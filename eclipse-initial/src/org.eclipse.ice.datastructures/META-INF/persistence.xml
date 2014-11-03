@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+	version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
+	<persistence-unit name="org.eclipse.ice.datastructures"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<class>org.eclipse.ice.datastructures.ICEObject.ICEObject</class>
+		<class>org.eclipse.ice.datastructures.form.DataComponent</class>
+		<class>org.eclipse.ice.datastructures.form.TimeDataComponent</class>
+		<class>org.eclipse.ice.datastructures.form.Entry</class>
+		<class>org.eclipse.ice.datastructures.form.Form</class>
+		<class>org.eclipse.ice.datastructures.form.ResourceComponent</class>
+		<class>org.eclipse.ice.datastructures.form.TableComponent</class>
+		<class>org.eclipse.ice.datastructures.resource.ICEResource</class>
+		<class>org.eclipse.ice.datastructures.form.MatrixComponent</class>
+		<class>org.eclipse.ice.datastructures.form.MasterDetailsPair</class>
+		<class>org.eclipse.ice.datastructures.form.MasterDetailsComponent</class>
+		<class>org.eclipse.ice.datastructures.form.geometry.AbstractShape</class>
+		<class>org.eclipse.ice.datastructures.form.geometry.GeometryComponent</class>
+		<class>org.eclipse.ice.datastructures.form.geometry.PrimitiveShape</class>
+		<class>org.eclipse.ice.datastructures.form.geometry.ComplexShape</class>
+		<class>org.eclipse.ice.datastructures.form.geometry.Transformation</class>
+		<class>org.eclipse.ice.datastructures.form.painfullySimpleForm.PainfullySimpleForm</class>
+		<class>org.eclipse.ice.datastructures.form.painfullySimpleForm.PainfullySimpleEntry</class>
+		<class>org.eclipse.ice.datastructures.form.BasicEntryContentProvider</class>
+		<class>org.eclipse.ice.datastructures.form.TreeComposite</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<properties>
+			<!-- Embedded Derby Login -->
+			<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:derby:database/datastructuresDatabase;create=true" />
+			<property name="javax.persistence.jdbc.user" value="APP" />
+			<property name="javax.persistence.jdbc.password" value="APP" />
+			<!-- Database Schema Creation -->
+			<property name="eclipselink.ddl-generation" value="create-tables" />
+			<property name="eclipselink.ddl-generation.output-mode"
+				value="database" />
+			<property name="eclipselink.weaving" value="false" />
+			<!-- Logging Settings -->
+			<property name="eclipselink.logging.level" value="OFF" />
+			<property name="eclipselink.logging.thread" value="false" />
+			<property name="eclipselink.logging.session" value="true" />
+			<property name="eclipselink.logging.exceptions" value="true" />
+			<property name="eclipselink.logging.timestamp" value="false" />
+		</properties>
+	</persistence-unit>
+</persistence>
