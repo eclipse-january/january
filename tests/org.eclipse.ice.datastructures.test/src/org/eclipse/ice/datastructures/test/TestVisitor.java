@@ -19,11 +19,11 @@ import org.eclipse.ice.datastructures.form.ResourceComponent;
 import org.eclipse.ice.datastructures.form.MasterDetailsComponent;
 import org.eclipse.ice.datastructures.form.TimeDataComponent;
 import org.eclipse.ice.datastructures.form.mesh.MeshComponent;
-import org.eclipse.ice.datastructures.form.BatteryComponent;
 import org.eclipse.ice.datastructures.form.TreeComposite;
 import org.eclipse.ice.datastructures.componentVisitor.IReactorComponent;
 import org.eclipse.ice.datastructures.form.MatrixComponent;
 import org.eclipse.ice.datastructures.form.TableComponent;
+import org.eclipse.ice.datastructures.form.emf.EMFComponent;
 import org.eclipse.ice.datastructures.form.geometry.GeometryComponent;
 import org.eclipse.ice.datastructures.form.geometry.IShape;
 
@@ -34,7 +34,7 @@ import org.eclipse.ice.datastructures.form.geometry.IShape;
  * </p>
  * <!-- end-UML-doc -->
  * 
- * @author bkj
+ * @author Jay Jay Billings
  * @generated 
  *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
@@ -267,23 +267,15 @@ public class TestVisitor implements IComponentVisitor {
 		// end-user-code
 	}
 
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see IComponentVisitor#visit(BatteryComponent component)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
-	public void visit(BatteryComponent component) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-
-		// end-user-code
-	}
-
 	@Override
 	public void visit(AdaptiveTreeComposite component) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void visit(EMFComponent component) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -15,21 +15,12 @@ package org.eclipse.ice.datastructures.resource;
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBManipulator;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.form.Entry;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.io.InputStream;
 import java.util.Date;
-
-import javax.activation.MimetypesFileTypeMap;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -52,8 +43,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
  * @generated 
  *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
-@Entity
-@Table(name = "ICEResource")
 @XmlRootElement(name = "ICEResource")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ICEResource extends ICEObject {
@@ -93,7 +82,6 @@ public class ICEResource extends ICEObject {
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	@XmlElement(name = "Properties")
 	private ArrayList<Entry> properties;
 
@@ -370,7 +358,6 @@ public class ICEResource extends ICEObject {
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlTransient
-	@Transient
 	public void setPictureType(boolean isPicture) {
 		// begin-user-code
 		this.isPicture = isPicture;

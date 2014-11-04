@@ -19,7 +19,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.Entity;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -42,7 +41,6 @@ import org.eclipse.ice.datastructures.updateableComposite.IUpdateableListener;
  */
 @XmlRootElement(name = "AdaptiveTreeComposite")
 @XmlAccessorType(XmlAccessType.FIELD)
-@Entity(name = "AdaptiveTreeComposite")
 public class AdaptiveTreeComposite extends TreeComposite {
 
 	/**

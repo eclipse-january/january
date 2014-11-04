@@ -28,7 +28,7 @@ import org.eclipse.ice.datastructures.form.TreeComposite;
  * Sub-classes should implement an iterative tree traversal algorithm instead of
  * a recursive one.
  * 
- * @author djg
+ * @author Jordan H. Deyton
  * 
  */
 public abstract class AbstractTreeCompositeIterator implements

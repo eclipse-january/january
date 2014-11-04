@@ -23,7 +23,7 @@ import org.eclipse.ice.datastructures.form.TreeComposite;
  * </code>
  * </pre>
  * 
- * @author djg
+ * @author Jordan H. Deyton
  * 
  */
 public class PreOrderTreeCompositeIterator extends

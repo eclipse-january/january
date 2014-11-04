@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2014 UT-Battelle, LLC.
+\ * Copyright (c) 2011, 2014 UT-Battelle, LLC.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -55,7 +55,13 @@ public enum AllowedValueType {
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	Continuous,
+	Continuous,	
+	/**
+	 * This literal means the Entry is used in a form for specifying some sort
+	 * of file (such as an input file). The value of the entry will be a
+	 * filename, and the list of allowedValues will be files in the workspace.
+	 */
+	File,
 	/**
 	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
 	 * 

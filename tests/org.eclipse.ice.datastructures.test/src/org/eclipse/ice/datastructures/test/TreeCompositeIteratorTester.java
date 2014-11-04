@@ -19,7 +19,7 @@ import org.junit.Test;
 /**
  * Checks the different types of iterators provided for TreeComposites.
  * 
- * @author djg
+ * @author Jordan H. Deyton
  * 
  */
 public class TreeCompositeIteratorTester {

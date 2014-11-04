@@ -34,7 +34,7 @@ import org.junit.*;
  * </p>
  * <!-- end-UML-doc -->
  * 
- * @author bkj
+ * @author Jay Jay Billings
  */
 public class ICEObjectTester {
 

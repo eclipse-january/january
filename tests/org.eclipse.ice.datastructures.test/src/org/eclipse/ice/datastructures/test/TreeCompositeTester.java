@@ -12,7 +12,12 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -20,24 +25,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
+import org.eclipse.ice.datastructures.componentVisitor.SelectiveComponentVisitor;
+import org.eclipse.ice.datastructures.form.DataComponent;
+import org.eclipse.ice.datastructures.form.Entry;
+import org.eclipse.ice.datastructures.form.TableComponent;
+import org.eclipse.ice.datastructures.form.TreeComposite;
+import org.eclipse.ice.datastructures.updateableComposite.Component;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
-import org.eclipse.ice.datastructures.form.Entry;
-import org.eclipse.ice.datastructures.form.TimeDataComponent;
-import org.eclipse.ice.datastructures.form.mesh.MeshComponent;
-import org.eclipse.ice.datastructures.form.AdaptiveTreeComposite;
-import org.eclipse.ice.datastructures.form.BatteryComponent;
-import org.eclipse.ice.datastructures.form.TreeComposite;
-import org.eclipse.ice.datastructures.form.DataComponent;
-import org.eclipse.ice.datastructures.form.ResourceComponent;
-import org.eclipse.ice.datastructures.form.TableComponent;
-import org.eclipse.ice.datastructures.form.MatrixComponent;
-import org.eclipse.ice.datastructures.form.geometry.IShape;
-import org.eclipse.ice.datastructures.form.geometry.GeometryComponent;
-import org.eclipse.ice.datastructures.form.MasterDetailsComponent;
-import org.eclipse.ice.datastructures.componentVisitor.IReactorComponent;
-import org.eclipse.ice.datastructures.updateableComposite.Component;
 
 /**
  * <!-- begin-UML-doc -->
@@ -49,11 +45,11 @@ import org.eclipse.ice.datastructures.updateableComposite.Component;
  * </p>
  * <!-- end-UML-doc -->
  * 
- * @author bkj
+ * @author Jay Jay Billings
  * @generated 
  *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
-public class TreeCompositeTester implements IComponentVisitor {
+public class TreeCompositeTester extends SelectiveComponentVisitor {
 	/**
 	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
 	 * 
@@ -877,6 +873,7 @@ public class TreeCompositeTester implements IComponentVisitor {
 		// Add some components to the treeComposites
 		treeComposite.addComponent(component1);
 		treeComposite.setActive(true);
+		treeComposite.setActiveDataNode(component1);
 		treeGrandChild.addComponent(component2);
 		treeChild1.addComponent(component3);
 
@@ -1240,20 +1237,6 @@ public class TreeCompositeTester implements IComponentVisitor {
 	/**
 	 * (non-Javadoc)
 	 * 
-	 * @see IComponentVisitor#visit(ResourceComponent component)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
-	public void visit(ResourceComponent component) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-
-		// end-user-code
-	}
-
-	/**
-	 * (non-Javadoc)
-	 * 
 	 * @see IComponentVisitor#visit(TableComponent component)
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
@@ -1262,62 +1245,6 @@ public class TreeCompositeTester implements IComponentVisitor {
 		// begin-user-code
 
 		addComponentToMap("table", component);
-
-		// end-user-code
-	}
-
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see IComponentVisitor#visit(MatrixComponent component)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
-	public void visit(MatrixComponent component) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-
-		// end-user-code
-	}
-
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see IComponentVisitor#visit(IShape component)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
-	public void visit(IShape component) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-
-		// end-user-code
-	}
-
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see IComponentVisitor#visit(GeometryComponent component)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
-	public void visit(GeometryComponent component) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-
-		// end-user-code
-	}
-
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see IComponentVisitor#visit(MasterDetailsComponent component)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
-	public void visit(MasterDetailsComponent component) {
-		// begin-user-code
-		// TODO Auto-generated method stub
 
 		// end-user-code
 	}
@@ -1335,59 +1262,5 @@ public class TreeCompositeTester implements IComponentVisitor {
 		addComponentToMap("tree", component);
 
 		// end-user-code
-	}
-
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see IComponentVisitor#visit(IReactorComponent component)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
-	public void visit(IReactorComponent component) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-
-		// end-user-code
-	}
-
-	@Override
-	public void visit(TimeDataComponent component) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see IComponentVisitor#visit(MeshComponent component)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
-	public void visit(MeshComponent component) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-
-		// end-user-code
-	}
-
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see IComponentVisitor#visit(BatteryComponent component)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
-	public void visit(BatteryComponent component) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-
-		// end-user-code
-	}
-
-	@Override
-	public void visit(AdaptiveTreeComposite component) {
-		// TODO Auto-generated method stub
-
 	}
 }

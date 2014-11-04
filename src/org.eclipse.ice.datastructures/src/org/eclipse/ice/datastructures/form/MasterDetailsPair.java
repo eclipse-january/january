@@ -14,14 +14,6 @@ package org.eclipse.ice.datastructures.form;
 
 import java.io.IOException;
 import java.io.InputStream;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -50,8 +42,6 @@ import org.eclipse.ice.datastructures.ICEObject.ICEObject;
  * @generated 
  *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
-@Entity
-@Table(name = "MasterDetailsPair")
 @XmlRootElement(name = "MasterDetailsPair")
 public class MasterDetailsPair extends ICEObject {
 	/**
@@ -75,7 +65,6 @@ public class MasterDetailsPair extends ICEObject {
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER, targetEntity = DataComponent.class)
 	private DataComponent details;
 
 	/**

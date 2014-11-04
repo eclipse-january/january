@@ -35,7 +35,7 @@ import org.eclipse.ice.datastructures.updateableComposite.Component;
  * </p>
  * <!-- end-UML-doc -->
  * 
- * @author bkj
+ * @author Jay Jay Billings
  */
 public class FormTester {
 	/**

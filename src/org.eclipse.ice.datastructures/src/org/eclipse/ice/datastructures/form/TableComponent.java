@@ -16,7 +16,6 @@ import org.eclipse.ice.datastructures.ICEObject.ICEJAXBManipulator;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.updateableComposite.Component;
 import org.eclipse.ice.datastructures.updateableComposite.IUpdateable;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,13 +23,6 @@ import java.util.Hashtable;
 import java.util.ArrayList;
 import org.eclipse.ice.datastructures.updateableComposite.IUpdateableListener;
 import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -66,12 +58,10 @@ import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
  * </p>
  * <!-- end-UML-doc -->
  * 
- * @author bkj
+ * @author Jay Jay Billings
  * @generated 
  *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
-@Entity()
-@Table(name = "TableComponent")
 @XmlRootElement(name = "TableComponent")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class TableComponent extends ICEObject implements Component {
@@ -86,7 +76,6 @@ public class TableComponent extends ICEObject implements Component {
 	 * </p>
 	 * <!-- end-UML-doc -->
 	 */
-	@Transient
 	private Hashtable<Integer, ArrayList<Entry>> rowTable;
 	/**
 	 * <!-- begin-UML-doc -->
@@ -113,7 +102,6 @@ public class TableComponent extends ICEObject implements Component {
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	@XmlElement(name = "Row")
 	private ArrayList<DataComponent> rowComponents;
 

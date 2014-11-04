@@ -17,12 +17,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -40,6 +34,7 @@ import org.eclipse.ice.datastructures.ICEObject.ICEJAXBManipulator;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
 import org.eclipse.ice.datastructures.componentVisitor.IReactorComponent;
+import org.eclipse.ice.datastructures.form.emf.EMFComponent;
 import org.eclipse.ice.datastructures.form.geometry.GeometryComponent;
 import org.eclipse.ice.datastructures.form.geometry.IShape;
 import org.eclipse.ice.datastructures.form.mesh.MeshComponent;
@@ -140,13 +135,12 @@ import org.eclipse.ice.datastructures.updateableComposite.IUpdateableListener;
  * </p>
  * <!-- end-UML-doc -->
  * 
- * @author bkj
+ * @author Jay Jay Billings
  * @generated 
  *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
 @XmlRootElement(name = "TreeComposite")
 @XmlAccessorType(XmlAccessType.FIELD)
-@Entity(name = "TreeComposite")
 public class TreeComposite extends ICEObject implements Composite,
 		IComponentVisitor {
 	/**
@@ -161,8 +155,7 @@ public class TreeComposite extends ICEObject implements Composite,
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlTransient
-	@Transient
-	private TreeComposite previousSibling = null;
+	protected TreeComposite previousSibling = null;
 	/**
 	 * <!-- begin-UML-doc -->
 	 * <p>
@@ -175,8 +168,7 @@ public class TreeComposite extends ICEObject implements Composite,
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlTransient
-	@Transient
-	private TreeComposite nextSibling = null;
+	protected TreeComposite nextSibling = null;
 	/**
 	 * <!-- begin-UML-doc -->
 	 * <p>
@@ -192,8 +184,7 @@ public class TreeComposite extends ICEObject implements Composite,
 	@XmlElements( {
 		@XmlElement(name = "TreeComposite", type = TreeComposite.class),
 		@XmlElement(name = "AdaptiveTreeComposite", type = AdaptiveTreeComposite.class) })
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER, targetEntity = TreeComposite.class)
-	private ArrayList<TreeComposite> children;
+	protected ArrayList<TreeComposite> children;
 	/**
 	 * <!-- begin-UML-doc -->
 	 * <p>
@@ -205,7 +196,6 @@ public class TreeComposite extends ICEObject implements Composite,
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlTransient
-	@Transient
 	private int currentChildIndex = 0;
 	/**
 	 * <!-- begin-UML-doc -->
@@ -217,7 +207,6 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER, targetEntity = ICEObject.class)
 	@XmlAnyElement()
 	@XmlElementRefs(value = {
 			@XmlElementRef(name = "ResourceComponent", type = ResourceComponent.class),
@@ -239,8 +228,7 @@ public class TreeComposite extends ICEObject implements Composite,
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlTransient
-	@Transient
-	private TreeComposite parent = null;
+	protected TreeComposite parent = null;
 
 	/**
 	 * <!-- begin-UML-doc -->
@@ -256,7 +244,6 @@ public class TreeComposite extends ICEObject implements Composite,
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlTransient
-	@Transient
 	private Component activeDataNode = null;
 
 	/**
@@ -288,9 +275,7 @@ public class TreeComposite extends ICEObject implements Composite,
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlElement(name = "exemplar")
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER, targetEntity = TreeComposite.class)
-	@JoinColumn(name = "ExemplarChildren")
-	private ArrayList<TreeComposite> childExemplars;
+	protected ArrayList<TreeComposite> childExemplars;
 
 	/**
 	 * <!-- begin-UML-doc -->
@@ -442,7 +427,7 @@ public class TreeComposite extends ICEObject implements Composite,
 	 *         matches the exemplars or because there is no exemplar set of
 	 *         children - and false otherwise.
 	 */
-	private boolean checkExemplars(TreeComposite cNode) {
+	protected boolean checkExemplars(TreeComposite cNode) {
 
 		// Local Declarations
 		boolean canAdd = true;
@@ -951,98 +936,7 @@ public class TreeComposite extends ICEObject implements Composite,
 	 */
 	public void copy(TreeComposite otherTreeComposite) {
 		// begin-user-code
-
-		// If null, return
-		if (otherTreeComposite == null) {
-			return;
-		}
-
-		// We need to temporarily unregister all listeners. This has two
-		// benefits/purposes:
-		// (1) The listeners are not notified during the copy operation.
-		// (2) The listeners are completely unregistered from old components.
-
-		// Create a backup of the listeners, then unregister from all of them.
-		List<IUpdateableListener> listenersCopy = new ArrayList<IUpdateableListener>(
-				listeners);
-		for (IUpdateableListener listener : listenersCopy) {
-			unregister(listener);
-		}
-		// Copy ICEObject contents
-		super.copy((ICEObject) otherTreeComposite);
-
-		// Copy contents - look at differences between "shallow", "deep", and
-		// nullaries
-
-		// Due to references on parent, these have to be null
-		this.parent = null;
-		this.nextSibling = null;
-		this.previousSibling = null;
-
-		// Clear the list of children to prepare for a deep copy
-		this.children.clear();
-
-		// Performs a deep copy. Please note that children's parents are reset!
-		for (int i = 0; i < otherTreeComposite.children.size(); i++) {
-
-			this.children.add((TreeComposite) otherTreeComposite.children
-					.get(i).clone());
-			// Reset parent
-			this.children.get(i).setParent(this);
-		}
-
-		// Reset links for siblings
-		for (int j = 0; j < otherTreeComposite.children.size() - 1; j++) {
-			this.children.get(j).nextSibling = this.children.get(j + 1);
-		}
-		for (int j = otherTreeComposite.children.size() - 1; j > 0; j--) {
-			this.children.get(j).previousSibling = this.children.get(j - 1);
-		}
-
-		// This is numerical and acceptable
-		this.currentChildIndex = otherTreeComposite.currentChildIndex;
-
-		// Deep copy dataNodes
-		this.dataNodes.clear();
-		for (int i = 0; i < otherTreeComposite.dataNodes.size(); i++) {
-			this.dataNodes
-					.add((Component) ((ICEObject) otherTreeComposite.dataNodes
-							.get(i)).clone());
-		}
-
-		// Copy dataNodes
-		this.allowActiveDataNodes = otherTreeComposite.allowActiveDataNodes;
-
-		// Since the dataNodes are shallow, this can be set correctly
-		this.activeDataNode = null;
-		for (int i = 0; i < this.children.size(); i++) {
-			// Compare the current children with the data node in the other tree
-			// composite
-			// Set accordingly
-			if (this.children.get(i).equals(otherTreeComposite.activeDataNode)) {
-				this.activeDataNode = this.children.get(i);
-			}
-		}
-
-		// Copy activity marker
-		this.active = otherTreeComposite.active;
-
-		// Copy the exemplars
-		this.childExemplars.clear();
-		for (int i = 0; i < otherTreeComposite.childExemplars.size(); i++) {
-			this.childExemplars
-					.add((TreeComposite) otherTreeComposite.childExemplars.get(
-							i).clone());
-		}
-
-		// Re-register with all of the listeners.
-		for (IUpdateableListener listener : listenersCopy) {
-			register(listener);
-		}
-		// Notify the listeners that this tree has changed.
-		this.notifyListeners();
-
-		return;
+		copy(otherTreeComposite, false);
 		// end-user-code
 	}
 
@@ -1136,23 +1030,18 @@ public class TreeComposite extends ICEObject implements Composite,
 
 		// Deep copy dataNodes
 		this.dataNodes.clear();
-		for (int i = 0; i < otherTreeComposite.dataNodes.size(); i++) {
-			this.dataNodes
-					.add((Component) ((ICEObject) otherTreeComposite.dataNodes
-							.get(i)).clone());
-		}
-
-		// Copy dataNodes
-		this.allowActiveDataNodes = otherTreeComposite.allowActiveDataNodes;
-
-		// Since the dataNodes are shallow, this can be set correctly
 		this.activeDataNode = null;
-		for (int i = 0; i < this.children.size(); i++) {
-			// Compare the current children with the data node in the other tree
-			// composite
-			// Set accordingly
-			if (this.children.get(i).equals(otherTreeComposite.activeDataNode)) {
-				this.activeDataNode = this.children.get(i);
+		this.allowActiveDataNodes = otherTreeComposite.allowActiveDataNodes;
+		for (int i = 0; i < otherTreeComposite.dataNodes.size(); i++) {
+			// Get the next data node and a clone of it to go in this tree.
+			Component dataNode = otherTreeComposite.dataNodes.get(i);
+			Component clone = (Component) ((ICEObject) dataNode).clone();
+			// Add the clone to this tree's set of data nodes.
+			this.dataNodes.add(clone);
+			// Synchronize the active data node with the other tree's active
+			// data node if the cloned data node is the active one.
+			if (dataNode == otherTreeComposite.activeDataNode) {
+				this.activeDataNode = clone;
 			}
 		}
 
@@ -1788,20 +1677,6 @@ public class TreeComposite extends ICEObject implements Composite,
 	/**
 	 * (non-Javadoc)
 	 * 
-	 * @see IComponentVisitor#visit(BatteryComponent component)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
-	public void visit(BatteryComponent component) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-
-		// end-user-code
-	}
-
-	/**
-	 * (non-Javadoc)
-	 * 
 	 * @see IComponentVisitor#visit(AdaptiveTreeComposite component)
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
@@ -1865,6 +1740,12 @@ public class TreeComposite extends ICEObject implements Composite,
 		}
 		return;
 		// end-user-code
+	}
+
+	@Override
+	public void visit(EMFComponent component) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -12,24 +12,21 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.componentVisitor;
 
-import java.util.Set;
 import java.util.ArrayList;
 
-import org.eclipse.ice.datastructures.updateableComposite.Component;
 import org.eclipse.ice.datastructures.form.AdaptiveTreeComposite;
 import org.eclipse.ice.datastructures.form.DataComponent;
+import org.eclipse.ice.datastructures.form.MasterDetailsComponent;
+import org.eclipse.ice.datastructures.form.MatrixComponent;
 import org.eclipse.ice.datastructures.form.ResourceComponent;
 import org.eclipse.ice.datastructures.form.TableComponent;
-import org.eclipse.ice.datastructures.form.geometry.GeometryComponent;
-import org.eclipse.ice.datastructures.form.MasterDetailsComponent;
-import org.eclipse.ice.datastructures.form.TreeComposite;
 import org.eclipse.ice.datastructures.form.TimeDataComponent;
-import org.eclipse.ice.datastructures.form.mesh.MeshComponent;
-import org.eclipse.ice.datastructures.form.BatteryComponent;
-import org.eclipse.ice.datastructures.form.geometry.ComplexShape;
-import org.eclipse.ice.datastructures.form.geometry.PrimitiveShape;
-import org.eclipse.ice.datastructures.form.MatrixComponent;
+import org.eclipse.ice.datastructures.form.TreeComposite;
+import org.eclipse.ice.datastructures.form.emf.EMFComponent;
+import org.eclipse.ice.datastructures.form.geometry.GeometryComponent;
 import org.eclipse.ice.datastructures.form.geometry.IShape;
+import org.eclipse.ice.datastructures.form.mesh.MeshComponent;
+import org.eclipse.ice.datastructures.updateableComposite.Component;
 
 /**
  * <!-- begin-UML-doc -->
@@ -40,7 +37,7 @@ import org.eclipse.ice.datastructures.form.geometry.IShape;
  * </p>
  * <!-- end-UML-doc -->
  * 
- * @author bkj
+ * @author Jay Jay Billings
  * @generated 
  *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
@@ -262,7 +259,7 @@ public interface IComponentVisitor {
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void visit(MeshComponent component);
-
+	
 	/**
 	 * <!-- begin-UML-doc -->
 	 * <p>
@@ -278,5 +275,6 @@ public interface IComponentVisitor {
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	public void visit(BatteryComponent component);
+	public void visit(EMFComponent component);
+	
 }

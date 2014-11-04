@@ -22,21 +22,9 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
-import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
-import org.eclipse.ice.datastructures.componentVisitor.IReactorComponent;
+import org.eclipse.ice.datastructures.componentVisitor.SelectiveComponentVisitor;
 import org.eclipse.ice.datastructures.form.AdaptiveTreeComposite;
-import org.eclipse.ice.datastructures.form.BatteryComponent;
-import org.eclipse.ice.datastructures.form.DataComponent;
-import org.eclipse.ice.datastructures.form.Entry;
-import org.eclipse.ice.datastructures.form.MasterDetailsComponent;
-import org.eclipse.ice.datastructures.form.MatrixComponent;
-import org.eclipse.ice.datastructures.form.ResourceComponent;
-import org.eclipse.ice.datastructures.form.TableComponent;
-import org.eclipse.ice.datastructures.form.TimeDataComponent;
 import org.eclipse.ice.datastructures.form.TreeComposite;
-import org.eclipse.ice.datastructures.form.geometry.GeometryComponent;
-import org.eclipse.ice.datastructures.form.geometry.IShape;
-import org.eclipse.ice.datastructures.form.mesh.MeshComponent;
 import org.eclipse.ice.datastructures.updateableComposite.IUpdateable;
 import org.junit.Test;
 
@@ -401,57 +389,21 @@ public class AdaptiveTreeCompositeTester {
 	/**
 	 * Fake class to test the visitation routine of the AdaptiveTreeComposite.
 	 */
-	private class FakeTreeVisitor implements IComponentVisitor {
+	private class FakeTreeVisitor extends SelectiveComponentVisitor {
 
 		// The fake visitor's visited component.
 		private AdaptiveTreeComposite tree = null;
 
+		@Override
 		public void visit(AdaptiveTreeComposite tree) {
 
 			// Set the IComponentVisitor component (if valid), and flag the
 			// component as having been visited.
-			if (component != null) {
+			if (tree != null) {
 				this.tree = tree;
 				wasVisited = true;
 			}
 			return;
 		}
-
-		public void visit(DataComponent component) {
-		}
-
-		public void visit(ResourceComponent component) {
-		}
-
-		public void visit(TableComponent component) {
-		}
-
-		public void visit(MatrixComponent component) {
-		}
-
-		public void visit(IShape component) {
-		}
-
-		public void visit(GeometryComponent component) {
-		}
-
-		public void visit(MasterDetailsComponent component) {
-		}
-
-		public void visit(TreeComposite component) {
-		}
-
-		public void visit(TimeDataComponent component) {
-		}
-
-		public void visit(MeshComponent component) {
-		}
-
-		public void visit(BatteryComponent component) {
-		}
-
-		public void visit(IReactorComponent component) {
-		}
-
 	};
 }

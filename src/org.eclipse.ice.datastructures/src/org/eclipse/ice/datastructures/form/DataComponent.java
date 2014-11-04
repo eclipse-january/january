@@ -17,19 +17,10 @@ import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
 import org.eclipse.ice.datastructures.updateableComposite.Component;
 import org.eclipse.ice.datastructures.updateableComposite.IUpdateable;
-
 import java.util.ArrayList;
 import org.eclipse.ice.datastructures.updateableComposite.IUpdateableListener;
-
 import java.io.IOException;
 import java.io.InputStream;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -44,17 +35,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  * </p>
  * <!-- end-UML-doc -->
  * 
- * @author bkj
+ * @author Jay Jay Billings
  */
-@Entity
-@Table(name = "DataComponent")
 @XmlRootElement(name = "DataComponent")
 public class DataComponent extends ICEObject implements Component,
 		IUpdateableListener {
 	/**
 	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
 	 */
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER, targetEntity = Entry.class)
 	@XmlElement(name = "Entry")
 	private ArrayList<Entry> entries;
 

@@ -14,16 +14,8 @@ package org.eclipse.ice.datastructures.form;
 
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.ArrayList;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
-import javax.persistence.Table;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -38,6 +30,7 @@ import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.updateableComposite.Component;
 import org.eclipse.ice.datastructures.updateableComposite.IUpdateableListener;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
+import org.eclipse.ice.datastructures.form.emf.EMFComponent;
 import org.eclipse.ice.datastructures.form.geometry.GeometryComponent;
 import org.eclipse.ice.datastructures.form.mesh.MeshComponent;
 import org.eclipse.ice.datastructures.updateableComposite.Composite;
@@ -65,8 +58,6 @@ import org.eclipse.ice.datastructures.updateableComposite.Composite;
  * @generated 
  *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
-@Entity
-@Table(name = "Form")
 @XmlRootElement(name = "Form")
 public class Form extends ICEObject implements Composite {
 	/**
@@ -79,7 +70,6 @@ public class Form extends ICEObject implements Composite {
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	@Column(name = "itemID")
 	private int itemID;
 
 	/**
@@ -92,9 +82,6 @@ public class Form extends ICEObject implements Composite {
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER, targetEntity = ICEObject.class)
-	@OrderBy()
 	@XmlAnyElement()
 	@XmlElementRefs(value = {
 			@XmlElementRef(name = "ResourceComponent", type = ResourceComponent.class),
@@ -106,7 +93,7 @@ public class Form extends ICEObject implements Composite {
 			@XmlElementRef(name = "DataComponent", type = DataComponent.class),
 			@XmlElementRef(name = "TreeComposite", type = TreeComposite.class),
 			@XmlElementRef(name = "MeshComponent", type = MeshComponent.class),
-			@XmlElementRef(name = "BatteryComponent", type = BatteryComponent.class) })
+			@XmlElementRef(name = "EMFComponent", type = EMFComponent.class)})
 	private ArrayList<Component> componentList;
 
 	/**

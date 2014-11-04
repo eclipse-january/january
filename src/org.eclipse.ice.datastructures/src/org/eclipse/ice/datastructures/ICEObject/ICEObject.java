@@ -18,16 +18,6 @@ import org.eclipse.ice.datastructures.updateableComposite.IUpdateableListener;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -63,13 +53,10 @@ import javax.xml.bind.annotation.XmlTransient;
  * </p>
  * <!-- end-UML-doc -->
  * 
- * @author bkj
+ * @author Jay Jay Billings
  * @generated 
  *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
-@Entity
-@Table(name = "ICEObject")
-@Inheritance(strategy = InheritanceType.JOINED)
 @XmlRootElement(name = "ICEObject")
 public class ICEObject implements IUpdateable, Persistable {
 	/**
@@ -106,7 +93,6 @@ public class ICEObject implements IUpdateable, Persistable {
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	@Column(length = 1000)
 	protected String objectDescription;
 	/**
 	 * <!-- begin-UML-doc -->
@@ -118,7 +104,6 @@ public class ICEObject implements IUpdateable, Persistable {
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	@Transient
 	protected ICEJAXBManipulator jaxbManipulator;
 
 	/**
@@ -133,9 +118,6 @@ public class ICEObject implements IUpdateable, Persistable {
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
-	@Column(name = "DBID_ID")
 	protected int DB_ID;
 
 	/**
@@ -149,7 +131,6 @@ public class ICEObject implements IUpdateable, Persistable {
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlTransient
-	@Transient
 	protected ArrayList<IUpdateableListener> listeners;
 
 	/**
@@ -489,13 +470,13 @@ public class ICEObject implements IUpdateable, Persistable {
 		int hash = 11;
 
 		// Compute the hashcode from this ICEObject's data
-		hash = 31 * hash + this.uniqueId;
+		hash = 31 * hash + uniqueId;
 		// If objectName is null, add 0, otherwise add String.hashcode()
 		hash = 31 * hash
-				+ (null == this.objectName ? 0 : this.objectName.hashCode());
+				+ (null == objectName ? 0 : objectName.hashCode());
 		hash = 31
 				* hash
-				+ (null == this.objectDescription ? 0 : this.objectDescription
+				+ (null == objectDescription ? 0 : objectDescription
 						.hashCode());
 		// Return the computed hash code
 		return hash;
