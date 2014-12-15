@@ -12,12 +12,11 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.ICEObject;
 
-import org.eclipse.ice.datastructures.updateableComposite.IUpdateable;
 import java.util.ArrayList;
-import org.eclipse.ice.datastructures.updateableComposite.IUpdateableListener;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -105,20 +104,6 @@ public class ICEObject implements IUpdateable, Persistable {
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	protected ICEJAXBManipulator jaxbManipulator;
-
-	/**
-	 * <!-- begin-UML-doc -->
-	 * <p>
-	 * A specifically attribute designed to be utilized by the JPA database.
-	 * This variable should not be accessed normally by ICE, only by JPA. DO NOT
-	 * OVERRIDE THIS VARIABLE!
-	 * </p>
-	 * <!-- end-UML-doc -->
-	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
-	protected int DB_ID;
 
 	/**
 	 * <!-- begin-UML-doc -->

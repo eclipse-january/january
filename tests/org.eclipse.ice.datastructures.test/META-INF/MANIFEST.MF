@@ -18,7 +18,6 @@ Import-Package: org.eclipse.emf.common.util,
  org.eclipse.ice.datastructures.form.mesh,
  org.eclipse.ice.datastructures.form.painfullySimpleForm,
  org.eclipse.ice.datastructures.resource,
- org.eclipse.ice.datastructures.updateableComposite,
  org.osgi.framework;version="1.6.0",
  org.osgi.util.tracker;version="1.5.0"
 Bundle-ActivationPolicy: lazy

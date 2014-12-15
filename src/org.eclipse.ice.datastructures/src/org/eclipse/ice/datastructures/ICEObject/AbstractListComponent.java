@@ -11,8 +11,6 @@
 package org.eclipse.ice.datastructures.ICEObject;
 
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
-import org.eclipse.ice.datastructures.updateableComposite.Component;
-import org.eclipse.ice.datastructures.updateableComposite.IUpdateableListener;
 
 /**
  * This class...

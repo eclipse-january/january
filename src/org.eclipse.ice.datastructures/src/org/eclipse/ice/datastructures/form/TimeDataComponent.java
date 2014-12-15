@@ -13,11 +13,14 @@
 package org.eclipse.ice.datastructures.form;
 
 import java.util.ArrayList;
+
+import org.eclipse.ice.datastructures.ICEObject.Component;
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBManipulator;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
-import org.eclipse.ice.datastructures.updateableComposite.Component;
+
 import java.io.IOException;
 import java.io.InputStream;
+
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlRootElement;
 
