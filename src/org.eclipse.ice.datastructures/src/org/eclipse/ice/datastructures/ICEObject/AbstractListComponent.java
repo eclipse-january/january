@@ -6,7 +6,8 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *   Initial API and implementation and/or initial documentation - Jay Jay Billings
+ *   Initial API and implementation and/or initial documentation - Jay Jay 
+ *   Billings
  *******************************************************************************/
 package org.eclipse.ice.datastructures.ICEObject;
 
