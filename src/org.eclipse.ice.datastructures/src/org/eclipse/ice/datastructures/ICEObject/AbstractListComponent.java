@@ -11,15 +11,31 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.ICEObject;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
+
+import ca.odell.glazedlists.EventList;
+import ca.odell.glazedlists.TransformedList;;
 
 /**
  * This class...
  * @author Jay Jay Billings
  *
  */
-public abstract class AbstractListComponent<T> implements Component, Cloneable {
+public abstract class AbstractListComponent<T> extends TransformedList<T,T> implements Component, Persistable {
 
+	/**
+	 * A protected constructor inherited from TransformedList.
+	 * @param source The source list used by the TransformedList.
+	 */
+	protected AbstractListComponent(EventList<T> source) {
+		super(source);
+	}
+
+	
+	
 	@Override
 	public abstract Object clone();
 	
@@ -52,4 +68,10 @@ public abstract class AbstractListComponent<T> implements Component, Cloneable {
 
 	@Override
 	public abstract void accept(IComponentVisitor visitor);
+	
+	@Override
+	public abstract void loadFromXML(InputStream inputStream);
+	
+	@Override
+	public abstract void persistToXML(OutputStream outputStream);
 }
