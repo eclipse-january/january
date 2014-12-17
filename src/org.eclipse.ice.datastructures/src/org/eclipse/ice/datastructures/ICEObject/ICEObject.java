@@ -261,7 +261,6 @@ public class ICEObject implements IUpdateable, Persistable {
 			dataObject = jaxbManipulator.read(this.getClass(), inputStream);
 			// Copy contents of new object into current data structure
 			this.copy((ICEObject) dataObject);
-
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		} catch (JAXBException e) {
@@ -309,20 +308,11 @@ public class ICEObject implements IUpdateable, Persistable {
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
-	 * <p>
-	 * This operation copies the contents of a Identifiable entity into the
-	 * current object using a deep copy.
-	 * </p>
-	 * <!-- end-UML-doc -->
+	 * This operation copies the contents of an ICEObject into the current
+	 * object using a deep copy.
 	 * 
-	 * @param entity
-	 *            <p>
-	 *            The Identifiable entity from which the values should be
+	 * @param entity The Identifiable entity from which the values should be
 	 *            copied.
-	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void copy(ICEObject entity) {
 		// begin-user-code
@@ -418,9 +408,8 @@ public class ICEObject implements IUpdateable, Persistable {
 		boolean retVal = false;
 		ICEObject castedOtherObject = null;
 
-		// Check the ICEObject, null and base type check first. Note that the
-		// instanceof operator must be used because subclasses of ICEObject
-		// can be anonymous.
+		// Check null and base type first. Note that the instanceof operator
+		// must be used because subclasses of ICEObject can be anonymous.
 		if (otherObject != null && (otherObject instanceof ICEObject)) {
 			// See if they are the same reference on the heap
 			if (this == otherObject) {
@@ -432,8 +421,7 @@ public class ICEObject implements IUpdateable, Persistable {
 						&& (this.objectName
 								.equals(castedOtherObject.objectName))
 						&& (this.objectDescription
-								.equals(castedOtherObject.objectDescription))
-				/* && (this.DB_ID == castedOtherObject.DB_ID) */;
+								.equals(castedOtherObject.objectDescription));
 			}
 		}
 
@@ -457,12 +445,10 @@ public class ICEObject implements IUpdateable, Persistable {
 		// Compute the hashcode from this ICEObject's data
 		hash = 31 * hash + uniqueId;
 		// If objectName is null, add 0, otherwise add String.hashcode()
-		hash = 31 * hash
-				+ (null == objectName ? 0 : objectName.hashCode());
+		hash = 31 * hash + (null == objectName ? 0 : objectName.hashCode());
 		hash = 31
 				* hash
-				+ (null == objectDescription ? 0 : objectDescription
-						.hashCode());
+				+ (null == objectDescription ? 0 : objectDescription.hashCode());
 		// Return the computed hash code
 		return hash;
 

@@ -20,8 +20,6 @@ import org.eclipse.ice.datastructures.ICEObject.WrappedGlazedEventListener;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
 import org.junit.Test;
 
-import ca.odell.glazedlists.event.ListEvent;
-
 /**
  * This class is responsible for testing the WrappedGlazedEventListener.
  * 

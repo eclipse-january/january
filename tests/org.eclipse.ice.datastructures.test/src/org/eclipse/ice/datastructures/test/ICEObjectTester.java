@@ -16,21 +16,15 @@ import static org.junit.Assert.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBManipulator;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
-import org.eclipse.ice.datastructures.form.DataComponent;
-import org.eclipse.ice.datastructures.form.Entry;
-
 import org.junit.*;
 
 /**
  * <!-- begin-UML-doc -->
  * <p>
  * The ICEObjectTester is responsible for testing the ICEObject class. It only
- * tests the name, id and description properties and does not test persistence.
+ * tests the name, id, and description properties as well as persistence.
+ * It also checks equality, hashCode computation, copying, and cloning.
  * </p>
  * <!-- end-UML-doc -->
  * 
@@ -39,20 +33,8 @@ import org.junit.*;
 public class ICEObjectTester {
 
 	/**
-	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
-	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
-	private ICEObject testICEObject;
-
-	/**
-	 * <!-- begin-UML-doc -->
-	 * <p>
 	 * This operation checks the ICEObject to insure that the id, name and
 	 * description getters and setters function properly.
-	 * </p>
-	 * <!-- end-UML-doc -->
 	 */
 	@Test
 	public void checkProperties() {
@@ -81,26 +63,12 @@ public class ICEObjectTester {
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
-	 * <p>
 	 * This operation checks the ICEObject class to ensure that its copy() and
 	 * clone() operations work as specified.
-	 * </p>
-	 * <!-- end-UML-doc -->
-	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkCopying() {
 		// begin-user-code
-		// TODO Auto-generated method stub
-		/*
-		 * The following sets of operations will be used to test the
-		 * "clone and copy" portion of the ICEObject.
-		 */
-
-		// Test to show valid usage of clone
 
 		// Local declarations
 		int id = 20110901;
@@ -108,6 +76,8 @@ public class ICEObjectTester {
 		String description = "The 1st day of the ninth month in the year of "
 				+ "our Lord 2011";
 		ICEObject testNC = new ICEObject();
+		
+		// Test to show valid usage of clone
 
 		// Set up the id, name and description
 		testNC.setId(id);
@@ -158,7 +128,7 @@ public class ICEObjectTester {
 		testNC.setId(id);
 		testNC.setName(name);
 		testNC.setDescription(description);
-
+		// Attempt the null copy
 		testNC.copy(null);
 
 		// Check the id, name and description - nothing has changed
@@ -341,7 +311,7 @@ public class ICEObjectTester {
 				&& !testICEObject.equals(unEqualObject));
 
 		// Assert checking equality with null value returns false
-		assertFalse(testICEObject==null);
+		assertFalse(testICEObject == null);
 
 		// Assert that two equal objects have the same hashcode
 		assertTrue(testICEObject.equals(equalObject)
