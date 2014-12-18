@@ -14,12 +14,14 @@ package org.eclipse.ice.datastructures.ICEObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -59,8 +61,8 @@ import ca.odell.glazedlists.event.ListEventListener;
  *
  */
 @XmlRootElement(name = "AbstractListComponent")
-//@XmlAccessorType(XmlAccessType.FIELD)
-public abstract class AbstractListComponent<T> extends TransformedList<T, T>
+@XmlAccessorType(XmlAccessType.FIELD)
+public class AbstractListComponent<T> extends TransformedList<T, T>
 		implements Component, Persistable {
 
 	/**
@@ -89,7 +91,7 @@ public abstract class AbstractListComponent<T> extends TransformedList<T, T>
 	protected BasicEventList<String> idList;
 
 	
-	protected EventList<T> jaxbSourceList;
+	protected BasicEventList<T> jaxbSourceList;
 	
 	/**
 	 * The default constructor.
@@ -110,7 +112,7 @@ public abstract class AbstractListComponent<T> extends TransformedList<T, T>
 	protected AbstractListComponent(EventList<T> source) {
 		super(source);
 		// Store the source list locally too so that JAXB gets it
-		jaxbSourceList = source;
+		jaxbSourceList = (BasicEventList<T>) source;
 		// Set it all up
 		idList = new BasicEventList<String>();
 		idList.add("1");
@@ -342,7 +344,36 @@ public abstract class AbstractListComponent<T> extends TransformedList<T, T>
 	 * @see Persistable#loadFromXML(InputStream inputStream)
 	 */
 	@Override
-	public abstract void loadFromXML(InputStream inputStream);
+	public void loadFromXML(InputStream inputStream) {
+		
+		// Initialize JAXBManipulator
+		jaxbManipulator = new ICEJAXBManipulator();
+
+		// Call the read() on jaxbManipulator to create a new Object instance
+		// from the inputStream
+		Object dataObject;
+		Integer i = 5;
+		Integer j = Integer.class.cast(i);
+
+		try {
+			dataObject = jaxbManipulator.read(AbstractListComponent.class, inputStream);
+			// Copy contents of new object into current data structure
+			this.copy((AbstractListComponent<T>) dataObject);
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		// Nullerize jaxbManipilator
+		jaxbManipulator = null;
+
+		return;
+		
+		
+	}
 
 	/**
 	 * (non-Javadoc)
@@ -350,7 +381,7 @@ public abstract class AbstractListComponent<T> extends TransformedList<T, T>
 	 * @see Component#accept(IComponentVisitor)
 	 */
 	@Override
-	public abstract void accept(IComponentVisitor visitor);
+	public void accept(IComponentVisitor visitor) {};
 
 	/**
 	 * (non-Javadoc)
@@ -358,7 +389,7 @@ public abstract class AbstractListComponent<T> extends TransformedList<T, T>
 	 * @see Cloneable#clone()
 	 */
 	@Override
-	public abstract Object clone();
+	public Object clone() { return null;};
 
 	/**
 	 * (non-Javadoc)
@@ -368,6 +399,6 @@ public abstract class AbstractListComponent<T> extends TransformedList<T, T>
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Override
-	public abstract void update(String updatedKey, String newValue);
+	public void update(String updatedKey, String newValue) {};
 
 }
