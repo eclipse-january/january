@@ -191,7 +191,6 @@ public class AbstractListComponentTester {
 		obj.persistToXML(System.out);
 		objList.persistToXML(System.out);
 		
-	
 		// end-user-code
 	}
 
