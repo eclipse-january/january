@@ -57,7 +57,7 @@ import javax.xml.bind.annotation.XmlTransient;
  *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
 @XmlRootElement(name = "ICEObject")
-public class ICEObject implements IUpdateable, Persistable {
+public class ICEObject implements IUpdateable {
 	/**
 	 * <!-- begin-UML-doc -->
 	 * <p>
@@ -237,73 +237,6 @@ public class ICEObject implements IUpdateable, Persistable {
 	public String getDescription() {
 		// begin-user-code
 		return objectDescription;
-		// end-user-code
-	}
-
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see Persistable#loadFromXML(InputStream inputStream)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
-	public void loadFromXML(InputStream inputStream) {
-		// begin-user-code
-
-		// Initialize JAXBManipulator
-		jaxbManipulator = new ICEJAXBHandler();
-
-		// Call the read() on jaxbManipulator to create a new Object instance
-		// from the inputStream
-		Object dataObject;
-
-		try {
-			dataObject = jaxbManipulator.read(this.getClass(), inputStream);
-			// Copy contents of new object into current data structure
-			this.copy((ICEObject) dataObject);
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		// Nullerize jaxbManipilator
-		jaxbManipulator = null;
-
-		return;
-		// end-user-code
-	}
-
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see Persistable#persistToXML(OutputStream outputStream)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
-	public void persistToXML(OutputStream outputStream) {
-		// begin-user-code
-
-		// Initialize JAXBManipulator
-		jaxbManipulator = new ICEJAXBHandler();
-
-		// Call the write() on jaxbManipulator to write to outputStream
-		try {
-			jaxbManipulator.write(this, outputStream);
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		// Nullerize jaxbManipilator
-		jaxbManipulator = null;
-
-		return;
 		// end-user-code
 	}
 

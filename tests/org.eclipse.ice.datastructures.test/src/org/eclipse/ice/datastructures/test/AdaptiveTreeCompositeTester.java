@@ -20,11 +20,16 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.xml.bind.JAXBException;
+
+import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
 import org.eclipse.ice.datastructures.componentVisitor.SelectiveComponentVisitor;
 import org.eclipse.ice.datastructures.form.AdaptiveTreeComposite;
+import org.eclipse.ice.datastructures.form.Entry;
 import org.eclipse.ice.datastructures.form.TreeComposite;
 import org.junit.Test;
 
@@ -306,15 +311,21 @@ public class AdaptiveTreeCompositeTester {
 	
 	/**
 	 * This method checks the XML unmarshaling routine.
+	 * @throws IOException 
+	 * @throws JAXBException 
+	 * @throws NullPointerException 
 	 */
 	@Test
-	public void checkLoadingFromXML() {
+	public void checkLoadingFromXML() throws NullPointerException, JAXBException, IOException {
 		
 		// Local Declarations
 		AdaptiveTreeComposite tree, loadedTree;
 		ArrayList<TreeComposite> typesList;
 		ByteArrayOutputStream outputStream;
 		ByteArrayInputStream inputStream;
+		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
+		ArrayList<Class> classList = new ArrayList<Class>();
+		classList.add(AdaptiveTreeComposite.class);
 		
 		// Construct the types list to pass into the constructor
 		typesList = createInputTrees();
@@ -327,22 +338,16 @@ public class AdaptiveTreeCompositeTester {
 
 		// Persist to the OutputStream
 		outputStream = new ByteArrayOutputStream();
-		tree.persistToXML(outputStream);
+		xmlHandler.write(tree, classList, outputStream);
 
 		// Convert the data into an InputStream now
 		inputStream = new ByteArrayInputStream(outputStream.toByteArray());
 
 		// Try to load from the InputStream
 		loadedTree = new AdaptiveTreeComposite(null);
-		loadedTree.loadFromXML(inputStream);
+		loadedTree = (AdaptiveTreeComposite) xmlHandler.read(classList, inputStream);
 
 		// Compare the original tree to the one we unmarshalled
-		assertTrue(tree.equals(loadedTree));
-
-		// Try the unmarshall from null (invalid)
-		loadedTree.loadFromXML(null);
-
-		// Check that nothing has changed
 		assertTrue(tree.equals(loadedTree));
 		
 		return;

@@ -15,18 +15,23 @@ package org.eclipse.ice.datastructures.test;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.xml.bind.JAXBException;
 
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 import org.eclipse.ice.datastructures.ICEObject.Component;
+import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.form.Entry;
 import org.eclipse.ice.datastructures.form.Form;
 import org.eclipse.ice.datastructures.form.ResourceComponent;
 import org.eclipse.ice.datastructures.form.ResourceComponent;
 import org.eclipse.ice.datastructures.form.DataComponent;
+import org.eclipse.ice.datastructures.form.mesh.Edge;
 import org.eclipse.ice.datastructures.resource.ICEResource;
 
 /**
@@ -547,12 +552,15 @@ public class FormTester {
 	 * and to load itself from an XML input stream.
 	 * </p>
 	 * <!-- end-UML-doc -->
+	 * @throws IOException 
+	 * @throws JAXBException 
+	 * @throws NullPointerException 
 	 * 
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
-	public void checkXMLPersistence() {
+	public void checkXMLPersistence() throws NullPointerException, JAXBException, IOException {
 		// begin-user-code
 
 		/*
@@ -566,6 +574,9 @@ public class FormTester {
 		// Local declarations
 		Form form, loadedForm = null;
 		ArrayList<String> actionList = new ArrayList<String>();
+		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
+		ArrayList<Class> classList = new ArrayList<Class>();
+		classList.add(Form.class);
 
 		DataComponent dataComponent = new DataComponent();
 		DataComponent dataComponent2 = new DataComponent();
@@ -657,7 +668,7 @@ public class FormTester {
 
 		// persist to an output stream
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		form.persistToXML(outputStream);
+		xmlHandler.write(form, classList, outputStream);
 
 		// Initialize object and pass inputStream to read()
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(
@@ -667,25 +678,10 @@ public class FormTester {
 		loadedForm = new Form();
 
 		// load into Form();
-		loadedForm.loadFromXML(inputStream);
+		loadedForm = (Form) xmlHandler.read(classList, inputStream);
 
 		/* check contents */
 		assertTrue(form.equals(loadedForm));
 
-		// The next following tests demonstrate behavior for when you pass null
-		// args for read()
-
-		// test for read - null args
-		loadedForm.loadFromXML(null);
-
-		/* check contents - nothing has changed */
-		assertTrue(form.equals(loadedForm));
-
-		// args for write() - null args
-		outputStream = null;
-		loadedForm.persistToXML(outputStream);
-
-		assertNull(outputStream);
-		// end-user-code
 	}
 }

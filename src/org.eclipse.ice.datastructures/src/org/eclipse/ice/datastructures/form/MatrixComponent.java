@@ -557,48 +557,6 @@ public class MatrixComponent extends ICEObject implements Component {
 	/**
 	 * <!-- begin-UML-doc -->
 	 * <p>
-	 * This operation overloads the ICEObject.loadFromXML() operation to
-	 * properly load the MatrixComponent.
-	 * </p>
-	 * <!-- end-UML-doc -->
-	 * 
-	 * @param stream
-	 *            <p>
-	 *            The InputStream from which the TableComponent should be
-	 *            loaded.
-	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
-	public void loadFromXML(InputStream stream) {
-		// begin-user-code
-		// Initialize JAXBManipulator
-		jaxbManipulator = new ICEJAXBHandler();
-
-		// Call the read() on jaxbManipulator to create a new Object instance
-		// from the inputStream
-		Object dataObject;
-		try {
-			dataObject = jaxbManipulator.read(this.getClass(), stream);
-			// Copy contents of new object into current data structure
-			this.copy((MatrixComponent) dataObject);
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		// Nullerize jaxbManipilator
-		jaxbManipulator = null;
-
-		// end-user-code
-	}
-
-	/**
-	 * <!-- begin-UML-doc -->
-	 * <p>
 	 * Add a new column to this MatrixComponent. If this Matrix is square, it
 	 * will also add a row through the resizeSquareMatrix private method. The
 	 * resultant column is by default a row of zeros or the first element of the

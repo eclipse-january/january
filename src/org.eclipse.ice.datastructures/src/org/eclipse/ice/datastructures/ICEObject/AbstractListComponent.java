@@ -63,7 +63,7 @@ import ca.odell.glazedlists.event.ListEventListener;
 @XmlRootElement(name = "AbstractListComponent")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AbstractListComponent<T> extends TransformedList<T, T>
-		implements Component, Persistable {
+		implements Component {
 
 	/**
 	 * The ICEJAXBHandler used to marshal the class to and from XML.
@@ -309,70 +309,6 @@ public class AbstractListComponent<T> extends TransformedList<T, T>
 	protected boolean isWritable() {
 		// TODO Auto-generated method stub
 		return true;
-	}
-
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see Persistable#persistToXML(OutputStream outputStream)
-	 */
-	@Override
-	public void persistToXML(OutputStream outputStream) {
-		// Initialize JAXBManipulator
-		jaxbManipulator = new ICEJAXBHandler();
-
-		// Call the write() on jaxbManipulator to write to outputStream
-		try {
-			jaxbManipulator.write(this, outputStream);
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		// Nullerize jaxbManipilator
-		jaxbManipulator = null;
-
-		return;
-	}
-
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see Persistable#loadFromXML(InputStream inputStream)
-	 */
-	@Override
-	public void loadFromXML(InputStream inputStream) {
-		
-		// Initialize JAXBManipulator
-		jaxbManipulator = new ICEJAXBHandler();
-
-		// Call the read() on jaxbManipulator to create a new Object instance
-		// from the inputStream
-		Object dataObject;
-		Integer i = 5;
-		Integer j = Integer.class.cast(i);
-
-		try {
-			dataObject = jaxbManipulator.read(AbstractListComponent.class, inputStream);
-			// Copy contents of new object into current data structure
-			this.copy((AbstractListComponent<T>) dataObject);
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		// Nullerize jaxbManipilator
-		jaxbManipulator = null;
-
-		return;
-		
-		
 	}
 
 	/**

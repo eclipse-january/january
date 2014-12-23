@@ -652,48 +652,6 @@ public class TableComponent extends ICEObject implements Component {
 	/**
 	 * <!-- begin-UML-doc -->
 	 * <p>
-	 * This operation overloads the ICEObject.loadFromXML() operation to
-	 * properly load the TableComponent.
-	 * </p>
-	 * <!-- end-UML-doc -->
-	 * 
-	 * @param stream
-	 *            <p>
-	 *            The InputStream from which the TableComponent should be
-	 *            loaded.
-	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
-	public void loadFromXML(InputStream stream) {
-		// begin-user-code
-		// Initialize JAXBManipulator
-		jaxbManipulator = new ICEJAXBHandler();
-
-		// Call the read() on jaxbManipulator to create a new Object instance
-		// from the inputStream
-		Object dataObject;
-		try {
-			dataObject = jaxbManipulator.read(this.getClass(), stream);
-			// Copy contents of new object into current data structure
-			this.copy((TableComponent) dataObject);
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		// Nullerize jaxbManipilator
-		jaxbManipulator = null;
-
-		// end-user-code
-	}
-
-	/**
-	 * <!-- begin-UML-doc -->
-	 * <p>
 	 * This operation returns an array of the row ids that have been marked as
 	 * selected in the table.
 	 * </p>

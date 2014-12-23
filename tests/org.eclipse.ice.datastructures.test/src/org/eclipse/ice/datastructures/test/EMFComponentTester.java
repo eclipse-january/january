@@ -25,11 +25,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
+import javax.xml.bind.JAXBException;
+
+import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.form.DataComponent;
 import org.eclipse.ice.datastructures.form.TreeComposite;
 import org.eclipse.ice.datastructures.form.emf.EMFComponent;
 import org.eclipse.ice.datastructures.form.emf.EMFTreeComposite;
 import org.eclipse.ice.datastructures.form.iterator.BreadthFirstTreeCompositeIterator;
+import org.eclipse.ice.datastructures.form.mesh.Edge;
 import org.junit.*;
 
 /**
@@ -486,18 +490,24 @@ public class EMFComponentTester {
 	 * to XML and to load itself from an XML input stream.
 	 * </p>
 	 * <!-- end-UML-doc -->
+	 * @throws IOException 
+	 * @throws JAXBException 
+	 * @throws NullPointerException 
 	 * 
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
-	public void checkLoadingFromXML() {
+	public void checkLoadingFromXML() throws NullPointerException, JAXBException, IOException {
 		// begin-user-code
 		// Local declarations
 		int id = 5;
 		String name = "Bob";
 		String description = "I am Bob! 1.0";
 		ArrayList<Double> values = new ArrayList<Double>();
+		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
+		ArrayList<Class> classList = new ArrayList<Class>();
+		classList.add(EMFComponent.class);
 
 		// Add allowedvalues to arraylist
 		values.add(1.0);
@@ -510,7 +520,7 @@ public class EMFComponentTester {
 
 		// Load it into XML
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		emfComponent.persistToXML(outputStream);
+		xmlHandler.write(emfComponent, classList, outputStream);
 
 		assertNotNull(outputStream);
 		String xmlFile2 = new String(outputStream.toByteArray());
@@ -522,29 +532,10 @@ public class EMFComponentTester {
 
 		// load contents into xml
 		EMFComponent loadEMF = new EMFComponent();
-		loadEMF.loadFromXML(inputStream);
+		loadEMF = (EMFComponent) xmlHandler.read(classList, inputStream);
 
-		// Check contents
-		// assertTrue(loadEMF.equals(emfComponent));
+		// Check contents -- Why was this commented out? ~JJB 20141223 16:57
+		assertTrue(loadEMF.equals(emfComponent));
 
-		// Try to pass null into the operations
-
-		loadEMF.loadFromXML(null);
-		// Nothing happens - check comparison
-
-		// Check contents
-		// assertTrue(loadEMF.equals(emfComponent));
-
-		// Pass a bad file
-		String xmlFile = "I AM NOT AN XML FILE!  NO LEFT OR RIGHT CARROTS!";
-
-		inputStream = new ByteArrayInputStream(xmlFile.getBytes());
-
-		// Run operation
-		loadEMF.loadFromXML(inputStream);
-
-		// Check contents
-		// assertTrue(loadEMF.equals(emfComponent));
-		// end-user-code
 	}
 }

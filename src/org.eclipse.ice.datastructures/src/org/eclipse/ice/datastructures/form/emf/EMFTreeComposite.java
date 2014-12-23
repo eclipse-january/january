@@ -510,44 +510,6 @@ public class EMFTreeComposite extends TreeComposite {
 		// end-user-code
 	}
 
-	/**
-	 * This method overloads the
-	 * {@link org.eclipse.ice.datastructures.ICEObject#loadFromXML(InputStream)
-	 * ICEObject.loadFromXML(...)} method to properly load the EMFTreeComposite.
-	 * 
-	 * @param inputStream
-	 *            <p>
-	 *            The InputStream containing XML from which the
-	 *            AdaptiveTreeComposite should be loaded.
-	 *            </p>
-	 */
-	@Override
-	public void loadFromXML(InputStream inputStream) {
-
-		// Initialize JAXBManipulator
-		jaxbManipulator = new ICEJAXBHandler();
-
-		// Call the read() on jaxbManipulator to create a new Object instance
-		// from the inputStream
-		Object dataObject;
-		try {
-			dataObject = jaxbManipulator.read(this.getClass(), inputStream);
-			// Copy contents of new object into current data structure
-			this.copy((EMFTreeComposite) dataObject);
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		// Nullerize jaxbManipilator
-		jaxbManipulator = null;
-
-		return;
-	}
-
 	/** THIS IS FOR DEBUGGING **/
 	public void printEcoreTree(XMLProcessor processor) {
 

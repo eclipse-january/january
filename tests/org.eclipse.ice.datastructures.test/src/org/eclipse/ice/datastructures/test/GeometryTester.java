@@ -16,15 +16,20 @@ import static org.junit.Assert.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.xml.bind.JAXBException;
 
 import org.junit.Test;
-
+import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.form.geometry.ComplexShape;
 import org.eclipse.ice.datastructures.form.geometry.GeometryComponent;
 import org.eclipse.ice.datastructures.form.geometry.Transformation;
 import org.eclipse.ice.datastructures.form.geometry.OperatorType;
 import org.eclipse.ice.datastructures.form.geometry.PrimitiveShape;
 import org.eclipse.ice.datastructures.form.geometry.ShapeType;
+import org.eclipse.ice.datastructures.form.mesh.Edge;
 
 /**
  * <!-- begin-UML-doc -->
@@ -45,17 +50,23 @@ public class GeometryTester {
 	 * Checks the functionality of exporting an entire CSG tree to XML
 	 * </p>
 	 * <!-- end-UML-doc -->
+	 * @throws IOException 
+	 * @throws JAXBException 
+	 * @throws NullPointerException 
 	 * 
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
-	public void checkCSGTree() {
-		// begin-user-code
+	public void checkCSGTree() throws NullPointerException, JAXBException, IOException {
+
 		// Create the root GeometryComponent
 		GeometryComponent geometry = new GeometryComponent();
 		geometry.setName("Root geometry");
 		geometry.setDescription("This here's a verr' fine geom'try structcha");
+		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
+		ArrayList<Class> classList = new ArrayList<Class>();
+		classList.add(GeometryComponent.class);
 
 		// Create the CSG elements
 		ComplexShape union = new ComplexShape(OperatorType.Union);
@@ -107,9 +118,7 @@ public class GeometryTester {
 
 		// Persist GeometryComponent to XML
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		geometry.persistToXML(outputStream);
-
-		assertNotNull(outputStream);
+		xmlHandler.write(geometry, classList, outputStream);
 
 		// Print the XML output
 		// System.out.println(outputStream.toString());
@@ -119,7 +128,7 @@ public class GeometryTester {
 
 		// Load a new GeometryComponent from XML
 		GeometryComponent loadedGeometry = new GeometryComponent();
-		loadedGeometry.loadFromXML(inputStream);
+		loadedGeometry = (GeometryComponent) xmlHandler.read(classList, inputStream);
 
 		assertTrue(geometry.equals(loadedGeometry));
 

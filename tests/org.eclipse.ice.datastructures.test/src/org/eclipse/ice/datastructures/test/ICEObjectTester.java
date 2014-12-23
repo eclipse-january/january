@@ -16,6 +16,13 @@ import static org.junit.Assert.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.xml.bind.JAXBException;
+
+import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
+import org.eclipse.ice.datastructures.ICEObject.ICEList;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.junit.*;
 
@@ -146,12 +153,15 @@ public class ICEObjectTester {
 	 * XML and to load itself from an XML input stream.
 	 * </p>
 	 * <!-- end-UML-doc -->
+	 * @throws IOException 
+	 * @throws JAXBException 
+	 * @throws NullPointerException 
 	 * 
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
-	public void checkXMLPersistence() {
+	public void checkXMLPersistence() throws NullPointerException, JAXBException, IOException {
 		// begin-user-code
 		// TODO Auto-generated method stub
 
@@ -169,6 +179,9 @@ public class ICEObjectTester {
 		String name = "September 1st 2011";
 		String description = "The 1st day of the ninth month in the year of "
 				+ "our Lord 2011";
+		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
+		ArrayList<Class> classList = new ArrayList<Class>();
+		classList.add(ICEObject.class);
 
 		// Demonstrate a basic "write" to file. Should not fail
 		// Initialize the object and set values.
@@ -179,49 +192,15 @@ public class ICEObjectTester {
 
 		// persist to an output stream
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		testNC.persistToXML(outputStream);
+		xmlHandler.write(testNC, classList, outputStream);
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(
 				outputStream.toByteArray());
 
 		// Convert to inputStream
-		testNC2 = new ICEObject();
-		testNC2.loadFromXML(inputStream);
+		testNC2 = (ICEObject) xmlHandler.read(classList, inputStream);
 
 		// Check that it equals the persisted object
 		assertTrue(testNC.equals(testNC2));
-
-		// The next following tests demonstrate behavior for when you pass null
-		// args for read()
-
-		// test for read - null args
-		testNC = new ICEObject();
-		testNC.loadFromXML(null);
-		// checkContents - nothing has changed
-		assertEquals(testNC.getId(), 1);
-		assertEquals(testNC.getName(), "ICE Object");
-		assertEquals(testNC.getDescription(), "ICE Object");
-
-		// args for write() - null args
-		testNC = new ICEObject();
-		outputStream = null;
-		testNC.persistToXML(outputStream);
-		// Since arg was null, outputStream should still be null
-		assertNull(outputStream);
-
-		// This test will demonstrate what happens when inputStream is not an
-		// XMLFile for read()
-
-		// Initialize variables
-		String xmlFile = "A String not in XML";
-		inputStream = new ByteArrayInputStream(xmlFile.getBytes());
-
-		// run method
-		testNC = new ICEObject();
-		testNC.loadFromXML(inputStream);
-		// checkContents - nothing has changed
-		assertEquals(testNC.getId(), 1);
-		assertEquals(testNC.getName(), "ICE Object");
-		assertEquals(testNC.getDescription(), "ICE Object");
 
 		// end-user-code
 	}

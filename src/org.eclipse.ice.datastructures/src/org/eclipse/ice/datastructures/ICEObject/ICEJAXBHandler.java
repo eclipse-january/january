@@ -62,15 +62,16 @@ public class ICEJAXBHandler {
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	public Object read(Class objectClass, InputStream inputStream)
+	public Object read(ArrayList<Class> classList, InputStream inputStream)
 			throws NullPointerException, JAXBException, IOException {
 		// begin-user-code
 
 		// Initialize local variables
 		JAXBContext context;
+		Class[] clazzArray = {};
 
 		// If the input args are null, throw an exception
-		if (objectClass == null) {
+		if (classList == null) {
 			throw new NullPointerException("NullPointerException: "
 					+ "objectClass argument can not be null");
 		}
@@ -80,7 +81,7 @@ public class ICEJAXBHandler {
 		}
 
 		// Create new instance of object from file and then return it.
-		context = JAXBContext.newInstance(objectClass);
+		context = JAXBContext.newInstance(classList.toArray(clazzArray));
 		Unmarshaller unmarshaller = context.createUnmarshaller();
 		// New object created
 		Object dataFromFile = unmarshaller.unmarshal(inputStream);
@@ -116,12 +117,12 @@ public class ICEJAXBHandler {
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	public void write(Object dataObject, OutputStream outputStream)
-			throws NullPointerException, JAXBException, IOException {
+	public void write(Object dataObject, ArrayList<Class> classList,
+			OutputStream outputStream) throws NullPointerException,
+			JAXBException, IOException {
 		// begin-user-code
 
 		JAXBContext jaxbContext = null;
-		ArrayList<Class> classList = new ArrayList<Class>();
 		Class[] classArray = {};
 
 		// Throw exceptions if input args are null
@@ -141,7 +142,8 @@ public class ICEJAXBHandler {
 			// Cast the object to a generic, type-less list
 			AbstractListComponent list = (AbstractListComponent) dataObject;
 			// Don't pop the container open if it is empty
-			if (list.size() > 0) {
+			if (list.size() > 0
+					&& !classList.contains(AbstractListComponent.class)) {
 				classList.add(AbstractListComponent.class);
 				classList.add(list.get(0).getClass());
 			}

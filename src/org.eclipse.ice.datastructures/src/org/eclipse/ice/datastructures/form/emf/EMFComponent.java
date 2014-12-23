@@ -460,37 +460,6 @@ public class EMFComponent extends ICEObject implements Component {
 		// end-user-code
 	}
 
-	/**
-	 * This operation overloads the ICEObject.loadFromXML() operation to
-	 * properly load the EMFComponent.
-	 * 
-	 */
-	public void loadFromXML(InputStream inputStream) {
-		// begin-user-code
-
-		// Initialize JAXBManipulator
-		jaxbManipulator = new ICEJAXBHandler();
-
-		// Call the read() on jaxbManipulator to create a new Object instance
-		// from the inputStream
-		Object dataObject;
-		try {
-			dataObject = jaxbManipulator.read(this.getClass(), inputStream);
-			// Copy contents of new object into current data structure
-			this.copy((EMFComponent) dataObject);
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		// Nullerize jaxbManipilator
-		jaxbManipulator = null;
-		// end-user-code
-	}
-
 	@Override
 	public void accept(IComponentVisitor visitor) {
 		visitor.visit(this);

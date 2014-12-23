@@ -19,16 +19,21 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.eclipse.ice.datastructures.ICEObject.Component;
+import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.form.geometry.ComplexShape;
 import org.eclipse.ice.datastructures.form.geometry.GeometryComponent;
 import org.eclipse.ice.datastructures.form.geometry.IShape;
 import org.eclipse.ice.datastructures.form.geometry.OperatorType;
 import org.eclipse.ice.datastructures.form.geometry.PrimitiveShape;
 import org.eclipse.ice.datastructures.form.geometry.ShapeType;
+import org.eclipse.ice.datastructures.form.mesh.Edge;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.xml.bind.JAXBException;
 
 import org.junit.Test;
 
@@ -210,13 +215,19 @@ public class GeometryComponentTester {
 	 * itself to XML and to load itself from an XML input stream.
 	 * </p>
 	 * <!-- end-UML-doc -->
+	 * @throws IOException 
+	 * @throws JAXBException 
+	 * @throws NullPointerException 
 	 * 
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
-	public void checkLoadingFromXML() {
-		// begin-user-code
+	public void checkLoadingFromXML() throws NullPointerException, JAXBException, IOException {
+		// Local Declarations
+		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
+		ArrayList<Class> classList = new ArrayList<Class>();
+		classList.add(GeometryComponent.class);
 
 		// Instantiate a GeometryComponent
 		GeometryComponent geometry = new GeometryComponent();
@@ -227,9 +238,7 @@ public class GeometryComponentTester {
 
 		// Load it into XML
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		geometry.persistToXML(outputStream);
-
-		assertNotNull(outputStream);
+		xmlHandler.write(geometry, classList, outputStream);
 
 		// convert information inside of outputStream to inputStream
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(
@@ -240,31 +249,11 @@ public class GeometryComponentTester {
 
 		// load contents into xml
 		GeometryComponent loadGeometry = new GeometryComponent();
-		loadGeometry.loadFromXML(inputStream);
+		loadGeometry = (GeometryComponent) xmlHandler.read(classList, inputStream);
 
 		// Check contents
 		assertTrue(loadGeometry.equals(geometry));
 
-		// Try to pass null into the operations
-
-		loadGeometry.loadFromXML(null);
-		// Nothing happens - check comparison
-
-		// Check contents
-		assertTrue(loadGeometry.equals(geometry));
-
-		// Pass a bad file
-		String xmlFile = "p98npv597p35tu8mp34958muy3cpt983t,oe";
-
-		inputStream = new ByteArrayInputStream(xmlFile.getBytes());
-
-		// Run operation
-		loadGeometry.loadFromXML(inputStream);
-
-		// Check contents
-		assertTrue(loadGeometry.equals(geometry));
-
-		// end-user-code
 	}
 
 	/**

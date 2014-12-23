@@ -169,28 +169,28 @@ public class AbstractListComponentTester {
 		component.add(5);
 		component.add(1337);
 
-		// persist to an output stream
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		component.persistToXML(outputStream);
-		component.persistToXML(System.out);
-		ByteArrayInputStream inputStream = new ByteArrayInputStream(
-				outputStream.toByteArray());
-		
-		component.loadFromXML(inputStream);
-		System.out.println(component.getId());
-		System.out.println(component.getName());
-		System.out.println(component.getDescription());;
-		System.out.println(component.get(0));
-		System.out.println(component.get(1));
-
-		AbstractListComponent<ICEObject> objList = new AbstractListComponent<ICEObject>();
-		ICEObject obj = new ICEObject();
-		obj.setId(777777);
-		objList.add(obj);
-		
-		obj.persistToXML(System.out);
-		objList.persistToXML(System.out);
-		
+//		// persist to an output stream
+//		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//		component.persistToXML(outputStream);
+//		component.persistToXML(System.out);
+//		ByteArrayInputStream inputStream = new ByteArrayInputStream(
+//				outputStream.toByteArray());
+//		
+//		component.loadFromXML(inputStream);
+//		System.out.println(component.getId());
+//		System.out.println(component.getName());
+//		System.out.println(component.getDescription());;
+//		System.out.println(component.get(0));
+//		System.out.println(component.get(1));
+//
+//		AbstractListComponent<ICEObject> objList = new AbstractListComponent<ICEObject>();
+//		ICEObject obj = new ICEObject();
+//		obj.setId(777777);
+//		objList.add(obj);
+//		
+//		obj.persistToXML(System.out);
+//		objList.persistToXML(System.out);
+//		
 		// end-user-code
 	}
 

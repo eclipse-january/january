@@ -439,48 +439,6 @@ public class ICEResource extends ICEObject {
 	/**
 	 * <!-- begin-UML-doc -->
 	 * <p>
-	 * This operation overloads the ICEObject.loadFromXML() operation to
-	 * properly load the ICEResource.
-	 * </p>
-	 * <!-- end-UML-doc -->
-	 * 
-	 * @param inputStream
-	 *            <p>
-	 *            The InputStream containing XML from which the ICEResource
-	 *            should be loaded.
-	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
-	public void loadFromXML(InputStream inputStream) {
-		// begin-user-code
-
-		// Initialize JAXBManipulator
-		jaxbManipulator = new ICEJAXBHandler();
-
-		// Call the read() on jaxbManipulator to create a new Object instance
-		// from the inputStream
-		Object dataObject;
-		try {
-			dataObject = jaxbManipulator.read(this.getClass(), inputStream);
-			// Copy contents of new object into current data structure
-			this.copy((ICEResource) dataObject);
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		// Nullerize jaxbManipilator
-		jaxbManipulator = null;
-		// end-user-code
-	}
-
-	/**
-	 * <!-- begin-UML-doc -->
-	 * <p>
 	 * This operation is used to check equality between the ICEResource and
 	 * another ICEResource. It returns true if the ICEResources are equal and
 	 * false if they are not.

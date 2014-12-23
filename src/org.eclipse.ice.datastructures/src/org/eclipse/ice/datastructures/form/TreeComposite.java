@@ -1099,48 +1099,6 @@ public class TreeComposite extends ICEObject implements Composite,
 	/**
 	 * <!-- begin-UML-doc -->
 	 * <p>
-	 * This operation overloads the ICEObject.loadFromXML() operation to
-	 * properly load the TreeComposite.
-	 * </p>
-	 * <!-- end-UML-doc -->
-	 * 
-	 * @param inputStream
-	 *            <p>
-	 *            The InputStream containing XML from which the TreeComposite
-	 *            should be loaded.
-	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
-	public void loadFromXML(InputStream inputStream) {
-		// begin-user-code
-		// Initialize JAXBManipulator
-		jaxbManipulator = new ICEJAXBHandler();
-
-		// Call the read() on jaxbManipulator to create a new Object instance
-		// from the inputStream
-		Object dataObject;
-		try {
-			dataObject = jaxbManipulator.read(this.getClass(), inputStream);
-			// Copy contents of new object into current data structure
-			this.copy((TreeComposite) dataObject);
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		// Nullerize jaxbManipilator
-		jaxbManipulator = null;
-		// end-user-code
-
-	}
-
-	/**
-	 * <!-- begin-UML-doc -->
-	 * <p>
 	 * This operation adds a list of TreeComposites that must be used to create
 	 * children for this TreeComposite. If a list of allowed child nodes exists,
 	 * a TreeComposite will overwrite it.
