@@ -22,7 +22,7 @@ import java.io.OutputStream;
 
 import javax.xml.bind.JAXBException;
 
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBManipulator;
+import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -32,7 +32,7 @@ import org.junit.Ignore;
  * <!-- begin-UML-doc -->
  * <p>
  * The ICEJAXBManipulatorTester is responsible for testing the checks the
- * ICEJAXBManipulator to ensure that it can read and write to the streams
+ * ICEJAXBHandler to ensure that it can read and write to the streams
  * properly. It used the SimpleJAXBTestClass.
  * </p>
  * <!-- end-UML-doc -->
@@ -56,7 +56,7 @@ public class ICEJAXBManipulatorTester {
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	private ICEJAXBManipulator iCEJAXBManipulator;
+	private ICEJAXBHandler iCEJAXBManipulator;
 
 	/**
 	 * <!-- begin-UML-doc -->
@@ -72,9 +72,9 @@ public class ICEJAXBManipulatorTester {
 	public void setupTests() {
 		// begin-user-code
 
-		// Initialize the test class and ICEJAXBManipulator
+		// Initialize the test class and ICEJAXBHandler
 		simpleJAXBTestClass = new SimpleJAXBTestClass();
-		iCEJAXBManipulator = new ICEJAXBManipulator();
+		iCEJAXBManipulator = new ICEJAXBHandler();
 
 		// end-user-code
 	}
@@ -82,7 +82,7 @@ public class ICEJAXBManipulatorTester {
 	/**
 	 * <!-- begin-UML-doc -->
 	 * <p>
-	 * This operation checks the ICEJAXBManipulator to ensure that it can read
+	 * This operation checks the ICEJAXBHandler to ensure that it can read
 	 * and write to the streams properly. It used the SimpleJAXBTestClass.
 	 * </p>
 	 * <!-- end-UML-doc -->
@@ -111,7 +111,7 @@ public class ICEJAXBManipulatorTester {
 		InputStream inputStream = new ByteArrayInputStream(xmlFile.getBytes());
 
 		// Initialize Manipulator and pass inputStream to read()
-		iCEJAXBManipulator = new ICEJAXBManipulator();
+		iCEJAXBManipulator = new ICEJAXBHandler();
 		Object data;
 
 		// Try to do the read, fail if an exception is caught.
@@ -140,7 +140,7 @@ public class ICEJAXBManipulatorTester {
 
 		// persist to an output stream
 		OutputStream outputStream = new ByteArrayOutputStream();
-		iCEJAXBManipulator = new ICEJAXBManipulator();
+		iCEJAXBManipulator = new ICEJAXBHandler();
 
 		// Try to do the write, fail if an exception is caught.
 		try {
@@ -165,7 +165,7 @@ public class ICEJAXBManipulatorTester {
 	/**
 	 * <!-- begin-UML-doc -->
 	 * <p>
-	 * This test checks the behavior ICEJAXBManipulator.read() operation when a
+	 * This test checks the behavior ICEJAXBHandler.read() operation when a
 	 * null Class parameter is passed. The testing method should throw a
 	 * NullPointerException.
 	 * </p>
@@ -200,7 +200,7 @@ public class ICEJAXBManipulatorTester {
 	/**
 	 * <!-- begin-UML-doc -->
 	 * <p>
-	 * This test checks the behavior ICEJAXBManipulator.read() operation when a
+	 * This test checks the behavior ICEJAXBHandler.read() operation when a
 	 * null inputStream parameter is passed. The testing method should throw a
 	 * NullPointerException.
 	 * </p>
@@ -224,7 +224,7 @@ public class ICEJAXBManipulatorTester {
 	/**
 	 * <!-- begin-UML-doc -->
 	 * <p>
-	 * This test checks the behavior ICEJAXBManipulator.write() operation when a
+	 * This test checks the behavior ICEJAXBHandler.write() operation when a
 	 * null Object parameter is passed. The testing method should throw a
 	 * NullPointerException.
 	 * </p>
@@ -250,7 +250,7 @@ public class ICEJAXBManipulatorTester {
 	/**
 	 * <!-- begin-UML-doc -->
 	 * <p>
-	 * This test checks the behavior ICEJAXBManipulator.write() operation when a
+	 * This test checks the behavior ICEJAXBHandler.write() operation when a
 	 * null inputStream parameter is passed. The testing method should throw a
 	 * NullPointerException.
 	 * </p>
@@ -273,7 +273,7 @@ public class ICEJAXBManipulatorTester {
 	/**
 	 * <!-- begin-UML-doc -->
 	 * <p>
-	 * This test checks the behavior ICEJAXBManipulator.read() operation when an
+	 * This test checks the behavior ICEJAXBHandler.read() operation when an
 	 * invalid inputStream parameter is passed. The testing method should throw
 	 * a JAXBException.
 	 * </p>
@@ -301,7 +301,7 @@ public class ICEJAXBManipulatorTester {
 	/**
 	 * <!-- begin-UML-doc -->
 	 * <p>
-	 * This test checks the behavior ICEJAXBManipulator.read() operation when an
+	 * This test checks the behavior ICEJAXBHandler.read() operation when an
 	 * invalid object is passed. The testing method should throw a
 	 * JAXBException. The testing method should throw a JAXBException.
 	 * </p>
@@ -342,7 +342,7 @@ public class ICEJAXBManipulatorTester {
 	/**
 	 * <!-- begin-UML-doc -->
 	 * <p>
-	 * This test checks the behavior ICEJAXBManipulator.write() operation when
+	 * This test checks the behavior ICEJAXBHandler.write() operation when
 	 * an invalid object is passed. The testing method should throw a
 	 * JAXBException.
 	 * </p>

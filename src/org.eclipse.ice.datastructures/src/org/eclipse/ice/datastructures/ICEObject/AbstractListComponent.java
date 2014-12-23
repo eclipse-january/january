@@ -66,10 +66,10 @@ public class AbstractListComponent<T> extends TransformedList<T, T>
 		implements Component, Persistable {
 
 	/**
-	 * The ICEJAXBManipulator used to marshal the class to and from XML.
+	 * The ICEJAXBHandler used to marshal the class to and from XML.
 	 */
 	@XmlTransient
-	protected ICEJAXBManipulator jaxbManipulator;
+	protected ICEJAXBHandler jaxbManipulator;
 	
 	/**
 	 * A listener map to map ICE listeners to ListEventListeners.
@@ -319,7 +319,7 @@ public class AbstractListComponent<T> extends TransformedList<T, T>
 	@Override
 	public void persistToXML(OutputStream outputStream) {
 		// Initialize JAXBManipulator
-		jaxbManipulator = new ICEJAXBManipulator();
+		jaxbManipulator = new ICEJAXBHandler();
 
 		// Call the write() on jaxbManipulator to write to outputStream
 		try {
@@ -347,7 +347,7 @@ public class AbstractListComponent<T> extends TransformedList<T, T>
 	public void loadFromXML(InputStream inputStream) {
 		
 		// Initialize JAXBManipulator
-		jaxbManipulator = new ICEJAXBManipulator();
+		jaxbManipulator = new ICEJAXBHandler();
 
 		// Call the read() on jaxbManipulator to create a new Object instance
 		// from the inputStream

@@ -96,14 +96,14 @@ public class ICEObject implements IUpdateable, Persistable {
 	/**
 	 * <!-- begin-UML-doc -->
 	 * <p>
-	 * The ICEJAXBManipulator used to marshal ICEObjects to and from XML.
+	 * The ICEJAXBHandler used to marshal ICEObjects to and from XML.
 	 * </p>
 	 * <!-- end-UML-doc -->
 	 * 
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	protected ICEJAXBManipulator jaxbManipulator;
+	protected ICEJAXBHandler jaxbManipulator;
 
 	/**
 	 * <!-- begin-UML-doc -->
@@ -251,7 +251,7 @@ public class ICEObject implements IUpdateable, Persistable {
 		// begin-user-code
 
 		// Initialize JAXBManipulator
-		jaxbManipulator = new ICEJAXBManipulator();
+		jaxbManipulator = new ICEJAXBHandler();
 
 		// Call the read() on jaxbManipulator to create a new Object instance
 		// from the inputStream
@@ -287,7 +287,7 @@ public class ICEObject implements IUpdateable, Persistable {
 		// begin-user-code
 
 		// Initialize JAXBManipulator
-		jaxbManipulator = new ICEJAXBManipulator();
+		jaxbManipulator = new ICEJAXBHandler();
 
 		// Call the write() on jaxbManipulator to write to outputStream
 		try {

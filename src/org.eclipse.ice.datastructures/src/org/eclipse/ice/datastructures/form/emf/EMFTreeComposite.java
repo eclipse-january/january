@@ -32,7 +32,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceImpl;
 import org.eclipse.emf.ecore.xmi.util.XMLProcessor;
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBManipulator;
+import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
 import org.eclipse.ice.datastructures.form.AdaptiveTreeComposite;
 import org.eclipse.ice.datastructures.form.DataComponent;
@@ -525,7 +525,7 @@ public class EMFTreeComposite extends TreeComposite {
 	public void loadFromXML(InputStream inputStream) {
 
 		// Initialize JAXBManipulator
-		jaxbManipulator = new ICEJAXBManipulator();
+		jaxbManipulator = new ICEJAXBHandler();
 
 		// Call the read() on jaxbManipulator to create a new Object instance
 		// from the inputStream

@@ -22,7 +22,7 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBException;
 
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBManipulator;
+import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.materials.Material;
 import org.junit.Test;
 
@@ -157,7 +157,7 @@ public class MaterialTester {
 	public void checkPersistence() {
 
 		// Use the ICE JAXB Manipulator instead of raw JAXB. Waste not want not.
-		ICEJAXBManipulator jaxbHandler = new ICEJAXBManipulator();
+		ICEJAXBHandler jaxbHandler = new ICEJAXBHandler();
 
 		// Create a Material that will be written to XML
 		Material material = TestMaterialFactory.createCO2();

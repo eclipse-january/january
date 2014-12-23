@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import org.eclipse.ice.datastructures.ICEObject.Component;
 import org.eclipse.ice.datastructures.ICEObject.Composite;
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBManipulator;
+import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
@@ -1115,7 +1115,7 @@ public class TreeComposite extends ICEObject implements Composite,
 	public void loadFromXML(InputStream inputStream) {
 		// begin-user-code
 		// Initialize JAXBManipulator
-		jaxbManipulator = new ICEJAXBManipulator();
+		jaxbManipulator = new ICEJAXBHandler();
 
 		// Call the read() on jaxbManipulator to create a new Object instance
 		// from the inputStream

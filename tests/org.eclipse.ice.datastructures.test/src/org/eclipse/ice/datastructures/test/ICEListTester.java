@@ -23,7 +23,7 @@ import javax.xml.bind.JAXBException;
 
 import org.junit.Test;
 
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBManipulator;
+import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.ICEObject.ICEList;
 
 /**
@@ -72,9 +72,9 @@ public class ICEListTester {
 
 		// Check for XMLPersistence
 
-		// create an instance of ICEJAXBManipulator and outputStream
+		// create an instance of ICEJAXBHandler and outputStream
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
-		ICEJAXBManipulator manipulator = new ICEJAXBManipulator();
+		ICEJAXBHandler manipulator = new ICEJAXBHandler();
 
 		// try to persist
 		try {
@@ -139,9 +139,9 @@ public class ICEListTester {
 		assertNotNull(outputList);
 		assertEquals(inputList, outputList);
 
-		// create an instance of ICEJAXBManipulator and outputStream
+		// create an instance of ICEJAXBHandler and outputStream
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
-		ICEJAXBManipulator manipulator = new ICEJAXBManipulator();
+		ICEJAXBHandler manipulator = new ICEJAXBHandler();
 
 		// try to persist
 		try {
@@ -207,9 +207,9 @@ public class ICEListTester {
 		assertNotNull(outputList);
 		assertEquals(inputList, outputList);
 
-		// create an instance of ICEJAXBManipulator and outputStream
+		// create an instance of ICEJAXBHandler and outputStream
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
-		ICEJAXBManipulator manipulator = new ICEJAXBManipulator();
+		ICEJAXBHandler manipulator = new ICEJAXBHandler();
 
 		// try to persist
 		try {

@@ -40,7 +40,7 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceImpl;
 import org.eclipse.emf.ecore.xmi.util.XMLProcessor;
 import org.eclipse.ice.datastructures.ICEObject.Component;
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBManipulator;
+import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
 import org.eclipse.ice.datastructures.form.TreeComposite;
@@ -469,7 +469,7 @@ public class EMFComponent extends ICEObject implements Component {
 		// begin-user-code
 
 		// Initialize JAXBManipulator
-		jaxbManipulator = new ICEJAXBManipulator();
+		jaxbManipulator = new ICEJAXBHandler();
 
 		// Call the read() on jaxbManipulator to create a new Object instance
 		// from the inputStream

@@ -15,7 +15,7 @@ package org.eclipse.ice.datastructures.form;
 import java.util.ArrayList;
 
 import org.eclipse.ice.datastructures.ICEObject.Component;
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBManipulator;
+import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
 
 import java.io.IOException;
@@ -278,7 +278,7 @@ public class TimeDataComponent extends DataComponent {
 		// begin-user-code
 
 		// Initialize JAXBManipulator
-		jaxbManipulator = new ICEJAXBManipulator();
+		jaxbManipulator = new ICEJAXBHandler();
 
 		// Call the read() on jaxbManipulator to create a new Object instance
 		// from the inputStream
