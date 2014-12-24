@@ -15,37 +15,44 @@ import static org.junit.Assert.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.text.Normalizer.Form;
+import java.util.ArrayList;
 
-import org.eclipse.ice.datastructures.ICEObject.AbstractListComponent;
+import javax.xml.bind.JAXBException;
+
+import org.eclipse.ice.datastructures.ICEObject.ListComponent;
+import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
+import org.eclipse.ice.datastructures.form.AdaptiveTreeComposite;
 import org.junit.*;
 
 /**
- * The AbstractListComponentTester is responsible for testing the
- * AbstractListComponent class. It only tests the name, id, and description
+ * The ListComponentTester is responsible for testing the
+ * ListComponent class. It only tests the name, id, and description
  * properties as well as persistence (insofar as it can for the latter). It also
  * checks equality, hashCode computation, copying, and cloning.
  * 
  * Finally, this class tests those operations from Component that are
- * implemented by AbstractListComponentTester.
- *
+ * implemented by ListComponentTester.
+ * 
  * @author Jay Jay Billings
  */
-public class AbstractListComponentTester {
+public class ListComponentTester {
 
 	/**
-	 * The AbstractListComponent that will be used for the test. This class is
+	 * The ListComponent that will be used for the test. This class is
 	 * simply a stub that makes it possible to instantiate the
-	 * AbstractListComponent so that it can be tested.
+	 * ListComponent so that it can be tested.
 	 */
-	private AbstractListComponent component;
+	private ListComponent component;
 
 	/**
 	 * <!-- begin-UML-doc -->
-	 *
-	 * This operation checks the AbstractListComponent to insure that the id,
+	 * 
+	 * This operation checks the ListComponent to insure that the id,
 	 * name and description getters and setters function properly.
-	 *
+	 * 
 	 * <!-- end-UML-doc -->
 	 */
 	@Test
@@ -58,8 +65,8 @@ public class AbstractListComponentTester {
 		String description = "The 1st day of the ninth month in the year of "
 				+ "our Lord 2011";
 
-		// Create the AbstractListComponent
-		AbstractListComponent component = new AbstractListComponent();
+		// Create the ListComponent
+		ListComponent component = new ListComponent();
 
 		// Set up the id, name and description
 		component.setId(id);
@@ -76,24 +83,22 @@ public class AbstractListComponentTester {
 
 	/**
 	 * <!-- begin-UML-doc -->
-	 *
-	 * This operation checks the AbstractListComponent class to ensure that its
+	 * 
+	 * This operation checks the ListComponent class to ensure that its
 	 * copy() and clone() operations work as specified.
-	 *
+	 * 
 	 * <!-- end-UML-doc -->
 	 */
 	@Test
 	public void checkCopying() {
 		// begin-user-code
 
-		// Test to show valid usage of copy
-
 		// Local declarations
 		int id = 20110901;
 		String name = "September 1st 2011";
 		String description = "The 1st day of the ninth month in the year of "
 				+ "our Lord 2011";
-		component = new AbstractListComponent<Integer>();
+		component = new ListComponent<Integer>();
 
 		// Set up the id, name and description
 		component.setId(id);
@@ -103,8 +108,8 @@ public class AbstractListComponentTester {
 		component.add(5);
 		component.add(383400);
 
-		// Create a new instance of AbstractListComponent and copy contents
-		AbstractListComponent component2 = new AbstractListComponent();
+		// Create a new instance of ListComponent and copy contents
+		ListComponent component2 = new ListComponent();
 		component2.copy(component);
 
 		// Check the id, name and description with copy
@@ -115,6 +120,11 @@ public class AbstractListComponentTester {
 		assertTrue(component2.contains(5));
 		assertTrue(component2.contains(383400));
 
+		// Create a clone of the component and check it
+		ListComponent<Integer> componentClone = (ListComponent<Integer>) component
+				.clone();
+		assertEquals(component,componentClone);
+
 		// Test to show an invalid use of copy - null args
 
 		// Local declarations
@@ -122,7 +132,7 @@ public class AbstractListComponentTester {
 		name = "September 1st 2011";
 		description = "The 1st day of the ninth month in the year of "
 				+ "our Lord 2011";
-		component = new AbstractListComponent();
+		component = new ListComponent();
 
 		// Set up the id, name and description
 		component.setId(id);
@@ -141,27 +151,33 @@ public class AbstractListComponentTester {
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
-	 *
-	 * This operation checks the ability of the AbstractListComponent to persist
+	 * This operation checks the ability of the ListComponent to persist
 	 * itself to XML and to load itself from an XML input stream.
-	 *
-	 * <!-- end-UML-doc -->
+	 * 
+	 * @throws IOException
+	 * @throws JAXBException
+	 * @throws NullPointerException
 	 */
 	@Test
-	public void checkXMLPersistence() {
+	public void checkXMLPersistence() throws NullPointerException,
+			JAXBException, IOException {
 		// begin-user-code
 
 		// Local declarations
-		AbstractListComponent<Integer> component2 = null;
+		ListComponent<Integer> component2 = null;
 		int id = 20110901;
 		String name = "September 1st 2011";
 		String description = "The 1st day of the ninth month in the year of "
 				+ "our Lord 2011";
+		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
+		ArrayList<Class> classList = new ArrayList<Class>();
+		classList.add(AdaptiveTreeComposite.class);
+		classList.add(Form.class);
+		classList.add(Integer.class);
 
 		// Demonstrate a basic "write" to file. Should not fail
 		// Initialize the object and set values.
-		component = new AbstractListComponent<Integer>();
+		component = new ListComponent<Integer>();
 		component.setId(id);
 		component.setName(name);
 		component.setDescription(description);
@@ -169,57 +185,65 @@ public class AbstractListComponentTester {
 		component.add(5);
 		component.add(1337);
 
-//		// persist to an output stream
-//		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//		component.persistToXML(outputStream);
-//		component.persistToXML(System.out);
-//		ByteArrayInputStream inputStream = new ByteArrayInputStream(
-//				outputStream.toByteArray());
-//		
-//		component.loadFromXML(inputStream);
-//		System.out.println(component.getId());
-//		System.out.println(component.getName());
-//		System.out.println(component.getDescription());;
-//		System.out.println(component.get(0));
-//		System.out.println(component.get(1));
-//
-//		AbstractListComponent<ICEObject> objList = new AbstractListComponent<ICEObject>();
-//		ICEObject obj = new ICEObject();
-//		obj.setId(777777);
-//		objList.add(obj);
-//		
-//		obj.persistToXML(System.out);
-//		objList.persistToXML(System.out);
-//		
+		// Persist the Integer list to an output stream
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		xmlHandler.write(component, classList, outputStream);
+		ByteArrayInputStream inputStream = new ByteArrayInputStream(
+				outputStream.toByteArray());
+		// Load it up and check it
+		component2 = (ListComponent<Integer>) xmlHandler.read(
+				classList, inputStream);
+		assertEquals(component.getId(), component2.getId());
+		assertEquals(component.getName(), component2.getName());
+		assertEquals(component.getDescription(), component2.getDescription());
+		assertEquals(component.get(0), component2.get(0));
+		assertEquals(component.get(1), component2.get(1));
+
+		// Create a list to hold ICEObjects and put one in it.
+		ListComponent<ICEObject> objList = new ListComponent<ICEObject>();
+		ICEObject obj = new ICEObject();
+		obj.setId(777777);
+		objList.add(obj);
+		// Write it to the stream
+		outputStream = new ByteArrayOutputStream();
+		xmlHandler.write(objList, classList, outputStream);
+		inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+		// Load it back up and check it
+		ListComponent<ICEObject> loadedList = (ListComponent<ICEObject>) xmlHandler
+				.read(classList, inputStream);
+		assertEquals(objList.getId(), loadedList.getId());
+		assertEquals(1, objList.size());
+		assertEquals(obj, loadedList.get(0));
+
 		// end-user-code
 	}
 
 	/**
 	 * <!-- begin-UML-doc -->
-	 *
-	 * This operation checks the AbstractListComponent class to insure that its
+	 * 
+	 * This operation checks the ListComponent class to insure that its
 	 * equals() operation works.
-	 *
+	 * 
 	 * <!-- end-UML-doc -->
 	 */
 	@Test
 	public void checkEquality() {
 		// begin-user-code
 
-		// Create an AbstractListComponent
-		component = new AbstractListComponent();
-		// Create another AbstractListComponent to assert Equality with the last
-		AbstractListComponent equalComponent = new AbstractListComponent();
-		// Create an AbstractListComponent that is not equal to component
-		AbstractListComponent unequalComponent = new AbstractListComponent();
-		// Create a third AbstractListComponent to test Transitivity
-		AbstractListComponent transitiveComponent = new AbstractListComponent();
+		// Create an ListComponent
+		component = new ListComponent();
+		// Create another ListComponent to assert Equality with the last
+		ListComponent equalComponent = new ListComponent();
+		// Create an ListComponent that is not equal to component
+		ListComponent unequalComponent = new ListComponent();
+		// Create a third ListComponent to test Transitivity
+		ListComponent transitiveComponent = new ListComponent();
 
 		// Set its data
 		component.setId(12);
-		component.setName("ICE AbstractListComponent");
+		component.setName("ICE ListComponent");
 		component
-				.setDescription("This is an AbstractListComponent that will "
+				.setDescription("This is an ListComponent that will "
 						+ "be used for testing equality with other AbstractListComponents.");
 		// Add some integers to the list
 		component.add(5);
@@ -227,22 +251,22 @@ public class AbstractListComponentTester {
 
 		// Setup the equal component
 		equalComponent.setId(12);
-		equalComponent.setName("ICE AbstractListComponent");
+		equalComponent.setName("ICE ListComponent");
 		equalComponent
-				.setDescription("This is an AbstractListComponent that will "
+				.setDescription("This is an ListComponent that will "
 						+ "be used for testing equality with other AbstractListComponents.");
 		equalComponent.add(5);
 		equalComponent.add(383400);
 
 		// Assert that these two AbstractListComponents are equal
 		assertTrue(component.equals(equalComponent));
-		
+
 		// Setup the unequal component
 		unequalComponent.setId(52);
-		unequalComponent.setName("Bill the AbstractListComponent");
+		unequalComponent.setName("Bill the ListComponent");
 		unequalComponent
-				.setDescription("This is an AbstractListComponent to verify that "
-						+ "AbstractListComponent.equals() returns false for an object that is not "
+				.setDescription("This is an ListComponent to verify that "
+						+ "ListComponent.equals() returns false for an object that is not "
 						+ "equivalent to component.");
 
 		// Assert that two unequal objects returns false
@@ -250,9 +274,9 @@ public class AbstractListComponentTester {
 
 		// Setup the transitive list
 		transitiveComponent.setId(12);
-		transitiveComponent.setName("ICE AbstractListComponent");
+		transitiveComponent.setName("ICE ListComponent");
 		transitiveComponent
-				.setDescription("This is an AbstractListComponent that will "
+				.setDescription("This is an ListComponent that will "
 						+ "be used for testing equality with other AbstractListComponents.");
 		transitiveComponent.add(5);
 		transitiveComponent.add(383400);
@@ -288,27 +312,24 @@ public class AbstractListComponentTester {
 
 		// Assert that two equal objects have the same hashcode
 		assertTrue(component.equals(equalComponent)
-				&& component.hashCode() == equalComponent
-						.hashCode());
+				&& component.hashCode() == equalComponent.hashCode());
 
 		// Assert that hashcode is consistent
-		assertTrue(component.hashCode() == component
-				.hashCode());
+		assertTrue(component.hashCode() == component.hashCode());
 
 		// Assert that hashcodes are different for unequal objects
-		assertFalse(component.hashCode() == unequalComponent
-				.hashCode());
+		assertFalse(component.hashCode() == unequalComponent.hashCode());
 
 		// end-user-code
 	}
 
 	/**
 	 * <!-- begin-UML-doc -->
-	 *
-	 * This operation tests the AbstractListComponent to insure that it can
+	 * 
+	 * This operation tests the ListComponent to insure that it can
 	 * properly dispatch notifications when it receives an update that changes
 	 * its state.
-	 *
+	 * 
 	 * <!-- end-UML-doc -->
 	 */
 	@Test
@@ -320,17 +341,17 @@ public class AbstractListComponentTester {
 		TestComponentListener secondListener = new TestComponentListener();
 
 		// Setup the component
-		component = new AbstractListComponent();
+		component = new ListComponent();
 
 		// Register the listener
 		component.register(firstListener);
 
 		// Add the second listener
 		component.register(secondListener);
-		
+
 		// Change the name of the object
 		component.setName("Warren Buffett");
-		
+
 		// Check the listeners to make sure they updated
 		assertTrue(firstListener.wasNotified());
 		assertTrue(secondListener.wasNotified());

@@ -136,15 +136,15 @@ public class ICEJAXBHandler {
 		}
 
 		// Create the class list with which to initialize the context. If the
-		// data object is an AbstractListComponent, it is important to give it
+		// data object is an ListComponent, it is important to give it
 		// both the type of the container and the generic.
-		if (dataObject instanceof AbstractListComponent) {
+		if (dataObject instanceof ListComponent) {
 			// Cast the object to a generic, type-less list
-			AbstractListComponent list = (AbstractListComponent) dataObject;
+			ListComponent list = (ListComponent) dataObject;
 			// Don't pop the container open if it is empty
 			if (list.size() > 0
-					&& !classList.contains(AbstractListComponent.class)) {
-				classList.add(AbstractListComponent.class);
+					&& !classList.contains(ListComponent.class)) {
+				classList.add(ListComponent.class);
 				classList.add(list.get(0).getClass());
 			}
 		} else if (!dataObject.getClass().isAnonymousClass()) {

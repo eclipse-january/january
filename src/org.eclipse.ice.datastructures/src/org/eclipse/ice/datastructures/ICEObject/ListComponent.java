@@ -58,19 +58,19 @@ import ca.odell.glazedlists.event.ListEventListener;
  * instead of AbstractEventList, so we will live with this for now.
  * 
  * @author Jay Jay Billings
- *
+ * 
  */
-@XmlRootElement(name = "AbstractListComponent")
+@XmlRootElement(name = "ListComponent")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class AbstractListComponent<T> extends TransformedList<T, T>
-		implements Component {
+public class ListComponent<T> extends TransformedList<T, T> implements
+		Component {
 
 	/**
 	 * The ICEJAXBHandler used to marshal the class to and from XML.
 	 */
 	@XmlTransient
 	protected ICEJAXBHandler jaxbManipulator;
-	
+
 	/**
 	 * A listener map to map ICE listeners to ListEventListeners.
 	 */
@@ -90,16 +90,19 @@ public class AbstractListComponent<T> extends TransformedList<T, T>
 	 */
 	protected BasicEventList<String> idList;
 
-	
+	/**
+	 * A handle to the source list that is necessary for JAXB to properly handle
+	 * this class.
+	 */
 	protected BasicEventList<T> jaxbSourceList;
-	
+
 	/**
 	 * The default constructor.
 	 * 
 	 * It delegates the actual constructor to the TransformedList constructor
 	 * and sets the source list to an empty BasicEventList.
 	 */
-	public AbstractListComponent() {
+	public ListComponent() {
 		this(new BasicEventList<T>());
 	}
 
@@ -109,7 +112,7 @@ public class AbstractListComponent<T> extends TransformedList<T, T>
 	 * @param source
 	 *            The source list used by the TransformedList.
 	 */
-	protected AbstractListComponent(EventList<T> source) {
+	protected ListComponent(EventList<T> source) {
 		super(source);
 		// Store the source list locally too so that JAXB gets it
 		jaxbSourceList = (BasicEventList<T>) source;
@@ -123,13 +126,13 @@ public class AbstractListComponent<T> extends TransformedList<T, T>
 	}
 
 	/**
-	 * This operation copies the contents of the AbstractListComponent into the
+	 * This operation copies the contents of the ListComponent into the
 	 * current object using a deep copy.
 	 * 
 	 * @param list
 	 *            The list from which the values should be copied.
 	 */
-	public void copy(AbstractListComponent<T> list) {
+	public void copy(ListComponent<T> list) {
 		// Return if null
 		if (list == null) {
 			return;
@@ -169,17 +172,17 @@ public class AbstractListComponent<T> extends TransformedList<T, T>
 	public boolean equals(Object otherObject) {
 		// Local Declarations
 		boolean retVal = false;
-		AbstractListComponent<T> castedOtherObject = null;
+		ListComponent<T> castedOtherObject = null;
 
 		// Check null and base type first. Note that the instanceof operator
 		// must be used because subclasses of ICEObject can be anonymous.
 		if (otherObject != null
-				&& (otherObject instanceof AbstractListComponent<?>)) {
+				&& (otherObject instanceof ListComponent<?>)) {
 			// See if they are the same reference on the heap
 			if (this == otherObject) {
 				retVal = true;
 			} else {
-				castedOtherObject = (AbstractListComponent<T>) otherObject;
+				castedOtherObject = (ListComponent<T>) otherObject;
 				// Check each member attribute
 				retVal = (idList.equals(castedOtherObject.idList))
 						&& (source.equals(castedOtherObject.source));
@@ -317,7 +320,8 @@ public class AbstractListComponent<T> extends TransformedList<T, T>
 	 * @see Component#accept(IComponentVisitor)
 	 */
 	@Override
-	public void accept(IComponentVisitor visitor) {};
+	public void accept(IComponentVisitor visitor) {
+	};
 
 	/**
 	 * (non-Javadoc)
@@ -325,7 +329,12 @@ public class AbstractListComponent<T> extends TransformedList<T, T>
 	 * @see Cloneable#clone()
 	 */
 	@Override
-	public Object clone() { return null;};
+	public Object clone() {
+		// Create a copy of this list
+		ListComponent<T> copy = new ListComponent<T>();
+		copy.copy(this);
+		return copy;
+	};
 
 	/**
 	 * (non-Javadoc)
@@ -335,6 +344,7 @@ public class AbstractListComponent<T> extends TransformedList<T, T>
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Override
-	public void update(String updatedKey, String newValue) {};
+	public void update(String updatedKey, String newValue) {
+	};
 
 }
