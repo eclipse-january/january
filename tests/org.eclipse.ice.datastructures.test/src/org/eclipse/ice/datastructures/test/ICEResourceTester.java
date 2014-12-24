@@ -20,8 +20,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.junit.Test;
+import javax.xml.bind.JAXBException;
 
+import org.junit.Test;
+import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
+import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.form.AllowedValueType;
 import org.eclipse.ice.datastructures.form.Entry;
 import org.eclipse.ice.datastructures.resource.ICEResource;
@@ -506,12 +509,15 @@ public class ICEResourceTester {
 	 * XML and to load itself from an XML input stream.
 	 * </p>
 	 * <!-- end-UML-doc -->
+	 * @throws IOException 
+	 * @throws JAXBException 
+	 * @throws NullPointerException 
 	 * 
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
-	public void checkXMLPersistence() {
+	public void checkXMLPersistence() throws NullPointerException, JAXBException, IOException {
 		// begin-user-code
 		/*
 		 * The following sets of operations will be used to test the
@@ -531,6 +537,9 @@ public class ICEResourceTester {
 		File testFile2 = new File(filename2);
 		Entry prop1, prop2, prop3;
 		ArrayList<Entry> properties = null;
+		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
+		ArrayList<Class> classList = new ArrayList<Class>();
+		classList.add(ICEResource.class);
 
 		// Create some entries
 
@@ -590,7 +599,7 @@ public class ICEResourceTester {
 
 		// persist to an output stream
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		iCEResource.persistToXML(outputStream);
+		xmlHandler.write(iCEResource, classList, outputStream);
 
 		// Initialize object and pass inputStream to read()
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(
@@ -601,49 +610,11 @@ public class ICEResourceTester {
 			e.printStackTrace();
 			fail();
 		}
-		testNR2.loadFromXML(inputStream);
+		testNR2 = (ICEResource) xmlHandler.read(classList, inputStream);
 
 		// checkContents
 		assertTrue(iCEResource.getProperties().get(0)
 				.equals(testNR2.getProperties().get(0)));
-		assertTrue(iCEResource.equals(testNR2));
-
-		// The next following tests demonstrate behavior for when you pass null
-		// args for read()
-
-		testNR2.loadFromXML(null);
-		// checkContents - nothing has changed - compared to iCEResource
-		assertTrue(iCEResource.equals(testNR2));
-
-		// args for write() - null args
-		try {
-			testNR = new ICEResource(testFile);
-		} catch (IOException e) {
-			e.printStackTrace();
-			fail();
-		}
-		outputStream = null;
-		testNR.persistToXML(outputStream);
-		// Since arg was null, outputStream should still be null
-		assertNull(outputStream);
-
-		// This test will demonstrate what happens when inputStream is not an
-		// XMLFile for read()
-
-		// Initialize variables
-		String xmlFile = "A String not in XML";
-		inputStream = new ByteArrayInputStream(xmlFile.getBytes());
-
-		// run method
-		try {
-			testNR = new ICEResource(testFile);
-		} catch (IOException e) {
-			e.printStackTrace();
-			fail();
-		}
-		testNR2.loadFromXML(inputStream);
-
-		// checkContents - nothing has changed - compared to iCEResource
 		assertTrue(iCEResource.equals(testNR2));
 
 		// end-user-code

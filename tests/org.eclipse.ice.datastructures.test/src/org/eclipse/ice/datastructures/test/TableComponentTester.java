@@ -13,13 +13,19 @@
 package org.eclipse.ice.datastructures.test;
 
 import static org.junit.Assert.*;
+
+import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.form.DataComponent;
 import org.eclipse.ice.datastructures.form.Entry;
+import org.eclipse.ice.datastructures.form.MasterDetailsPair;
 import org.eclipse.ice.datastructures.form.TableComponent;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.xml.bind.JAXBException;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -911,18 +917,14 @@ public class TableComponentTester {
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
-	 * <p>
 	 * This operation checks the ability of the TableComponent to persist itself
 	 * to XML and to load itself from an XML input stream.
-	 * </p>
-	 * <!-- end-UML-doc -->
-	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
+	 * @throws IOException 
+	 * @throws JAXBException 
+	 * @throws NullPointerException 
 	 */
 	@Test
-	public void checkLoadingFromXML() {
+	public void checkLoadingFromXML() throws NullPointerException, JAXBException, IOException {
 		// begin-user-code
 
 		/*
@@ -937,6 +939,9 @@ public class TableComponentTester {
 		ArrayList<Entry> template = new ArrayList<Entry>();
 		ArrayList<Entry> row1 = new ArrayList<Entry>();
 		ArrayList<Entry> row2 = new ArrayList<Entry>();
+		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
+		ArrayList<Class> classList = new ArrayList<Class>();
+		classList.add(TableComponent.class);
 
 		Entry column1 = new Entry();
 		Entry column2 = new Entry();
@@ -1027,8 +1032,7 @@ public class TableComponentTester {
 
 		// persist to an output stream
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		tableComponent.persistToXML(outputStream);
-		// tableComponent.persistToXML(System.out);
+		xmlHandler.write(tableComponent, classList, outputStream);
 
 		// Initialize object and pass inputStream to read()
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(
@@ -1038,7 +1042,7 @@ public class TableComponentTester {
 		tableComponent2 = new TableComponent();
 
 		// load into DataComponent();
-		tableComponent2.loadFromXML(inputStream);
+		tableComponent2 = (TableComponent) xmlHandler.read(classList, inputStream);
 		assertTrue(tableComponent.equals(tableComponent2));
 
 		// check contents
@@ -1106,84 +1110,5 @@ public class TableComponentTester {
 		assertEquals(0, tableComponent2.getRowIds().get(0).intValue());
 		assertEquals(1, tableComponent2.getRowIds().get(1).intValue());
 
-		// The next following tests demonstrate behavior for when you pass null
-		// args for read()
-
-		// test for read - null args
-		tableComponent2.loadFromXML(null);
-
-		// checkContents - nothing has changed
-		// check row template, its entries, and columns
-		template = tableComponent2.getRowTemplate();
-		assertNotNull(template);
-		// Get columns
-		testColumn1 = template.get(0);
-		testColumn2 = template.get(1);
-		testColumn3 = template.get(2);
-
-		// check test Columns
-		assertEquals("Column1", testColumn1.getName());
-		assertEquals(1, testColumn1.getId());
-		assertEquals("I am Column1!", testColumn1.getDescription());
-		assertEquals("Over 9000!", testColumn1.getValue());
-
-		assertEquals("Column2", testColumn2.getName());
-		assertEquals(2, testColumn2.getId());
-		assertEquals("I am Column2!", testColumn2.getDescription());
-		assertEquals("Under 9000!", testColumn2.getValue());
-
-		assertEquals("Column3", testColumn3.getName());
-		assertEquals(3, testColumn3.getId());
-		assertEquals("I am Column3!", testColumn3.getDescription());
-		assertEquals("At 9000!", testColumn3.getValue());
-
-		// check column names
-		assertEquals("Column1", tableComponent2.getColumnNames().get(0));
-		assertEquals("Column2", tableComponent2.getColumnNames().get(1));
-		assertEquals("Column3", tableComponent2.getColumnNames().get(2));
-
-		// check row1's information and contents for validity
-		assertEquals("Entry1", row1.get(0).getName());
-		assertEquals(1, row1.get(0).getId());
-		assertEquals("I am Entry1!", row1.get(0).getDescription());
-
-		assertEquals("Entry2", row1.get(1).getName());
-		assertEquals(2, row1.get(1).getId());
-		assertEquals("I am Entry2!", row1.get(1).getDescription());
-
-		assertEquals("Entry3", row1.get(2).getName());
-		assertEquals(3, row1.get(2).getId());
-		assertEquals("I am Entry3!", row1.get(2).getDescription());
-
-		// check row2's information and contents for validity
-		assertEquals("Entry4", row2.get(0).getName());
-		assertEquals(4, row2.get(0).getId());
-		assertEquals("I am Entry4!", row2.get(0).getDescription());
-
-		assertEquals("Entry5", row2.get(1).getName());
-		assertEquals(5, row2.get(1).getId());
-		assertEquals("I am Entry5!", row2.get(1).getDescription());
-
-		assertEquals("Entry6", row2.get(2).getName());
-		assertEquals(6, row2.get(2).getId());
-		assertEquals("I am Entry6!", row2.get(2).getDescription());
-
-		// check number of rows, columns, and rowIds
-		assertEquals(2, tableComponent2.numberOfRows());
-		assertEquals(3, tableComponent2.numberOfColumns());
-
-		// check rowIds - check to see there are 2 rows and they are set
-		// correctly for each id.
-		assertEquals(0, tableComponent2.getRowIds().get(0).intValue());
-		assertEquals(1, tableComponent2.getRowIds().get(1).intValue());
-
-		// args for write() - null args
-		outputStream = null;
-		tableComponent.persistToXML(outputStream);
-
-		// checkContents - nothing has changed
-		assertNull(outputStream);
-
-		// end-user-code
 	}
 }

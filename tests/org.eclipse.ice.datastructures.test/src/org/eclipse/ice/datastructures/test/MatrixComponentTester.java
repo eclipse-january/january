@@ -21,22 +21,24 @@ import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.xml.bind.JAXBException;
+
+import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.form.AllowedValueType;
 import org.eclipse.ice.datastructures.form.DataComponent;
 import org.eclipse.ice.datastructures.form.Entry;
+import org.eclipse.ice.datastructures.form.MasterDetailsPair;
 import org.eclipse.ice.datastructures.form.MatrixComponent;
 import org.junit.*;
 
 /**
- * <!-- begin-UML-doc --> <!-- end-UML-doc -->
- * 
- * @author Jay Jay Billings
- * @generated 
- *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
+ * This class is responsible for testing the MatrixComponent.
+ * @author Jay Jay Billings, Alex McCaskey
  */
 
 public class MatrixComponentTester {
@@ -363,18 +365,14 @@ public class MatrixComponentTester {
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
-	 * <p>
 	 * This operation checks the ability of the MatrixComponent to persist
 	 * itself to XML and to load itself from an XML input stream.
-	 * </p>
-	 * <!-- end-UML-doc -->
-	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
+	 * @throws IOException 
+	 * @throws JAXBException 
+	 * @throws NullPointerException 
 	 */
 	@Test
-	public void checkLoadingFromXML() {
+	public void checkLoadingFromXML() throws NullPointerException, JAXBException, IOException {
 		// begin-user-code
 		// Local declarations
 		int id = 5;
@@ -382,6 +380,9 @@ public class MatrixComponentTester {
 		String description = "I am Bob! 1.0";
 		ArrayList<Double> values = new ArrayList<Double>();
 		MatrixComponent loadMatrix;
+		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
+		ArrayList<Class> classList = new ArrayList<Class>();
+		classList.add(MatrixComponent.class);
 
 		// Add allowedvalues to arraylist
 		values.add(1.0);
@@ -403,9 +404,7 @@ public class MatrixComponentTester {
 
 		// Load it into XML
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		matrixComponent.persistToXML(outputStream);
-
-		assertNotNull(outputStream);
+		xmlHandler.write(matrixComponent, classList, outputStream);
 		String xmlFile2 = new String(outputStream.toByteArray());
 		// System.err.println(xmlFile2);
 
@@ -415,26 +414,7 @@ public class MatrixComponentTester {
 
 		// load contents into xml
 		loadMatrix = new MatrixComponent();
-		loadMatrix.loadFromXML(inputStream);
-
-		// Check contents
-		assertTrue(loadMatrix.equals(matrixComponent));
-
-		// Try to pass null into the operations
-
-		loadMatrix.loadFromXML(null);
-		// Nothing happens - check comparison
-
-		// Check contents
-		assertTrue(loadMatrix.equals(matrixComponent));
-
-		// Pass a bad file
-		String xmlFile = "I AM NOT AN XML FILE!  NO LEFT OR RIGHT CARROTS!";
-
-		inputStream = new ByteArrayInputStream(xmlFile.getBytes());
-
-		// Run operation
-		loadMatrix.loadFromXML(inputStream);
+		loadMatrix = (MatrixComponent) xmlHandler.read(classList, inputStream);
 
 		// Check contents
 		assertTrue(loadMatrix.equals(matrixComponent));

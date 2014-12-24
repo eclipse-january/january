@@ -21,13 +21,17 @@ import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.xml.bind.JAXBException;
+
+import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
+import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.form.AllowedValueType;
 import org.eclipse.ice.datastructures.form.DataComponent;
 import org.eclipse.ice.datastructures.form.Entry;
 import org.eclipse.ice.datastructures.form.MasterDetailsPair;
-
 import org.junit.Test;
 
 /**
@@ -353,12 +357,15 @@ public class MasterDetailsPairTester {
 	 * to XML and to load itself from an XML input stream.
 	 * </p>
 	 * <!-- end-UML-doc -->
+	 * @throws IOException 
+	 * @throws JAXBException 
+	 * @throws NullPointerException 
 	 * 
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
-	public void checkLoadingFromXML() {
+	public void checkLoadingFromXML() throws NullPointerException, JAXBException, IOException {
 		// begin-user-code
 		// Local Declarations
 		MasterDetailsPair mDetailsP = new MasterDetailsPair();
@@ -366,6 +373,9 @@ public class MasterDetailsPairTester {
 		DataComponent detailsComp = new DataComponent();
 		String MasterType1 = "TypeOne!";
 		Entry entry;
+		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
+		ArrayList<Class> classList = new ArrayList<Class>();
+		classList.add(MasterDetailsPair.class);
 
 		// Setup DataComponent
 		entry = new Entry();
@@ -382,37 +392,17 @@ public class MasterDetailsPairTester {
 
 		// Load it into XML
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		mDetailsP.persistToXML(outputStream);
-
-		assertNotNull(outputStream);
+		xmlHandler.write(mDetailsP, classList, outputStream);
 
 		// convert information inside of outputStream to inputStream
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(
 				outputStream.toByteArray());
 
 		// load contents into xml
-		loadDetailsP.loadFromXML(inputStream);
+		loadDetailsP = (MasterDetailsPair) xmlHandler.read(classList, inputStream);
 
 		// Check contents
 		// Check that data is correct
-		assertTrue(mDetailsP.equals(loadDetailsP));
-
-		// Try to pass null into the operations
-		loadDetailsP.loadFromXML(null);
-
-		// Nothing happens - check comparison
-		// Check contents - should be the same as previously set data.
-		assertTrue(mDetailsP.equals(loadDetailsP));
-
-		// Pass a bad file
-		String xmlFile = "I AM NOT AN XML FILE!  NO LEFT OR RIGHT CARROTS!";
-
-		inputStream = new ByteArrayInputStream(xmlFile.getBytes());
-
-		// Run operation
-		loadDetailsP.loadFromXML(inputStream);
-
-		// Check contents
 		assertTrue(mDetailsP.equals(loadDetailsP));
 
 		// end-user-code

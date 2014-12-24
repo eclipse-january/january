@@ -16,26 +16,24 @@ import static org.junit.Assert.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.xml.bind.JAXBException;
+
+import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
+import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.form.AllowedValueType;
 import org.eclipse.ice.datastructures.form.DataComponent;
 import org.eclipse.ice.datastructures.form.Entry;
 import org.eclipse.ice.datastructures.form.MasterDetailsComponent;
 import org.eclipse.ice.datastructures.form.MasterDetailsPair;
-
 import org.junit.Test;
 
 /**
- * <!-- begin-UML-doc -->
- * <p>
  * This class is responsible for testing the MasterDetailsComponent.
- * </p>
- * <!-- end-UML-doc -->
  * 
- * @author s4h
- * @generated 
- *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
+ * @author Jay Jay Billings
  */
 
 public class MasterDetailsTester {
@@ -1082,18 +1080,14 @@ public class MasterDetailsTester {
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
-	 * <p>
 	 * This operation checks the ability of the MasterDetailsComponent to
 	 * persist itself to XML and to load itself from an XML input stream.
-	 * </p>
-	 * <!-- end-UML-doc -->
-	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
+	 * @throws IOException 
+	 * @throws JAXBException 
+	 * @throws NullPointerException 
 	 */
 	@Test
-	public void checkLoadingFromXML() {
+	public void checkLoadingFromXML() throws NullPointerException, JAXBException, IOException {
 		// begin-user-code
 		// Local Declarations
 		MasterDetailsComponent loadMaster;
@@ -1104,6 +1098,9 @@ public class MasterDetailsTester {
 		Entry entry1, entry2, entry3, entry4;
 		Entry entryGlobal1, entryGlobal2;
 		DataComponent globalsDataComponent;
+		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
+		ArrayList<Class> classList = new ArrayList<Class>();
+		classList.add(MasterDetailsComponent.class);
 
 		// Types of MasterValues
 		String MasterType1 = "Type One";
@@ -1228,47 +1225,15 @@ public class MasterDetailsTester {
 
 		// Load it into XML
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		mDetailsComp.persistToXML(outputStream);
-
-		assertNotNull(outputStream);
+		xmlHandler.write(mDetailsComp, classList, outputStream);
 
 		// convert information inside of outputStream to inputStream
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(
 				outputStream.toByteArray());
-
-		String xmlFile2 = new String(outputStream.toByteArray());
-
 		// load contents into xml
 		loadMaster = new MasterDetailsComponent();
-		loadMaster.loadFromXML(inputStream);
-
-		// Persist for checking
-		ByteArrayOutputStream outputStream2 = new ByteArrayOutputStream();
-		loadMaster.persistToXML(outputStream2);
-
-		String xmlFile1 = new String(outputStream2.toByteArray());
-
-		assertEquals(xmlFile2.toString(), xmlFile1.toString());
-
-		assertTrue(loadMaster.equals(mDetailsComp));
-
-		// Try to pass null into the operations
-
-		loadMaster.loadFromXML(null);
-		// Nothing happens - check comparison
-
-		// Check contents
-		assertTrue(loadMaster.equals(mDetailsComp));
-
-		// Pass a bad file
-		String xmlFile = "I AM NOT AN XML FILE!  NO LEFT OR RIGHT CARROTS!";
-
-		inputStream = new ByteArrayInputStream(xmlFile.getBytes());
-
-		// Run operation
-		loadMaster.loadFromXML(inputStream);
-
-		// Check contents
+		loadMaster = (MasterDetailsComponent) xmlHandler.read(classList, inputStream);
+		// Check the contents
 		assertTrue(loadMaster.equals(mDetailsComp));
 
 		// end-user-code

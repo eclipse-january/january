@@ -21,16 +21,21 @@ import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import javax.xml.bind.JAXBException;
+
 import org.eclipse.ice.datastructures.ICEObject.Component;
+import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
 import org.eclipse.ice.datastructures.componentVisitor.SelectiveComponentVisitor;
 import org.eclipse.ice.datastructures.form.DataComponent;
 import org.eclipse.ice.datastructures.form.Entry;
 import org.eclipse.ice.datastructures.form.TableComponent;
+import org.eclipse.ice.datastructures.form.TimeDataComponent;
 import org.eclipse.ice.datastructures.form.TreeComposite;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -978,25 +983,23 @@ public class TreeCompositeTester extends SelectiveComponentVisitor {
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
-	 * <p>
 	 * This operation checks the ability of the TreeComposite to persist itself
 	 * to XML and to load itself from an XML input stream.
-	 * </p>
-	 * <!-- end-UML-doc -->
-	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
+	 * @throws IOException 
+	 * @throws JAXBException 
+	 * @throws NullPointerException 
 	 */
 	@Test
-	public void checkLoadingFromXML() {
-		// begin-user-code
+	public void checkLoadingFromXML() throws NullPointerException, JAXBException, IOException {
 		// Local Declarations
 		TreeComposite treeComposite, loadTree;
 		TreeComposite treeChild1, treeChild2, treeGrandChild;
 		DataComponent component1, component2, component3;
 		ByteArrayOutputStream outputStream;
 		ByteArrayInputStream inputStream;
+		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
+		ArrayList<Class> classList = new ArrayList<Class>();
+		classList.add(TreeComposite.class);
 
 		// Instantiate a few TreeComposites
 		treeComposite = new TreeComposite();
@@ -1028,7 +1031,7 @@ public class TreeCompositeTester extends SelectiveComponentVisitor {
 
 		// persist to outputStream
 		outputStream = new ByteArrayOutputStream();
-		treeComposite.persistToXML(outputStream);
+		xmlHandler.write(treeComposite, classList, outputStream);
 
 		// Convert data to inputStream
 		loadTree = new TreeComposite();
@@ -1036,18 +1039,11 @@ public class TreeCompositeTester extends SelectiveComponentVisitor {
 		inputStream = new ByteArrayInputStream(outputStream.toByteArray());
 
 		// Load the stream
-		loadTree.loadFromXML(inputStream);
+		loadTree = (TreeComposite) xmlHandler.read(classList, inputStream);
 
 		// Compare to see if equal
 		assertTrue(treeComposite.equals(loadTree));
 
-		// Load tree - null
-		loadTree.loadFromXML(null);
-
-		// Check contents - nothing has changed
-		assertTrue(treeComposite.equals(loadTree));
-
-		// end-user-code
 	}
 
 	/**
@@ -1078,7 +1074,7 @@ public class TreeCompositeTester extends SelectiveComponentVisitor {
 		TreeComposite testChildTree = new TreeComposite();
 		TreeComposite copiedTestTree = null;
 		ArrayList<TreeComposite> exemplars = null, exemplar3Exemplars = null;
-
+		
 		// Configure the first exemplar
 		exemplar1.setId(1);
 		exemplar1.setName("Kahn");

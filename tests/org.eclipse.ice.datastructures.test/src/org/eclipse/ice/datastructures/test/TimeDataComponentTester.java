@@ -16,12 +16,16 @@ import static org.junit.Assert.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
-import org.junit.Test;
+import javax.xml.bind.JAXBException;
 
+import org.junit.Test;
+import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.form.AllowedValueType;
 import org.eclipse.ice.datastructures.form.Entry;
+import org.eclipse.ice.datastructures.form.MasterDetailsPair;
 import org.eclipse.ice.datastructures.form.TimeDataComponent;
 
 /**
@@ -194,17 +198,8 @@ public class TimeDataComponentTester {
 		assertEquals(defaultName, timeComponent.getName());
 		assertEquals(defaultId, timeComponent.getId());
 		assertEquals(defaultDescription, timeComponent.getDescription());
-		assertTrue(entryList.equals(timeComponent.retrieveAllEntries())); // Set
-																			// to
-																			// the
-																			// new
-																			// entry
-																			// list
-																			// of
-																			// ready
-																			// values
-
-		// end-user-code
+		// Set to the new entry list of ready values
+		assertTrue(entryList.equals(timeComponent.retrieveAllEntries()));
 
 	}
 
@@ -272,25 +267,24 @@ public class TimeDataComponentTester {
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
-	 * <p>
 	 * Checks loading and persisting to XML.
-	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
+	 * @throws IOException
+	 * @throws JAXBException
+	 * @throws NullPointerException
 	 */
 	@Test
-	public void checkXMLPersistence() {
-
-		// begin-user-code
+	public void checkXMLPersistence() throws NullPointerException,
+			JAXBException, IOException {
 
 		// Local declarations
 		int id = 20110901;
 		String name = "September 1st 2011";
 		String description = "The 1st day of the ninth month in the year of "
 				+ "our Lord 2011";
+		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
+		ArrayList<Class> classList = new ArrayList<Class>();
+		classList.add(TimeDataComponent.class);
 
 		// Create the DataComponent
 		TimeDataComponent dataComponent = new TimeDataComponent();
@@ -305,7 +299,7 @@ public class TimeDataComponentTester {
 
 		// persist to an output stream
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		dataComponent.persistToXML(outputStream);
+		xmlHandler.write(dataComponent, classList, outputStream);
 
 		// Initialize object and pass inputStream to read()
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(
@@ -315,28 +309,11 @@ public class TimeDataComponentTester {
 		loadDataComponent = new TimeDataComponent();
 
 		// load into TimeDataComponent();
-		loadDataComponent.loadFromXML(inputStream);
+		loadDataComponent = (TimeDataComponent) xmlHandler.read(classList,
+				inputStream);
 
 		// check contents
 		assertTrue(dataComponent.equals(loadDataComponent));
-
-		// The next following tests demonstrate behavior for when you pass null
-		// args for read()
-
-		// test for read - null args
-		loadDataComponent.loadFromXML(null);
-
-		// check contents - nothing has changed the previously set data
-		assertTrue(dataComponent.equals(loadDataComponent));
-
-		// args for write() - null args
-		outputStream = null;
-		loadDataComponent.persistToXML(outputStream);
-
-		// checkContents - nothing has changed
-		assertNull(outputStream);
-
-		// end-user-code
 
 	}
 
@@ -459,7 +436,7 @@ public class TimeDataComponentTester {
 				&& !component.equals(unEqualComponent));
 
 		// Assert checking equality with null is false
-		assertFalse(component==null);
+		assertFalse(component == null);
 
 		// Assert that two equal objects return same hashcode
 		assertTrue(component.equals(equalComponent)

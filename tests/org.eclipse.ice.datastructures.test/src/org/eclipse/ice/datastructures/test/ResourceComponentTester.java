@@ -12,17 +12,19 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.test;
 
+import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
+import org.eclipse.ice.datastructures.form.MasterDetailsPair;
 import org.eclipse.ice.datastructures.form.ResourceComponent;
+
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.xml.bind.JAXBException;
 
 import org.junit.Test;
 import org.eclipse.ice.datastructures.resource.ICEResource;
@@ -448,18 +450,14 @@ public class ResourceComponentTester {
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
-	 * <p>
 	 * This operation checks the ability of the ResourceComponent class to
 	 * persist itself to XML and to load itself from an XML input stream.
-	 * </p>
-	 * <!-- end-UML-doc -->
-	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
+	 * @throws IOException 
+	 * @throws JAXBException 
+	 * @throws NullPointerException 
 	 */
 	@Test
-	public void checkXMLPersistence() {
+	public void checkXMLPersistence() throws NullPointerException, JAXBException, IOException {
 		// begin-user-code
 		// TODO Auto-generated method stub
 		/*
@@ -477,6 +475,9 @@ public class ResourceComponentTester {
 		int id = 2266;
 		String name = "3F 127 on Deck 9, section 2";
 		String description = "Bones' Quarters";
+		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
+		ArrayList<Class> classList = new ArrayList<Class>();
+		classList.add(ResourceComponent.class);
 
 		// Set up file path - for resources
 		File file = new File("Mississippi.testFile");
@@ -513,7 +514,7 @@ public class ResourceComponentTester {
 
 		// persist to an output stream
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		testRC.persistToXML(outputStream);
+		xmlHandler.write(testRC, classList, outputStream);
 
 		// Load back in
 
@@ -525,26 +526,8 @@ public class ResourceComponentTester {
 		testRC2 = new ResourceComponent();
 
 		// load into ResourceComponent();
-		testRC2.loadFromXML(inputStream);
+		testRC2 = (ResourceComponent) xmlHandler.read(classList, inputStream);
 
-		// check contents
-		assertTrue(testRC.equals(testRC2));
-
-		// The next following tests demonstrate behavior for when you pass null
-		// args for read()
-
-		// test for read - null args
-		testRC.loadFromXML(null);
-
-		// checkContents - nothing has changed - compared to testOC2
-		// check contents
-		assertTrue(testRC.equals(testRC2));
-
-		// args for write() - null args
-		outputStream = null;
-		testRC.persistToXML(outputStream);
-
-		// checkContents - nothing has changed - compared to testOC2
 		// check contents
 		assertTrue(testRC.equals(testRC2));
 

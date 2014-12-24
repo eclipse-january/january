@@ -20,10 +20,15 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.JAXBException;
+
 import org.eclipse.ice.datastructures.ICEObject.Component;
+import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
+import org.eclipse.ice.datastructures.form.MasterDetailsPair;
 import org.eclipse.ice.datastructures.form.mesh.Edge;
 import org.eclipse.ice.datastructures.form.mesh.MeshComponent;
 import org.eclipse.ice.datastructures.form.mesh.Polygon;
@@ -635,13 +640,21 @@ public class MeshComponentTester {
 	 * to XML and to load itself from an XML input stream.
 	 * </p>
 	 * <!-- end-UML-doc -->
+	 * @throws IOException 
+	 * @throws JAXBException 
+	 * @throws NullPointerException 
 	 * 
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
-	public void checkLoadingFromXML() {
+	public void checkLoadingFromXML() throws NullPointerException, JAXBException, IOException {
 		// begin-user-code
+
+		// Local Declarations
+		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
+		ArrayList<Class> classList = new ArrayList<Class>();
+		classList.add(MeshComponent.class);
 
 		// Create a simple polygon to add the the component.
 		ArrayList<Vertex> vertices = new ArrayList<Vertex>();
@@ -668,8 +681,7 @@ public class MeshComponentTester {
 		component.addPolygon(shape);
 		// Load it into XML.
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		component.persistToXML(outputStream);
-		assertNotNull(outputStream);
+		xmlHandler.write(component, classList, outputStream);
 
 		// Convert the output stream data to an input stream.
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(
@@ -677,21 +689,9 @@ public class MeshComponentTester {
 
 		// Load the input stream's contents into a new component.
 		MeshComponent loadedComponent = new MeshComponent();
-		loadedComponent.loadFromXML(inputStream);
+		loadedComponent = (MeshComponent) xmlHandler.read(classList, inputStream);
 
 		// Make sure the two components match.
-		assertTrue(component.equals(loadedComponent));
-
-		// Check invalid parameters.
-
-		// Try passing null and make sure the components match.
-		inputStream = null;
-		loadedComponent.loadFromXML(inputStream);
-		assertTrue(component.equals(loadedComponent));
-
-		// Try passing a bad input stream and make sure the components match.
-		inputStream = new ByteArrayInputStream("invalidstreamasdf1".getBytes());
-		loadedComponent.loadFromXML(inputStream);
 		assertTrue(component.equals(loadedComponent));
 
 		return;
