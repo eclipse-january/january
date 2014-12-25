@@ -321,6 +321,7 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	 */
 	@Override
 	public void accept(IComponentVisitor visitor) {
+		visitor.visit(this);
 	};
 
 	/**

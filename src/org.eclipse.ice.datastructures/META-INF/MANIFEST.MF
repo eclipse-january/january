@@ -28,3 +28,4 @@ Import-Package: ca.odell.glazedlists,
  org.osgi.framework;version="1.6.0"
 Bundle-ActivationPolicy: lazy
 JPA-PersistenceUnits: org.eclipse.ice.datastructures
+Require-Bundle: ca.odell.glazedlists;bundle-version="1.9.0";visibility:=reexport

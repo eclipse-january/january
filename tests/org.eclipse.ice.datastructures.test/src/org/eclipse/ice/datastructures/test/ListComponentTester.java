@@ -24,7 +24,7 @@ import javax.xml.bind.JAXBException;
 import org.eclipse.ice.datastructures.ICEObject.ListComponent;
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
-import org.eclipse.ice.datastructures.form.AdaptiveTreeComposite;
+import org.eclipse.ice.datastructures.componentVisitor.SelectiveComponentVisitor;
 import org.junit.*;
 
 /**
@@ -40,6 +40,11 @@ import org.junit.*;
  */
 public class ListComponentTester {
 
+	/**
+	 * A flag to mark whether or not visitation worked.
+	 */
+	boolean visited = false;
+	
 	/**
 	 * The ListComponent that will be used for the test. This class is
 	 * simply a stub that makes it possible to instantiate the
@@ -171,9 +176,10 @@ public class ListComponentTester {
 				+ "our Lord 2011";
 		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
 		ArrayList<Class> classList = new ArrayList<Class>();
-		classList.add(AdaptiveTreeComposite.class);
+		classList.add(ListComponent.class);
 		classList.add(Form.class);
 		classList.add(Integer.class);
+		classList.add(ICEObject.class);
 
 		// Demonstrate a basic "write" to file. Should not fail
 		// Initialize the object and set values.
@@ -378,4 +384,30 @@ public class ListComponentTester {
 		return;
 		// end-user-code
 	}
+	
+	/**
+	 * This method checks the visitation routine.
+	 */
+	@Test
+	public void checkVisitation() {
+
+		// Create a new AdaptiveTreeComposite to visit
+		ListComponent<Integer> component = new ListComponent<Integer>();
+
+		// Create a visitor, and try to visit the tree
+		SelectiveComponentVisitor visitor = new SelectiveComponentVisitor() {
+			@Override
+			public void visit(ListComponent component) {
+				visited = true;
+			}
+		};
+		component.accept(visitor);
+
+		// Check that the component was visited
+		assertTrue(visited);
+
+		return;
+	}
+	
+	
 }

@@ -36,6 +36,7 @@ import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
+import org.eclipse.ice.datastructures.ICEObject.ListComponent;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
 import org.eclipse.ice.datastructures.componentVisitor.IReactorComponent;
 import org.eclipse.ice.datastructures.form.emf.EMFComponent;
@@ -44,8 +45,6 @@ import org.eclipse.ice.datastructures.form.geometry.IShape;
 import org.eclipse.ice.datastructures.form.mesh.MeshComponent;
 
 /**
- * <!-- begin-UML-doc -->
- * <p>
  * The TreeComposite realizes the Composite interface to provide a multi-level
  * hierarchical tree of ICE Components. TreeComposites are n-ary trees, meaning
  * that they can have any number of children and data per node. A "sibling" is a
@@ -132,12 +131,8 @@ import org.eclipse.ice.datastructures.form.mesh.MeshComponent;
  * the list returned by getChildExemplars() is submitted. Special care should be
  * taken that children from this list are added to the TreeComposite *before*
  * they themselves are modified.
- * </p>
- * <!-- end-UML-doc -->
  * 
  * @author Jay Jay Billings
- * @generated 
- *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
 @XmlRootElement(name = "TreeComposite")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -1702,6 +1697,12 @@ public class TreeComposite extends ICEObject implements Composite,
 
 	@Override
 	public void visit(EMFComponent component) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void visit(ListComponent component) {
 		// TODO Auto-generated method stub
 		
 	}

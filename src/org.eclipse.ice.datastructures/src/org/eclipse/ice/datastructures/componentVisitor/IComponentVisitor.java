@@ -15,6 +15,7 @@ package org.eclipse.ice.datastructures.componentVisitor;
 import java.util.ArrayList;
 
 import org.eclipse.ice.datastructures.ICEObject.Component;
+import org.eclipse.ice.datastructures.ICEObject.ListComponent;
 import org.eclipse.ice.datastructures.form.AdaptiveTreeComposite;
 import org.eclipse.ice.datastructures.form.DataComponent;
 import org.eclipse.ice.datastructures.form.MasterDetailsComponent;
@@ -29,60 +30,30 @@ import org.eclipse.ice.datastructures.form.geometry.IShape;
 import org.eclipse.ice.datastructures.form.mesh.MeshComponent;
 
 /**
- * <!-- begin-UML-doc -->
- * <p>
  * This interface defines the "visitation" routines that implementations of
  * Component may use to reveal their types to visitors. It is one part of the
  * Visitor pattern.
- * </p>
- * <!-- end-UML-doc -->
  * 
  * @author Jay Jay Billings
- * @generated 
- *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
 public interface IComponentVisitor {
 	/**
-	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
-	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
-	ArrayList<Component> component = null;
-
-	/**
-	 * <!-- begin-UML-doc -->
-	 * <p>
 	 * This operation directs a visitor to perform its actions on the Component
 	 * as a DataComponent.
-	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param component
-	 *            <p>
 	 *            DataComponent which was originally called by the accept()
 	 *            operation
-	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void visit(DataComponent component);
 
 	/**
-	 * <!-- begin-UML-doc -->
-	 * <p>
 	 * This operation directs a visitor to perform its actions on the Component
 	 * as an OutputComponent.
-	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param component
-	 *            <p>
 	 *            OutputComponent which was originally called by the accept()
 	 *            operation
-	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void visit(ResourceComponent component);
 
@@ -178,8 +149,8 @@ public interface IComponentVisitor {
 	/**
 	 * <!-- begin-UML-doc -->
 	 * <p>
-	 * This operation directs informs the visitor that it is actually working
-	 * with a TreeComposite and should operate accordingly.
+	 * This operation informs the visitor that it is actually working with a
+	 * TreeComposite and should operate accordingly.
 	 * </p>
 	 * <!-- end-UML-doc -->
 	 * 
@@ -195,8 +166,8 @@ public interface IComponentVisitor {
 	/**
 	 * <!-- begin-UML-doc -->
 	 * <p>
-	 * This operation directs informs the visitor that it is actually working
-	 * with an AdaptiveTreeComposite and should operate accordingly.
+	 * This operation informs the visitor that it is actually working with an
+	 * AdaptiveTreeComposite and should operate accordingly.
 	 * </p>
 	 * <!-- end-UML-doc -->
 	 * 
@@ -208,12 +179,12 @@ public interface IComponentVisitor {
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void visit(AdaptiveTreeComposite component);
-	
+
 	/**
 	 * <!-- begin-UML-doc -->
 	 * <p>
-	 * This operation directs informs the visitor that it is actually working
-	 * with an IReactorComponent and should operate accordingly.
+	 * This operation informs the visitor that it is actually working with an
+	 * IReactorComponent and should operate accordingly.
 	 * </p>
 	 * <!-- end-UML-doc -->
 	 * 
@@ -229,8 +200,8 @@ public interface IComponentVisitor {
 	/**
 	 * <!-- begin-UML-doc -->
 	 * <p>
-	 * This operation directs informs the visitor that it is actually working
-	 * with a TimeDataComponent and should operate accordingly.
+	 * This operation informs the visitor that it is actually working with a
+	 * TimeDataComponent and should operate accordingly.
 	 * </p>
 	 * <!-- end-UML-doc -->
 	 * 
@@ -246,8 +217,8 @@ public interface IComponentVisitor {
 	/**
 	 * <!-- begin-UML-doc -->
 	 * <p>
-	 * This operation directs informs the visitor that it is actually working
-	 * with a MeshComponent and should operate accordingly.
+	 * This operation informs the visitor that it is actually working with a
+	 * MeshComponent and should operate accordingly.
 	 * </p>
 	 * <!-- end-UML-doc -->
 	 * 
@@ -259,22 +230,22 @@ public interface IComponentVisitor {
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void visit(MeshComponent component);
-	
+
 	/**
-	 * <!-- begin-UML-doc -->
-	 * <p>
-	 * This operation directs informs the visitor that it is actually working
-	 * with a BatteryComponent and should operate accordingly.
-	 * </p>
-	 * <!-- end-UML-doc -->
+	 * This operation informs the visitor that it is actually working with an
+	 * EMFComponent and should operate accordingly.
 	 * 
 	 * @param component
-	 *            <p>
-	 *            The BatteryComponent.
-	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
+	 *            The EMFComponent.
 	 */
 	public void visit(EMFComponent component);
-	
+
+	/**
+	 * This operation informs the visitor that it is actually working with a
+	 * ListComponent. The generic type of the component is not specified.
+	 * 
+	 * @param component The ListComponent
+	 */
+	public void visit(ListComponent component);
+
 }

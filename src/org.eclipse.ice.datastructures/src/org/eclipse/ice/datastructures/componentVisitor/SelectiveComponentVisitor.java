@@ -1,5 +1,6 @@
 package org.eclipse.ice.datastructures.componentVisitor;
 
+import org.eclipse.ice.datastructures.ICEObject.ListComponent;
 import org.eclipse.ice.datastructures.form.AdaptiveTreeComposite;
 import org.eclipse.ice.datastructures.form.DataComponent;
 import org.eclipse.ice.datastructures.form.MasterDetailsComponent;
@@ -199,4 +200,13 @@ public abstract class SelectiveComponentVisitor implements IComponentVisitor {
 	public void visit(EMFComponent component) {
 		// Nothing to do.
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor#visit(org.eclipse.ice.datastructures.ICEObject.ListComponent)
+	 */
+	public void visit(ListComponent component) {
+		// Nothing to do
+	}
+	
 }
