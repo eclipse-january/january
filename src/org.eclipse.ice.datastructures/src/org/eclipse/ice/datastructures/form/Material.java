@@ -10,7 +10,7 @@
  *   Jordan H. Deyton, Dasha Gorin, Alexander J. McCaskey, Taylor Patterson,
  *   Claire Saunders, Matthew Wang, Anna Wojtowicz
  *******************************************************************************/
-package org.eclipse.ice.materials;
+package org.eclipse.ice.datastructures.form;
 
 import java.util.ArrayList;
 import java.util.HashMap;

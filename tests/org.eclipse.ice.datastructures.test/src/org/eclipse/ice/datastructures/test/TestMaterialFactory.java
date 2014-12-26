@@ -10,7 +10,7 @@
  *   Jordan H. Deyton, Dasha Gorin, Alexander J. McCaskey, Taylor Patterson,
  *   Claire Saunders, Matthew Wang, Anna Wojtowicz
  *******************************************************************************/
-package org.eclipse.ice.materials.test;
+package org.eclipse.ice.datastructures.test;
 
 import org.eclipse.ice.datastructures.form.Material;
 

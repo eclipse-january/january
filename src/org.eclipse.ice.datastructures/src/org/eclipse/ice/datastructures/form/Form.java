@@ -12,11 +12,8 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.form;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -28,8 +25,8 @@ import org.eclipse.ice.datastructures.ICEObject.Component;
 import org.eclipse.ice.datastructures.ICEObject.Composite;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
 import org.eclipse.ice.datastructures.ICEObject.Identifiable;
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
+import org.eclipse.ice.datastructures.ICEObject.ListComponent;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
 import org.eclipse.ice.datastructures.form.emf.EMFComponent;
 import org.eclipse.ice.datastructures.form.geometry.GeometryComponent;
@@ -93,6 +90,7 @@ public class Form extends ICEObject implements Composite {
 			@XmlElementRef(name = "DataComponent", type = DataComponent.class),
 			@XmlElementRef(name = "TreeComposite", type = TreeComposite.class),
 			@XmlElementRef(name = "MeshComponent", type = MeshComponent.class),
+			@XmlElementRef(name = "ListComponent", type = ListComponent.class),
 			@XmlElementRef(name = "EMFComponent", type = EMFComponent.class)})
 	private ArrayList<Component> componentList;
 
