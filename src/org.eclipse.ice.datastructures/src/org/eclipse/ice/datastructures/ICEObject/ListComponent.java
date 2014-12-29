@@ -11,17 +11,11 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.ICEObject;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -32,6 +26,7 @@ import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.TransformedList;
 import ca.odell.glazedlists.event.ListEvent;
 import ca.odell.glazedlists.event.ListEventListener;
+import ca.odell.glazedlists.gui.WritableTableFormat;
 
 /**
  * This is an abstract base class for Components that are based on lists. Its
@@ -46,6 +41,21 @@ import ca.odell.glazedlists.event.ListEventListener;
  * It provides a base implementation for most of the capabilities it provides,
  * although it must be subclassed to handle certain specific operations such as
  * loading from XML and cloning.
+ * 
+ * It can be configured to provide a handle to an IElementSource that will
+ * provide valid, new elements upon request. This configuration is meant to
+ * facilitate the use of the ListComponent as a, for instance, proxy for
+ * selections made from databases or similar tools. If getElementSource()
+ * returns null, clients should feel free to put whatever values they want into
+ * the List.
+ * 
+ * This class also realizes the WritableTableFormat interface from GlazedLists
+ * so that it simply be "dropped in" to GlazedList tables in client UIs. This is
+ * handled using delegation instead of inheritance so that the format can be
+ * easily changed without re-initializing the list. Alternatively, the
+ * WritableTableFormat can just be retrieved with a getter too. If the table
+ * format is not provided, the behavior is unspecified, but this Component
+ * should probably not be put in a Form in that case.
  * 
  * <b>Implementation note</b>
  * 
@@ -63,7 +73,7 @@ import ca.odell.glazedlists.event.ListEventListener;
 @XmlRootElement(name = "ListComponent")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ListComponent<T> extends TransformedList<T, T> implements
-		Component {
+		Component, WritableTableFormat<T> {
 
 	/**
 	 * The ICEJAXBHandler used to marshal the class to and from XML.
@@ -97,6 +107,21 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	protected BasicEventList<T> jaxbSourceList;
 
 	/**
+	 * The IElementSource provides a list of possible new elements for this
+	 * list. If it is available, it should be used, but it doesn't have to be.
+	 */
+	@XmlTransient
+	protected IElementSource<T> elementSource;
+
+	/**
+	 * The GlazedList WritableTableFormat that should be used by this list when
+	 * it is fed to client UI code. Its purpose is simply to describe the list
+	 * and how it can be read in a human-friendly fashion.
+	 */
+	@XmlTransient
+	protected WritableTableFormat<T> tableFormat;
+
+	/**
 	 * The default constructor.
 	 * 
 	 * It delegates the actual constructor to the TransformedList constructor
@@ -104,6 +129,18 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	 */
 	public ListComponent() {
 		this(new BasicEventList<T>());
+	}
+
+	/**
+	 * An alternative constructor that provides a handle to an IElementSource so
+	 * that clients have a source for valid, new elements to add to the list.
+	 * 
+	 * @param elementSource
+	 *            the IElementSource from which new elements should be drawn.
+	 */
+	public ListComponent(IElementSource<T> elementSource) {
+		this();
+		this.elementSource = elementSource;
 	}
 
 	/**
@@ -126,8 +163,8 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	}
 
 	/**
-	 * This operation copies the contents of the ListComponent into the
-	 * current object using a deep copy.
+	 * This operation copies the contents of the ListComponent into the current
+	 * object using a deep copy.
 	 * 
 	 * @param list
 	 *            The list from which the values should be copied.
@@ -176,8 +213,7 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 
 		// Check null and base type first. Note that the instanceof operator
 		// must be used because subclasses of ICEObject can be anonymous.
-		if (otherObject != null
-				&& (otherObject instanceof ListComponent<?>)) {
+		if (otherObject != null && (otherObject instanceof ListComponent<?>)) {
 			// See if they are the same reference on the heap
 			if (this == otherObject) {
 				retVal = true;
@@ -346,6 +382,139 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	 */
 	@Override
 	public void update(String updatedKey, String newValue) {
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ca.odell.glazedlists.gui.TableFormat#getColumnCount()
+	 */
+	@Override
+	public int getColumnCount() {
+
+		int retValue = 0;
+
+		// Delegate the call
+		if (tableFormat != null) {
+			retValue = tableFormat.getColumnCount();
+		}
+
+		return retValue;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ca.odell.glazedlists.gui.TableFormat#getColumnName(int)
+	 */
+	@Override
+	public String getColumnName(int column) {
+
+		String name = null;
+
+		// Delegate the call
+		if (tableFormat != null) {
+			name = tableFormat.getColumnName(column);
+		}
+
+		return name;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ca.odell.glazedlists.gui.TableFormat#getColumnValue(java.lang.Object,
+	 * int)
+	 */
+	@Override
+	public Object getColumnValue(T baseObject, int column) {
+
+		Object obj = null;
+
+		// Delegate the call
+		if (tableFormat != null) {
+			obj = tableFormat.getColumnValue(baseObject, column);
+		}
+
+		return obj;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ca.odell.glazedlists.gui.WritableTableFormat#isEditable(java.lang.Object,
+	 * int)
+	 */
+	@Override
+	public boolean isEditable(T baseObject, int column) {
+
+		boolean retValue = false;
+
+		// Delegate the call
+		if (tableFormat != null) {
+			retValue = tableFormat.isEditable(baseObject, column);
+		}
+
+		return retValue;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ca.odell.glazedlists.gui.WritableTableFormat#setColumnValue(java.lang
+	 * .Object, java.lang.Object, int)
+	 */
+	@Override
+	public T setColumnValue(T baseObject, Object editedValue, int column) {
+
+		T retValue = null;
+
+		// Delegate the call
+		if (tableFormat != null) {
+			retValue = tableFormat.setColumnValue(baseObject, editedValue,
+					column);
+		}
+
+		return retValue;
 	};
+
+	/**
+	 * This operation returns the element source which should be used to create
+	 * new elements to add to the list.
+	 * 
+	 * @return The element source or null if no IElementSource is provided. If
+	 *         null, then the client code should add whatever valid element they
+	 *         want.
+	 */
+	public IElementSource<T> getElementSource() {
+		return elementSource;
+	}
+
+	/**
+	 * This operation sets the GlazedList WritableTableFormat that should be
+	 * used to describe this List when used by client UI code or other clients
+	 * that need to know how to read the List.
+	 * 
+	 * @param format
+	 *            The table format. Calls to this class' implementation of the
+	 *            WritableTableFormat interface will be delegated to this
+	 *            format.
+	 */
+	public void setTableFormat(WritableTableFormat<T> format) {
+		tableFormat = format;
+	}
+
+	/**
+	 * This operation returns the GlazedList WritableTableFormat that is used to
+	 * describe this list or null if it was not set.
+	 * 
+	 * @return The table format or null.
+	 */
+	public WritableTableFormat<T> getTableFormat() {
+		return tableFormat;
+	}
 
 }

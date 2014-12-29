@@ -21,42 +21,48 @@ import java.util.ArrayList;
 
 import javax.xml.bind.JAXBException;
 
+import org.eclipse.ice.datastructures.ICEObject.IElementSource;
 import org.eclipse.ice.datastructures.ICEObject.ListComponent;
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.componentVisitor.SelectiveComponentVisitor;
 import org.junit.*;
 
+import ca.odell.glazedlists.EventList;
+import ca.odell.glazedlists.gui.TableFormat;
+import ca.odell.glazedlists.gui.WritableTableFormat;
+
 /**
- * The ListComponentTester is responsible for testing the
- * ListComponent class. It only tests the name, id, and description
- * properties as well as persistence (insofar as it can for the latter). It also
- * checks equality, hashCode computation, copying, and cloning.
+ * The ListComponentTester is responsible for testing the ListComponent class.
+ * It only tests the name, id, and description properties as well as persistence
+ * (insofar as it can for the latter). It also checks equality, hashCode
+ * computation, copying, and cloning.
  * 
  * Finally, this class tests those operations from Component that are
  * implemented by ListComponentTester.
  * 
  * @author Jay Jay Billings
  */
-public class ListComponentTester {
+public class ListComponentTester implements IElementSource<Integer>,
+		WritableTableFormat<Integer> {
 
 	/**
 	 * A flag to mark whether or not visitation worked.
 	 */
 	boolean visited = false;
-	
+
 	/**
-	 * The ListComponent that will be used for the test. This class is
-	 * simply a stub that makes it possible to instantiate the
-	 * ListComponent so that it can be tested.
+	 * The ListComponent that will be used for the test. This class is simply a
+	 * stub that makes it possible to instantiate the ListComponent so that it
+	 * can be tested.
 	 */
 	private ListComponent component;
 
 	/**
 	 * <!-- begin-UML-doc -->
 	 * 
-	 * This operation checks the ListComponent to insure that the id,
-	 * name and description getters and setters function properly.
+	 * This operation checks the ListComponent to insure that the id, name and
+	 * description getters and setters function properly.
 	 * 
 	 * <!-- end-UML-doc -->
 	 */
@@ -89,8 +95,8 @@ public class ListComponentTester {
 	/**
 	 * <!-- begin-UML-doc -->
 	 * 
-	 * This operation checks the ListComponent class to ensure that its
-	 * copy() and clone() operations work as specified.
+	 * This operation checks the ListComponent class to ensure that its copy()
+	 * and clone() operations work as specified.
 	 * 
 	 * <!-- end-UML-doc -->
 	 */
@@ -128,7 +134,7 @@ public class ListComponentTester {
 		// Create a clone of the component and check it
 		ListComponent<Integer> componentClone = (ListComponent<Integer>) component
 				.clone();
-		assertEquals(component,componentClone);
+		assertEquals(component, componentClone);
 
 		// Test to show an invalid use of copy - null args
 
@@ -156,8 +162,8 @@ public class ListComponentTester {
 	}
 
 	/**
-	 * This operation checks the ability of the ListComponent to persist
-	 * itself to XML and to load itself from an XML input stream.
+	 * This operation checks the ability of the ListComponent to persist itself
+	 * to XML and to load itself from an XML input stream.
 	 * 
 	 * @throws IOException
 	 * @throws JAXBException
@@ -197,8 +203,8 @@ public class ListComponentTester {
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(
 				outputStream.toByteArray());
 		// Load it up and check it
-		component2 = (ListComponent<Integer>) xmlHandler.read(
-				classList, inputStream);
+		component2 = (ListComponent<Integer>) xmlHandler.read(classList,
+				inputStream);
 		assertEquals(component.getId(), component2.getId());
 		assertEquals(component.getName(), component2.getName());
 		assertEquals(component.getDescription(), component2.getDescription());
@@ -227,8 +233,8 @@ public class ListComponentTester {
 	/**
 	 * <!-- begin-UML-doc -->
 	 * 
-	 * This operation checks the ListComponent class to insure that its
-	 * equals() operation works.
+	 * This operation checks the ListComponent class to insure that its equals()
+	 * operation works.
 	 * 
 	 * <!-- end-UML-doc -->
 	 */
@@ -332,9 +338,8 @@ public class ListComponentTester {
 	/**
 	 * <!-- begin-UML-doc -->
 	 * 
-	 * This operation tests the ListComponent to insure that it can
-	 * properly dispatch notifications when it receives an update that changes
-	 * its state.
+	 * This operation tests the ListComponent to insure that it can properly
+	 * dispatch notifications when it receives an update that changes its state.
 	 * 
 	 * <!-- end-UML-doc -->
 	 */
@@ -384,7 +389,7 @@ public class ListComponentTester {
 		return;
 		// end-user-code
 	}
-	
+
 	/**
 	 * This method checks the visitation routine.
 	 */
@@ -408,6 +413,82 @@ public class ListComponentTester {
 
 		return;
 	}
-	
-	
+
+	/**
+	 * This operation checks the IElementSource handle of the ListComponent.
+	 */
+	@Test
+	public void checkElementSource() {
+
+		// Create a new AdaptiveTreeComposite to visit
+		ListComponent<Integer> component = new ListComponent<Integer>(this);
+
+		// Check that the component received the IElementSource and that it
+		// returns the correct one.
+		IElementSource<Integer> source = component.getElementSource();
+		assertNotNull(source);
+		assertTrue(source == this);
+	}
+
+	/**
+	 * This operation is responsible for making sure that the ListComponent can
+	 * properly behave as a WritableTableFormat.
+	 */
+	@Test
+	public void checkTableFormat() {
+
+		// Create the list and set the table format
+		// Create a new AdaptiveTreeComposite to visit
+		ListComponent<Integer> component = new ListComponent<Integer>();
+		component.setTableFormat(this);
+
+		// Check everything
+		assertNotNull(component.getTableFormat());
+		assertTrue(this == component.getTableFormat());
+		assertEquals(getColumnCount(), component.getColumnCount());
+		assertEquals(getColumnName(0), component.getColumnName(0));
+		assertEquals(getColumnValue(0, 1), component.getColumnValue(0, 1));
+		assertEquals(isEditable(0, 1), component.isEditable(0, 1));
+		assertEquals(setColumnValue(1, 2, 0), component.setColumnValue(1, 2, 0));
+
+	}
+
+	@Override
+	public EventList<Integer> getElements() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TableFormat<Integer> getTableFormat() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getColumnCount() {
+		return 5;
+	}
+
+	@Override
+	public String getColumnName(int column) {
+		return "Six";
+	}
+
+	@Override
+	public Object getColumnValue(Integer baseObject, int column) {
+		return 7;
+	}
+
+	@Override
+	public boolean isEditable(Integer baseObject, int column) {
+		return true;
+	}
+
+	@Override
+	public Integer setColumnValue(Integer baseObject, Object editedValue,
+			int column) {
+		return 4;
+	}
+
 }

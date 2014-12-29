@@ -7,6 +7,7 @@ Require-Bundle: org.junit;bundle-version="4.8.2",
  org.eclipse.emf.ecore
 Import-Package: ca.odell.glazedlists,
  ca.odell.glazedlists.event,
+ ca.odell.glazedlists.gui,
  org.eclipse.emf.common.util,
  org.eclipse.emf.ecore.xmi,
  org.eclipse.emf.ecore.xmi.impl,
