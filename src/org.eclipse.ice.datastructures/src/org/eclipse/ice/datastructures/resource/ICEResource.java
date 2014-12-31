@@ -120,10 +120,10 @@ public class ICEResource extends ICEObject {
 		path = null;
 
 		// Setup properties list
-		this.properties = new ArrayList<Entry>();
+		properties = new ArrayList<Entry>();
 
 		// Default is set to false for isPicture
-		this.isPicture = false;
+		isPicture = false;
 
 		return;
 
@@ -160,10 +160,10 @@ public class ICEResource extends ICEObject {
 		setContents(resourceFile);
 
 		// Setup properties list
-		this.properties = new ArrayList<Entry>();
+		properties = new ArrayList<Entry>();
 
 		// Default is set to false for isPicture
-		this.isPicture = false;
+		isPicture = false;
 
 		return;
 
@@ -366,19 +366,10 @@ public class ICEResource extends ICEObject {
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
-	 * <p>
 	 * This operation performs a deep copy of the attributes of another
 	 * ICEResource into the current ICEResource.
-	 * </p>
-	 * <!-- end-UML-doc -->
-	 * 
 	 * @param otherResource
-	 *            <p>
 	 *            The other ICEResource from which information should be copied.
-	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void copy(ICEResource otherResource) {
 		// begin-user-code
@@ -410,55 +401,31 @@ public class ICEResource extends ICEObject {
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
-	 * <p>
 	 * This operation provides a deep copy of the ICEResource.
-	 * </p>
-	 * <!-- end-UML-doc -->
-	 * 
-	 * @return <p>
+	 * @return
 	 *         A clone of the ICEResource.
-	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	public java.lang.Object clone() {
-		// begin-user-code
+	public Object clone() {
 		// Create a new instance, copy contents, and return it
-
-		// create a new instance of resource and copy contents
 		ICEResource resource = null;
 		resource = new ICEResource();
 		resource.copy(this);
 
-		// return
 		return resource;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
-	 * <p>
 	 * This operation is used to check equality between the ICEResource and
 	 * another ICEResource. It returns true if the ICEResources are equal and
 	 * false if they are not.
-	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param otherICEResource
-	 *            <p>
 	 *            The other ICEResource to which this ICEResource should be
 	 *            compared.
-	 *            </p>
-	 * @return <p>
-	 *         True if the ICEResources are equal, false otherwise.
-	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
+	 * @return True if the ICEResources are equal, false otherwise.
 	 */
-	public boolean equals(java.lang.Object otherICEResource) {
-		// begin-user-code
-		// begin-user-code
+	public boolean equals(Object otherICEResource) {
+
 		// Check if they are same reference in memory
 		if (this == otherICEResource) {
 			// If so, return true, saves time
@@ -483,26 +450,18 @@ public class ICEResource extends ICEObject {
 		ICEResource castedResource = (ICEResource) otherICEResource;
 
 		// Check that their attributes are the same
-		return (this.file.equals(castedResource.file))
-				&& (this.path.equals(castedResource.path)
-						&& this.properties.equals(castedResource.properties) && (this.isPicture == castedResource.isPicture));
+		return (file.equals(castedResource.file))
+				&& (path.equals(castedResource.path)
+						&& properties.equals(castedResource.properties) && (isPicture == castedResource.isPicture));
 
 		// end-user-code
 		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
-	 * <p>
 	 * This operation returns the hashcode value of the ICEObject.
-	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @return <p>
-	 *         The hashcode for the ICEResource.
-	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
+	 * @return The hashcode for the ICEResource.
 	 */
 	public int hashCode() {
 		// begin-user-code
@@ -512,14 +471,12 @@ public class ICEResource extends ICEObject {
 
 		// Compute hashcode from ICEResource data
 		hash = 31 * hash + super.hashCode();
-		hash = 31 * hash
-				+ (null == this.file ? 0 : this.file.hashCode());
-		hash = 31 * hash
-				+ (null == this.path ? 0 : this.path.hashCode());
-//		hash = 31 * hash
-//				+ (null == this.file.toString() ? 0 : this.file.hashCode());
-//		hash = 31 * hash
-//				+ (null == this.path.toString() ? 0 : this.path.hashCode());
+		hash = 31 * hash + (null == this.file ? 0 : this.file.hashCode());
+		hash = 31 * hash + (null == this.path ? 0 : this.path.hashCode());
+		// hash = 31 * hash
+		// + (null == this.file.toString() ? 0 : this.file.hashCode());
+		// hash = 31 * hash
+		// + (null == this.path.toString() ? 0 : this.path.hashCode());
 		hash = 31 * hash + this.properties.hashCode();
 		hash = 31 * hash + (!this.isPicture ? 0 : 1);
 
