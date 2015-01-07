@@ -143,7 +143,12 @@ public class EMFComponentTester {
 
 		docRoot.setNextChild(shipOrder);
 		assertEquals(1, docRoot.getNumberOfChildren());
-
+		
+		// Test that we can only add 1 shiporder
+		docRoot.setNextChild(shipOrder);
+		assertEquals(1, docRoot.getNumberOfChildren());
+		
+		
 		assertEquals(1, shipOrder.getNumberOfDataNodes());
 		DataComponent component = (DataComponent) shipOrder.getActiveDataNode();
 		assertEquals("ShiporderType Data", component.getName());
@@ -152,10 +157,12 @@ public class EMFComponentTester {
 				.getName());
 		assertEquals("orderid", component.retrieveAllEntries().get(1).getName());
 		assertTrue(component.retrieveEntry("orderperson").setValue("McCaskey"));
+		assertTrue(component.retrieveEntry("orderid").setValue(""));
+
 
 		// Check the first child of RootNode's tree structure
 		EMFTreeComposite shipTo = (EMFTreeComposite) shipOrder
-				.getChildExemplars().get(0).clone();
+				.getChildExemplars().get(0).clone(); // HERE ITS NOT 1 Index BC OUR CHILD EXEMPLAR LIST IS DYNAMIC
 		assertEquals(0, shipOrder.getNumberOfChildren());
 		shipOrder.setNextChild(shipTo);
 		assertEquals(1, shipOrder.getNumberOfChildren());
@@ -171,9 +178,10 @@ public class EMFComponentTester {
 		assertTrue(component.retrieveEntry("city").setValue("city"));
 		assertTrue(component.retrieveEntry("country").setValue("country"));
 
+		System.out.println("SETTING NEXT ITEM CHILD");
 		// Check the second child of RootNode's tree structure
 		TreeComposite item = (EMFTreeComposite) shipOrder.getChildExemplars()
-				.get(1).clone();
+				.get(0).clone();
 		shipOrder.setNextChild(item);
 		assertEquals(2, shipOrder.getNumberOfChildren());
 		assertEquals("ItemType", item.getName());
@@ -188,7 +196,7 @@ public class EMFComponentTester {
 		assertTrue(component.retrieveEntry("price").setValue("0.0"));
 
 		EMFTreeComposite anotherItem = (EMFTreeComposite) shipOrder
-				.getChildExemplars().get(1).clone();
+				.getChildExemplars().get(0).clone();
 		shipOrder.setNextChild(anotherItem);
 		assertEquals(3, shipOrder.getNumberOfChildren());
 		assertEquals("ItemType", anotherItem.getName());
@@ -212,7 +220,7 @@ public class EMFComponentTester {
 	 * </p>
 	 * <!-- end-UML-doc -->
 	 */
-	@Test
+	@Ignore
 	public void checkBatML() {
 		// Local Declarations
 		String separator = System.getProperty("file.separator");
@@ -307,6 +315,14 @@ public class EMFComponentTester {
 							Charset.defaultCharset());
 			ArrayList<String> actualFileContents = (ArrayList<String>) Files
 					.readAllLines(Paths.get(filePath), Charset.defaultCharset());
+			System.out.println("\n");
+			for (String s : actualFileContents) {
+				System.out.println(s);
+			}
+			System.out.println("\n");
+			for (String s : exptectedFileContents) {
+				System.out.println(s);
+			}
 			assertTrue(actualFileContents.equals(exptectedFileContents));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -326,6 +342,7 @@ public class EMFComponentTester {
 		String separator = System.getProperty("file.separator");
 		String userDir = System.getProperty("user.home") + separator
 				+ "ICETests" + separator + "datastructuresData";
+		String filePath = userDir + separator + "shiporder.xsd";
 		String expectedFilePath = userDir + separator
 				+ "expectedShipOrderSave.xml";
 		File loadFile = new File(expectedFilePath);
@@ -486,7 +503,7 @@ public class EMFComponentTester {
 	/**
 	 * <!-- begin-UML-doc -->
 	 * <p>
-	 * This operation checks the ability of the DataComponent to persist itself
+	 * This operation checks the ability of the EMFComponent to persist itself
 	 * to XML and to load itself from an XML input stream.
 	 * </p>
 	 * <!-- end-UML-doc -->
@@ -524,7 +541,7 @@ public class EMFComponentTester {
 
 		assertNotNull(outputStream);
 		String xmlFile2 = new String(outputStream.toByteArray());
-		System.err.println(xmlFile2);
+		System.out.println(xmlFile2);
 
 		// convert information inside of outputStream to inputStream
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(
@@ -534,8 +551,10 @@ public class EMFComponentTester {
 		EMFComponent loadEMF = new EMFComponent();
 		loadEMF = (EMFComponent) xmlHandler.read(classList, inputStream);
 
+		
+		
 		// Check contents -- Why was this commented out? ~JJB 20141223 16:57
-		//assertTrue(loadEMF.equals(emfComponent));
+		assertTrue(loadEMF.equals(emfComponent));
 
 	}
 }

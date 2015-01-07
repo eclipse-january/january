@@ -50,12 +50,12 @@ import org.xml.sax.SAXException;
  * The EMFComponent is a realization of the Component interface that
  * encapsulates the data in an Eclipse Modeling Framework (EMF) Ecore model
  * tree. EMFComponent takes a valid XML schema file (*.xsd) and generates an
- * Ecore model using a specialization of the EMF utility class, XMLProcessor.
- * This Ecore model is then mapped to an EMFTreeComposite, a subclass of
- * TreeComposite that keeps track of a given Ecore tree node's structural
- * EAttribute features and keeps the Ecore model updated upon user modification
- * to those attributes. EMFComponent provides serialization and de-serialization
- * routines for the encapsulated XML resource.
+ * Ecore model using the EMF utility class, XMLProcessor. This Ecore model is
+ * then mapped to an EMFTreeComposite, a subclass of TreeComposite that keeps
+ * track of a given Ecore tree node's structural EAttribute features and keeps
+ * the Ecore model updated upon user modification to those attributes.
+ * EMFComponent provides serialization and de-serialization routines for the
+ * encapsulated XML resource.
  * 
  * @author Alex McCaskey
  */
@@ -64,30 +64,23 @@ public class EMFComponent extends ICEObject implements Component {
 
 	/**
 	 * Reference to the EMFTreeComposite which provides a representation of the
-	 * Ecore model that the ICE Form Editor expects and can visualization for
-	 * user manipulation. This tree represents DocumentRoot in the EMF tree, so
-	 * it should only have 1 child.
+	 * Ecore model that the ICE UI expects and can visualization for user
+	 * manipulation. This tree represents DocumentRoot in the EMF tree, so it
+	 * should only have 1 child.
 	 * 
 	 */
 	@XmlElement(name = "EMFTreeComposite")
 	private EMFTreeComposite iceEMFTree;
 
 	/**
-	 * Reference to the specialized XMLProcessor that is used to read and write
-	 * the EMFComponent's XML Resource.
+	 * Reference to the XMLProcessor that is used to read and write the
+	 * EMFComponent's XML Resource.
 	 * 
 	 */
 	private XMLProcessor xmlProcessor;
 
 	/**
-	 * Reference to the root EObject in the Ecore model tree. This node
-	 * corresponds to DocumentRoot in the XML tree.
-	 * 
-	 */
-	private EObject documentRoot;
-
-	/**
-	 * Reference to the EMF Resource that contains the Ecore domain model.
+	 * Reference to the EMF XML Resource that contains the Ecore domain model.
 	 * 
 	 */
 	private XMLResource xmlResource;
@@ -105,15 +98,16 @@ public class EMFComponent extends ICEObject implements Component {
 	/**
 	 * The constructor, takes a Java file pointing to the XML schema model.
 	 * 
+	 * @param file The XML Schema
 	 */
 	public EMFComponent(File file) {
 		super();
 
 		// Initialize class data
 		iceEMFTree = new EMFTreeComposite();
-		// eObjectRegistry = new HashMap<EObject, EMFTreeComposite>();
 		xmlResource = new XMLResourceImpl();
 
+		// Make sure we have a valid File object.
 		if (file != null) {
 			// Create a new XMLProcessor to be used in creating
 			// and persisting XML Resources
@@ -125,8 +119,6 @@ public class EMFComponent extends ICEObject implements Component {
 			}
 
 			// Get the package containing the model
-			// FIXME for now should just be the only
-			// element in the package registry
 			EPackage ePackage = (EPackage) xmlProcessor.getEPackageRegistry()
 					.values().toArray()[0];
 
@@ -142,11 +134,12 @@ public class EMFComponent extends ICEObject implements Component {
 					EClass eClass = (EClass) obj;
 					// Add the new EMFTreeComposite corresponding to the current
 					// EClass instance to the mapping
-					if (eClass.getName().equals("DocumentRoot")) {
+					if ("DocumentRoot".equals(eClass.getName())) {
 						// This will give us a root node, and the constructor
 						// will take care of constructing possible exemplar
 						// children nodes.
 						iceEMFTree = new EMFTreeComposite(eClass);
+						break;
 					}
 				}
 			}
@@ -159,52 +152,17 @@ public class EMFComponent extends ICEObject implements Component {
 	 * Return the generated EMFTreeComposite that represents the Ecore domain
 	 * model.
 	 * 
+	 * @return
 	 */
 	public TreeComposite getEMFTreeComposite() {
 		return iceEMFTree;
 	}
 
 	/**
-	 * Save the XMLResource to System.out. This is mainly for debugging.
-	 */
-	public boolean save() {
-
-		// Create a new XMLResource and add the Ecore model to it
-		xmlResource.getContents().clear();
-		if (iceEMFTree.getEcoreNode() != null) {
-			xmlResource.getContents().add(iceEMFTree.getEcoreNode());
-
-			// Write to standard out
-			try {
-				xmlProcessor.save(System.out, xmlResource, null);
-			} catch (IOException e) {
-				e.printStackTrace();
-				return false;
-			}
-			return true;
-		} else {
-			return true;
-		}
-	}
-
-	/**
-	 * Save the XMLResource to a java.lang.String
-	 * 
-	 */
-	public String saveToString() {
-		String retString = null;
-		try {
-			retString = xmlProcessor.saveToString(xmlResource, null);
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
-		return retString;
-	}
-
-	/**
 	 * Save the XMLResource to the given Java File.
 	 * 
+	 * @param saveFile
+	 * @return
 	 */
 	public boolean save(File saveFile) {
 
@@ -248,6 +206,8 @@ public class EMFComponent extends ICEObject implements Component {
 	}
 
 	/**
+	 * Load the XML file with a given XML schema. This method should be used 
+	 * in conjuction with the nullary constructor. 
 	 * 
 	 * @param schema
 	 * @param file
@@ -268,11 +228,15 @@ public class EMFComponent extends ICEObject implements Component {
 	}
 
 	/**
- 	 * Load the given File as an XMLResource.
+	 * Load the given File as an XMLResource.
+	 * 
 	 * @param file
 	 * @return
 	 */
 	public boolean load(File file) {
+
+		// Local Declarations
+		EObject documentRoot = null;
 
 		if (xmlProcessor != null) {
 			try {
@@ -292,9 +256,7 @@ public class EMFComponent extends ICEObject implements Component {
 
 		if (documentRoot != null) {
 			iceEMFTree = new EMFTreeComposite(documentRoot);
-			iceEMFTree.createExemplarsBasedOnEClass();
 			mapToEMFTreeComposite(documentRoot.eContents().get(0), iceEMFTree);
-			iceEMFTree.canModifyEcore(true);
 		} else {
 			return false;
 		}
@@ -302,14 +264,18 @@ public class EMFComponent extends ICEObject implements Component {
 		return true;
 	}
 
+	/**
+	 * This private method recursively walks the EObject tree and creates 
+	 * a EMFTreeComposite representing the XML data. 
+	 * 
+	 * @param rootNode
+	 * @param parent
+	 */
 	private void mapToEMFTreeComposite(EObject rootNode, EMFTreeComposite parent) {
 
 		// Get the EClass Meta Data and
 		// this EObject's children
-		EClass eClass = rootNode.eClass();
 		EList<EObject> subChildren = rootNode.eContents();
-		ArrayList<EClass> unBoundedNodes = new ArrayList<EClass>();
-		EPackage p = null;
 
 		// If we have no children, then create a EMFTreeComposite
 		// representing rootNode and set it as the child of
@@ -322,21 +288,10 @@ public class EMFComponent extends ICEObject implements Component {
 
 			// Create a EMFTreeComposite for this rootNode EObject
 			EMFTreeComposite thisTreeNode = new EMFTreeComposite(rootNode);
-			thisTreeNode.createExemplarsBasedOnEClass();
 
 			// Loop over its children to map from Ecore to EMFTreeComposite
 			for (EObject obj : subChildren) {
 				mapToEMFTreeComposite(obj, thisTreeNode);
-			}
-
-			// At this point thisTreeNode has children presumably
-			// So we can add exemplars here. Loop over all this
-			// EObject's EReferences and add to the list those that
-			// are unbounded, they will become child exemplars
-			for (EReference ref : eClass.getEAllReferences()) {
-				if (ref.getUpperBound() == -1) {
-					unBoundedNodes.add(ref.getEReferenceType());
-				}
 			}
 
 			// Set thisTreeNode as the child of the incoming
@@ -373,24 +328,10 @@ public class EMFComponent extends ICEObject implements Component {
 		// At this point, other object must be a EMFComponent, so cast it
 		EMFComponent castedComponent = (EMFComponent) otherEMFComponent;
 
-		// // Not checking domainModelFile or XMLResource because I think two
-		// // EMFComponents can be equal even if they are from different sources
-		//
-		// EcoreUtil.EqualityHelper equalityHelper = new
-		// EcoreUtil.EqualityHelper();
-		// System.out.println("EqualityHelper: " +
-		// String.valueOf(equalityHelper.equals(castedComponent.documentRoot,
-		// documentRoot)));
-		// System.out.println("Trees: " +
-		// String.valueOf(castedComponent.iceEMFTree.equals(iceEMFTree)));
-		// System.out.println("DIFS: " +
-		// compare(castedComponent.xmlResource.getResourceSet(),
-		// xmlResource.getResourceSet()));
-
-		// FIXME EQUALITY HERE IS DIFFICULT, ECOREUTILS.equals?
-		// FIXME For now assume that if the TreeComposites are equal,
+		// For now assume that if the TreeComposites are equal,
 		// the two EMFComponents are equal
 		if (!castedComponent.iceEMFTree.equals(iceEMFTree)) {
+			System.out.println("Trees were not equal!");
 			return false;
 		}
 
@@ -421,6 +362,8 @@ public class EMFComponent extends ICEObject implements Component {
 	/**
 	 * This operation performs a deep copy of the attributes of another
 	 * EMFComponent into the current EMFComponent.
+	 * 
+	 * @param otherEMFComponent
 	 */
 	public void copy(EMFComponent otherEMFComponent) {
 		// begin-user-code
@@ -435,9 +378,6 @@ public class EMFComponent extends ICEObject implements Component {
 			// FIXME ECOREUTILS
 			iceEMFTree.copy(otherEMFComponent.iceEMFTree);
 			// documentRoot = EcoreUtil.copy(otherEMFComponent.documentRoot);
-
-			// FIX THIS
-			// xmlResource = otherEMFComponent.xmlResource;
 
 			notifyListeners();
 		}
@@ -463,6 +403,47 @@ public class EMFComponent extends ICEObject implements Component {
 	@Override
 	public void accept(IComponentVisitor visitor) {
 		visitor.visit(this);
+	}
+
+	/**
+	 * Save the XMLResource to System.out. This is mainly for debugging.
+	 * 
+	 * @return
+	 */
+	public boolean save() {
+
+		// Create a new XMLResource and add the Ecore model to it
+		// xmlResource.getContents().clear();
+		if (iceEMFTree.getEcoreNode() != null) {
+			xmlResource.getContents().add(iceEMFTree.getEcoreNode());
+
+			// Write to standard out
+			try {
+				xmlProcessor.save(System.out, xmlResource, null);
+			} catch (IOException e) {
+				e.printStackTrace();
+				return false;
+			}
+			return true;
+		} else {
+			return true;
+		}
+	}
+
+	/**
+	 * Save the XMLResource to a java.lang.String
+	 * 
+	 * @return
+	 */
+	public String saveToString() {
+		String retString = null;
+		try {
+			retString = xmlProcessor.saveToString(xmlResource, null);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return retString;
 	}
 
 }

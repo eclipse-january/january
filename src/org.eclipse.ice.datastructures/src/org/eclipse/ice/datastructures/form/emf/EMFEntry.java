@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.ice.datastructures.form.Entry;
 
 /**
- * EMFEntry is a subclass of Entry that modifies a corresponding EAttribute
+ * EMFEntry is a subclass of Entry that modifies a unique EAttribute
  * instance each time its value is changed.
  * 
  * @author Alex McCaskey
@@ -71,19 +71,6 @@ public class EMFEntry extends Entry {
 		containingEcoreNode = ecoreNode;
 		setName(entryMetaData.getName());
 		typeName = attribute.getEType().getInstanceClassName();
-
-		// Initialize this EAttribute on the containing Ecore node
-		if (containingEcoreNode != null) {
-			if (typeName.equals("java.lang.String")) {
-				containingEcoreNode.eSet(entryMetaData, "");
-			} else if (typeName.equals("java.math.BigInteger")) {
-				BigInteger b = new BigInteger("0");
-				containingEcoreNode.eSet(entryMetaData, b);
-			} else if (typeName.equals("java.math.BigDecimal")) {
-				BigDecimal d = new BigDecimal(0.0);
-				containingEcoreNode.eSet(entryMetaData, d);
-			}
-		}
 	}
 
 	/**
