@@ -29,7 +29,7 @@ import ca.odell.glazedlists.gui.TableFormat;
 public interface IElementSource<T> {
 
 	/**
-	 * This operation returns the list of elements that should be used to select
+	 * This operation returns the list of candidates that should be used to select
 	 * new elements to add to the ListComponent.
 	 * 
 	 * @return The element candidates

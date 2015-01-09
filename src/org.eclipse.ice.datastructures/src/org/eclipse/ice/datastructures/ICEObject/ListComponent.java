@@ -479,6 +479,17 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	};
 
 	/**
+	 * This operation sets the element source that should be used by the list
+	 * 
+	 * @param source
+	 *            the element source that provides a list of values that
+	 *            *should* be used to seed new entries.
+	 */
+	public void setElementSource(IElementSource<T> source) {
+		elementSource = source;
+	}
+
+	/**
 	 * This operation returns the element source which should be used to create
 	 * new elements to add to the list.
 	 * 

@@ -421,13 +421,23 @@ public class ListComponentTester implements IElementSource<Integer>,
 	public void checkElementSource() {
 
 		// Create a new AdaptiveTreeComposite to visit
-		ListComponent<Integer> component = new ListComponent<Integer>(this);
+		component = new ListComponent<Integer>(this);
 
 		// Check that the component received the IElementSource and that it
 		// returns the correct one.
 		IElementSource<Integer> source = component.getElementSource();
 		assertNotNull(source);
 		assertTrue(source == this);
+		
+		// Try it again using the setter
+		component = new ListComponent<Integer>();
+		component.setElementSource(this);
+		source = null;
+		source = component.getElementSource();
+		assertNotNull(source);
+		assertTrue(source == this);
+		
+		return;		
 	}
 
 	/**
