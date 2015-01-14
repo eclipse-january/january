@@ -64,6 +64,11 @@ import ca.odell.glazedlists.gui.WritableTableFormat;
  * the suggested base class for extensions to GlazedLists instead of
  * AbstractEventList, so we will have to live with this for now.
  * 
+ * I also had to override the ListEventListener registration operations to make
+ * sure that the source list was registered. The TransformedList by defaults
+ * registers listeners against itself, not the source, but it processes all of
+ * the list additions, etc., through the source.
+ * 
  * @author Jay Jay Billings
  * 
  */
@@ -523,6 +528,38 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	 */
 	public WritableTableFormat<T> getTableFormat() {
 		return tableFormat;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ca.odell.glazedlists.AbstractEventList#addListEventListener(ca.odell.
+	 * glazedlists.event.ListEventListener)
+	 */
+	@Override
+	public void addListEventListener(
+			ListEventListener<? super T> listChangeListener) {
+		// Make sure that the listener is registered with this list
+		super.addListEventListener(listChangeListener);
+		// And the source
+		source.addListEventListener(listChangeListener);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ca.odell.glazedlists.AbstractEventList#removeListEventListener(ca.odell
+	 * .glazedlists.event.ListEventListener)
+	 */
+	@Override
+	public void removeListEventListener(
+			ListEventListener<? super T> listChangeListener) {
+		// Make sure that the listener is unregistered with this list
+		super.removeListEventListener(listChangeListener);
+		// And the source
+		source.removeListEventListener(listChangeListener);
 	}
 
 }

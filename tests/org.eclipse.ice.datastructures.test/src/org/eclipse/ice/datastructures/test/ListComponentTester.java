@@ -29,6 +29,8 @@ import org.eclipse.ice.datastructures.componentVisitor.SelectiveComponentVisitor
 import org.junit.*;
 
 import ca.odell.glazedlists.EventList;
+import ca.odell.glazedlists.event.ListEvent;
+import ca.odell.glazedlists.event.ListEventListener;
 import ca.odell.glazedlists.gui.TableFormat;
 import ca.odell.glazedlists.gui.WritableTableFormat;
 
@@ -44,7 +46,7 @@ import ca.odell.glazedlists.gui.WritableTableFormat;
  * @author Jay Jay Billings
  */
 public class ListComponentTester implements IElementSource<Integer>,
-		WritableTableFormat<Integer> {
+		WritableTableFormat<Integer>, ListEventListener<Integer> {
 
 	/**
 	 * A flag to mark whether or not visitation worked.
@@ -57,6 +59,12 @@ public class ListComponentTester implements IElementSource<Integer>,
 	 * can be tested.
 	 */
 	private ListComponent component;
+
+	/**
+	 * True if the test was notified via the GlazedLists ListEventListener
+	 * interface instead of the ICE interface.
+	 */
+	private volatile boolean notified = false;
 
 	/**
 	 * <!-- begin-UML-doc -->
@@ -352,7 +360,10 @@ public class ListComponentTester implements IElementSource<Integer>,
 		TestComponentListener secondListener = new TestComponentListener();
 
 		// Setup the component
-		component = new ListComponent();
+		component = new ListComponent<Integer>();
+
+		// Register this test as a ListEventListener
+		component.addListEventListener(this);
 
 		// Register the listener
 		component.register(firstListener);
@@ -385,6 +396,23 @@ public class ListComponentTester implements IElementSource<Integer>,
 		component.setDescription("New description");
 		// Make sure the listener was notified
 		assertTrue(firstListener.wasNotified());
+
+		// Reset the listener
+		firstListener.reset();
+		// Try adding an element
+		component.add(88);
+		assertTrue(firstListener.wasNotified());
+		assertTrue(notified);
+
+		// Unregister as a ListEventListener.
+		component.removeListEventListener(this);
+		// Reset the notification flag and then add another element to force an
+		// update.
+		notified = false;
+		component.add(888);
+		// Make sure we didn't receive a notification through the
+		// ListEventListener interface.
+		assertFalse(notified);
 
 		return;
 		// end-user-code
@@ -428,7 +456,7 @@ public class ListComponentTester implements IElementSource<Integer>,
 		IElementSource<Integer> source = component.getElementSource();
 		assertNotNull(source);
 		assertTrue(source == this);
-		
+
 		// Try it again using the setter
 		component = new ListComponent<Integer>();
 		component.setElementSource(this);
@@ -436,8 +464,8 @@ public class ListComponentTester implements IElementSource<Integer>,
 		source = component.getElementSource();
 		assertNotNull(source);
 		assertTrue(source == this);
-		
-		return;		
+
+		return;
 	}
 
 	/**
@@ -499,6 +527,13 @@ public class ListComponentTester implements IElementSource<Integer>,
 	public Integer setColumnValue(Integer baseObject, Object editedValue,
 			int column) {
 		return 4;
+	}
+
+	@Override
+	public void listChanged(ListEvent<Integer> listChanges) {
+		System.out.println("ListComponentTester Message: "
+				+ "ListEventListener callback executed.");
+		notified = true;
 	}
 
 }
