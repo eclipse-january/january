@@ -29,30 +29,26 @@ import ca.odell.glazedlists.event.ListEventListener;
 import ca.odell.glazedlists.gui.WritableTableFormat;
 
 /**
- * This is an abstract base class for Components that are based on lists. Its
- * primary purpose is to provide all of the standard list operations expected
- * from the Java Collections in a class that realizes ICE's additional
- * requirements for persistence and unique identification.
+ * This is a base class for Components that are based on lists. Its primary
+ * purpose is to provide all of the standard list operations expected from Java
+ * Collections in a class that realizes ICE's additional requirements for
+ * persistence, unique identification, and notifications.
  * 
- * It implements both the Component and Persistable interfaces to match up with
- * the ICE requirements and extends the TransformedList from GlazedLists to
- * provide the generic, observable list capabilities.
- * 
- * It provides a base implementation for most of the capabilities it provides,
- * although it must be subclassed to handle certain specific operations such as
- * loading from XML and cloning.
+ * It implements the Component to match up with the ICE requirements and extends
+ * the TransformedList from GlazedLists to provide the generic, observable list
+ * capabilities.
  * 
  * It can be configured to provide a handle to an IElementSource that will
  * provide valid, new elements upon request. This configuration is meant to
- * facilitate the use of the ListComponent as a, for instance, proxy for
+ * facilitate the use of the ListComponent as a, for example, proxy for
  * selections made from databases or similar tools. If getElementSource()
  * returns null, clients should feel free to put whatever values they want into
  * the List.
  * 
  * This class also realizes the WritableTableFormat interface from GlazedLists
- * so that it simply be "dropped in" to GlazedList tables in client UIs. This is
- * handled using delegation instead of inheritance so that the format can be
- * easily changed without re-initializing the list. Alternatively, the
+ * so that it can simply be "dropped in" to GlazedList tables in client UIs.
+ * This is handled using delegation instead of inheritance so that the format
+ * can be easily changed without re-initializing the list. Alternatively, the
  * WritableTableFormat can just be retrieved with a getter too. If the table
  * format is not provided, the behavior is unspecified, but this Component
  * should probably not be put in a Form in that case.
@@ -61,11 +57,12 @@ import ca.odell.glazedlists.gui.WritableTableFormat;
  * 
  * Unfortunately, there are some tricky implementation details here related to
  * extending TransformedList. The point of a TransformedList is to sit on top of
- * a source list and manipulate it so it is a wrapper around another list. This
- * means that in the implementation of this class any work to register listeners
- * or manipulate the list should be done to the source list, not "this" list.
- * TransformedList is the suggested base class for extensions to GlazedLists
- * instead of AbstractEventList, so we will live with this for now.
+ * a source list and manipulate it so it is a wrapper around another list,
+ * facilitating transformations to that list. This means that in the
+ * implementation of this class any work to register listeners or manipulate the
+ * list should be done to the source list, not "this" list. TransformedList is
+ * the suggested base class for extensions to GlazedLists instead of
+ * AbstractEventList, so we will have to live with this for now.
  * 
  * @author Jay Jay Billings
  * 
