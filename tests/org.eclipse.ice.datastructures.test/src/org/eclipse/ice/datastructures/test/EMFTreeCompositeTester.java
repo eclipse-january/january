@@ -145,6 +145,9 @@ public class EMFTreeCompositeTester {
 
 	}
 
+	/**
+	 * Test that we can properly get correct child exemplars
+	 */
 	@Test
 	public void checkGetChildExemplars() {
 		EMFTreeComposite docRoot = trees.get(0);
@@ -226,8 +229,6 @@ public class EMFTreeCompositeTester {
 
 		clonedOrder.removeChild(anotherClonedItem);
 		assertEquals(2, clonedOrder.getNumberOfChildren());
-
-		docRoot.printEcoreTree(processor);
 
 		return;
 		// end-user-code

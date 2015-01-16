@@ -23,8 +23,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.ice.datastructures.form.Entry;
 
 /**
- * EMFEntry is a subclass of Entry that modifies a unique EAttribute
- * instance each time its value is changed.
+ * EMFEntry is a subclass of Entry that modifies a unique EAttribute instance
+ * each time its value is changed.
  * 
  * @author Alex McCaskey
  * 
@@ -71,38 +71,61 @@ public class EMFEntry extends Entry {
 		containingEcoreNode = ecoreNode;
 		setName(entryMetaData.getName());
 		typeName = attribute.getEType().getInstanceClassName();
+
+		Object initialValue = containingEcoreNode.eGet(entryMetaData);
+
+		if (initialValue != null && typeName != null) {
+
+			try {
+			if (typeName.equals("java.math.BigInteger")) {
+				BigInteger b = (BigInteger) initialValue;
+				setValue(b.toString());
+			} else if (typeName.equals("java.math.BigDecimal")) {
+				BigDecimal d = (BigDecimal) initialValue;
+				setValue(d.toString());
+			} else if (typeName.equals("java.lang.String")){
+				setValue((String) initialValue);
+			} /*else {
+				throw new IllegalArgumentException(
+						"Unsupported Data Type for the EMFEntry.");
+			}*/
+			} catch (ClassCastException e) {
+				return;
+			}
+		}
+
 	}
 
 	/**
 	 * The constructor
 	 * 
 	 */
-	public EMFEntry(EAttribute attribute, EObject ecoreNode,
-			boolean initializeDefaultValues) {
-		super();
-		// Set the data
-		entryMetaData = attribute;
-		containingEcoreNode = ecoreNode;
-		setName(entryMetaData.getName());
-		typeName = attribute.getEType().getInstanceClassName();
-
-		if (containingEcoreNode != null) {
-			if (typeName != null && initializeDefaultValues
-					&& entryMetaData.getUpperBound() != -1) {
-				// Initialize this EAttribute on the containing Ecore node
-				if (typeName.equals("java.lang.String")) {
-					// System.out.println(entryMetaData.getName());
-					containingEcoreNode.eSet(entryMetaData, "");
-				} else if (typeName.equals("java.math.BigInteger")) {
-					BigInteger b = new BigInteger("0");
-					containingEcoreNode.eSet(entryMetaData, b);
-				} else if (typeName.equals("java.math.BigDecimal")) {
-					BigDecimal d = new BigDecimal(0.0);
-					containingEcoreNode.eSet(entryMetaData, d);
-				}
-			}
-		}
-	}
+//	public EMFEntry(EAttribute attribute, EObject ecoreNode,
+//			boolean initializeDefaultValues) {
+//		super();
+//		// Set the data
+//		entryMetaData = attribute;
+//		containingEcoreNode = ecoreNode;
+//		setName(entryMetaData.getName());
+//		typeName = attribute.getEType().getInstanceClassName();
+//
+//		if (containingEcoreNode != null) {
+//			if (typeName != null && initializeDefaultValues
+//					&& entryMetaData.getUpperBound() != -1) {
+//				// Initialize this EAttribute on the containing Ecore node
+//				if (typeName.equals("java.lang.String")) {
+//					// System.out.println(entryMetaData.getName());
+//					containingEcoreNode.eSet(entryMetaData, "");
+//				} else if (typeName.equals("java.math.BigInteger")) {
+//					BigInteger b = new BigInteger("0");
+//					containingEcoreNode.eSet(entryMetaData, b);
+//				} else if (typeName.equals("java.math.BigDecimal")) {
+//					BigDecimal d = new BigDecimal(0.0);
+//					containingEcoreNode.eSet(entryMetaData, d);
+//				}
+//			}
+//		}
+//	}
 
 	/**
 	 * This method overrides Entry.setValue to additionally modify the
@@ -160,7 +183,7 @@ public class EMFEntry extends Entry {
 	public Object clone() {
 		// begin-user-code
 		EMFEntry entry = new EMFEntry(entryMetaData,
-				EcoreUtil.create(entryMetaData.getEContainingClass()), false);
+				EcoreUtil.create(entryMetaData.getEContainingClass()));
 		entry.copy(this);
 		return entry;
 		// end-user-code

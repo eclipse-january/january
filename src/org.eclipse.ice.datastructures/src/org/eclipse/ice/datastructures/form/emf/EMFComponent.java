@@ -77,12 +77,14 @@ public class EMFComponent extends ICEObject implements Component {
 	 * EMFComponent's XML Resource.
 	 * 
 	 */
+	@XmlTransient
 	private XMLProcessor xmlProcessor;
 
 	/**
 	 * Reference to the EMF XML Resource that contains the Ecore domain model.
 	 * 
 	 */
+	@XmlTransient
 	private XMLResource xmlResource;
 
 	/**
@@ -190,6 +192,8 @@ public class EMFComponent extends ICEObject implements Component {
 				// Direct the XMLProcessor to save the Resource
 				xmlProcessor.save(outputStream, xmlResource, null);
 
+				outputStream.close();
+				
 				// Indicate success
 				return true;
 			} else {
@@ -277,6 +281,7 @@ public class EMFComponent extends ICEObject implements Component {
 		// this EObject's children
 		EList<EObject> subChildren = rootNode.eContents();
 
+		// System.out.println("We have " + subChildren.size() + " children.");
 		// If we have no children, then create a EMFTreeComposite
 		// representing rootNode and set it as the child of
 		// the incoming parent
@@ -288,7 +293,7 @@ public class EMFComponent extends ICEObject implements Component {
 
 			// Create a EMFTreeComposite for this rootNode EObject
 			EMFTreeComposite thisTreeNode = new EMFTreeComposite(rootNode);
-
+			//System.out.println("Created the " + thisTreeNode.getName() + " tree.");
 			// Loop over its children to map from Ecore to EMFTreeComposite
 			for (EObject obj : subChildren) {
 				mapToEMFTreeComposite(obj, thisTreeNode);
@@ -296,6 +301,9 @@ public class EMFComponent extends ICEObject implements Component {
 
 			// Set thisTreeNode as the child of the incoming
 			// parent
+			if (parent.getName().equals("ModelDBType")) {
+				System.out.println("Setting " + thisTreeNode.getName() + " as a child of " + parent.getName());
+			}
 			parent.setNextChild(thisTreeNode);
 		}
 
@@ -331,10 +339,10 @@ public class EMFComponent extends ICEObject implements Component {
 		// For now assume that if the TreeComposites are equal,
 		// the two EMFComponents are equal
 		if (!castedComponent.iceEMFTree.equals(iceEMFTree)) {
-			System.out.println("Trees were not equal!");
+			System.out.println("TREES NOT EQUAL");
 			return false;
 		}
-
+		
 		// If made it here, these EMFComponents are Equal
 		// Return true
 		return true;

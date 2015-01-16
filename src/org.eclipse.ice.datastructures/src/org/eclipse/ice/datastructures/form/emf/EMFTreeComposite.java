@@ -15,6 +15,7 @@ package org.eclipse.ice.datastructures.form.emf;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -44,9 +45,9 @@ import org.eclipse.ice.datastructures.form.emf.EMFEntry;
  * 
  * The EMFTreeComposite is a subclass of TreeComposite that represents a node in
  * an Eclipse Modeling Framework Ecore model tree. To do that, it takes as input
- * the EClass metadata representing the corresponding model tree node, and from that
- * creates an actual EObject instance. From this data, the EMFTreeComposite can
- * construct an active data node (DataComponent) that contains EMFEntries
+ * the EClass metadata representing the corresponding model tree node, and from
+ * that creates an actual EObject instance. From this data, the EMFTreeComposite
+ * can construct an active data node (DataComponent) that contains EMFEntries
  * corresponding to the EAttributes within the EClass metadata's
  * EStructuralFeatures. This data node can then be shown to the users in the
  * same way a regular TreeComposite does.
@@ -82,7 +83,11 @@ public class EMFTreeComposite extends TreeComposite {
 	@XmlTransient
 	private EClass ecoreNodeMetaData;
 
-	// private boolean canModifyEcore = true;
+	/**
+	 * 
+	 */
+	@XmlTransient
+	private boolean loadedFromEObject = false;
 
 	/**
 	 * The nullary-constructor
@@ -92,6 +97,7 @@ public class EMFTreeComposite extends TreeComposite {
 		super();
 		setName("Null Constructed EMFTreeComposite");
 		setDescription(toString());
+		//setId(new Random(System.currentTimeMillis()).nextInt());
 		return;
 	}
 
@@ -108,11 +114,12 @@ public class EMFTreeComposite extends TreeComposite {
 			ecoreNode = EcoreUtil.create(ecoreNodeMetaData);
 			setName(ecoreNodeMetaData.getName());
 			setDescription(toString());
+			//setId(new Random(System.currentTimeMillis()).nextInt());
 
 			// Create the active DataComponent
 			createActiveDataNode();
 		}
-		
+
 		return;
 	}
 
@@ -128,6 +135,9 @@ public class EMFTreeComposite extends TreeComposite {
 		ecoreNodeMetaData = ecoreNode.eClass();
 		setName(ecoreNodeMetaData.getName());
 		setDescription(toString());
+		//setId(new Random(System.currentTimeMillis()).nextInt());
+
+		loadedFromEObject = true;
 
 		// Create the active DataComponent
 		createActiveDataNode();
@@ -171,9 +181,9 @@ public class EMFTreeComposite extends TreeComposite {
 	}
 
 	/**
-	 * This method overrides TreeComposite.getChildExemplars to dynamically 
-	 * generate a list of exemplar children based on the EClass metadata's list 
-	 * of EReferences. 
+	 * This method overrides TreeComposite.getChildExemplars to dynamically
+	 * generate a list of exemplar children based on the EClass metadata's list
+	 * of EReferences.
 	 * 
 	 * @return
 	 */
@@ -216,8 +226,8 @@ public class EMFTreeComposite extends TreeComposite {
 				// same name as one of this tree's children, then do not add it
 				// to the exemplar list.
 				for (TreeComposite currentChild : children) {
-					if (currentChild.getName().equals(exemplar.getEReferenceType()
-							.getName())) {
+					if (currentChild.getName().equals(
+							exemplar.getEReferenceType().getName())) {
 						childExists = true;
 						break;
 					}
@@ -276,12 +286,14 @@ public class EMFTreeComposite extends TreeComposite {
 
 		// Check if we successfully added a child
 		if (currentSize == children.size()) {
+			System.out.println("Could not add " + cNode.getName()
+					+ " as child of " + getName());
 			return;
 		}
 
 		castedTree = (EMFTreeComposite) cNode;
 
-		//EObject newObj = EcoreUtil.create(castedTree.ecoreNodeMetaData);
+		// EObject newObj = EcoreUtil.create(castedTree.ecoreNodeMetaData);
 
 		// We need to figure out which child exemplar this child node
 		// corresponds to.
@@ -291,7 +303,8 @@ public class EMFTreeComposite extends TreeComposite {
 			if (exemplar.getUpperBound() != -1) {
 				ecoreNode.eSet(exemplar, castedTree.ecoreNode);
 			} else {
-				((EList<EObject>) ecoreNode.eGet(exemplar)).add(castedTree.ecoreNode);
+				((EList<EObject>) ecoreNode.eGet(exemplar))
+						.add(castedTree.ecoreNode);
 			}
 		}
 
@@ -307,7 +320,7 @@ public class EMFTreeComposite extends TreeComposite {
 
 	/**
 	 * This method returns an EReference exemplar child of this EClass node c
-	 * corresponding to the given String name. 
+	 * corresponding to the given String name.
 	 * 
 	 * @param treeName
 	 * @return
@@ -323,9 +336,9 @@ public class EMFTreeComposite extends TreeComposite {
 	}
 
 	/**
-	 * This method overrides TreeComposite.checkExemplars to use the 
-	 * overridden getChildExemplars method to see if a given TreeComposite can 
-	 * be added as a new child of this tree. 
+	 * This method overrides TreeComposite.checkExemplars to use the overridden
+	 * getChildExemplars method to see if a given TreeComposite can be added as
+	 * a new child of this tree.
 	 * 
 	 * @param cNode
 	 * @return
@@ -344,18 +357,16 @@ public class EMFTreeComposite extends TreeComposite {
 	}
 
 	/**
-	 * This method overrides TreeComposite.hasChildExemplars to use the 
-	 * overridden getChildExemplars method to return whether or not this 
-	 * tree has child exemplars. 
+	 * This method overrides TreeComposite.hasChildExemplars to use the
+	 * overridden getChildExemplars method to return whether or not this tree
+	 * has child exemplars.
+	 * 
 	 * @return
 	 */
 	@Override
 	public boolean hasChildExemplars() {
 		return !getChildExemplars().isEmpty();
 	}
-	// public void canModifyEcore(boolean canModify) {
-	// canModifyEcore = canModify;
-	// }
 
 	/**
 	 * Update the EObject node and the EMFEntries corresponding to that EObjects
@@ -394,7 +405,7 @@ public class EMFTreeComposite extends TreeComposite {
 		// Local Declarations
 		EStructuralFeature childStructuralFeature = null;
 		int currentSize = children.size();
-		
+
 		// Remove the TreeComposite from this TreeComposite
 		super.removeChild(cNode);
 
@@ -423,40 +434,10 @@ public class EMFTreeComposite extends TreeComposite {
 	 * equal and false if they are not.
 	 * 
 	 */
-//	@Override
-//	public boolean equals(Object otherTreeComposite) {
-//		// begin-user-code
-//
-//		// It is extremely difficult to check for equality
-//		// between these Ecore objects, so for now
-//		// I'm just gonna assume if the TreeComposite parts are
-//		// equal, then the EMFTreeComposites are equal.
-//		return super.equals(otherTreeComposite);
-//		// Local Declarations
-//		// boolean equalVal = false;
-//		// EMFTreeComposite tree = null;
-//		//
-//		// // Make sure we are dealing with a legitimate TreeComposite
-//		// if (otherTreeComposite != null
-//		// && (otherTreeComposite instanceof EMFTreeComposite)) {
-//		//
-//		// // See if they are the same reference
-//		// if (this == otherTreeComposite) {
-//		// equalVal = true;
-//		// } else {
-//		// tree = (EMFTreeComposite) otherTreeComposite;
-//		// equalVal = super.equals(tree) &&
-//		// EcoreUtil.equals(ecoreNode, tree.ecoreNode);
-//		// // EcoreUtil.equals(containingNode, tree.containingNode)
-//		// // && EcoreUtil
-//		// // .equals(ecoreExemplars, tree.ecoreExemplars)
-//		// // super.equals(tree);
-//		// }
-//		// }
-//		//
-//		// return equalVal;
-//		// end-user-code
-//	}
+	@Override
+	public boolean equals(Object otherTreeComposite) {
+		return super.equals(otherTreeComposite);
+	}
 
 	/**
 	 * This operation returns the hashcode value of the EMFTreeComposite. It
@@ -467,16 +448,7 @@ public class EMFTreeComposite extends TreeComposite {
 	 */
 	@Override
 	public int hashCode() {
-		// begin-user-code
-
-		// Local Declarations
-		int hash = 8;
-
-		// Compute the hashcode
-		hash = 31 * hash + super.hashCode();
-
-		return hash;
-		// end-user-code
+		return super.hashCode();
 	}
 
 	/**
@@ -487,7 +459,6 @@ public class EMFTreeComposite extends TreeComposite {
 	 * @param otherTreeComposite
 	 */
 	public void copy(EMFTreeComposite otherTreeComposite) {
-		// begin-user-code
 
 		// If null, return
 		if (otherTreeComposite == null) {
@@ -496,11 +467,10 @@ public class EMFTreeComposite extends TreeComposite {
 
 		ecoreNodeMetaData = otherTreeComposite.ecoreNodeMetaData;
 		ecoreNode = EcoreUtil.create(ecoreNodeMetaData);
-		
-		super.copy((TreeComposite) otherTreeComposite);
+
+		super.copy((TreeComposite) otherTreeComposite, true);
 
 		return;
-		// end-user-code
 	}
 
 	/**
@@ -510,32 +480,14 @@ public class EMFTreeComposite extends TreeComposite {
 	 */
 	@Override
 	public Object clone() {
-		// begin-user-code
 		// Local Declarations
 		EMFTreeComposite emfTreeComposite = new EMFTreeComposite();
-				//ecoreNodeMetaData);
 
+		// Copy this EMFTreeComposite
 		emfTreeComposite.copy(this);
 
 		// Return the tree
 		return emfTreeComposite;
-		// end-user-code
 	}
 
-	/** THIS IS FOR DEBUGGING **/
-	public void printEcoreTree(XMLProcessor processor) {
-
-		XMLResource resource = new XMLResourceImpl();
-
-		resource.getContents().add(ecoreNode);
-
-		String xmlString = "";
-		try {
-			xmlString = processor.saveToString(resource, null);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		System.out.println(xmlString);
-	}
 }
