@@ -13,7 +13,6 @@
 package org.eclipse.ice.datastructures.test;
 
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
-import org.eclipse.ice.datastructures.form.MasterDetailsPair;
 import org.eclipse.ice.datastructures.form.ResourceComponent;
 
 import static org.junit.Assert.*;
@@ -48,7 +47,7 @@ public class ResourceComponentTester {
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	private ResourceComponent resourceComponent;
+	private ResourceComponent<ICEResource> resourceComponent;
 	/**
 	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
 	 * 
@@ -85,7 +84,7 @@ public class ResourceComponentTester {
 		String description = "Bones' Quarters";
 
 		// Create the ResourceComponent
-		resourceComponent = new ResourceComponent();
+		resourceComponent = new ResourceComponent<ICEResource>();
 
 		// Set the id, name and description
 		resourceComponent.setId(id);
@@ -119,7 +118,7 @@ public class ResourceComponentTester {
 		ArrayList<ICEResource> retResources = null;
 
 		// Create the ResourceComponent
-		resourceComponent = new ResourceComponent();
+		resourceComponent = new ResourceComponent<ICEResource>();
 
 		// Create five test resources - this one themed after places where Bones
 		// lived
@@ -168,7 +167,7 @@ public class ResourceComponentTester {
 		testVisitor = new TestVisitor();
 
 		// Setup the ResourceComponent
-		resourceComponent = new ResourceComponent();
+		resourceComponent = new ResourceComponent<ICEResource>();
 
 		// Send the visitor
 		resourceComponent.accept(testVisitor);
@@ -201,7 +200,7 @@ public class ResourceComponentTester {
 		testComponentListener = new TestComponentListener();
 
 		// Setup the ResourceComponent
-		resourceComponent = new ResourceComponent();
+		resourceComponent = new ResourceComponent<ICEResource>();
 
 		// Register the listener
 		resourceComponent.register(testComponentListener);
@@ -254,10 +253,10 @@ public class ResourceComponentTester {
 		// begin-user-code
 
 		// Create ResourceComponents to test
-		ResourceComponent outComp1 = new ResourceComponent();
-		ResourceComponent equalComp = new ResourceComponent();
-		ResourceComponent unEqual = new ResourceComponent();
-		ResourceComponent transitiveComp = new ResourceComponent();
+		ResourceComponent<ICEResource> outComp1 = new ResourceComponent<ICEResource>();
+		ResourceComponent<ICEResource> equalComp = new ResourceComponent<ICEResource>();
+		ResourceComponent<ICEResource> unEqual = new ResourceComponent<ICEResource>();
+		ResourceComponent<ICEResource> transitiveComp = new ResourceComponent<ICEResource>();
 		try {
 			outComp1.addResource(new ICEResource(new File("TestFile.test")));
 			outComp1.addResource(new ICEResource(
@@ -348,7 +347,6 @@ public class ResourceComponentTester {
 
 		// Local Declarations
 		ArrayList<ICEResource> resources = new ArrayList<ICEResource>();
-		ArrayList<ICEResource> retResources = null;
 		TestComponentListener listener = new TestComponentListener();
 
 		// Local declarations
@@ -357,7 +355,7 @@ public class ResourceComponentTester {
 		String description = "Bones' Quarters";
 
 		// Create the ResourceComponent
-		resourceComponent = new ResourceComponent();
+		resourceComponent = new ResourceComponent<ICEResource>();
 
 		// Create five test resources - this one themed after places where Bones
 		// lived
@@ -386,8 +384,8 @@ public class ResourceComponentTester {
 		resourceComponent.register(listener);
 
 		// Run clone operation
-		ResourceComponent cloneOutput = (ResourceComponent) resourceComponent
-				.clone();
+		ResourceComponent<ICEResource> cloneOutput = 
+				(ResourceComponent<ICEResource>) resourceComponent.clone();
 
 		// Check contents
 		assertEquals(resourceComponent.getDescription(),
@@ -401,7 +399,7 @@ public class ResourceComponentTester {
 		// Use resourceComponent from above
 
 		// Create a new instance of ResourceComponent and copy contents
-		ResourceComponent copyOutput = new ResourceComponent();
+		ResourceComponent<ICEResource> copyOutput = new ResourceComponent<ICEResource>();
 		copyOutput.copy(resourceComponent);
 
 		// Check contents
@@ -414,9 +412,8 @@ public class ResourceComponentTester {
 
 		// check listener - sleep to make sure thread updates
 		File file = new File("testA");
-		ICEResource resource = null;
 		try {
-			resource = new ICEResource(file);
+			new ICEResource(file);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -437,9 +434,8 @@ public class ResourceComponentTester {
 
 		// check listener - sleep to make sure thread updates
 		file = new File("testA");
-		resource = null;
 		try {
-			resource = new ICEResource(file);
+			new ICEResource(file);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -469,9 +465,8 @@ public class ResourceComponentTester {
 		 */
 
 		// Local declarations
-		ResourceComponent testRC = null, testRC2 = null;
+		ResourceComponent<ICEResource> testRC = null, testRC2 = null;
 		ArrayList<ICEResource> resources = new ArrayList<ICEResource>();
-		ArrayList<ICEResource> retResources = null;
 		int id = 2266;
 		String name = "3F 127 on Deck 9, section 2";
 		String description = "Bones' Quarters";
@@ -482,13 +477,11 @@ public class ResourceComponentTester {
 		// Set up file path - for resources
 		File file = new File("Mississippi.testFile");
 		File file2 = new File("Enterprise.testFile");
-		String filePath2 = null;
-		String filePath = null;
-		filePath = file.toURI().toASCIIString();
-		filePath2 = file2.toURI().toASCIIString();
+		file.toURI().toASCIIString();
+		file2.toURI().toASCIIString();
 
 		// Create the ResourceComponent
-		testRC = new ResourceComponent();
+		testRC = new ResourceComponent<ICEResource>();
 
 		// Create two test resources - this one themed after places where Bones
 		// lived
@@ -523,10 +516,11 @@ public class ResourceComponentTester {
 				outputStream.toByteArray());
 
 		// create a new instance of a different variable to compare
-		testRC2 = new ResourceComponent();
+		testRC2 = new ResourceComponent<ICEResource>();
 
 		// load into ResourceComponent();
-		testRC2 = (ResourceComponent) xmlHandler.read(classList, inputStream);
+		testRC2 = (ResourceComponent<ICEResource>) 
+				xmlHandler.read(classList, inputStream);
 
 		// check contents
 		assertTrue(testRC.equals(testRC2));
@@ -548,14 +542,14 @@ public class ResourceComponentTester {
 		// begin-user-code
 		// Local declarations
 		ArrayList<ICEResource> resources = new ArrayList<ICEResource>();
-		ResourceComponent resComponent = null;
+		ResourceComponent<ICEResource> resComponent = null;
 
 		// Set up file path - for resources
 		File file = new File("Mississippi.testFile");
 		File file2 = new File("Enterprise.testFile");
 
 		// Create the ResourceComponent
-		resComponent = new ResourceComponent();
+		resComponent = new ResourceComponent<ICEResource>();
 
 		// Create two test resources -
 		try {

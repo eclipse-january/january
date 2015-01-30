@@ -13,25 +13,15 @@
 package org.eclipse.ice.datastructures.form;
 
 import org.eclipse.ice.datastructures.ICEObject.Component;
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
-import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
 import org.eclipse.ice.datastructures.ICEObject.ListComponent;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
+import java.util.ListIterator;
 
 import org.eclipse.ice.datastructures.resource.ICEResource;
 
-import java.io.InputStream;
-
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -139,12 +129,12 @@ public class ResourceComponent<T extends ICEResource> extends ListComponent<T> i
 		// begin-user-code
 			
 		// FIXME How does List not have a "get all" method?? This isn't right...
-		ArrayList<ICEResource> resources = new ArrayList<ICEResource>();
-		ICEResource currResource;
+		ArrayList<ICEResource> resources = new ArrayList<ICEResource>();		
+		ListIterator<ICEResource> iter = null;
+		iter = resources.listIterator();
 		
-		for (int i = 0; i < this.size(); i++) {
-			currResource = this.get(i);
-			resources.add(currResource);
+		while (iter.hasNext()) {
+			resources.add(iter.next());
 		}
 		
 		return resources;
