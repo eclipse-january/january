@@ -16,11 +16,15 @@ import org.eclipse.ice.datastructures.ICEObject.Component;
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
+import org.eclipse.ice.datastructures.ICEObject.ListComponent;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.ice.datastructures.resource.ICEResource;
 
@@ -29,20 +33,21 @@ import java.io.InputStream;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
 
 /**
  * <!-- begin-UML-doc -->
  * <p>
- * The ResourceComponent is a specialization of Component that is used to manage
- * a set of ICEResources. It is used, for example, to collect Resources for
- * output data on a Form. ICEResources can be very easily added to
+ * The ResourceComponent is a specialization of ListComponent that is used to 
+ * manage a set of ICEResources. It is used, for example, to collect Resources 
+ * for output data on a Form. ICEResources can be very easily added to
  * ResourceComponents by calling the addResource() operation and the whole list
  * of managed ICEResources can be retrieved with getResources().
  * </p>
  * <p>
- * Notifications are not provided on ResourceComponents if their names, ids or
+ * Notifications are not provided on ResourceComponents if their names, IDs or
  * descriptions change. These should not change in general because there is only
  * a single ResourceComponent for the given set of ICEResources. It only
  * provides notifications when ICEResources are added.
@@ -54,20 +59,21 @@ import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
  *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
 @XmlRootElement(name = "ResourceComponent")
-public class ResourceComponent extends ICEObject implements Component {
+public class ResourceComponent<T extends ICEResource> extends ListComponent<T> implements Component {
+
 	/**
 	 * <!-- begin-UML-doc -->
 	 * <p>
-	 * The list of ICEResources managed by this component.
+	 * The set of IUpdateableListeners observing the ResourceComponent.
 	 * </p>
 	 * <!-- end-UML-doc -->
 	 * 
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	@XmlElement(name = "ICEResource")
-	private ArrayList<ICEResource> resources;
-
+	@XmlTransient
+	protected ArrayList<IUpdateableListener> listeners;
+	
 	/**
 	 * <!-- begin-UML-doc -->
 	 * <p>
@@ -83,9 +89,6 @@ public class ResourceComponent extends ICEObject implements Component {
 
 		// Setup the listeners list
 		listeners = new ArrayList<IUpdateableListener>();
-
-		// Setup the ICEResources list
-		resources = new ArrayList<ICEResource>();
 
 		return;
 		// end-user-code
@@ -105,12 +108,12 @@ public class ResourceComponent extends ICEObject implements Component {
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	public void addResource(ICEResource resource) {
+	public void addResource(T resource) {
 		// begin-user-code
 
-		// Add the ICEResource if it is good
+		// Add the resource if it is good
 		if (resource != null) {
-			resources.add(resource);
+			this.add(resource);
 			notifyListeners();
 		}
 
@@ -134,6 +137,16 @@ public class ResourceComponent extends ICEObject implements Component {
 	 */
 	public ArrayList<ICEResource> getResources() {
 		// begin-user-code
+			
+		// FIXME How does List not have a "get all" method?? This isn't right...
+		ArrayList<ICEResource> resources = new ArrayList<ICEResource>();
+		ICEResource currResource;
+		
+		for (int i = 0; i < this.size(); i++) {
+			currResource = this.get(i);
+			resources.add(currResource);
+		}
+		
 		return resources;
 		// end-user-code
 	}
@@ -141,8 +154,9 @@ public class ResourceComponent extends ICEObject implements Component {
 	/**
 	 * <!-- begin-UML-doc -->
 	 * <p>
-	 * An operation that clears all the ICEResources in the iCEResource list. If
-	 * there are no items in the list, this operation does nothing.
+	 * An operation that clears all the ICEResources stored on the 
+	 * ResourceComponent. If there are no items in the list, this operation does 
+	 * nothing.
 	 * </p>
 	 * <!-- end-UML-doc -->
 	 * 
@@ -151,8 +165,9 @@ public class ResourceComponent extends ICEObject implements Component {
 	 */
 	public void clearResources() {
 		// begin-user-code
-		this.resources.clear();
+		this.clear();
 
+		return;
 		// end-user-code
 	}
 
@@ -172,7 +187,7 @@ public class ResourceComponent extends ICEObject implements Component {
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	public void copy(ResourceComponent otherResourceComponent) {
+	public void copy(ResourceComponent<T> otherResourceComponent) {
 		// begin-user-code
 
 		// Return if otherOutputComponenet is null
@@ -181,17 +196,17 @@ public class ResourceComponent extends ICEObject implements Component {
 		}
 
 		// Copy contents into super and current object
-		super.copy((ICEObject) otherResourceComponent);
+		super.copy((ResourceComponent<T>) otherResourceComponent);
 
 		// Deep copy
-		this.resources.clear();
-		for (int i = 0; i < otherResourceComponent.resources.size(); i++) {
-			this.resources.add((ICEResource) otherResourceComponent.resources
-					.get(i).clone());
-		}
+		this.clear();
+		List<T> otherResources = 
+				(List<T>) otherResourceComponent.getResources().clone();
+		this.addAll(otherResources);
 
 		this.notifyListeners();
-
+		
+		return;
 		// end-user-code
 	}
 
@@ -212,10 +227,10 @@ public class ResourceComponent extends ICEObject implements Component {
 		// begin-user-code
 
 		// create a new instance of ResourceComponent and copy contents
-		ResourceComponent outputComponent = new ResourceComponent();
+		ResourceComponent<T> outputComponent = new ResourceComponent<T>();
 		outputComponent.copy(this);
+		
 		return outputComponent;
-
 		// end-user-code
 	}
 
@@ -260,13 +275,13 @@ public class ResourceComponent extends ICEObject implements Component {
 		}
 
 		// Other object must be a ResourceComponent at this point
-		ResourceComponent castedComponent = (ResourceComponent) otherResourceComponent;
+		ResourceComponent<T> castedComponent = 
+				(ResourceComponent<T>) otherResourceComponent;
 
 		// Check that their resources are equal
-		for (ICEResource r : this.resources) {
-			// Check that the other ResourceComponent has r
-			// Contains in ArrayList<E> uses E.equals()
-			if (!castedComponent.resources.contains(r)) {
+		for (T resource : this) {
+			// Check that the other ResourceComponent has the same resource
+			if (!castedComponent.contains(resource)) {
 				return false;
 			}
 		}
@@ -297,8 +312,8 @@ public class ResourceComponent extends ICEObject implements Component {
 
 		// Compute hash code from ResourceComponent data
 		hash = 31 * hash + super.hashCode();
-		for (ICEResource r : this.resources) {
-			hash = 31 * hash + r.hashCode();
+		for (T resource : this) {
+			hash = 31 * hash + resource.hashCode();
 		}
 
 		return hash;
@@ -313,11 +328,7 @@ public class ResourceComponent extends ICEObject implements Component {
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void update(String updatedKey, String newValue) {
-		// begin-user-code
-
 		// Nothing to do.
-
-		// end-user-code
 	}
 
 	/**
@@ -334,7 +345,42 @@ public class ResourceComponent extends ICEObject implements Component {
 		visitor.visit(this);
 
 		return;
+		// end-user-code
+	}
 
+	/**
+	 * <!-- begin-UML-doc -->
+	 * <p>
+	 * This protected operation notifies the listeners of the ResourceComponent
+	 * that its state has changed.
+	 * </p>
+	 * <!-- end-UML-doc -->
+	 * 
+	 * @generated 
+	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
+	 */
+	protected void notifyListeners() {
+		// begin-user-code
+
+		// Only process the update if there are listeners
+		if (listeners != null && !listeners.isEmpty()) {
+			// Create a thread on which to notify the listeners.
+			Thread notifierThread = new Thread() {
+				@Override
+				public void run() {
+					// Loop over all listeners and update them
+					for (int i = 0; i < listeners.size(); i++) {
+						listeners.get(i).update(ResourceComponent.this);
+					}
+					return;
+				}
+			};
+
+			// Launch the thread and do the notifications
+			notifierThread.start();
+		}
+
+		return;
 		// end-user-code
 	}
 }
