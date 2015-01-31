@@ -463,10 +463,17 @@ public class EMFComponentTester {
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	@Ignore
+	@Test
 	public void checkCopying() {
 		// begin-user-code
 
+		EMFComponent comp = (EMFComponent) emfComponent.clone();
+		assertTrue(comp.equals(emfComponent));
+
+		EMFComponent newCopy = new EMFComponent();
+		newCopy.copy(emfComponent);
+		assertTrue(newCopy.equals(emfComponent));
+		
 		return;
 		// end-user-code
 	}

@@ -114,7 +114,6 @@ public class EMFTreeComposite extends TreeComposite {
 			ecoreNode = EcoreUtil.create(ecoreNodeMetaData);
 			setName(ecoreNodeMetaData.getName());
 			setDescription(toString());
-			//setId(new Random(System.currentTimeMillis()).nextInt());
 
 			// Create the active DataComponent
 			createActiveDataNode();
