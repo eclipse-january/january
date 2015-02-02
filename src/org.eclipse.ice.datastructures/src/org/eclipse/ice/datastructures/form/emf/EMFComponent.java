@@ -100,7 +100,8 @@ public class EMFComponent extends ICEObject implements Component {
 	/**
 	 * The constructor, takes a Java file pointing to the XML schema model.
 	 * 
-	 * @param file The XML Schema
+	 * @param file
+	 *            The XML Schema
 	 */
 	public EMFComponent(File file) {
 		super();
@@ -193,7 +194,7 @@ public class EMFComponent extends ICEObject implements Component {
 				xmlProcessor.save(outputStream, xmlResource, null);
 
 				outputStream.close();
-				
+
 				// Indicate success
 				return true;
 			} else {
@@ -210,8 +211,8 @@ public class EMFComponent extends ICEObject implements Component {
 	}
 
 	/**
-	 * Load the XML file with a given XML schema. This method should be used 
-	 * in conjuction with the nullary constructor. 
+	 * Load the XML file with a given XML schema. This method should be used in
+	 * conjuction with the nullary constructor.
 	 * 
 	 * @param schema
 	 * @param file
@@ -258,57 +259,43 @@ public class EMFComponent extends ICEObject implements Component {
 			return false;
 		}
 
+		// If we have a valid document root node, we should walk 
+		// and create the EMFTreeComposite
 		if (documentRoot != null) {
+			// Create the root node EMFTreeComposite
 			iceEMFTree = new EMFTreeComposite(documentRoot);
-			mapToEMFTreeComposite(documentRoot.eContents().get(0), iceEMFTree);
+			
+			// Create the a map to store EObject keys to their corresponding
+			// EMFTreeComposite value. 
+			HashMap<EObject, EMFTreeComposite> map = new HashMap<EObject, EMFTreeComposite>();
+
+			// Put the root node in the tree
+			map.put(documentRoot, iceEMFTree);
+			
+			// Use the EMF tree iterator to walk the Ecore tree. 
+			TreeIterator<EObject> tree = documentRoot.eAllContents();
+			while (tree.hasNext()) {
+				EObject obj = tree.next();
+				
+				// Put this EObject in the map with its 
+				// EMFTreeComposite representation
+				map.put(obj, new EMFTreeComposite(obj));
+			}
+
+			// Loop through all the EObject keys and 
+			// set each EMFTreeComposite's parent
+			for (EObject o : map.keySet()) {
+				EObject parent = o.eContainer();
+				if (parent != null) {
+					map.get(parent).setNextChild(map.get(o));
+				}
+			}
+
 		} else {
 			return false;
 		}
 
 		return true;
-	}
-
-	/**
-	 * This private method recursively walks the EObject tree and creates 
-	 * a EMFTreeComposite representing the XML data. 
-	 * 
-	 * @param rootNode
-	 * @param parent
-	 */
-	private void mapToEMFTreeComposite(EObject rootNode, EMFTreeComposite parent) {
-
-		// Get the EClass Meta Data and
-		// this EObject's children
-		EList<EObject> subChildren = rootNode.eContents();
-
-		// System.out.println("We have " + subChildren.size() + " children.");
-		// If we have no children, then create a EMFTreeComposite
-		// representing rootNode and set it as the child of
-		// the incoming parent
-		if (subChildren.isEmpty()) {
-			parent.setNextChild(new EMFTreeComposite(rootNode));
-		} else {
-			// If this rootNode does have children, then recursively walk and
-			// create EMFTreeComposites of them
-
-			// Create a EMFTreeComposite for this rootNode EObject
-			EMFTreeComposite thisTreeNode = new EMFTreeComposite(rootNode);
-			//System.out.println("Created the " + thisTreeNode.getName() + " tree.");
-			// Loop over its children to map from Ecore to EMFTreeComposite
-			for (EObject obj : subChildren) {
-				mapToEMFTreeComposite(obj, thisTreeNode);
-			}
-
-			// Set thisTreeNode as the child of the incoming
-			// parent
-			if (parent.getName().equals("ModelDBType")) {
-				System.out.println("Setting " + thisTreeNode.getName() + " as a child of " + parent.getName());
-			}
-			parent.setNextChild(thisTreeNode);
-		}
-
-		return;
-
 	}
 
 	/**
@@ -342,7 +329,7 @@ public class EMFComponent extends ICEObject implements Component {
 			System.out.println("TREES NOT EQUAL");
 			return false;
 		}
-		
+
 		// If made it here, these EMFComponents are Equal
 		// Return true
 		return true;

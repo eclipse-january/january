@@ -12,42 +12,31 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.form.emf;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Random;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipse.emf.ecore.xmi.impl.XMLResourceImpl;
-import org.eclipse.emf.ecore.xmi.util.XMLProcessor;
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
-import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
-import org.eclipse.ice.datastructures.form.AdaptiveTreeComposite;
 import org.eclipse.ice.datastructures.form.DataComponent;
 import org.eclipse.ice.datastructures.form.TreeComposite;
 import org.eclipse.ice.datastructures.form.emf.EMFEntry;
 
 /**
  * 
- * The EMFTreeComposite is a subclass of TreeComposite that represents a node in
+ * The EMFTreeComposite is a subclass of TreeComposite that represents a tree node in
  * an Eclipse Modeling Framework Ecore model tree. To do that, it takes as input
  * the EClass metadata representing the corresponding model tree node, and from
  * that creates an actual EObject instance. From this data, the EMFTreeComposite
- * can construct an active data node (DataComponent) that contains EMFEntries
+ * can construct an active data node (DataComponent) that contains EMFEntrys
  * corresponding to the EAttributes within the EClass metadata's
  * EStructuralFeatures. This data node can then be shown to the users in the
  * same way a regular TreeComposite does.
@@ -84,12 +73,6 @@ public class EMFTreeComposite extends TreeComposite {
 	private EClass ecoreNodeMetaData;
 
 	/**
-	 * 
-	 */
-	@XmlTransient
-	private boolean loadedFromEObject = false;
-
-	/**
 	 * The nullary-constructor
 	 * 
 	 */
@@ -97,7 +80,6 @@ public class EMFTreeComposite extends TreeComposite {
 		super();
 		setName("Null Constructed EMFTreeComposite");
 		setDescription(toString());
-		//setId(new Random(System.currentTimeMillis()).nextInt());
 		return;
 	}
 
@@ -134,9 +116,6 @@ public class EMFTreeComposite extends TreeComposite {
 		ecoreNodeMetaData = ecoreNode.eClass();
 		setName(ecoreNodeMetaData.getName());
 		setDescription(toString());
-		//setId(new Random(System.currentTimeMillis()).nextInt());
-
-		loadedFromEObject = true;
 
 		// Create the active DataComponent
 		createActiveDataNode();
@@ -203,8 +182,9 @@ public class EMFTreeComposite extends TreeComposite {
 		// unspecified,
 		// so just treat it like (1).
 
-		for (EReference exemplar : ecoreNodeMetaData.getEReferences()) {
+		for (EReference exemplar : ecoreNodeMetaData.getEAllReferences()) { // BUG, need getE(ALL)References...
 
+			// We don't want to use any of these types. 
 			if ("EStringToStringMapEntry".equals(exemplar.getEReferenceType()
 					.getName())) {
 				continue;
@@ -347,6 +327,9 @@ public class EMFTreeComposite extends TreeComposite {
 
 		// Loop over all exemplars and see if this cNode is compatible
 		for (TreeComposite exemplar : getChildExemplars()) {
+			if (cNode.getName().equals("DefinitionType")) {
+				System.out.print("Exemplar: " + exemplar.getName());
+			}
 			if (cNode.getName().equals(exemplar.getName())) {
 				return true;
 			}

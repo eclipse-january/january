@@ -192,7 +192,7 @@ public class EMFComponentTester {
 	 * </p>
 	 * <!-- end-UML-doc -->
 	 */
-	@Ignore
+	@Test
 	public void checkBatML() {
 		// Local Declarations
 		String separator = System.getProperty("file.separator");
@@ -219,13 +219,10 @@ public class EMFComponentTester {
 		EMFTreeComposite modelDB = (EMFTreeComposite) docRootTree
 				.getChildAtIndex(0).getChildAtIndex(0).getChildAtIndex(0);
 
-		System.out.println("EXEMPS:");
 		for (TreeComposite t : modelDB.getChildExemplars()) {
 			System.out.println("HELLO: " + t.getName());
 		}
 
-		System.out.println("Name: " + docRootTree.getChildAtIndex(0).getChildAtIndex(0)
-				.getChildAtIndex(0).getName());
 		BreadthFirstTreeCompositeIterator iter = new BreadthFirstTreeCompositeIterator(
 				batmlEMFComponent.getEMFTreeComposite());
 
@@ -340,32 +337,37 @@ public class EMFComponentTester {
 		assertEquals("ShiporderType Data", component.getName());
 		assertEquals(2, component.retrieveAllEntries().size());
 
-		// Check the first child of RootNode's tree structure
-		TreeComposite child1 = shipOrder.getChildAtIndex(0);
-		assertEquals("ShiptoType", child1.getName());
-		assertEquals(0, child1.getNumberOfChildren());
-		assertEquals(1, child1.getNumberOfDataNodes());
-		component = (DataComponent) child1.getActiveDataNode();
-		assertEquals("ShiptoType Data", component.getName());
-		assertEquals(4, component.retrieveAllEntries().size());
-
-		// Check the second child of RootNode's tree structure
-		TreeComposite child2 = shipOrder.getChildAtIndex(1);
-		assertEquals("ItemType", child2.getName());
-		assertEquals(0, child2.getNumberOfChildren());
-		assertEquals(1, child2.getNumberOfDataNodes());
-		component = (DataComponent) child2.getActiveDataNode();
-		assertEquals("ItemType Data", component.getName());
-		assertEquals(4, component.retrieveAllEntries().size());
-
-		TreeComposite child3 = shipOrder.getChildAtIndex(2);
-		assertEquals("ItemType", child3.getName());
-		assertEquals(0, child3.getNumberOfChildren());
-		assertEquals(1, child3.getNumberOfDataNodes());
-		component = (DataComponent) child3.getActiveDataNode();
-		assertEquals("ItemType Data", component.getName());
-		assertEquals(4, component.retrieveAllEntries().size());
-
+		assertEquals(3, shipOrder.getNumberOfChildren());
+		
+		int itemCount = 0; 
+		int shiptoCount = 0;
+		
+		for (int i = 0; i < 3; i++) {
+			TreeComposite child = shipOrder.getChildAtIndex(i);
+			assertNotNull(child);
+			
+			if ("ShiptoType".equals(child.getName())) {
+				shiptoCount++;
+				assertEquals(0, child.getNumberOfChildren());
+				assertEquals(1, child.getNumberOfDataNodes());
+				component = (DataComponent) child.getActiveDataNode();
+				assertEquals("ShiptoType Data", component.getName());
+				assertEquals(4, component.retrieveAllEntries().size());
+			} else if ("ItemType".equals(child.getName())) {
+				itemCount++;
+				assertEquals(0, child.getNumberOfChildren());
+				assertEquals(1, child.getNumberOfDataNodes());
+				component = (DataComponent) child.getActiveDataNode();
+				assertEquals("ItemType Data", component.getName());
+				assertEquals(4, component.retrieveAllEntries().size());
+			} else {
+				fail();
+			}
+		}
+		
+		assertEquals(1, shiptoCount);
+		assertEquals(2, itemCount);
+		
 		String xmlString = emfComponent.saveToString();
 		assertNotNull(xmlString);
 		assertEquals(2, xmlString.split(Pattern.quote("<item>"), -1).length - 1);
