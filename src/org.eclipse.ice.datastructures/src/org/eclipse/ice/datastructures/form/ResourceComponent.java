@@ -44,12 +44,12 @@ import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
  * </p>
  * <!-- end-UML-doc -->
  * 
- * @author Jay Jay Billings
+ * @author Jay Jay Billings, Anna Wojtowicz
  * @generated 
  *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
 @XmlRootElement(name = "ResourceComponent")
-public class ResourceComponent<T extends ICEResource> extends ListComponent<T> implements Component {
+public class ResourceComponent extends ListComponent<ICEResource> implements Component {
 
 	/**
 	 * <!-- begin-UML-doc -->
@@ -98,7 +98,7 @@ public class ResourceComponent<T extends ICEResource> extends ListComponent<T> i
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	public void addResource(T resource) {
+	public void addResource(ICEResource resource) {
 		// begin-user-code
 
 		// Add the resource if it is good
@@ -127,17 +127,8 @@ public class ResourceComponent<T extends ICEResource> extends ListComponent<T> i
 	 */
 	public ArrayList<ICEResource> getResources() {
 		// begin-user-code
-			
-		// FIXME How does List not have a "get all" method?? This isn't right...
-		ArrayList<ICEResource> resources = new ArrayList<ICEResource>();		
-		ListIterator<ICEResource> iter = null;
-		iter = resources.listIterator();
 		
-		while (iter.hasNext()) {
-			resources.add(iter.next());
-		}
-		
-		return resources;
+		return new ArrayList<ICEResource>(this);
 		// end-user-code
 	}
 
@@ -177,7 +168,7 @@ public class ResourceComponent<T extends ICEResource> extends ListComponent<T> i
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	public void copy(ResourceComponent<T> otherResourceComponent) {
+	public void copy(ResourceComponent otherResourceComponent) {
 		// begin-user-code
 
 		// Return if otherOutputComponenet is null
@@ -186,12 +177,12 @@ public class ResourceComponent<T extends ICEResource> extends ListComponent<T> i
 		}
 
 		// Copy contents into super and current object
-		super.copy((ResourceComponent<T>) otherResourceComponent);
+		super.copy((ResourceComponent) otherResourceComponent);
 
 		// Deep copy
 		this.clear();
-		List<T> otherResources = 
-				(List<T>) otherResourceComponent.getResources().clone();
+		List<ICEResource> otherResources = 
+				(List<ICEResource>) otherResourceComponent.getResources().clone();
 		this.addAll(otherResources);
 
 		this.notifyListeners();
@@ -217,7 +208,7 @@ public class ResourceComponent<T extends ICEResource> extends ListComponent<T> i
 		// begin-user-code
 
 		// create a new instance of ResourceComponent and copy contents
-		ResourceComponent<T> outputComponent = new ResourceComponent<T>();
+		ResourceComponent outputComponent = new ResourceComponent();
 		outputComponent.copy(this);
 		
 		return outputComponent;
@@ -265,11 +256,11 @@ public class ResourceComponent<T extends ICEResource> extends ListComponent<T> i
 		}
 
 		// Other object must be a ResourceComponent at this point
-		ResourceComponent<T> castedComponent = 
-				(ResourceComponent<T>) otherResourceComponent;
+		ResourceComponent castedComponent = 
+				(ResourceComponent) otherResourceComponent;
 
 		// Check that their resources are equal
-		for (T resource : this) {
+		for (ICEResource resource : this) {
 			// Check that the other ResourceComponent has the same resource
 			if (!castedComponent.contains(resource)) {
 				return false;
@@ -302,7 +293,7 @@ public class ResourceComponent<T extends ICEResource> extends ListComponent<T> i
 
 		// Compute hash code from ResourceComponent data
 		hash = 31 * hash + super.hashCode();
-		for (T resource : this) {
+		for (ICEResource resource : this) {
 			hash = 31 * hash + resource.hashCode();
 		}
 
