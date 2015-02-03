@@ -18,14 +18,18 @@ import org.eclipse.ice.datastructures.ICEObject.ListComponent;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 import org.eclipse.ice.datastructures.resource.ICEResource;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
+import ca.odell.glazedlists.BasicEventList;
 
 /**
  * <!-- begin-UML-doc -->
@@ -49,39 +53,35 @@ import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
  *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
 @XmlRootElement(name = "ResourceComponent")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ResourceComponent extends ListComponent<ICEResource> implements Component {
 
 	/**
-	 * <!-- begin-UML-doc -->
-	 * <p>
+	 * A handle to the source list that is necessary for JAXB to properly
+	 * marshal/unmarshal the list of resources.
+	 */
+	@XmlElementWrapper(name="Resources")
+	@XmlElement(name="ICEResource")
+	protected BasicEventList<ICEResource> jaxbSourceList;
+	
+	/**
 	 * The set of IUpdateableListeners observing the ResourceComponent.
-	 * </p>
-	 * <!-- end-UML-doc -->
-	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlTransient
 	protected ArrayList<IUpdateableListener> listeners;
 	
 	/**
-	 * <!-- begin-UML-doc -->
-	 * <p>
-	 * The Constructor
-	 * </p>
-	 * <!-- end-UML-doc -->
-	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
+	 * The constructor.
 	 */
 	public ResourceComponent() {
-		// begin-user-code
-
+		
+		// Store the source locally so it can be marshalled correctly by JAXB
+		jaxbSourceList = (BasicEventList<ICEResource>) this.source;
+		
 		// Setup the listeners list
 		listeners = new ArrayList<IUpdateableListener>();
-
+		
 		return;
-		// end-user-code
 	}
 
 	/**
