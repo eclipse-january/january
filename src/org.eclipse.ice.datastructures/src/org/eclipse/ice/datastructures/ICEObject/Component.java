@@ -12,12 +12,7 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.ICEObject;
 
-import java.util.Set;
 import java.util.ArrayList;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
 
