@@ -62,7 +62,7 @@ public class ResourceComponent extends ListComponent<ICEResource> {
 	 */
 	public ResourceComponent() {
 		
-		// Store the source locally so it can be marshalled correctly by JAXB
+		// Store the source locally so it can be marshaled correctly by JAXB
 		jaxbSourceList = (BasicEventList<ICEResource>) this.source;
 		
 		// Setup the listeners list
