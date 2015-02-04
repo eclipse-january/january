@@ -20,11 +20,8 @@ import java.util.ArrayList;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
 import org.eclipse.ice.datastructures.resource.ICEResource;
 
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-
-import ca.odell.glazedlists.BasicEventList;
 
 /**
  * The ResourceComponent is a specialization of ListComponent that is used to 
@@ -32,25 +29,14 @@ import ca.odell.glazedlists.BasicEventList;
  * for output data on a Form. ICEResources can be very easily added to
  * ResourceComponents by calling the addResource() operation and the whole list
  * of managed ICEResources can be retrieved with getResources().
-
- * Notifications are not provided on ResourceComponents if their names, IDs or
- * descriptions change. These should not change in general because there is only
- * a single ResourceComponent for the given set of ICEResources. It only
- * provides notifications when ICEResources are added.
-
+ *
+ *
  * 
  * @author Jay Jay Billings, Anna Wojtowicz
  */
 @XmlRootElement(name = "ResourceComponent")
 public class ResourceComponent extends ListComponent<ICEResource> {
 
-	/**
-	 * A handle to the source list that is necessary for JAXB to properly
-	 * marshal/unmarshal the list of ICEResources.
-	 */
-	@XmlElement(name="ICEResource")
-	protected BasicEventList<ICEResource> jaxbSourceList;
-	
 	/**
 	 * The set of IUpdateableListeners observing the ResourceComponent.
 	 */
@@ -61,9 +47,6 @@ public class ResourceComponent extends ListComponent<ICEResource> {
 	 * The constructor.
 	 */
 	public ResourceComponent() {
-		
-		// Store the source locally so it can be marshaled correctly by JAXB
-		jaxbSourceList = (BasicEventList<ICEResource>) this.source;
 		
 		// Setup the listeners list
 		listeners = new ArrayList<IUpdateableListener>();
@@ -81,7 +64,6 @@ public class ResourceComponent extends ListComponent<ICEResource> {
 		// Add the resource if it is good
 		if (resource != null) {
 			this.add(resource);
-			notifyListeners();
 		}
 
 		return;
@@ -116,10 +98,7 @@ public class ResourceComponent extends ListComponent<ICEResource> {
 		// Create a new instance of ResourceComponent and copy contents
 		ResourceComponent outputComponent = new ResourceComponent();
 		outputComponent.copy(this);
-		
-		// Notify listeners
-		notifyListeners();
-		
+
 		return outputComponent;
 	}
 
@@ -166,30 +145,30 @@ public class ResourceComponent extends ListComponent<ICEResource> {
 		return;
 	}
 	
-	/**
-	 * This protected operation notifies the listeners of the ResourceComponent
-	 * that its state has changed.
-	 */
-	protected void notifyListeners() {
-
-		// Only process the update if there are listeners
-		if (listeners != null && !listeners.isEmpty()) {
-			// Create a thread on which to notify the listeners.
-			Thread notifierThread = new Thread() {
-				@Override
-				public void run() {
-					// Loop over all listeners and update them
-					for (int i = 0; i < listeners.size(); i++) {
-						listeners.get(i).update(ResourceComponent.this);
-					}
-					return;
-				}
-			};
-
-			// Launch the thread and do the notifications
-			notifierThread.start();
-		}
-
-		return;
-	}
+//	/**
+//	 * This protected operation notifies the listeners of the ResourceComponent
+//	 * that its state has changed.
+//	 */
+//	protected void notifyListeners() {
+//
+//		// Only process the update if there are listeners
+//		if (listeners != null && !listeners.isEmpty()) {
+//			// Create a thread on which to notify the listeners.
+//			Thread notifierThread = new Thread() {
+//				@Override
+//				public void run() {
+//					// Loop over all listeners and update them
+//					for (int i = 0; i < listeners.size(); i++) {
+//						listeners.get(i).update(ResourceComponent.this);
+//					}
+//					return;
+//				}
+//			};
+//
+//			// Launch the thread and do the notifications
+//			notifierThread.start();
+//		}
+//
+//		return;
+//	}
 }

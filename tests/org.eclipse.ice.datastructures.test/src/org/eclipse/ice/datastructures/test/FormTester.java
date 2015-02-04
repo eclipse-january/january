@@ -576,7 +576,7 @@ public class FormTester {
 		ArrayList<String> actionList = new ArrayList<String>();
 		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
 		ArrayList<Class> classList = new ArrayList<Class>();
-		classList.add(Form.class);
+		classList.add(ICEResource.class);
 
 		DataComponent dataComponent = new DataComponent();
 		DataComponent dataComponent2 = new DataComponent();
@@ -664,23 +664,21 @@ public class FormTester {
 		// add to form
 		form.addComponent(outputComp);
 
-		// Demonstrate a basic "write" to file. Should not fail
+		// Write (persist) a Form, then read it back in and check it's still
+		// the same
 
-		// persist to an output stream
+		// Create an OutputStream and persist the Form to it
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		xmlHandler.write(form, classList, outputStream);
 
-		// Initialize object and pass inputStream to read()
+		// Create an InputStream from the OutputStream
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(
 				outputStream.toByteArray());
 
-		// create a new instance of a different variable to compare
-		loadedForm = new Form();
-
-		// load into Form();
+		// Read the input stream into a Form
 		loadedForm = (Form) xmlHandler.read(classList, inputStream);
 
-		/* check contents */
+		// Check the forms are the same
 		assertTrue(form.equals(loadedForm));
 
 	}
