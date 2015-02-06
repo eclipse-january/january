@@ -17,8 +17,7 @@ import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementRef;
-import javax.xml.bind.annotation.XmlElementRefs;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.eclipse.ice.datastructures.ICEObject.Component;
@@ -26,11 +25,7 @@ import org.eclipse.ice.datastructures.ICEObject.Composite;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
 import org.eclipse.ice.datastructures.ICEObject.Identifiable;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
-import org.eclipse.ice.datastructures.ICEObject.ListComponent;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
-import org.eclipse.ice.datastructures.form.emf.EMFComponent;
-import org.eclipse.ice.datastructures.form.geometry.GeometryComponent;
-import org.eclipse.ice.datastructures.form.mesh.MeshComponent;
 
 /**
  * <!-- begin-UML-doc -->
@@ -79,19 +74,8 @@ public class Form extends ICEObject implements Composite {
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	@XmlAnyElement()
-	@XmlElementRefs(value = {
-			@XmlElementRef(name = "ResourceComponent", type = ResourceComponent.class),
-			@XmlElementRef(name = "TableComponent", type = TableComponent.class),
-			@XmlElementRef(name = "MatrixComponent", type = MatrixComponent.class),
-			@XmlElementRef(name = "GeometryComponent", type = GeometryComponent.class),
-			@XmlElementRef(name = "MasterDetailsComponent", type = MasterDetailsComponent.class),
-			@XmlElementRef(name = "TimeDataComponent", type = TimeDataComponent.class),
-			@XmlElementRef(name = "DataComponent", type = DataComponent.class),
-			@XmlElementRef(name = "TreeComposite", type = TreeComposite.class),
-			@XmlElementRef(name = "MeshComponent", type = MeshComponent.class),
-			@XmlElementRef(name = "ListComponent", type = ListComponent.class),
-			@XmlElementRef(name = "EMFComponent", type = EMFComponent.class)})
+	@XmlElementWrapper
+	@XmlAnyElement(lax=true)
 	private ArrayList<Component> componentList;
 
 	/**
@@ -119,7 +103,6 @@ public class Form extends ICEObject implements Composite {
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-
 	protected boolean canProcess = true;
 
 	/**

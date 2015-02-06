@@ -20,6 +20,7 @@ Import-Package: ca.odell.glazedlists,
  org.eclipse.ice.datastructures.form.iterator,
  org.eclipse.ice.datastructures.form.mesh,
  org.eclipse.ice.datastructures.form.painfullySimpleForm,
+ org.eclipse.ice.datastructures.jaxbclassprovider,
  org.eclipse.ice.datastructures.resource,
  org.osgi.framework;version="1.6.0",
  org.osgi.util.tracker;version="1.5.0"

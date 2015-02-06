@@ -32,6 +32,7 @@ import org.eclipse.ice.datastructures.form.ResourceComponent;
 import org.eclipse.ice.datastructures.form.ResourceComponent;
 import org.eclipse.ice.datastructures.form.DataComponent;
 import org.eclipse.ice.datastructures.form.mesh.Edge;
+import org.eclipse.ice.datastructures.jaxbclassprovider.ICEJAXBClassProvider;
 import org.eclipse.ice.datastructures.resource.ICEResource;
 
 /**
@@ -577,7 +578,10 @@ public class FormTester {
 		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
 		ArrayList<Class> classList = new ArrayList<Class>();
 		classList.add(ICEResource.class);
-
+		
+		// Inform the JAXBContext of all relevant classes. 
+		classList.addAll(new ICEJAXBClassProvider().getClasses());
+		
 		DataComponent dataComponent = new DataComponent();
 		DataComponent dataComponent2 = new DataComponent();
 		Entry entry1 = new Entry();
@@ -664,21 +668,23 @@ public class FormTester {
 		// add to form
 		form.addComponent(outputComp);
 
-		// Write (persist) a Form, then read it back in and check it's still
-		// the same
+		// Demonstrate a basic "write" to file. Should not fail
 
-		// Create an OutputStream and persist the Form to it
+		// persist to an output stream
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		xmlHandler.write(form, classList, outputStream);
 
-		// Create an InputStream from the OutputStream
+		// Initialize object and pass inputStream to read()
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(
 				outputStream.toByteArray());
 
-		// Read the input stream into a Form
+		// create a new instance of a different variable to compare
+		loadedForm = new Form();
+
+		// load into Form();
 		loadedForm = (Form) xmlHandler.read(classList, inputStream);
 
-		// Check the forms are the same
+		/* check contents */
 		assertTrue(form.equals(loadedForm));
 
 	}
