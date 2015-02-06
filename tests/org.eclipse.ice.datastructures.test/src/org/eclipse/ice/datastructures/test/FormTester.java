@@ -577,7 +577,6 @@ public class FormTester {
 		ArrayList<String> actionList = new ArrayList<String>();
 		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
 		ArrayList<Class> classList = new ArrayList<Class>();
-		classList.add(ICEResource.class);
 		
 		// Inform the JAXBContext of all relevant classes. 
 		classList.addAll(new ICEJAXBClassProvider().getClasses());

@@ -63,7 +63,7 @@ public class ICEJAXBClassProviderTester {
 		// not null, and make sure we have 10 of them
 		List<Class> classList = provider.getClasses();
 		assertNotNull(classList);
-		assertEquals(11, classList.size());
+		assertEquals(12, classList.size());
 		
 		// Check that all the correct ones are there. 
 		assertTrue(classList.contains(ResourceComponent.class));
