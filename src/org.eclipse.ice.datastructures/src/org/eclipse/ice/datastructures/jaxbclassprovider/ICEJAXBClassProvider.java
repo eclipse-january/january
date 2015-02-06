@@ -17,6 +17,7 @@ import java.util.List;
 
 import org.eclipse.ice.datastructures.ICEObject.ListComponent;
 import org.eclipse.ice.datastructures.form.DataComponent;
+import org.eclipse.ice.datastructures.form.Material;
 import org.eclipse.ice.datastructures.form.MatrixComponent;
 import org.eclipse.ice.datastructures.form.ResourceComponent;
 import org.eclipse.ice.datastructures.form.TableComponent;
@@ -57,7 +58,7 @@ public class ICEJAXBClassProvider implements IJAXBClassProvider {
 		classList.add(MeshComponent.class);
 		classList.add(ListComponent.class);
 		classList.add(EMFComponent.class);
-		
+		classList.add(Material.class);
 		return classList;
 	}
 

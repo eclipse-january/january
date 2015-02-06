@@ -18,6 +18,7 @@ import java.util.List;
 
 import org.eclipse.ice.datastructures.ICEObject.ListComponent;
 import org.eclipse.ice.datastructures.form.DataComponent;
+import org.eclipse.ice.datastructures.form.Material;
 import org.eclipse.ice.datastructures.form.MatrixComponent;
 import org.eclipse.ice.datastructures.form.ResourceComponent;
 import org.eclipse.ice.datastructures.form.TableComponent;
@@ -62,7 +63,7 @@ public class ICEJAXBClassProviderTester {
 		// not null, and make sure we have 10 of them
 		List<Class> classList = provider.getClasses();
 		assertNotNull(classList);
-		assertEquals(10, classList.size());
+		assertEquals(11, classList.size());
 		
 		// Check that all the correct ones are there. 
 		assertTrue(classList.contains(ResourceComponent.class));
@@ -75,6 +76,6 @@ public class ICEJAXBClassProviderTester {
 		assertTrue(classList.contains(MeshComponent.class));
 		assertTrue(classList.contains(ListComponent.class));
 		assertTrue(classList.contains(EMFComponent.class));
-		
+		assertTrue(classList.contains(Material.class));
 	}
 }
