@@ -86,8 +86,9 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 
 	/**
 	 * A BasicEventList that is used to store the identity of this component.
-	 * Index 0 - the unique id, cast to a String Index 1 - the name Index 2 -
-	 * the description
+	 * Index 0 - the unique id, cast to a String 
+	 * Index 1 - the name 
+	 * Index 2 - the description
 	 * 
 	 * Doing this makes it possible to use the built-in updates provided by the
 	 * BasicEventList instead of implementing our own here since these
@@ -180,11 +181,7 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	}
 
 	/**
-	 * (non-Javadoc)
-	 * 
 	 * @see Identifiable#hashCode()
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public int hashCode() {
 		// Local Declaration
@@ -199,8 +196,6 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	}
 
 	/**
-	 * (non-Javadoc)
-	 * 
 	 * @see Identifiable#equals(Object otherObject)
 	 */
 	public boolean equals(Object otherObject) {
@@ -226,8 +221,6 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	}
 
 	/**
-	 * (non-Javadoc)
-	 * 
 	 * @see IUpdateable#register(IUpdateableListener listener)
 	 */
 	@Override
@@ -245,8 +238,6 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	}
 
 	/**
-	 * (non-Javadoc)
-	 * 
 	 * @see IUpdateable#unregister(IUpdateableListener listener)
 	 */
 	@Override
@@ -261,8 +252,6 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	}
 
 	/**
-	 * (non-Javadoc)
-	 * 
 	 * @see Identifiable#setId(int id)
 	 */
 	@Override
@@ -273,8 +262,6 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	}
 
 	/**
-	 * (non-Javadoc)
-	 * 
 	 * @see Identifiable#getDescription()
 	 */
 	@Override
@@ -283,8 +270,6 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	}
 
 	/**
-	 * (non-Javadoc)
-	 * 
 	 * @see Identifiable#getId()
 	 */
 	@Override
@@ -293,8 +278,6 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	}
 
 	/**
-	 * (non-Javadoc)
-	 * 
 	 * @see Identifiable#setName(String name)
 	 */
 	@Override
@@ -305,8 +288,6 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	}
 
 	/**
-	 * (non-Javadoc)
-	 * 
 	 * @see Identifiable#getName()
 	 */
 	@Override
@@ -315,8 +296,6 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	}
 
 	/**
-	 * (non-Javadoc)
-	 * 
 	 * @see Identifiable#setDescription(String description)
 	 */
 	@Override
@@ -327,8 +306,6 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	}
 
 	/**
-	 * (non-Javadoc)
-	 * 
 	 * @see TransformedList#listChanged(ListEvent)
 	 */
 	@Override
@@ -337,19 +314,15 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	}
 
 	/**
-	 * (non-Javadoc)
-	 * 
 	 * @see TransformedList#isWriteable()
 	 */
 	@Override
 	protected boolean isWritable() {
-		// TODO Auto-generated method stub
+
 		return true;
 	}
 
 	/**
-	 * (non-Javadoc)
-	 * 
 	 * @see Component#accept(IComponentVisitor)
 	 */
 	@Override
@@ -358,8 +331,6 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	};
 
 	/**
-	 * (non-Javadoc)
-	 * 
 	 * @see Cloneable#clone()
 	 */
 	@Override
@@ -371,19 +342,13 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	};
 
 	/**
-	 * (non-Javadoc)
-	 * 
 	 * @see IUpdateable#update(String updatedKey, String newValue)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Override
 	public void update(String updatedKey, String newValue) {
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see ca.odell.glazedlists.gui.TableFormat#getColumnCount()
 	 */
 	@Override
@@ -399,9 +364,7 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 		return retValue;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see ca.odell.glazedlists.gui.TableFormat#getColumnName(int)
 	 */
 	@Override
@@ -417,9 +380,7 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 		return name;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see
 	 * ca.odell.glazedlists.gui.TableFormat#getColumnValue(java.lang.Object,
 	 * int)
@@ -437,9 +398,7 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 		return obj;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see
 	 * ca.odell.glazedlists.gui.WritableTableFormat#isEditable(java.lang.Object,
 	 * int)
@@ -457,9 +416,7 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 		return retValue;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see
 	 * ca.odell.glazedlists.gui.WritableTableFormat#setColumnValue(java.lang
 	 * .Object, java.lang.Object, int)
