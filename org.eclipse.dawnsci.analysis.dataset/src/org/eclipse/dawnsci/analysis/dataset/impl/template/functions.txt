@@ -1,0 +1,476 @@
+biop:
+  add - a + b, addition of a and b
+integer:
+  ox = iax + ibx;
+real:
+  ox = iax + ibx;
+complex:
+  ox = iax + ibx;
+  oy = iay + iby;
+
+biop:
+  subtract - a - b, subtraction of a by b
+integer:
+  ox = iax - ibx;
+real:
+  ox = iax - ibx;
+complex:
+  ox = iax - ibx;
+  oy = iay - iby;
+
+biop:
+  multiply - a * b, product of a and b
+integer:
+  ox = iax * ibx;
+real:
+  ox = iax * ibx;
+complex:
+  ox = iax * ibx - iay * iby;
+  oy = iax * iby + iay * ibx;
+
+biop:
+  divide - a / b, division of a by b
+integer:
+  ox = ibx == 0 ? 0 : iax / ibx;
+real:
+  ox = iax / ibx;
+complex:
+  if (iby == 0) {
+  	ox = iax / ibx;
+  	oy = iay / ibx;
+  } else if (ibx == 0) {
+  	ox = iay / iby;
+  	oy = -iax / iby;
+  } else if (Math.abs(ibx) < Math.abs(iby)) {
+  	q = ibx / iby;
+  	den = ibx * q + iby;
+  	ox = (iax * q + iay) / den;
+  	oy = (iay * q - ibx) / den;
+  } else {
+  	q = iby / ibx;
+  	den = iby * q + ibx;
+  	ox = (iay * q + iax) / den;
+  	oy = (iay - iax * q) / den;
+  }
+
+biop:
+  dividez - a / b, division of a by b
+integer:
+  ox = ibx == 0 ? 0 : iax / ibx;
+real:
+  ox = ibx == 0 ? 0 : iax / ibx;
+complex:
+  if (ibx == 0 && iby == 0) {
+  	ox = 0;
+  	oy = 0;
+  } else if (Math.abs(ibx) < Math.abs(iby)) {
+  	q = ibx / iby;
+  	den = ibx * q + iby;
+  	ox = (iax * q + iay) / den;
+  	oy = (iay * q - ibx) / den;
+  } else {
+  	q = iby / ibx;
+  	den = iby * q + ibx;
+  	ox = (iay * q + iax) / den;
+  	oy = (iay - iax * q) / den;
+  }
+
+biop:
+  divideTowardsFloor - a / b, division of a by b but rounded towards negative infinity 
+integer:
+  if (ibx == 0) {
+  	ox = 0;
+  } else {
+  	ox = iax / ibx;
+  	if (iax != ox * ibx && ((iax < 0) ^ (ibx < 0))) {
+  		ox--;
+  	}
+  }
+real:
+  ox = iax / ibx;
+complex:
+  if (iby == 0) {
+  	ox = iax / ibx;
+  	oy = iay / ibx;
+  } else if (ibx == 0) {
+  	ox = iay / iby;
+  	oy = -iax / iby;
+  } else if (Math.abs(ibx) < Math.abs(iby)) {
+  	q = ibx / iby;
+  	den = ibx * q + iby;
+  	ox = (iax * q + iay) / den;
+  	oy = (iay * q - ibx) / den;
+  } else {
+  	q = iby / ibx;
+  	den = iby * q + ibx;
+  	ox = (iay * q + iax) / den;
+  	oy = (iay - iax * q) / den;
+  }
+
+biop:
+  power - a ** b, raise a to power of b
+integer_with_reals:
+  ox = Math.pow(iax, ibx);
+real:
+  ox = Math.pow(iax, ibx);
+complex:
+  tz = new Complex(iax, iay).pow(new Complex(ibx, iby));
+  ox = tz.getReal();
+  oy = tz.getImaginary();
+
+biop:
+  remainder - a % b, remainder of division of a by b
+integer:
+  ox = ibx == 0 ? 0 : iax % ibx;
+real:
+  ox = iax % ibx;
+
+biop:
+  maximum - return maximum of a and b
+integer_with_reals:
+  ox = Math.max(iax, ibx);
+real:
+  ox = Math.max(iax, ibx);
+complex:
+  if (Double.isNaN(iax) || Double.isNaN(iay)) {
+  	ox = iax;
+  	oy = iay;
+  } else if (Double.isNaN(ibx) || Double.isNaN(iby)) {
+  	ox = ibx;
+  	oy = iby;
+  } else {
+  	ox = Math.max(iax, ibx);
+  	oy = Math.max(iay, iby);
+  }
+
+biop:
+  minimum - return minimum of a and b
+integer_with_reals:
+  ox = Math.min(iax, ibx);
+real:
+  ox = Math.min(iax, ibx);
+complex:
+  if (Double.isNaN(iax) || Double.isNaN(iay)) {
+  	ox = iax;
+  	oy = iay;
+  } else if (Double.isNaN(ibx) || Double.isNaN(iby)) {
+  	ox = ibx;
+  	oy = iby;
+  } else {
+  	ox = Math.min(iax, ibx);
+  	oy = Math.min(iay, iby);
+  }
+
+ibiop:
+  bitwiseAnd - a & b, bitwise AND of a and b
+integer:
+  ox = iax & ibx;
+
+ibiop:
+  bitwiseOr - a | b, bitwise inclusive OR of a and b
+integer:
+  ox = iax | ibx;
+
+ibiop:
+  bitwiseXor - a ^ b, bitwise exclusive OR of a and b
+integer:
+  ox = iax ^ ibx;
+
+ibiop:
+  leftShift - a << b, bitwise left shift of a by b
+integer:
+  ox = iax << ibx;
+
+ibiop:
+  rightShift - a >> b, bitwise right shift of a by b
+integer:
+  ox = iax >> ibx;
+
+ibiop: 0 u
+  unsignedRightShift - a >>> b, bitwise right shift of a by b with zeros added 
+integer:
+  ox = (unsignedMask & iax) >>> ibx;
+
+ifunc:
+  bitwiseInvert - ~a, bitwise invert (or NOT) each element
+integer:
+  ox = ~ix;
+
+func:
+  sin - evaluate the sine function on each element of the dataset
+real:
+  ox = Math.sin(ix);
+complex:
+  ox = Math.sin(ix)*Math.cosh(iy);
+  oy = Math.cos(ix)*Math.sinh(iy);
+
+func:
+  cos - evaluate the cosine function on each element of the dataset
+real:
+  ox = Math.cos(ix);
+complex:
+  ox = Math.cos(ix)*Math.cosh(iy);
+  oy = -Math.sin(ix)*Math.sinh(iy);
+
+func:
+  tan - evaluate the tangent function on each element of the dataset
+real:
+  ox = Math.tan(ix);
+complex:
+  x = 2.*ix;
+  y = 2.*iy;
+  tf = 1./(Math.cos(x)+Math.cosh(y));
+  ox = tf*Math.sin(x);
+  oy = tf*Math.sinh(y);
+
+func:
+  arcsin - evaluate the inverse sine function on each element of the dataset
+real:
+  ox = Math.asin(ix);
+complex:
+  tz = new Complex(ix, iy).asin();
+  ox = tz.getReal();
+  oy = tz.getImaginary();
+
+func:
+  arccos - evaluate the inverse cosine function on each element of the dataset
+real:
+  ox = Math.acos(ix);
+complex:
+  tz = new Complex(ix, iy).acos();
+  ox = tz.getReal();
+  oy = tz.getImaginary();
+
+func:
+  arctan - evaluate the inverse tangent function on each element of the dataset
+real:
+  ox = Math.atan(ix);
+complex:
+  tz = new Complex(ix, iy).atan();
+  ox = tz.getReal();
+  oy = tz.getImaginary();
+
+func:
+  sinh - evaluate the hyperbolic sine function on each element of the dataset
+real:
+  ox = Math.sinh(ix);
+complex:
+  ox = Math.sinh(ix)*Math.cos(iy);
+  oy = Math.cosh(ix)*Math.sin(iy);
+
+func:
+  cosh - evaluate the hyperbolic cosine function on each element of the dataset
+real:
+  ox = Math.cosh(ix);
+complex:
+  ox = Math.cosh(ix)*Math.cos(iy);
+  oy = Math.sinh(ix)*Math.sin(iy);
+
+func:
+  tanh - evaluate the tangent hyperbolic function on each element of the dataset
+real:
+  ox = Math.tanh(ix);
+complex:
+  tx = 2.*ix;
+  ty = 2.*iy;
+  tf = 1./(Math.cos(tx)+Math.cosh(ty));
+  ox = tf*Math.sinh(tx);
+  oy = tf*Math.sin(ty);
+
+func:
+  arcsinh - evaluate the inverse hyperbolic sine function on each element of the dataset
+real:
+  ox = Math.log(ix + Math.sqrt(ix*ix + 1));
+complex:
+  tz = new Complex(-iy, ix).asin();
+  ox = tz.getImaginary();
+  oy = -tz.getReal();
+
+func:
+  arccosh - evaluate the inverse hyperbolic cosine function on each element of the dataset
+real:
+  ox = Math.log(ix + Math.sqrt(ix*ix - 1));
+complex:
+  tz = new Complex(-iy, ix).acos();
+  ox = tz.getImaginary();
+  oy = -tz.getReal();
+
+func:
+  arctanh - evaluate the inverse hyperbolic tangent function on each element of the dataset
+real:
+  ox = 0.5*Math.log((1 + ix)/(1 - ix));
+complex:
+  tz = new Complex(-iy, ix).atan();
+  ox = tz.getImaginary();
+  oy = -tz.getReal();
+
+func:
+  log - evaluate the logarithm function on each element of the dataset
+real:
+  ox = Math.log(ix);
+complex:
+  ox = Math.log(Math.hypot(ix, iy));
+  oy = Math.atan2(iy, ix);
+
+func:
+  log2 - evaluate the logarithm function on each element of the dataset
+real:
+  ox = Math.log(ix)/Math.log(2.);
+complex:
+  ox = Math.log(Math.hypot(ix, iy))/Math.log(2.);
+  oy = Math.atan2(iy, ix);
+
+func:
+  log10 - evaluate the logarithm function on each element of the dataset
+real:
+  ox = Math.log10(ix);
+complex:
+  ox = Math.log10(Math.hypot(ix, iy));
+  oy = Math.atan2(iy, ix);
+
+func:
+  log1p - evaluate the logarithm function of 1 plus on each element of the dataset
+real:
+  ox = Math.log1p(ix);
+complex:
+  ox = 0.5*Math.log1p(ix*ix + 2.*ix + iy*iy);
+  oy = Math.atan2(iy, ix+1);
+
+func:
+  exp - evaluate the exponential function on each element of the dataset
+real:
+  ox = Math.exp(ix);
+complex:
+  tf = Math.exp(ix);
+  ox = tf*Math.cos(iy);
+  oy = tf*Math.sin(iy);
+
+func:
+  expm1 - evaluate the exponential function - 1 on each element of the dataset
+real:
+  ox = Math.expm1(ix);
+complex:
+  tf = Math.expm1(ix);
+  ox = tf*Math.cos(iy);
+  oy = tf*Math.sin(iy);
+
+func:
+  sqrt - evaluate the square root function on each element of the dataset
+real:
+  ox = Math.sqrt(ix);
+complex:
+  tz = new Complex(ix, iy).sqrt();
+  ox = tz.getReal();
+  oy = tz.getImaginary();
+
+func:
+  cbrt - evaluate the cube root function on each element of the dataset
+real:
+  ox = Math.cbrt(ix);
+complex:
+  tz = new Complex(ix, iy).pow(new Complex(1./3.,0));
+  ox = tz.getReal();
+  oy = tz.getImaginary();
+
+func:
+  square - square each element
+real:
+  ox = ix*ix;
+complex:
+  ox = ix*ix - iy*iy;
+  oy = 2.*ix*iy;
+
+func:
+  floor - evaluate the floor function on each element of the dataset
+integer:
+  ox = ix;
+real:
+  ox = Math.floor(ix);
+complex:
+  ox = Math.floor(ix);
+  oy = Math.floor(iy);
+
+func:
+  ceil - evaluate the ceiling function on each element of the dataset
+integer:
+  ox = ix;
+real:
+  ox = Math.ceil(ix);
+complex:
+  ox = Math.ceil(ix);
+  oy = Math.ceil(iy);
+
+func:
+  rint - round each element of the dataset
+integer:
+  ox = ix;
+real:
+  ox = Math.rint(ix);
+complex:
+  ox = Math.rint(ix);
+  oy = Math.rint(iy);
+
+func:
+  truncate - truncate each element to integers of the dataset
+integer:
+  ox = ix;
+real:
+  ox = toLong(ix);
+complex:
+  ox = toLong(ix);
+  oy = toLong(iy);
+
+func:
+  toDegrees - convert to degrees
+real:
+  ox = Math.toDegrees(ix);
+complex:
+  ox = Math.toDegrees(ix);
+  oy = Math.toDegrees(iy);
+
+func:
+  toRadians - convert to radians
+real:
+  ox = Math.toRadians(ix);
+complex:
+  ox = Math.toRadians(ix);
+  oy = Math.toRadians(iy);
+
+func:
+  signum - sign of each element
+integer:
+  ox = ix > 0 ? 1 : (ix < 0 ? -1 : 0);
+real:
+  ox = Math.signum(ix);
+complex:
+  ox = Math.signum(ix);
+  oy = Math.signum(iy);
+
+func:
+  negative - negative value of each element
+integer:
+  ox = -ix;
+real:
+  ox = -ix;
+complex:
+  ox = -ix;
+  oy = -iy;
+
+func: 2
+  clip - clip elements to limits
+integer_with_reals:
+  if (ix < pax)
+  	ox = pax;
+  else if (ix > pbx)
+  	ox = pbx;
+  else
+  	ox = ix;
+real:
+  if (Double.isNaN(ix))
+  	ox = (pax+pbx)/2.;
+  else if (ix < pax)
+  	ox = pax;
+  else if (ix > pbx)
+  	ox = pbx;
+  else
+  	ox = ix;
