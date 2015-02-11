@@ -28,6 +28,7 @@ import java.util.regex.Pattern;
 import javax.xml.bind.JAXBException;
 
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
+import org.eclipse.ice.datastructures.form.AdaptiveTreeComposite;
 import org.eclipse.ice.datastructures.form.DataComponent;
 import org.eclipse.ice.datastructures.form.TreeComposite;
 import org.eclipse.ice.datastructures.form.emf.EMFComponent;
@@ -93,34 +94,6 @@ public class EMFComponentTester {
 		assertTrue("DocumentRoot".equals(emfTree.getName()));
 		assertEquals(0, emfTree.getNumberOfChildren());
 		assertEquals(1, emfTree.getChildExemplars().size());
-		// assertEquals(1, emfTree.getNumberOfDataNodes());
-		// component = (DataComponent) emfTree.getActiveDataNode();
-		// assertEquals("ShiporderType Data", component.getName());
-		// assertEquals(2, component.retrieveAllEntries().size());
-		// assertEquals("orderperson", component.retrieveAllEntries().get(0)
-		// .getName());
-		// assertEquals("orderperson", component.retrieveAllEntries().get(0)
-		// .getValue());
-		// assertEquals("orderid",
-		// component.retrieveAllEntries().get(1).getName());
-		//
-		// // Check the first child of RootNode's tree structure
-		// TreeComposite child1 = emfTree.getChildAtIndex(0);
-		// assertEquals("ShiptoType", child1.getName());
-		// assertEquals(0, child1.getNumberOfChildren());
-		// assertEquals(1, child1.getNumberOfDataNodes());
-		// component = (DataComponent) child1.getActiveDataNode();
-		// assertEquals("ShiptoType Data", component.getName());
-		// assertEquals(4, component.retrieveAllEntries().size());
-		//
-		// // Check the second child of RootNode's tree structure
-		// TreeComposite child2 = emfTree.getChildAtIndex(1);
-		// assertEquals("ItemType", child2.getName());
-		// assertEquals(0, child2.getNumberOfChildren());
-		// assertEquals(1, child2.getNumberOfDataNodes());
-		// component = (DataComponent) child2.getActiveDataNode();
-		// assertEquals("ItemType Data", component.getName());
-		// assertEquals(4, component.retrieveAllEntries().size());
 
 		return;
 
@@ -144,6 +117,10 @@ public class EMFComponentTester {
 		docRoot.setNextChild(shipOrder);
 		assertEquals(1, docRoot.getNumberOfChildren());
 
+		// Test that we can only add 1 shiporder
+		docRoot.setNextChild(shipOrder);
+		assertEquals(1, docRoot.getNumberOfChildren());
+
 		assertEquals(1, shipOrder.getNumberOfDataNodes());
 		DataComponent component = (DataComponent) shipOrder.getActiveDataNode();
 		assertEquals("ShiporderType Data", component.getName());
@@ -152,10 +129,13 @@ public class EMFComponentTester {
 				.getName());
 		assertEquals("orderid", component.retrieveAllEntries().get(1).getName());
 		assertTrue(component.retrieveEntry("orderperson").setValue("McCaskey"));
+		assertTrue(component.retrieveEntry("orderid").setValue(""));
 
 		// Check the first child of RootNode's tree structure
 		EMFTreeComposite shipTo = (EMFTreeComposite) shipOrder
-				.getChildExemplars().get(0).clone();
+				.getChildExemplars().get(0).clone(); // HERE ITS NOT 1 Index BC
+														// OUR CHILD EXEMPLAR
+														// LIST IS DYNAMIC
 		assertEquals(0, shipOrder.getNumberOfChildren());
 		shipOrder.setNextChild(shipTo);
 		assertEquals(1, shipOrder.getNumberOfChildren());
@@ -173,7 +153,7 @@ public class EMFComponentTester {
 
 		// Check the second child of RootNode's tree structure
 		TreeComposite item = (EMFTreeComposite) shipOrder.getChildExemplars()
-				.get(1).clone();
+				.get(0).clone();
 		shipOrder.setNextChild(item);
 		assertEquals(2, shipOrder.getNumberOfChildren());
 		assertEquals("ItemType", item.getName());
@@ -188,7 +168,7 @@ public class EMFComponentTester {
 		assertTrue(component.retrieveEntry("price").setValue("0.0"));
 
 		EMFTreeComposite anotherItem = (EMFTreeComposite) shipOrder
-				.getChildExemplars().get(1).clone();
+				.getChildExemplars().get(0).clone();
 		shipOrder.setNextChild(anotherItem);
 		assertEquals(3, shipOrder.getNumberOfChildren());
 		assertEquals("ItemType", anotherItem.getName());
@@ -218,27 +198,30 @@ public class EMFComponentTester {
 		String separator = System.getProperty("file.separator");
 		String userDir = System.getProperty("user.home") + separator
 				+ "ICETests" + separator + "datastructuresData";
-		
-		String filePath1 = userDir + separator
-				+ "electrical.xsd";
-		String filePath2 = userDir + separator
-				+ "electrical.xml";
+
+		String filePath1 = userDir + separator + "electrical.xsd";
+		String filePath2 = userDir + separator + "electrical.xml";
 		ArrayList<String> treeNames = new ArrayList<String>();
 		HashMap<String, Integer> verificationMap = new HashMap<String, Integer>();
 
-		EMFComponent batmlEMFComponent = new EMFComponent(null);
+		EMFComponent batmlEMFComponent = new EMFComponent(new File(filePath1));
 
-		assertTrue(batmlEMFComponent.save());
+		assertTrue(batmlEMFComponent.load(new File(filePath2)));
 
-		assertTrue(batmlEMFComponent.load(new File(filePath1), new File(filePath2)));
-		//System.exit(0);
+		EMFTreeComposite docRootTree = (EMFTreeComposite) batmlEMFComponent
+				.getEMFTreeComposite();
 
-		batmlEMFComponent.save();
-		
-		assertNotNull(batmlEMFComponent.getEMFTreeComposite().getChildAtIndex(0));
-		System.out.println("NAME: " + batmlEMFComponent.getEMFTreeComposite().getName());
-		assertTrue(batmlEMFComponent.getEMFTreeComposite().getChildAtIndex(0)
-				.getChildAtIndex(0).getName().equals("ModelDBType1"));
+		assertNotNull(docRootTree);
+		assertNotNull(docRootTree.getChildAtIndex(0));
+		assertTrue(docRootTree.getChildAtIndex(0).getChildAtIndex(0).getName()
+				.equals("ModelDBType1"));
+
+		EMFTreeComposite modelDB = (EMFTreeComposite) docRootTree
+				.getChildAtIndex(0).getChildAtIndex(0).getChildAtIndex(0);
+
+		for (TreeComposite t : modelDB.getChildExemplars()) {
+			System.out.println("HELLO: " + t.getName());
+		}
 
 		BreadthFirstTreeCompositeIterator iter = new BreadthFirstTreeCompositeIterator(
 				batmlEMFComponent.getEMFTreeComposite());
@@ -247,6 +230,7 @@ public class EMFComponentTester {
 			EMFTreeComposite tree = (EMFTreeComposite) iter.next();
 			String treeName = tree.getName();
 			treeNames.add(treeName);
+			System.out.println("TreeName: " + treeName);
 			if (verificationMap.keySet().contains(treeName)) {
 				int newValue = verificationMap.get(treeName) + 1;
 				verificationMap.put(treeName, newValue);
@@ -307,6 +291,7 @@ public class EMFComponentTester {
 							Charset.defaultCharset());
 			ArrayList<String> actualFileContents = (ArrayList<String>) Files
 					.readAllLines(Paths.get(filePath), Charset.defaultCharset());
+
 			assertTrue(actualFileContents.equals(exptectedFileContents));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -352,32 +337,37 @@ public class EMFComponentTester {
 		assertEquals("ShiporderType Data", component.getName());
 		assertEquals(2, component.retrieveAllEntries().size());
 
-		// Check the first child of RootNode's tree structure
-		TreeComposite child1 = shipOrder.getChildAtIndex(0);
-		assertEquals("ShiptoType", child1.getName());
-		assertEquals(0, child1.getNumberOfChildren());
-		assertEquals(1, child1.getNumberOfDataNodes());
-		component = (DataComponent) child1.getActiveDataNode();
-		assertEquals("ShiptoType Data", component.getName());
-		assertEquals(4, component.retrieveAllEntries().size());
-
-		// Check the second child of RootNode's tree structure
-		TreeComposite child2 = shipOrder.getChildAtIndex(1);
-		assertEquals("ItemType", child2.getName());
-		assertEquals(0, child2.getNumberOfChildren());
-		assertEquals(1, child2.getNumberOfDataNodes());
-		component = (DataComponent) child2.getActiveDataNode();
-		assertEquals("ItemType Data", component.getName());
-		assertEquals(4, component.retrieveAllEntries().size());
-
-		TreeComposite child3 = shipOrder.getChildAtIndex(2);
-		assertEquals("ItemType", child3.getName());
-		assertEquals(0, child3.getNumberOfChildren());
-		assertEquals(1, child3.getNumberOfDataNodes());
-		component = (DataComponent) child3.getActiveDataNode();
-		assertEquals("ItemType Data", component.getName());
-		assertEquals(4, component.retrieveAllEntries().size());
-
+		assertEquals(3, shipOrder.getNumberOfChildren());
+		
+		int itemCount = 0; 
+		int shiptoCount = 0;
+		
+		for (int i = 0; i < 3; i++) {
+			TreeComposite child = shipOrder.getChildAtIndex(i);
+			assertNotNull(child);
+			
+			if ("ShiptoType".equals(child.getName())) {
+				shiptoCount++;
+				assertEquals(0, child.getNumberOfChildren());
+				assertEquals(1, child.getNumberOfDataNodes());
+				component = (DataComponent) child.getActiveDataNode();
+				assertEquals("ShiptoType Data", component.getName());
+				assertEquals(4, component.retrieveAllEntries().size());
+			} else if ("ItemType".equals(child.getName())) {
+				itemCount++;
+				assertEquals(0, child.getNumberOfChildren());
+				assertEquals(1, child.getNumberOfDataNodes());
+				component = (DataComponent) child.getActiveDataNode();
+				assertEquals("ItemType Data", component.getName());
+				assertEquals(4, component.retrieveAllEntries().size());
+			} else {
+				fail();
+			}
+		}
+		
+		assertEquals(1, shiptoCount);
+		assertEquals(2, itemCount);
+		
 		String xmlString = emfComponent.saveToString();
 		assertNotNull(xmlString);
 		assertEquals(2, xmlString.split(Pattern.quote("<item>"), -1).length - 1);
@@ -467,7 +457,7 @@ public class EMFComponentTester {
 	/**
 	 * <!-- begin-UML-doc -->
 	 * <p>
-	 * This operation checks the DataComponent to ensure that its copy() and
+	 * This operation checks the EMFComponent to ensure that its copy() and
 	 * clone() operations work as specified.
 	 * </p>
 	 * <!-- end-UML-doc -->
@@ -475,10 +465,17 @@ public class EMFComponentTester {
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	@Ignore
+	@Test
 	public void checkCopying() {
 		// begin-user-code
 
+		EMFComponent comp = (EMFComponent) emfComponent.clone();
+		assertTrue(comp.equals(emfComponent));
+
+		EMFComponent newCopy = new EMFComponent();
+		newCopy.copy(emfComponent);
+		assertTrue(newCopy.equals(emfComponent));
+		
 		return;
 		// end-user-code
 	}
@@ -486,33 +483,32 @@ public class EMFComponentTester {
 	/**
 	 * <!-- begin-UML-doc -->
 	 * <p>
-	 * This operation checks the ability of the DataComponent to persist itself
+	 * This operation checks the ability of the EMFComponent to persist itself
 	 * to XML and to load itself from an XML input stream.
 	 * </p>
 	 * <!-- end-UML-doc -->
-	 * @throws IOException 
-	 * @throws JAXBException 
-	 * @throws NullPointerException 
+	 * 
+	 * @throws IOException
+	 * @throws JAXBException
+	 * @throws NullPointerException
 	 * 
 	 * @generated 
 	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
-	public void checkLoadingFromXML() throws NullPointerException, JAXBException, IOException {
+	public void checkLoadingFromXML() throws NullPointerException,
+			JAXBException, IOException {
 		// begin-user-code
 		// Local declarations
 		int id = 5;
 		String name = "Bob";
 		String description = "I am Bob! 1.0";
-		ArrayList<Double> values = new ArrayList<Double>();
 		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
 		ArrayList<Class> classList = new ArrayList<Class>();
 		classList.add(EMFComponent.class);
 
-		// Add allowedvalues to arraylist
-		values.add(1.0);
-		values.add(10.0);
-
+		emfComponent = new EMFComponent();
+		
 		// set ICEObject info
 		emfComponent.setId(id);
 		emfComponent.setName(name);
@@ -524,7 +520,6 @@ public class EMFComponentTester {
 
 		assertNotNull(outputStream);
 		String xmlFile2 = new String(outputStream.toByteArray());
-		System.err.println(xmlFile2);
 
 		// convert information inside of outputStream to inputStream
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(
@@ -535,7 +530,9 @@ public class EMFComponentTester {
 		loadEMF = (EMFComponent) xmlHandler.read(classList, inputStream);
 
 		// Check contents -- Why was this commented out? ~JJB 20141223 16:57
-		//assertTrue(loadEMF.equals(emfComponent));
+		assertTrue(loadEMF.equals(emfComponent));
+
+
 
 	}
 }
