@@ -96,7 +96,6 @@ class transmutate(object):
             self.scdtype = "ARRAY" + self.sdtype
             self.dcdtype = "ARRAY" + self.ddtype
 
-        from ordereddict import OrderedDict #@UnresolvedImport
         processors = [("// DATA_TYPE", self.data),
             ("// CLASS_TYPE", self.jpclass),
             ("// PRIM_TYPE", self.primitive),
