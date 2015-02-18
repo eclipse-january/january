@@ -270,6 +270,19 @@ public class SliceND {
 	}
 
 	@Override
+	public SliceND clone() {
+		SliceND c = new SliceND(oshape);
+		for (int i = 0; i < oshape.length; i++) {
+			c.lshape[i] = lshape[i];
+			c.lstart[i] = lstart[i];
+			c.lstop[i] = lstop[i];
+			c.lstep[i] = lstep[i];
+		}
+		c.allData = allData;
+		return c;
+	}
+
+	@Override
 	public String toString() {
 		final int rank = lshape.length;
 		if (rank == 0) {
