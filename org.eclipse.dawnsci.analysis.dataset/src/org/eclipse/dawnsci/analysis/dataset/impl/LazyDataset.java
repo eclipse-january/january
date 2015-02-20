@@ -30,6 +30,7 @@ import org.eclipse.dawnsci.analysis.api.metadata.Reshapeable;
 import org.eclipse.dawnsci.analysis.api.metadata.Sliceable;
 import org.eclipse.dawnsci.analysis.api.metadata.Transposable;
 import org.eclipse.dawnsci.analysis.api.monitor.IMonitor;
+import org.eclipse.dawnsci.analysis.dataset.metadata.OriginMetadataImpl;
 
 public class LazyDataset extends LazyDatasetBase implements Serializable, Cloneable {
 
@@ -365,6 +366,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 			}
 		}
 		view.storeMetadata(metadata, Sliceable.class);
+		
 		view.sliceMetadata(true, slice);
 		return view;
 	}
@@ -489,6 +491,8 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 			a = a.getTransposedView(map);
 		}
 		a.setShape(slice.getShape());
+		a.addMetadata(new OriginMetadataImpl(this, nslice.convertToSlice(), oShape, null, null));
+		
 		return a;
 	}
 
