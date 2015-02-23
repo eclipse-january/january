@@ -124,8 +124,9 @@ public class Maths {
 		final BroadcastIterator it = new BroadcastIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
-		switch (dt) {
+		final double[] cpx;
+
+		switch (result.getDtype()) {
 		case Dataset.BOOL:
 			boolean[] bdata = ((BooleanDataset) result).getData();
 			it.setOutputDouble(false);
@@ -370,50 +371,58 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			float[] c64data = ((ComplexFloatDataset) result).getData();
 			it.setOutputDouble(true);
+			cpx = new double[2];
 
 			if (da.getElementsPerItem() == 1) {
 				while (it.hasNext()) {
 					final double ib = db.getElementDoubleAbs(it.bIndex + 1);
-					c64data[it.oIndex]     = (float) op.realComplexOperate(it.aDouble, 0, it.bDouble, ib);
-					c64data[it.oIndex + 1] = (float) op.imagComplexOperate(it.aDouble, 0, it.bDouble, ib);
+					op.complexOperate(cpx, it.aDouble, 0, it.bDouble, ib);
+					c64data[it.oIndex]     = (float) cpx[0];
+					c64data[it.oIndex + 1] = (float) cpx[1];
 				}
 			} else if (db.getElementsPerItem() == 1) {
 				while (it.hasNext()) {
 					final double ia = da.getElementDoubleAbs(it.aIndex + 1);
-					c64data[it.oIndex]     = (float) op.realComplexOperate(it.aDouble, ia, it.bDouble, 0);
-					c64data[it.oIndex + 1] = (float) op.imagComplexOperate(it.aDouble, ia, it.bDouble, 0);
+					op.complexOperate(cpx, it.aDouble, ia, it.bDouble, 0);
+					c64data[it.oIndex]     = (float) cpx[0];
+					c64data[it.oIndex + 1] = (float) cpx[1];
 				}
 			} else {
 				while (it.hasNext()) {
 					final double ia = da.getElementDoubleAbs(it.aIndex + 1);
 					final double ib = db.getElementDoubleAbs(it.bIndex + 1);
-					c64data[it.oIndex]     = (float) op.realComplexOperate(it.aDouble, ia, it.bDouble, ib);
-					c64data[it.oIndex + 1] = (float) op.imagComplexOperate(it.aDouble, ia, it.bDouble, ib);
+					op.complexOperate(cpx, it.aDouble, ia, it.bDouble, ib);
+					c64data[it.oIndex]     = (float) cpx[0];
+					c64data[it.oIndex + 1] = (float) cpx[1];
 				}
 			}
 			break;
 		case Dataset.COMPLEX128:
 			double[] c128data = ((ComplexDoubleDataset) result).getData();
 			it.setOutputDouble(true);
+			cpx = new double[2];
 
 			if (da.getElementsPerItem() == 1) {
 				while (it.hasNext()) {
 					final double ib = db.getElementDoubleAbs(it.bIndex + 1);
-					c128data[it.oIndex]     = op.realComplexOperate(it.aDouble, 0, it.bDouble, ib);
-					c128data[it.oIndex + 1] = op.imagComplexOperate(it.aDouble, 0, it.bDouble, ib);
+					op.complexOperate(cpx, it.aDouble, 0, it.bDouble, ib);
+					c128data[it.oIndex]     = cpx[0];
+					c128data[it.oIndex + 1] = cpx[1];
 				}
 			} else if (db.getElementsPerItem() == 1) {
 				while (it.hasNext()) {
 					final double ia = da.getElementDoubleAbs(it.aIndex + 1);
-					c128data[it.oIndex]     = op.realComplexOperate(it.aDouble, ia, it.bDouble, 0);
-					c128data[it.oIndex + 1] = op.imagComplexOperate(it.aDouble, ia, it.bDouble, 0);
+					op.complexOperate(cpx, it.aDouble, ia, it.bDouble, 0);
+					c128data[it.oIndex]     = cpx[0];
+					c128data[it.oIndex + 1] = cpx[1];
 				}
 			} else {
 				while (it.hasNext()) {
 					final double ia = da.getElementDoubleAbs(it.aIndex + 1);
 					final double ib = db.getElementDoubleAbs(it.bIndex + 1);
-					c128data[it.oIndex]     = op.realComplexOperate(it.aDouble, ia, it.bDouble, ib);
-					c128data[it.oIndex + 1] = op.imagComplexOperate(it.aDouble, ia, it.bDouble, ib);
+					op.complexOperate(cpx, it.aDouble, ia, it.bDouble, ib);
+					c128data[it.oIndex]     = cpx[0];
+					c128data[it.oIndex + 1] = cpx[1];
 				}
 			}
 			break;

@@ -16,6 +16,7 @@ package org.eclipse.dawnsci.analysis.dataset.impl;
  * Interface to represent a binary operation for implementations over different output domains
  */
 public interface BinaryOperation {
+
 	/**
 	 * @param a
 	 * @param b
@@ -38,22 +39,13 @@ public interface BinaryOperation {
 	double doubleOperate(double a, double b);
 
 	/**
+	 * @param out holds (ra, ia) op (rb, ib)
 	 * @param ra
 	 * @param ia
 	 * @param rb
 	 * @param ib
-	 * @return Re(a op b)
 	 */
-	double realComplexOperate(double ra, double ia, double rb, double ib);
-
-	/**
-	 * @param ra
-	 * @param ia
-	 * @param rb
-	 * @param ib
-	 * @return Im(a op b)
-	 */
-	double imagComplexOperate(double ra, double ia, double rb, double ib);
+	void complexOperate(double[] out, double ra, double ia, double rb, double ib);
 
 	@Override
 	String toString();
@@ -88,15 +80,6 @@ class Stub implements BinaryOperation {
 	 * override this
 	 */
 	@Override
-	public double realComplexOperate(double ra, double ia, double rb, double ib) {
-		return 0;
-	}
-
-	/**
-	 * override this
-	 */
-	@Override
-	public double imagComplexOperate(double ra, double ia, double rb, double ib) {
-		return 0;
+	public void complexOperate(double[] out, double ra, double ia, double rb, double ib) {
 	}
 }
