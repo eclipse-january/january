@@ -28,6 +28,7 @@ import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.componentVisitor.SelectiveComponentVisitor;
 import org.eclipse.ice.datastructures.resource.ICEResource;
+import org.eclipse.ice.datastructures.resource.VizResource;
 import org.junit.*;
 
 import ca.odell.glazedlists.EventList;
@@ -167,6 +168,7 @@ public class ListComponentTester implements IElementSource<Integer>,
 		classList.add(Integer.class);
 		classList.add(ICEObject.class);
 		classList.add(ICEResource.class);
+		classList.add(VizResource.class);
 
 		// Demonstrate a basic "write" to file. Should not fail
 		// Initialize the object and set values.
@@ -215,12 +217,16 @@ public class ListComponentTester implements IElementSource<Integer>,
 		// Set up some dummy resources and add them to the list
 		File file = new File("Isabelle");
 		File file2 = new File("Zelda");
+		File file3 = new File("Doctor");
 		ICEResource res = new ICEResource(file);
 		ICEResource res2 = new ICEResource(file2);
+		VizResource res3 = new VizResource(file3);
 		resList.add(res);
 		resList.add(res2);
+		resList.add(res3);
 		file.deleteOnExit();
 		file2.deleteOnExit();
+		file3.deleteOnExit();
 
 		// Write it to the stream
 		outputStream = new ByteArrayOutputStream();
@@ -230,9 +236,10 @@ public class ListComponentTester implements IElementSource<Integer>,
 		ListComponent<?> resLoadedList = (ListComponent<?>) xmlHandler
 				.read(classList, inputStream);
 		assertEquals(resList.getId(), resLoadedList.getId());
-		assertEquals(2, resList.size());
+		assertEquals(3, resList.size());
 		assertEquals(res, resLoadedList.get(0));
 		assertEquals(res2, resLoadedList.get(1));
+		assertEquals(res3, resLoadedList.get(2));
 		assertTrue(resList.equals(resLoadedList));
 
 		return;
