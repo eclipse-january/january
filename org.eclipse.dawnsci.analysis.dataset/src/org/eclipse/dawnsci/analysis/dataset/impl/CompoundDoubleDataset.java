@@ -1254,7 +1254,7 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
 			if (is == 1) {
-				final double db = bds.getElementDoubleAbs(0); // PRIM_TYPE // GET_ELEMENT_WITH_CAST
+				final double db = bds.getElementDoubleAbs(0);
 				while (it.hasNext()) {
 					for (int i = 0; i < isize; i++) {
 						data[it.index + i] += db;
@@ -1263,7 +1263,7 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 			} else if (is == isize) {
 				while (it.hasNext()) {
 					for (int i = 0; i < isize; i++) {
-						data[it.index + i] += bds.getElementDoubleAbs(i); // GET_ELEMENT_WITH_CAST
+						data[it.index + i] += bds.getElementDoubleAbs(i);
 					}
 				}
 			} else {
@@ -1275,16 +1275,16 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 			if (is == 1) {
 				while (it.hasNext()) {
 					final double db = it.bDouble;
-					data[it.aIndex] += db; // ADD_CAST
+					data[it.aIndex] += db;
 					for (int i = 1; i < isize; i++) {
-						data[it.aIndex + i] += db; // ADD_CAST
+						data[it.aIndex + i] += db;
 					}
 				}
 			} else if (is == isize) {
 				while (it.hasNext()) {
-					data[it.aIndex] += it.bDouble; // ADD_CAST
+					data[it.aIndex] += it.bDouble;
 					for (int i = 1; i < isize; i++) {
-						data[it.aIndex + i] += bds.getElementDoubleAbs(it.bIndex + i); // GET_ELEMENT_WITH_CAST
+						data[it.aIndex + i] += bds.getElementDoubleAbs(it.bIndex + i);
 					}
 				}
 			} else {
@@ -1302,19 +1302,16 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
 			if (is == 1) {
-				final double db = bds.getElementDoubleAbs(0); // INT_OMIT // PRIM_TYPE // GET_ELEMENT_WITH_CAST
-				// final double db = bds.getElementDoubleAbs(0); // INT_USE
+				final double db = bds.getElementDoubleAbs(0);
 				while (it.hasNext()) {
 					for (int i = 0; i < isize; i++) {
-						data[it.index + i] -= db; // INT_OMIT
-						// data[it.index + i] = (data[it.index + i] - db); // INT_USE // ADD_CAST
+						data[it.index + i] -= db;
 					}
 				}
 			} else if (is == isize) {
 				while (it.hasNext()) {
 					for (int i = 0; i < isize; i++) {
-						data[it.index + i] -= bds.getElementDoubleAbs(i); // INT_OMIT // GET_ELEMENT_WITH_CAST
-						// data[it.index + i] = (data[it.index + i] - bds.getElementDoubleAbs(i)); // INT_USE // ADD_CAST
+						data[it.index + i] -= bds.getElementDoubleAbs(i);
 					}
 				}
 			} else {
@@ -1327,17 +1324,14 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 				while (it.hasNext()) {
 					final double db = it.bDouble;
 					for (int i = 0; i < isize; i++) {
-						data[it.aIndex + i] -= db; // INT_OMIT // ADD_CAST
-						// data[it.aIndex + i] = (it.aDouble - db); // INT_USE // ADD_CAST
+						data[it.aIndex + i] -= db;
 					}
 				}
 			} else if (is == isize) {
 				while (it.hasNext()) {
-					data[it.aIndex] -= it.bDouble; // INT_OMIT // ADD_CAST
-					// data[it.aIndex] = (it.aDouble - it.bDouble); // INT_USE // ADD_CAST
+					data[it.aIndex] -= it.bDouble;
 					for (int i = 1; i < isize; i++) {
-						data[it.aIndex + i] -= bds.getElementDoubleAbs(it.bIndex + i); // INT_OMIT // GET_ELEMENT_WITH_CAST
-						// data[it.aIndex + i] = (data[it.aIndex + i] - bds.getElementDoubleAbs(it.bIndex + i)); // INT_USE // ADD_CAST
+						data[it.aIndex + i] -= bds.getElementDoubleAbs(it.bIndex + i);
 					}
 				}
 			} else {
@@ -1355,7 +1349,7 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
 			if (is == 1) {
-				final double db = bds.getElementDoubleAbs(0); // PRIM_TYPE // GET_ELEMENT_WITH_CAST
+				final double db = bds.getElementDoubleAbs(0);
 				while (it.hasNext()) {
 					for (int i = 0; i < isize; i++) {
 						data[it.index + i] *= db;
@@ -1364,7 +1358,7 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 			} else if (is == isize) {
 				while (it.hasNext()) {
 					for (int i = 0; i < isize; i++) {
-						data[it.index + i] *= bds.getElementDoubleAbs(i); // GET_ELEMENT_WITH_CAST
+						data[it.index + i] *= bds.getElementDoubleAbs(i);
 					}
 				}
 			} else {
@@ -1377,14 +1371,14 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 				while (it.hasNext()) {
 					final double db = it.bDouble;
 					for (int i = 0; i < isize; i++) {
-						data[it.aIndex + i] *= db; // ADD_CAST
+						data[it.aIndex + i] *= db;
 					}
 				}
 			} else if (is == isize) {
 				while (it.hasNext()) {
-					data[it.aIndex] *= it.bDouble; // ADD_CAST
+					data[it.aIndex] *= it.bDouble;
 					for (int i = 1; i < isize; i++) {
-						data[it.aIndex + i] *= bds.getElementDoubleAbs(it.bIndex + i); // GET_ELEMENT_WITH_CAST
+						data[it.aIndex + i] *= bds.getElementDoubleAbs(it.bIndex + i);
 					}
 				}
 			} else {
@@ -1402,29 +1396,21 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
 			if (is == 1) {
-				final double db = bds.getElementDoubleAbs(0); // INT_OMIT // PRIM_TYPE // GET_ELEMENT_WITH_CAST
-				// final double db = bds.getElementDoubleAbs(0); // INT_USE
+				final double db = bds.getElementDoubleAbs(0);
 				// if (db == 0) { // INT_USE
 				// 	fill(0); // INT_USE
 				// } else { // INT_USE
 				while (it.hasNext()) {
 					for (int i = 0; i < isize; i++) {
-						data[it.index + i] /= db; // INT_OMIT
-						// data[it.index + i] = (data[it.index + i] / db); // INT_USE // ADD_CAST
+						data[it.index + i] /= db;
 					}
 				}
 				// } // INT_USE
 			} else if (is == isize) {
 				while (it.hasNext()) {
 					for (int i = 0; i < isize; i++) {
-						final double db = bds.getElementDoubleAbs(i); // INT_OMIT // PRIM_TYPE // GET_ELEMENT_WITH_CAST
-						// final double db = bds.getElementDoubleAbs(0); // INT_USE
-						data[it.index + i] /= db; // INT_OMIT
-						// try { // INT_USE
-						// 	data[it.index + i] = (data[it.index + i] / db); // INT_USE // ADD_CAST
-						// } catch (ArithmeticException e) { // INT_USE
-						// 	data[it.index + i] = 0; // INT_USE
-						// } // INT_USE
+						final double db = bds.getElementDoubleAbs(i);
+						data[it.index + i] /= db; // INT_EXCEPTION
 					}
 				}
 			} else {
@@ -1442,22 +1428,15 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 					// 	}// INT_USE
 					// } else { // INT_USE
 					for (int i = 0; i < isize; i++) {
-						data[it.aIndex + i] /= db; // INT_OMIT // ADD_CAST
-					// 	data[it.aIndex + i] = (data[it.aIndex + i] / db); // INT_USE // ADD_CAST
+						data[it.aIndex + i] /= db;
 					}
 					// } // INT_USE
 				}
 			} else if (is == isize) {
 				while (it.hasNext()) {
 					for (int i = 0; i < isize; i++) {
-						final double db = bds.getElementDoubleAbs(it.bIndex + i); // INT_OMIT // PRIM_TYPE // GET_ELEMENT_WITH_CAST
-						// final double db = bds.getElementDoubleAbs(0); // INT_USE
-						data[it.aIndex + i] /= db; // INT_OMIT
-						// try { // INT_USE
-						// 	data[it.aIndex + i] = (data[it.aIndex + i] / db); // INT_USE // ADD_CAST
-						// } catch (ArithmeticException e) { // INT_USE
-						// 	data[it.aIndex + i] = 0; // INT_USE
-						// } // INT_USE
+						final double db = bds.getElementDoubleAbs(it.bIndex + i);
+						data[it.aIndex + i] /= db; // INT_EXCEPTION
 					}
 				}
 			} else {
@@ -1486,23 +1465,20 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
 			if (is == 1) {
-				final double db = bds.getElementDoubleAbs(0); // INT_OMIT // PRIM_TYPE // GET_ELEMENT_WITH_CAST
-				// final double db = bds.getElementDoubleAbs(0); // INT_USE
+				final double db = bds.getElementDoubleAbs(0);
 				// if (db == 0) { // INT_USE
 				// 	fill(0); // INT_USE
 				// } else { // INT_USE
 				while (it.hasNext()) {
 					for (int i = 0; i < isize; i++) {
-						data[it.index + i] %= db; // INT_OMIT
-						// data[it.index + i] = (data[it.index + i] % db); // INT_USE // ADD_CAST
+						data[it.index + i] %= db;
 					}
 				}
 				// } // INT_USE
 			} else if (is == isize) {
 				while (it.hasNext()) {
 					for (int i = 0; i < isize; i++) {
-						data[it.index + i] %= bds.getElementDoubleAbs(i); // INT_OMIT // GET_ELEMENT_WITH_CAST
-						// data[it.index + i] = (data[it.index + i] % bds.getElementDoubleAbs(i)); // INT_USE // ADD_CAST
+						data[it.index + i] %= bds.getElementDoubleAbs(i); // INT_EXCEPTION
 					}
 				}
 			} else {
@@ -1519,21 +1495,14 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 					// 		data[it.aIndex + i] = 0; // INT_USE
 					// } else { // INT_USE
 					for (int i = 0; i < isize; i++)
-						data[it.aIndex + i] %= db; // INT_OMIT
-					// 	data[it.aIndex + i] = (data[it.aIndex + i] % db); // INT_USE // ADD_CAST
+						data[it.aIndex + i] %= db;
 					// } // INT_USE
 				}
 			} else if (is == isize) {
 				while (it.hasNext()) {
 					for (int i = 0; i < isize; i++) {
-						final double db = bds.getElementDoubleAbs(it.bIndex + i); // INT_OMIT // PRIM_TYPE // GET_ELEMENT_WITH_CAST
-						// final double db = bds.getElementDoubleAbs(0); // INT_USE
-						data[it.aIndex + i] %= db; // INT_OMIT
-						// try { // INT_USE
-						// 	data[it.aIndex + i] = (data[it.aIndex + i] % db); // INT_USE // ADD_CAST
-						// } catch (ArithmeticException e) { // INT_USE
-						// 	data[it.aIndex + i] = 0; // INT_USE
-						// } // INT_USE
+						final double db = bds.getElementDoubleAbs(it.bIndex + i);
+						data[it.aIndex + i] %= db; // INT_EXCEPTION
 					}
 				}
 			} else {
@@ -1557,11 +1526,11 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 					while (it.hasNext()) {
 						for (int i = 0; i < isize; i++) {
 							final double v = Math.pow(data[it.index + i], vr);
-							// if (Double.isInfinite(v) || Double.isNaN(v)) { // INT_ZEROTEST
-							// 	data[it.index + i] = 0; // INT_ZEROTEST
-							// } else { // INT_ZEROTEST
+							// if (Double.isInfinite(v) || Double.isNaN(v)) { // INT_USE
+							// 	data[it.index + i] = 0; // INT_USE
+							// } else { // INT_USE
 							data[it.index + i] = v; // PRIM_TYPE_LONG // ADD_CAST
-							// } // INT_ZEROTEST
+							// } // INT_USE
 						}
 					}
 				} else {
@@ -1570,11 +1539,11 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 						for (int i = 0; i < isize; i++) {
 							Complex zd = new Complex(data[it.index + i], 0.);
 							final double v = zd.pow(zv).getReal();
-							// if (Double.isInfinite(v) || Double.isNaN(v)) { // INT_ZEROTEST
-							// 	data[it.index + i] = 0; // INT_ZEROTEST
-							// } else { // INT_ZEROTEST
+							// if (Double.isInfinite(v) || Double.isNaN(v)) { // INT_USE
+							// 	data[it.index + i] = 0; // INT_USE
+							// } else { // INT_USE
 							data[it.index + i] = v; // PRIM_TYPE_LONG // ADD_CAST
-							// } // INT_ZEROTEST
+							// } // INT_USE
 						}
 					}
 				}
@@ -1582,22 +1551,22 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 				while (it.hasNext()) {
 					for (int i = 0; i < isize; i++) {
 						final double v = Math.pow(data[it.index + i], vr);
-						// if (Double.isInfinite(v) || Double.isNaN(v)) { // INT_ZEROTEST
-						// 	data[it.index + i] = 0; // INT_ZEROTEST
-						// } else { // INT_ZEROTEST
+						// if (Double.isInfinite(v) || Double.isNaN(v)) { // INT_USE
+						// 	data[it.index + i] = 0; // INT_USE
+						// } else { // INT_USE
 						data[it.index + i] = v; // PRIM_TYPE_LONG // ADD_CAST
-						// } // INT_ZEROTEST
+						// } // INT_USE
 					}
 				}
 			} else if (is == isize) {
 				while (it.hasNext()) {
 					for (int i = 0; i < isize; i++) {
 						final double v = Math.pow(data[it.index + i], bds.getElementDoubleAbs(i));
-						// if (Double.isInfinite(v) || Double.isNaN(v)) { // INT_ZEROTEST
-						// 	data[it.index + i] = 0; // INT_ZEROTEST
-						// } else { // INT_ZEROTEST
+						// if (Double.isInfinite(v) || Double.isNaN(v)) { // INT_USE
+						// 	data[it.index + i] = 0; // INT_USE
+						// } else { // INT_USE
 						data[it.index + i] = v; // PRIM_TYPE_LONG // ADD_CAST
-						// } // INT_ZEROTEST
+						// } // INT_USE
 					}
 				}
 			}
@@ -1606,18 +1575,18 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 			it.setOutputDouble(true);
 			while (it.hasNext()) {
 				double v = Math.pow(it.aDouble, it.bDouble);
-				// if (Double.isInfinite(v) || Double.isNaN(v)) { // INT_ZEROTEST
-				// 	data[it.aIndex] = 0; // INT_ZEROTEST
-				// } else { // INT_ZEROTEST
+				// if (Double.isInfinite(v) || Double.isNaN(v)) { // INT_USE
+				// 	data[it.aIndex] = 0; // INT_USE
+				// } else { // INT_USE
 				data[it.aIndex] = v; // PRIM_TYPE_LONG // ADD_CAST
-				// } // INT_ZEROTEST
+				// } // INT_USE
 				for (int i = 1; i < isize; i++) {
 					v = Math.pow(data[it.aIndex + i], bds.getElementDoubleAbs(it.bIndex + i));
-					// if (Double.isInfinite(v) || Double.isNaN(v)) { // INT_ZEROTEST
-					// 	data[it.aIndex + i] = 0; // INT_ZEROTEST
-					// } else { // INT_ZEROTEST
+					// if (Double.isInfinite(v) || Double.isNaN(v)) { // INT_USE
+					// 	data[it.aIndex + i] = 0; // INT_USE
+					// } else { // INT_USE
 					data[it.aIndex + i] = v; // PRIM_TYPE_LONG // ADD_CAST
-					// } // INT_ZEROTEST
+					// } // INT_USE
 				}
 			}
 		}

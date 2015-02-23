@@ -910,7 +910,7 @@ public class FloatDataset extends AbstractDataset {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
-			final float db = (float) bds.getElementDoubleAbs(0); // PRIM_TYPE // GET_ELEMENT_WITH_CAST
+			final double db = bds.getElementDoubleAbs(0);
 			while (it.hasNext()) {
 				data[it.index] += db;
 			}
@@ -918,7 +918,7 @@ public class FloatDataset extends AbstractDataset {
 			final BroadcastIterator it = new BroadcastIterator(this, bds);
 			it.setOutputDouble(true);
 			while (it.hasNext()) {
-				data[it.aIndex] += (float) it.bDouble; // ADD_CAST
+				data[it.aIndex] += it.bDouble;
 			}
 		}
 		setDirty();
@@ -930,18 +930,15 @@ public class FloatDataset extends AbstractDataset {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
-			final float db = (float) bds.getElementDoubleAbs(0); // PRIM_TYPE // GET_ELEMENT_WITH_CAST
-			// final double db = bds.getElementDoubleAbs(0); // INT_USE
+			final double db = bds.getElementDoubleAbs(0);
 			while (it.hasNext()) {
 				data[it.index] -= db;
-				// data[it.index] = (float) (data[it.index] - db); // INT_USE // ADD_CAST
 			}
 		} else {
 			final BroadcastIterator it = new BroadcastIterator(this, bds);
 			it.setOutputDouble(true);
 			while (it.hasNext()) {
-				data[it.aIndex] -= (float) it.bDouble; // ADD_CAST
-				// data[it.aIndex] = (float) (it.aDouble - it.bDouble); // INT_USE // ADD_CAST
+				data[it.aIndex] -= it.bDouble;
 			}
 		}
 		setDirty();
@@ -953,7 +950,7 @@ public class FloatDataset extends AbstractDataset {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
-			final float db = (float) bds.getElementDoubleAbs(0); // PRIM_TYPE // GET_ELEMENT_WITH_CAST
+			final double db = bds.getElementDoubleAbs(0);
 			while (it.hasNext()) {
 				data[it.index] *= db;
 			}
@@ -961,7 +958,7 @@ public class FloatDataset extends AbstractDataset {
 			final BroadcastIterator it = new BroadcastIterator(this, bds);
 			it.setOutputDouble(true);
 			while (it.hasNext()) {
-				data[it.aIndex] *= (float) it.bDouble; // ADD_CAST
+				data[it.aIndex] *= it.bDouble;
 			}
 		}
 		setDirty();
@@ -972,26 +969,23 @@ public class FloatDataset extends AbstractDataset {
 	public FloatDataset idivide(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 		if (bds.getSize() == 1) {
-			final float db = (float) bds.getElementDoubleAbs(0); // PRIM_TYPE // GET_ELEMENT_WITH_CAST
-			// final double db = bds.getElementDoubleAbs(0); // INT_USE
+			final double db = bds.getElementDoubleAbs(0);
 			// if (db == 0) { // INT_USE
 			// 	fill(0); // INT_USE
 			// } else { // INT_USE
 			final IndexIterator it = getIterator();
 			while (it.hasNext()) {
 				data[it.index] /= db;
-				// 	data[it.index] = (float) (data[it.index] / db); // INT_USE // ADD_CAST
 			}
 			// } // INT_USE
 		} else {
 			final BroadcastIterator it = new BroadcastIterator(this, bds);
 			it.setOutputDouble(true);
 			while (it.hasNext()) {
-				data[it.aIndex] /= (float) it.bDouble; // ADD_CAST
 				// if (it.bDouble == 0) { // INT_USE
 				// 	data[it.aIndex] = 0; // INT_USE
 				// } else { // INT_USE
-				// 	data[it.aIndex] = (float) (it.aDouble / it.bDouble); // INT_USE // ADD_CAST
+				data[it.aIndex] /= it.bDouble;
 				// } // INT_USE
 			}
 		}
@@ -1013,22 +1007,20 @@ public class FloatDataset extends AbstractDataset {
 	public FloatDataset iremainder(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 		if (bds.getSize() == 1) {
-			final float db = (float) bds.getElementDoubleAbs(0); // PRIM_TYPE // GET_ELEMENT_WITH_CAST
-			// final double db = bds.getElementDoubleAbs(0); // INT_USE
+			final double db = bds.getElementDoubleAbs(0);
 			// if (db == 0) { // INT_USE
 			// 	fill(0); // INT_USE
 			// } else { // INT_USE
 			final IndexIterator it = getIterator();
 			while (it.hasNext()) {
 				data[it.index] %= db;
-				// 	data[it.index] = (float) (data[it.index] % db); // INT_USE // ADD_CAST
 			}
 			// } // INT_USE
 		} else {
 			final BroadcastIterator it = new BroadcastIterator(this, bds);
 			it.setOutputDouble(true);
 			while (it.hasNext()) {
-				data[it.aIndex] %= (float) it.bDouble; // ADD_CAST // INT_EXCEPTION
+				data[it.aIndex] %= it.bDouble; // INT_EXCEPTION
 			}
 		}
 		setDirty();
@@ -1046,32 +1038,32 @@ public class FloatDataset extends AbstractDataset {
 				if (vi == 0.) {
 					while (it.hasNext()) {
 						final double v = Math.pow(data[it.index], vr);
-						// if (Double.isInfinite(v) || Double.isNaN(v)) { // INT_ZEROTEST
-						// 	data[it.index] = 0; // INT_ZEROTEST
-						// } else { // INT_ZEROTEST
+						// if (Double.isInfinite(v) || Double.isNaN(v)) { // INT_USE
+						// 	data[it.index] = 0; // INT_USE
+						// } else { // INT_USE
 						data[it.index] = (float) v; // PRIM_TYPE_LONG // ADD_CAST
-						// } // INT_ZEROTEST
+						// } // INT_USE
 					}
 				} else {
 					final Complex zv = new Complex(vr, vi);
 					while (it.hasNext()) {
 						Complex zd = new Complex(data[it.index], 0.);
 						final double v = zd.pow(zv).getReal();
-						// if (Double.isInfinite(v) || Double.isNaN(v)) { // INT_ZEROTEST
-						// 	data[it.index] = 0; // INT_ZEROTEST
-						// } else { // INT_ZEROTEST
+						// if (Double.isInfinite(v) || Double.isNaN(v)) { // INT_USE
+						// 	data[it.index] = 0; // INT_USE
+						// } else { // INT_USE
 						data[it.index] = (float) v; // PRIM_TYPE_LONG // ADD_CAST
-						// } // INT_ZEROTEST
+						// } // INT_USE
 					}
 				}
 			} else {// NAN_OMIT
 				while (it.hasNext()) {
 					final double v = Math.pow(data[it.index], vr);
-					// if (Double.isInfinite(v) || Double.isNaN(v)) { // INT_ZEROTEST
-					// 	data[it.index] = 0; // INT_ZEROTEST
-					// } else { // INT_ZEROTEST
+					// if (Double.isInfinite(v) || Double.isNaN(v)) { // INT_USE
+					// 	data[it.index] = 0; // INT_USE
+					// } else { // INT_USE
 					data[it.index] = (float) v; // PRIM_TYPE_LONG // ADD_CAST
-					// } // INT_ZEROTEST
+					// } // INT_USE
 				}
 			}
 		} else {
@@ -1079,11 +1071,11 @@ public class FloatDataset extends AbstractDataset {
 			it.setOutputDouble(true);
 			while (it.hasNext()) {
 				final double v = Math.pow(it.aDouble, it.bDouble);
-				// if (Double.isInfinite(v) || Double.isNaN(v)) { // INT_ZEROTEST
-				// 	data[it.aIndex] = 0; // INT_ZEROTEST
-				// } else { // INT_ZEROTEST
+				// if (Double.isInfinite(v) || Double.isNaN(v)) { // INT_USE
+				// 	data[it.aIndex] = 0; // INT_USE
+				// } else { // INT_USE
 				data[it.aIndex] = (float) v; // PRIM_TYPE_LONG // ADD_CAST
-				// } // INT_ZEROTEST
+				// } // INT_USE
 			}
 		}
 		setDirty();

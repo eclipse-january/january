@@ -631,13 +631,13 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 			final double db = bds.getElementDoubleAbs(0);
 			if (is == 1 || bds.getElementDoubleAbs(1) == 0) {
 				while (it.hasNext()) {
-					data[it.index] += (float) db; // ADD_CAST
+					data[it.index] += db;
 				}
 			} else {
 				final double vi = bds.getElementDoubleAbs(1);
 				while (it.hasNext()) {
-					data[it.index]     += (float) db; // ADD_CAST
-					data[it.index + 1] += (float) vi; // ADD_CAST
+					data[it.index]     += db;
+					data[it.index + 1] += vi;
 				}
 			}
 		} else {
@@ -645,12 +645,12 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 			it.setOutputDouble(true);
 			if (is == 1) {
 				while (it.hasNext()) {
-					data[it.aIndex] += (float) it.bDouble; // ADD_CAST
+					data[it.aIndex] += it.bDouble;
 				}
 			} else {
 				while (it.hasNext()) {
-					data[it.aIndex]     += (float) it.bDouble; // ADD_CAST
-					data[it.aIndex + 1] += (float) bds.getElementDoubleAbs(it.bIndex + 1); // GET_ELEMENT_WITH_CAST
+					data[it.aIndex]     += it.bDouble;
+					data[it.aIndex + 1] += bds.getElementDoubleAbs(it.bIndex + 1);
 				}
 			}
 		}
@@ -667,13 +667,13 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 			final double db = bds.getElementDoubleAbs(0);
 			if (is == 1 || bds.getElementDoubleAbs(1) == 0) {
 				while (it.hasNext()) {
-					data[it.index] -= (float) db; // ADD_CAST
+					data[it.index] -= db;
 				}
 			} else {
 				final double vi = bds.getElementDoubleAbs(1);
 				while (it.hasNext()) {
-					data[it.index]     -= (float) db; // ADD_CAST
-					data[it.index + 1] -= (float) vi; // ADD_CAST
+					data[it.index]     -= db;
+					data[it.index + 1] -= vi;
 				}
 			}
 		} else {
@@ -681,12 +681,12 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 			it.setOutputDouble(true);
 			if (is == 1) {
 				while (it.hasNext()) {
-					data[it.aIndex] -= (float) it.bDouble; // ADD_CAST
+					data[it.aIndex] -= it.bDouble;
 				}
 			} else {
 				while (it.hasNext()) {
-					data[it.aIndex]     -= (float) it.bDouble; // ADD_CAST
-					data[it.aIndex + 1] -= (float) bds.getElementDoubleAbs(it.bIndex + 1); // GET_ELEMENT_WITH_CAST
+					data[it.aIndex]     -= it.bDouble;
+					data[it.aIndex + 1] -= bds.getElementDoubleAbs(it.bIndex + 1);
 				}
 			}
 		}
@@ -703,8 +703,8 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 			final double r2 = bds.getElementDoubleAbs(0);
 			if (is == 1 || bds.getElementDoubleAbs(1) == 0) {
 				while (it.hasNext()) {
-					data[it.index]     *= (float) r2; // ADD_CAST
-					data[it.index + 1] *= (float) r2; // ADD_CAST
+					data[it.index]     *= r2;
+					data[it.index + 1] *= r2;
 				}
 			} else {
 				final double i2 = bds.getElementDoubleAbs(1);
@@ -720,8 +720,8 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 			it.setOutputDouble(true);
 			if (is == 1) {
 				while (it.hasNext()) {
-					data[it.aIndex]     *= (float) it.bDouble; // ADD_CAST
-					data[it.aIndex + 1] *= (float) it.bDouble; // ADD_CAST
+					data[it.aIndex]     *= it.bDouble;
+					data[it.aIndex + 1] *= it.bDouble;
 				}
 			} else {
 				while (it.hasNext()) {
@@ -747,8 +747,8 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 			final double r2 = bds.getElementDoubleAbs(0);
 			if (is == 1 || bds.getElementDoubleAbs(1) == 0) {
 				while (it.hasNext()) {
-					data[it.index]     /= (float) r2; // ADD_CAST
-					data[it.index + 1] /= (float) r2; // ADD_CAST
+					data[it.index]     /= r2;
+					data[it.index + 1] /= r2;
 				}
 			} else {
 				final double i2 = bds.getElementDoubleAbs(1);
@@ -784,8 +784,8 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 			it.setOutputDouble(true);
 			if (is == 1) {
 				while (it.hasNext()) {
-					data[it.aIndex]     /= (float) it.bDouble; // ADD_CAST
-					data[it.aIndex + 1] /= (float) it.bDouble; // ADD_CAST
+					data[it.aIndex]     /= it.bDouble;
+					data[it.aIndex + 1] /= it.bDouble;
 				}
 			} else {
 				while (it.hasNext()) {

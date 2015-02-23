@@ -35,7 +35,7 @@ Mark up source class with following comment markers:
 // FORMAT_STRING  - format string for getString method
 // DEFAULT_VAL    - default value for expanded dataset
 // INT_EXCEPTION  - surround with try/catch for integer arithmetic exception
-// INT_ZEROTEST   - use commented out code for testing for integer zero
+// INT_USE        - use commented out code for integer types
 // ADD_CAST       - add a cast to primitive type
 // OMIT_SAME_CAST - omit a cast to same type 
 // OMIT_REAL_CAST - omit a cast to real type 
@@ -113,10 +113,8 @@ class transmutate(object):
             ("// BOOLEAN_ZERO", self.boolzero),
             ("// NAN_OMIT", self.nanomit),
             ("// FORMAT_STRING", self.string),
-            ("// INT_OMIT", self.intomit),
             ("// INT_USE", self.intuse),
             ("// INT_EXCEPTION", self.intexception),
-            ("// INT_ZEROTEST", self.intzerotest),
             ("// OMIT_SAME_CAST", self.omitcast),
             ("// OMIT_REAL_CAST", self.omitrealcast),
             ("// OMIT_CAST_INT", self.omitcastint),
@@ -300,11 +298,6 @@ class transmutate(object):
                 e = line.find(' :', s)
             return line[:b] + line[s+len(self.sform) + 2:(e-1)] + line[e:]
         return line.replace(self.sform, self.dform)
-
-    def intomit(self, line):
-        if not self.isreal:
-            return None
-        return line.replace(" // INT_OMIT", "")
 
     def intuse(self, line):
         if not self.isreal: # uncomment line
