@@ -12,6 +12,7 @@
 
 package org.eclipse.dawnsci.analysis.dataset.impl;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.apache.commons.math3.complex.Complex;
@@ -135,11 +136,14 @@ public class DatasetFactory {
 	 *            can be Java list, array or Number
 	 * @return dataset
 	 */
-	public static Dataset createFromObject(final Object obj) {
+	public static Dataset createFromObject(Object obj) {
 		if (obj instanceof Dataset)
 			return (Dataset) obj;
 		if (obj instanceof ILazyDataset)
 			return DatasetUtils.convertToDataset((ILazyDataset) obj);
+		if (obj instanceof BigInteger) {
+			obj = ((BigInteger) obj).longValue();
+		}
 
 		final int dtype = AbstractDataset.getDTypeFromObject(obj);
 		return createFromObject(obj, dtype);
