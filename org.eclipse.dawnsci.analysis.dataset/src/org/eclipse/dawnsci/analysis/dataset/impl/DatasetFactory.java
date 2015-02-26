@@ -258,7 +258,7 @@ public class DatasetFactory {
 			throw new IllegalArgumentException("No list or zero-length list given");
 		}
 		Object obj = objectList.get(0);
-		if (obj instanceof Number || obj instanceof Complex) {
+		if (obj instanceof Number || obj instanceof Complex || obj instanceof String) {
 			int dtype = AbstractDataset.getDTypeFromClass(obj.getClass());
 			int len = objectList.size();
 			Dataset result = zeros(new int[] { len }, dtype);
