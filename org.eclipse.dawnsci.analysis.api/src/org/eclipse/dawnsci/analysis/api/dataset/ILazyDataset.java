@@ -26,7 +26,7 @@ import org.eclipse.dawnsci.analysis.api.monitor.IMonitor;
 public interface ILazyDataset extends Serializable, IMetadataProvider, INameable {
 		
 	/**
-	 * @return Class of element
+	 * @return Boxed class of element
 	 */
 	public Class<?> elementClass();
 
