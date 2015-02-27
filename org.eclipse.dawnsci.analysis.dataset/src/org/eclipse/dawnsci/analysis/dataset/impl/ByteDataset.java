@@ -885,17 +885,31 @@ public class ByteDataset extends AbstractDataset {
 	@Override
 	public ByteDataset iadd(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
+		boolean useLong = bds.elementClass().equals(Long.class);
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
-			final double db = bds.getElementDoubleAbs(0);
-			while (it.hasNext()) {
-				data[it.index] += db;
+			if (useLong) {
+				final long lb = bds.getElementLongAbs(0);
+				while (it.hasNext()) {
+					data[it.index] += lb;
+				}
+			} else {
+				final double db = bds.getElementDoubleAbs(0);
+				while (it.hasNext()) {
+					data[it.index] += db;
+				}
 			}
 		} else {
 			final BroadcastIterator it = new BroadcastIterator(this, bds);
-			it.setOutputDouble(true);
-			while (it.hasNext()) {
-				data[it.aIndex] += it.bDouble;
+			it.setOutputDouble(!useLong);
+			if (useLong) {
+				while (it.hasNext()) {
+					data[it.aIndex] += it.bLong;
+				}
+			} else {
+				while (it.hasNext()) {
+					data[it.aIndex] += it.bDouble;
+				}
 			}
 		}
 		setDirty();
@@ -905,17 +919,32 @@ public class ByteDataset extends AbstractDataset {
 	@Override
 	public ByteDataset isubtract(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
+		boolean useLong = bds.elementClass().equals(Long.class);
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
-			final double db = bds.getElementDoubleAbs(0);
-			while (it.hasNext()) {
-				data[it.index] -= db;
+			if (useLong) {
+				final long lb = bds.getElementLongAbs(0);
+				while (it.hasNext()) {
+					data[it.index] -= lb;
+				}
+			} else {
+				final double db = bds.getElementDoubleAbs(0);
+				while (it.hasNext()) {
+					data[it.index] -= db;
+				}
 			}
 		} else {
 			final BroadcastIterator it = new BroadcastIterator(this, bds);
-			it.setOutputDouble(true);
-			while (it.hasNext()) {
-				data[it.aIndex] -= it.bDouble;
+			if (useLong) {
+				it.setOutputDouble(false);
+				while (it.hasNext()) {
+					data[it.aIndex] -= it.bLong;
+				}
+			} else {
+				it.setOutputDouble(true);
+				while (it.hasNext()) {
+					data[it.aIndex] -= it.bDouble;
+				}
 			}
 		}
 		setDirty();
@@ -925,17 +954,31 @@ public class ByteDataset extends AbstractDataset {
 	@Override
 	public ByteDataset imultiply(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
+		boolean useLong = bds.elementClass().equals(Long.class);
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
-			final double db = bds.getElementDoubleAbs(0);
-			while (it.hasNext()) {
-				data[it.index] *= db;
+			if (useLong) {
+				final long lb = bds.getElementLongAbs(0);
+				while (it.hasNext()) {
+					data[it.index] *= lb;
+				}
+			} else {
+				final double db = bds.getElementDoubleAbs(0);
+				while (it.hasNext()) {
+					data[it.index] *= db;
+				}
 			}
 		} else {
 			final BroadcastIterator it = new BroadcastIterator(this, bds);
-			it.setOutputDouble(true);
-			while (it.hasNext()) {
-				data[it.aIndex] *= it.bDouble;
+			it.setOutputDouble(!useLong);
+			if (useLong) {
+				while (it.hasNext()) {
+					data[it.aIndex] *= it.bLong;
+				}
+			} else {
+				while (it.hasNext()) {
+					data[it.aIndex] *= it.bDouble;
+				}
 			}
 		}
 		setDirty();
@@ -945,25 +988,48 @@ public class ByteDataset extends AbstractDataset {
 	@Override
 	public ByteDataset idivide(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
+		boolean useLong = bds.elementClass().equals(Long.class);
 		if (bds.getSize() == 1) {
-			final double db = bds.getElementDoubleAbs(0);
-			if (db == 0) { // INT_USE
-				fill(0); // INT_USE
-			} else { // INT_USE
-			final IndexIterator it = getIterator();
-			while (it.hasNext()) {
-				data[it.index] /= db;
+			if (useLong) {
+				final long lb = bds.getElementLongAbs(0);
+				if (lb == 0) { // INT_USE
+					fill(0); // INT_USE
+				} else { // INT_USE
+				final IndexIterator it = getIterator();
+				while (it.hasNext()) {
+					data[it.index] /= lb;
+				}
+				} // INT_USE
+			} else {
+				final double db = bds.getElementDoubleAbs(0);
+				if (db == 0) { // INT_USE
+					fill(0); // INT_USE
+				} else { // INT_USE
+				final IndexIterator it = getIterator();
+				while (it.hasNext()) {
+					data[it.index] /= db;
+				}
+				} // INT_USE
 			}
-			} // INT_USE
 		} else {
 			final BroadcastIterator it = new BroadcastIterator(this, bds);
-			it.setOutputDouble(true);
-			while (it.hasNext()) {
-				if (it.bDouble == 0) { // INT_USE
-					data[it.aIndex] = 0; // INT_USE
-				} else { // INT_USE
-				data[it.aIndex] /= it.bDouble;
-				} // INT_USE
+			it.setOutputDouble(!useLong);
+			if (useLong) {
+				while (it.hasNext()) {
+					if (it.bLong == 0) { // INT_USE
+						data[it.aIndex] = 0; // INT_USE
+					} else { // INT_USE
+					data[it.aIndex] /= it.bLong;
+					} // INT_USE
+				}
+			} else {
+				while (it.hasNext()) {
+					if (it.bDouble == 0) { // INT_USE
+						data[it.aIndex] = 0; // INT_USE
+					} else { // INT_USE
+					data[it.aIndex] /= it.bDouble;
+					} // INT_USE
+				}
 			}
 		}
 		setDirty();
@@ -978,24 +1044,47 @@ public class ByteDataset extends AbstractDataset {
 	@Override
 	public ByteDataset iremainder(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
+		boolean useLong = bds.elementClass().equals(Long.class);
 		if (bds.getSize() == 1) {
-			final double db = bds.getElementDoubleAbs(0);
-			if (db == 0) { // INT_USE
-				fill(0); // INT_USE
-			} else { // INT_USE
-			final IndexIterator it = getIterator();
-			while (it.hasNext()) {
-				data[it.index] %= db;
+			if (useLong) {
+				final long lb = bds.getElementLongAbs(0);
+				if (lb == 0) { // INT_USE
+					fill(0); // INT_USE
+				} else { // INT_USE
+				final IndexIterator it = getIterator();
+				while (it.hasNext()) {
+					data[it.index] %= lb;
+				}
+				} // INT_USE
+			} else {
+				final long lb = bds.getElementLongAbs(0);
+				if (lb == 0) { // INT_USE
+					fill(0); // INT_USE
+				} else { // INT_USE
+				final IndexIterator it = getIterator();
+				while (it.hasNext()) {
+					data[it.index] %= lb;
+				}
+				} // INT_USE
 			}
-			} // INT_USE
 		} else {
 			final BroadcastIterator it = new BroadcastIterator(this, bds);
-			it.setOutputDouble(true);
-			while (it.hasNext()) {
+			it.setOutputDouble(!useLong);
+			if (useLong) {
+				while (it.hasNext()) {
 				try {
-					data[it.aIndex] %= it.bDouble; // INT_EXCEPTION
+						data[it.aIndex] %= it.bLong; // INT_EXCEPTION
 				} catch (ArithmeticException e) {
 					data[it.aIndex] = 0;
+				}
+				}
+			} else {
+				while (it.hasNext()) {
+				try {
+						data[it.aIndex] %= it.bDouble; // INT_EXCEPTION
+				} catch (ArithmeticException e) {
+					data[it.aIndex] = 0;
+				}
 				}
 			}
 		}
@@ -1011,7 +1100,7 @@ public class ByteDataset extends AbstractDataset {
 			final IndexIterator it = getIterator();
 			if (bds.isComplex()) {
 				final double vi = bds.getElementDoubleAbs(1);
-				if (vi == 0.) {
+				if (vi == 0) {
 					while (it.hasNext()) {
 						final double v = Math.pow(data[it.index], vr);
 						if (Double.isInfinite(v) || Double.isNaN(v)) { // INT_USE
@@ -1023,7 +1112,7 @@ public class ByteDataset extends AbstractDataset {
 				} else {
 					final Complex zv = new Complex(vr, vi);
 					while (it.hasNext()) {
-						Complex zd = new Complex(data[it.index], 0.);
+						Complex zd = new Complex(data[it.index], 0);
 						final double v = zd.pow(zv).getReal();
 						if (Double.isInfinite(v) || Double.isNaN(v)) { // INT_USE
 							data[it.index] = 0; // INT_USE
@@ -1045,13 +1134,25 @@ public class ByteDataset extends AbstractDataset {
 		} else {
 			final BroadcastIterator it = new BroadcastIterator(this, bds);
 			it.setOutputDouble(true);
-			while (it.hasNext()) {
-				final double v = Math.pow(it.aDouble, it.bDouble);
-				if (Double.isInfinite(v) || Double.isNaN(v)) { // INT_USE
-					data[it.aIndex] = 0; // INT_USE
-				} else { // INT_USE
-				data[it.aIndex] = (byte) (long) v; // PRIM_TYPE_LONG // ADD_CAST
-				} // INT_USE
+			if (bds.isComplex()) {
+				while (it.hasNext()) {
+					final Complex zv = new Complex(it.bDouble, bds.getElementDoubleAbs(it.bIndex + 1));
+					final double v = new Complex(it.aDouble, 0).pow(zv).getReal();
+					if (Double.isInfinite(v) || Double.isNaN(v)) { // INT_USE
+						data[it.aIndex] = 0; // INT_USE
+					} else { // INT_USE
+					data[it.aIndex] = (byte) (long) v; // PRIM_TYPE_LONG // ADD_CAST
+					} // INT_USE
+				}
+			} else {// NAN_OMIT
+				while (it.hasNext()) {
+					final double v = Math.pow(it.aDouble, it.bDouble);
+					if (Double.isInfinite(v) || Double.isNaN(v)) { // INT_USE
+						data[it.aIndex] = 0; // INT_USE
+					} else { // INT_USE
+					data[it.aIndex] = (byte) (long) v; // PRIM_TYPE_LONG // ADD_CAST
+					} // INT_USE
+				}
 			}
 		}
 		setDirty();

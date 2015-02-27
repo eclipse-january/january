@@ -633,32 +633,45 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	@Override
 	public ComplexDoubleDataset iadd(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		int is = bds.getElementsPerItem();
+		boolean useLong = bds.elementClass().equals(Long.class);
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
-			final double db = bds.getElementDoubleAbs(0);
-			if (is == 1 || bds.getElementDoubleAbs(1) == 0) {
+			if (useLong) { // note no complex longs
+				final long lb = bds.getElementLongAbs(0);
 				while (it.hasNext()) {
-					data[it.index] += db;
+					data[it.index] += lb;
 				}
 			} else {
-				final double vi = bds.getElementDoubleAbs(1);
-				while (it.hasNext()) {
-					data[it.index]     += db;
-					data[it.index + 1] += vi;
+				final double db = bds.getElementDoubleAbs(0);
+				if (!bds.isComplex() || bds.getElementDoubleAbs(1) == 0) {
+					while (it.hasNext()) {
+						data[it.index] += db;
+					}
+				} else {
+					final double vi = bds.getElementDoubleAbs(1);
+					while (it.hasNext()) {
+						data[it.index]     += db;
+						data[it.index + 1] += vi;
+					}
 				}
 			}
 		} else {
 			final BroadcastIterator it = new BroadcastIterator(this, bds);
-			it.setOutputDouble(true);
-			if (is == 1) {
+			it.setOutputDouble(!useLong);
+			if (useLong) { // note no complex longs
 				while (it.hasNext()) {
-					data[it.aIndex] += it.bDouble;
+					data[it.aIndex] += it.bLong;
 				}
 			} else {
-				while (it.hasNext()) {
-					data[it.aIndex]     += it.bDouble;
-					data[it.aIndex + 1] += bds.getElementDoubleAbs(it.bIndex + 1);
+				if (bds.isComplex()) {
+					while (it.hasNext()) {
+						data[it.aIndex]     += it.bDouble;
+						data[it.aIndex + 1] += bds.getElementDoubleAbs(it.bIndex + 1);
+					}
+				} else {
+					while (it.hasNext()) {
+						data[it.aIndex] += it.bDouble;
+					}
 				}
 			}
 		}
@@ -669,32 +682,45 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	@Override
 	public ComplexDoubleDataset isubtract(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		int is = bds.getElementsPerItem();
+		boolean useLong = bds.elementClass().equals(Long.class);
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
-			final double db = bds.getElementDoubleAbs(0);
-			if (is == 1 || bds.getElementDoubleAbs(1) == 0) {
+			if (useLong) { // note no complex longs
+				final long lb = bds.getElementLongAbs(0);
 				while (it.hasNext()) {
-					data[it.index] -= db;
+					data[it.index] -= lb;
 				}
 			} else {
-				final double vi = bds.getElementDoubleAbs(1);
-				while (it.hasNext()) {
-					data[it.index]     -= db;
-					data[it.index + 1] -= vi;
+				final double db = bds.getElementDoubleAbs(0);
+				if (!bds.isComplex() || bds.getElementDoubleAbs(1) == 0) {
+					while (it.hasNext()) {
+						data[it.index] -= db;
+					}
+				} else {
+					final double vi = bds.getElementDoubleAbs(1);
+					while (it.hasNext()) {
+						data[it.index]     -= db;
+						data[it.index + 1] -= vi;
+					}
 				}
 			}
 		} else {
 			final BroadcastIterator it = new BroadcastIterator(this, bds);
-			it.setOutputDouble(true);
-			if (is == 1) {
+			it.setOutputDouble(!useLong);
+			if (useLong) { // note no complex longs
 				while (it.hasNext()) {
-					data[it.aIndex] -= it.bDouble;
+					data[it.aIndex] -= it.bLong;
 				}
 			} else {
-				while (it.hasNext()) {
-					data[it.aIndex]     -= it.bDouble;
-					data[it.aIndex + 1] -= bds.getElementDoubleAbs(it.bIndex + 1);
+				if (bds.isComplex()) {
+					while (it.hasNext()) {
+						data[it.aIndex]     -= it.bDouble;
+						data[it.aIndex + 1] -= bds.getElementDoubleAbs(it.bIndex + 1);
+					}
+				} else {
+					while (it.hasNext()) {
+						data[it.aIndex] -= it.bDouble;
+					}
 				}
 			}
 		}
@@ -705,40 +731,55 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	@Override
 	public ComplexDoubleDataset imultiply(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		int is = bds.getElementsPerItem();
+		boolean useLong = bds.elementClass().equals(Long.class);
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
-			final double r2 = bds.getElementDoubleAbs(0);
-			if (is == 1 || bds.getElementDoubleAbs(1) == 0) {
+			if (useLong) { // note no complex longs
+				final long r2 = bds.getElementLongAbs(0);
 				while (it.hasNext()) {
 					data[it.index]     *= r2;
 					data[it.index + 1] *= r2;
 				}
 			} else {
-				final double i2 = bds.getElementDoubleAbs(1);
-				while (it.hasNext()) {
-					double r1 = data[it.index];
-					double i1 = data[it.index + 1];
-					data[it.index]     = (r1*r2 - i1*i2); // ADD_CAST
-					data[it.index + 1] = (r1*i2 + i1*r2); // ADD_CAST
+				final double r2 = bds.getElementDoubleAbs(0);
+				if (!bds.isComplex() || bds.getElementDoubleAbs(1) == 0) {
+					while (it.hasNext()) {
+						data[it.index]     *= r2;
+						data[it.index + 1] *= r2;
+					}
+				} else {
+					final double i2 = bds.getElementDoubleAbs(1);
+					while (it.hasNext()) {
+						double r1 = data[it.index];
+						double i1 = data[it.index + 1];
+						data[it.index]     = (r1*r2 - i1*i2); // ADD_CAST
+						data[it.index + 1] = (r1*i2 + i1*r2); // ADD_CAST
+					}
 				}
 			}
 		} else {
 			final BroadcastIterator it = new BroadcastIterator(this, bds);
-			it.setOutputDouble(true);
-			if (is == 1) {
+			it.setOutputDouble(!useLong);
+			if (useLong) { // note no complex longs
 				while (it.hasNext()) {
 					data[it.aIndex]     *= it.bDouble;
 					data[it.aIndex + 1] *= it.bDouble;
 				}
 			} else {
-				while (it.hasNext()) {
-					double r1 = it.aDouble;
-					double r2 = it.bDouble;
-					double i1 = data[it.aIndex + 1];
-					double i2 = bds.getElementDoubleAbs(it.bIndex + 1);
-					data[it.aIndex]     = (r1*r2 - i1*i2); // ADD_CAST
-					data[it.aIndex + 1] = (r1*i2 + i1*r2); // ADD_CAST
+				if (bds.isComplex()) {
+					while (it.hasNext()) {
+						double r1 = it.aDouble;
+						double r2 = it.bDouble;
+						double i1 = data[it.aIndex + 1];
+						double i2 = bds.getElementDoubleAbs(it.bIndex + 1);
+						data[it.aIndex]     = (r1*r2 - i1*i2); // ADD_CAST
+						data[it.aIndex + 1] = (r1*i2 + i1*r2); // ADD_CAST
+					}
+				} else {
+					while (it.hasNext()) {
+						data[it.aIndex]     *= it.bDouble;
+						data[it.aIndex + 1] *= it.bDouble;
+					}
 				}
 			}
 		}
@@ -749,54 +790,62 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	@Override
 	public ComplexDoubleDataset idivide(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		int is = bds.getElementsPerItem();
+		boolean useLong = bds.elementClass().equals(Long.class);
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
-			final double r2 = bds.getElementDoubleAbs(0);
-			if (is == 1 || bds.getElementDoubleAbs(1) == 0) {
+			if (useLong) { // note no complex longs
+				final long r2 = bds.getElementLongAbs(0);
 				while (it.hasNext()) {
 					data[it.index]     /= r2;
 					data[it.index + 1] /= r2;
 				}
 			} else {
-				final double i2 = bds.getElementDoubleAbs(1);
-				if (Math.abs(r2) < Math.abs(i2)) {
-					double q = r2/i2;
-					double den = r2*q + i2;
+				final double r2 = bds.getElementDoubleAbs(0);
+				if (!bds.isComplex() || bds.getElementDoubleAbs(1) == 0) {
 					while (it.hasNext()) {
-						double r1 = data[it.index];
-						double i1 = data[it.index + 1];
-						data[it.index]     = ((r1*q + i1) / den); // ADD_CAST
-						data[it.index + 1] = ((i1*q - r1) / den); // ADD_CAST
+						data[it.index]     /= r2;
+						data[it.index + 1] /= r2;
 					}
 				} else {
-					double q = i2/r2;
-					double den = i2*q + r2;
-					if (den == 0) {
-						while (it.hasNext()) {
-							data[it.index]     = Double.NaN; // CLASS_TYPE
-							data[it.index + 1] = Double.NaN; // CLASS_TYPE
-						}
-					} else {
+					final double i2 = bds.getElementDoubleAbs(1);
+					if (Math.abs(r2) < Math.abs(i2)) {
+						double q = r2/i2;
+						double den = r2*q + i2;
 						while (it.hasNext()) {
 							double r1 = data[it.index];
 							double i1 = data[it.index + 1];
-							data[it.index]     = ((i1 * q + r1) / den); // ADD_CAST
-							data[it.index + 1] = ((i1 - r1 * q) / den); // ADD_CAST
+							data[it.index]     = ((r1*q + i1) / den); // ADD_CAST
+							data[it.index + 1] = ((i1*q - r1) / den); // ADD_CAST
+						}
+					} else {
+						double q = i2/r2;
+						double den = i2*q + r2;
+						if (den == 0) {
+							while (it.hasNext()) {
+								data[it.index]     = Double.NaN; // CLASS_TYPE
+								data[it.index + 1] = Double.NaN; // CLASS_TYPE
+							}
+						} else {
+							while (it.hasNext()) {
+								double r1 = data[it.index];
+								double i1 = data[it.index + 1];
+								data[it.index]     = ((i1 * q + r1) / den); // ADD_CAST
+								data[it.index + 1] = ((i1 - r1 * q) / den); // ADD_CAST
+							}
 						}
 					}
 				}
 			}
 		} else {
 			final BroadcastIterator it = new BroadcastIterator(this, bds);
-			it.setOutputDouble(true);
-			if (is == 1) {
+			it.setOutputDouble(!useLong);
+			if (useLong) {
 				while (it.hasNext()) {
-					data[it.aIndex]     /= it.bDouble;
-					data[it.aIndex + 1] /= it.bDouble;
+					data[it.aIndex]     /= it.bLong;
+					data[it.aIndex + 1] /= it.bLong;
 				}
 			} else {
-				{
+				if (bds.isComplex()) {
 					while (it.hasNext()) {
 						double r1 = it.aDouble;
 						double r2 = it.bDouble;
@@ -819,6 +868,11 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 							}
 						}
 					}
+				} else {
+					while (it.hasNext()) {
+						data[it.aIndex]     /= it.bDouble;
+						data[it.aIndex + 1] /= it.bDouble;
+					}
 				}
 			}
 		}
@@ -834,11 +888,10 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	@Override
 	public ComplexDoubleDataset ipower(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		int is = bds.getElementsPerItem();
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
 			final double r2 = bds.getElementDoubleAbs(0);
-			if (is == 1 || bds.getElementDoubleAbs(1) == 0) {
+			if (!bds.isComplex() || bds.getElementDoubleAbs(1) == 0) {
 				while (it.hasNext()) {
 					final Complex zd = new Complex(data[it.index], data[it.index + 1]).pow(r2);
 					data[it.index]     = zd.getReal(); // ADD_CAST
@@ -855,16 +908,16 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 		} else {
 			final BroadcastIterator it = new BroadcastIterator(this, bds);
 			it.setOutputDouble(true);
-			if (is == 1) {
+			if (bds.isComplex()) {
 				while (it.hasNext()) {
-					final Complex zd = new Complex(it.aDouble, data[it.aIndex + 1]).pow(it.bDouble);
+					final Complex zv = new Complex(it.bDouble, bds.getElementDoubleAbs(it.bIndex + 1));
+					final Complex zd = new Complex(it.aDouble, data[it.aIndex + 1]).pow(zv);
 					data[it.aIndex]     = zd.getReal(); // ADD_CAST
 					data[it.aIndex + 1] = zd.getImaginary(); // ADD_CAST
 				}
 			} else {
 				while (it.hasNext()) {
-					final Complex zv = new Complex(it.bDouble, bds.getElementDoubleAbs(it.bIndex + 1));
-					final Complex zd = new Complex(it.aDouble, data[it.aIndex + 1]).pow(zv);
+					final Complex zd = new Complex(it.aDouble, data[it.aIndex + 1]).pow(it.bDouble);
 					data[it.aIndex]     = zd.getReal(); // ADD_CAST
 					data[it.aIndex + 1] = zd.getImaginary(); // ADD_CAST
 				}
