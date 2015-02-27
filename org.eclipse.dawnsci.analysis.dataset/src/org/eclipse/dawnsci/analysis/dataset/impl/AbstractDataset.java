@@ -1018,7 +1018,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	/**
 	 * @param dtype
-	 * @return class of constituent element
+	 * @return (boxed) class of constituent element
 	 */
 	public static Class<?> elementClass(final int dtype) {
 		switch (dtype) {
