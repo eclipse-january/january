@@ -796,7 +796,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 					data[it.aIndex + 1] /= it.bDouble;
 				}
 			} else {
-				while (it.hasNext()) {
+				{
 					while (it.hasNext()) {
 						double r1 = it.aDouble;
 						double r2 = it.bDouble;
