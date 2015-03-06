@@ -132,6 +132,9 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 	 *            (can be null to create 1D dataset)
 	 */
 	public CompoundDoubleDataset(final int itemSize, final double[] data, int... shape) { // PRIM_TYPE
+		if (data == null) {
+			throw new IllegalArgumentException("Data must not be null");
+		}
 		isize = itemSize;
 		if (shape == null || shape.length == 0) {
 			shape = new int[] { data.length / isize };

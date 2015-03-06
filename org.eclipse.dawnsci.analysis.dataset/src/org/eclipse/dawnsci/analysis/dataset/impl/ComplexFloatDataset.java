@@ -73,6 +73,9 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 	 * @param shape (can be null to create 1D dataset)
 	 */
 	public ComplexFloatDataset(final float[] realData, final float[] imagData, int... shape) { // PRIM_TYPE
+		if (realData == null || imagData == null) {
+			throw new IllegalArgumentException("Data must not be null");
+		}
 		int dsize = realData.length > imagData.length ? imagData.length : realData.length;
 		if (shape == null || shape.length == 0) {
 			shape = new int[] {dsize};

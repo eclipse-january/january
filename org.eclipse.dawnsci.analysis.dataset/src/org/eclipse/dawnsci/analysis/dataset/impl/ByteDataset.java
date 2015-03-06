@@ -86,6 +86,9 @@ public class ByteDataset extends AbstractDataset {
 	 *            (can be null to create 1D dataset)
 	 */
 	public ByteDataset(final byte[] data, int... shape) { // PRIM_TYPE
+		if (data == null) {
+			throw new IllegalArgumentException("Data must not be null");
+		}
 		if (shape == null || shape.length == 0) {
 			shape = new int[] { data.length };
 		}
