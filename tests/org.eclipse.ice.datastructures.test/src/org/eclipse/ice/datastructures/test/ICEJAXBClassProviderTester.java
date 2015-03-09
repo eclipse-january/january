@@ -29,6 +29,7 @@ import org.eclipse.ice.datastructures.form.geometry.GeometryComponent;
 import org.eclipse.ice.datastructures.form.mesh.MeshComponent;
 import org.eclipse.ice.datastructures.jaxbclassprovider.ICEJAXBClassProvider;
 import org.eclipse.ice.datastructures.jaxbclassprovider.IJAXBClassProvider;
+import org.eclipse.ice.datastructures.resource.VizResource;
 import org.junit.Test;
 
 /**
@@ -63,7 +64,7 @@ public class ICEJAXBClassProviderTester {
 		// not null, and make sure we have 10 of them
 		List<Class> classList = provider.getClasses();
 		assertNotNull(classList);
-		assertEquals(11, classList.size());
+		assertEquals(13, classList.size());
 		
 		// Check that all the correct ones are there. 
 		assertTrue(classList.contains(ResourceComponent.class));
@@ -77,5 +78,6 @@ public class ICEJAXBClassProviderTester {
 		assertTrue(classList.contains(ListComponent.class));
 		assertTrue(classList.contains(EMFComponent.class));
 		assertTrue(classList.contains(Material.class));
+		assertTrue(classList.contains(VizResource.class));
 	}
 }

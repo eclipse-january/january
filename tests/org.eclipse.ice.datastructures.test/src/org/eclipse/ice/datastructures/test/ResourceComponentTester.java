@@ -13,7 +13,6 @@
 package org.eclipse.ice.datastructures.test;
 
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
-import org.eclipse.ice.datastructures.form.MasterDetailsPair;
 import org.eclipse.ice.datastructures.form.ResourceComponent;
 
 import static org.junit.Assert.*;
@@ -30,54 +29,33 @@ import org.junit.Test;
 import org.eclipse.ice.datastructures.resource.ICEResource;
 
 /**
- * <!-- begin-UML-doc -->
- * <p>
  * The ResourceComponentTester class is responsible for testing the
  * functionality of the ResourceComponent class.
- * </p>
- * <!-- end-UML-doc -->
  * 
- * @author Jay Jay Billings
- * @generated 
- *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
+ * @author Jay Jay Billings, Anna Wojtowicz
  */
 public class ResourceComponentTester {
+	
 	/**
-	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
-	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
+	 * A ResourceComponent used for testing.
 	 */
 	private ResourceComponent resourceComponent;
+	
 	/**
-	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
-	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
+	 * A fake listener to listen to changes to the ResourceComponent.
 	 */
 	private TestComponentListener testComponentListener;
+	
 	/**
-	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
-	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
+	 * A fake visitor to visit the ResourceComponent.
 	 */
 	private TestVisitor testVisitor;
 
 	/**
-	 * <!-- begin-UML-doc -->
-	 * <p>
-	 * This operation checks the construction of ResourceComponents to insure
-	 * that the contract with ICEObject is not broken, amongst other things.
-	 * </p>
-	 * <!-- end-UML-doc -->
-	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
+	 * This operation checks the construction of ResourceComponents.
 	 */
 	@Test
 	public void checkCreation() {
-		// begin-user-code
 
 		// Local declarations
 		int id = 2266;
@@ -96,23 +74,17 @@ public class ResourceComponentTester {
 		assertEquals(resourceComponent.getDescription(), description);
 		assertEquals(resourceComponent.getId(), id);
 		assertEquals(resourceComponent.getName(), name);
-		// end-user-code
+		
+		return;
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
-	 * <p>
-	 * This operation checks the ResourceComponents ability to add Resources to
-	 * its list.
-	 * </p>
-	 * <!-- end-UML-doc -->
-	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
+
+	 * This operation checks the ResourceComponent's ability to add Resources to
+	 * itself.
 	 */
 	@Test
 	public void checkResources() {
-		// begin-user-code
 
 		// Local Declarations
 		ArrayList<ICEResource> resources = new ArrayList<ICEResource>();
@@ -145,24 +117,14 @@ public class ResourceComponentTester {
 		assertEquals(resources, retResources);
 
 		return;
-
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
-	 * <p>
 	 * This operation checks the visitation capabilities of the
 	 * ResourceComponent.
-	 * </p>
-	 * <!-- end-UML-doc -->
-	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkVisitation() {
-		// begin-user-code
 
 		// Setup the visitor
 		testVisitor = new TestVisitor();
@@ -177,25 +139,16 @@ public class ResourceComponentTester {
 		assertTrue(testVisitor.wasVisited());
 
 		return;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
-	 * <p>
 	 * This operation checks the ability of the ResourceComponent to notify
 	 * listeners when it has been updated. That is, when the list of Resources
 	 * has changed in some way or the identifying information of the component
 	 * has changed.
-	 * </p>
-	 * <!-- end-UML-doc -->
-	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkNotifications() {
-		// begin-user-code
 
 		// Setup the listener
 		testComponentListener = new TestComponentListener();
@@ -234,24 +187,14 @@ public class ResourceComponentTester {
 		assertTrue(testComponentListener.wasNotified());
 
 		return;
-
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
-	 * <p>
-	 * This operation checks the ResourceComponent to insure that its equals()
+	 * This operation checks the ResourceComponent to ensure that its equals()
 	 * operation works.
-	 * </p>
-	 * <!-- end-UML-doc -->
-	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkEquality() {
-		// begin-user-code
 
 		// Create ResourceComponents to test
 		ResourceComponent outComp1 = new ResourceComponent();
@@ -279,8 +222,8 @@ public class ResourceComponentTester {
 					"SecondTestFile.test")));
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			fail();
 		}
 
 		// Assert two equal ResourceComponents return true
@@ -321,34 +264,18 @@ public class ResourceComponentTester {
 		// Assert hashcodes for unequal objects are different
 		assertFalse(outComp1.hashCode() == unEqual.hashCode());
 
-		// end-user-code
+		return;
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
-	 * <p>
-	 * This operation checks the ResourceComponent to ensure that its copy() and
-	 * clone() operations work as specified.
-	 * </p>
-	 * <!-- end-UML-doc -->
-	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
+	 * This operation checks the ResourceComponent to ensure that its clone()
+	 * works as expected.
 	 */
 	@Test
-	public void checkCopying() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		/*
-		 * The following sets of operations will be used to test the
-		 * "clone and copy" portion of ResourceComponent.
-		 */
-
-		// Test to show valid usage of clone
+	public void checkCloning() {
 
 		// Local Declarations
 		ArrayList<ICEResource> resources = new ArrayList<ICEResource>();
-		ArrayList<ICEResource> retResources = null;
 		TestComponentListener listener = new TestComponentListener();
 
 		// Local declarations
@@ -386,8 +313,8 @@ public class ResourceComponentTester {
 		resourceComponent.register(listener);
 
 		// Run clone operation
-		ResourceComponent cloneOutput = (ResourceComponent) resourceComponent
-				.clone();
+		ResourceComponent cloneOutput = 
+				(ResourceComponent) resourceComponent.clone();
 
 		// Check contents
 		assertEquals(resourceComponent.getDescription(),
@@ -397,81 +324,23 @@ public class ResourceComponentTester {
 		assertEquals(resourceComponent.getResources(),
 				cloneOutput.getResources());
 
-		// Test to show valid usage of copy
-		// Use resourceComponent from above
-
-		// Create a new instance of ResourceComponent and copy contents
-		ResourceComponent copyOutput = new ResourceComponent();
-		copyOutput.copy(resourceComponent);
-
-		// Check contents
-		assertEquals(resourceComponent.getDescription(),
-				copyOutput.getDescription());
-		assertEquals(resourceComponent.getId(), copyOutput.getId());
-		assertEquals(resourceComponent.getName(), copyOutput.getName());
-		assertEquals(resourceComponent.getResources(),
-				copyOutput.getResources());
-
-		// check listener - sleep to make sure thread updates
-		File file = new File("testA");
-		ICEResource resource = null;
-		try {
-			resource = new ICEResource(file);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		// Test to show an invalid use of copy - null args
-
-		// Call copy with null, which should not change anything
-		copyOutput.copy(null);
-
-		// Check contents - nothing has changed - check with resourceComponent
-		assertEquals(resourceComponent.getDescription(),
-				copyOutput.getDescription());
-		assertEquals(resourceComponent.getId(), copyOutput.getId());
-		assertEquals(resourceComponent.getName(), copyOutput.getName());
-		assertEquals(resourceComponent.getResources(),
-				copyOutput.getResources());
-
-		// check listener - sleep to make sure thread updates
-		file = new File("testA");
-		resource = null;
-		try {
-			resource = new ICEResource(file);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
 		return;
-		// end-user-code
 	}
 
 	/**
 	 * This operation checks the ability of the ResourceComponent class to
 	 * persist itself to XML and to load itself from an XML input stream.
+	 * 
 	 * @throws IOException 
 	 * @throws JAXBException 
 	 * @throws NullPointerException 
 	 */
 	@Test
 	public void checkXMLPersistence() throws NullPointerException, JAXBException, IOException {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		/*
-		 * The following sets of operations will be used to test the
-		 * "read and write" portion of the ResourceComponent. It will
-		 * demonstrate the behavior of reading and writing from an
-		 * "XML (inputStream and outputStream)" file. It will use an annotated
-		 * ResourceComponent to demonstrate basic behavior.
-		 */
 
 		// Local declarations
 		ResourceComponent testRC = null, testRC2 = null;
 		ArrayList<ICEResource> resources = new ArrayList<ICEResource>();
-		ArrayList<ICEResource> retResources = null;
 		int id = 2266;
 		String name = "3F 127 on Deck 9, section 2";
 		String description = "Bones' Quarters";
@@ -482,10 +351,8 @@ public class ResourceComponentTester {
 		// Set up file path - for resources
 		File file = new File("Mississippi.testFile");
 		File file2 = new File("Enterprise.testFile");
-		String filePath2 = null;
-		String filePath = null;
-		filePath = file.toURI().toASCIIString();
-		filePath2 = file2.toURI().toASCIIString();
+		file.toURI().toASCIIString();
+		file2.toURI().toASCIIString();
 
 		// Create the ResourceComponent
 		testRC = new ResourceComponent();
@@ -526,26 +393,22 @@ public class ResourceComponentTester {
 		testRC2 = new ResourceComponent();
 
 		// load into ResourceComponent();
-		testRC2 = (ResourceComponent) xmlHandler.read(classList, inputStream);
+		testRC2 = (ResourceComponent) 
+				xmlHandler.read(classList, inputStream);
 
 		// check contents
 		assertTrue(testRC.equals(testRC2));
 
-		// end-user-code
+		return;
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
-	 * <p>
 	 * An operation that checks the clear operation on ResourceComponent.
-	 * </p>
-	 * <!-- end-UML-doc -->
-	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
+	@Test
 	public void checkClear() {
 		// begin-user-code
+		
 		// Local declarations
 		ArrayList<ICEResource> resources = new ArrayList<ICEResource>();
 		ResourceComponent resComponent = null;
@@ -592,6 +455,6 @@ public class ResourceComponentTester {
 		assertNotNull(resComponent.getResources());
 		assertEquals(0, resComponent.getResources().size());
 
-		// end-user-code
+		return;
 	}
 }

@@ -15,6 +15,7 @@ import static org.junit.Assert.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.text.Normalizer.Form;
 import java.util.ArrayList;
@@ -26,6 +27,8 @@ import org.eclipse.ice.datastructures.ICEObject.ListComponent;
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.componentVisitor.SelectiveComponentVisitor;
+import org.eclipse.ice.datastructures.resource.ICEResource;
+import org.eclipse.ice.datastructures.resource.VizResource;
 import org.junit.*;
 
 import ca.odell.glazedlists.EventList;
@@ -59,16 +62,11 @@ public class ListComponentTester implements IElementSource<Integer>,
 	private ListComponent component;
 
 	/**
-	 * <!-- begin-UML-doc -->
-	 * 
 	 * This operation checks the ListComponent to insure that the id, name and
 	 * description getters and setters function properly.
-	 * 
-	 * <!-- end-UML-doc -->
 	 */
 	@Test
 	public void checkProperties() {
-		// begin-user-code
 
 		// Local declarations
 		int id = 20110901;
@@ -88,21 +86,14 @@ public class ListComponentTester implements IElementSource<Integer>,
 		assertEquals(component.getId(), id);
 		assertEquals(component.getName(), name);
 		assertEquals(component.getDescription(), description);
-
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
-	 * 
 	 * This operation checks the ListComponent class to ensure that its copy()
 	 * and clone() operations work as specified.
-	 * 
-	 * <!-- end-UML-doc -->
 	 */
 	@Test
 	public void checkCopying() {
-		// begin-user-code
 
 		// Local declarations
 		int id = 20110901;
@@ -158,7 +149,6 @@ public class ListComponentTester implements IElementSource<Integer>,
 		assertEquals(component.getName(), name);
 		assertEquals(component.getDescription(), description);
 
-		// end-user-code
 	}
 
 	/**
@@ -172,7 +162,6 @@ public class ListComponentTester implements IElementSource<Integer>,
 	@Test
 	public void checkXMLPersistence() throws NullPointerException,
 			JAXBException, IOException {
-		// begin-user-code
 
 		// Local declarations
 		ListComponent<Integer> component2 = null;
@@ -186,6 +175,8 @@ public class ListComponentTester implements IElementSource<Integer>,
 		classList.add(Form.class);
 		classList.add(Integer.class);
 		classList.add(ICEObject.class);
+		classList.add(ICEResource.class);
+		classList.add(VizResource.class);
 
 		// Demonstrate a basic "write" to file. Should not fail
 		// Initialize the object and set values.
@@ -210,6 +201,7 @@ public class ListComponentTester implements IElementSource<Integer>,
 		assertEquals(component.getDescription(), component2.getDescription());
 		assertEquals(component.get(0), component2.get(0));
 		assertEquals(component.get(1), component2.get(1));
+		assertTrue(component.equals(component2));
 
 		// Create a list to hold ICEObjects and put one in it.
 		ListComponent<ICEObject> objList = new ListComponent<ICEObject>();
@@ -226,21 +218,47 @@ public class ListComponentTester implements IElementSource<Integer>,
 		assertEquals(objList.getId(), loadedList.getId());
 		assertEquals(1, objList.size());
 		assertEquals(obj, loadedList.get(0));
+		assertTrue(objList.equals(loadedList));
 
-		// end-user-code
+		// Create a list to hold ICEResources and put one in it.
+		ListComponent<ICEResource> resList = new ListComponent<ICEResource>();
+		// Set up some dummy resources and add them to the list
+		File file = new File("Isabelle");
+		File file2 = new File("Zelda");
+		File file3 = new File("Doctor");
+		ICEResource res = new ICEResource(file);
+		ICEResource res2 = new ICEResource(file2);
+		VizResource res3 = new VizResource(file3);
+		resList.add(res);
+		resList.add(res2);
+		resList.add(res3);
+		file.deleteOnExit();
+		file2.deleteOnExit();
+		file3.deleteOnExit();
+		
+		// Write it to the stream
+		outputStream = new ByteArrayOutputStream();
+		xmlHandler.write(resList, classList, outputStream);
+		inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+		// Load it back up and check it
+		ListComponent<ICEResource> resLoadedList = (ListComponent<ICEResource>) xmlHandler
+				.read(classList, inputStream);
+		assertEquals(resList.getId(), resLoadedList.getId());
+		assertEquals(3, resList.size());
+		assertEquals(res, resLoadedList.get(0));
+		assertEquals(res2, resLoadedList.get(1));
+		assertEquals(res3, resLoadedList.get(2));
+		assertTrue(resList.equals(resLoadedList));
+		
+		return;
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
-	 * 
 	 * This operation checks the ListComponent class to insure that its equals()
 	 * operation works.
-	 * 
-	 * <!-- end-UML-doc -->
 	 */
 	@Test
 	public void checkEquality() {
-		// begin-user-code
 
 		// Create an ListComponent
 		component = new ListComponent();
@@ -332,20 +350,15 @@ public class ListComponentTester implements IElementSource<Integer>,
 		// Assert that hashcodes are different for unequal objects
 		assertFalse(component.hashCode() == unequalComponent.hashCode());
 
-		// end-user-code
+		return;
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
-	 * 
 	 * This operation tests the ListComponent to insure that it can properly
 	 * dispatch notifications when it receives an update that changes its state.
-	 * 
-	 * <!-- end-UML-doc -->
 	 */
 	@Test
 	public void checkNotifications() {
-		// begin-user-code
 
 		// Setup the listeners
 		TestComponentListener firstListener = new TestComponentListener();
@@ -387,7 +400,6 @@ public class ListComponentTester implements IElementSource<Integer>,
 		assertTrue(firstListener.wasNotified());
 
 		return;
-		// end-user-code
 	}
 
 	/**
@@ -428,6 +440,8 @@ public class ListComponentTester implements IElementSource<Integer>,
 		IElementSource<Integer> source = component.getElementSource();
 		assertNotNull(source);
 		assertTrue(source == this);
+		
+		return;
 	}
 
 	/**
@@ -451,17 +465,16 @@ public class ListComponentTester implements IElementSource<Integer>,
 		assertEquals(isEditable(0, 1), component.isEditable(0, 1));
 		assertEquals(setColumnValue(1, 2, 0), component.setColumnValue(1, 2, 0));
 
+		return;
 	}
 
 	@Override
 	public EventList<Integer> getElements() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public TableFormat<Integer> getTableFormat() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
