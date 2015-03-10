@@ -1117,8 +1117,7 @@ public class DatasetUtils {
 			return (Dataset) lazydata;
 		}
 
-		int dtype = lazydata instanceof Dataset ? ((Dataset) lazydata).getDtype() :
-			AbstractDataset.getDType(lazydata);
+		int dtype = AbstractDataset.getDType(lazydata);
 
 		IDataset data;
 		if (lazydata instanceof IDataset) {
