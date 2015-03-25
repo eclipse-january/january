@@ -768,13 +768,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.ice.caebat"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.platform"
          download-size="0"
          install-size="0"
@@ -2330,5 +2323,26 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          download-size="0"
          install-size="0"
          version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.ice.vibe"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ice.caebat.batml"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ice.viz.service.paraview"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
 </feature>

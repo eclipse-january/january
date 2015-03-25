@@ -163,5 +163,5 @@ public interface IComponentVisitor {
 	 * 
 	 * @param component The ListComponent
 	 */
-	public void visit(ListComponent component);
+	public void visit(ListComponent<?> component);
 }
