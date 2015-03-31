@@ -16,7 +16,7 @@ package org.eclipse.dawnsci.analysis.api.dataset;
  * 2. An HDF5 dataset which entire shape changes as data is added.
  *  
  */
-public interface IDynamicDataset extends IDataset {
+public interface IDynamicDataset {
 
 	/**
 	 * Add a listener which will be fired when aspects of the data change for
