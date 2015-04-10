@@ -56,6 +56,38 @@ public class LazyWriteableDataset extends LazyDataset implements ILazyWriteableD
 		this(name, dtype, 1, shape, maxShape, chunks, saver);
 	}
 
+	/**
+	 * Create a lazy writeable dataset based on in-memory data (handy for testing)
+	 * @param dataset
+	 */
+	public static LazyWriteableDataset createLazyDataset(final Dataset dataset) {
+		return new LazyWriteableDataset(dataset.getName(), dataset.getDtype(), dataset.getElementsPerItem(), dataset.getShape(),
+				null, null,
+		new ILazySaver() {
+			final Dataset d = dataset;
+			@Override
+			public boolean isFileReadable() {
+				return true;
+			}
+
+			@Override
+			public boolean isFileWriteable() {
+				return true;
+			}
+
+			@Override
+			public Dataset getDataset(IMonitor mon, SliceND slice)
+					throws Exception {
+				return d.getSlice(mon, slice);
+			}
+
+			@Override
+			public void setSlice(IMonitor mon, IDataset data, SliceND slice) throws Exception {
+				d.setSlice(data, slice);
+			}
+		});
+	}
+
 	@Override
 	public int[] getMaxShape() {
 		return maxShape;
