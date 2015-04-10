@@ -34,13 +34,13 @@ import org.eclipse.dawnsci.analysis.dataset.metadata.OriginMetadataImpl;
 
 public class LazyDataset extends LazyDatasetBase implements Serializable, Cloneable {
 
-	private int[]       oShape; // original shape
+	protected int[]     oShape; // original shape
 	protected long      size;   // number of items
 	private int         dtype;
 	private int         isize; // number of elements per item
 
 	protected ILazyLoader loader;
-	private LazyDataset base = null; // used for transpose
+	protected LazyDataset base = null; // used for transpose
 
 	// relative to loader or base
 	private int         prepShape = 0; // prepending and post-pending 
@@ -397,6 +397,50 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 		return view;
 	}
 
+	@Override
+	public Dataset getSlice(IMonitor monitor, int[] start, int[] stop, int[] step) throws Exception {
+		return getSlice(monitor, new SliceND(shape, start, stop, step));
+	}
+
+	@Override
+	public Dataset getSlice(IMonitor monitor, SliceND slice) throws Exception {
+
+		if (loader != null && !loader.isFileReadable())
+			return null; // TODO add interaction to use plot (or remote) server to load dataset
+
+		SliceND nslice = calcTrueSlice(slice);
+
+		Dataset a;
+		if (base != null) {
+			a = base.getSlice(monitor, nslice);
+		} else {
+			try {
+				a = DatasetUtils.convertToDataset(loader.getDataset(monitor, nslice));
+			} catch (Exception e) {
+				// return a fake dataset to show that this has not worked, should not be used in general though.
+				logger.debug("Problem getting {}: {}", String.format("slice %s %s %s", Arrays.toString(slice.getStart()), Arrays.toString(slice.getStop()),
+								Arrays.toString(slice.getStep())), e);
+				a = new DoubleDataset(1);
+			}
+			a.setName(name + AbstractDataset.BLOCK_OPEN + nslice.toString() + AbstractDataset.BLOCK_CLOSE);
+			if (metadata != null && a instanceof LazyDatasetBase) {
+				LazyDatasetBase ba = (LazyDatasetBase) a;
+				ba.metadata = copyMetadata();
+				if (oMetadata != null)
+					ba.restoreMetadata(oMetadata);
+				if (!nslice.isAll())
+					ba.sliceMetadata(true, nslice);
+			}
+		}
+		if (map != null) {
+			a = a.getTransposedView(map);
+		}
+		a.setShape(slice.getShape());
+		a.addMetadata(new OriginMetadataImpl(this, nslice.convertToSlice(), oShape, null, null));
+		
+		return a;
+	}
+
 	// reverse transform
 	private int[] getOriginal(int[] values) {
 		if (values == null)
@@ -411,17 +455,8 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 		return ovalues;
 	}
 
-	@Override
-	public Dataset getSlice(IMonitor monitor, int[] start, int[] stop, int[] step) throws Exception {
-		return getSlice(monitor, new SliceND(shape, start, stop, step));
-	}
-
-	@Override
-	public Dataset getSlice(IMonitor monitor, SliceND slice) throws Exception {
-
-		if (loader != null && !loader.isFileReadable())
-			return null; // TODO add interaction to use plot (or remote) server to load dataset
-
+	protected SliceND calcTrueSlice(SliceND slice) {
+		// TODO check it can do expansions for writing datasets
 		int[] lstart = slice.getStart();
 		int[] lstop  = slice.getStop();
 		int[] lstep  = slice.getStep();
@@ -464,36 +499,11 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 			}
 		}
 
-		SliceND nslice = new SliceND(base == null ? oShape : base.shape, nstart, nstop, nstep);
-		Dataset a;
-		if (base != null) {
-			a = base.getSlice(monitor, nslice);
-		} else {
-			try {
-				a = DatasetUtils.convertToDataset(loader.getDataset(monitor, nslice));
-			} catch (Exception e) {
-				// return a fake dataset to show that this has not worked, should not be used in general though.
-				logger.debug("Problem getting {}: {}", String.format("slice %s %s %s", Arrays.toString(slice.getStart()), Arrays.toString(slice.getStop()),
-								Arrays.toString(slice.getStep())), e);
-				a = new DoubleDataset(1);
-			}
-			a.setName(name + AbstractDataset.BLOCK_OPEN + nslice.toString() + AbstractDataset.BLOCK_CLOSE);
-			if (metadata != null && a instanceof LazyDatasetBase) {
-				LazyDatasetBase ba = (LazyDatasetBase) a;
-				ba.metadata = copyMetadata();
-				if (oMetadata != null)
-					ba.restoreMetadata(oMetadata);
-				if (!nslice.isAll())
-					ba.sliceMetadata(true, nslice);
-			}
-		}
-		if (map != null) {
-			a = a.getTransposedView(map);
-		}
-		a.setShape(slice.getShape());
-		a.addMetadata(new OriginMetadataImpl(this, nslice.convertToSlice(), oShape, null, null));
-		
-		return a;
+		return createSlice(nstart, nstop, nstep);
+	}
+
+	protected SliceND createSlice(int[] nstart, int[] nstop, int[] nstep) {
+		return new SliceND(base == null ? oShape : base.shape, nstart, nstop, nstep);
 	}
 
 	/**
