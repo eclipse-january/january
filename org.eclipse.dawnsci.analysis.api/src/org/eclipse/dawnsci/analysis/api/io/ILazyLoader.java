@@ -18,6 +18,9 @@ import org.eclipse.dawnsci.analysis.api.dataset.IDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.SliceND;
 import org.eclipse.dawnsci.analysis.api.monitor.IMonitor;
 
+/**
+ * Used by lazy datasets to read slices from a file
+ */
 public interface ILazyLoader extends Serializable {
 
 	/**
