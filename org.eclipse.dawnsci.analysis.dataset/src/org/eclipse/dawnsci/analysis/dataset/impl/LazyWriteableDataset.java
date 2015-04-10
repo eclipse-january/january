@@ -13,6 +13,7 @@ import java.io.IOException;
 
 import org.eclipse.dawnsci.analysis.api.dataset.IDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.ILazyWriteableDataset;
+import org.eclipse.dawnsci.analysis.api.dataset.Slice;
 import org.eclipse.dawnsci.analysis.api.dataset.SliceND;
 import org.eclipse.dawnsci.analysis.api.io.ILazySaver;
 import org.eclipse.dawnsci.analysis.api.monitor.IMonitor;
@@ -96,6 +97,54 @@ public class LazyWriteableDataset extends LazyDataset implements ILazyWriteableD
 	@Override
 	public int[] getChunking() {
 		return chunks;
+	}
+
+	@Override
+	public LazyWriteableDataset clone() {
+		LazyWriteableDataset ret = new LazyWriteableDataset(new String(name), getDtype(), getElementsPerItem(), 
+				oShape, maxShape, chunks, saver);
+		ret.shape = shape;
+		ret.size = size;
+		ret.prepShape = prepShape;
+		ret.postShape = postShape;
+		ret.begSlice = begSlice;
+		ret.delSlice = delSlice;
+		ret.map = map;
+		ret.base = base;
+		ret.metadata = copyMetadata();
+		ret.oMetadata = oMetadata;
+		return ret;
+	}
+
+	@Override
+	public LazyWriteableDataset getSliceView(int[] start, int[] stop, int[] step) {
+		return (LazyWriteableDataset) super.getSliceView(start, stop, step);
+	}
+
+	@Override
+	public LazyWriteableDataset getSliceView(Slice... slice) {
+		return (LazyWriteableDataset) super.getSliceView(slice);
+	}
+
+	@Override
+	public LazyWriteableDataset getSliceView(SliceND slice) {
+		return (LazyWriteableDataset) super.getSliceView(slice);
+	}
+
+	@Override
+	public LazyWriteableDataset getTransposedView(int... axes) {
+		return (LazyWriteableDataset) super.getTransposedView(axes);
+	}
+
+	/**
+	 * Set a slice of the dataset
+	 * 
+	 * @param data
+	 * @param slice an n-D slice
+	 * @throws Exception 
+	 */
+	public void setSlice(IDataset data, SliceND slice) throws Exception {
+		setSlice(null, data, slice);
 	}
 
 	@Override

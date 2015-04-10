@@ -43,12 +43,12 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	protected LazyDataset base = null; // used for transpose
 
 	// relative to loader or base
-	private int         prepShape = 0; // prepending and post-pending 
-	private int         postShape = 0; // changes to shape
-	private int[]       begSlice = null; // slice begin
-	private int[]       delSlice = null; // slice delta
-	private int[]       map; // transposition map (same length as current shape)
-	private Map<Class<? extends MetadataType>, List<MetadataType>> oMetadata = null;
+	protected int         prepShape = 0; // prepending and post-pending 
+	protected int         postShape = 0; // changes to shape
+	protected int[]       begSlice = null; // slice begin
+	protected int[]       delSlice = null; // slice delta
+	protected int[]       map; // transposition map (same length as current shape)
+	protected Map<Class<? extends MetadataType>, List<MetadataType>> oMetadata = null;
 
 	/**
 	 * Create a lazy dataset
