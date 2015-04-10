@@ -78,7 +78,7 @@ public class LazyWriteableDataset extends LazyDataset implements ILazyWriteableD
 			((ILazyWriteableDataset) base).setSlice(monitor, data, nslice);
 		} else {
 			saver.setSlice(monitor, data, nslice);
-			calcTrueSlice(nslice);
+			oShape = nslice.getSourceShape();
 		}
 	}
 

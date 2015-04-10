@@ -275,6 +275,10 @@ public class SliceND {
 				lstop[i] = stop;
 				lshape[i] = (stop - start - 1) / step + 1;
 			}
+
+			if (lstop[i] > s) {
+				oshape[i] = lstop[i];
+			}
 		} else {
 			if (start < 0) {
 				start = -1;
