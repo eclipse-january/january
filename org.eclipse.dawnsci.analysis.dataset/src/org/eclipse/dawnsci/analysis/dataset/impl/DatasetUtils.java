@@ -2294,4 +2294,15 @@ public class DatasetUtils {
 
 		return indexes;
 	}
+
+	/**
+	 * Serialize dataset by flattening it. Discards metadata
+	 * @param data
+	 * @return some java array
+	 */
+	public static Serializable serializeDataset(final IDataset data) {
+		Dataset d = convertToDataset(data.getSliceView());
+		d.clearMetadata(null);
+		return d.flatten().getBuffer();
+	}
 }
