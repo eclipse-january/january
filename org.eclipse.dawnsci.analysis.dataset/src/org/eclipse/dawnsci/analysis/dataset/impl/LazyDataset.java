@@ -456,7 +456,6 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	}
 
 	protected SliceND calcTrueSlice(SliceND slice) {
-		// TODO check it can do expansions for writing datasets
 		int[] lstart = slice.getStart();
 		int[] lstop  = slice.getStop();
 		int[] lstep  = slice.getStep();
