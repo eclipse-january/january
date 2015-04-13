@@ -11,7 +11,10 @@ package org.eclipse.dawnsci.analysis.api.dataset;
 
 import java.util.Iterator;
 
-public class DataListenerDelegate implements IDynamicDataset {
+/**
+ * Class used by DynamicDatasets to delgate 
+ */
+public class DataListenerDelegate {
 
 	private EventListenerList eventListenerlist;
 
@@ -19,12 +22,10 @@ public class DataListenerDelegate implements IDynamicDataset {
 		eventListenerlist = new EventListenerList();
 	}
 	
-	@Override
 	public void addDataListener(IDataListener l) {
 		eventListenerlist.addListener(IDataListener.class, l);
 	}
 
-	@Override
 	public void removeDataListener(IDataListener l) {
 		eventListenerlist.removeListener(IDataListener.class, l);
 	}

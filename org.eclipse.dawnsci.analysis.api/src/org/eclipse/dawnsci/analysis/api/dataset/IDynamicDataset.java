@@ -9,6 +9,7 @@
 
 package org.eclipse.dawnsci.analysis.api.dataset;
 
+
 /**
  * This interface is intended for data sources that change dynamically.
  * Examples:
@@ -16,8 +17,17 @@ package org.eclipse.dawnsci.analysis.api.dataset;
  * 2. An HDF5 dataset which entire shape changes as data is added.
  *  
  */
-public interface IDynamicDataset {
+public interface IDynamicDataset<T extends IDataset> {
 
+	/**
+	 * Internal use only. When the dataset changes, the internal API may update the 
+	 * underlying data which the dataset is linked to.
+	 * 
+	 * @param newData
+	 */
+	public void setData(T newData);
+
+	
 	/**
 	 * Add a listener which will be fired when aspects of the data change for
 	 * instance shape or content.
