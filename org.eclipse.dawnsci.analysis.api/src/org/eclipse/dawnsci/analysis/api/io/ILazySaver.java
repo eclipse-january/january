@@ -17,6 +17,12 @@ import org.eclipse.dawnsci.analysis.api.monitor.IMonitor;
  * Used by lazy writeable datasets to write slices to a file
  */
 public interface ILazySaver extends ILazyLoader {
+
+	/**
+	 * Initialize dataset in file
+	 */
+	public void initialize() throws Exception;
+
 	/**
 	 * 
 	 * @return true if file is writeable

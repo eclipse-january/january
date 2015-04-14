@@ -77,6 +77,10 @@ public class LazyWriteableDataset extends LazyDataset implements ILazyWriteableD
 			}
 
 			@Override
+			public void initialize() throws Exception {
+			}
+
+			@Override
 			public Dataset getDataset(IMonitor mon, SliceND slice)
 					throws Exception {
 				return d.getSlice(mon, slice);
