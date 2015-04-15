@@ -317,6 +317,13 @@ public class SliceND {
 	}
 
 	/**
+	 * @return maximum shape
+	 */
+	public int[] getMaxShape() {
+		return mshape;
+	}
+
+	/**
 	 * @return resulting shape
 	 */
 	public int[] getShape() {
