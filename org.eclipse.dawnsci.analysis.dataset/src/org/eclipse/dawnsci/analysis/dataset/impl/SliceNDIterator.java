@@ -33,9 +33,10 @@ public class SliceNDIterator extends IndexIterator {
 	 * position in source dataset
 	 */
 	final private int[] pos;
+	final private int[] end;
 	private boolean once;
 
-	private SliceND iSlice; // source slice
+	private SliceND cSlice; // current slice
 	
 	private int sRank; // number of dimensions used (i.e. not missing)
 	final private SliceND oSlice; // omitted source slice
@@ -51,22 +52,21 @@ public class SliceNDIterator extends IndexIterator {
 	 * @param axes missing axes
 	 */
 	public SliceNDIterator(SliceND slice, int... axes) {
-		iSlice = slice.clone();
-		int[] sShape = iSlice.getSourceShape();
-		int[] oshape = iSlice.getShape();
-		start = iSlice.getStart();
-		stop  = iSlice.getStop();
-		step  = iSlice.getStep();
+		cSlice = slice.clone();
+		int[] sShape = cSlice.getSourceShape();
+		shape = cSlice.getShape().clone();
+		start = cSlice.getStart();
+		stop  = cSlice.getStop();
+		step  = cSlice.getStep();
 		for (int s : step) {
 			if (s < 0) {
 				throw new UnsupportedOperationException("Negative steps not implemented");
 			}
 		}
-		int rank = oshape.length;
+		int rank = shape.length;
 		endrank = rank - 1;
 
 		omit = new boolean[rank];
-		shape = oshape.clone();
 		dSlice = new SliceND(shape);
 		dStart = dSlice.getStart();
 		dStop  = dSlice.getStop();
@@ -86,8 +86,9 @@ public class SliceNDIterator extends IndexIterator {
 			}
 		}
 
-
-		pos = start.clone();
+		cSlice = cSlice.clone();
+		pos = cSlice.getStart();
+		end = cSlice.getStop();
 		if (sRank == rank) {
 			sPos = pos;
 			oSlice = null;
@@ -126,10 +127,12 @@ public class SliceNDIterator extends IndexIterator {
 				continue;
 			}
 			pos[j] += step[j];
+			end[j] = pos[j] + step[j];
 			dStart[j]++;
 			dStop[j]++;
 			if (pos[j] >= stop[j]) {
 				pos[j] = start[j];
+				end[j] = pos[j] + step[j];
 				dStart[j] = 0;
 				dStop[j] = 1;
 				if (sPos != pos) {
@@ -167,6 +170,14 @@ public class SliceNDIterator extends IndexIterator {
 	}
 
 	/**
+	 * Get current slice
+	 * @return slice
+	 */
+	public SliceND getCurrentSlice() {
+		return cSlice;
+	}
+
+	/**
 	 * Shortened position where axes are omitted
 	 * @return used position
 	 */
@@ -186,6 +197,7 @@ public class SliceNDIterator extends IndexIterator {
 		for (int i = 0; i <= endrank; i++) {
 			pos[i] = start[i];
 			if (!omit[i]) {
+				end[i] = pos[i] + step[i];
 				dStart[i] = 0;
 				dStop[i] = 1;
 			}
@@ -206,6 +218,7 @@ public class SliceNDIterator extends IndexIterator {
 			for (int i = endrank - 1; i >= 0; i--) {
 				if (!omit[i]) {
 					pos[i] -= step[i];
+					end[i] = pos[i] + step[i];
 					dStart[i]--;
 					dStop[i]--;
 					break;
@@ -215,6 +228,7 @@ public class SliceNDIterator extends IndexIterator {
 			pos[endrank] -= step[endrank];
 			dStart[endrank]--;
 			dStop[endrank]--;
+			end[endrank] = pos[endrank] + step[endrank];
 		}
 
 		if (sPos != pos) {
