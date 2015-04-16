@@ -67,6 +67,11 @@ import ca.odell.glazedlists.gui.WritableTableFormat;
  * AbstractEventList, so we will have to live with this for now.
  * </p>
  * 
+ * I also had to override the ListEventListener registration operations to make
+ * sure that the source list was registered. The TransformedList by defaults
+ * registers listeners against itself, not the source, but it processes all of
+ * the list additions, etc., through the source.
+ * 
  * @author Jay Jay Billings
  * 
  */
@@ -439,6 +444,17 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	};
 
 	/**
+	 * This operation sets the element source that should be used by the list
+	 * 
+	 * @param source
+	 *            the element source that provides a list of values that
+	 *            *should* be used to seed new entries.
+	 */
+	public void setElementSource(IElementSource<T> source) {
+		elementSource = source;
+	}
+
+	/**
 	 * This operation returns the element source which should be used to create
 	 * new elements to add to the list.
 	 * 
@@ -506,4 +522,5 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 		// Remove the listener from the TransformedList's source EventList.
 		super.source.removeListEventListener(listChangeListener);
 	}
+
 }

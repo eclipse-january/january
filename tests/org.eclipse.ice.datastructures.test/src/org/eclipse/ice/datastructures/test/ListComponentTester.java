@@ -32,6 +32,8 @@ import org.eclipse.ice.datastructures.resource.VizResource;
 import org.junit.*;
 
 import ca.odell.glazedlists.EventList;
+import ca.odell.glazedlists.event.ListEvent;
+import ca.odell.glazedlists.event.ListEventListener;
 import ca.odell.glazedlists.gui.TableFormat;
 import ca.odell.glazedlists.gui.WritableTableFormat;
 
@@ -47,12 +49,18 @@ import ca.odell.glazedlists.gui.WritableTableFormat;
  * @author Jay Jay Billings
  */
 public class ListComponentTester implements IElementSource<Integer>,
-		WritableTableFormat<Integer> {
+		WritableTableFormat<Integer>, ListEventListener<Integer> {
 
 	/**
 	 * A flag to mark whether or not visitation worked.
 	 */
 	boolean visited = false;
+
+	/**
+	 * True if the test was notified via the GlazedLists ListEventListener
+	 * interface instead of the ICE interface.
+	 */
+	private volatile boolean notified = false;
 
 	/**
 	 * This operation checks the ListComponent to insure that the id, name and
@@ -397,8 +405,7 @@ public class ListComponentTester implements IElementSource<Integer>,
 		component.add("fred");
 		// Make sure the listener was notified
 		assertTrue(firstListener.wasNotified());
-		
-		
+
 		return;
 	}
 
@@ -555,6 +562,13 @@ public class ListComponentTester implements IElementSource<Integer>,
 	public Integer setColumnValue(Integer baseObject, Object editedValue,
 			int column) {
 		return 4;
+	}
+
+	@Override
+	public void listChanged(ListEvent<Integer> listChanges) {
+		System.out.println("ListComponentTester Message: "
+				+ "ListEventListener callback executed.");
+		notified = true;
 	}
 
 }

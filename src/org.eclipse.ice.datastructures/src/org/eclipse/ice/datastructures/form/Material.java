@@ -62,7 +62,7 @@ public class Material implements Cloneable {
 	/**
 	 * The list of components that comprise this material.
 	 */
-	@XmlElement(name="Material")
+	@XmlElement(name = "Material")
 	private List<Material> components;
 
 	/**
@@ -122,10 +122,15 @@ public class Material implements Cloneable {
 	 * 
 	 * @param key
 	 *            The key/name of the property whose value should be returned
-	 * @return the value
+	 * @return the value or 0.0 if this value is not in the map, but
+	 *         never null.
 	 */
 	public double getProperty(String key) {
-		return properties.get(key);
+		double value = 0.0;
+		if (properties.containsKey(key)) {
+			value = properties.get(key);	
+		} 
+		return value;
 	}
 
 	/**
@@ -222,22 +227,27 @@ public class Material implements Cloneable {
 	}
 
 	/**
-	 * This operation copies the content of the incoming material into this material.
-	 * @param material the material to copy
+	 * This operation copies the content of the incoming material into this
+	 * material.
+	 * 
+	 * @param material
+	 *            the material to copy
 	 */
 	public void copy(Material material) {
 		// Don't copy the input if it is not a Material or if it is null
 		if (material != null && material != this) {
 			this.name = material.name;
 			this.size = material.size;
-			this.properties = (HashMap<String, Double>) material.properties.clone();
+			this.properties = (HashMap<String, Double>) material.properties
+					.clone();
 			this.components = new ArrayList<Material>(material.components);
-		}		
+		}
 	}
-	
+
 	/**
 	 * This operation clones the material and creates a completely new material
 	 * with the same information.
+	 * 
 	 * @return The clone
 	 */
 	public Object clone() {

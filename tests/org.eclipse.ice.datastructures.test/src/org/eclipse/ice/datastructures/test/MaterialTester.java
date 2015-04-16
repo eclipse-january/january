@@ -67,6 +67,9 @@ public class MaterialTester {
 		assertTrue(properties.containsKey("molar mass (g/mol)"));
 		assertTrue(properties.containsKey("vapor pressure (MPa)"));
 
+		// Make sure that requesting a property that isn't in the map returns 0.0.
+		assertEquals(0.0,testMaterial.getProperty("penguin"),1.0e-8);
+		
 		return;
 	}
 
