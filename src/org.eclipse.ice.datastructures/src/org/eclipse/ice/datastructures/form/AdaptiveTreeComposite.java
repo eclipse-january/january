@@ -12,14 +12,11 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.form;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -27,7 +24,6 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.eclipse.ice.datastructures.ICEObject.Component;
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
 
@@ -214,8 +210,10 @@ public class AdaptiveTreeComposite extends TreeComposite {
 						// Look for a match in the new parameter HashMap
 						if (newParamMap.containsKey(currEntry.getName())) {
 							// Copy the data into the new parameter list
-							(newParamMap.get(currEntry.getName()))
-								.copy(currEntry);
+							Entry newEntry = newParamMap.get(currEntry.getName());
+							boolean req = currEntry.isRequired();
+							newEntry.copy(currEntry);
+							newEntry.setRequired(req);
 						}
 						
 						// If it's not in the list and the previous type of
@@ -244,9 +242,13 @@ public class AdaptiveTreeComposite extends TreeComposite {
 					copy(typeTree);
 				}
 
-				// Set the old name, state, children and child exemplars
+				// Set the old name, state, active data node, children and 
+				// child exemplars
 				setName(oldTreeName);
 				setActive(isActive);
+				if (getDataNodes() != null && !getDataNodes().isEmpty()) {
+					setActiveDataNode(getDataNodes().get(0));
+				}
 				for (TreeComposite tree : children) {
 					setNextChild(tree);
 				}
@@ -274,8 +276,8 @@ public class AdaptiveTreeComposite extends TreeComposite {
 	 *         AdaptiveTreeComposite. It is null if no types are available.
 	 */
 	public ArrayList<String> getTypes() {
-		return (typesMap != null) ? new ArrayList<String>(typesMap.keySet())
-				: null;
+		return (typesMap != null) ? 
+				new ArrayList<String>(typesMap.keySet()) : null;
 	}
 
 	/**
