@@ -9,6 +9,7 @@
 
 package org.eclipse.dawnsci.analysis.api.dataset;
 
+import org.eclipse.dawnsci.analysis.api.io.ILazySaver;
 import org.eclipse.dawnsci.analysis.api.monitor.IMonitor;
 
 /**
@@ -31,6 +32,12 @@ public interface ILazyWriteableDataset extends ILazyDataset {
 	 * @return chunks
 	 */
 	public int[] getChunking();
+
+	/**
+	 * Set saver
+	 * @param saver
+	 */
+	public void setSaver(ILazySaver saver);
 
 	/**
 	 * Set a slice of the dataset
