@@ -36,12 +36,12 @@ public interface PeemMetadata extends MetadataType {
 	 * @return field of view value in microns
 	 */
 	public double getFieldOfView();
-
-	/**
-	 * Image rotation (motor x-axis angle with respect to camera x-axis)
-	 * @return angular rotation in degrees 
-	 */
-	public double getRotation();
+//
+//	/**
+//	 * Image rotation (motor x-axis angle with respect to camera x-axis)
+//	 * @return angular rotation in degrees 
+//	 */
+//	public double getRotation();
 
 	/**
 	 * Sets X/y motor position in microns
@@ -61,10 +61,10 @@ public interface PeemMetadata extends MetadataType {
 	 */
 	void setFieldOfView(double fieldOfView);
 
-	/**
-	 * Sets rotation angular value in degree
-	 * Image rotation (motor x-axis angle with respect to camera x-axis)
-	 * @param rotation
-	 */
-	void setRotation(double rotation);
+//	/**
+//	 * Sets rotation angular value in degree
+//	 * Image rotation (motor x-axis angle with respect to camera x-axis)
+//	 * @param rotation
+//	 */
+//	void setRotation(double rotation);
 }
