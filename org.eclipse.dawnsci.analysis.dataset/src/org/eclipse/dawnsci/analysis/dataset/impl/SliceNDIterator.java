@@ -238,6 +238,8 @@ public class SliceNDIterator extends IndexIterator {
 				}
 			}
 		}
+		
+		cSlice.checkAllData();
 	}
 
 	@Override
