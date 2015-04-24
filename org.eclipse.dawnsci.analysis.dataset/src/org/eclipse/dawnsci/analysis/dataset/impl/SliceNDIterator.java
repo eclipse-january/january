@@ -195,11 +195,14 @@ public class SliceNDIterator extends IndexIterator {
 	@Override
 	public void reset() {
 		for (int i = 0; i <= endrank; i++) {
-			pos[i] = start[i];
+			int b = start[i];
+			int d = step[i];
 			if (!omit[i]) {
-				end[i] = pos[i] + step[i];
+				cSlice.setSlice(i, b, b + d, d);
 				dStart[i] = 0;
 				dStop[i] = 1;
+			} else {
+				cSlice.setSlice(i, b, end[i], d);
 			}
 		}
 
@@ -214,21 +217,25 @@ public class SliceNDIterator extends IndexIterator {
 		}
 
 		if (omit[endrank]) {
-			pos[endrank] = start[endrank];
+			int b = start[endrank];
+			int d = step[endrank];
+			cSlice.setSlice(endrank, b, end[endrank], d);
 			for (int i = endrank - 1; i >= 0; i--) {
 				if (!omit[i]) {
-					pos[i] -= step[i];
-					end[i] = pos[i] + step[i];
+					b = pos[i];
+					d = step[i];
+					cSlice.setSlice(endrank, b - d, b, d);
 					dStart[i]--;
 					dStop[i]--;
 					break;
 				}
 			}
 		} else {
-			pos[endrank] -= step[endrank];
+			int b = pos[endrank];
+			int d = step[endrank];
+			cSlice.setSlice(endrank, b - d, b, d);
 			dStart[endrank]--;
 			dStop[endrank]--;
-			end[endrank] = pos[endrank] + step[endrank];
 		}
 
 		if (sPos != pos) {
@@ -238,8 +245,6 @@ public class SliceNDIterator extends IndexIterator {
 				}
 			}
 		}
-		
-		cSlice.checkAllData();
 	}
 
 	@Override
