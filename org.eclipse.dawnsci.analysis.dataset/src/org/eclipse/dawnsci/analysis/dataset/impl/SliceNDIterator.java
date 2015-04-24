@@ -217,23 +217,19 @@ public class SliceNDIterator extends IndexIterator {
 		}
 
 		if (omit[endrank]) {
-			int b = start[endrank];
-			int d = step[endrank];
-			cSlice.setSlice(endrank, b, end[endrank], d);
+			pos[endrank] = start[endrank];
 			for (int i = endrank - 1; i >= 0; i--) {
 				if (!omit[i]) {
-					b = pos[i];
-					d = step[i];
-					cSlice.setSlice(endrank, b - d, b, d);
+					end[i] = pos[i];
+					pos[i] -= step[i];
 					dStart[i]--;
 					dStop[i]--;
 					break;
 				}
 			}
 		} else {
-			int b = pos[endrank];
-			int d = step[endrank];
-			cSlice.setSlice(endrank, b - d, b, d);
+			end[endrank] = pos[endrank];
+			pos[endrank] -= step[endrank];
 			dStart[endrank]--;
 			dStop[endrank]--;
 		}
