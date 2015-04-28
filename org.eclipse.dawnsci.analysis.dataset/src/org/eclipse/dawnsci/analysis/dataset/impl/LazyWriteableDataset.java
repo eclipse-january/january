@@ -99,8 +99,18 @@ public class LazyWriteableDataset extends LazyDataset implements ILazyWriteableD
 	}
 
 	@Override
+	public void setMaxShape(int[] maxShape) {
+		this.maxShape = maxShape == null ? shape.clone() : maxShape.clone();
+	}
+
+	@Override
 	public int[] getChunking() {
 		return chunks;
+	}
+
+	@Override
+	public void setChunking(int[] chunks) {
+		this.chunks = chunks == null ? null : chunks.clone();
 	}
 
 	@Override

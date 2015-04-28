@@ -28,10 +28,20 @@ public interface ILazyWriteableDataset extends ILazyDataset {
 	public int[] getMaxShape();
 
 	/**
+	 * Set maximum shape
+	 */
+	public void setMaxShape(int[] maxShape);
+
+	/**
 	 * Get chunking
 	 * @return chunks
 	 */
 	public int[] getChunking();
+
+	/**
+	 * Set chunking
+	 */
+	public void setChunking(int[] chunks);
 
 	/**
 	 * Set saver
