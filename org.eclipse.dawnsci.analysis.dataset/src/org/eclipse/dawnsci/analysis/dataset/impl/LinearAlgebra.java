@@ -1136,9 +1136,12 @@ public class LinearAlgebra {
 	 */
 	public static Dataset solve(Dataset a, Dataset v) {
 		LUDecomposition lud = new LUDecomposition(createRealMatrix(a));
-		RealVector x = createRealVector(v);
-		MatrixUtils.solveLowerTriangularSystem(lud.getL(), x);
-		return createDataset(x);
+		if (v.getRank() == 1) {
+			RealVector x = createRealVector(v);
+			return createDataset(lud.getSolver().solve(x));
+		}
+		RealMatrix x = createRealMatrix(v);
+		return createDataset(lud.getSolver().solve(x));
 	}
 
 	/**
