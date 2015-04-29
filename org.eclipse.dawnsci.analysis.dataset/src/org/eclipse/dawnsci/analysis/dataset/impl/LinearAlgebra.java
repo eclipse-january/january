@@ -564,12 +564,15 @@ public class LinearAlgebra {
 	/**
 	 * Create the Kronecker product as defined by 
 	 * kron[k0,...,kN] = a[i0,...,iN] * b[j0,...,jN]
-	 * where kn = in + sn * jn for n = 0...N and s is shape of b
+	 * where kn = sn * in + jn for n = 0...N and s is shape of b
 	 * @param a
 	 * @param b
 	 * @return Kronecker product of a and b
 	 */
 	public static Dataset kroneckerProduct(Dataset a, Dataset b) {
+		if (a.getElementsPerItem() != 1 || b.getElementsPerItem() != 1) {
+			throw new UnsupportedOperationException("Compound datasets (including complex ones) are not currently supported");
+		}
 		int ar = a.getRank();
 		int br = b.getRank();
 		int[] aShape;
@@ -577,6 +580,7 @@ public class LinearAlgebra {
 		aShape = a.getShapeRef();
 		bShape = b.getShapeRef();
 		int r = ar;
+		// pre-pad if ranks are not same
 		if (ar < br) {
 			r = br;
 			int[] shape = new int[br];
@@ -590,7 +594,7 @@ public class LinearAlgebra {
 			}
 			a = a.reshape(shape);
 			aShape = shape;
-		} else {
+		} else if (ar > br) {
 			int[] shape = new int[ar];
 			int j = 0;
 			for (int i = br; i < ar; i++) {
@@ -611,23 +615,44 @@ public class LinearAlgebra {
 		Dataset kron = DatasetFactory.zeros(nShape, AbstractDataset.getBestDType(a.getDtype(), b.getDtype()));
 		IndexIterator ita = a.getIterator(true);
 		IndexIterator itb = b.getIterator(true);
-		int k = 0;
+		int[] pa = ita.getPos();
+		int[] pb = itb.getPos();
+		int[] off = new int[1];
+		int[] stride = AbstractDataset.createStrides(1, nShape, null, 0, off);
 		if (kron.getDtype() == Dataset.INT64) {
 			while (ita.hasNext()) {
 				long av = a.getElementLongAbs(ita.index);
+
+				int ka = 0; 
+				for (int i = 0; i < r; i++) {
+					ka += stride[i] * bShape[i] * pa[i];
+				}
 				itb.reset();
 				while (itb.hasNext()) {
 					long bv = b.getElementLongAbs(itb.index);
-					kron.setObjectAbs(k++, av * bv);
+					int kb = ka;
+					for (int i = 0; i < r; i++) {
+						kb += stride[i] * pb[i];
+					}
+					kron.setObjectAbs(kb, av * bv);
 				}
 			}
 		} else {
 			while (ita.hasNext()) {
 				double av = a.getElementDoubleAbs(ita.index);
+
+				int ka = 0; 
+				for (int i = 0; i < r; i++) {
+					ka += stride[i] * bShape[i] * pa[i];
+				}
 				itb.reset();
 				while (itb.hasNext()) {
-					double bv = b.getElementDoubleAbs(itb.index);
-					kron.setObjectAbs(k++, av * bv);
+					double bv = b.getElementLongAbs(itb.index);
+					int kb = ka;
+					for (int i = 0; i < r; i++) {
+						kb += stride[i] * pb[i];
+					}
+					kron.setObjectAbs(kb, av * bv);
 				}
 			}
 		}
