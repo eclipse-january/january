@@ -392,4 +392,30 @@ public class SliceND {
 
 		return s.substring(0, s.length()-1);
 	}
+
+	/**
+	 * Creating slice from dataset
+	 * @param data
+	 * @param start
+	 * @param stop
+	 * @return slice
+	 */
+	public static SliceND createSlice(ILazyDataset data, int[] start, int[] stop) {
+		return createSlice(data, start, stop, null);
+	}
+
+	/**
+	 * Creating slice from dataset
+	 * @param data
+	 * @param start
+	 * @param stop
+	 * @param step
+	 * @return slice
+	 */
+	public static SliceND createSlice(ILazyDataset data, int[] start, int[] stop, int[] step) {
+		if (data instanceof ILazyWriteableDataset) {
+			return new SliceND(data.getShape(), ((ILazyWriteableDataset) data).getMaxShape(), start, stop, step);
+		}
+		return new SliceND(data.getShape(), start, stop, step);
+	}
 }
