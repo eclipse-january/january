@@ -69,6 +69,9 @@ public class LazyExamples {
 		final ILazyDataset slice = lz.getSliceView(new Slice(0,5000), null, null);
 		System.out.println("The lazy slice is "+slice);
 		
+		// You may slice an image from  slice instead
+		final IDataset image = slice.getSlice(new Slice(4000,4001), null, null).squeeze();
+		System.out.println("The image has shape "+Arrays.toString(image.getShape()));
 	}
 
 	
