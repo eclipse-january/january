@@ -605,6 +605,9 @@ public class DatasetUtils {
 		try {
 			// copy across the data
 			switch (dtype) {
+			case Dataset.STRING:
+				c = new StringDataset(a);
+				break;
 			case Dataset.BOOL:
 				c = new BooleanDataset(a);
 				break;
