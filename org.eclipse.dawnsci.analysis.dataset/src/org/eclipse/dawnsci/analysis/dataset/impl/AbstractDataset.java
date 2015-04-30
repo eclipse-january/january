@@ -692,9 +692,16 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		return shape;
 	}
 
-	private static void getShapeFromObj(final ArrayList<Integer> ldims, Object obj, int depth) {
+	/**
+	 * Get shape from object
+	 * @param ldims
+	 * @param obj
+	 * @param depth
+	 * @return true if there is a possibility of differing lengths
+	 */
+	private static boolean getShapeFromObj(final ArrayList<Integer> ldims, Object obj, int depth) {
 		if (obj == null)
-			return;
+			return true;
 
 		if (obj instanceof List<?>) {
 			List<?> jl = (List<?>) obj;
@@ -702,22 +709,29 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			updateShape(ldims, depth, l);
 			for (int i = 0; i < l; i++) {
 				Object lo = jl.get(i);
-				getShapeFromObj(ldims, lo, depth + 1);
+				if (!getShapeFromObj(ldims, lo, depth + 1)) {
+					break;
+				}
 			}
+			return true;
 		} else if (obj.getClass().isArray()) {
 			final int l = Array.getLength(obj);
 			updateShape(ldims, depth, l);
 			for (int i = 0; i < l; i++) {
 				Object lo = Array.get(obj, i);
-				getShapeFromObj(ldims, lo, depth + 1);
+				if (!getShapeFromObj(ldims, lo, depth + 1)) {
+					break;
+				}
 			}
+			return true;
 		} else if (obj instanceof IDataset) {
 			int[] s = ((IDataset) obj).getShape();
 			for (int i = 0; i < s.length; i++) {
 				updateShape(ldims, depth++, s[i]);
 			}
+			return true;
 		} else {
-			return; // not an array of any type
+			return false; // not an array of any type
 		}
 	}
 
