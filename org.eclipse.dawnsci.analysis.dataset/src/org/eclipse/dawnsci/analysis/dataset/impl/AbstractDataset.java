@@ -642,6 +642,10 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 				}
 			}
 		} else if (obj.getClass().isArray()) {
+			Class<?> ca = obj.getClass().getComponentType();
+			if (isComponentSupported(ca)) {
+				return getDTypeFromClass(ca);
+			}
 			int l = Array.getLength(obj);
 			for (int i = 0; i < l; i++) {
 				Object lo = Array.get(obj, i);
@@ -658,6 +662,10 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			dtype = getDTypeFromClass(obj.getClass());
 		}
 		return dtype;
+	}
+
+	private static boolean isComponentSupported(Class<? extends Object> comp) {
+		return comp.isPrimitive() || Number.class.isAssignableFrom(comp) || comp.equals(Boolean.class) || comp.equals(Complex.class) || comp.equals(String.class);
 	}
 
 	/**
@@ -714,9 +722,14 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 				}
 			}
 			return true;
-		} else if (obj.getClass().isArray()) {
+		}
+		Class<? extends Object> ca = obj.getClass().getComponentType();
+		if (ca != null) {
 			final int l = Array.getLength(obj);
 			updateShape(ldims, depth, l);
+			if (isComponentSupported(ca)) {
+				return true;
+			}
 			for (int i = 0; i < l; i++) {
 				Object lo = Array.get(obj, i);
 				if (!getShapeFromObj(ldims, lo, depth + 1)) {
