@@ -834,6 +834,44 @@ public class DatasetUtils {
 	}
 
 	/**
+	 * Make a dataset unsigned by promoting it to a wider dataset type and unwrapping the signs
+	 * of its content
+	 * @param a
+	 * @return unsigned dataset or original if it is not an integer dataset
+	 */
+	public static Dataset makeUnsigned(IDataset a) {
+		Dataset d = convertToDataset(a);
+		int dtype = d.getDtype();
+		switch (dtype) {
+		case Dataset.INT32:
+			d = new LongDataset(d);
+			unwrapUnsigned(d, 32);
+			break;
+		case Dataset.INT16:
+			d = new IntegerDataset(d);
+			unwrapUnsigned(d, 16);
+			break;
+		case Dataset.INT8:
+			d = new ShortDataset(d);
+			unwrapUnsigned(d, 8);
+			break;
+		case Dataset.ARRAYINT32:
+			d = new CompoundLongDataset(d);
+			unwrapUnsigned(d, 32);
+			break;
+		case Dataset.ARRAYINT16:
+			d = new CompoundIntegerDataset(d);
+			unwrapUnsigned(d, 16);
+			break;
+		case Dataset.ARRAYINT8:
+			d = new CompoundShortDataset(d);
+			unwrapUnsigned(d, 8);
+			break;
+		}
+		return d;
+	}
+
+	/**
 	 * Unwrap dataset elements so that all elements are unsigned
 	 * @param a dataset
 	 * @param bitWidth width of original primitive in bits
