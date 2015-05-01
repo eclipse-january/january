@@ -1776,5 +1776,78 @@ public class Stats {
 			}
 		}
 		return new double[] {lx, hx, nl, nh};
-	}	
+	}
+	
+	
+	public static Dataset covariance(final Dataset a) {
+		return covariance(a, true, false, null); 
+	}
+	public static Dataset covariance(final Dataset a, 
+			Boolean rowvar, Boolean bias, Integer ddof) {
+		return covariance(a, null, rowvar, bias, ddof);
+	}
+	public static Dataset covariance(final Dataset a, final Dataset b) {
+		return covariance(a, b, true, false, null);
+	}
+	/**
+	 * 
+	 * @param a
+	 * @param b
+	 * @param rowvar
+	 * @param bias
+	 * @param ddof
+	 * @return - covariance matrix
+	 */
+	public static Dataset covariance (final Dataset a, final Dataset b, 
+			Boolean rowvar, Boolean bias, Integer ddof) {
+		
+		//TODO Add some handling of the dataset type.
+		Dataset vars = new DoubleDataset(a);
+		if (a.getRank() == 1) {
+			vars.setShape(1, a.getShape()[0]);
+		}
+		
+		//1D of variables, so consider rows as variables
+		if (vars.getShape()[0] == 1) {
+			rowvar = true;
+		}
+		
+		//nr is the number of records; axis is index
+		int nr, axis;
+		if (rowvar) {
+			nr = vars.getShape()[1];
+			axis = 0;
+		} else {
+			nr = vars.getShape()[0];
+			axis = 1;
+		}
+		
+		//Set the reduced degrees of freedom & normalisation factor
+		if (ddof == null) {
+			if (bias == false)
+				ddof = 1;
+		} else {
+			ddof = 0;
+		}
+		double norm_fact = nr - ddof;
+		if (norm_fact <= 0.) {
+			//TODO Some sort of warning here?
+			norm_fact = 0.;
+		}
+		
+		//Concatenate additional set of variables with main set
+		if (b != null) {
+			vars = DatasetUtils.concatenate(new Dataset[]{vars, b}, axis);
+		}
+		
+		//Calculate deviations & covariance matrix
+		vars.isubtract(vars.mean(false, 1-axis));
+		Dataset cov;
+		if (rowvar) {
+			cov = Maths.divide(LinearAlgebra.dotProduct(vars, Maths.conjugate(vars.transpose())), norm_fact).squeeze();
+		} else {
+			cov = Maths.divide(LinearAlgebra.dotProduct(vars.transpose(), Maths.conjugate(vars)), norm_fact).squeeze();
+		}
+		return cov;
+	}
 }
