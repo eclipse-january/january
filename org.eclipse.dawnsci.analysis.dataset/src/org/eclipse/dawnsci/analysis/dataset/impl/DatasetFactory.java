@@ -15,7 +15,6 @@ package org.eclipse.dawnsci.analysis.dataset.impl;
 import java.math.BigInteger;
 import java.util.List;
 
-import org.apache.commons.math3.complex.Complex;
 import org.eclipse.dawnsci.analysis.api.dataset.ILazyDataset;
 
 public class DatasetFactory {
@@ -207,6 +206,11 @@ public class DatasetFactory {
 		if (obj instanceof ILazyDataset)
 			return DatasetUtils.cast(DatasetUtils.convertToDataset((ILazyDataset) obj), dtype);
 
+		Class<? extends Object> ca = obj.getClass().getComponentType();
+		if (ca != null && (ca.isPrimitive() || ca.equals(String.class))) {
+			return DatasetUtils.cast(createFromPrimitiveArray(obj, AbstractDataset.getDTypeFromClass(ca)), dtype);
+		}
+
 		switch (dtype) {
 		case Dataset.BOOL:
 			return BooleanDataset.createFromObject(obj);
@@ -242,6 +246,29 @@ public class DatasetFactory {
 			return StringDataset.createFromObject(obj);
 		case Dataset.OBJECT:
 			return ObjectDataset.createFromObject(obj);
+		default:
+			return null;
+		}
+	}
+
+	private static Dataset createFromPrimitiveArray(final Object array, final int dtype) {
+		switch (dtype) {
+		case Dataset.BOOL:
+			return new BooleanDataset((boolean []) array);
+		case Dataset.INT8:
+			return new ByteDataset((byte []) array);
+		case Dataset.INT16:
+			return new ShortDataset((short []) array);
+		case Dataset.INT32:
+			return new IntegerDataset((int []) array, null);
+		case Dataset.INT64:
+			return new LongDataset((long []) array);
+		case Dataset.FLOAT32:
+			return new FloatDataset((float []) array);
+		case Dataset.FLOAT64:
+			return new DoubleDataset((double []) array);
+		case Dataset.STRING:
+			return new StringDataset((String []) array);
 		default:
 			return null;
 		}
