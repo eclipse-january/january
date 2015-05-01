@@ -664,7 +664,11 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		return dtype;
 	}
 
-	private static boolean isComponentSupported(Class<? extends Object> comp) {
+	/**
+	 * @param comp
+	 * @return true if supported
+	 */
+	public static boolean isComponentSupported(Class<? extends Object> comp) {
 		return comp.isPrimitive() || Number.class.isAssignableFrom(comp) || comp.equals(Boolean.class) || comp.equals(Complex.class) || comp.equals(String.class);
 	}
 
