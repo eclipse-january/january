@@ -626,7 +626,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	 * @return dataset type
 	 */
 	public static int getDTypeFromObject(Object obj) {
-		int dtype = BOOL;
+		int dtype = -1;
 	
 		if (obj == null) {
 			return dtype;
