@@ -160,33 +160,7 @@ public class DatasetFactory {
 	public static Dataset createFromObject(final Object obj, boolean isUnsigned) {
 		Dataset a = createFromObject(obj);
 		if (isUnsigned) {
-			switch (a.getDtype()) {
-			case Dataset.INT32:
-				a = new LongDataset(a);
-				DatasetUtils.unwrapUnsigned(a, 32);
-				break;
-			case Dataset.INT16:
-				a = new IntegerDataset(a);
-				DatasetUtils.unwrapUnsigned(a, 16);
-				break;
-			case Dataset.INT8:
-				a = new ShortDataset(a);
-				DatasetUtils.unwrapUnsigned(a, 8);
-				break;
-			case Dataset.ARRAYINT32:
-				a = new CompoundLongDataset(a);
-				DatasetUtils.unwrapUnsigned(a, 32);
-				break;
-			case Dataset.ARRAYINT16:
-				a = new CompoundIntegerDataset(a);
-				DatasetUtils.unwrapUnsigned(a, 16);
-				break;
-			case Dataset.ARRAYINT8:
-				a = new CompoundShortDataset(a);
-				DatasetUtils.unwrapUnsigned(a, 8);
-				break;
-			}
-
+			a = DatasetUtils.makeUnsigned(a);
 		}
 		return a;
 	}
@@ -198,6 +172,7 @@ public class DatasetFactory {
 	 *            can be a Java list, array or Number
 	 * @param dtype
 	 * @return dataset
+	 * @throws IllegalArgumentException if dataset type is not known
 	 */
 	public static Dataset createFromObject(final Object obj, final int dtype) {
 		if (obj instanceof Dataset)
@@ -247,7 +222,7 @@ public class DatasetFactory {
 		case Dataset.OBJECT:
 			return ObjectDataset.createFromObject(obj);
 		default:
-			return null;
+			throw new IllegalArgumentException("Dataset type is not known");
 		}
 	}
 
