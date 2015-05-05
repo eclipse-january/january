@@ -1837,7 +1837,11 @@ public class Stats {
 		
 		//Concatenate additional set of variables with main set
 		if (b != null) {
-			vars = DatasetUtils.concatenate(new Dataset[]{vars, b}, axis);
+			Dataset extraVars = new DoubleDataset(b);
+			if (b.getRank() == 1) {
+				extraVars.setShape(1, a.getShape()[0]);
+			}
+			vars = DatasetUtils.concatenate(new Dataset[]{vars, extraVars}, axis);
 		}
 		
 		//Calculate deviations & covariance matrix
