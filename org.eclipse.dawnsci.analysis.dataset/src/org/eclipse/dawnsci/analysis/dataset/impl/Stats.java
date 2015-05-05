@@ -1818,8 +1818,8 @@ public class Stats {
 	public static Dataset covariance (final Dataset a, final Dataset b, 
 			Boolean rowvar, Boolean bias, Integer ddof) {
 		
-		//TODO Add some handling of the dataset type.
-		Dataset vars = new DoubleDataset(a);
+		//Create a working copy of the dataset & check its rank.
+		Dataset vars = a.clone();
 		if (a.getRank() == 1) {
 			vars.setShape(1, a.getShape()[0]);
 		}
@@ -1855,7 +1855,8 @@ public class Stats {
 		
 		//Concatenate additional set of variables with main set
 		if (b != null) {
-			Dataset extraVars = new DoubleDataset(b);
+			//Create a working copy of the dataset & check its rank.
+			Dataset extraVars = b.clone();
 			if (b.getRank() == 1) {
 				extraVars.setShape(1, a.getShape()[0]);
 			}
