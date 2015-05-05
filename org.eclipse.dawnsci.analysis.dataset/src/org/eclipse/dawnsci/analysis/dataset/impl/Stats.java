@@ -1824,10 +1824,11 @@ public class Stats {
 		
 		//Set the reduced degrees of freedom & normalisation factor
 		if (ddof == null) {
-			if (bias == false)
+			if (bias == false) {
 				ddof = 1;
-		} else {
-			ddof = 0;
+			} else {
+				ddof = 0;
+			}
 		}
 		double norm_fact = nr - ddof;
 		if (norm_fact <= 0.) {
