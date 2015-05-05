@@ -1841,7 +1841,9 @@ public class Stats {
 		}
 		
 		//Calculate deviations & covariance matrix
-		vars.isubtract(vars.mean(false, 1-axis));
+		Dataset varsMean = vars.mean(false, 1-axis);
+		varsMean.setShape(vars.getShape()[0], 1);
+		vars.isubtract(varsMean);
 		Dataset cov;
 		if (rowvar) {
 			cov = Maths.divide(LinearAlgebra.dotProduct(vars, Maths.conjugate(vars.transpose())), norm_fact).squeeze();
