@@ -1842,7 +1842,10 @@ public class Stats {
 		
 		//Calculate deviations & covariance matrix
 		Dataset varsMean = vars.mean(false, 1-axis);
-		varsMean.setShape(vars.getShape()[0], 1);
+		//-vars & varsMean need same shape (this is a hack!)
+		int[] meanShape = vars.getShape();
+		meanShape[1-axis] = 1;
+		varsMean.setShape(meanShape);
 		vars.isubtract(varsMean);
 		Dataset cov;
 		if (rowvar) {
