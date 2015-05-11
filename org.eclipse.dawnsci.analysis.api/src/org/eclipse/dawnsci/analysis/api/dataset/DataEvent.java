@@ -16,6 +16,16 @@ import java.util.EventObject;
  * For instance if an image represents a live stream.
  */
 public class DataEvent extends EventObject {
+	
+	private int[] shape;
+
+	public int[] getShape() {
+		return shape;
+	}
+
+	public void setShape(int[] shape) {
+		this.shape = shape;
+	}
 
 	/**
 	 * Creates an event to notify that this data has changed.
