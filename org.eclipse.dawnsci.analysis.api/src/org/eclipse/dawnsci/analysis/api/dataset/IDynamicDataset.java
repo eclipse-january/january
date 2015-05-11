@@ -18,15 +18,6 @@ package org.eclipse.dawnsci.analysis.api.dataset;
  *  
  */
 public interface IDynamicDataset {
-
-	/**
-	 * Internal use only. When the dataset changes, the internal API may update the 
-	 * underlying data which the dataset is linked to.
-	 * 
-	 * @param newData
-	 */
-	public void setData(IDataset newData);
-
 	
 	/**
 	 * Add a listener which will be fired when aspects of the data change for

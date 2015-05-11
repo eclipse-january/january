@@ -36,8 +36,8 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	protected int[]     oShape; // original shape
 	protected long      size;   // number of items
-	private int         dtype;
-	private int         isize; // number of elements per item
+	protected int       dtype;
+	protected int       isize; // number of elements per item
 
 	protected ILazyLoader loader;
 	protected LazyDataset base = null; // used for transpose
