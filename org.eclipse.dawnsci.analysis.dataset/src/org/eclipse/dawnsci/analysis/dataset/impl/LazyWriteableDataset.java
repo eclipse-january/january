@@ -45,11 +45,11 @@ public class LazyWriteableDataset extends LazyDataset implements ILazyWriteableD
 
 		// check shape for expandable dimensions
 		for (int i = 0; i < shape.length; i++) {
-			if (shape[i] == UNLIMITED) {
-				shape[i] = 0;
+			if (this.shape[i] == UNLIMITED) {
+				this.shape[i] = 0;
 			}
 		}
-		size = AbstractDataset.calcLongSize(shape);
+		size = AbstractDataset.calcLongSize(this.shape);
 	}
 
 	/**
