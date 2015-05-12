@@ -60,8 +60,8 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	 */
 	public LazyDataset(String name, int dtype, int elements, int[] shape, ILazyLoader loader) {
 		this.name = name;
-		this.shape = shape;
-		this.oShape = shape;
+		this.shape = shape.clone();
+		this.oShape = this.shape;
 		this.loader = loader;
 		this.dtype = dtype;
 		this.isize = elements;
