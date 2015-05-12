@@ -18,4 +18,42 @@ package org.eclipse.dawnsci.analysis.api.dataset;
  */
 public interface IRemoteDataset extends ILazyDataset, IDynamicDataset {
 
+	/**
+	 * DataServer path, a local path on the server used to locate the remote dataset.
+	 * @return the file path to the data in the file system of the remote machine
+	 */
+	public String getPath();
+	
+	/**
+	 * DataServer path, a local path on the server used to locate the remote dataset.
+	 * @param path to the data in the file system of the remote machine
+	 */
+	public void setPath(String path);
+
+	/**
+	 * The data set location/name in the file
+	 * @return Data set 
+	 */
+	public String getDataset();
+	
+	/**
+	 * The data set location/name in the file
+	 * @param dataset
+	 */
+	public void setDataset(String dataset);
+
+	/**
+	 * Cannot will connect with the DataServer to start listening
+	 * to any updates to the file should it be written in the remote file system.
+	 * When connect it called, the remote file must exist and the dataset properties
+	 * are read. These properties must not change in the file while you are connected.
+	 * For instance if the file is ints when you connect, it must not change data class.
+	 */
+	public void connect() throws Exception;
+	
+	/**
+	 * Stops listening to the dataset changing and disconnects from the server.
+	 * A remote dataset may be connected and disconnected multiple times.
+	 */
+	public void disconnect() throws Exception;
 }
