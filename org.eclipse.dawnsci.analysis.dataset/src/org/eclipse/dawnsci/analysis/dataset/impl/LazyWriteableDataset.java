@@ -42,6 +42,14 @@ public class LazyWriteableDataset extends LazyDataset implements ILazyWriteableD
 		this.chunks = chunks == null ? null : chunks.clone();
 		this.saver = saver;
 		this.loader = saver;
+
+		// check shape for expandable dimensions
+		for (int i = 0; i < shape.length; i++) {
+			if (shape[i] == UNLIMITED) {
+				shape[i] = 0;
+			}
+		}
+		size = AbstractDataset.calcLongSize(shape);
 	}
 
 	/**
@@ -174,6 +182,7 @@ public class LazyWriteableDataset extends LazyDataset implements ILazyWriteableD
 		} else {
 			saver.setSlice(monitor, data, nslice);
 			oShape = nslice.getSourceShape();
+			shape = slice.getSourceShape();
 		}
 	}
 
