@@ -26,6 +26,10 @@ public interface IRemoteDataset extends ILazyDataset, IDynamicDataset {
 	
 	/**
 	 * DataServer path, a local path on the server used to locate the remote dataset.
+	 * This path may also be a directory where the data collection will happen. In this
+	 * case when the first file is written, the dataset must be made up of files with the
+	 * same extension.
+	 * 
 	 * @param path to the data in the file system of the remote machine
 	 */
 	public void setPath(String path);
