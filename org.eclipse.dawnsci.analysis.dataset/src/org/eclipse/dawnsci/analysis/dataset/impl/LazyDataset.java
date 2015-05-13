@@ -208,12 +208,12 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	@Override
 	public void setShape(int... shape) {
-		setShapeInternal(shape);
+		setShapeInternal(false, shape);
 	}
 
 	@Override
 	public LazyDataset squeezeEnds() {
-		setShapeInternal(AbstractDataset.squeezeShape(shape, true));
+		setShapeInternal(false, AbstractDataset.squeezeShape(shape, true));
 		return this;
 	}
 
@@ -266,10 +266,21 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 		return getSliceView(new SliceND(shape, slice));
 	}
 
-	private void setShapeInternal(int... nShape) {
+	/**
+	 * 
+	 * @param newSize - Used by remote dataset to reshape the data shape when the remote data changes.
+	 * @param nShape
+	 */
+	protected void setShapeInternal(boolean newSize, int... nShape) {
+		
 		long nsize = AbstractDataset.calcLongSize(nShape);
-		if (nsize != size) {
-			throw new IllegalArgumentException("Size of new shape is not equal to current size");
+		if (newSize) {
+			size = nsize;
+			shape = nShape;
+		} else {
+			if (nsize != size) {
+				throw new IllegalArgumentException("Size of new shape is not equal to current size");
+			}
 		}
 		if (nsize == 1) {
 			shape = nShape.clone();
