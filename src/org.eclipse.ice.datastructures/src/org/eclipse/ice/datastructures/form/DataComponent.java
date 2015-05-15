@@ -28,14 +28,12 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * <!-- begin-UML-doc -->
  * <p>
  * The DataComponent class is a container for Entries and behaves as a Component
  * from the UpdateableComposite package. The class is used contain a set of
  * Entries that are related to each other in some way and to accept updates from
  * dispatched from the Registry.
  * </p>
- * <!-- end-UML-doc -->
  * 
  * @author Jay Jay Billings
  */
@@ -43,34 +41,27 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class DataComponent extends ICEObject implements Component,
 		IUpdateableListener {
 	/**
-	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
 	 */
 	@XmlElement(name = "Entry")
 	private ArrayList<Entry> entries;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The Constructor
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 */
 	public DataComponent() {
-		// begin-user-code
 
 		// Setup the list of Entries
 		entries = new ArrayList<Entry>();
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation adds an entry to the DataComponent.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param newEntry
 	 *            <p>
@@ -78,7 +69,6 @@ public class DataComponent extends ICEObject implements Component,
 	 *            </p>
 	 */
 	public void addEntry(Entry newEntry) {
-		// begin-user-code
 
 		// Add the Entry if it is not null
 		if (newEntry != null) {
@@ -89,17 +79,14 @@ public class DataComponent extends ICEObject implements Component,
 			notifyListeners();
 		}
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation adds an Entry to the DataComponent and specifies the name
 	 * of another Entry on which it is dependent. It notifies listeners that the
 	 * DataComponent has been updated.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param newEntry
 	 *            <p>
@@ -110,27 +97,20 @@ public class DataComponent extends ICEObject implements Component,
 	 *            The list of Entry names for those Entries on which the new
 	 *            Entry is dependent.
 	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void addEntry(Entry newEntry, String... parentNames) {
-		// begin-user-code
 
 		// FIXME - Do we need this?
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation clears all entries that are currently stored in the Form.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 */
 	public void clearEntries() {
-		// begin-user-code
 
 		// Clear the list of Entries if it is not already empty
 		if (!entries.isEmpty()) {
@@ -138,16 +118,13 @@ public class DataComponent extends ICEObject implements Component,
 			notifyListeners();
 		}
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation deletes the Entry with name equal to entryName from the
 	 * Entries in the Form.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param entryName
 	 *            <p>
@@ -155,7 +132,6 @@ public class DataComponent extends ICEObject implements Component,
 	 *            </p>
 	 */
 	public void deleteEntry(String entryName) {
-		// begin-user-code
 
 		// FIXME - Entry names are not necessarily unique!
 
@@ -177,15 +153,12 @@ public class DataComponent extends ICEObject implements Component,
 		}
 
 		return;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation retrieves the Entry with name entryName from the Form.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param entryName
 	 *            <p>
@@ -196,7 +169,6 @@ public class DataComponent extends ICEObject implements Component,
 	 *         </p>
 	 */
 	public Entry retrieveEntry(String entryName) {
-		// begin-user-code
 
 		for (Entry j : entries) {
 			if (j.getName().equals(entryName)) {
@@ -205,17 +177,14 @@ public class DataComponent extends ICEObject implements Component,
 		}
 
 		return null;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation retrieves those Entries in the Form that are currently
 	 * ready to be answered by the Eclipse User. This list can change with time
 	 * as more information is provided to the Form and Item.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The list of Entries that are ready to be addressed. The Entries
@@ -225,7 +194,6 @@ public class DataComponent extends ICEObject implements Component,
 	 *         </p>
 	 */
 	public ArrayList<Entry> retrieveReadyEntries() {
-		// begin-user-code
 
 		// Local Declarations
 		ArrayList<Entry> readyEntryList = new ArrayList<Entry>();
@@ -237,35 +205,28 @@ public class DataComponent extends ICEObject implements Component,
 		}
 
 		return readyEntryList;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation will return all of the Entries in the Form regardless of
 	 * their dependency or preparation status.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The list of all Entries stored in the Form.
 	 *         </p>
 	 */
 	public ArrayList<Entry> retrieveAllEntries() {
-		// begin-user-code
 		return entries;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation determines whether a Form contains an Entry with the name
 	 * entryName. It returns True if the Entry is in the Form and False if it is
 	 * not in the Form.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param entryName
 	 *            <p>
@@ -278,7 +239,6 @@ public class DataComponent extends ICEObject implements Component,
 	 *         </p>
 	 */
 	public boolean contains(String entryName) {
-		// begin-user-code
 
 		for (Entry i : entries) {
 			if (i.getName().equals(entryName)) {
@@ -287,17 +247,14 @@ public class DataComponent extends ICEObject implements Component,
 		}
 
 		return false;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation is used to check equality between the DataComponent and
 	 * another DataComponent. It returns true if the DataComponents are equal
 	 * and false if they are not.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param otherDataComponent
 	 *            <p>
@@ -307,11 +264,8 @@ public class DataComponent extends ICEObject implements Component,
 	 * @return <p>
 	 *         True if the DataComponents are equal, false otherwise.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public boolean equals(Object otherDataComponent) {
-		// begin-user-code
 
 		// Check if they are the same reference in memory
 		if (this == otherDataComponent) {
@@ -341,24 +295,18 @@ public class DataComponent extends ICEObject implements Component,
 		// If made it here, these DataComponents are Equal
 		// Return true
 		return true;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns the hashcode value of the DataComponent.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The hashcode.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public int hashCode() {
-		// begin-user-code
 
 		// Local Declaration
 		int hash = 9;
@@ -369,27 +317,21 @@ public class DataComponent extends ICEObject implements Component,
 			hash = 31 * hash + entry.hashCode();
 		}
 		return hash;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation performs a deep copy of the attributes of another
 	 * DataComponent into the current DataComponent.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param otherDataComponent
 	 *            <p>
 	 *            The other DataComponent from which information should be
 	 *            copied.
 	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void copy(DataComponent otherDataComponent) {
-		// begin-user-code
 
 		// Return if otherDataComponenet is null
 		if (otherDataComponent != null) {
@@ -408,31 +350,24 @@ public class DataComponent extends ICEObject implements Component,
 			notifyListeners();
 		}
 		return;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation provides a deep copy of the DataComponent.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The deep-copy clone of this DataComponent.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public Object clone() {
-		// begin-user-code
 
 		// Create a new instance, copy contents and return it
 		DataComponent dataComponent = new DataComponent();
 		dataComponent.copy(this);
 
 		return dataComponent;
-		// end-user-code
 	}
 
 	/**
@@ -443,7 +378,6 @@ public class DataComponent extends ICEObject implements Component,
 	 */
 	@Override
 	public void update(String updatedKey, String newValue) {
-		// begin-user-code
 
 		for (Entry i : entries) {
 			i.update(updatedKey, newValue);
@@ -451,38 +385,29 @@ public class DataComponent extends ICEObject implements Component,
 
 		return;
 
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see Component#accept(IComponentVisitor visitor)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void accept(IComponentVisitor visitor) {
-		// begin-user-code
 
 		// Reveal our type to the visitor
 		visitor.visit(this);
 
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see IUpdateableListener#update(IUpdateable component)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void update(IUpdateable component) {
-		// begin-user-code
 
 		notifyListeners();
 
-		// end-user-code
 	}
 
 }

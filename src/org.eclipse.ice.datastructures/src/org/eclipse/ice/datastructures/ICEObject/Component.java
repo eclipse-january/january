@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
 
 /**
- * <!-- begin-UML-doc -->
  * <p>
  * The Component interface is the base for all shared operations in the
  * UpdateableComposite package's classes. These operations must be implemented
@@ -25,36 +24,26 @@ import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
  * also observable and realizations of IComponentListener can be registered with
  * Components to receive updates when the state of the Component changes.
  * </p>
- * <!-- end-UML-doc -->
  * 
  * @author Jay Jay Billings
- * @generated 
- *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
 public interface Component extends IUpdateable {
 	/**
-	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	ArrayList<IComponentVisitor> iComponentVisitor = null;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation directs the Component to call back to an IComponentVisitor
 	 * so that the visitor can perform its required actions for the exact type
 	 * of the Component.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param visitor
 	 *            <p>
 	 *            The visitor
 	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void accept(IComponentVisitor visitor);
 }

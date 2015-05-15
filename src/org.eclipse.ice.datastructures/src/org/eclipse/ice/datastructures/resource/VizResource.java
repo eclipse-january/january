@@ -234,7 +234,6 @@ public class VizResource extends ICEResource {
 	 * @return The hashcode for the VizResource.
 	 */
 	public int hashCode() {
-		// begin-user-code
 
 		// Local Declaration
 		int hash = 11;
@@ -244,7 +243,6 @@ public class VizResource extends ICEResource {
 
 		return hash;
 
-		// end-user-code
 	}
 
 	/**

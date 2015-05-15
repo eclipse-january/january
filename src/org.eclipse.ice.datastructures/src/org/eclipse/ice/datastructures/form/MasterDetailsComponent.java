@@ -32,7 +32,6 @@ import javax.xml.bind.annotation.XmlTransient;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
 
 /**
- * <!-- begin-UML-doc -->
  * <p>
  * This class provides a data structure that orders key values and
  * DataComponents in a way that is consistent with the Master/Details pattern.
@@ -94,115 +93,83 @@ import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
  * they are persisted and that storing them in two separate arrays can cause
  * book keeping errors (which is a common procedural anti-pattern).
  * </p>
- * <!-- end-UML-doc -->
  * 
  * @author s4h
- * @generated 
- *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
 @XmlRootElement(name = "MasterDetailsComponent")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class MasterDetailsComponent extends ICEObject implements Component {
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The list of Master/Details pairs that have been created in the component.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlElement(name = "MasterDetailsPairs")
 	private ArrayList<MasterDetailsPair> masterDetailsPairs;
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The list of strings that is used as a template for creating new master
 	 * instances. The default value of a new master is set to the first value in
 	 * this list and the masters that are created may have their values set to
 	 * any one of the values in this list.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlElement(name = "AllowedMasters")
 	private ArrayList<String> allowedMasters;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The list of masters and details that may be instantiated in this
 	 * component. Calling setTemplates() with separate lists will populate this
 	 * list and calling setTemplates() with a pair will reference that list.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlElement(name = "MasterDetailsTemplateList")
 	private ArrayList<MasterDetailsPair> masterDetailsTemplateList;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * An attribute that represents the total number of MasterDetailPairs added.
 	 * This counter will increment and reflect in the masterDetailsPairId. When
 	 * a Master is deleted, this counter will not decrement.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlAttribute
 	private Integer counter;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * A DataComponent that can be configured to contain global properties for
 	 * MasterDetailsPairs.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlElement(name = "GlobalsComponent")
 	private DataComponent globals;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * Represents the add and remove button for the MasterDetailsComponent's GUI
 	 * infrastructure. Defaults to true. If it is set to false, then the GUI
 	 * should disable the add and remove button and allow the internal
 	 * infrastructure handle the masters's overall size.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlAttribute()
 	private boolean toggleAddRemoveButton;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The constructor.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public MasterDetailsComponent() {
-		// begin-user-code
 
 		// Setup listeners, masters, template, and pairs.
 		this.listeners = new ArrayList<IUpdateableListener>();
@@ -214,17 +181,14 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 		// Set counter to One
 		this.counter = 1;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation sets the Master/Details template that is required for to
 	 * initialize the component. It may only be called once per
 	 * MasterDetailsComponent.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param masterTypeList
 	 *            <p>
@@ -239,12 +203,9 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 	 *            is the details block for the first master, the second for the
 	 *            second, and so on.
 	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void setTemplates(ArrayList<String> masterTypeList,
 			ArrayList<DataComponent> detailList) {
-		// begin-user-code
 		// Local declarations
 		MasterDetailsPair mDetailsP;
 
@@ -286,29 +247,23 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 		}
 
 		this.notifyListeners();
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation sets up the templates for the MasterDetailsComponent using
 	 * a list of MasterDetailsPairs. It is provided as an alternative to the
 	 * other setTemplates() operation for both brevity and better memory
 	 * management.<b></b>
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param pairs
 	 *            <p>
 	 *            The list of MasterDetailsPairs that should be used as the
 	 *            template for this component.
 	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void setTemplates(ArrayList<MasterDetailsPair> pairs) {
-		// begin-user-code
 		// Local declarations
 		MasterDetailsPair mDetailsP;
 
@@ -332,17 +287,14 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 		}
 
 		this.notifyListeners();
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns the details block (a DataComponent) associated
 	 * with the master who has the specified id. If there are two masters with
 	 * the same id in the component, it only returns the first.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param masterId
 	 *            <p>
@@ -351,11 +303,8 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 	 * @return <p>
 	 *         The details block for the master with the specified id.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public DataComponent getDetails(int masterId) {
-		// begin-user-code
 
 		// Return if the masterDetailsTemplateList is not set.
 		// Also check if the masterId < 0 || masterId > this.counter
@@ -375,27 +324,21 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 		// It was not found. Return
 		return null;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation adds a instantiates a new master. The value of the new
 	 * master is set to the first value in the masterTemplate list. It returns
 	 * the integer id that the MasterDetailsComponent assigns to that master and
 	 * the master may be retrieved later by calling getMaster().
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The id of the new master instance.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public int addMaster() {
-		// begin-user-code
 		// Local Declarations
 		MasterDetailsPair mDetailsP = null;
 
@@ -425,18 +368,15 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 
 		return this.counter - 1;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation deletes a master from the MasterDetailsComponent. It
 	 * returns true if the id is valid and it is able to delete the master and
 	 * its details and it returns false otherwise. Deleting a master will not
 	 * change the ids of the other masters.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param id
 	 *            <p>
@@ -445,11 +385,8 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 	 * @return <p>
 	 *         True if the master was deleted, false otherwise.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public boolean deleteMaster(int id) {
-		// begin-user-code
 		// Return if the masterDetailsTemplateList is null
 		if (this.masterDetailsTemplateList == null) {
 			return false;
@@ -473,15 +410,12 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 		// It was not found. Return
 		return false;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns the value of the master with the specified id.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param id
 	 *            <p>
@@ -490,11 +424,8 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 	 * @return <p>
 	 *         The value of the instance of the master with the given id.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public String getMasterValue(int id) {
-		// begin-user-code
 
 		// Return if the masterDetailsTemplateList is not set.
 		if (this.masterDetailsTemplateList.isEmpty()) {
@@ -516,18 +447,15 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 
 		// Nothing found, return null
 		return null;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation sets the value of an instance of a master with the
 	 * specified id. If the value is not one of the values in the list returned
 	 * from getAllowedMasterValues(), this operation returns false and does not
 	 * set the value.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param id
 	 *            <p>
@@ -540,11 +468,8 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 	 * @return <p>
 	 *         True if setting the value was successful, false otherwise.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public boolean setMasterInstanceValue(int id, String value) {
-		// begin-user-code
 
 		// Local Declarations
 		DataComponent dataComponent = null;
@@ -605,25 +530,19 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 
 		// Nothing found, return false
 		return false;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns the list of allowed values that may be assigned to
 	 * masters when setMasterInstanceValue() is called.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The list of values that may be assigned to masters.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public ArrayList<String> getAllowedMasterValues() {
-		// begin-user-code
 		ArrayList<String> tempString = new ArrayList<String>();
 
 		// If the allowedMasterValues are empty, return null
@@ -638,17 +557,14 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 
 		return tempString;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation is used to check equality between the
 	 * MasterDetailsComponent and another MasterDetailsComponent. It returns
 	 * true if the MasterDetailsComponents are equal and false if they are not.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param otherMasterDetailsComponent
 	 *            <p>
@@ -658,11 +574,8 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 	 * @return <p>
 	 *         True if the MasterDetailsComponents are equal, false otherwise.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public boolean equals(Object otherMasterDetailsComponent) {
-		// begin-user-code
 		boolean retVal = true;
 		// Check if they are the same reference in memory
 		if (this == otherMasterDetailsComponent) {
@@ -704,24 +617,18 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 						.equals(castedmDetailsP.masterDetailsTemplateList));
 
 		return retVal;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns the hashcode value of the MasterDetailsComponent.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The hashcode.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public int hashCode() {
-		// begin-user-code
 		// Local Declaration
 		int hash = 1;
 
@@ -746,27 +653,21 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 
 		return hash;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation performs a deep copy of the attributes of another
 	 * MasterDetailsComponent into the current MasterDetailsComponent.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param otherMasterDetailsComponent
 	 *            <p>
 	 *            The other MasterDetailsComponent from which information should
 	 *            be copied.
 	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void copy(MasterDetailsComponent otherMasterDetailsComponent) {
-		// begin-user-code
 		// Return if object is null
 		if (otherMasterDetailsComponent == null) {
 			return;
@@ -814,126 +715,93 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 		this.toggleAddRemoveButton = otherMasterDetailsComponent.toggleAddRemoveButton;
 
 		this.notifyListeners();
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation provides a deep copy of the MasterDetailsComponent.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The deep-copy clone of this MasterDetailsComponent.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public Object clone() {
-		// begin-user-code
 		// create a new instance of MasterDetailsComponent and copy contents
 		MasterDetailsComponent mDetailsP = new MasterDetailsComponent();
 		mDetailsP.copy(this);
 		return mDetailsP;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This private operation checks the list of MasterDetailsPairs to make sure
 	 * that for the value of the master the proper details DataComponent is set.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param id
 	 *            <p>
 	 *            The integer id of the MasterDetailsPair that should be
 	 *            checked.
 	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	private void rectifyDetailsBlock(int id) {
-		// begin-user-code
 		// TODO Auto-generated method stub
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * Returns the number of MasterDetailsPairs in masterDetailsPairs list.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         Number of masters.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public int numberOfMasters() {
-		// begin-user-code
 		return this.masterDetailsPairs.size();
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * An operation that gets the globals variable. Returns null if it has not
 	 * been set. This should be reviewed by clients if it is not null.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         A returned DataComponent globals value.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public DataComponent getGlobalsComponent() {
-		// begin-user-code
 		return this.globals;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * An operation that sets the globals attribute. If the global's operation
 	 * has been set and is passed null, globals is set to null.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param globals
 	 *            <p>
 	 *            The DataComponent global to be set.
 	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void setGlobalsComponent(DataComponent globals) {
-		// begin-user-code
 
 		// Passed all required critera, set as globals.
 		this.globals = globals;
 
 		// Notify the listeners
 		this.notifyListeners();
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * An operation that returns the master at index in the masterDetailsPairs
 	 * list. Returns null if it does not exist.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param index
 	 *            <p>
@@ -942,11 +810,8 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 	 * @return <p>
 	 *         A string value in masterDetailsPairs list.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public String getMasterAtIndex(int index) {
-		// begin-user-code
 
 		// If it is a proper index, return Master String
 		if (index < 0 || index > this.masterDetailsPairs.size()
@@ -956,16 +821,13 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 			return this.masterDetailsPairs.get(index).getMaster();
 		}
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * An operation that returns the details DataComponent at index in the
 	 * masterDetailsPairs list. Returns null if it does not exist.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param index
 	 *            <p>
@@ -974,11 +836,8 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 	 * @return <p>
 	 *         The returned DataComponent.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public DataComponent getDetailsAtIndex(int index) {
-		// begin-user-code
 		// If it is a proper index, return DataComponent details
 		if (index < 0 || index > this.masterDetailsPairs.size()
 				|| this.masterDetailsPairs.isEmpty()) {
@@ -986,17 +845,14 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 		} else {
 			return this.masterDetailsPairs.get(index).getDetails();
 		}
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * An operation that returns the unique masterDetailsPairId plus Master
 	 * String keyed on the unique id (masterDetailsPairId) in the list of
 	 * masterDetailsPairs. Returns null if it does not exist.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param id
 	 *            <p>
@@ -1005,11 +861,8 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 	 * @return <p>
 	 *         The unique master value, equal to 'id + " " + value'.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public String getUniqueMasterValue(int id) {
-		// begin-user-code
 		// If it is a proper index, return Master String
 		if (id < 0 || id > this.counter || this.masterDetailsPairs.isEmpty()) {
 			return null;
@@ -1026,17 +879,14 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 
 		// Nothing found, return null
 		return null;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * An operation that returns the unique masterDetailsPairId plus Master
 	 * String keyed on the index in the list of masterDetailsPairs. Returns null
 	 * if it does not exist.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param index
 	 *            <p>
@@ -1045,11 +895,8 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 	 * @return <p>
 	 *         The unique master value, equal to 'id + " " + value'.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public String getUniqueMasterValueAtIndex(int index) {
-		// begin-user-code
 		// If it is a proper index, return Master String
 		if (index < 0 || index > this.masterDetailsPairs.size()
 				|| this.masterDetailsPairs.isEmpty()) {
@@ -1059,16 +906,13 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 			return this.masterDetailsPairs.get(index).getMasterDetailsPairId()
 					+ " " + this.masterDetailsPairs.get(index).getMaster();
 		}
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * An operation that deletes a master at an index. Returns true if the
 	 * operation was successful. False otherwise.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param index
 	 *            <p>
@@ -1077,11 +921,8 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 	 * @return <p>
 	 *         Status of deletion.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public boolean deleteMasterAtIndex(int index) {
-		// begin-user-code
 		// If it is a proper index, return DataComponent details
 		if (index < 0 || index > this.masterDetailsPairs.size()
 				|| this.masterDetailsPairs.isEmpty()) {
@@ -1093,79 +934,58 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 
 			return true;
 		}
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * Returns true if the MasterDetailsComponent's buttons should be enabled.
 	 * If false, the buttons should be disabled.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The status
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public boolean canAddRemoveButton() {
-		// begin-user-code
 
 		return this.toggleAddRemoveButton;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * Sets the toggle for the add and remove button.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param toggle
 	 *            <p>
 	 *            Toggle for the add or remove button.
 	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void toggleAddRemoveButton(boolean toggle) {
-		// begin-user-code
 
 		this.toggleAddRemoveButton = toggle;
 
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see IUpdateable#update(String updatedKey, String newValue)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void update(String updatedKey, String newValue) {
-		// begin-user-code
 		// Not used at this time. Does nothing.
 
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see Component#accept(IComponentVisitor visitor)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void accept(IComponentVisitor visitor) {
-		// begin-user-code
 		// Reveal our type to the visitor
 		visitor.visit(this);
 
-		// end-user-code
 	}
 }

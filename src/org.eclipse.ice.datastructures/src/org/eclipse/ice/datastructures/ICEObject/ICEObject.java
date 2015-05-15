@@ -23,7 +23,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * <!-- begin-UML-doc -->
  * <p>
  * ICEObject is the base class for all common, shared data structures in ICE
  * with the notable exception of the ICEList. ICEObjects are uniquely
@@ -50,86 +49,58 @@ import javax.xml.bind.annotation.XmlTransient;
  * unregistering and notifications. Subclasses are expected to override
  * update().
  * </p>
- * <!-- end-UML-doc -->
  * 
  * @author Jay Jay Billings
- * @generated 
- *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
 @XmlRootElement(name = "ICEObject")
 public class ICEObject implements IUpdateable {
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The unique identification number of the ICEObject.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	protected int uniqueId;
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The name of the ICEObject.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	protected String objectName;
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The description of the ICEObject. This description should be different
 	 * than the name of the ICEObject and should contain information that would
 	 * be useful to a human user.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	protected String objectDescription;
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The ICEJAXBHandler used to marshal ICEObjects to and from XML.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	protected ICEJAXBHandler jaxbManipulator;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The set of IUpdateableListeners observing the ICEObject.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlTransient
 	protected ArrayList<IUpdateableListener> listeners;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The Constructor
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public ICEObject() {
-		// begin-user-code
 
 		// Set it all up
 		uniqueId = 1;
@@ -138,18 +109,14 @@ public class ICEObject implements IUpdateable {
 		listeners = new ArrayList<IUpdateableListener>();
 
 		return;
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see Identifiable#setId(int id)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void setId(int id) {
-		// begin-user-code
 
 		if (id >= 0) {
 			uniqueId = id;
@@ -157,32 +124,24 @@ public class ICEObject implements IUpdateable {
 			notifyListeners();
 		}
 
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see Identifiable#getId()
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlAttribute()
 	public int getId() {
-		// begin-user-code
 		return uniqueId;
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see Identifiable#setName(String name)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void setName(String name) {
-		// begin-user-code
 
 		if (name != null) {
 			objectName = name;
@@ -190,32 +149,24 @@ public class ICEObject implements IUpdateable {
 			notifyListeners();
 		}
 
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see Identifiable#getName()
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlAttribute()
 	public String getName() {
-		// begin-user-code
 		return objectName;
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see Identifiable#setDescription(String description)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void setDescription(String description) {
-		// begin-user-code
 
 		if (description != null) {
 			objectDescription = description;
@@ -223,21 +174,16 @@ public class ICEObject implements IUpdateable {
 			notifyListeners();
 		}
 
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see Identifiable#getDescription()
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlAttribute()
 	public String getDescription() {
-		// begin-user-code
 		return objectDescription;
-		// end-user-code
 	}
 
 	/**
@@ -248,7 +194,6 @@ public class ICEObject implements IUpdateable {
 	 *            copied.
 	 */
 	public void copy(ICEObject entity) {
-		// begin-user-code
 
 		// Return if null
 		if (entity == null) {
@@ -259,22 +204,16 @@ public class ICEObject implements IUpdateable {
 		this.objectName = entity.objectName;
 		this.uniqueId = entity.uniqueId;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This protected operation notifies the listeners of the ICEObject that its
 	 * state has changed.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	protected void notifyListeners() {
-		// begin-user-code
 
 		// Only process the update if there are listeners
 		if (listeners != null && !listeners.isEmpty()) {
@@ -295,25 +234,19 @@ public class ICEObject implements IUpdateable {
 		}
 
 		return;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns a clone of the ICEObject using a deep copy.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The new clone.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Override
 	public Object clone() {
-		// begin-user-code
 
 		// Create a new instance of the current object
 		ICEObject newObject = new ICEObject();
@@ -324,18 +257,14 @@ public class ICEObject implements IUpdateable {
 		// return object
 		return newObject;
 
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see Identifiable#equals(Object otherObject)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public boolean equals(Object otherObject) {
-		// begin-user-code
 
 		// Local Declarations
 		boolean retVal = false;
@@ -359,18 +288,14 @@ public class ICEObject implements IUpdateable {
 		}
 
 		return retVal;
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see Identifiable#hashCode()
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public int hashCode() {
-		// begin-user-code
 
 		// Local Declaration
 		int hash = 11;
@@ -385,52 +310,40 @@ public class ICEObject implements IUpdateable {
 		// Return the computed hash code
 		return hash;
 
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see IUpdateable#update(String updatedKey, String newValue)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void update(String updatedKey, String newValue) {
-		// begin-user-code
 
 		// Nothing TODO. Subclasses must override this operation for tailored
 		// behavior.
 
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see IUpdateable#register(IUpdateableListener listener)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void register(IUpdateableListener listener) {
-		// begin-user-code
 
 		// Register the listener if it is not null
 		if (listener != null) {
 			listeners.add(listener);
 		}
 		return;
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see IUpdateable#unregister(IUpdateableListener listener)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void unregister(IUpdateableListener listener) {
-		// begin-user-code
 
 		// Unregister the listener if it is not null and in the list
 		if (listener != null && listeners.contains(listener)) {
@@ -438,6 +351,5 @@ public class ICEObject implements IUpdateable {
 		}
 
 		return;
-		// end-user-code
 	}
 }

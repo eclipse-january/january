@@ -305,7 +305,6 @@ public class EMFComponent extends ICEObject implements Component {
 	 * 
 	 */
 	public boolean equals(Object otherEMFComponent) {
-		// begin-user-code
 
 		// Check if they are the same reference in memory
 		if (this == otherEMFComponent) {
@@ -333,7 +332,6 @@ public class EMFComponent extends ICEObject implements Component {
 		// If made it here, these EMFComponents are Equal
 		// Return true
 		return true;
-		// end-user-code
 	}
 
 	/**
@@ -341,7 +339,6 @@ public class EMFComponent extends ICEObject implements Component {
 	 * 
 	 */
 	public int hashCode() {
-		// begin-user-code
 
 		// Local Declaration
 		int hash = 9;
@@ -351,7 +348,6 @@ public class EMFComponent extends ICEObject implements Component {
 		hash = 31 * hash + iceEMFTree.hashCode();
 
 		return hash;
-		// end-user-code
 	}
 
 	/**
@@ -361,7 +357,6 @@ public class EMFComponent extends ICEObject implements Component {
 	 * @param otherEMFComponent
 	 */
 	public void copy(EMFComponent otherEMFComponent) {
-		// begin-user-code
 
 		// Return if otherEMFComponenet is null
 		if (otherEMFComponent != null) {
@@ -377,7 +372,6 @@ public class EMFComponent extends ICEObject implements Component {
 			notifyListeners();
 		}
 		return;
-		// end-user-code
 	}
 
 	/**
@@ -385,14 +379,12 @@ public class EMFComponent extends ICEObject implements Component {
 	 * 
 	 */
 	public Object clone() {
-		// begin-user-code
 
 		// Create a new instance, copy contents and return it
 		EMFComponent emfComponent = new EMFComponent();
 		emfComponent.copy(this);
 
 		return emfComponent;
-		// end-user-code
 	}
 
 	@Override

@@ -301,7 +301,6 @@ public class AdaptiveTreeComposite extends TreeComposite {
 		super.copy(otherObject);
 
 		return;
-		// end-user-code
 	}
 
 	/**
@@ -373,11 +372,8 @@ public class AdaptiveTreeComposite extends TreeComposite {
 	 * (non-Javadoc)
 	 * 
 	 * @see Component#accept(IComponentVisitor visitor)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void accept(IComponentVisitor visitor) {
-		// begin-user-code
 
 		// Tell the visitor that this is a tree
 		if (visitor != null) {
@@ -385,6 +381,5 @@ public class AdaptiveTreeComposite extends TreeComposite {
 		}
 		return;
 
-		// end-user-code
 	}
 }

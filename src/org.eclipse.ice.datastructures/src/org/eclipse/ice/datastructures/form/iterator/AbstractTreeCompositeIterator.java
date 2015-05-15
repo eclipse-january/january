@@ -47,7 +47,6 @@ public abstract class AbstractTreeCompositeIterator implements
 	 *            iterator.
 	 */
 	public AbstractTreeCompositeIterator(TreeComposite root) {
-		// begin-user-code
 
 		// Set the root node of the tree.
 		if (root != null) {
@@ -63,7 +62,6 @@ public abstract class AbstractTreeCompositeIterator implements
 		}
 
 		return;
-		// end-user-code
 	}
 
 	/*
@@ -82,7 +80,6 @@ public abstract class AbstractTreeCompositeIterator implements
 	 * @see java.util.Iterator#next()
 	 */
 	public TreeComposite next() {
-		// begin-user-code
 
 		// Set the default return value.
 		TreeComposite next = null;
@@ -95,7 +92,6 @@ public abstract class AbstractTreeCompositeIterator implements
 		}
 
 		return next;
-		// end-user-code
 	}
 
 	/*
@@ -104,13 +100,11 @@ public abstract class AbstractTreeCompositeIterator implements
 	 * @see java.util.Iterator#remove()
 	 */
 	public void remove() {
-		// begin-user-code
 
 		// TODO We may or may not want to implement this.
 		throw new UnsupportedOperationException("TreeCompositeIterator error: "
 				+ "Removing elements is currently not supported.");
 
-		// end-user-code
 	}
 
 }

@@ -24,25 +24,19 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 /**
- * <!-- begin-UML-doc -->
  * <p>
  * This class is responsible for reading and writing JAXB-annotated classes into
  * and out of ICE.
  * </p>
- * <!-- end-UML-doc -->
  * 
  * @author Jay Jay Billings
- * @generated 
- *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
 public class ICEJAXBHandler {
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation reads an instance of a particular class type from the
 	 * input stream into a Java Object.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param objectClass
 	 *            <p>
@@ -59,12 +53,9 @@ public class ICEJAXBHandler {
 	 * @throws NullPointerException
 	 * @throws JAXBException
 	 * @throws IOException
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public Object read(ArrayList<Class> classList, InputStream inputStream)
 			throws NullPointerException, JAXBException, IOException {
-		// begin-user-code
 
 		// Initialize local variables
 		JAXBContext context;
@@ -89,18 +80,15 @@ public class ICEJAXBHandler {
 		// Return object
 		return dataFromFile;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation writes an instance of a particular class type from the
 	 * input stream into a Java Object. This operation requires both the Object
 	 * and the specific class type because some classes, such as local classes,
 	 * do return the appropriate class type from a call to "this.getClass()."
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param dataObject
 	 *            <p>
@@ -114,13 +102,10 @@ public class ICEJAXBHandler {
 	 * @throws NullPointerException
 	 * @throws JAXBException
 	 * @throws IOException
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void write(Object dataObject, ArrayList<Class> classList,
 			OutputStream outputStream) throws NullPointerException,
 			JAXBException, IOException {
-		// begin-user-code
 
 		JAXBContext jaxbContext = null;
 		Class[] classArray = {};
@@ -167,6 +152,5 @@ public class ICEJAXBHandler {
 		}
 
 		return;
-		// end-user-code
 	}
 }

@@ -38,32 +38,23 @@ import javax.xml.bind.JAXBException;
 import org.junit.Test;
 
 /**
- * <!-- begin-UML-doc -->
  * <p>
  * Tests the GeometryComponent class
  * </p>
- * <!-- end-UML-doc -->
  * 
  * @author Jay Jay Billings
- * @generated 
- *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
 public class GeometryComponentTester {
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * Checks whether a ComplexShape and a PrimitiveShape <span
 	 * style="font-size:16pt;"></span>can be added, returned, and removed from a
 	 * GeometryComponent
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkAddShapes() {
-		// begin-user-code
 
 		// Instantiate a GeometryComponent
 		GeometryComponent geometry = new GeometryComponent();
@@ -106,23 +97,17 @@ public class GeometryComponentTester {
 		geometry.setShapes(shapes);
 		assertEquals(1, geometry.getShapes().size());
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the shape to ensure that it can be correctly
 	 * visited by a realization of the IComponent interface.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkVisitation() {
-		// begin-user-code
 
 		// Instantiate TestVisitor
 		TestVisitor testVisitor = new TestVisitor();
@@ -136,41 +121,29 @@ public class GeometryComponentTester {
 		// Check that testVisitor was visited
 		assertTrue(testVisitor.wasVisited());
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the ability of the GeometryComponent to update its
 	 * Entries.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkUpdate() {
-		// begin-user-code
 		// Not implemented
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation tests the GeometryComponent to ensure that it can properly
 	 * dispatch notifications when it receives an update that changes its state.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkNotifications() {
-		// begin-user-code
 
 		// Create a new listener and add it to a GeometryComponent
 		GeometryComponent geometry = new GeometryComponent();
@@ -205,22 +178,17 @@ public class GeometryComponentTester {
 		assertTrue(listener.wasNotified());
 		listener.reset();
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the ability of the GeometryComponent to persist
 	 * itself to XML and to load itself from an XML input stream.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * @throws IOException 
 	 * @throws JAXBException 
 	 * @throws NullPointerException 
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkLoadingFromXML() throws NullPointerException, JAXBException, IOException {
@@ -257,19 +225,14 @@ public class GeometryComponentTester {
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the GeometryComponent to ensure that its equals()
 	 * and hashcode() operations work.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkEquality() {
-		// begin-user-code
 		// Create GeometryComponent to test
 		GeometryComponent component = new GeometryComponent();
 		GeometryComponent equalComponent = new GeometryComponent();
@@ -339,23 +302,17 @@ public class GeometryComponentTester {
 		// Assert that hashcodes from unequal objects are different
 		assertTrue(component.hashCode() != unEqualComponent.hashCode());
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation tests the construction of the GeometryComponent class and
 	 * the functionality inherited from ICEObject.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkCreation() {
-		// begin-user-code
 
 		// Create a new GeometryComponent
 		GeometryComponent geometry = new GeometryComponent();
@@ -364,23 +321,17 @@ public class GeometryComponentTester {
 		assertNotNull(geometry.getShapes());
 		assertTrue(geometry.getShapes().isEmpty());
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the GeometryComponent to ensure that its copy() and
 	 * clone() operations work as specified.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkCopying() {
-		// begin-user-code
 
 		GeometryComponent geometry = new GeometryComponent();
 		GeometryComponent cloneGeometry;
@@ -419,6 +370,5 @@ public class GeometryComponentTester {
 		// Check equality of contents
 		assertTrue(copyGeometry.equals(geometry));
 
-		// end-user-code
 	}
 }

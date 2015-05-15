@@ -36,31 +36,22 @@ import org.eclipse.ice.datastructures.form.mesh.Vertex;
 import org.junit.Test;
 
 /**
- * <!-- begin-UML-doc -->
  * <p>
  * Tests the MeshComponent class.
  * </p>
- * <!-- end-UML-doc -->
  * 
  * @author Jordan H. Deyton
- * @generated 
- *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
 public class MeshComponentTester {
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation tests the construction of the MeshComponent class and the
 	 * functionality inherited from ICEObject.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkCreation() {
-		// begin-user-code
 
 		// Create a MeshComponent to test.
 		MeshComponent component = new MeshComponent();
@@ -79,23 +70,17 @@ public class MeshComponentTester {
 		assertEquals(1, component.getNextVertexId());
 
 		return;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation verifies that shapes can be successfully added to and
 	 * removed from the MeshComponent.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkAddPolygons() {
-		// begin-user-code
 
 		/*- XXX The minus sign right after the asterisk on this line prevents
 		 * auto-formatting from messing up the ASCII art below!
@@ -498,24 +483,18 @@ public class MeshComponentTester {
 		// but vertex1 != vertex2), bad IDs.
 
 		return;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks MeshComponent to ensure that it can be correctly
 	 * visited by a realization of the IComponentVisitor and IMeshPartVisitor
 	 * interfaces.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkVisitation() {
-		// begin-user-code
 
 		// ---- Check visiting with an IComponentVisitor. ---- //
 		// Create a MeshComponent to test.
@@ -549,23 +528,17 @@ public class MeshComponentTester {
 		// -------------------------------------------------- //
 
 		return;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation tests the MeshComponent to ensure that it can properly
 	 * dispatch notifications when it receives an update that changes its state.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkNotifications() {
-		// begin-user-code
 
 		// Create a simple polygon to add the the component.
 		ArrayList<Vertex> vertices = new ArrayList<Vertex>();
@@ -630,26 +603,20 @@ public class MeshComponentTester {
 		assertTrue(listener1.wasNotified());
 
 		return;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the ability of the MeshComponent to persist itself
 	 * to XML and to load itself from an XML input stream.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * @throws IOException 
 	 * @throws JAXBException 
 	 * @throws NullPointerException 
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkLoadingFromXML() throws NullPointerException, JAXBException, IOException {
-		// begin-user-code
 
 		// Local Declarations
 		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
@@ -695,23 +662,17 @@ public class MeshComponentTester {
 		assertTrue(component.equals(loadedComponent));
 
 		return;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the MeshComponent to insure that its equals() and
 	 * hashCode() operations work.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkEquality() {
-		// begin-user-code
 
 		// Create a simple polygon to add the the component.
 		ArrayList<Vertex> vertices = new ArrayList<Vertex>();
@@ -776,23 +737,17 @@ public class MeshComponentTester {
 		assertFalse(object.hashCode() == unequalObject.hashCode());
 
 		return;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the MeshComponent to ensure that its copy() and
 	 * clone() operations work as specified.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkCopying() {
-		// begin-user-code
 
 		/*
 		 * 
@@ -910,6 +865,5 @@ public class MeshComponentTester {
 		assertEquals(4f, copy.getEdge(3).getLength(), 1e-7f);
 
 		return;
-		// end-user-code
 	}
 }

@@ -21,7 +21,6 @@ import com.jme3.export.Savable;
 import org.eclipse.ice.datastructures.form.geometry.IShape;
 
 /**
- * <!-- begin-UML-doc -->
  * <p>
  * Wrapper class for allowing an IShape to be stored in a JME3 Spatial as user
  * data
@@ -31,62 +30,43 @@ import org.eclipse.ice.datastructures.form.geometry.IShape;
  * ability to persist the IShape. This class exists solely to avoid IShape
  * implementing Savable.
  * </p>
- * <!-- end-UML-doc -->
  * 
  * @author abd
- * @generated 
- *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
 public class ShapeTransient implements Savable {
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The associated shape
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	private IShape shape;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * Associates a new ShapeTransient with the given IShape
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param shape
 	 *            <p>
 	 *            The associated shape
 	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public ShapeTransient(IShape shape) {
-		// begin-user-code
 		this.shape = shape;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * Returns the associated shape
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The associated shape
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public IShape getShape() {
-		// begin-user-code
 		return shape;
-		// end-user-code
 	}
 
 	/**

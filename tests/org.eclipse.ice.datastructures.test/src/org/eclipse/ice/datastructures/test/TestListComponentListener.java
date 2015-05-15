@@ -32,21 +32,16 @@ public class TestListComponentListener<T> implements ListEventListener<T> {
 	private final AtomicBoolean wasNotified = new AtomicBoolean(false);
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns the notification state of the listener.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         True if the listener has been notified of an update, false
 	 *         otherwise.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public boolean wasNotified() {
-		// begin-user-code
 
 		// Wait a couple of seconds so that the thread can work, but break early
 		// if the thread has finished.
@@ -64,26 +59,19 @@ public class TestListComponentListener<T> implements ListEventListener<T> {
 		}
 
 		return wasNotified.get();
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation resets the countdownlatch to 0.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void reset() {
-		// begin-user-code
 
 		wasNotified.set(false);
 
 		return;
-		// end-user-code
 	}
 
 	/*

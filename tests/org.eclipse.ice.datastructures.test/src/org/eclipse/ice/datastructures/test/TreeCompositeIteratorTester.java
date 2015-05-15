@@ -40,7 +40,6 @@ public class TreeCompositeIteratorTester {
 	 */
 	@Before
 	public void initializeTree() {
-		// begin-user-code
 
 		// Create a tree with a single node.
 		rootBase = new TreeComposite();
@@ -116,7 +115,6 @@ public class TreeCompositeIteratorTester {
 		c.setNextChild(d);
 
 		return;
-		// end-user-code
 	}
 
 	/**
@@ -125,7 +123,6 @@ public class TreeCompositeIteratorTester {
 	 */
 	@Test
 	public void checkPreOrderExceptions() {
-		// begin-user-code
 
 		TreeComposite root;
 		Iterator<TreeComposite> iterator;
@@ -177,7 +174,6 @@ public class TreeCompositeIteratorTester {
 		}
 
 		return;
-		// end-user-code
 	}
 
 	/**
@@ -185,7 +181,6 @@ public class TreeCompositeIteratorTester {
 	 */
 	@Test
 	public void checkPreOrderTraversal() {
-		// begin-user-code
 
 		// ---- Test with the base case tree. ---- //
 		// Initialize the actual output.
@@ -225,7 +220,6 @@ public class TreeCompositeIteratorTester {
 		// ---------------------------------------------- //
 
 		return;
-		// end-user-code
 	}
 
 	/**
@@ -234,7 +228,6 @@ public class TreeCompositeIteratorTester {
 	 */
 	@Test
 	public void checkPostOrderErrors() {
-		// begin-user-code
 
 		TreeComposite root;
 		Iterator<TreeComposite> iterator;
@@ -286,7 +279,6 @@ public class TreeCompositeIteratorTester {
 		}
 
 		return;
-		// end-user-code
 	}
 
 	/**
@@ -294,7 +286,6 @@ public class TreeCompositeIteratorTester {
 	 */
 	@Test
 	public void checkPostOrderTraversal() {
-		// begin-user-code
 
 		// ---- Test with the base case tree. ---- //
 		// Initialize the actual output.
@@ -334,7 +325,6 @@ public class TreeCompositeIteratorTester {
 		// ---------------------------------------------- //
 
 		return;
-		// end-user-code
 	}
 
 	/**
@@ -343,7 +333,6 @@ public class TreeCompositeIteratorTester {
 	 */
 	@Test
 	public void checkBreadthFirstErrors() {
-		// begin-user-code
 
 		TreeComposite root;
 		Iterator<TreeComposite> iterator;
@@ -395,7 +384,6 @@ public class TreeCompositeIteratorTester {
 		}
 
 		return;
-		// end-user-code
 	}
 
 	/**
@@ -403,7 +391,6 @@ public class TreeCompositeIteratorTester {
 	 */
 	@Test
 	public void checkBreadthFirstTraversal() {
-		// begin-user-code
 
 		// ---- Test with the base case tree. ---- //
 		// Initialize the actual output.
@@ -443,7 +430,6 @@ public class TreeCompositeIteratorTester {
 		// ---------------------------------------------- //
 
 		return;
-		// end-user-code
 	}
 
 }

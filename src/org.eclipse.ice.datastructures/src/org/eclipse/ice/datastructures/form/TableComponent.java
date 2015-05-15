@@ -39,7 +39,6 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
 
 /**
- * <!-- begin-UML-doc -->
  * <p>
  * The TableComponent class is a Component that contains a set of Entries that
  * are related to each other within a single row of a table and it can contain
@@ -58,51 +57,38 @@ import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
  * if a row is deleted it will result in the entire table being re-ordered to
  * keep the row numbers sequential.
  * </p>
- * <!-- end-UML-doc -->
  * 
  * @author Jay Jay Billings
- * @generated 
- *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
 @XmlRootElement(name = "TableComponent")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class TableComponent extends ICEObject implements Component {
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The java.util.HashTable that contains the rows. The key of the hashtable
 	 * is an integer that represents the row index in the table. The value is a
 	 * java.util.ArrayList that contains the set of Entries for that row. The
 	 * value for key = 0 is the Row Template.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 */
 	private Hashtable<Integer, ArrayList<Entry>> rowTable;
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * A list containing the names of the columns.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlElement(name = "ColumnNames")
 	private ArrayList<String> columnNames;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p >
 	 * The set of DataComponents that represents the rows of the table. The
 	 * index of the set represents the row index in the table. The DataComponent
 	 * at i = 0 is the Row Template.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlElement(name = "Row")
 	private ArrayList<DataComponent> rowComponents;
@@ -115,39 +101,28 @@ public class TableComponent extends ICEObject implements Component {
 	private ArrayList<Integer> selectedRows;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The constructor
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public TableComponent() {
-		// begin-user-code
 		columnNames = new ArrayList<String>();
 		rowComponents = new ArrayList<DataComponent>();
 		listeners = new ArrayList<IUpdateableListener>();
 		selectedRows = new ArrayList<Integer>();
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns the number of rows that are stored in the table.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The total number of rows in the table.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public int numberOfRows() {
-		// begin-user-code
 
 		// exclude columns row
 		if (rowComponents.size() <= 1) {
@@ -157,32 +132,24 @@ public class TableComponent extends ICEObject implements Component {
 			// are not considered rows.
 			return this.rowComponents.size() - 1;
 		}
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns the number of columns that are stored in the
 	 * table. This is exactly equal to the length of a single row since the
 	 * TableComponent is built off of a row template.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The number of columns.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public int numberOfColumns() {
-		// begin-user-code
 		return this.columnNames.size();
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation retrieves an individual row from the Table. The row is
 	 * returned as a collection of Entries that represent each element in the
@@ -190,7 +157,6 @@ public class TableComponent extends ICEObject implements Component {
 	 * of the values currently stored in the TableComponent. (This prevents the
 	 * rows from being re-ordered.)
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param index
 	 *            <p>
@@ -199,11 +165,8 @@ public class TableComponent extends ICEObject implements Component {
 	 * @return <p>
 	 *         The set of Entries that represent the row in the table.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public ArrayList<Entry> getRow(int index) {
-		// begin-user-code
 
 		// return null if index does not exist
 		// Index shift -> index 0 of rowComponents are the column tags and are
@@ -228,11 +191,9 @@ public class TableComponent extends ICEObject implements Component {
 		}
 
 		return rowArray;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation adds a row to the Table and returns the index of that row.
 	 * The new row may be retrieved and its Entries may be edited by calling
@@ -241,16 +202,12 @@ public class TableComponent extends ICEObject implements Component {
 	 * values. If the Row Template has not yet been set for the TableComponent,
 	 * this operation cannot add a row and it returns -1.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The index of the new row in the table.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public int addRow() {
-		// begin-user-code
 		// create a clone of template
 
 		// Return -1 if the template has not been set
@@ -284,17 +241,14 @@ public class TableComponent extends ICEObject implements Component {
 		// Index shift -> index 0 of rowComponents are the column tags and are
 		// not considered rows.
 		return rowComponents.size() - 2;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation will delete the row in the table with the specified index.
 	 * It will return true if it is success or false otherwise (like if it can
 	 * not find a row with that index).
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param index
 	 *            <p>
@@ -304,11 +258,8 @@ public class TableComponent extends ICEObject implements Component {
 	 *         True if the row was deleted and false if some problem was
 	 *         encountered, like an incorrect row id.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public boolean deleteRow(int index) {
-		// begin-user-code
 
 		// Return if the index is deleting a row that does not exist
 		// Index shift -> index 0 of rowComponents are the column tags and are
@@ -337,11 +288,9 @@ public class TableComponent extends ICEObject implements Component {
 		// return true
 		return true;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation sets the collection of Entries which should be used as the
 	 * template for this table. This template will be used to create new rows
@@ -349,18 +298,14 @@ public class TableComponent extends ICEObject implements Component {
 	 * The row template may only be set once per TableComponent: changing the
 	 * row template of a TableComponent can only be done by creating a new one.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param template
 	 *            <p>
 	 *            The set of Entries that represent the canonical row of this
 	 *            table.
 	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void setRowTemplate(ArrayList<Entry> template) {
-		// begin-user-code
 
 		// Local Declarations
 		int i = 0;
@@ -390,25 +335,19 @@ public class TableComponent extends ICEObject implements Component {
 		rowComponents.add(dataComponent);
 
 		this.notifyListeners();
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns the row template for this TableComponent.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The set of Entries that represent the canonical row of this
 	 *         table.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public ArrayList<Entry> getRowTemplate() {
-		// begin-user-code
 		// Local Declarations
 		int i = 0;
 
@@ -425,25 +364,19 @@ public class TableComponent extends ICEObject implements Component {
 		}
 
 		return rowTemplate;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns the set of integers that uniquely identify rows in
 	 * the table.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The set of ids or indices for the rows in the table.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public ArrayList<Integer> getRowIds() {
-		// begin-user-code
 		// create a new arraylist
 		ArrayList<Integer> rowIds = new ArrayList<Integer>();
 
@@ -460,24 +393,18 @@ public class TableComponent extends ICEObject implements Component {
 		}
 
 		return rowIds;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns the names of the table's columns.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The names of the columns.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public ArrayList<String> getColumnNames() {
-		// begin-user-code
 
 		// Create a new arraylist and copy it into a new array.
 		// This prevents runtime edits.
@@ -489,26 +416,20 @@ public class TableComponent extends ICEObject implements Component {
 		}
 
 		return rowArray;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation performs a deep copy of the attributes of another
 	 * TableComponent into the current TableComponent.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param otherTableComponent
 	 *            <p>
 	 *            The TableComponent from which information should be copied.
 	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void copy(TableComponent otherTableComponent) {
-		// begin-user-code
 		// Return if otherTableComponenet is null
 		if (otherTableComponent == null) {
 			return;
@@ -538,24 +459,18 @@ public class TableComponent extends ICEObject implements Component {
 		this.notifyListeners();
 
 		return;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation provides a deep copy of the TableComponent.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         A clone of the TableComponent.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public Object clone() {
-		// begin-user-code
 
 		// Create a new instance, copy contents, and return it
 
@@ -564,17 +479,14 @@ public class TableComponent extends ICEObject implements Component {
 		tableComponent.copy(this);
 		return tableComponent;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation is used to check equality between the TableComponent and
 	 * another TableComponent. It returns true if the TableComponents are equal
 	 * and false if they are not.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param otherTableComponent
 	 *            <p>
@@ -583,11 +495,8 @@ public class TableComponent extends ICEObject implements Component {
 	 * @return <p>
 	 *         True if the TableComponents are equal, false if not
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public boolean equals(TableComponent otherTableComponent) {
-		// begin-user-code
 		boolean retVal = true;
 		// Check if they are the same reference in memory
 		if (this == otherTableComponent) {
@@ -615,24 +524,18 @@ public class TableComponent extends ICEObject implements Component {
 				&& (this.selectedRows.equals(castedComponent.selectedRows));
 
 		return retVal;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns the hashcode value of the TableComponent.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The hashcode
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public int hashCode() {
-		// begin-user-code
 
 		// Local Declaration
 		int hash = 9;
@@ -646,48 +549,36 @@ public class TableComponent extends ICEObject implements Component {
 		hash *= selectedRows.hashCode();
 
 		return hash;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns an array of the row ids that have been marked as
 	 * selected in the table.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The set of rows in the table that have been marked as selected or
 	 *         null if none have been selected.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public ArrayList<Integer> getSelectedRows() {
-		// begin-user-code
 		return ((!selectedRows.isEmpty()) ? (ArrayList<Integer>) selectedRows
 				.clone() : null);
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation sets the selected rows in the table.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         An array of the rows in the table that should be marked as
 	 *         selected. If an id in this array is not also in the table then it
 	 *         is ignored and will not be returned in a call to getSelectedRows.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void setSelectedRows(ArrayList<Integer> rows) {
-		// begin-user-code
 
 		// Only store the array if it exists
 		if (rows != null) {
@@ -708,22 +599,17 @@ public class TableComponent extends ICEObject implements Component {
 		}
 
 		return;
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see Component#accept(IComponentVisitor visitor)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void accept(IComponentVisitor visitor) {
-		// begin-user-code
 		// Reveal our type to the visitor
 		visitor.visit(this);
 
-		// end-user-code
 	}
 
 }

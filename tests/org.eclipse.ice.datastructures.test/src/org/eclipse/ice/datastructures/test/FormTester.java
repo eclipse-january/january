@@ -36,50 +36,39 @@ import org.eclipse.ice.datastructures.jaxbclassprovider.ICEJAXBClassProvider;
 import org.eclipse.ice.datastructures.resource.ICEResource;
 
 /**
- * <!-- begin-UML-doc -->
  * <p>
  * The FormTester is responsible for testing the Form class.
  * </p>
- * <!-- end-UML-doc -->
  * 
  * @author Jay Jay Billings
  */
 public class FormTester {
 	/**
-	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
 	 */
 	private Form form;
 
 	/**
-	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
 	 * 
 	 */
 	private DataComponent dataComponent;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The TestComponentListener used to subscribe to and check notifications
 	 * from the Form.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	private TestComponentListener testComponentListener;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation tests the Form by calling the constructor and checking the
 	 * getters and setters for the operations inherited from ICEObject.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 */
 	@Test
 	public void checkCreation() {
-		// begin-user-code
 
 		form = new Form();
 
@@ -93,20 +82,16 @@ public class FormTester {
 		form.setDescription("First Form");
 		assertEquals("First Form", form.getDescription());
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation tests the Form class by insuring that parent Item IDs can
 	 * be set and retrieved without error.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 */
 	@Test
 	public void checkItemID() {
-		// begin-user-code
 		// Create the form
 		form = new Form();
 
@@ -115,20 +100,16 @@ public class FormTester {
 		// Check that the ID is properly set
 		assertEquals(3858, form.getItemID());
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the Form to insure that DataComponents can be
 	 * properly manipulated.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 */
 	@Test
 	public void checkDataComponents() {
-		// begin-user-code
 
 		// Local Declarations
 		int i = 0, numComps = 10;
@@ -170,24 +151,18 @@ public class FormTester {
 		form.removeComponent(2);
 		assertEquals(compList.size() - 1, form.getNumberOfComponents());
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation tests the Form class by registering a realization of
 	 * IComponentListener against it and making sure that it receives status
 	 * updates from the Form class.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkNotifications() {
-		// begin-user-code
 
 		// Setup the listener
 		testComponentListener = new TestComponentListener();
@@ -209,24 +184,18 @@ public class FormTester {
 
 		return;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This test insures that the list of Actions give to the Form on creation
 	 * is consistent. It also checks that getActionList() returns null for a
 	 * Form created with a null value for the list of Actions.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkActionList() {
-		// begin-user-code
 
 		// Local declarations
 		ArrayList<String> actionList = new ArrayList<String>();
@@ -251,23 +220,17 @@ public class FormTester {
 			assertEquals(actionList.get(i), form.getActionList().get(i));
 		}
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the Form by making sure that it can be marked as
 	 * ready or not ready.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkReadiness() {
-		// begin-user-code
 
 		// Create the Form
 		form = new Form();
@@ -283,23 +246,17 @@ public class FormTester {
 		form.markReady(false);
 		assertFalse(form.isReady());
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the Form to insure that its equals() operation
 	 * works.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkEquality() {
-		// begin-user-code
 
 		// Create Forms to check equals()
 		Form form = new Form();
@@ -428,23 +385,17 @@ public class FormTester {
 		form.setActionList(null);
 		assertFalse(form.equals(equalForm));
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the Form to ensure that its copy() and clone()
 	 * operations work as specified.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkCopying() {
-		// begin-user-code
 
 		/*
 		 * The following sets of operations will be used to test the
@@ -543,26 +494,20 @@ public class FormTester {
 		assertTrue(form.equals(copyForm));
 
 		return;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the ability of the Form to persist itself to XML
 	 * and to load itself from an XML input stream.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * @throws IOException 
 	 * @throws JAXBException 
 	 * @throws NullPointerException 
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkXMLPersistence() throws NullPointerException, JAXBException, IOException {
-		// begin-user-code
 
 		/*
 		 * The following sets of operations will be used to test the

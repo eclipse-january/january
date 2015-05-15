@@ -15,7 +15,6 @@ package org.eclipse.ice.datastructures.ICEObject;
 import java.util.ArrayList;
 
 /**
- * <!-- begin-UML-doc -->
  * <p>
  * The IUpdateable interface provides a single update operation that may be used
  * by implementers to receive an update based on a key-value pair. This is used
@@ -23,28 +22,20 @@ import java.util.ArrayList;
  * the Registry when values stored therein change. More generally it can be used
  * by any class within ICE for receiving or posting updates.
  * </p>
- * <!-- end-UML-doc -->
  * 
  * @author Jay Jay Billings
- * @generated 
- *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
 public interface IUpdateable extends Identifiable {
 	/**
-	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	ArrayList<IUpdateableListener> iComponentListener = null;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation notifies a class that has implemented IUpdateable that the
 	 * value associated with the particular key has been updated.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param updatedKey
 	 *            <p>
@@ -54,46 +45,36 @@ public interface IUpdateable extends Identifiable {
 	 *            <p>
 	 *            The updated value of the key.
 	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void update(String updatedKey, String newValue);
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation registers a listener that realizes the IUpdateableListener
 	 * interface with the IUpdateable so that it can receive notifications of
 	 * changes to the IUpdateable if they are published.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param listener
 	 *            <p>
 	 *            The new listener that should be notified when the the
 	 *            Component's state changes.
 	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void register(IUpdateableListener listener);
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation unregisters a listener that realizes the
 	 * IUpdateableListener interface with the IUpdateable so that it will no
 	 * longer receive notifications of changes to the IUpdateable if they are
 	 * published.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param listener
 	 *            <p>
 	 *            The listener that should no longer receive updates.
 	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void unregister(IUpdateableListener listener);
 }

@@ -30,32 +30,22 @@ import org.junit.Test;
 import org.junit.Ignore;
 
 /**
- * <!-- begin-UML-doc -->
  * <p>
  * The ICEJAXBHandlerTester is responsible for testing the checks the
  * ICEJAXBHandler to ensure that it can read and write to the streams
  * properly. It used the SimpleJAXBTestClass.
  * </p>
- * <!-- end-UML-doc -->
  * 
  * @author Jay Jay Billings
- * @generated 
- *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
 
 public class ICEJAXBHandlerTester {
 	/**
-	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	private SimpleJAXBTestClass simpleJAXBTestClass;
 	/**
-	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	private ICEJAXBHandler iCEJAXBManipulator;
 
@@ -65,41 +55,30 @@ public class ICEJAXBHandlerTester {
 	ArrayList<Class> classList = new ArrayList<Class>();
 	
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * An operation that sets up some of the tests. @Before Annotation used.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Before
 	public void setupTests() {
-		// begin-user-code
 
 		// Initialize the test class and ICEJAXBHandler
 		simpleJAXBTestClass = new SimpleJAXBTestClass();
 		iCEJAXBManipulator = new ICEJAXBHandler();
 		classList.add(SimpleJAXBTestClass.class);
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the ICEJAXBHandler to ensure that it can read
 	 * and write to the streams properly. It used the SimpleJAXBTestClass.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkXMLPersistence() {
-		// begin-user-code
 		/*
 		 * The following sets of operations will be used to test the
 		 * "read and write" portion of the ICE JAXBManipulator. It will
@@ -166,17 +145,14 @@ public class ICEJAXBHandlerTester {
 		// Check outputStream - convert to string and compare
 		String xmlFile2 = outputStream.toString();
 		assertEquals(xmlFile, xmlFile2); // Should be the same!
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This test checks the behavior ICEJAXBHandler.read() operation when a
 	 * null Class parameter is passed. The testing method should throw a
 	 * NullPointerException.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @throws NullPointerException
 	 * @throws IOException
@@ -185,7 +161,6 @@ public class ICEJAXBHandlerTester {
 	@Test(expected = java.lang.NullPointerException.class)
 	public void checkXMLPersistenceReadOperationWithClassAsNull()
 			throws NullPointerException, IOException, JAXBException {
-		// begin-user-code
 		// Local declarations
 		String xmlFile = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
 				+ "<SimpleJAXBTestClass int=\"0\"/>";
@@ -201,17 +176,14 @@ public class ICEJAXBHandlerTester {
 		data = iCEJAXBManipulator.read(null, inputStream); // Throws
 															// NullPointerException
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This test checks the behavior ICEJAXBHandler.read() operation when a
 	 * null inputStream parameter is passed. The testing method should throw a
 	 * NullPointerException.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @throws IOException
 	 * @throws JAXBException
@@ -220,22 +192,18 @@ public class ICEJAXBHandlerTester {
 	@Test(expected = java.lang.NullPointerException.class)
 	public void checkXMLPersistenceReadOperationWithInputStreamAsNull()
 			throws IOException, JAXBException, NullPointerException {
-		// begin-user-code
 		// Make sure that the read pointer throws a null pointer exception if
 		// the stream is null
 		iCEJAXBManipulator.read(classList, null);
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This test checks the behavior ICEJAXBHandler.write() operation when a
 	 * null Object parameter is passed. The testing method should throw a
 	 * NullPointerException.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @throws IOException
 	 * @throws JAXBException
@@ -244,24 +212,20 @@ public class ICEJAXBHandlerTester {
 	@Test(expected = java.lang.NullPointerException.class)
 	public void checkXMLPersistenceWriteOperationWithObjectAsNull()
 			throws IOException, JAXBException, NullPointerException {
-		// begin-user-code
 		// Initialize variables
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
 		// test for write - null args
 		iCEJAXBManipulator.write(null, classList, outputStream);
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This test checks the behavior ICEJAXBHandler.write() operation when a
 	 * null inputStream parameter is passed. The testing method should throw a
 	 * NullPointerException.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @throws IOException
 	 * @throws JAXBException
@@ -270,21 +234,17 @@ public class ICEJAXBHandlerTester {
 	@Test(expected = java.lang.NullPointerException.class)
 	public void checkXMLPersistenceWriteOperationWithInputStreamAsNull()
 			throws IOException, JAXBException, NullPointerException {
-		// begin-user-code
 		// Catch a null pointer exception
 		iCEJAXBManipulator.write(simpleJAXBTestClass,classList, null);
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This test checks the behavior ICEJAXBHandler.read() operation when an
 	 * invalid inputStream parameter is passed. The testing method should throw
 	 * a JAXBException.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @throws IOException
 	 * @throws JAXBException
@@ -293,7 +253,6 @@ public class ICEJAXBHandlerTester {
 	@Test(expected = javax.xml.bind.JAXBException.class)
 	public void checkXMLPersistenceReadWithInvalidInputStream()
 			throws IOException, JAXBException, NullPointerException {
-		// begin-user-code
 		// Setup the invalid XML String and then convert it to InputStream
 		String xmlFile = "A String not in XML";
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(
@@ -302,17 +261,14 @@ public class ICEJAXBHandlerTester {
 		// Should throw a JAXBException on the invalid InputStream
 		iCEJAXBManipulator.read(classList, inputStream);
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This test checks the behavior ICEJAXBHandler.read() operation when an
 	 * invalid object is passed. The testing method should throw a
 	 * JAXBException. The testing method should throw a JAXBException.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @throws IOException
 	 * @throws JAXBException
@@ -321,7 +277,6 @@ public class ICEJAXBHandlerTester {
 	@Test(expected = javax.xml.bind.JAXBException.class)
 	public void checkXMLPersistenceReadWithInvalidObject() throws IOException,
 			JAXBException, NullPointerException {
-		// begin-user-code
 		// This test will demonstrate the reaction of JAXB marshallers on a
 		// object that is not annotated (for read)
 
@@ -343,17 +298,14 @@ public class ICEJAXBHandlerTester {
 		// This method should throw a JAXBException.
 		iCEJAXBManipulator.read(classList, inputStream);
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This test checks the behavior ICEJAXBHandler.write() operation when
 	 * an invalid object is passed. The testing method should throw a
 	 * JAXBException.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @throws IOException
 	 * @throws JAXBException
@@ -362,7 +314,6 @@ public class ICEJAXBHandlerTester {
 	@Test(expected = javax.xml.bind.JAXBException.class)
 	public void checkXMLPersistenceWriteWithInvalidObject() throws IOException,
 			JAXBException, NullPointerException {
-		// begin-user-code
 		// This test will demonstrate the reaction of JAXB marshallers on a
 		// object that is not annotated (for write)
 
@@ -374,6 +325,5 @@ public class ICEJAXBHandlerTester {
 		// This operation should throw a JAXBException
 		iCEJAXBManipulator.write(j, classList, outputStream);
 
-		// end-user-code
 	}
 }

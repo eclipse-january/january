@@ -97,7 +97,6 @@ public class EMFEntryTester {
 	 */
 	@Test
 	public void checkConstruction() {
-		// begin-user-code
 
 		// So now we got an EAttribute to test out
 		EMFEntry entry = new EMFEntry(attribute, ecoreNode);
@@ -111,7 +110,6 @@ public class EMFEntryTester {
 	 */
 	@Test
 	public void checkCopying() {
-		// begin-user-code
 		EMFEntry entry = new EMFEntry(attribute, ecoreNode);
 		EMFEntry clonedEntry = (EMFEntry) entry.clone();
 
@@ -120,7 +118,6 @@ public class EMFEntryTester {
 		assertTrue("hello".equals(entry.getValue()));
 		assertFalse("hello".equals(clonedEntry.getValue()));
 
-		// end-user-code
 	}
 
 }

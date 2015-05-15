@@ -41,25 +41,18 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * <!-- begin-UML-doc -->
  * <p>
  * This class is responsible for testing the TreeComposite. The test generates
  * random numbers of children and siblings since the TreeComposite is an n-ary
  * tree. It does not have specific tests for re-wiring and visitation because
  * those must be done extensively in the other tests since it is a tree.
  * </p>
- * <!-- end-UML-doc -->
  * 
  * @author Jay Jay Billings
- * @generated 
- *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
 public class TreeCompositeTester extends SelectiveComponentVisitor {
 	/**
-	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	private TreeComposite treeComposite;
 
@@ -70,19 +63,14 @@ public class TreeCompositeTester extends SelectiveComponentVisitor {
 	private HashMap<String, ArrayList<Component>> componentMap = new HashMap<String, ArrayList<Component>>();
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the construction of the TreeComposite and whether
 	 * or not its name, id and description can be set properly.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkConstruction() {
-		// begin-user-code
 
 		// Local Declarations
 		String name = "Tuvok", desc = "Vulcan";
@@ -106,23 +94,17 @@ public class TreeCompositeTester extends SelectiveComponentVisitor {
 		assertEquals(false, treeComposite.isActive());
 
 		return;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the ability of the TreeComposite to manage a set of
 	 * subordinate, child TreeComposites.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkChildren() {
-		// begin-user-code
 
 		// Local Declarations
 		long seed = System.nanoTime();
@@ -251,23 +233,17 @@ public class TreeCompositeTester extends SelectiveComponentVisitor {
 
 		return;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the ability of the TreeComposite to identify its
 	 * nearest neighbors (sibling) TreeComposites.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkSiblings() {
-		// begin-user-code
 
 		// Local Declarations
 		long seed = System.nanoTime();
@@ -354,24 +330,18 @@ public class TreeCompositeTester extends SelectiveComponentVisitor {
 		assertEquals(name + " " + 0, currentSibling.getName());
 		assertEquals(desc + " " + 0, currentSibling.getDescription());
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the TreeComposite to make sure that parent
 	 * TreeComposites can be identified and that the tree can be walked
 	 * "to the top."
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkParent() {
-		// begin-user-code
 
 		// Local Declarations
 		TreeComposite firstChild = null, secondChild = null, parent = null;
@@ -483,23 +453,17 @@ public class TreeCompositeTester extends SelectiveComponentVisitor {
 
 		return;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the ability of a TreeComposite to manage its data
 	 * nodes. It also checks active data node support.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkDataNodes() {
-		// begin-user-code
 
 		// Local Declarations
 		TreeComposite firstChild = null, secondChild = null;
@@ -605,45 +569,33 @@ public class TreeCompositeTester extends SelectiveComponentVisitor {
 
 		return;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the ability of the TreeComposite to process
 	 * updates. At the moment, it should do absolutely nothing (so nothing
 	 * should change).
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Ignore("TreeComposites do not yet perform updates. This test is a stub.")
 	@Test
 	public void checkUpdate() {
-		// begin-user-code
 
 		fail();
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation tests the TreeComposite to insure that it can properly
 	 * dispatch notifications when it receives an update that changes its state.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkNotifications() {
-		// begin-user-code
 
 		// Setup the listener
 		TestComponentListener testComponentListener = new TestComponentListener();
@@ -759,23 +711,17 @@ public class TreeCompositeTester extends SelectiveComponentVisitor {
 
 		return;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the TreeComposite to insure that its equals() and
 	 * hashcode() operations work.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkEquality() {
-		// begin-user-code
 
 		// Local Declarations
 		TreeComposite firstChild = null, secondChild = null;
@@ -834,23 +780,17 @@ public class TreeCompositeTester extends SelectiveComponentVisitor {
 
 		return;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the TreeComposite to ensure that its copy() and
 	 * clone() operations work as specified.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkCopying() {
-		// begin-user-code
 
 		// Local Declarations
 		TreeComposite treeComposite, copyTree, copyTreeChild2, cloneTree;
@@ -979,7 +919,6 @@ public class TreeCompositeTester extends SelectiveComponentVisitor {
 		}
 
 		return;
-		// end-user-code
 	}
 
 	/**
@@ -1047,20 +986,15 @@ public class TreeCompositeTester extends SelectiveComponentVisitor {
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the TreeComposite to make sure that it can be
 	 * configured with a set of exemplar children that must be used to add new
 	 * children to the TreeComposite.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkChildExemplars() {
-		// begin-user-code
 
 		// Local Declarations
 		DataComponent exemplar1DataComponent = new DataComponent();
@@ -1187,7 +1121,6 @@ public class TreeCompositeTester extends SelectiveComponentVisitor {
 		assertTrue(testTree.equals(copiedTestTree));
 		assertEquals(testTree.hashCode(), copiedTestTree.hashCode());
 
-		// end-user-code
 	}
 
 	/**
@@ -1219,44 +1152,32 @@ public class TreeCompositeTester extends SelectiveComponentVisitor {
 	 * (non-Javadoc)
 	 * 
 	 * @see IComponentVisitor#visit(DataComponent component)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void visit(DataComponent component) {
-		// begin-user-code
 
 		addComponentToMap("data", component);
 
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see IComponentVisitor#visit(TableComponent component)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void visit(TableComponent component) {
-		// begin-user-code
 
 		addComponentToMap("table", component);
 
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see IComponentVisitor#visit(TreeComposite component)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void visit(TreeComposite component) {
-		// begin-user-code
 
 		addComponentToMap("tree", component);
 
-		// end-user-code
 	}
 }

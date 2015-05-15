@@ -66,7 +66,6 @@ public class EMFComponentTester {
 	 */
 	@Test
 	public void checkCreation() {
-		// begin-user-code
 
 		// Local declarations
 		DataComponent component = null;
@@ -97,14 +96,11 @@ public class EMFComponentTester {
 
 		return;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 */
 	@Test
 	public void checkTreeModification() {
@@ -187,10 +183,8 @@ public class EMFComponentTester {
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 */
 	@Test
 	public void checkBatML() {
@@ -260,10 +254,8 @@ public class EMFComponentTester {
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 */
 	@Test
 	public void checkSave() {
@@ -301,10 +293,8 @@ public class EMFComponentTester {
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 */
 	@Test
 	public void checkLoad() {
@@ -375,19 +365,14 @@ public class EMFComponentTester {
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the DataComponent to insure that its equals() and
 	 * hashcode() operations work.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkEquality() {
-		// begin-user-code
 		String separator = System.getProperty("file.separator");
 		String userDir = System.getProperty("user.home") + separator
 				+ "ICETests" + separator + "datastructuresData";
@@ -451,23 +436,17 @@ public class EMFComponentTester {
 
 		// Assert that hashcodes from unequal objects are different
 		assertTrue(component.hashCode() != unEqualComponent.hashCode());
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the EMFComponent to ensure that its copy() and
 	 * clone() operations work as specified.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkCopying() {
-		// begin-user-code
 
 		EMFComponent comp = (EMFComponent) emfComponent.clone();
 		assertTrue(comp.equals(emfComponent));
@@ -477,28 +456,22 @@ public class EMFComponentTester {
 		assertTrue(newCopy.equals(emfComponent));
 		
 		return;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the ability of the EMFComponent to persist itself
 	 * to XML and to load itself from an XML input stream.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @throws IOException
 	 * @throws JAXBException
 	 * @throws NullPointerException
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkLoadingFromXML() throws NullPointerException,
 			JAXBException, IOException {
-		// begin-user-code
 		// Local declarations
 		int id = 5;
 		String name = "Bob";

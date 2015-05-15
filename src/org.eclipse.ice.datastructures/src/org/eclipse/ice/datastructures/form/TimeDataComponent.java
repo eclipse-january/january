@@ -25,7 +25,6 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * <!-- begin-UML-doc -->
  * <p>
  * A specific DataComponent implementation that handles very specific roles for
  * setting up time loops. These time loops are delegated on the Datastructure.
@@ -45,29 +44,21 @@ import javax.xml.bind.annotation.XmlRootElement;
  * undefined behavior. As such, the only operations that work are retrieving
  * entries.
  * </p>
- * <!-- end-UML-doc -->
  * 
  * @author s4h
- * @generated 
- *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
 @XmlRootElement(name = "TimeDataComponent")
 public class TimeDataComponent extends DataComponent {
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * A parameterized constructor that takes a type (Explicit or Regular) as a
 	 * passed parameter. If the parameter is not specified as "EXPLICIT" or
 	 * "REGULAR", then it will default to nullary constructor.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param type
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public TimeDataComponent(String type) {
-		// begin-user-code
 
 		// Call nullary constructor
 		this();
@@ -82,22 +73,16 @@ public class TimeDataComponent extends DataComponent {
 			super.retrieveAllEntries().get(3).setReady(false);
 		}
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The nullary constructor. Defaults object to mode of Regular and creates
 	 * required entries as necessary.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public TimeDataComponent() {
-		// begin-user-code
 
 		// Call super
 		super();
@@ -201,49 +186,37 @@ public class TimeDataComponent extends DataComponent {
 		this.setId(1);
 		this.setDescription("TimeDataComponent 1's Description");
 
-		// end-user-code
 
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation performs a deep copy of the attributes of another
 	 * TimeDataComponent into the current TimeDataComponent.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param otherDataComponent
 	 *            <p>
 	 *            The other DataComponent from which information should be
 	 *            copied.
 	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void copy(TimeDataComponent otherDataComponent) {
-		// begin-user-code
 
 		super.copy(otherDataComponent);
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation provides a deep copy of the TimeDataComponent.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The deep-copy clone of this DataComponent.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public Object clone() {
-		// begin-user-code
 
 		// Local Declarations
 		TimeDataComponent component = new TimeDataComponent();
@@ -254,37 +227,28 @@ public class TimeDataComponent extends DataComponent {
 		// Return object
 		return component;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * Overrides and does nothing.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param newEntry
 	 *            <p>
 	 *            The new Entry that will be added to the Form.
 	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void addEntry(Entry newEntry) {
-		// begin-user-code
 
 		// Do nothing
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * Overrides and does nothing.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param newEntry
 	 *            <p>
@@ -295,74 +259,53 @@ public class TimeDataComponent extends DataComponent {
 	 *            The list of Entry names for those Entries on which the new
 	 *            Entry is dependent.
 	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void addEntry(Entry newEntry, String... parentNames) {
-		// begin-user-code
 
 		// Do nothing
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * Overrides and does nothing.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void clearEntries() {
-		// begin-user-code
 
 		// Do nothing
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * Overrides and does nothing.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param entryName
 	 *            <p>
 	 *            The name of the Entry to delete.
 	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void deleteEntry(String entryName) {
-		// begin-user-code
 
 		// Do nothing
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * Overrides DataComponent's implementation of retrieveAllEntries. This will
 	 * return a list of entries in a shallow copied list. This way, entries can
 	 * not be added or removed indirectly via getter method.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The list of all Entries stored in the Form.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public ArrayList<Entry> retrieveAllEntries() {
-		// begin-user-code
 
 		// Local Declarations
 		ArrayList<Entry> entries = new ArrayList<Entry>();
@@ -376,18 +319,15 @@ public class TimeDataComponent extends DataComponent {
 		// Return the entries
 		return entries;
 
-		// end-user-code
 
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation is used to check equality between the DataComponent and
 	 * another DataComponent. It returns true if the DataComponents are equal
 	 * and false if they are not.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param otherDataComponent
 	 *            <p>
@@ -397,18 +337,14 @@ public class TimeDataComponent extends DataComponent {
 	 * @return <p>
 	 *         True if the DataComponents are equal, false otherwise.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public boolean equals(Object otherDataComponent) {
-		// begin-user-code
 
 		// Make sure it is an instance of TimeDataComponent, compare the rest
 		// normally
 		return otherDataComponent instanceof TimeDataComponent
 				&& super.equals(otherDataComponent);
 
-		// end-user-code
 	}
 
 	/**
@@ -426,15 +362,11 @@ public class TimeDataComponent extends DataComponent {
 	 * (non-Javadoc)
 	 * 
 	 * @see Component#accept(IComponentVisitor visitor)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void accept(IComponentVisitor visitor) {
-		// begin-user-code
 
 		// Reveal our type to the visitor
 		visitor.visit(this);
 
-		// end-user-code
 	}
 }

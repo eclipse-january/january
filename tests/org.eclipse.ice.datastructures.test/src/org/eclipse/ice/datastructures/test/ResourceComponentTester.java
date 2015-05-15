@@ -407,7 +407,6 @@ public class ResourceComponentTester {
 	 */
 	@Test
 	public void checkClear() {
-		// begin-user-code
 		
 		// Local declarations
 		ArrayList<ICEResource> resources = new ArrayList<ICEResource>();
