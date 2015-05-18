@@ -31,7 +31,7 @@ import org.eclipse.ice.datastructures.form.geometry.IShape;
  * implementing Savable.
  * </p>
  * 
- * @author abd
+ * @author Andrew P. Belt
  */
 public class ShapeTransient implements Savable {
 	/**

@@ -36,7 +36,7 @@ import org.junit.Test;
 /**
  * This class is responsible for testing the methods of AdaptiveTreeComposite.
  * 
- * @author w5q
+ * @author Anna Wojtowicz
  */
 public class AdaptiveTreeCompositeTester {
 
