@@ -684,11 +684,11 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	/**
-	 * get shape from object (array or list supported)
+	 * Get shape from object (array or list supported)
 	 * @param obj
 	 * @return shape
 	 */
-	protected static int[] getShapeFromObject(final Object obj) {
+	public static int[] getShapeFromObject(final Object obj) {
 		ArrayList<Integer> lshape = new ArrayList<Integer>();
 
 		getShapeFromObj(lshape, obj, 0);
