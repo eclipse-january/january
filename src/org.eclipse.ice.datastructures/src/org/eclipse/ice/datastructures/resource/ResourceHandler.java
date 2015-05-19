@@ -31,10 +31,10 @@ import java.util.ArrayList;
  * just a regular {@link ICEResource}.</p>
  * 
  * <p>This class' methods are intended to be called by Items directly, using the
- * {@link #Item.getProcess(String) Item.getProcess(...)} method.</p>
+ * {@link org.eclipse.ice.item.Item#getProcess(String) Item.getProcess(...)} 
+ * method.</p>
  * 
  * @author Anna Wojtowicz
- *
  */
 
 public class ResourceHandler {
