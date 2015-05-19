@@ -33,7 +33,7 @@ import org.eclipse.ice.datastructures.form.TimeDataComponent;
  * A class that tests the TimeDataComponent.
  * </p>
  * 
- * @author s4h
+ * @author Scott Forest Hull II
  */
 public class TimeDataComponentTester {
 	/**

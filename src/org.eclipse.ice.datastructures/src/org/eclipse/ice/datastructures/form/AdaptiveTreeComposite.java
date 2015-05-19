@@ -33,7 +33,7 @@ import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
  * a map of all available TreeComposites (keyed on name), that the current
  * AdaptiveTreeComposite can be.
  * 
- * @author w5q
+ * @author Anna Wojtowicz
  * 
  */
 @XmlRootElement(name = "AdaptiveTreeComposite")

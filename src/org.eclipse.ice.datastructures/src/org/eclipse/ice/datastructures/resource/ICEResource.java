@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
  * others.
  * </p>
  * 
- * @author s4h
+ * @author Scott Forest Hull II
  */
 @XmlRootElement(name = "ICEResource")
 @XmlAccessorType(XmlAccessType.FIELD)

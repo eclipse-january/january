@@ -94,7 +94,7 @@ import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
  * book keeping errors (which is a common procedural anti-pattern).
  * </p>
  * 
- * @author s4h
+ * @author Scott Forest Hull II
  */
 @XmlRootElement(name = "MasterDetailsComponent")
 @XmlAccessorType(XmlAccessType.FIELD)

@@ -45,7 +45,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * entries.
  * </p>
  * 
- * @author s4h
+ * @author Scott Forest Hull II
  */
 @XmlRootElement(name = "TimeDataComponent")
 public class TimeDataComponent extends DataComponent {
