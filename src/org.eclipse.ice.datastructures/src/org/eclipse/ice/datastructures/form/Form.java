@@ -380,11 +380,10 @@ public class Form extends ICEObject implements Composite {
 
 	}
 
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see IUpdateable#update(String updatedKey, String newValue)
+	/*
+	 * Overrides a method from ICEObject.
 	 */
+	@Override
 	public void update(String updatedKey, String newValue) {
 
 		for (Component i : componentList) {
