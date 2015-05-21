@@ -12,21 +12,16 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.form;
 
-import org.eclipse.ice.datastructures.ICEObject.Component;
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
-import org.eclipse.ice.datastructures.ICEObject.ICEObject;
-import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
-
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import org.eclipse.ice.datastructures.ICEObject.Component;
+import org.eclipse.ice.datastructures.ICEObject.ICEObject;
+import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
 
 /**
@@ -1031,10 +1026,8 @@ public class MatrixComponent extends ICEObject implements Component {
 		return tempDoubles;
 	}
 
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see IUpdateable#update(String updatedKey, String newValue)
+	/*
+	 * Overrides a super class method.
 	 */
 	public void update(String updatedKey, String newValue) {
 		// TODO Auto-generated method stub
