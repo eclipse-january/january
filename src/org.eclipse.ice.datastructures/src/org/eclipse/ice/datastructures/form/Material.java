@@ -152,7 +152,7 @@ public class Material implements Cloneable {
 	 *         internal properties of the material.
 	 */
 	public Map<String, Double> getProperties() {
-		return (Map<String, Double>) properties.clone();
+		return new HashMap<String, Double>(properties);
 	}
 
 	/**
@@ -180,8 +180,8 @@ public class Material implements Cloneable {
 	 * This operation overrides Object.equals() to tailor its behavior for
 	 * materials.
 	 * 
-	 * @param the
-	 *            other Object to compare against this one
+	 * @param other
+	 *            The other Object to compare against this one
 	 * @return true if they are equal, false otherwise
 	 */
 	public boolean equals(Object other) {
@@ -238,8 +238,7 @@ public class Material implements Cloneable {
 		if (material != null && material != this) {
 			this.name = material.name;
 			this.size = material.size;
-			this.properties = (HashMap<String, Double>) material.properties
-					.clone();
+			this.properties = new HashMap<String, Double>(properties);
 			this.components = new ArrayList<Material>(material.components);
 		}
 	}
