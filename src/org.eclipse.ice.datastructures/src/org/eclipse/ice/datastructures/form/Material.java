@@ -237,8 +237,7 @@ public class Material implements Cloneable {
 		if (material != null && material != this) {
 			this.name = material.name;
 			this.size = material.size;
-			this.properties = (HashMap<String, Double>) material.properties
-					.clone();
+			this.properties = new HashMap<String, Double> (material.properties);
 			this.components = new ArrayList<Material>(material.components);
 		}
 	}
