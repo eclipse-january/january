@@ -122,14 +122,13 @@ public class Material implements Cloneable {
 	 * 
 	 * @param key
 	 *            The key/name of the property whose value should be returned
-	 * @return the value or 0.0 if this value is not in the map, but
-	 *         never null.
+	 * @return the value or 0.0 if this value is not in the map, but never null.
 	 */
 	public double getProperty(String key) {
 		double value = 0.0;
 		if (properties.containsKey(key)) {
-			value = properties.get(key);	
-		} 
+			value = properties.get(key);
+		}
 		return value;
 	}
 
@@ -238,7 +237,8 @@ public class Material implements Cloneable {
 		if (material != null && material != this) {
 			this.name = material.name;
 			this.size = material.size;
-			this.properties = new HashMap<String, Double>(properties);
+			this.properties = (HashMap<String, Double>) material.properties
+					.clone();
 			this.components = new ArrayList<Material>(material.components);
 		}
 	}
