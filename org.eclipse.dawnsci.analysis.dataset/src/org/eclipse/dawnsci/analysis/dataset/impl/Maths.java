@@ -1756,6 +1756,67 @@ public class Maths {
 	}
 
 	/**
+	 * Linearly interpolate values at points in a 1D dataset corresponding to given coordinates.
+	 * @param x input 1-D coordinate dataset
+	 * @param d input 1-D dataset
+	 * @param x0 coordinate values
+	 * @param left value to use when x0 lies left of domain. If null, then interpolate to zero by using leftmost interval
+	 * @param right value to use when x0 lies right of domain. If null, then interpolate to zero by using rightmost interval
+	 * @return interpolated values
+	 */
+	public static Dataset interpolate(final IDataset x, final IDataset d, final IDataset x0, Number left, Number right) {
+		assert x.getRank() == 1;
+		assert d.getRank() == 1;
+	
+		DoubleDataset r = new DoubleDataset(x0.getShape());
+	
+		DoubleDataset dx = (DoubleDataset) DatasetUtils.cast(x, Dataset.FLOAT64);
+		Dataset dx0 = DatasetUtils.convertToDataset(x0);
+		double[] xa = dx.getData();
+		int s = xa.length - 1;
+		IndexIterator it = dx0.getIterator();
+		int k = -1;
+		while (it.hasNext()) {
+			k++;
+			double v = dx0.getElementDoubleAbs(it.index);
+			int i = Arrays.binarySearch(xa, v);
+			if (i < 0) {
+				// i = -(insertion point) - 1
+				if (i == -1) {
+					if (left != null) {
+						r.setAbs(k, left.doubleValue());
+						continue;
+					}
+					final double d1 = xa[0] - xa[1];
+					double t = d1 - v + xa[0];
+					if (t >= 0)
+						continue; // sets to zero
+					t /= d1;
+					r.setAbs(k, t * d.getDouble(0));
+				} else if (i == -s - 2) {
+					if (right != null) {
+						r.setAbs(k, right.doubleValue());
+						continue;
+					}
+					final double d1 = xa[s] - xa[s - 1];
+					double t = d1 - v + xa[s];
+					if (t <= 0)
+						continue; // sets to zero
+					t /= d1;
+					r.setAbs(k, t * d.getDouble(s));
+				} else {
+					i = -i - 1;
+					final double t = (xa[i] - v)/(xa[i] - xa[i - 1]);
+					r.setAbs(k, (1 - t) * d.getDouble(i) + t * d.getDouble(i - 1));
+				}
+			} else {
+				r.setAbs(k, d.getDouble(i));
+			}
+		}
+		return r;
+	}
+
+	/**
 	 * Linearly interpolate a value at a point in a 1D dataset. The dataset is considered to have
 	 * zero support outside its bounds. Thus points just outside are interpolated from the boundary
 	 * value to zero.
