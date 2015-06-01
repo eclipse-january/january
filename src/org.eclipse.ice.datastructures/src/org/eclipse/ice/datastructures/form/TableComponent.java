@@ -12,30 +12,17 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.form;
 
-import org.eclipse.ice.datastructures.ICEObject.Component;
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
-import org.eclipse.ice.datastructures.ICEObject.ICEObject;
-import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
-import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Hashtable;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Hashtable;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.adapters.XmlAdapter;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import org.eclipse.ice.datastructures.ICEObject.Component;
+import org.eclipse.ice.datastructures.ICEObject.ICEObject;
+import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
 
 /**
@@ -568,15 +555,13 @@ public class TableComponent extends ICEObject implements Component {
 	}
 
 	/**
-	 * <p>
 	 * This operation sets the selected rows in the table.
-	 * </p>
 	 * 
-	 * @return <p>
-	 *         An array of the rows in the table that should be marked as
-	 *         selected. If an id in this array is not also in the table then it
-	 *         is ignored and will not be returned in a call to getSelectedRows.
-	 *         </p>
+	 * @param rows
+	 *            An array of the rows in the table that should be marked as
+	 *            selected. If an id in this array is not also in the table then
+	 *            it is ignored and will not be returned in a call to
+	 *            getSelectedRows.
 	 */
 	public void setSelectedRows(ArrayList<Integer> rows) {
 

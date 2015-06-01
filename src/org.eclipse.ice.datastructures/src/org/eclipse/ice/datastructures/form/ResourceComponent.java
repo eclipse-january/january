@@ -24,8 +24,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * The ResourceComponent is a specialization of ListComponent that is used to 
- * manage a set of ICEResources. It is used, for example, to collect Resources 
+ * The ResourceComponent is a specialization of ListComponent that is used to
+ * manage a set of ICEResources. It is used, for example, to collect Resources
  * for output data on a Form. ICEResources can be very easily added to
  * ResourceComponents by calling the addResource() operation and the whole list
  * of managed ICEResources can be retrieved with getResources().
@@ -42,22 +42,23 @@ public class ResourceComponent extends ListComponent<ICEResource> {
 	 */
 	@XmlTransient
 	protected ArrayList<IUpdateableListener> listeners;
-	
+
 	/**
 	 * The constructor.
 	 */
 	public ResourceComponent() {
-		
+
 		// Setup the listeners list
 		listeners = new ArrayList<IUpdateableListener>();
-		
+
 		return;
 	}
 
 	/**
 	 * This operation adds an ICEResource to the component.
 	 * 
-	 * @param resource	The new resource to add.
+	 * @param resource
+	 *            The new resource to add.
 	 */
 	public void addResource(ICEResource resource) {
 
@@ -79,8 +80,8 @@ public class ResourceComponent extends ListComponent<ICEResource> {
 	}
 
 	/**
-	 * An operation that clears all the ICEResources stored on the 
-	 * ResourceComponent. If there are no items in the list, this operation does 
+	 * An operation that clears all the ICEResources stored on the
+	 * ResourceComponent. If there are no items in the list, this operation does
 	 * nothing.
 	 */
 	public void clearResources() {
@@ -110,7 +111,7 @@ public class ResourceComponent extends ListComponent<ICEResource> {
 	 * @param otherResourceComponent
 	 *            The other ResourceComponent whose information should be
 	 *            compared to this ResourceComponent.
-	 * @return	  True if the ResourceComponents are equal, false otherwise.
+	 * @return True if the ResourceComponents are equal, false otherwise.
 	 */
 	public boolean equals(Object otherResourceComponent) {
 
@@ -124,7 +125,7 @@ public class ResourceComponent extends ListComponent<ICEResource> {
 		boolean retVal = false;
 		if (otherResourceComponent != null
 				&& otherResourceComponent instanceof ResourceComponent) {
-			
+
 			// Call the super equals to check the list contents
 			retVal = super.equals(otherResourceComponent);
 		}
@@ -134,9 +135,8 @@ public class ResourceComponent extends ListComponent<ICEResource> {
 
 	/**
 	 * Accepts a visitor to reveal the type of the ResourceComponent.
-	 * 
-	 * @see Component#accept(IComponentVisitor visitor)
 	 */
+	@Override
 	public void accept(IComponentVisitor visitor) {
 
 		// Reveal our type to the visitor

@@ -324,12 +324,11 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 		System.out.println("List changed!");
 	}
 
-	/**
-	 * @see TransformedList#isWriteable()
+	/*
+	 * Overrides a super class method.
 	 */
 	@Override
 	protected boolean isWritable() {
-
 		return true;
 	}
 
@@ -341,8 +340,8 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 		visitor.visit(this);
 	};
 
-	/**
-	 * @see Cloneable#clone()
+	/*
+	 * Implements a method from Identifiable.
 	 */
 	@Override
 	public Object clone() {
@@ -425,9 +424,8 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 		return retValue;
 	}
 
-	/**
-	 * @see ca.odell.glazedlists.gui.WritableTableFormat#setColumnValue(java.lang
-	 *      .Object, java.lang.Object, int)
+	/*
+	 * Implements a method from WritableTableFormat.
 	 */
 	@Override
 	public T setColumnValue(T baseObject, Object editedValue, int column) {

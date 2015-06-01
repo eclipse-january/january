@@ -30,25 +30,24 @@ import org.eclipse.ice.datastructures.resource.ICEResource;
 import org.eclipse.ice.datastructures.resource.VizResource;
 
 /**
- * The ICEJAXBClassProvider is a realization of the IJAXBClassProvider that 
- * provides a list of classes that the XMLPersistenceProvider's JAXBContext must be 
- * aware of when marshalling/unmarshalling ICE data structures. 
+ * The ICEJAXBClassProvider is a realization of the IJAXBClassProvider that
+ * provides a list of classes that the XMLPersistenceProvider's JAXBContext must
+ * be aware of when marshalling/unmarshalling ICE data structures.
  * 
  * @author Alex McCaskey
  *
  */
 public class ICEJAXBClassProvider implements IJAXBClassProvider {
 
-	/**
-	 * (non-Javadoc)
-	 * @see org.eclipse.ice.persistence.xml.IJAXBClassProvider#getClasses()
+	/*
+	 * Implements a method from IJAXBClassProvider.
 	 */
 	@Override
 	public List<Class> getClasses() {
-		
-		// Create the return list of classes. 
+
+		// Create the return list of classes.
 		List<Class> classList = new ArrayList<Class>();
-		
+
 		// Add the classes needed for XML persistence
 		classList.add(TableComponent.class);
 		classList.add(MatrixComponent.class);
@@ -66,9 +65,8 @@ public class ICEJAXBClassProvider implements IJAXBClassProvider {
 		return classList;
 	}
 
-	/**
-	 * (non-Javadoc)
-	 * @see org.eclipse.ice.persistence.xml.IJAXBClassProvider#getProviderName()
+	/*
+	 * Implements a method from IJAXBClassProvider.
 	 */
 	@Override
 	public String getProviderName() {
