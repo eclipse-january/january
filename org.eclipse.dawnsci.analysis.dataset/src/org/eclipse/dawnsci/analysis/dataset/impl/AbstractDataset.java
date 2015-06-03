@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.math3.complex.Complex;
-import org.apache.commons.math3.stat.descriptive.StorelessUnivariateStatistic;
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
 import org.apache.commons.math3.stat.descriptive.moment.Variance;
 import org.eclipse.dawnsci.analysis.api.dataset.IDataset;
@@ -3248,11 +3247,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		SummaryStatistics stats = getStatistics(false);
 
 		if (isDatasetWholePopulation) {
-			StorelessUnivariateStatistic oldVar = stats.getVarianceImpl();
-			stats.setVarianceImpl(new Variance(false));
-			Number var = stats.getVariance();
-			stats.setVarianceImpl(oldVar);
-			return var;
+			Variance newVar = (Variance) stats.getVarianceImpl().copy();
+			newVar.setBiasCorrected(false);
+			return newVar.getResult();
 		}
 		return stats.getVariance();
 	}
