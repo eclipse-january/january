@@ -99,7 +99,7 @@ public final class LazyMaths {
 
 		RunningAverage av = null;
 		int c = 0;
-		while (iter.hasNext() && c <= stop) {
+		while (iter.hasNext() && c < stop) {
 			if (c++ < start) continue;
 			for (int i = 0; i < rank; i++) {
 				end[i] = omit[i] ? shape[i] : pos[i] + 1;
