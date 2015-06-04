@@ -109,6 +109,25 @@ public class LazyWriteableDataset extends LazyDataset implements ILazyWriteableD
 	@Override
 	public void setMaxShape(int[] maxShape) {
 		this.maxShape = maxShape == null ? shape.clone() : maxShape.clone();
+
+		if (this.maxShape.length > oShape.length) {
+			oShape = prependShapeWithOnes(this.maxShape.length, oShape);
+		}
+		if (this.maxShape.length > shape.length) {
+			setShapeInternal(false, prependShapeWithOnes(this.maxShape.length, shape));
+		}
+	}
+
+	private final static int[] prependShapeWithOnes(int rank, int[] shape) {
+		int[] nShape = new int[rank];
+		int excess = rank - shape.length;
+		for (int i = 0; i < excess; i++) {
+			nShape[i] = 1;
+		}
+		for (int i = excess; i < nShape.length; i++) {
+			nShape[i] = shape[i - excess];
+		}
+		return nShape;
 	}
 
 	@Override
