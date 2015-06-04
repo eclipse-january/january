@@ -69,6 +69,17 @@ public class ResourceComponent extends ListComponent<ICEResource> {
 
 		return;
 	}
+	
+	/**
+	 * This operation removes an ICEResource from the component.
+	 * 
+	 * @param resource
+	 * 			The resource to remove.
+	 */
+	public void removeResource(ICEResource resource) {
+		this.remove(resource);
+		return;
+	}
 
 	/**
 	 * This operation gets all of the ICEResources from the component.
