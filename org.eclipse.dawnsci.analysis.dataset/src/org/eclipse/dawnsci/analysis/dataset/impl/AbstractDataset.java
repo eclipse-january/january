@@ -2506,7 +2506,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		} else if (!(obj instanceof IDataset)) {
 			ds = DatasetFactory.createFromObject(obj, isComplex() || getElementsPerItem() == 1 ? FLOAT64 : ARRAYFLOAT64);
 		} else {
-			ds = DatasetUtils.convertToDataset((ILazyDataset) obj);
+			ds = DatasetUtils.convertToDataset((IDataset) obj);
 		}
 
 		return setSlicedView(getSliceView(slice), ds);
@@ -3312,7 +3312,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 		Dataset ed = null;
 		if (led instanceof IDataset) {
-			ed = DatasetUtils.convertToDataset(led);
+			ed = DatasetUtils.convertToDataset((IDataset) led);
 			if (!(led instanceof Dataset)) {
 				setError(ed); // set back
 			}

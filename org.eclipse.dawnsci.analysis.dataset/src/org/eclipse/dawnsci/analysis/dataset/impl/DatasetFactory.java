@@ -15,7 +15,7 @@ package org.eclipse.dawnsci.analysis.dataset.impl;
 import java.math.BigInteger;
 import java.util.List;
 
-import org.eclipse.dawnsci.analysis.api.dataset.ILazyDataset;
+import org.eclipse.dawnsci.analysis.api.dataset.IDataset;
 
 public class DatasetFactory {
 
@@ -136,10 +136,8 @@ public class DatasetFactory {
 	 * @return dataset
 	 */
 	public static Dataset createFromObject(Object obj) {
-		if (obj instanceof Dataset)
-			return (Dataset) obj;
-		if (obj instanceof ILazyDataset)
-			return DatasetUtils.convertToDataset((ILazyDataset) obj);
+		if (obj instanceof IDataset)
+			return DatasetUtils.convertToDataset((IDataset) obj);
 		if (obj instanceof BigInteger) {
 			obj = ((BigInteger) obj).longValue();
 		}
@@ -175,11 +173,8 @@ public class DatasetFactory {
 	 * @throws IllegalArgumentException if dataset type is not known
 	 */
 	public static Dataset createFromObject(final Object obj, final int dtype) {
-		if (obj instanceof Dataset)
-			return DatasetUtils.cast((Dataset) obj, dtype);
-
-		if (obj instanceof ILazyDataset)
-			return DatasetUtils.cast(DatasetUtils.convertToDataset((ILazyDataset) obj), dtype);
+		if (obj instanceof IDataset)
+			return DatasetUtils.cast((IDataset) obj, dtype);
 
 		Class<? extends Object> ca = obj.getClass().getComponentType();
 		if (ca != null && (ca.isPrimitive() || ca.equals(String.class))) {
