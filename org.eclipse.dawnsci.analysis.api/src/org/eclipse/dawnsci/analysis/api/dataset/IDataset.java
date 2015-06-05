@@ -52,7 +52,7 @@ public interface IDataset extends ILazyDataset {
 
 	/**
 	 * @param pos
-	 * @return Item in given position as a long 
+	 * @return Item in given position as a long
 	 */
 	public long getLong(final int... pos);
 
@@ -64,7 +64,7 @@ public interface IDataset extends ILazyDataset {
 
 	/**
 	 * @param pos
-	 * @return Item in given position as an int 
+	 * @return Item in given position as an int
 	 */
 	public int getInt(final int... pos);
 
@@ -87,7 +87,7 @@ public interface IDataset extends ILazyDataset {
 	public boolean getBoolean(final int... pos);
 
 	/**
-	 * Set the value given by object at given position  
+	 * Set the value given by object at given position
 	 * @param obj
 	 * @param pos
 	 */
@@ -115,26 +115,31 @@ public interface IDataset extends ILazyDataset {
 	public IDataset squeeze(boolean onlyFromEnds);
 
 	/**
-	 * @param switches - Should be null, or one boolean. By default it is false, if the boolean is true, will ignore NaNs and ignore infinities. 
+	 * @param switches - Should be null, or one boolean. By default it is false, if the boolean is
+	 * true, will ignore NaNs and ignore infinities.
 	 * @return mean of all items in dataset as a double, array of doubles or a complex number
 	 */
 	public Object mean(boolean... switches);
 
 	/**
-	 * NOTE this does not return the minimum value if there are NaNs in the 
+	 * NOTE this does not return the minimum value if there are NaNs in the
 	 * dataset.
 	 * 
-	 * @param switches - Can be null, one boolean, or two booleans. By default, both are false. If the first boolean is true, will ignore NaNs and ignore infinities. Use the second boolean to ignore infinities separately.
+	 * @param switches - Can be null, one boolean, or two booleans. By default, both are false. If
+	 * the first boolean is true, will ignore NaNs and ignore infinities. Use the second boolean to
+	 * ignore infinities separately.
 	 * @return Minimum value
 	 * @throws UnsupportedOperationException if comparisons are not valid
 	 */
 	public Number min(boolean... switches);
 
 	/**
-	 * NOTE this does not return the maximum value if there are NaNs in the 
+	 * NOTE this does not return the maximum value if there are NaNs in the
 	 * dataset.
 	 * 
-	 * @param switches - Can be null, one boolean, or two booleans. By default, both are false. If the first boolean is true, will ignore NaNs and ignore infinities. Use the second boolean to ignore infinities separately.
+	 * @param switches - Can be null, one boolean, or two booleans. By default, both are false. If
+	 * the first boolean is true, will ignore NaNs and ignore infinities. Use the second boolean to
+	 * ignore infinities separately.
 	 * @return Maximum value
 	 * @throws UnsupportedOperationException if comparisons are not valid
 	 */
@@ -172,7 +177,7 @@ public interface IDataset extends ILazyDataset {
 	 *            specifies the stopping indexes (can be null for end)
 	 * @param step
 	 *            specifies the steps in the slice (can be null for unit steps)
-	 * @return The sliced view of a dataset 
+	 * @return The sliced view of a dataset
 	 */
 	@Override
 	public IDataset getSliceView(int[] start, int[] stop, int[] step);
@@ -181,7 +186,7 @@ public interface IDataset extends ILazyDataset {
 	 * Get a slice of the dataset. The returned dataset is a view on a selection of items
 	 * 
 	 * @param slice an array of slice objects (the array can be null or contain nulls)
-	 * @return The sliced view of a dataset 
+	 * @return The sliced view of a dataset
 	 */
 	@Override
 	public IDataset getSliceView(Slice... slice);
@@ -190,7 +195,7 @@ public interface IDataset extends ILazyDataset {
 	 * Get a slice of the dataset. The returned dataset is a view on a selection of items
 	 * 
 	 * @param slice an nD slice object
-	 * @return The sliced view of a dataset 
+	 * @return The sliced view of a dataset
 	 */
 	@Override
 	public IDataset getSliceView(SliceND slice);

@@ -153,7 +153,7 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 	 * Get a slice of the dataset. The returned lazy dataset is a view on a selection of items
 	 * 
 	 * @param slice an array of slice objects (the array can be null or contain nulls)
-	 * @return The sliced view of a lazy dataset 
+	 * @return The sliced view of a lazy dataset
 	 */
 	public ILazyDataset getSliceView(final Slice... slice);
 
@@ -161,7 +161,7 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 	 * Get a slice of the dataset. The returned lazy dataset is a view on a selection of items
 	 * 
 	 * @param slice an n-D slice
-	 * @return The sliced view of a lazy dataset 
+	 * @return The sliced view of a lazy dataset
 	 */
 	public ILazyDataset getSliceView(final SliceND slice);
 
@@ -198,7 +198,7 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 	public <T extends MetadataType> void setMetadata(T metadata);
 
 	/**
-	 * Remove metadata of given class 
+	 * Remove metadata of given class
 	 * @param clazz if null remove everything
 	 */
 	public <T extends MetadataType> void clearMetadata(Class<T> clazz);
