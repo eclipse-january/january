@@ -143,6 +143,17 @@ public class Material implements Cloneable {
 	public void setProperty(String key, double value) {
 		properties.put(key, value);
 	}
+	
+	/**
+	 * This operation removes a property from the material's properties list. 
+	 * @param key
+	 * 			The name of the property that should be removed. 
+	 */
+	public void removeProperty(String key){
+		if(properties.containsKey(key)){
+			properties.remove(key);
+		}
+	}
 
 	/**
 	 * This operation returns the full set of properties for this material.
