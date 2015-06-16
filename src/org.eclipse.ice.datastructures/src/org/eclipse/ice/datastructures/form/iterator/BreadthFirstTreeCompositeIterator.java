@@ -44,7 +44,6 @@ public class BreadthFirstTreeCompositeIterator extends
 	 *            iterator.
 	 */
 	public BreadthFirstTreeCompositeIterator(TreeComposite root) {
-		// begin-user-code
 
 		// Call the super constructor. Send a non-null root TreeComposite. We
 		// must make sure this class is completely initialized before throwing
@@ -68,7 +67,6 @@ public class BreadthFirstTreeCompositeIterator extends
 		}
 
 		return;
-		// end-user-code
 	}
 
 	/*
@@ -78,9 +76,7 @@ public class BreadthFirstTreeCompositeIterator extends
 	 */
 	@Override
 	public boolean hasNext() {
-		// begin-user-code
 		return !queue.isEmpty();
-		// end-user-code
 	}
 
 	/*
@@ -90,7 +86,6 @@ public class BreadthFirstTreeCompositeIterator extends
 	 */
 	@Override
 	public TreeComposite next() {
-		// begin-user-code
 
 		// Set the default return value.
 		TreeComposite next = super.next();
@@ -102,7 +97,6 @@ public class BreadthFirstTreeCompositeIterator extends
 		}
 
 		return next;
-		// end-user-code
 	}
 
 }

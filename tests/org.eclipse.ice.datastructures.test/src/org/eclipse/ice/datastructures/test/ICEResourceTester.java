@@ -30,39 +30,27 @@ import org.eclipse.ice.datastructures.form.Entry;
 import org.eclipse.ice.datastructures.resource.ICEResource;
 
 /**
- * <!-- begin-UML-doc -->
  * <p>
  * This class is responsible for checking the ICEResource class.
  * </p>
- * <!-- end-UML-doc -->
  * 
  * @author Jay Jay Billings
- * @generated 
- *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
 public class ICEResourceTester {
 	/**
-	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	private ICEResource iCEResource;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the construction of an ICEResource to insure that it
 	 * can be created from both a java.io.File.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkResourceCreation() {
-		// begin-user-code
 
 		// Local Declarations
 		String filename = "ICEResourceTestFile.testFile";
@@ -82,47 +70,35 @@ public class ICEResourceTester {
 		assertEquals(1, iCEResource.getId());
 		assertEquals(testFile.getAbsolutePath(), iCEResource.getDescription());
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the creation of the non nullary ICEResource
 	 * constructor when passed a null parameter. Should throw a
 	 * NullPointerException.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @throws Class
 	 * @throws Class
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test(expected = java.lang.NullPointerException.class)
 	public void checkResourceCreationNullPointerException()
 			throws NullPointerException, IOException {
-		// begin-user-code
 		iCEResource = new ICEResource(null);
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the contents of the File managed by an ICEResource.
 	 * It also checks the get/setPath operations for URIs to make sure that the
 	 * URI can be changed and that changing the URI changes the File.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkContents() {
-		// begin-user-code
 
 		// Local Declarations
 		String filename = "ICEResourceTestFile.testFile";
@@ -202,23 +178,17 @@ public class ICEResourceTester {
 		assertTrue(iCEResource.getContents().getAbsolutePath()
 				.equals(testFile2.getAbsolutePath()));
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the accessors for setting a list of properties on
 	 * the ICEResource.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkProperties() {
-		// begin-user-code
 		// Local declarations
 		ICEResource resource = null;
 		File file;
@@ -314,23 +284,17 @@ public class ICEResourceTester {
 		assertNotNull(resource.getProperties());
 		assertEquals(0, resource.getProperties().size());
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the ICEResource to insure that its equals()
 	 * operation works.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkEquality() {
-		// begin-user-code
 		// Local declaration
 		Entry entry = new Entry();
 		ArrayList<Entry> properties = null;
@@ -400,23 +364,17 @@ public class ICEResourceTester {
 
 		assertFalse(resource.hashCode() == unEqualResource.hashCode());
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the ICEResource to ensure that its copy() and
 	 * clone() operations work as specified.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkCopying() {
-		// begin-user-code
 
 		/*
 		 * The following sets of operations will be used to test the
@@ -499,7 +457,6 @@ public class ICEResourceTester {
 		assertEquals(iCEResource.getName(), copyResource.getName());
 		assertEquals(iCEResource.getPath(), copyResource.getPath());
 
-		// end-user-code
 	}
 
 	/**
@@ -511,7 +468,6 @@ public class ICEResourceTester {
 	 */
 	@Test
 	public void checkXMLPersistence() throws NullPointerException, JAXBException, IOException {
-		// begin-user-code
 		/*
 		 * The following sets of operations will be used to test the
 		 * "read and write" portion of the ICEResourceTester. It will
@@ -610,22 +566,16 @@ public class ICEResourceTester {
 				.equals(testNR2.getProperties().get(0)));
 		assertTrue(iCEResource.equals(testNR2));
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * An operation that checks the isPictureType and setPictureType operations.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkIsPicture() {
-		// begin-user-code
 		// Local declarations
 		ICEResource testNR = null, testNR2 = null;
 
@@ -659,6 +609,5 @@ public class ICEResourceTester {
 		// If set to false, picture type is false
 		assertFalse(testNR2.isPictureType());
 
-		// end-user-code
 	}
 }

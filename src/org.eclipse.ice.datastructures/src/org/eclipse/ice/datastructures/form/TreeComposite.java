@@ -139,41 +139,29 @@ import org.eclipse.ice.datastructures.form.mesh.MeshComponent;
 public class TreeComposite extends ICEObject implements Composite,
 		IComponentVisitor {
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The TreeComposite at the same level of the tree that comes before this
 	 * TreeComposite in the set.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlTransient
 	protected TreeComposite previousSibling = null;
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The TreeComposite at the same level of the tree that comes after this
 	 * TreeComposite in the set.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlTransient
 	protected TreeComposite nextSibling = null;
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The set of children TreeComposites that are managed by this
 	 * TreeComposite.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlElementWrapper(name = "Children")
 	@XmlElements( {
@@ -181,26 +169,18 @@ public class TreeComposite extends ICEObject implements Composite,
 		@XmlElement(name = "AdaptiveTreeComposite", type = AdaptiveTreeComposite.class) })
 	protected ArrayList<TreeComposite> children;
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The current index in the set to which the child iterator points.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlTransient
 	private int currentChildIndex = 0;
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The set of Components that hold data for the TreeComposite.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlAnyElement()
 	@XmlElementRefs(value = {
@@ -213,49 +193,36 @@ public class TreeComposite extends ICEObject implements Composite,
 	private ArrayList<Component> dataNodes;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * A reference to the parent TreeComposite that "owns" this child.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlTransient
 	protected TreeComposite parent = null;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The active data node is the data node that should take priority over the
 	 * other data nodes. If a data node is marked as active it should take
 	 * priority over the other data nodes when the nodes are considered for
 	 * decision making or prioritized.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlTransient
 	private Component activeDataNode = null;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The flag that determines whether or not active data nodes are allowed.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlAttribute
 	private boolean allowActiveDataNodes = true;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The set of exemplar children of this Tree from which children must be
 	 * created. If this TreeComposite has been configured to use the exemplars
@@ -264,39 +231,27 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * by copying a TreeComposite from this set and returning it back to the
 	 * parent TreeComposite.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlElement(name = "exemplar")
 	protected ArrayList<TreeComposite> childExemplars;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * True if the TreeComposite should be considered active, false if not.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlAttribute
 	private boolean active = false;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The constructor.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public TreeComposite() {
-		// begin-user-code
 
 		// Allocate the array for holding children
 		children = new ArrayList<TreeComposite>();
@@ -310,11 +265,9 @@ public class TreeComposite extends ICEObject implements Composite,
 		// Setup the exemplar list
 		childExemplars = new ArrayList<TreeComposite>();
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation sets the parent TreeComposite of the current
 	 * TreeComposite. This operation will automatically "rewire" the original
@@ -327,17 +280,13 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * exception of erasing the link to the siblings and removing the child from
 	 * the previous parent.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param pNode
 	 *            <p>
 	 *            The parent node.
 	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void setParent(TreeComposite pNode) {
-		// begin-user-code
 
 		// Make sure the node isn't null
 		if (pNode != null) {
@@ -357,45 +306,33 @@ public class TreeComposite extends ICEObject implements Composite,
 
 		return;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns the parent TreeComposite of the current
 	 * TreeComposite.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The parent node.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public TreeComposite getParent() {
-		// begin-user-code
 		return parent;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns the next child of the TreeComposite.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The next child in the set of child TreeComposites or null if the
 	 *         end of the set has been reached.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public TreeComposite getNextChild() {
-		// begin-user-code
 
 		// Local Declarations
 		TreeComposite currentChild = null;
@@ -409,7 +346,6 @@ public class TreeComposite extends ICEObject implements Composite,
 		}
 
 		return currentChild;
-		// end-user-code
 	}
 
 	/**
@@ -436,25 +372,20 @@ public class TreeComposite extends ICEObject implements Composite,
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation sets add a child to the list of children managed by this
 	 * TreeComposite. The child is added to the end of the set and the tree is
 	 * not "rewired." This operation will not add children that are already
 	 * members of the TreeComposite and it will not add itself as a child.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param cNode
 	 *            <p>
 	 *            The next and newest child TreeComposite at this level of the
 	 *            tree.
 	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void setNextChild(TreeComposite cNode) {
-		// begin-user-code
 
 		// Local Declarations
 		TreeComposite lastChild = null;
@@ -491,25 +422,19 @@ public class TreeComposite extends ICEObject implements Composite,
 
 		return;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns the previous child of the TreeComposite.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The previous child in the set of child TreeComposites or null if
 	 *         the iterator has returned to the beginning of the set.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public TreeComposite getPreviousChild() {
-		// begin-user-code
 
 		// Local Declarations
 		TreeComposite currentChild = null;
@@ -523,28 +448,22 @@ public class TreeComposite extends ICEObject implements Composite,
 		}
 
 		return currentChild;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation removes the specified child node from the set of children
 	 * or does nothing if it is not a child of this TreeComposite. Calling this
 	 * operation will "rewire" the tree such that the previous and next siblings
 	 * of the deleted node will point to each other.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param cNode
 	 *            <p>
 	 *            The child node to remove.
 	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void removeChild(TreeComposite cNode) {
-		// begin-user-code
 
 		// Try to remove the child if it is not null, and make sure the child
 		// belongs to the set for this tree
@@ -578,54 +497,39 @@ public class TreeComposite extends ICEObject implements Composite,
 
 		return;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns the number of children of this TreeComposite.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public int getNumberOfChildren() {
-		// begin-user-code
 		return children.size();
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation resets the child iterator of this TreeComposite to its
 	 * initial position at the beginning of the set.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void resetChildIterator() {
-		// begin-user-code
 
 		// Reset the child iterator to the starting position.
 		currentChildIndex = 0;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation treats the set of children as if they are randomly
 	 * accessible and returns the child at the given index if it is between zero
 	 * and the number of children minus one.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param index
 	 *            <p>
@@ -634,11 +538,8 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * @return <p>
 	 *         The child or null if the index is out of bounds.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public TreeComposite getChildAtIndex(int index) {
-		// begin-user-code
 
 		// Check the bounds
 		if (index > -1 && index < children.size()) {
@@ -646,105 +547,75 @@ public class TreeComposite extends ICEObject implements Composite,
 		}
 
 		return null;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns the next or "nearest right" sibling of the
 	 * TreeComposite. It returns null if there is not a sibling after this one.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The next or "nearest right" sibling in the tree.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public TreeComposite getNextSibling() {
-		// begin-user-code
 		return nextSibling;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns the previous or "nearest left" sibling of the
 	 * TreeComposite. It returns null if there is not a previous sibling.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The previous or "nearest left" sibling in the tree.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public TreeComposite getPreviousSibling() {
-		// begin-user-code
 		return previousSibling;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns the set of data nodes managed by the TreeComposite
 	 * or null if no such nodes exist. Data nodes are those nodes which are only
 	 * Components and not Composites. This includes things such as DataComponent
 	 * and TableComponent.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The set of Components managed by the TreeComposite.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public ArrayList<Component> getDataNodes() {
-		// begin-user-code
 		return dataNodes;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns the number of data nodes of this TreeComposite.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public int getNumberOfDataNodes() {
-		// begin-user-code
 		return dataNodes.size();
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns the active data node for this TreeComposite or
 	 * null if the active data node has not been specified if and only if active
 	 * data nodes are allowed for this TreeComposite.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The active data node or null if it has not been specified.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public Component getActiveDataNode() {
-		// begin-user-code
 
 		// Make sure active nodes are allowed
 		if (allowActiveDataNodes) {
@@ -752,11 +623,9 @@ public class TreeComposite extends ICEObject implements Composite,
 		}
 
 		return null;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation sets the active data node for the TreeComposite if and
 	 * only if active data nodes are allowed for this TreeComposite. If the node
@@ -765,7 +634,6 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * this operation with a Component that is not a member of the set of data
 	 * nodes will not add it to the set.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param node
 	 *            <p>
@@ -773,11 +641,8 @@ public class TreeComposite extends ICEObject implements Composite,
 	 *            If this node is null or not a member of the set of data nodes
 	 *            for this TreeComposite it is ignored.
 	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void setActiveDataNode(Component node) {
-		// begin-user-code
 
 		// Make sure active nodes are allowed, that the node is not null and
 		// that it is in the set.
@@ -790,11 +655,9 @@ public class TreeComposite extends ICEObject implements Composite,
 
 		return;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation specifies whether or not this TreeComposite will allow
 	 * clients to specify active data nodes. Support for active nodes may be
@@ -803,24 +666,18 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * getActiveDataNode() will always return null and setActiveDataNode() will
 	 * not function. Active data nodes are allowed by default.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param allow
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void allowActiveDataNodes(boolean allow) {
-		// begin-user-code
 
 		allowActiveDataNodes = allow;
 		// Notify any listeners
 		notifyListeners();
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation is used to check equality between the TreeComposite and
 	 * another TreeComposite. It returns true if the TreeComposites are equal
@@ -828,7 +685,6 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * TreeComposite, child and data nodes alike. It does not compare the parent
 	 * and sibling references.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param otherTreeComposite
 	 *            <p>
@@ -838,11 +694,8 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * @return <p>
 	 *         True if the TreeComposites are equal, false otherwise.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public boolean equals(Object otherTreeComposite) {
-		// begin-user-code
 
 		// Local Declarations
 		boolean equalVal = false;
@@ -874,26 +727,20 @@ public class TreeComposite extends ICEObject implements Composite,
 		}
 
 		return equalVal;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns the hashcode value of the TreeComposite. It does
 	 * not include the parent and sibling references when computing the
 	 * hashcode.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The hashcode.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public int hashCode() {
-		// begin-user-code
 
 		// Local Declarations
 		int hash = 8;
@@ -909,34 +756,26 @@ public class TreeComposite extends ICEObject implements Composite,
 		hash = 31 * hash + childExemplars.hashCode();
 
 		return hash;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation performs a deep copy of the attributes of another
 	 * TreeComposite into the current TreeComposite. It copies ALL of the
 	 * children of the TreeComposite, data and child nodes alike.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param otherTreeComposite
 	 *            <p>
 	 *            The other TreeComposite from which information should be
 	 *            copied.
 	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void copy(TreeComposite otherTreeComposite) {
-		// begin-user-code
 		copy(otherTreeComposite, false);
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation performs a deep copy of the attributes of another
 	 * TreeComposite into the current TreeComposite. It copies ALL of the
@@ -950,7 +789,6 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * and sibling references are not set to null, and only children and data is 
 	 * copied over.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param otherTreeComposite
 	 *            <p>
@@ -963,11 +801,8 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * 			  "copied in place" (ie. retain parent and sibling references).
 	 * 			  Setting this to true will keep all existing wiring in place.
 	 * 			  </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void copy(TreeComposite otherTreeComposite, boolean copyInPlace) {
-		// begin-user-code
 
 		// If null, return
 		if (otherTreeComposite == null) {
@@ -1059,25 +894,19 @@ public class TreeComposite extends ICEObject implements Composite,
 		this.notifyListeners();
 
 		return;
-		// end-user-code
 	}
 	
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation provides a deep copy of the TreeComposite. It clones ALL
 	 * of the nodes of a TreeComposite, data and child nodes alike.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The deep-copy clone of this TreeComposite.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public Object clone() {
-		// begin-user-code
 		// Local Declarations
 		TreeComposite treeComposite;
 
@@ -1088,27 +917,21 @@ public class TreeComposite extends ICEObject implements Composite,
 		// Return the tree
 		return treeComposite;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation adds a list of TreeComposites that must be used to create
 	 * children for this TreeComposite. If a list of allowed child nodes exists,
 	 * a TreeComposite will overwrite it.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param exemplars
 	 *            <p>
 	 *            The set of exemplar child types ("set of exemplars").
 	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void setChildExemplars(ArrayList<TreeComposite> exemplars) {
-		// begin-user-code
 
 		// Check that the incoming list is valid
 		if (exemplars != null) {
@@ -1116,7 +939,6 @@ public class TreeComposite extends ICEObject implements Composite,
 		}
 
 		return;
-		// end-user-code
 	}
 
 	/**
@@ -1155,29 +977,22 @@ public class TreeComposite extends ICEObject implements Composite,
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation retrieves the list of TreeComposites that must be used to
 	 * create children for this TreeComposite. An individual from this set must
 	 * be copied (via clone(), for example) and submitted to setNextChild() or
 	 * addComponent().
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The set of exemplar child types ("set of exemplars").
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public ArrayList<TreeComposite> getChildExemplars() {
-		// begin-user-code
 		return (ArrayList<TreeComposite>) childExemplars.clone();
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns true if a list of exemplar child node types has
 	 * been configured and the TreeComposite can only add children of those
@@ -1185,63 +1000,46 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * TreeComposites are configured to accept all components by default (this
 	 * operation will return false, that is).
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         True if the exemplars exist, false otherwise.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public boolean hasChildExemplars() {
-		// begin-user-code
 		return !childExemplars.isEmpty();
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation indicates if the TreeComposite is active. True if Active,
 	 * false if not.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         True if Active, false if not
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public boolean isActive() {
-		// begin-user-code
 		return active;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation sets specifies whether or not the TreeComposite is active.
 	 * True for active, false if not.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param flag
 	 *            <p>
 	 *            True if Active, false if not
 	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void setActive(boolean flag) {
-		// begin-user-code
 		active = flag;
 
 		notifyListeners();
 
 		return;
-		// end-user-code
 	}
 
 	/**
@@ -1267,11 +1065,8 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * (non-Javadoc)
 	 * 
 	 * @see Component#accept(IComponentVisitor visitor)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void accept(IComponentVisitor visitor) {
-		// begin-user-code
 
 		// Tell the visitor that this is a tree
 		if (visitor != null) {
@@ -1279,18 +1074,14 @@ public class TreeComposite extends ICEObject implements Composite,
 		}
 		return;
 
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see Composite#addComponent(Component child)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void addComponent(Component child) {
-		// begin-user-code
 
 		// Visit the component if it is not equal to null. It will be sorted by
 		// the visitation routines and all of the current listeners will be
@@ -1301,18 +1092,14 @@ public class TreeComposite extends ICEObject implements Composite,
 			notifyListeners();
 		}
 
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see Composite#removeComponent(int childId)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void removeComponent(int childId) {
-		// begin-user-code
 
 		// Linear searches are fine for this operation because both the number
 		// of children and the number of data components should be very low. In
@@ -1346,18 +1133,14 @@ public class TreeComposite extends ICEObject implements Composite,
 
 		return;
 
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see Composite#getComponent(int childId)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public Component getComponent(int childId) {
-		// begin-user-code
 
 		// Everything should have an id greater than 0.
 		if (childId < 1) {
@@ -1378,31 +1161,23 @@ public class TreeComposite extends ICEObject implements Composite,
 		}
 
 		return null;
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see Composite#getNumberOfComponents()
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public int getNumberOfComponents() {
-		// begin-user-code
 		return dataNodes.size() + children.size();
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see Composite#getComponents()
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public ArrayList<Component> getComponents() {
-		// begin-user-code
 
 		// Create a new list that contains the data nodes.
 		ArrayList<Component> componentList = new ArrayList<Component>(dataNodes);
@@ -1410,18 +1185,14 @@ public class TreeComposite extends ICEObject implements Composite,
 		componentList.addAll(children);
 
 		return componentList;
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see IComponentVisitor#visit(DataComponent component)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void visit(DataComponent component) {
-		// begin-user-code
 
 		// Make sure the component is real before adding it.
 		if (component != null) {
@@ -1438,18 +1209,14 @@ public class TreeComposite extends ICEObject implements Composite,
 
 		return;
 
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see IComponentVisitor#visit(ResourceComponent component)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void visit(ResourceComponent component) {
-		// begin-user-code
 
 		// Make sure the component is real before adding it.
 		if (component != null) {
@@ -1458,18 +1225,14 @@ public class TreeComposite extends ICEObject implements Composite,
 
 		return;
 
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see IComponentVisitor#visit(TableComponent component)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void visit(TableComponent component) {
-		// begin-user-code
 
 		// Make sure the component is real before adding it.
 		if (component != null) {
@@ -1478,18 +1241,14 @@ public class TreeComposite extends ICEObject implements Composite,
 
 		return;
 
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see IComponentVisitor#visit(MatrixComponent component)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void visit(MatrixComponent component) {
-		// begin-user-code
 
 		// Make sure the component is real before adding it.
 		if (component != null) {
@@ -1498,18 +1257,14 @@ public class TreeComposite extends ICEObject implements Composite,
 
 		return;
 
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see IComponentVisitor#visit(IShape component)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void visit(IShape component) {
-		// begin-user-code
 
 		// Make sure the component is real before adding it.
 		if (component != null) {
@@ -1518,18 +1273,14 @@ public class TreeComposite extends ICEObject implements Composite,
 
 		return;
 
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see IComponentVisitor#visit(GeometryComponent component)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void visit(GeometryComponent component) {
-		// begin-user-code
 
 		// Make sure the component is real before adding it.
 		if (component != null) {
@@ -1538,18 +1289,14 @@ public class TreeComposite extends ICEObject implements Composite,
 
 		return;
 
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see IComponentVisitor#visit(MasterDetailsComponent component)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void visit(MasterDetailsComponent component) {
-		// begin-user-code
 
 		// Make sure the component is real before adding it.
 		if (component != null) {
@@ -1558,18 +1305,14 @@ public class TreeComposite extends ICEObject implements Composite,
 
 		return;
 
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see IComponentVisitor#visit(TreeComposite component)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void visit(TreeComposite component) {
-		// begin-user-code
 
 		// Make sure the component is real before adding it.
 		if (component != null) {
@@ -1579,21 +1322,16 @@ public class TreeComposite extends ICEObject implements Composite,
 
 		return;
 
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see IComponentVisitor#visit(IReactorComponent component)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void visit(IReactorComponent component) {
-		// begin-user-code
 		// TODO Auto-generated method stub
 
-		// end-user-code
 	}
 
 	/*
@@ -1617,22 +1355,16 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * (non-Javadoc)
 	 * 
 	 * @see IComponentVisitor#visit(MeshComponent component)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void visit(MeshComponent component) {
-		// begin-user-code
 		// TODO Auto-generated method stub
 
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see IComponentVisitor#visit(AdaptiveTreeComposite component)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void visit(AdaptiveTreeComposite component) {
 		// TODO Auto-generated method stub
@@ -1644,11 +1376,8 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * with all
 	 * 
 	 * @see IUpdateable#register(IUpdateableListener listener)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void register(IUpdateableListener listener) {
-		// begin-user-code
 
 		// Register the listener if it is not null
 		if (listener != null) {
@@ -1665,18 +1394,14 @@ public class TreeComposite extends ICEObject implements Composite,
 		}
 
 		return;
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see IUpdateable#unregister(IUpdateableListener listener)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void unregister(IUpdateableListener listener) {
-		// begin-user-code
 
 		// Unregister the listener if it is not null and in the list
 		if (listener != null && listeners.contains(listener)) {
@@ -1692,7 +1417,6 @@ public class TreeComposite extends ICEObject implements Composite,
 			}
 		}
 		return;
-		// end-user-code
 	}
 
 	@Override

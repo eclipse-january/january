@@ -3,7 +3,8 @@ Bundle-ManifestVersion: 2
 Bundle-Name: ICEDataStructures
 Bundle-SymbolicName: org.eclipse.ice.datastructures
 Bundle-Version: 2.0.0
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Service-Component: OSGI-INF/*.xml
 Meta-Persistence: META-INF/persistence.xml
 Export-Package: org.eclipse.ice.datastructures.ICEObject,
  org.eclipse.ice.datastructures.componentVisitor,
@@ -13,6 +14,7 @@ Export-Package: org.eclipse.ice.datastructures.ICEObject,
  org.eclipse.ice.datastructures.form.iterator,
  org.eclipse.ice.datastructures.form.mesh,
  org.eclipse.ice.datastructures.form.painfullySimpleForm,
+ org.eclipse.ice.datastructures.jaxbclassprovider,
  org.eclipse.ice.datastructures.resource
 Import-Package: ca.odell.glazedlists,
  ca.odell.glazedlists.event,
@@ -29,3 +31,4 @@ Import-Package: ca.odell.glazedlists,
 Bundle-ActivationPolicy: lazy
 JPA-PersistenceUnits: org.eclipse.ice.datastructures
 Require-Bundle: ca.odell.glazedlists;bundle-version="1.9.0";visibility:=reexport
+Service-Component: OSGI-INF/jaxbclassprovider.xml

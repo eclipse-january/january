@@ -32,30 +32,22 @@ import org.eclipse.ice.datastructures.form.geometry.ShapeType;
 import org.eclipse.ice.datastructures.form.mesh.Edge;
 
 /**
- * <!-- begin-UML-doc -->
  * <p>
  * Checks the overall functionality of the geometry package and the interaction
  * between each of its components
  * </p>
- * <!-- end-UML-doc -->
  * 
  * @author Jay Jay Billings
- * @generated 
- *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
 public class GeometryTester {
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * Checks the functionality of exporting an entire CSG tree to XML
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * @throws IOException 
 	 * @throws JAXBException 
 	 * @throws NullPointerException 
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkCSGTree() throws NullPointerException, JAXBException, IOException {
@@ -137,22 +129,16 @@ public class GeometryTester {
 		sphere1.setTransformation(new Transformation());
 
 		assertFalse(geometry.equals(loadedGeometry));
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * Checks whether notifications will be sent up the CSG tree
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkNotifications() {
-		// begin-user-code
 
 		TestComponentListener listener = new TestComponentListener();
 
@@ -198,6 +184,5 @@ public class GeometryTester {
 
 		assertTrue(listener.wasNotified()); // U4
 
-		// end-user-code
 	}
 }

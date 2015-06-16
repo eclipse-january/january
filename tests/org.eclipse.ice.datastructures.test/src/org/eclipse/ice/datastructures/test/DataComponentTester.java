@@ -28,65 +28,46 @@ import org.eclipse.ice.datastructures.form.Entry;
 import org.junit.*;
 
 /**
- * <!-- begin-UML-doc -->
  * <p>
  * The DataComponentTester class is responsible for testing the DataComponent
  * class.
  * </p>
- * <!-- end-UML-doc -->
  * 
  * @author Jay Jay Billings
- * @generated 
- *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
 public class DataComponentTester {
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The DataComponent to be tested.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	private DataComponent dataComponent;
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The TestComponentListener used to subscribe to and check notifications
 	 * from the DataComponent.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	private TestComponentListener testComponentListener;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * A TestVisitor that is used to test the visitation scheme.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	private TestVisitor testVisitor;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation tests the construction of the DataComponent class and the
 	 * functionality inherited from ICEObject.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 */
 	@Test
 	public void checkCreation() {
-		// begin-user-code
 
 		// Local declarations
 		int id = 20110901;
@@ -109,20 +90,16 @@ public class DataComponentTester {
 
 		return;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation tests the DataComponent class by making sure that Entry
 	 * can be added to the component.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 */
 	@Test
 	public void checkAddingEntries() {
-		// begin-user-code
 
 		// Location Declarations
 		int i = 0, numEntries = 50;
@@ -167,20 +144,16 @@ public class DataComponentTester {
 
 		return;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation tests the DataComponent class to make sure that Entries
 	 * can be cleared and deleted.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 */
 	@Test
 	public void checkClearingEntries() {
-		// begin-user-code
 
 		// Location Declarations
 		int i = 0, numEntries = 50;
@@ -212,20 +185,16 @@ public class DataComponentTester {
 
 		return;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation tests the DataComponent class to insure that checking for
 	 * Entry containment functions properly.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 */
 	@Test
 	public void checkContainment() {
-		// begin-user-code
 
 		// Location Declarations
 		int i = 0, numEntries = 50;
@@ -249,20 +218,16 @@ public class DataComponentTester {
 			assertTrue(dataComponent.contains((entries.get(i)).getName()));
 		}
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the ability of the DataComponent to update its
 	 * Entries.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 */
 	@Test
 	public void checkUpdate() {
-		// begin-user-code
 
 		// Location Declarations
 		int i = 0, numEntries = 10;
@@ -301,23 +266,17 @@ public class DataComponentTester {
 			assertEquals(value, retEntries.get(i).getValue());
 		}
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation tests the DataComponent to insure that it can properly
 	 * dispatch notifications when it receives an update that changes its state.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkNotifications() {
-		// begin-user-code
 
 		// Local Declarations
 		Entry testEntry = new Entry();
@@ -380,23 +339,17 @@ public class DataComponentTester {
 
 		return;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the DataComponent to insure that it can be
 	 * correctly visited by a realization of the IComponentVisitor interface.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkVisitation() {
-		// begin-user-code
 
 		// Setup the visitor
 		testVisitor = new TestVisitor();
@@ -410,23 +363,17 @@ public class DataComponentTester {
 		// Check the visitor
 		assertTrue(testVisitor.wasVisited());
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the DataComponent to insure that its equals() and
 	 * hashcode() operations work.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkEquality() {
-		// begin-user-code
 
 		// Create DataComponents to test
 		DataComponent component = new DataComponent();
@@ -509,23 +456,17 @@ public class DataComponentTester {
 		// Assert that hashcodes from unequal objects are different
 		assertTrue(component.hashCode() != unEqualComponent.hashCode());
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the DataComponent to ensure that its copy() and
 	 * clone() operations work as specified.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkCopying() {
-		// begin-user-code
 		/*
 		 * The following sets of operations will be used to test the
 		 * "clone and copy" portion of DataComponent.
@@ -602,7 +543,6 @@ public class DataComponentTester {
 		assertTrue(copyData.contains(entry2.getName()));
 
 		return;
-		// end-user-code
 	}
 
 	/**

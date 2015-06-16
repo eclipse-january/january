@@ -24,42 +24,30 @@ import org.eclipse.emf.ecore.xmi.util.XMLProcessor;
 import org.xml.sax.SAXException;
 
 /**
- * <!-- begin-UML-doc -->
  * <p>
  * ICEXMLProcessor is a subclass of the Eclipse Modeling Framework's (EMF)
  * utility XMLProcessor class. It performs all the same functions as
  * XMLProcessor and lets clients create empty XML instance Resources from a valid 
  * XML schema definition.
  * </p>
- * <!-- end-UML-doc -->
  * 
  * @author Alex McCaskey
- * @generated 
- *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
 public class ICEXMLProcessor extends XMLProcessor {
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * Reference to the XML schema file for the Ecore domain model.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	private URI schema;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The constructor, takes an XML schema Java File.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public ICEXMLProcessor(URI schemaFile) throws SAXException {
 		super(schemaFile);
@@ -69,15 +57,11 @@ public class ICEXMLProcessor extends XMLProcessor {
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This method creates and returns a new empty XML Resource instance that conforms to 
 	 * the given XML schema definition. 
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 //	public Resource createXMLInstance() {
 //		// Better way to do this?

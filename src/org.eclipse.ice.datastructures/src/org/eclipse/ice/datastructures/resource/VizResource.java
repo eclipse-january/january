@@ -19,9 +19,6 @@ import java.util.Arrays;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.eclipse.ice.datastructures.ICEObject.ICEObject;
-import org.eclipse.ice.datastructures.form.Entry;
-
 /**
  * The VizResource is used for loading a data set that should be visualized in
  * one of the platform's many visualization services. It is significantly
@@ -152,8 +149,9 @@ public class VizResource extends ICEResource {
 	/**
 	 * Set the remote file flag
 	 * 
-	 * @param val
-	 *            The boolean value to set resmoteFileFlag to
+	 * @param name
+	 *            The new name of the host. If local, use "localhost". Any other
+	 *            hostname will be treated as remote.
 	 */
 	public void setHost(String name) {
 		host = name;
@@ -234,7 +232,6 @@ public class VizResource extends ICEResource {
 	 * @return The hashcode for the VizResource.
 	 */
 	public int hashCode() {
-		// begin-user-code
 
 		// Local Declaration
 		int hash = 11;
@@ -244,7 +241,6 @@ public class VizResource extends ICEResource {
 
 		return hash;
 
-		// end-user-code
 	}
 
 	/**
@@ -255,7 +251,7 @@ public class VizResource extends ICEResource {
 	 *            The other VizResource from which information should be copied.
 	 */
 	public void copy(VizResource otherResource) {
-		
+
 		if (otherResource != null) {
 			// Copy all the base class stuff
 			super.copy(otherResource);

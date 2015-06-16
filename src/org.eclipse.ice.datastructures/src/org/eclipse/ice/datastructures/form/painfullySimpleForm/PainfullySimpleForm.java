@@ -30,7 +30,6 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * <!-- begin-UML-doc -->
  * <p>
  * The PainfullySimpleForm is a Form that is initialized from a InputStream that
  * contains the serialized contents of a Form in <a href=
@@ -40,36 +39,26 @@ import javax.xml.bind.annotation.XmlRootElement;
  * Painfully Simple Form does not maintain any memory of the stream from which
  * it created itself.
  * </p>
- * <!-- end-UML-doc -->
  * 
  * @author Jay Jay Billings
- * @generated 
- *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
 @XmlRootElement(name = "Form")
 public class PainfullySimpleForm extends Form {
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * An attribute that holds an arraylist of entries with a key relative to
 	 * the TableComponent's name. This is setup in the loadEntries operation.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 */
 	private HashMap<String, ArrayList<Entry>> rowTemplates;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The constructor.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public PainfullySimpleForm() {
-		// begin-user-code
 
 		// Call the super constructor
 		super();
@@ -77,11 +66,9 @@ public class PainfullySimpleForm extends Form {
 		// prepare rowTemplates
 		this.rowTemplates = new HashMap<String, ArrayList<Entry>>();
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation loads the PainfullySimpleForm from an set of strings that
 	 * contains the contents of the Form in the Painfully Simple Form file
@@ -94,7 +81,6 @@ public class PainfullySimpleForm extends Form {
 	 * it has been delegated to the PSF, which means that it is its duty to
 	 * throw the error.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param inputLines
 	 *            <p>
@@ -102,11 +88,8 @@ public class PainfullySimpleForm extends Form {
 	 *            being a different line.
 	 *            </p>
 	 * @throws IOException
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void loadFromPSF(ArrayList<String> inputLines) throws IOException {
-		// begin-user-code
 
 		// Local Declarations
 		int firstEntryLine = 0;
@@ -165,16 +148,13 @@ public class PainfullySimpleForm extends Form {
 			throw new IOException("PSF InputStream cannot be null!");
 		}
 		return;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the InputStream to determine if it is in the
 	 * Painfully Simple Form file format.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param lines
 	 *            <p>
@@ -183,11 +163,8 @@ public class PainfullySimpleForm extends Form {
 	 * @return <p>
 	 *         True if the format matches the PSF, false otherwise.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	private boolean isPSF(ArrayList<String> lines) {
-		// begin-user-code
 
 		// Local Declarations
 		boolean retFlag = false;
@@ -202,27 +179,21 @@ public class PainfullySimpleForm extends Form {
 		}
 
 		return retFlag;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation loads the DataComponents and sets up the rowTemplates in
 	 * the PSF stream into the Form.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param lines
 	 *            <p>
 	 *            The lines of text from the PSF file.
 	 *            </p>
 	 * @throws IOException
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	private void loadComponents(ArrayList<String> lines) throws IOException {
-		// begin-user-code
 
 		// Local Declarations
 		String[] splitLines = { "", "" };
@@ -305,27 +276,21 @@ public class PainfullySimpleForm extends Form {
 
 		return;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operations loads the Entries in the PSF stream into the
 	 * DataComponents of the Form.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param lines
 	 *            <p>
 	 *            The lines of text from the PSF file.
 	 *            </p>
 	 * @throws IOException
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	private void loadEntries(ArrayList<String> lines) throws IOException {
-		// begin-user-code
 
 		// Local Declarations
 		int lowerBound = 0, upperBound = 0; // Loop variables for tracking block
@@ -421,26 +386,20 @@ public class PainfullySimpleForm extends Form {
 		// finished!
 		return;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation gets the name and description of the Form from the lines
 	 * of text from the PSF file.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param lines
 	 *            <p>
 	 *            The lines of text from the PSF file.
 	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	private void getFormNameAndDescription(ArrayList<String> lines) {
-		// begin-user-code
 
 		// Local Declarations
 		boolean hasName = false, hasDescription = false;
@@ -460,22 +419,16 @@ public class PainfullySimpleForm extends Form {
 			}
 		}
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * An operation that sets up the row templates to the TableComponents in the
 	 * form's component list.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	private void setupRowTemplates() {
-		// begin-user-code
 
 		ICEObject compRef = null;
 		TableComponent tableRef = null;
@@ -494,6 +447,5 @@ public class PainfullySimpleForm extends Form {
 			}
 		}
 
-		// end-user-code
 	}
 }

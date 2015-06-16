@@ -28,7 +28,7 @@ import ca.odell.glazedlists.event.ListEventListener;
  * @author Jay Jay Billings
  *
  */
-public class WrappedGlazedEventListener implements ListEventListener {
+public class WrappedGlazedEventListener<T> implements ListEventListener<T> {
 
 	/**
 	 * The IUpdateableListener to which events should be dispatched
@@ -57,7 +57,7 @@ public class WrappedGlazedEventListener implements ListEventListener {
 	 * This GlazedList update operation. The notification is forwarded to the
 	 * IUpdateableListener.
 	 */
-	public void listChanged(ListEvent listChanges) {
+	public void listChanged(ListEvent<T> listChanges) {
 		// Just post the update
 		listener.update(component);
 	}

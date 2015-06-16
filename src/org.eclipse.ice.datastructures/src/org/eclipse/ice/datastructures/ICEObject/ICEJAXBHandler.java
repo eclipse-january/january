@@ -24,47 +24,29 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 /**
- * <!-- begin-UML-doc -->
- * <p>
  * This class is responsible for reading and writing JAXB-annotated classes into
  * and out of ICE.
- * </p>
- * <!-- end-UML-doc -->
  * 
  * @author Jay Jay Billings
- * @generated 
- *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
 public class ICEJAXBHandler {
+
 	/**
-	 * <!-- begin-UML-doc -->
-	 * <p>
 	 * This operation reads an instance of a particular class type from the
 	 * input stream into a Java Object.
-	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @param objectClass
-	 *            <p>
-	 *            The Class from which JAXB annotations should be read.
-	 *            </p>
+	 * @param classList
+	 *            The class list from which JAXB annotations should be read.
 	 * @param inputStream
-	 *            <p>
 	 *            An InputStream from which the XML should be read by JAXB.
-	 *            </p>
-	 * @return <p>
-	 *         An Object that is an instance of the Class that was parsed from
+	 * @return An Object that is an instance of the Class that was parsed from
 	 *         the XML InputStream.
-	 *         </p>
 	 * @throws NullPointerException
 	 * @throws JAXBException
 	 * @throws IOException
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public Object read(ArrayList<Class> classList, InputStream inputStream)
 			throws NullPointerException, JAXBException, IOException {
-		// begin-user-code
 
 		// Initialize local variables
 		JAXBContext context;
@@ -89,38 +71,27 @@ public class ICEJAXBHandler {
 		// Return object
 		return dataFromFile;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
-	 * <p>
 	 * This operation writes an instance of a particular class type from the
 	 * input stream into a Java Object. This operation requires both the Object
 	 * and the specific class type because some classes, such as local classes,
 	 * do return the appropriate class type from a call to "this.getClass()."
-	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param dataObject
-	 *            <p>
 	 *            An Object that is an instance of the Class that is parsed to
 	 *            create the XML InputStream.
-	 *            </p>
+	 * @param classList
 	 * @param outputStream
-	 *            <p>
 	 *            An OutputStream to which the XML should be written by JAXB.
-	 *            </p>
 	 * @throws NullPointerException
 	 * @throws JAXBException
 	 * @throws IOException
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void write(Object dataObject, ArrayList<Class> classList,
 			OutputStream outputStream) throws NullPointerException,
 			JAXBException, IOException {
-		// begin-user-code
 
 		JAXBContext jaxbContext = null;
 		Class[] classArray = {};
@@ -142,8 +113,7 @@ public class ICEJAXBHandler {
 			// Cast the object to a generic, type-less list
 			ListComponent list = (ListComponent) dataObject;
 			// Don't pop the container open if it is empty
-			if (list.size() > 0
-					&& !classList.contains(ListComponent.class)) {
+			if (list.size() > 0 && !classList.contains(ListComponent.class)) {
 				classList.add(ListComponent.class);
 				classList.add(list.get(0).getClass());
 			}
@@ -167,6 +137,5 @@ public class ICEJAXBHandler {
 		}
 
 		return;
-		// end-user-code
 	}
 }

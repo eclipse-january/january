@@ -17,8 +17,7 @@ import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementRef;
-import javax.xml.bind.annotation.XmlElementRefs;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.eclipse.ice.datastructures.ICEObject.Component;
@@ -26,14 +25,9 @@ import org.eclipse.ice.datastructures.ICEObject.Composite;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
 import org.eclipse.ice.datastructures.ICEObject.Identifiable;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
-import org.eclipse.ice.datastructures.ICEObject.ListComponent;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
-import org.eclipse.ice.datastructures.form.emf.EMFComponent;
-import org.eclipse.ice.datastructures.form.geometry.GeometryComponent;
-import org.eclipse.ice.datastructures.form.mesh.MeshComponent;
 
 /**
- * <!-- begin-UML-doc -->
  * <p>
  * The Form class is a representation of the Item class and contains all of the
  * Entries that must be addressed by the Eclipse User before the Item can
@@ -49,93 +43,57 @@ import org.eclipse.ice.datastructures.form.mesh.MeshComponent;
  * information provided so that a task can be performed with no modification.
  * isReady() should always return true for such a Form, newly created.
  * </p>
- * <!-- end-UML-doc -->
  * 
  * @author Jay Jay Billings
- * @generated 
- *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
 @XmlRootElement(name = "Form")
 public class Form extends ICEObject implements Composite {
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The unique ID of the Item that is represented by this Form.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	private int itemID;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The list of Components.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	@XmlAnyElement()
-	@XmlElementRefs(value = {
-			@XmlElementRef(name = "ResourceComponent", type = ResourceComponent.class),
-			@XmlElementRef(name = "TableComponent", type = TableComponent.class),
-			@XmlElementRef(name = "MatrixComponent", type = MatrixComponent.class),
-			@XmlElementRef(name = "GeometryComponent", type = GeometryComponent.class),
-			@XmlElementRef(name = "MasterDetailsComponent", type = MasterDetailsComponent.class),
-			@XmlElementRef(name = "TimeDataComponent", type = TimeDataComponent.class),
-			@XmlElementRef(name = "DataComponent", type = DataComponent.class),
-			@XmlElementRef(name = "TreeComposite", type = TreeComposite.class),
-			@XmlElementRef(name = "MeshComponent", type = MeshComponent.class),
-			@XmlElementRef(name = "ListComponent", type = ListComponent.class),
-			@XmlElementRef(name = "EMFComponent", type = EMFComponent.class)})
+	@XmlElementWrapper
+	@XmlAnyElement(lax=true)
 	private ArrayList<Component> componentList;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The list of Actions that can be performed for this Form when it is
 	 * processed.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	protected ArrayList<String> actionList;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This attribute indicates whether or not the Form is complete and valid
 	 * and can be processed by one of the Actions described in its list. This
 	 * value is true if the Form is ready, false otherwise.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-
 	protected boolean canProcess = true;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The constructor. This constructor requires a list of Actions for which
 	 * the Form can be used. If this list is null, then getActionList() will
 	 * return null.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public Form() {
-		// begin-user-code
 
 		// Setup the Form ID
 		this.itemID = 0;
@@ -146,16 +104,13 @@ public class Form extends ICEObject implements Composite {
 		// Setup the list of Listeners
 		listeners = new ArrayList<IUpdateableListener>();
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns the id of the Item that is represented by this
 	 * Form.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The unique ID of the Item that the Form represents.
@@ -163,17 +118,13 @@ public class Form extends ICEObject implements Composite {
 	 */
 	@XmlAttribute()
 	public int getItemID() {
-		// begin-user-code
 		return this.itemID;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation sets the ID of the item to which the Form belongs.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param newItemID
 	 *            <p>
@@ -181,110 +132,82 @@ public class Form extends ICEObject implements Composite {
 	 *            </p>
 	 */
 	public void setItemID(int newItemID) {
-		// begin-user-code
 		this.itemID = newItemID;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation retrieves the list of Actions that can be performed for
 	 * the Form.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The list of Actions that can be performed for this Form when it
 	 *         is processed or null if no such list was provided.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlElement(name = "ActionList")
 	public ArrayList<String> getActionList() {
-		// begin-user-code
 		return this.actionList;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation sets the list of Actions that can be performed using the
 	 * data on the Form.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param actions
 	 *            <p>
 	 *            The list of available Actions.
 	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void setActionList(ArrayList<String> actions) {
-		// begin-user-code
 
 		// Setup the list of Actions
 		this.actionList = actions;
 
 		return;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns true if the Form is complete, valid and can be
 	 * processed.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         True if the Form is complete, valid and can be processed.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public boolean isReady() {
-		// begin-user-code
 		return canProcess;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation marks the Form as either ready (true) or not ready (false)
 	 * to be processed.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param ready
 	 *            <p>
 	 *            True if the Form should be marked as complete, valid and ready
 	 *            to be processed. False otherwise.
 	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void markReady(boolean ready) {
-		// begin-user-code
 
 		canProcess = ready;
 
 		return;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation is used to check equality between the Form and another
 	 * Form. It returns true if the Forms are equal and false if they are not.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param otherForm
 	 *            <p>
@@ -293,11 +216,8 @@ public class Form extends ICEObject implements Composite {
 	 * @return <p>
 	 *         True if the Forms are equal, false otherwise.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public boolean equals(Object otherForm) {
-		// begin-user-code
 
 		// Check if they are the same references in memory
 		if (this == otherForm) {
@@ -352,24 +272,18 @@ public class Form extends ICEObject implements Composite {
 		// If made it here, these Forms are Equal
 		// Return true
 		return true;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns the hashcode value of the Form.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The hashcode of the Form.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public int hashCode() {
-		// begin-user-code
 
 		// Local Declaration
 		int hash = 13;
@@ -392,24 +306,18 @@ public class Form extends ICEObject implements Composite {
 		}
 
 		return hash;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation provides a deep copy of the Form.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The deep-copy clone of this Form.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public Object clone() {
-		// begin-user-code
 
 		// Create a new instance, copy contents, and return it
 
@@ -417,26 +325,20 @@ public class Form extends ICEObject implements Composite {
 		Form form = new Form();
 		form.copy(this);
 		return form;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation performs a deep copy of the attributes of another Form
 	 * into the current Form.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param otherForm
 	 *            <p>
 	 *            The other Form from which information should be copied.
 	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void copy(Form otherForm) {
-		// begin-user-code
 
 		// Return if otherForm is null
 		if (otherForm == null) {
@@ -476,18 +378,13 @@ public class Form extends ICEObject implements Composite {
 		// Throw up a flare
 		this.notifyListeners();
 
-		// end-user-code
 	}
 
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see IUpdateable#update(String updatedKey, String newValue)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
+	/*
+	 * Overrides a method from ICEObject.
 	 */
+	@Override
 	public void update(String updatedKey, String newValue) {
-		// begin-user-code
 
 		for (Component i : componentList) {
 			i.update(updatedKey, newValue);
@@ -495,32 +392,24 @@ public class Form extends ICEObject implements Composite {
 
 		return;
 
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see Component#accept(IComponentVisitor visitor)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void accept(IComponentVisitor visitor) {
-		// begin-user-code
 		// TODO Auto-generated method stub
 
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see Composite#addComponent(Component child)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void addComponent(Component child) {
-		// begin-user-code
 
 		// Add the child component if it is not null and update listeners
 		if (child != null) {
@@ -533,18 +422,14 @@ public class Form extends ICEObject implements Composite {
 		}
 
 		return;
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see Composite#removeComponent(int childId)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void removeComponent(int childId) {
-		// begin-user-code
 
 		// Local Declarations
 		Identifiable comp = null; // FIXME - might not be an ICEObject!
@@ -559,18 +444,14 @@ public class Form extends ICEObject implements Composite {
 
 		return;
 
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see Composite#getComponent(int childId)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public Component getComponent(int childId) {
-		// begin-user-code
 
 		// Local Declarations
 		Identifiable comp = null;
@@ -589,25 +470,17 @@ public class Form extends ICEObject implements Composite {
 	 * (non-Javadoc)
 	 * 
 	 * @see Composite#getNumberOfComponents()
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public int getNumberOfComponents() {
-		// begin-user-code
 		return this.componentList.size();
-		// end-user-code
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see Composite#getComponents()
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public ArrayList<Component> getComponents() {
-		// begin-user-code
 		return this.componentList;
-		// end-user-code
 	}
 }

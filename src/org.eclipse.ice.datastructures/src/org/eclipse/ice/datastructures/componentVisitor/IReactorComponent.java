@@ -17,31 +17,23 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.eclipse.ice.datastructures.ICEObject.Component;
 
 /**
- * <!-- begin-UML-doc -->
  * <p>
  * This interface specializes the Component interface for LWRReactors. It is a
  * place holder used
  * </p>
- * <!-- end-UML-doc -->
  * 
  * @author Jay Jay Billings
- * @generated 
- *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
 @XmlRootElement(name = "ReactorComponent")
 public interface IReactorComponent extends Component {
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns the contents of the ILWRComponent as a string.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The contents of the LWRComponent as a string.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public String toString();
 }

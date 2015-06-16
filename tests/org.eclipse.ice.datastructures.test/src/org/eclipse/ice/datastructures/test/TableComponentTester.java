@@ -31,65 +31,45 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * <!-- begin-UML-doc --> <!-- end-UML-doc -->
  * 
  * @author Jay Jay Billings
- * @generated 
- *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
 
 public class TableComponentTester {
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The TableComponent used in the test.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	private static TableComponent tableComponent;
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * An IComponentListener used to test notifications from the TableComponent.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	private TestComponentListener testComponentListener;
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * An IComponentVisitor used to test the ability of the TableComponent to be
 	 * visited.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	private TestVisitor testVisitor;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the TableComponent to make sure that setting the
 	 * Row Template can only be done once and that the Row Template can be
 	 * retrieved, but not manipulated. It also checks the name, id and
 	 * description of the TableComponent.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkConstruction() {
-		// begin-user-code
 		// Local Declarations
 		ArrayList<Entry> template = new ArrayList<Entry>();
 		ArrayList<Entry> template2 = new ArrayList<Entry>();
@@ -267,25 +247,19 @@ public class TableComponentTester {
 		assertEquals(column3.getDescription(), testColumn3.getDescription());
 		assertEquals(column3.getValue(), testColumn3.getValue());
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation ensures that rows can be retrieved, added and deleted from
 	 * the table and that the number of rows and columns, as well as the names
 	 * of the columns are correct. It also checks that rows can be marked as
 	 * selected.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkRowManipulation() {
-		// begin-user-code
 
 		// Local Declarations
 		ArrayList<Entry> template = new ArrayList<Entry>();
@@ -591,23 +565,17 @@ public class TableComponentTester {
 		assertEquals(1, (int) retSelectedRows.get(0));
 
 		return;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation tests the TableComponent to insure that it can properly
 	 * dispatch notifications when it receives an update that changes its state.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkNotifications() {
-		// begin-user-code
 
 		// Setup the listener
 		testComponentListener = new TestComponentListener();
@@ -650,23 +618,17 @@ public class TableComponentTester {
 
 		return;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the TableComponent to insure that it can be
 	 * correctly visited by a realization of the IComponentVisitor interface.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkVisitation() {
-		// begin-user-code
 
 		// Setup the visitor
 		testVisitor = new TestVisitor();
@@ -680,23 +642,17 @@ public class TableComponentTester {
 		// Check the visitor
 		assertTrue(testVisitor.wasVisited());
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the TableComponent to insure that its equals() and
 	 * hashcode() operations work.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkEquality() {
-		// begin-user-code
 		// Local Declarations
 		ArrayList<Entry> template = new ArrayList<Entry>();
 		ArrayList<Entry> template2 = new ArrayList<Entry>();
@@ -783,23 +739,17 @@ public class TableComponentTester {
 		// Assert that hashcodes from unequal objects are different
 		assertTrue(component.hashCode() != unEqualComponent.hashCode());
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the TableComponent to ensure that its copy() and
 	 * clone() operations work as specified.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkCopying() {
-		// begin-user-code
 
 		/*
 		 * The following sets of operations will be used to test the
@@ -913,7 +863,6 @@ public class TableComponentTester {
 		assertTrue(tableComponent.equals(copyTable));
 
 		return;
-		// end-user-code
 	}
 
 	/**
@@ -925,7 +874,6 @@ public class TableComponentTester {
 	 */
 	@Test
 	public void checkLoadingFromXML() throws NullPointerException, JAXBException, IOException {
-		// begin-user-code
 
 		/*
 		 * The following sets of operations will be used to test the

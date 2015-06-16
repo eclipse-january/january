@@ -181,11 +181,9 @@ public class EMFEntry extends Entry {
 	 * 
 	 */
 	public Object clone() {
-		// begin-user-code
 		EMFEntry entry = new EMFEntry(entryMetaData,
 				EcoreUtil.create(entryMetaData.getEContainingClass()));
 		entry.copy(this);
 		return entry;
-		// end-user-code
 	}
 }

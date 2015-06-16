@@ -33,18 +33,20 @@ import ca.odell.glazedlists.gui.WritableTableFormat;
  * purpose is to provide all of the standard list operations expected from Java
  * Collections in a class that realizes ICE's additional requirements for
  * persistence, unique identification, and notifications.
- * 
+ * <p>
  * It implements the Component to match up with the ICE requirements and extends
  * the TransformedList from GlazedLists to provide the generic, observable list
  * capabilities.
- * 
+ * </p>
+ * <p>
  * It can be configured to provide a handle to an IElementSource that will
  * provide valid, new elements upon request. This configuration is meant to
  * facilitate the use of the ListComponent as a, for example, proxy for
  * selections made from databases or similar tools. If getElementSource()
  * returns null, clients should feel free to put whatever values they want into
  * the List.
- * 
+ * </p>
+ * <p>
  * This class also realizes the WritableTableFormat interface from GlazedLists
  * so that it can simply be "dropped in" to GlazedList tables in client UIs.
  * This is handled using delegation instead of inheritance so that the format
@@ -52,9 +54,9 @@ import ca.odell.glazedlists.gui.WritableTableFormat;
  * WritableTableFormat can just be retrieved with a getter too. If the table
  * format is not provided, the behavior is unspecified, but this Component
  * should probably not be put in a Form in that case.
- * 
+ * </p>
  * <b>Implementation note</b>
- * 
+ * <p>
  * Unfortunately, there are some tricky implementation details here related to
  * extending TransformedList. The point of a TransformedList is to sit on top of
  * a source list and manipulate it so it is a wrapper around another list,
@@ -63,6 +65,12 @@ import ca.odell.glazedlists.gui.WritableTableFormat;
  * list should be done to the source list, not "this" list. TransformedList is
  * the suggested base class for extensions to GlazedLists instead of
  * AbstractEventList, so we will have to live with this for now.
+ * </p>
+ * 
+ * I also had to override the ListEventListener registration operations to make
+ * sure that the source list was registered. The TransformedList by defaults
+ * registers listeners against itself, not the source, but it processes all of
+ * the list additions, etc., through the source.
  * 
  * @author Jay Jay Billings
  * 
@@ -80,9 +88,13 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 
 	/**
 	 * A listener map to map ICE listeners to ListEventListeners.
+	 * <p>
+	 * The listeners must have the type Object since the listeners are
+	 * registered with both {@link #idList} and the TransformedList's source.
+	 * </p>
 	 */
 	@XmlTransient
-	Map<IUpdateableListener, ListEventListener> listenerMap;
+	Map<IUpdateableListener, ListEventListener<Object>> listenerMap;
 
 	/**
 	 * A BasicEventList that is used to store the identity of this component.
@@ -156,7 +168,7 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 		idList.add("ICE Object");
 		idList.add("ICE Object");
 		// Setup the listener map
-		listenerMap = new HashMap<IUpdateableListener, ListEventListener>();
+		listenerMap = new HashMap<IUpdateableListener, ListEventListener<Object>>();
 	}
 
 	/**
@@ -180,11 +192,7 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	}
 
 	/**
-	 * (non-Javadoc)
-	 * 
 	 * @see Identifiable#hashCode()
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public int hashCode() {
 		// Local Declaration
@@ -199,14 +207,12 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	}
 
 	/**
-	 * (non-Javadoc)
-	 * 
 	 * @see Identifiable#equals(Object otherObject)
 	 */
 	public boolean equals(Object otherObject) {
 		// Local Declarations
 		boolean retVal = false;
-		ListComponent<T> castedOtherObject = null;
+		ListComponent<?> castedOtherObject = null;
 
 		// Check null and base type first. Note that the instanceof operator
 		// must be used because subclasses of ICEObject can be anonymous.
@@ -215,7 +221,7 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 			if (this == otherObject) {
 				retVal = true;
 			} else {
-				castedOtherObject = (ListComponent<T>) otherObject;
+				castedOtherObject = (ListComponent<?>) otherObject;
 				// Check each member attribute
 				retVal = (idList.equals(castedOtherObject.idList))
 						&& (source.equals(castedOtherObject.source));
@@ -226,15 +232,13 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	}
 
 	/**
-	 * (non-Javadoc)
-	 * 
 	 * @see IUpdateable#register(IUpdateableListener listener)
 	 */
 	@Override
 	public void register(IUpdateableListener listener) {
 		// Delegate this to the super class and id list by wrapping the listener
 		// and registering it
-		WrappedGlazedEventListener glazedListener = new WrappedGlazedEventListener(
+		WrappedGlazedEventListener<Object> glazedListener = new WrappedGlazedEventListener<Object>(
 				listener, this);
 		System.out.println("Registered!");
 		source.addListEventListener(glazedListener);
@@ -245,14 +249,12 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	}
 
 	/**
-	 * (non-Javadoc)
-	 * 
 	 * @see IUpdateable#unregister(IUpdateableListener listener)
 	 */
 	@Override
 	public void unregister(IUpdateableListener listener) {
 		// Pull the listener from the map
-		ListEventListener glazedListener = listenerMap.get(listener);
+		ListEventListener<Object> glazedListener = listenerMap.get(listener);
 		// Unregister it from the lists
 		source.removeListEventListener(glazedListener);
 		idList.removeListEventListener(glazedListener);
@@ -261,8 +263,6 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	}
 
 	/**
-	 * (non-Javadoc)
-	 * 
 	 * @see Identifiable#setId(int id)
 	 */
 	@Override
@@ -273,8 +273,6 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	}
 
 	/**
-	 * (non-Javadoc)
-	 * 
 	 * @see Identifiable#getDescription()
 	 */
 	@Override
@@ -283,8 +281,6 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	}
 
 	/**
-	 * (non-Javadoc)
-	 * 
 	 * @see Identifiable#getId()
 	 */
 	@Override
@@ -293,8 +289,6 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	}
 
 	/**
-	 * (non-Javadoc)
-	 * 
 	 * @see Identifiable#setName(String name)
 	 */
 	@Override
@@ -305,8 +299,6 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	}
 
 	/**
-	 * (non-Javadoc)
-	 * 
 	 * @see Identifiable#getName()
 	 */
 	@Override
@@ -315,8 +307,6 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	}
 
 	/**
-	 * (non-Javadoc)
-	 * 
 	 * @see Identifiable#setDescription(String description)
 	 */
 	@Override
@@ -327,8 +317,6 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	}
 
 	/**
-	 * (non-Javadoc)
-	 * 
 	 * @see TransformedList#listChanged(ListEvent)
 	 */
 	@Override
@@ -336,20 +324,15 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 		System.out.println("List changed!");
 	}
 
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see TransformedList#isWriteable()
+	/*
+	 * Overrides a super class method.
 	 */
 	@Override
 	protected boolean isWritable() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	/**
-	 * (non-Javadoc)
-	 * 
 	 * @see Component#accept(IComponentVisitor)
 	 */
 	@Override
@@ -357,10 +340,8 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 		visitor.visit(this);
 	};
 
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see Cloneable#clone()
+	/*
+	 * Implements a method from Identifiable.
 	 */
 	@Override
 	public Object clone() {
@@ -371,19 +352,13 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	};
 
 	/**
-	 * (non-Javadoc)
-	 * 
 	 * @see IUpdateable#update(String updatedKey, String newValue)
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Override
 	public void update(String updatedKey, String newValue) {
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see ca.odell.glazedlists.gui.TableFormat#getColumnCount()
 	 */
 	@Override
@@ -399,9 +374,7 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 		return retValue;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see ca.odell.glazedlists.gui.TableFormat#getColumnName(int)
 	 */
 	@Override
@@ -417,12 +390,9 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 		return name;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * ca.odell.glazedlists.gui.TableFormat#getColumnValue(java.lang.Object,
-	 * int)
+	/**
+	 * @see ca.odell.glazedlists.gui.TableFormat#getColumnValue(java.lang.Object,
+	 *      int)
 	 */
 	@Override
 	public Object getColumnValue(T baseObject, int column) {
@@ -437,12 +407,9 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 		return obj;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * ca.odell.glazedlists.gui.WritableTableFormat#isEditable(java.lang.Object,
-	 * int)
+	/**
+	 * @see ca.odell.glazedlists.gui.WritableTableFormat#isEditable(java.lang.Object,
+	 *      int)
 	 */
 	@Override
 	public boolean isEditable(T baseObject, int column) {
@@ -458,11 +425,7 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * ca.odell.glazedlists.gui.WritableTableFormat#setColumnValue(java.lang
-	 * .Object, java.lang.Object, int)
+	 * Implements a method from WritableTableFormat.
 	 */
 	@Override
 	public T setColumnValue(T baseObject, Object editedValue, int column) {
@@ -477,6 +440,17 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 
 		return retValue;
 	};
+
+	/**
+	 * This operation sets the element source that should be used by the list
+	 * 
+	 * @param source
+	 *            the element source that provides a list of values that
+	 *            *should* be used to seed new entries.
+	 */
+	public void setElementSource(IElementSource<T> source) {
+		elementSource = source;
+	}
 
 	/**
 	 * This operation returns the element source which should be used to create
@@ -512,6 +486,39 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	 */
 	public WritableTableFormat<T> getTableFormat() {
 		return tableFormat;
+	}
+
+	/**
+	 * Registers the specified listener to receive change updates for this list.
+	 * <p>
+	 * ListComponent also registers the listener to the underlying source list.
+	 * Effectively, this method can be used to register glazed list listeners.
+	 * </p>
+	 */
+	@Override
+	public void addListEventListener(
+			ListEventListener<? super T> listChangeListener) {
+		super.addListEventListener(listChangeListener);
+
+		// Add the listener to the TransformedList's source EventList.
+		super.source.addListEventListener(listChangeListener);
+	}
+
+	/**
+	 * Removes the specified listener from receiving change updates for this
+	 * list.
+	 * <p>
+	 * ListComponent also removes the listener from the underlying source list.
+	 * Effectively, this method can be used to unregister glazed list listeners.
+	 * </p>
+	 */
+	@Override
+	public void removeListEventListener(
+			ListEventListener<? super T> listChangeListener) {
+		super.removeListEventListener(listChangeListener);
+
+		// Remove the listener from the TransformedList's source EventList.
+		super.source.removeListEventListener(listChangeListener);
 	}
 
 }

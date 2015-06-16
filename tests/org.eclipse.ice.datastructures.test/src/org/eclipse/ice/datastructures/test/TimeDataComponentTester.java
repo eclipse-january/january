@@ -29,31 +29,22 @@ import org.eclipse.ice.datastructures.form.MasterDetailsPair;
 import org.eclipse.ice.datastructures.form.TimeDataComponent;
 
 /**
- * <!-- begin-UML-doc -->
  * <p>
  * A class that tests the TimeDataComponent.
  * </p>
- * <!-- end-UML-doc -->
  * 
- * @author s4h
- * @generated 
- *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
+ * @author Scott Forest Hull II
  */
 public class TimeDataComponentTester {
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * Checks the construction operations.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkConstruction() {
 
-		// begin-user-code
 
 		// Local Declarations
 		String defaultName = "TimeDataComponent 1";
@@ -204,20 +195,15 @@ public class TimeDataComponentTester {
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * Checks the overridden operations concerning entry manipulation on
 	 * TimeDataComponent.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkEntryOperations() {
 
-		// begin-user-code
 
 		// Local Declarations
 		int size = 5;
@@ -262,7 +248,6 @@ public class TimeDataComponentTester {
 		assertEquals(nameChanged, timeComponent.retrieveAllEntries().get(0)
 				.getName());
 
-		// end-user-code
 
 	}
 
@@ -318,19 +303,14 @@ public class TimeDataComponentTester {
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * Checks copying and clone routines.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkCopying() {
 
-		// begin-user-code
 
 		// Local declarations
 		int id = 20110901;
@@ -377,23 +357,17 @@ public class TimeDataComponentTester {
 		assertTrue(dataComponent.equals(copyData));
 
 		return;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * An operation that checks the equality operations.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkEquality() {
 
-		// begin-user-code
 
 		// Create TimeDataComponents to test
 		TimeDataComponent component = new TimeDataComponent();
@@ -448,7 +422,6 @@ public class TimeDataComponentTester {
 		// Assert that hashcodes from unequal objects are different
 		assertTrue(component.hashCode() != unEqualComponent.hashCode());
 
-		// end-user-code
 
 	}
 }

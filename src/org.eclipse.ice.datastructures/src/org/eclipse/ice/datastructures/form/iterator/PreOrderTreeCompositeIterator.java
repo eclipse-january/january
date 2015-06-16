@@ -43,7 +43,6 @@ public class PreOrderTreeCompositeIterator extends
 	 *            iterator.
 	 */
 	public PreOrderTreeCompositeIterator(TreeComposite root) {
-		// begin-user-code
 
 		// Call the super constructor. Send a non-null root TreeComposite. We
 		// must make sure this class is completely initialized before throwing
@@ -67,7 +66,6 @@ public class PreOrderTreeCompositeIterator extends
 		}
 
 		return;
-		// end-user-code
 	}
 
 	/*
@@ -77,9 +75,7 @@ public class PreOrderTreeCompositeIterator extends
 	 */
 	@Override
 	public boolean hasNext() {
-		// begin-user-code
 		return !stack.isEmpty();
-		// end-user-code
 	}
 
 	/*
@@ -89,7 +85,6 @@ public class PreOrderTreeCompositeIterator extends
 	 */
 	@Override
 	public TreeComposite next() {
-		// begin-user-code
 
 		// Set the default return value.
 		TreeComposite next = super.next();
@@ -101,7 +96,6 @@ public class PreOrderTreeCompositeIterator extends
 		}
 
 		return next;
-		// end-user-code
 	}
 
 }

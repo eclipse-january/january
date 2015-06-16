@@ -96,7 +96,6 @@ public class EMFTreeCompositeTester {
 	 */
 	@Test
 	public void checkConstruction() {
-		// begin-user-code
 
 		// Make sure we have 4 trees
 		// for the 4 EClass instances
@@ -231,7 +230,6 @@ public class EMFTreeCompositeTester {
 		assertEquals(2, clonedOrder.getNumberOfChildren());
 
 		return;
-		// end-user-code
 	}
 
 	/**
@@ -239,7 +237,6 @@ public class EMFTreeCompositeTester {
 	 */
 	@Test
 	public void checkCopying() {
-		// begin-user-code
 		EMFTreeComposite shipOrder = trees.get(2);
 		System.out.println("NAME: " + shipOrder.getName());
 		EMFTreeComposite clonedOrder = (EMFTreeComposite) shipOrder.clone();
@@ -265,7 +262,6 @@ public class EMFTreeCompositeTester {
 		assertFalse("helloworld".equals(((DataComponent) shipOrder
 				.getActiveDataNode()).retrieveEntry("orderperson").getValue()));
 
-		// end-user-code
 	}
 
 }

@@ -12,16 +12,13 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.resource;
 
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.form.Entry;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
-import java.io.InputStream;
 import java.util.Date;
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -30,88 +27,63 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlAccessorType;
 
 /**
- * <!-- begin-UML-doc -->
  * <p>
  * The Resource class represents persistent data resources used by ICE and the
  * other software packages with which it interacts. This includes files
  * containing simulation input and output data, movies and plots, amongst
  * others.
  * </p>
- * <!-- end-UML-doc -->
  * 
- * @author s4h
- * @generated 
- *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
+ * @author Scott Forest Hull II
  */
 @XmlRootElement(name = "ICEResource")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ICEResource extends ICEObject {
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * A File reference to the Resource.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlAttribute()
 	private File file;
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The path to the file as a URI.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlAttribute()
 	private URI path;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The set of properties associated with this resource.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlElement(name = "Properties")
 	private ArrayList<Entry> properties;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * An attribute that determines if ICEResouce is a picture or not. Can be
 	 * set multiple times.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlAttribute
 	private boolean isPicture;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The default constructor. If this constructor is used, a second call to
 	 * setContents() must be made.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public ICEResource() {
-		// begin-user-code
 
 		// Set the particulars
 		setName(null);
@@ -127,29 +99,23 @@ public class ICEResource extends ICEObject {
 
 		return;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * An alternative constructor that takes the File as an argument. The
 	 * default values of the name, id and description for this class are the
 	 * filename, 1 and the absolute path, respectively. It is the same as
 	 * calling the no-arg constructor followed by calling setContents().
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param resourceFile
 	 *            <p>
 	 *            The file that the Resource should be created to represent.
 	 *            </p>
 	 * @throws IOException
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public ICEResource(File resourceFile) throws IOException {
-		// begin-user-code
 
 		// Set the particulars
 		setName(resourceFile.getName());
@@ -167,24 +133,18 @@ public class ICEResource extends ICEObject {
 
 		return;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns the last modification date of the file.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The date.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public String getLastModificationDate() {
-		// begin-user-code
 
 		// Local Declarations
 		Date fileDate = null;
@@ -197,66 +157,48 @@ public class ICEResource extends ICEObject {
 		}
 
 		return retVal;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operations returns the contents of the Resource as an instance of
 	 * File.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The file.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public File getContents() {
-		// begin-user-code
 
 		return file;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns the URI to the Resource.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The path as a URL.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public URI getPath() {
-		// begin-user-code
 		if (this.file != null) {
 			path = file.toURI();
 		}
 		return path;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation sets the path to the Resource and is an alternative to
 	 * setContents(). It will reset the File handle if it is different.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param path
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void setPath(URI path) {
-		// begin-user-code
 
 		// If null, return
 		if (path == null) {
@@ -270,49 +212,37 @@ public class ICEResource extends ICEObject {
 			this.file = new File(path);
 		}
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation associates a set of Entries with the resource that
 	 * describe specific properties. The list of Entries is returned by
 	 * reference and is not a deep copy, i.e. - changing one will change it on
 	 * the resource.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         The properties or null if there are no properties.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public ArrayList<Entry> getProperties() {
-		// begin-user-code
 
 		return this.properties;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns the set of Entries that describe specific
 	 * properties of the resource. The properties can be set multiple times.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param props
 	 *            <p>
 	 *            The properties.
 	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void setProperties(ArrayList<Entry> props) {
-		// begin-user-code
 		// If null return
 		if (props == null) {
 			return;
@@ -320,49 +250,36 @@ public class ICEResource extends ICEObject {
 
 		this.properties = props;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation returns true if the ICEResource is an image and false if
 	 * not based upon the isPicture attribute.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @return <p>
 	 *         True if this is a picture, false otherwise.
 	 *         </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public boolean isPictureType() {
-		// begin-user-code
 		return this.isPicture;
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * An operation that sets the isPicture attribute on ICEResource.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param isPicture
 	 *            <p>
 	 *            Determines if ICEResource is a picture.
 	 *            </p>
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlTransient
 	public void setPictureType(boolean isPicture) {
-		// begin-user-code
 		this.isPicture = isPicture;
 
-		// end-user-code
 	}
 
 	/**
@@ -372,7 +289,6 @@ public class ICEResource extends ICEObject {
 	 *            The other ICEResource from which information should be copied.
 	 */
 	public void copy(ICEResource otherResource) {
-		// begin-user-code
 
 		// if resource is null, return
 		if (otherResource == null) {
@@ -397,7 +313,6 @@ public class ICEResource extends ICEObject {
 
 		// Copy picture
 		this.isPicture = otherResource.isPicture;
-		// end-user-code
 	}
 
 	/**
@@ -454,8 +369,6 @@ public class ICEResource extends ICEObject {
 				&& (path.equals(castedResource.path)
 						&& properties.equals(castedResource.properties) && (isPicture == castedResource.isPicture));
 
-		// end-user-code
-		// end-user-code
 	}
 
 	/**
@@ -464,7 +377,6 @@ public class ICEResource extends ICEObject {
 	 * @return The hashcode for the ICEResource.
 	 */
 	public int hashCode() {
-		// begin-user-code
 
 		// Local Declaration
 		int hash = 11;
@@ -482,17 +394,14 @@ public class ICEResource extends ICEObject {
 
 		return hash;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation sets the File which the Resource represents. The default
 	 * values of the name, id and description for this class are the filename, 1
 	 * and the absolute path, respectively.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @param resourceFile
 	 *            <p>
@@ -500,13 +409,10 @@ public class ICEResource extends ICEObject {
 	 *            </p>
 	 * @throws IOException
 	 * @throws NullPointerException
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@XmlTransient
 	public void setContents(File resourceFile) throws IOException,
 			NullPointerException {
-		// begin-user-code
 
 		// Set the file reference and path
 		try {
@@ -518,7 +424,6 @@ public class ICEResource extends ICEObject {
 
 		return;
 
-		// end-user-code
 	}
 
 }

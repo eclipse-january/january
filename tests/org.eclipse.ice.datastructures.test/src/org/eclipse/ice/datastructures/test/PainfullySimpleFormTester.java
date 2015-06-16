@@ -27,53 +27,37 @@ import org.eclipse.ice.datastructures.form.TableComponent;
 import org.eclipse.ice.datastructures.form.painfullySimpleForm.PainfullySimpleForm;
 
 /**
- * <!-- begin-UML-doc -->
  * <p>
  * The PainfullySimpleFormTester is responsible for testing the
  * PainfullySimpleForm class. It is primarily concerned with checking the
  * ability of the PSF to load itself from a PSF file.
  * </p>
- * <!-- end-UML-doc -->
  * 
  * @author Jay Jay Billings
- * @generated 
- *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
 public class PainfullySimpleFormTester {
 	/**
-	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	private PainfullySimpleForm painfullySimpleForm;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * An attribute set up in setupTests and used for loading PSF files.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	private ArrayList<String> PSFForm;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation sets up the tests for PainfullySimpleFormTester. Annotated
 	 * with @Before clause.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Before
 	public void setupTests() {
-		// begin-user-code
 		PSFForm = new ArrayList<String>();
 
 		// Setup the string containing the Form in PSF format. This was
@@ -163,23 +147,17 @@ public class PainfullySimpleFormTester {
 		PSFForm.add("#Vicious comments here too!\n");
 		PSFForm.add("#Vicious comments here also!\n");
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the PSF by loading it from a string representation
 	 * of a PSF (converted to an InputStream).
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkLoadingFromPSF() {
-		// begin-user-code
 		// Local Declarations
 		DataComponent dataComp1 = null, dataComp2 = null;
 		TableComponent tableComp = null;
@@ -226,26 +204,20 @@ public class PainfullySimpleFormTester {
 
 		return;
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the loadingFromPSFBlock() on PainfullySimpleForm
 	 * for a missing Form name. Should throw an IOException.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @throws Class
 	 * @throws IOException
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test(expected = java.io.IOException.class)
 	public void checkLoadingFromPSFBlockwithMissingFormName()
 			throws IOException {
-		// begin-user-code
 		// Make sure it fails it something isn't correct - in this case a messed
 		// up formName statement
 		PSFForm.set(3, "PSF Wiki Article Form\n");
@@ -254,25 +226,19 @@ public class PainfullySimpleFormTester {
 		// load it up, catch exception
 		painfullySimpleForm.loadFromPSF(PSFForm);
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the loadingFromPSFBlock() on PainfullySimpleForm
 	 * for an extra group. Should throw an IOException.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @throws Class
 	 * @throws IOException
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test(expected = java.io.IOException.class)
 	public void checkLoadingFromPSFBlockwithOneExtraGroup() throws IOException {
-		// begin-user-code
 
 		// This time try it with an extra group tag
 		PSFForm.add(7, "group=Extra Group\n");
@@ -281,50 +247,38 @@ public class PainfullySimpleFormTester {
 		painfullySimpleForm = new PainfullySimpleForm();
 		// load and catch IOException
 		painfullySimpleForm.loadFromPSF(PSFForm);
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the loadingFromPSFBlock() on PainfullySimpleForm
 	 * for a null pointer for lists. Should throw an IOException.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @throws Class
 	 * @throws IOException
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test(expected = java.io.IOException.class)
 	public void checkLoadingFromPSFBlockwithNullPointer() throws IOException {
-		// begin-user-code
 
 		// Try passing null for the input stream
 		painfullySimpleForm = new PainfullySimpleForm();
 		painfullySimpleForm.loadFromPSF(null);
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the loadingFromPSFBlock() on PainfullySimpleForm
 	 * for an entry that references a group that does not exist. Should throw an
 	 * IOException.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
 	 * @throws Class
 	 * @throws IOException
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test(expected = java.io.IOException.class)
 	public void checkLoadingFromPSFBlockwithEntryUknownGroup()
 			throws IOException {
-		// begin-user-code
 		// Try to put a group name in there that doesn't exist. This is done
 		// easiest by overwriting an existing group name.
 		// Change the name of one of the good groups
@@ -336,6 +290,5 @@ public class PainfullySimpleFormTester {
 		// load it
 		painfullySimpleForm.loadFromPSF(PSFForm);
 
-		// end-user-code
 	}
 }

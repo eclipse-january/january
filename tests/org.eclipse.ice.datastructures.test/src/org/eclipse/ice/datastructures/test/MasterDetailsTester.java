@@ -38,45 +38,32 @@ import org.junit.Test;
 
 public class MasterDetailsTester {
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * The TestComponentListener used to subscribe to and check notifications
 	 * from the DataComponent.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	private TestComponentListener testComponentListener;
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * A TestVisitor that is used to test the visitation scheme.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	private TestVisitor testVisitor;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the construction process of the
 	 * MasterDetailsComponent by ensuring that the template can be set and that
 	 * it can only be set once. It checks that the template was properly
 	 * configured by adding a master and retrieving its details.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkConstruction() {
-		// begin-user-code
 		// Local Declarations
 		MasterDetailsComponent mDetailsComp = new MasterDetailsComponent();
 		DataComponent detailsComp1, detailsComp2, detailsComp3;
@@ -241,23 +228,17 @@ public class MasterDetailsTester {
 		// check that the toggle defaults to true
 		assertEquals(toggle, mDetailsComp.canAddRemoveButton());
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks getAllMasters() and getMaster() by first adding the
 	 * masters and then retrieving them.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkMasters() {
-		// begin-user-code
 		// Local Declarations
 		MasterDetailsComponent mDetailsComp = new MasterDetailsComponent();
 		DataComponent detailsComp1, detailsComp2, detailsComp3;
@@ -429,11 +410,9 @@ public class MasterDetailsTester {
 		mDetailsComp = new MasterDetailsComponent();
 		assertFalse(mDetailsComp.deleteMaster(0));
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operations checks the four operations related to retrieving details.
 	 * It creates several master instances in the component and calls the
@@ -441,14 +420,10 @@ public class MasterDetailsTester {
 	 * values of the masters and makes sure that the associated details blocks
 	 * change to the appropriate DataComponent.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkDetails() {
-		// begin-user-code
 		// Local Declarations
 		MasterDetailsComponent mDetailsComp = new MasterDetailsComponent();
 		DataComponent detailsComp1, detailsComp2, detailsComp3;
@@ -558,43 +533,31 @@ public class MasterDetailsTester {
 		// Try to get details on something that does not exist
 		assertNull(mDetailsComp.getDetails(4));
 		assertNull(mDetailsComp.getDetails(-1));
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the ability of the MasterDetailsComponent to
 	 * process updates. At the moment, it should do absolutely nothing (so
 	 * nothing should change).
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void checkUpdate() {
-		// begin-user-code
 		// Nothing to do here
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation tests the MasterDetailsComponent to insure that it can
 	 * properly dispatch notifications when it receives an update that changes
 	 * its state.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkNotifications() {
-		// begin-user-code
 		// Local Declarations
 		MasterDetailsComponent mDetailsComp = new MasterDetailsComponent();
 		DataComponent detailsComp1, detailsComp2, detailsComp3;
@@ -740,23 +703,17 @@ public class MasterDetailsTester {
 		// Reset the listener
 		testComponentListener.reset();
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the MasterDetailsComponent to insure that it can be
 	 * correctly visited by a realization of the IComponentVisitor interface.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkVisitation() {
-		// begin-user-code
 		// Local Declarations
 		MasterDetailsComponent master = new MasterDetailsComponent();
 
@@ -769,23 +726,17 @@ public class MasterDetailsTester {
 		// Check the visitor
 		assertTrue(testVisitor.wasVisited());
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the MasterDetailsComponent to insure that its
 	 * equals() and hashcode() operations work.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkEquality() {
-		// begin-user-code
 		// Local Declarations
 		MasterDetailsComponent component = new MasterDetailsComponent();
 		MasterDetailsComponent equalComponent = new MasterDetailsComponent();
@@ -905,23 +856,17 @@ public class MasterDetailsTester {
 		// Assert that hashcodes from unequal objects are different
 		assertTrue(component.hashCode() != unEqualComponent.hashCode());
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the MasterDetailsComponent to ensure that its
 	 * copy() and clone() operations work as specified.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkCopying() {
-		// begin-user-code
 		// Local Declarations
 		MasterDetailsComponent cloneMaster, copyMaster;
 		MasterDetailsComponent mDetailsComp = new MasterDetailsComponent();
@@ -1076,7 +1021,6 @@ public class MasterDetailsTester {
 		assertTrue(copyMaster.equals(mDetailsComp));
 
 		return;
-		// end-user-code
 	}
 
 	/**
@@ -1088,7 +1032,6 @@ public class MasterDetailsTester {
 	 */
 	@Test
 	public void checkLoadingFromXML() throws NullPointerException, JAXBException, IOException {
-		// begin-user-code
 		// Local Declarations
 		MasterDetailsComponent loadMaster;
 		MasterDetailsComponent mDetailsComp = new MasterDetailsComponent();
@@ -1236,23 +1179,17 @@ public class MasterDetailsTester {
 		// Check the contents
 		assertTrue(loadMaster.equals(mDetailsComp));
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * An operation that checks the getGlobalsComponent() and
 	 * setGlobalsComponent() operations on MasterDetailsComponent.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkGetSetGlobalsComponent() {
-		// begin-user-code
 		// Local Declarations
 		MasterDetailsComponent mDetailsComp = new MasterDetailsComponent();
 		DataComponent detailsComp1, detailsComp2, detailsComp3;
@@ -1410,24 +1347,18 @@ public class MasterDetailsTester {
 		assertEquals(0, mDetailsComp.getGlobalsComponent().retrieveAllEntries()
 				.size());
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * An operation that checks getMasterAtIndex(), getDetailsAtIndex(),
 	 * getUniqueMasterValue(), deleteMasterAtIndex(), and
 	 * getUniqueMasterValueAtIndex().
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkAtIndexOperations() {
-		// begin-user-code
 		// Local Declarations
 		MasterDetailsComponent mDetailsComp = new MasterDetailsComponent();
 		DataComponent detailsComp1, detailsComp2, detailsComp3;
@@ -1671,22 +1602,16 @@ public class MasterDetailsTester {
 															// should be unable
 															// to delete
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * Checks the toggling of add and removing of buttons boolean for MDC.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkToggle() {
-		// begin-user-code
 
 		// Instantiate a new master details component
 		MasterDetailsComponent mDetailsComp = new MasterDetailsComponent();
@@ -1703,6 +1628,5 @@ public class MasterDetailsTester {
 		// Check value
 		assertTrue(mDetailsComp.canAddRemoveButton());
 
-		// end-user-code
 	}
 }

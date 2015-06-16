@@ -27,13 +27,11 @@ import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.junit.*;
 
 /**
- * <!-- begin-UML-doc -->
  * <p>
  * The ICEObjectTester is responsible for testing the ICEObject class. It only
  * tests the name, id, and description properties as well as persistence.
  * It also checks equality, hashCode computation, copying, and cloning.
  * </p>
- * <!-- end-UML-doc -->
  * 
  * @author Jay Jay Billings
  */
@@ -45,7 +43,6 @@ public class ICEObjectTester {
 	 */
 	@Test
 	public void checkProperties() {
-		// begin-user-code
 
 		// Local declarations
 		int id = 20110901;
@@ -66,7 +63,6 @@ public class ICEObjectTester {
 		assertEquals(testNC.getName(), name);
 		assertEquals(testNC.getDescription(), description);
 
-		// end-user-code
 	}
 
 	/**
@@ -75,7 +71,6 @@ public class ICEObjectTester {
 	 */
 	@Test
 	public void checkCopying() {
-		// begin-user-code
 
 		// Local declarations
 		int id = 20110901;
@@ -143,26 +138,20 @@ public class ICEObjectTester {
 		assertEquals(testNC.getName(), name);
 		assertEquals(testNC.getDescription(), description);
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the ability of the ICEObject to persist itself to
 	 * XML and to load itself from an XML input stream.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * @throws IOException 
 	 * @throws JAXBException 
 	 * @throws NullPointerException 
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkXMLPersistence() throws NullPointerException, JAXBException, IOException {
-		// begin-user-code
 		// TODO Auto-generated method stub
 
 		/*
@@ -202,23 +191,17 @@ public class ICEObjectTester {
 		// Check that it equals the persisted object
 		assertTrue(testNC.equals(testNC2));
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the ICEObject class to insure that its equals()
 	 * operation works.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkEquality() {
-		// begin-user-code
 
 		// Create an ICEObject
 		ICEObject testICEObject = new ICEObject();
@@ -302,23 +285,17 @@ public class ICEObjectTester {
 		// Assert that hashcodes are different for unequal objects
 		assertFalse(testICEObject.hashCode() == unEqualObject.hashCode());
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation tests the ICEObject to insure that it can properly
 	 * dispatch notifications when it receives an update that changes its state.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkNotifications() {
-		// begin-user-code
 
 		// Setup the listeners
 		TestComponentListener firstListener = new TestComponentListener();
@@ -359,6 +336,5 @@ public class ICEObjectTester {
 		assertTrue(firstListener.wasNotified());
 
 		return;
-		// end-user-code
 	}
 }

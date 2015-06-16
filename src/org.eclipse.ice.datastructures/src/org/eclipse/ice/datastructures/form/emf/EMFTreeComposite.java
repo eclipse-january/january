@@ -253,7 +253,6 @@ public class EMFTreeComposite extends TreeComposite {
 	 */
 	@Override
 	public void setNextChild(TreeComposite cNode) {
-		// begin-user-code
 
 		// Local Declarations
 		EMFTreeComposite castedTree;
@@ -294,7 +293,6 @@ public class EMFTreeComposite extends TreeComposite {
 
 		return;
 
-		// end-user-code
 	}
 
 	/**

@@ -35,32 +35,23 @@ import org.eclipse.ice.datastructures.form.MasterDetailsPair;
 import org.junit.Test;
 
 /**
- * <!-- begin-UML-doc -->
  * <p>
  * This class is responsible for testing the MasterDetailsPair class.
  * </p>
- * <!-- end-UML-doc -->
  * 
  * @author Jay Jay Billings
- * @generated 
- *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
 
 public class MasterDetailsPairTester {
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the MasterDetailsPair to insure that its equals()
 	 * and hashcode() operations work.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkEquality() {
-		// begin-user-code
 		// Local Declarations
 		DataComponent dComponent = new DataComponent();
 		DataComponent dComponent2 = new DataComponent();
@@ -159,23 +150,17 @@ public class MasterDetailsPairTester {
 		// Assert that hashcodes from unequal objects are different
 		assertTrue(component.hashCode() != unEqualComponent.hashCode());
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the MasterDetailsPair to ensure that its copy() and
 	 * clone() operations work as specified.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkCopying() {
-		// begin-user-code
 		// Local Declarations
 		MasterDetailsPair cloneMaster, copyMaster = null;
 		DataComponent dComponent = new DataComponent();
@@ -237,24 +222,18 @@ public class MasterDetailsPairTester {
 		// Check equality of contents
 		assertTrue(copyMaster.equals(component));
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the alternative constructor of the
 	 * MasterDetailsPair class to make sure that the master and details can be
 	 * retrieved after calling it.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkAlternativeConstructor() {
-		// begin-user-code
 
 		// Local Declarations
 		MasterDetailsPair mDetailsP;
@@ -290,23 +269,17 @@ public class MasterDetailsPairTester {
 		assertNull(mDetailsP.getMaster());
 		assertNull(mDetailsP.getDetails());
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the MasterDetailsPair by making sure its getters
 	 * and setters work.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkGetsAndSets() {
-		// begin-user-code
 		// Local Declarations
 		MasterDetailsPair mDetailsP;
 		DataComponent dComponent;
@@ -347,26 +320,20 @@ public class MasterDetailsPairTester {
 		// Check value
 		assertNotNull(mDetailsP.getDetails());
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the ability of the MasterDetails to persist itself
 	 * to XML and to load itself from an XML input stream.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * @throws IOException 
 	 * @throws JAXBException 
 	 * @throws NullPointerException 
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkLoadingFromXML() throws NullPointerException, JAXBException, IOException {
-		// begin-user-code
 		// Local Declarations
 		MasterDetailsPair mDetailsP = new MasterDetailsPair();
 		MasterDetailsPair loadDetailsP = new MasterDetailsPair();
@@ -405,6 +372,5 @@ public class MasterDetailsPairTester {
 		// Check that data is correct
 		assertTrue(mDetailsP.equals(loadDetailsP));
 
-		// end-user-code
 	}
 }

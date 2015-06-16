@@ -43,41 +43,27 @@ import org.junit.*;
 
 public class MatrixComponentTester {
 	/**
-	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	private MatrixComponent matrixComponent;
 	/**
-	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	private TestComponentListener testComponentListener;
 	/**
-	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	private TestVisitor testVisitor;
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the MatrixComponent to insure that its equals() and
 	 * hashcode() operations work.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkEquality() {
-		// begin-user-code
 		// Create MatrixComponents to test
 		MatrixComponent component = new MatrixComponent(false,
 				AllowedValueType.Continuous);
@@ -167,23 +153,17 @@ public class MatrixComponentTester {
 		// Assert that hashcodes from unequal objects are different
 		assertTrue(component.hashCode() != unEqualComponent.hashCode());
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the MatrixComponent to insure that it can be
 	 * correctly visited by a realization of the IComponentVisitor interface.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkVisitation() {
-		// begin-user-code
 		// Setup the visitor
 		testVisitor = new TestVisitor();
 
@@ -196,23 +176,17 @@ public class MatrixComponentTester {
 		// Check the visitor
 		assertTrue(testVisitor.wasVisited());
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation tests the MatrixComponent to insure that it can properly
 	 * dispatch notifications when it receives an update that changes its state.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkNotifications() {
-		// begin-user-code
 		// Setup the listener
 		testComponentListener = new TestComponentListener();
 
@@ -291,23 +265,17 @@ public class MatrixComponentTester {
 
 		// Reset the listener
 		testComponentListener.reset();
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks the MatrixComponent to ensure that its copy() and
 	 * clone() operations work as specified.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkCopying() {
-		// begin-user-code
 		// Local declarations
 		int id = 5;
 		String name = "Bob";
@@ -361,7 +329,6 @@ public class MatrixComponentTester {
 		assertTrue(copyMatrix.equals(matrixComponent));
 
 		return;
-		// end-user-code
 	}
 
 	/**
@@ -373,7 +340,6 @@ public class MatrixComponentTester {
 	 */
 	@Test
 	public void checkLoadingFromXML() throws NullPointerException, JAXBException, IOException {
-		// begin-user-code
 		// Local declarations
 		int id = 5;
 		String name = "Bob";
@@ -419,24 +385,18 @@ public class MatrixComponentTester {
 		// Check contents
 		assertTrue(loadMatrix.equals(matrixComponent));
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This method checks that a MatrixComponent can be constructed by using all
 	 * three constructors. It also tests that its ICEObject data can be set and
 	 * get correctly.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkConstruction() {
-		// begin-user-code
 
 		// Local Declarations
 		ICEObject iceObject = new ICEObject();
@@ -545,24 +505,18 @@ public class MatrixComponentTester {
 		assertEquals(iceObject.getDescription(),
 				matrixComponent.getDescription());
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This method checks that if a MatrixComponent is constructed with the
 	 * isSquare attribute true, it retains that data and returns true for the
 	 * isSquare method.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkIsSquare() {
-		// begin-user-code
 		// Use nullery constructor - isSquared should be false
 		matrixComponent = new MatrixComponent();
 		assertFalse(matrixComponent.isSquare());
@@ -586,24 +540,18 @@ public class MatrixComponentTester {
 		matrixComponent = new MatrixComponent(true, AllowedValueType.Discrete);
 		assertTrue(matrixComponent.isSquare());
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This method checks that users can add and remove rows for a general nxm,
 	 * non-square matrix. It also asserts that its default values on those newly
 	 * added rows are correct according to its AllowedValueType.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkRowResize() {
-		// begin-user-code
 		// Local Declarations
 		ArrayList<Double> row1;
 		ArrayList<Double> row2;
@@ -912,24 +860,18 @@ public class MatrixComponentTester {
 		badRowTemplateContinuous = new ArrayList<Double>();
 		rowTemplate = new ArrayList<Double>();
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This method checks that adding a row to a square MatrixComponent also
 	 * adds a column, and that all newly added values are correctly set with the
 	 * correct default value.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkRowSquareResize() {
-		// begin-user-code
 		// Local Declarations
 		ArrayList<Double> row1;
 		ArrayList<Double> row2;
@@ -1219,24 +1161,18 @@ public class MatrixComponentTester {
 		badRowTemplateContinuous = new ArrayList<Double>();
 		rowTemplate = new ArrayList<Double>();
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This method checks that columns can be added or removed from this
 	 * non-square MatrixComponent. It also checks that the new values are set to
 	 * the correct default values.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkColumnResize() {
-		// begin-user-code
 		// Local Declarations
 		ArrayList<Double> col1;
 		ArrayList<Double> col2;
@@ -1544,24 +1480,18 @@ public class MatrixComponentTester {
 		badColTemplateContinuous = new ArrayList<Double>();
 		colTemplate = new ArrayList<Double>();
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This method checks that adding a column to the MatrixComponent correctly
 	 * adds both a column and a row, and that all values are correcly set to
 	 * their default values.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkColumnSquareResize() {
-		// begin-user-code
 		// Local Declarations
 		ArrayList<Double> col1;
 		ArrayList<Double> col2;
@@ -1849,23 +1779,17 @@ public class MatrixComponentTester {
 		badColTemplateContinuous = new ArrayList<Double>();
 		colTemplate = new ArrayList<Double>();
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * An operation that checks the allowedValueTypes with the get/set
 	 * operations for elements at their required index.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkElementInsertion() {
-		// begin-user-code
 		// Local Declarations
 		ArrayList<Double> row1, row2, row3, row4;
 		ArrayList<Double> rowTemplate;
@@ -2091,22 +2015,16 @@ public class MatrixComponentTester {
 			assertEquals(expected, actual);
 		}
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * An operation that checks the resizable attribute.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkResizable() {
-		// begin-user-code
 
 		// If a row is not resizable, then rows and columns can not be added or
 		// deleted
@@ -2135,22 +2053,16 @@ public class MatrixComponentTester {
 		assertEquals(4, matrixComponent.numberOfRows());
 		assertEquals(2, matrixComponent.numberOfColumns());
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * An operation that checks the getAllowedValueType and getAllowedValues.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkAllowedValues() {
-		// begin-user-code
 		// Local Declarations
 		ArrayList<Double> colTemplate = new ArrayList<Double>();
 
@@ -2203,6 +2115,5 @@ public class MatrixComponentTester {
 		assertEquals(1.0, matrixComponent.getAllowedValues().get(2), 0.0);
 		assertEquals(10.0, matrixComponent.getAllowedValues().get(3), 0.0);
 
-		// end-user-code
 	}
 }

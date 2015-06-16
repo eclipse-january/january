@@ -27,31 +27,22 @@ import org.eclipse.ice.datastructures.ICEObject.ICEList;
 import org.eclipse.ice.datastructures.form.geometry.GeometryComponent;
 
 /**
- * <!-- begin-UML-doc -->
  * <p>
  * This class is responsible for testing the ICEList class. It checks that the
  * ICEList generic container works for Strings, Integers and Doubles.
  * </p>
- * <!-- end-UML-doc -->
  * 
  * @author Jay Jay Billings
- * @generated 
- *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
 public class ICEListTester {
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks that the ICEList works for Strings.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkStrings() {
-		// begin-user-code
 
 		// Local Declarations
 		ICEList<String> iceList = new ICEList<String>();
@@ -108,22 +99,16 @@ public class ICEListTester {
 				iceList2.getList().get(1));
 		assertEquals("Honest", iceList2.getList().get(2));
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks that the ICEList works for Strings.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkInt() {
-		// begin-user-code
 
 		// Local Declarations
 		ICEList<Integer> iceList = new ICEList<Integer>();
@@ -179,22 +164,16 @@ public class ICEListTester {
 		assertEquals(99, iceList2.getList().get(1));
 		assertEquals(50, iceList2.getList().get(2));
 
-		// end-user-code
 	}
 
 	/**
-	 * <!-- begin-UML-doc -->
 	 * <p>
 	 * This operation checks that the ICEList works for Strings.
 	 * </p>
-	 * <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	@Test
 	public void checkDouble() {
-		// begin-user-code
 
 		// Local Declarations
 		ICEList<Double> iceList = new ICEList<Double>();
@@ -248,6 +227,5 @@ public class ICEListTester {
 		assertEquals(99.9, iceList2.getList().get(1));
 		assertEquals(50.50, iceList2.getList().get(2));
 
-		// end-user-code
 	}
 }
