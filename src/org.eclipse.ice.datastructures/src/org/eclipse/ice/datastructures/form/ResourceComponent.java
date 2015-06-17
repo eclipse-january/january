@@ -69,7 +69,7 @@ public class ResourceComponent extends ListComponent<ICEResource> {
 
 		return;
 	}
-
+	
 	/**
 	 * This operation gets all of the ICEResources from the component.
 	 * 
