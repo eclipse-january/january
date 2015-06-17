@@ -42,7 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "Material")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Material implements Cloneable {
+public class Material implements Cloneable, Comparable {
 
 	/**
 	 * The name of the material.
@@ -143,14 +143,15 @@ public class Material implements Cloneable {
 	public void setProperty(String key, double value) {
 		properties.put(key, value);
 	}
-	
+
 	/**
-	 * This operation removes a property from the material's properties list. 
+	 * This operation removes a property from the material's properties list.
+	 * 
 	 * @param key
-	 * 			The name of the property that should be removed. 
+	 *            The name of the property that should be removed.
 	 */
-	public void removeProperty(String key){
-		if(properties.containsKey(key)){
+	public void removeProperty(String key) {
+		if (properties.containsKey(key)) {
 			properties.remove(key);
 		}
 	}
@@ -248,9 +249,62 @@ public class Material implements Cloneable {
 		if (material != null && material != this) {
 			this.name = material.name;
 			this.size = material.size;
-			this.properties = new HashMap<String, Double> (material.properties);
+			this.properties = new HashMap<String, Double>(material.properties);
 			this.components = new ArrayList<Material>(material.components);
 		}
+	}
+
+	/**
+	 * Gets the number before the element denoting which isotope or form of an
+	 * element or compound this material represents.
+	 * 
+	 * @return The number of this isotope, as an int. Will return 0 if this is a
+	 *         pure element (no number preceding its name)
+	 */
+	public int getIsotopicNumber() {
+		// Get an empty string to build off of
+		String numStr = "";
+		// Iterate over the characters in the name to pull out the isotope
+		// number.
+		// it is assumed that the name will follow the format xxxYy, where x is
+		// a digit and y is a letter.
+		for (int i = 0; i < name.length(); i++) {
+			if (Character.isDigit(name.charAt(i))) {
+				numStr += name.charAt(i);
+			} else {
+				break;
+			}
+		}
+		// Get the isotope number in int form. If no x values in name, return 0.
+		int retVal;
+		if (numStr.equals("")) {
+			retVal = 0;
+		} else {
+			retVal = Integer.parseInt(numStr);
+		}
+		return retVal;
+	}
+
+	/**
+	 * Gets the elemental or compound name for this material. Note- this will
+	 * return the same string for two isotopes of the same element.
+	 * 
+	 * @return A String containing the name of the element or compound that this
+	 *         material represents.
+	 */
+	public String getElementalName() {
+		// A string to build on
+		String nameStr = "";
+		// Iterate over the name of the material, it is assumed that the
+		// name follow the form xxxYy, where x is a digit and y is a letter.
+		for (int i = name.length() - 1; i >= 0; i--) {
+			if (Character.isLetter(name.charAt(i))) {
+				nameStr = name.charAt(i) + nameStr;
+			} else {
+				break;
+			}
+		}
+		return nameStr;
 	}
 
 	/**
@@ -264,6 +318,56 @@ public class Material implements Cloneable {
 		Material clone = new Material();
 		clone.copy(this);
 		return clone;
+	}
+
+	/**
+	 * This operation compares materials so that they may be sorted when in
+	 * lists. Implements the Comparable interface. Uses only the material's
+	 * names, as these should be the best unique identifiers for sorting.
+	 * 
+	 * @param otherMaterial
+	 *            The other material to be compared. Will return 0 if this is
+	 *            not a material object or a subclass!
+	 * @return Returns a value less than one if it is to be closer to index 0
+	 *         than the other material. Returns a value of exactly 0 if it is
+	 *         equal to the other material. Finally, returns a value of greater
+	 *         than one if it is to be further from index 0 than the other
+	 *         material.
+	 */
+	@Override
+	public int compareTo(Object otherMaterial) {
+
+		int returnVal = 0;
+
+		// The name of the element or compound for the two materials
+		String thisElement = getElementalName();
+		String otherElement = ((Material) otherMaterial).getElementalName();
+
+		// The isotopic numbers for the two materials
+		int thisNum = getIsotopicNumber();
+		int otherNum = ((Material) otherMaterial).getIsotopicNumber();
+
+		// Dealing with the same element, sort by isotope number
+		if (thisElement.toLowerCase().equals(otherElement.toLowerCase())) {
+
+			// Sort from lower isotopic number to greater
+			if (thisNum < otherNum) {
+				returnVal = -1;
+			} else if (thisNum > otherNum) {
+				returnVal = 1;
+			} else {
+				returnVal = 0;
+			}
+
+			// Dealing with different elements, sort by name.
+		} else {
+			returnVal = thisElement.toLowerCase().compareTo(
+					otherElement.toLowerCase());
+		}
+
+		// Return the sorting value for these two Materials
+		return returnVal;
+
 	}
 
 }
