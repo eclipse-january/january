@@ -114,7 +114,8 @@ public class LazyWriteableDataset extends LazyDataset implements ILazyWriteableD
 			oShape = prependShapeWithOnes(this.maxShape.length, oShape);
 		}
 		if (this.maxShape.length > shape.length) {
-			setShapeInternal(false, prependShapeWithOnes(this.maxShape.length, shape));
+			shape = prependShapeWithOnes(this.maxShape.length, shape); // TODO this does not update any metadata
+//			setShapeInternal(false, prependShapeWithOnes(this.maxShape.length, shape));
 		}
 	}
 
