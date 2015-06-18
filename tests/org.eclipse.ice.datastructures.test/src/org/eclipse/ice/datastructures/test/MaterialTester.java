@@ -109,7 +109,7 @@ public class MaterialTester {
 		Material testMat1 = TestMaterialFactory.createCO2();
 		Material testMat2 = TestMaterialFactory.createCO2();
 
-		// The should be equal
+		// They should be equal
 		assertTrue(testMat1.equals(testMat2));
 
 		// Make sure that a self comparison works

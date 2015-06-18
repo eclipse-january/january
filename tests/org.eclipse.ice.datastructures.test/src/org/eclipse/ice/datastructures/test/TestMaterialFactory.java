@@ -50,11 +50,6 @@ public class TestMaterialFactory {
 		// The same effect could be achieved by adding oxygen twice to
 		// the test material.
 		testMaterial.addComponent(new MaterialStack(oxygen, 2));
-
-		// Add them as components
-		testMaterial.addComponent(carbon);
-		testMaterial.addComponent(oxygen);
-		testMaterial.addComponent(oxygen);
 		
 		return testMaterial;
 	}

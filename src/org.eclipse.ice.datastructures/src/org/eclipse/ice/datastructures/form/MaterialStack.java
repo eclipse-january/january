@@ -97,7 +97,7 @@ public class MaterialStack implements Comparable<MaterialStack> {
 	 * Adds one to the amount on the stack. A convenience method. The same
 	 * effect could be achieved by writing MaterialStack.add(1).
 	 */
-	public void incrimentAmount() {
+	public void incrementAmount() {
 		number++;
 	}
 
@@ -120,10 +120,30 @@ public class MaterialStack implements Comparable<MaterialStack> {
 	 *         and false if otherwise.
 	 */
 	public boolean equals(MaterialStack stack) {
-		return number == stack.getAmount()
+		boolean val = (number == stack.getAmount())
 				&& material.equals(stack.getMaterial());
+		System.out.println(number == stack.getAmount());
+		return val;
 	}
 
+	/**
+	 * This operation overrides Object.hashCode to return the proper hash for
+	 * MaterialStacks.
+	 * 
+	 * @return the hash
+	 */
+	@Override
+	public int hashCode() {
+		// Local Declarations
+		int hash = 8;
+
+		// Compute the hash code
+		hash = 31 * hash + number;
+		hash = 31 * hash + material.hashCode();
+
+		return hash;
+	}
+	
 	/**
 	 * Compares two material stacks to see which should be first in a list
 	 * containing material stacks. Compares based on the same logic for the

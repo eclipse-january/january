@@ -13,7 +13,7 @@
 package org.eclipse.ice.datastructures.form;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.List;
 import java.util.Map;
 
@@ -114,21 +114,21 @@ public class Material implements Cloneable, Comparable<Material> {
 	/**
 	 * The key-value pair map of properties for this material.
 	 */
-	private HashMap<String, Double> properties;
+	private TreeMap<String, Double> properties;
 
 	/**
 	 * The list of components that comprise this material.
 	 */
-	//@XmlElement(name = "Material")
-	private List<MaterialStack> components;
+	@XmlElement(name = "Material")
+	private TreeMap<String, MaterialStack> components;
 
 	/**
 	 * The constructor.
 	 */
 	public Material() {
 		name = "";
-		properties = new HashMap<String, Double>();
-		components = new ArrayList<MaterialStack>();
+		properties = new TreeMap<String, Double>();
+		components = new TreeMap<String, MaterialStack>();
 	}
 
 	/**
@@ -198,7 +198,7 @@ public class Material implements Cloneable, Comparable<Material> {
 	 *         internal properties of the material.
 	 */
 	public Map<String, Double> getProperties() {
-		return new HashMap<String, Double>(properties);
+		return new TreeMap<String, Double>(properties);
 	}
 
 	/**
@@ -208,7 +208,7 @@ public class Material implements Cloneable, Comparable<Material> {
 	 *         will not affect list stored by the Material.
 	 */
 	public List<MaterialStack> getComponents() {
-		return new ArrayList<MaterialStack>(components);
+		return new ArrayList<MaterialStack>(components.values());
 	}
 
 	/**
@@ -222,24 +222,12 @@ public class Material implements Cloneable, Comparable<Material> {
 	 *            The material that is a component of this material to be added.
 	 */
 	public void addComponent(Material component) {
-		// Do not want to make a new stack if the material already is a
-		// component
-		// of this one.
-		boolean added = false;
-		// Iterate over stacks to try to find the material
-		for (MaterialStack stack : components) {
-			Material m = stack.getMaterial();
-			if (component.equals(m)) {
-				// Add the material
-				stack.setAmount(stack.getAmount() + 1);
-				added = true;
-				break;
-			}
-		}
-		// Not found already, create a new material stack and add to components
-		if (!added) {
-			components.add(new MaterialStack(component, 1));
-		}
+
+		// Pass it on to the other method.
+		MaterialStack stack = new MaterialStack(component, 1);
+		addComponent(stack);
+
+		return;
 	}
 
 	/**
@@ -250,26 +238,20 @@ public class Material implements Cloneable, Comparable<Material> {
 	 * the list of components.
 	 * 
 	 * @param stack
+	 *            the stack of material to add
 	 */
 	public void addComponent(MaterialStack stack) {
-		// Do not want to add a new stack if the material in the stack already
-		// is a component of this one.
-		boolean added = false;
-		Material mat = stack.getMaterial();
-		// Iterate over stacks to try to find the material that fits the new
-		// stack
-		for (MaterialStack matStack : components) {
-			Material m = matStack.getMaterial();
-			if (mat.equals(m)) {
-				// Add the stack amount to the existing stack
-				matStack.setAmount(matStack.getAmount() + stack.getAmount());
-				added = true;
-				break;
-			}
-		}
-		// Not found already, then just add the stack to the components
-		if (!added) {
-			components.add(stack);
+
+		// Pull the material and check the map
+		Material component = stack.getMaterial();
+		if (components.containsKey(component.name)) {
+			// Increment the size of the material stack in the map by the amount
+			// in the new stack.
+			components.get(component.name).addAmount(stack.getAmount());
+		} else {
+			// Not found already, create a new material stack and add to
+			// components
+			components.put(component.getName(), stack);
 		}
 	}
 
@@ -293,9 +275,10 @@ public class Material implements Cloneable, Comparable<Material> {
 			} else {
 				Material otherMaterial = (Material) other;
 				// Check each member
-				retVal = this.name.equals(otherMaterial.name)
-						&& this.components.equals(otherMaterial.components)
-						&& this.properties.equals(otherMaterial.properties);
+				boolean val1 = this.name.equals(otherMaterial.name);
+				boolean val2 = this.components.equals(otherMaterial.components);
+				boolean val3 = this.properties.equals(otherMaterial.properties);
+				retVal = val1 && val2 && val3;
 			}
 		}
 
@@ -332,8 +315,9 @@ public class Material implements Cloneable, Comparable<Material> {
 		// Don't copy the input if it is not a Material or if it is null
 		if (material != null && material != this) {
 			this.name = material.name;
-			this.properties = new HashMap<String, Double>(material.properties);
-			this.components = new ArrayList<MaterialStack>(material.components);
+			this.properties = new TreeMap<String, Double>(material.properties);
+			this.components = new TreeMap<String, MaterialStack>(
+					material.components);
 		}
 	}
 
