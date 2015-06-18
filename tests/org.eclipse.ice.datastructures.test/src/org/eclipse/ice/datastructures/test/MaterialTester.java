@@ -49,10 +49,6 @@ public class MaterialTester {
 		testMaterial.setName("CO2");
 		assertEquals("CO2", testMaterial.getName());
 
-		// Check the size
-		testMaterial.setSize(1);
-		assertEquals(1, testMaterial.getSize());
-
 		// Check properties - just test handling a few
 		testMaterial.setProperty("molar mass (g/mol)", 44.01);
 		double mass = testMaterial.getProperty("molar mass (g/mol)");
@@ -120,11 +116,6 @@ public class MaterialTester {
 
 		// Make sure that passing something else in fails
 		assertFalse(testMat1.equals(1));
-
-		// Make sure they are not equal after the size is changed
-		testMat2.setSize(5);
-		assertFalse(testMat1.equals(testMat2));
-		testMat2.setSize(1);
 
 		// Check that the hash code doesn't change with no changes in state
 		assertEquals(testMat1.hashCode(), testMat1.hashCode());

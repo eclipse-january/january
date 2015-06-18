@@ -34,20 +34,17 @@ public class TestMaterialFactory {
 		// Create a simple CO2 Material
 		Material testMaterial = new Material();
 		testMaterial.setName("CO2");
-		testMaterial.setSize(1);
 		testMaterial.setProperty("molar mass (g/mol)", 44.01);
 		testMaterial.setProperty("vapor pressure (MPa)", 5.73);
 
 		// Create component 1 - Carbon
 		Material carbon = new Material();
 		carbon.setName("C");
-		carbon.setSize(1);
 
 		// Create component 2 - Oxygen
 		Material oxygen = new Material();
 		oxygen.setName("O");
 		// Note that the "size" of O is 2 since we need O2
-		oxygen.setSize(2);
 
 		// Add them as components
 		testMaterial.addComponent(carbon);
@@ -67,7 +64,6 @@ public class TestMaterialFactory {
 		// Create a simple H2O Material
 		Material testMaterial = new Material();
 		testMaterial.setName("H2O");
-		testMaterial.setSize(1);
 		testMaterial.setProperty("molar mass (g/mol)", 18.01);
 		// Vapor pressure at 273 K
 		testMaterial.setProperty("vapor pressure (MPa)", 611.0e-6);
@@ -75,12 +71,10 @@ public class TestMaterialFactory {
 		// Create component 1 - Hydrogen
 		Material hydrogen = new Material();
 		hydrogen.setName("H");
-		hydrogen.setSize(2);
 
 		// Create component 2 - Oxygen
 		Material oxygen = new Material();
 		oxygen.setName("O");
-		oxygen.setSize(1);
 
 		// Add them as components
 		testMaterial.addComponent(hydrogen);

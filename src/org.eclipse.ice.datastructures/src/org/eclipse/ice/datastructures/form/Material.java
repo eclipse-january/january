@@ -42,17 +42,72 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "Material")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Material implements Cloneable, Comparable {
+public class Material implements Cloneable, Comparable<Material> {
+
+	// Strings for property names.
+
+	/**
+	 * The atomic mass of the material. This is the name of that property.
+	 */
+	public static final String ATOMIC_MASS = "M (amu)";
+
+	/**
+	 * The Atomic density of the material. This is the name of that property.
+	 */
+	public static final String ATOMIC_DENSITY = "Dens (at/nm3)";
+
+	/**
+	 * The density (in g/cm^3) of the material. This is the name of that
+	 * property.
+	 */
+	public static final String DENSITY = "Dens (g/cm3)";
+
+	/**
+	 * The Bound coherent scattering length of the material. This is the name of
+	 * that property.
+	 */
+	public static final String BOUND_COHERENT_SCATTERING_LENGTH = "Coh b";
+
+	/**
+	 * The Bound incoherent scattering length of the material. This is the name
+	 * of that property.
+	 */
+	public static final String BOUND_INCOHERENT_SCATTERING_LENGTH = "Inc b";
+
+	/**
+	 * The bound coherent scattering cross section of the material. This is the
+	 * name of that property.
+	 */
+	public static final String BOUND_COHERENT_SCATTERING_CROSS_SECTION = "Coh xs";
+
+	/**
+	 * The bound incoherent scattering cross section of the material. This is
+	 * the name of that property.
+	 */
+	public static final String BOUND_INCOHERENT_SCATTERING_CROSS_SECTION = "Inc xs";
+
+	/**
+	 * The scattering length density in (A^-2) of the material. This is the name
+	 * of that property.
+	 */
+	public static final String SCATTERING_LENGTH_DENSITY = "Scattering Length Density (A^-2)";
+
+	/**
+	 * The scattering cross section in (A^-2) of the material. This is the name
+	 * of that property.
+	 */
+	public static final String SCATTERING_CROSS_SECTION = "Scattering Cross Section";
+
+	/**
+	 * The absorption cross section of the material. This is the name of that
+	 * property.
+	 */
+	public static final String ABSORPTION_CROSS_SECTION = "Abs xs";
 
 	/**
 	 * The name of the material.
 	 */
 	private String name;
-
-	/**
-	 * The size of the material.
-	 */
-	private int size;
 
 	/**
 	 * The key-value pair map of properties for this material.
@@ -70,7 +125,6 @@ public class Material implements Cloneable, Comparable {
 	 */
 	public Material() {
 		name = "";
-		size = 0;
 		properties = new HashMap<String, Double>();
 		components = new ArrayList<Material>();
 	}
@@ -93,27 +147,6 @@ public class Material implements Cloneable, Comparable {
 	 */
 	public void setName(String matName) {
 		name = matName;
-	}
-
-	/**
-	 * Get the size of the Material
-	 * 
-	 * @return the size
-	 */
-	public int getSize() {
-		return size;
-	}
-
-	/**
-	 * This operation sets the size of the material.
-	 * 
-	 * @param matSize
-	 *            The size of the material. There are no restrictions on what it
-	 *            may be. Technically a negative value here would be really
-	 *            stupid, put it is possible for now.
-	 */
-	public void setSize(int matSize) {
-		size = matSize;
 	}
 
 	/**
@@ -208,7 +241,6 @@ public class Material implements Cloneable, Comparable {
 				Material otherMaterial = (Material) other;
 				// Check each member
 				retVal = this.name.equals(otherMaterial.name)
-						&& this.size == otherMaterial.size
 						&& this.components.equals(otherMaterial.components)
 						&& this.properties.equals(otherMaterial.properties);
 			}
@@ -230,7 +262,6 @@ public class Material implements Cloneable, Comparable {
 
 		// Compute the hash code
 		hash = 31 * hash + name.hashCode();
-		hash = 31 * hash + size;
 		hash = 31 * hash + properties.hashCode();
 		hash = 31 * hash + components.hashCode();
 
@@ -248,7 +279,6 @@ public class Material implements Cloneable, Comparable {
 		// Don't copy the input if it is not a Material or if it is null
 		if (material != null && material != this) {
 			this.name = material.name;
-			this.size = material.size;
 			this.properties = new HashMap<String, Double>(material.properties);
 			this.components = new ArrayList<Material>(material.components);
 		}
@@ -335,17 +365,17 @@ public class Material implements Cloneable, Comparable {
 	 *         material.
 	 */
 	@Override
-	public int compareTo(Object otherMaterial) {
+	public int compareTo(Material otherMaterial) {
 
 		int returnVal = 0;
 
 		// The name of the element or compound for the two materials
 		String thisElement = getElementalName();
-		String otherElement = ((Material) otherMaterial).getElementalName();
+		String otherElement = otherMaterial.getElementalName();
 
 		// The isotopic numbers for the two materials
 		int thisNum = getIsotopicNumber();
-		int otherNum = ((Material) otherMaterial).getIsotopicNumber();
+		int otherNum = otherMaterial.getIsotopicNumber();
 
 		// Dealing with the same element, sort by isotope number
 		if (thisElement.toLowerCase().equals(otherElement.toLowerCase())) {
