@@ -8,17 +8,18 @@
  * Contributors:
  *   Initial API and implementation and/or initial documentation - Jay Jay Billings,
  *   Jordan H. Deyton, Dasha Gorin, Alexander J. McCaskey, Taylor Patterson,
- *   Claire Saunders, Matthew Wang, Anna Wojtowicz
+ *   Claire Saunders, Matthew Wang, Anna Wojtowicz, Kasper Gammeltoft
  *******************************************************************************/
 package org.eclipse.ice.datastructures.test;
 
 import org.eclipse.ice.datastructures.form.Material;
+import org.eclipse.ice.datastructures.form.MaterialStack;
 
 /**
  * This is a utility class used by the Material tests to create materials with a
  * known initial configuration.
  * 
- * @author Jay Jay Billings
+ * @author Jay Jay Billings, Kasper Gammeltoft
  * 
  */
 public class TestMaterialFactory {
@@ -40,16 +41,21 @@ public class TestMaterialFactory {
 		// Create component 1 - Carbon
 		Material carbon = new Material();
 		carbon.setName("C");
+		testMaterial.addComponent(carbon);
 
 		// Create component 2 - Oxygen
 		Material oxygen = new Material();
 		oxygen.setName("O");
-		// Note that the "size" of O is 2 since we need O2
+		// Note that we need a stack because there is more than one.
+		// The same effect could be achieved by adding oxygen twice to
+		// the test material.
+		testMaterial.addComponent(new MaterialStack(oxygen, 2));
 
 		// Add them as components
 		testMaterial.addComponent(carbon);
 		testMaterial.addComponent(oxygen);
-
+		testMaterial.addComponent(oxygen);
+		
 		return testMaterial;
 	}
 
@@ -77,10 +83,12 @@ public class TestMaterialFactory {
 		oxygen.setName("O");
 
 		// Add them as components
+		// We need two hydrogens for H2O
+		testMaterial.addComponent(hydrogen);
 		testMaterial.addComponent(hydrogen);
 		testMaterial.addComponent(oxygen);
 
 		return testMaterial;
 	}
-	
+
 }

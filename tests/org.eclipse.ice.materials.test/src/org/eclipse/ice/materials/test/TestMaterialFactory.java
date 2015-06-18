@@ -49,6 +49,7 @@ public class TestMaterialFactory {
 		// Add them as components
 		testMaterial.addComponent(carbon);
 		testMaterial.addComponent(oxygen);
+		testMaterial.addComponent(oxygen);
 
 		return testMaterial;
 	}
@@ -77,6 +78,7 @@ public class TestMaterialFactory {
 		oxygen.setName("O");
 
 		// Add them as components
+		testMaterial.addComponent(hydrogen);
 		testMaterial.addComponent(hydrogen);
 		testMaterial.addComponent(oxygen);
 
