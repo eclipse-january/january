@@ -22,6 +22,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.eclipse.ice.datastructures.form.MaterialStack;
+
 /**
  * This class represents physical Materials.
  * 
@@ -117,8 +119,8 @@ public class Material implements Cloneable, Comparable<Material> {
 	/**
 	 * The list of components that comprise this material.
 	 */
-	@XmlElement(name = "Material")
-	private List<Material> components;
+	//@XmlElement(name = "Material")
+	private List<MaterialStack> components;
 
 	/**
 	 * The constructor.
@@ -126,7 +128,7 @@ public class Material implements Cloneable, Comparable<Material> {
 	public Material() {
 		name = "";
 		properties = new HashMap<String, Double>();
-		components = new ArrayList<Material>();
+		components = new ArrayList<MaterialStack>();
 	}
 
 	/**
@@ -205,19 +207,70 @@ public class Material implements Cloneable, Comparable<Material> {
 	 * @return The list of Materials that make up this one. Changing this list
 	 *         will not affect list stored by the Material.
 	 */
-	public List<Material> getComponents() {
-		return new ArrayList<Material>(components);
+	public List<MaterialStack> getComponents() {
+		return new ArrayList<MaterialStack>(components);
 	}
 
 	/**
 	 * This operation adds a component to this material, effectively marking
-	 * this Materials as being a composite of others.
+	 * this Material as being a composite of others. It tries to see if the
+	 * material added already exists in this material's components, and if so
+	 * just increments the amount. Otherwise, adds the new material as a
+	 * material stack with an amount of 1.
 	 * 
 	 * @param component
-	 *            The material that is a component of this material.
+	 *            The material that is a component of this material to be added.
 	 */
 	public void addComponent(Material component) {
-		components.add(component);
+		// Do not want to make a new stack if the material already is a
+		// component
+		// of this one.
+		boolean added = false;
+		// Iterate over stacks to try to find the material
+		for (MaterialStack stack : components) {
+			Material m = stack.getMaterial();
+			if (component.equals(m)) {
+				// Add the material
+				stack.setAmount(stack.getAmount() + 1);
+				added = true;
+				break;
+			}
+		}
+		// Not found already, create a new material stack and add to components
+		if (!added) {
+			components.add(new MaterialStack(component, 1));
+		}
+	}
+
+	/**
+	 * This operation adds a component to this material, effectivly marking this
+	 * Material as being a composite of others. It tries to see if the material
+	 * stack given is a stack of an existing compoenent of this material, and if
+	 * so updates the amount for that stack. Otherwise, adds the new stack to
+	 * the list of components.
+	 * 
+	 * @param stack
+	 */
+	public void addComponent(MaterialStack stack) {
+		// Do not want to add a new stack if the material in the stack already
+		// is a component of this one.
+		boolean added = false;
+		Material mat = stack.getMaterial();
+		// Iterate over stacks to try to find the material that fits the new
+		// stack
+		for (MaterialStack matStack : components) {
+			Material m = matStack.getMaterial();
+			if (mat.equals(m)) {
+				// Add the stack amount to the existing stack
+				matStack.setAmount(matStack.getAmount() + stack.getAmount());
+				added = true;
+				break;
+			}
+		}
+		// Not found already, then just add the stack to the components
+		if (!added) {
+			components.add(stack);
+		}
 	}
 
 	/**
@@ -280,7 +333,7 @@ public class Material implements Cloneable, Comparable<Material> {
 		if (material != null && material != this) {
 			this.name = material.name;
 			this.properties = new HashMap<String, Double>(material.properties);
-			this.components = new ArrayList<Material>(material.components);
+			this.components = new ArrayList<MaterialStack>(material.components);
 		}
 	}
 

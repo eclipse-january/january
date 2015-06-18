@@ -25,6 +25,7 @@ import javax.xml.bind.JAXBException;
 
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.form.Material;
+import org.eclipse.ice.datastructures.form.MaterialStack;
 import org.junit.Test;
 
 /**
@@ -81,12 +82,12 @@ public class MaterialTester {
 
 		// Check its components
 		assertNotNull(testMaterial.getComponents());
-		List<Material> components = testMaterial.getComponents();
+		List<MaterialStack> components = testMaterial.getComponents();
 		assertEquals(2, components.size());
 
 		// Get the Materials
-		Material firstMaterial = components.get(0);
-		Material secondMaterial = components.get(1);
+		Material firstMaterial = components.get(0).getMaterial();
+		Material secondMaterial = components.get(1).getMaterial();
 
 		// Check them in an order independent way. It is enough to check that
 		// the components are there. There is no need to check their sizes.
