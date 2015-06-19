@@ -12,20 +12,16 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.form;
 
+import java.util.ArrayList;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.eclipse.ice.datastructures.ICEObject.Component;
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
-
-import java.util.ArrayList;
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * <p>
@@ -265,6 +261,7 @@ public class DataComponent extends ICEObject implements Component,
 	 *         True if the DataComponents are equal, false otherwise.
 	 *         </p>
 	 */
+	@Override
 	public boolean equals(Object otherDataComponent) {
 
 		// Check if they are the same reference in memory
@@ -306,6 +303,7 @@ public class DataComponent extends ICEObject implements Component,
 	 *         The hashcode.
 	 *         </p>
 	 */
+	@Override
 	public int hashCode() {
 
 		// Local Declaration
@@ -361,6 +359,7 @@ public class DataComponent extends ICEObject implements Component,
 	 *         The deep-copy clone of this DataComponent.
 	 *         </p>
 	 */
+	@Override
 	public Object clone() {
 
 		// Create a new instance, copy contents and return it
@@ -392,6 +391,7 @@ public class DataComponent extends ICEObject implements Component,
 	 * 
 	 * @see Component#accept(IComponentVisitor visitor)
 	 */
+	@Override
 	public void accept(IComponentVisitor visitor) {
 
 		// Reveal our type to the visitor
@@ -404,6 +404,7 @@ public class DataComponent extends ICEObject implements Component,
 	 * 
 	 * @see IUpdateableListener#update(IUpdateable component)
 	 */
+	@Override
 	public void update(IUpdateable component) {
 
 		notifyListeners();

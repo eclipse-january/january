@@ -14,15 +14,10 @@ package org.eclipse.ice.datastructures.form;
 
 import java.util.ArrayList;
 
-import org.eclipse.ice.datastructures.ICEObject.Component;
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
-import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
-
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import org.eclipse.ice.datastructures.ICEObject.Component;
+import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
 
 /**
  * <p>
@@ -93,6 +88,7 @@ public class TimeDataComponent extends DataComponent {
 
 		// Setup Entries for comparison
 		entry = new Entry() {
+			@Override
 			protected void setup() {
 				this.setName("Enable Regular Mode");
 				this.tag = "MODE";
@@ -111,6 +107,7 @@ public class TimeDataComponent extends DataComponent {
 
 		// Entry: START
 		entry = new Entry() {
+			@Override
 			protected void setup() {
 				this.setName("Start");
 				this.tag = "START";
@@ -130,6 +127,7 @@ public class TimeDataComponent extends DataComponent {
 
 		// Entry: FINISH
 		entry = new Entry() {
+			@Override
 			protected void setup() {
 				this.setName("Finish");
 				this.tag = "FINISH";
@@ -149,6 +147,7 @@ public class TimeDataComponent extends DataComponent {
 
 		// Entry: NSTEP
 		entry = new Entry() {
+			@Override
 			protected void setup() {
 				this.setName("The number to step");
 				this.tag = "NSTEP";
@@ -168,6 +167,7 @@ public class TimeDataComponent extends DataComponent {
 
 		// Entry: VALUES
 		entry = new Entry() {
+			@Override
 			protected void setup() {
 				this.setName("VALUES");
 				this.tag = "VALUES";
@@ -216,6 +216,7 @@ public class TimeDataComponent extends DataComponent {
 	 *         The deep-copy clone of this DataComponent.
 	 *         </p>
 	 */
+	@Override
 	public Object clone() {
 
 		// Local Declarations
@@ -239,6 +240,7 @@ public class TimeDataComponent extends DataComponent {
 	 *            The new Entry that will be added to the Form.
 	 *            </p>
 	 */
+	@Override
 	public void addEntry(Entry newEntry) {
 
 		// Do nothing
@@ -260,6 +262,7 @@ public class TimeDataComponent extends DataComponent {
 	 *            Entry is dependent.
 	 *            </p>
 	 */
+	@Override
 	public void addEntry(Entry newEntry, String... parentNames) {
 
 		// Do nothing
@@ -272,6 +275,7 @@ public class TimeDataComponent extends DataComponent {
 	 * </p>
 	 * 
 	 */
+	@Override
 	public void clearEntries() {
 
 		// Do nothing
@@ -288,6 +292,7 @@ public class TimeDataComponent extends DataComponent {
 	 *            The name of the Entry to delete.
 	 *            </p>
 	 */
+	@Override
 	public void deleteEntry(String entryName) {
 
 		// Do nothing
@@ -305,6 +310,7 @@ public class TimeDataComponent extends DataComponent {
 	 *         The list of all Entries stored in the Form.
 	 *         </p>
 	 */
+	@Override
 	public ArrayList<Entry> retrieveAllEntries() {
 
 		// Local Declarations
@@ -338,6 +344,7 @@ public class TimeDataComponent extends DataComponent {
 	 *         True if the DataComponents are equal, false otherwise.
 	 *         </p>
 	 */
+	@Override
 	public boolean equals(Object otherDataComponent) {
 
 		// Make sure it is an instance of TimeDataComponent, compare the rest
@@ -350,6 +357,7 @@ public class TimeDataComponent extends DataComponent {
 	/**
 	 * Returns the hashcode of the object.
 	 */
+	@Override
 	public int hashCode() {
 
 		// Hash code is the same as super's
@@ -363,6 +371,7 @@ public class TimeDataComponent extends DataComponent {
 	 * 
 	 * @see Component#accept(IComponentVisitor visitor)
 	 */
+	@Override
 	public void accept(IComponentVisitor visitor) {
 
 		// Reveal our type to the visitor

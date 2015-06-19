@@ -263,6 +263,7 @@ public class Material implements Cloneable, Comparable<Material> {
 	 *            The other Object to compare against this one
 	 * @return true if they are equal, false otherwise
 	 */
+	@Override
 	public boolean equals(Object other) {
 		// Local Declarations
 		boolean retVal = false;
@@ -380,6 +381,7 @@ public class Material implements Cloneable, Comparable<Material> {
 	 * 
 	 * @return The clone
 	 */
+	@Override
 	public Object clone() {
 		// Create a new Material, copy everything into it and return it
 		Material clone = new Material();

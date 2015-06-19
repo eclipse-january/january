@@ -22,9 +22,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.eclipse.ice.datastructures.ICEObject.Component;
 import org.eclipse.ice.datastructures.ICEObject.Composite;
+import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
 import org.eclipse.ice.datastructures.ICEObject.Identifiable;
-import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
 
 /**
@@ -217,6 +217,7 @@ public class Form extends ICEObject implements Composite {
 	 *         True if the Forms are equal, false otherwise.
 	 *         </p>
 	 */
+	@Override
 	public boolean equals(Object otherForm) {
 
 		// Check if they are the same references in memory
@@ -283,6 +284,7 @@ public class Form extends ICEObject implements Composite {
 	 *         The hashcode of the Form.
 	 *         </p>
 	 */
+	@Override
 	public int hashCode() {
 
 		// Local Declaration
@@ -317,6 +319,7 @@ public class Form extends ICEObject implements Composite {
 	 *         The deep-copy clone of this Form.
 	 *         </p>
 	 */
+	@Override
 	public Object clone() {
 
 		// Create a new instance, copy contents, and return it
@@ -399,6 +402,7 @@ public class Form extends ICEObject implements Composite {
 	 * 
 	 * @see Component#accept(IComponentVisitor visitor)
 	 */
+	@Override
 	public void accept(IComponentVisitor visitor) {
 		// TODO Auto-generated method stub
 
@@ -409,6 +413,7 @@ public class Form extends ICEObject implements Composite {
 	 * 
 	 * @see Composite#addComponent(Component child)
 	 */
+	@Override
 	public void addComponent(Component child) {
 
 		// Add the child component if it is not null and update listeners
@@ -429,6 +434,7 @@ public class Form extends ICEObject implements Composite {
 	 * 
 	 * @see Composite#removeComponent(int childId)
 	 */
+	@Override
 	public void removeComponent(int childId) {
 
 		// Local Declarations
@@ -451,6 +457,7 @@ public class Form extends ICEObject implements Composite {
 	 * 
 	 * @see Composite#getComponent(int childId)
 	 */
+	@Override
 	public Component getComponent(int childId) {
 
 		// Local Declarations
@@ -471,6 +478,7 @@ public class Form extends ICEObject implements Composite {
 	 * 
 	 * @see Composite#getNumberOfComponents()
 	 */
+	@Override
 	public int getNumberOfComponents() {
 		return this.componentList.size();
 	}
@@ -480,6 +488,7 @@ public class Form extends ICEObject implements Composite {
 	 * 
 	 * @see Composite#getComponents()
 	 */
+	@Override
 	public ArrayList<Component> getComponents() {
 		return this.componentList;
 	}

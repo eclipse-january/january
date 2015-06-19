@@ -101,6 +101,7 @@ public class TestComponentListener implements IUpdateableListener {
 	 * 
 	 * @see IUpdateableListener#update(IUpdateable component)
 	 */
+	@Override
 	public void update(IUpdateable component) {
 
 		// Update the flag

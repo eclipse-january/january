@@ -308,6 +308,7 @@ public class AdaptiveTreeComposite extends TreeComposite {
 	 * 
 	 * @return The newly instantiated AdaptiveTreeComposite.
 	 */
+	@Override
 	public AdaptiveTreeComposite clone() {
 
 		// Instantiate a new AdaptiveTreeComposite
@@ -325,6 +326,7 @@ public class AdaptiveTreeComposite extends TreeComposite {
 	 *            The other AdaptiveTreeComposite to compare against.
 	 * @return Returns true if the objects are equal, otherwise false.
 	 */
+	@Override
 	public boolean equals(Object otherObject) {
 
 		// Local declarations
@@ -356,6 +358,7 @@ public class AdaptiveTreeComposite extends TreeComposite {
 	 * 
 	 * @return The hashcode of the object.
 	 */
+	@Override
 	public int hashCode() {
 
 		// Call the super's hash
@@ -373,6 +376,7 @@ public class AdaptiveTreeComposite extends TreeComposite {
 	 * 
 	 * @see Component#accept(IComponentVisitor visitor)
 	 */
+	@Override
 	public void accept(IComponentVisitor visitor) {
 
 		// Tell the visitor that this is a tree

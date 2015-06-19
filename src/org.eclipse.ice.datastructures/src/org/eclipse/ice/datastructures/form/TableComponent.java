@@ -457,6 +457,7 @@ public class TableComponent extends ICEObject implements Component {
 	 *         A clone of the TableComponent.
 	 *         </p>
 	 */
+	@Override
 	public Object clone() {
 
 		// Create a new instance, copy contents, and return it
@@ -522,6 +523,7 @@ public class TableComponent extends ICEObject implements Component {
 	 *         The hashcode
 	 *         </p>
 	 */
+	@Override
 	public int hashCode() {
 
 		// Local Declaration
@@ -591,6 +593,7 @@ public class TableComponent extends ICEObject implements Component {
 	 * 
 	 * @see Component#accept(IComponentVisitor visitor)
 	 */
+	@Override
 	public void accept(IComponentVisitor visitor) {
 		// Reveal our type to the visitor
 		visitor.visit(this);
