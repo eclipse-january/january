@@ -30,11 +30,8 @@ import javax.xml.bind.JAXBException;
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.form.AllowedValueType;
-import org.eclipse.ice.datastructures.form.DataComponent;
-import org.eclipse.ice.datastructures.form.Entry;
-import org.eclipse.ice.datastructures.form.MasterDetailsPair;
 import org.eclipse.ice.datastructures.form.MatrixComponent;
-import org.junit.*;
+import org.junit.Test;
 
 /**
  * This class is responsible for testing the MatrixComponent.

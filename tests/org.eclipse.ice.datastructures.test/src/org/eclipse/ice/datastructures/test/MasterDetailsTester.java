@@ -12,7 +12,12 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -22,7 +27,6 @@ import java.util.ArrayList;
 import javax.xml.bind.JAXBException;
 
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
-import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.form.AllowedValueType;
 import org.eclipse.ice.datastructures.form.DataComponent;
 import org.eclipse.ice.datastructures.form.Entry;
@@ -81,6 +85,7 @@ public class MasterDetailsTester {
 		// Create Entries
 
 		entry1 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("0");
@@ -91,6 +96,7 @@ public class MasterDetailsTester {
 		};
 
 		entry2 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("Apple");
@@ -101,6 +107,7 @@ public class MasterDetailsTester {
 		};
 
 		entry3 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.defaultValue = "Gabriel";
@@ -109,6 +116,7 @@ public class MasterDetailsTester {
 		};
 
 		entry4 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("0");
@@ -259,6 +267,7 @@ public class MasterDetailsTester {
 		// Create Entries
 
 		entry1 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("0");
@@ -269,6 +278,7 @@ public class MasterDetailsTester {
 		};
 
 		entry2 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("Apple");
@@ -279,6 +289,7 @@ public class MasterDetailsTester {
 		};
 
 		entry3 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.defaultValue = "Gabriel";
@@ -287,6 +298,7 @@ public class MasterDetailsTester {
 		};
 
 		entry4 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("0");
@@ -443,6 +455,7 @@ public class MasterDetailsTester {
 		// Create Entries
 
 		entry1 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("0");
@@ -453,6 +466,7 @@ public class MasterDetailsTester {
 		};
 
 		entry2 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("Apple");
@@ -463,6 +477,7 @@ public class MasterDetailsTester {
 		};
 
 		entry3 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.defaultValue = "Gabriel";
@@ -471,6 +486,7 @@ public class MasterDetailsTester {
 		};
 
 		entry4 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("0");
@@ -577,6 +593,7 @@ public class MasterDetailsTester {
 		// Create Entries
 
 		entry1 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("0");
@@ -587,6 +604,7 @@ public class MasterDetailsTester {
 		};
 
 		entry2 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("Apple");
@@ -597,6 +615,7 @@ public class MasterDetailsTester {
 		};
 
 		entry3 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.defaultValue = "Gabriel";
@@ -605,6 +624,7 @@ public class MasterDetailsTester {
 		};
 
 		entry4 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("0");
@@ -770,6 +790,7 @@ public class MasterDetailsTester {
 		globalsDataComponent = new DataComponent();
 
 		entry5 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("-50");
@@ -781,6 +802,7 @@ public class MasterDetailsTester {
 		};
 
 		entry6 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("White");
@@ -891,6 +913,7 @@ public class MasterDetailsTester {
 
 		// Create Entries
 		entry1 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("0");
@@ -901,6 +924,7 @@ public class MasterDetailsTester {
 		};
 
 		entry2 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("Apple");
@@ -911,6 +935,7 @@ public class MasterDetailsTester {
 		};
 
 		entry3 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.defaultValue = "Gabriel";
@@ -919,6 +944,7 @@ public class MasterDetailsTester {
 		};
 
 		entry4 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("0");
@@ -968,6 +994,7 @@ public class MasterDetailsTester {
 
 		// Create a Discrete and Continuous Entry.
 		entry5 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("-50");
@@ -979,6 +1006,7 @@ public class MasterDetailsTester {
 		};
 
 		entry6 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("White");
@@ -1057,6 +1085,7 @@ public class MasterDetailsTester {
 
 		// Create Entries
 		entry1 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("0");
@@ -1068,6 +1097,7 @@ public class MasterDetailsTester {
 		};
 
 		entry2 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("Apple");
@@ -1079,6 +1109,7 @@ public class MasterDetailsTester {
 		};
 
 		entry3 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.defaultValue = "Gabriel";
@@ -1088,6 +1119,7 @@ public class MasterDetailsTester {
 		};
 
 		entry4 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("0");
@@ -1137,6 +1169,7 @@ public class MasterDetailsTester {
 		globalsDataComponent = new DataComponent();
 
 		entryGlobal1 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("-50");
@@ -1148,6 +1181,7 @@ public class MasterDetailsTester {
 		};
 
 		entryGlobal2 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("White");
@@ -1210,6 +1244,7 @@ public class MasterDetailsTester {
 
 		// Create Entries
 		entry1 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("0");
@@ -1221,6 +1256,7 @@ public class MasterDetailsTester {
 		};
 
 		entry2 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("Apple");
@@ -1232,6 +1268,7 @@ public class MasterDetailsTester {
 		};
 
 		entry3 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.defaultValue = "Gabriel";
@@ -1241,6 +1278,7 @@ public class MasterDetailsTester {
 		};
 
 		entry4 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("0");
@@ -1290,6 +1328,7 @@ public class MasterDetailsTester {
 		globalsDataComponent = new DataComponent();
 
 		entry5 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("-50");
@@ -1301,6 +1340,7 @@ public class MasterDetailsTester {
 		};
 
 		entry6 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("White");
@@ -1379,6 +1419,7 @@ public class MasterDetailsTester {
 
 		// Create Entries
 		entry1 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("0");
@@ -1390,6 +1431,7 @@ public class MasterDetailsTester {
 		};
 
 		entry2 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("Apple");
@@ -1401,6 +1443,7 @@ public class MasterDetailsTester {
 		};
 
 		entry3 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.defaultValue = "Gabriel";
@@ -1410,6 +1453,7 @@ public class MasterDetailsTester {
 		};
 
 		entry4 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("0");
@@ -1458,6 +1502,7 @@ public class MasterDetailsTester {
 
 		// Setup Entries for global DataComponent
 		entry5 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("-50");
@@ -1469,6 +1514,7 @@ public class MasterDetailsTester {
 		};
 
 		entry6 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("White");

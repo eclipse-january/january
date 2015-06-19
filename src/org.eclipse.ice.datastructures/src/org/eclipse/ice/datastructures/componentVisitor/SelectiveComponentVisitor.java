@@ -220,6 +220,7 @@ public abstract class SelectiveComponentVisitor implements IComponentVisitor {
 	 * (non-Javadoc)
 	 * @see org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor#visit(org.eclipse.ice.datastructures.ICEObject.ListComponent)
 	 */
+	@Override
 	public void visit(ListComponent<?> component) {
 		// Nothing to do
 	}

@@ -12,19 +12,21 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.resource;
 
-import org.eclipse.ice.datastructures.ICEObject.ICEObject;
-import org.eclipse.ice.datastructures.form.Entry;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Date;
+
 import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.XmlAccessorType;
+
+import org.eclipse.ice.datastructures.ICEObject.ICEObject;
+import org.eclipse.ice.datastructures.form.Entry;
 
 /**
  * <p>
@@ -320,6 +322,7 @@ public class ICEResource extends ICEObject {
 	 * @return
 	 *         A clone of the ICEResource.
 	 */
+	@Override
 	public Object clone() {
 		// Create a new instance, copy contents, and return it
 		ICEResource resource = null;
@@ -339,6 +342,7 @@ public class ICEResource extends ICEObject {
 	 *            compared.
 	 * @return True if the ICEResources are equal, false otherwise.
 	 */
+	@Override
 	public boolean equals(Object otherICEResource) {
 
 		// Check if they are same reference in memory
@@ -376,6 +380,7 @@ public class ICEResource extends ICEObject {
 	 * 
 	 * @return The hashcode for the ICEResource.
 	 */
+	@Override
 	public int hashCode() {
 
 		// Local Declaration
