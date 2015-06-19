@@ -13,7 +13,7 @@
 package org.eclipse.ice.datastructures.form;
 
 import java.util.ArrayList;
-import java.util.TreeMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +21,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.eclipse.ice.datastructures.form.MaterialStack;
 
@@ -43,7 +44,7 @@ import org.eclipse.ice.datastructures.form.MaterialStack;
  * 
  */
 @XmlRootElement(name = "Material")
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.NONE)
 public class Material implements Cloneable, Comparable<Material> {
 
 	// Strings for property names.
@@ -51,84 +52,97 @@ public class Material implements Cloneable, Comparable<Material> {
 	/**
 	 * The atomic mass of the material. This is the name of that property.
 	 */
+	@XmlTransient
 	public static final String ATOMIC_MASS = "M (amu)";
 
 	/**
 	 * The Atomic density of the material. This is the name of that property.
 	 */
+	@XmlTransient
 	public static final String ATOMIC_DENSITY = "Dens (at/nm3)";
 
 	/**
 	 * The density (in g/cm^3) of the material. This is the name of that
 	 * property.
 	 */
+	@XmlTransient
 	public static final String DENSITY = "Dens (g/cm3)";
 
 	/**
 	 * The Bound coherent scattering length of the material. This is the name of
 	 * that property.
 	 */
+	@XmlTransient
 	public static final String BOUND_COHERENT_SCATTERING_LENGTH = "Coh b";
 
 	/**
 	 * The Bound incoherent scattering length of the material. This is the name
 	 * of that property.
 	 */
+	@XmlTransient
 	public static final String BOUND_INCOHERENT_SCATTERING_LENGTH = "Inc b";
 
 	/**
 	 * The bound coherent scattering cross section of the material. This is the
 	 * name of that property.
 	 */
+	@XmlTransient
 	public static final String BOUND_COHERENT_SCATTERING_CROSS_SECTION = "Coh xs";
 
 	/**
 	 * The bound incoherent scattering cross section of the material. This is
 	 * the name of that property.
 	 */
+	@XmlTransient
 	public static final String BOUND_INCOHERENT_SCATTERING_CROSS_SECTION = "Inc xs";
 
 	/**
 	 * The scattering length density in (A^-2) of the material. This is the name
 	 * of that property.
 	 */
+	@XmlTransient
 	public static final String SCATTERING_LENGTH_DENSITY = "Scattering Length Density (A^-2)";
 
 	/**
 	 * The scattering cross section in (A^-2) of the material. This is the name
 	 * of that property.
 	 */
+	@XmlTransient
 	public static final String SCATTERING_CROSS_SECTION = "Scattering Cross Section";
 
 	/**
 	 * The absorption cross section of the material. This is the name of that
 	 * property.
 	 */
+	@XmlTransient
 	public static final String ABSORPTION_CROSS_SECTION = "Abs xs";
 
 	/**
 	 * The name of the material.
 	 */
+	@XmlElement
 	private String name;
 
 	/**
 	 * The key-value pair map of properties for this material.
 	 */
-	private TreeMap<String, Double> properties;
+	@XmlElement(name = "properties")
+	private HashMap<String, Double> properties;
 
 	/**
 	 * The list of components that comprise this material.
 	 */
-	@XmlElement(name = "Material")
-	private TreeMap<String, MaterialStack> components;
+	@XmlElement(name = "components")
+	//@XmlTransient
+	private HashMap<String, MaterialStack> components;
 
 	/**
 	 * The constructor.
 	 */
 	public Material() {
 		name = "";
-		properties = new TreeMap<String, Double>();
-		components = new TreeMap<String, MaterialStack>();
+		properties = new HashMap<String, Double>();
+		components = new HashMap<String, MaterialStack>();
 	}
 
 	/**
@@ -198,7 +212,7 @@ public class Material implements Cloneable, Comparable<Material> {
 	 *         internal properties of the material.
 	 */
 	public Map<String, Double> getProperties() {
-		return new TreeMap<String, Double>(properties);
+		return new HashMap<String, Double>(properties);
 	}
 
 	/**
@@ -316,8 +330,8 @@ public class Material implements Cloneable, Comparable<Material> {
 		// Don't copy the input if it is not a Material or if it is null
 		if (material != null && material != this) {
 			this.name = material.name;
-			this.properties = new TreeMap<String, Double>(material.properties);
-			this.components = new TreeMap<String, MaterialStack>(
+			this.properties = new HashMap<String, Double>(material.properties);
+			this.components = new HashMap<String, MaterialStack>(
 					material.components);
 		}
 	}

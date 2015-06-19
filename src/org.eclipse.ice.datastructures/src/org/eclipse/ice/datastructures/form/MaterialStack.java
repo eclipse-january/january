@@ -11,15 +11,21 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.form;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * A class to encapsulate a multitude of the same material. This is a much
  * better solution than having a material hold information about its own amount
  * in a stack.
  * 
- * 
  * @author Kasper Gammeltoft
  * 
  */
+@XmlRootElement(name = "MaterialStack")
+@XmlAccessorType(XmlAccessType.NONE)
 public class MaterialStack implements Comparable<MaterialStack> {
 
 	/**
@@ -59,6 +65,7 @@ public class MaterialStack implements Comparable<MaterialStack> {
 	 * 
 	 * @return The material
 	 */
+	@XmlElement(name = "stackMaterial")
 	public Material getMaterial() {
 		return material;
 	}
@@ -79,6 +86,7 @@ public class MaterialStack implements Comparable<MaterialStack> {
 	 * 
 	 * @return The amount in the stack
 	 */
+	@XmlElement()
 	public int getAmount() {
 		return number;
 	}
