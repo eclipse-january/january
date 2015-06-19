@@ -27,37 +27,54 @@ public class MaterialStackTester {
 	/**
 	 * Test method for {@link org.eclipse.ice.datastructures.form.MaterialStack#MaterialStack()}.
 	 */
-	//@Test
+	@Test
 	public void testConstruction() {
-		// Check setup
-		fail("Not yet implemented");
+		Material matTest1 = new Material();
+		matTest1.setName("Nitrogen");
+		MaterialStack stack1 = new MaterialStack(matTest1, 3);
+		assertNotNull(matTest1);
+		MaterialStack stack2 = new MaterialStack();
+		stack2.setMaterial(matTest1);
+		stack2.setAmount(3);
+		assertTrue(stack1.equals(stack2));
 	}
 
 	/**
 	 * Test method for {@link org.eclipse.ice.datastructures.form.MaterialStack#getMaterial()}.
 	 */
-//	@Test
+	@Test
 	public void testGetMaterial() {
-		// Check the material
-		fail("Not yet implemented");
+		Material C02 = TestMaterialFactory.createCO2();
+		MaterialStack stack = new MaterialStack(C02, 3);
+		Material testMat = stack.getMaterial();
+		assertTrue(C02.equals(testMat));
 	}
 
 	/**
 	 * Test method for {@link org.eclipse.ice.datastructures.form.MaterialStack#getAmount()}.
 	 */
-//	@Test
+	@Test
 	public void testGetAmount() {
-		// Check all getters
-		fail("Not yet implemented");
+		int amount = 3;
+		MaterialStack stack = new MaterialStack(TestMaterialFactory.createH2O(), amount);
+		int testAmount = stack.getAmount();
+		assertTrue(amount==testAmount);
 	}
 
 	/**
 	 * Test method for {@link org.eclipse.ice.datastructures.form.MaterialStack#incrementAmount()}.
 	 */
-//	@Test
+	@Test
 	public void testIncrementAmount() {
-		// Check increment, set and add
-		fail("Not yet implemented");
+		int startAmount = 2;
+		MaterialStack stack = new MaterialStack(TestMaterialFactory.createH2O(), startAmount);
+		stack.incrementAmount();
+		assertEquals(startAmount+1, stack.getAmount());
+		startAmount++;
+		int add = 5;
+		stack.addAmount(add);
+		assertEquals(startAmount+add, stack.getAmount());
+		
 	}
 
 	/**

@@ -119,11 +119,19 @@ public class MaterialStack implements Comparable<MaterialStack> {
 	 * @return Returns true if the stacks are equal (same material, same amount)
 	 *         and false if otherwise.
 	 */
-	public boolean equals(MaterialStack stack) {
-		boolean val = (number == stack.getAmount())
-				&& material.equals(stack.getMaterial());
-		System.out.println(number == stack.getAmount());
-		return val;
+	@Override
+	public boolean equals(Object toCompare) {
+		boolean isEqual = false;
+		if(toCompare instanceof MaterialStack){
+			if(this==toCompare){
+				isEqual = true;
+			} else {
+				MaterialStack stack = (MaterialStack)toCompare;
+				isEqual = (number == stack.getAmount())
+						&& material.equals(stack.getMaterial());
+			}
+		} 
+		return isEqual;
 	}
 
 	/**
