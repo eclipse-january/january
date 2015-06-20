@@ -12,14 +12,13 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.ICEObject;
 
-import javax.xml.bind.JAXBException;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 

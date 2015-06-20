@@ -231,6 +231,7 @@ public class VizResource extends ICEResource {
 	 * 
 	 * @return The hashcode for the VizResource.
 	 */
+	@Override
 	public int hashCode() {
 
 		// Local Declaration
@@ -271,6 +272,7 @@ public class VizResource extends ICEResource {
 	 * 
 	 * @return A clone of the VizResource.
 	 */
+	@Override
 	public Object clone() {
 
 		// Create a new instance of resource and copy contents

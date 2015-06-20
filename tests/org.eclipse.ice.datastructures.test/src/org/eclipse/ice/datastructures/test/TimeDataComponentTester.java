@@ -12,7 +12,10 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -21,12 +24,11 @@ import java.util.ArrayList;
 
 import javax.xml.bind.JAXBException;
 
-import org.junit.Test;
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.form.AllowedValueType;
 import org.eclipse.ice.datastructures.form.Entry;
-import org.eclipse.ice.datastructures.form.MasterDetailsPair;
 import org.eclipse.ice.datastructures.form.TimeDataComponent;
+import org.junit.Test;
 
 /**
  * <p>
@@ -57,6 +59,7 @@ public class TimeDataComponentTester {
 
 		// Setup Entries for comparison
 		entry1 = new Entry() {
+			@Override
 			protected void setup() {
 				this.setName("Enable Regular Mode");
 				this.tag = "MODE";
@@ -75,6 +78,7 @@ public class TimeDataComponentTester {
 
 		// Entry: START
 		entry2 = new Entry() {
+			@Override
 			protected void setup() {
 				this.setName("Start");
 				this.tag = "START";
@@ -94,6 +98,7 @@ public class TimeDataComponentTester {
 
 		// Entry: FINISH
 		entry3 = new Entry() {
+			@Override
 			protected void setup() {
 				this.setName("Finish");
 				this.tag = "FINISH";
@@ -113,6 +118,7 @@ public class TimeDataComponentTester {
 
 		// Entry: NSTEP
 		entry4 = new Entry() {
+			@Override
 			protected void setup() {
 				this.setName("The number to step");
 				this.tag = "NSTEP";
@@ -132,6 +138,7 @@ public class TimeDataComponentTester {
 
 		// Entry: VALUES
 		entry5 = new Entry() {
+			@Override
 			protected void setup() {
 				this.setName("VALUES");
 				this.tag = "VALUES";
