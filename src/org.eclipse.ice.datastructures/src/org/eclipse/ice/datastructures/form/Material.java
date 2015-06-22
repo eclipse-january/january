@@ -13,6 +13,7 @@
 package org.eclipse.ice.datastructures.form;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.TreeMap;
 import java.util.List;
 import java.util.Map;
@@ -65,46 +66,63 @@ public class Material implements Cloneable, Comparable<Material> {
 	public static final String DENSITY = "Dens (g/cm3)";
 
 	/**
+	 * The number density of the material. This is the name of that property.
+	 */
+	public static final String NUMBER_DENSITY = "N (Å-3)";
+
+	/**
 	 * The Bound coherent scattering length of the material. This is the name of
 	 * that property.
 	 */
-	public static final String BOUND_COHERENT_SCATTERING_LENGTH = "Coh b";
+	public static final String COHERENT_SCAT_LENGTH = "Coh b";
 
 	/**
 	 * The Bound incoherent scattering length of the material. This is the name
 	 * of that property.
 	 */
-	public static final String BOUND_INCOHERENT_SCATTERING_LENGTH = "Inc b";
+	public static final String INCOHERENT_SCAT_LENGTH = "Inc b";
 
 	/**
 	 * The bound coherent scattering cross section of the material. This is the
 	 * name of that property.
 	 */
-	public static final String BOUND_COHERENT_SCATTERING_CROSS_SECTION = "Coh xs";
+	public static final String COHERENT_SCAT_X_SECTION = "Coh xs";
 
 	/**
 	 * The bound incoherent scattering cross section of the material. This is
 	 * the name of that property.
 	 */
-	public static final String BOUND_INCOHERENT_SCATTERING_CROSS_SECTION = "Inc xs";
+	public static final String INCOHERENT_SCAT_X_SECTION = "Inc xs";
 
 	/**
 	 * The scattering length density in (A^-2) of the material. This is the name
 	 * of that property.
 	 */
-	public static final String SCATTERING_LENGTH_DENSITY = "Scattering Length Density (A^-2)";
+	public static final String SCAT_LENGTH_DENSITY = "Scattering Length Density (A^-2)";
 
 	/**
 	 * The scattering cross section in (A^-2) of the material. This is the name
 	 * of that property.
 	 */
-	public static final String SCATTERING_CROSS_SECTION = "Scattering Cross Section";
+	public static final String SCAT_X_SECTION = "Nb xs";
 
 	/**
 	 * The absorption cross section of the material. This is the name of that
 	 * property.
 	 */
-	public static final String ABSORPTION_CROSS_SECTION = "Abs xs";
+	public static final String ABS_X_SECTION = "Abs xs";
+
+	/**
+	 * The true or coherent mass absorption coefficient of the material. This is
+	 * the name of that property.
+	 */
+	public static final String MASS_ABS_COHERENT = "mmabs/l (Å-2)";
+
+	/**
+	 * The incoherent mass absorption coefficient of the material. This is the
+	 * name of that property.
+	 */
+	public static final String MASS_ABS_INCOHERENT = "mminc (Å-1)";
 
 	/**
 	 * The name of the material.
@@ -120,7 +138,7 @@ public class Material implements Cloneable, Comparable<Material> {
 	 * The list of components that comprise this material.
 	 */
 	@XmlElement(name = "Material")
-	private TreeMap<String, MaterialStack> components;
+	private HashMap<String, MaterialStack> components;
 
 	/**
 	 * The constructor.
@@ -128,7 +146,7 @@ public class Material implements Cloneable, Comparable<Material> {
 	public Material() {
 		name = "";
 		properties = new TreeMap<String, Double>();
-		components = new TreeMap<String, MaterialStack>();
+		components = new HashMap<String, MaterialStack>();
 	}
 
 	/**
@@ -256,6 +274,108 @@ public class Material implements Cloneable, Comparable<Material> {
 	}
 
 	/**
+	 * This operation checks to see if the given material at all is a component
+	 * of this material.
+	 * 
+	 * @param material
+	 *            The Material to check with
+	 * @return Returns true if the given material is in the compoents list of
+	 *         this one. Returns false if otherwise.
+	 */
+	public boolean isComponent(Material material) {
+		return components.containsKey(material.getName());
+
+	}
+
+	/**
+	 * This operation updates the properties for this material based on the code
+	 * from John Ankner's compound calculator written in Visual Basic. The code
+	 * was ported for the Reflectivity Model. Calculates the number density,
+	 * scattering length density, true (coherent) scattering length absorption
+	 * coefficient, and the incoherent scattering length absorption coefficient
+	 * all from the density of the material (in g/cm^3) and its components. If
+	 * called on a elemental material, does nothing.
+	 */
+	public void updateProperties() {
+
+		// Makes sure to not try to recalculate the values for an element or
+		// isotope.
+		if (!isElemental()) {
+			// Variables and constants
+			final double nA = 6.02E23;
+			double numberDensity = 0;
+			double muMAbs = 0;
+			double muMInc = 0;
+			double b = 0;
+
+			double density = getProperty(DENSITY);
+			// Get the molecular mass
+			int molMass = 0;
+			List<MaterialStack> list = getComponents();
+			for (MaterialStack stack : list) {
+				molMass += stack.getAmount()
+						* (stack.getMaterial().getProperty(ATOMIC_MASS));
+
+			}
+
+			// Check if valid inputs
+			if (list.size() > 0 && molMass >= 1) {
+
+				// Get the number density
+				numberDensity = (1E-24) * (nA) * (density / molMass);
+
+				// Iterate over the list and create the new material's
+				// properties
+				for (int j = 0; j < list.size(); j++) {
+					MaterialStack stack = list.get(j);
+					Material mat = stack.getMaterial();
+					int N = stack.getAmount();
+					// Get the real part of the scattering length from coherent
+					// cross section
+					double Cohxs = Math
+							.sqrt(mat.getProperty(COHERENT_SCAT_X_SECTION) * (10E-8) / 12.566);
+
+					int sign = (int) (Math.signum(mat
+							.getProperty(COHERENT_SCAT_LENGTH)));
+
+					if (sign == 0) {
+						sign = 1;
+					}
+
+					// The real part of the scattering length
+					b += N * Cohxs * sign;
+
+					// Determine true mass absorption coefficient
+					double massPercent = mat.getProperty(ATOMIC_MASS) / molMass;
+					muMAbs += N * massPercent
+							* (mat.getProperty(MASS_ABS_COHERENT));
+
+					// Determine incoherent mass absorption coefficient
+					muMInc += N * massPercent
+							* (mat.getProperty(MASS_ABS_INCOHERENT));
+
+				}
+
+			}
+
+			// Now just write these values to the new material's properties.
+
+			// Set the new total mass for the material
+			setProperty(ATOMIC_MASS, molMass);
+			// Set the number density
+			setProperty(NUMBER_DENSITY, numberDensity);
+			// Set the scattering length density
+			setProperty(SCAT_LENGTH_DENSITY, numberDensity * b);
+			// Set the true scattering length absorption coefficient
+			muMAbs *= 1E-24 * getProperty(DENSITY);
+			setProperty(MASS_ABS_COHERENT, muMAbs);
+			// Set the incoherent scattering length absorption coefficient
+			muMInc *= 1E-24 * getProperty(DENSITY);
+			setProperty(MASS_ABS_INCOHERENT, muMInc);
+		}
+	}
+
+	/**
 	 * This operation overrides Object.equals() to tailor its behavior for
 	 * materials.
 	 * 
@@ -316,45 +436,65 @@ public class Material implements Cloneable, Comparable<Material> {
 		if (material != null && material != this) {
 			this.name = material.name;
 			this.properties = new TreeMap<String, Double>(material.properties);
-			this.components = new TreeMap<String, MaterialStack>(
+			this.components = new HashMap<String, MaterialStack>(
 					material.components);
 		}
 	}
 
 	/**
+	 * Gets if this material is elemental (not a compound/composite). It must
+	 * have no components to be elemental.
+	 * 
+	 * @return Returns true if this material is elemental, false if otherwise.
+	 */
+	public boolean isElemental() {
+		return components.isEmpty();
+	}
+
+	/**
 	 * Gets the number before the element denoting which isotope or form of an
-	 * element or compound this material represents.
+	 * element or compound this material represents. If it is a compound or
+	 * composite, will return 0.
 	 * 
 	 * @return The number of this isotope, as an int. Will return 0 if this is a
-	 *         pure element (no number preceding its name)
+	 *         pure element (no number preceding its name) or if this material
+	 *         is not elemental.
 	 */
 	public int getIsotopicNumber() {
 		// Get an empty string to build off of
 		String numStr = "";
-		// Iterate over the characters in the name to pull out the isotope
-		// number.
-		// it is assumed that the name will follow the format xxxYy, where x is
-		// a digit and y is a letter.
-		for (int i = 0; i < name.length(); i++) {
-			if (Character.isDigit(name.charAt(i))) {
-				numStr += name.charAt(i);
-			} else {
-				break;
-			}
-		}
-		// Get the isotope number in int form. If no x values in name, return 0.
 		int retVal;
-		if (numStr.equals("")) {
+		// If this is a component it should not truly have isotopes and thus no
+		// isotopic number.
+		if (!(components.isEmpty())) {
 			retVal = 0;
 		} else {
-			retVal = Integer.parseInt(numStr);
+			// Iterate over the characters in the name to pull out the isotope
+			// number.
+			// it is assumed that the name will follow the format xxxYy, where x
+			// is
+			// a digit and y is a letter.
+			for (int i = 0; i < name.length(); i++) {
+				if (Character.isDigit(name.charAt(i))) {
+					numStr += name.charAt(i);
+				} else {
+					break;
+				}
+			}
+			// Get the isotope number in int form. If no x values in name,
+			// return 0.
+			if (numStr.equals("")) {
+				retVal = 0;
+			} else {
+				retVal = Integer.parseInt(numStr);
+			}
 		}
 		return retVal;
 	}
 
 	/**
 	 * Gets the elemental or compound name for this material. Note- this will
-	 * return the same string for two isotopes of the same element.
+	 * return the same string for two different isotopes of the same element.
 	 * 
 	 * @return A String containing the name of the element or compound that this
 	 *         material represents.
@@ -362,13 +502,20 @@ public class Material implements Cloneable, Comparable<Material> {
 	public String getElementalName() {
 		// A string to build on
 		String nameStr = "";
-		// Iterate over the name of the material, it is assumed that the
-		// name follow the form xxxYy, where x is a digit and y is a letter.
-		for (int i = name.length() - 1; i >= 0; i--) {
-			if (Character.isLetter(name.charAt(i))) {
-				nameStr = name.charAt(i) + nameStr;
-			} else {
-				break;
+
+		// If it is a composite, just have the elemental name be the full name
+		// of the composite.
+		if (!components.isEmpty()) {
+			nameStr = name;
+		} else {
+			// Iterate over the name of the material, it is assumed that the
+			// name follow the form xxxYy, where x is a digit and y is a letter.
+			for (int i = name.length() - 1; i >= 0; i--) {
+				if (Character.isLetter(name.charAt(i))) {
+					nameStr = name.charAt(i) + nameStr;
+				} else {
+					break;
+				}
 			}
 		}
 		return nameStr;
