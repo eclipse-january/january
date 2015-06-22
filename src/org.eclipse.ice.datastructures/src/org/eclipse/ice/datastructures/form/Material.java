@@ -290,6 +290,20 @@ public class Material implements Cloneable, Comparable<Material> {
 			components.put(component.getName(), stack);
 		}
 	}
+	
+	/**
+	 * This operation checks to see if the given material at all is a component
+	 * of this material.
+	 * 
+	 * @param material
+	 *            The Material to check with
+	 * @return Returns true if the given material is in the compoents list of
+	 *         this one. Returns false if otherwise.
+	 */
+	public boolean isComponent(Material material) {
+		return components.containsKey(material.getName());
+
+	}
 
 	/**
 	 * This operation overrides Object.equals() to tailor its behavior for
