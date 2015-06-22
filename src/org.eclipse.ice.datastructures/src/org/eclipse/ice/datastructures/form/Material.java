@@ -8,7 +8,7 @@
  * Contributors:
  *   Initial API and implementation and/or initial documentation - Jay Jay Billings,
  *   Jordan H. Deyton, Dasha Gorin, Alexander J. McCaskey, Taylor Patterson,
- *   Claire Saunders, Matthew Wang, Anna Wojtowicz
+ *   Claire Saunders, Matthew Wang, Anna Wojtowicz, Kasper Gammeltoft
  *******************************************************************************/
 package org.eclipse.ice.datastructures.form;
 
@@ -40,7 +40,7 @@ import org.eclipse.ice.datastructures.form.MaterialStack;
  * with the getComponents() operation. ICE makes no attempt to correct
  * mismatched sizes, etc. between components and composites.
  * 
- * @author Jay Jay Billings
+ * @author Jay Jay Billings, Kasper Gammeltoft
  * 
  */
 @XmlRootElement(name = "Material")
