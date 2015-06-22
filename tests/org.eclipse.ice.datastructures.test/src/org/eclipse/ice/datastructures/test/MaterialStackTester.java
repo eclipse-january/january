@@ -129,8 +129,7 @@ public class MaterialStackTester {
 		ICEJAXBHandler jaxbHandler = new ICEJAXBHandler();
 
 		// Create a Material that will be written to XML
-		Material material = new Material();//TestMaterialFactory.createCO2();
-		material.addComponent(new Material());
+		Material material = TestMaterialFactory.createCO2();
 		
 		MaterialStack stack = new MaterialStack();
 		stack.setMaterial(material);
