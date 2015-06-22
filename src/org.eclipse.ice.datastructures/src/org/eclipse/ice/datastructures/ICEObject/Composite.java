@@ -13,7 +13,6 @@
 package org.eclipse.ice.datastructures.ICEObject;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 /**
  * <p>
