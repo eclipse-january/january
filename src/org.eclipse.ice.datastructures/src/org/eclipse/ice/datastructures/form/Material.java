@@ -8,7 +8,7 @@
  * Contributors:
  *   Initial API and implementation and/or initial documentation - Jay Jay Billings,
  *   Jordan H. Deyton, Dasha Gorin, Alexander J. McCaskey, Taylor Patterson,
- *   Claire Saunders, Matthew Wang, Anna Wojtowicz
+ *   Claire Saunders, Matthew Wang, Anna Wojtowicz, Kasper Gammeltoft
  *******************************************************************************/
 package org.eclipse.ice.datastructures.form;
 
@@ -40,7 +40,7 @@ import org.eclipse.ice.datastructures.form.MaterialStack;
  * with the getComponents() operation. ICE makes no attempt to correct
  * mismatched sizes, etc. between components and composites.
  * 
- * @author Jay Jay Billings
+ * @author Jay Jay Billings, Kasper Gammeltoft
  * 
  */
 @XmlRootElement(name = "Material")
@@ -67,7 +67,7 @@ public class Material implements Cloneable, Comparable<Material> {
 	 */
 	@XmlTransient
 	public static final String DENSITY = "Dens (g/cm3)";
-	
+
 	/**
 	 * The number density of the material. This is the name of that property.
 	 */
@@ -122,7 +122,6 @@ public class Material implements Cloneable, Comparable<Material> {
 	 */
 	@XmlTransient
 	public static final String ABS_X_SECTION = "Abs xs";
-	
 
 	/**
 	 * The true or coherent mass absorption coefficient of the material. This is
@@ -131,14 +130,13 @@ public class Material implements Cloneable, Comparable<Material> {
 	@XmlTransient
 	public static final String MASS_ABS_COHERENT = "mmabs/l (Å-2)";
 
-	
 	/**
 	 * The incoherent mass absorption coefficient of the material. This is the
 	 * name of that property.
 	 */
 	@XmlTransient
 	public static final String MASS_ABS_INCOHERENT = "mminc (Å-1)";
-	
+
 	/**
 	 * The name of the material.
 	 */
@@ -155,7 +153,7 @@ public class Material implements Cloneable, Comparable<Material> {
 	 * The list of components that comprise this material.
 	 */
 	@XmlElement(name = "components")
-	//@XmlTransient
+	// @XmlTransient
 	private HashMap<String, MaterialStack> components;
 
 	/**
@@ -290,7 +288,7 @@ public class Material implements Cloneable, Comparable<Material> {
 			components.put(component.getName(), stack);
 		}
 	}
-	
+
 	/**
 	 * This operation checks to see if the given material at all is a component
 	 * of this material.
@@ -371,7 +369,7 @@ public class Material implements Cloneable, Comparable<Material> {
 					material.components);
 		}
 	}
-	
+
 	/**
 	 * This operation updates the properties for this material based on the code
 	 * from John Ankner's compound calculator written in Visual Basic. The code
@@ -489,10 +487,8 @@ public class Material implements Cloneable, Comparable<Material> {
 			retVal = 0;
 		} else {
 			// Iterate over the characters in the name to pull out the isotope
-			// number.
-			// it is assumed that the name will follow the format xxxYy, where x
-			// is
-			// a digit and y is a letter.
+			// number. it is assumed that the name will follow the format xxxYy,
+			// where x is a digit and y is a letter.
 			for (int i = 0; i < name.length(); i++) {
 				if (Character.isDigit(name.charAt(i))) {
 					numStr += name.charAt(i);
