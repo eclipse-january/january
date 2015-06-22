@@ -8,13 +8,12 @@
  * Contributors:
  *   Initial API and implementation and/or initial documentation - Jay Jay Billings,
  *   Jordan H. Deyton, Dasha Gorin, Alexander J. McCaskey, Taylor Patterson,
- *   Claire Saunders, Matthew Wang, Anna Wojtowicz, Kasper Gammeltoft
+ *   Claire Saunders, Matthew Wang, Anna Wojtowicz
  *******************************************************************************/
 package org.eclipse.ice.datastructures.form;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.TreeMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +21,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.eclipse.ice.datastructures.form.MaterialStack;
 
@@ -40,11 +40,11 @@ import org.eclipse.ice.datastructures.form.MaterialStack;
  * with the getComponents() operation. ICE makes no attempt to correct
  * mismatched sizes, etc. between components and composites.
  * 
- * @author Jay Jay Billings, Kasper Gammeltoft
+ * @author Jay Jay Billings
  * 
  */
 @XmlRootElement(name = "Material")
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.NONE)
 public class Material implements Cloneable, Comparable<Material> {
 
 	// Strings for property names.
@@ -52,92 +52,110 @@ public class Material implements Cloneable, Comparable<Material> {
 	/**
 	 * The atomic mass of the material. This is the name of that property.
 	 */
+	@XmlTransient
 	public static final String ATOMIC_MASS = "M (amu)";
 
 	/**
 	 * The Atomic density of the material. This is the name of that property.
 	 */
+	@XmlTransient
 	public static final String ATOMIC_DENSITY = "Dens (at/nm3)";
 
 	/**
 	 * The density (in g/cm^3) of the material. This is the name of that
 	 * property.
 	 */
+	@XmlTransient
 	public static final String DENSITY = "Dens (g/cm3)";
-
+	
 	/**
 	 * The number density of the material. This is the name of that property.
 	 */
+	@XmlTransient
 	public static final String NUMBER_DENSITY = "N (Å-3)";
 
 	/**
 	 * The Bound coherent scattering length of the material. This is the name of
 	 * that property.
 	 */
+	@XmlTransient
 	public static final String COHERENT_SCAT_LENGTH = "Coh b";
 
 	/**
 	 * The Bound incoherent scattering length of the material. This is the name
 	 * of that property.
 	 */
+	@XmlTransient
 	public static final String INCOHERENT_SCAT_LENGTH = "Inc b";
 
 	/**
 	 * The bound coherent scattering cross section of the material. This is the
 	 * name of that property.
 	 */
+	@XmlTransient
 	public static final String COHERENT_SCAT_X_SECTION = "Coh xs";
 
 	/**
 	 * The bound incoherent scattering cross section of the material. This is
 	 * the name of that property.
 	 */
+	@XmlTransient
 	public static final String INCOHERENT_SCAT_X_SECTION = "Inc xs";
 
 	/**
 	 * The scattering length density in (A^-2) of the material. This is the name
 	 * of that property.
 	 */
+	@XmlTransient
 	public static final String SCAT_LENGTH_DENSITY = "Scattering Length Density (A^-2)";
 
 	/**
 	 * The scattering cross section in (A^-2) of the material. This is the name
 	 * of that property.
 	 */
-	public static final String SCAT_X_SECTION = "Nb xs";
+	@XmlTransient
+	public static final String SCAT_X_SECTION = "Scattering Cross Section";
 
 	/**
 	 * The absorption cross section of the material. This is the name of that
 	 * property.
 	 */
+	@XmlTransient
 	public static final String ABS_X_SECTION = "Abs xs";
+	
 
 	/**
 	 * The true or coherent mass absorption coefficient of the material. This is
 	 * the name of that property.
 	 */
+	@XmlTransient
 	public static final String MASS_ABS_COHERENT = "mmabs/l (Å-2)";
 
+	
 	/**
 	 * The incoherent mass absorption coefficient of the material. This is the
 	 * name of that property.
 	 */
+	@XmlTransient
 	public static final String MASS_ABS_INCOHERENT = "mminc (Å-1)";
-
+	
 	/**
 	 * The name of the material.
 	 */
+	@XmlElement
 	private String name;
 
 	/**
 	 * The key-value pair map of properties for this material.
 	 */
-	private TreeMap<String, Double> properties;
+	@XmlElement(name = "properties")
+	private HashMap<String, Double> properties;
 
 	/**
 	 * The list of components that comprise this material.
 	 */
-	@XmlElement(name = "Material")
+	@XmlElement(name = "components")
+	//@XmlTransient
 	private HashMap<String, MaterialStack> components;
 
 	/**
@@ -145,7 +163,7 @@ public class Material implements Cloneable, Comparable<Material> {
 	 */
 	public Material() {
 		name = "";
-		properties = new TreeMap<String, Double>();
+		properties = new HashMap<String, Double>();
 		components = new HashMap<String, MaterialStack>();
 	}
 
@@ -216,7 +234,7 @@ public class Material implements Cloneable, Comparable<Material> {
 	 *         internal properties of the material.
 	 */
 	public Map<String, Double> getProperties() {
-		return new TreeMap<String, Double>(properties);
+		return new HashMap<String, Double>(properties);
 	}
 
 	/**
@@ -274,19 +292,72 @@ public class Material implements Cloneable, Comparable<Material> {
 	}
 
 	/**
-	 * This operation checks to see if the given material at all is a component
-	 * of this material.
+	 * This operation overrides Object.equals() to tailor its behavior for
+	 * materials.
 	 * 
-	 * @param material
-	 *            The Material to check with
-	 * @return Returns true if the given material is in the compoents list of
-	 *         this one. Returns false if otherwise.
+	 * @param other
+	 *            The other Object to compare against this one
+	 * @return true if they are equal, false otherwise
 	 */
-	public boolean isComponent(Material material) {
-		return components.containsKey(material.getName());
+	@Override
+	public boolean equals(Object other) {
+		// Local Declarations
+		boolean retVal = false;
 
+		// Don't inspect the input if it is not a Material or if it is null
+		if (other != null && other instanceof Material) {
+			// Check the reference
+			if (this == other) {
+				retVal = true;
+			} else {
+				Material otherMaterial = (Material) other;
+				// Check each member
+				boolean val1 = this.name.equals(otherMaterial.name);
+				boolean val2 = this.components.equals(otherMaterial.components);
+				boolean val3 = this.properties.equals(otherMaterial.properties);
+				retVal = val1 && val2 && val3;
+			}
+		}
+
+		return retVal;
 	}
 
+	/**
+	 * This operation overrides Object.hashCode to return the proper hash for
+	 * Materials.
+	 * 
+	 * @return the hash
+	 */
+	@Override
+	public int hashCode() {
+		// Local Declarations
+		int hash = 8;
+
+		// Compute the hash code
+		hash = 31 * hash + name.hashCode();
+		hash = 31 * hash + properties.hashCode();
+		hash = 31 * hash + components.hashCode();
+
+		return hash;
+	}
+
+	/**
+	 * This operation copies the content of the incoming material into this
+	 * material.
+	 * 
+	 * @param material
+	 *            the material to copy
+	 */
+	public void copy(Material material) {
+		// Don't copy the input if it is not a Material or if it is null
+		if (material != null && material != this) {
+			this.name = material.name;
+			this.properties = new HashMap<String, Double>(material.properties);
+			this.components = new HashMap<String, MaterialStack>(
+					material.components);
+		}
+	}
+	
 	/**
 	 * This operation updates the properties for this material based on the code
 	 * from John Ankner's compound calculator written in Visual Basic. The code
@@ -372,72 +443,6 @@ public class Material implements Cloneable, Comparable<Material> {
 			// Set the incoherent scattering length absorption coefficient
 			muMInc *= 1E-24 * getProperty(DENSITY);
 			setProperty(MASS_ABS_INCOHERENT, muMInc);
-		}
-	}
-
-	/**
-	 * This operation overrides Object.equals() to tailor its behavior for
-	 * materials.
-	 * 
-	 * @param other
-	 *            The other Object to compare against this one
-	 * @return true if they are equal, false otherwise
-	 */
-	public boolean equals(Object other) {
-		// Local Declarations
-		boolean retVal = false;
-
-		// Don't inspect the input if it is not a Material or if it is null
-		if (other != null && other instanceof Material) {
-			// Check the reference
-			if (this == other) {
-				retVal = true;
-			} else {
-				Material otherMaterial = (Material) other;
-				// Check each member
-				boolean val1 = this.name.equals(otherMaterial.name);
-				boolean val2 = this.components.equals(otherMaterial.components);
-				boolean val3 = this.properties.equals(otherMaterial.properties);
-				retVal = val1 && val2 && val3;
-			}
-		}
-
-		return retVal;
-	}
-
-	/**
-	 * This operation overrides Object.hashCode to return the proper hash for
-	 * Materials.
-	 * 
-	 * @return the hash
-	 */
-	@Override
-	public int hashCode() {
-		// Local Declarations
-		int hash = 8;
-
-		// Compute the hash code
-		hash = 31 * hash + name.hashCode();
-		hash = 31 * hash + properties.hashCode();
-		hash = 31 * hash + components.hashCode();
-
-		return hash;
-	}
-
-	/**
-	 * This operation copies the content of the incoming material into this
-	 * material.
-	 * 
-	 * @param material
-	 *            the material to copy
-	 */
-	public void copy(Material material) {
-		// Don't copy the input if it is not a Material or if it is null
-		if (material != null && material != this) {
-			this.name = material.name;
-			this.properties = new TreeMap<String, Double>(material.properties);
-			this.components = new HashMap<String, MaterialStack>(
-					material.components);
 		}
 	}
 
