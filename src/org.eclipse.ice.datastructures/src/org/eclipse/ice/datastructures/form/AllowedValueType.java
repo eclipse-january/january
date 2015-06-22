@@ -27,19 +27,23 @@ public enum AllowedValueType {
 	 * the values stored in the allowedValues array for that Entry.
 	 */
 	Discrete,
-	
+
 	/**
 	 * This literal means that the value stored by an Entry must be within the
 	 * range of values specified by the allowedValues array for that Entry.
 	 */
 	Continuous,
-	
+
 	/**
 	 * This literal means the Entry is used in a form for specifying some sort
 	 * of file (such as an input file). The value of the entry will be a
 	 * filename, and the list of allowedValues will be files in the workspace.
 	 */
 	File,
-	
+
+	/**
+	 * This literal means that the Entry is used in an undefined form where the
+	 * value is and should be treated as a simple string.
+	 */
 	Undefined
 }
