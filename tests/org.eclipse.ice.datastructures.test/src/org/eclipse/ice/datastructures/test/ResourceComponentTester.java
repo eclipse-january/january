@@ -12,10 +12,11 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.test;
 
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
-import org.eclipse.ice.datastructures.form.ResourceComponent;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -25,8 +26,10 @@ import java.util.ArrayList;
 
 import javax.xml.bind.JAXBException;
 
-import org.junit.Test;
+import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
+import org.eclipse.ice.datastructures.form.ResourceComponent;
 import org.eclipse.ice.datastructures.resource.ICEResource;
+import org.junit.Test;
 
 /**
  * The ResourceComponentTester class is responsible for testing the

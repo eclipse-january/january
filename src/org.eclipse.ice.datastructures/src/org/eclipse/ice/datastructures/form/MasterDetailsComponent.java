@@ -569,6 +569,7 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 	 *         True if the MasterDetailsComponents are equal, false otherwise.
 	 *         </p>
 	 */
+	@Override
 	public boolean equals(Object otherMasterDetailsComponent) {
 		boolean retVal = true;
 		// Check if they are the same reference in memory
@@ -622,6 +623,7 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 	 *         The hashcode.
 	 *         </p>
 	 */
+	@Override
 	public int hashCode() {
 		// Local Declaration
 		int hash = 1;
@@ -720,6 +722,7 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 	 *         The deep-copy clone of this MasterDetailsComponent.
 	 *         </p>
 	 */
+	@Override
 	public Object clone() {
 		// create a new instance of MasterDetailsComponent and copy contents
 		MasterDetailsComponent mDetailsP = new MasterDetailsComponent();
@@ -976,6 +979,7 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 	 * 
 	 * @see Component#accept(IComponentVisitor visitor)
 	 */
+	@Override
 	public void accept(IComponentVisitor visitor) {
 		// Reveal our type to the visitor
 		visitor.visit(this);

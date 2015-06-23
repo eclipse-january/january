@@ -12,12 +12,9 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.form;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyElement;
@@ -32,7 +29,6 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import org.eclipse.ice.datastructures.ICEObject.Component;
 import org.eclipse.ice.datastructures.ICEObject.Composite;
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
@@ -695,6 +691,7 @@ public class TreeComposite extends ICEObject implements Composite,
 	 *         True if the TreeComposites are equal, false otherwise.
 	 *         </p>
 	 */
+	@Override
 	public boolean equals(Object otherTreeComposite) {
 
 		// Local Declarations
@@ -740,6 +737,7 @@ public class TreeComposite extends ICEObject implements Composite,
 	 *         The hashcode.
 	 *         </p>
 	 */
+	@Override
 	public int hashCode() {
 
 		// Local Declarations
@@ -906,6 +904,7 @@ public class TreeComposite extends ICEObject implements Composite,
 	 *         The deep-copy clone of this TreeComposite.
 	 *         </p>
 	 */
+	@Override
 	public Object clone() {
 		// Local Declarations
 		TreeComposite treeComposite;
@@ -1066,6 +1065,7 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * 
 	 * @see Component#accept(IComponentVisitor visitor)
 	 */
+	@Override
 	public void accept(IComponentVisitor visitor) {
 
 		// Tell the visitor that this is a tree
@@ -1081,6 +1081,7 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * 
 	 * @see Composite#addComponent(Component child)
 	 */
+	@Override
 	public void addComponent(Component child) {
 
 		// Visit the component if it is not equal to null. It will be sorted by
@@ -1099,6 +1100,7 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * 
 	 * @see Composite#removeComponent(int childId)
 	 */
+	@Override
 	public void removeComponent(int childId) {
 
 		// Linear searches are fine for this operation because both the number
@@ -1140,6 +1142,7 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * 
 	 * @see Composite#getComponent(int childId)
 	 */
+	@Override
 	public Component getComponent(int childId) {
 
 		// Everything should have an id greater than 0.
@@ -1168,6 +1171,7 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * 
 	 * @see Composite#getNumberOfComponents()
 	 */
+	@Override
 	public int getNumberOfComponents() {
 		return dataNodes.size() + children.size();
 	}
@@ -1177,6 +1181,7 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * 
 	 * @see Composite#getComponents()
 	 */
+	@Override
 	public ArrayList<Component> getComponents() {
 
 		// Create a new list that contains the data nodes.
@@ -1192,6 +1197,7 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * 
 	 * @see IComponentVisitor#visit(DataComponent component)
 	 */
+	@Override
 	public void visit(DataComponent component) {
 
 		// Make sure the component is real before adding it.
@@ -1216,6 +1222,7 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * 
 	 * @see IComponentVisitor#visit(ResourceComponent component)
 	 */
+	@Override
 	public void visit(ResourceComponent component) {
 
 		// Make sure the component is real before adding it.
@@ -1232,6 +1239,7 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * 
 	 * @see IComponentVisitor#visit(TableComponent component)
 	 */
+	@Override
 	public void visit(TableComponent component) {
 
 		// Make sure the component is real before adding it.
@@ -1248,6 +1256,7 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * 
 	 * @see IComponentVisitor#visit(MatrixComponent component)
 	 */
+	@Override
 	public void visit(MatrixComponent component) {
 
 		// Make sure the component is real before adding it.
@@ -1264,6 +1273,7 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * 
 	 * @see IComponentVisitor#visit(IShape component)
 	 */
+	@Override
 	public void visit(IShape component) {
 
 		// Make sure the component is real before adding it.
@@ -1280,6 +1290,7 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * 
 	 * @see IComponentVisitor#visit(GeometryComponent component)
 	 */
+	@Override
 	public void visit(GeometryComponent component) {
 
 		// Make sure the component is real before adding it.
@@ -1296,6 +1307,7 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * 
 	 * @see IComponentVisitor#visit(MasterDetailsComponent component)
 	 */
+	@Override
 	public void visit(MasterDetailsComponent component) {
 
 		// Make sure the component is real before adding it.
@@ -1312,6 +1324,7 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * 
 	 * @see IComponentVisitor#visit(TreeComposite component)
 	 */
+	@Override
 	public void visit(TreeComposite component) {
 
 		// Make sure the component is real before adding it.
@@ -1329,6 +1342,7 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * 
 	 * @see IComponentVisitor#visit(IReactorComponent component)
 	 */
+	@Override
 	public void visit(IReactorComponent component) {
 		// TODO Auto-generated method stub
 
@@ -1341,6 +1355,7 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor#visit
 	 * (org.eclipse.ice.datastructures.form.TimeDataComponent)
 	 */
+	@Override
 	public void visit(TimeDataComponent component) {
 
 		// Make sure the component is real before adding it.
@@ -1356,6 +1371,7 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * 
 	 * @see IComponentVisitor#visit(MeshComponent component)
 	 */
+	@Override
 	public void visit(MeshComponent component) {
 		// TODO Auto-generated method stub
 
@@ -1366,6 +1382,7 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * 
 	 * @see IComponentVisitor#visit(AdaptiveTreeComposite component)
 	 */
+	@Override
 	public void visit(AdaptiveTreeComposite component) {
 		// TODO Auto-generated method stub
 
@@ -1377,6 +1394,7 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * 
 	 * @see IUpdateable#register(IUpdateableListener listener)
 	 */
+	@Override
 	public void register(IUpdateableListener listener) {
 
 		// Register the listener if it is not null
@@ -1401,6 +1419,7 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * 
 	 * @see IUpdateable#unregister(IUpdateableListener listener)
 	 */
+	@Override
 	public void unregister(IUpdateableListener listener) {
 
 		// Unregister the listener if it is not null and in the list

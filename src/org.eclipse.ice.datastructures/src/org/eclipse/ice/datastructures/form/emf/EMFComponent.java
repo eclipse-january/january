@@ -16,31 +16,21 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceImpl;
 import org.eclipse.emf.ecore.xmi.util.XMLProcessor;
 import org.eclipse.ice.datastructures.ICEObject.Component;
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
 import org.eclipse.ice.datastructures.form.TreeComposite;
@@ -304,6 +294,7 @@ public class EMFComponent extends ICEObject implements Component {
 	 * false if they are not.
 	 * 
 	 */
+	@Override
 	public boolean equals(Object otherEMFComponent) {
 
 		// Check if they are the same reference in memory
@@ -338,6 +329,7 @@ public class EMFComponent extends ICEObject implements Component {
 	 * This operation returns the hashcode value of the EMFComponent.
 	 * 
 	 */
+	@Override
 	public int hashCode() {
 
 		// Local Declaration
@@ -378,6 +370,7 @@ public class EMFComponent extends ICEObject implements Component {
 	 * This operation provides a deep copy of the EMFComponent.
 	 * 
 	 */
+	@Override
 	public Object clone() {
 
 		// Create a new instance, copy contents and return it

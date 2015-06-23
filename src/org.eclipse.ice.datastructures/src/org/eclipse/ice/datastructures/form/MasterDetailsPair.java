@@ -12,14 +12,10 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.form;
 
-import java.io.IOException;
-import java.io.InputStream;
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 
 /**
@@ -74,6 +70,7 @@ public class MasterDetailsPair extends ICEObject {
 	 *         A hashcode value.
 	 *         </p>
 	 */
+	@Override
 	public int hashCode() {
 		// Local Declarations
 		int hash = 8;
@@ -101,6 +98,7 @@ public class MasterDetailsPair extends ICEObject {
 	 *         True if equal to otherObject. False otherwise.
 	 *         </p>
 	 */
+	@Override
 	public boolean equals(Object otherObject) {
 		// Local Declarations
 		boolean retVal = false;
@@ -169,6 +167,7 @@ public class MasterDetailsPair extends ICEObject {
 	 *         A deep cloned MasterDetailsPair.
 	 *         </p>
 	 */
+	@Override
 	public Object clone() {
 		// create a new instance of MasterDetailsComponent and copy contents
 		MasterDetailsPair master = new MasterDetailsPair();

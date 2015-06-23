@@ -180,6 +180,7 @@ public class EMFEntry extends Entry {
 	 * This operation provides a deep copy of the EMFEntry.
 	 * 
 	 */
+	@Override
 	public Object clone() {
 		EMFEntry entry = new EMFEntry(entryMetaData,
 				EcoreUtil.create(entryMetaData.getEContainingClass()));
