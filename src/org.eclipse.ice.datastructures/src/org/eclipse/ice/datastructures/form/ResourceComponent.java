@@ -103,6 +103,16 @@ public class ResourceComponent extends ListComponent<ICEResource> {
 		return outputComponent;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.ICEObject.ListComponent#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+		
+	}
+	
 	/**
 	 * This operation is used to check equality between the ResourceComponent
 	 * and another ResourceComponent. It returns true if the Components are
