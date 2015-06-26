@@ -204,7 +204,7 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 		MasterDetailsPair mDetailsP;
 
 		// If the masterTypeList or detailList is null, return
-		if (!(masterTypeList != null & detailList != null)) {
+		if (!(masterTypeList != null && detailList != null)) {
 			return;
 		} else {
 			// This is a speedy boolean statement to check validation for
@@ -212,8 +212,8 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 			// If the lists (plural) are not empty, are equal in size, and if
 			// the templatelist has not been set, everything is okay.
 			// Otherwise, return.
-			if (!(!masterTypeList.isEmpty() & !detailList.isEmpty()
-					& (masterTypeList.size() == detailList.size()) & this.masterDetailsTemplateList
+			if (!(!masterTypeList.isEmpty() && !detailList.isEmpty()
+					&& (masterTypeList.size() == detailList.size()) && this.masterDetailsTemplateList
 						.isEmpty())) {
 				return;
 			}
@@ -303,7 +303,7 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 		// Return if the masterDetailsTemplateList is not set.
 		// Also check if the masterId < 0 || masterId > this.counter
 		// Faster boolean operations.
-		if (!(!this.masterDetailsTemplateList.isEmpty() & (masterId >= 0) & (masterId < this.counter))) {
+		if (!(!this.masterDetailsTemplateList.isEmpty() && (masterId >= 0) && (masterId < this.counter))) {
 			return null;
 		}
 
