@@ -35,5 +35,6 @@ public interface IReactorComponent extends Component {
 	 *         The contents of the LWRComponent as a string.
 	 *         </p>
 	 */
+	@Override
 	public String toString();
 }

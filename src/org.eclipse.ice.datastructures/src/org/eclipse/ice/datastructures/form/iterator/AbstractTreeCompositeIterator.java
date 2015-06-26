@@ -80,6 +80,7 @@ public abstract class AbstractTreeCompositeIterator implements
 	 * 
 	 * @see java.util.Iterator#hasNext()
 	 */
+	@Override
 	public abstract boolean hasNext();
 
 	/**
@@ -90,6 +91,7 @@ public abstract class AbstractTreeCompositeIterator implements
 	 * 
 	 * @see java.util.Iterator#next()
 	 */
+	@Override
 	public TreeComposite next() {
 
 		// Set the default return value.
@@ -110,6 +112,7 @@ public abstract class AbstractTreeCompositeIterator implements
 	 * 
 	 * @see java.util.Iterator#remove()
 	 */
+	@Override
 	public void remove() {
 
 		// TODO We may or may not want to implement this.

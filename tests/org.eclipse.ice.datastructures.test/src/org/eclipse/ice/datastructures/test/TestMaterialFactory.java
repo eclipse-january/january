@@ -8,17 +8,18 @@
  * Contributors:
  *   Initial API and implementation and/or initial documentation - Jay Jay Billings,
  *   Jordan H. Deyton, Dasha Gorin, Alexander J. McCaskey, Taylor Patterson,
- *   Claire Saunders, Matthew Wang, Anna Wojtowicz
+ *   Claire Saunders, Matthew Wang, Anna Wojtowicz, Kasper Gammeltoft
  *******************************************************************************/
 package org.eclipse.ice.datastructures.test;
 
 import org.eclipse.ice.datastructures.form.Material;
+import org.eclipse.ice.datastructures.form.MaterialStack;
 
 /**
  * This is a utility class used by the Material tests to create materials with a
  * known initial configuration.
  * 
- * @author Jay Jay Billings
+ * @author Jay Jay Billings, Kasper Gammeltoft
  * 
  */
 public class TestMaterialFactory {
@@ -34,25 +35,22 @@ public class TestMaterialFactory {
 		// Create a simple CO2 Material
 		Material testMaterial = new Material();
 		testMaterial.setName("CO2");
-		testMaterial.setSize(1);
 		testMaterial.setProperty("molar mass (g/mol)", 44.01);
 		testMaterial.setProperty("vapor pressure (MPa)", 5.73);
 
 		// Create component 1 - Carbon
 		Material carbon = new Material();
 		carbon.setName("C");
-		carbon.setSize(1);
+		testMaterial.addComponent(carbon);
 
 		// Create component 2 - Oxygen
 		Material oxygen = new Material();
 		oxygen.setName("O");
-		// Note that the "size" of O is 2 since we need O2
-		oxygen.setSize(2);
-
-		// Add them as components
-		testMaterial.addComponent(carbon);
-		testMaterial.addComponent(oxygen);
-
+		// Note that we need a stack because there is more than one.
+		// The same effect could be achieved by adding oxygen twice to
+		// the test material.
+		testMaterial.addComponent(new MaterialStack(oxygen, 2));
+		
 		return testMaterial;
 	}
 
@@ -67,7 +65,6 @@ public class TestMaterialFactory {
 		// Create a simple H2O Material
 		Material testMaterial = new Material();
 		testMaterial.setName("H2O");
-		testMaterial.setSize(1);
 		testMaterial.setProperty("molar mass (g/mol)", 18.01);
 		// Vapor pressure at 273 K
 		testMaterial.setProperty("vapor pressure (MPa)", 611.0e-6);
@@ -75,18 +72,18 @@ public class TestMaterialFactory {
 		// Create component 1 - Hydrogen
 		Material hydrogen = new Material();
 		hydrogen.setName("H");
-		hydrogen.setSize(2);
 
 		// Create component 2 - Oxygen
 		Material oxygen = new Material();
 		oxygen.setName("O");
-		oxygen.setSize(1);
 
 		// Add them as components
+		// We need two hydrogens for H2O
+		testMaterial.addComponent(hydrogen);
 		testMaterial.addComponent(hydrogen);
 		testMaterial.addComponent(oxygen);
 
 		return testMaterial;
 	}
-	
+
 }

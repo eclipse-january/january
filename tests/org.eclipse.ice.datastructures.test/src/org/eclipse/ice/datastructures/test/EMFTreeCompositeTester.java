@@ -12,13 +12,14 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.xml.sax.SAXException;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
@@ -27,6 +28,9 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.xmi.util.XMLProcessor;
 import org.eclipse.ice.datastructures.form.DataComponent;
 import org.eclipse.ice.datastructures.form.emf.EMFTreeComposite;
+import org.junit.Before;
+import org.junit.Test;
+import org.xml.sax.SAXException;
 
 /**
  * This class tests the EMFTreeComposite. It checks that the class can be

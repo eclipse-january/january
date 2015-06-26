@@ -35,7 +35,6 @@ import org.eclipse.ice.datastructures.componentVisitor.SelectiveComponentVisitor
 import org.eclipse.ice.datastructures.form.DataComponent;
 import org.eclipse.ice.datastructures.form.Entry;
 import org.eclipse.ice.datastructures.form.TableComponent;
-import org.eclipse.ice.datastructures.form.TimeDataComponent;
 import org.eclipse.ice.datastructures.form.TreeComposite;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -1153,6 +1152,7 @@ public class TreeCompositeTester extends SelectiveComponentVisitor {
 	 * 
 	 * @see IComponentVisitor#visit(DataComponent component)
 	 */
+	@Override
 	public void visit(DataComponent component) {
 
 		addComponentToMap("data", component);
@@ -1164,6 +1164,7 @@ public class TreeCompositeTester extends SelectiveComponentVisitor {
 	 * 
 	 * @see IComponentVisitor#visit(TableComponent component)
 	 */
+	@Override
 	public void visit(TableComponent component) {
 
 		addComponentToMap("table", component);
@@ -1175,6 +1176,7 @@ public class TreeCompositeTester extends SelectiveComponentVisitor {
 	 * 
 	 * @see IComponentVisitor#visit(TreeComposite component)
 	 */
+	@Override
 	public void visit(TreeComposite component) {
 
 		addComponentToMap("tree", component);
