@@ -12,14 +12,7 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.form.emf;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.util.XMLProcessor;
 import org.xml.sax.SAXException;
 

@@ -347,6 +347,7 @@ public class MatrixComponent extends ICEObject implements Component {
 	 *         A clone of the TableComponent.
 	 *         </p>
 	 */
+	@Override
 	public Object clone() {
 		// create a new instance of MatrixComponent and copy contents
 		MatrixComponent matrixComponent = new MatrixComponent();
@@ -369,7 +370,8 @@ public class MatrixComponent extends ICEObject implements Component {
 	 *         True if the TableComponents are equal, false if not
 	 *         </p>
 	 */
-	public boolean equals(MatrixComponent otherMatrixComponent) {
+	public boolean equals(Object otherMatrixComponent) {
+		
 		boolean retVal = true;
 		// Check if they are the same reference in memory
 		if (this == otherMatrixComponent) {
@@ -412,6 +414,7 @@ public class MatrixComponent extends ICEObject implements Component {
 	 *         The hashcode
 	 *         </p>
 	 */
+	@Override
 	public int hashCode() {
 		// Local Declaration
 		int hash = 9;
@@ -1029,6 +1032,7 @@ public class MatrixComponent extends ICEObject implements Component {
 	/*
 	 * Overrides a super class method.
 	 */
+	@Override
 	public void update(String updatedKey, String newValue) {
 		// TODO Auto-generated method stub
 
@@ -1039,6 +1043,7 @@ public class MatrixComponent extends ICEObject implements Component {
 	 * 
 	 * @see Component#accept(IComponentVisitor visitor)
 	 */
+	@Override
 	public void accept(IComponentVisitor visitor) {
 		// Reveal our type to the visitor
 		visitor.visit(this);

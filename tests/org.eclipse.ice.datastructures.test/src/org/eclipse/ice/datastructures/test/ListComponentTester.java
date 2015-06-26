@@ -11,7 +11,11 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -22,14 +26,14 @@ import java.util.ArrayList;
 
 import javax.xml.bind.JAXBException;
 
-import org.eclipse.ice.datastructures.ICEObject.IElementSource;
-import org.eclipse.ice.datastructures.ICEObject.ListComponent;
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
+import org.eclipse.ice.datastructures.ICEObject.IElementSource;
+import org.eclipse.ice.datastructures.ICEObject.ListComponent;
 import org.eclipse.ice.datastructures.componentVisitor.SelectiveComponentVisitor;
 import org.eclipse.ice.datastructures.resource.ICEResource;
 import org.eclipse.ice.datastructures.resource.VizResource;
-import org.junit.*;
+import org.junit.Test;
 
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.event.ListEvent;
@@ -54,7 +58,12 @@ public class ListComponentTester implements IElementSource<Integer>,
 	/**
 	 * A flag to mark whether or not visitation worked.
 	 */
-	boolean visited = false;
+	private boolean visited = false;
+
+	/**
+	 * The value set in the table format
+	 */
+	private Integer value = 7;
 
 	/**
 	 * True if the test was notified via the GlazedLists ListEventListener
@@ -194,8 +203,7 @@ public class ListComponentTester implements IElementSource<Integer>,
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(
 				outputStream.toByteArray());
 		// Load it up and check it
-		component2 = (ListComponent<?>) xmlHandler.read(classList,
-				inputStream);
+		component2 = (ListComponent<?>) xmlHandler.read(classList, inputStream);
 		assertEquals(component.getId(), component2.getId());
 		assertEquals(component.getName(), component2.getName());
 		assertEquals(component.getDescription(), component2.getDescription());
@@ -213,8 +221,8 @@ public class ListComponentTester implements IElementSource<Integer>,
 		xmlHandler.write(objList, classList, outputStream);
 		inputStream = new ByteArrayInputStream(outputStream.toByteArray());
 		// Load it back up and check it
-		ListComponent<?> loadedList = (ListComponent<?>) xmlHandler
-				.read(classList, inputStream);
+		ListComponent<?> loadedList = (ListComponent<?>) xmlHandler.read(
+				classList, inputStream);
 		assertEquals(objList.getId(), loadedList.getId());
 		assertEquals(1, objList.size());
 		assertEquals(obj, loadedList.get(0));
@@ -241,8 +249,8 @@ public class ListComponentTester implements IElementSource<Integer>,
 		xmlHandler.write(resList, classList, outputStream);
 		inputStream = new ByteArrayInputStream(outputStream.toByteArray());
 		// Load it back up and check it
-		ListComponent<?> resLoadedList = (ListComponent<?>) xmlHandler
-				.read(classList, inputStream);
+		ListComponent<?> resLoadedList = (ListComponent<?>) xmlHandler.read(
+				classList, inputStream);
 		assertEquals(resList.getId(), resLoadedList.getId());
 		assertEquals(3, resList.size());
 		assertEquals(res, resLoadedList.get(0));
@@ -512,7 +520,6 @@ public class ListComponentTester implements IElementSource<Integer>,
 	public void checkTableFormat() {
 
 		// Create the list and set the table format
-		// Create a new AdaptiveTreeComposite to visit
 		ListComponent<Integer> component = new ListComponent<Integer>();
 		component.setTableFormat(this);
 
@@ -523,47 +530,100 @@ public class ListComponentTester implements IElementSource<Integer>,
 		assertEquals(getColumnName(0), component.getColumnName(0));
 		assertEquals(getColumnValue(0, 1), component.getColumnValue(0, 1));
 		assertEquals(isEditable(0, 1), component.isEditable(0, 1));
-		assertEquals(setColumnValue(1, 2, 0), component.setColumnValue(1, 2, 0));
+		// Check setting the value
+		component.setColumnValue(1, 2, 0);
+		assertEquals(getColumnValue(1, 0), component.getColumnValue(1, 0));
 
 		return;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ice.datastructures.ICEObject.IElementSource#getElements()
+	 */
 	@Override
 	public EventList<Integer> getElements() {
 		return null;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ice.datastructures.ICEObject.IElementSource#getTableFormat()
+	 */
 	@Override
 	public TableFormat<Integer> getTableFormat() {
 		return null;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ca.odell.glazedlists.gui.TableFormat#getColumnCount()
+	 */
 	@Override
 	public int getColumnCount() {
 		return 5;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ca.odell.glazedlists.gui.TableFormat#getColumnName(int)
+	 */
 	@Override
 	public String getColumnName(int column) {
 		return "Six";
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ca.odell.glazedlists.gui.TableFormat#getColumnValue(java.lang.Object,
+	 * int)
+	 */
 	@Override
 	public Object getColumnValue(Integer baseObject, int column) {
-		return 7;
+		return value;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ca.odell.glazedlists.gui.WritableTableFormat#isEditable(java.lang.Object,
+	 * int)
+	 */
 	@Override
 	public boolean isEditable(Integer baseObject, int column) {
 		return true;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ca.odell.glazedlists.gui.WritableTableFormat#setColumnValue(java.lang
+	 * .Object, java.lang.Object, int)
+	 */
 	@Override
 	public Integer setColumnValue(Integer baseObject, Object editedValue,
 			int column) {
-		return 4;
+		value = (Integer) editedValue;
+		return value;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ca.odell.glazedlists.event.ListEventListener#listChanged(ca.odell.glazedlists
+	 * .event.ListEvent)
+	 */
 	@Override
 	public void listChanged(ListEvent<Integer> listChanges) {
 		System.out.println("ListComponentTester Message: "

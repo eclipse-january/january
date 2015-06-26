@@ -14,11 +14,11 @@ package org.eclipse.ice.client.widgets.geometry;
 
 import java.io.IOException;
 
+import org.eclipse.ice.datastructures.form.geometry.IShape;
+
 import com.jme3.export.JmeExporter;
 import com.jme3.export.JmeImporter;
 import com.jme3.export.Savable;
-
-import org.eclipse.ice.datastructures.form.geometry.IShape;
 
 /**
  * <p>

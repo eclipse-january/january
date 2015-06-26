@@ -28,7 +28,6 @@ import javax.xml.bind.JAXBException;
 
 import org.eclipse.ice.datastructures.ICEObject.Component;
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
-import org.eclipse.ice.datastructures.form.MasterDetailsPair;
 import org.eclipse.ice.datastructures.form.mesh.Edge;
 import org.eclipse.ice.datastructures.form.mesh.MeshComponent;
 import org.eclipse.ice.datastructures.form.mesh.Polygon;

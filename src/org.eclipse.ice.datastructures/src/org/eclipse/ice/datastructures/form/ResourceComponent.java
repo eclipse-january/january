@@ -12,16 +12,15 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.form;
 
-import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
-import org.eclipse.ice.datastructures.ICEObject.ListComponent;
-
 import java.util.ArrayList;
-
-import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
-import org.eclipse.ice.datastructures.resource.ICEResource;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+
+import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
+import org.eclipse.ice.datastructures.ICEObject.ListComponent;
+import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
+import org.eclipse.ice.datastructures.resource.ICEResource;
 
 /**
  * The ResourceComponent is a specialization of ListComponent that is used to
@@ -94,6 +93,7 @@ public class ResourceComponent extends ListComponent<ICEResource> {
 	 * 
 	 * @return The clone of this ResourceComponent.
 	 */
+	@Override
 	public Object clone() {
 
 		// Create a new instance of ResourceComponent and copy contents
@@ -103,6 +103,16 @@ public class ResourceComponent extends ListComponent<ICEResource> {
 		return outputComponent;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.ICEObject.ListComponent#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+		
+	}
+	
 	/**
 	 * This operation is used to check equality between the ResourceComponent
 	 * and another ResourceComponent. It returns true if the Components are
@@ -113,6 +123,7 @@ public class ResourceComponent extends ListComponent<ICEResource> {
 	 *            compared to this ResourceComponent.
 	 * @return True if the ResourceComponents are equal, false otherwise.
 	 */
+	@Override
 	public boolean equals(Object otherResourceComponent) {
 
 		// Check if they are the same reference in memory

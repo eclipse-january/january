@@ -12,6 +12,12 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -20,20 +26,15 @@ import java.util.ArrayList;
 
 import javax.xml.bind.JAXBException;
 
-import org.junit.Test;
-
-import static org.junit.Assert.*;
-
 import org.eclipse.ice.datastructures.ICEObject.Component;
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
+import org.eclipse.ice.datastructures.form.DataComponent;
 import org.eclipse.ice.datastructures.form.Entry;
 import org.eclipse.ice.datastructures.form.Form;
 import org.eclipse.ice.datastructures.form.ResourceComponent;
-import org.eclipse.ice.datastructures.form.ResourceComponent;
-import org.eclipse.ice.datastructures.form.DataComponent;
-import org.eclipse.ice.datastructures.form.mesh.Edge;
 import org.eclipse.ice.datastructures.jaxbclassprovider.ICEJAXBClassProvider;
 import org.eclipse.ice.datastructures.resource.ICEResource;
+import org.junit.Test;
 
 /**
  * <p>

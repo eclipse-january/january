@@ -12,19 +12,19 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.test;
 
-import static org.eclipse.ice.datastructures.form.painfullySimpleForm.PainfullySimpleEntry.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.junit.Before;
-import org.junit.Test;
 import org.eclipse.ice.datastructures.form.DataComponent;
 import org.eclipse.ice.datastructures.form.Entry;
 import org.eclipse.ice.datastructures.form.TableComponent;
-
 import org.eclipse.ice.datastructures.form.painfullySimpleForm.PainfullySimpleForm;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * <p>

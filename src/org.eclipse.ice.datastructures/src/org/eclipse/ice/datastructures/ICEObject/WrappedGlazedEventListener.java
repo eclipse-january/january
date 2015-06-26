@@ -57,6 +57,7 @@ public class WrappedGlazedEventListener<T> implements ListEventListener<T> {
 	 * This GlazedList update operation. The notification is forwarded to the
 	 * IUpdateableListener.
 	 */
+	@Override
 	public void listChanged(ListEvent<T> listChanges) {
 		// Just post the update
 		listener.update(component);

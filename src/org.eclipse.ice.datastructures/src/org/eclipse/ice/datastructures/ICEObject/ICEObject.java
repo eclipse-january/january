@@ -13,11 +13,7 @@
 package org.eclipse.ice.datastructures.ICEObject;
 
 import java.util.ArrayList;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -116,6 +112,7 @@ public class ICEObject implements IUpdateable {
 	 * 
 	 * @see Identifiable#setId(int id)
 	 */
+	@Override
 	public void setId(int id) {
 
 		if (id >= 0) {
@@ -131,6 +128,7 @@ public class ICEObject implements IUpdateable {
 	 * 
 	 * @see Identifiable#getId()
 	 */
+	@Override
 	@XmlAttribute()
 	public int getId() {
 		return uniqueId;
@@ -141,6 +139,7 @@ public class ICEObject implements IUpdateable {
 	 * 
 	 * @see Identifiable#setName(String name)
 	 */
+	@Override
 	public void setName(String name) {
 
 		if (name != null) {
@@ -156,6 +155,7 @@ public class ICEObject implements IUpdateable {
 	 * 
 	 * @see Identifiable#getName()
 	 */
+	@Override
 	@XmlAttribute()
 	public String getName() {
 		return objectName;
@@ -166,6 +166,7 @@ public class ICEObject implements IUpdateable {
 	 * 
 	 * @see Identifiable#setDescription(String description)
 	 */
+	@Override
 	public void setDescription(String description) {
 
 		if (description != null) {
@@ -181,6 +182,7 @@ public class ICEObject implements IUpdateable {
 	 * 
 	 * @see Identifiable#getDescription()
 	 */
+	@Override
 	@XmlAttribute()
 	public String getDescription() {
 		return objectDescription;
@@ -264,6 +266,7 @@ public class ICEObject implements IUpdateable {
 	 * 
 	 * @see Identifiable#equals(Object otherObject)
 	 */
+	@Override
 	public boolean equals(Object otherObject) {
 
 		// Local Declarations
@@ -295,6 +298,7 @@ public class ICEObject implements IUpdateable {
 	 * 
 	 * @see Identifiable#hashCode()
 	 */
+	@Override
 	public int hashCode() {
 
 		// Local Declaration
@@ -317,6 +321,7 @@ public class ICEObject implements IUpdateable {
 	 * 
 	 * @see IUpdateable#update(String updatedKey, String newValue)
 	 */
+	@Override
 	public void update(String updatedKey, String newValue) {
 
 		// Nothing TODO. Subclasses must override this operation for tailored
@@ -329,6 +334,7 @@ public class ICEObject implements IUpdateable {
 	 * 
 	 * @see IUpdateable#register(IUpdateableListener listener)
 	 */
+	@Override
 	public void register(IUpdateableListener listener) {
 
 		// Register the listener if it is not null
@@ -343,6 +349,7 @@ public class ICEObject implements IUpdateable {
 	 * 
 	 * @see IUpdateable#unregister(IUpdateableListener listener)
 	 */
+	@Override
 	public void unregister(IUpdateableListener listener) {
 
 		// Unregister the listener if it is not null and in the list

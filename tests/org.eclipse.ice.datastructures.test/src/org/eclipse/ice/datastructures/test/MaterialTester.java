@@ -12,7 +12,10 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -25,6 +28,7 @@ import javax.xml.bind.JAXBException;
 
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.form.Material;
+import org.eclipse.ice.datastructures.form.MaterialStack;
 import org.junit.Test;
 
 /**
@@ -48,10 +52,6 @@ public class MaterialTester {
 		// Check the name
 		testMaterial.setName("CO2");
 		assertEquals("CO2", testMaterial.getName());
-
-		// Check the size
-		testMaterial.setSize(1);
-		assertEquals(1, testMaterial.getSize());
 
 		// Check properties - just test handling a few
 		testMaterial.setProperty("molar mass (g/mol)", 44.01);
@@ -85,12 +85,12 @@ public class MaterialTester {
 
 		// Check its components
 		assertNotNull(testMaterial.getComponents());
-		List<Material> components = testMaterial.getComponents();
+		List<MaterialStack> components = testMaterial.getComponents();
 		assertEquals(2, components.size());
 
 		// Get the Materials
-		Material firstMaterial = components.get(0);
-		Material secondMaterial = components.get(1);
+		Material firstMaterial = components.get(0).getMaterial();
+		Material secondMaterial = components.get(1).getMaterial();
 
 		// Check them in an order independent way. It is enough to check that
 		// the components are there. There is no need to check their sizes.
@@ -112,7 +112,7 @@ public class MaterialTester {
 		Material testMat1 = TestMaterialFactory.createCO2();
 		Material testMat2 = TestMaterialFactory.createCO2();
 
-		// The should be equal
+		// They should be equal
 		assertTrue(testMat1.equals(testMat2));
 
 		// Make sure that a self comparison works
@@ -120,11 +120,6 @@ public class MaterialTester {
 
 		// Make sure that passing something else in fails
 		assertFalse(testMat1.equals(1));
-
-		// Make sure they are not equal after the size is changed
-		testMat2.setSize(5);
-		assertFalse(testMat1.equals(testMat2));
-		testMat2.setSize(1);
 
 		// Check that the hash code doesn't change with no changes in state
 		assertEquals(testMat1.hashCode(), testMat1.hashCode());
@@ -191,5 +186,6 @@ public class MaterialTester {
 			e.printStackTrace();
 		}
 
+		return;
 	}
 }

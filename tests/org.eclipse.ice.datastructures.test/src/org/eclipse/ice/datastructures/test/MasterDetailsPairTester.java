@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import javax.xml.bind.JAXBException;
 
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
-import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.form.AllowedValueType;
 import org.eclipse.ice.datastructures.form.DataComponent;
 import org.eclipse.ice.datastructures.form.Entry;
@@ -60,6 +59,7 @@ public class MasterDetailsPairTester {
 
 		// Create two entries for the DataComponent (Details).
 		entry1 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("0");
@@ -70,6 +70,7 @@ public class MasterDetailsPairTester {
 		};
 
 		entry2 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("Apple");
@@ -170,6 +171,7 @@ public class MasterDetailsPairTester {
 		// Create entries for DataComponent
 		// Create a continuous 0-50 entry.
 		entry1 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("0");
@@ -181,6 +183,7 @@ public class MasterDetailsPairTester {
 
 		// Create a Discrete entry with Apple and Orange as values.
 		entry2 = new Entry() {
+			@Override
 			protected void setup() {
 				this.allowedValues = new ArrayList<String>();
 				this.allowedValues.add("Apple");

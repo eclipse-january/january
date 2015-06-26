@@ -110,6 +110,7 @@ public interface Identifiable {
 	 *         True if the Identifiable entitys are equal, false otherwise.
 	 *         </p>
 	 */
+	@Override
 	public boolean equals(Object otherObject);
 
 	/**
@@ -121,6 +122,7 @@ public interface Identifiable {
 	 *         The hashcode of the Identifiable entity.
 	 *         </p>
 	 */
+	@Override
 	public int hashCode();
 
 	/**
