@@ -484,7 +484,7 @@ public class TableComponent extends ICEObject implements Component {
 	 *         True if the TableComponents are equal, false if not
 	 *         </p>
 	 */
-	public boolean equals(TableComponent otherTableComponent) {
+	public boolean equals(Object otherTableComponent) {
 		boolean retVal = true;
 		// Check if they are the same reference in memory
 		if (this == otherTableComponent) {

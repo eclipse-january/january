@@ -370,7 +370,8 @@ public class MatrixComponent extends ICEObject implements Component {
 	 *         True if the TableComponents are equal, false if not
 	 *         </p>
 	 */
-	public boolean equals(MatrixComponent otherMatrixComponent) {
+	public boolean equals(Object otherMatrixComponent) {
+		
 		boolean retVal = true;
 		// Check if they are the same reference in memory
 		if (this == otherMatrixComponent) {
