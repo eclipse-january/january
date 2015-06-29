@@ -875,6 +875,16 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 	}
 
 	@Override
+	public void getDoubleArray(final double[] darray, final int i) {
+		getDoubleArrayAbs(get1DIndex(i), darray);
+	}
+
+	@Override
+	public void getDoubleArray(final double[] darray, final int i, final int j) {
+		getDoubleArrayAbs(get1DIndex(i, j), darray);
+	}
+
+	@Override
 	public void getDoubleArray(final double[] darray, final int... pos) {
 		getDoubleArrayAbs(get1DIndex(pos), darray);
 	}

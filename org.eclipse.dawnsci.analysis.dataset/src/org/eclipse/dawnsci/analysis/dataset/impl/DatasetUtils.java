@@ -1138,11 +1138,11 @@ public class DatasetUtils {
 
 	/**
 	 * Convert (if necessary) a dataset obeying the interface to our implementation
-	 * @param lazydata can be null
+	 * @param data can be null
 	 * @return Converted dataset or null
 	 */
-	public static AbstractDataset convertToAbstractDataset(ILazyDataset lazydata) {
-		return (AbstractDataset) convertToDataset(lazydata);
+	public static AbstractDataset convertToAbstractDataset(IDataset data) {
+		return (AbstractDataset) convertToDataset(data);
 	}
 
 	/**

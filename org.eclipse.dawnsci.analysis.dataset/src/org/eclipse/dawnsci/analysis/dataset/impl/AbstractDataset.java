@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.math3.complex.Complex;
-import org.apache.commons.math3.stat.descriptive.StorelessUnivariateStatistic;
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
 import org.apache.commons.math3.stat.descriptive.moment.Variance;
 import org.eclipse.dawnsci.analysis.api.dataset.IDataset;
@@ -684,11 +683,11 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	/**
-	 * get shape from object (array or list supported)
+	 * Get shape from object (array or list supported)
 	 * @param obj
 	 * @return shape
 	 */
-	protected static int[] getShapeFromObject(final Object obj) {
+	public static int[] getShapeFromObject(final Object obj) {
 		ArrayList<Integer> lshape = new ArrayList<Integer>();
 
 		getShapeFromObj(lshape, obj, 0);
@@ -2507,7 +2506,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		} else if (!(obj instanceof IDataset)) {
 			ds = DatasetFactory.createFromObject(obj, isComplex() || getElementsPerItem() == 1 ? FLOAT64 : ARRAYFLOAT64);
 		} else {
-			ds = DatasetUtils.convertToDataset((ILazyDataset) obj);
+			ds = DatasetUtils.convertToDataset((IDataset) obj);
 		}
 
 		return setSlicedView(getSliceView(slice), ds);
@@ -3248,11 +3247,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		SummaryStatistics stats = getStatistics(false);
 
 		if (isDatasetWholePopulation) {
-			StorelessUnivariateStatistic oldVar = stats.getVarianceImpl();
-			stats.setVarianceImpl(new Variance(false));
-			Number var = stats.getVariance();
-			stats.setVarianceImpl(oldVar);
-			return var;
+			Variance newVar = (Variance) stats.getVarianceImpl().copy();
+			newVar.setBiasCorrected(false);
+			return newVar.getResult();
 		}
 		return stats.getVariance();
 	}
@@ -3315,7 +3312,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 		Dataset ed = null;
 		if (led instanceof IDataset) {
-			ed = DatasetUtils.convertToDataset(led);
+			ed = DatasetUtils.convertToDataset((IDataset) led);
 			if (!(led instanceof Dataset)) {
 				setError(ed); // set back
 			}

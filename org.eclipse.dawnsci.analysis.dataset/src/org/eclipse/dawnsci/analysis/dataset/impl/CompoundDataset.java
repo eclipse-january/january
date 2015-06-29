@@ -189,9 +189,24 @@ public interface CompoundDataset extends Dataset {
 	/**
 	 * Get an item as a double array
 	 * @param darray double array must be allocated and have sufficient length
+	 * @param i
+	 */
+	public void getDoubleArray(double[] darray, final int i);
+
+	/**
+	 * Get an item as a double array
+	 * @param darray double array must be allocated and have sufficient length
+	 * @param i
+	 * @param j
+	 */
+	public void getDoubleArray(double[] darray, final int i, final int j);
+
+	/**
+	 * Get an item as a double array
+	 * @param darray double array must be allocated and have sufficient length
 	 * @param pos
 	 */
-	public void getDoubleArray(double[] darray, int... pos);
+	public void getDoubleArray(double[] darray, final int... pos);
 
 	/**
 	 * Get an item as a double array

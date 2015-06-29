@@ -1756,6 +1756,67 @@ public class Maths {
 	}
 
 	/**
+	 * Linearly interpolate values at points in a 1D dataset corresponding to given coordinates.
+	 * @param x input 1-D coordinate dataset
+	 * @param d input 1-D dataset
+	 * @param x0 coordinate values
+	 * @param left value to use when x0 lies left of domain. If null, then interpolate to zero by using leftmost interval
+	 * @param right value to use when x0 lies right of domain. If null, then interpolate to zero by using rightmost interval
+	 * @return interpolated values
+	 */
+	public static Dataset interpolate(final Dataset x, final Dataset d, final IDataset x0, Number left, Number right) {
+		assert x.getRank() == 1;
+		assert d.getRank() == 1;
+	
+		DoubleDataset r = new DoubleDataset(x0.getShape());
+	
+		DoubleDataset dx = (DoubleDataset) DatasetUtils.cast(x, Dataset.FLOAT64);
+		Dataset dx0 = DatasetUtils.convertToDataset(x0);
+		double[] xa = dx.getData();
+		int s = xa.length - 1;
+		IndexIterator it = dx0.getIterator();
+		int k = -1;
+		while (it.hasNext()) {
+			k++;
+			double v = dx0.getElementDoubleAbs(it.index);
+			int i = Arrays.binarySearch(xa, v);
+			if (i < 0) {
+				// i = -(insertion point) - 1
+				if (i == -1) {
+					if (left != null) {
+						r.setAbs(k, left.doubleValue());
+						continue;
+					}
+					final double d1 = xa[0] - xa[1];
+					double t = d1 - v + xa[0];
+					if (t >= 0)
+						continue; // sets to zero
+					t /= d1;
+					r.setAbs(k, t * d.getDouble(0));
+				} else if (i == -s - 2) {
+					if (right != null) {
+						r.setAbs(k, right.doubleValue());
+						continue;
+					}
+					final double d1 = xa[s] - xa[s - 1];
+					double t = d1 - v + xa[s];
+					if (t <= 0)
+						continue; // sets to zero
+					t /= d1;
+					r.setAbs(k, t * d.getDouble(s));
+				} else {
+					i = -i - 1;
+					final double t = (xa[i] - v)/(xa[i] - xa[i - 1]);
+					r.setAbs(k, (1 - t) * d.getDouble(i) + t * d.getDouble(i - 1));
+				}
+			} else {
+				r.setAbs(k, d.getDouble(i));
+			}
+		}
+		return r;
+	}
+
+	/**
 	 * Linearly interpolate a value at a point in a 1D dataset. The dataset is considered to have
 	 * zero support outside its bounds. Thus points just outside are interpolated from the boundary
 	 * value to zero.
@@ -1763,7 +1824,7 @@ public class Maths {
 	 * @param x0 coordinate
 	 * @return interpolated value
 	 */
-	public static double interpolate(final IDataset d, final double x0) {
+	public static double interpolate(final Dataset d, final double x0) {
 		assert d.getRank() == 1;
 
 		final int i0 = (int) Math.floor(x0);
@@ -1792,7 +1853,7 @@ public class Maths {
 	 * @param x0 coordinate
 	 * @return interpolated value
 	 */
-	public static double interpolate(final IDataset d, final IDataset m, final double x0) {
+	public static double interpolate(final Dataset d, final Dataset m, final double x0) {
 		assert d.getRank() == 1;
 		assert m.getRank() == 1;
 
@@ -1868,7 +1929,7 @@ public class Maths {
 	 * @param x1 coordinate
 	 * @return bilinear interpolation
 	 */
-	public static double interpolate(final IDataset d, final double x0, final double x1) {
+	public static double interpolate(final Dataset d, final double x0, final double x1) {
 		final int[] s = d.getShape();
 		assert s.length == 2;
 	
@@ -1927,7 +1988,7 @@ public class Maths {
 	 * @param x1 coordinate
 	 * @return bilinear interpolation
 	 */
-	public static double interpolate(final IDataset d, final IDataset m, final double x0, final double x1) {
+	public static double interpolate(final Dataset d, final Dataset m, final double x0, final double x1) {
 		if (m == null)
 			return interpolate(d, x0, x1);
 	
@@ -2061,7 +2122,7 @@ public class Maths {
 	 * @param x coordinates
 	 * @return interpolated value
 	 */
-	public static double interpolate(final IDataset d, final double... x) {
+	public static double interpolate(final Dataset d, final double... x) {
 		return interpolate(d, null, x);
 	}
 
@@ -2074,7 +2135,7 @@ public class Maths {
 	 * @param x coordinates
 	 * @return interpolated value
 	 */
-	public static double interpolate(final IDataset d, final IDataset m, final double... x) {
+	public static double interpolate(final Dataset d, final Dataset m, final double... x) {
 		int r = d.getRank();
 		if (r != x.length) {
 			throw new IllegalArgumentException("Number of coordinates must be equal to rank of dataset");
@@ -2251,11 +2312,11 @@ public class Maths {
 	 * @param d input dataset
 	 * @param x0 coordinate
 	 * @return interpolated value
-	 * @deprecated Use {@link #interpolate(IDataset, double)}
+	 * @deprecated Use {@link #interpolate(Dataset, double)}
 	 */
 	@Deprecated
 	public static double getLinear(final IDataset d, final double x0) {
-		return interpolate(d, x0);
+		return interpolate(DatasetUtils.convertToDataset(d), x0);
 	}
 
 	/**
@@ -2278,11 +2339,11 @@ public class Maths {
 	 * @param x0 coordinate
 	 * @param x1 coordinate
 	 * @return bilinear interpolation
-	 * @deprecated Use {@link #interpolate(IDataset, double, double)}
+	 * @deprecated Use {@link #interpolate(Dataset, double, double)}
 	 */
 	@Deprecated
 	public static double getBilinear(final IDataset d, final double x0, final double x1) {
-		return interpolate(d, x0, x1);
+		return interpolate(DatasetUtils.convertToDataset(d), x0, x1);
 	}
 
 	/**
@@ -2292,11 +2353,11 @@ public class Maths {
 	 * @param x0 coordinate
 	 * @param x1 coordinate
 	 * @return bilinear interpolation
-	 * @deprecated Use {@link #interpolate(IDataset, IDataset, double, double)}
+	 * @deprecated Use {@link #interpolate(Dataset, Dataset, double, double)}
 	 */
 	@Deprecated
 	public static double getBilinear(final IDataset d, final IDataset m, final double x0, final double x1) {
-		return interpolate(d, m, x0, x1);
+		return interpolate(DatasetUtils.convertToDataset(d), DatasetUtils.convertToDataset(m), x0, x1);
 	}
 
 	/**

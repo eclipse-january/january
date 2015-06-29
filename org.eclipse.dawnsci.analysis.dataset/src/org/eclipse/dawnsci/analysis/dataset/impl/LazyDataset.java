@@ -446,8 +446,9 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 		if (map != null) {
 			a = a.getTransposedView(map);
 		}
-		a.setShape(slice.getShape());
-		a.addMetadata(new OriginMetadataImpl(this, nslice.convertToSlice(), oShape, null, null));
+		if (slice != null)
+			a.setShape(slice.getShape());
+		a.addMetadata(new OriginMetadataImpl(this, nslice.convertToSlice(), oShape, null, name));
 		
 		return a;
 	}
@@ -467,6 +468,9 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	}
 
 	protected SliceND calcTrueSlice(SliceND slice) {
+		if (slice == null) {
+			slice = new SliceND(shape);
+		}
 		int[] lstart = slice.getStart();
 		int[] lstop  = slice.getStop();
 		int[] lstep  = slice.getStep();

@@ -75,9 +75,12 @@ public class ErrorMetadataImpl implements ErrorMetadata, Serializable {
 	}
 
 	public void setSquaredError(IDataset sqErrors) {
-		sqError = DatasetUtils.convertToDataset(sanitizeErrorData(sqErrors));
-		if (sqError != null)
-			error = Maths.sqrt(sqError);
+		ILazyDataset se = sanitizeErrorData(sqErrors);
+		if (se instanceof IDataset) {
+			sqError = DatasetUtils.convertToDataset((IDataset) se);
+			if (sqError != null)
+				error = Maths.sqrt(sqError);
+		}
 	}
 
 	private ILazyDataset sanitizeErrorData(ILazyDataset errorData) {
