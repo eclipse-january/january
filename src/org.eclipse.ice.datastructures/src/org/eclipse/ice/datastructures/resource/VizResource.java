@@ -100,7 +100,7 @@ public class VizResource extends ICEResource {
 	/**
 	 * Return any possible children VizResources.
 	 * 
-	 * @return
+	 * @return A list containing child viz resources.
 	 */
 	public ArrayList<VizResource> getChildrenResources() {
 		return childrenResources;
