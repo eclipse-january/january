@@ -41,6 +41,8 @@ public enum AllowedValueType {
 	 */
 	File,
 
+	Executable,
+	
 	/**
 	 * This literal means that the Entry is used in an undefined form where the
 	 * value is and should be treated as a simple string.
