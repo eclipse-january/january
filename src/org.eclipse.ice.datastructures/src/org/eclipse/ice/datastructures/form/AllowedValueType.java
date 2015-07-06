@@ -41,6 +41,12 @@ public enum AllowedValueType {
 	 */
 	File,
 
+	/**
+	 * This literal implies that the Entry is used in a form for specifying 
+	 * an executable on the file system. The value of the Entry will be a 
+	 * URI represented as a string, and the list of allowedValues will be 
+	 * previously selected executables.
+	 */
 	Executable,
 	
 	/**
