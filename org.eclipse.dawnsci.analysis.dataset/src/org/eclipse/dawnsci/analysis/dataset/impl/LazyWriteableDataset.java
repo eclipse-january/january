@@ -206,6 +206,11 @@ public class LazyWriteableDataset extends LazyDataset implements ILazyWriteableD
 		}
 	}
 
+	@Override
+	public void setSlice(IMonitor monitor, IDataset data, int[] start, int[] stop, int[] step) throws Exception {
+		setSlice(monitor, data, new SliceND(shape, maxShape, start, stop, step));
+	}
+
 	/**
 	 * Set saver (and also loader)
 	 * @param saver

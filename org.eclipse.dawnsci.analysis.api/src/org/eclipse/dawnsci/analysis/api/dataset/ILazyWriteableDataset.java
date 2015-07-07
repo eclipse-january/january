@@ -58,4 +58,19 @@ public interface ILazyWriteableDataset extends ILazyDataset {
 	 * @throws Exception 
 	 */
 	public void setSlice(final IMonitor monitor, final IDataset data, final SliceND slice) throws Exception;
+
+	/**
+	 * Set a slice of the dataset
+	 * 
+	 * @param monitor
+	 * @param data
+	 * @param start
+	 *            specifies the starting indexes (can be null for origin)
+	 * @param stop
+	 *            specifies the stopping indexes (can be null for end)
+	 * @param step
+	 *            specifies the steps in the slice (can be null for unit steps)
+	 * @throws Exception 
+	 */
+	public void setSlice(final IMonitor monitor, final IDataset data, final int[] start, final int[] stop, final int[] step) throws Exception;
 }
