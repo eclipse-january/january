@@ -36,6 +36,17 @@ public interface IDynamicDataset {
 
 	
 	/**
+	 * Set the shape as being allowed to be dynamic. Sometimes with a
+	 * dynamic dataset, it is desirable to temporarily stop updating the
+	 * shape while a slice is done. Calling this method *MUST* be done in 
+	 * a try{} finally{}
+	 * 
+	 * @param dyn
+	 */
+	public void setShapeDynamic(boolean dyn);
+	
+	
+	/**
 	 * Add a listener which will be fired when aspects of the meta data change for
 	 * instance origin of data
 	 * @param l
