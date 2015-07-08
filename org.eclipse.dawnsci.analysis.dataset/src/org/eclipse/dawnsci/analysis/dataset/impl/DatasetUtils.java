@@ -2346,4 +2346,55 @@ public class DatasetUtils {
 		d.clearMetadata(null);
 		return d.flatten().getBuffer();
 	}
+
+	/**
+	 * Extract values where condition is non-zero. This is similar to Dataset#getByBoolean but supports broadcasting
+	 * @param data
+	 * @param condition should be broadcastable to data
+	 * @return 1-D dataset of values
+	 */
+	public static Dataset extract(final IDataset data, final IDataset condition) {
+		Dataset a = convertToDataset(data.getSliceView());
+		Dataset b = cast(condition.getSliceView(), Dataset.BOOL);
+
+		try {
+			return a.getByBoolean(b);
+		} catch (IllegalArgumentException e) {
+			final int length = ((Number) b.sum()).intValue();
+	
+			BroadcastIterator it = new BroadcastIterator(a, b);
+			int size = AbstractDataset.calcSize(it.getShape());
+			Dataset c;
+			if (length < size) {
+				int[] ashape = it.getFirstShape();
+				int[] bshape = it.getSecondShape();
+				int r = ashape.length;
+				size = length;
+				for (int i = 0; i < r; i++) {
+					int s = ashape[i];
+					if (s > 1 && bshape[i] == 1) {
+						size *= s;
+					}
+				}
+			}
+			c = DatasetFactory.zeros(new int[] {size}, a.getDtype());
+	
+			int i = 0;
+			if (it.isOutputDouble()) {
+				while (it.hasNext()) {
+					if (it.bLong != 0) {
+						c.setObjectAbs(i++, it.aDouble);
+					}
+				}
+			} else {
+				while (it.hasNext()) {
+					if (it.bLong != 0) {
+						c.setObjectAbs(i++, it.aLong);
+					}
+				}
+			}
+	
+			return c;
+		}
+	}
 }
