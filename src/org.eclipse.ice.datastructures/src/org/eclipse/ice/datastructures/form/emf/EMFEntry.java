@@ -114,7 +114,7 @@ public class EMFEntry extends Entry {
 //					&& entryMetaData.getUpperBound() != -1) {
 //				// Initialize this EAttribute on the containing Ecore node
 //				if (typeName.equals("java.lang.String")) {
-//					// System.out.println(entryMetaData.getName());
+//					// logger.info(entryMetaData.getName());
 //					containingEcoreNode.eSet(entryMetaData, "");
 //				} else if (typeName.equals("java.math.BigInteger")) {
 //					BigInteger b = new BigInteger("0");

@@ -18,6 +18,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * <p>
  * ICEObject is the base class for all common, shared data structures in ICE
@@ -50,6 +53,13 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @XmlRootElement(name = "ICEObject")
 public class ICEObject implements IUpdateable {
+	
+	/**
+	 * Logger for handling event messages and other information.
+	 */
+	@XmlTransient
+	protected final Logger logger;	
+	
 	/**
 	 * <p>
 	 * The unique identification number of the ICEObject.
@@ -98,6 +108,9 @@ public class ICEObject implements IUpdateable {
 	 */
 	public ICEObject() {
 
+		// Create the logger
+		logger = LoggerFactory.getLogger(getClass());
+		
 		// Set it all up
 		uniqueId = 1;
 		objectName = "ICE Object";

@@ -188,8 +188,7 @@ public class EMFComponent extends ICEObject implements Component {
 				// Indicate success
 				return true;
 			} else {
-				System.out
-						.println("[EMFComponent] Could not create save file.");
+				logger.info("[EMFComponent] Could not create save file.");
 				return false;
 			}
 
@@ -249,30 +248,30 @@ public class EMFComponent extends ICEObject implements Component {
 			return false;
 		}
 
-		// If we have a valid document root node, we should walk 
+		// If we have a valid document root node, we should walk
 		// and create the EMFTreeComposite
 		if (documentRoot != null) {
 			// Create the root node EMFTreeComposite
 			iceEMFTree = new EMFTreeComposite(documentRoot);
-			
+
 			// Create the a map to store EObject keys to their corresponding
-			// EMFTreeComposite value. 
+			// EMFTreeComposite value.
 			HashMap<EObject, EMFTreeComposite> map = new HashMap<EObject, EMFTreeComposite>();
 
 			// Put the root node in the tree
 			map.put(documentRoot, iceEMFTree);
-			
-			// Use the EMF tree iterator to walk the Ecore tree. 
+
+			// Use the EMF tree iterator to walk the Ecore tree.
 			TreeIterator<EObject> tree = documentRoot.eAllContents();
 			while (tree.hasNext()) {
 				EObject obj = tree.next();
-				
-				// Put this EObject in the map with its 
+
+				// Put this EObject in the map with its
 				// EMFTreeComposite representation
 				map.put(obj, new EMFTreeComposite(obj));
 			}
 
-			// Loop through all the EObject keys and 
+			// Loop through all the EObject keys and
 			// set each EMFTreeComposite's parent
 			for (EObject o : map.keySet()) {
 				EObject parent = o.eContainer();
@@ -316,7 +315,7 @@ public class EMFComponent extends ICEObject implements Component {
 		// For now assume that if the TreeComposites are equal,
 		// the two EMFComponents are equal
 		if (!castedComponent.iceEMFTree.equals(iceEMFTree)) {
-			System.out.println("TREES NOT EQUAL");
+			logger.info("TREES NOT EQUAL");
 			return false;
 		}
 
@@ -386,9 +385,9 @@ public class EMFComponent extends ICEObject implements Component {
 	}
 
 	/**
-	 * Save the XMLResource to System.out. This is mainly for debugging.
+	 * Save the XMLResource to stdout. This is mainly for debugging.
 	 * 
-	 * @return
+	 * @return Always true if successful, false otherwise.
 	 */
 	public boolean save() {
 

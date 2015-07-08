@@ -17,6 +17,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * <p>
  * This class acts as a manager for discovering and creating resource objects in
@@ -43,6 +46,12 @@ import java.util.ArrayList;
  */
 
 public class ResourceHandler {
+
+	/**
+	 * Logger for handling event messages and other information.
+	 */
+	private static final Logger logger = LoggerFactory
+			.getLogger(ResourceHandler.class);
 
 	/**
 	 * The list of file extensions that indicate a resource should be made into
@@ -100,7 +109,7 @@ public class ResourceHandler {
 			file = new File(filePath);
 		} else {
 			// If the file path is empty, complain and exit
-			System.out.println("ResourceHandler Message: The file path was "
+			logger.info("ResourceHandler Message: The file path was "
 					+ "empty!");
 
 			return resource;
@@ -118,7 +127,7 @@ public class ResourceHandler {
 				fileExt = filePath.substring(lastDot + 1);
 			} else {
 				// If no proper file extension was found, complain and exit
-				System.out.println("ResourceHandler Message: The file path "
+				logger.info("ResourceHandler Message: The file path "
 						+ "does not have a valid file extension: " + filePath);
 
 				return resource;

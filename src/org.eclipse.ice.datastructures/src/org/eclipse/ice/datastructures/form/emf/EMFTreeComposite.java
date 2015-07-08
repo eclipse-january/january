@@ -263,7 +263,7 @@ public class EMFTreeComposite extends TreeComposite {
 
 		// Check if we successfully added a child
 		if (currentSize == children.size()) {
-			System.out.println("Could not add " + cNode.getName()
+			logger.info("Could not add " + cNode.getName()
 					+ " as child of " + getName());
 			return;
 		}
@@ -325,7 +325,7 @@ public class EMFTreeComposite extends TreeComposite {
 		// Loop over all exemplars and see if this cNode is compatible
 		for (TreeComposite exemplar : getChildExemplars()) {
 			if (cNode.getName().equals("DefinitionType")) {
-				System.out.print("Exemplar: " + exemplar.getName());
+				logger.info("Exemplar: " + exemplar.getName());
 			}
 			if (cNode.getName().equals(exemplar.getName())) {
 				return true;
