@@ -15,22 +15,8 @@ import org.eclipse.dawnsci.analysis.api.monitor.IMonitor;
 /**
  * This sub-interface adds the ability to write to a lazy dataset slice-by-slice
  */
-public interface ILazyWriteableDataset extends ILazyDataset {
+public interface ILazyWriteableDataset extends IDynamicDataset {
 
-	/**
-	 * Denotes an unlimited dimension in maximum shape
-	 */
-	public static final int UNLIMITED = -1;
-
-	/**
-	 * @return maximum shape
-	 */
-	public int[] getMaxShape();
-
-	/**
-	 * Set maximum shape
-	 */
-	public void setMaxShape(int[] maxShape);
 
 	/**
 	 * Get chunking

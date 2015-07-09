@@ -1245,7 +1245,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			shape[found] = size/nsize;
 		} else if (nsize != size) {
 			logger.error("New shape is not same size as old shape");
-			throw new IllegalArgumentException("New shape is not same size as old shape");
+			throw new IllegalArgumentException("New size is not same as the old size. Old size is "+size+" new size is "+nsize+" and shape is "+Arrays.toString(shape));
 		}
 	}
 

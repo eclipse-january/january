@@ -11,6 +11,9 @@ package org.eclipse.dawnsci.analysis.dataset.impl;
 
 import java.io.IOException;
 
+import org.eclipse.dawnsci.analysis.api.dataset.DataEvent;
+import org.eclipse.dawnsci.analysis.api.dataset.DataListenerDelegate;
+import org.eclipse.dawnsci.analysis.api.dataset.IDataListener;
 import org.eclipse.dawnsci.analysis.api.dataset.IDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.ILazyWriteableDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.Slice;
@@ -25,6 +28,7 @@ public class LazyWriteableDataset extends LazyDataset implements ILazyWriteableD
 	private int[] maxShape;
 	private int[] chunks;
 	private ILazySaver saver;
+	private DataListenerDelegate eventDelegate;
 
 	/**
 	 * Create a lazy dataset
@@ -42,6 +46,7 @@ public class LazyWriteableDataset extends LazyDataset implements ILazyWriteableD
 		this.chunks = chunks == null ? null : chunks.clone();
 		this.saver = saver;
 		this.loader = saver;
+		this.eventDelegate = new DataListenerDelegate();
 
 		// check shape for expandable dimensions
 		for (int i = 0; i < shape.length; i++) {
@@ -155,6 +160,7 @@ public class LazyWriteableDataset extends LazyDataset implements ILazyWriteableD
 		ret.base = base;
 		ret.metadata = copyMetadata();
 		ret.oMetadata = oMetadata;
+		ret.eventDelegate = eventDelegate;
 		return ret;
 	}
 
@@ -204,6 +210,7 @@ public class LazyWriteableDataset extends LazyDataset implements ILazyWriteableD
 			oShape = nslice.getSourceShape();
 			shape = slice.getSourceShape();
 		}
+		eventDelegate.fire(new DataEvent(getName(), shape));
 	}
 
 	@Override
@@ -228,4 +235,15 @@ public class LazyWriteableDataset extends LazyDataset implements ILazyWriteableD
 		}
 		return new SliceND(base.shape, nstart, nstop, nstep);
 	}
+
+	@Override
+	public void addDataListener(IDataListener l) {
+		eventDelegate.addDataListener(l);
+	}
+
+	@Override
+	public void removeDataListener(IDataListener l) {
+		eventDelegate.removeDataListener(l);
+	}
+
 }

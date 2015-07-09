@@ -20,6 +20,21 @@ package org.eclipse.dawnsci.analysis.api.dataset;
 public interface IDynamicDataset {
 	
 	/**
+	 * Denotes an unlimited dimension in maximum shape
+	 */
+	public static final int UNLIMITED = -1;
+
+	/**
+	 * @return maximum shape
+	 */
+	public int[] getMaxShape();
+
+	/**
+	 * Set maximum shape
+	 */
+	public void setMaxShape(int[] maxShape);
+
+	/**
 	 * Add a listener which will be fired when aspects of the data change for
 	 * instance shape or content.
 	 * @param l
@@ -34,17 +49,6 @@ public interface IDynamicDataset {
 	 */
 	public void removeDataListener(IDataListener l);
 
-	
-	/**
-	 * Set the shape as being allowed to be dynamic. Sometimes with a
-	 * dynamic dataset, it is desirable to temporarily stop updating the
-	 * shape while a slice is done. Calling this method *MUST* be done in 
-	 * a try{} finally{}
-	 * 
-	 * @param dyn
-	 */
-	public void setShapeDynamic(boolean dyn);
-	
 	
 	/**
 	 * Add a listener which will be fired when aspects of the meta data change for
