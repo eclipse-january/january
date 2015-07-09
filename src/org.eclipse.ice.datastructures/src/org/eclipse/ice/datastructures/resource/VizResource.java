@@ -114,7 +114,7 @@ public class VizResource extends ICEResource {
 	 */
 	public void setFileSet(String[] fileSet) {
 		for (String i : fileSet)
-			System.out.println(i);
+			logger.info(i);
 		this.fileSet = fileSet;
 	}
 

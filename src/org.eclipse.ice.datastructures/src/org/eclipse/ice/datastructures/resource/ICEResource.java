@@ -298,7 +298,7 @@ public class ICEResource extends ICEObject {
 		}
 
 		// copy from super class
-		super.copy((ICEObject) otherResource);
+		super.copy(otherResource);
 
 		// Copy current values
 		// These files are not cloned

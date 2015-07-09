@@ -819,7 +819,7 @@ public class TreeComposite extends ICEObject implements Composite,
 			unregister(listener);
 		}
 		// Copy ICEObject contents
-		super.copy((ICEObject) otherTreeComposite);
+		super.copy(otherTreeComposite);
 
 		// Copy contents - look at differences between "shallow", "deep", and
 		// nullaries

@@ -20,6 +20,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
@@ -80,6 +82,12 @@ import ca.odell.glazedlists.gui.WritableTableFormat;
 public class ListComponent<T> extends TransformedList<T, T> implements
 		Component, WritableTableFormat<T> {
 
+	/**
+	 * Logger for handling event messages and other information.
+	 */
+	@XmlTransient
+	protected final Logger logger;
+	
 	/**
 	 * The ICEJAXBHandler used to marshal the class to and from XML.
 	 */
@@ -160,6 +168,10 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	 */
 	protected ListComponent(EventList<T> source) {
 		super(source);
+		
+		// Create the logger
+		logger = LoggerFactory.getLogger(getClass());
+		
 		// Store the source list locally too so that JAXB gets it
 		jaxbSourceList = (BasicEventList<T>) source;
 		// Set it all up
@@ -242,7 +254,7 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 		// and registering it
 		WrappedGlazedEventListener<Object> glazedListener = new WrappedGlazedEventListener<Object>(
 				listener, this);
-		System.out.println("Registered!");
+		logger.info("Registered!");
 		source.addListEventListener(glazedListener);
 		idList.addListEventListener(glazedListener);
 		// Add the wrapped listener to the map so that it can be located later
@@ -323,7 +335,7 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	 */
 	@Override
 	public void listChanged(ListEvent<T> listChanges) {
-		System.out.println("List changed!");
+		logger.info("List changed!");
 	}
 
 	/*

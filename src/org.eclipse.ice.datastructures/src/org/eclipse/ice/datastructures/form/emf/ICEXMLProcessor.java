@@ -63,9 +63,9 @@ public class ICEXMLProcessor extends XMLProcessor {
 //					".xml"));
 //			return load(new FileInputStream(f), loadOptions);
 //		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
+//			logger.error(getClass().getName() + " Exception!",e);
 //		} catch (IOException e) {
-//			e.printStackTrace();
+//			logger.error(getClass().getName() + " Exception!",e);
 //		}
 //		return null;
 //	}

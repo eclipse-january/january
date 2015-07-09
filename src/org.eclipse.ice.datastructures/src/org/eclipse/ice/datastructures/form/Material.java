@@ -534,6 +534,7 @@ public class Material implements Cloneable, Comparable<Material> {
 	 * 
 	 * @return The clone
 	 */
+	@Override
 	public Object clone() {
 		// Create a new Material, copy everything into it and return it
 		Material clone = new Material();

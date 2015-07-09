@@ -114,7 +114,7 @@ public class EMFEntry extends Entry {
 //					&& entryMetaData.getUpperBound() != -1) {
 //				// Initialize this EAttribute on the containing Ecore node
 //				if (typeName.equals("java.lang.String")) {
-//					// System.out.println(entryMetaData.getName());
+//					// logger.info(entryMetaData.getName());
 //					containingEcoreNode.eSet(entryMetaData, "");
 //				} else if (typeName.equals("java.math.BigInteger")) {
 //					BigInteger b = new BigInteger("0");
@@ -149,7 +149,7 @@ public class EMFEntry extends Entry {
 							"Unsupported Data Type for the EMFEntry.");
 				}
 			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
+				logger.error(getClass().getName() + " Exception!",e);
 				return false;
 			}
 			return true;
@@ -167,7 +167,7 @@ public class EMFEntry extends Entry {
 			return;
 		}
 
-		super.copy((Entry) otherEntry);
+		super.copy(otherEntry);
 
 		// containingEcoreNode = EcoreUtil.copy(otherEntry.containingEcoreNode);
 		// entryMetaData = EcoreUtil.copy(otherEntry.entryMetaData);

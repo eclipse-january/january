@@ -145,7 +145,7 @@ public class MasterDetailsPair extends ICEObject {
 		}
 
 		// Copy contents of super
-		super.copy((MasterDetailsPair) otherMasterDetailsPair);
+		super.copy(otherMasterDetailsPair);
 
 		// Copy id
 		this.masterDetailsPairId = otherMasterDetailsPair.masterDetailsPairId;
