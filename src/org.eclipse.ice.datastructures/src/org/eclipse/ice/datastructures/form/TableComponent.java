@@ -423,7 +423,7 @@ public class TableComponent extends ICEObject implements Component {
 		}
 
 		// Copy contents into super and current object
-		super.copy((ICEObject) otherTableComponent);
+		super.copy(otherTableComponent);
 
 		// Deep copy column names
 		this.columnNames.clear();
@@ -484,6 +484,7 @@ public class TableComponent extends ICEObject implements Component {
 	 *         True if the TableComponents are equal, false if not
 	 *         </p>
 	 */
+	@Override
 	public boolean equals(Object otherTableComponent) {
 		boolean retVal = true;
 		// Check if they are the same reference in memory

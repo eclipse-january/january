@@ -349,7 +349,7 @@ public class Form extends ICEObject implements Composite {
 		}
 
 		// Copy contents into super and current object
-		super.copy((ICEObject) otherForm);
+		super.copy(otherForm);
 
 		// Copy action list - Deep copy
 		if (otherForm.actionList == null) {
@@ -441,7 +441,7 @@ public class Form extends ICEObject implements Composite {
 		Identifiable comp = null; // FIXME - might not be an ICEObject!
 
 		for (int i = 0; i < componentList.size(); i++) {
-			comp = (Identifiable) componentList.get(i);
+			comp = componentList.get(i);
 			if (comp.getId() == childId) {
 				componentList.remove(i);
 				break;
@@ -464,7 +464,7 @@ public class Form extends ICEObject implements Composite {
 		Identifiable comp = null;
 
 		for (int i = 0; i < componentList.size(); i++) {
-			comp = (Identifiable) componentList.get(i);
+			comp = componentList.get(i);
 			if (comp.getId() == childId) {
 				return componentList.get(i);
 			}

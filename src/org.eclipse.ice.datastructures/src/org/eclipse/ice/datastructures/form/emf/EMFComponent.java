@@ -243,7 +243,7 @@ public class EMFComponent extends ICEObject implements Component {
 		}
 
 		if (xmlResource != null) {
-			documentRoot = (EObject) xmlResource.getContents().get(0);
+			documentRoot = xmlResource.getContents().get(0);
 		} else {
 			return false;
 		}
@@ -353,7 +353,7 @@ public class EMFComponent extends ICEObject implements Component {
 		if (otherEMFComponent != null) {
 
 			// Copy contents into super and current object
-			super.copy((ICEObject) otherEMFComponent);
+			super.copy(otherEMFComponent);
 
 			// TODO Do rest of copy...
 			// FIXME ECOREUTILS

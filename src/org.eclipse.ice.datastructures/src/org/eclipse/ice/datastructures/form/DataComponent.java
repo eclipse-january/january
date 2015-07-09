@@ -335,7 +335,7 @@ public class DataComponent extends ICEObject implements Component,
 		if (otherDataComponent != null) {
 
 			// Copy contents into super and current object
-			super.copy((ICEObject) otherDataComponent);
+			super.copy(otherDataComponent);
 
 			// reset entries
 			entries.clear();
