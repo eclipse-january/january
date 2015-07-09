@@ -482,6 +482,20 @@ public class BroadcastIterator extends IndexIterator {
 	}
 
 	/**
+	 * @return shape of first broadcasted dataset
+	 */
+	public int[] getFirstShape() {
+		return aShape;
+	}
+
+	/**
+	 * @return shape of second broadcasted dataset
+	 */
+	public int[] getSecondShape() {
+		return bShape;
+	}
+
+	/**
 	 * @return output dataset (can be null)
 	 */
 	public Dataset getOutput() {
