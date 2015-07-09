@@ -108,7 +108,7 @@ public class EMFComponent extends ICEObject implements Component {
 				xmlProcessor = new XMLProcessor(URI.createFileURI(file
 						.getAbsolutePath()));
 			} catch (SAXException e) {
-				e.printStackTrace();
+				logger.error(getClass().getName() + " Exception!",e);
 			}
 
 			// Get the package containing the model
@@ -193,7 +193,7 @@ public class EMFComponent extends ICEObject implements Component {
 			}
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(getClass().getName() + " Exception!",e);
 			return false;
 		}
 
@@ -214,7 +214,7 @@ public class EMFComponent extends ICEObject implements Component {
 			xmlProcessor = new XMLProcessor(URI.createFileURI(schema
 					.getAbsolutePath()));
 		} catch (SAXException e) {
-			e.printStackTrace();
+			logger.error(getClass().getName() + " Exception!",e);
 			return false;
 		}
 
@@ -237,7 +237,7 @@ public class EMFComponent extends ICEObject implements Component {
 				xmlResource = (XMLResource) xmlProcessor.load(
 						new FileInputStream(file), null);
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.error(getClass().getName() + " Exception!",e);
 				return false;
 			}
 		}
@@ -400,7 +400,7 @@ public class EMFComponent extends ICEObject implements Component {
 			try {
 				xmlProcessor.save(System.out, xmlResource, null);
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.error(getClass().getName() + " Exception!",e);
 				return false;
 			}
 			return true;
@@ -419,7 +419,7 @@ public class EMFComponent extends ICEObject implements Component {
 		try {
 			retString = xmlProcessor.saveToString(xmlResource, null);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(getClass().getName() + " Exception!",e);
 			return null;
 		}
 		return retString;

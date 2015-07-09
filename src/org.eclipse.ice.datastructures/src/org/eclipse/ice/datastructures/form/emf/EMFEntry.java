@@ -149,7 +149,7 @@ public class EMFEntry extends Entry {
 							"Unsupported Data Type for the EMFEntry.");
 				}
 			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
+				logger.error(getClass().getName() + " Exception!",e);
 				return false;
 			}
 			return true;
