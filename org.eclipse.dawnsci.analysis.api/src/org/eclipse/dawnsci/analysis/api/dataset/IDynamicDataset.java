@@ -17,8 +17,8 @@ package org.eclipse.dawnsci.analysis.api.dataset;
  * 2. An HDF5 dataset which entire shape changes as data is added.
  *  
  */
-public interface IDynamicDataset {
-	
+public interface IDynamicDataset extends ILazyDataset {
+
 	/**
 	 * Denotes an unlimited dimension in maximum shape
 	 */
