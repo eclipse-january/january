@@ -18,6 +18,11 @@ import org.eclipse.dawnsci.analysis.api.monitor.IMonitor;
 public interface ILazyWriteableDataset extends IDynamicDataset {
 
 	/**
+	 * See {@link IDynamicDataset#UNLIMITED}
+	 */
+	public static final int UNLIMITED = IDynamicDataset.UNLIMITED;
+
+	/**
 	 * Get chunking
 	 * @return chunks (can be null)
 	 */

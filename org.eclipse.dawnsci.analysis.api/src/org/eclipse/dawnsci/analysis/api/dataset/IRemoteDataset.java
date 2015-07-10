@@ -12,7 +12,7 @@ package org.eclipse.dawnsci.analysis.api.dataset;
 /**
  * A Remote dataset is a lazy dataset which exists in a remote
  * location. It uses a connection to the DataServer to provide the
- * implementation of the slicing requied remotely.
+ * implementation of the slicing required remotely.
  * 
  * You may also listen to data changing in the dataset
  */

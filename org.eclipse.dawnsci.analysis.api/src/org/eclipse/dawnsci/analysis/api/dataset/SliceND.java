@@ -429,8 +429,8 @@ public class SliceND {
 	 * @return slice
 	 */
 	public static SliceND createSlice(ILazyDataset data, int[] start, int[] stop, int[] step) {
-		if (data instanceof ILazyWriteableDataset) {
-			return new SliceND(data.getShape(), ((ILazyWriteableDataset) data).getMaxShape(), start, stop, step);
+		if (data instanceof IDynamicDataset) {
+			return new SliceND(data.getShape(), ((IDynamicDataset) data).getMaxShape(), start, stop, step);
 		}
 		return new SliceND(data.getShape(), start, stop, step);
 	}

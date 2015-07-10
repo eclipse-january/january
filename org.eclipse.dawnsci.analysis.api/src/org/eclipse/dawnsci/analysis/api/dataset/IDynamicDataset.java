@@ -25,7 +25,15 @@ public interface IDynamicDataset extends ILazyDataset {
 	public static final int UNLIMITED = -1;
 
 	/**
-	 * @return maximum shape
+	 * Change shape
+	 * @param newShape
+	 * @throws IllegalArgumentException if new shape exceeds maximum shape or is of different rank
+	 * @throws UnsupportedOperationException if used on a view
+	 */
+	public void resize(int... newShape);
+
+	/**
+	 * @return maximum shape (can be null)
 	 */
 	public int[] getMaxShape();
 

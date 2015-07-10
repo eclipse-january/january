@@ -86,7 +86,7 @@ public class LazyWriteableDataset extends LazyDataset implements ILazyWriteableD
 		return new LazyWriteableDataset(dataset.getName(), dataset.getDtype(), dataset.getElementsPerItem(), dataset.getShape(),
 				maxShape, null,
 		new ILazySaver() {
-			final Dataset d = dataset;
+			Dataset d = dataset;
 			@Override
 			public boolean isFileReadable() {
 				return true;
@@ -109,9 +109,40 @@ public class LazyWriteableDataset extends LazyDataset implements ILazyWriteableD
 
 			@Override
 			public void setSlice(IMonitor mon, IDataset data, SliceND slice) throws Exception {
+				if (slice.isExpanded()) {
+					Dataset od = d;
+					d = DatasetFactory.zeros(slice.getSourceShape(), od.getDtype());
+					d.setSlice(od, SliceND.createSlice(od, null, null));
+				}
 				d.setSlice(data, slice);
 			}
 		});
+	}
+
+	@Override
+	public void resize(int... newShape) {
+		if (base != null) {
+			throw new UnsupportedOperationException("Changing the shape of a view is not allowed");
+		}
+		int rank = shape.length;
+		if (newShape.length != rank) {
+			throw new IllegalArgumentException("Rank of new shape must match current shape");
+		}
+		if (maxShape != null) {
+			for (int i = 0; i < rank; i++) {
+				int m = maxShape[i];
+				if (m != -1 && newShape[i] > m) {
+					throw new IllegalArgumentException("A dimension of new shape must not exceed maximum shape");
+				}
+			}
+		}
+		this.shape = newShape.clone();
+		this.oShape = this.shape;
+		try {
+			size = AbstractDataset.calcLongSize(shape);
+		} catch (IllegalArgumentException e) {
+			size = Long.MAX_VALUE; // this indicates that the entire dataset cannot be read in! 
+		}
 	}
 
 	@Override
@@ -128,7 +159,7 @@ public class LazyWriteableDataset extends LazyDataset implements ILazyWriteableD
 		}
 		if (this.maxShape.length > shape.length) {
 			shape = prependShapeWithOnes(this.maxShape.length, shape); // TODO this does not update any metadata
-//			setShapeInternal(false, prependShapeWithOnes(this.maxShape.length, shape));
+//			setShapeInternal(prependShapeWithOnes(this.maxShape.length, shape));
 		}
 	}
 
