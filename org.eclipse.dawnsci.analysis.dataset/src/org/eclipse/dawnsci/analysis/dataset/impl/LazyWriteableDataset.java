@@ -75,8 +75,16 @@ public class LazyWriteableDataset extends LazyDataset implements ILazyWriteableD
 	 * @param dataset
 	 */
 	public static LazyWriteableDataset createLazyDataset(final Dataset dataset) {
+		return createLazyDataset(dataset, null);
+	}
+
+	/**
+	 * Create a lazy writeable dataset based on in-memory data (handy for testing)
+	 * @param dataset
+	 */
+	public static LazyWriteableDataset createLazyDataset(final Dataset dataset, final int[] maxShape) {
 		return new LazyWriteableDataset(dataset.getName(), dataset.getDtype(), dataset.getElementsPerItem(), dataset.getShape(),
-				null, null,
+				maxShape, null,
 		new ILazySaver() {
 			final Dataset d = dataset;
 			@Override
