@@ -413,20 +413,12 @@ public class Material implements Cloneable, Comparable<Material> {
 					MaterialStack stack = list.get(j);
 					Material mat = stack.getMaterial();
 					int N = stack.getAmount();
-					// Get the real part of the scattering length from coherent
-					// cross section
-					double Cohxs = Math
-							.sqrt(mat.getProperty(COHERENT_SCAT_X_SECTION) * (10E-8) / 12.566);
-
-					int sign = (int) (Math.signum(mat
-							.getProperty(COHERENT_SCAT_LENGTH)));
-
-					if (sign == 0) {
-						sign = 1;
-					}
+					
+					// Sum the scattering length for the new material
+					double cohb = mat.getProperty(COHERENT_SCAT_LENGTH);
 
 					// The real part of the scattering length
-					b += N * Cohxs * sign;
+					b += N * cohb;
 
 					// Determine true mass absorption coefficient
 					double massPercent = mat.getProperty(ATOMIC_MASS) / molMass;
