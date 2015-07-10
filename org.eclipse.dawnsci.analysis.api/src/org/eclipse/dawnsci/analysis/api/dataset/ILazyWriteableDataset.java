@@ -17,10 +17,9 @@ import org.eclipse.dawnsci.analysis.api.monitor.IMonitor;
  */
 public interface ILazyWriteableDataset extends IDynamicDataset {
 
-
 	/**
 	 * Get chunking
-	 * @return chunks
+	 * @return chunks (can be null)
 	 */
 	public int[] getChunking();
 
