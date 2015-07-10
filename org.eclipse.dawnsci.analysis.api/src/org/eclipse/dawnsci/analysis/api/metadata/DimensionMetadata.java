@@ -15,5 +15,8 @@ package org.eclipse.dawnsci.analysis.api.metadata;
 public interface DimensionMetadata extends MetadataType {
 
 	public int[] getDataDimensions();
-	
+
+	public int[] getDataMaxDimensions();
+
+	public int[] getDataChunkDimensions();
 }

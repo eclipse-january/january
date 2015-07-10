@@ -13,36 +13,31 @@ import org.eclipse.dawnsci.analysis.api.dataset.ILazyDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.Slice;
 import org.eclipse.dawnsci.analysis.api.metadata.OriginMetadata;
 
-public class OriginMetadataImpl implements OriginMetadata {
+public class OriginMetadataImpl extends DimensionMetadataImpl implements OriginMetadata {
 	
 	private ILazyDataset parent;
 	private Slice[] outSlice;
 	private Slice[] currentSlice;
-	private int[] dataDims;
 	
 	private String datasetName;
 	private String filePath;
 
 	public OriginMetadataImpl(ILazyDataset parent, Slice[] outSlice, int[] dataDims, String filePath, String datasetName) {
+		super(dataDims, null, null);
 		this.parent = parent;
 		this.outSlice = outSlice;
-		this.dataDims = dataDims;
 		this.datasetName = datasetName;
 		this.filePath = filePath;
 	}
 
 	public OriginMetadataImpl(OriginMetadataImpl origin) {
+		super(null, null, null);
 		parent = origin.parent == null ? null : origin.parent;
 		outSlice = origin.outSlice == null ? null : origin.outSlice.clone();
-		dataDims = origin.dataDims == null ? null : origin.dataDims.clone();
+		shape = origin.shape == null ? null : origin.shape.clone();
 		datasetName = origin.datasetName == null ? null : new String(origin.datasetName);
 		filePath = origin.filePath == null ? null : new String(origin.filePath);
 		currentSlice = origin.currentSlice == null ? null : origin.currentSlice.clone();
-	}
-
-	@Override
-	public int[] getDataDimensions() {
-		return dataDims;
 	}
 
 	@Override
