@@ -27,6 +27,7 @@ public class SliceND {
 	private int[] mshape;
 
 	private boolean allData;
+	private boolean expanded;
 
 	/**
 	 * Construct ND slice for whole of shape
@@ -42,6 +43,7 @@ public class SliceND {
 		oshape = shape.clone();
 		allData = true;
 		mshape = oshape;
+		expanded = false;
 	}
 
 	/**
@@ -178,6 +180,11 @@ public class SliceND {
 	 * Check whether the slice covers the entire shape
 	 */
 	private void checkAllData() {
+		if (expanded) {
+			allData = false;
+			return;
+		}
+
 		allData = Arrays.equals(oshape, lshape);
 		if (allData) {
 			for (int i = 0; i < oshape.length; i++) {
@@ -281,6 +288,7 @@ public class SliceND {
 
 			if (lstop[i] > s) {
 				oshape[i] = lstop[i];
+				expanded = true;
 			}
 		} else {
 			if (start < 0) {
@@ -324,6 +332,13 @@ public class SliceND {
 	 */
 	public int[] getMaxShape() {
 		return mshape;
+	}
+
+	/**
+	 * @return true if slice makes shape larger
+	 */
+	public boolean isExpanded() {
+		return expanded;
 	}
 
 	/**
@@ -375,6 +390,7 @@ public class SliceND {
 			c.lstep[i] = lstep[i];
 		}
 		c.allData = allData;
+		c.expanded = expanded;
 		return c;
 	}
 
