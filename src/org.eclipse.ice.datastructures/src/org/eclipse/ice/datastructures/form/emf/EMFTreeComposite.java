@@ -447,7 +447,7 @@ public class EMFTreeComposite extends TreeComposite {
 		ecoreNodeMetaData = otherTreeComposite.ecoreNodeMetaData;
 		ecoreNode = EcoreUtil.create(ecoreNodeMetaData);
 
-		super.copy((TreeComposite) otherTreeComposite, true);
+		super.copy(otherTreeComposite, true);
 
 		return;
 	}

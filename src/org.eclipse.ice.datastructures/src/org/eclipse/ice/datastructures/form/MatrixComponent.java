@@ -306,7 +306,7 @@ public class MatrixComponent extends ICEObject implements Component {
 		}
 
 		// Copy contents into super and current object
-		super.copy((ICEObject) otherMatrixComponent);
+		super.copy(otherMatrixComponent);
 
 		// Get allowed values and elements correctly - unique!
 		if (otherMatrixComponent.allowedValues == null) {
@@ -370,6 +370,7 @@ public class MatrixComponent extends ICEObject implements Component {
 	 *         True if the TableComponents are equal, false if not
 	 *         </p>
 	 */
+	@Override
 	public boolean equals(Object otherMatrixComponent) {
 		
 		boolean retVal = true;

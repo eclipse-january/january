@@ -67,9 +67,23 @@ public class MaterialTester {
 		assertTrue(properties.containsKey("molar mass (g/mol)"));
 		assertTrue(properties.containsKey("vapor pressure (MPa)"));
 
-		// Make sure that requesting a property that isn't in the map returns 0.0.
-		assertEquals(0.0,testMaterial.getProperty("penguin"),1.0e-8);
+		// Make sure that requesting a property that isn't in the map returns
+		// 0.0.
+		assertEquals(0.0, testMaterial.getProperty("penguin"), 1.0e-8);
 		
+		// Make some more test materials
+		Material carbon = new Material();
+		carbon.setName("C");
+		
+		Material c1 = new Material();
+		c1.setName("12C");
+		
+		// Test the get isotopic number and get elemental name
+		assertEquals(12, c1.getIsotopicNumber());
+		assertEquals(carbon.getName(), carbon.getElementalName());
+		assertEquals(0, carbon.getIsotopicNumber());
+		assertEquals(carbon.getName(), c1.getElementalName());
+
 		return;
 	}
 
@@ -94,10 +108,52 @@ public class MaterialTester {
 
 		// Check them in an order independent way. It is enough to check that
 		// the components are there. There is no need to check their sizes.
-		assertTrue(("C".equals(firstMaterial.getName()) && "O"
-				.equals(secondMaterial.getName()))
-				|| ("O".equals(firstMaterial.getName()) && "C"
-						.equals(secondMaterial.getName())));
+		assertTrue(("C".equals(firstMaterial.getName())
+				&& "O".equals(secondMaterial.getName()))
+				|| ("O".equals(firstMaterial.getName())
+						&& "C".equals(secondMaterial.getName())));
+
+	}
+
+	/**
+	 * This operation checks that a set of materials can properly sort itself
+	 * using the compare to method on the material's names. For example, sorting
+	 * a list such as b, c, 1c, d, f, 5c should give the resulting order of a,
+	 * b, c, 1c, 5c, d, f.
+	 */
+	@Test
+	public void checkSorting() {
+		
+		// Make some test materials
+		Material A = new Material();
+		A.setName("A");
+		Material B = new Material();
+		B.setName("B");
+		Material co2 = TestMaterialFactory.createCO2();
+		Material B1 = new Material();
+		B1.setName("3B");
+
+		// Make sure that alphabetical order is followed
+		assertTrue(A.compareTo(B) < 0);
+
+		// Make sure that isotopes go in numeric order
+		assertTrue(B.compareTo(B1) < 0);
+
+		// Make sure that a blank material would be at the front of a list
+		assertTrue(A.compareTo(new Material()) > 0);
+
+		// Make sure that if materials have the same name they are the same when
+		// compared.
+		Material A1 = new Material();
+		A1.setName(A.getName());
+		assertTrue(A.compareTo(A1) == 0);
+
+		// Make sure that the compound is in proper alphabetic order (no numeric
+		// sorting).
+		assertTrue(co2.compareTo(B1) > 0);
+		Material C = new Material();
+		C.setName("C");
+		assertTrue(C.compareTo(co2) < 0);
 
 	}
 
@@ -159,7 +215,7 @@ public class MaterialTester {
 		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
 		ArrayList<Class> classList = new ArrayList<Class>();
 		classList.add(Material.class);
-		
+
 		// Use the ICE JAXB Manipulator instead of raw JAXB. Waste not want not.
 		ICEJAXBHandler jaxbHandler = new ICEJAXBHandler();
 
@@ -178,7 +234,7 @@ public class MaterialTester {
 					outputStream.toByteArray());
 			Material readMaterial = (Material) jaxbHandler.read(classList,
 					inputStream);
-			
+
 			// They should be equal.
 			assertTrue(readMaterial.equals(material));
 		} catch (NullPointerException | JAXBException | IOException e) {

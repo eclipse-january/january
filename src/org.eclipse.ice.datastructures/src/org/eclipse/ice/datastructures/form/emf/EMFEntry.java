@@ -167,7 +167,7 @@ public class EMFEntry extends Entry {
 			return;
 		}
 
-		super.copy((Entry) otherEntry);
+		super.copy(otherEntry);
 
 		// containingEcoreNode = EcoreUtil.copy(otherEntry.containingEcoreNode);
 		// entryMetaData = EcoreUtil.copy(otherEntry.entryMetaData);
