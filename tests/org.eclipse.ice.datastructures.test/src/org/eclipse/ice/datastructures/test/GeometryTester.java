@@ -24,6 +24,7 @@ import javax.xml.bind.JAXBException;
 
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.form.geometry.ComplexShape;
+import org.eclipse.ice.datastructures.form.geometry.Geometry;
 import org.eclipse.ice.datastructures.form.geometry.GeometryComponent;
 import org.eclipse.ice.datastructures.form.geometry.OperatorType;
 import org.eclipse.ice.datastructures.form.geometry.PrimitiveShape;
@@ -59,6 +60,7 @@ public class GeometryTester {
 		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
 		ArrayList<Class> classList = new ArrayList<Class>();
 		classList.add(GeometryComponent.class);
+		classList.add(Geometry.class);
 
 		// Create the CSG elements
 		ComplexShape union = new ComplexShape(OperatorType.Union);
@@ -96,7 +98,7 @@ public class GeometryTester {
 		union.setProperty("awesome?", "yes");
 
 		// Create the CSG tree
-		geometry.addShape(union);
+		geometry.getGeometry().addShape(union);
 
 		union.addShape(complement);
 		union.addShape(cone);

@@ -28,6 +28,7 @@ import javax.xml.bind.JAXBException;
 import org.eclipse.ice.datastructures.ICEObject.Component;
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.form.geometry.ComplexShape;
+import org.eclipse.ice.datastructures.form.geometry.Geometry;
 import org.eclipse.ice.datastructures.form.geometry.GeometryComponent;
 import org.eclipse.ice.datastructures.form.geometry.IShape;
 import org.eclipse.ice.datastructures.form.geometry.OperatorType;
@@ -59,32 +60,32 @@ public class GeometryComponentTester {
 
 		// Add a PrimitiveShape
 		PrimitiveShape sphere = new PrimitiveShape(ShapeType.Sphere);
-		geometry.addShape(sphere);
-		assertEquals(1, geometry.getShapes().size());
-		assertEquals(sphere, geometry.getShapes().get(0));
+		geometry.getGeometry().addShape(sphere);
+		assertEquals(1, geometry.getGeometry().getShapes().size());
+		assertEquals(sphere, geometry.getGeometry().getShapes().get(0));
 
 		// Add a ComplexShape
 		ComplexShape complex = new ComplexShape(OperatorType.Union);
-		geometry.addShape(complex);
-		assertEquals(2, geometry.getShapes().size());
-		assertEquals(complex, geometry.getShapes().get(1));
+		geometry.getGeometry().addShape(complex);
+		assertEquals(2, geometry.getGeometry().getShapes().size());
+		assertEquals(complex, geometry.getGeometry().getShapes().get(1));
 
 		// Try adding null
-		geometry.addShape(null);
-		assertEquals(2, geometry.getShapes().size());
+		geometry.getGeometry().addShape(null);
+		assertEquals(2, geometry.getGeometry().getShapes().size());
 
 		// Add a shape with an unknown concrete type
 		IShape unknownShape = new PrimitiveShape();
-		geometry.addShape(unknownShape);
-		assertEquals(3, geometry.getShapes().size());
-		assertEquals(unknownShape, geometry.getShapes().get(2));
+		geometry.getGeometry().addShape(unknownShape);
+		assertEquals(3, geometry.getGeometry().getShapes().size());
+		assertEquals(unknownShape, geometry.getGeometry().getShapes().get(2));
 
 		// Remove the second shape
-		geometry.removeShape(complex);
-		assertEquals(2, geometry.getShapes().size());
+		geometry.getGeometry().removeShape(complex);
+		assertEquals(2, geometry.getGeometry().getShapes().size());
 
 		// Steal the list from the GeometryComponent
-		ArrayList<IShape> shapes = geometry.getShapes();
+		ArrayList<IShape> shapes = geometry.getGeometry().getShapes();
 		assertEquals(2, shapes.size());
 
 		// Remove a shape from the stolen list
@@ -92,8 +93,8 @@ public class GeometryComponentTester {
 		assertEquals(1, shapes.size());
 
 		// Give it to the GeometryComponent
-		geometry.setShapes(shapes);
-		assertEquals(1, geometry.getShapes().size());
+		geometry.getGeometry().setShapes(shapes);
+		assertEquals(1, geometry.getGeometry().getShapes().size());
 
 	}
 
@@ -149,7 +150,7 @@ public class GeometryComponentTester {
 		geometry.register(listener);
 
 		// Modify geometryComponent's shapes list
-		geometry.addShape(new PrimitiveShape(ShapeType.Cube));
+		geometry.getGeometry().addShape(new PrimitiveShape(ShapeType.Cube));
 
 		// Check that the listener was notified and reset the listener
 		assertTrue(listener.wasNotified());
@@ -194,10 +195,11 @@ public class GeometryComponentTester {
 		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
 		ArrayList<Class> classList = new ArrayList<Class>();
 		classList.add(GeometryComponent.class);
+		classList.add(Geometry.class);
 
 		// Instantiate a GeometryComponent
 		GeometryComponent geometry = new GeometryComponent();
-		geometry.addShape(new PrimitiveShape(ShapeType.Sphere));
+		geometry.getGeometry().addShape(new PrimitiveShape(ShapeType.Sphere));
 		geometry.setId(25);
 		geometry.setDescription("description");
 		geometry.setName("name");
@@ -241,11 +243,11 @@ public class GeometryComponentTester {
 		IShape shape = new PrimitiveShape(ShapeType.Cylinder);
 		IShape weirdShape = new ComplexShape(OperatorType.Intersection);
 
-		component.addShape(shape);
-		equalComponent.addShape(shape);
-		transitiveComponent.addShape(shape);
+		component.getGeometry().addShape(shape);
+		equalComponent.getGeometry().addShape(shape);
+		transitiveComponent.getGeometry().addShape(shape);
 
-		unEqualComponent.addShape(weirdShape);
+		unEqualComponent.getGeometry().addShape(weirdShape);
 
 		// Set ICEObject data
 		component.setId(1);
@@ -316,8 +318,8 @@ public class GeometryComponentTester {
 		GeometryComponent geometry = new GeometryComponent();
 
 		// Check that the shapes list exists but is empty
-		assertNotNull(geometry.getShapes());
-		assertTrue(geometry.getShapes().isEmpty());
+		assertNotNull(geometry.getGeometry().getShapes());
+		assertTrue(geometry.getGeometry().getShapes().isEmpty());
 
 	}
 
@@ -344,8 +346,8 @@ public class GeometryComponentTester {
 		PrimitiveShape sphere1 = new PrimitiveShape(ShapeType.Sphere);
 		ComplexShape cube1 = new ComplexShape(OperatorType.Union);
 
-		geometry.addShape(sphere1);
-		geometry.addShape(cube1);
+		geometry.getGeometry().addShape(sphere1);
+		geometry.getGeometry().addShape(cube1);
 
 		// Clone contents
 		cloneGeometry = (GeometryComponent) geometry.clone();
