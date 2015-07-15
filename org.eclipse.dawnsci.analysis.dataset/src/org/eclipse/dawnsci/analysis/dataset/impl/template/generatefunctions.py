@@ -178,7 +178,7 @@ def beginmethod(name, jdoc=None, params=0):
     print("\t\tfinal Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);")
     if is_binaryop:
         print("\t\tfinal Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);")
-        print("\t\tfinal BroadcastIterator it = new BroadcastIterator(da, db, o, true);")
+        print("\t\tfinal BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);")
         if allow_ints:
             print("\t\tit.setOutputDouble(false);");
     else:

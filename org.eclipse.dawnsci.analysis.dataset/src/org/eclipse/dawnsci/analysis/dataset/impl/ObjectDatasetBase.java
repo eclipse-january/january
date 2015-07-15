@@ -671,10 +671,10 @@ public class ObjectDatasetBase extends AbstractDataset {
 
 	@Override
 	ObjectDatasetBase setSlicedView(Dataset view, Dataset d) {
-		BroadcastIterator biter = new BroadcastIterator(view, d);
+		final BroadcastIteratorBase it = BroadcastIterator.createIterator(view, d);
 
-		while (biter.hasNext()) {
-			data[biter.aIndex] = d.getObjectAbs(biter.bIndex); // GET_ELEMENT_WITH_CAST
+		while (it.hasNext()) {
+			data[it.aIndex] = d.getObjectAbs(it.bIndex); // GET_ELEMENT_WITH_CAST
 		}
 		return this;
 	}

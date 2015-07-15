@@ -564,7 +564,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 
 	@Override
 	ComplexDoubleDataset setSlicedView(Dataset view, Dataset d) {
-		BroadcastIterator it = new BroadcastIterator(view, d);
+		final BroadcastIteratorBase it = BroadcastIterator.createIterator(view, d);
 
 		if (d instanceof ComplexFloatDataset || d instanceof ComplexDoubleDataset) {
 			while (it.hasNext()) {
@@ -659,7 +659,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 				}
 			}
 		} else {
-			final BroadcastIterator it = new BroadcastIterator(this, bds);
+			final BroadcastIteratorBase it = BroadcastIterator.createIterator(this, bds);
 			it.setOutputDouble(!useLong);
 			if (useLong) { // note no complex longs
 				while (it.hasNext()) {
@@ -708,7 +708,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 				}
 			}
 		} else {
-			final BroadcastIterator it = new BroadcastIterator(this, bds);
+			final BroadcastIteratorBase it = BroadcastIterator.createIterator(this, bds);
 			it.setOutputDouble(!useLong);
 			if (useLong) { // note no complex longs
 				while (it.hasNext()) {
@@ -761,7 +761,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 				}
 			}
 		} else {
-			final BroadcastIterator it = new BroadcastIterator(this, bds);
+			final BroadcastIteratorBase it = BroadcastIterator.createIterator(this, bds);
 			it.setOutputDouble(!useLong);
 			if (useLong) { // note no complex longs
 				while (it.hasNext()) {
@@ -840,7 +840,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 				}
 			}
 		} else {
-			final BroadcastIterator it = new BroadcastIterator(this, bds);
+			final BroadcastIteratorBase it = BroadcastIterator.createIterator(this, bds);
 			it.setOutputDouble(!useLong);
 			if (useLong) {
 				while (it.hasNext()) {
@@ -909,7 +909,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 				}
 			}
 		} else {
-			final BroadcastIterator it = new BroadcastIterator(this, bds);
+			final BroadcastIteratorBase it = BroadcastIterator.createIterator(this, bds);
 			it.setOutputDouble(true);
 			if (bds.isComplex()) {
 				while (it.hasNext()) {
@@ -933,7 +933,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	@Override
 	public double residual(final Object b, Dataset w, boolean ignoreNaNs) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = new BroadcastIterator(this, bds);
+		final BroadcastIteratorBase it = BroadcastIterator.createIterator(this, bds);
 		it.setOutputDouble(true);
 		double sum = 0;
 		double comp = 0;

@@ -11,6 +11,7 @@ package org.eclipse.dawnsci.analysis.examples.dataset.impl;
 
 import org.eclipse.dawnsci.analysis.api.dataset.Slice;
 import org.eclipse.dawnsci.analysis.dataset.impl.BroadcastIterator;
+import org.eclipse.dawnsci.analysis.dataset.impl.BroadcastIteratorBase;
 import org.eclipse.dawnsci.analysis.dataset.impl.CompoundDataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.Dataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.DatasetFactory;
@@ -78,11 +79,11 @@ public class BroadcastIteratorTest {
 	@Test
 	public void testBroadcastWithNoOutput() {
 		Dataset a, b, c;
-		BroadcastIterator it;
+		BroadcastIteratorBase it;
 
 		a = DatasetFactory.createRange(5, Dataset.FLOAT64).reshape(5, 1);
 		b = DatasetFactory.createRange(2, 8, 1, Dataset.FLOAT64).reshape(1, 6);
-		it = new BroadcastIterator(a, b);
+		it = BroadcastIterator.createIterator(a, b);
 		Assert.assertArrayEquals("Broadcast shape", new int[] {5, 6}, it.getShape());
 		c = DatasetFactory.zeros(it.getShape(), Dataset.FLOAT64);
 
@@ -97,7 +98,7 @@ public class BroadcastIteratorTest {
 		}
 
 		b.setShape(6);
-		it = new BroadcastIterator(a, b);
+		it = BroadcastIterator.createIterator(a, b);
 		Assert.assertArrayEquals("Broadcast shape", new int[] {5, 6}, it.getShape());
 		c = DatasetFactory.zeros(it.getShape(), Dataset.FLOAT64);
 
@@ -112,7 +113,7 @@ public class BroadcastIteratorTest {
 		}
 
 		a = DatasetFactory.ones(new int[] {1}, Dataset.INT16);
-		it = new BroadcastIterator(a, b);
+		it = BroadcastIterator.createIterator(a, b);
 		Assert.assertArrayEquals("Broadcast shape", new int[] {6}, it.getShape());
 		c = DatasetFactory.zeros(it.getShape(), Dataset.FLOAT64);
 
@@ -126,7 +127,7 @@ public class BroadcastIteratorTest {
 
 		// zero-rank dataset
 		a = DatasetFactory.createFromObject(1);
-		it = new BroadcastIterator(a, b);
+		it = BroadcastIterator.createIterator(a, b);
 		Assert.assertArrayEquals("Broadcast shape", new int[] {6}, it.getShape());
 		c = DatasetFactory.zeros(it.getShape(), Dataset.FLOAT64);
 
@@ -139,7 +140,7 @@ public class BroadcastIteratorTest {
 		}
 
 		b = DatasetFactory.createFromObject(2);
-		it = new BroadcastIterator(a, b);
+		it = BroadcastIterator.createIterator(a, b);
 		it.setOutputDouble(true);
 		Assert.assertArrayEquals("Broadcast shape", new int[] {}, it.getShape());
 		c = DatasetFactory.zeros(it.getShape(), Dataset.FLOAT64);
@@ -152,7 +153,7 @@ public class BroadcastIteratorTest {
 		// also sliced views
 		a = DatasetFactory.createRange(5, Dataset.FLOAT64).reshape(5, 1);
 		b = DatasetFactory.createRange(2, 8, 1, Dataset.FLOAT64).getSliceView(new Slice(null, null, 2));
-		it = new BroadcastIterator(a, b);
+		it = BroadcastIterator.createIterator(a, b);
 		Assert.assertArrayEquals("Broadcast shape", new int[] {5, 3}, it.getShape());
 		c = DatasetFactory.zeros(it.getShape(), Dataset.FLOAT64);
 
@@ -171,12 +172,12 @@ public class BroadcastIteratorTest {
 	@Test
 	public void testBroadcastWithOutput() {
 		Dataset a, b, c;
-		BroadcastIterator it;
+		BroadcastIteratorBase it;
 
 		a = DatasetFactory.createRange(10, Dataset.FLOAT64).reshape(10, 1);
 		b = DatasetFactory.createRange(2, 14, 1, Dataset.FLOAT64).reshape(1, 12);
 		c = DatasetFactory.zeros(new int[] {10, 12}, Dataset.FLOAT64);
-		it = new BroadcastIterator(a, b, c);
+		it = BroadcastIterator.createIterator(a, b, c);
 		Assert.assertArrayEquals("Broadcast shape", new int[] {10, 12}, it.getShape());
 
 		for (int i = 0; i < 10; i++) {
@@ -193,7 +194,7 @@ public class BroadcastIteratorTest {
 		a = DatasetFactory.createRange(120, Dataset.FLOAT64).reshape(10, 12);
 		b = DatasetFactory.createRange(2, 14, 1, Dataset.FLOAT64).reshape(1, 12);
 		c = a;
-		it = new BroadcastIterator(a, b, c);
+		it = BroadcastIterator.createIterator(a, b, c);
 		Assert.assertArrayEquals("Broadcast shape", new int[] {10, 12}, it.getShape());
 
 		for (int i = 0; i < 10; i++) {
@@ -209,7 +210,7 @@ public class BroadcastIteratorTest {
 		a = DatasetFactory.createRange(10, Dataset.FLOAT64).reshape(10, 1);
 		b = DatasetFactory.createRange(2, 122, 1, Dataset.FLOAT64).reshape(10, 12);
 		c = b;
-		it = new BroadcastIterator(a, b, c);
+		it = BroadcastIterator.createIterator(a, b, c);
 		Assert.assertArrayEquals("Broadcast shape", new int[] {10, 12}, it.getShape());
 
 		for (int i = 0; i < 10; i++) {
@@ -226,7 +227,7 @@ public class BroadcastIteratorTest {
 		a = DatasetFactory.createRange(240, Dataset.FLOAT64).reshape(20, 12).getSliceView(new Slice(null, null, 2));
 		b = DatasetFactory.createRange(2, 14, 1, Dataset.FLOAT64).reshape(1, 12);
 		c = a;
-		it = new BroadcastIterator(a, b, c);
+		it = BroadcastIterator.createIterator(a, b, c);
 		Assert.assertArrayEquals("Broadcast shape", new int[] {10, 12}, it.getShape());
 
 		for (int i = 0; i < 10; i++) {
@@ -243,7 +244,7 @@ public class BroadcastIteratorTest {
 		a = DatasetFactory.createRange(12, Dataset.FLOAT64);
 		b = DatasetFactory.createRange(2, 14, 1, Dataset.FLOAT64);
 		c = DatasetFactory.zeros(new int[] {10, 12}, Dataset.FLOAT64);
-		it = new BroadcastIterator(a, b, c);
+		it = BroadcastIterator.createIterator(a, b, c);
 		Assert.assertArrayEquals("Broadcast shape", new int[] {10, 12}, it.getShape());
 
 		for (int i = 0; i < 10; i++) {
@@ -258,7 +259,7 @@ public class BroadcastIteratorTest {
 
 		// compound output
 		c = DatasetFactory.zeros(3, new int[] {10, 12}, Dataset.FLOAT64);
-		it = new BroadcastIterator(a, b, c);
+		it = BroadcastIterator.createIterator(a, b, c);
 		Assert.assertArrayEquals("Broadcast shape", new int[] {10, 12}, it.getShape());
 
 		CompoundDataset cc = (CompoundDataset) c;

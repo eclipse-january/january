@@ -121,7 +121,8 @@ public class Maths {
 	public static Dataset operate(final Object a, final Object b, final Dataset o, final BinaryOperation op) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = new BroadcastIterator(da, db, o, true);
+
+		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
 		final double[] cpx;
@@ -818,7 +819,7 @@ public class Maths {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 
-		final BroadcastIterator it = new BroadcastIterator(da, db, o, true);
+		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
 		final int dt = result.getDtype();
@@ -1080,7 +1081,7 @@ public class Maths {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 
-		final BroadcastIterator it = new BroadcastIterator(da, db, o, true);
+		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
 		final int dt = result.getDtype();
@@ -3330,7 +3331,7 @@ public class Maths {
 	public static Dataset add(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = new BroadcastIterator(da, db, o, true);
+		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
 		final int dt = result.getDtype();
@@ -4218,7 +4219,7 @@ public class Maths {
 	public static Dataset subtract(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = new BroadcastIterator(da, db, o, true);
+		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
 		final int dt = result.getDtype();
@@ -5106,7 +5107,7 @@ public class Maths {
 	public static Dataset multiply(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = new BroadcastIterator(da, db, o, true);
+		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
 		final int dt = result.getDtype();
@@ -5994,7 +5995,7 @@ public class Maths {
 	public static Dataset divide(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = new BroadcastIterator(da, db, o, true);
+		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
 		final int dt = result.getDtype();
@@ -6984,7 +6985,7 @@ public class Maths {
 	public static Dataset dividez(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = new BroadcastIterator(da, db, o, true);
+		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
 		final int dt = result.getDtype();
@@ -7956,7 +7957,7 @@ public class Maths {
 	public static Dataset divideTowardsFloor(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = new BroadcastIterator(da, db, o, true);
+		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
 		final int dt = result.getDtype();
@@ -9394,7 +9395,7 @@ public class Maths {
 	public static Dataset power(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = new BroadcastIterator(da, db, o, true);
+		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
 		final int dt = result.getDtype();
@@ -10294,7 +10295,7 @@ public class Maths {
 	public static Dataset remainder(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = new BroadcastIterator(da, db, o, true);
+		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
 		final int dt = result.getDtype();
@@ -11096,7 +11097,7 @@ public class Maths {
 	public static Dataset maximum(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = new BroadcastIterator(da, db, o, true);
+		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
 		final int dt = result.getDtype();
@@ -12032,7 +12033,7 @@ public class Maths {
 	public static Dataset minimum(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = new BroadcastIterator(da, db, o, true);
+		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
 		final int dt = result.getDtype();
@@ -12968,7 +12969,7 @@ public class Maths {
 	public static Dataset bitwiseAnd(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = new BroadcastIterator(da, db, o, true);
+		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
 		it.setOutputDouble(false);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
@@ -13291,7 +13292,7 @@ public class Maths {
 	public static Dataset bitwiseOr(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = new BroadcastIterator(da, db, o, true);
+		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
 		it.setOutputDouble(false);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
@@ -13614,7 +13615,7 @@ public class Maths {
 	public static Dataset bitwiseXor(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = new BroadcastIterator(da, db, o, true);
+		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
 		it.setOutputDouble(false);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
@@ -13937,7 +13938,7 @@ public class Maths {
 	public static Dataset leftShift(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = new BroadcastIterator(da, db, o, true);
+		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
 		it.setOutputDouble(false);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
@@ -14260,7 +14261,7 @@ public class Maths {
 	public static Dataset rightShift(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = new BroadcastIterator(da, db, o, true);
+		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
 		it.setOutputDouble(false);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
@@ -14583,7 +14584,7 @@ public class Maths {
 	public static Dataset unsignedRightShift(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = new BroadcastIterator(da, db, o, true);
+		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
 		it.setOutputDouble(false);
 		final long unsignedMask;
 		final Dataset result = it.getOutput();

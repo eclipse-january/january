@@ -20,23 +20,18 @@ import java.util.List;
  * Class to run over a pair of datasets in parallel with NumPy broadcasting to promote shapes
  * which have lower rank and outputs to a third dataset
  */
-public class BroadcastIterator extends IndexIterator {
+public class BroadcastIterator extends BroadcastIteratorBase {
 	private int[] maxShape;
 	private int[] aShape;
 	private int[] bShape;
 	private final Dataset aDataset;
 	private final Dataset bDataset;
-	private final Dataset oDataset;
 	private int[] aStride;
 	private int[] bStride;
 	private int[] oStride;
 
 	final private int endrank;
 
-	/**
-	 * position in dataset
-	 */
-	private final int[] pos;
 	private final int[] aDelta, bDelta;
 	private final int[] oDelta; // this being non-null means output is different from inputs
 	private final int aStep, bStep, oStep;
@@ -45,39 +40,16 @@ public class BroadcastIterator extends IndexIterator {
 	private final boolean outputA;
 	private final boolean outputB;
 
-	/**
-	 * Index in array
-	 */
-	public int aIndex, bIndex, oIndex;
-
-	/**
-	 * Current value in array
-	 */
-	public double aDouble, bDouble;
-
-	/**
-	 * Current value in array
-	 */
-	public long aLong, bLong;
-
-	private boolean asDouble = true;
-
-	/**
-	 * 
-	 * @param a
-	 * @param b
-	 */
-	public BroadcastIterator(Dataset a, Dataset b) {
-		this(a, b, null, false);
+	public static BroadcastIteratorBase createIterator(Dataset a, Dataset b) {
+		return createIterator(a, b, null, false);
 	}
 
-	/**
-	 * @param a
-	 * @param b
-	 * @param o (can be null for new dataset, a or b)
-	 */
-	public BroadcastIterator(Dataset a, Dataset b, Dataset o) {
-		this(a, b, o, false);
+	public static BroadcastIteratorBase createIterator(Dataset a, Dataset b, Dataset o) {
+		return createIterator(a, b, o, false);
+	}
+
+	public static BroadcastIteratorBase createIterator(Dataset a, Dataset b, Dataset o, boolean createIfNull) {
+		return new BroadcastIterator(a, b, o, createIfNull);
 	}
 
 	/**
@@ -88,6 +60,7 @@ public class BroadcastIterator extends IndexIterator {
 	 * @param createIfNull
 	 */
 	public BroadcastIterator(Dataset a, Dataset b, Dataset o, boolean createIfNull) {
+		super();
 		List<int[]> fullShapes = broadcastShapes(a.getShapeRef(), b.getShapeRef(), o == null ? null : o.getShapeRef());
 
 		checkItemSize(a, b, o);
@@ -170,24 +143,6 @@ public class BroadcastIterator extends IndexIterator {
 		oStart = oDelta == null ? 0 : oDataset.getOffset();
 		asDouble = aDataset.hasFloatingPointElements() || bDataset.hasFloatingPointElements();
 		reset();
-	}
-
-	/**
-	 * @return true if output from iterator is double
-	 */
-	public boolean isOutputDouble() {
-		return asDouble;
-	}
-
-	/**
-	 * Set to output doubles
-	 * @param asDouble
-	 */
-	public void setOutputDouble(boolean asDouble) {
-		if (this.asDouble != asDouble) {
-			this.asDouble = asDouble;
-			storeCurrentValues();
-		}
 	}
 
 	private static void checkItemSize(Dataset a, Dataset b, Dataset o) {
@@ -495,18 +450,6 @@ public class BroadcastIterator extends IndexIterator {
 		return bShape;
 	}
 
-	/**
-	 * @return output dataset (can be null)
-	 */
-	public Dataset getOutput() {
-		return oDataset;
-	}
-
-	@Override
-	public int[] getPos() {
-		return pos;
-	}
-
 	@Override
 	public void reset() {
 		for (int i = 0; i <= endrank; i++)
@@ -532,7 +475,8 @@ public class BroadcastIterator extends IndexIterator {
 		}
 	}
 
-	private void storeCurrentValues() {
+	@Override
+	protected void storeCurrentValues() {
 		if (aIndex >= 0) {
 			if (asDouble) {
 				aDouble = aDataset.getElementDoubleAbs(aIndex);

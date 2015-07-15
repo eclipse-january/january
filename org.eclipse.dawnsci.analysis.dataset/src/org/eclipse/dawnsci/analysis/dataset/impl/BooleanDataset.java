@@ -241,7 +241,7 @@ public class BooleanDataset extends BooleanDatasetBase {
 	@Override
 	public BooleanDataset iadd(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = new BroadcastIterator(this, bds);
+		final BroadcastIteratorBase it = BroadcastIterator.createIterator(this, bds);
 		while (it.hasNext()) {
 			data[it.aIndex] |= bds.getElementBooleanAbs(it.bIndex);
 		}
@@ -255,7 +255,7 @@ public class BooleanDataset extends BooleanDatasetBase {
 	@Override
 	public BooleanDataset isubtract(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = new BroadcastIterator(this, bds);
+		final BroadcastIteratorBase it = BroadcastIterator.createIterator(this, bds);
 		while (it.hasNext()) {
 			data[it.aIndex] ^= bds.getElementBooleanAbs(it.bIndex);
 		}
@@ -269,7 +269,7 @@ public class BooleanDataset extends BooleanDatasetBase {
 	@Override
 	public BooleanDataset imultiply(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = new BroadcastIterator(this, bds);
+		final BroadcastIteratorBase it = BroadcastIterator.createIterator(this, bds);
 		while (it.hasNext()) {
 			data[it.aIndex] &= bds.getElementBooleanAbs(it.bIndex);
 		}
@@ -297,7 +297,7 @@ public class BooleanDataset extends BooleanDatasetBase {
 	@Override
 	public double residual(final Object b, final Dataset w, boolean ignoreNaNs) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = new BroadcastIterator(this, bds);
+		final BroadcastIteratorBase it = BroadcastIterator.createIterator(this, bds);
 		double sum = 0;
 		{
 			if (w == null) {
