@@ -297,7 +297,8 @@ def transtext(text, jtype, otype=None, lprefix="\t\t\t\t\t", is_int=True, overri
             jconv = "toLong"
     else:
         jprim = "double"
-        if otype == "long" or is_real:
+#        if otype == "long" or is_real:
+        if is_real:
             jconv = ""
         else:
             jconv = "toLong"
@@ -323,7 +324,10 @@ def transtext(text, jtype, otype=None, lprefix="\t\t\t\t\t", is_int=True, overri
                     else:
                         print "%s%s = (%s) (%s);" % (lprefix, lhs, vars[slhs], rhs)
                 else:
-                    print "%s%s = (%s) %s(%s);" % (lprefix, lhs, vars[slhs], jconv, rhs)
+                    if not is_real and otype == "long":
+                        print "%s%s = %s(%s);" % (lprefix, lhs, jconv, rhs)
+                    else:
+                        print "%s%s = (%s) %s(%s);" % (lprefix, lhs, vars[slhs], jconv, rhs)
             else:
                 print "%s%s" % (lprefix, t),
         else:
