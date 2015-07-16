@@ -66,17 +66,14 @@ public class BroadcastPairIterator extends BroadcastIterator {
 			oStride = aStride;
 			oDelta = null;
 			oStep = 0;
-			oDataset = aDataset;
 		} else if (outputB) {
 			oStride = bStride;
 			oDelta = null;
 			oStep = 0;
-			oDataset = bDataset;
 		} else if (o != null) {
 			oStride = AbstractDataset.createBroadcastStrides(o, maxShape);
 			oDelta = new int[rank];
 			oStep = o.getElementsPerItem();
-			oDataset = o;
 		} else if (createIfNull) {
 			oDataset = createDataset(a, b, maxShape);
 			oStride = AbstractDataset.createBroadcastStrides(oDataset, maxShape);
@@ -85,7 +82,6 @@ public class BroadcastPairIterator extends BroadcastIterator {
 		} else {
 			oDelta = null;
 			oStep = 0;
-			oDataset = o;
 		}
 
 		pos = new int[rank];

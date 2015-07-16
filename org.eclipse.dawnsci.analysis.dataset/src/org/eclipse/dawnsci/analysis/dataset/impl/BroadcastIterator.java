@@ -311,9 +311,9 @@ public abstract class BroadcastIterator extends IndexIterator {
 	protected BroadcastIterator(Dataset a, Dataset b, Dataset o) {
 		aDataset = a;
 		bDataset = b;
+		oDataset = o;
 		outputA = a == o;
 		outputB = b == o;
-
 		checkItemSize(a, b, o);
 	}
 

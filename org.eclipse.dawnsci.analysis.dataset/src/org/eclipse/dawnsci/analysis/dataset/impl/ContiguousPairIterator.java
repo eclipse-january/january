@@ -34,7 +34,6 @@ public class ContiguousPairIterator extends BroadcastIterator {
 		} else if (outputB) {
 			oStep = bStep;
 		} else if (o != null) {
-			oDataset = o;
 			oStep = o.getElementsPerItem();
 		} else if (createIfNull) {
 			oDataset = createDataset(a, b, a.getShapeRef());
