@@ -671,7 +671,7 @@ public class ObjectDatasetBase extends AbstractDataset {
 
 	@Override
 	ObjectDatasetBase setSlicedView(Dataset view, Dataset d) {
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(view, d);
+		final BroadcastIterator it = BroadcastIterator.createIterator(view, d);
 
 		while (it.hasNext()) {
 			data[it.aIndex] = d.getObjectAbs(it.bIndex); // GET_ELEMENT_WITH_CAST
