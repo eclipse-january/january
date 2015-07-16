@@ -719,7 +719,7 @@ public class DoubleDataset extends AbstractDataset {
 
 	@Override
 	DoubleDataset setSlicedView(Dataset view, Dataset d) {
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(view, d);
+		final BroadcastIterator it = BroadcastIterator.createIterator(view, d);
 
 		while (it.hasNext()) {
 			data[it.aIndex] = d.getElementDoubleAbs(it.bIndex); // GET_ELEMENT_WITH_CAST
@@ -926,7 +926,7 @@ public class DoubleDataset extends AbstractDataset {
 				} // NAN_OMIT
 			} // NAN_OMIT
 		} else { // NAN_OMIT
-			final BroadcastIteratorBase it = BroadcastIterator.createIterator(this, bds); // NAN_OMIT
+			final BroadcastIterator it = BroadcastIterator.createIterator(this, bds); // NAN_OMIT
 			it.setOutputDouble(!useLong); // NAN_OMIT
 			if (useLong) { // NAN_OMIT
 				while (it.hasNext()) { // NAN_OMIT
@@ -960,7 +960,7 @@ public class DoubleDataset extends AbstractDataset {
 				} // NAN_OMIT
 			} // NAN_OMIT
 		} else { // NAN_OMIT
-			final BroadcastIteratorBase it = BroadcastIterator.createIterator(this, bds); // NAN_OMIT
+			final BroadcastIterator it = BroadcastIterator.createIterator(this, bds); // NAN_OMIT
 			if (useLong) { // NAN_OMIT
 				it.setOutputDouble(false); // NAN_OMIT
 				while (it.hasNext()) { // NAN_OMIT
@@ -995,7 +995,7 @@ public class DoubleDataset extends AbstractDataset {
 				} // NAN_OMIT
 			} // NAN_OMIT
 		} else { // NAN_OMIT
-			final BroadcastIteratorBase it = BroadcastIterator.createIterator(this, bds); // NAN_OMIT
+			final BroadcastIterator it = BroadcastIterator.createIterator(this, bds); // NAN_OMIT
 			it.setOutputDouble(!useLong); // NAN_OMIT
 			if (useLong) { // NAN_OMIT
 				while (it.hasNext()) { // NAN_OMIT
@@ -1038,7 +1038,7 @@ public class DoubleDataset extends AbstractDataset {
 				// } // INT_USE // NAN_OMIT
 			} // NAN_OMIT
 		} else { // NAN_OMIT
-			final BroadcastIteratorBase it = BroadcastIterator.createIterator(this, bds); // NAN_OMIT
+			final BroadcastIterator it = BroadcastIterator.createIterator(this, bds); // NAN_OMIT
 			it.setOutputDouble(!useLong); // NAN_OMIT
 			if (useLong) { // NAN_OMIT
 				while (it.hasNext()) { // NAN_OMIT
@@ -1099,7 +1099,7 @@ public class DoubleDataset extends AbstractDataset {
 				// } // INT_USE // NAN_OMIT
 			} // NAN_OMIT
 		} else { // NAN_OMIT
-			final BroadcastIteratorBase it = BroadcastIterator.createIterator(this, bds); // NAN_OMIT
+			final BroadcastIterator it = BroadcastIterator.createIterator(this, bds); // NAN_OMIT
 			it.setOutputDouble(!useLong); // NAN_OMIT
 			if (useLong) { // NAN_OMIT
 				while (it.hasNext()) { // NAN_OMIT
@@ -1155,7 +1155,7 @@ public class DoubleDataset extends AbstractDataset {
 				} // NAN_OMIT
 			} // NAN_OMIT
 		} else { // NAN_OMIT
-			final BroadcastIteratorBase it = BroadcastIterator.createIterator(this, bds); // NAN_OMIT
+			final BroadcastIterator it = BroadcastIterator.createIterator(this, bds); // NAN_OMIT
 			it.setOutputDouble(true); // NAN_OMIT
 			if (bds.isComplex()) { // NAN_OMIT
 				while (it.hasNext()) { // NAN_OMIT
@@ -1185,7 +1185,7 @@ public class DoubleDataset extends AbstractDataset {
 	@Override
 	public double residual(final Object b, final Dataset w, boolean ignoreNaNs) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b); // NAN_OMIT
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(this, bds); // NAN_OMIT
+		final BroadcastIterator it = BroadcastIterator.createIterator(this, bds); // NAN_OMIT
 		it.setOutputDouble(true); // NAN_OMIT
 		double sum = 0;
 		double comp = 0; // NAN_OMIT

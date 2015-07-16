@@ -178,7 +178,7 @@ def beginmethod(name, jdoc=None, params=0):
     print("\t\tfinal Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);")
     if is_binaryop:
         print("\t\tfinal Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);")
-        print("\t\tfinal BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);")
+        print("\t\tfinal BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);")
         if allow_ints:
             print("\t\tit.setOutputDouble(false);");
     else:
@@ -279,10 +279,15 @@ def deftemps(text, jtype, lprefix, vars):
                     print "%s%s %s;" % (lprefix, jtype, lhs)
     return vars
 
-def transtext(text, jtype, otype=None, lprefix="\t\t\t\t\t", is_int=True, override_long=False, vars=None):
+import re
+param_re = re.compile("p[a-z][xy]")
+
+def transtext(text, jtype, otype=None, lprefix="\t\t\t\t\t", is_int=True, override_long=False, use_long=False, vars=None):
     if otype == None:
         otype = jtype
     vars = deftemps(text, jtype, lprefix, vars)
+
+    is_real = (otype == "float" and not is_int) or otype == "double" 
 
     if is_int:
         jprim = "long"
@@ -292,7 +297,11 @@ def transtext(text, jtype, otype=None, lprefix="\t\t\t\t\t", is_int=True, overri
             jconv = "toLong"
     else:
         jprim = "double"
-        jconv = ""
+        if otype == "long" or is_real:
+            jconv = ""
+        else:
+            jconv = "toLong"
+
 
     for t in text:
         # need to build up list of temporaries
@@ -307,6 +316,12 @@ def transtext(text, jtype, otype=None, lprefix="\t\t\t\t\t", is_int=True, overri
                     print "%s%s = 0;" % (lprefix, lhs)
                 elif vars[slhs] == jprim:
                     print "%s%s = %s(%s);" % (lprefix, lhs, jconv, rhs)
+                elif is_real:
+#                     print "%s%s = (%s) (%s);" % (lprefix, lhs, vars[slhs], rhs)
+                    if use_long and rhs.find("Math.") < 0 and param_re.search(rhs) is None:
+                        print "%s%s = (%s);" % (lprefix, lhs, rhs)
+                    else:
+                        print "%s%s = (%s) (%s);" % (lprefix, lhs, vars[slhs], rhs)
                 else:
                     print "%s%s = (%s) %s(%s);" % (lprefix, lhs, vars[slhs], jconv, rhs)
             else:
@@ -337,7 +352,7 @@ def loop(text, jtype, ovar, is_int, override_long):
         print("\t\t\t\t\tfinal long ibx = it.bLong;")
     else:
         print("\t\t\t\t\tfinal long ix = it.aLong;")
-    transtext(text, jtype, is_int=is_int, override_long=override_long)
+    transtext(text, jtype, is_int=is_int, override_long=override_long, use_long=True)
     print("\t\t\t\t\t%s[it.oIndex] = ox;" % ovar)
     print("\t\t\t\t}")
     print("\t\t\t}")
@@ -411,7 +426,7 @@ def loopcompound(text, jtype, ovar, is_int, override_long):
         print("\t\t\t\t\t\tfinal long ibx = it.bLong;")
     else:
         print("\t\t\t\t\t\tfinal long ix = it.aLong;")
-    transtext(text, jtype, lprefix="\t\t\t\t\t\t", is_int=is_int, override_long=override_long)
+    transtext(text, jtype, lprefix="\t\t\t\t\t\t", is_int=is_int, override_long=override_long, use_long=True)
     print("\t\t\t\t\t\t%s[it.oIndex] = ox;" % ovar)
     print("\t\t\t\t\t}")
     print("\t\t\t\t}")
@@ -437,11 +452,11 @@ def loopcompound(text, jtype, ovar, is_int, override_long):
         print("\t\t\t\t\twhile (it.hasNext()) {")
         print("\t\t\t\t\t\tfinal long iax = it.aLong;")
         print("\t\t\t\t\t\tlong ibx = it.bLong;")
-        vars = transtext(text, jtype, lprefix="\t\t\t\t\t\t", is_int=is_int, override_long=override_long)
+        vars = transtext(text, jtype, lprefix="\t\t\t\t\t\t", is_int=is_int, override_long=override_long, use_long=True)
         print("\t\t\t\t\t\t%s[it.oIndex] = ox;" % ovar)
         print("\t\t\t\t\t\tfor (int j = 1; j < is; j++) {")
         print("\t\t\t\t\t\t\tibx = db.getElementLongAbs(it.bIndex + j);")
-        transtext(text, jtype, lprefix="\t\t\t\t\t\t\t", is_int=is_int, vars=vars, override_long=override_long)
+        transtext(text, jtype, lprefix="\t\t\t\t\t\t\t", is_int=is_int, vars=vars, override_long=override_long, use_long=True)
         print("\t\t\t\t\t\t\t%s[it.oIndex + j] = ox;" % ovar)
         print("\t\t\t\t\t\t}")
         print("\t\t\t\t\t}")
@@ -461,7 +476,7 @@ def loopcompound(text, jtype, ovar, is_int, override_long):
             print("\t\t\t\t{")
         print("\t\t\t\t\twhile (it.hasNext()) {")
         print("\t\t\t\t\t\tfinal long ix = it.aLong;")
-        transtext(text, jtype, lprefix="\t\t\t\t\t\t", is_int=is_int, override_long=override_long)
+        transtext(text, jtype, lprefix="\t\t\t\t\t\t", is_int=is_int, override_long=override_long, use_long=True)
         print("\t\t\t\t\t\tfor (int j = 0; j < is; j++) {")
         print("\t\t\t\t\t\t\t%s[it.oIndex + j] = ox;" % ovar)
         print("\t\t\t\t\t\t}")
@@ -489,11 +504,11 @@ def loopcompound(text, jtype, ovar, is_int, override_long):
         print("\t\t\t\t\twhile (it.hasNext()) {")
         print("\t\t\t\t\t\tlong iax = it.aLong;")
         print("\t\t\t\t\t\tfinal long ibx = it.bLong;")
-        vars = transtext(text, jtype, lprefix="\t\t\t\t\t\t", is_int=is_int, override_long=override_long)
+        vars = transtext(text, jtype, lprefix="\t\t\t\t\t\t", is_int=is_int, override_long=override_long, use_long=True)
         print("\t\t\t\t\t\t%s[it.oIndex] = ox;" % ovar)
         print("\t\t\t\t\t\tfor (int j = 1; j < is; j++) {")
         print("\t\t\t\t\t\t\tiax = da.getElementLongAbs(it.aIndex + j);")
-        transtext(text, jtype, lprefix="\t\t\t\t\t\t\t", is_int=is_int, vars=vars, override_long=override_long)
+        transtext(text, jtype, lprefix="\t\t\t\t\t\t\t", is_int=is_int, vars=vars, override_long=override_long, use_long=True)
         print("\t\t\t\t\t\t\t%s[it.oIndex + j] = ox;" % ovar)
         print("\t\t\t\t\t\t}")
         print("\t\t\t\t\t}")
@@ -525,7 +540,7 @@ def loopcompound(text, jtype, ovar, is_int, override_long):
     if is_binaryop:
         print("\t\t\t\t\t\tlong iax = it.aLong;")
         print("\t\t\t\t\t\tlong ibx = it.bLong;")
-        vars = transtext(text, jtype, lprefix="\t\t\t\t\t\t", is_int=is_int, override_long=override_long)
+        vars = transtext(text, jtype, lprefix="\t\t\t\t\t\t", is_int=is_int, override_long=override_long, use_long=True)
         print("\t\t\t\t\t\t%s[it.oIndex] = ox;" % ovar)
         print("\t\t\t\t\t\tfor (int j = 1; j < is; j++) {")
         print("\t\t\t\t\t\t\tiax = da.getElementLongAbs(it.aIndex + j);")
@@ -534,7 +549,7 @@ def loopcompound(text, jtype, ovar, is_int, override_long):
         vars = None
         print("\t\t\t\t\t\tfor (int j = 0; j < is; j++) {")
         print("\t\t\t\t\t\t\tfinal long ix = da.getElementLongAbs(it.aIndex + j);")
-    transtext(text, jtype, lprefix="\t\t\t\t\t\t\t", is_int=is_int, vars=vars, override_long=override_long)
+    transtext(text, jtype, lprefix="\t\t\t\t\t\t\t", is_int=is_int, vars=vars, override_long=override_long, use_long=True)
     print("\t\t\t\t\t\t\t%s[it.oIndex + j] = ox;" % ovar)
     print("\t\t\t\t\t\t}")
     print("\t\t\t\t\t}")

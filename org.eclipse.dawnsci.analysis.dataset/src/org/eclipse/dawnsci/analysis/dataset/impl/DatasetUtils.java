@@ -2362,7 +2362,7 @@ public class DatasetUtils {
 		} catch (IllegalArgumentException e) {
 			final int length = ((Number) b.sum()).intValue();
 	
-			BroadcastIterator it = new BroadcastIterator(a, b, null, false);
+			BroadcastPairIterator it = new BroadcastPairIterator(a, b, null, false);
 			int size = AbstractDataset.calcSize(it.getShape());
 			Dataset c;
 			if (length < size) {

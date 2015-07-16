@@ -653,7 +653,7 @@ public class BooleanDatasetBase extends AbstractDataset {
 
 	@Override
 	BooleanDatasetBase setSlicedView(Dataset view, Dataset d) {
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(view, d);
+		final BroadcastIterator it = BroadcastIterator.createIterator(view, d);
 
 		while (it.hasNext()) {
 			data[it.aIndex] = d.getElementBooleanAbs(it.bIndex); // GET_ELEMENT_WITH_CAST

@@ -1075,7 +1075,7 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 
 	@Override
 	CompoundIntegerDataset setSlicedView(Dataset view, Dataset d) {
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(view, d);
+		final BroadcastIterator it = BroadcastIterator.createIterator(view, d);
 
 		final int is = view.getElementsPerItem();
 
@@ -1269,7 +1269,7 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 				throw new IllegalArgumentException("Argument does not have same number of elements per item or is not a non-compound dataset");
 			}
 		} else {
-			final BroadcastIteratorBase it = BroadcastIterator.createIterator(this, bds);
+			final BroadcastIterator it = BroadcastIterator.createIterator(this, bds);
 			it.setOutputDouble(!useLong);
 			if (is == 1) {
 				if (useLong) {
@@ -1354,7 +1354,7 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 				throw new IllegalArgumentException("Argument does not have same number of elements per item or is not a non-compound dataset");
 			}
 		} else {
-			final BroadcastIteratorBase it = BroadcastIterator.createIterator(this, bds);
+			final BroadcastIterator it = BroadcastIterator.createIterator(this, bds);
 			it.setOutputDouble(!useLong);
 			if (is == 1) {
 				if (useLong) {
@@ -1441,7 +1441,7 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 				}
 			}
 		} else {
-			final BroadcastIteratorBase it = BroadcastIterator.createIterator(this, bds);
+			final BroadcastIterator it = BroadcastIterator.createIterator(this, bds);
 			it.setOutputDouble(!useLong);
 			if (useLong) {
 				if (is == 1) {
@@ -1546,7 +1546,7 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 				}
 			}
 		} else {
-			final BroadcastIteratorBase it = BroadcastIterator.createIterator(this, bds);
+			final BroadcastIterator it = BroadcastIterator.createIterator(this, bds);
 			it.setOutputDouble(!useLong);
 			if (useLong) {
 				if (is == 1) {
@@ -1674,7 +1674,7 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 				}
 			}
 		} else {
-			final BroadcastIteratorBase it = BroadcastIterator.createIterator(this, bds);
+			final BroadcastIterator it = BroadcastIterator.createIterator(this, bds);
 			it.setOutputDouble(!useLong);
 			if (useLong) {
 				if (is == 1) {
@@ -1792,7 +1792,7 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 				}
 			}
 		} else {
-			final BroadcastIteratorBase it = BroadcastIterator.createIterator(this, bds);
+			final BroadcastIterator it = BroadcastIterator.createIterator(this, bds);
 			it.setOutputDouble(true);
 			if (bds.isComplex()) {
 				while (it.hasNext()) {
@@ -1838,7 +1838,7 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 	@Override
 	public double residual(final Object b, final Dataset w, boolean ignoreNaNs) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(this, bds);
+		final BroadcastIterator it = BroadcastIterator.createIterator(this, bds);
 		it.setOutputDouble(true);
 		double sum = 0;
 		double comp = 0;

@@ -719,7 +719,7 @@ public class FloatDataset extends AbstractDataset {
 
 	@Override
 	FloatDataset setSlicedView(Dataset view, Dataset d) {
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(view, d);
+		final BroadcastIterator it = BroadcastIterator.createIterator(view, d);
 
 		while (it.hasNext()) {
 			data[it.aIndex] = (float) d.getElementDoubleAbs(it.bIndex); // GET_ELEMENT_WITH_CAST
@@ -926,7 +926,7 @@ public class FloatDataset extends AbstractDataset {
 				}
 			}
 		} else {
-			final BroadcastIteratorBase it = BroadcastIterator.createIterator(this, bds);
+			final BroadcastIterator it = BroadcastIterator.createIterator(this, bds);
 			it.setOutputDouble(!useLong);
 			if (useLong) {
 				while (it.hasNext()) {
@@ -960,7 +960,7 @@ public class FloatDataset extends AbstractDataset {
 				}
 			}
 		} else {
-			final BroadcastIteratorBase it = BroadcastIterator.createIterator(this, bds);
+			final BroadcastIterator it = BroadcastIterator.createIterator(this, bds);
 			if (useLong) {
 				it.setOutputDouble(false);
 				while (it.hasNext()) {
@@ -995,7 +995,7 @@ public class FloatDataset extends AbstractDataset {
 				}
 			}
 		} else {
-			final BroadcastIteratorBase it = BroadcastIterator.createIterator(this, bds);
+			final BroadcastIterator it = BroadcastIterator.createIterator(this, bds);
 			it.setOutputDouble(!useLong);
 			if (useLong) {
 				while (it.hasNext()) {
@@ -1038,7 +1038,7 @@ public class FloatDataset extends AbstractDataset {
 				// } // INT_USE
 			}
 		} else {
-			final BroadcastIteratorBase it = BroadcastIterator.createIterator(this, bds);
+			final BroadcastIterator it = BroadcastIterator.createIterator(this, bds);
 			it.setOutputDouble(!useLong);
 			if (useLong) {
 				while (it.hasNext()) {
@@ -1099,7 +1099,7 @@ public class FloatDataset extends AbstractDataset {
 				// } // INT_USE
 			}
 		} else {
-			final BroadcastIteratorBase it = BroadcastIterator.createIterator(this, bds);
+			final BroadcastIterator it = BroadcastIterator.createIterator(this, bds);
 			it.setOutputDouble(!useLong);
 			if (useLong) {
 				while (it.hasNext()) {
@@ -1155,7 +1155,7 @@ public class FloatDataset extends AbstractDataset {
 				}
 			}
 		} else {
-			final BroadcastIteratorBase it = BroadcastIterator.createIterator(this, bds);
+			final BroadcastIterator it = BroadcastIterator.createIterator(this, bds);
 			it.setOutputDouble(true);
 			if (bds.isComplex()) {
 				while (it.hasNext()) {
@@ -1185,7 +1185,7 @@ public class FloatDataset extends AbstractDataset {
 	@Override
 	public double residual(final Object b, final Dataset w, boolean ignoreNaNs) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(this, bds);
+		final BroadcastIterator it = BroadcastIterator.createIterator(this, bds);
 		it.setOutputDouble(true);
 		double sum = 0;
 		double comp = 0;

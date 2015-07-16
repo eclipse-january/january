@@ -122,7 +122,7 @@ public class Maths {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
+		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
 		final double[] cpx;
@@ -819,7 +819,7 @@ public class Maths {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
+		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
 		final int dt = result.getDtype();
@@ -1081,7 +1081,7 @@ public class Maths {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
+		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
 		final int dt = result.getDtype();
@@ -3331,7 +3331,7 @@ public class Maths {
 	public static Dataset add(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
+		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
 		final int dt = result.getDtype();
@@ -3344,7 +3344,7 @@ public class Maths {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					byte ox;
-					ox = (byte) (iax + ibx);
+					ox = (byte) toLong(iax + ibx);
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -3364,7 +3364,7 @@ public class Maths {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					short ox;
-					ox = (short) (iax + ibx);
+					ox = (short) toLong(iax + ibx);
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -3404,7 +3404,7 @@ public class Maths {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					int ox;
-					ox = (int) (iax + ibx);
+					ox = (int) toLong(iax + ibx);
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -3425,7 +3425,7 @@ public class Maths {
 						final double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (iax + ibx);
+						ox = (byte) toLong(iax + ibx);
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -3443,11 +3443,11 @@ public class Maths {
 						final double iax = it.aDouble;
 						double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (iax + ibx);
+						ox = (byte) toLong(iax + ibx);
 						oai8data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (byte) (iax + ibx);
+							ox = (byte) toLong(iax + ibx);
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -3471,11 +3471,11 @@ public class Maths {
 						double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (iax + ibx);
+						ox = (byte) toLong(iax + ibx);
 						oai8data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
-							ox = (byte) (iax + ibx);
+							ox = (byte) toLong(iax + ibx);
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -3499,12 +3499,12 @@ public class Maths {
 						double iax = it.aDouble;
 						double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (iax + ibx);
+						ox = (byte) toLong(iax + ibx);
 						oai8data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (byte) (iax + ibx);
+							ox = (byte) toLong(iax + ibx);
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -3533,7 +3533,7 @@ public class Maths {
 						final double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						short ox;
-						ox = (short) (iax + ibx);
+						ox = (short) toLong(iax + ibx);
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -3551,11 +3551,11 @@ public class Maths {
 						final double iax = it.aDouble;
 						double ibx = it.bDouble;
 						short ox;
-						ox = (short) (iax + ibx);
+						ox = (short) toLong(iax + ibx);
 						oai16data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (short) (iax + ibx);
+							ox = (short) toLong(iax + ibx);
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -3579,11 +3579,11 @@ public class Maths {
 						double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						short ox;
-						ox = (short) (iax + ibx);
+						ox = (short) toLong(iax + ibx);
 						oai16data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
-							ox = (short) (iax + ibx);
+							ox = (short) toLong(iax + ibx);
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -3607,12 +3607,12 @@ public class Maths {
 						double iax = it.aDouble;
 						double ibx = it.bDouble;
 						short ox;
-						ox = (short) (iax + ibx);
+						ox = (short) toLong(iax + ibx);
 						oai16data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (short) (iax + ibx);
+							ox = (short) toLong(iax + ibx);
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -3749,7 +3749,7 @@ public class Maths {
 						final double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						int ox;
-						ox = (int) (iax + ibx);
+						ox = (int) toLong(iax + ibx);
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -3767,11 +3767,11 @@ public class Maths {
 						final double iax = it.aDouble;
 						double ibx = it.bDouble;
 						int ox;
-						ox = (int) (iax + ibx);
+						ox = (int) toLong(iax + ibx);
 						oai32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (int) (iax + ibx);
+							ox = (int) toLong(iax + ibx);
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -3795,11 +3795,11 @@ public class Maths {
 						double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						int ox;
-						ox = (int) (iax + ibx);
+						ox = (int) toLong(iax + ibx);
 						oai32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
-							ox = (int) (iax + ibx);
+							ox = (int) toLong(iax + ibx);
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -3823,12 +3823,12 @@ public class Maths {
 						double iax = it.aDouble;
 						double ibx = it.bDouble;
 						int ox;
-						ox = (int) (iax + ibx);
+						ox = (int) toLong(iax + ibx);
 						oai32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (int) (iax + ibx);
+							ox = (int) toLong(iax + ibx);
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -3864,7 +3864,7 @@ public class Maths {
 					final long iax = it.aLong;
 					final long ibx = it.bLong;
 					float ox;
-					ox = (float) (iax + ibx);
+					ox = (iax + ibx);
 					of32data[it.oIndex] = ox;
 				}
 			}
@@ -3905,7 +3905,7 @@ public class Maths {
 						final long iax = it.aLong;
 						final long ibx = it.bLong;
 						float ox;
-						ox = (float) (iax + ibx);
+						ox = (iax + ibx);
 						oaf32data[it.oIndex] = ox;
 					}
 				}
@@ -3928,11 +3928,11 @@ public class Maths {
 						final long iax = it.aLong;
 						long ibx = it.bLong;
 						float ox;
-						ox = (float) (iax + ibx);
+						ox = (iax + ibx);
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementLongAbs(it.bIndex + j);
-							ox = (float) (iax + ibx);
+							ox = (iax + ibx);
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -3956,11 +3956,11 @@ public class Maths {
 						long iax = it.aLong;
 						final long ibx = it.bLong;
 						float ox;
-						ox = (float) (iax + ibx);
+						ox = (iax + ibx);
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementLongAbs(it.aIndex + j);
-							ox = (float) (iax + ibx);
+							ox = (iax + ibx);
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -3985,12 +3985,12 @@ public class Maths {
 						long iax = it.aLong;
 						long ibx = it.bLong;
 						float ox;
-						ox = (float) (iax + ibx);
+						ox = (iax + ibx);
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementLongAbs(it.aIndex + j);
 							ibx = db.getElementLongAbs(it.bIndex + j);
-							ox = (float) (iax + ibx);
+							ox = (iax + ibx);
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -4219,7 +4219,7 @@ public class Maths {
 	public static Dataset subtract(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
+		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
 		final int dt = result.getDtype();
@@ -4232,7 +4232,7 @@ public class Maths {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					byte ox;
-					ox = (byte) (iax - ibx);
+					ox = (byte) toLong(iax - ibx);
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -4252,7 +4252,7 @@ public class Maths {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					short ox;
-					ox = (short) (iax - ibx);
+					ox = (short) toLong(iax - ibx);
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -4292,7 +4292,7 @@ public class Maths {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					int ox;
-					ox = (int) (iax - ibx);
+					ox = (int) toLong(iax - ibx);
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -4313,7 +4313,7 @@ public class Maths {
 						final double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (iax - ibx);
+						ox = (byte) toLong(iax - ibx);
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -4331,11 +4331,11 @@ public class Maths {
 						final double iax = it.aDouble;
 						double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (iax - ibx);
+						ox = (byte) toLong(iax - ibx);
 						oai8data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (byte) (iax - ibx);
+							ox = (byte) toLong(iax - ibx);
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -4359,11 +4359,11 @@ public class Maths {
 						double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (iax - ibx);
+						ox = (byte) toLong(iax - ibx);
 						oai8data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
-							ox = (byte) (iax - ibx);
+							ox = (byte) toLong(iax - ibx);
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -4387,12 +4387,12 @@ public class Maths {
 						double iax = it.aDouble;
 						double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (iax - ibx);
+						ox = (byte) toLong(iax - ibx);
 						oai8data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (byte) (iax - ibx);
+							ox = (byte) toLong(iax - ibx);
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -4421,7 +4421,7 @@ public class Maths {
 						final double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						short ox;
-						ox = (short) (iax - ibx);
+						ox = (short) toLong(iax - ibx);
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -4439,11 +4439,11 @@ public class Maths {
 						final double iax = it.aDouble;
 						double ibx = it.bDouble;
 						short ox;
-						ox = (short) (iax - ibx);
+						ox = (short) toLong(iax - ibx);
 						oai16data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (short) (iax - ibx);
+							ox = (short) toLong(iax - ibx);
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -4467,11 +4467,11 @@ public class Maths {
 						double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						short ox;
-						ox = (short) (iax - ibx);
+						ox = (short) toLong(iax - ibx);
 						oai16data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
-							ox = (short) (iax - ibx);
+							ox = (short) toLong(iax - ibx);
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -4495,12 +4495,12 @@ public class Maths {
 						double iax = it.aDouble;
 						double ibx = it.bDouble;
 						short ox;
-						ox = (short) (iax - ibx);
+						ox = (short) toLong(iax - ibx);
 						oai16data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (short) (iax - ibx);
+							ox = (short) toLong(iax - ibx);
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -4637,7 +4637,7 @@ public class Maths {
 						final double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						int ox;
-						ox = (int) (iax - ibx);
+						ox = (int) toLong(iax - ibx);
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -4655,11 +4655,11 @@ public class Maths {
 						final double iax = it.aDouble;
 						double ibx = it.bDouble;
 						int ox;
-						ox = (int) (iax - ibx);
+						ox = (int) toLong(iax - ibx);
 						oai32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (int) (iax - ibx);
+							ox = (int) toLong(iax - ibx);
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -4683,11 +4683,11 @@ public class Maths {
 						double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						int ox;
-						ox = (int) (iax - ibx);
+						ox = (int) toLong(iax - ibx);
 						oai32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
-							ox = (int) (iax - ibx);
+							ox = (int) toLong(iax - ibx);
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -4711,12 +4711,12 @@ public class Maths {
 						double iax = it.aDouble;
 						double ibx = it.bDouble;
 						int ox;
-						ox = (int) (iax - ibx);
+						ox = (int) toLong(iax - ibx);
 						oai32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (int) (iax - ibx);
+							ox = (int) toLong(iax - ibx);
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -4752,7 +4752,7 @@ public class Maths {
 					final long iax = it.aLong;
 					final long ibx = it.bLong;
 					float ox;
-					ox = (float) (iax - ibx);
+					ox = (iax - ibx);
 					of32data[it.oIndex] = ox;
 				}
 			}
@@ -4793,7 +4793,7 @@ public class Maths {
 						final long iax = it.aLong;
 						final long ibx = it.bLong;
 						float ox;
-						ox = (float) (iax - ibx);
+						ox = (iax - ibx);
 						oaf32data[it.oIndex] = ox;
 					}
 				}
@@ -4816,11 +4816,11 @@ public class Maths {
 						final long iax = it.aLong;
 						long ibx = it.bLong;
 						float ox;
-						ox = (float) (iax - ibx);
+						ox = (iax - ibx);
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementLongAbs(it.bIndex + j);
-							ox = (float) (iax - ibx);
+							ox = (iax - ibx);
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -4844,11 +4844,11 @@ public class Maths {
 						long iax = it.aLong;
 						final long ibx = it.bLong;
 						float ox;
-						ox = (float) (iax - ibx);
+						ox = (iax - ibx);
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementLongAbs(it.aIndex + j);
-							ox = (float) (iax - ibx);
+							ox = (iax - ibx);
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -4873,12 +4873,12 @@ public class Maths {
 						long iax = it.aLong;
 						long ibx = it.bLong;
 						float ox;
-						ox = (float) (iax - ibx);
+						ox = (iax - ibx);
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementLongAbs(it.aIndex + j);
 							ibx = db.getElementLongAbs(it.bIndex + j);
-							ox = (float) (iax - ibx);
+							ox = (iax - ibx);
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -5107,7 +5107,7 @@ public class Maths {
 	public static Dataset multiply(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
+		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
 		final int dt = result.getDtype();
@@ -5120,7 +5120,7 @@ public class Maths {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					byte ox;
-					ox = (byte) (iax * ibx);
+					ox = (byte) toLong(iax * ibx);
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -5140,7 +5140,7 @@ public class Maths {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					short ox;
-					ox = (short) (iax * ibx);
+					ox = (short) toLong(iax * ibx);
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -5180,7 +5180,7 @@ public class Maths {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					int ox;
-					ox = (int) (iax * ibx);
+					ox = (int) toLong(iax * ibx);
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -5201,7 +5201,7 @@ public class Maths {
 						final double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (iax * ibx);
+						ox = (byte) toLong(iax * ibx);
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -5219,11 +5219,11 @@ public class Maths {
 						final double iax = it.aDouble;
 						double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (iax * ibx);
+						ox = (byte) toLong(iax * ibx);
 						oai8data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (byte) (iax * ibx);
+							ox = (byte) toLong(iax * ibx);
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -5247,11 +5247,11 @@ public class Maths {
 						double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (iax * ibx);
+						ox = (byte) toLong(iax * ibx);
 						oai8data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
-							ox = (byte) (iax * ibx);
+							ox = (byte) toLong(iax * ibx);
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -5275,12 +5275,12 @@ public class Maths {
 						double iax = it.aDouble;
 						double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (iax * ibx);
+						ox = (byte) toLong(iax * ibx);
 						oai8data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (byte) (iax * ibx);
+							ox = (byte) toLong(iax * ibx);
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -5309,7 +5309,7 @@ public class Maths {
 						final double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						short ox;
-						ox = (short) (iax * ibx);
+						ox = (short) toLong(iax * ibx);
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -5327,11 +5327,11 @@ public class Maths {
 						final double iax = it.aDouble;
 						double ibx = it.bDouble;
 						short ox;
-						ox = (short) (iax * ibx);
+						ox = (short) toLong(iax * ibx);
 						oai16data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (short) (iax * ibx);
+							ox = (short) toLong(iax * ibx);
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -5355,11 +5355,11 @@ public class Maths {
 						double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						short ox;
-						ox = (short) (iax * ibx);
+						ox = (short) toLong(iax * ibx);
 						oai16data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
-							ox = (short) (iax * ibx);
+							ox = (short) toLong(iax * ibx);
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -5383,12 +5383,12 @@ public class Maths {
 						double iax = it.aDouble;
 						double ibx = it.bDouble;
 						short ox;
-						ox = (short) (iax * ibx);
+						ox = (short) toLong(iax * ibx);
 						oai16data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (short) (iax * ibx);
+							ox = (short) toLong(iax * ibx);
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -5525,7 +5525,7 @@ public class Maths {
 						final double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						int ox;
-						ox = (int) (iax * ibx);
+						ox = (int) toLong(iax * ibx);
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -5543,11 +5543,11 @@ public class Maths {
 						final double iax = it.aDouble;
 						double ibx = it.bDouble;
 						int ox;
-						ox = (int) (iax * ibx);
+						ox = (int) toLong(iax * ibx);
 						oai32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (int) (iax * ibx);
+							ox = (int) toLong(iax * ibx);
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -5571,11 +5571,11 @@ public class Maths {
 						double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						int ox;
-						ox = (int) (iax * ibx);
+						ox = (int) toLong(iax * ibx);
 						oai32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
-							ox = (int) (iax * ibx);
+							ox = (int) toLong(iax * ibx);
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -5599,12 +5599,12 @@ public class Maths {
 						double iax = it.aDouble;
 						double ibx = it.bDouble;
 						int ox;
-						ox = (int) (iax * ibx);
+						ox = (int) toLong(iax * ibx);
 						oai32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (int) (iax * ibx);
+							ox = (int) toLong(iax * ibx);
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -5640,7 +5640,7 @@ public class Maths {
 					final long iax = it.aLong;
 					final long ibx = it.bLong;
 					float ox;
-					ox = (float) (iax * ibx);
+					ox = (iax * ibx);
 					of32data[it.oIndex] = ox;
 				}
 			}
@@ -5681,7 +5681,7 @@ public class Maths {
 						final long iax = it.aLong;
 						final long ibx = it.bLong;
 						float ox;
-						ox = (float) (iax * ibx);
+						ox = (iax * ibx);
 						oaf32data[it.oIndex] = ox;
 					}
 				}
@@ -5704,11 +5704,11 @@ public class Maths {
 						final long iax = it.aLong;
 						long ibx = it.bLong;
 						float ox;
-						ox = (float) (iax * ibx);
+						ox = (iax * ibx);
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementLongAbs(it.bIndex + j);
-							ox = (float) (iax * ibx);
+							ox = (iax * ibx);
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -5732,11 +5732,11 @@ public class Maths {
 						long iax = it.aLong;
 						final long ibx = it.bLong;
 						float ox;
-						ox = (float) (iax * ibx);
+						ox = (iax * ibx);
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementLongAbs(it.aIndex + j);
-							ox = (float) (iax * ibx);
+							ox = (iax * ibx);
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -5761,12 +5761,12 @@ public class Maths {
 						long iax = it.aLong;
 						long ibx = it.bLong;
 						float ox;
-						ox = (float) (iax * ibx);
+						ox = (iax * ibx);
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementLongAbs(it.aIndex + j);
 							ibx = db.getElementLongAbs(it.bIndex + j);
-							ox = (float) (iax * ibx);
+							ox = (iax * ibx);
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -5995,7 +5995,7 @@ public class Maths {
 	public static Dataset divide(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
+		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
 		final int dt = result.getDtype();
@@ -6008,7 +6008,7 @@ public class Maths {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					byte ox;
-					ox = (byte) (ibx == 0 ? 0 : iax / ibx);
+					ox = (byte) toLong(ibx == 0 ? 0 : iax / ibx);
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -6028,7 +6028,7 @@ public class Maths {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					short ox;
-					ox = (short) (ibx == 0 ? 0 : iax / ibx);
+					ox = (short) toLong(ibx == 0 ? 0 : iax / ibx);
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -6068,7 +6068,7 @@ public class Maths {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					int ox;
-					ox = (int) (ibx == 0 ? 0 : iax / ibx);
+					ox = (int) toLong(ibx == 0 ? 0 : iax / ibx);
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -6089,7 +6089,7 @@ public class Maths {
 						final double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (ibx == 0 ? 0 : iax / ibx);
+						ox = (byte) toLong(ibx == 0 ? 0 : iax / ibx);
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -6107,11 +6107,11 @@ public class Maths {
 						final double iax = it.aDouble;
 						double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (ibx == 0 ? 0 : iax / ibx);
+						ox = (byte) toLong(ibx == 0 ? 0 : iax / ibx);
 						oai8data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (byte) (ibx == 0 ? 0 : iax / ibx);
+							ox = (byte) toLong(ibx == 0 ? 0 : iax / ibx);
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -6135,11 +6135,11 @@ public class Maths {
 						double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (ibx == 0 ? 0 : iax / ibx);
+						ox = (byte) toLong(ibx == 0 ? 0 : iax / ibx);
 						oai8data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
-							ox = (byte) (ibx == 0 ? 0 : iax / ibx);
+							ox = (byte) toLong(ibx == 0 ? 0 : iax / ibx);
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -6163,12 +6163,12 @@ public class Maths {
 						double iax = it.aDouble;
 						double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (ibx == 0 ? 0 : iax / ibx);
+						ox = (byte) toLong(ibx == 0 ? 0 : iax / ibx);
 						oai8data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (byte) (ibx == 0 ? 0 : iax / ibx);
+							ox = (byte) toLong(ibx == 0 ? 0 : iax / ibx);
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -6197,7 +6197,7 @@ public class Maths {
 						final double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						short ox;
-						ox = (short) (ibx == 0 ? 0 : iax / ibx);
+						ox = (short) toLong(ibx == 0 ? 0 : iax / ibx);
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -6215,11 +6215,11 @@ public class Maths {
 						final double iax = it.aDouble;
 						double ibx = it.bDouble;
 						short ox;
-						ox = (short) (ibx == 0 ? 0 : iax / ibx);
+						ox = (short) toLong(ibx == 0 ? 0 : iax / ibx);
 						oai16data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (short) (ibx == 0 ? 0 : iax / ibx);
+							ox = (short) toLong(ibx == 0 ? 0 : iax / ibx);
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -6243,11 +6243,11 @@ public class Maths {
 						double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						short ox;
-						ox = (short) (ibx == 0 ? 0 : iax / ibx);
+						ox = (short) toLong(ibx == 0 ? 0 : iax / ibx);
 						oai16data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
-							ox = (short) (ibx == 0 ? 0 : iax / ibx);
+							ox = (short) toLong(ibx == 0 ? 0 : iax / ibx);
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -6271,12 +6271,12 @@ public class Maths {
 						double iax = it.aDouble;
 						double ibx = it.bDouble;
 						short ox;
-						ox = (short) (ibx == 0 ? 0 : iax / ibx);
+						ox = (short) toLong(ibx == 0 ? 0 : iax / ibx);
 						oai16data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (short) (ibx == 0 ? 0 : iax / ibx);
+							ox = (short) toLong(ibx == 0 ? 0 : iax / ibx);
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -6413,7 +6413,7 @@ public class Maths {
 						final double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						int ox;
-						ox = (int) (ibx == 0 ? 0 : iax / ibx);
+						ox = (int) toLong(ibx == 0 ? 0 : iax / ibx);
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -6431,11 +6431,11 @@ public class Maths {
 						final double iax = it.aDouble;
 						double ibx = it.bDouble;
 						int ox;
-						ox = (int) (ibx == 0 ? 0 : iax / ibx);
+						ox = (int) toLong(ibx == 0 ? 0 : iax / ibx);
 						oai32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (int) (ibx == 0 ? 0 : iax / ibx);
+							ox = (int) toLong(ibx == 0 ? 0 : iax / ibx);
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -6459,11 +6459,11 @@ public class Maths {
 						double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						int ox;
-						ox = (int) (ibx == 0 ? 0 : iax / ibx);
+						ox = (int) toLong(ibx == 0 ? 0 : iax / ibx);
 						oai32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
-							ox = (int) (ibx == 0 ? 0 : iax / ibx);
+							ox = (int) toLong(ibx == 0 ? 0 : iax / ibx);
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -6487,12 +6487,12 @@ public class Maths {
 						double iax = it.aDouble;
 						double ibx = it.bDouble;
 						int ox;
-						ox = (int) (ibx == 0 ? 0 : iax / ibx);
+						ox = (int) toLong(ibx == 0 ? 0 : iax / ibx);
 						oai32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (int) (ibx == 0 ? 0 : iax / ibx);
+							ox = (int) toLong(ibx == 0 ? 0 : iax / ibx);
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -6528,7 +6528,7 @@ public class Maths {
 					final long iax = it.aLong;
 					final long ibx = it.bLong;
 					float ox;
-					ox = (float) (iax / ibx);
+					ox = (iax / ibx);
 					of32data[it.oIndex] = ox;
 				}
 			}
@@ -6569,7 +6569,7 @@ public class Maths {
 						final long iax = it.aLong;
 						final long ibx = it.bLong;
 						float ox;
-						ox = (float) (iax / ibx);
+						ox = (iax / ibx);
 						oaf32data[it.oIndex] = ox;
 					}
 				}
@@ -6592,11 +6592,11 @@ public class Maths {
 						final long iax = it.aLong;
 						long ibx = it.bLong;
 						float ox;
-						ox = (float) (iax / ibx);
+						ox = (iax / ibx);
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementLongAbs(it.bIndex + j);
-							ox = (float) (iax / ibx);
+							ox = (iax / ibx);
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -6620,11 +6620,11 @@ public class Maths {
 						long iax = it.aLong;
 						final long ibx = it.bLong;
 						float ox;
-						ox = (float) (iax / ibx);
+						ox = (iax / ibx);
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementLongAbs(it.aIndex + j);
-							ox = (float) (iax / ibx);
+							ox = (iax / ibx);
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -6649,12 +6649,12 @@ public class Maths {
 						long iax = it.aLong;
 						long ibx = it.bLong;
 						float ox;
-						ox = (float) (iax / ibx);
+						ox = (iax / ibx);
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementLongAbs(it.aIndex + j);
 							ibx = db.getElementLongAbs(it.bIndex + j);
-							ox = (float) (iax / ibx);
+							ox = (iax / ibx);
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -6985,7 +6985,7 @@ public class Maths {
 	public static Dataset dividez(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
+		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
 		final int dt = result.getDtype();
@@ -6998,7 +6998,7 @@ public class Maths {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					byte ox;
-					ox = (byte) (ibx == 0 ? 0 : iax / ibx);
+					ox = (byte) toLong(ibx == 0 ? 0 : iax / ibx);
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -7018,7 +7018,7 @@ public class Maths {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					short ox;
-					ox = (short) (ibx == 0 ? 0 : iax / ibx);
+					ox = (short) toLong(ibx == 0 ? 0 : iax / ibx);
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -7058,7 +7058,7 @@ public class Maths {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					int ox;
-					ox = (int) (ibx == 0 ? 0 : iax / ibx);
+					ox = (int) toLong(ibx == 0 ? 0 : iax / ibx);
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -7079,7 +7079,7 @@ public class Maths {
 						final double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (ibx == 0 ? 0 : iax / ibx);
+						ox = (byte) toLong(ibx == 0 ? 0 : iax / ibx);
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -7097,11 +7097,11 @@ public class Maths {
 						final double iax = it.aDouble;
 						double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (ibx == 0 ? 0 : iax / ibx);
+						ox = (byte) toLong(ibx == 0 ? 0 : iax / ibx);
 						oai8data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (byte) (ibx == 0 ? 0 : iax / ibx);
+							ox = (byte) toLong(ibx == 0 ? 0 : iax / ibx);
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -7125,11 +7125,11 @@ public class Maths {
 						double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (ibx == 0 ? 0 : iax / ibx);
+						ox = (byte) toLong(ibx == 0 ? 0 : iax / ibx);
 						oai8data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
-							ox = (byte) (ibx == 0 ? 0 : iax / ibx);
+							ox = (byte) toLong(ibx == 0 ? 0 : iax / ibx);
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -7153,12 +7153,12 @@ public class Maths {
 						double iax = it.aDouble;
 						double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (ibx == 0 ? 0 : iax / ibx);
+						ox = (byte) toLong(ibx == 0 ? 0 : iax / ibx);
 						oai8data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (byte) (ibx == 0 ? 0 : iax / ibx);
+							ox = (byte) toLong(ibx == 0 ? 0 : iax / ibx);
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -7187,7 +7187,7 @@ public class Maths {
 						final double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						short ox;
-						ox = (short) (ibx == 0 ? 0 : iax / ibx);
+						ox = (short) toLong(ibx == 0 ? 0 : iax / ibx);
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -7205,11 +7205,11 @@ public class Maths {
 						final double iax = it.aDouble;
 						double ibx = it.bDouble;
 						short ox;
-						ox = (short) (ibx == 0 ? 0 : iax / ibx);
+						ox = (short) toLong(ibx == 0 ? 0 : iax / ibx);
 						oai16data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (short) (ibx == 0 ? 0 : iax / ibx);
+							ox = (short) toLong(ibx == 0 ? 0 : iax / ibx);
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -7233,11 +7233,11 @@ public class Maths {
 						double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						short ox;
-						ox = (short) (ibx == 0 ? 0 : iax / ibx);
+						ox = (short) toLong(ibx == 0 ? 0 : iax / ibx);
 						oai16data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
-							ox = (short) (ibx == 0 ? 0 : iax / ibx);
+							ox = (short) toLong(ibx == 0 ? 0 : iax / ibx);
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -7261,12 +7261,12 @@ public class Maths {
 						double iax = it.aDouble;
 						double ibx = it.bDouble;
 						short ox;
-						ox = (short) (ibx == 0 ? 0 : iax / ibx);
+						ox = (short) toLong(ibx == 0 ? 0 : iax / ibx);
 						oai16data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (short) (ibx == 0 ? 0 : iax / ibx);
+							ox = (short) toLong(ibx == 0 ? 0 : iax / ibx);
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -7403,7 +7403,7 @@ public class Maths {
 						final double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						int ox;
-						ox = (int) (ibx == 0 ? 0 : iax / ibx);
+						ox = (int) toLong(ibx == 0 ? 0 : iax / ibx);
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -7421,11 +7421,11 @@ public class Maths {
 						final double iax = it.aDouble;
 						double ibx = it.bDouble;
 						int ox;
-						ox = (int) (ibx == 0 ? 0 : iax / ibx);
+						ox = (int) toLong(ibx == 0 ? 0 : iax / ibx);
 						oai32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (int) (ibx == 0 ? 0 : iax / ibx);
+							ox = (int) toLong(ibx == 0 ? 0 : iax / ibx);
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -7449,11 +7449,11 @@ public class Maths {
 						double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						int ox;
-						ox = (int) (ibx == 0 ? 0 : iax / ibx);
+						ox = (int) toLong(ibx == 0 ? 0 : iax / ibx);
 						oai32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
-							ox = (int) (ibx == 0 ? 0 : iax / ibx);
+							ox = (int) toLong(ibx == 0 ? 0 : iax / ibx);
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -7477,12 +7477,12 @@ public class Maths {
 						double iax = it.aDouble;
 						double ibx = it.bDouble;
 						int ox;
-						ox = (int) (ibx == 0 ? 0 : iax / ibx);
+						ox = (int) toLong(ibx == 0 ? 0 : iax / ibx);
 						oai32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (int) (ibx == 0 ? 0 : iax / ibx);
+							ox = (int) toLong(ibx == 0 ? 0 : iax / ibx);
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -7518,7 +7518,7 @@ public class Maths {
 					final long iax = it.aLong;
 					final long ibx = it.bLong;
 					float ox;
-					ox = (float) (ibx == 0 ? 0 : iax / ibx);
+					ox = (ibx == 0 ? 0 : iax / ibx);
 					of32data[it.oIndex] = ox;
 				}
 			}
@@ -7559,7 +7559,7 @@ public class Maths {
 						final long iax = it.aLong;
 						final long ibx = it.bLong;
 						float ox;
-						ox = (float) (ibx == 0 ? 0 : iax / ibx);
+						ox = (ibx == 0 ? 0 : iax / ibx);
 						oaf32data[it.oIndex] = ox;
 					}
 				}
@@ -7582,11 +7582,11 @@ public class Maths {
 						final long iax = it.aLong;
 						long ibx = it.bLong;
 						float ox;
-						ox = (float) (ibx == 0 ? 0 : iax / ibx);
+						ox = (ibx == 0 ? 0 : iax / ibx);
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementLongAbs(it.bIndex + j);
-							ox = (float) (ibx == 0 ? 0 : iax / ibx);
+							ox = (ibx == 0 ? 0 : iax / ibx);
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -7610,11 +7610,11 @@ public class Maths {
 						long iax = it.aLong;
 						final long ibx = it.bLong;
 						float ox;
-						ox = (float) (ibx == 0 ? 0 : iax / ibx);
+						ox = (ibx == 0 ? 0 : iax / ibx);
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementLongAbs(it.aIndex + j);
-							ox = (float) (ibx == 0 ? 0 : iax / ibx);
+							ox = (ibx == 0 ? 0 : iax / ibx);
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -7639,12 +7639,12 @@ public class Maths {
 						long iax = it.aLong;
 						long ibx = it.bLong;
 						float ox;
-						ox = (float) (ibx == 0 ? 0 : iax / ibx);
+						ox = (ibx == 0 ? 0 : iax / ibx);
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementLongAbs(it.aIndex + j);
 							ibx = db.getElementLongAbs(it.bIndex + j);
-							ox = (float) (ibx == 0 ? 0 : iax / ibx);
+							ox = (ibx == 0 ? 0 : iax / ibx);
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -7957,7 +7957,7 @@ public class Maths {
 	public static Dataset divideTowardsFloor(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
+		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
 		final int dt = result.getDtype();
@@ -7973,7 +7973,7 @@ public class Maths {
 					if (ibx == 0) {
 						ox = 0;
 					} else {
-						ox = (byte) (iax / ibx);
+						ox = (byte) toLong(iax / ibx);
 						if (iax != ox * ibx && ((iax < 0) ^ (ibx < 0))) {
 							ox--;
 						}
@@ -8007,7 +8007,7 @@ public class Maths {
 					if (ibx == 0) {
 						ox = 0;
 					} else {
-						ox = (short) (iax / ibx);
+						ox = (short) toLong(iax / ibx);
 						if (iax != ox * ibx && ((iax < 0) ^ (ibx < 0))) {
 							ox--;
 						}
@@ -8075,7 +8075,7 @@ public class Maths {
 					if (ibx == 0) {
 						ox = 0;
 					} else {
-						ox = (int) (iax / ibx);
+						ox = (int) toLong(iax / ibx);
 						if (iax != ox * ibx && ((iax < 0) ^ (ibx < 0))) {
 							ox--;
 						}
@@ -8110,7 +8110,7 @@ public class Maths {
 						if (ibx == 0) {
 							ox = 0;
 						} else {
-							ox = (byte) (iax / ibx);
+							ox = (byte) toLong(iax / ibx);
 							if (iax != ox * ibx && ((iax < 0) ^ (ibx < 0))) {
 								ox--;
 							}
@@ -8142,7 +8142,7 @@ public class Maths {
 						if (ibx == 0) {
 							ox = 0;
 						} else {
-							ox = (byte) (iax / ibx);
+							ox = (byte) toLong(iax / ibx);
 							if (iax != ox * ibx && ((iax < 0) ^ (ibx < 0))) {
 								ox--;
 							}
@@ -8153,7 +8153,7 @@ public class Maths {
 							if (ibx == 0) {
 								ox = 0;
 							} else {
-								ox = (byte) (iax / ibx);
+								ox = (byte) toLong(iax / ibx);
 								if (iax != ox * ibx && ((iax < 0) ^ (ibx < 0))) {
 									ox--;
 								}
@@ -8198,7 +8198,7 @@ public class Maths {
 						if (ibx == 0) {
 							ox = 0;
 						} else {
-							ox = (byte) (iax / ibx);
+							ox = (byte) toLong(iax / ibx);
 							if (iax != ox * ibx && ((iax < 0) ^ (ibx < 0))) {
 								ox--;
 							}
@@ -8209,7 +8209,7 @@ public class Maths {
 							if (ibx == 0) {
 								ox = 0;
 							} else {
-								ox = (byte) (iax / ibx);
+								ox = (byte) toLong(iax / ibx);
 								if (iax != ox * ibx && ((iax < 0) ^ (ibx < 0))) {
 									ox--;
 								}
@@ -8254,7 +8254,7 @@ public class Maths {
 						if (ibx == 0) {
 							ox = 0;
 						} else {
-							ox = (byte) (iax / ibx);
+							ox = (byte) toLong(iax / ibx);
 							if (iax != ox * ibx && ((iax < 0) ^ (ibx < 0))) {
 								ox--;
 							}
@@ -8266,7 +8266,7 @@ public class Maths {
 							if (ibx == 0) {
 								ox = 0;
 							} else {
-								ox = (byte) (iax / ibx);
+								ox = (byte) toLong(iax / ibx);
 								if (iax != ox * ibx && ((iax < 0) ^ (ibx < 0))) {
 									ox--;
 								}
@@ -8316,7 +8316,7 @@ public class Maths {
 						if (ibx == 0) {
 							ox = 0;
 						} else {
-							ox = (short) (iax / ibx);
+							ox = (short) toLong(iax / ibx);
 							if (iax != ox * ibx && ((iax < 0) ^ (ibx < 0))) {
 								ox--;
 							}
@@ -8348,7 +8348,7 @@ public class Maths {
 						if (ibx == 0) {
 							ox = 0;
 						} else {
-							ox = (short) (iax / ibx);
+							ox = (short) toLong(iax / ibx);
 							if (iax != ox * ibx && ((iax < 0) ^ (ibx < 0))) {
 								ox--;
 							}
@@ -8359,7 +8359,7 @@ public class Maths {
 							if (ibx == 0) {
 								ox = 0;
 							} else {
-								ox = (short) (iax / ibx);
+								ox = (short) toLong(iax / ibx);
 								if (iax != ox * ibx && ((iax < 0) ^ (ibx < 0))) {
 									ox--;
 								}
@@ -8404,7 +8404,7 @@ public class Maths {
 						if (ibx == 0) {
 							ox = 0;
 						} else {
-							ox = (short) (iax / ibx);
+							ox = (short) toLong(iax / ibx);
 							if (iax != ox * ibx && ((iax < 0) ^ (ibx < 0))) {
 								ox--;
 							}
@@ -8415,7 +8415,7 @@ public class Maths {
 							if (ibx == 0) {
 								ox = 0;
 							} else {
-								ox = (short) (iax / ibx);
+								ox = (short) toLong(iax / ibx);
 								if (iax != ox * ibx && ((iax < 0) ^ (ibx < 0))) {
 									ox--;
 								}
@@ -8460,7 +8460,7 @@ public class Maths {
 						if (ibx == 0) {
 							ox = 0;
 						} else {
-							ox = (short) (iax / ibx);
+							ox = (short) toLong(iax / ibx);
 							if (iax != ox * ibx && ((iax < 0) ^ (ibx < 0))) {
 								ox--;
 							}
@@ -8472,7 +8472,7 @@ public class Maths {
 							if (ibx == 0) {
 								ox = 0;
 							} else {
-								ox = (short) (iax / ibx);
+								ox = (short) toLong(iax / ibx);
 								if (iax != ox * ibx && ((iax < 0) ^ (ibx < 0))) {
 									ox--;
 								}
@@ -8728,7 +8728,7 @@ public class Maths {
 						if (ibx == 0) {
 							ox = 0;
 						} else {
-							ox = (int) (iax / ibx);
+							ox = (int) toLong(iax / ibx);
 							if (iax != ox * ibx && ((iax < 0) ^ (ibx < 0))) {
 								ox--;
 							}
@@ -8760,7 +8760,7 @@ public class Maths {
 						if (ibx == 0) {
 							ox = 0;
 						} else {
-							ox = (int) (iax / ibx);
+							ox = (int) toLong(iax / ibx);
 							if (iax != ox * ibx && ((iax < 0) ^ (ibx < 0))) {
 								ox--;
 							}
@@ -8771,7 +8771,7 @@ public class Maths {
 							if (ibx == 0) {
 								ox = 0;
 							} else {
-								ox = (int) (iax / ibx);
+								ox = (int) toLong(iax / ibx);
 								if (iax != ox * ibx && ((iax < 0) ^ (ibx < 0))) {
 									ox--;
 								}
@@ -8816,7 +8816,7 @@ public class Maths {
 						if (ibx == 0) {
 							ox = 0;
 						} else {
-							ox = (int) (iax / ibx);
+							ox = (int) toLong(iax / ibx);
 							if (iax != ox * ibx && ((iax < 0) ^ (ibx < 0))) {
 								ox--;
 							}
@@ -8827,7 +8827,7 @@ public class Maths {
 							if (ibx == 0) {
 								ox = 0;
 							} else {
-								ox = (int) (iax / ibx);
+								ox = (int) toLong(iax / ibx);
 								if (iax != ox * ibx && ((iax < 0) ^ (ibx < 0))) {
 									ox--;
 								}
@@ -8872,7 +8872,7 @@ public class Maths {
 						if (ibx == 0) {
 							ox = 0;
 						} else {
-							ox = (int) (iax / ibx);
+							ox = (int) toLong(iax / ibx);
 							if (iax != ox * ibx && ((iax < 0) ^ (ibx < 0))) {
 								ox--;
 							}
@@ -8884,7 +8884,7 @@ public class Maths {
 							if (ibx == 0) {
 								ox = 0;
 							} else {
-								ox = (int) (iax / ibx);
+								ox = (int) toLong(iax / ibx);
 								if (iax != ox * ibx && ((iax < 0) ^ (ibx < 0))) {
 									ox--;
 								}
@@ -8938,7 +8938,7 @@ public class Maths {
 					final long iax = it.aLong;
 					final long ibx = it.bLong;
 					float ox;
-					ox = (float) (iax / ibx);
+					ox = (iax / ibx);
 					of32data[it.oIndex] = ox;
 				}
 			}
@@ -8979,7 +8979,7 @@ public class Maths {
 						final long iax = it.aLong;
 						final long ibx = it.bLong;
 						float ox;
-						ox = (float) (iax / ibx);
+						ox = (iax / ibx);
 						oaf32data[it.oIndex] = ox;
 					}
 				}
@@ -9002,11 +9002,11 @@ public class Maths {
 						final long iax = it.aLong;
 						long ibx = it.bLong;
 						float ox;
-						ox = (float) (iax / ibx);
+						ox = (iax / ibx);
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementLongAbs(it.bIndex + j);
-							ox = (float) (iax / ibx);
+							ox = (iax / ibx);
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -9030,11 +9030,11 @@ public class Maths {
 						long iax = it.aLong;
 						final long ibx = it.bLong;
 						float ox;
-						ox = (float) (iax / ibx);
+						ox = (iax / ibx);
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementLongAbs(it.aIndex + j);
-							ox = (float) (iax / ibx);
+							ox = (iax / ibx);
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -9059,12 +9059,12 @@ public class Maths {
 						long iax = it.aLong;
 						long ibx = it.bLong;
 						float ox;
-						ox = (float) (iax / ibx);
+						ox = (iax / ibx);
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementLongAbs(it.aIndex + j);
 							ibx = db.getElementLongAbs(it.bIndex + j);
-							ox = (float) (iax / ibx);
+							ox = (iax / ibx);
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -9395,7 +9395,7 @@ public class Maths {
 	public static Dataset power(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
+		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
 		final int dt = result.getDtype();
@@ -9408,7 +9408,7 @@ public class Maths {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					byte ox;
-					ox = (byte) (Math.pow(iax, ibx));
+					ox = (byte) toLong(Math.pow(iax, ibx));
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -9428,7 +9428,7 @@ public class Maths {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					short ox;
-					ox = (short) (Math.pow(iax, ibx));
+					ox = (short) toLong(Math.pow(iax, ibx));
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -9468,7 +9468,7 @@ public class Maths {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					int ox;
-					ox = (int) (Math.pow(iax, ibx));
+					ox = (int) toLong(Math.pow(iax, ibx));
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -9489,7 +9489,7 @@ public class Maths {
 						final double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (Math.pow(iax, ibx));
+						ox = (byte) toLong(Math.pow(iax, ibx));
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -9507,11 +9507,11 @@ public class Maths {
 						final double iax = it.aDouble;
 						double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (Math.pow(iax, ibx));
+						ox = (byte) toLong(Math.pow(iax, ibx));
 						oai8data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (byte) (Math.pow(iax, ibx));
+							ox = (byte) toLong(Math.pow(iax, ibx));
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -9535,11 +9535,11 @@ public class Maths {
 						double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (Math.pow(iax, ibx));
+						ox = (byte) toLong(Math.pow(iax, ibx));
 						oai8data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
-							ox = (byte) (Math.pow(iax, ibx));
+							ox = (byte) toLong(Math.pow(iax, ibx));
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -9563,12 +9563,12 @@ public class Maths {
 						double iax = it.aDouble;
 						double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (Math.pow(iax, ibx));
+						ox = (byte) toLong(Math.pow(iax, ibx));
 						oai8data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (byte) (Math.pow(iax, ibx));
+							ox = (byte) toLong(Math.pow(iax, ibx));
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -9597,7 +9597,7 @@ public class Maths {
 						final double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						short ox;
-						ox = (short) (Math.pow(iax, ibx));
+						ox = (short) toLong(Math.pow(iax, ibx));
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -9615,11 +9615,11 @@ public class Maths {
 						final double iax = it.aDouble;
 						double ibx = it.bDouble;
 						short ox;
-						ox = (short) (Math.pow(iax, ibx));
+						ox = (short) toLong(Math.pow(iax, ibx));
 						oai16data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (short) (Math.pow(iax, ibx));
+							ox = (short) toLong(Math.pow(iax, ibx));
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -9643,11 +9643,11 @@ public class Maths {
 						double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						short ox;
-						ox = (short) (Math.pow(iax, ibx));
+						ox = (short) toLong(Math.pow(iax, ibx));
 						oai16data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
-							ox = (short) (Math.pow(iax, ibx));
+							ox = (short) toLong(Math.pow(iax, ibx));
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -9671,12 +9671,12 @@ public class Maths {
 						double iax = it.aDouble;
 						double ibx = it.bDouble;
 						short ox;
-						ox = (short) (Math.pow(iax, ibx));
+						ox = (short) toLong(Math.pow(iax, ibx));
 						oai16data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (short) (Math.pow(iax, ibx));
+							ox = (short) toLong(Math.pow(iax, ibx));
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -9813,7 +9813,7 @@ public class Maths {
 						final double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						int ox;
-						ox = (int) (Math.pow(iax, ibx));
+						ox = (int) toLong(Math.pow(iax, ibx));
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -9831,11 +9831,11 @@ public class Maths {
 						final double iax = it.aDouble;
 						double ibx = it.bDouble;
 						int ox;
-						ox = (int) (Math.pow(iax, ibx));
+						ox = (int) toLong(Math.pow(iax, ibx));
 						oai32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (int) (Math.pow(iax, ibx));
+							ox = (int) toLong(Math.pow(iax, ibx));
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -9859,11 +9859,11 @@ public class Maths {
 						double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						int ox;
-						ox = (int) (Math.pow(iax, ibx));
+						ox = (int) toLong(Math.pow(iax, ibx));
 						oai32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
-							ox = (int) (Math.pow(iax, ibx));
+							ox = (int) toLong(Math.pow(iax, ibx));
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -9887,12 +9887,12 @@ public class Maths {
 						double iax = it.aDouble;
 						double ibx = it.bDouble;
 						int ox;
-						ox = (int) (Math.pow(iax, ibx));
+						ox = (int) toLong(Math.pow(iax, ibx));
 						oai32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (int) (Math.pow(iax, ibx));
+							ox = (int) toLong(Math.pow(iax, ibx));
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -10295,7 +10295,7 @@ public class Maths {
 	public static Dataset remainder(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
+		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
 		final int dt = result.getDtype();
@@ -10308,7 +10308,7 @@ public class Maths {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					byte ox;
-					ox = (byte) (ibx == 0 ? 0 : iax % ibx);
+					ox = (byte) toLong(ibx == 0 ? 0 : iax % ibx);
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -10328,7 +10328,7 @@ public class Maths {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					short ox;
-					ox = (short) (ibx == 0 ? 0 : iax % ibx);
+					ox = (short) toLong(ibx == 0 ? 0 : iax % ibx);
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -10368,7 +10368,7 @@ public class Maths {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					int ox;
-					ox = (int) (ibx == 0 ? 0 : iax % ibx);
+					ox = (int) toLong(ibx == 0 ? 0 : iax % ibx);
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -10389,7 +10389,7 @@ public class Maths {
 						final double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (ibx == 0 ? 0 : iax % ibx);
+						ox = (byte) toLong(ibx == 0 ? 0 : iax % ibx);
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -10407,11 +10407,11 @@ public class Maths {
 						final double iax = it.aDouble;
 						double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (ibx == 0 ? 0 : iax % ibx);
+						ox = (byte) toLong(ibx == 0 ? 0 : iax % ibx);
 						oai8data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (byte) (ibx == 0 ? 0 : iax % ibx);
+							ox = (byte) toLong(ibx == 0 ? 0 : iax % ibx);
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -10435,11 +10435,11 @@ public class Maths {
 						double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (ibx == 0 ? 0 : iax % ibx);
+						ox = (byte) toLong(ibx == 0 ? 0 : iax % ibx);
 						oai8data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
-							ox = (byte) (ibx == 0 ? 0 : iax % ibx);
+							ox = (byte) toLong(ibx == 0 ? 0 : iax % ibx);
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -10463,12 +10463,12 @@ public class Maths {
 						double iax = it.aDouble;
 						double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (ibx == 0 ? 0 : iax % ibx);
+						ox = (byte) toLong(ibx == 0 ? 0 : iax % ibx);
 						oai8data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (byte) (ibx == 0 ? 0 : iax % ibx);
+							ox = (byte) toLong(ibx == 0 ? 0 : iax % ibx);
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -10497,7 +10497,7 @@ public class Maths {
 						final double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						short ox;
-						ox = (short) (ibx == 0 ? 0 : iax % ibx);
+						ox = (short) toLong(ibx == 0 ? 0 : iax % ibx);
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -10515,11 +10515,11 @@ public class Maths {
 						final double iax = it.aDouble;
 						double ibx = it.bDouble;
 						short ox;
-						ox = (short) (ibx == 0 ? 0 : iax % ibx);
+						ox = (short) toLong(ibx == 0 ? 0 : iax % ibx);
 						oai16data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (short) (ibx == 0 ? 0 : iax % ibx);
+							ox = (short) toLong(ibx == 0 ? 0 : iax % ibx);
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -10543,11 +10543,11 @@ public class Maths {
 						double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						short ox;
-						ox = (short) (ibx == 0 ? 0 : iax % ibx);
+						ox = (short) toLong(ibx == 0 ? 0 : iax % ibx);
 						oai16data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
-							ox = (short) (ibx == 0 ? 0 : iax % ibx);
+							ox = (short) toLong(ibx == 0 ? 0 : iax % ibx);
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -10571,12 +10571,12 @@ public class Maths {
 						double iax = it.aDouble;
 						double ibx = it.bDouble;
 						short ox;
-						ox = (short) (ibx == 0 ? 0 : iax % ibx);
+						ox = (short) toLong(ibx == 0 ? 0 : iax % ibx);
 						oai16data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (short) (ibx == 0 ? 0 : iax % ibx);
+							ox = (short) toLong(ibx == 0 ? 0 : iax % ibx);
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -10713,7 +10713,7 @@ public class Maths {
 						final double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						int ox;
-						ox = (int) (ibx == 0 ? 0 : iax % ibx);
+						ox = (int) toLong(ibx == 0 ? 0 : iax % ibx);
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -10731,11 +10731,11 @@ public class Maths {
 						final double iax = it.aDouble;
 						double ibx = it.bDouble;
 						int ox;
-						ox = (int) (ibx == 0 ? 0 : iax % ibx);
+						ox = (int) toLong(ibx == 0 ? 0 : iax % ibx);
 						oai32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (int) (ibx == 0 ? 0 : iax % ibx);
+							ox = (int) toLong(ibx == 0 ? 0 : iax % ibx);
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -10759,11 +10759,11 @@ public class Maths {
 						double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						int ox;
-						ox = (int) (ibx == 0 ? 0 : iax % ibx);
+						ox = (int) toLong(ibx == 0 ? 0 : iax % ibx);
 						oai32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
-							ox = (int) (ibx == 0 ? 0 : iax % ibx);
+							ox = (int) toLong(ibx == 0 ? 0 : iax % ibx);
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -10787,12 +10787,12 @@ public class Maths {
 						double iax = it.aDouble;
 						double ibx = it.bDouble;
 						int ox;
-						ox = (int) (ibx == 0 ? 0 : iax % ibx);
+						ox = (int) toLong(ibx == 0 ? 0 : iax % ibx);
 						oai32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (int) (ibx == 0 ? 0 : iax % ibx);
+							ox = (int) toLong(ibx == 0 ? 0 : iax % ibx);
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -10828,7 +10828,7 @@ public class Maths {
 					final long iax = it.aLong;
 					final long ibx = it.bLong;
 					float ox;
-					ox = (float) (iax % ibx);
+					ox = (iax % ibx);
 					of32data[it.oIndex] = ox;
 				}
 			}
@@ -10869,7 +10869,7 @@ public class Maths {
 						final long iax = it.aLong;
 						final long ibx = it.bLong;
 						float ox;
-						ox = (float) (iax % ibx);
+						ox = (iax % ibx);
 						oaf32data[it.oIndex] = ox;
 					}
 				}
@@ -10892,11 +10892,11 @@ public class Maths {
 						final long iax = it.aLong;
 						long ibx = it.bLong;
 						float ox;
-						ox = (float) (iax % ibx);
+						ox = (iax % ibx);
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementLongAbs(it.bIndex + j);
-							ox = (float) (iax % ibx);
+							ox = (iax % ibx);
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -10920,11 +10920,11 @@ public class Maths {
 						long iax = it.aLong;
 						final long ibx = it.bLong;
 						float ox;
-						ox = (float) (iax % ibx);
+						ox = (iax % ibx);
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementLongAbs(it.aIndex + j);
-							ox = (float) (iax % ibx);
+							ox = (iax % ibx);
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -10949,12 +10949,12 @@ public class Maths {
 						long iax = it.aLong;
 						long ibx = it.bLong;
 						float ox;
-						ox = (float) (iax % ibx);
+						ox = (iax % ibx);
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementLongAbs(it.aIndex + j);
 							ibx = db.getElementLongAbs(it.bIndex + j);
-							ox = (float) (iax % ibx);
+							ox = (iax % ibx);
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -11097,7 +11097,7 @@ public class Maths {
 	public static Dataset maximum(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
+		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
 		final int dt = result.getDtype();
@@ -11110,7 +11110,7 @@ public class Maths {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					byte ox;
-					ox = (byte) (Math.max(iax, ibx));
+					ox = (byte) toLong(Math.max(iax, ibx));
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -11130,7 +11130,7 @@ public class Maths {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					short ox;
-					ox = (short) (Math.max(iax, ibx));
+					ox = (short) toLong(Math.max(iax, ibx));
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -11170,7 +11170,7 @@ public class Maths {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					int ox;
-					ox = (int) (Math.max(iax, ibx));
+					ox = (int) toLong(Math.max(iax, ibx));
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -11191,7 +11191,7 @@ public class Maths {
 						final double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (Math.max(iax, ibx));
+						ox = (byte) toLong(Math.max(iax, ibx));
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -11209,11 +11209,11 @@ public class Maths {
 						final double iax = it.aDouble;
 						double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (Math.max(iax, ibx));
+						ox = (byte) toLong(Math.max(iax, ibx));
 						oai8data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (byte) (Math.max(iax, ibx));
+							ox = (byte) toLong(Math.max(iax, ibx));
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -11237,11 +11237,11 @@ public class Maths {
 						double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (Math.max(iax, ibx));
+						ox = (byte) toLong(Math.max(iax, ibx));
 						oai8data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
-							ox = (byte) (Math.max(iax, ibx));
+							ox = (byte) toLong(Math.max(iax, ibx));
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -11265,12 +11265,12 @@ public class Maths {
 						double iax = it.aDouble;
 						double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (Math.max(iax, ibx));
+						ox = (byte) toLong(Math.max(iax, ibx));
 						oai8data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (byte) (Math.max(iax, ibx));
+							ox = (byte) toLong(Math.max(iax, ibx));
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -11299,7 +11299,7 @@ public class Maths {
 						final double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						short ox;
-						ox = (short) (Math.max(iax, ibx));
+						ox = (short) toLong(Math.max(iax, ibx));
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -11317,11 +11317,11 @@ public class Maths {
 						final double iax = it.aDouble;
 						double ibx = it.bDouble;
 						short ox;
-						ox = (short) (Math.max(iax, ibx));
+						ox = (short) toLong(Math.max(iax, ibx));
 						oai16data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (short) (Math.max(iax, ibx));
+							ox = (short) toLong(Math.max(iax, ibx));
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -11345,11 +11345,11 @@ public class Maths {
 						double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						short ox;
-						ox = (short) (Math.max(iax, ibx));
+						ox = (short) toLong(Math.max(iax, ibx));
 						oai16data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
-							ox = (short) (Math.max(iax, ibx));
+							ox = (short) toLong(Math.max(iax, ibx));
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -11373,12 +11373,12 @@ public class Maths {
 						double iax = it.aDouble;
 						double ibx = it.bDouble;
 						short ox;
-						ox = (short) (Math.max(iax, ibx));
+						ox = (short) toLong(Math.max(iax, ibx));
 						oai16data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (short) (Math.max(iax, ibx));
+							ox = (short) toLong(Math.max(iax, ibx));
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -11515,7 +11515,7 @@ public class Maths {
 						final double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						int ox;
-						ox = (int) (Math.max(iax, ibx));
+						ox = (int) toLong(Math.max(iax, ibx));
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -11533,11 +11533,11 @@ public class Maths {
 						final double iax = it.aDouble;
 						double ibx = it.bDouble;
 						int ox;
-						ox = (int) (Math.max(iax, ibx));
+						ox = (int) toLong(Math.max(iax, ibx));
 						oai32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (int) (Math.max(iax, ibx));
+							ox = (int) toLong(Math.max(iax, ibx));
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -11561,11 +11561,11 @@ public class Maths {
 						double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						int ox;
-						ox = (int) (Math.max(iax, ibx));
+						ox = (int) toLong(Math.max(iax, ibx));
 						oai32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
-							ox = (int) (Math.max(iax, ibx));
+							ox = (int) toLong(Math.max(iax, ibx));
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -11589,12 +11589,12 @@ public class Maths {
 						double iax = it.aDouble;
 						double ibx = it.bDouble;
 						int ox;
-						ox = (int) (Math.max(iax, ibx));
+						ox = (int) toLong(Math.max(iax, ibx));
 						oai32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (int) (Math.max(iax, ibx));
+							ox = (int) toLong(Math.max(iax, ibx));
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -12033,7 +12033,7 @@ public class Maths {
 	public static Dataset minimum(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
+		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
 		final int dt = result.getDtype();
@@ -12046,7 +12046,7 @@ public class Maths {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					byte ox;
-					ox = (byte) (Math.min(iax, ibx));
+					ox = (byte) toLong(Math.min(iax, ibx));
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -12066,7 +12066,7 @@ public class Maths {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					short ox;
-					ox = (short) (Math.min(iax, ibx));
+					ox = (short) toLong(Math.min(iax, ibx));
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -12106,7 +12106,7 @@ public class Maths {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					int ox;
-					ox = (int) (Math.min(iax, ibx));
+					ox = (int) toLong(Math.min(iax, ibx));
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -12127,7 +12127,7 @@ public class Maths {
 						final double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (Math.min(iax, ibx));
+						ox = (byte) toLong(Math.min(iax, ibx));
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -12145,11 +12145,11 @@ public class Maths {
 						final double iax = it.aDouble;
 						double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (Math.min(iax, ibx));
+						ox = (byte) toLong(Math.min(iax, ibx));
 						oai8data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (byte) (Math.min(iax, ibx));
+							ox = (byte) toLong(Math.min(iax, ibx));
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -12173,11 +12173,11 @@ public class Maths {
 						double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (Math.min(iax, ibx));
+						ox = (byte) toLong(Math.min(iax, ibx));
 						oai8data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
-							ox = (byte) (Math.min(iax, ibx));
+							ox = (byte) toLong(Math.min(iax, ibx));
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -12201,12 +12201,12 @@ public class Maths {
 						double iax = it.aDouble;
 						double ibx = it.bDouble;
 						byte ox;
-						ox = (byte) (Math.min(iax, ibx));
+						ox = (byte) toLong(Math.min(iax, ibx));
 						oai8data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (byte) (Math.min(iax, ibx));
+							ox = (byte) toLong(Math.min(iax, ibx));
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -12235,7 +12235,7 @@ public class Maths {
 						final double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						short ox;
-						ox = (short) (Math.min(iax, ibx));
+						ox = (short) toLong(Math.min(iax, ibx));
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -12253,11 +12253,11 @@ public class Maths {
 						final double iax = it.aDouble;
 						double ibx = it.bDouble;
 						short ox;
-						ox = (short) (Math.min(iax, ibx));
+						ox = (short) toLong(Math.min(iax, ibx));
 						oai16data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (short) (Math.min(iax, ibx));
+							ox = (short) toLong(Math.min(iax, ibx));
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -12281,11 +12281,11 @@ public class Maths {
 						double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						short ox;
-						ox = (short) (Math.min(iax, ibx));
+						ox = (short) toLong(Math.min(iax, ibx));
 						oai16data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
-							ox = (short) (Math.min(iax, ibx));
+							ox = (short) toLong(Math.min(iax, ibx));
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -12309,12 +12309,12 @@ public class Maths {
 						double iax = it.aDouble;
 						double ibx = it.bDouble;
 						short ox;
-						ox = (short) (Math.min(iax, ibx));
+						ox = (short) toLong(Math.min(iax, ibx));
 						oai16data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (short) (Math.min(iax, ibx));
+							ox = (short) toLong(Math.min(iax, ibx));
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -12451,7 +12451,7 @@ public class Maths {
 						final double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						int ox;
-						ox = (int) (Math.min(iax, ibx));
+						ox = (int) toLong(Math.min(iax, ibx));
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -12469,11 +12469,11 @@ public class Maths {
 						final double iax = it.aDouble;
 						double ibx = it.bDouble;
 						int ox;
-						ox = (int) (Math.min(iax, ibx));
+						ox = (int) toLong(Math.min(iax, ibx));
 						oai32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (int) (Math.min(iax, ibx));
+							ox = (int) toLong(Math.min(iax, ibx));
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -12497,11 +12497,11 @@ public class Maths {
 						double iax = it.aDouble;
 						final double ibx = it.bDouble;
 						int ox;
-						ox = (int) (Math.min(iax, ibx));
+						ox = (int) toLong(Math.min(iax, ibx));
 						oai32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
-							ox = (int) (Math.min(iax, ibx));
+							ox = (int) toLong(Math.min(iax, ibx));
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -12525,12 +12525,12 @@ public class Maths {
 						double iax = it.aDouble;
 						double ibx = it.bDouble;
 						int ox;
-						ox = (int) (Math.min(iax, ibx));
+						ox = (int) toLong(Math.min(iax, ibx));
 						oai32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementDoubleAbs(it.aIndex + j);
 							ibx = db.getElementDoubleAbs(it.bIndex + j);
-							ox = (int) (Math.min(iax, ibx));
+							ox = (int) toLong(Math.min(iax, ibx));
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -12969,7 +12969,7 @@ public class Maths {
 	public static Dataset bitwiseAnd(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
+		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		it.setOutputDouble(false);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
@@ -13292,7 +13292,7 @@ public class Maths {
 	public static Dataset bitwiseOr(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
+		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		it.setOutputDouble(false);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
@@ -13615,7 +13615,7 @@ public class Maths {
 	public static Dataset bitwiseXor(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
+		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		it.setOutputDouble(false);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
@@ -13938,7 +13938,7 @@ public class Maths {
 	public static Dataset leftShift(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
+		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		it.setOutputDouble(false);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
@@ -14261,7 +14261,7 @@ public class Maths {
 	public static Dataset rightShift(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
+		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		it.setOutputDouble(false);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
@@ -14584,7 +14584,7 @@ public class Maths {
 	public static Dataset unsignedRightShift(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, o, true);
+		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		it.setOutputDouble(false);
 		final long unsignedMask;
 		final Dataset result = it.getOutput();
@@ -15140,7 +15140,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					byte ox;
-					ox = (byte) (Math.sin(ix));
+					ox = (byte) toLong(Math.sin(ix));
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -15158,7 +15158,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					short ox;
-					ox = (short) (Math.sin(ix));
+					ox = (short) toLong(Math.sin(ix));
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -15194,7 +15194,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					int ox;
-					ox = (int) (Math.sin(ix));
+					ox = (int) toLong(Math.sin(ix));
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -15213,7 +15213,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.sin(ix));
+						ox = (byte) toLong(Math.sin(ix));
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -15229,7 +15229,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.sin(ix));
+						ox = (byte) toLong(Math.sin(ix));
 						for (int j = 0; j < is; j++) {
 							oai8data[it.oIndex + j] = ox;
 						}
@@ -15250,7 +15250,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							byte ox;
-							ox = (byte) (Math.sin(ix));
+							ox = (byte) toLong(Math.sin(ix));
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -15273,7 +15273,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.sin(ix));
+						ox = (short) toLong(Math.sin(ix));
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -15289,7 +15289,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.sin(ix));
+						ox = (short) toLong(Math.sin(ix));
 						for (int j = 0; j < is; j++) {
 							oai16data[it.oIndex + j] = ox;
 						}
@@ -15310,7 +15310,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							short ox;
-							ox = (short) (Math.sin(ix));
+							ox = (short) toLong(Math.sin(ix));
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -15393,7 +15393,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.sin(ix));
+						ox = (int) toLong(Math.sin(ix));
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -15409,7 +15409,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.sin(ix));
+						ox = (int) toLong(Math.sin(ix));
 						for (int j = 0; j < is; j++) {
 							oai32data[it.oIndex + j] = ox;
 						}
@@ -15430,7 +15430,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							int ox;
-							ox = (int) (Math.sin(ix));
+							ox = (int) toLong(Math.sin(ix));
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -15691,7 +15691,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					byte ox;
-					ox = (byte) (Math.cos(ix));
+					ox = (byte) toLong(Math.cos(ix));
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -15709,7 +15709,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					short ox;
-					ox = (short) (Math.cos(ix));
+					ox = (short) toLong(Math.cos(ix));
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -15745,7 +15745,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					int ox;
-					ox = (int) (Math.cos(ix));
+					ox = (int) toLong(Math.cos(ix));
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -15764,7 +15764,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.cos(ix));
+						ox = (byte) toLong(Math.cos(ix));
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -15780,7 +15780,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.cos(ix));
+						ox = (byte) toLong(Math.cos(ix));
 						for (int j = 0; j < is; j++) {
 							oai8data[it.oIndex + j] = ox;
 						}
@@ -15801,7 +15801,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							byte ox;
-							ox = (byte) (Math.cos(ix));
+							ox = (byte) toLong(Math.cos(ix));
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -15824,7 +15824,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.cos(ix));
+						ox = (short) toLong(Math.cos(ix));
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -15840,7 +15840,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.cos(ix));
+						ox = (short) toLong(Math.cos(ix));
 						for (int j = 0; j < is; j++) {
 							oai16data[it.oIndex + j] = ox;
 						}
@@ -15861,7 +15861,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							short ox;
-							ox = (short) (Math.cos(ix));
+							ox = (short) toLong(Math.cos(ix));
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -15944,7 +15944,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.cos(ix));
+						ox = (int) toLong(Math.cos(ix));
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -15960,7 +15960,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.cos(ix));
+						ox = (int) toLong(Math.cos(ix));
 						for (int j = 0; j < is; j++) {
 							oai32data[it.oIndex + j] = ox;
 						}
@@ -15981,7 +15981,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							int ox;
-							ox = (int) (Math.cos(ix));
+							ox = (int) toLong(Math.cos(ix));
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -16242,7 +16242,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					byte ox;
-					ox = (byte) (Math.tan(ix));
+					ox = (byte) toLong(Math.tan(ix));
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -16260,7 +16260,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					short ox;
-					ox = (short) (Math.tan(ix));
+					ox = (short) toLong(Math.tan(ix));
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -16296,7 +16296,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					int ox;
-					ox = (int) (Math.tan(ix));
+					ox = (int) toLong(Math.tan(ix));
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -16315,7 +16315,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.tan(ix));
+						ox = (byte) toLong(Math.tan(ix));
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -16331,7 +16331,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.tan(ix));
+						ox = (byte) toLong(Math.tan(ix));
 						for (int j = 0; j < is; j++) {
 							oai8data[it.oIndex + j] = ox;
 						}
@@ -16352,7 +16352,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							byte ox;
-							ox = (byte) (Math.tan(ix));
+							ox = (byte) toLong(Math.tan(ix));
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -16375,7 +16375,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.tan(ix));
+						ox = (short) toLong(Math.tan(ix));
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -16391,7 +16391,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.tan(ix));
+						ox = (short) toLong(Math.tan(ix));
 						for (int j = 0; j < is; j++) {
 							oai16data[it.oIndex + j] = ox;
 						}
@@ -16412,7 +16412,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							short ox;
-							ox = (short) (Math.tan(ix));
+							ox = (short) toLong(Math.tan(ix));
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -16495,7 +16495,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.tan(ix));
+						ox = (int) toLong(Math.tan(ix));
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -16511,7 +16511,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.tan(ix));
+						ox = (int) toLong(Math.tan(ix));
 						for (int j = 0; j < is; j++) {
 							oai32data[it.oIndex + j] = ox;
 						}
@@ -16532,7 +16532,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							int ox;
-							ox = (int) (Math.tan(ix));
+							ox = (int) toLong(Math.tan(ix));
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -16817,7 +16817,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					byte ox;
-					ox = (byte) (Math.asin(ix));
+					ox = (byte) toLong(Math.asin(ix));
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -16835,7 +16835,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					short ox;
-					ox = (short) (Math.asin(ix));
+					ox = (short) toLong(Math.asin(ix));
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -16871,7 +16871,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					int ox;
-					ox = (int) (Math.asin(ix));
+					ox = (int) toLong(Math.asin(ix));
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -16890,7 +16890,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.asin(ix));
+						ox = (byte) toLong(Math.asin(ix));
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -16906,7 +16906,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.asin(ix));
+						ox = (byte) toLong(Math.asin(ix));
 						for (int j = 0; j < is; j++) {
 							oai8data[it.oIndex + j] = ox;
 						}
@@ -16927,7 +16927,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							byte ox;
-							ox = (byte) (Math.asin(ix));
+							ox = (byte) toLong(Math.asin(ix));
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -16950,7 +16950,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.asin(ix));
+						ox = (short) toLong(Math.asin(ix));
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -16966,7 +16966,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.asin(ix));
+						ox = (short) toLong(Math.asin(ix));
 						for (int j = 0; j < is; j++) {
 							oai16data[it.oIndex + j] = ox;
 						}
@@ -16987,7 +16987,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							short ox;
-							ox = (short) (Math.asin(ix));
+							ox = (short) toLong(Math.asin(ix));
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -17070,7 +17070,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.asin(ix));
+						ox = (int) toLong(Math.asin(ix));
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -17086,7 +17086,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.asin(ix));
+						ox = (int) toLong(Math.asin(ix));
 						for (int j = 0; j < is; j++) {
 							oai32data[it.oIndex + j] = ox;
 						}
@@ -17107,7 +17107,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							int ox;
-							ox = (int) (Math.asin(ix));
+							ox = (int) toLong(Math.asin(ix));
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -17376,7 +17376,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					byte ox;
-					ox = (byte) (Math.acos(ix));
+					ox = (byte) toLong(Math.acos(ix));
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -17394,7 +17394,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					short ox;
-					ox = (short) (Math.acos(ix));
+					ox = (short) toLong(Math.acos(ix));
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -17430,7 +17430,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					int ox;
-					ox = (int) (Math.acos(ix));
+					ox = (int) toLong(Math.acos(ix));
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -17449,7 +17449,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.acos(ix));
+						ox = (byte) toLong(Math.acos(ix));
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -17465,7 +17465,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.acos(ix));
+						ox = (byte) toLong(Math.acos(ix));
 						for (int j = 0; j < is; j++) {
 							oai8data[it.oIndex + j] = ox;
 						}
@@ -17486,7 +17486,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							byte ox;
-							ox = (byte) (Math.acos(ix));
+							ox = (byte) toLong(Math.acos(ix));
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -17509,7 +17509,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.acos(ix));
+						ox = (short) toLong(Math.acos(ix));
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -17525,7 +17525,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.acos(ix));
+						ox = (short) toLong(Math.acos(ix));
 						for (int j = 0; j < is; j++) {
 							oai16data[it.oIndex + j] = ox;
 						}
@@ -17546,7 +17546,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							short ox;
-							ox = (short) (Math.acos(ix));
+							ox = (short) toLong(Math.acos(ix));
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -17629,7 +17629,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.acos(ix));
+						ox = (int) toLong(Math.acos(ix));
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -17645,7 +17645,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.acos(ix));
+						ox = (int) toLong(Math.acos(ix));
 						for (int j = 0; j < is; j++) {
 							oai32data[it.oIndex + j] = ox;
 						}
@@ -17666,7 +17666,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							int ox;
-							ox = (int) (Math.acos(ix));
+							ox = (int) toLong(Math.acos(ix));
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -17935,7 +17935,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					byte ox;
-					ox = (byte) (Math.atan(ix));
+					ox = (byte) toLong(Math.atan(ix));
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -17953,7 +17953,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					short ox;
-					ox = (short) (Math.atan(ix));
+					ox = (short) toLong(Math.atan(ix));
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -17989,7 +17989,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					int ox;
-					ox = (int) (Math.atan(ix));
+					ox = (int) toLong(Math.atan(ix));
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -18008,7 +18008,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.atan(ix));
+						ox = (byte) toLong(Math.atan(ix));
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -18024,7 +18024,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.atan(ix));
+						ox = (byte) toLong(Math.atan(ix));
 						for (int j = 0; j < is; j++) {
 							oai8data[it.oIndex + j] = ox;
 						}
@@ -18045,7 +18045,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							byte ox;
-							ox = (byte) (Math.atan(ix));
+							ox = (byte) toLong(Math.atan(ix));
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -18068,7 +18068,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.atan(ix));
+						ox = (short) toLong(Math.atan(ix));
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -18084,7 +18084,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.atan(ix));
+						ox = (short) toLong(Math.atan(ix));
 						for (int j = 0; j < is; j++) {
 							oai16data[it.oIndex + j] = ox;
 						}
@@ -18105,7 +18105,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							short ox;
-							ox = (short) (Math.atan(ix));
+							ox = (short) toLong(Math.atan(ix));
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -18188,7 +18188,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.atan(ix));
+						ox = (int) toLong(Math.atan(ix));
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -18204,7 +18204,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.atan(ix));
+						ox = (int) toLong(Math.atan(ix));
 						for (int j = 0; j < is; j++) {
 							oai32data[it.oIndex + j] = ox;
 						}
@@ -18225,7 +18225,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							int ox;
-							ox = (int) (Math.atan(ix));
+							ox = (int) toLong(Math.atan(ix));
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -18494,7 +18494,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					byte ox;
-					ox = (byte) (Math.sinh(ix));
+					ox = (byte) toLong(Math.sinh(ix));
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -18512,7 +18512,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					short ox;
-					ox = (short) (Math.sinh(ix));
+					ox = (short) toLong(Math.sinh(ix));
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -18548,7 +18548,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					int ox;
-					ox = (int) (Math.sinh(ix));
+					ox = (int) toLong(Math.sinh(ix));
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -18567,7 +18567,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.sinh(ix));
+						ox = (byte) toLong(Math.sinh(ix));
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -18583,7 +18583,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.sinh(ix));
+						ox = (byte) toLong(Math.sinh(ix));
 						for (int j = 0; j < is; j++) {
 							oai8data[it.oIndex + j] = ox;
 						}
@@ -18604,7 +18604,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							byte ox;
-							ox = (byte) (Math.sinh(ix));
+							ox = (byte) toLong(Math.sinh(ix));
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -18627,7 +18627,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.sinh(ix));
+						ox = (short) toLong(Math.sinh(ix));
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -18643,7 +18643,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.sinh(ix));
+						ox = (short) toLong(Math.sinh(ix));
 						for (int j = 0; j < is; j++) {
 							oai16data[it.oIndex + j] = ox;
 						}
@@ -18664,7 +18664,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							short ox;
-							ox = (short) (Math.sinh(ix));
+							ox = (short) toLong(Math.sinh(ix));
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -18747,7 +18747,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.sinh(ix));
+						ox = (int) toLong(Math.sinh(ix));
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -18763,7 +18763,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.sinh(ix));
+						ox = (int) toLong(Math.sinh(ix));
 						for (int j = 0; j < is; j++) {
 							oai32data[it.oIndex + j] = ox;
 						}
@@ -18784,7 +18784,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							int ox;
-							ox = (int) (Math.sinh(ix));
+							ox = (int) toLong(Math.sinh(ix));
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -19045,7 +19045,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					byte ox;
-					ox = (byte) (Math.cosh(ix));
+					ox = (byte) toLong(Math.cosh(ix));
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -19063,7 +19063,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					short ox;
-					ox = (short) (Math.cosh(ix));
+					ox = (short) toLong(Math.cosh(ix));
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -19099,7 +19099,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					int ox;
-					ox = (int) (Math.cosh(ix));
+					ox = (int) toLong(Math.cosh(ix));
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -19118,7 +19118,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.cosh(ix));
+						ox = (byte) toLong(Math.cosh(ix));
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -19134,7 +19134,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.cosh(ix));
+						ox = (byte) toLong(Math.cosh(ix));
 						for (int j = 0; j < is; j++) {
 							oai8data[it.oIndex + j] = ox;
 						}
@@ -19155,7 +19155,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							byte ox;
-							ox = (byte) (Math.cosh(ix));
+							ox = (byte) toLong(Math.cosh(ix));
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -19178,7 +19178,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.cosh(ix));
+						ox = (short) toLong(Math.cosh(ix));
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -19194,7 +19194,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.cosh(ix));
+						ox = (short) toLong(Math.cosh(ix));
 						for (int j = 0; j < is; j++) {
 							oai16data[it.oIndex + j] = ox;
 						}
@@ -19215,7 +19215,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							short ox;
-							ox = (short) (Math.cosh(ix));
+							ox = (short) toLong(Math.cosh(ix));
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -19298,7 +19298,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.cosh(ix));
+						ox = (int) toLong(Math.cosh(ix));
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -19314,7 +19314,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.cosh(ix));
+						ox = (int) toLong(Math.cosh(ix));
 						for (int j = 0; j < is; j++) {
 							oai32data[it.oIndex + j] = ox;
 						}
@@ -19335,7 +19335,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							int ox;
-							ox = (int) (Math.cosh(ix));
+							ox = (int) toLong(Math.cosh(ix));
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -19596,7 +19596,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					byte ox;
-					ox = (byte) (Math.tanh(ix));
+					ox = (byte) toLong(Math.tanh(ix));
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -19614,7 +19614,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					short ox;
-					ox = (short) (Math.tanh(ix));
+					ox = (short) toLong(Math.tanh(ix));
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -19650,7 +19650,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					int ox;
-					ox = (int) (Math.tanh(ix));
+					ox = (int) toLong(Math.tanh(ix));
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -19669,7 +19669,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.tanh(ix));
+						ox = (byte) toLong(Math.tanh(ix));
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -19685,7 +19685,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.tanh(ix));
+						ox = (byte) toLong(Math.tanh(ix));
 						for (int j = 0; j < is; j++) {
 							oai8data[it.oIndex + j] = ox;
 						}
@@ -19706,7 +19706,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							byte ox;
-							ox = (byte) (Math.tanh(ix));
+							ox = (byte) toLong(Math.tanh(ix));
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -19729,7 +19729,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.tanh(ix));
+						ox = (short) toLong(Math.tanh(ix));
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -19745,7 +19745,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.tanh(ix));
+						ox = (short) toLong(Math.tanh(ix));
 						for (int j = 0; j < is; j++) {
 							oai16data[it.oIndex + j] = ox;
 						}
@@ -19766,7 +19766,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							short ox;
-							ox = (short) (Math.tanh(ix));
+							ox = (short) toLong(Math.tanh(ix));
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -19849,7 +19849,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.tanh(ix));
+						ox = (int) toLong(Math.tanh(ix));
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -19865,7 +19865,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.tanh(ix));
+						ox = (int) toLong(Math.tanh(ix));
 						for (int j = 0; j < is; j++) {
 							oai32data[it.oIndex + j] = ox;
 						}
@@ -19886,7 +19886,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							int ox;
-							ox = (int) (Math.tanh(ix));
+							ox = (int) toLong(Math.tanh(ix));
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -20171,7 +20171,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					byte ox;
-					ox = (byte) (Math.log(ix + Math.sqrt(ix*ix + 1)));
+					ox = (byte) toLong(Math.log(ix + Math.sqrt(ix*ix + 1)));
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -20189,7 +20189,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					short ox;
-					ox = (short) (Math.log(ix + Math.sqrt(ix*ix + 1)));
+					ox = (short) toLong(Math.log(ix + Math.sqrt(ix*ix + 1)));
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -20225,7 +20225,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					int ox;
-					ox = (int) (Math.log(ix + Math.sqrt(ix*ix + 1)));
+					ox = (int) toLong(Math.log(ix + Math.sqrt(ix*ix + 1)));
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -20244,7 +20244,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.log(ix + Math.sqrt(ix*ix + 1)));
+						ox = (byte) toLong(Math.log(ix + Math.sqrt(ix*ix + 1)));
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -20260,7 +20260,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.log(ix + Math.sqrt(ix*ix + 1)));
+						ox = (byte) toLong(Math.log(ix + Math.sqrt(ix*ix + 1)));
 						for (int j = 0; j < is; j++) {
 							oai8data[it.oIndex + j] = ox;
 						}
@@ -20281,7 +20281,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							byte ox;
-							ox = (byte) (Math.log(ix + Math.sqrt(ix*ix + 1)));
+							ox = (byte) toLong(Math.log(ix + Math.sqrt(ix*ix + 1)));
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -20304,7 +20304,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.log(ix + Math.sqrt(ix*ix + 1)));
+						ox = (short) toLong(Math.log(ix + Math.sqrt(ix*ix + 1)));
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -20320,7 +20320,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.log(ix + Math.sqrt(ix*ix + 1)));
+						ox = (short) toLong(Math.log(ix + Math.sqrt(ix*ix + 1)));
 						for (int j = 0; j < is; j++) {
 							oai16data[it.oIndex + j] = ox;
 						}
@@ -20341,7 +20341,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							short ox;
-							ox = (short) (Math.log(ix + Math.sqrt(ix*ix + 1)));
+							ox = (short) toLong(Math.log(ix + Math.sqrt(ix*ix + 1)));
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -20424,7 +20424,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.log(ix + Math.sqrt(ix*ix + 1)));
+						ox = (int) toLong(Math.log(ix + Math.sqrt(ix*ix + 1)));
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -20440,7 +20440,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.log(ix + Math.sqrt(ix*ix + 1)));
+						ox = (int) toLong(Math.log(ix + Math.sqrt(ix*ix + 1)));
 						for (int j = 0; j < is; j++) {
 							oai32data[it.oIndex + j] = ox;
 						}
@@ -20461,7 +20461,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							int ox;
-							ox = (int) (Math.log(ix + Math.sqrt(ix*ix + 1)));
+							ox = (int) toLong(Math.log(ix + Math.sqrt(ix*ix + 1)));
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -20730,7 +20730,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					byte ox;
-					ox = (byte) (Math.log(ix + Math.sqrt(ix*ix - 1)));
+					ox = (byte) toLong(Math.log(ix + Math.sqrt(ix*ix - 1)));
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -20748,7 +20748,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					short ox;
-					ox = (short) (Math.log(ix + Math.sqrt(ix*ix - 1)));
+					ox = (short) toLong(Math.log(ix + Math.sqrt(ix*ix - 1)));
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -20784,7 +20784,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					int ox;
-					ox = (int) (Math.log(ix + Math.sqrt(ix*ix - 1)));
+					ox = (int) toLong(Math.log(ix + Math.sqrt(ix*ix - 1)));
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -20803,7 +20803,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.log(ix + Math.sqrt(ix*ix - 1)));
+						ox = (byte) toLong(Math.log(ix + Math.sqrt(ix*ix - 1)));
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -20819,7 +20819,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.log(ix + Math.sqrt(ix*ix - 1)));
+						ox = (byte) toLong(Math.log(ix + Math.sqrt(ix*ix - 1)));
 						for (int j = 0; j < is; j++) {
 							oai8data[it.oIndex + j] = ox;
 						}
@@ -20840,7 +20840,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							byte ox;
-							ox = (byte) (Math.log(ix + Math.sqrt(ix*ix - 1)));
+							ox = (byte) toLong(Math.log(ix + Math.sqrt(ix*ix - 1)));
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -20863,7 +20863,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.log(ix + Math.sqrt(ix*ix - 1)));
+						ox = (short) toLong(Math.log(ix + Math.sqrt(ix*ix - 1)));
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -20879,7 +20879,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.log(ix + Math.sqrt(ix*ix - 1)));
+						ox = (short) toLong(Math.log(ix + Math.sqrt(ix*ix - 1)));
 						for (int j = 0; j < is; j++) {
 							oai16data[it.oIndex + j] = ox;
 						}
@@ -20900,7 +20900,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							short ox;
-							ox = (short) (Math.log(ix + Math.sqrt(ix*ix - 1)));
+							ox = (short) toLong(Math.log(ix + Math.sqrt(ix*ix - 1)));
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -20983,7 +20983,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.log(ix + Math.sqrt(ix*ix - 1)));
+						ox = (int) toLong(Math.log(ix + Math.sqrt(ix*ix - 1)));
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -20999,7 +20999,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.log(ix + Math.sqrt(ix*ix - 1)));
+						ox = (int) toLong(Math.log(ix + Math.sqrt(ix*ix - 1)));
 						for (int j = 0; j < is; j++) {
 							oai32data[it.oIndex + j] = ox;
 						}
@@ -21020,7 +21020,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							int ox;
-							ox = (int) (Math.log(ix + Math.sqrt(ix*ix - 1)));
+							ox = (int) toLong(Math.log(ix + Math.sqrt(ix*ix - 1)));
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -21289,7 +21289,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					byte ox;
-					ox = (byte) (0.5*Math.log((1 + ix)/(1 - ix)));
+					ox = (byte) toLong(0.5*Math.log((1 + ix)/(1 - ix)));
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -21307,7 +21307,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					short ox;
-					ox = (short) (0.5*Math.log((1 + ix)/(1 - ix)));
+					ox = (short) toLong(0.5*Math.log((1 + ix)/(1 - ix)));
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -21343,7 +21343,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					int ox;
-					ox = (int) (0.5*Math.log((1 + ix)/(1 - ix)));
+					ox = (int) toLong(0.5*Math.log((1 + ix)/(1 - ix)));
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -21362,7 +21362,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (0.5*Math.log((1 + ix)/(1 - ix)));
+						ox = (byte) toLong(0.5*Math.log((1 + ix)/(1 - ix)));
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -21378,7 +21378,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (0.5*Math.log((1 + ix)/(1 - ix)));
+						ox = (byte) toLong(0.5*Math.log((1 + ix)/(1 - ix)));
 						for (int j = 0; j < is; j++) {
 							oai8data[it.oIndex + j] = ox;
 						}
@@ -21399,7 +21399,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							byte ox;
-							ox = (byte) (0.5*Math.log((1 + ix)/(1 - ix)));
+							ox = (byte) toLong(0.5*Math.log((1 + ix)/(1 - ix)));
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -21422,7 +21422,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (0.5*Math.log((1 + ix)/(1 - ix)));
+						ox = (short) toLong(0.5*Math.log((1 + ix)/(1 - ix)));
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -21438,7 +21438,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (0.5*Math.log((1 + ix)/(1 - ix)));
+						ox = (short) toLong(0.5*Math.log((1 + ix)/(1 - ix)));
 						for (int j = 0; j < is; j++) {
 							oai16data[it.oIndex + j] = ox;
 						}
@@ -21459,7 +21459,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							short ox;
-							ox = (short) (0.5*Math.log((1 + ix)/(1 - ix)));
+							ox = (short) toLong(0.5*Math.log((1 + ix)/(1 - ix)));
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -21542,7 +21542,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (0.5*Math.log((1 + ix)/(1 - ix)));
+						ox = (int) toLong(0.5*Math.log((1 + ix)/(1 - ix)));
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -21558,7 +21558,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (0.5*Math.log((1 + ix)/(1 - ix)));
+						ox = (int) toLong(0.5*Math.log((1 + ix)/(1 - ix)));
 						for (int j = 0; j < is; j++) {
 							oai32data[it.oIndex + j] = ox;
 						}
@@ -21579,7 +21579,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							int ox;
-							ox = (int) (0.5*Math.log((1 + ix)/(1 - ix)));
+							ox = (int) toLong(0.5*Math.log((1 + ix)/(1 - ix)));
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -21848,7 +21848,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					byte ox;
-					ox = (byte) (Math.log(ix));
+					ox = (byte) toLong(Math.log(ix));
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -21866,7 +21866,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					short ox;
-					ox = (short) (Math.log(ix));
+					ox = (short) toLong(Math.log(ix));
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -21902,7 +21902,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					int ox;
-					ox = (int) (Math.log(ix));
+					ox = (int) toLong(Math.log(ix));
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -21921,7 +21921,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.log(ix));
+						ox = (byte) toLong(Math.log(ix));
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -21937,7 +21937,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.log(ix));
+						ox = (byte) toLong(Math.log(ix));
 						for (int j = 0; j < is; j++) {
 							oai8data[it.oIndex + j] = ox;
 						}
@@ -21958,7 +21958,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							byte ox;
-							ox = (byte) (Math.log(ix));
+							ox = (byte) toLong(Math.log(ix));
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -21981,7 +21981,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.log(ix));
+						ox = (short) toLong(Math.log(ix));
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -21997,7 +21997,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.log(ix));
+						ox = (short) toLong(Math.log(ix));
 						for (int j = 0; j < is; j++) {
 							oai16data[it.oIndex + j] = ox;
 						}
@@ -22018,7 +22018,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							short ox;
-							ox = (short) (Math.log(ix));
+							ox = (short) toLong(Math.log(ix));
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -22101,7 +22101,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.log(ix));
+						ox = (int) toLong(Math.log(ix));
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -22117,7 +22117,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.log(ix));
+						ox = (int) toLong(Math.log(ix));
 						for (int j = 0; j < is; j++) {
 							oai32data[it.oIndex + j] = ox;
 						}
@@ -22138,7 +22138,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							int ox;
-							ox = (int) (Math.log(ix));
+							ox = (int) toLong(Math.log(ix));
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -22399,7 +22399,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					byte ox;
-					ox = (byte) (Math.log(ix)/Math.log(2.));
+					ox = (byte) toLong(Math.log(ix)/Math.log(2.));
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -22417,7 +22417,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					short ox;
-					ox = (short) (Math.log(ix)/Math.log(2.));
+					ox = (short) toLong(Math.log(ix)/Math.log(2.));
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -22453,7 +22453,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					int ox;
-					ox = (int) (Math.log(ix)/Math.log(2.));
+					ox = (int) toLong(Math.log(ix)/Math.log(2.));
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -22472,7 +22472,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.log(ix)/Math.log(2.));
+						ox = (byte) toLong(Math.log(ix)/Math.log(2.));
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -22488,7 +22488,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.log(ix)/Math.log(2.));
+						ox = (byte) toLong(Math.log(ix)/Math.log(2.));
 						for (int j = 0; j < is; j++) {
 							oai8data[it.oIndex + j] = ox;
 						}
@@ -22509,7 +22509,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							byte ox;
-							ox = (byte) (Math.log(ix)/Math.log(2.));
+							ox = (byte) toLong(Math.log(ix)/Math.log(2.));
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -22532,7 +22532,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.log(ix)/Math.log(2.));
+						ox = (short) toLong(Math.log(ix)/Math.log(2.));
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -22548,7 +22548,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.log(ix)/Math.log(2.));
+						ox = (short) toLong(Math.log(ix)/Math.log(2.));
 						for (int j = 0; j < is; j++) {
 							oai16data[it.oIndex + j] = ox;
 						}
@@ -22569,7 +22569,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							short ox;
-							ox = (short) (Math.log(ix)/Math.log(2.));
+							ox = (short) toLong(Math.log(ix)/Math.log(2.));
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -22652,7 +22652,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.log(ix)/Math.log(2.));
+						ox = (int) toLong(Math.log(ix)/Math.log(2.));
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -22668,7 +22668,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.log(ix)/Math.log(2.));
+						ox = (int) toLong(Math.log(ix)/Math.log(2.));
 						for (int j = 0; j < is; j++) {
 							oai32data[it.oIndex + j] = ox;
 						}
@@ -22689,7 +22689,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							int ox;
-							ox = (int) (Math.log(ix)/Math.log(2.));
+							ox = (int) toLong(Math.log(ix)/Math.log(2.));
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -22950,7 +22950,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					byte ox;
-					ox = (byte) (Math.log10(ix));
+					ox = (byte) toLong(Math.log10(ix));
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -22968,7 +22968,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					short ox;
-					ox = (short) (Math.log10(ix));
+					ox = (short) toLong(Math.log10(ix));
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -23004,7 +23004,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					int ox;
-					ox = (int) (Math.log10(ix));
+					ox = (int) toLong(Math.log10(ix));
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -23023,7 +23023,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.log10(ix));
+						ox = (byte) toLong(Math.log10(ix));
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -23039,7 +23039,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.log10(ix));
+						ox = (byte) toLong(Math.log10(ix));
 						for (int j = 0; j < is; j++) {
 							oai8data[it.oIndex + j] = ox;
 						}
@@ -23060,7 +23060,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							byte ox;
-							ox = (byte) (Math.log10(ix));
+							ox = (byte) toLong(Math.log10(ix));
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -23083,7 +23083,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.log10(ix));
+						ox = (short) toLong(Math.log10(ix));
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -23099,7 +23099,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.log10(ix));
+						ox = (short) toLong(Math.log10(ix));
 						for (int j = 0; j < is; j++) {
 							oai16data[it.oIndex + j] = ox;
 						}
@@ -23120,7 +23120,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							short ox;
-							ox = (short) (Math.log10(ix));
+							ox = (short) toLong(Math.log10(ix));
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -23203,7 +23203,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.log10(ix));
+						ox = (int) toLong(Math.log10(ix));
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -23219,7 +23219,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.log10(ix));
+						ox = (int) toLong(Math.log10(ix));
 						for (int j = 0; j < is; j++) {
 							oai32data[it.oIndex + j] = ox;
 						}
@@ -23240,7 +23240,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							int ox;
-							ox = (int) (Math.log10(ix));
+							ox = (int) toLong(Math.log10(ix));
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -23501,7 +23501,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					byte ox;
-					ox = (byte) (Math.log1p(ix));
+					ox = (byte) toLong(Math.log1p(ix));
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -23519,7 +23519,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					short ox;
-					ox = (short) (Math.log1p(ix));
+					ox = (short) toLong(Math.log1p(ix));
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -23555,7 +23555,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					int ox;
-					ox = (int) (Math.log1p(ix));
+					ox = (int) toLong(Math.log1p(ix));
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -23574,7 +23574,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.log1p(ix));
+						ox = (byte) toLong(Math.log1p(ix));
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -23590,7 +23590,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.log1p(ix));
+						ox = (byte) toLong(Math.log1p(ix));
 						for (int j = 0; j < is; j++) {
 							oai8data[it.oIndex + j] = ox;
 						}
@@ -23611,7 +23611,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							byte ox;
-							ox = (byte) (Math.log1p(ix));
+							ox = (byte) toLong(Math.log1p(ix));
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -23634,7 +23634,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.log1p(ix));
+						ox = (short) toLong(Math.log1p(ix));
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -23650,7 +23650,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.log1p(ix));
+						ox = (short) toLong(Math.log1p(ix));
 						for (int j = 0; j < is; j++) {
 							oai16data[it.oIndex + j] = ox;
 						}
@@ -23671,7 +23671,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							short ox;
-							ox = (short) (Math.log1p(ix));
+							ox = (short) toLong(Math.log1p(ix));
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -23754,7 +23754,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.log1p(ix));
+						ox = (int) toLong(Math.log1p(ix));
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -23770,7 +23770,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.log1p(ix));
+						ox = (int) toLong(Math.log1p(ix));
 						for (int j = 0; j < is; j++) {
 							oai32data[it.oIndex + j] = ox;
 						}
@@ -23791,7 +23791,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							int ox;
-							ox = (int) (Math.log1p(ix));
+							ox = (int) toLong(Math.log1p(ix));
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -24052,7 +24052,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					byte ox;
-					ox = (byte) (Math.exp(ix));
+					ox = (byte) toLong(Math.exp(ix));
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -24070,7 +24070,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					short ox;
-					ox = (short) (Math.exp(ix));
+					ox = (short) toLong(Math.exp(ix));
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -24106,7 +24106,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					int ox;
-					ox = (int) (Math.exp(ix));
+					ox = (int) toLong(Math.exp(ix));
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -24125,7 +24125,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.exp(ix));
+						ox = (byte) toLong(Math.exp(ix));
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -24141,7 +24141,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.exp(ix));
+						ox = (byte) toLong(Math.exp(ix));
 						for (int j = 0; j < is; j++) {
 							oai8data[it.oIndex + j] = ox;
 						}
@@ -24162,7 +24162,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							byte ox;
-							ox = (byte) (Math.exp(ix));
+							ox = (byte) toLong(Math.exp(ix));
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -24185,7 +24185,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.exp(ix));
+						ox = (short) toLong(Math.exp(ix));
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -24201,7 +24201,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.exp(ix));
+						ox = (short) toLong(Math.exp(ix));
 						for (int j = 0; j < is; j++) {
 							oai16data[it.oIndex + j] = ox;
 						}
@@ -24222,7 +24222,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							short ox;
-							ox = (short) (Math.exp(ix));
+							ox = (short) toLong(Math.exp(ix));
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -24305,7 +24305,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.exp(ix));
+						ox = (int) toLong(Math.exp(ix));
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -24321,7 +24321,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.exp(ix));
+						ox = (int) toLong(Math.exp(ix));
 						for (int j = 0; j < is; j++) {
 							oai32data[it.oIndex + j] = ox;
 						}
@@ -24342,7 +24342,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							int ox;
-							ox = (int) (Math.exp(ix));
+							ox = (int) toLong(Math.exp(ix));
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -24611,7 +24611,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					byte ox;
-					ox = (byte) (Math.expm1(ix));
+					ox = (byte) toLong(Math.expm1(ix));
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -24629,7 +24629,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					short ox;
-					ox = (short) (Math.expm1(ix));
+					ox = (short) toLong(Math.expm1(ix));
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -24665,7 +24665,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					int ox;
-					ox = (int) (Math.expm1(ix));
+					ox = (int) toLong(Math.expm1(ix));
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -24684,7 +24684,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.expm1(ix));
+						ox = (byte) toLong(Math.expm1(ix));
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -24700,7 +24700,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.expm1(ix));
+						ox = (byte) toLong(Math.expm1(ix));
 						for (int j = 0; j < is; j++) {
 							oai8data[it.oIndex + j] = ox;
 						}
@@ -24721,7 +24721,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							byte ox;
-							ox = (byte) (Math.expm1(ix));
+							ox = (byte) toLong(Math.expm1(ix));
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -24744,7 +24744,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.expm1(ix));
+						ox = (short) toLong(Math.expm1(ix));
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -24760,7 +24760,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.expm1(ix));
+						ox = (short) toLong(Math.expm1(ix));
 						for (int j = 0; j < is; j++) {
 							oai16data[it.oIndex + j] = ox;
 						}
@@ -24781,7 +24781,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							short ox;
-							ox = (short) (Math.expm1(ix));
+							ox = (short) toLong(Math.expm1(ix));
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -24864,7 +24864,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.expm1(ix));
+						ox = (int) toLong(Math.expm1(ix));
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -24880,7 +24880,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.expm1(ix));
+						ox = (int) toLong(Math.expm1(ix));
 						for (int j = 0; j < is; j++) {
 							oai32data[it.oIndex + j] = ox;
 						}
@@ -24901,7 +24901,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							int ox;
-							ox = (int) (Math.expm1(ix));
+							ox = (int) toLong(Math.expm1(ix));
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -25170,7 +25170,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					byte ox;
-					ox = (byte) (Math.sqrt(ix));
+					ox = (byte) toLong(Math.sqrt(ix));
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -25188,7 +25188,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					short ox;
-					ox = (short) (Math.sqrt(ix));
+					ox = (short) toLong(Math.sqrt(ix));
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -25224,7 +25224,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					int ox;
-					ox = (int) (Math.sqrt(ix));
+					ox = (int) toLong(Math.sqrt(ix));
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -25243,7 +25243,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.sqrt(ix));
+						ox = (byte) toLong(Math.sqrt(ix));
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -25259,7 +25259,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.sqrt(ix));
+						ox = (byte) toLong(Math.sqrt(ix));
 						for (int j = 0; j < is; j++) {
 							oai8data[it.oIndex + j] = ox;
 						}
@@ -25280,7 +25280,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							byte ox;
-							ox = (byte) (Math.sqrt(ix));
+							ox = (byte) toLong(Math.sqrt(ix));
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -25303,7 +25303,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.sqrt(ix));
+						ox = (short) toLong(Math.sqrt(ix));
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -25319,7 +25319,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.sqrt(ix));
+						ox = (short) toLong(Math.sqrt(ix));
 						for (int j = 0; j < is; j++) {
 							oai16data[it.oIndex + j] = ox;
 						}
@@ -25340,7 +25340,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							short ox;
-							ox = (short) (Math.sqrt(ix));
+							ox = (short) toLong(Math.sqrt(ix));
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -25423,7 +25423,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.sqrt(ix));
+						ox = (int) toLong(Math.sqrt(ix));
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -25439,7 +25439,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.sqrt(ix));
+						ox = (int) toLong(Math.sqrt(ix));
 						for (int j = 0; j < is; j++) {
 							oai32data[it.oIndex + j] = ox;
 						}
@@ -25460,7 +25460,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							int ox;
-							ox = (int) (Math.sqrt(ix));
+							ox = (int) toLong(Math.sqrt(ix));
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -25729,7 +25729,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					byte ox;
-					ox = (byte) (Math.cbrt(ix));
+					ox = (byte) toLong(Math.cbrt(ix));
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -25747,7 +25747,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					short ox;
-					ox = (short) (Math.cbrt(ix));
+					ox = (short) toLong(Math.cbrt(ix));
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -25783,7 +25783,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					int ox;
-					ox = (int) (Math.cbrt(ix));
+					ox = (int) toLong(Math.cbrt(ix));
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -25802,7 +25802,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.cbrt(ix));
+						ox = (byte) toLong(Math.cbrt(ix));
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -25818,7 +25818,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.cbrt(ix));
+						ox = (byte) toLong(Math.cbrt(ix));
 						for (int j = 0; j < is; j++) {
 							oai8data[it.oIndex + j] = ox;
 						}
@@ -25839,7 +25839,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							byte ox;
-							ox = (byte) (Math.cbrt(ix));
+							ox = (byte) toLong(Math.cbrt(ix));
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -25862,7 +25862,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.cbrt(ix));
+						ox = (short) toLong(Math.cbrt(ix));
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -25878,7 +25878,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.cbrt(ix));
+						ox = (short) toLong(Math.cbrt(ix));
 						for (int j = 0; j < is; j++) {
 							oai16data[it.oIndex + j] = ox;
 						}
@@ -25899,7 +25899,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							short ox;
-							ox = (short) (Math.cbrt(ix));
+							ox = (short) toLong(Math.cbrt(ix));
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -25982,7 +25982,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.cbrt(ix));
+						ox = (int) toLong(Math.cbrt(ix));
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -25998,7 +25998,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.cbrt(ix));
+						ox = (int) toLong(Math.cbrt(ix));
 						for (int j = 0; j < is; j++) {
 							oai32data[it.oIndex + j] = ox;
 						}
@@ -26019,7 +26019,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							int ox;
-							ox = (int) (Math.cbrt(ix));
+							ox = (int) toLong(Math.cbrt(ix));
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -26288,7 +26288,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					byte ox;
-					ox = (byte) (ix*ix);
+					ox = (byte) toLong(ix*ix);
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -26306,7 +26306,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					short ox;
-					ox = (short) (ix*ix);
+					ox = (short) toLong(ix*ix);
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -26342,7 +26342,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					int ox;
-					ox = (int) (ix*ix);
+					ox = (int) toLong(ix*ix);
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -26361,7 +26361,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (ix*ix);
+						ox = (byte) toLong(ix*ix);
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -26377,7 +26377,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (ix*ix);
+						ox = (byte) toLong(ix*ix);
 						for (int j = 0; j < is; j++) {
 							oai8data[it.oIndex + j] = ox;
 						}
@@ -26398,7 +26398,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							byte ox;
-							ox = (byte) (ix*ix);
+							ox = (byte) toLong(ix*ix);
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -26421,7 +26421,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (ix*ix);
+						ox = (short) toLong(ix*ix);
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -26437,7 +26437,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (ix*ix);
+						ox = (short) toLong(ix*ix);
 						for (int j = 0; j < is; j++) {
 							oai16data[it.oIndex + j] = ox;
 						}
@@ -26458,7 +26458,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							short ox;
-							ox = (short) (ix*ix);
+							ox = (short) toLong(ix*ix);
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -26541,7 +26541,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (ix*ix);
+						ox = (int) toLong(ix*ix);
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -26557,7 +26557,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (ix*ix);
+						ox = (int) toLong(ix*ix);
 						for (int j = 0; j < is; j++) {
 							oai32data[it.oIndex + j] = ox;
 						}
@@ -26578,7 +26578,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							int ox;
-							ox = (int) (ix*ix);
+							ox = (int) toLong(ix*ix);
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -26607,7 +26607,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final long ix = it.aLong;
 					float ox;
-					ox = (float) (ix*ix);
+					ox = (ix*ix);
 					of32data[it.oIndex] = ox;
 				}
 			}
@@ -26644,7 +26644,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final long ix = it.aLong;
 						float ox;
-						ox = (float) (ix*ix);
+						ox = (ix*ix);
 						oaf32data[it.oIndex] = ox;
 					}
 				}
@@ -26662,7 +26662,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final long ix = it.aLong;
 						float ox;
-						ox = (float) (ix*ix);
+						ox = (ix*ix);
 						for (int j = 0; j < is; j++) {
 							oaf32data[it.oIndex + j] = ox;
 						}
@@ -26683,7 +26683,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final long ix = da.getElementLongAbs(it.aIndex + j);
 							float ox;
-							ox = (float) (ix*ix);
+							ox = (ix*ix);
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -26839,7 +26839,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					byte ox;
-					ox = (byte) (ix);
+					ox = (byte) toLong(ix);
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -26857,7 +26857,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					short ox;
-					ox = (short) (ix);
+					ox = (short) toLong(ix);
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -26893,7 +26893,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					int ox;
-					ox = (int) (ix);
+					ox = (int) toLong(ix);
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -26912,7 +26912,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (ix);
+						ox = (byte) toLong(ix);
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -26928,7 +26928,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (ix);
+						ox = (byte) toLong(ix);
 						for (int j = 0; j < is; j++) {
 							oai8data[it.oIndex + j] = ox;
 						}
@@ -26949,7 +26949,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							byte ox;
-							ox = (byte) (ix);
+							ox = (byte) toLong(ix);
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -26972,7 +26972,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (ix);
+						ox = (short) toLong(ix);
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -26988,7 +26988,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (ix);
+						ox = (short) toLong(ix);
 						for (int j = 0; j < is; j++) {
 							oai16data[it.oIndex + j] = ox;
 						}
@@ -27009,7 +27009,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							short ox;
-							ox = (short) (ix);
+							ox = (short) toLong(ix);
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -27092,7 +27092,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (ix);
+						ox = (int) toLong(ix);
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -27108,7 +27108,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (ix);
+						ox = (int) toLong(ix);
 						for (int j = 0; j < is; j++) {
 							oai32data[it.oIndex + j] = ox;
 						}
@@ -27129,7 +27129,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							int ox;
-							ox = (int) (ix);
+							ox = (int) toLong(ix);
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -27390,7 +27390,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					byte ox;
-					ox = (byte) (ix);
+					ox = (byte) toLong(ix);
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -27408,7 +27408,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					short ox;
-					ox = (short) (ix);
+					ox = (short) toLong(ix);
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -27444,7 +27444,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					int ox;
-					ox = (int) (ix);
+					ox = (int) toLong(ix);
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -27463,7 +27463,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (ix);
+						ox = (byte) toLong(ix);
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -27479,7 +27479,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (ix);
+						ox = (byte) toLong(ix);
 						for (int j = 0; j < is; j++) {
 							oai8data[it.oIndex + j] = ox;
 						}
@@ -27500,7 +27500,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							byte ox;
-							ox = (byte) (ix);
+							ox = (byte) toLong(ix);
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -27523,7 +27523,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (ix);
+						ox = (short) toLong(ix);
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -27539,7 +27539,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (ix);
+						ox = (short) toLong(ix);
 						for (int j = 0; j < is; j++) {
 							oai16data[it.oIndex + j] = ox;
 						}
@@ -27560,7 +27560,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							short ox;
-							ox = (short) (ix);
+							ox = (short) toLong(ix);
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -27643,7 +27643,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (ix);
+						ox = (int) toLong(ix);
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -27659,7 +27659,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (ix);
+						ox = (int) toLong(ix);
 						for (int j = 0; j < is; j++) {
 							oai32data[it.oIndex + j] = ox;
 						}
@@ -27680,7 +27680,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							int ox;
-							ox = (int) (ix);
+							ox = (int) toLong(ix);
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -27941,7 +27941,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					byte ox;
-					ox = (byte) (ix);
+					ox = (byte) toLong(ix);
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -27959,7 +27959,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					short ox;
-					ox = (short) (ix);
+					ox = (short) toLong(ix);
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -27995,7 +27995,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					int ox;
-					ox = (int) (ix);
+					ox = (int) toLong(ix);
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -28014,7 +28014,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (ix);
+						ox = (byte) toLong(ix);
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -28030,7 +28030,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (ix);
+						ox = (byte) toLong(ix);
 						for (int j = 0; j < is; j++) {
 							oai8data[it.oIndex + j] = ox;
 						}
@@ -28051,7 +28051,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							byte ox;
-							ox = (byte) (ix);
+							ox = (byte) toLong(ix);
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -28074,7 +28074,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (ix);
+						ox = (short) toLong(ix);
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -28090,7 +28090,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (ix);
+						ox = (short) toLong(ix);
 						for (int j = 0; j < is; j++) {
 							oai16data[it.oIndex + j] = ox;
 						}
@@ -28111,7 +28111,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							short ox;
-							ox = (short) (ix);
+							ox = (short) toLong(ix);
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -28194,7 +28194,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (ix);
+						ox = (int) toLong(ix);
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -28210,7 +28210,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (ix);
+						ox = (int) toLong(ix);
 						for (int j = 0; j < is; j++) {
 							oai32data[it.oIndex + j] = ox;
 						}
@@ -28231,7 +28231,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							int ox;
-							ox = (int) (ix);
+							ox = (int) toLong(ix);
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -28492,7 +28492,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					byte ox;
-					ox = (byte) (ix);
+					ox = (byte) toLong(ix);
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -28510,7 +28510,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					short ox;
-					ox = (short) (ix);
+					ox = (short) toLong(ix);
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -28546,7 +28546,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					int ox;
-					ox = (int) (ix);
+					ox = (int) toLong(ix);
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -28565,7 +28565,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (ix);
+						ox = (byte) toLong(ix);
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -28581,7 +28581,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (ix);
+						ox = (byte) toLong(ix);
 						for (int j = 0; j < is; j++) {
 							oai8data[it.oIndex + j] = ox;
 						}
@@ -28602,7 +28602,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							byte ox;
-							ox = (byte) (ix);
+							ox = (byte) toLong(ix);
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -28625,7 +28625,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (ix);
+						ox = (short) toLong(ix);
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -28641,7 +28641,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (ix);
+						ox = (short) toLong(ix);
 						for (int j = 0; j < is; j++) {
 							oai16data[it.oIndex + j] = ox;
 						}
@@ -28662,7 +28662,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							short ox;
-							ox = (short) (ix);
+							ox = (short) toLong(ix);
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -28745,7 +28745,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (ix);
+						ox = (int) toLong(ix);
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -28761,7 +28761,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (ix);
+						ox = (int) toLong(ix);
 						for (int j = 0; j < is; j++) {
 							oai32data[it.oIndex + j] = ox;
 						}
@@ -28782,7 +28782,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							int ox;
-							ox = (int) (ix);
+							ox = (int) toLong(ix);
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -28811,7 +28811,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final long ix = it.aLong;
 					float ox;
-					ox = (float) (toLong(ix));
+					ox = (toLong(ix));
 					of32data[it.oIndex] = ox;
 				}
 			}
@@ -28848,7 +28848,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final long ix = it.aLong;
 						float ox;
-						ox = (float) (toLong(ix));
+						ox = (toLong(ix));
 						oaf32data[it.oIndex] = ox;
 					}
 				}
@@ -28866,7 +28866,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final long ix = it.aLong;
 						float ox;
-						ox = (float) (toLong(ix));
+						ox = (toLong(ix));
 						for (int j = 0; j < is; j++) {
 							oaf32data[it.oIndex + j] = ox;
 						}
@@ -28887,7 +28887,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final long ix = da.getElementLongAbs(it.aIndex + j);
 							float ox;
-							ox = (float) (toLong(ix));
+							ox = (toLong(ix));
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -29043,7 +29043,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					byte ox;
-					ox = (byte) (Math.toDegrees(ix));
+					ox = (byte) toLong(Math.toDegrees(ix));
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -29061,7 +29061,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					short ox;
-					ox = (short) (Math.toDegrees(ix));
+					ox = (short) toLong(Math.toDegrees(ix));
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -29097,7 +29097,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					int ox;
-					ox = (int) (Math.toDegrees(ix));
+					ox = (int) toLong(Math.toDegrees(ix));
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -29116,7 +29116,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.toDegrees(ix));
+						ox = (byte) toLong(Math.toDegrees(ix));
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -29132,7 +29132,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.toDegrees(ix));
+						ox = (byte) toLong(Math.toDegrees(ix));
 						for (int j = 0; j < is; j++) {
 							oai8data[it.oIndex + j] = ox;
 						}
@@ -29153,7 +29153,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							byte ox;
-							ox = (byte) (Math.toDegrees(ix));
+							ox = (byte) toLong(Math.toDegrees(ix));
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -29176,7 +29176,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.toDegrees(ix));
+						ox = (short) toLong(Math.toDegrees(ix));
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -29192,7 +29192,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.toDegrees(ix));
+						ox = (short) toLong(Math.toDegrees(ix));
 						for (int j = 0; j < is; j++) {
 							oai16data[it.oIndex + j] = ox;
 						}
@@ -29213,7 +29213,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							short ox;
-							ox = (short) (Math.toDegrees(ix));
+							ox = (short) toLong(Math.toDegrees(ix));
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -29296,7 +29296,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.toDegrees(ix));
+						ox = (int) toLong(Math.toDegrees(ix));
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -29312,7 +29312,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.toDegrees(ix));
+						ox = (int) toLong(Math.toDegrees(ix));
 						for (int j = 0; j < is; j++) {
 							oai32data[it.oIndex + j] = ox;
 						}
@@ -29333,7 +29333,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							int ox;
-							ox = (int) (Math.toDegrees(ix));
+							ox = (int) toLong(Math.toDegrees(ix));
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -29594,7 +29594,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					byte ox;
-					ox = (byte) (Math.toRadians(ix));
+					ox = (byte) toLong(Math.toRadians(ix));
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -29612,7 +29612,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					short ox;
-					ox = (short) (Math.toRadians(ix));
+					ox = (short) toLong(Math.toRadians(ix));
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -29648,7 +29648,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					int ox;
-					ox = (int) (Math.toRadians(ix));
+					ox = (int) toLong(Math.toRadians(ix));
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -29667,7 +29667,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.toRadians(ix));
+						ox = (byte) toLong(Math.toRadians(ix));
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -29683,7 +29683,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (Math.toRadians(ix));
+						ox = (byte) toLong(Math.toRadians(ix));
 						for (int j = 0; j < is; j++) {
 							oai8data[it.oIndex + j] = ox;
 						}
@@ -29704,7 +29704,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							byte ox;
-							ox = (byte) (Math.toRadians(ix));
+							ox = (byte) toLong(Math.toRadians(ix));
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -29727,7 +29727,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.toRadians(ix));
+						ox = (short) toLong(Math.toRadians(ix));
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -29743,7 +29743,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (Math.toRadians(ix));
+						ox = (short) toLong(Math.toRadians(ix));
 						for (int j = 0; j < is; j++) {
 							oai16data[it.oIndex + j] = ox;
 						}
@@ -29764,7 +29764,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							short ox;
-							ox = (short) (Math.toRadians(ix));
+							ox = (short) toLong(Math.toRadians(ix));
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -29847,7 +29847,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.toRadians(ix));
+						ox = (int) toLong(Math.toRadians(ix));
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -29863,7 +29863,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (Math.toRadians(ix));
+						ox = (int) toLong(Math.toRadians(ix));
 						for (int j = 0; j < is; j++) {
 							oai32data[it.oIndex + j] = ox;
 						}
@@ -29884,7 +29884,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							int ox;
-							ox = (int) (Math.toRadians(ix));
+							ox = (int) toLong(Math.toRadians(ix));
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -30145,7 +30145,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					byte ox;
-					ox = (byte) (ix > 0 ? 1 : (ix < 0 ? -1 : 0));
+					ox = (byte) toLong(ix > 0 ? 1 : (ix < 0 ? -1 : 0));
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -30163,7 +30163,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					short ox;
-					ox = (short) (ix > 0 ? 1 : (ix < 0 ? -1 : 0));
+					ox = (short) toLong(ix > 0 ? 1 : (ix < 0 ? -1 : 0));
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -30199,7 +30199,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					int ox;
-					ox = (int) (ix > 0 ? 1 : (ix < 0 ? -1 : 0));
+					ox = (int) toLong(ix > 0 ? 1 : (ix < 0 ? -1 : 0));
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -30218,7 +30218,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (ix > 0 ? 1 : (ix < 0 ? -1 : 0));
+						ox = (byte) toLong(ix > 0 ? 1 : (ix < 0 ? -1 : 0));
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -30234,7 +30234,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (ix > 0 ? 1 : (ix < 0 ? -1 : 0));
+						ox = (byte) toLong(ix > 0 ? 1 : (ix < 0 ? -1 : 0));
 						for (int j = 0; j < is; j++) {
 							oai8data[it.oIndex + j] = ox;
 						}
@@ -30255,7 +30255,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							byte ox;
-							ox = (byte) (ix > 0 ? 1 : (ix < 0 ? -1 : 0));
+							ox = (byte) toLong(ix > 0 ? 1 : (ix < 0 ? -1 : 0));
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -30278,7 +30278,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (ix > 0 ? 1 : (ix < 0 ? -1 : 0));
+						ox = (short) toLong(ix > 0 ? 1 : (ix < 0 ? -1 : 0));
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -30294,7 +30294,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (ix > 0 ? 1 : (ix < 0 ? -1 : 0));
+						ox = (short) toLong(ix > 0 ? 1 : (ix < 0 ? -1 : 0));
 						for (int j = 0; j < is; j++) {
 							oai16data[it.oIndex + j] = ox;
 						}
@@ -30315,7 +30315,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							short ox;
-							ox = (short) (ix > 0 ? 1 : (ix < 0 ? -1 : 0));
+							ox = (short) toLong(ix > 0 ? 1 : (ix < 0 ? -1 : 0));
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -30398,7 +30398,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (ix > 0 ? 1 : (ix < 0 ? -1 : 0));
+						ox = (int) toLong(ix > 0 ? 1 : (ix < 0 ? -1 : 0));
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -30414,7 +30414,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (ix > 0 ? 1 : (ix < 0 ? -1 : 0));
+						ox = (int) toLong(ix > 0 ? 1 : (ix < 0 ? -1 : 0));
 						for (int j = 0; j < is; j++) {
 							oai32data[it.oIndex + j] = ox;
 						}
@@ -30435,7 +30435,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							int ox;
-							ox = (int) (ix > 0 ? 1 : (ix < 0 ? -1 : 0));
+							ox = (int) toLong(ix > 0 ? 1 : (ix < 0 ? -1 : 0));
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -30696,7 +30696,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					byte ox;
-					ox = (byte) (-ix);
+					ox = (byte) toLong(-ix);
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -30714,7 +30714,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					short ox;
-					ox = (short) (-ix);
+					ox = (short) toLong(-ix);
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -30750,7 +30750,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					int ox;
-					ox = (int) (-ix);
+					ox = (int) toLong(-ix);
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -30769,7 +30769,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (-ix);
+						ox = (byte) toLong(-ix);
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -30785,7 +30785,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						byte ox;
-						ox = (byte) (-ix);
+						ox = (byte) toLong(-ix);
 						for (int j = 0; j < is; j++) {
 							oai8data[it.oIndex + j] = ox;
 						}
@@ -30806,7 +30806,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							byte ox;
-							ox = (byte) (-ix);
+							ox = (byte) toLong(-ix);
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -30829,7 +30829,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (-ix);
+						ox = (short) toLong(-ix);
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -30845,7 +30845,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						short ox;
-						ox = (short) (-ix);
+						ox = (short) toLong(-ix);
 						for (int j = 0; j < is; j++) {
 							oai16data[it.oIndex + j] = ox;
 						}
@@ -30866,7 +30866,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							short ox;
-							ox = (short) (-ix);
+							ox = (short) toLong(-ix);
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -30949,7 +30949,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (-ix);
+						ox = (int) toLong(-ix);
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -30965,7 +30965,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						int ox;
-						ox = (int) (-ix);
+						ox = (int) toLong(-ix);
 						for (int j = 0; j < is; j++) {
 							oai32data[it.oIndex + j] = ox;
 						}
@@ -30986,7 +30986,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							int ox;
-							ox = (int) (-ix);
+							ox = (int) toLong(-ix);
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -31015,7 +31015,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final long ix = it.aLong;
 					float ox;
-					ox = (float) (-ix);
+					ox = (-ix);
 					of32data[it.oIndex] = ox;
 				}
 			}
@@ -31052,7 +31052,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final long ix = it.aLong;
 						float ox;
-						ox = (float) (-ix);
+						ox = (-ix);
 						oaf32data[it.oIndex] = ox;
 					}
 				}
@@ -31070,7 +31070,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final long ix = it.aLong;
 						float ox;
-						ox = (float) (-ix);
+						ox = (-ix);
 						for (int j = 0; j < is; j++) {
 							oaf32data[it.oIndex + j] = ox;
 						}
@@ -31091,7 +31091,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final long ix = da.getElementLongAbs(it.aIndex + j);
 							float ox;
-							ox = (float) (-ix);
+							ox = (-ix);
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -31254,11 +31254,11 @@ public class Maths {
 					final double ix = it.aDouble;
 					byte ox;
 					if (ix < pax)
-						ox = (byte) (pax);
+						ox = (byte) toLong(pax);
 					else if (ix > pbx)
-						ox = (byte) (pbx);
+						ox = (byte) toLong(pbx);
 					else
-						ox = (byte) (ix);
+						ox = (byte) toLong(ix);
 					oi8data[it.oIndex] = ox;
 				}
 			} else {
@@ -31282,11 +31282,11 @@ public class Maths {
 					final double ix = it.aDouble;
 					short ox;
 					if (ix < pax)
-						ox = (short) (pax);
+						ox = (short) toLong(pax);
 					else if (ix > pbx)
-						ox = (short) (pbx);
+						ox = (short) toLong(pbx);
 					else
-						ox = (short) (ix);
+						ox = (short) toLong(ix);
 					oi16data[it.oIndex] = ox;
 				}
 			} else {
@@ -31338,11 +31338,11 @@ public class Maths {
 					final double ix = it.aDouble;
 					int ox;
 					if (ix < pax)
-						ox = (int) (pax);
+						ox = (int) toLong(pax);
 					else if (ix > pbx)
-						ox = (int) (pbx);
+						ox = (int) toLong(pbx);
 					else
-						ox = (int) (ix);
+						ox = (int) toLong(ix);
 					oi32data[it.oIndex] = ox;
 				}
 			} else {
@@ -31367,11 +31367,11 @@ public class Maths {
 						final double ix = it.aDouble;
 						byte ox;
 						if (ix < pax)
-							ox = (byte) (pax);
+							ox = (byte) toLong(pax);
 						else if (ix > pbx)
-							ox = (byte) (pbx);
+							ox = (byte) toLong(pbx);
 						else
-							ox = (byte) (ix);
+							ox = (byte) toLong(ix);
 						oai8data[it.oIndex] = ox;
 					}
 				} else {
@@ -31393,11 +31393,11 @@ public class Maths {
 						final double ix = it.aDouble;
 						byte ox;
 						if (ix < pax)
-							ox = (byte) (pax);
+							ox = (byte) toLong(pax);
 						else if (ix > pbx)
-							ox = (byte) (pbx);
+							ox = (byte) toLong(pbx);
 						else
-							ox = (byte) (ix);
+							ox = (byte) toLong(ix);
 						for (int j = 0; j < is; j++) {
 							oai8data[it.oIndex + j] = ox;
 						}
@@ -31424,11 +31424,11 @@ public class Maths {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							byte ox;
 							if (ix < pax)
-								ox = (byte) (pax);
+								ox = (byte) toLong(pax);
 							else if (ix > pbx)
-								ox = (byte) (pbx);
+								ox = (byte) toLong(pbx);
 							else
-								ox = (byte) (ix);
+								ox = (byte) toLong(ix);
 							oai8data[it.oIndex + j] = ox;
 						}
 					}
@@ -31457,11 +31457,11 @@ public class Maths {
 						final double ix = it.aDouble;
 						short ox;
 						if (ix < pax)
-							ox = (short) (pax);
+							ox = (short) toLong(pax);
 						else if (ix > pbx)
-							ox = (short) (pbx);
+							ox = (short) toLong(pbx);
 						else
-							ox = (short) (ix);
+							ox = (short) toLong(ix);
 						oai16data[it.oIndex] = ox;
 					}
 				} else {
@@ -31483,11 +31483,11 @@ public class Maths {
 						final double ix = it.aDouble;
 						short ox;
 						if (ix < pax)
-							ox = (short) (pax);
+							ox = (short) toLong(pax);
 						else if (ix > pbx)
-							ox = (short) (pbx);
+							ox = (short) toLong(pbx);
 						else
-							ox = (short) (ix);
+							ox = (short) toLong(ix);
 						for (int j = 0; j < is; j++) {
 							oai16data[it.oIndex + j] = ox;
 						}
@@ -31514,11 +31514,11 @@ public class Maths {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							short ox;
 							if (ix < pax)
-								ox = (short) (pax);
+								ox = (short) toLong(pax);
 							else if (ix > pbx)
-								ox = (short) (pbx);
+								ox = (short) toLong(pbx);
 							else
-								ox = (short) (ix);
+								ox = (short) toLong(ix);
 							oai16data[it.oIndex + j] = ox;
 						}
 					}
@@ -31637,11 +31637,11 @@ public class Maths {
 						final double ix = it.aDouble;
 						int ox;
 						if (ix < pax)
-							ox = (int) (pax);
+							ox = (int) toLong(pax);
 						else if (ix > pbx)
-							ox = (int) (pbx);
+							ox = (int) toLong(pbx);
 						else
-							ox = (int) (ix);
+							ox = (int) toLong(ix);
 						oai32data[it.oIndex] = ox;
 					}
 				} else {
@@ -31663,11 +31663,11 @@ public class Maths {
 						final double ix = it.aDouble;
 						int ox;
 						if (ix < pax)
-							ox = (int) (pax);
+							ox = (int) toLong(pax);
 						else if (ix > pbx)
-							ox = (int) (pbx);
+							ox = (int) toLong(pbx);
 						else
-							ox = (int) (ix);
+							ox = (int) toLong(ix);
 						for (int j = 0; j < is; j++) {
 							oai32data[it.oIndex + j] = ox;
 						}
@@ -31694,11 +31694,11 @@ public class Maths {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							int ox;
 							if (ix < pax)
-								ox = (int) (pax);
+								ox = (int) toLong(pax);
 							else if (ix > pbx)
-								ox = (int) (pbx);
+								ox = (int) toLong(pbx);
 							else
-								ox = (int) (ix);
+								ox = (int) toLong(ix);
 							oai32data[it.oIndex + j] = ox;
 						}
 					}
@@ -31746,7 +31746,7 @@ public class Maths {
 					else if (ix > pbx)
 						ox = (float) (pbx);
 					else
-						ox = (float) (ix);
+						ox = (ix);
 					of32data[it.oIndex] = ox;
 				}
 			}
@@ -31811,7 +31811,7 @@ public class Maths {
 						else if (ix > pbx)
 							ox = (float) (pbx);
 						else
-							ox = (float) (ix);
+							ox = (ix);
 						oaf32data[it.oIndex] = ox;
 					}
 				}
@@ -31843,7 +31843,7 @@ public class Maths {
 						else if (ix > pbx)
 							ox = (float) (pbx);
 						else
-							ox = (float) (ix);
+							ox = (ix);
 						for (int j = 0; j < is; j++) {
 							oaf32data[it.oIndex + j] = ox;
 						}
@@ -31878,7 +31878,7 @@ public class Maths {
 							else if (ix > pbx)
 								ox = (float) (pbx);
 							else
-								ox = (float) (ix);
+								ox = (ix);
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}

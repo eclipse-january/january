@@ -11,7 +11,7 @@ package org.eclipse.dawnsci.analysis.examples.dataset.impl;
 
 import org.eclipse.dawnsci.analysis.api.dataset.Slice;
 import org.eclipse.dawnsci.analysis.dataset.impl.BroadcastIterator;
-import org.eclipse.dawnsci.analysis.dataset.impl.BroadcastIteratorBase;
+import org.eclipse.dawnsci.analysis.dataset.impl.BroadcastIterator;
 import org.eclipse.dawnsci.analysis.dataset.impl.CompoundDataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.Dataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.DatasetFactory;
@@ -79,7 +79,7 @@ public class BroadcastIteratorTest {
 	@Test
 	public void testBroadcastWithNoOutput() {
 		Dataset a, b, c;
-		BroadcastIteratorBase it;
+		BroadcastIterator it;
 
 		a = DatasetFactory.createRange(5, Dataset.FLOAT64).reshape(5, 1);
 		b = DatasetFactory.createRange(2, 8, 1, Dataset.FLOAT64).reshape(1, 6);
@@ -172,7 +172,7 @@ public class BroadcastIteratorTest {
 	@Test
 	public void testBroadcastWithOutput() {
 		Dataset a, b, c;
-		BroadcastIteratorBase it;
+		BroadcastIterator it;
 
 		a = DatasetFactory.createRange(10, Dataset.FLOAT64).reshape(10, 1);
 		b = DatasetFactory.createRange(2, 14, 1, Dataset.FLOAT64).reshape(1, 12);

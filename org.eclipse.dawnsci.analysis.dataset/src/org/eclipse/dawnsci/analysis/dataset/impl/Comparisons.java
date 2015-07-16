@@ -54,7 +54,7 @@ public class Comparisons {
 
 		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
 
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, r);
+		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, r);
 		final int as = da.getElementsPerItem();
 		final int bs = db.getElementsPerItem();
 
@@ -201,7 +201,7 @@ public class Comparisons {
 
 		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
 
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, r);
+		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, r);
 		it.setOutputDouble(true);
 		final int as = da.getElementsPerItem();
 		final int bs = db.getElementsPerItem();
@@ -296,7 +296,7 @@ public class Comparisons {
 
 		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
 
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, r);
+		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, r);
 		final int as = da.getElementsPerItem();
 		final int bs = db.getElementsPerItem();
 
@@ -406,7 +406,7 @@ public class Comparisons {
 
 		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
 
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, r);
+		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, r);
 		final int as = da.getElementsPerItem();
 		final int bs = db.getElementsPerItem();
 
@@ -516,7 +516,7 @@ public class Comparisons {
 
 		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
 
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, r);
+		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, r);
 		it.setOutputDouble(true);
 		final int as = da.getElementsPerItem();
 		final int bs = db.getElementsPerItem();
@@ -627,7 +627,7 @@ public class Comparisons {
 
 		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
 
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, r);
+		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, r);
 		it.setOutputDouble(true);
 		final int as = da.getElementsPerItem();
 		final int bs = db.getElementsPerItem();
@@ -789,7 +789,7 @@ public class Comparisons {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db);
+		final BroadcastIterator it = BroadcastIterator.createIterator(da, db);
 		it.setOutputDouble(true);
 		final int as = da.getElementsPerItem();
 		final int bs = db.getElementsPerItem();
@@ -1057,7 +1057,7 @@ public class Comparisons {
 
 		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
 
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, r);
+		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, r);
 		it.setOutputDouble(true);
 		final int as = da.getElementsPerItem();
 		final int bs = db.getElementsPerItem();
@@ -1132,7 +1132,7 @@ public class Comparisons {
 
 		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
 
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, r);
+		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, r);
 		it.setOutputDouble(true);
 		final int as = da.getElementsPerItem();
 		final int bs = db.getElementsPerItem();
@@ -1207,7 +1207,7 @@ public class Comparisons {
 
 		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
 
-		final BroadcastIteratorBase it = BroadcastIterator.createIterator(da, db, r);
+		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, r);
 		it.setOutputDouble(true);
 		final int as = da.getElementsPerItem();
 		final int bs = db.getElementsPerItem();
