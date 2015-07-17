@@ -25,7 +25,7 @@ import org.eclipse.ice.datastructures.form.TableComponent;
 import org.eclipse.ice.datastructures.form.TimeDataComponent;
 import org.eclipse.ice.datastructures.form.TreeComposite;
 import org.eclipse.ice.datastructures.form.emf.EMFComponent;
-import org.eclipse.ice.datastructures.form.geometry.GeometryComponent;
+import org.eclipse.ice.datastructures.form.geometry.IGeometryComponent;
 import org.eclipse.ice.datastructures.form.geometry.IShape;
 import org.eclipse.ice.datastructures.form.mesh.MeshComponent;
 
@@ -128,7 +128,7 @@ public abstract class SelectiveComponentVisitor implements IComponentVisitor {
 	 * (org.eclipse.ice.datastructures.form.geometry.GeometryComponent)
 	 */
 	@Override
-	public void visit(GeometryComponent component) {
+	public void visit(IGeometryComponent component) {
 		// Nothing to do.
 	}
 

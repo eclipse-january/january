@@ -24,7 +24,7 @@ import org.eclipse.ice.datastructures.form.TableComponent;
 import org.eclipse.ice.datastructures.form.TimeDataComponent;
 import org.eclipse.ice.datastructures.form.TreeComposite;
 import org.eclipse.ice.datastructures.form.emf.EMFComponent;
-import org.eclipse.ice.datastructures.form.geometry.GeometryComponent;
+import org.eclipse.ice.datastructures.form.geometry.IGeometryComponent;
 import org.eclipse.ice.datastructures.form.mesh.MeshComponent;
 import org.eclipse.ice.datastructures.resource.ICEResource;
 import org.eclipse.ice.datastructures.resource.VizResource;
@@ -51,7 +51,7 @@ public class ICEJAXBClassProvider implements IJAXBClassProvider {
 		// Add the classes needed for XML persistence
 		classList.add(TableComponent.class);
 		classList.add(MatrixComponent.class);
-		classList.add(GeometryComponent.class);
+		classList.add(IGeometryComponent.class);
 		classList.add(TimeDataComponent.class);
 		classList.add(DataComponent.class);
 		classList.add(TreeComposite.class);

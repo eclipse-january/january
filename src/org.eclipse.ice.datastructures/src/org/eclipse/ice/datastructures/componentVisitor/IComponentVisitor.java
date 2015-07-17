@@ -22,7 +22,7 @@ import org.eclipse.ice.datastructures.form.TableComponent;
 import org.eclipse.ice.datastructures.form.TimeDataComponent;
 import org.eclipse.ice.datastructures.form.TreeComposite;
 import org.eclipse.ice.datastructures.form.emf.EMFComponent;
-import org.eclipse.ice.datastructures.form.geometry.GeometryComponent;
+import org.eclipse.ice.datastructures.form.geometry.IGeometryComponent;
 import org.eclipse.ice.datastructures.form.geometry.IShape;
 import org.eclipse.ice.datastructures.form.mesh.MeshComponent;
 
@@ -91,7 +91,7 @@ public interface IComponentVisitor {
 	 *            GeometryComponent which was originally called by the accept()
 	 *            operation
 	 */
-	public void visit(GeometryComponent component);
+	public void visit(IGeometryComponent component);
 
 	/**
 	 * This operation directs a visitor to perform its actions on the Component

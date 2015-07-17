@@ -24,8 +24,8 @@ import javax.xml.bind.JAXBException;
 
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.form.geometry.ComplexShape;
-import org.eclipse.ice.datastructures.form.geometry.Geometry;
-import org.eclipse.ice.datastructures.form.geometry.GeometryComponent;
+import org.eclipse.ice.viz.service.geometry.Geometry;
+import org.eclipse.ice.viz.service.geometry.GeometryComponent;
 import org.eclipse.ice.datastructures.form.geometry.OperatorType;
 import org.eclipse.ice.datastructures.form.geometry.PrimitiveShape;
 import org.eclipse.ice.datastructures.form.geometry.ShapeType;
