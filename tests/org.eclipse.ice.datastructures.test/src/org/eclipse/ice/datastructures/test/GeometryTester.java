@@ -23,9 +23,9 @@ import java.util.ArrayList;
 import javax.xml.bind.JAXBException;
 
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
+import org.eclipse.ice.datastructures.form.GeometryComponent;
 import org.eclipse.ice.datastructures.form.geometry.ComplexShape;
 import org.eclipse.ice.viz.service.geometry.Geometry;
-import org.eclipse.ice.viz.service.geometry.GeometryComponent;
 import org.eclipse.ice.datastructures.form.geometry.OperatorType;
 import org.eclipse.ice.datastructures.form.geometry.PrimitiveShape;
 import org.eclipse.ice.datastructures.form.geometry.ShapeType;
@@ -45,16 +45,19 @@ public class GeometryTester {
 	 * <p>
 	 * Checks the functionality of exporting an entire CSG tree to XML
 	 * </p>
-	 * @throws IOException 
-	 * @throws JAXBException 
-	 * @throws NullPointerException 
+	 * 
+	 * @throws IOException
+	 * @throws JAXBException
+	 * @throws NullPointerException
 	 * 
 	 */
 	@Test
-	public void checkCSGTree() throws NullPointerException, JAXBException, IOException {
+	public void checkCSGTree() throws NullPointerException, JAXBException,
+			IOException {
 
 		// Create the root GeometryComponent
 		GeometryComponent geometry = new GeometryComponent();
+		geometry.setGeometry(new Geometry());
 		geometry.setName("Root geometry");
 		geometry.setDescription("This here's a verr' fine geom'try structcha");
 		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
@@ -122,7 +125,8 @@ public class GeometryTester {
 
 		// Load a new GeometryComponent from XML
 		GeometryComponent loadedGeometry = new GeometryComponent();
-		loadedGeometry = (GeometryComponent) xmlHandler.read(classList, inputStream);
+		loadedGeometry = (GeometryComponent) xmlHandler.read(classList,
+				inputStream);
 
 		assertTrue(geometry.equals(loadedGeometry));
 

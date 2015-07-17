@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.eclipse.ice.datastructures.ICEObject.ListComponent;
 import org.eclipse.ice.datastructures.form.DataComponent;
+import org.eclipse.ice.datastructures.form.GeometryComponent;
 import org.eclipse.ice.datastructures.form.Material;
 import org.eclipse.ice.datastructures.form.MatrixComponent;
 import org.eclipse.ice.datastructures.form.ResourceComponent;
@@ -27,7 +28,6 @@ import org.eclipse.ice.datastructures.form.TableComponent;
 import org.eclipse.ice.datastructures.form.TimeDataComponent;
 import org.eclipse.ice.datastructures.form.TreeComposite;
 import org.eclipse.ice.datastructures.form.emf.EMFComponent;
-import org.eclipse.ice.datastructures.form.geometry.IGeometryComponent;
 import org.eclipse.ice.datastructures.form.mesh.MeshComponent;
 import org.eclipse.ice.datastructures.jaxbclassprovider.ICEJAXBClassProvider;
 import org.eclipse.ice.datastructures.jaxbclassprovider.IJAXBClassProvider;
@@ -72,7 +72,7 @@ public class ICEJAXBClassProviderTester {
 		assertTrue(classList.contains(ResourceComponent.class));
 		assertTrue(classList.contains(TableComponent.class));
 		assertTrue(classList.contains(MatrixComponent.class));
-		assertTrue(classList.contains(IGeometryComponent.class));
+		assertTrue(classList.contains(GeometryComponent.class));
 		assertTrue(classList.contains(TimeDataComponent.class));
 		assertTrue(classList.contains(DataComponent.class));
 		assertTrue(classList.contains(TreeComposite.class));

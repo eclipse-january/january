@@ -36,7 +36,6 @@ import org.eclipse.ice.datastructures.ICEObject.ListComponent;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
 import org.eclipse.ice.datastructures.componentVisitor.IReactorComponent;
 import org.eclipse.ice.datastructures.form.emf.EMFComponent;
-import org.eclipse.ice.datastructures.form.geometry.IGeometryComponent;
 import org.eclipse.ice.datastructures.form.geometry.IShape;
 import org.eclipse.ice.datastructures.form.mesh.MeshComponent;
 
@@ -183,7 +182,7 @@ public class TreeComposite extends ICEObject implements Composite,
 			@XmlElementRef(name = "ResourceComponent", type = ResourceComponent.class),
 			@XmlElementRef(name = "TableComponent", type = TableComponent.class),
 			@XmlElementRef(name = "MatrixComponent", type = MatrixComponent.class),
-			@XmlElementRef(name = "GeometryComponent", type = IGeometryComponent.class),
+			@XmlElementRef(name = "GeometryComponent", type = GeometryComponent.class),
 			@XmlElementRef(name = "MasterDetailsComponent", type = MasterDetailsComponent.class),
 			@XmlElementRef(name = "DataComponent", type = DataComponent.class) })
 	private ArrayList<Component> dataNodes;
@@ -1291,7 +1290,7 @@ public class TreeComposite extends ICEObject implements Composite,
 	 * @see IComponentVisitor#visit(GeometryComponent component)
 	 */
 	@Override
-	public void visit(IGeometryComponent component) {
+	public void visit(GeometryComponent component) {
 
 		// Make sure the component is real before adding it.
 		if (component != null) {

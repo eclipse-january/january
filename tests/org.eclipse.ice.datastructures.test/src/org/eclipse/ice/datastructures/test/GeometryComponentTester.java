@@ -27,9 +27,9 @@ import javax.xml.bind.JAXBException;
 
 import org.eclipse.ice.datastructures.ICEObject.Component;
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
+import org.eclipse.ice.datastructures.form.GeometryComponent;
 import org.eclipse.ice.datastructures.form.geometry.ComplexShape;
 import org.eclipse.ice.viz.service.geometry.Geometry;
-import org.eclipse.ice.viz.service.geometry.GeometryComponent;
 import org.eclipse.ice.datastructures.form.geometry.IShape;
 import org.eclipse.ice.datastructures.form.geometry.OperatorType;
 import org.eclipse.ice.datastructures.form.geometry.PrimitiveShape;
@@ -57,6 +57,7 @@ public class GeometryComponentTester {
 
 		// Instantiate a GeometryComponent
 		GeometryComponent geometry = new GeometryComponent();
+		geometry.setGeometry(new Geometry());
 
 		// Add a PrimitiveShape
 		PrimitiveShape sphere = new PrimitiveShape(ShapeType.Sphere);
@@ -146,6 +147,7 @@ public class GeometryComponentTester {
 
 		// Create a new listener and add it to a GeometryComponent
 		GeometryComponent geometry = new GeometryComponent();
+		geometry.setGeometry(new Geometry());
 		TestComponentListener listener = new TestComponentListener();
 		geometry.register(listener);
 
@@ -184,13 +186,15 @@ public class GeometryComponentTester {
 	 * This operation checks the ability of the GeometryComponent to persist
 	 * itself to XML and to load itself from an XML input stream.
 	 * </p>
-	 * @throws IOException 
-	 * @throws JAXBException 
-	 * @throws NullPointerException 
+	 * 
+	 * @throws IOException
+	 * @throws JAXBException
+	 * @throws NullPointerException
 	 * 
 	 */
 	@Test
-	public void checkLoadingFromXML() throws NullPointerException, JAXBException, IOException {
+	public void checkLoadingFromXML() throws NullPointerException,
+			JAXBException, IOException {
 		// Local Declarations
 		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
 		ArrayList<Class> classList = new ArrayList<Class>();
@@ -199,6 +203,7 @@ public class GeometryComponentTester {
 
 		// Instantiate a GeometryComponent
 		GeometryComponent geometry = new GeometryComponent();
+		geometry.setGeometry(new Geometry());
 		geometry.getGeometry().addShape(new PrimitiveShape(ShapeType.Sphere));
 		geometry.setId(25);
 		geometry.setDescription("description");
@@ -217,7 +222,8 @@ public class GeometryComponentTester {
 
 		// load contents into xml
 		GeometryComponent loadGeometry = new GeometryComponent();
-		loadGeometry = (GeometryComponent) xmlHandler.read(classList, inputStream);
+		loadGeometry = (GeometryComponent) xmlHandler.read(classList,
+				inputStream);
 
 		// Check contents
 		assertTrue(loadGeometry.equals(geometry));
@@ -238,6 +244,10 @@ public class GeometryComponentTester {
 		GeometryComponent equalComponent = new GeometryComponent();
 		GeometryComponent unEqualComponent = new GeometryComponent();
 		GeometryComponent transitiveComponent = new GeometryComponent();
+		component.setGeometry(new Geometry());
+		equalComponent.setGeometry(new Geometry());
+		unEqualComponent.setGeometry(new Geometry());
+		transitiveComponent.setGeometry(new Geometry());
 
 		// Change values
 		IShape shape = new PrimitiveShape(ShapeType.Cylinder);
@@ -290,7 +300,7 @@ public class GeometryComponentTester {
 				&& !component.equals(unEqualComponent));
 
 		// Assert checking equality with null is false
-		assertFalse(component==null);
+		assertFalse(component == null);
 
 		// Assert that two equal objects return same hashcode
 		assertTrue(component.equals(equalComponent)
@@ -316,6 +326,7 @@ public class GeometryComponentTester {
 
 		// Create a new GeometryComponent
 		GeometryComponent geometry = new GeometryComponent();
+		geometry.setGeometry(new Geometry());
 
 		// Check that the shapes list exists but is empty
 		assertNotNull(geometry.getGeometry().getShapes());
@@ -336,6 +347,7 @@ public class GeometryComponentTester {
 		GeometryComponent geometry = new GeometryComponent();
 		GeometryComponent cloneGeometry;
 		GeometryComponent copyGeometry;
+		geometry.setGeometry(new Geometry());
 
 		// Set up ICEObject stuff for GeometryComponent
 		geometry.setId(25);
