@@ -30,6 +30,7 @@ import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
 import org.eclipse.ice.datastructures.componentVisitor.SelectiveComponentVisitor;
 import org.eclipse.ice.datastructures.form.AdaptiveTreeComposite;
 import org.eclipse.ice.datastructures.form.TreeComposite;
+import org.eclipse.ice.viz.service.geometry.IVizUpdateable;
 import org.junit.Test;
 
 /**
@@ -249,7 +250,6 @@ public class AdaptiveTreeCompositeTester {
 		// Create a listener. We only want to deal with updates directly from
 		// the tree, not from its children.
 		TestComponentListener listener = new TestComponentListener() {
-			@Override
 			public void update(IUpdateable component) {
 				if (component == tree) {
 					super.update(component);

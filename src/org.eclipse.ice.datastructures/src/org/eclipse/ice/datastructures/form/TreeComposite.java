@@ -36,7 +36,6 @@ import org.eclipse.ice.datastructures.ICEObject.ListComponent;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
 import org.eclipse.ice.datastructures.componentVisitor.IReactorComponent;
 import org.eclipse.ice.datastructures.form.emf.EMFComponent;
-import org.eclipse.ice.datastructures.form.geometry.IShape;
 import org.eclipse.ice.datastructures.form.mesh.MeshComponent;
 
 /**
@@ -1257,23 +1256,6 @@ public class TreeComposite extends ICEObject implements Composite,
 	 */
 	@Override
 	public void visit(MatrixComponent component) {
-
-		// Make sure the component is real before adding it.
-		if (component != null) {
-			addDataNodeToList(component);
-		}
-
-		return;
-
-	}
-
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see IComponentVisitor#visit(IShape component)
-	 */
-	@Override
-	public void visit(IShape component) {
 
 		// Make sure the component is real before adding it.
 		if (component != null) {

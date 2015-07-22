@@ -14,7 +14,7 @@ package org.eclipse.ice.client.widgets.geometry;
 
 import java.io.IOException;
 
-import org.eclipse.ice.datastructures.form.geometry.IShape;
+import org.eclipse.ice.datastructures.form.geometry.ICEShape;
 
 import com.jme3.export.JmeExporter;
 import com.jme3.export.JmeImporter;
@@ -40,7 +40,7 @@ public class ShapeTransient implements Savable {
 	 * </p>
 	 * 
 	 */
-	private IShape shape;
+	private ICEShape shape;
 
 	/**
 	 * <p>
@@ -52,7 +52,7 @@ public class ShapeTransient implements Savable {
 	 *            The associated shape
 	 *            </p>
 	 */
-	public ShapeTransient(IShape shape) {
+	public ShapeTransient(ICEShape shape) {
 		this.shape = shape;
 	}
 
@@ -65,7 +65,7 @@ public class ShapeTransient implements Savable {
 	 *         The associated shape
 	 *         </p>
 	 */
-	public IShape getShape() {
+	public ICEShape getShape() {
 		return shape;
 	}
 
