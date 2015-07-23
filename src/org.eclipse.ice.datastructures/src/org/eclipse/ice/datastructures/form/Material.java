@@ -23,8 +23,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import org.eclipse.ice.datastructures.form.MaterialStack;
-
 /**
  * This class represents physical Materials.
  * 
@@ -72,7 +70,7 @@ public class Material implements Cloneable, Comparable<Material> {
 	 * The number density of the material. This is the name of that property.
 	 */
 	@XmlTransient
-	public static final String NUMBER_DENSITY = "N (Å-3)";
+	public static final String NUMBER_DENSITY = "N (Ang^-3)";
 
 	/**
 	 * The Bound coherent scattering length of the material. This is the name of
@@ -128,14 +126,14 @@ public class Material implements Cloneable, Comparable<Material> {
 	 * the name of that property.
 	 */
 	@XmlTransient
-	public static final String MASS_ABS_COHERENT = "mmabs/l (Å-2)";
+	public static final String MASS_ABS_COHERENT = "mmabs/l (Ang^-2)";
 
 	/**
 	 * The incoherent mass absorption coefficient of the material. This is the
 	 * name of that property.
 	 */
 	@XmlTransient
-	public static final String MASS_ABS_INCOHERENT = "mminc (Å-1)";
+	public static final String MASS_ABS_INCOHERENT = "mminc (Ang^-1)";
 
 	/**
 	 * The name of the material.
@@ -393,12 +391,15 @@ public class Material implements Cloneable, Comparable<Material> {
 
 			double density = getProperty(DENSITY);
 			// Get the molecular mass
-			int molMass = 0;
+			double molMass = 0;
 			List<MaterialStack> list = getComponents();
 			for (MaterialStack stack : list) {
-				molMass += stack.getAmount()
-						* (stack.getMaterial().getProperty(ATOMIC_MASS));
 
+				molMass += (stack.getAmount()
+						* (stack.getMaterial().getProperty(ATOMIC_MASS)));
+				System.out
+						.println("adding mass: " + stack.getMaterial().getName()
+								+ " amount: " + molMass);
 			}
 
 			// Check if valid inputs
@@ -413,9 +414,9 @@ public class Material implements Cloneable, Comparable<Material> {
 					MaterialStack stack = list.get(j);
 					Material mat = stack.getMaterial();
 					int N = stack.getAmount();
-					
+
 					// Sum the scattering length for the new material
-					double cohb = mat.getProperty(COHERENT_SCAT_LENGTH);
+					double cohb = 1E-5 * mat.getProperty(COHERENT_SCAT_LENGTH);
 
 					// The real part of the scattering length
 					b += N * cohb;
@@ -583,8 +584,8 @@ public class Material implements Cloneable, Comparable<Material> {
 
 			// Dealing with different elements, sort by name.
 		} else {
-			returnVal = thisElement.toLowerCase().compareTo(
-					otherElement.toLowerCase());
+			returnVal = thisElement.toLowerCase()
+					.compareTo(otherElement.toLowerCase());
 		}
 
 		// Return the sorting value for these two Materials
