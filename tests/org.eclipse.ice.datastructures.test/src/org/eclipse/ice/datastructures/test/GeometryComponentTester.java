@@ -29,10 +29,10 @@ import org.eclipse.ice.datastructures.ICEObject.Component;
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.form.GeometryComponent;
 import org.eclipse.ice.viz.service.geometry.Geometry;
+import org.eclipse.ice.viz.service.geometry.OperatorType;
+import org.eclipse.ice.viz.service.geometry.ShapeType;
 import org.eclipse.ice.datastructures.form.geometry.ICEGeometry;
-import org.eclipse.ice.datastructures.form.geometry.ICEOperatorType;
 import org.eclipse.ice.datastructures.form.geometry.ICEShape;
-import org.eclipse.ice.datastructures.form.geometry.ICEShapeType;
 import org.junit.Test;
 
 /**
@@ -59,13 +59,13 @@ public class GeometryComponentTester {
 		geometry.setGeometry(new ICEGeometry());
 
 		// Add a PrimitiveShape
-		ICEShape sphere = new ICEShape(ICEShapeType.Sphere);
+		ICEShape sphere = new ICEShape(ShapeType.Sphere);
 		geometry.getGeometry().addShape(sphere);
 		assertEquals(1, geometry.getGeometry().getShapes().size());
 		assertEquals(sphere, geometry.getGeometry().getShapes().get(0));
 
 		// Add a ComplexShape
-		ICEShape complex = new ICEShape(ICEOperatorType.Union);
+		ICEShape complex = new ICEShape(OperatorType.Union);
 		geometry.getGeometry().addShape(complex);
 		assertEquals(2, geometry.getGeometry().getShapes().size());
 		assertEquals(complex, geometry.getGeometry().getShapes().get(1));
@@ -75,7 +75,7 @@ public class GeometryComponentTester {
 		assertEquals(2, geometry.getGeometry().getShapes().size());
 
 		// Add a shape with an unknown concrete type
-		ICEShape unknownShape = new ICEShape(ICEShapeType.None);
+		ICEShape unknownShape = new ICEShape(ShapeType.None);
 		geometry.getGeometry().addShape(unknownShape);
 		assertEquals(3, geometry.getGeometry().getShapes().size());
 		assertEquals(unknownShape, geometry.getGeometry().getShapes().get(2));
@@ -151,7 +151,7 @@ public class GeometryComponentTester {
 		geometry.register(listener);
 
 		// Modify geometryComponent's shapes list
-		geometry.getGeometry().addShape(new ICEShape(ICEShapeType.Cube));
+		geometry.getGeometry().addShape(new ICEShape(ShapeType.Cube));
 
 		// Check that the listener was notified and reset the listener
 		assertTrue(listener.wasNotified());
@@ -203,7 +203,7 @@ public class GeometryComponentTester {
 		// Instantiate a GeometryComponent
 		GeometryComponent geometry = new GeometryComponent();
 		geometry.setGeometry(new ICEGeometry());
-		geometry.getGeometry().addShape(new ICEShape(ICEShapeType.Sphere));
+		geometry.getGeometry().addShape(new ICEShape(ShapeType.Sphere));
 		geometry.setId(25);
 		geometry.setDescription("description");
 		geometry.setName("name");
@@ -249,8 +249,8 @@ public class GeometryComponentTester {
 		transitiveComponent.setGeometry(new ICEGeometry());
 
 		// Change values
-		ICEShape shape = new ICEShape(ICEShapeType.Cylinder);
-		ICEShape weirdShape = new ICEShape(ICEOperatorType.Intersection);
+		ICEShape shape = new ICEShape(ShapeType.Cylinder);
+		ICEShape weirdShape = new ICEShape(OperatorType.Intersection);
 
 		component.getGeometry().addShape(shape);
 		equalComponent.getGeometry().addShape(shape);
@@ -354,8 +354,8 @@ public class GeometryComponentTester {
 		geometry.setName("Geometry name");
 
 		// Set up GeometryComponent-specific stuff
-		ICEShape sphere1 = new ICEShape(ICEShapeType.Sphere);
-		ICEShape cube1 = new ICEShape(ICEOperatorType.Union);
+		ICEShape sphere1 = new ICEShape(ShapeType.Sphere);
+		ICEShape cube1 = new ICEShape(OperatorType.Union);
 
 		geometry.getGeometry().addShape(sphere1);
 		geometry.getGeometry().addShape(cube1);

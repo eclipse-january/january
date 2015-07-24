@@ -23,6 +23,7 @@ Import-Package: ca.odell.glazedlists,
  org.eclipse.ice.datastructures.jaxbclassprovider,
  org.eclipse.ice.datastructures.resource,
  org.eclipse.ice.viz.service.geometry,
+ org.eclipse.ice.viz.service.geometry.test,
  org.osgi.framework;version="1.6.0",
  org.osgi.util.tracker;version="1.5.0"
 Bundle-ActivationPolicy: lazy

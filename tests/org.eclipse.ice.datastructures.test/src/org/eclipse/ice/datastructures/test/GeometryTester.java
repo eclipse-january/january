@@ -25,11 +25,11 @@ import javax.xml.bind.JAXBException;
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.form.GeometryComponent;
 import org.eclipse.ice.viz.service.geometry.Geometry;
+import org.eclipse.ice.viz.service.geometry.OperatorType;
+import org.eclipse.ice.viz.service.geometry.ShapeType;
+import org.eclipse.ice.viz.service.geometry.Transformation;
 import org.eclipse.ice.datastructures.form.geometry.ICEGeometry;
-import org.eclipse.ice.datastructures.form.geometry.ICEOperatorType;
 import org.eclipse.ice.datastructures.form.geometry.ICEShape;
-import org.eclipse.ice.datastructures.form.geometry.ICEShapeType;
-import org.eclipse.ice.datastructures.form.geometry.ICETransformation;
 import org.junit.Test;
 
 /**
@@ -66,21 +66,21 @@ public class GeometryTester {
 		classList.add(Geometry.class);
 
 		// Create the CSG elements
-		ICEShape union = new ICEShape(ICEOperatorType.Union);
-		ICEShape intersection = new ICEShape(ICEOperatorType.Intersection);
-		ICEShape complement = new ICEShape(ICEOperatorType.Complement);
+		ICEShape union = new ICEShape(OperatorType.Union);
+		ICEShape intersection = new ICEShape(OperatorType.Intersection);
+		ICEShape complement = new ICEShape(OperatorType.Complement);
 		complement.setDescription("Official ICE shape");
 
-		ICEShape sphere1 = new ICEShape(ICEShapeType.Sphere);
-		ICEShape sphere2 = new ICEShape(ICEShapeType.Sphere);
-		ICEShape cube = new ICEShape(ICEShapeType.Cube);
-		ICEShape cone = new ICEShape(ICEShapeType.Cone);
-		ICEShape cylinder = new ICEShape(ICEShapeType.Cylinder);
+		ICEShape sphere1 = new ICEShape(ShapeType.Sphere);
+		ICEShape sphere2 = new ICEShape(ShapeType.Sphere);
+		ICEShape cube = new ICEShape(ShapeType.Cube);
+		ICEShape cone = new ICEShape(ShapeType.Cone);
+		ICEShape cylinder = new ICEShape(ShapeType.Cylinder);
 
 		// Edit the transformations
-		ICETransformation sphere1Transformation = sphere1.getTransformation();
-		ICETransformation sphere2Transformation = new ICETransformation();
-		ICETransformation intersectionTransformation = intersection
+		Transformation sphere1Transformation = sphere1.getTransformation();
+		Transformation sphere2Transformation = new Transformation();
+		Transformation intersectionTransformation = intersection
 				.getTransformation();
 
 		sphere1Transformation.setScale(0, 0, 2.0);
@@ -132,7 +132,7 @@ public class GeometryTester {
 
 		// Change one of the IShapes to check whether the two geometries are
 		// not equal
-		sphere1.setTransformation(new ICETransformation());
+		sphere1.setTransformation(new Transformation());
 
 		assertFalse(geometry.equals(loadedGeometry));
 	}
@@ -149,10 +149,10 @@ public class GeometryTester {
 		TestComponentListener listener = new TestComponentListener();
 
 		// Create the CSG elements
-		ICEShape union1 = new ICEShape(ICEOperatorType.Union);
-		ICEShape union2 = new ICEShape(ICEOperatorType.Union);
-		ICEShape sphere1 = new ICEShape(ICEShapeType.Sphere);
-		ICEShape sphere2 = new ICEShape(ICEShapeType.Sphere);
+		ICEShape union1 = new ICEShape(OperatorType.Union);
+		ICEShape union2 = new ICEShape(OperatorType.Union);
+		ICEShape sphere1 = new ICEShape(ShapeType.Sphere);
+		ICEShape sphere2 = new ICEShape(ShapeType.Sphere);
 
 		// Make the CSG tree
 		union1.addShape(union2);
