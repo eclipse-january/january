@@ -105,34 +105,37 @@ public class EMFComponent extends ICEObject implements Component {
 			// Create a new XMLProcessor to be used in creating
 			// and persisting XML Resources
 			try {
-				xmlProcessor = new XMLProcessor(URI.createFileURI(file
-						.getAbsolutePath()));
+				xmlProcessor = new XMLProcessor(URI.createFileURI(file.getAbsolutePath()));
 			} catch (SAXException e) {
-				logger.error(getClass().getName() + " Exception!",e);
+				logger.error(getClass().getName() + " Exception!", e);
 			}
 
-			// Get the package containing the model
-			EPackage ePackage = (EPackage) xmlProcessor.getEPackageRegistry()
-					.values().toArray()[0];
+			if (xmlProcessor != null) {
 
-			// Get the TreeIterator to walk over the elements
-			TreeIterator<EObject> tree = ePackage.eAllContents();
-			while (tree.hasNext()) {
-				// Get the Element
-				EObject obj = tree.next();
+				// Get the package containing the model
+				EPackage ePackage = (EPackage) xmlProcessor.getEPackageRegistry().values().toArray()[0];
 
-				// We only care about EClass instances bc those
-				// are the nodes of the tree.
-				if (obj instanceof EClass) {
-					EClass eClass = (EClass) obj;
-					// Add the new EMFTreeComposite corresponding to the current
-					// EClass instance to the mapping
-					if ("DocumentRoot".equals(eClass.getName())) {
-						// This will give us a root node, and the constructor
-						// will take care of constructing possible exemplar
-						// children nodes.
-						iceEMFTree = new EMFTreeComposite(eClass);
-						break;
+				// Get the TreeIterator to walk over the elements
+				TreeIterator<EObject> tree = ePackage.eAllContents();
+				while (tree.hasNext()) {
+					// Get the Element
+					EObject obj = tree.next();
+
+					// We only care about EClass instances bc those
+					// are the nodes of the tree.
+					if (obj instanceof EClass) {
+						EClass eClass = (EClass) obj;
+						// Add the new EMFTreeComposite corresponding to the
+						// current
+						// EClass instance to the mapping
+						if ("DocumentRoot".equals(eClass.getName())) {
+							// This will give us a root node, and the
+							// constructor
+							// will take care of constructing possible exemplar
+							// children nodes.
+							iceEMFTree = new EMFTreeComposite(eClass);
+							break;
+						}
 					}
 				}
 			}
@@ -193,7 +196,7 @@ public class EMFComponent extends ICEObject implements Component {
 			}
 
 		} catch (IOException e) {
-			logger.error(getClass().getName() + " Exception!",e);
+			logger.error(getClass().getName() + " Exception!", e);
 			return false;
 		}
 
@@ -211,10 +214,9 @@ public class EMFComponent extends ICEObject implements Component {
 		// Create a new XMLProcessor to be used in creating
 		// and persisting XML Resources
 		try {
-			xmlProcessor = new XMLProcessor(URI.createFileURI(schema
-					.getAbsolutePath()));
+			xmlProcessor = new XMLProcessor(URI.createFileURI(schema.getAbsolutePath()));
 		} catch (SAXException e) {
-			logger.error(getClass().getName() + " Exception!",e);
+			logger.error(getClass().getName() + " Exception!", e);
 			return false;
 		}
 
@@ -234,10 +236,9 @@ public class EMFComponent extends ICEObject implements Component {
 
 		if (xmlProcessor != null) {
 			try {
-				xmlResource = (XMLResource) xmlProcessor.load(
-						new FileInputStream(file), null);
+				xmlResource = (XMLResource) xmlProcessor.load(new FileInputStream(file), null);
 			} catch (IOException e) {
-				logger.error(getClass().getName() + " Exception!",e);
+				logger.error(getClass().getName() + " Exception!", e);
 				return false;
 			}
 		}
@@ -303,8 +304,7 @@ public class EMFComponent extends ICEObject implements Component {
 
 		// Check that the object is not null, and that it is a EMFComponent
 		// Check that these objects have the same ICEObject data
-		if (otherEMFComponent == null
-				|| !(otherEMFComponent instanceof EMFComponent)
+		if (otherEMFComponent == null || !(otherEMFComponent instanceof EMFComponent)
 				|| !super.equals(otherEMFComponent)) {
 			return false;
 		}
@@ -400,7 +400,7 @@ public class EMFComponent extends ICEObject implements Component {
 			try {
 				xmlProcessor.save(System.out, xmlResource, null);
 			} catch (IOException e) {
-				logger.error(getClass().getName() + " Exception!",e);
+				logger.error(getClass().getName() + " Exception!", e);
 				return false;
 			}
 			return true;
@@ -419,7 +419,7 @@ public class EMFComponent extends ICEObject implements Component {
 		try {
 			retString = xmlProcessor.saveToString(xmlResource, null);
 		} catch (IOException e) {
-			logger.error(getClass().getName() + " Exception!",e);
+			logger.error(getClass().getName() + " Exception!", e);
 			return null;
 		}
 		return retString;
