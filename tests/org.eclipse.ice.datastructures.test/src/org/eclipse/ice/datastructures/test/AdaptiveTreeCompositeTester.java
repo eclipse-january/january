@@ -30,7 +30,6 @@ import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
 import org.eclipse.ice.datastructures.componentVisitor.SelectiveComponentVisitor;
 import org.eclipse.ice.datastructures.form.AdaptiveTreeComposite;
 import org.eclipse.ice.datastructures.form.TreeComposite;
-import org.eclipse.ice.viz.service.geometry.IVizUpdateable;
 import org.junit.Test;
 
 /**

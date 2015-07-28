@@ -28,7 +28,6 @@ import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
 import org.eclipse.ice.datastructures.form.geometry.ICEGeometry;
-import org.eclipse.ice.viz.service.geometry.Geometry;
 /**
  * <p>
  * Composite container for a Geometry along with any
