@@ -12,8 +12,6 @@ package org.eclipse.dawnsci.analysis.dataset.impl;
 import java.io.IOException;
 
 import org.eclipse.dawnsci.analysis.api.dataset.DataEvent;
-import org.eclipse.dawnsci.analysis.api.dataset.DataListenerDelegate;
-import org.eclipse.dawnsci.analysis.api.dataset.IDataListener;
 import org.eclipse.dawnsci.analysis.api.dataset.IDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.ILazyWriteableDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.Slice;
@@ -24,11 +22,9 @@ import org.eclipse.dawnsci.analysis.api.monitor.IMonitor;
 /**
  * Subclass of lazy dataset that allows setting slices
  */
-public class LazyWriteableDataset extends LazyDataset implements ILazyWriteableDataset {
-	private int[] maxShape;
+public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWriteableDataset {
 	private int[] chunks;
 	private ILazySaver saver;
-	private DataListenerDelegate eventDelegate;
 
 	/**
 	 * Create a lazy dataset
@@ -41,16 +37,13 @@ public class LazyWriteableDataset extends LazyDataset implements ILazyWriteableD
 	 * @param saver
 	 */
 	public LazyWriteableDataset(String name, int dtype, int elements, int[] shape, int[] maxShape, int[] chunks, ILazySaver saver) {
-		super(name, dtype, elements, shape, saver);
-		this.maxShape = maxShape == null ? shape.clone() : maxShape.clone();
+		super(name, dtype, elements, shape, maxShape, saver);
 		this.chunks = chunks == null ? null : chunks.clone();
 		this.saver = saver;
-		this.loader = saver;
-		this.eventDelegate = new DataListenerDelegate();
 
 		// check shape for expandable dimensions
 		for (int i = 0; i < shape.length; i++) {
-			if (this.shape[i] == UNLIMITED) {
+			if (this.shape[i] == ILazyWriteableDataset.UNLIMITED) {
 				this.shape[i] = 0;
 			}
 		}
@@ -117,62 +110,6 @@ public class LazyWriteableDataset extends LazyDataset implements ILazyWriteableD
 				d.setSlice(data, slice);
 			}
 		});
-	}
-
-	@Override
-	public void resize(int... newShape) {
-		if (base != null) {
-			throw new UnsupportedOperationException("Changing the shape of a view is not allowed");
-		}
-		int rank = shape.length;
-		if (newShape.length != rank) {
-			throw new IllegalArgumentException("Rank of new shape must match current shape");
-		}
-		if (maxShape != null) {
-			for (int i = 0; i < rank; i++) {
-				int m = maxShape[i];
-				if (m != -1 && newShape[i] > m) {
-					throw new IllegalArgumentException("A dimension of new shape must not exceed maximum shape");
-				}
-			}
-		}
-		this.shape = newShape.clone();
-		this.oShape = this.shape;
-		try {
-			size = AbstractDataset.calcLongSize(shape);
-		} catch (IllegalArgumentException e) {
-			size = Long.MAX_VALUE; // this indicates that the entire dataset cannot be read in! 
-		}
-	}
-
-	@Override
-	public int[] getMaxShape() {
-		return maxShape;
-	}
-
-	@Override
-	public void setMaxShape(int[] maxShape) {
-		this.maxShape = maxShape == null ? shape.clone() : maxShape.clone();
-
-		if (this.maxShape.length > oShape.length) {
-			oShape = prependShapeWithOnes(this.maxShape.length, oShape);
-		}
-		if (this.maxShape.length > shape.length) {
-			shape = prependShapeWithOnes(this.maxShape.length, shape); // TODO this does not update any metadata
-//			setShapeInternal(prependShapeWithOnes(this.maxShape.length, shape));
-		}
-	}
-
-	private final static int[] prependShapeWithOnes(int rank, int[] shape) {
-		int[] nShape = new int[rank];
-		int excess = rank - shape.length;
-		for (int i = 0; i < excess; i++) {
-			nShape[i] = 1;
-		}
-		for (int i = excess; i < nShape.length; i++) {
-			nShape[i] = shape[i - excess];
-		}
-		return nShape;
 	}
 
 	@Override
@@ -249,7 +186,7 @@ public class LazyWriteableDataset extends LazyDataset implements ILazyWriteableD
 			oShape = nslice.getSourceShape();
 			shape = slice.getSourceShape();
 		}
-		eventDelegate.fire(new DataEvent(getName(), shape));
+		eventDelegate.fire(new DataEvent(name, shape));
 	}
 
 	@Override
@@ -273,16 +210,6 @@ public class LazyWriteableDataset extends LazyDataset implements ILazyWriteableD
 			return new SliceND(oShape, maxShape, nstart, nstop, nstep);
 		}
 		return new SliceND(base.shape, nstart, nstop, nstep);
-	}
-
-	@Override
-	public void addDataListener(IDataListener l) {
-		eventDelegate.addDataListener(l);
-	}
-
-	@Override
-	public void removeDataListener(IDataListener l) {
-		eventDelegate.removeDataListener(l);
 	}
 
 }

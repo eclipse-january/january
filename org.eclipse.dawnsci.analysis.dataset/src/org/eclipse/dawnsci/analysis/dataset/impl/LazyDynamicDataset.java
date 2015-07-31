@@ -1,0 +1,121 @@
+/*-
+ * Copyright 2015 Diamond Light Source Ltd.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
+
+package org.eclipse.dawnsci.analysis.dataset.impl;
+
+import java.util.Arrays;
+
+import org.eclipse.dawnsci.analysis.api.dataset.DataEvent;
+import org.eclipse.dawnsci.analysis.api.dataset.DataListenerDelegate;
+import org.eclipse.dawnsci.analysis.api.dataset.IDataListener;
+import org.eclipse.dawnsci.analysis.api.dataset.IDynamicDataset;
+import org.eclipse.dawnsci.analysis.api.io.ILazyLoader;
+
+public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
+	protected int[] maxShape;
+
+	protected DataListenerDelegate eventDelegate;
+
+	public LazyDynamicDataset(String name, int dtype, int elements, int[] shape, int[] maxShape, ILazyLoader loader) {
+		super(name, dtype, elements, shape, loader);
+		this.maxShape = maxShape == null ? shape.clone() : maxShape.clone();
+		this.eventDelegate = new DataListenerDelegate();
+	}
+
+	@Override
+	public void resize(int... newShape) {
+		if (base != null) {
+			throw new UnsupportedOperationException("Changing the shape of a view is not allowed");
+		}
+		int rank = shape.length;
+		if (newShape.length != rank) {
+			throw new IllegalArgumentException("Rank of new shape must match current shape");
+		}
+
+		if (Arrays.equals(shape, newShape))
+			return;
+
+		if (maxShape != null) {
+			for (int i = 0; i < rank; i++) {
+				int m = maxShape[i];
+				if (m != -1 && newShape[i] > m) {
+					throw new IllegalArgumentException("A dimension of new shape must not exceed maximum shape");
+				}
+			}
+		}
+		this.shape = newShape.clone();
+		this.oShape = this.shape;
+		try {
+			size = AbstractDataset.calcLongSize(shape);
+		} catch (IllegalArgumentException e) {
+			size = Long.MAX_VALUE; // this indicates that the entire dataset cannot be read in! 
+		}
+
+		eventDelegate.fire(new DataEvent(name, shape));
+	}
+
+	@Override
+	public int[] getMaxShape() {
+		return maxShape;
+	}
+
+	@Override
+	public void setMaxShape(int[] maxShape) {
+		this.maxShape = maxShape == null ? shape.clone() : maxShape.clone();
+
+		if (this.maxShape.length > oShape.length) {
+			oShape = prependShapeWithOnes(this.maxShape.length, oShape);
+		}
+		if (this.maxShape.length > shape.length) {
+			shape = prependShapeWithOnes(this.maxShape.length, shape); // TODO this does not update any metadata
+//			setShapeInternal(prependShapeWithOnes(this.maxShape.length, shape));
+		}
+	}
+
+	private final static int[] prependShapeWithOnes(int rank, int[] shape) {
+		int[] nShape = new int[rank];
+		int excess = rank - shape.length;
+		for (int i = 0; i < excess; i++) {
+			nShape[i] = 1;
+		}
+		for (int i = excess; i < nShape.length; i++) {
+			nShape[i] = shape[i - excess];
+		}
+		return nShape;
+	}
+
+	@Override
+	public LazyDynamicDataset clone() {
+		LazyDynamicDataset ret = new LazyDynamicDataset(new String(name), getDtype(), getElementsPerItem(), 
+				oShape, maxShape, loader);
+		ret.shape = shape;
+		ret.size = size;
+		ret.prepShape = prepShape;
+		ret.postShape = postShape;
+		ret.begSlice = begSlice;
+		ret.delSlice = delSlice;
+		ret.map = map;
+		ret.base = base;
+		ret.metadata = copyMetadata();
+		ret.oMetadata = oMetadata;
+		ret.eventDelegate = eventDelegate;
+		return ret;
+	}
+
+	@Override
+	public void addDataListener(IDataListener l) {
+		eventDelegate.addDataListener(l);
+	}
+
+	@Override
+	public void removeDataListener(IDataListener l) {
+		eventDelegate.removeDataListener(l);
+	}
+
+}
