@@ -18,13 +18,13 @@ import org.eclipse.ice.datastructures.form.DataComponent;
 import org.eclipse.ice.datastructures.form.GeometryComponent;
 import org.eclipse.ice.datastructures.form.MasterDetailsComponent;
 import org.eclipse.ice.datastructures.form.MatrixComponent;
+import org.eclipse.ice.datastructures.form.MeshComponent;
 import org.eclipse.ice.datastructures.form.ResourceComponent;
 import org.eclipse.ice.datastructures.form.TableComponent;
 import org.eclipse.ice.datastructures.form.TimeDataComponent;
 import org.eclipse.ice.datastructures.form.TreeComposite;
 import org.eclipse.ice.datastructures.form.emf.EMFComponent;
 import org.eclipse.ice.datastructures.form.geometry.IShape;
-import org.eclipse.ice.datastructures.form.mesh.MeshComponent;
 
 /**
  * This interface defines the "visitation" routines that implementations of
