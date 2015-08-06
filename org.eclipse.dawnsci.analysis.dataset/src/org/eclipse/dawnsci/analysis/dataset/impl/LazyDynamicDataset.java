@@ -14,6 +14,7 @@ import java.util.Arrays;
 import org.eclipse.dawnsci.analysis.api.dataset.DataEvent;
 import org.eclipse.dawnsci.analysis.api.dataset.DataListenerDelegate;
 import org.eclipse.dawnsci.analysis.api.dataset.IDataListener;
+import org.eclipse.dawnsci.analysis.api.dataset.IDatasetChangeChecker;
 import org.eclipse.dawnsci.analysis.api.dataset.IDynamicDataset;
 import org.eclipse.dawnsci.analysis.api.io.ILazyLoader;
 
@@ -21,6 +22,31 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 	protected int[] maxShape;
 
 	protected DataListenerDelegate eventDelegate;
+	protected IDatasetChangeChecker checker;
+	private boolean stop;
+
+	class PeriodicRunnable implements Runnable {
+		long millis;
+
+		@Override
+		public void run() {
+			while (!stop) {
+				try {
+					Thread.sleep(millis);
+				} catch (InterruptedException e) {
+					logger.error("Something has interrupted this periodic runner!");
+					stop = true; // ends runner
+				}
+				if (checker == null || checker.check()) {
+					fireDataListeners();
+				}
+			}				
+		}
+	}
+
+	private transient PeriodicRunnable runner = new PeriodicRunnable();
+
+	private Thread checkingThread;
 
 	public LazyDynamicDataset(String name, int dtype, int elements, int[] shape, int[] maxShape, ILazyLoader loader) {
 		super(name, dtype, elements, shape, loader);
@@ -118,4 +144,34 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 		eventDelegate.removeDataListener(l);
 	}
 
+	@Override
+	public synchronized void startUpdateChecker(int milliseconds, IDatasetChangeChecker checker) {
+		// stop any current checking threads
+		if (checkingThread != null) {
+			stop = true;
+			if (checkingThread != null) {
+				checkingThread.interrupt();
+			}
+		}
+		this.checker = checker;
+		if (checker != null) {
+			checker.setDataset(this);
+		}
+		if (milliseconds <= 0) {  
+			return;
+		}
+
+		runner.millis = milliseconds;
+		checkingThread = new Thread(runner);
+		checkingThread.setDaemon(true);
+		checkingThread.setName("Checking thread with period " + milliseconds + "ms");
+		checkingThread.start();
+	}
+
+	@Override
+	public void fireDataListeners() {
+		synchronized (eventDelegate) {
+			eventDelegate.fire(new DataEvent(name, shape));
+		}
+	}
 }
