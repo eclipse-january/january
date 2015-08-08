@@ -6,11 +6,11 @@
 	<parent>
 		<groupId>ICE</groupId>
 		<artifactId>org.eclipse.ice.build</artifactId>
-		<version>2.0.0</version>
+		<version>2.1.7.20150808</version>
 		<relativePath>${pom-filename}</relativePath>
 	</parent>
 	<groupId>ICE</groupId>
 	<artifactId>org.eclipse.ice.client.widgets.moose</artifactId>
-	<version>2.0.0</version>
+	<version>2.1.7.20150808</version>
 	<packaging>eclipse-plugin</packaging>
 </project>
