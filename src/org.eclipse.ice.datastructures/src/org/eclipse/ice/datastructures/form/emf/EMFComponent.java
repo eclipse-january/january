@@ -243,9 +243,10 @@ public class EMFComponent extends ICEObject implements Component {
 			}
 		}
 
-		if (xmlResource != null) {
+		if (xmlResource != null && xmlResource.getContents().size() > 0) {
 			documentRoot = xmlResource.getContents().get(0);
 		} else {
+			System.out.println("EMFComponent Error: Could not find document root for " + file.getAbsolutePath());
 			return false;
 		}
 
