@@ -28,10 +28,11 @@ import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
 import org.eclipse.ice.datastructures.form.geometry.ICEGeometry;
+
 /**
  * <p>
- * Composite container for a Geometry along with any
- * additional information required to interpret the geometry data
+ * Composite container for a Geometry along with any additional information
+ * required to interpret the geometry data
  * </p>
  * 
  * @author Jay Jay Billings
@@ -48,14 +49,13 @@ public class GeometryComponent extends ICEObject implements Component,
 	 */
 	@XmlTransient
 	private ArrayList<IUpdateableListener> listeners;
-	
+
 	/**
 	 * The Geometry managed by the GeometryComponent
 	 */
 	@XmlAnyElement()
 	@XmlElementRef(name = "ICEGeometry", type = ICEGeometry.class)
 	private ICEGeometry geometry;
-
 
 	/**
 	 * <p>
@@ -108,8 +108,8 @@ public class GeometryComponent extends ICEObject implements Component,
 	 * 
 	 */
 	public GeometryComponent() {
-		
-		//Create a new Geometry and register as its listener.
+
+		// Create a new Geometry and register as its listener.
 		geometry = new ICEGeometry();
 		geometry.register(this);
 
@@ -118,34 +118,30 @@ public class GeometryComponent extends ICEObject implements Component,
 
 	}
 
-
-
 	/**
 	 * Accessor method for the held Geometry.
 	 * 
 	 * @return The held Geometry
 	 */
-	public ICEGeometry getGeometry(){
+	public ICEGeometry getGeometry() {
 		return geometry;
 	}
-	
+
 	/**
 	 * Mutator method for the held geometry
 	 * 
-	 * @param newGeometry the new Geometry to hold
+	 * @param newGeometry
+	 *            the new Geometry to hold
 	 */
-	public void setGeometry(ICEGeometry newGeometry){
+	public void setGeometry(ICEGeometry newGeometry) {
 		geometry = newGeometry;
-		
-		//Register self as a listener for the geometry
+
+		// Register self as a listener for the geometry
 		geometry.register(this);
 
 		// Notify listeners
 		notifyListeners();
 	}
-
-
-
 
 	/**
 	 * <p>
@@ -159,7 +155,7 @@ public class GeometryComponent extends ICEObject implements Component,
 	@Override
 	public int hashCode() {
 
-		//Return the ICEObject's hashcode
+		// Return the ICEObject's hashcode
 		int hash = super.hashCode();
 
 		return hash;
@@ -232,8 +228,8 @@ public class GeometryComponent extends ICEObject implements Component,
 
 		// Copy shapes list
 		this.setGeometry((ICEGeometry) iceObject.getGeometry().clone());
-		//this.geometry.copy(iceObject.getGeometry());
-		
+		// this.geometry.copy(iceObject.getGeometry());
+
 		this.notifyListeners();
 
 	}
