@@ -249,7 +249,6 @@ public class AdaptiveTreeCompositeTester {
 		// Create a listener. We only want to deal with updates directly from
 		// the tree, not from its children.
 		TestComponentListener listener = new TestComponentListener() {
-			@Override
 			public void update(IUpdateable component) {
 				if (component == tree) {
 					super.update(component);
