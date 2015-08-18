@@ -227,7 +227,7 @@ public class EMFComponent extends ICEObject implements Component {
 	 * Load the given File as an XMLResource.
 	 * 
 	 * @param file
-	 * @return
+	 * @return whether the operation was successful
 	 */
 	public boolean load(File file) {
 
@@ -254,8 +254,10 @@ public class EMFComponent extends ICEObject implements Component {
 		// and create the EMFTreeComposite
 		if (documentRoot != null) {
 			// Create the root node EMFTreeComposite
+			int id = 1;
 			iceEMFTree = new EMFTreeComposite(documentRoot);
-
+			iceEMFTree.setId(id);
+			
 			// Create the a map to store EObject keys to their corresponding
 			// EMFTreeComposite value.
 			HashMap<EObject, EMFTreeComposite> map = new HashMap<EObject, EMFTreeComposite>();
@@ -265,14 +267,18 @@ public class EMFComponent extends ICEObject implements Component {
 
 			// Use the EMF tree iterator to walk the Ecore tree.
 			TreeIterator<EObject> tree = documentRoot.eAllContents();
-			while (tree.hasNext()) {
-				EObject obj = tree.next();
-
+			EObject obj = null;
+			EMFTreeComposite tempTree = null;
+			while (tree.hasNext()){
+				id++;
+				obj = tree.next();
+				tempTree = new EMFTreeComposite(obj);
+				tempTree.setId(id);
 				// Put this EObject in the map with its
 				// EMFTreeComposite representation
-				map.put(obj, new EMFTreeComposite(obj));
+				map.put(obj, tempTree);
 			}
-
+			
 			// Loop through all the EObject keys and
 			// set each EMFTreeComposite's parent
 			for (EObject o : map.keySet()) {
@@ -281,7 +287,6 @@ public class EMFComponent extends ICEObject implements Component {
 					map.get(parent).setNextChild(map.get(o));
 				}
 			}
-
 		} else {
 			return false;
 		}
