@@ -1169,6 +1169,23 @@ public class LinearAlgebra {
 		return createDataset(lud.getSolver().solve(x));
 	}
 
+	
+	/**
+	 * Solve least squares matrix equation A x = v by SVD
+	 * @param a
+	 * @param v
+	 * @return x
+	 */
+	public static Dataset solveSVD(Dataset a, Dataset v) {
+		SingularValueDecomposition svd = new SingularValueDecomposition(createRealMatrix(a));
+		if (v.getRank() == 1) {
+			RealVector x = createRealVector(v);
+			return createDataset(svd.getSolver().solve(x));
+		}
+		RealMatrix x = createRealMatrix(v);
+		return createDataset(svd.getSolver().solve(x));
+	}
+	
 	/**
 	 * Calculate Cholesky decomposition A = L L^T
 	 * @param a
