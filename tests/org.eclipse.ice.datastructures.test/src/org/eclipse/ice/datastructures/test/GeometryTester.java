@@ -24,12 +24,12 @@ import javax.xml.bind.JAXBException;
 
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.form.GeometryComponent;
-import org.eclipse.ice.datastructures.form.geometry.ComplexShape;
-import org.eclipse.ice.viz.service.geometry.Geometry;
-import org.eclipse.ice.datastructures.form.geometry.OperatorType;
-import org.eclipse.ice.datastructures.form.geometry.PrimitiveShape;
-import org.eclipse.ice.datastructures.form.geometry.ShapeType;
-import org.eclipse.ice.datastructures.form.geometry.Transformation;
+import org.eclipse.ice.viz.service.geometry.shapes.Geometry;
+import org.eclipse.ice.viz.service.geometry.shapes.OperatorType;
+import org.eclipse.ice.viz.service.geometry.shapes.ShapeType;
+import org.eclipse.ice.viz.service.geometry.shapes.Transformation;
+import org.eclipse.ice.datastructures.form.geometry.ICEGeometry;
+import org.eclipse.ice.datastructures.form.geometry.ICEShape;
 import org.junit.Test;
 
 /**
@@ -57,7 +57,7 @@ public class GeometryTester {
 
 		// Create the root GeometryComponent
 		GeometryComponent geometry = new GeometryComponent();
-		geometry.setGeometry(new Geometry());
+		geometry.setGeometry(new ICEGeometry());
 		geometry.setName("Root geometry");
 		geometry.setDescription("This here's a verr' fine geom'try structcha");
 		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
@@ -66,16 +66,16 @@ public class GeometryTester {
 		classList.add(Geometry.class);
 
 		// Create the CSG elements
-		ComplexShape union = new ComplexShape(OperatorType.Union);
-		ComplexShape intersection = new ComplexShape(OperatorType.Intersection);
-		ComplexShape complement = new ComplexShape(OperatorType.Complement);
+		ICEShape union = new ICEShape(OperatorType.Union);
+		ICEShape intersection = new ICEShape(OperatorType.Intersection);
+		ICEShape complement = new ICEShape(OperatorType.Complement);
 		complement.setDescription("Official ICE shape");
 
-		PrimitiveShape sphere1 = new PrimitiveShape(ShapeType.Sphere);
-		PrimitiveShape sphere2 = new PrimitiveShape(ShapeType.Sphere);
-		PrimitiveShape cube = new PrimitiveShape(ShapeType.Cube);
-		PrimitiveShape cone = new PrimitiveShape(ShapeType.Cone);
-		PrimitiveShape cylinder = new PrimitiveShape(ShapeType.Cylinder);
+		ICEShape sphere1 = new ICEShape(ShapeType.Sphere);
+		ICEShape sphere2 = new ICEShape(ShapeType.Sphere);
+		ICEShape cube = new ICEShape(ShapeType.Cube);
+		ICEShape cone = new ICEShape(ShapeType.Cone);
+		ICEShape cylinder = new ICEShape(ShapeType.Cylinder);
 
 		// Edit the transformations
 		Transformation sphere1Transformation = sphere1.getTransformation();
@@ -149,10 +149,10 @@ public class GeometryTester {
 		TestComponentListener listener = new TestComponentListener();
 
 		// Create the CSG elements
-		ComplexShape union1 = new ComplexShape(OperatorType.Union);
-		ComplexShape union2 = new ComplexShape(OperatorType.Union);
-		PrimitiveShape sphere1 = new PrimitiveShape(ShapeType.Sphere);
-		PrimitiveShape sphere2 = new PrimitiveShape(ShapeType.Sphere);
+		ICEShape union1 = new ICEShape(OperatorType.Union);
+		ICEShape union2 = new ICEShape(OperatorType.Union);
+		ICEShape sphere1 = new ICEShape(ShapeType.Sphere);
+		ICEShape sphere2 = new ICEShape(ShapeType.Sphere);
 
 		// Make the CSG tree
 		union1.addShape(union2);
@@ -176,6 +176,7 @@ public class GeometryTester {
 		listener.reset();
 
 		// Test sphere1 notification
+		sphere1.register(listener);
 		sphere1.setProperty("key", "value");
 		assertTrue(listener.wasNotified()); // U3
 		System.out
@@ -183,7 +184,7 @@ public class GeometryTester {
 		listener.reset();
 
 		// Test sphere2 notification
-		union2.register(listener);
+		sphere2.register(listener);
 		System.out
 				.println("GeometryTester Message: Union2 & Sphere2 notified!");
 		sphere2.setProperty("key", "value");

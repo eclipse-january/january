@@ -27,11 +27,11 @@ Import-Package: ca.odell.glazedlists,
  org.eclipse.emf.ecore.xmi.util,
  org.eclipse.ice.viz.service.datastructures,
  org.eclipse.ice.viz.service.mesh.datastructures,
+ org.eclipse.ice.viz.service.geometry.shapes,
  org.eclipse.xsd,
  org.osgi.framework;version="1.6.0",
  org.slf4j;version="1.7.2"
 Bundle-ActivationPolicy: lazy
 JPA-PersistenceUnits: org.eclipse.ice.datastructures
 Require-Bundle: ca.odell.glazedlists;bundle-version="1.9.0";visibility:=reexport
-Service-Component: OSGI-INF/jaxbclassprovider.xml
 Bundle-Vendor: Oak Ridge National Laboratory

@@ -27,7 +27,7 @@ import org.eclipse.ice.datastructures.form.TableComponent;
 import org.eclipse.ice.datastructures.form.TimeDataComponent;
 import org.eclipse.ice.datastructures.form.TreeComposite;
 import org.eclipse.ice.datastructures.form.emf.EMFComponent;
-import org.eclipse.ice.datastructures.form.geometry.IShape;
+import org.eclipse.ice.datastructures.form.MeshComponent;
 
 /**
  * This adapter class provides default implementations for the methods described
@@ -105,18 +105,6 @@ public abstract class SelectiveComponentVisitor implements IComponentVisitor {
 	 */
 	@Override
 	public void visit(MatrixComponent component) {
-		// Nothing to do.
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor#visit
-	 * (org.eclipse.ice.datastructures.form.geometry.IShape)
-	 */
-	@Override
-	public void visit(IShape component) {
 		// Nothing to do.
 	}
 

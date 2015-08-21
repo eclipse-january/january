@@ -24,7 +24,7 @@ import org.eclipse.ice.datastructures.form.TableComponent;
 import org.eclipse.ice.datastructures.form.TimeDataComponent;
 import org.eclipse.ice.datastructures.form.TreeComposite;
 import org.eclipse.ice.datastructures.form.emf.EMFComponent;
-import org.eclipse.ice.datastructures.form.geometry.IShape;
+import org.eclipse.ice.datastructures.form.MeshComponent;
 
 /**
  * This interface defines the "visitation" routines that implementations of
@@ -73,15 +73,6 @@ public interface IComponentVisitor {
 	 *            operation
 	 */
 	public void visit(MatrixComponent component);
-
-	/**
-	 * This operation directs a visitor to perform its actions on the Component
-	 * as an IShape.
-	 * 
-	 * @param component
-	 *            IShape which was originally called by the accept() operation
-	 */
-	public void visit(IShape component);
 
 	/**
 	 * This operation directs a visitor to perform its actions on the Component
