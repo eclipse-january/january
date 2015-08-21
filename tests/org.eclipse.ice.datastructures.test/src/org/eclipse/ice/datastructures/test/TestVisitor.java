@@ -25,7 +25,6 @@ import org.eclipse.ice.datastructures.form.TableComponent;
 import org.eclipse.ice.datastructures.form.TimeDataComponent;
 import org.eclipse.ice.datastructures.form.TreeComposite;
 import org.eclipse.ice.datastructures.form.emf.EMFComponent;
-import org.eclipse.ice.datastructures.form.geometry.IShape;
 import org.eclipse.ice.datastructures.form.mesh.MeshComponent;
 
 /**
@@ -125,21 +124,6 @@ public class TestVisitor implements IComponentVisitor {
 	@Override
 	public void visit(MatrixComponent component) {
 
-		if (component != null) {
-			visited = true;
-		}
-
-	}
-
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see IComponentVisitor#visit(IShape component)
-	 */
-	@Override
-	public void visit(IShape component) {
-
-		// Set the visitation state to true if the component is not null
 		if (component != null) {
 			visited = true;
 		}
