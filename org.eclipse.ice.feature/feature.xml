@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.ice"
       label="ICE Infrastructure Feature"
-      version="2.1.7.20150812"
+      version="2.1.7.20150822"
       provider-name="ornl.gov"
       os="linux,macosx,win32"
       ws="cocoa,gtk,win32"
@@ -156,17 +156,10 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.ui"
-         download-size="0"
-         install-size="0"
-         version="3.107.0.v20150507-1945"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.ice.core"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150821"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
@@ -210,13 +203,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.text"
-         download-size="0"
-         install-size="0"
-         version="3.5.400.v20150505-1044"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.core.databinding.observable"
          download-size="0"
          install-size="0"
@@ -224,28 +210,10 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.swt.gtk.linux.x86_64"
-         os="linux"
-         ws="gtk"
-         arch="x86_64"
-         download-size="0"
-         install-size="0"
-         version="3.104.0.v20150528-0211"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.core.databinding.property"
          download-size="0"
          install-size="0"
          version="1.5.0.v20150422-0725"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ui.workbench"
-         download-size="0"
-         install-size="0"
-         version="3.107.0.v20150510-1732"
          unpack="false"/>
 
    <plugin
@@ -261,13 +229,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          download-size="0"
          install-size="0"
          version="3.2.800.v20130819-1716"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ui.views"
-         download-size="0"
-         install-size="0"
-         version="3.8.0.v20150422-0725"
          unpack="false"/>
 
    <plugin
@@ -303,13 +264,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.swt"
-         download-size="0"
-         install-size="0"
-         version="3.104.0.v20150528-0211"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.equinox.ds"
          download-size="0"
          install-size="0"
@@ -334,7 +288,7 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          id="org.eclipse.ice.item"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150821"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
@@ -426,7 +380,7 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          id="org.eclipse.ice.datastructures"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="2.1.7.20150822"
          unpack="false"/>
 
    <plugin
@@ -455,13 +409,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          download-size="0"
          install-size="0"
          version="1.3.0.v201303031735"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ui.forms"
-         download-size="0"
-         install-size="0"
-         version="3.6.200.v20150506-2029"
          unpack="false"/>
 
    <plugin
@@ -530,50 +477,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.swt.cocoa.macosx.x86_64"
-         os="macosx"
-         ws="cocoa"
-         arch="x86_64"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.swt.gtk.linux.x86"
-         os="linux"
-         ws="gtk"
-         arch="x86"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.swt.win32.win32.x86"
-         os="win32"
-         ws="win32"
-         arch="x86"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.swt.win32.win32.x86_64"
-         os="win32"
-         ws="win32"
-         arch="x86_64"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.core.net.linux.x86"
          os="linux"
          ws="gtk"
@@ -624,13 +527,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.ui.editors"
-         download-size="0"
-         install-size="0"
-         version="3.9.0.v20150213-1939"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.compare"
          download-size="0"
          install-size="0"
@@ -645,13 +541,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.ui.ide"
-         download-size="0"
-         install-size="0"
-         version="3.11.0.v20150510-1749"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.core.filebuffers"
          download-size="0"
          install-size="0"
@@ -659,24 +548,10 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.ui.workbench.texteditor"
-         download-size="0"
-         install-size="0"
-         version="3.9.100.v20141023-1946"
-         unpack="false"/>
-
-   <plugin
          id="com.jcraft.jsch"
          download-size="0"
          install-size="0"
          version="0.1.51.v201410302000"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ice.analysistool"
-         download-size="0"
-         install-size="0"
-         version="2.1.7.20150821"
          unpack="false"/>
 
    <plugin
@@ -715,13 +590,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.update.configurator"
-         download-size="0"
-         install-size="0"
-         version="3.3.300.v20140518-1928"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.ice.io"
          download-size="0"
          install-size="0"
@@ -746,7 +614,7 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          id="org.eclipse.ice.reactor"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
@@ -758,12 +626,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
 
    <plugin
          id="org.eclipse.platform"
-         download-size="0"
-         install-size="0"
-         version="4.5.0.v20150603-2000"/>
-
-   <plugin
-         id="org.eclipse.sdk"
          download-size="0"
          install-size="0"
          version="4.5.0.v20150603-2000"/>
@@ -784,13 +646,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
 
    <plugin
          id="org.eclipse.emf.edit"
-         download-size="0"
-         install-size="0"
-         version="2.11.0.v20150601-0402"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.xsd"
          download-size="0"
          install-size="0"
          version="2.11.0.v20150601-0402"
@@ -818,69 +673,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.xsd.edit"
-         download-size="0"
-         install-size="0"
-         version="2.8.0.v20150601-0402"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.wst.common.project.facet.core"
-         download-size="0"
-         install-size="0"
-         version="1.4.300.v201111030423"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.wst.common.frameworks"
-         download-size="0"
-         install-size="0"
-         version="1.2.200.v201304241450"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.wst.common.environment"
-         download-size="0"
-         install-size="0"
-         version="1.0.400.v200912181831"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.wst.common.core"
-         download-size="0"
-         install-size="0"
-         version="1.2.0.v200908251833"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.wst.common.ui"
-         download-size="0"
-         install-size="0"
-         version="1.1.500.v200911182011"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.wst.common.uriresolver"
-         download-size="0"
-         install-size="0"
-         version="1.2.200.v201505132009"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.wst.sse.core"
-         download-size="0"
-         install-size="0"
-         version="1.1.900.v201401092025"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.wst.sse.ui"
-         download-size="0"
-         install-size="0"
-         version="1.3.400.v201505141512"
-         unpack="false"/>
-
-   <plugin
          id="org.apache.xml.resolver"
          download-size="0"
          install-size="0"
@@ -895,55 +687,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.wst.common.emf"
-         download-size="0"
-         install-size="0"
-         version="1.2.400.v201505132009"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.wst.validation"
-         download-size="0"
-         install-size="0"
-         version="1.2.600.v201501211647"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.wst.xml.core"
-         download-size="0"
-         install-size="0"
-         version="1.1.902.v201501211904"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.wst.xml.ui"
-         download-size="0"
-         install-size="0"
-         version="1.1.501.v201501212057"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.wst.xsd.core"
-         download-size="0"
-         install-size="0"
-         version="1.1.900.v201401141857"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.wst.xsd.ui"
-         download-size="0"
-         install-size="0"
-         version="1.2.500.v201208081537"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ice.kdd"
-         download-size="0"
-         install-size="0"
-         version="2.1.7.20150821"
-         unpack="false"/>
-
-   <plugin
          id="com.springsource.snakeyaml"
          download-size="0"
          install-size="0"
@@ -954,14 +697,14 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          id="org.eclipse.ice.persistence.xml"
          download-size="0"
          install-size="0"
-         version="2.1.01"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.ice.client.widgets.reactoreditor.grid"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
@@ -1017,7 +760,7 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          id="gov.lbnl.visit.swt"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150808"
+         version="2.1.7.20150822"
          unpack="false"/>
 
    <plugin
@@ -1129,7 +872,7 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          id="org.eclipse.ice.materials"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
@@ -1266,13 +1009,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.ui.intro"
-         download-size="0"
-         install-size="0"
-         version="3.4.300.v20141007-1449"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.ice.materials.ui"
          download-size="0"
          install-size="0"
@@ -1294,594 +1030,10 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.ice.viz.service"
-         download-size="0"
-         install-size="0"
-         version="2.1.7.20150812"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.ice.viz.service.visit"
          download-size="0"
          install-size="0"
          version="2.1.7.20150821"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.remote.core"
-         download-size="0"
-         install-size="0"
-         version="2.0.0.201506061609"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.remote.jsch.core"
-         download-size="0"
-         install-size="0"
-         version="1.0.0.201506061609"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp"
-         download-size="0"
-         install-size="0"
-         version="9.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.aix"
-         download-size="0"
-         install-size="0"
-         version="9.0.0.201506101404"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.cdt.compilers.core"
-         download-size="0"
-         install-size="0"
-         version="6.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.core"
-         download-size="0"
-         install-size="0"
-         version="8.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.debug.core"
-         download-size="0"
-         install-size="0"
-         version="7.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.debug.sdm"
-         download-size="0"
-         install-size="0"
-         version="9.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.debug.sdm.core"
-         download-size="0"
-         install-size="0"
-         version="7.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.debug.sdm.ui"
-         download-size="0"
-         install-size="0"
-         version="5.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.debug.ui"
-         download-size="0"
-         install-size="0"
-         version="5.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.doc.user"
-         download-size="0"
-         install-size="0"
-         version="7.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.ems.core"
-         download-size="0"
-         install-size="0"
-         version="3.1.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.ems.ui"
-         download-size="0"
-         install-size="0"
-         version="3.1.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.etfw"
-         download-size="0"
-         install-size="0"
-         version="7.1.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.etfw.doc.user"
-         download-size="0"
-         install-size="0"
-         version="1.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.etfw.feedback"
-         download-size="0"
-         install-size="0"
-         version="6.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.etfw.feedback.perfsuite"
-         download-size="0"
-         install-size="0"
-         version="1.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.etfw.feedback.perfsuite.doc.user"
-         download-size="0"
-         install-size="0"
-         version="1.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.etfw.jaxb"
-         download-size="0"
-         install-size="0"
-         version="1.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.etfw.launch"
-         download-size="0"
-         install-size="0"
-         version="1.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.etfw.parallel"
-         download-size="0"
-         install-size="0"
-         version="2.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.etfw.tau"
-         download-size="0"
-         install-size="0"
-         version="1.0.1.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.etfw.tau.papiselect"
-         download-size="0"
-         install-size="0"
-         version="4.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.etfw.tau.perfdmf"
-         download-size="0"
-         install-size="0"
-         version="3.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.etfw.tau.selinst"
-         download-size="0"
-         install-size="0"
-         version="1.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.etfw.tau.selinstfort"
-         download-size="0"
-         install-size="0"
-         version="1.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.etfw.tau.ui"
-         download-size="0"
-         install-size="0"
-         version="1.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.etfw.toolopts"
-         download-size="0"
-         install-size="0"
-         version="5.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.gem"
-         download-size="0"
-         install-size="0"
-         version="1.3.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.gem.help"
-         download-size="0"
-         install-size="0"
-         version="1.3.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.launch"
-         download-size="0"
-         install-size="0"
-         version="7.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.linux"
-         download-size="0"
-         install-size="0"
-         version="9.0.0.201506101404"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.macosx"
-         download-size="0"
-         install-size="0"
-         version="9.0.0.201506101404"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.pldt.common"
-         download-size="0"
-         install-size="0"
-         version="6.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.pldt.doc.user"
-         download-size="0"
-         install-size="0"
-         version="6.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.pldt.mpi.analysis"
-         download-size="0"
-         install-size="0"
-         version="6.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.pldt.mpi.analysis.cdt"
-         download-size="0"
-         install-size="0"
-         version="6.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.pldt.mpi.core"
-         download-size="0"
-         install-size="0"
-         version="6.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.pldt.mpi.fortran"
-         download-size="0"
-         install-size="0"
-         version="5.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.pldt.openacc"
-         download-size="0"
-         install-size="0"
-         version="6.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.pldt.openacc.fortran"
-         download-size="0"
-         install-size="0"
-         version="6.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.pldt.openmp.analysis"
-         download-size="0"
-         install-size="0"
-         version="6.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.pldt.openmp.core"
-         download-size="0"
-         install-size="0"
-         version="6.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.pldt.openmp.fortran"
-         download-size="0"
-         install-size="0"
-         version="5.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.pldt.openmp.ui.pv"
-         download-size="0"
-         install-size="0"
-         version="6.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.pldt.openshmem"
-         download-size="0"
-         install-size="0"
-         version="6.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.pldt.upc"
-         download-size="0"
-         install-size="0"
-         version="6.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.pldt.wizards"
-         download-size="0"
-         install-size="0"
-         version="6.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.proxy"
-         download-size="0"
-         install-size="0"
-         version="9.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.proxy.protocol"
-         download-size="0"
-         install-size="0"
-         version="6.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.rdt.sync.cdt.core"
-         download-size="0"
-         install-size="0"
-         version="1.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.rdt.sync.cdt.ui"
-         download-size="0"
-         install-size="0"
-         version="1.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.rdt.sync.core"
-         download-size="0"
-         install-size="0"
-         version="5.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.rdt.sync.fortran.ui"
-         download-size="0"
-         install-size="0"
-         version="1.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.rdt.sync.git.core"
-         download-size="0"
-         install-size="0"
-         version="2.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.rdt.sync.git.ui"
-         download-size="0"
-         install-size="0"
-         version="1.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.rdt.sync.ui"
-         download-size="0"
-         install-size="0"
-         version="2.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.remote.server.core"
-         download-size="0"
-         install-size="0"
-         version="3.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.remote.terminal"
-         download-size="0"
-         install-size="0"
-         version="2.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.rm.ibm.ll.doc.user"
-         download-size="0"
-         install-size="0"
-         version="4.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.rm.ibm.ll.ui"
-         download-size="0"
-         install-size="0"
-         version="1.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.rm.ibm.pe.doc.user"
-         download-size="0"
-         install-size="0"
-         version="5.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.rm.ibm.pe.ui"
-         download-size="0"
-         install-size="0"
-         version="1.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.rm.ibm.platform.lsf.doc.user"
-         download-size="0"
-         install-size="0"
-         version="1.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.rm.ibm.platform.lsf.ui"
-         download-size="0"
-         install-size="0"
-         version="1.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.rm.jaxb.configs"
-         download-size="0"
-         install-size="0"
-         version="1.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.rm.jaxb.contrib"
-         download-size="0"
-         install-size="0"
-         version="1.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.rm.jaxb.control.core"
-         download-size="0"
-         install-size="0"
-         version="2.1.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.rm.jaxb.control.ui"
-         download-size="0"
-         install-size="0"
-         version="2.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.rm.jaxb.core"
-         download-size="0"
-         install-size="0"
-         version="1.2.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.rm.jaxb.doc.user"
-         download-size="0"
-         install-size="0"
-         version="1.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.rm.jaxb.ui"
-         download-size="0"
-         install-size="0"
-         version="1.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.rm.lml.core"
-         download-size="0"
-         install-size="0"
-         version="2.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.rm.lml.da"
-         download-size="0"
-         install-size="0"
-         version="1.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.rm.lml.da.server"
-         download-size="0"
-         install-size="0"
-         version="2.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.rm.lml.monitor.core"
-         download-size="0"
-         install-size="0"
-         version="2.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.rm.lml.monitor.ui"
-         download-size="0"
-         install-size="0"
-         version="2.1.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.rm.lml.ui"
-         download-size="0"
-         install-size="0"
-         version="2.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.rm.slurm.help"
-         download-size="0"
-         install-size="0"
-         version="1.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.ui"
-         download-size="0"
-         install-size="0"
-         version="7.0.0.201506101404"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ptp.utils"
-         download-size="0"
-         install-size="0"
-         version="9.0.0.201506101404"
          unpack="false"/>
 
    <plugin
@@ -1895,7 +1047,7 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          id="org.eclipse.ice.caebat.batml"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="2.1.7.20150822"
          unpack="false"/>
 
    <plugin
@@ -1938,105 +1090,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          download-size="0"
          install-size="0"
          version="4.0.0.201506090130-r"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.swtbot.ant.junit"
-         download-size="0"
-         install-size="0"
-         version="2.3.0.201506081302"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.swtbot.eclipse.core"
-         download-size="0"
-         install-size="0"
-         version="2.3.0.201506081302"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.swtbot.eclipse.finder"
-         download-size="0"
-         install-size="0"
-         version="2.3.0.201506081302"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.swtbot.eclipse.gef.finder"
-         download-size="0"
-         install-size="0"
-         version="2.3.0.201506081302"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.swtbot.eclipse.junit.headless"
-         download-size="0"
-         install-size="0"
-         version="2.3.0.201506081302"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.swtbot.eclipse.spy"
-         download-size="0"
-         install-size="0"
-         version="2.3.0.201506081302"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.swtbot.eclipse.ui"
-         download-size="0"
-         install-size="0"
-         version="2.3.0.201506081302"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.swtbot.forms.finder"
-         download-size="0"
-         install-size="0"
-         version="2.3.0.201506081302"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.swtbot.generator"
-         download-size="0"
-         install-size="0"
-         version="2.3.0.201506081302"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.swtbot.generator.jdt"
-         download-size="0"
-         install-size="0"
-         version="2.3.0.201506081302"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.swtbot.generator.ui"
-         download-size="0"
-         install-size="0"
-         version="2.3.0.201506081302"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.swtbot.go"
-         download-size="0"
-         install-size="0"
-         version="2.3.0.201506081302"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.swtbot.junit4_x"
-         download-size="0"
-         install-size="0"
-         version="2.3.0.201506081302"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.swtbot.swt.finder"
-         download-size="0"
-         install-size="0"
-         version="2.3.0.201506081302"
          unpack="false"/>
 
    <plugin
@@ -2376,27 +1429,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.remote.console"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.remote.jsch.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.remote.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.apache.commons.io"
          download-size="0"
          install-size="0"
@@ -2440,14 +1472,42 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.ice.viz.service.paraview.web"
+         id="org.eclipse.ice.viz.service.geometry"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.ice.viz.service.geometry"
+         id="org.eclipse.ice.viz.service"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ice.viz.service.paraview.web"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ice.viz.service.jme3"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ice.kdd"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ice.analysistool"
          download-size="0"
          install-size="0"
          version="0.0.0"
