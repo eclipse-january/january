@@ -166,7 +166,7 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          id="org.eclipse.ice.core"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="2.1.7.20150821"
          unpack="false"/>
 
    <plugin
@@ -334,7 +334,7 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          id="org.eclipse.ice.item"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="2.1.7.20150821"
          unpack="false"/>
 
    <plugin
@@ -676,35 +676,35 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          id="org.eclipse.ice.analysistool"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="2.1.7.20150821"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.ice.client"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="2.1.7.20150821"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.ice.client.rcp"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="2.1.7.20150821"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.ice.client.widgets"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="2.1.7.20150821"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.ice.reactorAnalyzer"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="2.1.7.20150821"
          unpack="false"/>
 
    <plugin
@@ -739,7 +739,7 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          id="org.eclipse.ice.client.widgets.rcp"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="2.1.7.20150821"
          unpack="false"/>
 
    <plugin
@@ -753,7 +753,7 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          id="org.eclipse.ice.client.widgets.reactoreditor"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="2.1.7.20150821"
          unpack="false"/>
 
    <plugin
@@ -940,7 +940,7 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          id="org.eclipse.ice.kdd"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="2.1.7.20150821"
          unpack="false"/>
 
    <plugin
@@ -968,42 +968,42 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          id="org.eclipse.ice.client.widgets.reactoreditor.lwr"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="2.1.7.20150821"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.ice.client.widgets.reactoreditor.sfr"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="2.1.7.20150821"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.ice.reactor.sfr"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="2.1.7.20150821"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.ice.proteus"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="2.1.7.20150821"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.ice.mesh"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="2.1.7.20150821"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.ice.nek5000"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="2.1.7.20150821"
          unpack="false"/>
 
    <plugin
@@ -1024,7 +1024,7 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          id="org.eclipse.ice.viz"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="2.1.7.20150821"
          unpack="false"/>
 
    <plugin
@@ -1038,21 +1038,21 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          id="org.eclipse.ice.reactor.perspective"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="2.1.7.20150821"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.ice.reactor.plant"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="2.1.7.20150821"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.ice.client.widgets.moose"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="2.1.7.20150821"
          unpack="false"/>
 
    <plugin
@@ -1115,14 +1115,14 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          id="org.eclipse.ice.xolotl"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="2.1.7.20150821"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.ice.reflectivity"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="2.1.7.20150821"
          unpack="false"/>
 
    <plugin
@@ -1276,14 +1276,14 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          id="org.eclipse.ice.materials.ui"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="2.1.7.20150821"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.ice.sassena"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="2.1.7.20150821"
          unpack="false"/>
 
    <plugin
@@ -1304,7 +1304,7 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          id="org.eclipse.ice.viz.service.visit"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="2.1.7.20150821"
          unpack="false"/>
 
    <plugin
@@ -1888,7 +1888,7 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          id="org.eclipse.ice.vibe"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="2.1.7.20150821"
          unpack="false"/>
 
    <plugin
@@ -2436,7 +2436,7 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          id="org.eclipse.ice.viz.service.paraview"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150812"
+         version="2.1.7.20150821"
          unpack="false"/>
 
    <plugin
