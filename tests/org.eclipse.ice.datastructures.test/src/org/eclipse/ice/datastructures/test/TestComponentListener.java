@@ -18,6 +18,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
+import org.eclipse.ice.viz.service.datastructures.IVizUpdateable;
+import org.eclipse.ice.viz.service.datastructures.IVizUpdateableListener;
 
 /**
  * <p>
@@ -31,7 +33,8 @@ import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
  * 
  * @author Jay Jay Billings
  */
-public class TestComponentListener implements IUpdateableListener {
+public class TestComponentListener implements IUpdateableListener,
+		IVizUpdateableListener {
 
 	/**
 	 * The flag that indicates whether or not the listener was updated.
@@ -112,5 +115,22 @@ public class TestComponentListener implements IUpdateableListener {
 
 		return;
 
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.viz.service.datastructures.IVizUpdateableListener#update(org.eclipse.ice.viz.service.datastructures.IVizUpdateable)
+	 */
+	@Override
+	public void update(IVizUpdateable component) {
+
+		// Update the flag
+		wasNotified.set(true);
+
+		// Dump some debug information
+		System.out.println("TestComponentListener Message: Updated!");
+
+		return;
+		
 	}
 }
