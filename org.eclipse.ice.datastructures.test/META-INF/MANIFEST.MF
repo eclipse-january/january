@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ICEDataStructuresTest
 Bundle-SymbolicName: org.eclipse.ice.datastructures.test
-Bundle-Version: 2.1.7.20150821
+Bundle-Version: 2.1.7.20150824
 Require-Bundle: org.junit;bundle-version="4.8.2",
  org.eclipse.emf.ecore
 Import-Package: ca.odell.glazedlists,
@@ -18,12 +18,13 @@ Import-Package: ca.odell.glazedlists,
  org.eclipse.ice.datastructures.form.emf,
  org.eclipse.ice.datastructures.form.geometry,
  org.eclipse.ice.datastructures.form.iterator,
+ org.eclipse.ice.datastructures.form.mesh,
  org.eclipse.ice.datastructures.form.painfullySimpleForm,
  org.eclipse.ice.datastructures.jaxbclassprovider,
  org.eclipse.ice.datastructures.resource,
  org.eclipse.ice.viz.service.datastructures,
- org.eclipse.ice.viz.service.mesh.datastructures,
  org.eclipse.ice.viz.service.geometry.shapes,
+ org.eclipse.ice.viz.service.jme3.geometry,
  org.osgi.framework;version="1.6.0",
  org.osgi.util.tracker;version="1.5.0"
 Bundle-ActivationPolicy: lazy
