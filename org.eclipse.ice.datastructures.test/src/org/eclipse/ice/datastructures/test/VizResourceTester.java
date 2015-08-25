@@ -1,15 +1,15 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2014 UT-Battelle, LLC.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *   Initial API and implementation and/or initial documentation - Jay Jay Billings,
- *   Jordan H. Deyton, Dasha Gorin, Alexander J. McCaskey, Taylor Patterson,
- *   Claire Saunders, Matthew Wang, Anna Wojtowicz
- *******************************************************************************/
+ *  * Copyright (c) 2012, 2014 UT-Battelle, LLC.
+ *   * All rights reserved. This program and the accompanying materials
+ *    * are made available under the terms of the Eclipse Public License v1.0
+ *     * which accompanies this distribution, and is available at
+ *      * http://www.eclipse.org/legal/epl-v10.html
+ *       *
+ *        * Contributors:
+ *         *   Initial API and implementation and/or initial documentation - Jay Jay Billings,
+ *          *   Jordan H. Deyton, Dasha Gorin, Alexander J. McCaskey, Taylor Patterson,
+ *           *   Claire Saunders, Matthew Wang, Anna Wojtowicz
+ *            *******************************************************************************/
 package org.eclipse.ice.datastructures.test;
 
 import static org.junit.Assert.assertEquals;
@@ -31,21 +31,21 @@ import org.eclipse.ice.datastructures.resource.VizResource;
 import org.junit.Test;
 
 /**
- * This class is responsible for checking the VizResource class
- * 
- * @author Taylor Patterson
- * 
- */
+ *  * This class is responsible for checking the VizResource class
+ *   * 
+ *    * @author Taylor Patterson
+ *     * 
+ *      */
 public class VizResourceTester {
 
 	/**
-	 * The VizResource to use for testing.
-	 */
+ * 	 * The VizResource to use for testing.
+ * 	 	 */
 	private VizResource vizResource;
 
 	/**
-	 * Check the setFileSet and getFileSet operations.
-	 */
+ * 	 * Check the setFileSet and getFileSet operations.
+ * 	 	 */
 	@Test
 	public void checkFileSet() {
 
@@ -121,13 +121,13 @@ public class VizResourceTester {
 	 * @throws NullPointerException
 	 */
 	@Test
-	public void checkXMLPersistence() throws NullPointerException,
-			JAXBException, IOException {
+	public void checkXMLPersistence()
+			throws NullPointerException, JAXBException, IOException {
 
 		// Local declarations
 		VizResource vizResource = null, loadedResource = null;
-		VizResource childRes1 = new VizResource(new File("1")), childRes2 = new VizResource(
-				new File("2"));
+		VizResource childRes1 = new VizResource(new File("1")),
+				childRes2 = new VizResource(new File("2"));
 		childRes2.setId(2);
 		childRes2.setName("2");
 		ArrayList<VizResource> childResources = new ArrayList<VizResource>();
@@ -172,7 +172,8 @@ public class VizResourceTester {
 
 		// Local declarations
 		VizResource vizResource = null, equalResource = null;
-		VizResource childRes1 = new VizResource(), childRes2 = new VizResource();
+		VizResource childRes1 = new VizResource(),
+				childRes2 = new VizResource();
 		ArrayList<VizResource> childResources = new ArrayList<VizResource>();
 		childResources.add(childRes1);
 		childResources.add(childRes2);
@@ -207,7 +208,8 @@ public class VizResourceTester {
 
 		// Local declarations
 		VizResource vizResource = null, equalResource = new VizResource();
-		VizResource childRes1 = new VizResource(), childRes2 = new VizResource();
+		VizResource childRes1 = new VizResource(),
+				childRes2 = new VizResource();
 		ArrayList<VizResource> childResources = new ArrayList<VizResource>();
 		childResources.add(childRes1);
 		childResources.add(childRes2);
