@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.form.Entry;
+import org.eclipse.ice.viz.service.datastructures.resource.IResource;
 
 /**
  * <p>
@@ -40,7 +41,7 @@ import org.eclipse.ice.datastructures.form.Entry;
  */
 @XmlRootElement(name = "ICEResource")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ICEResource extends ICEObject {
+public class ICEResource extends ICEObject{
 
 	/**
 	 * <p>
@@ -137,14 +138,8 @@ public class ICEResource extends ICEObject {
 
 	}
 
-	/**
-	 * <p>
-	 * This operation returns the last modification date of the file.
-	 * </p>
-	 * 
-	 * @return <p>
-	 *         The date.
-	 *         </p>
+	/* (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.resource.IResource#getLastModificationDate()
 	 */
 	public String getLastModificationDate() {
 
@@ -161,29 +156,16 @@ public class ICEResource extends ICEObject {
 		return retVal;
 	}
 
-	/**
-	 * <p>
-	 * This operations returns the contents of the Resource as an instance of
-	 * File.
-	 * </p>
-	 * 
-	 * @return <p>
-	 *         The file.
-	 *         </p>
+	/* (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.resource.IResource#getContents()
 	 */
 	public File getContents() {
 
 		return file;
 	}
 
-	/**
-	 * <p>
-	 * This operation returns the URI to the Resource.
-	 * </p>
-	 * 
-	 * @return <p>
-	 *         The path as a URL.
-	 *         </p>
+	/* (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.resource.IResource#getPath()
 	 */
 	public URI getPath() {
 		if (this.file != null) {
@@ -192,13 +174,8 @@ public class ICEResource extends ICEObject {
 		return path;
 	}
 
-	/**
-	 * <p>
-	 * This operation sets the path to the Resource and is an alternative to
-	 * setContents(). It will reset the File handle if it is different.
-	 * </p>
-	 * 
-	 * @param path
+	/* (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.resource.IResource#setPath(java.net.URI)
 	 */
 	public void setPath(URI path) {
 
@@ -216,33 +193,16 @@ public class ICEResource extends ICEObject {
 
 	}
 
-	/**
-	 * <p>
-	 * This operation associates a set of Entries with the resource that
-	 * describe specific properties. The list of Entries is returned by
-	 * reference and is not a deep copy, i.e. - changing one will change it on
-	 * the resource.
-	 * </p>
-	 * 
-	 * @return <p>
-	 *         The properties or null if there are no properties.
-	 *         </p>
+	/* (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.resource.IResource#getProperties()
 	 */
 	public ArrayList<Entry> getProperties() {
 
 		return this.properties;
 	}
 
-	/**
-	 * <p>
-	 * This operation returns the set of Entries that describe specific
-	 * properties of the resource. The properties can be set multiple times.
-	 * </p>
-	 * 
-	 * @param props
-	 *            <p>
-	 *            The properties.
-	 *            </p>
+	/* (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.resource.IResource#setProperties(java.util.ArrayList)
 	 */
 	public void setProperties(ArrayList<Entry> props) {
 		// If null return
@@ -254,29 +214,15 @@ public class ICEResource extends ICEObject {
 
 	}
 
-	/**
-	 * <p>
-	 * This operation returns true if the ICEResource is an image and false if
-	 * not based upon the isPicture attribute.
-	 * </p>
-	 * 
-	 * @return <p>
-	 *         True if this is a picture, false otherwise.
-	 *         </p>
+	/* (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.resource.IResource#isPictureType()
 	 */
 	public boolean isPictureType() {
 		return this.isPicture;
 	}
 
-	/**
-	 * <p>
-	 * An operation that sets the isPicture attribute on ICEResource.
-	 * </p>
-	 * 
-	 * @param isPicture
-	 *            <p>
-	 *            Determines if ICEResource is a picture.
-	 *            </p>
+	/* (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.resource.IResource#setPictureType(boolean)
 	 */
 	@XmlTransient
 	public void setPictureType(boolean isPicture) {
@@ -284,11 +230,8 @@ public class ICEResource extends ICEObject {
 
 	}
 
-	/**
-	 * This operation performs a deep copy of the attributes of another
-	 * ICEResource into the current ICEResource.
-	 * @param otherResource
-	 *            The other ICEResource from which information should be copied.
+	/* (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.resource.IResource#copy(org.eclipse.ice.datastructures.resource.ICEResource)
 	 */
 	public void copy(ICEResource otherResource) {
 
@@ -401,19 +344,8 @@ public class ICEResource extends ICEObject {
 
 	}
 
-	/**
-	 * <p>
-	 * This operation sets the File which the Resource represents. The default
-	 * values of the name, id and description for this class are the filename, 1
-	 * and the absolute path, respectively.
-	 * </p>
-	 * 
-	 * @param resourceFile
-	 *            <p>
-	 *            The file that the Resource should be created to represent.
-	 *            </p>
-	 * @throws IOException
-	 * @throws NullPointerException
+	/* (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.resource.IResource#setContents(java.io.File)
 	 */
 	@XmlTransient
 	public void setContents(File resourceFile) throws IOException,
