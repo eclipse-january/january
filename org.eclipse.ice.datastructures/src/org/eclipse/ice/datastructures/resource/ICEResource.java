@@ -27,7 +27,6 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.form.Entry;
-import org.eclipse.ice.viz.service.datastructures.resource.IResource;
 
 /**
  * <p>
@@ -41,7 +40,7 @@ import org.eclipse.ice.viz.service.datastructures.resource.IResource;
  */
 @XmlRootElement(name = "ICEResource")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ICEResource extends ICEObject{
+public class ICEResource extends ICEObject {
 
 	/**
 	 * <p>
@@ -138,8 +137,12 @@ public class ICEResource extends ICEObject{
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.ice.datastructures.resource.IResource#getLastModificationDate()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ice.datastructures.resource.IResource#getLastModificationDate
+	 * ()
 	 */
 	public String getLastModificationDate() {
 
@@ -156,7 +159,9 @@ public class ICEResource extends ICEObject{
 		return retVal;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ice.datastructures.resource.IResource#getContents()
 	 */
 	public File getContents() {
@@ -164,7 +169,9 @@ public class ICEResource extends ICEObject{
 		return file;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ice.datastructures.resource.IResource#getPath()
 	 */
 	public URI getPath() {
@@ -174,8 +181,11 @@ public class ICEResource extends ICEObject{
 		return path;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.ice.datastructures.resource.IResource#setPath(java.net.URI)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ice.datastructures.resource.IResource#setPath(java.net.URI)
 	 */
 	public void setPath(URI path) {
 
@@ -193,7 +203,9 @@ public class ICEResource extends ICEObject{
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ice.datastructures.resource.IResource#getProperties()
 	 */
 	public ArrayList<Entry> getProperties() {
@@ -201,8 +213,12 @@ public class ICEResource extends ICEObject{
 		return this.properties;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.ice.datastructures.resource.IResource#setProperties(java.util.ArrayList)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ice.datastructures.resource.IResource#setProperties(java.util
+	 * .ArrayList)
 	 */
 	public void setProperties(ArrayList<Entry> props) {
 		// If null return
@@ -214,15 +230,20 @@ public class ICEResource extends ICEObject{
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ice.datastructures.resource.IResource#isPictureType()
 	 */
 	public boolean isPictureType() {
 		return this.isPicture;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.ice.datastructures.resource.IResource#setPictureType(boolean)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ice.datastructures.resource.IResource#setPictureType(boolean)
 	 */
 	@XmlTransient
 	public void setPictureType(boolean isPicture) {
@@ -230,8 +251,12 @@ public class ICEResource extends ICEObject{
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.ice.datastructures.resource.IResource#copy(org.eclipse.ice.datastructures.resource.ICEResource)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ice.datastructures.resource.IResource#copy(org.eclipse.ice.
+	 * datastructures.resource.ICEResource)
 	 */
 	public void copy(ICEResource otherResource) {
 
@@ -252,8 +277,8 @@ public class ICEResource extends ICEObject{
 		// These items are cloned
 		this.properties.clear();
 		for (int i = 0; i < otherResource.properties.size(); i++) {
-			this.properties.add((Entry) otherResource.getProperties().get(i)
-					.clone());
+			this.properties
+					.add((Entry) otherResource.getProperties().get(i).clone());
 		}
 
 		// Copy picture
@@ -262,8 +287,8 @@ public class ICEResource extends ICEObject{
 
 	/**
 	 * This operation provides a deep copy of the ICEResource.
-	 * @return
-	 *         A clone of the ICEResource.
+	 * 
+	 * @return A clone of the ICEResource.
 	 */
 	@Override
 	public Object clone() {
@@ -314,7 +339,8 @@ public class ICEResource extends ICEObject{
 		// Check that their attributes are the same
 		return (file.equals(castedResource.file))
 				&& (path.equals(castedResource.path)
-						&& properties.equals(castedResource.properties) && (isPicture == castedResource.isPicture));
+						&& properties.equals(castedResource.properties)
+						&& (isPicture == castedResource.isPicture));
 
 	}
 
@@ -344,12 +370,16 @@ public class ICEResource extends ICEObject{
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.ice.datastructures.resource.IResource#setContents(java.io.File)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ice.datastructures.resource.IResource#setContents(java.io.
+	 * File)
 	 */
 	@XmlTransient
-	public void setContents(File resourceFile) throws IOException,
-			NullPointerException {
+	public void setContents(File resourceFile)
+			throws IOException, NullPointerException {
 
 		// Set the file reference and path
 		try {
