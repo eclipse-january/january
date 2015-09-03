@@ -1031,7 +1031,8 @@ public class MatrixComponent extends ICEObject implements Component {
 	}
 
 	/*
-	 * Overrides a super class method.
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.ICEObject.ICEObject#update(java.lang.String, java.lang.String)
 	 */
 	@Override
 	public void update(String updatedKey, String newValue) {

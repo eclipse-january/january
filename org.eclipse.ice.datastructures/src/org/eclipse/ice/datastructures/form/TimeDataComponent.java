@@ -230,15 +230,9 @@ public class TimeDataComponent extends DataComponent {
 
 	}
 
-	/**
-	 * <p>
-	 * Overrides and does nothing.
-	 * </p>
-	 * 
-	 * @param newEntry
-	 *            <p>
-	 *            The new Entry that will be added to the Form.
-	 *            </p>
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.form.DataComponent#addEntry(org.eclipse.ice.datastructures.form.Entry)
 	 */
 	@Override
 	public void addEntry(Entry newEntry) {
@@ -247,20 +241,9 @@ public class TimeDataComponent extends DataComponent {
 
 	}
 
-	/**
-	 * <p>
-	 * Overrides and does nothing.
-	 * </p>
-	 * 
-	 * @param newEntry
-	 *            <p>
-	 *            The new Entry that should be added to the form.
-	 *            </p>
-	 * @param parentNames
-	 *            <p>
-	 *            The list of Entry names for those Entries on which the new
-	 *            Entry is dependent.
-	 *            </p>
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.form.DataComponent#addEntry(org.eclipse.ice.datastructures.form.Entry, java.lang.String[])
 	 */
 	@Override
 	public void addEntry(Entry newEntry, String... parentNames) {
@@ -269,11 +252,9 @@ public class TimeDataComponent extends DataComponent {
 
 	}
 
-	/**
-	 * <p>
-	 * Overrides and does nothing.
-	 * </p>
-	 * 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.form.DataComponent#clearEntries()
 	 */
 	@Override
 	public void clearEntries() {
@@ -282,15 +263,9 @@ public class TimeDataComponent extends DataComponent {
 
 	}
 
-	/**
-	 * <p>
-	 * Overrides and does nothing.
-	 * </p>
-	 * 
-	 * @param entryName
-	 *            <p>
-	 *            The name of the Entry to delete.
-	 *            </p>
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.form.DataComponent#deleteEntry(java.lang.String)
 	 */
 	@Override
 	public void deleteEntry(String entryName) {
