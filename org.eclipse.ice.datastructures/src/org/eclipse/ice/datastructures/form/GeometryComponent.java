@@ -332,7 +332,8 @@ public class GeometryComponent extends ICEObject implements Component,
 	}
 
 	/*
-	 * Implements a method from IUpdateableListener.
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.ICEObject.IUpdateableListener#update(org.eclipse.ice.datastructures.ICEObject.IUpdateable)
 	 */
 	@Override
 	public void update(IUpdateable component) {

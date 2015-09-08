@@ -40,7 +40,8 @@ import org.eclipse.ice.datastructures.resource.VizResource;
 public class ICEJAXBClassProvider implements IJAXBClassProvider {
 
 	/*
-	 * Implements a method from IJAXBClassProvider.
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.jaxbclassprovider.IJAXBClassProvider#getClasses()
 	 */
 	@Override
 	public List<Class> getClasses() {
@@ -66,7 +67,8 @@ public class ICEJAXBClassProvider implements IJAXBClassProvider {
 	}
 
 	/*
-	 * Implements a method from IJAXBClassProvider.
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.jaxbclassprovider.IJAXBClassProvider#getProviderName()
 	 */
 	@Override
 	public String getProviderName() {
