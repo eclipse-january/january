@@ -41,12 +41,6 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 		this.chunks = chunks == null ? null : chunks.clone();
 		this.saver = saver;
 
-		// check shape for expandable dimensions
-		for (int i = 0; i < shape.length; i++) {
-			if (this.shape[i] == ILazyWriteableDataset.UNLIMITED) {
-				this.shape[i] = 0;
-			}
-		}
 		size = AbstractDataset.calcLongSize(this.shape);
 	}
 

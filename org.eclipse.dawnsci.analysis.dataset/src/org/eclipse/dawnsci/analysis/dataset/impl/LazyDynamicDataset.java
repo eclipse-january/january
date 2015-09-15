@@ -16,6 +16,7 @@ import org.eclipse.dawnsci.analysis.api.dataset.DataListenerDelegate;
 import org.eclipse.dawnsci.analysis.api.dataset.IDataListener;
 import org.eclipse.dawnsci.analysis.api.dataset.IDatasetChangeChecker;
 import org.eclipse.dawnsci.analysis.api.dataset.IDynamicDataset;
+import org.eclipse.dawnsci.analysis.api.dataset.ILazyWriteableDataset;
 import org.eclipse.dawnsci.analysis.api.io.ILazyLoader;
 
 public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
@@ -50,7 +51,26 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 
 	public LazyDynamicDataset(String name, int dtype, int elements, int[] shape, int[] maxShape, ILazyLoader loader) {
 		super(name, dtype, elements, shape, loader);
-		this.maxShape = maxShape == null ? shape.clone() : maxShape.clone();
+		if (maxShape == null) {
+			this.maxShape = shape.clone();
+			// check there are no unlimited dimensions in shape
+			int rank = shape.length;
+			boolean isUnlimited = false;
+			for (int i = 0; i < rank; i++) {
+				if (shape[i] == ILazyWriteableDataset.UNLIMITED) {
+					isUnlimited = true;
+					break;
+				}
+			}
+			if (isUnlimited) { // set all zeros
+				for (int i = 0; i < rank; i++) {
+					this.shape[i] = 0;
+					this.oShape[i] = 0;
+				}
+			}
+		} else {
+			this.maxShape = maxShape.clone();
+		}
 		this.eventDelegate = new DataListenerDelegate();
 	}
 
