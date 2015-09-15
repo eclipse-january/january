@@ -321,7 +321,7 @@ public class SliceND {
 	}
 
 	/**
-	 * @return shape of source dataset (this can change for dynamic datasets)
+	 * @return shape of source dataset
 	 */
 	public int[] getSourceShape() {
 		return oshape;

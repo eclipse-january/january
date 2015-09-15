@@ -70,6 +70,8 @@ public class Maths {
 	}
 
 	private static long toLong(double d) {
+		if (Double.isInfinite(d) || Double.isNaN(d))
+			return 0;
 		return (long) d;
 	}
 

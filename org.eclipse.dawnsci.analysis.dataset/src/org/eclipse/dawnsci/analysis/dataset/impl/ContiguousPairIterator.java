@@ -42,7 +42,6 @@ public class ContiguousPairIterator extends BroadcastIterator {
 			oStep = 1;
 		}
 		shape = a.getShape();
-		asDouble = aDataset.hasFloatingPointElements() || bDataset.hasFloatingPointElements();
 		reset();
 	}
 
