@@ -831,10 +831,6 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	protected static long toLong(final Object b) {
 		if (b instanceof Number) {
-			double t = ((Number) b).doubleValue();
-			if (Double.isNaN(t) || Double.isInfinite(t)) {
-				return 0;
-			}
 			return ((Number) b).longValue();
 		} else if (b instanceof Boolean) {
 			return ((Boolean) b).booleanValue() ? 1 : 0;
