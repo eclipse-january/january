@@ -212,6 +212,8 @@ public class DatasetFactory {
 			return ComplexFloatDataset.createFromObject(obj);
 		case Dataset.COMPLEX128:
 			return ComplexDoubleDataset.createFromObject(obj);
+		case Dataset.DATE:
+			return DateDatasetImpl.createFromObject(obj);
 		case Dataset.STRING:
 			return StringDataset.createFromObject(obj);
 		case Dataset.OBJECT:
