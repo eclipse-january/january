@@ -219,6 +219,19 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 
 		return (List<T>) metadata.get(findMetadataTypeSubInterfaces(clazz));
 	}
+	
+	@Override
+	public <T extends MetadataType> T getFirstMetadata(Class<T> clazz) {
+		try {
+			List<T> ml = getMetadata(clazz);
+			if (ml == null) return null;
+			return ml.isEmpty() ? null : ml.get(0);
+		} catch (Exception e) {
+			logger.error("Get metadata failed!",e);
+		}
+
+		return null;
+	}
 
 	@Override
 	public <T extends MetadataType> void clearMetadata(Class<T> clazz) {

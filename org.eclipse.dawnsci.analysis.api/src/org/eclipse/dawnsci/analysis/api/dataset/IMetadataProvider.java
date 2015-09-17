@@ -34,4 +34,10 @@ public interface IMetadataProvider {
 	 * @throws Exception
 	 */
 	public <T extends MetadataType> List<T> getMetadata(Class<T> clazz) throws Exception;
+
+	/**
+	 * @param clazz if null return first from everything
+	 * @return first element from list of metadata with given class
+	 */
+	public <T extends MetadataType> T getFirstMetadata(Class<T> clazz);
 }
