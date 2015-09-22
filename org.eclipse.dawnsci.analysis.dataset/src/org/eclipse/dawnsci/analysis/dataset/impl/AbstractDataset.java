@@ -677,8 +677,8 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	 * @return dataset type
 	 */
 	public static int getDType(ILazyDataset d) {
-		if (d instanceof Dataset)
-			return ((Dataset) d).getDtype();
+		if (d instanceof LazyDatasetBase)
+			return ((LazyDatasetBase) d).getDtype();
 		return getDTypeFromClass(d.elementClass(), d.getElementsPerItem());
 	}
 
