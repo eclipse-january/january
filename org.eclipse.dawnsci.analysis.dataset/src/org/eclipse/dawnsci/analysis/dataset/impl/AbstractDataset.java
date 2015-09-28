@@ -2709,6 +2709,8 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	protected void calculateSummaryStats(final boolean ignoreNaNs, final boolean ignoreInfs, final String name) {
 		final IndexIterator iter = getIterator();
 		final SummaryStatistics stats = new SummaryStatistics();
+		//sum of logs is slow and we dont use it, so blocking its calculation here
+		stats.setSumLogImpl(new NullStorelessUnivariateStatistic());
 
 		if (storedValues == null || !storedValues.containsKey(STORE_HASH)) {
 			boolean hasNaNs = false;
@@ -2811,6 +2813,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			}
 
 			final SummaryStatistics stats = new SummaryStatistics();
+			//sum of logs is slow and we dont use it, so blocking its calculation here
+			stats.setSumLogImpl(new NullStorelessUnivariateStatistic());
+			
 			double amax = Double.NEGATIVE_INFINITY;
 			double amin = Double.POSITIVE_INFINITY;
 			boolean hasNaNs = false;
