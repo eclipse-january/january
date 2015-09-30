@@ -499,13 +499,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.core.resources.source"
-         download-size="0"
-         install-size="0"
-         version="3.10.0.v20150423-0755"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.compare"
          download-size="0"
          install-size="0"
