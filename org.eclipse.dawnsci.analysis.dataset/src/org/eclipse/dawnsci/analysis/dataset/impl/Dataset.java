@@ -99,11 +99,16 @@ public interface Dataset extends IErrorDataset {
 	 * String
 	 */
 	public static final int STRING = 9;
-
+	
 	/**
 	 * Object
 	 */
 	public static final int OBJECT = 10;
+
+	/**
+	 * Date
+	 */
+	public static final int DATE = 11;
 
 	static final int ARRAYMUL = 100;
 
