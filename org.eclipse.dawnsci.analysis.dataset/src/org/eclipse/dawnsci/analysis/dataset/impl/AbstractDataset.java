@@ -17,6 +17,7 @@ import java.lang.reflect.Array;
 import java.text.Format;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -103,10 +104,15 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	public static final int COMPLEX = Dataset.COMPLEX;
 
 	/**
+	 * Date
+	 */
+	public static final int DATE = Dataset.DATE;
+
+	/**
 	 * String
 	 */
 	public static final int STRING = Dataset.STRING;
-
+	
 	/**
 	 * Object
 	 */
@@ -585,6 +591,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		result.put(double.class, FLOAT64);
 		result.put(Complex.class, COMPLEX128);
 		result.put(String.class, STRING);
+		result.put(Date.class, DATE);
 		result.put(Object.class, OBJECT);
 		return result;
 	}
@@ -817,7 +824,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			}
 			return toBoolean(db.getObjectAbs(0));
 		} else if (b instanceof IDataset) {
-			IDataset db = (Dataset) b;
+			IDataset db = (IDataset) b;
 			if (db.getSize() != 1) {
 				logger.error("Given dataset must have only one item");
 				throw new IllegalArgumentException("Given dataset must have only one item");
@@ -844,7 +851,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			}
 			return toLong(db.getObjectAbs(0));
 		} else if (b instanceof IDataset) {
-			IDataset db = (Dataset) b;
+			IDataset db = (IDataset) b;
 			if (db.getSize() != 1) {
 				logger.error("Given dataset must have only one item");
 				throw new IllegalArgumentException("Given dataset must have only one item");
