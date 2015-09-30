@@ -235,9 +235,8 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 			}
 			return getSlice(null, new SliceND(shape, slice));
 		} catch (Exception e) {
-			logger.error("Problem slicing lazy dataset", e);
+			throw new RuntimeException("Problem slicing lazy dataset", e);
 		}
-		return null;
 	}
 
 	@Override
