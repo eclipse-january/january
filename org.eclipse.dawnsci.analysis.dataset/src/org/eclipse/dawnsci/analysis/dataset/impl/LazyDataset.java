@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.dawnsci.analysis.api.dataset.IDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.ILazyDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.Slice;
 import org.eclipse.dawnsci.analysis.api.dataset.SliceND;
@@ -460,7 +461,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 		return ovalues;
 	}
 
-	protected SliceND calcTrueSlice(SliceND slice) {
+	protected final SliceND calcTrueSlice(SliceND slice) {
 		if (slice == null) {
 			slice = new SliceND(shape);
 		}
@@ -507,6 +508,12 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 		}
 
 		return createSlice(nstart, nstop, nstep);
+	}
+
+	protected final IDataset transformInput(IDataset data) {
+		if (map == null)
+			return data;
+		return data.getTransposedView(map);
 	}
 
 	protected SliceND createSlice(int[] nstart, int[] nstop, int[] nstep) {

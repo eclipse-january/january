@@ -178,6 +178,7 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 		}
 
 		SliceND nslice = calcTrueSlice(slice);
+		data = transformInput(data);
 
 		if (base != null) {
 			((ILazyWriteableDataset) base).setSlice(monitor, data, nslice);
