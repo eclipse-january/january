@@ -173,6 +173,9 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 		}
 
 		int[] dshape = data instanceof Dataset ? ((Dataset) data).getShapeRef() : data.getShape();
+		if (dshape.length == 0) { // fix zero-rank case
+			dshape = new int[] {1};
+		}
 		if (!Arrays.equals(slice.getShape(), dshape)) {
 			throw new IllegalArgumentException("Slice shape does not match input data shape");
 		}
