@@ -159,7 +159,7 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          id="org.eclipse.ecf.ssl"
          download-size="0"
          install-size="0"
-         version="1.1.0.v20150512-1727"
+         version="0.0.0"
          fragment="true"
          unpack="false"/>
 
@@ -213,7 +213,7 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          id="org.eclipse.ecf.provider.filetransfer.ssl"
          download-size="0"
          install-size="0"
-         version="1.0.0.v20150512-1727"
+         version="0.0.0"
          fragment="true"
          unpack="false"/>
 
@@ -235,7 +235,7 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          id="org.eclipse.ecf.filetransfer"
          download-size="0"
          install-size="0"
-         version="5.0.0.v20150512-1727"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
@@ -253,7 +253,7 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          id="org.eclipse.ecf.identity"
          download-size="0"
          install-size="0"
-         version="3.5.0.v20150512-1727"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
@@ -281,7 +281,7 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          id="org.eclipse.ecf.provider.filetransfer"
          download-size="0"
          install-size="0"
-         version="3.2.200.v20150512-1727"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
@@ -309,7 +309,7 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          id="org.eclipse.ecf"
          download-size="0"
          install-size="0"
-         version="3.4.0.v20150512-1727"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
@@ -844,7 +844,7 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          id="org.eclipse.jgit"
          download-size="0"
          install-size="0"
-         version="4.0.0.201506090130-r"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
