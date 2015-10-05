@@ -67,12 +67,14 @@ final class EventListenerList {
 			this.type = type;
 		}
 
+		@Override
 		public Object next() {
 			Object result = items[index + 1];
 			index += 2;
 			return result;
 		}
 
+		@Override
 		public boolean hasNext() {
 			if (items == null)
 				return false;
@@ -81,6 +83,7 @@ final class EventListenerList {
 			return index < items.length;
 		}
 
+		@Override
 		public void remove() {
 			throw new UnsupportedOperationException(
 					"Iterator removal not supported"); //$NON-NLS-1$

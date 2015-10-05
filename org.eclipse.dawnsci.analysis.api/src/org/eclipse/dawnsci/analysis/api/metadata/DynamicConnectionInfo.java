@@ -80,6 +80,7 @@ public class DynamicConnectionInfo implements MetadataType {
 	 * Make a deep copy of metadata
 	 * @return clone
 	 */
+	@Override
 	public MetadataType clone() {
 		DynamicConnectionInfo info = new DynamicConnectionInfo();
 		info.receivedCount = this.receivedCount;

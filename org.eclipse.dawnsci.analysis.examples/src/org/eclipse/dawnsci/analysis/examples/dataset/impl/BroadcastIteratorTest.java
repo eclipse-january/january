@@ -11,7 +11,6 @@ package org.eclipse.dawnsci.analysis.examples.dataset.impl;
 
 import org.eclipse.dawnsci.analysis.api.dataset.Slice;
 import org.eclipse.dawnsci.analysis.dataset.impl.BroadcastIterator;
-import org.eclipse.dawnsci.analysis.dataset.impl.BroadcastIterator;
 import org.eclipse.dawnsci.analysis.dataset.impl.CompoundDataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.Dataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.DatasetFactory;
