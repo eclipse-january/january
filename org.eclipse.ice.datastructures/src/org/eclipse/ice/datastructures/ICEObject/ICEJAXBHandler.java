@@ -6,9 +6,8 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *   Initial API and implementation and/or initial documentation - Jay Jay Billings,
- *   Jordan H. Deyton, Dasha Gorin, Alexander J. McCaskey, Taylor Patterson,
- *   Claire Saunders, Matthew Wang, Anna Wojtowicz
+ *   Initial API and implementation and/or initial documentation -
+ *   Jay Jay Billings
  *******************************************************************************/
 package org.eclipse.ice.datastructures.ICEObject;
 
@@ -25,7 +24,7 @@ import javax.xml.bind.Unmarshaller;
 /**
  * This class is responsible for reading and writing JAXB-annotated classes into
  * and out of ICE.
- * 
+ *
  * @author Jay Jay Billings
  */
 public class ICEJAXBHandler {
@@ -33,7 +32,7 @@ public class ICEJAXBHandler {
 	/**
 	 * This operation reads an instance of a particular class type from the
 	 * input stream into a Java Object.
-	 * 
+	 *
 	 * @param classList
 	 *            The class list from which JAXB annotations should be read.
 	 * @param inputStream
@@ -77,7 +76,7 @@ public class ICEJAXBHandler {
 	 * input stream into a Java Object. This operation requires both the Object
 	 * and the specific class type because some classes, such as local classes,
 	 * do return the appropriate class type from a call to "this.getClass()."
-	 * 
+	 *
 	 * @param dataObject
 	 *            An Object that is an instance of the Class that is parsed to
 	 *            create the XML InputStream.
