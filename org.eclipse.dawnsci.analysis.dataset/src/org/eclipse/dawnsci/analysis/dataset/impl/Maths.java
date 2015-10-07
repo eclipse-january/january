@@ -11546,7 +11546,7 @@ public class Maths {
 					final long iax = it.aLong;
 					final long ibx = it.bLong;
 					float ox;
-					ox = (float) (Math.max(iax, ibx));
+					ox = (Math.max(iax, ibx));
 					of32data[it.oIndex] = ox;
 				}
 			}
@@ -11578,16 +11578,14 @@ public class Maths {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
 						final double ibx = it.bDouble;
-						float ox;
-						ox = (float) (Math.max(iax, ibx));
+						float ox = (float) (Math.max(iax, ibx));
 						oaf32data[it.oIndex] = ox;
 					}
 				} else {
 					while (it.hasNext()) {
 						final long iax = it.aLong;
 						final long ibx = it.bLong;
-						float ox;
-						ox = (float) (Math.max(iax, ibx));
+						float ox = (Math.max(iax, ibx));
 						oaf32data[it.oIndex] = ox;
 					}
 				}
@@ -11609,12 +11607,11 @@ public class Maths {
 					while (it.hasNext()) {
 						final long iax = it.aLong;
 						long ibx = it.bLong;
-						float ox;
-						ox = (float) (Math.max(iax, ibx));
+						float ox = (Math.max(iax, ibx));
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementLongAbs(it.bIndex + j);
-							ox = (float) (Math.max(iax, ibx));
+							ox = (Math.max(iax, ibx));
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -11638,11 +11635,11 @@ public class Maths {
 						long iax = it.aLong;
 						final long ibx = it.bLong;
 						float ox;
-						ox = (float) (Math.max(iax, ibx));
+						ox = (Math.max(iax, ibx));
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementLongAbs(it.aIndex + j);
-							ox = (float) (Math.max(iax, ibx));
+							ox = (Math.max(iax, ibx));
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -11667,12 +11664,12 @@ public class Maths {
 						long iax = it.aLong;
 						long ibx = it.bLong;
 						float ox;
-						ox = (float) (Math.max(iax, ibx));
+						ox = (Math.max(iax, ibx));
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementLongAbs(it.aIndex + j);
 							ibx = db.getElementLongAbs(it.bIndex + j);
-							ox = (float) (Math.max(iax, ibx));
+							ox = (Math.max(iax, ibx));
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -12482,7 +12479,7 @@ public class Maths {
 					final long iax = it.aLong;
 					final long ibx = it.bLong;
 					float ox;
-					ox = (float) (Math.min(iax, ibx));
+					ox = (Math.min(iax, ibx));
 					of32data[it.oIndex] = ox;
 				}
 			}
@@ -12523,7 +12520,7 @@ public class Maths {
 						final long iax = it.aLong;
 						final long ibx = it.bLong;
 						float ox;
-						ox = (float) (Math.min(iax, ibx));
+						ox = (Math.min(iax, ibx));
 						oaf32data[it.oIndex] = ox;
 					}
 				}
@@ -12546,11 +12543,11 @@ public class Maths {
 						final long iax = it.aLong;
 						long ibx = it.bLong;
 						float ox;
-						ox = (float) (Math.min(iax, ibx));
+						ox = (Math.min(iax, ibx));
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementLongAbs(it.bIndex + j);
-							ox = (float) (Math.min(iax, ibx));
+							ox = (Math.min(iax, ibx));
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -12574,11 +12571,11 @@ public class Maths {
 						long iax = it.aLong;
 						final long ibx = it.bLong;
 						float ox;
-						ox = (float) (Math.min(iax, ibx));
+						ox = (Math.min(iax, ibx));
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementLongAbs(it.aIndex + j);
-							ox = (float) (Math.min(iax, ibx));
+							ox = (Math.min(iax, ibx));
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -12603,12 +12600,12 @@ public class Maths {
 						long iax = it.aLong;
 						long ibx = it.bLong;
 						float ox;
-						ox = (float) (Math.min(iax, ibx));
+						ox = (Math.min(iax, ibx));
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementLongAbs(it.aIndex + j);
 							ibx = db.getElementLongAbs(it.bIndex + j);
-							ox = (float) (Math.min(iax, ibx));
+							ox = (Math.min(iax, ibx));
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -28720,7 +28717,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					float ox;
-					ox = (float) (toLong(ix));
+					ox = (toLong(ix));
 					of32data[it.oIndex] = ox;
 				}
 			} else {
@@ -28757,7 +28754,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						float ox;
-						ox = (float) (toLong(ix));
+						ox = (toLong(ix));
 						oaf32data[it.oIndex] = ox;
 					}
 				} else {
@@ -28773,7 +28770,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						float ox;
-						ox = (float) (toLong(ix));
+						ox = (toLong(ix));
 						for (int j = 0; j < is; j++) {
 							oaf32data[it.oIndex + j] = ox;
 						}
@@ -28794,7 +28791,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							float ox;
-							ox = (float) (toLong(ix));
+							ox = (toLong(ix));
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -28878,8 +28875,8 @@ public class Maths {
 					final double ix = it.aDouble;
 					float ox;
 					float oy;
-					ox = (float) (toLong(ix));
-					oy = (float) (toLong(iy));
+					ox = (toLong(ix));
+					oy = (toLong(iy));
 					oc64data[it.oIndex] = ox;
 					oc64data[it.oIndex + 1] = oy;
 				}
@@ -28889,8 +28886,8 @@ public class Maths {
 					final double iy = da.getElementDoubleAbs(it.aIndex + 1);
 					float ox;
 					float oy;
-					ox = (float) (toLong(ix));
-					oy = (float) (toLong(iy));
+					ox = (toLong(ix));
+					oy = (toLong(iy));
 					oc64data[it.oIndex] = ox;
 					oc64data[it.oIndex + 1] = oy;
 				}
@@ -30380,7 +30377,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final long ix = it.aLong;
 					float ox;
-					ox = (float) (Math.signum(ix));
+					ox = (Math.signum(ix));
 					of32data[it.oIndex] = ox;
 				}
 			}
@@ -30417,7 +30414,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final long ix = it.aLong;
 						float ox;
-						ox = (float) (Math.signum(ix));
+						ox = (Math.signum(ix));
 						oaf32data[it.oIndex] = ox;
 					}
 				}
@@ -30435,7 +30432,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final long ix = it.aLong;
 						float ox;
-						ox = (float) (Math.signum(ix));
+						ox = (Math.signum(ix));
 						for (int j = 0; j < is; j++) {
 							oaf32data[it.oIndex + j] = ox;
 						}
@@ -30456,7 +30453,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final long ix = da.getElementLongAbs(it.aIndex + j);
 							float ox;
-							ox = (float) (Math.signum(ix));
+							ox = (Math.signum(ix));
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}

@@ -141,7 +141,6 @@ public class IndexIteratorTest {
 		return result;
 	}
 
-	@SuppressWarnings({ "null" })
 	private void testSlicedDataset(Dataset t, int start, int startaxis, int step, int stepaxis) {
 		int rank = t.getRank();
 		int[] steps = new int[rank];

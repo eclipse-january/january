@@ -27,7 +27,7 @@ final class EventListenerList {
 	 * @param listener
 	 *            the listener
 	 */
-	public synchronized void addListener(Class c, Object listener) {
+	public synchronized void addListener(Class<?> c, Object listener) {
 		if (listener == null || c == null)
 			throw new IllegalArgumentException();
 
@@ -48,7 +48,7 @@ final class EventListenerList {
 	 *            the type
 	 * @return whether this list contains a listener of type <i>c</i>
 	 */
-	public synchronized boolean containsListener(Class c) {
+	public synchronized boolean containsListener(Class<?> c) {
 		if (array == null)
 			return false;
 		for (int i = 0; i < array.length; i += 2)
@@ -57,12 +57,12 @@ final class EventListenerList {
 		return false;
 	}
 
-	static class TypeIterator implements Iterator {
+	static class TypeIterator implements Iterator<Object> {
 		private final Object[] items;
-		private final Class type;
+		private final Class<?> type;
 		private int index;
 
-		TypeIterator(Object items[], Class type) {
+		TypeIterator(Object items[], Class<?> type) {
 			this.items = items;
 			this.type = type;
 		}
@@ -97,7 +97,7 @@ final class EventListenerList {
 	 *            the type
 	 * @return an Iterator of all the listeners of type <i>c</i>
 	 */
-	public synchronized Iterator getListeners(final Class listenerType) {
+	public synchronized Iterator<Object> getListeners(final Class<?> listenerType) {
 		return new TypeIterator(array, listenerType);
 	}
 
@@ -109,7 +109,7 @@ final class EventListenerList {
 	 * @param listener
 	 *            the listener
 	 */
-	public synchronized void removeListener(Class c, Object listener) {
+	public synchronized void removeListener(Class<?> c, Object listener) {
 		if (array == null || array.length == 0)
 			return;
 		if (listener == null || c == null)

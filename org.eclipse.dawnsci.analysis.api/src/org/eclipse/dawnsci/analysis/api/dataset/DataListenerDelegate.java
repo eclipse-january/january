@@ -12,7 +12,7 @@ package org.eclipse.dawnsci.analysis.api.dataset;
 import java.util.Iterator;
 
 /**
- * Class used by DynamicDatasets to delgate 
+ * Class used by DynamicDatasets to delegate
  */
 public class DataListenerDelegate {
 
@@ -31,7 +31,7 @@ public class DataListenerDelegate {
 	}
 
 	public void fire(DataEvent evt) {
-		for (Iterator iterator = eventListenerlist.getListeners(IDataListener.class); iterator.hasNext();) {
+		for (Iterator<Object> iterator = eventListenerlist.getListeners(IDataListener.class); iterator.hasNext();) {
 			IDataListener l = (IDataListener) iterator.next();
 			l.dataChangePerformed(evt);
 		}

@@ -3320,7 +3320,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 		Dataset ed = null;
 		if (led instanceof IDataset) {
-			ed = DatasetUtils.convertToDataset((IDataset) led);
+			ed = DatasetUtils.convertToDataset(led);
 			if (!(led instanceof Dataset)) {
 				setError(ed); // set back
 			}

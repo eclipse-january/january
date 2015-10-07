@@ -838,7 +838,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		if (blob instanceof ILazyDataset) {
 			d = (ILazyDataset) blob;
 			if (d instanceof IDataset) {
-				Dataset ed = DatasetUtils.convertToDataset((IDataset) d);
+				Dataset ed = DatasetUtils.convertToDataset(d);
 				int is = ed.getElementsPerItem();
 				if (is != 1 && is != getElementsPerItem()) {
 					throw new IllegalArgumentException("Dataset has incompatible number of elements with this dataset");
