@@ -40,6 +40,7 @@ import org.junit.Test;
  * @author Matthew Gerring
  *
  */
+@SuppressWarnings("unused")
 public class NumpyExamples {
 	
 	/**
@@ -433,7 +434,7 @@ public class NumpyExamples {
     4 equally spaced samples between 1 and 3, inclusive
     linspace(1,3,4)                          linspace(1,3,4)     
     */
-    @Test
+	@Test
     public void various() {
     	
     	IDataset zeros = DatasetFactory.zeros(new int[]{3, 4}, Dataset.FLOAT64);
