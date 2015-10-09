@@ -28,7 +28,7 @@ import org.junit.Test;
 public class ItemBuilderTester {
 
 	/**
-	 * Test for {@link org.eclipse.ice.item.ItemBuilder#getItemBuilders()}.
+	 * Test for {@link org.eclipse.ice.item.ItemBuilder}.
 	 *
 	 * @throws CoreException
 	 */
