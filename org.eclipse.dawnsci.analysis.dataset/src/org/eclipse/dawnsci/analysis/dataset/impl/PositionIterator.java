@@ -91,7 +91,7 @@ public class PositionIterator extends IndexIterator {
 	 * @param slice
 	 * @param axes missing axes
 	 */
-	public PositionIterator(SliceND slice, int[] axes) {
+	public PositionIterator(SliceND slice, int... axes) {
 		int[] oshape = slice.getShape();
 		start = slice.getStart();
 		stop  = slice.getStop();
