@@ -25,12 +25,12 @@ import org.slf4j.LoggerFactory;
  * The IJAXBClassProvider interface provides the methods necessary to inform
  * clients creating a JAXBContext object of the relevant classes that must be
  * known for succesfull marshalling/unmarshalling of XML data.
- * 
+ *
  * Realizations of this interface must provide a valid name String that
  * describes the realization and a valid set of Java Class objects representing
  * the JAXB-annotated structures the JAXBContext must know about.
- * 
- * 
+ *
+ *
  * @author Alex McCaskey
  *
  */
@@ -39,7 +39,7 @@ public interface IJAXBClassProvider {
 	/**
 	 * Return the list of Classes that will be required in the creation of a
 	 * JAXBContext.
-	 * 
+	 *
 	 * @return classList The list of Classes used in creating a JAXBContext
 	 *         object.
 	 */
@@ -47,12 +47,12 @@ public interface IJAXBClassProvider {
 
 	/**
 	 * Return the name of this IJAXBClassProvider.
-	 * 
+	 *
 	 * @return providerName The name of this IJAXBClassProvider
 	 */
 	public String getProviderName();
-	
-	
+
+
 
 	/**
 	 * This operation pulls the list of JAXB class providers from the registry
@@ -62,15 +62,15 @@ public interface IJAXBClassProvider {
 	 * @throws CoreException
 	 */
 	public static IJAXBClassProvider[] getJAXBProviders() throws CoreException {
-		
+
 		/**
 	     * Logger for handling event messages and other information.
 		 */
-		
+
 	    Logger logger = LoggerFactory.getLogger(IJAXBClassProvider.class);
 
 		IJAXBClassProvider[] jaxbProviders = null;
-		String id = "org.eclipse.ice.item.itemBuilder";
+		String id = "org.eclipse.ice.datastructures.jaxbClassProvider";
 		IExtensionPoint point = Platform.getExtensionRegistry()
 				.getExtensionPoint(id);
 

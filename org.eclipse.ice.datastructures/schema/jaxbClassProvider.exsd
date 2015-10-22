@@ -6,7 +6,7 @@
          <meta.schema plugin="org.eclipse.ice.datastructures" id="JAXBClassProvider" name="JAXB Class Provider"/>
       </appinfo>
       <documentation>
-         [Enter description of this extension point.]
+         This Extension Point can be used by clients to automatically provide a class to ICE&apos;s JAXB-based persistence services. Extensions must realize the IJAXBProvider interface from org.eclipse.ice.datastructures.jaxbclassprovider.
       </documentation>
    </annotation>
 
