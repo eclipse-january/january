@@ -14,6 +14,13 @@ package org.eclipse.ice.datastructures.jaxbclassprovider;
 
 import java.util.List;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionPoint;
+import org.eclipse.core.runtime.Platform;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * The IJAXBClassProvider interface provides the methods necessary to inform
  * clients creating a JAXBContext object of the relevant classes that must be
@@ -44,5 +51,43 @@ public interface IJAXBClassProvider {
 	 * @return providerName The name of this IJAXBClassProvider
 	 */
 	public String getProviderName();
+	
+	
+
+	/**
+	 * This operation pulls the list of JAXB class providers from the registry
+	 * for classes that need custom handling.
+	 *
+	 * @return The list of class providers.
+	 * @throws CoreException
+	 */
+	public static IJAXBClassProvider[] getJAXBProviders() throws CoreException {
+		
+		/**
+	     * Logger for handling event messages and other information.
+		 */
+		
+	    Logger logger = LoggerFactory.getLogger(IJAXBClassProvider.class);
+
+		IJAXBClassProvider[] jaxbProviders = null;
+		String id = "org.eclipse.ice.item.itemBuilder";
+		IExtensionPoint point = Platform.getExtensionRegistry()
+				.getExtensionPoint(id);
+
+		// If the point is available, create all the builders and load them into
+		// the array.
+		if (point != null) {
+			IConfigurationElement[] elements = point.getConfigurationElements();
+			jaxbProviders = new IJAXBClassProvider[elements.length];
+			for (int i = 0; i < elements.length; i++) {
+				jaxbProviders[i] = (IJAXBClassProvider) elements[i]
+						.createExecutableExtension("class");
+			}
+		} else {
+			logger.error("Extension Point " + id + "does not exist");
+		}
+
+		return jaxbProviders;
+	}
 
 }
