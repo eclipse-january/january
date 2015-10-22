@@ -20,7 +20,7 @@ import org.junit.Test;
 
 /**
  * This class tests the static interface operation
- * ItemBuilder.getItemBuilders().
+ * IJAXBClassProvider.getJAXBProviders().
  *
  * @author Jay Jay Billings
  *
@@ -28,13 +28,15 @@ import org.junit.Test;
 public class IJAXBClassProviderTester {
 
 	/**
-	 * Test for {@link org.eclipse.ice.item.ItemBuilder}.
+	 * Test for
+	 * {@link org.eclipse.ice.datastructures.jaxbclassprovider.IJAXBClassProvider}
+	 * .
 	 *
 	 * @throws CoreException
 	 */
 	@Test
 	public void test() throws CoreException {
-		// Simply get the builders from the registry and make sure they are
+		// Simply get the providers from the registry and make sure they are
 		// actually there.
 		IJAXBClassProvider[] providers = IJAXBClassProvider.getJAXBProviders();
 		assertNotNull(providers);

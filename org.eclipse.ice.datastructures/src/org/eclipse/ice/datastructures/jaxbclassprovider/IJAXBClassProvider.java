@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2014 UT-Battelle, LLC.
+ * Copyright (c) 2013, 2014, 2015 UT-Battelle, LLC.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,8 +7,7 @@
  *
  * Contributors:
  *   Initial API and implementation and/or initial documentation - Jay Jay Billings,
- *   Jordan H. Deyton, Dasha Gorin, Alexander J. McCaskey, Taylor Patterson,
- *   Claire Saunders, Matthew Wang, Anna Wojtowicz
+ *   Alexander J. McCaskey, Anna Wojtowicz, Menghan Li
  *******************************************************************************/
 package org.eclipse.ice.datastructures.jaxbclassprovider;
 
@@ -31,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * the JAXB-annotated structures the JAXBContext must know about.
  *
  *
- * @author Alex McCaskey
+ * @author Alex McCaskey, Anna Wojtowicz, Jay Jay Billings, Menghan Li
  *
  */
 public interface IJAXBClassProvider {
