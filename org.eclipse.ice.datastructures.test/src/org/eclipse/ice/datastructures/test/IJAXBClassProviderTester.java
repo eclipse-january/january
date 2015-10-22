@@ -14,9 +14,16 @@ package org.eclipse.ice.datastructures.test;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
+
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionPoint;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.ice.datastructures.jaxbclassprovider.IJAXBClassProvider;
 import org.junit.Test;
+import org.osgi.framework.BundleException;
 
 /**
  * This class tests the static interface operation
@@ -33,14 +40,35 @@ public class IJAXBClassProviderTester {
 	 * .
 	 *
 	 * @throws CoreException
+	 * @throws BundleException
+	 * @throws ClassNotFoundException
+	 * @throws URISyntaxException
+	 * @throws FileNotFoundException
 	 */
 	@Test
-	public void test() throws CoreException {
+	public void test() throws CoreException, BundleException,
+			ClassNotFoundException, URISyntaxException, FileNotFoundException {
+
+		IJAXBClassProvider[] jaxbProviders = null;
+		String id = "org.eclipse.ice.datastructures.jaxbClassProvider";
+		IExtensionPoint point = Platform.getExtensionRegistry()
+				.getExtensionPoint(id);
+
+		// If the point is available, create all the builders and load them into
+		// the array.
+		IConfigurationElement[] elements = point.getConfigurationElements();
+		jaxbProviders = new IJAXBClassProvider[elements.length];
+		for (int i = 0; i < elements.length; i++) {
+			jaxbProviders[i] = (IJAXBClassProvider) elements[i]
+					.createExecutableExtension("class");
+		}
+
 		// Simply get the providers from the registry and make sure they are
 		// actually there.
 		IJAXBClassProvider[] providers = IJAXBClassProvider.getJAXBProviders();
 		assertNotNull(providers);
 		assertTrue(providers.length > 0);
+
 		return;
 	}
 

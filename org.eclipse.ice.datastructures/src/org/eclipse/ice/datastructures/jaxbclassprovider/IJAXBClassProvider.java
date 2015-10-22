@@ -6,8 +6,8 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *   Initial API and implementation and/or initial documentation - Jay Jay Billings,
- *   Alexander J. McCaskey, Anna Wojtowicz, Menghan Li
+ *   Initial API and implementation and/or initial documentation -
+ *   Jay Jay Billings, Alexander J. McCaskey, Anna Wojtowicz, Menghan Li
  *******************************************************************************/
 package org.eclipse.ice.datastructures.jaxbclassprovider;
 
@@ -51,8 +51,6 @@ public interface IJAXBClassProvider {
 	 */
 	public String getProviderName();
 
-
-
 	/**
 	 * This operation pulls the list of JAXB class providers from the registry
 	 * for classes that need custom handling.
@@ -62,12 +60,8 @@ public interface IJAXBClassProvider {
 	 */
 	public static IJAXBClassProvider[] getJAXBProviders() throws CoreException {
 
-		/**
-	     * Logger for handling event messages and other information.
-		 */
-
-	    Logger logger = LoggerFactory.getLogger(IJAXBClassProvider.class);
-
+		// Logger for handling event messages and other information.
+		Logger logger = LoggerFactory.getLogger(IJAXBClassProvider.class);
 		IJAXBClassProvider[] jaxbProviders = null;
 		String id = "org.eclipse.ice.datastructures.jaxbClassProvider";
 		IExtensionPoint point = Platform.getExtensionRegistry()
@@ -83,7 +77,8 @@ public interface IJAXBClassProvider {
 						.createExecutableExtension("class");
 			}
 		} else {
-			logger.error("Extension Point " + id + "does not exist");
+			System.err.println("Extension Point " + id + " does not exist");
+			logger.error("Extension Point " + id + " does not exist");
 		}
 
 		return jaxbProviders;
