@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.ice.datastructures.jaxbclassprovider.IJAXBClassProvider;
@@ -32,8 +33,9 @@ public class FakeJAXBClassProvider implements IJAXBClassProvider {
 	 */
 	@Override
 	public List<Class> getClasses() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Class> classList = new ArrayList<Class>();
+		classList.add(this.getClass());
+		return classList;
 	}
 
 	/*
@@ -44,8 +46,7 @@ public class FakeJAXBClassProvider implements IJAXBClassProvider {
 	 */
 	@Override
 	public String getProviderName() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Fake Class Provider";
 	}
 
 }

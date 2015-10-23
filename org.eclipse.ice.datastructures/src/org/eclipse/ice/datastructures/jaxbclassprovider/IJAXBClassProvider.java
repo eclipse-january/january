@@ -77,7 +77,6 @@ public interface IJAXBClassProvider {
 						.createExecutableExtension("class");
 			}
 		} else {
-			System.err.println("Extension Point " + id + " does not exist");
 			logger.error("Extension Point " + id + " does not exist");
 		}
 
