@@ -26,9 +26,19 @@ public interface FormTextContentDescriber extends ITextContentDescriber {
 	 * If this is a valid ICE Item being described, return 
 	 * the discovered Item ID. 
 	 *  
-	 * @return
+	 * @return itemId The id of the Item.
 	 */
 	public int getItemID();
+	
+	/**
+	 * Return true if given the provided lines of text as one String 
+	 * this file describes a valid ICE Form. 
+	 * 
+	 * @param lines Lines of text as one String
+	 * @return isValid True if this is a valid ICE Form file description.
+	 */
+	public boolean isValidFile(String lines);
+	
 	
 	// FIXME MAYBE ADD MORE LATER
 }
