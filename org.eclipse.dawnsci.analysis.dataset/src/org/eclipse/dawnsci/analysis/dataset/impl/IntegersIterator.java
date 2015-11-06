@@ -73,10 +73,11 @@ public class IntegersIterator extends IndexIterator {
 				indexes.add(i);
 			} else if (i instanceof IntegerDataset) {
 				Dataset id = (Dataset) i;
-				if (restrict1D && id.getRank() > 1) {
+				int r = id.getRank();
+				if (restrict1D && r > 1) {
 					throw new IllegalArgumentException("Integer datasets were restricted to zero or one dimensions");
 				}
-				if (id.getRank() == 0) { // avoid zero-rank datasets
+				if (r == 0) { // avoid zero-rank datasets
 					i = id.reshape(1);
 				}
 				indexes.add(i);
@@ -85,8 +86,11 @@ public class IntegersIterator extends IndexIterator {
 			}
 		}
 		if (indexes.size() < irank) { // pad out index list
-			for (int i = indexes.size(); i < irank; i++)
+			for (int i = indexes.size(); i < irank; i++) {
 				indexes.add(null);
+			}
+		} else if (indexes.size() > irank) {
+			throw new IllegalArgumentException("Too many indices (a boolean dataset may have too many dimensions)");
 		}
 
 		int ilength = -1;
@@ -103,16 +107,17 @@ public class IntegersIterator extends IndexIterator {
 				}
 
 				int l = ind.size;
-				if (ilength < 0) {
+				if (ilength < l) {
 					ilength = l;
-				} else if (l != ilength) {
+					cshape = null;
+				} else if (l != 1 && l != ilength) {
 					throw new IllegalArgumentException("Index datasets do not have same size");
 				}
 				if (cshape == null) {
 					cshape = ind.shape;
 					srank = cshape.length;
 					offset = i;
-				} else if (!Arrays.equals(ind.shape, cshape)) {
+				} else if (l > 1 && !Arrays.equals(ind.shape, cshape)) { // broadcast
 					throw new IllegalArgumentException("Index datasets do not have same shape");
 				}
 			} else {
@@ -130,10 +135,10 @@ public class IntegersIterator extends IndexIterator {
 			for (int i = 0; i < irank; i++) {
 				Object obj = indexes.get(i);
 				if (obj instanceof IntegerDataset) {
-					IntegerDataset ind = (IntegerDataset) obj;
 					if (restrict1D || !used) {
 						used = true;
-						for (int j : ind.shape) {
+						int[] lshape = restrict1D ? ((IntegerDataset) obj).shape : cshape;
+						for (int j : lshape) {
 							oShape.add(j);
 						}
 					}
@@ -224,7 +229,7 @@ public class IntegersIterator extends IndexIterator {
 					Object obj = indexes.get(j);
 					if (obj instanceof IntegerDataset) {
 						IntegerDataset ind = (IntegerDataset) obj;
-						ipos[i++] = ind.get(spos);
+						ipos[i++] = ind.size > 1 ? ind.get(spos) : ind.getAbs(0); // broadcasting
 					}
 				}
 				int o = orank - irank;
