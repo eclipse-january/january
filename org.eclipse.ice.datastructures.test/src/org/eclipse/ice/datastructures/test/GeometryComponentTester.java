@@ -29,7 +29,6 @@ import javax.xml.bind.JAXBException;
 import org.eclipse.ice.datastructures.ICEObject.Component;
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.form.GeometryComponent;
-import org.eclipse.ice.viz.service.geometry.shapes.Geometry;
 import org.eclipse.ice.viz.service.geometry.shapes.OperatorType;
 import org.eclipse.ice.viz.service.geometry.shapes.ShapeType;
 import org.eclipse.ice.viz.service.modeling.AbstractController;
@@ -215,7 +214,6 @@ public class GeometryComponentTester {
 		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
 		ArrayList<Class> classList = new ArrayList<Class>();
 		classList.add(GeometryComponent.class);
-		classList.add(Geometry.class);
 
 		// Instantiate a GeometryComponent
 		GeometryComponent geometry = new GeometryComponent();

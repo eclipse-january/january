@@ -24,8 +24,6 @@ import javax.xml.bind.JAXBException;
 
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.form.GeometryComponent;
-import org.eclipse.ice.datastructures.form.geometry.ICEShape;
-import org.eclipse.ice.viz.service.geometry.shapes.Geometry;
 import org.eclipse.ice.viz.service.geometry.shapes.OperatorType;
 import org.eclipse.ice.viz.service.geometry.shapes.ShapeType;
 import org.eclipse.ice.viz.service.modeling.AbstractView;
@@ -69,7 +67,6 @@ public class GeometryTester {
 		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
 		ArrayList<Class> classList = new ArrayList<Class>();
 		classList.add(GeometryComponent.class);
-		classList.add(Geometry.class);
 
 		// Create the CSG elements
 		Shape union = (Shape) geometryShape.clone();
@@ -148,59 +145,5 @@ public class GeometryTester {
 		sphere1.setTransformation(new Transformation());
 
 		assertFalse(geometry.equals(loadedGeometry));
-	}
-
-	/**
-	 * <p>
-	 * Checks whether notifications will be sent up the CSG tree
-	 * </p>
-	 * 
-	 */
-	@Test
-	public void checkNotifications() {
-
-		TestComponentListener listener = new TestComponentListener();
-
-		// Create the CSG elements
-		ICEShape union1 = new ICEShape(OperatorType.Union);
-		ICEShape union2 = new ICEShape(OperatorType.Union);
-		ICEShape sphere1 = new ICEShape(ShapeType.Sphere);
-		ICEShape sphere2 = new ICEShape(ShapeType.Sphere);
-
-		// Make the CSG tree
-		union1.addShape(union2);
-		union1.addShape(sphere1);
-		union2.addShape(sphere2);
-
-		// Test union1 notification
-		union1.register(listener);
-		union1.setProperty("key", "value");
-
-		assertTrue(listener.wasNotified()); // U1
-		System.out.println("GeometryTester Message: Union1 notified!");
-		listener.reset();
-
-		// Test union2 notification
-		union2.register(listener);
-		union2.setProperty("key", "value");
-
-		assertTrue(listener.wasNotified()); // U2
-		System.out.println("GeometryTester Message: Union2 notified!");
-		listener.reset();
-
-		// Test sphere1 notification
-		sphere1.register(listener);
-		sphere1.setProperty("key", "value");
-		assertTrue(listener.wasNotified()); // U3
-		System.out.println("GeometryTester Message: Union1 & Sphere1 notified!");
-		listener.reset();
-
-		// Test sphere2 notification
-		sphere2.register(listener);
-		System.out.println("GeometryTester Message: Union2 & Sphere2 notified!");
-		sphere2.setProperty("key", "value");
-
-		assertTrue(listener.wasNotified()); // U4
-
 	}
 }
