@@ -24,12 +24,14 @@ import javax.xml.bind.JAXBException;
 
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.form.GeometryComponent;
+import org.eclipse.ice.datastructures.form.geometry.ICEShape;
 import org.eclipse.ice.viz.service.geometry.shapes.Geometry;
 import org.eclipse.ice.viz.service.geometry.shapes.OperatorType;
 import org.eclipse.ice.viz.service.geometry.shapes.ShapeType;
-import org.eclipse.ice.viz.service.geometry.shapes.Transformation;
-import org.eclipse.ice.datastructures.form.geometry.ICEGeometry;
-import org.eclipse.ice.datastructures.form.geometry.ICEShape;
+import org.eclipse.ice.viz.service.modeling.AbstractView;
+import org.eclipse.ice.viz.service.modeling.Shape;
+import org.eclipse.ice.viz.service.modeling.ShapeComponent;
+import org.eclipse.ice.viz.service.modeling.Transformation;
 import org.junit.Test;
 
 /**
@@ -52,12 +54,16 @@ public class GeometryTester {
 	 * 
 	 */
 	@Test
-	public void checkCSGTree() throws NullPointerException, JAXBException,
-			IOException {
+	public void checkCSGTree() throws NullPointerException, JAXBException, IOException {
+
+		// Create a shape
+		ShapeComponent geometryModel = new ShapeComponent();
+		AbstractView geometryView = new AbstractView();
+		Shape geometryShape = new Shape(geometryModel, geometryView);
 
 		// Create the root GeometryComponent
 		GeometryComponent geometry = new GeometryComponent();
-		geometry.setGeometry(new ICEGeometry());
+		geometry.setGeometry(geometryShape);
 		geometry.setName("Root geometry");
 		geometry.setDescription("This here's a verr' fine geom'try structcha");
 		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
@@ -66,22 +72,31 @@ public class GeometryTester {
 		classList.add(Geometry.class);
 
 		// Create the CSG elements
-		ICEShape union = new ICEShape(OperatorType.Union);
-		ICEShape intersection = new ICEShape(OperatorType.Intersection);
-		ICEShape complement = new ICEShape(OperatorType.Complement);
-		complement.setDescription("Official ICE shape");
+		Shape union = (Shape) geometryShape.clone();
+		union.setProperty("Operator", OperatorType.Union.toString());
+		Shape intersection = (Shape) geometryShape.clone();
+		union.setProperty("Operator", OperatorType.Intersection.toString());
 
-		ICEShape sphere1 = new ICEShape(ShapeType.Sphere);
-		ICEShape sphere2 = new ICEShape(ShapeType.Sphere);
-		ICEShape cube = new ICEShape(ShapeType.Cube);
-		ICEShape cone = new ICEShape(ShapeType.Cone);
-		ICEShape cylinder = new ICEShape(ShapeType.Cylinder);
+		Shape complement = (Shape) geometryShape.clone();
+		complement.setProperty("OperatorType", OperatorType.Complement.toString());
+		complement.setProperty("Operator", OperatorType.Complement.toString());
+		complement.setProperty("Description", "Official ICE shape");
+
+		Shape sphere1 = (Shape) geometryShape.clone();
+		sphere1.setProperty("Type", ShapeType.Sphere.toString());
+		Shape sphere2 = (Shape) geometryShape.clone();
+		sphere2.setProperty("Type", ShapeType.Sphere.toString());
+		Shape cube = (Shape) geometryShape.clone();
+		cube.setProperty("Type", ShapeType.Cube.toString());
+		Shape cone = (Shape) geometryShape.clone();
+		cone.setProperty("Type", ShapeType.Cone.toString());
+		Shape cylinder = (Shape) geometryShape.clone();
+		cylinder.setProperty("Type", ShapeType.Cylinder.toString());
 
 		// Edit the transformations
 		Transformation sphere1Transformation = sphere1.getTransformation();
 		Transformation sphere2Transformation = new Transformation();
-		Transformation intersectionTransformation = intersection
-				.getTransformation();
+		Transformation intersectionTransformation = intersection.getTransformation();
 
 		sphere1Transformation.setScale(0, 0, 2.0);
 		sphere1Transformation.setScale(1, 1, 2.0);
@@ -101,17 +116,17 @@ public class GeometryTester {
 		union.setProperty("awesome?", "yes");
 
 		// Create the CSG tree
-		geometry.getGeometry().addShape(union);
+		geometry.getGeometry().addEntity(union);
 
-		union.addShape(complement);
-		union.addShape(cone);
-		union.addShape(cylinder);
+		union.addEntity(complement);
+		union.addEntity(cone);
+		union.addEntity(cylinder);
 
-		complement.addShape(cube);
-		complement.addShape(intersection);
+		complement.addEntity(cube);
+		complement.addEntity(intersection);
 
-		intersection.addShape(sphere1);
-		intersection.addShape(sphere2);
+		intersection.addEntity(sphere1);
+		intersection.addEntity(sphere2);
 
 		// Persist GeometryComponent to XML
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -120,13 +135,11 @@ public class GeometryTester {
 		// Print the XML output
 		// System.out.println(outputStream.toString());
 
-		ByteArrayInputStream inputStream = new ByteArrayInputStream(
-				outputStream.toByteArray());
+		ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
 
 		// Load a new GeometryComponent from XML
 		GeometryComponent loadedGeometry = new GeometryComponent();
-		loadedGeometry = (GeometryComponent) xmlHandler.read(classList,
-				inputStream);
+		loadedGeometry = (GeometryComponent) xmlHandler.read(classList, inputStream);
 
 		assertTrue(geometry.equals(loadedGeometry));
 
@@ -179,14 +192,12 @@ public class GeometryTester {
 		sphere1.register(listener);
 		sphere1.setProperty("key", "value");
 		assertTrue(listener.wasNotified()); // U3
-		System.out
-				.println("GeometryTester Message: Union1 & Sphere1 notified!");
+		System.out.println("GeometryTester Message: Union1 & Sphere1 notified!");
 		listener.reset();
 
 		// Test sphere2 notification
 		sphere2.register(listener);
-		System.out
-				.println("GeometryTester Message: Union2 & Sphere2 notified!");
+		System.out.println("GeometryTester Message: Union2 & Sphere2 notified!");
 		sphere2.setProperty("key", "value");
 
 		assertTrue(listener.wasNotified()); // U4
