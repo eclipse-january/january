@@ -2179,7 +2179,29 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	/**
-	 * Check if shapes are compatible, ignoring axes of length 1
+	 * Check if shapes are broadcast compatible
+	 * 
+	 * @param ashape
+	 * @param bshape
+	 * @return true if they are compatible
+	 */
+	public static boolean areShapesBroadcastCompatible(final int[] ashape, final int[] bshape) {
+
+		if (ashape.length < bshape.length) {
+			return areShapesBroadcastCompatible(bshape, ashape);
+		}
+
+		for (int a = ashape.length - bshape.length, b = 0; a < ashape.length && b < bshape.length; a++, b++) {
+			if (ashape[a] != bshape[b] && ashape[a] != 1 && bshape[b] != 1) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Check if shapes are compatible, ignoring extra axes of length 1
 	 * 
 	 * @param ashape
 	 * @param bshape
