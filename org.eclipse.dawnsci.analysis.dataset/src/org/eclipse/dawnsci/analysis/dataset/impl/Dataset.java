@@ -221,19 +221,30 @@ public interface Dataset extends IErrorDataset {
 	public Dataset clone();
 
 	/**
-	 * This function allows anything that dirties the dataset to clear stored values
-	 * so that the other functions can work correctly.
+	 * This method allows anything that dirties the dataset to clear stored values
+	 * so that the other methods can work correctly.
 	 */
 	public void setDirty();
 
 	/**
-	 * The n-D position in the dataset of the given index in the data array
+	 * This method calculates the n-dimensional position in the dataset of
+	 * the given index in the data array
 	 * 
 	 * @param n
 	 *            The index in the array
 	 * @return the corresponding [a,b,...,n] position in the dataset
 	 */
 	public int[] getNDPosition(int n);
+
+	/**
+	 * This method calculates the index in the data array that corresponds to
+	 * the given n-dimensional position
+	 * 
+	 * @param n
+	 *            the integer array specifying the n-D position
+	 * @return the index on the data array corresponding to that location
+	 */
+	public int get1DIndex(final int... n);
 
 	/**
 	 * Check that axis is in range [-rank,rank)
@@ -244,7 +255,7 @@ public interface Dataset extends IErrorDataset {
 	public int checkAxis(int axis);
 
 	/**
-	 * This function takes a dataset and checks its shape against the current dataset. If they are
+	 * This method takes a dataset and checks its shape against the current dataset. If they are
 	 * both of the same size, then this returns true otherwise it returns false.
 	 * 
 	 * @param g
@@ -254,7 +265,7 @@ public interface Dataset extends IErrorDataset {
 	public boolean isCompatibleWith(ILazyDataset g);
 
 	/**
-	 * This function takes a dataset and checks its shape against the current dataset. If they are
+	 * This method takes a dataset and checks its shape against the current dataset. If they are
 	 * both of the same size, then this returns with no error, if there is a problem, then an error
 	 * is thrown.
 	 * 

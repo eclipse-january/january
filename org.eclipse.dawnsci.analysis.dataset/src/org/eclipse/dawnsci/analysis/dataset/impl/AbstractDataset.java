@@ -1601,16 +1601,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		return get1DIndexFromShape(shape, pos);
 	}
 
-	/**
-	 * Function that uses the knowledge of the dataset to calculate the index in the data array
-	 * that corresponds to the n-dimensional position given by the int array. The input values
-	 * <b>must</b> be inside the arrays, this should be ok as this function is mainly in code which
-	 * will be run inside the get and set functions
-	 * 
-	 * @param n
-	 *            the integer array specifying the n-D position
-	 * @return the index on the data array corresponding to that location
-	 */
+	@Override
 	public int get1DIndex(final int... n) {
 		final int imax = n.length;
 		final int rank = shape.length;
