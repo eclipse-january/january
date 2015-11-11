@@ -380,6 +380,9 @@ public class EMFComponent extends ICEObject implements Component {
 
 		// Create a new instance, copy contents and return it
 		EMFComponent emfComponent = new EMFComponent();
+		if (iceEMFTree.getEcoreMetaData() != null) {
+			emfComponent.iceEMFTree.setECoreNodeMetaData(iceEMFTree.getEcoreMetaData());
+		}
 		emfComponent.copy(this);
 
 		return emfComponent;

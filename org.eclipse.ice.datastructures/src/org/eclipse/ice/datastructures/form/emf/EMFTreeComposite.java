@@ -422,6 +422,15 @@ public class EMFTreeComposite extends TreeComposite {
 	}
 
 	/**
+	 * Sets the ECore node meta data
+	 * 
+	 * @param metaData : The meta data to set
+	 */
+	public void setECoreNodeMetaData(EClass metaData) {
+		ecoreNodeMetaData = metaData;
+	}
+	
+	/**
 	 * This operation performs a deep copy of the attributes of another
 	 * EMFTreeComposite into the current EMFTreeComposite. It copies ALL of the
 	 * children of the EMFTreeComposite, data and child nodes alike.
@@ -435,9 +444,10 @@ public class EMFTreeComposite extends TreeComposite {
 			return;
 		}
 
-		ecoreNodeMetaData = otherTreeComposite.ecoreNodeMetaData;
-		ecoreNode = EcoreUtil.create(ecoreNodeMetaData);
-
+		if (otherTreeComposite.ecoreNodeMetaData != null) {
+			ecoreNodeMetaData = otherTreeComposite.ecoreNodeMetaData;
+			ecoreNode = EcoreUtil.create(ecoreNodeMetaData);
+		}
 		super.copy(otherTreeComposite, true);
 
 		return;
