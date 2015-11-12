@@ -40,7 +40,8 @@ import org.eclipse.ice.viz.service.modeling.Shape;
  */
 @XmlRootElement(name = "GeometryComponent")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GeometryComponent extends ICEObject implements Component, IUpdateableListener, IVizUpdateableListener {
+public class GeometryComponent extends ICEObject
+		implements Component, IUpdateableListener, IVizUpdateableListener {
 	/**
 	 * <p>
 	 * The set of ComponentListeners observing the GeometryComponent
@@ -191,7 +192,8 @@ public class GeometryComponent extends ICEObject implements Component, IUpdateab
 		}
 		// Check that the other object is not null and an instance of the
 		// GeometryComponent
-		if (otherObject == null || !(otherObject instanceof GeometryComponent)) {
+		if (otherObject == null
+				|| !(otherObject instanceof GeometryComponent)) {
 			return false;
 		}
 		// Check that these objects have the same ICEObject data
@@ -280,19 +282,19 @@ public class GeometryComponent extends ICEObject implements Component, IUpdateab
 		}
 		// Create a thread object that notifies all listeners
 
-		Thread notifyThread = new Thread() {
-
-			@Override
-			public void run() {
-				// Loop over all listeners and update them
-				for (int i = 0; i < listeners.size(); i++) {
-					listeners.get(i).update(geometryComponent);
-				}
-			}
-		};
+		// Thread notifyThread = new Thread() {
+		//
+		// @Override
+		// public void run() {
+		// // Loop over all listeners and update them
+		for (int i = 0; i < listeners.size(); i++) {
+			listeners.get(i).update(geometryComponent);
+		}
+		// }
+		// };
 
 		// Start the thread
-		notifyThread.start();
+		// notifyThread.start();
 
 	}
 
