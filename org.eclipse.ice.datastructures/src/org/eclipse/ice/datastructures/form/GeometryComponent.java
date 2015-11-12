@@ -140,6 +140,9 @@ public class GeometryComponent extends ICEObject
 	public void setGeometry(Shape newGeometry) {
 		geometry = newGeometry;
 
+		// Set the shape as being the root node for the scene
+		geometry.setProperty("Root", "True");
+
 		// Register self as a listener for the geometry
 		geometry.register(this);
 
