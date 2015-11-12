@@ -638,27 +638,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="org.codehaus.jackson.core"
-         download-size="0"
-         install-size="0"
-         version="1.6.0.v20101005-0925"
-         unpack="false"/>
-
-   <plugin
-         id="org.codehaus.jackson.jaxrs"
-         download-size="0"
-         install-size="0"
-         version="1.6.0.v20101005-1100"
-         unpack="false"/>
-
-   <plugin
-         id="org.codehaus.jackson.mapper"
-         download-size="0"
-         install-size="0"
-         version="1.6.0.v20101005-0925"
-         unpack="false"/>
-
-   <plugin
          id="javax.ws.rs"
          download-size="0"
          install-size="0"
