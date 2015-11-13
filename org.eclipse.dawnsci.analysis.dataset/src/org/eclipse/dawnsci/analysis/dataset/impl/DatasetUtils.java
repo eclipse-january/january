@@ -2397,4 +2397,34 @@ public class DatasetUtils {
 			return c;
 		}
 	}
+
+	/**
+	 * @param a
+	 * @return name of dataset type
+	 */
+	public static String getDTypeName(Dataset a) {
+		int d = a.getDtype();
+		int e = a.getElementsPerItem();
+		int isize = a.getItemsize();
+		if (AbstractDataset.isDTypeComplex(d)) {
+			return "COMPLEX" + isize*8;
+		} else if (d == Dataset.RGB) {
+			return "RGB";
+		}
+
+		String prefix = e > 1 ? ("ARRAY of " + e + " ") : "";
+		if (AbstractDataset.isDTypeFloating(d)) {
+			return prefix + "FLOAT" + isize*8;
+		}
+		switch (d) {
+		case Dataset.BOOL:
+			return prefix + "BOOLEAN";
+		case Dataset.STRING:
+			return prefix + "STRING";
+		case Dataset.OBJECT:
+			return prefix + "OBJECT";
+		}
+
+		return prefix + "INT" + isize*8;
+	}
 }
