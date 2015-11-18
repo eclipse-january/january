@@ -74,6 +74,7 @@ public class ResourceHandler {
 			vizFileExtensions.add("csv");
 			vizFileExtensions.add("e");
 			vizFileExtensions.add("silo");
+			vizFileExtensions.add("h5m");
 		}
 
 		return;

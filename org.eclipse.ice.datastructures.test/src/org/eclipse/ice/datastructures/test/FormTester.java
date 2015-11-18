@@ -40,33 +40,30 @@ import org.junit.Test;
  * <p>
  * The FormTester is responsible for testing the Form class.
  * </p>
- * 
+ *
  * @author Jay Jay Billings
  */
 public class FormTester {
+
 	/**
+	 * The form to be tested
 	 */
 	private Form form;
 
 	/**
-	 * 
+	 * A data component used in the form
 	 */
 	private DataComponent dataComponent;
 
 	/**
-	 * <p>
 	 * The TestComponentListener used to subscribe to and check notifications
 	 * from the Form.
-	 * </p>
-	 * 
 	 */
 	private TestComponentListener testComponentListener;
 
 	/**
-	 * <p>
 	 * This operation tests the Form by calling the constructor and checking the
 	 * getters and setters for the operations inherited from ICEObject.
-	 * </p>
 	 */
 	@Test
 	public void checkCreation() {
@@ -160,7 +157,7 @@ public class FormTester {
 	 * IComponentListener against it and making sure that it receives status
 	 * updates from the Form class.
 	 * </p>
-	 * 
+	 *
 	 */
 	@Test
 	public void checkNotifications() {
@@ -193,7 +190,7 @@ public class FormTester {
 	 * is consistent. It also checks that getActionList() returns null for a
 	 * Form created with a null value for the list of Actions.
 	 * </p>
-	 * 
+	 *
 	 */
 	@Test
 	public void checkActionList() {
@@ -228,7 +225,7 @@ public class FormTester {
 	 * This operation checks the Form by making sure that it can be marked as
 	 * ready or not ready.
 	 * </p>
-	 * 
+	 *
 	 */
 	@Test
 	public void checkReadiness() {
@@ -254,7 +251,7 @@ public class FormTester {
 	 * This operation checks the Form to insure that its equals() operation
 	 * works.
 	 * </p>
-	 * 
+	 *
 	 */
 	@Test
 	public void checkEquality() {
@@ -393,7 +390,7 @@ public class FormTester {
 	 * This operation checks the Form to ensure that its copy() and clone()
 	 * operations work as specified.
 	 * </p>
-	 * 
+	 *
 	 */
 	@Test
 	public void checkCopying() {
@@ -502,10 +499,10 @@ public class FormTester {
 	 * This operation checks the ability of the Form to persist itself to XML
 	 * and to load itself from an XML input stream.
 	 * </p>
-	 * @throws IOException 
-	 * @throws JAXBException 
-	 * @throws NullPointerException 
-	 * 
+	 * @throws IOException
+	 * @throws JAXBException
+	 * @throws NullPointerException
+	 *
 	 */
 	@Test
 	public void checkXMLPersistence() throws NullPointerException, JAXBException, IOException {
@@ -523,10 +520,10 @@ public class FormTester {
 		ArrayList<String> actionList = new ArrayList<String>();
 		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
 		ArrayList<Class> classList = new ArrayList<Class>();
-		
-		// Inform the JAXBContext of all relevant classes. 
+
+		// Inform the JAXBContext of all relevant classes.
 		classList.addAll(new ICEJAXBClassProvider().getClasses());
-		
+
 		DataComponent dataComponent = new DataComponent();
 		DataComponent dataComponent2 = new DataComponent();
 		Entry entry1 = new Entry();
@@ -626,7 +623,7 @@ public class FormTester {
 		// create a new instance of a different variable to compare
 		loadedForm = new Form();
 
-		// load into Form();
+		// load into Form
 		loadedForm = (Form) xmlHandler.read(classList, inputStream);
 
 		/* check contents */

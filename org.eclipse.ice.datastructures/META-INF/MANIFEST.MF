@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ICEDataStructures
-Bundle-SymbolicName: org.eclipse.ice.datastructures
+Bundle-SymbolicName: org.eclipse.ice.datastructures;singleton:=true
 Bundle-Version: 2.1.7.20150825
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Service-Component: OSGI-INF/*.xml
 Meta-Persistence: META-INF/persistence.xml
 Export-Package: org.eclipse.ice.datastructures.ICEObject,
@@ -17,6 +17,8 @@ Export-Package: org.eclipse.ice.datastructures.ICEObject,
  org.eclipse.ice.datastructures.resource
 Import-Package: ca.odell.glazedlists,
  ca.odell.glazedlists.event,
+ org.eclipse.core.runtime;version="3.5.0",
+ org.eclipse.core.runtime.content,
  org.eclipse.emf.common,
  org.eclipse.emf.common.util,
  org.eclipse.emf.ecore,
@@ -36,6 +38,6 @@ Import-Package: ca.odell.glazedlists,
  org.slf4j;version="1.7.2"
 Bundle-ActivationPolicy: lazy
 JPA-PersistenceUnits: org.eclipse.ice.datastructures
-Require-Bundle: ca.odell.glazedlists;bundle-version="1.9.0";visibility:=reexport
-Service-Component: OSGI-INF/jaxbclassprovider.xml
+Require-Bundle: ca.odell.glazedlists;visibility:=reexport,
+ org.eclipse.core.runtime
 Bundle-Vendor: Oak Ridge National Laboratory

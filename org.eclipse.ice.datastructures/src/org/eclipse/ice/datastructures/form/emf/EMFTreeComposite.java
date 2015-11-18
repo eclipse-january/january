@@ -57,7 +57,6 @@ public class EMFTreeComposite extends TreeComposite {
 	 * Reference to the Ecore model object that is the actual tree node instance
 	 * and has sub-children. This reference is used and manipulated to keep the
 	 * TreeComposite data in sync with the Ecore model tree.
-	 * 
 	 */
 	@XmlTransient
 	private EObject ecoreNode;
@@ -66,14 +65,12 @@ public class EMFTreeComposite extends TreeComposite {
 	 * Reference to the EClass metadata corresponding to the ecoreNode EObject
 	 * instance. This object gives information about the EStructuralFeatures
 	 * (EAttributes and EReferences) of the ecoreNode EObject.
-	 * 
 	 */
 	@XmlTransient
 	private EClass ecoreNodeMetaData;
 
 	/**
 	 * The nullary-constructor
-	 * 
 	 */
 	public EMFTreeComposite() {
 		super();
@@ -220,15 +217,13 @@ public class EMFTreeComposite extends TreeComposite {
 			}
 
 		}
-
 		return exemplars;
-
 	}
 
 	/**
 	 * Return the EObject tree node corresponding to this EMFTreeComposite.
 	 * 
-	 * @return
+	 * @return the EObject representing the root node of this tree
 	 */
 	public EObject getEcoreNode() {
 		return ecoreNode;
@@ -289,9 +284,6 @@ public class EMFTreeComposite extends TreeComposite {
 		// corresponding EMFEntries that use it, on
 		// the newly added child cNode.
 		castedTree.updateContainingNode(castedTree.ecoreNode);
-
-		return;
-
 	}
 
 	/**
@@ -411,7 +403,6 @@ public class EMFTreeComposite extends TreeComposite {
 	 * This operation is used to check equality between the EMFTreeComposite and
 	 * another EMFTreeComposite. It returns true if the EMFTreeComposites are
 	 * equal and false if they are not.
-	 * 
 	 */
 	@Override
 	public boolean equals(Object otherTreeComposite) {
@@ -431,6 +422,15 @@ public class EMFTreeComposite extends TreeComposite {
 	}
 
 	/**
+	 * Sets the ECore node meta data
+	 * 
+	 * @param metaData : The meta data to set
+	 */
+	public void setECoreNodeMetaData(EClass metaData) {
+		ecoreNodeMetaData = metaData;
+	}
+	
+	/**
 	 * This operation performs a deep copy of the attributes of another
 	 * EMFTreeComposite into the current EMFTreeComposite. It copies ALL of the
 	 * children of the EMFTreeComposite, data and child nodes alike.
@@ -444,9 +444,10 @@ public class EMFTreeComposite extends TreeComposite {
 			return;
 		}
 
-		ecoreNodeMetaData = otherTreeComposite.ecoreNodeMetaData;
-		ecoreNode = EcoreUtil.create(ecoreNodeMetaData);
-
+		if (otherTreeComposite.ecoreNodeMetaData != null) {
+			ecoreNodeMetaData = otherTreeComposite.ecoreNodeMetaData;
+			ecoreNode = EcoreUtil.create(ecoreNodeMetaData);
+		}
 		super.copy(otherTreeComposite, true);
 
 		return;
@@ -455,7 +456,6 @@ public class EMFTreeComposite extends TreeComposite {
 	/**
 	 * This operation provides a deep copy of the TreeComposite. It clones ALL
 	 * of the nodes of a TreeComposite, data and child nodes alike.
-	 * 
 	 */
 	@Override
 	public Object clone() {

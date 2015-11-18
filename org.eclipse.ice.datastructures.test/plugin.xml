@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         id="fakeJAXBClassProvider"
+         name="Fake JAXB Class Provider"
+         point="org.eclipse.ice.datastructures.jaxbClassProvider">
+      <implementation
+            class="org.eclipse.ice.datastructures.test.FakeJAXBClassProvider">
+      </implementation>
+   </extension>
+</plugin>

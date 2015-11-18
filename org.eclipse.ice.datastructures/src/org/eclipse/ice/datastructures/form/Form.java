@@ -384,7 +384,8 @@ public class Form extends ICEObject implements Composite {
 	}
 
 	/*
-	 * Overrides a method from ICEObject.
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.ICEObject.ICEObject#update(java.lang.String, java.lang.String)
 	 */
 	@Override
 	public void update(String updatedKey, String newValue) {

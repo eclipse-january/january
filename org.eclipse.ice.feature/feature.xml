@@ -306,6 +306,13 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
+         id="org.eclipse.ecf"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="org.eclipse.equinox.preferences"
          download-size="0"
          install-size="0"
@@ -492,13 +499,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.core.resources.source"
-         download-size="0"
-         install-size="0"
-         version="3.10.0.v20150423-0755"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.compare"
          download-size="0"
          install-size="0"
@@ -635,27 +635,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          download-size="0"
          install-size="0"
          version="1.0.0.201409040043"
-         unpack="false"/>
-
-   <plugin
-         id="org.codehaus.jackson.core"
-         download-size="0"
-         install-size="0"
-         version="1.6.0.v20101005-0925"
-         unpack="false"/>
-
-   <plugin
-         id="org.codehaus.jackson.jaxrs"
-         download-size="0"
-         install-size="0"
-         version="1.6.0.v20101005-1100"
-         unpack="false"/>
-
-   <plugin
-         id="org.codehaus.jackson.mapper"
-         download-size="0"
-         install-size="0"
-         version="1.6.0.v20101005-0925"
          unpack="false"/>
 
    <plugin
@@ -810,139 +789,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          download-size="0"
          install-size="0"
          version="3.1.0.v20150323-1312"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.egit"
-         download-size="0"
-         install-size="0"
-         version="4.0.0.201506090130-r"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.egit.core"
-         download-size="0"
-         install-size="0"
-         version="4.0.0.201506090130-r"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.egit.github.core"
-         download-size="0"
-         install-size="0"
-         version="4.0.0.201506090130-r"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.egit.ui"
-         download-size="0"
-         install-size="0"
-         version="4.0.0.201506090130-r"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.jgit"
-         download-size="0"
-         install-size="0"
-         version="4.0.0.201506090130-r"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.m2e.archetype.common"
-         download-size="0"
-         install-size="0"
-         version="1.6.0.20150526-2031"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.m2e.core"
-         download-size="0"
-         install-size="0"
-         version="1.6.0.20150526-2032"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.m2e.core.ui"
-         download-size="0"
-         install-size="0"
-         version="1.6.0.20150526-2032"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.m2e.discovery"
-         download-size="0"
-         install-size="0"
-         version="1.6.0.20150526-2032"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.m2e.editor"
-         download-size="0"
-         install-size="0"
-         version="1.6.0.20150526-2032"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.m2e.editor.xml"
-         download-size="0"
-         install-size="0"
-         version="1.6.0.20150526-2032"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.m2e.jdt"
-         download-size="0"
-         install-size="0"
-         version="1.6.0.20150526-2032"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.m2e.launching"
-         download-size="0"
-         install-size="0"
-         version="1.6.0.20150526-2032"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.m2e.lifecyclemapping.defaults"
-         download-size="0"
-         install-size="0"
-         version="1.6.0.20150526-2032"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.m2e.maven.indexer"
-         download-size="0"
-         install-size="0"
-         version="1.6.0.20150526-2031"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.m2e.maven.runtime"
-         download-size="0"
-         install-size="0"
-         version="1.6.0.20150526-2031"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.m2e.model.edit"
-         download-size="0"
-         install-size="0"
-         version="1.6.0.20150526-2032"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.m2e.refactoring"
-         download-size="0"
-         install-size="0"
-         version="1.6.0.20150526-2032"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.m2e.scm"
-         download-size="0"
-         install-size="0"
-         version="1.6.0.20150526-2032"
          unpack="false"/>
 
    <plugin
@@ -1507,7 +1353,14 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.ecf"
+         id="org.eclipse.ice.developer"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ice.developer.moose"
          download-size="0"
          install-size="0"
          version="0.0.0"
