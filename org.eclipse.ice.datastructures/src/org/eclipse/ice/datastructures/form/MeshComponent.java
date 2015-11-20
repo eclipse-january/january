@@ -12,7 +12,6 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.form;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -25,9 +24,8 @@ import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
 import org.eclipse.ice.viz.service.datastructures.VizObject.IVizUpdateable;
 import org.eclipse.ice.viz.service.datastructures.VizObject.IVizUpdateableListener;
 import org.eclipse.ice.viz.service.modeling.AbstractController;
-import org.eclipse.ice.viz.service.modeling.Edge;
+import org.eclipse.ice.viz.service.modeling.AbstractController;
 import org.eclipse.ice.viz.service.modeling.Face;
-import org.eclipse.ice.viz.service.modeling.Vertex;
 
 /**
  * <p>
@@ -50,19 +48,19 @@ public class MeshComponent extends ICEObject
 	private AbstractController mesh;
 
 	/**
-	 * The next unused ID for polygons.
+	 * The next free ID to assign to a Polygon.
 	 */
-	private int nextPolygonID;
+	private int nextPolygonID = 1;
 
 	/**
-	 * The next unused ID for vertices.
+	 * The next free ID to assign to an Edge.
 	 */
-	private int nextVertexID;
+	private int nextEdgeID = 1;
 
 	/**
-	 * The next unused ID for edges.
+	 * The next free ID to assign to a Vertex.
 	 */
-	private int nextEdgeID;
+	private int nextVertexID = 1;
 
 	/**
 	 * <p>
@@ -120,59 +118,6 @@ public class MeshComponent extends ICEObject
 
 	/**
 	 * <p>
-	 * Removes a polygon from the MeshComponent. This will also remove any
-	 * vertices and edges used only by this polygon. If a polygon was removed, a
-	 * notification is sent to listeners.
-	 * </p>
-	 * 
-	 * @param id
-	 *            <p>
-	 *            The ID of the polygon to remove from the existing list.
-	 *            </p>
-	 */
-	public void removePolygon(int id) {
-
-		// Check each entity for the given id
-		for (AbstractController entity : mesh.getEntities()) {
-
-			// If the id was found, remove the corresponding entity from the
-			// list
-			if (Integer.toString(id).equals(entity.getProperty("Id"))) {
-				mesh.removeEntity(entity);
-
-				// Notify listeners of the change
-				notifyListeners();
-				return;
-			}
-		}
-
-		return;
-	}
-
-	/**
-	 * <p>
-	 * Removes a list polygons from the MeshComponent. This will also remove any
-	 * vertices and edges used by these polygons. If a polygon was removed, a
-	 * notification is sent to listeners.
-	 * </p>
-	 * 
-	 * @param ids
-	 *            <p>
-	 *            An ArrayList containing the IDs of the polygons to remove from
-	 *            the MeshComponent.
-	 *            </p>
-	 */
-	public void removePolygons(ArrayList<Integer> ids) {
-
-		// Remove each individual id in the list
-		for (int i : ids) {
-			removePolygon(i);
-		}
-		return;
-	}
-
-	/**
-	 * <p>
 	 * Gets a list of all polygons stored in the MeshComponent ordered by their
 	 * IDs.
 	 * </p>
@@ -184,33 +129,6 @@ public class MeshComponent extends ICEObject
 	 */
 	public List<AbstractController> getPolygons() {
 		return mesh.getEntities();
-	}
-
-	/**
-	 * <p>
-	 * Gets a Polygon instance corresponding to an ID.
-	 * </p>
-	 * 
-	 * @param id
-	 *            <p>
-	 *            The ID of the polygon.
-	 *            </p>
-	 * @return
-	 * 		<p>
-	 *         The polygon referred to by the ID, or null if there is no polygon
-	 *         with the ID.
-	 *         </p>
-	 */
-	public AbstractController getPolygon(int id) {
-
-		// Seach the entities for a polygon with the given ID
-		for (AbstractController entity : mesh.getEntities()) {
-			if (id == Integer.valueOf(entity.getProperty("Id"))) {
-				return entity;
-			}
-		}
-
-		return null;
 	}
 
 	/**
@@ -229,84 +147,6 @@ public class MeshComponent extends ICEObject
 		int temp = nextPolygonID;
 		nextPolygonID++;
 		return temp;
-	}
-
-	// /**
-	// * <p>
-	// * Sets the list of all polygons stored in the MeshComponent.
-	// * </p>
-	// *
-	// * @param polygons
-	// * <p>
-	// * The list of polygons to replace the existing list of polygons
-	// * in the MeshComponent.
-	// * </p>
-	// */
-	// public void setPolygons(ArrayList<Polygon> polygons) {
-	// mesh.setPolygons(polygons);
-	// }
-
-	/**
-	 * <p>
-	 * Gets a list of all vertices associated with this MeshComponent.
-	 * </p>
-	 * 
-	 * @return
-	 * 		<p>
-	 *         All vertices managed by this MeshComponent.
-	 *         </p>
-	 */
-	public List<AbstractController> getVertices() {
-
-		// A list of every unique vertex
-		List<AbstractController> vertices = new ArrayList<AbstractController>();
-
-		// Get every vertex
-		for (AbstractController face : mesh.getEntities()) {
-			for (AbstractController edge : face
-					.getEntitiesByCategory("Edges")) {
-				for (AbstractController vertex : edge
-						.getEntitiesByCategory("Vertices")) {
-
-					// If the vertex is not already in the list, add it
-					if (!vertices.contains(vertex)) {
-						vertices.add(vertex);
-					}
-				}
-
-			}
-		}
-
-		return vertices;
-	}
-
-	/**
-	 * <p>
-	 * Gets a Vertex instance corresponding to an ID.
-	 * </p>
-	 * 
-	 * @param id
-	 *            <p>
-	 *            The ID of the vertex.
-	 *            </p>
-	 * @return
-	 * 		<p>
-	 *         The vertex referred to by the ID, or null if the ID is invalid.
-	 *         </p>
-	 */
-	public Vertex getVertex(int id) {
-
-		// Get a list of all vertices
-		for (AbstractController entity : getVertices()) {
-
-			// If the vertex has the given ID, return it
-			if (id == Integer.valueOf(entity.getProperty("Id"))) {
-				return (Vertex) entity;
-			}
-		}
-
-		// If the vertex was not found, return null
-		return null;
 	}
 
 	/**
@@ -329,65 +169,6 @@ public class MeshComponent extends ICEObject
 
 	/**
 	 * <p>
-	 * Gets a list of all edges associated with this MeshComponent.
-	 * </p>
-	 * 
-	 * @return
-	 * 		<p>
-	 *         All edges managed by this MeshComponent.
-	 *         </p>
-	 */
-	public List<AbstractController> getEdges() {
-		// A list of every unique vertex
-		List<AbstractController> edges = new ArrayList<AbstractController>();
-
-		// Get every vertex
-		for (AbstractController face : mesh.getEntities()) {
-			for (AbstractController edge : face
-					.getEntitiesByCategory("Edges")) {
-
-				// If the vertex is not already in the list, add it
-				if (!edges.contains(edge)) {
-					edges.add(edge);
-				}
-
-			}
-		}
-
-		return edges;
-	}
-
-	/**
-	 * <p>
-	 * Gets an Edge instance corresponding to an ID.
-	 * </p>
-	 * 
-	 * @param id
-	 *            <p>
-	 *            The ID of the edge.
-	 *            </p>
-	 * @return
-	 * 		<p>
-	 *         The edge referred to by the ID, or null if the ID is invalid.
-	 *         </p>
-	 */
-	public Edge getEdge(int id) {
-
-		// Get a list of all edges
-		for (AbstractController entity : getEdges()) {
-
-			// If the edge has the given ID, return it
-			if (id == Integer.valueOf(entity.getProperty("Id"))) {
-				return (Edge) entity;
-			}
-		}
-
-		// If the edge was not found, return null
-		return null;
-	}
-
-	/**
-	 * <p>
 	 * Returns the next available ID for edges.
 	 * </p>
 	 * 
@@ -399,117 +180,10 @@ public class MeshComponent extends ICEObject
 	public int getNextEdgeId() {
 
 		// Increment the next edge id then return its original value
-		int temp = nextVertexID;
-		nextVertexID++;
+		int temp = nextEdgeID;
+		nextEdgeID++;
 		return temp;
 	}
-
-	// /**
-	// * <p>
-	// * Returns a list of Edges attached to the Vertex with the specified ID.
-	// * </p>
-	// *
-	// * @param id
-	// * <p>
-	// * The ID of the vertex.
-	// * </p>
-	// * @return
-	// * <p>
-	// * An ArrayList of Edges that are attached to the vertex with the
-	// * specified ID. If there are no such edges, e.g., if the vertex ID
-	// * is invalid, the list will be empty.
-	// * </p>
-	// */
-	// public ArrayList<Edge> getEdgesFromVertex(int id) {
-	// return getEdgesFromVertex(id);
-	// }
-
-	// /**
-	// * <p>
-	// * Returns a list of Polygons containing the Vertex with the specified ID.
-	// * </p>
-	// *
-	// * @param id
-	// * <p>
-	// * The ID of the vertex.
-	// * </p>
-	// * @return
-	// * <p>
-	// * An ArrayList of Polygons that contain the vertex with the
-	// * specified ID. If there are no such polygons, e.g., if the vertex
-	// * ID is invalid, the list will be empty.
-	// * </p>
-	// */
-	// public ArrayList<Polygon> getPolygonsFromVertex(int id) {
-	// return mesh.getPolygonsFromVertex(id);
-	// }
-
-	// /**
-	// * <p>
-	// * Returns a list of Polygons containing the Edge with the specified ID.
-	// * </p>
-	// *
-	// * @param id
-	// * <p>
-	// * The ID of the edge.
-	// * </p>
-	// * @return
-	// * <p>
-	// * An ArrayList of Polygons that contain the edge with the specified
-	// * ID. If there are no such polygons, e.g., if the edge ID is
-	// * invalid, the list will be empty.
-	// * </p>
-	// */
-	// public ArrayList<Polygon> getPolygonsFromEdge(int id) {
-	// return mesh.getPolygonsFromEdge(id);
-	// }
-
-	// /**
-	// * <p>
-	// * Returns an Edge that connects two specified vertices if one exists.
-	// * </p>
-	// *
-	// * @param firstId
-	// * <p>
-	// * The ID of the first vertex.
-	// * </p>
-	// * @param secondId
-	// * <p>
-	// * The ID of the second vertex.
-	// * </p>
-	// *
-	// * @return
-	// * <p>
-	// * An Edge instance that connects the first and second vertices, or
-	// * null if no such edge exists.
-	// * </p>
-	// */
-	// public Edge getEdgeFromVertices(int firstId, int secondId) {
-	// return mesh.getEdgeFromVertices(firstId, secondId);
-	//
-	// }
-
-	// /**
-	// * <p>
-	// * Returns a list containing all Polygons in the MeshComponent whose
-	// * vertices are a subset of the supplied list of vertices.
-	// * </p>
-	// *
-	// * @param vertices
-	// * <p>
-	// * A collection of vertices.
-	// * </p>
-	// * @return
-	// * <p>
-	// * An ArrayList of all Polygons in the MeshComponent that are
-	// * composed of some subset of the specified vertices.
-	// * </p>
-	// */
-	// public ArrayList<Polygon> getPolygonsFromVertices(
-	// ArrayList<Vertex> vertices) {
-	// return mesh.getPolygonsFromVertices(vertices);
-	//
-	// }
 
 	/**
 	 * <p>
