@@ -17,6 +17,7 @@ import org.eclipse.dawnsci.analysis.api.dataset.IDataListener;
 import org.eclipse.dawnsci.analysis.api.dataset.IDatasetChangeChecker;
 import org.eclipse.dawnsci.analysis.api.dataset.IDynamicDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.ILazyWriteableDataset;
+import org.eclipse.dawnsci.analysis.api.io.ILazyDynamicLoader;
 import org.eclipse.dawnsci.analysis.api.io.ILazyLoader;
 
 public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
@@ -74,6 +75,12 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 		this.eventDelegate = new DataListenerDelegate();
 	}
 
+	public void refreshShape() {
+		if (loader instanceof ILazyDynamicLoader) {
+			resize(((ILazyDynamicLoader)loader).refreshShape());
+		}
+	}
+	
 	@Override
 	public void resize(int... newShape) {
 		if (base != null) {
