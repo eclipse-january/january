@@ -23,7 +23,7 @@ import org.eclipse.dawnsci.analysis.api.io.ILazyLoader;
 public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 	protected int[] maxShape;
 
-	protected DataListenerDelegate eventDelegate;
+	protected transient DataListenerDelegate eventDelegate; // this does not need to be serialised!
 	protected IDatasetChangeChecker checker;
 	private boolean stop;
 
