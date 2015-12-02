@@ -25,6 +25,8 @@ import org.eclipse.ice.viz.service.datastructures.VizObject.IVizUpdateable;
 import org.eclipse.ice.viz.service.datastructures.VizObject.IVizUpdateableListener;
 import org.eclipse.ice.viz.service.modeling.AbstractController;
 import org.eclipse.ice.viz.service.modeling.AbstractController;
+import org.eclipse.ice.viz.service.modeling.AbstractMeshComponent;
+import org.eclipse.ice.viz.service.modeling.AbstractView;
 import org.eclipse.ice.viz.service.modeling.Face;
 
 /**
@@ -71,7 +73,8 @@ public class MeshComponent extends ICEObject
 	 */
 	public MeshComponent() {
 		super();
-		mesh = new AbstractController();
+		mesh = new AbstractController(new AbstractMeshComponent(),
+				new AbstractView());
 		mesh.register(this);
 		return;
 	}
