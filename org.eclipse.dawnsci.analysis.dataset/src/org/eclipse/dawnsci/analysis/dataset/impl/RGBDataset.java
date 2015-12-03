@@ -12,6 +12,8 @@
 
 package org.eclipse.dawnsci.analysis.dataset.impl;
 
+import java.util.Arrays;
+
 /**
  * Class to hold colour datasets as red, green, blue tuples of short integers
  */
@@ -68,7 +70,12 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 		}
 		this.shape = shape.clone();
 
-		odata = data = createArray(size);
+		try {
+			odata = data = createArray(size);
+		} catch (Throwable t) {
+			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
+			throw t;
+		}
 
 		for (int i = 0, n = 0; i < size; i++) {
 			data[n++] = (short) redData[i];
@@ -98,7 +105,12 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 		}
 		this.shape = shape.clone();
 
-		odata = data = createArray(size);
+		try {
+			odata = data = createArray(size);
+		} catch (Throwable t) {
+			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
+			throw t;
+		}
 
 		for (int i = 0, n = 0; i < size; i++) {
 			data[n++] = redData[i];
@@ -128,7 +140,12 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 		}
 		this.shape = shape.clone();
 
-		odata = data = createArray(size);
+		try {
+			odata = data = createArray(size);
+		} catch (Throwable t) {
+			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
+			throw t;
+		}
 
 		for (int i = 0, n = 0; i < size; i++) {
 			data[n++] = (short) (0xff & redData[i]);

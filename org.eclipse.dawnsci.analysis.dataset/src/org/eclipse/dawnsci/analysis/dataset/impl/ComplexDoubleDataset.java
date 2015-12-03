@@ -88,7 +88,12 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 		}
 		this.shape = shape.clone();
 
-		odata = data = createArray(size);
+		try {
+			odata = data = createArray(size);
+		} catch (Throwable t) {
+			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
+			throw t;
+		}
 
 		for (int i = 0, n = 0; i < size; i++) {
 			data[n++] = realData[i];
@@ -157,7 +162,12 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 		result.shape = getShapeFromObject(obj);
 		result.size = calcSize(result.shape);
 
-		result.odata = result.data = result.createArray(result.size);
+		try {
+			result.odata = result.data = result.createArray(result.size);
+		} catch (Throwable t) {
+			logger.error("Could not create a dataset of shape {}", Arrays.toString(result.shape), t);
+			throw t;
+		}
 
 		int[] pos = new int[result.shape.length];
 		result.fillData(obj, 0, pos);

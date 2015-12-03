@@ -77,7 +77,12 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 		}
 		this.shape = shape.clone();
 
-		odata = data = createArray(size);
+		try {
+			odata = data = createArray(size);
+		} catch (Throwable t) {
+			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
+			throw t;
+		}
 	}
 
 	/**
@@ -88,19 +93,24 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 		isize = dataset.isize;
 
 		copyToView(dataset, this, true, true);
-		if (dataset.stride == null) {
-			odata = data = dataset.data.clone();
-		} else {
-			offset = 0;
-			stride = null;
-			base = null;
-			odata = data = createArray(size);
-			IndexIterator iter = dataset.getIterator();
-			for (int j = 0; iter.hasNext();) {
-				for (int i = 0; i < isize; i++) {
-					data[j++] = dataset.data[iter.index + i];
+		try {
+			if (dataset.stride == null) {
+				odata = data = dataset.data.clone();
+			} else {
+				offset = 0;
+				stride = null;
+				base = null;
+				odata = data = createArray(size);
+				IndexIterator iter = dataset.getIterator();
+				for (int j = 0; iter.hasNext();) {
+					for (int i = 0; i < isize; i++) {
+						data[j++] = dataset.data[iter.index + i];
+					}
 				}
 			}
+		} catch (Throwable t) {
+			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
+			throw t;
 		}
 	}
 
@@ -114,7 +124,12 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 		stride = null;
 		base = null;
 		isize = dataset.getElementsPerItem();
-		odata = data = createArray(size);
+		try {
+			odata = data = createArray(size);
+		} catch (Throwable t) {
+			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
+			throw t;
+		}
 
 		IndexIterator iter = dataset.getIterator();
 		for (int j = 0; iter.hasNext();) {
@@ -165,7 +180,12 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 		size = calcSize(datasets[0].getShapeRef());
 		shape = datasets[0].getShape();
 
-		odata = data = createArray(size);
+		try {
+			odata = data = createArray(size);
+		} catch (Throwable t) {
+			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
+			throw t;
+		}
 
 		IndexIterator[] iters = new IndexIterator[isize];
 		for (int i = 0; i < datasets.length; i++)
@@ -195,7 +215,12 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 		shape = dataset.getShape();
 		name = new String(dataset.getName());
 
-		odata = data = createArray(size);
+		try {
+			odata = data = createArray(size);
+		} catch (Throwable t) {
+			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
+			throw t;
+		}
 		final int os = dataset.getElementsPerItem();
 
 		IndexIterator iter = dataset.getIterator();
@@ -792,7 +817,13 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	public void resize(int... newShape) {
 		IndexIterator iter = getIterator();
 		int nsize = calcSize(newShape);
-		byte[] ndata = createArray(nsize); // PRIM_TYPE
+		byte[] ndata; // PRIM_TYPE
+		try {
+			ndata = createArray(nsize);
+		} catch (Throwable t) {
+			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
+			throw t;
+		}
 
 		int i = 0;
 		while (iter.hasNext() && i < nsize) {

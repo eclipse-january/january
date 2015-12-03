@@ -75,7 +75,12 @@ public class ObjectDatasetBase extends AbstractDataset {
 		}
 		this.shape = shape.clone();
 
-		odata = data = createArray(size);
+		try {
+			odata = data = createArray(size);
+		} catch (Throwable t) {
+			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
+			throw t;
+		}
 	}
 
 	/**
@@ -107,17 +112,24 @@ public class ObjectDatasetBase extends AbstractDataset {
 	 */
 	public ObjectDatasetBase(final ObjectDatasetBase dataset) {
 		copyToView(dataset, this, true, true);
-		if (dataset.stride == null) {
-			odata = data = dataset.data.clone();
-		} else {
-			offset = 0;
-			stride = null;
-			base = null;
-			odata = data = createArray(size);
-			IndexIterator iter = dataset.getIterator();
-			for (int i = 0; iter.hasNext(); i++) {
-				data[i] = dataset.data[iter.index];
+
+		try {
+			if (dataset.stride == null) {
+				odata = data = dataset.data.clone();
+			} else {
+				offset = 0;
+				stride = null;
+				base = null;
+				odata = data = createArray(size);
+
+				IndexIterator iter = dataset.getIterator();
+				for (int i = 0; iter.hasNext(); i++) {
+					data[i] = dataset.data[iter.index];
+				}
 			}
+		} catch (Throwable t) {
+			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
+			throw t;
 		}
 	}
 
@@ -130,7 +142,12 @@ public class ObjectDatasetBase extends AbstractDataset {
 		offset = 0;
 		stride = null;
 		base = null;
-		odata = data = createArray(size);
+		try {
+			odata = data = createArray(size);
+		} catch (Throwable t) {
+			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
+			throw t;
+		}
 		IndexIterator iter = dataset.getIterator();
 		for (int i = 0; iter.hasNext(); i++) {
 			data[i] = dataset.getObjectAbs(iter.index); // GET_ELEMENT_WITH_CAST
@@ -179,7 +196,12 @@ public class ObjectDatasetBase extends AbstractDataset {
 		result.shape = getShapeFromObject(obj);
 		result.size = calcSize(result.shape);
 
-		result.odata = result.data = createArray(result.size);
+		try {
+			result.odata = result.data = createArray(result.size);
+		} catch (Throwable t) {
+			logger.error("Could not create a dataset of shape {}", Arrays.toString(result.shape), t);
+			throw t;
+		}
 
 		int[] pos = new int[result.shape.length];
 		result.fillData(obj, 0, pos);
@@ -511,7 +533,13 @@ public class ObjectDatasetBase extends AbstractDataset {
 	public void resize(int... newShape) {
 		final IndexIterator iter = getIterator();
 		final int nsize = calcSize(newShape);
-		final Object[] ndata = createArray(nsize); // PRIM_TYPE
+		final Object[] ndata; // PRIM_TYPE
+		try {
+			ndata = createArray(nsize);
+		} catch (Exception e) {
+			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), e);
+			throw e;
+		}
 		for (int i = 0; iter.hasNext() && i < nsize; i++) {
 			ndata[i] = data[iter.index];
 		}
