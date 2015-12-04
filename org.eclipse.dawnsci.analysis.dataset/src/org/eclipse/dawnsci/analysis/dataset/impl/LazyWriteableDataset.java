@@ -176,8 +176,10 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 		if (dshape.length == 0) { // fix zero-rank case
 			dshape = new int[] {1};
 		}
+		// if necessary, reshape the input data according to the shape of the slice
 		if (!Arrays.equals(slice.getShape(), dshape)) {
-			throw new IllegalArgumentException("Slice shape does not match input data shape");
+			data = data.getSliceView();
+			data.setShape(slice.getShape());
 		}
 
 		SliceND nslice = calcTrueSlice(slice);
