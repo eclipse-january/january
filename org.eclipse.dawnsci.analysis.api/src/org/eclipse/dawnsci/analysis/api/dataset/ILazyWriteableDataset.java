@@ -30,8 +30,9 @@ public interface ILazyWriteableDataset extends IDynamicDataset {
 
 	/**
 	 * Set chunking
+	 * @param chunks chunk shape
 	 */
-	public void setChunking(int[] chunks);
+	public void setChunking(int... chunks);
 
 	/**
 	 * Set saver

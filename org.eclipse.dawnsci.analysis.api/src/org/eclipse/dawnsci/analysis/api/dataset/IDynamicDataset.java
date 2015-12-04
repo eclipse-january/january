@@ -39,8 +39,9 @@ public interface IDynamicDataset extends ILazyDataset {
 
 	/**
 	 * Set maximum shape
+	 * @param maxShape maximum shape
 	 */
-	public void setMaxShape(int[] maxShape);
+	public void setMaxShape(int... maxShape);
 
 	/**
 	 * Add a listener which will be fired when aspects of the data change for
