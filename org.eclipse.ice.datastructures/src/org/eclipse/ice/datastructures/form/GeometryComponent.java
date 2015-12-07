@@ -26,8 +26,9 @@ import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
-import org.eclipse.ice.viz.service.datastructures.VizObject.IVizUpdateable;
-import org.eclipse.ice.viz.service.datastructures.VizObject.IVizUpdateableListener;
+import org.eclipse.ice.viz.service.datastructures.VizObject.IManagedVizUpdateable;
+import org.eclipse.ice.viz.service.datastructures.VizObject.IManagedVizUpdateableListener;
+import org.eclipse.ice.viz.service.datastructures.VizObject.UpdateableSubscriptionType;
 import org.eclipse.ice.viz.service.modeling.Shape;
 
 /**
@@ -40,8 +41,8 @@ import org.eclipse.ice.viz.service.modeling.Shape;
  */
 @XmlRootElement(name = "GeometryComponent")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GeometryComponent extends ICEObject
-		implements Component, IUpdateableListener, IVizUpdateableListener {
+public class GeometryComponent extends ICEObject implements Component,
+		IUpdateableListener, IManagedVizUpdateableListener {
 	/**
 	 * <p>
 	 * The set of ComponentListeners observing the GeometryComponent
@@ -365,9 +366,27 @@ public class GeometryComponent extends ICEObject
 	 * VizObject.IVizUpdateable)
 	 */
 	@Override
-	public void update(IVizUpdateable component) {
+	public void update(IManagedVizUpdateable component,
+			UpdateableSubscriptionType[] type) {
 
 		notifyListeners();
 
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.ice.viz.service.datastructures.VizObject.
+	 * IManagedVizUpdateableListener#getSubscriptions(org.eclipse.ice.viz.
+	 * service.datastructures.VizObject.IVizUpdateable)
+	 */
+	@Override
+	public ArrayList<UpdateableSubscriptionType> getSubscriptions(
+			IManagedVizUpdateable source) {
+
+		// Register for all event types
+		ArrayList<UpdateableSubscriptionType> types = new ArrayList<UpdateableSubscriptionType>();
+		types.add(UpdateableSubscriptionType.All);
+		return types;
 	}
 }

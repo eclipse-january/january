@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.form;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -21,8 +22,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.eclipse.ice.datastructures.ICEObject.Component;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
-import org.eclipse.ice.viz.service.datastructures.VizObject.IVizUpdateable;
-import org.eclipse.ice.viz.service.datastructures.VizObject.IVizUpdateableListener;
+import org.eclipse.ice.viz.service.datastructures.VizObject.IManagedVizUpdateable;
+import org.eclipse.ice.viz.service.datastructures.VizObject.IManagedVizUpdateableListener;
+import org.eclipse.ice.viz.service.datastructures.VizObject.UpdateableSubscriptionType;
 import org.eclipse.ice.viz.service.modeling.AbstractController;
 import org.eclipse.ice.viz.service.modeling.AbstractController;
 import org.eclipse.ice.viz.service.modeling.AbstractMeshComponent;
@@ -42,7 +44,7 @@ import org.eclipse.ice.viz.service.modeling.Face;
 @XmlRootElement(name = "MeshComponent")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class MeshComponent extends ICEObject
-		implements Component, IVizUpdateableListener {
+		implements Component, IManagedVizUpdateableListener {
 
 	/**
 	 * The wrapped VizMeshComponent.
@@ -306,10 +308,44 @@ public class MeshComponent extends ICEObject
 		return;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.ice.viz.service.datastructures.VizObject.
+	 * IManagedVizUpdateableListener#update(org.eclipse.ice.viz.service.
+	 * datastructures.VizObject.IManagedVizUpdateable,
+	 * org.eclipse.ice.viz.service.datastructures.VizObject.
+	 * UpdateableSubscriptionType[])
+	 */
 	@Override
-	public void update(IVizUpdateable component) {
-		notifyListeners();
+	public void update(IManagedVizUpdateable component,
+			UpdateableSubscriptionType[] types) {
 
+		// Only pass on updates for the root part's list of children changing,
+		// in order to refresh the tree view of components.
+		for (UpdateableSubscriptionType type : types) {
+			if (type == UpdateableSubscriptionType.Child) {
+				notifyListeners();
+			}
+		}
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.ice.viz.service.datastructures.VizObject.
+	 * IManagedVizUpdateableListener#getSubscriptions(org.eclipse.ice.viz.
+	 * service.datastructures.VizObject.IVizUpdateable)
+	 */
+	@Override
+	public ArrayList<UpdateableSubscriptionType> getSubscriptions(
+			IManagedVizUpdateable source) {
+
+		// Register for all event types
+		ArrayList<UpdateableSubscriptionType> types = new ArrayList<UpdateableSubscriptionType>();
+		types.add(UpdateableSubscriptionType.All);
+		return types;
 	}
 
 }
