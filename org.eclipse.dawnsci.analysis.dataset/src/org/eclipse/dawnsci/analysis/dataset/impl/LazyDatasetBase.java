@@ -225,7 +225,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		try {
 			List<T> ml = getMetadata(clazz);
 			if (ml == null) return null;
-			return ml.isEmpty() ? null : ml.get(0);
+			for (T t : ml) if (t.getClass().equals(clazz)) return t;
 		} catch (Exception e) {
 			logger.error("Get metadata failed!",e);
 		}
