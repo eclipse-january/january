@@ -27,12 +27,17 @@ public class DynamicMetadataUtils {
 				ILazyDataset[] axis = ai.getAxis(i);
 				if (axis == null) continue;
 				for (int j = 0; j < axis.length; j++) {
-					ILazyDataset l = axis[i];
+					ILazyDataset l = axis[j];
 					if (l == null) continue;
 					int[] dims = ai.getDimensions(l);
 					
 					if (l instanceof LazyDynamicDataset) {
-						l = l.squeezeEnds();
+						if (l.getSize() == 1) {
+							l.setShape(new int[]{1});
+						} else {
+							l = l.squeezeEnds();
+						}
+						
 						((LazyDynamicDataset) l).refreshShape();
 					}
 					
