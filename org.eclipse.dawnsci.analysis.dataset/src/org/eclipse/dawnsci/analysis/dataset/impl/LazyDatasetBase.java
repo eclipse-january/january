@@ -225,7 +225,9 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		try {
 			List<T> ml = getMetadata(clazz);
 			if (ml == null) return null;
-			for (T t : ml) if (t.getClass().equals(clazz)) return t;
+			for (T t : ml) {
+				if (clazz.isInstance(t)) return t;
+			}
 		} catch (Exception e) {
 			logger.error("Get metadata failed!",e);
 		}
@@ -342,7 +344,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 				stp = stop.clone();
 				ste = step.clone();
 				for (int i = 0; i < rank; i++) {
-					if (shape[i] == oShape[i]) continue;
+					if (shape[i] >= oShape[i]) continue;
 					if (shape[i] == 1) {
 						stt[i] = 0;
 						stp[i] = 1;
