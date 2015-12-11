@@ -20,6 +20,7 @@ import org.eclipse.dawnsci.analysis.api.metadata.AxesMetadata;
 import org.eclipse.dawnsci.analysis.api.metadata.Reshapeable;
 import org.eclipse.dawnsci.analysis.api.metadata.Sliceable;
 import org.eclipse.dawnsci.analysis.api.metadata.Transposable;
+import org.eclipse.dawnsci.analysis.dataset.impl.LazyDynamicDataset;
 
 public class AxesMetadataImpl implements AxesMetadata {
 
@@ -109,7 +110,7 @@ public class AxesMetadataImpl implements AxesMetadata {
 		if (lz != null) dimensionMap.put(lz, axisDim);
 	}
 	
-	public int[] getDimensions(ILazyDataset lz) {
+	private int[] getDimensions(ILazyDataset lz) {
 		return dimensionMap.get(lz);
 	}
 
@@ -142,5 +143,50 @@ public class AxesMetadataImpl implements AxesMetadata {
 	@Override
 	public AxesMetadata createAxesMetadata(int rank) {
 		return new AxesMetadataImpl(rank);
+	}
+	
+	public int[] refresh(int[] shape) {
+		int[] maxShape = shape.clone();
+
+		AxesMetadataImpl ai = this;
+		for (int i = 0 ; i < ai.getAxes().length; i++) {
+			ILazyDataset[] axis = ai.getAxis(i);
+			if (axis == null) continue;
+			for (int j = 0; j < axis.length; j++) {
+				ILazyDataset l = axis[j];
+				if (l == null) continue;
+				int[] dims = ai.getDimensions(l);
+
+				if (l instanceof LazyDynamicDataset) {
+					if (l.getSize() == 1) {
+						l.setShape(new int[]{1});
+					} else {
+						l = l.squeezeEnds();
+					}
+
+					((LazyDynamicDataset) l).refreshShape();
+				}
+
+				if (dims == null) {
+					int k = l.getShape()[0];
+					if (k < maxShape[i]) maxShape[i] = k;
+					int[] newShape = shape.clone();
+					Arrays.fill(newShape, 1);
+					newShape[i] = k;
+					l.setShape(newShape);
+				} else {
+					int[] newShape = shape.clone();
+					Arrays.fill(newShape, 1);
+					for (int k = 0 ; k < dims.length; k++) {
+						int[] s = l.getShape();
+						if (s[dims[k]] < maxShape[k]) maxShape[k] = dims[k];
+						newShape[k] = s[dims[k]];
+						l.setShape(newShape);
+					}
+				}
+			}
+
+		}
+		return maxShape;
 	}
 }

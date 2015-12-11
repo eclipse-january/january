@@ -9,12 +9,9 @@
 
 package org.eclipse.dawnsci.analysis.dataset.metadata;
 
-import java.util.Arrays;
 import java.util.List;
 
-import org.eclipse.dawnsci.analysis.api.dataset.ILazyDataset;
 import org.eclipse.dawnsci.analysis.api.metadata.AxesMetadata;
-import org.eclipse.dawnsci.analysis.dataset.impl.LazyDynamicDataset;
 
 public class DynamicMetadataUtils {
 
@@ -23,43 +20,10 @@ public class DynamicMetadataUtils {
 		
 		for (AxesMetadata a : axm) {
 			AxesMetadataImpl ai = (AxesMetadataImpl)a;
-			for (int i = 0 ; i < ai.getAxes().length; i++) {
-				ILazyDataset[] axis = ai.getAxis(i);
-				if (axis == null) continue;
-				for (int j = 0; j < axis.length; j++) {
-					ILazyDataset l = axis[j];
-					if (l == null) continue;
-					int[] dims = ai.getDimensions(l);
-					
-					if (l instanceof LazyDynamicDataset) {
-						if (l.getSize() == 1) {
-							l.setShape(new int[]{1});
-						} else {
-							l = l.squeezeEnds();
-						}
-						
-						((LazyDynamicDataset) l).refreshShape();
-					}
-					
-					if (dims == null) {
-						int k = l.getShape()[0];
-						if (k < maxShape[i]) maxShape[i] = k;
-						int[] newShape = shape.clone();
-						Arrays.fill(newShape, 1);
-						newShape[i] = k;
-						l.setShape(newShape);
-					} else {
-						int[] newShape = shape.clone();
-						Arrays.fill(newShape, 1);
-						for (int k = 0 ; k < dims.length; k++) {
-							int[] s = l.getShape();
-							if (s[dims[k]] < maxShape[k]) maxShape[k] = dims[k];
-							newShape[k] = s[dims[k]];
-							l.setShape(newShape);
-						}
-					}
-				}
-			}
+			int[] s = ai.refresh(shape);
+			for (int i = 0; i < s.length; i++) {
+				if (maxShape[i] > s[i]) maxShape[i] = s[i];
+ 			}
 		}
 		
 		return maxShape;	
