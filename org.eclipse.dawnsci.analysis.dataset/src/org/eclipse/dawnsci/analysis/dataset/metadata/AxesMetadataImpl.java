@@ -15,12 +15,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.dawnsci.analysis.api.dataset.IDynamicDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.ILazyDataset;
 import org.eclipse.dawnsci.analysis.api.metadata.AxesMetadata;
 import org.eclipse.dawnsci.analysis.api.metadata.Reshapeable;
 import org.eclipse.dawnsci.analysis.api.metadata.Sliceable;
 import org.eclipse.dawnsci.analysis.api.metadata.Transposable;
-import org.eclipse.dawnsci.analysis.dataset.impl.LazyDynamicDataset;
 
 public class AxesMetadataImpl implements AxesMetadata {
 
@@ -157,14 +157,14 @@ public class AxesMetadataImpl implements AxesMetadata {
 				if (l == null) continue;
 				int[] dims = ai.getDimensions(l);
 
-				if (l instanceof LazyDynamicDataset) {
+				if (l instanceof IDynamicDataset) {
 					if (l.getSize() == 1) {
 						l.setShape(new int[]{1});
 					} else {
 						l = l.squeezeEnds();
 					}
 
-					((LazyDynamicDataset) l).refreshShape();
+					((IDynamicDataset) l).refreshShape();
 				}
 
 				if (dims == null) {
