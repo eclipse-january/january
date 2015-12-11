@@ -75,6 +75,7 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 		this.eventDelegate = new DataListenerDelegate();
 	}
 
+	@Override
 	public void refreshShape() {
 		if (loader instanceof ILazyDynamicLoader) {
 			resize(((ILazyDynamicLoader)loader).refreshShape());

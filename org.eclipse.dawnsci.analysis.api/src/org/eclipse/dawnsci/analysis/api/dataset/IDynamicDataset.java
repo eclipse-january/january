@@ -90,4 +90,9 @@ public interface IDynamicDataset extends ILazyDataset {
 	 * Alert any registered listeners
 	 */
 	public void fireDataListeners();
+	
+	/**
+	 * Force the shape to be re-read from file, if possible
+	 */
+	public void refreshShape();
 }
