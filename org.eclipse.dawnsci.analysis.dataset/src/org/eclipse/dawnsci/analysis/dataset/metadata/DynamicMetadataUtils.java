@@ -16,7 +16,9 @@ import org.eclipse.dawnsci.analysis.api.metadata.AxesMetadata;
 public class DynamicMetadataUtils {
 
 	public static int[] refreshDynamicAxesMetadata(List<AxesMetadata> axm, int[] shape){
+		
 		int[] maxShape = shape.clone();
+		if (axm == null) return maxShape;
 		
 		for (AxesMetadata a : axm) {
 			AxesMetadataImpl ai = (AxesMetadataImpl)a;
