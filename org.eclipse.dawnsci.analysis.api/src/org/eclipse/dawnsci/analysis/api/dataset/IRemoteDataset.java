@@ -9,6 +9,8 @@
 
 package org.eclipse.dawnsci.analysis.api.dataset;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * A Remote dataset is a lazy dataset which exists in a remote
  * location. It uses a connection to the DataServer to provide the
@@ -47,6 +49,22 @@ public interface IRemoteDataset extends ILazyDataset, IDynamicDataset {
 	public void setDataset(String dataset);
 
 	/**
+	 * Same as calling connect(500, TimeUnit.MILLISECOND)
+	 * 
+	 * Cannot will connect with the DataServer to start listening
+	 * to any updates to the file should it be written in the remote file system.
+	 * When connect it called, the remote file must exist and the dataset properties
+	 * are read. These properties must not change in the file while you are connected.
+	 * For instance if the file is ints when you connect, it must not change data class.
+	 * 
+	 * @return the name of the thread started to run the connection or null if each event
+	 * is driven from the event thread of the service (for instance web sockets provide the
+	 * thread and this runs the connection)
+	 * 
+	 */
+	public String connect() throws Exception;
+	
+	/**
 	 * Cannot will connect with the DataServer to start listening
 	 * to any updates to the file should it be written in the remote file system.
 	 * When connect it called, the remote file must exist and the dataset properties
@@ -57,8 +75,8 @@ public interface IRemoteDataset extends ILazyDataset, IDynamicDataset {
 	 * is driven from the event thread of the service (for instance web sockets provide the
 	 * thread and this runs the connection)
 	 */
-	public String connect() throws Exception;
-	
+	public String connect(long time, TimeUnit unit) throws Exception;
+
 	/**
 	 * Stops listening to the dataset changing and disconnects from the server.
 	 * A remote dataset may be connected and disconnected multiple times.
