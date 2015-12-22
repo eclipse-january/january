@@ -120,6 +120,16 @@ public class MeshComponent extends ICEObject
 
 		return;
 	}
+	
+	/**
+	 * Remove the given polygon from the MeshComponent.
+	 * 
+	 * @param polygon The polygon to be removed from the list.
+	 */
+	public void removePolygon(Face polygon){
+		mesh.removeEntity(polygon);
+		notifyListeners();
+	}
 
 	/**
 	 * <p>
