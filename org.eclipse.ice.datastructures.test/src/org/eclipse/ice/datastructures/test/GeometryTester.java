@@ -52,7 +52,8 @@ public class GeometryTester {
 	 * 
 	 */
 	@Test
-	public void checkCSGTree() throws NullPointerException, JAXBException, IOException {
+	public void checkCSGTree()
+			throws NullPointerException, JAXBException, IOException {
 
 		// Create a shape
 		ShapeComponent geometryModel = new ShapeComponent();
@@ -75,7 +76,8 @@ public class GeometryTester {
 		union.setProperty("Operator", OperatorType.Intersection.toString());
 
 		Shape complement = (Shape) geometryShape.clone();
-		complement.setProperty("OperatorType", OperatorType.Complement.toString());
+		complement.setProperty("OperatorType",
+				OperatorType.Complement.toString());
 		complement.setProperty("Operator", OperatorType.Complement.toString());
 		complement.setProperty("Description", "Official ICE shape");
 
@@ -93,7 +95,8 @@ public class GeometryTester {
 		// Edit the transformations
 		Transformation sphere1Transformation = sphere1.getTransformation();
 		Transformation sphere2Transformation = new Transformation();
-		Transformation intersectionTransformation = intersection.getTransformation();
+		Transformation intersectionTransformation = intersection
+				.getTransformation();
 
 		sphere1Transformation.setScale(0, 0, 2.0);
 		sphere1Transformation.setScale(1, 1, 2.0);
@@ -132,11 +135,13 @@ public class GeometryTester {
 		// Print the XML output
 		// System.out.println(outputStream.toString());
 
-		ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+		ByteArrayInputStream inputStream = new ByteArrayInputStream(
+				outputStream.toByteArray());
 
 		// Load a new GeometryComponent from XML
 		GeometryComponent loadedGeometry = new GeometryComponent();
-		loadedGeometry = (GeometryComponent) xmlHandler.read(classList, inputStream);
+		loadedGeometry = (GeometryComponent) xmlHandler.read(classList,
+				inputStream);
 
 		assertTrue(geometry.equals(loadedGeometry));
 

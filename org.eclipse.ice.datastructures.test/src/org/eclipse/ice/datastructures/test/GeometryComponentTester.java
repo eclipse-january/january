@@ -18,16 +18,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.JAXBException;
-
 import org.eclipse.ice.datastructures.ICEObject.Component;
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.form.GeometryComponent;
 import org.eclipse.ice.viz.service.geometry.shapes.OperatorType;
 import org.eclipse.ice.viz.service.geometry.shapes.ShapeType;
@@ -161,7 +154,8 @@ public class GeometryComponentTester {
 		geometry.register(listener);
 
 		// Modify geometryComponent's shapes list
-		geometry.getGeometry().addEntity((AbstractController) geometry.clone());
+		geometry.getGeometry()
+				.addEntity((AbstractController) geometryShape.clone());
 
 		// Check that the listener was notified and reset the listener
 		assertTrue(listener.wasNotified());
@@ -190,57 +184,61 @@ public class GeometryComponentTester {
 
 	}
 
-	/**
-	 * <p>
-	 * This operation checks the ability of the GeometryComponent to persist
-	 * itself to XML and to load itself from an XML input stream.
-	 * </p>
-	 * 
-	 * @throws IOException
-	 * @throws JAXBException
-	 * @throws NullPointerException
-	 * 
-	 */
-	@Test
-	public void checkLoadingFromXML() throws NullPointerException, JAXBException, IOException {
-
-		// Create a shape
-		ShapeComponent geometryModel = new ShapeComponent();
-		geometryModel.setProperty("Type", ShapeType.Sphere.toString());
-		AbstractView geometryView = new AbstractView();
-		Shape geometryShape = new Shape(geometryModel, geometryView);
-
-		// Local Declarations
-		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
-		ArrayList<Class> classList = new ArrayList<Class>();
-		classList.add(GeometryComponent.class);
-
-		// Instantiate a GeometryComponent
-		GeometryComponent geometry = new GeometryComponent();
-		geometry.setGeometry(geometryShape);
-		geometry.getGeometry().addEntity(geometryShape);
-		geometry.setId(25);
-		geometry.setDescription("description");
-		geometry.setName("name");
-
-		// Load it into XML
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		xmlHandler.write(geometry, classList, outputStream);
-
-		// convert information inside of outputStream to inputStream
-		ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-
-		String xmlFile2 = new String(outputStream.toByteArray());
-		// System.err.println(xmlFile2);
-
-		// load contents into xml
-		GeometryComponent loadGeometry = new GeometryComponent();
-		loadGeometry = (GeometryComponent) xmlHandler.read(classList, inputStream);
-
-		// Check contents
-		assertTrue(loadGeometry.equals(geometry));
-
-	}
+	// Reimplement test if JAXB persistence is ever supported for the geometry
+	// editor
+	// /**
+	// * <p>
+	// * This operation checks the ability of the GeometryComponent to persist
+	// * itself to XML and to load itself from an XML input stream.
+	// * </p>
+	// *
+	// * @throws IOException
+	// * @throws JAXBException
+	// * @throws NullPointerException
+	// *
+	// */
+	// @Test
+	// public void checkLoadingFromXML()
+	// throws NullPointerException, JAXBException, IOException {
+	//
+	// // Create a shape
+	// ShapeComponent geometryModel = new ShapeComponent();
+	// geometryModel.setProperty("Type", ShapeType.Sphere.toString());
+	// AbstractView geometryView = new AbstractView();
+	// Shape geometryShape = new Shape(geometryModel, geometryView);
+	//
+	// // Local Declarations
+	// ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
+	// ArrayList<Class> classList = new ArrayList<Class>();
+	// classList.add(GeometryComponent.class);
+	//
+	// // Instantiate a GeometryComponent
+	// GeometryComponent geometry = new GeometryComponent();
+	// geometry.setGeometry(geometryShape);
+	// geometry.setId(25);
+	// geometry.setDescription("description");
+	// geometry.setName("name");
+	//
+	// // Load it into XML
+	// ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+	// xmlHandler.write(geometry, classList, outputStream);
+	//
+	// // convert information inside of outputStream to inputStream
+	// ByteArrayInputStream inputStream = new ByteArrayInputStream(
+	// outputStream.toByteArray());
+	//
+	// String xmlFile2 = new String(outputStream.toByteArray());
+	// // System.err.println(xmlFile2);
+	//
+	// // load contents into xml
+	// GeometryComponent loadGeometry = new GeometryComponent();
+	// loadGeometry = (GeometryComponent) xmlHandler.read(classList,
+	// inputStream);
+	//
+	// // Check contents
+	// assertTrue(loadGeometry.equals(geometry));
+	//
+	// }
 
 	/**
 	 * <p>
@@ -300,26 +298,31 @@ public class GeometryComponentTester {
 		assertTrue(component.equals(component));
 
 		// Assert the equals() is Symmetric
-		assertTrue(component.equals(equalComponent) && equalComponent.equals(component));
+		assertTrue(component.equals(equalComponent)
+				&& equalComponent.equals(component));
 
 		// Assert equals() is transitive
-		if (component.equals(equalComponent) && equalComponent.equals(transitiveComponent)) {
+		if (component.equals(equalComponent)
+				&& equalComponent.equals(transitiveComponent)) {
 			assertTrue(component.equals(transitiveComponent));
 		} else {
 			fail();
 		}
 
 		// Assert equals is consistent
-		assertTrue(component.equals(equalComponent) && component.equals(equalComponent)
+		assertTrue(component.equals(equalComponent)
+				&& component.equals(equalComponent)
 				&& component.equals(equalComponent));
-		assertTrue(!component.equals(unEqualComponent) && !component.equals(unEqualComponent)
+		assertTrue(!component.equals(unEqualComponent)
+				&& !component.equals(unEqualComponent)
 				&& !component.equals(unEqualComponent));
 
 		// Assert checking equality with null is false
 		assertFalse(component == null);
 
 		// Assert that two equal objects return same hashcode
-		assertTrue(component.equals(equalComponent) && component.hashCode() == equalComponent.hashCode());
+		assertTrue(component.equals(equalComponent)
+				&& component.hashCode() == equalComponent.hashCode());
 
 		// Assert that hashcode is consistent
 		assertTrue(component.hashCode() == component.hashCode());
@@ -390,7 +393,7 @@ public class GeometryComponentTester {
 		ShapeComponent cubeModel = new ShapeComponent();
 		cubeModel.setProperty("Operator", OperatorType.Union.toString());
 		AbstractView cubeView = new AbstractView();
-		Shape cube1 = new Shape(geometryModel, geometryView);
+		Shape cube1 = new Shape(cubeModel, cubeView);
 
 		geometry.getGeometry().addEntity(sphere1);
 		geometry.getGeometry().addEntity(cube1);

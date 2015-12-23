@@ -16,8 +16,6 @@ import java.util.ArrayList;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAnyElement;
-import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -55,8 +53,6 @@ public class GeometryComponent extends ICEObject implements Component,
 	/**
 	 * The Geometry managed by the GeometryComponent
 	 */
-	@XmlAnyElement()
-	@XmlElementRef(name = "Shape", type = Shape.class)
 	private Shape geometry;
 
 	/**

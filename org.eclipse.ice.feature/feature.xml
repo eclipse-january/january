@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.ice"
       label="ICE Infrastructure Feature"
-      version="2.1.7.20150825"
+      version="2.1.8"
       provider-name="ornl.gov"
       os="linux,macosx,win32"
       ws="cocoa,gtk,win32"
@@ -537,7 +537,7 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          id="org.eclipse.platform"
          download-size="0"
          install-size="0"
-         version="4.5.0.v20150603-2000"/>
+         version="0.0.0"/>
 
    <plugin
          id="org.eclipse.emf.common.ui"
@@ -606,7 +606,7 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          id="gov.lbnl.visit.swt"
          download-size="0"
          install-size="0"
-         version="2.1.7.20150825"
+         version="2.1.8"
          unpack="false"/>
 
    <plugin
@@ -635,27 +635,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          download-size="0"
          install-size="0"
          version="1.0.0.201409040043"
-         unpack="false"/>
-
-   <plugin
-         id="org.codehaus.jackson.core"
-         download-size="0"
-         install-size="0"
-         version="1.6.0.v20101005-0925"
-         unpack="false"/>
-
-   <plugin
-         id="org.codehaus.jackson.jaxrs"
-         download-size="0"
-         install-size="0"
-         version="1.6.0.v20101005-1100"
-         unpack="false"/>
-
-   <plugin
-         id="org.codehaus.jackson.mapper"
-         download-size="0"
-         install-size="0"
-         version="1.6.0.v20101005-0925"
          unpack="false"/>
 
    <plugin
