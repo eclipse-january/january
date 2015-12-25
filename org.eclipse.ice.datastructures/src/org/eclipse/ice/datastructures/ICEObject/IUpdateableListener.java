@@ -14,12 +14,6 @@ package org.eclipse.ice.datastructures.ICEObject;
 
 import java.util.ArrayList;
 
-import javax.xml.bind.annotation.XmlAnyElement;
-import javax.xml.bind.annotation.XmlElementRef;
-import javax.xml.bind.annotation.XmlRootElement;
-
-import org.eclipse.ice.datastructures.form.geometry.ICEShape;
-
 /**
  * <p>
  * The IComponentListener interface specifies the operations that must be
