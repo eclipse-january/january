@@ -26,9 +26,9 @@ import org.eclipse.ice.viz.service.mesh.datastructures.NekPolygonComponent;
 import org.eclipse.ice.viz.service.modeling.AbstractController;
 import org.eclipse.ice.viz.service.modeling.AbstractView;
 import org.eclipse.ice.viz.service.modeling.Edge;
-import org.eclipse.ice.viz.service.modeling.EdgeComponent;
 import org.eclipse.ice.viz.service.modeling.FaceEdge;
 import org.eclipse.ice.viz.service.modeling.FaceEdgeComponent;
+import org.eclipse.ice.viz.service.modeling.LinearEdgeComponent;
 import org.eclipse.ice.viz.service.modeling.Vertex;
 import org.eclipse.ice.viz.service.modeling.VertexComponent;
 import org.junit.Test;
@@ -132,7 +132,7 @@ public class MeshComponentTester {
 		// Set up the edges.
 		for (int i = 0; i < 4; i++) {
 			edges.add(new Edge(
-					new EdgeComponent((Vertex) vertices.get(i),
+					new LinearEdgeComponent((Vertex) vertices.get(i),
 							(Vertex) vertices.get((i + 1) % 4)),
 					new AbstractView()));
 			allEdges.add(edges.get(i));
@@ -184,7 +184,7 @@ public class MeshComponentTester {
 		for (int i = 1; i < 4; i++) {
 			edges.set(i,
 					new Edge(
-							new EdgeComponent((Vertex) vertices.get(i),
+							new LinearEdgeComponent((Vertex) vertices.get(i),
 									(Vertex) vertices.get((i + 1) % 4)),
 							new AbstractView()));
 			allEdges.add(edges.get(i));
@@ -233,7 +233,7 @@ public class MeshComponentTester {
 		for (int i = 0; i < 4; i++) {
 			edges.set(i,
 					new Edge(
-							new EdgeComponent((Vertex) vertices.get(i),
+							new LinearEdgeComponent((Vertex) vertices.get(i),
 									(Vertex) vertices.get((i + 1) % 4)),
 							new AbstractView()));
 			allEdges.add(edges.get(i));
@@ -283,7 +283,7 @@ public class MeshComponentTester {
 		for (int i = 0; i < 4; i++) {
 			edges.set(i,
 					new Edge(
-							new EdgeComponent((Vertex) vertices.get(i),
+							new LinearEdgeComponent((Vertex) vertices.get(i),
 									(Vertex) vertices.get((i + 1) % 4)),
 							new AbstractView()));
 			allEdges.add(edges.get(i));
@@ -588,7 +588,7 @@ public class MeshComponentTester {
 		for (int i = 0; i < 3; i++) {
 			edges.add(
 					new Edge(
-							new EdgeComponent(vertices.get(i),
+							new LinearEdgeComponent(vertices.get(i),
 									vertices.get((i + 1) % 3)),
 							new AbstractView()));
 			edges.get(i).setProperty("Id", Integer.toString(i + 1));
@@ -609,7 +609,7 @@ public class MeshComponentTester {
 		for (int i = 1; i < 3; i++) {
 			edges.set(i,
 					new Edge(
-							new EdgeComponent(vertices.get(i),
+							new LinearEdgeComponent(vertices.get(i),
 									vertices.get((i + 1) % 3)),
 							new AbstractView()));
 			edges.get(i).setProperty("Id", Integer.toString(i + 3));
@@ -752,7 +752,7 @@ public class MeshComponentTester {
 		}
 
 		// Make sure the edges in the copy's first triangle were updated.
-		for (int i = 1; i < 4; i++) {
+		for (int i = 0; i < 3; i++) {
 			assertTrue(listeners.get(i).wasNotified());
 			listeners.get(i).reset();
 		}
