@@ -27,9 +27,9 @@ import org.eclipse.ice.viz.service.datastructures.VizObject.IManagedVizUpdateabl
 import org.eclipse.ice.viz.service.datastructures.VizObject.UpdateableSubscriptionType;
 import org.eclipse.ice.viz.service.modeling.AbstractController;
 import org.eclipse.ice.viz.service.modeling.AbstractController;
-import org.eclipse.ice.viz.service.modeling.AbstractMeshComponent;
+import org.eclipse.ice.viz.service.modeling.AbstractMesh;
 import org.eclipse.ice.viz.service.modeling.AbstractView;
-import org.eclipse.ice.viz.service.modeling.Face;
+import org.eclipse.ice.viz.service.modeling.FaceController;
 
 /**
  * <p>
@@ -75,7 +75,7 @@ public class MeshComponent extends ICEObject
 	 */
 	public MeshComponent() {
 		super();
-		mesh = new AbstractController(new AbstractMeshComponent(),
+		mesh = new AbstractController(new AbstractMesh(),
 				new AbstractView());
 		mesh.register(this);
 		return;
@@ -114,7 +114,7 @@ public class MeshComponent extends ICEObject
 	 *            The new polygon to add to the existing list.
 	 *            </p>
 	 */
-	public void addPolygon(Face polygon) {
+	public void addPolygon(FaceController polygon) {
 		mesh.addEntity(polygon);
 		notifyListeners();
 
@@ -126,7 +126,7 @@ public class MeshComponent extends ICEObject
 	 * 
 	 * @param polygon The polygon to be removed from the list.
 	 */
-	public void removePolygon(Face polygon){
+	public void removePolygon(FaceController polygon){
 		mesh.removeEntity(polygon);
 		notifyListeners();
 	}

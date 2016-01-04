@@ -26,8 +26,8 @@ import org.eclipse.ice.viz.service.geometry.shapes.OperatorType;
 import org.eclipse.ice.viz.service.geometry.shapes.ShapeType;
 import org.eclipse.ice.viz.service.modeling.AbstractController;
 import org.eclipse.ice.viz.service.modeling.AbstractView;
-import org.eclipse.ice.viz.service.modeling.Shape;
-import org.eclipse.ice.viz.service.modeling.ShapeComponent;
+import org.eclipse.ice.viz.service.modeling.ShapeController;
+import org.eclipse.ice.viz.service.modeling.ShapeMesh;
 import org.junit.Test;
 
 /**
@@ -50,23 +50,23 @@ public class GeometryComponentTester {
 	public void checkAddShapes() {
 
 		// Create a shape
-		ShapeComponent geometryModel = new ShapeComponent();
+		ShapeMesh geometryModel = new ShapeMesh();
 		geometryModel.setProperty("Type", ShapeType.Sphere.toString());
 		AbstractView geometryView = new AbstractView();
-		Shape geometryShape = new Shape(geometryModel, geometryView);
+		ShapeController geometryShape = new ShapeController(geometryModel, geometryView);
 
 		// Instantiate a GeometryComponent
 		GeometryComponent geometry = new GeometryComponent();
 		geometry.setGeometry(geometryShape);
 
 		// Add a PrimitiveShape
-		Shape sphere = (Shape) geometryShape.clone();
+		ShapeController sphere = (ShapeController) geometryShape.clone();
 		geometry.getGeometry().addEntity(sphere);
 		assertEquals(1, geometry.getGeometry().getEntities().size());
 		assertEquals(sphere, geometry.getGeometry().getEntities().get(0));
 
 		// Add a ComplexShape
-		Shape complex = (Shape) geometryShape.clone();
+		ShapeController complex = (ShapeController) geometryShape.clone();
 		geometry.getGeometry().addEntity(complex);
 		assertEquals(2, geometry.getGeometry().getEntities().size());
 		assertEquals(complex, geometry.getGeometry().getEntities().get(1));
@@ -76,7 +76,7 @@ public class GeometryComponentTester {
 		assertEquals(2, geometry.getGeometry().getEntities().size());
 
 		// Add a shape with an unknown concrete type
-		Shape unknownShape = (Shape) geometryShape.clone();
+		ShapeController unknownShape = (ShapeController) geometryShape.clone();
 		geometry.getGeometry().addEntity(unknownShape);
 		assertEquals(3, geometry.getGeometry().getEntities().size());
 		assertEquals(unknownShape, geometry.getGeometry().getEntities().get(2));
@@ -142,10 +142,10 @@ public class GeometryComponentTester {
 	public void checkNotifications() {
 
 		// Create a shape
-		ShapeComponent geometryModel = new ShapeComponent();
+		ShapeMesh geometryModel = new ShapeMesh();
 		geometryModel.setProperty("Type", ShapeType.Sphere.toString());
 		AbstractView geometryView = new AbstractView();
-		Shape geometryShape = new Shape(geometryModel, geometryView);
+		ShapeController geometryShape = new ShapeController(geometryModel, geometryView);
 
 		// Create a new listener and add it to a GeometryComponent
 		GeometryComponent geometry = new GeometryComponent();
@@ -250,10 +250,10 @@ public class GeometryComponentTester {
 	@Test
 	public void checkEquality() {
 
-		ShapeComponent geometryModel = new ShapeComponent();
+		ShapeMesh geometryModel = new ShapeMesh();
 		geometryModel.setProperty("Type", ShapeType.Sphere.toString());
 		AbstractView geometryView = new AbstractView();
-		Shape geometryShape = new Shape(geometryModel, geometryView);
+		ShapeController geometryShape = new ShapeController(geometryModel, geometryView);
 
 		// Create GeometryComponent to test
 		GeometryComponent component = new GeometryComponent();
@@ -261,14 +261,14 @@ public class GeometryComponentTester {
 		GeometryComponent unEqualComponent = new GeometryComponent();
 		GeometryComponent transitiveComponent = new GeometryComponent();
 		component.setGeometry(geometryShape);
-		equalComponent.setGeometry((Shape) geometryShape.clone());
-		unEqualComponent.setGeometry((Shape) geometryShape.clone());
-		transitiveComponent.setGeometry((Shape) geometryShape.clone());
+		equalComponent.setGeometry((ShapeController) geometryShape.clone());
+		unEqualComponent.setGeometry((ShapeController) geometryShape.clone());
+		transitiveComponent.setGeometry((ShapeController) geometryShape.clone());
 
 		// Change values
-		Shape shape = (Shape) geometryShape.clone();
+		ShapeController shape = (ShapeController) geometryShape.clone();
 		shape.setProperty("Type", ShapeType.Cylinder.toString());
-		Shape weirdShape = (Shape) geometryShape.clone();
+		ShapeController weirdShape = (ShapeController) geometryShape.clone();
 		shape.setProperty("Operator", OperatorType.Intersection.toString());
 
 		component.getGeometry().addEntity(shape);
@@ -343,10 +343,10 @@ public class GeometryComponentTester {
 	public void checkCreation() {
 
 		// Create a shape
-		ShapeComponent geometryModel = new ShapeComponent();
+		ShapeMesh geometryModel = new ShapeMesh();
 		geometryModel.setProperty("Type", ShapeType.Sphere.toString());
 		AbstractView geometryView = new AbstractView();
-		Shape geometryShape = new Shape(geometryModel, geometryView);
+		ShapeController geometryShape = new ShapeController(geometryModel, geometryView);
 
 		// Create a new GeometryComponent
 		GeometryComponent geometry = new GeometryComponent();
@@ -369,10 +369,10 @@ public class GeometryComponentTester {
 	public void checkCopying() {
 
 		// Create a shape
-		ShapeComponent geometryModel = new ShapeComponent();
+		ShapeMesh geometryModel = new ShapeMesh();
 		geometryModel.setProperty("Type", ShapeType.Sphere.toString());
 		AbstractView geometryView = new AbstractView();
-		Shape geometryShape = new Shape(geometryModel, geometryView);
+		ShapeController geometryShape = new ShapeController(geometryModel, geometryView);
 
 		GeometryComponent geometry = new GeometryComponent();
 		GeometryComponent cloneGeometry;
@@ -385,15 +385,15 @@ public class GeometryComponentTester {
 		geometry.setName("Geometry name");
 
 		// Set up GeometryComponent-specific stuff
-		ShapeComponent sphereModel = new ShapeComponent();
+		ShapeMesh sphereModel = new ShapeMesh();
 		sphereModel.setProperty("Type", ShapeType.Sphere.toString());
 		AbstractView sphereView = new AbstractView();
-		Shape sphere1 = new Shape(sphereModel, sphereView);
+		ShapeController sphere1 = new ShapeController(sphereModel, sphereView);
 
-		ShapeComponent cubeModel = new ShapeComponent();
+		ShapeMesh cubeModel = new ShapeMesh();
 		cubeModel.setProperty("Operator", OperatorType.Union.toString());
 		AbstractView cubeView = new AbstractView();
-		Shape cube1 = new Shape(cubeModel, cubeView);
+		ShapeController cube1 = new ShapeController(cubeModel, cubeView);
 
 		geometry.getGeometry().addEntity(sphere1);
 		geometry.getGeometry().addEntity(cube1);

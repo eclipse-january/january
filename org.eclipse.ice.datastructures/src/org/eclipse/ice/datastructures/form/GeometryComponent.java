@@ -27,7 +27,7 @@ import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
 import org.eclipse.ice.viz.service.datastructures.VizObject.IManagedVizUpdateable;
 import org.eclipse.ice.viz.service.datastructures.VizObject.IManagedVizUpdateableListener;
 import org.eclipse.ice.viz.service.datastructures.VizObject.UpdateableSubscriptionType;
-import org.eclipse.ice.viz.service.modeling.Shape;
+import org.eclipse.ice.viz.service.modeling.ShapeController;
 
 /**
  * <p>
@@ -53,7 +53,7 @@ public class GeometryComponent extends ICEObject implements Component,
 	/**
 	 * The Geometry managed by the GeometryComponent
 	 */
-	private Shape geometry;
+	private ShapeController geometry;
 
 	/**
 	 * <p>
@@ -124,7 +124,7 @@ public class GeometryComponent extends ICEObject implements Component,
 	 * 
 	 * @return The held Geometry
 	 */
-	public Shape getGeometry() {
+	public ShapeController getGeometry() {
 		return geometry;
 	}
 
@@ -134,7 +134,7 @@ public class GeometryComponent extends ICEObject implements Component,
 	 * @param newGeometry
 	 *            the new Geometry to hold
 	 */
-	public void setGeometry(Shape newGeometry) {
+	public void setGeometry(ShapeController newGeometry) {
 		geometry = newGeometry;
 
 		// Set the shape as being the root node for the scene
@@ -234,7 +234,7 @@ public class GeometryComponent extends ICEObject implements Component,
 		super.copy(iceObject);
 
 		// Copy shapes list
-		this.setGeometry((Shape) iceObject.getGeometry().clone());
+		this.setGeometry((ShapeController) iceObject.getGeometry().clone());
 		// this.geometry.copy(iceObject.getGeometry());
 
 		this.notifyListeners();
