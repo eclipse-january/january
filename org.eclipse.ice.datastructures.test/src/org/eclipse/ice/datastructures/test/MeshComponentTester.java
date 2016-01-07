@@ -142,7 +142,8 @@ public class MeshComponentTester {
 			edges.get(i).setProperty("Id", Integer.toString(allEdges.size()));
 		}
 		// Initialize the polygon.
-		polygon = new NekPolygonController(new NekPolygonMesh(), new AbstractView());
+		polygon = new NekPolygonController(new NekPolygonMesh(),
+				new AbstractView());
 		for (AbstractController edge : edges) {
 			polygon.addEntity(edge);
 		}
@@ -196,7 +197,8 @@ public class MeshComponentTester {
 			edges.get(i).setProperty("Id", Integer.toString(allEdges.size()));
 		}
 		// Initialize the polygon.
-		polygon = new NekPolygonController(new NekPolygonMesh(), new AbstractView());
+		polygon = new NekPolygonController(new NekPolygonMesh(),
+				new AbstractView());
 		for (AbstractController edge : edges) {
 			polygon.addEntity(edge);
 		}
@@ -247,7 +249,8 @@ public class MeshComponentTester {
 			edges.get(i).setProperty("Id", Integer.toString(allEdges.size()));
 		}
 		// Initialize the polygon.
-		polygon = new NekPolygonController(new NekPolygonMesh(), new AbstractView());
+		polygon = new NekPolygonController(new NekPolygonMesh(),
+				new AbstractView());
 		for (AbstractController edge : edges) {
 			polygon.addEntity(edge);
 		}
@@ -299,7 +302,8 @@ public class MeshComponentTester {
 			edges.get(i).setProperty("Id", Integer.toString(allEdges.size()));
 		}
 		// Initialize the polygon.
-		polygon = new NekPolygonController(new NekPolygonMesh(), new AbstractView());
+		polygon = new NekPolygonController(new NekPolygonMesh(),
+				new AbstractView());
 		for (AbstractController edge : edges) {
 			polygon.addEntity(edge);
 		}
@@ -499,8 +503,8 @@ public class MeshComponentTester {
 							new AbstractView()));
 			edges.get(i).setProperty("Id", Integer.toString(i + 1));
 		}
-		NekPolygonController polygon = new NekPolygonController(new NekPolygonMesh(),
-				new AbstractView());
+		NekPolygonController polygon = new NekPolygonController(
+				new NekPolygonMesh(), new AbstractView());
 		for (AbstractController edge : edges) {
 			polygon.addEntity(edge);
 		}
@@ -531,7 +535,8 @@ public class MeshComponentTester {
 							new AbstractView()));
 			edges.get(i).setProperty("Id", Integer.toString(i + 1));
 		}
-		polygon = new NekPolygonController(new NekPolygonMesh(), new AbstractView());
+		polygon = new NekPolygonController(new NekPolygonMesh(),
+				new AbstractView());
 		for (AbstractController edge : edges) {
 			polygon.addEntity(edge);
 		}
@@ -602,8 +607,8 @@ public class MeshComponentTester {
 							new AbstractView()));
 			edges.get(i).setProperty("Id", Integer.toString(i + 1));
 		}
-		NekPolygonController shape = new NekPolygonController(new NekPolygonMesh(),
-				new AbstractView());
+		NekPolygonController shape = new NekPolygonController(
+				new NekPolygonMesh(), new AbstractView());
 		for (AbstractController edge : edges) {
 			shape.addEntity(edge);
 		}
@@ -623,8 +628,8 @@ public class MeshComponentTester {
 							new AbstractView()));
 			edges.get(i).setProperty("Id", Integer.toString(i + 3));
 		}
-		NekPolygonController shape2 = new NekPolygonController(new NekPolygonMesh(),
-				new AbstractView());
+		NekPolygonController shape2 = new NekPolygonController(
+				new NekPolygonMesh(), new AbstractView());
 		for (AbstractController edge : edges) {
 			shape2.addEntity(edge);
 		}

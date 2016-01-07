@@ -12,11 +12,13 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.form;
 
-import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
-import org.eclipse.ice.datastructures.ICEObject.ListComponent;
 import java.util.ArrayList;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+
+import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
+import org.eclipse.ice.datastructures.ICEObject.ListComponent;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
 import org.eclipse.ice.datastructures.resource.ICEResource;
 
