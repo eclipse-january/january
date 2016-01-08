@@ -191,4 +191,8 @@ public class PositionIterator extends IndexIterator {
 	public int[] getShape() {
 		return shape;
 	}
+
+	public int[] getStop() {
+		return stop;
+	}
 }
