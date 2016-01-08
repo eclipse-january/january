@@ -168,10 +168,6 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 
 	@Override
 	public void setSlice(IMonitor monitor, IDataset data, SliceND slice) throws Exception {
-		if (saver == null || !saver.isFileWriteable()) {
-			throw new IOException("Cannot write to file!");
-		}
-
 		int[] dshape = data instanceof Dataset ? ((Dataset) data).getShapeRef() : data.getShape();
 		if (dshape.length == 0) { // fix zero-rank case
 			dshape = new int[] {1};
@@ -188,6 +184,10 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 		if (base != null) {
 			((ILazyWriteableDataset) base).setSlice(monitor, data, nslice);
 		} else {
+			if (saver == null || !saver.isFileWriteable()) {
+				throw new IOException("Cannot write to file!");
+			}
+
 			saver.setSlice(monitor, data, nslice);
 			oShape = nslice.getSourceShape();
 			shape = slice.getSourceShape();
