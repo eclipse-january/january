@@ -25,7 +25,6 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
 import org.eclipse.ice.datastructures.ICEObject.Identifiable;
 
 /**
@@ -145,16 +144,6 @@ public class FileEntry extends DiscreteEntry {
 		throw new UnsupportedOperationException(
 				"FileEntry only supports " + "the storage of one String value, not many, selected from "
 						+ "a list of files in the IProject space. " + "Therefore, this operation is not supported.");
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ice.datastructures.entry.DiscreteEntry#update(org.eclipse.ice.datastructures.ICEObject.IUpdateable)
-	 */
-	@Override
-	public void update(IUpdateable component) {
-		// TODO Auto-generated method stub
 
 	}
 
