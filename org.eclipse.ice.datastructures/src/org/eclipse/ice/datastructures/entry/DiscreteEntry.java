@@ -3,10 +3,18 @@ package org.eclipse.ice.datastructures.entry;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlElement;
+
 import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
 
 public class DiscreteEntry extends AbstractEntry {
 
+	/**
+	 * This list stores either the exact values that the Entry may have or a
+	 * range in which the value of the Entry must exist depending on the
+	 * AllowedValueType.
+	 */
+	@XmlElement(name = "AllowedValues")
 	protected List<String> allowedValues;
 	
 	public DiscreteEntry() {

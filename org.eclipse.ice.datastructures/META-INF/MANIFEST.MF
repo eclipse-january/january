@@ -8,6 +8,7 @@ Service-Component: OSGI-INF/*.xml
 Meta-Persistence: META-INF/persistence.xml
 Export-Package: org.eclipse.ice.datastructures.ICEObject,
  org.eclipse.ice.datastructures.componentVisitor,
+ org.eclipse.ice.datastructures.entry,
  org.eclipse.ice.datastructures.form,
  org.eclipse.ice.datastructures.form.emf,
  org.eclipse.ice.datastructures.form.geometry,

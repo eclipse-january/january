@@ -1,9 +1,26 @@
+/*******************************************************************************
+ * Copyright (c) 2012, 2014- UT-Battelle, LLC.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Initial API and implementation and/or initial documentation - Jay Jay Billings, 
+ *    Jordan H. Deyton, Dasha Gorin, Alexander J. McCaskey, Taylor Patterson, 
+ *    Claire Saunders, Matthew Wang, Anna Wojtowicz
+ *     
+ *******************************************************************************/
 package org.eclipse.ice.datastructures.entry;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
@@ -12,6 +29,20 @@ import org.eclipse.ice.datastructures.ICEObject.Identifiable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The AbstractEntry is a realization of IEntry (and by extension 
+ * the Identifiable, IUpdateable, and IUpdateableListener interfaces) that 
+ * provides default behaviour for an Undefined (ie String valued entry). 
+ * It keeps track of an entry value, a default value, a tag and comment 
+ * for the entry, and name, id, description, contextId identifiers. 
+ * 
+ * It defers implementation for entry-type-specific operations to subclasses.
+ * 
+ * @author Alex McCaskey
+ *
+ */
+@XmlRootElement(name = "AbstractEntry")
+@XmlAccessorType(XmlAccessType.FIELD)
 public abstract class AbstractEntry implements IEntry {
 	/**
 	 * Logger for handling event messages and other information.
@@ -20,58 +51,89 @@ public abstract class AbstractEntry implements IEntry {
 	protected final Logger logger;
 
 	/**
-	 * <p>
 	 * The unique identification number of the ICEObject.
-	 * </p>
 	 * 
 	 */
 	protected int uniqueId;
 	/**
-	 * <p>
 	 * The name of the ICEObject.
-	 * </p>
-	 * 
 	 */
 	protected String objectName;
 	/**
-	 * <p>
 	 * The description of the ICEObject. This description should be different
 	 * than the name of the ICEObject and should contain information that would
 	 * be useful to a human user.
-	 * </p>
 	 * 
 	 */
 	protected String objectDescription;
-	
+
 	/**
-	 * <p>
 	 * The set of IUpdateableListeners observing the ICEObject.
-	 * </p>
-	 * 
 	 */
 	@XmlTransient
 	protected ArrayList<IUpdateableListener> listeners;
 
-	protected String value;
-	
-	protected String defaultValue;
-	
-	protected String contextId;
-	
-	protected String comment;
-	
-	protected String tag;
-	
-	protected boolean isReady = true;
-	
-	protected boolean isModified = false;
-	
-	protected boolean isRequired = true;
-	
 	/**
-	 * <p>
+	 * The value of this AbstractEntry
+	 */
+	@XmlAttribute
+	protected String value;
+
+	/**
+	 * The default value for this AbstractEntry.
+	 */
+	@XmlAttribute
+	protected String defaultValue;
+
+	/**
+	 * The context Id of the AbstractEntry to be used in generating custom UI
+	 * Widgets.
+	 */
+	@XmlAttribute
+	protected String contextId;
+
+	/**
+	 * A String attribute where a comment about the Entry can be stored.
+	 */
+	@XmlElement(name = "Comment")
+	protected String comment;
+
+	/**
+	 * The tag of an Entry is a secondary descriptive value that may be used to
+	 * "tag" an Entry with a small note or additional value. This information
+	 * should not be used in the UI! Another way to think of the tag of an Entry
+	 * is to consider it as a second name that could be used, for example, when
+	 * writing to a file or stream where human readability is less of a factor
+	 * than the ability to parse the stream, (such as key-value pairs).
+	 */
+	@XmlAttribute()
+	protected String tag;
+
+	/**
+	 * This attribute stores the state of the Entry as either true if the Entry
+	 * is ready to be addressed and false if the Entry is not ready. This
+	 * attribute is true by default.
+	 */
+	@XmlAttribute()
+	protected boolean isReady = true;
+
+	/**
+	 * This attribute describes the "changed" state of the Entry. It has a value
+	 * of true if the Entry's value was recently set and false if the Entry has
+	 * not changed or was recently updated. It defaults to false.
+	 */
+	@XmlAttribute()
+	protected boolean isModified = false;
+
+	/**
+	 * This attribute indicates whether or not the Entry should be considered as
+	 * a required quantity.
+	 */
+	@XmlAttribute()
+	protected boolean isRequired = true;
+
+	/**
 	 * The Constructor
-	 * </p>
 	 * 
 	 */
 	public AbstractEntry() {
@@ -85,7 +147,9 @@ public abstract class AbstractEntry implements IEntry {
 		objectDescription = "ICE Entry";
 		contextId = "org.eclipse.ice.datastructures.entry.AbstractEntry";
 		listeners = new ArrayList<IUpdateableListener>();
-
+		defaultValue = "";
+		comment = "";
+		tag = "";
 		return;
 	}
 
@@ -188,6 +252,14 @@ public abstract class AbstractEntry implements IEntry {
 		this.objectDescription = entity.objectDescription;
 		this.objectName = entity.objectName;
 		this.uniqueId = entity.uniqueId;
+		this.comment = entity.comment;
+		this.defaultValue = entity.defaultValue;
+		this.value = entity.value;
+		this.isModified = entity.isModified;
+		this.isReady = entity.isReady;
+		this.isRequired = entity.isRequired;
+		this.tag = entity.tag;
+		this.contextId = entity.contextId;
 
 	}
 
@@ -233,7 +305,7 @@ public abstract class AbstractEntry implements IEntry {
 	 */
 	@Override
 	public abstract Object clone();
-	
+
 	/**
 	 * (non-Javadoc)
 	 * 
@@ -257,7 +329,14 @@ public abstract class AbstractEntry implements IEntry {
 				// Check each member attribute
 				retVal = (this.uniqueId == castedOtherObject.uniqueId)
 						&& (this.objectName.equals(castedOtherObject.objectName))
-						&& (this.objectDescription.equals(castedOtherObject.objectDescription));
+						&& (this.objectDescription.equals(castedOtherObject.objectDescription)
+								&& (this.defaultValue.equals(castedOtherObject.defaultValue))
+								&& (this.tag.equals(castedOtherObject.tag))
+								&& (this.comment.equals(castedOtherObject.comment))
+								&& (this.isReady == castedOtherObject.isReady)
+								&& (this.isModified == castedOtherObject.isModified)
+								&& (this.isRequired == castedOtherObject.isRequired)
+								&& (this.contextId.equals(castedOtherObject.contextId)));
 			}
 		}
 
@@ -280,6 +359,15 @@ public abstract class AbstractEntry implements IEntry {
 		// If objectName is null, add 0, otherwise add String.hashcode()
 		hash = 31 * hash + (null == objectName ? 0 : objectName.hashCode());
 		hash = 31 * hash + (null == objectDescription ? 0 : objectDescription.hashCode());
+		hash = 31 * hash + (null == defaultValue ? 0 : defaultValue.hashCode());
+		hash = 31 * hash + (null == comment ? 0 : comment.hashCode());
+		hash = 31 * hash + (null == tag ? 0 : tag.hashCode());
+		hash = 31 * hash + (null == contextId ? 0 : contextId.hashCode());
+		hash = 31 * hash + new Boolean(isReady).hashCode();
+		hash = 31 * hash + new Boolean(isRequired).hashCode();
+		hash = 31 * hash + new Boolean(isModified).hashCode();
+		hash = 31 * hash + (null == this.value ? 0 : this.value.hashCode());
+
 		// Return the computed hash code
 		return hash;
 
@@ -337,10 +425,10 @@ public abstract class AbstractEntry implements IEntry {
 			notifyListeners();
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	@Override
 	public abstract boolean setValue(String... values);
 
@@ -409,11 +497,11 @@ public abstract class AbstractEntry implements IEntry {
 	public void setReady(boolean ready) {
 		isReady = ready;
 	}
-	
+
 	public void setRequired(boolean required) {
 		isRequired = required;
 	}
-	
+
 	@Override
 	public boolean isModified() {
 		return isModified;
