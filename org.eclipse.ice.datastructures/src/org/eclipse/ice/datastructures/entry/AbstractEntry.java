@@ -417,6 +417,10 @@ public abstract class AbstractEntry implements IEntry {
 		return;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.entry.IEntry#setValue(java.lang.String)
+	 */
 	@Override
 	public boolean setValue(String value) {
 		if (value != null) {
@@ -429,92 +433,169 @@ public abstract class AbstractEntry implements IEntry {
 		return false;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.entry.IEntry#setValue(java.lang.String[])
+	 */
 	@Override
 	public abstract boolean setValue(String... values);
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.entry.IEntry#getValue()
+	 */
 	@Override
 	public String getValue() {
 		return value;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.entry.IEntry#getValue(int)
+	 */
 	@Override
 	public String getValue(int index) {
 		return getValue();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.entry.IEntry#getValues()
+	 */
+	@Override
+	public abstract String[] getValues();
+	
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.entry.IEntry#getDefaultValue()
+	 */
 	@Override
 	public String getDefaultValue() {
 		return defaultValue;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.entry.IEntry#setDefaultValue(java.lang.String)
+	 */
 	@Override
 	public void setDefaultValue(String value) {
 		defaultValue = value;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.entry.IEntry#getAllowedValues()
+	 */
 	@Override
 	public abstract List<String> getAllowedValues();
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.entry.IEntry#setAllowedValues(java.util.List)
+	 */
 	@Override
 	public abstract void setAllowedValues(List<String> values);
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.entry.IEntry#getComment()
+	 */
 	@Override
 	public String getComment() {
 		return comment;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.entry.IEntry#setComment(java.lang.String)
+	 */
 	@Override
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.entry.IEntry#getTag()
+	 */
 	@Override
 	public String getTag() {
 		return tag;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.entry.IEntry#setTag(java.lang.String)
+	 */
 	@Override
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
 
-	@Override
-	public String getErrorMessage() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.entry.IEntry#isReady()
+	 */
 	@Override
 	public boolean isReady() {
 		return isReady;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.entry.IEntry#isRequired()
+	 */
 	@Override
 	public boolean isRequired() {
 		return isRequired;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.entry.IEntry#setReady(boolean)
+	 */
 	public void setReady(boolean ready) {
 		isReady = ready;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.entry.IEntry#setRequired(boolean)
+	 */
 	public void setRequired(boolean required) {
 		isRequired = required;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.entry.IEntry#isModified()
+	 */
 	@Override
 	public boolean isModified() {
 		return isModified;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.ICEObject.IUpdateableListener#update(org.eclipse.ice.datastructures.ICEObject.IUpdateable)
+	 */
 	@Override
 	public abstract void update(IUpdateable component);
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.entry.IEntry#getContextId()
+	 */
 	@Override
 	public String getContextId() {
 		return contextId;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.entry.IEntry#setContextId(java.lang.String)
+	 */
 	@Override
 	public void setContextId(String id) {
 		contextId = id;

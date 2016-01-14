@@ -79,5 +79,11 @@ public class TestableAbstractEntry extends AbstractEntry {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public String[] getValues() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

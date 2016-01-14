@@ -36,4 +36,10 @@ public class MultiValueEntry extends AbstractEntry {
 
 	}
 
+	@Override
+	public String[] getValues() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
