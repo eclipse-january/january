@@ -11,13 +11,11 @@
  *    Claire Saunders, Matthew Wang, Anna Wojtowicz
  *     
  *******************************************************************************/
-package org.eclipse.ice.datastructures.entry.test;
+package org.eclipse.ice.datastructures.entry;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import org.eclipse.ice.datastructures.entry.DiscreteEntry;
 
 /**
  * The ContinuousEntry is a DiscreteEntry that requires clients 
