@@ -22,8 +22,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.eclipse.ice.datastructures.ICEObject.Component;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
-import org.eclipse.ice.viz.service.datastructures.VizObject.IManagedVizUpdateable;
-import org.eclipse.ice.viz.service.datastructures.VizObject.IManagedVizUpdateableListener;
+import org.eclipse.ice.viz.service.datastructures.VizObject.IManagedUpdateable;
+import org.eclipse.ice.viz.service.datastructures.VizObject.IManagedUpdateableListener;
 import org.eclipse.ice.viz.service.datastructures.VizObject.UpdateableSubscriptionType;
 import org.eclipse.ice.viz.service.modeling.AbstractController;
 import org.eclipse.ice.viz.service.modeling.AbstractController;
@@ -44,7 +44,7 @@ import org.eclipse.ice.viz.service.modeling.FaceController;
 @XmlRootElement(name = "MeshComponent")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class MeshComponent extends ICEObject
-		implements Component, IManagedVizUpdateableListener {
+		implements Component, IManagedUpdateableListener {
 
 	/**
 	 * The wrapped VizMeshComponent.
@@ -328,7 +328,7 @@ public class MeshComponent extends ICEObject
 	 * UpdateableSubscriptionType[])
 	 */
 	@Override
-	public void update(IManagedVizUpdateable component,
+	public void update(IManagedUpdateable component,
 			UpdateableSubscriptionType[] types) {
 
 		// Only pass on updates for the root part's list of children changing,
@@ -350,7 +350,7 @@ public class MeshComponent extends ICEObject
 	 */
 	@Override
 	public ArrayList<UpdateableSubscriptionType> getSubscriptions(
-			IManagedVizUpdateable source) {
+			IManagedUpdateable source) {
 
 		// Register for all event types
 		ArrayList<UpdateableSubscriptionType> types = new ArrayList<UpdateableSubscriptionType>();

@@ -19,8 +19,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
-import org.eclipse.ice.viz.service.datastructures.VizObject.IManagedVizUpdateable;
-import org.eclipse.ice.viz.service.datastructures.VizObject.IManagedVizUpdateableListener;
+import org.eclipse.ice.viz.service.datastructures.VizObject.IManagedUpdateable;
+import org.eclipse.ice.viz.service.datastructures.VizObject.IManagedUpdateableListener;
 import org.eclipse.ice.viz.service.datastructures.VizObject.IVizUpdateable;
 import org.eclipse.ice.viz.service.datastructures.VizObject.IVizUpdateableListener;
 import org.eclipse.ice.viz.service.datastructures.VizObject.UpdateableSubscriptionType;
@@ -37,7 +37,7 @@ import org.eclipse.ice.viz.service.datastructures.VizObject.UpdateableSubscripti
  * 
  * @author Jay Jay Billings
  */
-public class TestComponentListener implements IManagedVizUpdateableListener, IUpdateableListener,
+public class TestComponentListener implements IManagedUpdateableListener, IUpdateableListener,
 		IVizUpdateableListener {
 
 	/**
@@ -143,14 +143,14 @@ public class TestComponentListener implements IManagedVizUpdateableListener, IUp
 	 * @see org.eclipse.ice.viz.service.datastructures.VizObject.IManagedVizUpdateableListener#getSubscriptions(org.eclipse.ice.viz.service.datastructures.VizObject.IManagedVizUpdateable)
 	 */
 	@Override
-	public ArrayList<UpdateableSubscriptionType> getSubscriptions(IManagedVizUpdateable source) {
+	public ArrayList<UpdateableSubscriptionType> getSubscriptions(IManagedUpdateable source) {
 		ArrayList<UpdateableSubscriptionType> types = new ArrayList<UpdateableSubscriptionType>();
 		types.add(UpdateableSubscriptionType.All);
 		return types;
 	}
 
 	@Override
-	public void update(IManagedVizUpdateable component, UpdateableSubscriptionType[] type) {
+	public void update(IManagedUpdateable component, UpdateableSubscriptionType[] type) {
 		// Update the flag
 		wasNotified.set(true);
 
