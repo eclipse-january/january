@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Alex McCaskey
  *
  */
-@XmlRootElement(name = "FileEntry")
+@XmlRootElement(name = "ContinuousEntry")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ContinuousEntry extends DiscreteEntry {
 

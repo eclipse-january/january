@@ -47,6 +47,7 @@ public class DiscreteEntry extends AbstractEntry {
 	 * The Constructor
 	 */
 	public DiscreteEntry() {
+		super();
 		allowedValues = new ArrayList<String>();
 	}
 

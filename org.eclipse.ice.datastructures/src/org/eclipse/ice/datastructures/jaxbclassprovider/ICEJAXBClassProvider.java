@@ -16,6 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.ice.datastructures.ICEObject.ListComponent;
+import org.eclipse.ice.datastructures.entry.AbstractEntry;
+import org.eclipse.ice.datastructures.entry.ContinuousEntry;
+import org.eclipse.ice.datastructures.entry.ExecutableEntry;
+import org.eclipse.ice.datastructures.entry.FileEntry;
+import org.eclipse.ice.datastructures.entry.StringEntry;
 import org.eclipse.ice.datastructures.form.DataComponent;
 import org.eclipse.ice.datastructures.form.GeometryComponent;
 import org.eclipse.ice.datastructures.form.Material;
@@ -63,6 +68,12 @@ public class ICEJAXBClassProvider implements IJAXBClassProvider {
 		classList.add(Material.class);
 		classList.add(VizResource.class);
 		classList.add(ICEResource.class);
+		classList.add(AbstractEntry.class);
+		classList.add(FileEntry.class);
+		classList.add(StringEntry.class);
+		classList.add(ExecutableEntry.class);
+		classList.add(ContinuousEntry.class);
+
 		return classList;
 	}
 

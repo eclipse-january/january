@@ -33,6 +33,10 @@ import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class StringEntry extends AbstractEntry {
 
+	public StringEntry() {
+		super();
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.ice.datastructures.entry.AbstractEntry#clone()

@@ -28,9 +28,9 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.ice.datastructures.ICEObject.Identifiable;
 
 /**
- * FileEntry is a subclass of the DiscreteEntry that keeps track of 
- * a list of files (as allowed values) for the user to select. The 
- * value for this IEntry is the selected file name. 
+ * FileEntry is a subclass of the DiscreteEntry that keeps track of a list of
+ * files (as allowed values) for the user to select. The value for this IEntry
+ * is the selected file name.
  * 
  * @author Alex McCaskey
  *
@@ -40,24 +40,22 @@ import org.eclipse.ice.datastructures.ICEObject.Identifiable;
 public class FileEntry extends DiscreteEntry {
 
 	/**
-	 * Reference to the selected file. 
+	 * Reference to the selected file.
 	 */
 	@XmlTransient
-	private IFile file;
-	
+	protected IFile file;
+
 	/**
-	 * Reference to the IProject space that the Item 
-	 * containing this IEntry belongs to. This is used 
-	 * to query information about available files to list 
-	 * as allowed values. 
+	 * Reference to the IProject space that the Item containing this IEntry
+	 * belongs to. This is used to query information about available files to
+	 * list as allowed values.
 	 */
 	@XmlTransient
-	private IProject project;
-	
+	protected IProject project;
+
 	/**
-	 * The file extension this FileEntry cares about. If 
-	 * provided, only files with this extension will be added 
-	 * to the list of allowed values. 
+	 * The file extension this FileEntry cares about. If provided, only files
+	 * with this extension will be added to the list of allowed values.
 	 */
 	@XmlAttribute
 	private String fileExtension;
@@ -71,8 +69,9 @@ public class FileEntry extends DiscreteEntry {
 	}
 
 	/**
-	 * The constructor, with ability to specify file types 
-	 * clients care about for this FileEntry
+	 * The constructor, with ability to specify file types clients care about
+	 * for this FileEntry
+	 * 
 	 * @param fileType
 	 */
 	public FileEntry(String fileType) {
@@ -82,6 +81,7 @@ public class FileEntry extends DiscreteEntry {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ice.datastructures.entry.DiscreteEntry#clone()
 	 */
 	@Override
@@ -92,10 +92,11 @@ public class FileEntry extends DiscreteEntry {
 	}
 
 	/**
-	 * This operation lets clients specify the IProject space 
-	 * for the Item containing this FileEntry. 
+	 * This operation lets clients specify the IProject space for the Item
+	 * containing this FileEntry.
 	 * 
-	 * @param projectSpace The project this Entry belongs to.
+	 * @param projectSpace
+	 *            The project this Entry belongs to.
 	 */
 	public void setProject(IProject projectSpace) {
 		project = projectSpace;
@@ -105,39 +106,51 @@ public class FileEntry extends DiscreteEntry {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ice.datastructures.entry.DiscreteEntry#setValue(java.lang.String)
+	 * 
+	 * @see
+	 * org.eclipse.ice.datastructures.entry.DiscreteEntry#setValue(java.lang.
+	 * String)
 	 */
 	@Override
 	public boolean setValue(String newValue) {
-		// Set the value as normal for a Discrete entry, 
+		// Set the value as normal for a Discrete entry,
 		// but also get a reference to the file.
 		if (super.setValue(newValue)) {
-			file = project.getFile(newValue);
+			if (project != null) {
+				file = project.getFile(newValue);
+			}
 			return true;
 		}
 		return false;
 	}
-	
+
 	/**
-	 * Return the absolute file path for the selected file. 
+	 * Return the absolute file path for the selected file.
 	 * 
 	 * @return path
 	 */
 	public String getAbsoluteFilePath() {
-		return file.getLocation().toOSString();
+		if (file != null) {
+			return file.getLocation().toOSString();
+		} else {
+			return null;
+		}
 	}
-	
+
 	/**
-	 * Public operation that lets clients update the list of files, eg 
-	 * after a file has been imported to a project. 
+	 * Public operation that lets clients update the list of files, eg after a
+	 * file has been imported to a project.
 	 */
 	public void updateAvailableFiles() {
 		generateAllowedValues();
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ice.datastructures.entry.DiscreteEntry#setValue(java.lang.String[])
+	 * 
+	 * @see
+	 * org.eclipse.ice.datastructures.entry.DiscreteEntry#setValue(java.lang.
+	 * String[])
 	 */
 	@Override
 	public boolean setValue(String... values) {
@@ -148,10 +161,9 @@ public class FileEntry extends DiscreteEntry {
 	}
 
 	/**
-	 * This private operation serves as a utility for generating 
-	 * a list of available files names in the project with the 
-	 * given file extension. These files are set as the allowed 
-	 * values for this DiscreteEntry.
+	 * This private operation serves as a utility for generating a list of
+	 * available files names in the project with the given file extension. These
+	 * files are set as the allowed values for this DiscreteEntry.
 	 */
 	private void generateAllowedValues() {
 		ArrayList<String> files = null, allFiles = null;
@@ -195,7 +207,7 @@ public class FileEntry extends DiscreteEntry {
 
 		allowedValues = files;
 	}
-	
+
 	/**
 	 * (non-Javadoc)
 	 * 
@@ -219,24 +231,25 @@ public class FileEntry extends DiscreteEntry {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	public void copy(FileEntry entity) {
 
 		// Return if null
 		if (entity == null) {
 			return;
 		}
-		
+
 		super.copy(entity);
 		allowedValues = entity.allowedValues;
 		return;
 	}
-	
+
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ice.datastructures.entry.AbstractEntry#hashCode()
 	 */
 	@Override
@@ -248,7 +261,7 @@ public class FileEntry extends DiscreteEntry {
 		// Compute the hashcode from this ICEObject's data
 		hash = 31 * hash + super.hashCode();
 		hash = 31 * hash + fileExtension.hashCode();
-		
+
 		return hash;
 	}
 }

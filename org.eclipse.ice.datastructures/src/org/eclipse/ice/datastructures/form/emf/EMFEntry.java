@@ -14,12 +14,16 @@ package org.eclipse.ice.datastructures.form.emf;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
+import org.eclipse.ice.datastructures.entry.AbstractEntry;
+import org.eclipse.ice.datastructures.entry.StringEntry;
 import org.eclipse.ice.datastructures.form.Entry;
 
 /**
@@ -29,7 +33,7 @@ import org.eclipse.ice.datastructures.form.Entry;
  * @author Alex McCaskey
  * 
  */
-public class EMFEntry extends Entry {
+public class EMFEntry extends StringEntry {
 
 	/**
 	 * Reference to the EObject that contains the EAttribute that this EMFEntry
@@ -187,4 +191,5 @@ public class EMFEntry extends Entry {
 		entry.copy(this);
 		return entry;
 	}
+
 }

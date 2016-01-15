@@ -19,6 +19,8 @@ import static org.junit.Assert.fail;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.eclipse.ice.datastructures.entry.EntryConverter;
+import org.eclipse.ice.datastructures.entry.IEntry;
 import org.eclipse.ice.datastructures.form.DataComponent;
 import org.eclipse.ice.datastructures.form.Entry;
 import org.eclipse.ice.datastructures.form.TableComponent;
@@ -161,8 +163,8 @@ public class PainfullySimpleFormTester {
 		// Local Declarations
 		DataComponent dataComp1 = null, dataComp2 = null;
 		TableComponent tableComp = null;
-		Entry entry = null;
-		ArrayList<Entry> tempRowTemplate = null;
+		IEntry entry = null;
+		ArrayList<IEntry> tempRowTemplate = null;
 
 		// Print the block for diagnostics
 		System.out.println("Dumping PSF Block for Diagnostics:\n" + PSFForm);

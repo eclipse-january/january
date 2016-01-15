@@ -20,12 +20,15 @@ import java.util.Date;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
+import org.eclipse.ice.datastructures.entry.IEntry;
 import org.eclipse.ice.datastructures.form.Entry;
 
 /**
@@ -65,8 +68,9 @@ public class ICEResource extends ICEObject {
 	 * </p>
 	 * 
 	 */
-	@XmlElement(name = "Properties")
-	private ArrayList<Entry> properties;
+	@XmlElementWrapper
+	@XmlAnyElement(lax=true)
+	private ArrayList<IEntry> properties;
 
 	/**
 	 * <p>
@@ -94,7 +98,7 @@ public class ICEResource extends ICEObject {
 		path = null;
 
 		// Setup properties list
-		properties = new ArrayList<Entry>();
+		properties = new ArrayList<IEntry>();
 
 		// Default is set to false for isPicture
 		isPicture = false;
@@ -128,7 +132,7 @@ public class ICEResource extends ICEObject {
 		setContents(resourceFile);
 
 		// Setup properties list
-		properties = new ArrayList<Entry>();
+		properties = new ArrayList<IEntry>();
 
 		// Default is set to false for isPicture
 		isPicture = false;
@@ -208,7 +212,7 @@ public class ICEResource extends ICEObject {
 	 * 
 	 * @see org.eclipse.ice.datastructures.resource.IResource#getProperties()
 	 */
-	public ArrayList<Entry> getProperties() {
+	public ArrayList<IEntry> getProperties() {
 
 		return this.properties;
 	}
@@ -220,7 +224,7 @@ public class ICEResource extends ICEObject {
 	 * org.eclipse.ice.datastructures.resource.IResource#setProperties(java.util
 	 * .ArrayList)
 	 */
-	public void setProperties(ArrayList<Entry> props) {
+	public void setProperties(ArrayList<IEntry> props) {
 		// If null return
 		if (props == null) {
 			return;
@@ -278,7 +282,7 @@ public class ICEResource extends ICEObject {
 		this.properties.clear();
 		for (int i = 0; i < otherResource.properties.size(); i++) {
 			this.properties
-					.add((Entry) otherResource.getProperties().get(i).clone());
+					.add((IEntry) otherResource.getProperties().get(i).clone());
 		}
 
 		// Copy picture

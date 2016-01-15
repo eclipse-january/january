@@ -20,6 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.eclipse.ice.datastructures.ICEObject.Component;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
+import org.eclipse.ice.datastructures.entry.EntryConverter;
 import org.eclipse.ice.datastructures.form.DataComponent;
 import org.eclipse.ice.datastructures.form.Entry;
 import org.eclipse.ice.datastructures.form.Form;
@@ -439,7 +440,7 @@ public class PainfullySimpleForm extends Form {
 			if (rowTemplates.containsKey(compRef.getName())) {
 				tempArray = rowTemplates.get(compRef.getName());
 				tableRef = (TableComponent) compRef;
-				tableRef.setRowTemplate(tempArray);
+				tableRef.setRowTemplate(EntryConverter.convertEntriesToIEntries(tempArray));
 			}
 		}
 

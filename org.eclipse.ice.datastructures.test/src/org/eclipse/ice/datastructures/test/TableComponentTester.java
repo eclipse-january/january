@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import javax.xml.bind.JAXBException;
 
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
+import org.eclipse.ice.datastructures.entry.IEntry;
+import org.eclipse.ice.datastructures.entry.StringEntry;
 import org.eclipse.ice.datastructures.form.Entry;
 import org.eclipse.ice.datastructures.form.TableComponent;
 import org.junit.Test;
@@ -72,18 +74,18 @@ public class TableComponentTester {
 	@Test
 	public void checkConstruction() {
 		// Local Declarations
-		ArrayList<Entry> template = new ArrayList<Entry>();
-		ArrayList<Entry> template2 = new ArrayList<Entry>();
+		ArrayList<IEntry> template = new ArrayList<IEntry>();
+		ArrayList<IEntry> template2 = new ArrayList<IEntry>();
 
-		Entry column1 = new Entry();
-		Entry column2 = new Entry();
-		Entry column3 = new Entry();
+		IEntry column1 = new StringEntry();
+		IEntry column2 = new StringEntry();
+		IEntry column3 = new StringEntry();
 
-		Entry column4 = new Entry();
-		Entry column5 = new Entry();
-		Entry column6 = new Entry();
+		IEntry column4 = new StringEntry();
+		IEntry column5 = new StringEntry();
+		IEntry column6 = new StringEntry();
 
-		Entry testColumn1, testColumn2, testColumn3 = null;
+		IEntry testColumn1, testColumn2, testColumn3 = null;
 
 		// This test will verify a legal use of table component, append a row
 		// template,
@@ -205,7 +207,7 @@ public class TableComponentTester {
 		// template
 		// or columnNames
 		ArrayList<String> tempArray = new ArrayList<String>();
-		ArrayList<Entry> tArray = new ArrayList<Entry>();
+		ArrayList<IEntry> tArray = new ArrayList<IEntry>();
 
 		// check columnNames
 		tempArray = tableComponent.getColumnNames();
@@ -263,13 +265,13 @@ public class TableComponentTester {
 	public void checkRowManipulation() {
 
 		// Local Declarations
-		ArrayList<Entry> template = new ArrayList<Entry>();
-		ArrayList<Entry> row1 = new ArrayList<Entry>();
-		ArrayList<Entry> row2 = new ArrayList<Entry>();
+		ArrayList<IEntry> template = new ArrayList<IEntry>();
+		ArrayList<IEntry> row1 = new ArrayList<IEntry>();
+		ArrayList<IEntry> row2 = new ArrayList<IEntry>();
 
-		Entry column1 = new Entry();
-		Entry column2 = new Entry();
-		Entry column3 = new Entry();
+		IEntry column1 = new StringEntry();
+		IEntry column2 = new StringEntry();
+		IEntry column3 = new StringEntry();
 
 		// These tests will check the elasticity of the row editing methods.
 
@@ -591,8 +593,8 @@ public class TableComponentTester {
 		testComponentListener.reset();
 
 		// set a template
-		ArrayList<Entry> array = new ArrayList<Entry>();
-		array.add(new Entry());
+		ArrayList<IEntry> array = new ArrayList<IEntry>();
+		array.add(new StringEntry());
 		tableComponent.setRowTemplate(array);
 
 		// Check the listener to make sure it was updated
@@ -655,8 +657,8 @@ public class TableComponentTester {
 	@Test
 	public void checkEquality() {
 		// Local Declarations
-		ArrayList<Entry> template = new ArrayList<Entry>();
-		ArrayList<Entry> template2 = new ArrayList<Entry>();
+		ArrayList<IEntry> template = new ArrayList<IEntry>();
+		ArrayList<IEntry> template2 = new ArrayList<IEntry>();
 
 		// Create TableComponents to test
 		TableComponent component = new TableComponent();
@@ -667,7 +669,7 @@ public class TableComponentTester {
 		// Create ArrayList for row templates. Add to component, equalcomponent,
 		// and transitivecomponent
 		for (int i = 0; i < 10; i++) {
-			Entry e = new Entry();
+			IEntry e = new StringEntry();
 			e.setName("" + i);
 			template.add(e);
 		}
@@ -757,18 +759,18 @@ public class TableComponentTester {
 		 * "clone and copy" portion of TableComponent.
 		 */
 		// Local Declarations
-		ArrayList<Entry> template = new ArrayList<Entry>();
-		ArrayList<Entry> row1 = new ArrayList<Entry>();
-		ArrayList<Entry> row2 = new ArrayList<Entry>();
+		ArrayList<IEntry> template = new ArrayList<IEntry>();
+		ArrayList<IEntry> row1 = new ArrayList<IEntry>();
+		ArrayList<IEntry> row2 = new ArrayList<IEntry>();
 
-		Entry column1 = new Entry();
-		Entry column2 = new Entry();
-		Entry column3 = new Entry();
+		IEntry column1 = new StringEntry();
+		IEntry column2 = new StringEntry();
+		IEntry column3 = new StringEntry();
 
 		TableComponent cloneTable = new TableComponent();
 		TableComponent copyTable = new TableComponent();
 
-		Entry testColumn1, testColumn2, testColumn3 = null;
+		IEntry testColumn1, testColumn2, testColumn3 = null;
 
 		// create new tableComponent
 		tableComponent = new TableComponent();
@@ -885,20 +887,21 @@ public class TableComponentTester {
 		 */
 
 		// Local Declarations
-		ArrayList<Entry> template = new ArrayList<Entry>();
-		ArrayList<Entry> row1 = new ArrayList<Entry>();
-		ArrayList<Entry> row2 = new ArrayList<Entry>();
+		ArrayList<IEntry> template = new ArrayList<IEntry>();
+		ArrayList<IEntry> row1 = new ArrayList<IEntry>();
+		ArrayList<IEntry> row2 = new ArrayList<IEntry>();
 		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
 		ArrayList<Class> classList = new ArrayList<Class>();
 		classList.add(TableComponent.class);
-
-		Entry column1 = new Entry();
-		Entry column2 = new Entry();
-		Entry column3 = new Entry();
+		classList.add(StringEntry.class);
+		
+		IEntry column1 = new StringEntry();
+		IEntry column2 = new StringEntry();
+		IEntry column3 = new StringEntry();
 
 		TableComponent tableComponent2 = new TableComponent();
 
-		Entry testColumn1, testColumn2, testColumn3 = null;
+		IEntry testColumn1, testColumn2, testColumn3 = null;
 
 		// create new tableComponent
 		tableComponent = new TableComponent();

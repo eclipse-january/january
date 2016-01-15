@@ -30,11 +30,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The AbstractEntry is a realization of IEntry (and by extension 
- * the Identifiable, IUpdateable, and IUpdateableListener interfaces) that 
- * provides default behaviour for an Undefined (ie String valued entry). 
- * It keeps track of an entry value, a default value, a tag and comment 
- * for the entry, and name, id, description, contextId identifiers. 
+ * The AbstractEntry is a realization of IEntry (and by extension the
+ * Identifiable, IUpdateable, and IUpdateableListener interfaces) that provides
+ * default behaviour for an Undefined (ie String valued entry). It keeps track
+ * of an entry value, a default value, a tag and comment for the entry, and
+ * name, id, description, contextId identifiers.
  * 
  * It defers implementation for entry-type-specific operations to subclasses.
  * 
@@ -132,6 +132,12 @@ public abstract class AbstractEntry implements IEntry {
 	@XmlAttribute()
 	protected boolean isRequired = true;
 
+	/**
+	 * This attribute indicates whether or not this entry is a secret quantity.
+	 */
+	@XmlAttribute()
+	protected boolean isSecret = false;
+	
 	/**
 	 * The Constructor
 	 * 
@@ -330,13 +336,17 @@ public abstract class AbstractEntry implements IEntry {
 				retVal = (this.uniqueId == castedOtherObject.uniqueId)
 						&& (this.objectName.equals(castedOtherObject.objectName))
 						&& (this.objectDescription.equals(castedOtherObject.objectDescription)
-								&& (this.defaultValue.equals(castedOtherObject.defaultValue))
-								&& (this.tag.equals(castedOtherObject.tag))
-								&& (this.comment.equals(castedOtherObject.comment))
+								&& (defaultValue != null ? this.defaultValue.equals(castedOtherObject.defaultValue)
+										: castedOtherObject.defaultValue == null)
+								&& (tag != null ? this.tag.equals(castedOtherObject.tag)
+										: castedOtherObject.tag == null)
+								&& (comment != null ? this.comment.equals(castedOtherObject.comment)
+										: castedOtherObject.comment == null)
 								&& (this.isReady == castedOtherObject.isReady)
 								&& (this.isModified == castedOtherObject.isModified)
 								&& (this.isRequired == castedOtherObject.isRequired)
-								&& (this.contextId.equals(castedOtherObject.contextId)));
+								&& (contextId != null ? this.contextId.equals(castedOtherObject.contextId)
+										: castedOtherObject.contextId == null));
 			}
 		}
 
@@ -419,7 +429,9 @@ public abstract class AbstractEntry implements IEntry {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ice.datastructures.entry.IEntry#setValue(java.lang.String)
+	 * 
+	 * @see
+	 * org.eclipse.ice.datastructures.entry.IEntry#setValue(java.lang.String)
 	 */
 	@Override
 	public boolean setValue(String value) {
@@ -435,13 +447,16 @@ public abstract class AbstractEntry implements IEntry {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ice.datastructures.entry.IEntry#setValue(java.lang.String[])
+	 * 
+	 * @see
+	 * org.eclipse.ice.datastructures.entry.IEntry#setValue(java.lang.String[])
 	 */
 	@Override
 	public abstract boolean setValue(String... values);
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ice.datastructures.entry.IEntry#getValue()
 	 */
 	@Override
@@ -451,6 +466,7 @@ public abstract class AbstractEntry implements IEntry {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ice.datastructures.entry.IEntry#getValue(int)
 	 */
 	@Override
@@ -460,13 +476,15 @@ public abstract class AbstractEntry implements IEntry {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ice.datastructures.entry.IEntry#getValues()
 	 */
 	@Override
 	public abstract String[] getValues();
-	
+
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ice.datastructures.entry.IEntry#getDefaultValue()
 	 */
 	@Override
@@ -476,7 +494,10 @@ public abstract class AbstractEntry implements IEntry {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ice.datastructures.entry.IEntry#setDefaultValue(java.lang.String)
+	 * 
+	 * @see
+	 * org.eclipse.ice.datastructures.entry.IEntry#setDefaultValue(java.lang.
+	 * String)
 	 */
 	@Override
 	public void setDefaultValue(String value) {
@@ -485,6 +506,7 @@ public abstract class AbstractEntry implements IEntry {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ice.datastructures.entry.IEntry#getAllowedValues()
 	 */
 	@Override
@@ -492,13 +514,17 @@ public abstract class AbstractEntry implements IEntry {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ice.datastructures.entry.IEntry#setAllowedValues(java.util.List)
+	 * 
+	 * @see
+	 * org.eclipse.ice.datastructures.entry.IEntry#setAllowedValues(java.util.
+	 * List)
 	 */
 	@Override
 	public abstract void setAllowedValues(List<String> values);
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ice.datastructures.entry.IEntry#getComment()
 	 */
 	@Override
@@ -508,7 +534,9 @@ public abstract class AbstractEntry implements IEntry {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ice.datastructures.entry.IEntry#setComment(java.lang.String)
+	 * 
+	 * @see
+	 * org.eclipse.ice.datastructures.entry.IEntry#setComment(java.lang.String)
 	 */
 	@Override
 	public void setComment(String comment) {
@@ -517,6 +545,7 @@ public abstract class AbstractEntry implements IEntry {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ice.datastructures.entry.IEntry#getTag()
 	 */
 	@Override
@@ -526,6 +555,7 @@ public abstract class AbstractEntry implements IEntry {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ice.datastructures.entry.IEntry#setTag(java.lang.String)
 	 */
 	@Override
@@ -535,6 +565,7 @@ public abstract class AbstractEntry implements IEntry {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ice.datastructures.entry.IEntry#isReady()
 	 */
 	@Override
@@ -544,6 +575,7 @@ public abstract class AbstractEntry implements IEntry {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ice.datastructures.entry.IEntry#isRequired()
 	 */
 	@Override
@@ -553,6 +585,7 @@ public abstract class AbstractEntry implements IEntry {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ice.datastructures.entry.IEntry#setReady(boolean)
 	 */
 	public void setReady(boolean ready) {
@@ -561,6 +594,7 @@ public abstract class AbstractEntry implements IEntry {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ice.datastructures.entry.IEntry#setRequired(boolean)
 	 */
 	public void setRequired(boolean required) {
@@ -569,6 +603,7 @@ public abstract class AbstractEntry implements IEntry {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ice.datastructures.entry.IEntry#isModified()
 	 */
 	@Override
@@ -578,13 +613,35 @@ public abstract class AbstractEntry implements IEntry {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ice.datastructures.ICEObject.IUpdateableListener#update(org.eclipse.ice.datastructures.ICEObject.IUpdateable)
+	 * @see org.eclipse.ice.datastructures.entry.IEntry#isSecret()
+	 */
+	@Override
+	public boolean isSecret() {
+		return isSecret;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.entry.IEntry#setSecret(boolean)
+	 */
+	@Override
+	public void setSecret(boolean secret) {
+		isSecret = secret;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ice.datastructures.ICEObject.IUpdateableListener#update(org.
+	 * eclipse.ice.datastructures.ICEObject.IUpdateable)
 	 */
 	@Override
 	public abstract void update(IUpdateable component);
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ice.datastructures.entry.IEntry#getContextId()
 	 */
 	@Override
@@ -594,7 +651,9 @@ public abstract class AbstractEntry implements IEntry {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ice.datastructures.entry.IEntry#setContextId(java.lang.String)
+	 * 
+	 * @see org.eclipse.ice.datastructures.entry.IEntry#setContextId(java.lang.
+	 * String)
 	 */
 	@Override
 	public void setContextId(String id) {

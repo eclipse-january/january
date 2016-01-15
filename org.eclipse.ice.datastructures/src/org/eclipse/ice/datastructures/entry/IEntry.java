@@ -173,6 +173,21 @@ public interface IEntry extends Identifiable, IUpdateable, IUpdateableListener {
 	public void setRequired(boolean required);
 	
 	/**
+	 * This operation informs clients whether this IEntry is for a 
+	 * secret value (such as password) or not. 
+	 * 
+	 * @return secret True if secret, false if not.
+	 */
+	public boolean isSecret();
+	
+	/**
+	 * This operations marks the IEntry as secret.
+	 * 
+	 * @param secret True if secret, false otherwise.
+	 */
+	public void setSecret(boolean secret);
+	
+	/**
 	 * 
 	 * @return
 	 */
