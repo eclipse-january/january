@@ -31,6 +31,26 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ContinuousEntry extends DiscreteEntry {
 
+	/**
+	 * The constructor
+	 */
+	public ContinuousEntry() {
+		super();
+	}
+	
+	/**
+	 * Convenience constructor
+	 * @param allowed
+	 */
+	public ContinuousEntry(String... allowed) {
+		super(allowed);
+		if (allowed.length > 2) {
+			throw new IllegalArgumentException("ContinuousEntry must be constructed "
+					+ "with exactly 2 allowed values: the lower and upper bound of "
+					+ "the range.");
+		}
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.ice.datastructures.entry.DiscreteEntry#clone()

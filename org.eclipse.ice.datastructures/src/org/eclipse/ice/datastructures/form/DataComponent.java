@@ -92,20 +92,20 @@ public class DataComponent extends ICEObject implements Component,
 	 *            The new Entry that will be added to the Form.
 	 *            </p>
 	 */
-	public void addEntry(Entry newEntry) {
-
-		// Add the Entry if it is not null
-		if (newEntry != null) {
-			IEntry convertedEntry = EntryConverter.convert(newEntry);
-			
-			entries.add(convertedEntry);
-			// Register the data component as a listener of the Entry
-			newEntry.register(this);
-			// Notify the listeners that the component has changed
-			notifyListeners();
-		}
-
-	}
+//	public void addEntry(Entry newEntry) {
+//
+//		// Add the Entry if it is not null
+//		if (newEntry != null) {
+//			IEntry convertedEntry = EntryConverter.convert(newEntry);
+//			
+//			entries.add(convertedEntry);
+//			// Register the data component as a listener of the Entry
+//			newEntry.register(this);
+//			// Notify the listeners that the component has changed
+//			notifyListeners();
+//		}
+//
+//	}
 	/**
 	 * <p>
 	 * This operation adds an Entry to the DataComponent and specifies the name

@@ -14,6 +14,7 @@
 package org.eclipse.ice.datastructures.entry;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -51,6 +52,16 @@ public class DiscreteEntry extends AbstractEntry {
 		allowedValues = new ArrayList<String>();
 	}
 
+	/**
+	 * Convenience constructor, sets allowed values.
+	 * 
+	 * @param allowed Values that this DiscreteEntry allows.
+	 */
+	public DiscreteEntry(String... allowed) {
+		super();
+		allowedValues = Arrays.asList(allowed);
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 

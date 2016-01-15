@@ -21,6 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.eclipse.ice.datastructures.ICEObject.Component;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.entry.EntryConverter;
+import org.eclipse.ice.datastructures.entry.IEntry;
 import org.eclipse.ice.datastructures.form.DataComponent;
 import org.eclipse.ice.datastructures.form.Entry;
 import org.eclipse.ice.datastructures.form.Form;
@@ -47,7 +48,7 @@ public class PainfullySimpleForm extends Form {
 	 * the TableComponent's name. This is setup in the loadEntries operation.
 	 * </p>
 	 */
-	private HashMap<String, ArrayList<Entry>> rowTemplates;
+	private HashMap<String, ArrayList<IEntry>> rowTemplates;
 
 	/**
 	 * <p>
@@ -61,7 +62,7 @@ public class PainfullySimpleForm extends Form {
 		super();
 
 		// prepare rowTemplates
-		this.rowTemplates = new HashMap<String, ArrayList<Entry>>();
+		this.rowTemplates = new HashMap<String, ArrayList<IEntry>>();
 
 	}
 
@@ -268,7 +269,7 @@ public class PainfullySimpleForm extends Form {
 			addComponent(tableComp);
 
 			// Prepare the rowTemplates
-			rowTemplates.put(tableComp.getName(), new ArrayList<Entry>());
+			rowTemplates.put(tableComp.getName(), new ArrayList<IEntry>());
 		}
 
 		return;
@@ -301,7 +302,7 @@ public class PainfullySimpleForm extends Form {
 
 		// Temp list for TableEntries
 		Integer tableCount = 0;
-		ArrayList<Entry> tempArray = null;
+		ArrayList<IEntry> tempArray = null;
 
 		PainfullySimpleEntry entry = null;
 		boolean lastLineEmpty = false;
@@ -429,7 +430,7 @@ public class PainfullySimpleForm extends Form {
 
 		ICEObject compRef = null;
 		TableComponent tableRef = null;
-		ArrayList<Entry> tempArray = null;
+		ArrayList<IEntry> tempArray = null;
 
 		// Iterate through the components list and see if the name
 		// is in the rowTemplates list.
@@ -440,7 +441,7 @@ public class PainfullySimpleForm extends Form {
 			if (rowTemplates.containsKey(compRef.getName())) {
 				tempArray = rowTemplates.get(compRef.getName());
 				tableRef = (TableComponent) compRef;
-				tableRef.setRowTemplate(EntryConverter.convertEntriesToIEntries(tempArray));
+				tableRef.setRowTemplate(tempArray);
 			}
 		}
 

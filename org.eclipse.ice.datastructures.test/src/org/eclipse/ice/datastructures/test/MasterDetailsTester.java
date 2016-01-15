@@ -27,11 +27,16 @@ import java.util.ArrayList;
 import javax.xml.bind.JAXBException;
 
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
+import org.eclipse.ice.datastructures.entry.ContinuousEntry;
+import org.eclipse.ice.datastructures.entry.DiscreteEntry;
+import org.eclipse.ice.datastructures.entry.IEntry;
+import org.eclipse.ice.datastructures.entry.StringEntry;
 import org.eclipse.ice.datastructures.form.AllowedValueType;
 import org.eclipse.ice.datastructures.form.DataComponent;
 import org.eclipse.ice.datastructures.form.Entry;
 import org.eclipse.ice.datastructures.form.MasterDetailsComponent;
 import org.eclipse.ice.datastructures.form.MasterDetailsPair;
+import org.eclipse.ice.datastructures.jaxbclassprovider.ICEJAXBClassProvider;
 import org.junit.Test;
 
 /**
@@ -75,7 +80,7 @@ public class MasterDetailsTester {
 		ArrayList<MasterDetailsPair> template;
 		ArrayList<DataComponent> dataCompTemplate;
 		ArrayList<String> masterTypeTemplate;
-		Entry entry1, entry2, entry3, entry4;
+		IEntry entry1, entry2, entry3, entry4;
 		boolean toggle = true;
 
 		// create a new instance of MasterDetailsComponent
@@ -84,47 +89,21 @@ public class MasterDetailsTester {
 		// Setup list for templates
 		// Create Entries
 
-		entry1 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("0");
-				this.allowedValues.add("50");
-				this.defaultValue = "25";
-				this.allowedValueType = AllowedValueType.Continuous;
-			}
-		};
+		entry1 = new ContinuousEntry("0","50");
+		entry1.setDefaultValue("25");
+		entry1.setValue("0");
+		
+		entry2 = new DiscreteEntry("Apple", "Orange");
+		entry2.setDefaultValue("Orange");
+		entry2.setValue("Orange");
+				
+		entry3 = new StringEntry();
+		entry3.setDefaultValue("Gabriel");
+		entry3.setValue("Gabriel");
 
-		entry2 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("Apple");
-				this.allowedValues.add("Orange");
-				this.defaultValue = "Orange";
-				this.allowedValueType = AllowedValueType.Discrete;
-			}
-		};
-
-		entry3 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.defaultValue = "Gabriel";
-				this.allowedValueType = AllowedValueType.Undefined;
-			}
-		};
-
-		entry4 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("0");
-				this.allowedValues.add("10000");
-				this.defaultValue = "9001";
-				this.allowedValueType = AllowedValueType.Continuous;
-			}
-		};
+		entry4 = new ContinuousEntry("0", "10000");
+		entry4.setDefaultValue("9001");
+		entry4.setValue("9001");
 
 		// Create DataComponents
 		detailsComp1 = new DataComponent();
@@ -253,7 +232,7 @@ public class MasterDetailsTester {
 		MasterDetailsPair mdpair1, mdpair2, mdpair3;
 		ArrayList<MasterDetailsPair> template;
 		ArrayList<String> masterTypeTemplate;
-		Entry entry1, entry2, entry3, entry4;
+		IEntry entry1, entry2, entry3, entry4;
 
 		// Types of MasterValues
 		String MasterType1 = "Type One";
@@ -266,47 +245,21 @@ public class MasterDetailsTester {
 		// Setup list for templates
 		// Create Entries
 
-		entry1 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("0");
-				this.allowedValues.add("50");
-				this.defaultValue = "25";
-				this.allowedValueType = AllowedValueType.Continuous;
-			}
-		};
+		entry1 = new ContinuousEntry("0","50");
+		entry1.setDefaultValue("25");
+		entry1.setValue("0");
+		
+		entry2 = new DiscreteEntry("Apple", "Orange");
+		entry2.setDefaultValue("Orange");
+		entry2.setValue("Orange");
+				
+		entry3 = new StringEntry();
+		entry3.setDefaultValue("Gabriel");
+		entry3.setValue("Gabriel");
 
-		entry2 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("Apple");
-				this.allowedValues.add("Orange");
-				this.defaultValue = "Orange";
-				this.allowedValueType = AllowedValueType.Discrete;
-			}
-		};
-
-		entry3 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.defaultValue = "Gabriel";
-				this.allowedValueType = AllowedValueType.Undefined;
-			}
-		};
-
-		entry4 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("0");
-				this.allowedValues.add("10000");
-				this.defaultValue = "9001";
-				this.allowedValueType = AllowedValueType.Continuous;
-			}
-		};
+		entry4 = new ContinuousEntry("0", "10000");
+		entry4.setDefaultValue("9001");
+		entry4.setValue("9001");
 
 		// Create DataComponents
 		detailsComp1 = new DataComponent();
@@ -441,7 +394,7 @@ public class MasterDetailsTester {
 		DataComponent detailsComp1, detailsComp2, detailsComp3;
 		MasterDetailsPair mdpair1, mdpair2, mdpair3;
 		ArrayList<MasterDetailsPair> template;
-		Entry entry1, entry2, entry3, entry4;
+		IEntry entry1, entry2, entry3, entry4;
 
 		// Types of MasterValues
 		String MasterType1 = "Type One";
@@ -453,48 +406,21 @@ public class MasterDetailsTester {
 
 		// Setup list for templates
 		// Create Entries
+		entry1 = new ContinuousEntry("0","50");
+		entry1.setDefaultValue("25");
+		entry1.setValue("0");
+		
+		entry2 = new DiscreteEntry("Apple", "Orange");
+		entry2.setDefaultValue("Orange");
+		entry2.setValue("Orange");
+				
+		entry3 = new StringEntry();
+		entry3.setDefaultValue("Gabriel");
+		entry3.setValue("Gabriel");
 
-		entry1 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("0");
-				this.allowedValues.add("50");
-				this.defaultValue = "25";
-				this.allowedValueType = AllowedValueType.Continuous;
-			}
-		};
-
-		entry2 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("Apple");
-				this.allowedValues.add("Orange");
-				this.defaultValue = "Orange";
-				this.allowedValueType = AllowedValueType.Discrete;
-			}
-		};
-
-		entry3 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.defaultValue = "Gabriel";
-				this.allowedValueType = AllowedValueType.Undefined;
-			}
-		};
-
-		entry4 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("0");
-				this.allowedValues.add("10000");
-				this.defaultValue = "9001";
-				this.allowedValueType = AllowedValueType.Continuous;
-			}
-		};
+		entry4 = new ContinuousEntry("0", "10000");
+		entry4.setDefaultValue("9001");
+		entry4.setValue("9001");
 
 		// Create DataComponents
 		detailsComp1 = new DataComponent();
@@ -579,7 +505,7 @@ public class MasterDetailsTester {
 		DataComponent detailsComp1, detailsComp2, detailsComp3;
 		MasterDetailsPair mdpair1, mdpair2, mdpair3;
 		ArrayList<MasterDetailsPair> template;
-		Entry entry1, entry2, entry3, entry4;
+		IEntry entry1, entry2, entry3, entry4;
 
 		// Types of MasterValues
 		String MasterType1 = "Type One";
@@ -591,48 +517,21 @@ public class MasterDetailsTester {
 
 		// Setup list for templates
 		// Create Entries
+		entry1 = new ContinuousEntry("0","50");
+		entry1.setDefaultValue("25");
+		entry1.setValue("0");
+		
+		entry2 = new DiscreteEntry("Apple", "Orange");
+		entry2.setDefaultValue("Orange");
+		entry2.setValue("Orange");
+				
+		entry3 = new StringEntry();
+		entry3.setDefaultValue("Gabriel");
+		entry3.setValue("Gabriel");
 
-		entry1 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("0");
-				this.allowedValues.add("50");
-				this.defaultValue = "25";
-				this.allowedValueType = AllowedValueType.Continuous;
-			}
-		};
-
-		entry2 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("Apple");
-				this.allowedValues.add("Orange");
-				this.defaultValue = "Orange";
-				this.allowedValueType = AllowedValueType.Discrete;
-			}
-		};
-
-		entry3 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.defaultValue = "Gabriel";
-				this.allowedValueType = AllowedValueType.Undefined;
-			}
-		};
-
-		entry4 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("0");
-				this.allowedValues.add("10000");
-				this.defaultValue = "9001";
-				this.allowedValueType = AllowedValueType.Continuous;
-			}
-		};
+		entry4 = new ContinuousEntry("0", "10000");
+		entry4.setDefaultValue("9001");
+		entry4.setValue("9001");
 
 		// Create DataComponents
 		detailsComp1 = new DataComponent();
@@ -714,7 +613,7 @@ public class MasterDetailsTester {
 
 		// Test to see globals set correctly
 		DataComponent globals = new DataComponent();
-		globals.addEntry(new Entry());
+		globals.addEntry(new StringEntry());
 		mDetailsComp.setGlobalsComponent(globals);
 
 		// Check the Listener
@@ -763,15 +662,15 @@ public class MasterDetailsTester {
 		MasterDetailsComponent unEqualComponent = new MasterDetailsComponent();
 		MasterDetailsComponent transitiveComponent = new MasterDetailsComponent();
 		ArrayList<MasterDetailsPair> mdpairList = new ArrayList<MasterDetailsPair>();
-		Entry entry5, entry6;
+		IEntry entry5, entry6;
 		DataComponent globalsDataComponent;
 
 		DataComponent dComponent = new DataComponent();
 		DataComponent dComponent2 = new DataComponent();
-		Entry entry1 = new Entry();
+		IEntry entry1 = new StringEntry();
 		entry1.setValue("300");
 
-		dComponent.addEntry((Entry) new Entry());
+		dComponent.addEntry(new StringEntry());
 		dComponent2.addEntry(entry1);
 
 		MasterDetailsPair mdpair1 = new MasterDetailsPair("Type One",
@@ -789,30 +688,13 @@ public class MasterDetailsTester {
 		// Setup Globals DataComponent
 		globalsDataComponent = new DataComponent();
 
-		entry5 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("-50");
-				this.allowedValues.add("125");
-				this.defaultValue = "25";
-				this.value = "25";
-				this.allowedValueType = AllowedValueType.Continuous;
-			}
-		};
+		entry5 = new StringEntry();
+		entry5.setDefaultValue("Gabriel");
+		entry5.setValue("Gabriel");
 
-		entry6 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("White");
-				this.allowedValues.add("Green");
-				this.allowedValues.add("Yeller");
-				this.defaultValue = "White";
-				this.value = "White";
-				this.allowedValueType = AllowedValueType.Discrete;
-			}
-		};
+		entry6 = new ContinuousEntry("0", "10000");
+		entry6.setDefaultValue("9001");
+		entry6.setValue("9001");
 
 		globalsDataComponent.addEntry(entry5);
 		globalsDataComponent.addEntry(entry6);
@@ -895,7 +777,7 @@ public class MasterDetailsTester {
 		DataComponent detailsComp1, detailsComp2, detailsComp3;
 		MasterDetailsPair mdpair1, mdpair2, mdpair3;
 		ArrayList<MasterDetailsPair> template;
-		Entry entry1, entry2, entry3, entry4, entry5, entry6;
+		IEntry entry1, entry2, entry3, entry4, entry5, entry6;
 		DataComponent globalsDataComponent;
 
 		// Check to make sure listener is copied!
@@ -912,47 +794,21 @@ public class MasterDetailsTester {
 		// Setup list for templates
 
 		// Create Entries
-		entry1 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("0");
-				this.allowedValues.add("50");
-				this.defaultValue = "25";
-				this.allowedValueType = AllowedValueType.Continuous;
-			}
-		};
+		entry1 = new ContinuousEntry("0","50");
+		entry1.setDefaultValue("25");
+		entry1.setValue("0");
+		
+		entry2 = new DiscreteEntry("Apple", "Orange");
+		entry2.setDefaultValue("Orange");
+		entry2.setValue("Orange");
+				
+		entry3 = new StringEntry();
+		entry3.setDefaultValue("Gabriel");
+		entry3.setValue("Gabriel");
 
-		entry2 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("Apple");
-				this.allowedValues.add("Orange");
-				this.defaultValue = "Orange";
-				this.allowedValueType = AllowedValueType.Discrete;
-			}
-		};
-
-		entry3 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.defaultValue = "Gabriel";
-				this.allowedValueType = AllowedValueType.Undefined;
-			}
-		};
-
-		entry4 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("0");
-				this.allowedValues.add("10000");
-				this.defaultValue = "9001";
-				this.allowedValueType = AllowedValueType.Continuous;
-			}
-		};
+		entry4 = new ContinuousEntry("0", "10000");
+		entry4.setDefaultValue("9001");
+		entry4.setValue("9001");
 
 		// Create DataComponents
 		detailsComp1 = new DataComponent();
@@ -992,31 +848,13 @@ public class MasterDetailsTester {
 		// Setup Globals DataComponent
 		globalsDataComponent = new DataComponent();
 
-		// Create a Discrete and Continuous Entry.
-		entry5 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("-50");
-				this.allowedValues.add("125");
-				this.defaultValue = "25";
-				this.value = "25";
-				this.allowedValueType = AllowedValueType.Continuous;
-			}
-		};
+		entry5 = new StringEntry();
+		entry5.setDefaultValue("Gabriel");
+		entry5.setValue("Gabriel");
 
-		entry6 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("White");
-				this.allowedValues.add("Green");
-				this.allowedValues.add("Yeller");
-				this.defaultValue = "White";
-				this.value = "White";
-				this.allowedValueType = AllowedValueType.Discrete;
-			}
-		};
+		entry6 = new ContinuousEntry("0", "10000");
+		entry6.setDefaultValue("9001");
+		entry6.setValue("9001");
 
 		// Add listener
 		mDetailsComp.register(listener);
@@ -1066,13 +904,14 @@ public class MasterDetailsTester {
 		DataComponent detailsComp1, detailsComp2, detailsComp3;
 		MasterDetailsPair mdpair1, mdpair2, mdpair3;
 		ArrayList<MasterDetailsPair> template;
-		Entry entry1, entry2, entry3, entry4;
-		Entry entryGlobal1, entryGlobal2;
+		IEntry entry1, entry2, entry3, entry4;
+		IEntry entryGlobal1, entryGlobal2;
 		DataComponent globalsDataComponent;
 		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
 		ArrayList<Class> classList = new ArrayList<Class>();
 		classList.add(MasterDetailsComponent.class);
-
+		classList.addAll(new ICEJAXBClassProvider().getClasses());
+		
 		// Types of MasterValues
 		String MasterType1 = "Type One";
 		String MasterType2 = "Type Two";
@@ -1084,51 +923,21 @@ public class MasterDetailsTester {
 		// Setup list for templates
 
 		// Create Entries
-		entry1 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("0");
-				this.allowedValues.add("50");
-				this.defaultValue = "25";
-				this.value = "25";
-				this.allowedValueType = AllowedValueType.Continuous;
-			}
-		};
+		entry1 = new ContinuousEntry("0","50");
+		entry1.setDefaultValue("25");
+		entry1.setValue("0");
+		
+		entry2 = new DiscreteEntry("Apple", "Orange");
+		entry2.setDefaultValue("Orange");
+		entry2.setValue("Orange");
+				
+		entry3 = new StringEntry();
+		entry3.setDefaultValue("Gabriel");
+		entry3.setValue("Gabriel");
 
-		entry2 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("Apple");
-				this.allowedValues.add("Orange");
-				this.defaultValue = "Orange";
-				this.value = "Orange";
-				this.allowedValueType = AllowedValueType.Discrete;
-			}
-		};
-
-		entry3 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.defaultValue = "Gabriel";
-				this.value = "Gabriel";
-				this.allowedValueType = AllowedValueType.Undefined;
-			}
-		};
-
-		entry4 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("0");
-				this.allowedValues.add("10000");
-				this.defaultValue = "9001";
-				this.value = "9001";
-				this.allowedValueType = AllowedValueType.Continuous;
-			}
-		};
+		entry4 = new ContinuousEntry("0", "10000");
+		entry4.setDefaultValue("9001");
+		entry4.setValue("9001");
 
 		// Create DataComponents
 		detailsComp1 = new DataComponent();
@@ -1167,31 +976,14 @@ public class MasterDetailsTester {
 
 		// Setup Globals DataComponent
 		globalsDataComponent = new DataComponent();
+				
+		entryGlobal1 = new StringEntry();
+		entryGlobal1.setDefaultValue("Gabriel");
+		entryGlobal1.setValue("Gabriel");
 
-		entryGlobal1 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("-50");
-				this.allowedValues.add("125");
-				this.defaultValue = "25";
-				this.value = "25";
-				this.allowedValueType = AllowedValueType.Continuous;
-			}
-		};
-
-		entryGlobal2 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("White");
-				this.allowedValues.add("Green");
-				this.allowedValues.add("Yeller");
-				this.defaultValue = "White";
-				this.value = "White";
-				this.allowedValueType = AllowedValueType.Discrete;
-			}
-		};
+		entryGlobal2 = new ContinuousEntry("0", "10000");
+		entryGlobal2.setDefaultValue("9001");
+		entryGlobal2.setValue("9001");
 
 		globalsDataComponent.addEntry(entryGlobal1);
 		globalsDataComponent.addEntry(entryGlobal2);
@@ -1229,7 +1021,7 @@ public class MasterDetailsTester {
 		DataComponent detailsComp1, detailsComp2, detailsComp3;
 		MasterDetailsPair mdpair1, mdpair2, mdpair3;
 		ArrayList<MasterDetailsPair> template;
-		Entry entry1, entry2, entry3, entry4, entry5, entry6;
+		IEntry entry1, entry2, entry3, entry4, entry5, entry6;
 		DataComponent globalsDataComponent = new DataComponent();
 
 		// Types of MasterValues
@@ -1242,52 +1034,21 @@ public class MasterDetailsTester {
 
 		// Setup list for templates
 
-		// Create Entries
-		entry1 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("0");
-				this.allowedValues.add("50");
-				this.defaultValue = "25";
-				this.value = "25";
-				this.allowedValueType = AllowedValueType.Continuous;
-			}
-		};
+		entry1 = new ContinuousEntry("0","50");
+		entry1.setDefaultValue("25");
+		entry1.setValue("0");
+		
+		entry2 = new DiscreteEntry("Apple", "Orange");
+		entry2.setDefaultValue("Orange");
+		entry2.setValue("Orange");
+				
+		entry3 = new StringEntry();
+		entry3.setDefaultValue("Gabriel");
+		entry3.setValue("Gabriel");
 
-		entry2 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("Apple");
-				this.allowedValues.add("Orange");
-				this.defaultValue = "Orange";
-				this.value = "Orange";
-				this.allowedValueType = AllowedValueType.Discrete;
-			}
-		};
-
-		entry3 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.defaultValue = "Gabriel";
-				this.value = "Gabriel";
-				this.allowedValueType = AllowedValueType.Undefined;
-			}
-		};
-
-		entry4 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("0");
-				this.allowedValues.add("10000");
-				this.defaultValue = "9001";
-				this.value = "9001";
-				this.allowedValueType = AllowedValueType.Continuous;
-			}
-		};
+		entry4 = new ContinuousEntry("0", "10000");
+		entry4.setDefaultValue("9001");
+		entry4.setValue("9001");
 
 		// Create DataComponents
 		detailsComp1 = new DataComponent();
@@ -1327,30 +1088,13 @@ public class MasterDetailsTester {
 		// Setup Globals DataComponent
 		globalsDataComponent = new DataComponent();
 
-		entry5 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("-50");
-				this.allowedValues.add("125");
-				this.defaultValue = "25";
-				this.value = "25";
-				this.allowedValueType = AllowedValueType.Continuous;
-			}
-		};
+		entry5 = new StringEntry();
+		entry5.setDefaultValue("Gabriel");
+		entry5.setValue("Gabriel");
 
-		entry6 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("White");
-				this.allowedValues.add("Green");
-				this.allowedValues.add("Yeller");
-				this.defaultValue = "White";
-				this.value = "White";
-				this.allowedValueType = AllowedValueType.Discrete;
-			}
-		};
+		entry6 = new ContinuousEntry("0", "10000");
+		entry6.setDefaultValue("9001");
+		entry6.setValue("9001");
 
 		// Add entries to global DataComponent
 		globalsDataComponent.addEntry(entry5);
@@ -1404,7 +1148,7 @@ public class MasterDetailsTester {
 		DataComponent detailsComp1, detailsComp2, detailsComp3;
 		MasterDetailsPair mdpair1, mdpair2, mdpair3;
 		ArrayList<MasterDetailsPair> template;
-		Entry entry1, entry2, entry3, entry4, entry5, entry6;
+		IEntry entry1, entry2, entry3, entry4, entry5, entry6;
 		DataComponent globalsDataComponent = new DataComponent();
 
 		// Types of MasterValues
@@ -1418,52 +1162,21 @@ public class MasterDetailsTester {
 		// Setup list for templates
 
 		// Create Entries
-		entry1 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("0");
-				this.allowedValues.add("50");
-				this.defaultValue = "25";
-				this.value = "25";
-				this.allowedValueType = AllowedValueType.Continuous;
-			}
-		};
+		entry1 = new ContinuousEntry("0","50");
+		entry1.setDefaultValue("25");
+		entry1.setValue("0");
+		
+		entry2 = new DiscreteEntry("Apple", "Orange");
+		entry2.setDefaultValue("Orange");
+		entry2.setValue("Orange");
+				
+		entry3 = new StringEntry();
+		entry3.setDefaultValue("Gabriel");
+		entry3.setValue("Gabriel");
 
-		entry2 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("Apple");
-				this.allowedValues.add("Orange");
-				this.defaultValue = "Orange";
-				this.value = "Orange";
-				this.allowedValueType = AllowedValueType.Discrete;
-			}
-		};
-
-		entry3 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.defaultValue = "Gabriel";
-				this.value = "Gabriel";
-				this.allowedValueType = AllowedValueType.Undefined;
-			}
-		};
-
-		entry4 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("0");
-				this.allowedValues.add("10000");
-				this.defaultValue = "9001";
-				this.value = "9001";
-				this.allowedValueType = AllowedValueType.Continuous;
-			}
-		};
-
+		entry4 = new ContinuousEntry("0", "10000");
+		entry4.setDefaultValue("9001");
+		entry4.setValue("9001");
 		// Create DataComponents
 		detailsComp1 = new DataComponent();
 		detailsComp2 = new DataComponent();
@@ -1501,30 +1214,13 @@ public class MasterDetailsTester {
 		globalsDataComponent = new DataComponent();
 
 		// Setup Entries for global DataComponent
-		entry5 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("-50");
-				this.allowedValues.add("125");
-				this.defaultValue = "25";
-				this.value = "25";
-				this.allowedValueType = AllowedValueType.Continuous;
-			}
-		};
+		entry5 = new StringEntry();
+		entry5.setDefaultValue("Gabriel");
+		entry5.setValue("Gabriel");
 
-		entry6 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("White");
-				this.allowedValues.add("Green");
-				this.allowedValues.add("Yeller");
-				this.defaultValue = "White";
-				this.value = "White";
-				this.allowedValueType = AllowedValueType.Discrete;
-			}
-		};
+		entry6 = new ContinuousEntry("0", "10000");
+		entry6.setDefaultValue("9001");
+		entry6.setValue("9001");
 
 		// Add entries to global DataComponent
 		globalsDataComponent.addEntry(entry5);

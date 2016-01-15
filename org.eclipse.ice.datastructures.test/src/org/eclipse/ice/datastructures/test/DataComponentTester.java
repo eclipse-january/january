@@ -205,11 +205,11 @@ public class DataComponentTester {
 
 		// Location Declarations
 		int i = 0, numEntries = 50;
-		ArrayList<Entry> entries = new ArrayList<Entry>();
+		ArrayList<IEntry> entries = new ArrayList<IEntry>();
 
 		// Setup the list of Entries
 		for (i = 0; i < numEntries; i++) {
-			entries.add(new Entry());
+			entries.add(new StringEntry());
 			(entries.get(i)).setId(i);
 			(entries.get(i)).setName("Test Entry " + i);
 		}
@@ -286,7 +286,7 @@ public class DataComponentTester {
 	public void checkNotifications() {
 
 		// Local Declarations
-		Entry testEntry = new Entry();
+		IEntry testEntry = new StringEntry();
 		TestComponentListener secondTestComponentListener = new TestComponentListener();
 
 		// Setup the listener
@@ -498,8 +498,8 @@ public class DataComponentTester {
 		dataComponent.register(listener);
 
 		// create entries
-		Entry entry1 = new Entry();
-		Entry entry2 = new Entry();
+		IEntry entry1 = new StringEntry();
+		IEntry entry2 = new StringEntry();
 
 		// add entries to DataComponent
 		dataComponent.addEntry(entry1);

@@ -32,10 +32,12 @@ import org.eclipse.ice.datastructures.ICEObject.Component;
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
 import org.eclipse.ice.datastructures.componentVisitor.SelectiveComponentVisitor;
+import org.eclipse.ice.datastructures.entry.StringEntry;
 import org.eclipse.ice.datastructures.form.DataComponent;
 import org.eclipse.ice.datastructures.form.Entry;
 import org.eclipse.ice.datastructures.form.TableComponent;
 import org.eclipse.ice.datastructures.form.TreeComposite;
+import org.eclipse.ice.datastructures.jaxbclassprovider.ICEJAXBClassProvider;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -809,10 +811,10 @@ public class TreeCompositeTester extends SelectiveComponentVisitor {
 		component4 = new DataComponent(); // Only used for "copy in place" check
 
 		// Add some entries
-		component1.addEntry(new Entry());
-		component1.addEntry(new Entry());
-		component2.addEntry(new Entry());
-		component4.addEntry(new Entry());
+		component1.addEntry(new StringEntry());
+		component1.addEntry(new StringEntry());
+		component2.addEntry(new StringEntry());
+		component4.addEntry(new StringEntry());
 
 		// Add some components to the treeComposites
 		treeComposite.addComponent(component1);
@@ -938,7 +940,8 @@ public class TreeCompositeTester extends SelectiveComponentVisitor {
 		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
 		ArrayList<Class> classList = new ArrayList<Class>();
 		classList.add(TreeComposite.class);
-
+		classList.addAll(new ICEJAXBClassProvider().getClasses());
+		
 		// Instantiate a few TreeComposites
 		treeComposite = new TreeComposite();
 		treeChild1 = new TreeComposite();
@@ -951,9 +954,9 @@ public class TreeCompositeTester extends SelectiveComponentVisitor {
 		component3 = new DataComponent(); // This one is empty
 
 		// Add some entries
-		component1.addEntry(new Entry());
-		component1.addEntry(new Entry());
-		component2.addEntry(new Entry());
+		component1.addEntry(new StringEntry());
+		component1.addEntry(new StringEntry());
+		component2.addEntry(new StringEntry());
 
 		// Add some components to the treeComposites
 		treeComposite.addComponent(component1);
