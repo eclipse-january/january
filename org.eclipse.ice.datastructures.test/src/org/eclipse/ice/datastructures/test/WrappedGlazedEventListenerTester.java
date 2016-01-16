@@ -29,8 +29,8 @@ import org.junit.Test;
  * @author Jay Jay Billings
  *
  */
-public class WrappedGlazedEventListenerTester implements Component,
-		IUpdateableListener {
+public class WrappedGlazedEventListenerTester
+		implements Component, IUpdateableListener {
 
 	/**
 	 * The flag that indicates the test was notified
@@ -138,6 +138,18 @@ public class WrappedGlazedEventListenerTester implements Component,
 	public void update(IUpdateable component) {
 		updated = true;
 		isThis = (this == component);
+	}
+
+	@Override
+	public String getContext() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setContext(String context) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

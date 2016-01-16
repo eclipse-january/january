@@ -22,7 +22,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <p>
  * ICEObject is the base class for all common, shared data structures in ICE
  * with the notable exception of the ICEList. ICEObjects are uniquely
  * identifiable by their identification numbers and are persistent; it realizes
@@ -31,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * copy into an existing ICEObject. ICEObjects can be marshalled and
  * unmarshalled to XML using the loadFromXML() and persistToXML() operations
  * from the Persistable interface.
- * </p>
  * <p>
  * Operations are defined for most of the attributes and capabilities of the
  * ICEObject class, but some work is required by subclasses. Subclasses must
@@ -53,64 +51,57 @@ import org.slf4j.LoggerFactory;
  */
 @XmlRootElement(name = "ICEObject")
 public class ICEObject implements IUpdateable {
-	
+
 	/**
 	 * Logger for handling event messages and other information.
 	 */
 	@XmlTransient
-	protected final Logger logger;	
-	
+	protected final Logger logger;
+
 	/**
-	 * <p>
+	 * The context for this object. It should be used as described on
+	 * {@link org.eclipse.ice.datastructures.ICEObject.Identifiable}. It is not
+	 * persisted to XML because it only matters during runtime.
+	 */
+	@XmlTransient
+	protected String context = "";
+
+	/**
 	 * The unique identification number of the ICEObject.
-	 * </p>
-	 * 
 	 */
 	protected int uniqueId;
+
 	/**
-	 * <p>
 	 * The name of the ICEObject.
-	 * </p>
-	 * 
 	 */
 	protected String objectName;
+
 	/**
-	 * <p>
 	 * The description of the ICEObject. This description should be different
 	 * than the name of the ICEObject and should contain information that would
 	 * be useful to a human user.
-	 * </p>
-	 * 
 	 */
 	protected String objectDescription;
+
 	/**
-	 * <p>
 	 * The ICEJAXBHandler used to marshal ICEObjects to and from XML.
-	 * </p>
-	 * 
 	 */
 	protected ICEJAXBHandler jaxbManipulator;
 
 	/**
-	 * <p>
 	 * The set of IUpdateableListeners observing the ICEObject.
-	 * </p>
-	 * 
 	 */
 	@XmlTransient
 	protected ArrayList<IUpdateableListener> listeners;
 
 	/**
-	 * <p>
 	 * The Constructor
-	 * </p>
-	 * 
 	 */
 	public ICEObject() {
 
 		// Create the logger
 		logger = LoggerFactory.getLogger(getClass());
-		
+
 		// Set it all up
 		uniqueId = 1;
 		objectName = "ICE Object";
@@ -205,7 +196,8 @@ public class ICEObject implements IUpdateable {
 	 * This operation copies the contents of an ICEObject into the current
 	 * object using a deep copy.
 	 * 
-	 * @param entity The Identifiable entity from which the values should be
+	 * @param entity
+	 *            The Identifiable entity from which the values should be
 	 *            copied.
 	 */
 	public void copy(ICEObject entity) {
@@ -215,18 +207,17 @@ public class ICEObject implements IUpdateable {
 			return;
 		}
 		// Copy contents of entity to this ICEObject.
-		this.objectDescription = entity.objectDescription;
-		this.objectName = entity.objectName;
-		this.uniqueId = entity.uniqueId;
+		objectDescription = entity.objectDescription;
+		objectName = entity.objectName;
+		uniqueId = entity.uniqueId;
+		context = entity.context;
 
+		return;
 	}
 
 	/**
-	 * <p>
 	 * This protected operation notifies the listeners of the ICEObject that its
 	 * state has changed.
-	 * </p>
-	 * 
 	 */
 	protected void notifyListeners() {
 
@@ -252,13 +243,9 @@ public class ICEObject implements IUpdateable {
 	}
 
 	/**
-	 * <p>
 	 * This operation returns a clone of the ICEObject using a deep copy.
-	 * </p>
 	 * 
-	 * @return <p>
-	 *         The new clone.
-	 *         </p>
+	 * @return The new clone.
 	 */
 	@Override
 	public Object clone() {
@@ -295,11 +282,11 @@ public class ICEObject implements IUpdateable {
 			} else {
 				castedOtherObject = (ICEObject) otherObject;
 				// Check each member attribute
-				retVal = (this.uniqueId == castedOtherObject.uniqueId)
-						&& (this.objectName
-								.equals(castedOtherObject.objectName))
-						&& (this.objectDescription
-								.equals(castedOtherObject.objectDescription));
+				retVal = (uniqueId == castedOtherObject.uniqueId)
+						&& (objectName.equals(castedOtherObject.objectName))
+						&& (objectDescription
+								.equals(castedOtherObject.objectDescription))
+						&& (context.equals(castedOtherObject.context));
 			}
 		}
 
@@ -321,9 +308,9 @@ public class ICEObject implements IUpdateable {
 		hash = 31 * hash + uniqueId;
 		// If objectName is null, add 0, otherwise add String.hashcode()
 		hash = 31 * hash + (null == objectName ? 0 : objectName.hashCode());
-		hash = 31
-				* hash
-				+ (null == objectDescription ? 0 : objectDescription.hashCode());
+		hash = 31 * hash + (null == objectDescription ? 0
+				: objectDescription.hashCode());
+		hash = 31 * hash + context.hashCode();
 		// Return the computed hash code
 		return hash;
 
@@ -371,5 +358,27 @@ public class ICEObject implements IUpdateable {
 		}
 
 		return;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.ice.datastructures.ICEObject.Identifiable#getContext()
+	 */
+	@Override
+	public String getContext() {
+		return context;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ice.datastructures.ICEObject.Identifiable#setContext(java.
+	 * lang.String)
+	 */
+	@Override
+	public void setContext(String context) {
+		this.context = context;
 	}
 }

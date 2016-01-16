@@ -96,6 +96,13 @@ public class ListComponentTester implements IElementSource<Integer>,
 		assertEquals(component.getId(), id);
 		assertEquals(component.getName(), name);
 		assertEquals(component.getDescription(), description);
+
+		// Check the context
+		assertTrue(component.getContext().isEmpty());
+		component.setContext("foo");
+		assertEquals("foo", component.getContext());
+
+		return;
 	}
 
 	/**
@@ -169,8 +176,8 @@ public class ListComponentTester implements IElementSource<Integer>,
 	 * @throws NullPointerException
 	 */
 	@Test
-	public void checkXMLPersistence() throws NullPointerException,
-			JAXBException, IOException {
+	public void checkXMLPersistence()
+			throws NullPointerException, JAXBException, IOException {
 
 		// Local declarations
 		ListComponent<?> component2 = null;
@@ -221,8 +228,8 @@ public class ListComponentTester implements IElementSource<Integer>,
 		xmlHandler.write(objList, classList, outputStream);
 		inputStream = new ByteArrayInputStream(outputStream.toByteArray());
 		// Load it back up and check it
-		ListComponent<?> loadedList = (ListComponent<?>) xmlHandler.read(
-				classList, inputStream);
+		ListComponent<?> loadedList = (ListComponent<?>) xmlHandler
+				.read(classList, inputStream);
 		assertEquals(objList.getId(), loadedList.getId());
 		assertEquals(1, objList.size());
 		assertEquals(obj, loadedList.get(0));
@@ -249,8 +256,8 @@ public class ListComponentTester implements IElementSource<Integer>,
 		xmlHandler.write(resList, classList, outputStream);
 		inputStream = new ByteArrayInputStream(outputStream.toByteArray());
 		// Load it back up and check it
-		ListComponent<?> resLoadedList = (ListComponent<?>) xmlHandler.read(
-				classList, inputStream);
+		ListComponent<?> resLoadedList = (ListComponent<?>) xmlHandler
+				.read(classList, inputStream);
 		assertEquals(resList.getId(), resLoadedList.getId());
 		assertEquals(3, resList.size());
 		assertEquals(res, resLoadedList.get(0));
@@ -280,9 +287,8 @@ public class ListComponentTester implements IElementSource<Integer>,
 		// Set its data
 		component.setId(12);
 		component.setName("ICE ListComponent");
-		component
-				.setDescription("This is an ListComponent that will "
-						+ "be used for testing equality with other AbstractListComponents.");
+		component.setDescription("This is an ListComponent that will "
+				+ "be used for testing equality with other AbstractListComponents.");
 		// Add some integers to the list
 		component.add(5);
 		component.add(383400);
@@ -290,9 +296,8 @@ public class ListComponentTester implements IElementSource<Integer>,
 		// Setup the equal component
 		equalComponent.setId(12);
 		equalComponent.setName("ICE ListComponent");
-		equalComponent
-				.setDescription("This is an ListComponent that will "
-						+ "be used for testing equality with other AbstractListComponents.");
+		equalComponent.setDescription("This is an ListComponent that will "
+				+ "be used for testing equality with other AbstractListComponents.");
 		equalComponent.add(5);
 		equalComponent.add(383400);
 
@@ -313,9 +318,8 @@ public class ListComponentTester implements IElementSource<Integer>,
 		// Setup the transitive list
 		transitiveComponent.setId(12);
 		transitiveComponent.setName("ICE ListComponent");
-		transitiveComponent
-				.setDescription("This is an ListComponent that will "
-						+ "be used for testing equality with other AbstractListComponents.");
+		transitiveComponent.setDescription("This is an ListComponent that will "
+				+ "be used for testing equality with other AbstractListComponents.");
 		transitiveComponent.add(5);
 		transitiveComponent.add(383400);
 
@@ -620,9 +624,8 @@ public class ListComponentTester implements IElementSource<Integer>,
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * ca.odell.glazedlists.event.ListEventListener#listChanged(ca.odell.glazedlists
-	 * .event.ListEvent)
+	 * @see ca.odell.glazedlists.event.ListEventListener#listChanged(ca.odell.
+	 * glazedlists .event.ListEvent)
 	 */
 	@Override
 	public void listChanged(ListEvent<Integer> listChanges) {
