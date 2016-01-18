@@ -154,6 +154,7 @@ public abstract class AbstractEntry implements IEntry {
 		contextId = "org.eclipse.ice.datastructures.entry.AbstractEntry";
 		listeners = new ArrayList<IUpdateableListener>();
 		defaultValue = "";
+		value = "";
 		comment = "";
 		tag = "";
 		return;

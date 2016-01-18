@@ -35,6 +35,9 @@ public class StringEntry extends AbstractEntry {
 
 	public StringEntry() {
 		super();
+		// Setting this to be used by the UI in 
+		// constructing the correct EntryComposite.
+		contextId = "org.eclipse.ice.client.widgets.StringEntry";
 	}
 	
 	/*

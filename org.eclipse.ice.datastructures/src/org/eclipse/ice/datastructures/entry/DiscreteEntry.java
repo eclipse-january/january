@@ -50,6 +50,7 @@ public class DiscreteEntry extends AbstractEntry {
 	public DiscreteEntry() {
 		super();
 		allowedValues = new ArrayList<String>();
+		contextId = "org.eclipse.ice.client.widgets.DiscreteEntry";
 	}
 
 	/**
@@ -60,6 +61,7 @@ public class DiscreteEntry extends AbstractEntry {
 	public DiscreteEntry(String... allowed) {
 		super();
 		allowedValues = Arrays.asList(allowed);
+		contextId = "org.eclipse.ice.client.widgets.DiscreteEntry";
 	}
 	
 	/*
