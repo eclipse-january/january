@@ -13,128 +13,111 @@
 package org.eclipse.ice.datastructures.ICEObject;
 
 /**
- * <p>
  * This interface describes operations that would make a class uniquely
  * identifiable to ICE.
- * </p>
  * 
  * @author Jay Jay Billings
  */
 public interface Identifiable {
+
 	/**
-	 * <p>
 	 * This operation sets the identification number of the Identifiable entity.
 	 * It must be greater than zero.
-	 * </p>
 	 * 
 	 * @param id
-	 *            <p>
 	 *            The unique identification number that should be assigned to
 	 *            the Identifiable entity.
-	 *            </p>
 	 */
 	public void setId(int id);
 
 	/**
-	 * <p>
 	 * This operation retrieves the description of the Identifiable entity.
-	 * </p>
 	 * 
-	 * @return <p>
-	 *         The description of the Identifiable entity.
-	 *         </p>
+	 * @return The description of the Identifiable entity.
 	 */
 	public String getDescription();
 
 	/**
-	 * <p>
 	 * This operation retrieves the identification number of the Identifiable
 	 * entity.
-	 * </p>
 	 * 
-	 * @return <p>
-	 *         The unique identification number of the Identifiable entity.
-	 *         </p>
+	 * @return The unique identification number of the Identifiable entity.
 	 */
 	public int getId();
 
 	/**
-	 * <p>
 	 * This operation sets the name of the Identifiable entity.
-	 * </p>
 	 * 
 	 * @param name
-	 *            <p>
 	 *            The name that should be given to the Identifiable entity.
-	 *            </p>
 	 */
 	public void setName(String name);
 
 	/**
-	 * <p>
 	 * This operation retrieves the name of the Identifiable entity.
-	 * </p>
 	 * 
-	 * @return <p>
-	 *         The name of the Identifiable entity.
-	 *         </p>
+	 * @return The name of the Identifiable entity.
 	 */
 	public String getName();
 
 	/**
-	 * <p>
 	 * This operation sets the description of the Identifiable entity.
-	 * </p>
 	 * 
 	 * @param description
-	 *            <p>
 	 *            The description that should be stored for the Identifiable
 	 *            entity.
-	 *            </p>
 	 */
 	public void setDescription(String description);
 
 	/**
-	 * <p>
 	 * This operation is used to check equality between the ICE and another
 	 * Identifiable entity. It returns true if the Identifiable entities are
 	 * equal and false if they are not.
-	 * </p>
 	 * 
 	 * @param otherObject
-	 *            <p>
 	 *            The other Identifiable entity that should be compared with
 	 *            this one.
-	 *            </p>
-	 * @return <p>
-	 *         True if the Identifiable entitys are equal, false otherwise.
-	 *         </p>
+	 * @return True if the Identifiable entitys are equal, false otherwise.
 	 */
 	@Override
 	public boolean equals(Object otherObject);
 
 	/**
-	 * <p>
 	 * This operation returns the hashcode value of the Identifiable entity.
-	 * </p>
 	 * 
-	 * @return <p>
-	 *         The hashcode of the Identifiable entity.
-	 *         </p>
+	 * @return The hashcode of the Identifiable entity.
 	 */
 	@Override
 	public int hashCode();
 
 	/**
-	 * <p>
 	 * This operation returns a clone of the Identifiable instance using a deep
 	 * copy.
-	 * </p>
 	 * 
-	 * @return <p>
-	 *         The new clone.
-	 *         </p>
+	 * @return The new clone.
 	 */
 	public Object clone();
+
+	/**
+	 * This operation returns the "context" of the identifiable object. The
+	 * context can be thought of as an additional clue that can be provided with
+	 * the object to allow clients to interpret its contents in a slightly
+	 * different way. This is useful, for example, in dynamically redrawing the
+	 * UI using a service factory where the context can be used as a clue to
+	 * find the correct service for the Identifiable object. In this case, the
+	 * context behaves as a separate identifier that associates it with related
+	 * utilities.
+	 * 
+	 * @return the context
+	 */
+	public String getContext();
+
+	/**
+	 * This operation sets the context of Identifiable object.
+	 * 
+	 * @param context
+	 *            the context
+	 */
+	public void setContext(String context);
 
 }

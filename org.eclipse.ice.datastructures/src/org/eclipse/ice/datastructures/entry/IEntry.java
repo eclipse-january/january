@@ -191,13 +191,13 @@ public interface IEntry extends Identifiable, IUpdateable, IUpdateableListener {
 	 * 
 	 * @return
 	 */
-	public String getContextId();
+	//public String getContextId();
 	
 	/**
 	 * 
 	 * @param id
 	 */
-	public void setContextId(String id);
+	//public void setContextId(String id);
 
 	
 }

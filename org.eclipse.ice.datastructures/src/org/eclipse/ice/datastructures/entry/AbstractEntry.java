@@ -646,7 +646,7 @@ public abstract class AbstractEntry implements IEntry {
 	 * @see org.eclipse.ice.datastructures.entry.IEntry#getContextId()
 	 */
 	@Override
-	public String getContextId() {
+	public String getContext() {
 		return contextId;
 	}
 
@@ -657,7 +657,7 @@ public abstract class AbstractEntry implements IEntry {
 	 * String)
 	 */
 	@Override
-	public void setContextId(String id) {
+	public void setContext(String id) {
 		contextId = id;
 	}
 
