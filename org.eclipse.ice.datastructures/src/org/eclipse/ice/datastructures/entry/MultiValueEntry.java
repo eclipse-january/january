@@ -42,4 +42,9 @@ public class MultiValueEntry extends AbstractEntry {
 		return null;
 	}
 
+	@Override
+	public void accept(IEntryVisitor visitor) {
+		visitor.visit(this);
+	}
+
 }

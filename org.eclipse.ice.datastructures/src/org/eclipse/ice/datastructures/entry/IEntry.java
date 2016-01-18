@@ -188,16 +188,12 @@ public interface IEntry extends Identifiable, IUpdateable, IUpdateableListener {
 	public void setSecret(boolean secret);
 	
 	/**
+	 * This operation directs the IEntry to call back to an IEntryVisitor
+	 * so that the visitor can perform its required actions for the exact type
+	 * of the IEntry.
 	 * 
-	 * @return
+	 * @param visitor
+	 *            The visitor
 	 */
-	//public String getContextId();
-	
-	/**
-	 * 
-	 * @param id
-	 */
-	//public void setContextId(String id);
-
-	
+	public void accept(IEntryVisitor visitor);
 }

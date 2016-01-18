@@ -21,6 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
 import org.eclipse.ice.datastructures.entry.AbstractEntry;
+import org.eclipse.ice.datastructures.entry.IEntryVisitor;
 
 /**
  * This class is simply for testing AbstractEntry.
@@ -84,6 +85,12 @@ public class TestableAbstractEntry extends AbstractEntry {
 	public String[] getValues() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void accept(IEntryVisitor visitor) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

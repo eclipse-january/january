@@ -35,9 +35,6 @@ public class StringEntry extends AbstractEntry {
 
 	public StringEntry() {
 		super();
-		// Setting this to be used by the UI in 
-		// constructing the correct EntryComposite.
-		contextId = "org.eclipse.ice.client.widgets.StringEntry";
 	}
 	
 	/*
@@ -106,4 +103,12 @@ public class StringEntry extends AbstractEntry {
 		// do nothing
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.entry.IEntry#accept(org.eclipse.ice.datastructures.entry.IEntryVisitor)
+	 */
+	@Override
+	public void accept(IEntryVisitor visitor) {
+		visitor.visit(this);
+	}
 }

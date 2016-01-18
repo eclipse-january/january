@@ -77,7 +77,6 @@ public class FileEntry extends DiscreteEntry {
 	public FileEntry(String fileType) {
 		super();
 		fileExtension = fileType;
-		contextId = "org.eclipse.ice.client.widgets.FileEntry";
 	}
 
 	/**
@@ -273,5 +272,14 @@ public class FileEntry extends DiscreteEntry {
 		hash = 31 * hash + fileExtension.hashCode();
 
 		return hash;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.entry.DiscreteEntry#accept(org.eclipse.ice.datastructures.entry.IEntryVisitor)
+	 */
+	@Override
+	public void accept(IEntryVisitor visitor) {
+		visitor.visit(this);
 	}
 }

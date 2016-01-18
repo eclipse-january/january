@@ -50,7 +50,6 @@ public class DiscreteEntry extends AbstractEntry {
 	public DiscreteEntry() {
 		super();
 		allowedValues = new ArrayList<String>();
-		contextId = "org.eclipse.ice.client.widgets.DiscreteEntry";
 	}
 
 	/**
@@ -61,7 +60,6 @@ public class DiscreteEntry extends AbstractEntry {
 	public DiscreteEntry(String... allowed) {
 		super();
 		allowedValues = Arrays.asList(allowed);
-		contextId = "org.eclipse.ice.client.widgets.DiscreteEntry";
 	}
 	
 	/*
@@ -208,5 +206,14 @@ public class DiscreteEntry extends AbstractEntry {
 		hash = 31 * hash + allowedValues.hashCode();
 		
 		return hash;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.entry.IEntry#accept(org.eclipse.ice.datastructures.entry.IEntryVisitor)
+	 */
+	@Override
+	public void accept(IEntryVisitor visitor) {
+		visitor.visit(this);
 	}
 }

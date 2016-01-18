@@ -95,4 +95,12 @@ public class ContinuousEntry extends DiscreteEntry {
 		return false;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.entry.DiscreteEntry#accept(org.eclipse.ice.datastructures.entry.IEntryVisitor)
+	 */
+	@Override
+	public void accept(IEntryVisitor visitor) {
+		visitor.visit(this);
+	}
 }

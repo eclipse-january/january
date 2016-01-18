@@ -151,7 +151,7 @@ public abstract class AbstractEntry implements IEntry {
 		uniqueId = 1;
 		objectName = "ICE Entry";
 		objectDescription = "ICE Entry";
-		contextId = "org.eclipse.ice.datastructures.entry.AbstractEntry";
+		contextId = "default";
 		listeners = new ArrayList<IUpdateableListener>();
 		defaultValue = "";
 		value = "";
@@ -660,5 +660,4 @@ public abstract class AbstractEntry implements IEntry {
 	public void setContext(String id) {
 		contextId = id;
 	}
-
 }
