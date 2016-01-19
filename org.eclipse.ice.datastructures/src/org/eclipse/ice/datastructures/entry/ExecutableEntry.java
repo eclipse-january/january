@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
 
 /**
- * FileEntry is a subclass of the DiscreteEntry that keeps track of 
+ * ExecutableEntry is a subclass of the DiscreteEntry that keeps track of 
  * a list of files (as allowed values) for the user to select. The 
  * value for this IEntry is the selected file name. 
  * 
@@ -41,4 +41,11 @@ public class ExecutableEntry extends DiscreteEntry {
 		visitor.visit(this);
 	}
 	
+	public void setExecutableURI(URI uri) {
+		executableUri = uri;
+	}
+	
+	public URI getExecutableURI() {
+		return executableUri;
+	}
 }

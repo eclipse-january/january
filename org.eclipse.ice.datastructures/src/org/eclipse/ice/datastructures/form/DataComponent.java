@@ -15,7 +15,6 @@ package org.eclipse.ice.datastructures.form;
 import java.util.ArrayList;
 
 import javax.xml.bind.annotation.XmlAnyElement;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -24,7 +23,6 @@ import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
-import org.eclipse.ice.datastructures.entry.EntryConverter;
 import org.eclipse.ice.datastructures.entry.IEntry;
 
 /**
@@ -82,30 +80,6 @@ public class DataComponent extends ICEObject implements Component,
 
 	}
 
-	/**
-	 * <p>
-	 * This operation adds an entry to the DataComponent.
-	 * </p>
-	 * 
-	 * @param newEntry
-	 *            <p>
-	 *            The new Entry that will be added to the Form.
-	 *            </p>
-	 */
-//	public void addEntry(Entry newEntry) {
-//
-//		// Add the Entry if it is not null
-//		if (newEntry != null) {
-//			IEntry convertedEntry = EntryConverter.convert(newEntry);
-//			
-//			entries.add(convertedEntry);
-//			// Register the data component as a listener of the Entry
-//			newEntry.register(this);
-//			// Notify the listeners that the component has changed
-//			notifyListeners();
-//		}
-//
-//	}
 	/**
 	 * <p>
 	 * This operation adds an Entry to the DataComponent and specifies the name
