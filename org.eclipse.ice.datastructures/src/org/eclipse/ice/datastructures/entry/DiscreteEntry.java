@@ -21,6 +21,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
@@ -36,6 +37,14 @@ import org.eclipse.ice.datastructures.ICEObject.Identifiable;
 @XmlRootElement(name = "DiscreteEntry")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DiscreteEntry extends AbstractEntry {
+
+	/**
+	 * The template for the error that is returned for set value if the allowed
+	 * value type is discrete.
+	 */
+	@XmlTransient
+	protected String discreteErrMsg = "'${incorrectValue}' is an unacceptable "
+			+ "value. The value must be one of ${allowedValues}.";
 
 	/**
 	 * This list stores either the exact values that the Entry may have or a
@@ -70,7 +79,6 @@ public class DiscreteEntry extends AbstractEntry {
 	 */
 	@Override
 	public Object clone() {
-		System.out.println("CLONING DISCRETE ENTRY");
 		DiscreteEntry entry = new DiscreteEntry();
 		entry.copy(this);
 		return entry;
@@ -101,8 +109,32 @@ public class DiscreteEntry extends AbstractEntry {
 	public boolean setValue(String newValue) {
 		// Only set the value if it is allowed
 		if (allowedValues.contains(newValue)) {
+			errorMessage = null;
 			return super.setValue(newValue);
 		}
+		
+		String error = this.discreteErrMsg;
+
+		// loop to get all the values of the allowedValues
+		String tempValues = "";
+		for (int i = 0; i < allowedValues.size(); i++) {
+			// If it is a list and it is the last item, add an "or"
+			if (i == allowedValues.size() - 1 && allowedValues.size() > 1) {
+				tempValues += " or";
+			}
+			// Add the value to the message
+			tempValues += " " + allowedValues.get(i);
+			// Add a comma for the allowedValues
+			if (i < allowedValues.size() - 1 && allowedValues.size() > 2) {
+				tempValues += ",";
+			}
+
+		}
+
+		// Replace with correct errors
+		error = error.replace("${incorrectValue}", newValue != null ? newValue : "null");
+		error = error.replace(" ${allowedValues}", tempValues);
+		this.errorMessage = error;
 		return false;
 	}
 

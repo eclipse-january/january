@@ -16,6 +16,7 @@ package org.eclipse.ice.datastructures.entry;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
 
@@ -32,6 +33,14 @@ import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
 @XmlRootElement(name = "ContinuousEntry")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ContinuousEntry extends DiscreteEntry {
+
+	/**
+	 * The template for the error that is returned for set value if the allowed
+	 * value type is continuous.
+	 */
+	@XmlTransient
+	protected String continuousErrMsg = "'${incorrectValue}' is an "
+			+ "unacceptable value. The value must be between ${lowerBound} " + "and ${upperBound}.";
 
 	/**
 	 * The constructor
@@ -81,14 +90,22 @@ public class ContinuousEntry extends DiscreteEntry {
 			try {
 				newValueDouble = Double.valueOf(newValue);
 			} catch (NumberFormatException | NullPointerException e) {
+				errorMessage = newValue + " is an unacceptable value. The value must be a valid number.";
 				return false;
 			}
 			// Set the value if it is within the bounds
 			if (newValueDouble != null
 					&& (newValueDouble.compareTo(lowerBound) != -1 && newValueDouble.compareTo(upperBound) != 1)) {
 				this.value = newValue;
+				errorMessage = null;
 				return true;
 			} else {
+				// Replace the default error values with the ones for this Entry
+				String error = continuousErrMsg;
+				error = error.replace("${incorrectValue}", newValue != null ? newValue : "null");
+				error = error.replace("${lowerBound}", getAllowedValues().get(0));
+				error = error.replace("${upperBound}", getAllowedValues().get(1));
+				this.errorMessage = error;
 				return false;
 			}
 		}

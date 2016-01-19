@@ -80,6 +80,14 @@ public abstract class AbstractEntry implements IEntry {
 	protected String value;
 
 	/**
+	 * This attribute stores a human-readable reason for rejecting an invalid
+	 * value passed to setValue(). It may be retrieved by calling
+	 * getErrorMessage().
+	 */
+	@XmlAttribute()
+	protected String errorMessage = null;
+
+	/**
 	 * The default value for this AbstractEntry.
 	 */
 	@XmlAttribute
@@ -667,4 +675,14 @@ public abstract class AbstractEntry implements IEntry {
 	public void setContext(String id) {
 		contextId = id;
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.entry.IEntry#getErrorMessage()
+	 */
+	@Override
+	public String getErrorMessage() {
+		return this.errorMessage;
+	}
+
 }

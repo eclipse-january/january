@@ -188,6 +188,14 @@ public interface IEntry extends Identifiable, IUpdateable, IUpdateableListener {
 	public void setSecret(boolean secret);
 	
 	/**
+	 * This operation returns a human-readable reason for a rejected value
+	 * passed to setValue().
+	 * 
+	 * @return
+	 */
+	public String getErrorMessage();
+	
+	/**
 	 * This operation directs the IEntry to call back to an IEntryVisitor
 	 * so that the visitor can perform its required actions for the exact type
 	 * of the IEntry.
