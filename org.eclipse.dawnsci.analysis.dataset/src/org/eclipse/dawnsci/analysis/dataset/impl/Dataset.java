@@ -14,6 +14,7 @@ package org.eclipse.dawnsci.analysis.dataset.impl;
 
 import java.io.Serializable;
 
+import org.eclipse.dawnsci.analysis.api.dataset.Dtype;
 import org.eclipse.dawnsci.analysis.api.dataset.IErrorDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.ILazyDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.Slice;
@@ -35,117 +36,119 @@ import org.eclipse.dawnsci.analysis.api.monitor.IMonitor;
  * </p>
  */
 public interface Dataset extends IErrorDataset {
-
 	/**
 	 * Boolean
 	 */
-	public static final int BOOL = 0;
+	public static final int BOOL = Dtype.BOOL;
 
 	/**
 	 * Signed 8-bit integer
 	 */
-	public static final int INT8 = 1;
+	public static final int INT8 = Dtype.INT8;
 
 	/**
 	 * Signed 16-bit integer
 	 */
-	public static final int INT16 = 2;
+	public static final int INT16 = Dtype.INT16;
 
 	/**
 	 * Signed 32-bit integer
 	 */
-	public static final int INT32 = 3;
+	public static final int INT32 = Dtype.INT32;
 	/**
 	 * Integer (same as signed 32-bit integer)
 	 */
-	public static final int INT = INT32;
+	public static final int INT = Dtype.INT;
 
 	/**
 	 * Signed 64-bit integer
 	 */
-	public static final int INT64 = 4;
+	public static final int INT64 = Dtype.INT64;
 
 	/**
 	 * 32-bit floating point
 	 */
-	public static final int FLOAT32 = 5;
+	public static final int FLOAT32 = Dtype.FLOAT32;
 
 	/**
 	 * 64-bit floating point
 	 */
-	public static final int FLOAT64 = 6;
+	public static final int FLOAT64 = Dtype.FLOAT64;
 
 	/**
 	 * Floating point (same as 64-bit floating point)
 	 */
-	public static final int FLOAT = FLOAT64;
+	public static final int FLOAT = Dtype.FLOAT;
 
 	/**
 	 * 64-bit complex floating point (real and imaginary parts are 32-bit floats)
 	 */
-	public static final int COMPLEX64 = 7;
+	public static final int COMPLEX64 = Dtype.COMPLEX64;
 
 	/**
 	 * 128-bit complex floating point (real and imaginary parts are 64-bit floats)
 	 */
-	public static final int COMPLEX128 = 8;
+	public static final int COMPLEX128 = Dtype.COMPLEX128;
 
 	/**
 	 * Complex floating point (same as 64-bit floating point)
 	 */
-	public static final int COMPLEX = COMPLEX128;
-
-	/**
-	 * String
-	 */
-	public static final int STRING = 9;
-	
-	/**
-	 * Object
-	 */
-	public static final int OBJECT = 10;
+	public static final int COMPLEX = Dtype.COMPLEX;
 
 	/**
 	 * Date
 	 */
-	public static final int DATE = 11;
+	public static final int DATE = Dtype.DATE;
 
-	static final int ARRAYMUL = 100;
+	/**
+	 * String
+	 */
+	public static final int STRING = Dtype.STRING;
+	
+	/**
+	 * Object
+	 */
+	public static final int OBJECT = Dtype.OBJECT;
 
 	/**
 	 * Array of signed 8-bit integers
 	 */
-	public static final int ARRAYINT8 = ARRAYMUL * INT8;
+	public static final int ARRAYINT8 = Dtype.ARRAYINT8;
 
 	/**
 	 * Array of signed 16-bit integers
 	 */
-	public static final int ARRAYINT16 = ARRAYMUL * INT16;
+	public static final int ARRAYINT16 = Dtype.ARRAYINT16;
 
 	/**
 	 * Array of three signed 16-bit integers for RGB values
 	 */
-	public static final int RGB = ARRAYINT16 + 3;
+	public static final int RGB = Dtype.RGB;
 
 	/**
 	 * Array of signed 32-bit integers
 	 */
-	public static final int ARRAYINT32 = ARRAYMUL * INT32;
+	public static final int ARRAYINT32 = Dtype.ARRAYINT32;
 
 	/**
 	 * Array of signed 64-bit integers
 	 */
-	public static final int ARRAYINT64 = ARRAYMUL * INT64;
+	public static final int ARRAYINT64 = Dtype.ARRAYINT64;
 
 	/**
 	 * Array of 32-bit floating points
 	 */
-	public static final int ARRAYFLOAT32 = ARRAYMUL * FLOAT32;
+	public static final int ARRAYFLOAT32 = Dtype.ARRAYFLOAT32;
 
 	/**
 	 * Array of 64-bit floating points
 	 */
-	public static final int ARRAYFLOAT64 = ARRAYMUL * FLOAT64;
+	public static final int ARRAYFLOAT64 = Dtype.ARRAYFLOAT64;
+
+	/**
+	 * Multiplier
+	 */
+	static final int ARRAYMUL = 100;
 
 	/**
 	 * Update this when there are any serious changes to API
