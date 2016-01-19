@@ -26,7 +26,7 @@ import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
 import org.eclipse.ice.viz.service.datastructures.VizObject.IManagedUpdateable;
 import org.eclipse.ice.viz.service.datastructures.VizObject.IManagedUpdateableListener;
-import org.eclipse.ice.viz.service.datastructures.VizObject.UpdateableSubscriptionType;
+import org.eclipse.ice.viz.service.datastructures.VizObject.SubscriptionType;
 import org.eclipse.ice.viz.service.modeling.ShapeController;
 
 /**
@@ -363,7 +363,7 @@ public class GeometryComponent extends ICEObject implements Component,
 	 */
 	@Override
 	public void update(IManagedUpdateable component,
-			UpdateableSubscriptionType[] type) {
+			SubscriptionType[] type) {
 
 		notifyListeners();
 
@@ -377,12 +377,12 @@ public class GeometryComponent extends ICEObject implements Component,
 	 * service.datastructures.VizObject.IVizUpdateable)
 	 */
 	@Override
-	public ArrayList<UpdateableSubscriptionType> getSubscriptions(
+	public ArrayList<SubscriptionType> getSubscriptions(
 			IManagedUpdateable source) {
 
 		// Register for all event types
-		ArrayList<UpdateableSubscriptionType> types = new ArrayList<UpdateableSubscriptionType>();
-		types.add(UpdateableSubscriptionType.ALL);
+		ArrayList<SubscriptionType> types = new ArrayList<SubscriptionType>();
+		types.add(SubscriptionType.ALL);
 		return types;
 	}
 }

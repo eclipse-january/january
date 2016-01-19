@@ -24,7 +24,7 @@ import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
 import org.eclipse.ice.viz.service.datastructures.VizObject.IManagedUpdateable;
 import org.eclipse.ice.viz.service.datastructures.VizObject.IManagedUpdateableListener;
-import org.eclipse.ice.viz.service.datastructures.VizObject.UpdateableSubscriptionType;
+import org.eclipse.ice.viz.service.datastructures.VizObject.SubscriptionType;
 import org.eclipse.ice.viz.service.modeling.AbstractController;
 import org.eclipse.ice.viz.service.modeling.AbstractController;
 import org.eclipse.ice.viz.service.modeling.AbstractMesh;
@@ -329,12 +329,12 @@ public class MeshComponent extends ICEObject
 	 */
 	@Override
 	public void update(IManagedUpdateable component,
-			UpdateableSubscriptionType[] types) {
+			SubscriptionType[] types) {
 
 		// Only pass on updates for the root part's list of children changing,
 		// in order to refresh the tree view of components.
-		for (UpdateableSubscriptionType type : types) {
-			if (type == UpdateableSubscriptionType.CHILD) {
+		for (SubscriptionType type : types) {
+			if (type == SubscriptionType.CHILD) {
 				notifyListeners();
 			}
 		}
@@ -349,12 +349,12 @@ public class MeshComponent extends ICEObject
 	 * service.datastructures.VizObject.IVizUpdateable)
 	 */
 	@Override
-	public ArrayList<UpdateableSubscriptionType> getSubscriptions(
+	public ArrayList<SubscriptionType> getSubscriptions(
 			IManagedUpdateable source) {
 
 		// Register for all event types
-		ArrayList<UpdateableSubscriptionType> types = new ArrayList<UpdateableSubscriptionType>();
-		types.add(UpdateableSubscriptionType.ALL);
+		ArrayList<SubscriptionType> types = new ArrayList<SubscriptionType>();
+		types.add(SubscriptionType.ALL);
 		return types;
 	}
 
