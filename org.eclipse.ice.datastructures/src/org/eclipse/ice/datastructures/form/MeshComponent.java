@@ -334,7 +334,7 @@ public class MeshComponent extends ICEObject
 		// Only pass on updates for the root part's list of children changing,
 		// in order to refresh the tree view of components.
 		for (UpdateableSubscriptionType type : types) {
-			if (type == UpdateableSubscriptionType.Child) {
+			if (type == UpdateableSubscriptionType.CHILD) {
 				notifyListeners();
 			}
 		}
@@ -354,7 +354,7 @@ public class MeshComponent extends ICEObject
 
 		// Register for all event types
 		ArrayList<UpdateableSubscriptionType> types = new ArrayList<UpdateableSubscriptionType>();
-		types.add(UpdateableSubscriptionType.All);
+		types.add(UpdateableSubscriptionType.ALL);
 		return types;
 	}
 

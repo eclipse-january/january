@@ -145,7 +145,7 @@ public class TestComponentListener implements IManagedUpdateableListener, IUpdat
 	@Override
 	public ArrayList<UpdateableSubscriptionType> getSubscriptions(IManagedUpdateable source) {
 		ArrayList<UpdateableSubscriptionType> types = new ArrayList<UpdateableSubscriptionType>();
-		types.add(UpdateableSubscriptionType.All);
+		types.add(UpdateableSubscriptionType.ALL);
 		return types;
 	}
 

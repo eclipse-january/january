@@ -382,7 +382,7 @@ public class GeometryComponent extends ICEObject implements Component,
 
 		// Register for all event types
 		ArrayList<UpdateableSubscriptionType> types = new ArrayList<UpdateableSubscriptionType>();
-		types.add(UpdateableSubscriptionType.All);
+		types.add(UpdateableSubscriptionType.ALL);
 		return types;
 	}
 }
