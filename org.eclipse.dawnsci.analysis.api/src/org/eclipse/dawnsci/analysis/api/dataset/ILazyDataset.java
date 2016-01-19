@@ -218,8 +218,7 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 	public void setError(Serializable errors);
 
 	/**
-	 * Get the errors, if any. These will in a shape that can broadcast to the dataset
+	 * Get the errors, if any. These will be in a shape that can broadcast to the dataset
 	 */
 	public ILazyDataset getError();
-
 }

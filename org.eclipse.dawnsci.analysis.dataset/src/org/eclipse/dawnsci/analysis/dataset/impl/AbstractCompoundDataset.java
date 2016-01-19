@@ -695,15 +695,17 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 		if (b instanceof Number) {
 			result = new byte[itemSize];
 			final byte val = ((Number) b).byteValue();
-			for (int i = 0; i < itemSize; i++)
+			for (int i = 0; i < itemSize; i++) {
 				result[i] = val;
+			}
 		} else if (b instanceof byte[]) {
 			result = (byte[]) b;
 			if (result.length < itemSize) {
 				result = new byte[itemSize];
 				int ilen = result.length;
-				for (int i = 0; i < ilen; i++)
+				for (int i = 0; i < ilen; i++) {
 					result[i] = ((byte[]) b)[i];
+				}
 			}
 		} else if (b instanceof List<?>) {
 			result = new byte[itemSize];
@@ -725,8 +727,9 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 				throw new IllegalArgumentException("Given array was not of a numerical primitive type");
 			}
 			ilen = Math.min(itemSize, ilen);
-			for (int i = 0; i < ilen; i++)
+			for (int i = 0; i < ilen; i++) {
 				result[i] = (byte) ((Number) Array.get(b, i)).longValue();
+			}
 		} else if (b instanceof Complex) {
 			if (itemSize > 2) {
 				logger.error("Complex number will not fit in compound dataset");

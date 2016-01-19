@@ -218,7 +218,7 @@ public class Random {
 
 			@Override
 			public IDataset getDataset(IMonitor mon, SliceND slice) throws Exception {
-                return rand(slice.getShape());
+				return rand(slice.getShape());
 			}
 		});
 	}
