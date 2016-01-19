@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
+import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
 import org.eclipse.ice.datastructures.ICEObject.Identifiable;
 
 /**
@@ -69,6 +70,7 @@ public class DiscreteEntry extends AbstractEntry {
 	 */
 	@Override
 	public Object clone() {
+		System.out.println("CLONING DISCRETE ENTRY");
 		DiscreteEntry entry = new DiscreteEntry();
 		entry.copy(this);
 		return entry;
@@ -216,4 +218,5 @@ public class DiscreteEntry extends AbstractEntry {
 	public void accept(IEntryVisitor visitor) {
 		visitor.visit(this);
 	}
+	
 }

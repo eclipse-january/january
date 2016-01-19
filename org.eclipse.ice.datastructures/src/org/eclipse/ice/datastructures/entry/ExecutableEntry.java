@@ -6,6 +6,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
+
 /**
  * FileEntry is a subclass of the DiscreteEntry that keeps track of 
  * a list of files (as allowed values) for the user to select. The 
@@ -38,4 +40,5 @@ public class ExecutableEntry extends DiscreteEntry {
 	public void accept(IEntryVisitor visitor) {
 		visitor.visit(this);
 	}
+	
 }

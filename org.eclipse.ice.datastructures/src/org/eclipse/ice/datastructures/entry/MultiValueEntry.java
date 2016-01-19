@@ -3,6 +3,7 @@ package org.eclipse.ice.datastructures.entry;
 import java.util.List;
 
 import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
+import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
 
 public class MultiValueEntry extends AbstractEntry {
 

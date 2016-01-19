@@ -17,6 +17,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
+
 /**
  * The ContinuousEntry is a DiscreteEntry that requires clients 
  * to set exactly 2 allowed values: the lower bound and upper bound of a 
@@ -103,4 +105,5 @@ public class ContinuousEntry extends DiscreteEntry {
 	public void accept(IEntryVisitor visitor) {
 		visitor.visit(this);
 	}
+	
 }

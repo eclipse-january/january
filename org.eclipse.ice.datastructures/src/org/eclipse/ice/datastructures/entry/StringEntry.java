@@ -20,6 +20,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
+import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
 
 /**
  * The StringEntry is an AbstractEntry that only contains an 
@@ -111,4 +112,5 @@ public class StringEntry extends AbstractEntry {
 	public void accept(IEntryVisitor visitor) {
 		visitor.visit(this);
 	}
+
 }

@@ -25,6 +25,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
 import org.eclipse.ice.datastructures.ICEObject.Identifiable;
 
 /**
@@ -282,4 +283,5 @@ public class FileEntry extends DiscreteEntry {
 	public void accept(IEntryVisitor visitor) {
 		visitor.visit(this);
 	}
+	
 }
