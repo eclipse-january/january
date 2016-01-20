@@ -30,8 +30,6 @@ import org.eclipse.ice.datastructures.entry.ContinuousEntry;
 import org.eclipse.ice.datastructures.entry.DiscreteEntry;
 import org.eclipse.ice.datastructures.entry.IEntry;
 import org.eclipse.ice.datastructures.entry.StringEntry;
-import org.eclipse.ice.datastructures.form.AllowedValueType;
-import org.eclipse.ice.datastructures.form.Entry;
 import org.eclipse.ice.datastructures.form.TimeDataComponent;
 import org.junit.Test;
 
