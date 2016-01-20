@@ -65,13 +65,14 @@ public class DiscreteEntry extends AbstractEntry {
 	/**
 	 * Convenience constructor, sets allowed values.
 	 * 
-	 * @param allowed Values that this DiscreteEntry allows.
+	 * @param allowed
+	 *            Values that this DiscreteEntry allows.
 	 */
 	public DiscreteEntry(String... allowed) {
 		super();
 		allowedValues = Arrays.asList(allowed);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -112,7 +113,7 @@ public class DiscreteEntry extends AbstractEntry {
 			errorMessage = null;
 			return super.setValue(newValue);
 		}
-		
+
 		String error = this.discreteErrMsg;
 
 		// loop to get all the values of the allowedValues
@@ -209,24 +210,25 @@ public class DiscreteEntry extends AbstractEntry {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	public void copy(DiscreteEntry entity) {
 
 		// Return if null
 		if (entity == null) {
 			return;
 		}
-		
+
 		super.copy(entity);
 		allowedValues = entity.allowedValues;
 		return;
 	}
-	
+
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ice.datastructures.entry.AbstractEntry#hashCode()
 	 */
 	@Override
@@ -237,18 +239,22 @@ public class DiscreteEntry extends AbstractEntry {
 
 		// Compute the hashcode from this ICEObject's data
 		hash = 31 * hash + super.hashCode();
-		hash = 31 * hash + allowedValues.hashCode();
-		
+		if (allowedValues != null) {
+			hash = 31 * hash + allowedValues.hashCode();
+		}
+
 		return hash;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ice.datastructures.entry.IEntry#accept(org.eclipse.ice.datastructures.entry.IEntryVisitor)
+	 * 
+	 * @see org.eclipse.ice.datastructures.entry.IEntry#accept(org.eclipse.ice.
+	 * datastructures.entry.IEntryVisitor)
 	 */
 	@Override
 	public void accept(IEntryVisitor visitor) {
 		visitor.visit(this);
 	}
-	
+
 }

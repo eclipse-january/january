@@ -129,6 +129,7 @@ public class FileEntry extends DiscreteEntry {
 			if (project != null) {
 				file = project.getFile(newValue);
 			}
+			notifyListeners();
 			return true;
 		}
 		return false;

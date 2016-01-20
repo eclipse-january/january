@@ -518,6 +518,9 @@ public abstract class AbstractEntry implements IEntry {
 	@Override
 	public void setDefaultValue(String value) {
 		defaultValue = value;
+		if (this.value == null || this.value.isEmpty()) {
+			this.value = defaultValue;
+		}
 	}
 
 	/*
