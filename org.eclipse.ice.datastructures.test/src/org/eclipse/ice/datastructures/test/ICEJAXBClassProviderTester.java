@@ -19,6 +19,11 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 
 import org.eclipse.ice.datastructures.ICEObject.ListComponent;
+import org.eclipse.ice.datastructures.entry.ContinuousEntry;
+import org.eclipse.ice.datastructures.entry.DiscreteEntry;
+import org.eclipse.ice.datastructures.entry.ExecutableEntry;
+import org.eclipse.ice.datastructures.entry.FileEntry;
+import org.eclipse.ice.datastructures.entry.StringEntry;
 import org.eclipse.ice.datastructures.form.DataComponent;
 import org.eclipse.ice.datastructures.form.GeometryComponent;
 import org.eclipse.ice.datastructures.form.Material;
@@ -66,7 +71,7 @@ public class ICEJAXBClassProviderTester {
 		// not null, and make sure we have 10 of them
 		List<Class> classList = provider.getClasses();
 		assertNotNull(classList);
-		assertEquals(13, classList.size());
+		assertEquals(19, classList.size());
 		
 		// Check that all the correct ones are there. 
 		assertTrue(classList.contains(ResourceComponent.class));
@@ -80,6 +85,11 @@ public class ICEJAXBClassProviderTester {
 		assertTrue(classList.contains(ListComponent.class));
 		assertTrue(classList.contains(EMFComponent.class));
 		assertTrue(classList.contains(Material.class));
-		assertTrue(classList.contains(VizResource.class));
+		assertTrue(classList.contains(ContinuousEntry.class));
+		assertTrue(classList.contains(DiscreteEntry.class));
+		assertTrue(classList.contains(FileEntry.class));
+		assertTrue(classList.contains(StringEntry.class));
+		assertTrue(classList.contains(ExecutableEntry.class));
+
 	}
 }

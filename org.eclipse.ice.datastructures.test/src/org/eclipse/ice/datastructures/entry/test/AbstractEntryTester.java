@@ -60,7 +60,7 @@ public class AbstractEntryTester {
 		
 		// Check the already set stuff
 		assertEquals("ICE Entry", entry.getName());
-		assertEquals("org.eclipse.ice.datastructures.entry.AbstractEntry", entry.getContext());
+		assertEquals("default", entry.getContext());
 		assertEquals("",entry.getDefaultValue());
 		assertEquals("ICE Entry", entry.getDescription());
 		assertEquals(1, entry.getId());

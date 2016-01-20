@@ -18,6 +18,7 @@ import java.util.List;
 import org.eclipse.ice.datastructures.ICEObject.ListComponent;
 import org.eclipse.ice.datastructures.entry.AbstractEntry;
 import org.eclipse.ice.datastructures.entry.ContinuousEntry;
+import org.eclipse.ice.datastructures.entry.DiscreteEntry;
 import org.eclipse.ice.datastructures.entry.ExecutableEntry;
 import org.eclipse.ice.datastructures.entry.FileEntry;
 import org.eclipse.ice.datastructures.entry.StringEntry;
@@ -73,6 +74,8 @@ public class ICEJAXBClassProvider implements IJAXBClassProvider {
 		classList.add(StringEntry.class);
 		classList.add(ExecutableEntry.class);
 		classList.add(ContinuousEntry.class);
+		classList.add(DiscreteEntry.class);
+
 
 		return classList;
 	}

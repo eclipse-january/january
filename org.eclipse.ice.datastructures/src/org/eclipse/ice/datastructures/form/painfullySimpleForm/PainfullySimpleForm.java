@@ -14,13 +14,17 @@ package org.eclipse.ice.datastructures.form.painfullySimpleForm;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.eclipse.ice.datastructures.ICEObject.Component;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
+import org.eclipse.ice.datastructures.entry.ContinuousEntry;
+import org.eclipse.ice.datastructures.entry.DiscreteEntry;
 import org.eclipse.ice.datastructures.entry.IEntry;
+import org.eclipse.ice.datastructures.entry.StringEntry;
 import org.eclipse.ice.datastructures.form.DataComponent;
 import org.eclipse.ice.datastructures.form.Form;
 import org.eclipse.ice.datastructures.form.TableComponent;
@@ -47,6 +51,11 @@ public class PainfullySimpleForm extends Form {
 	 * </p>
 	 */
 	private HashMap<String, ArrayList<IEntry>> rowTemplates;
+
+	/**
+	 * Reference to the current Entry's group
+	 */
+	private String currentGroup;
 
 	/**
 	 * <p>
@@ -302,7 +311,9 @@ public class PainfullySimpleForm extends Form {
 		Integer tableCount = 0;
 		ArrayList<IEntry> tempArray = null;
 
-		PainfullySimpleEntry entry = null;
+//		PainfullySimpleEntry entry = null;
+		IEntry entry = null;
+
 		boolean lastLineEmpty = false;
 
 		// Setup the component map
@@ -342,24 +353,26 @@ public class PainfullySimpleForm extends Form {
 		for (int i = 0; i < emptyLines.size(); i++) {
 
 			// Create the Entry
-			entry = new PainfullySimpleEntry();
+//			entry = new PainfullySimpleEntry();
 			// Load from an ArrayList of the PSF block created as a sublist.
-			entry.loadFromPSFBlock(new ArrayList<String>(lines.subList(
+			ArrayList<String> lineList = new ArrayList<String>(lines.subList(lowerBound, upperBound +1));
+			
+			entry = loadFromPSFBlock(new ArrayList<String>(lines.subList(
 					lowerBound, upperBound + 1)));
+			
 			// Set the id
 			entry.setId(i + 1);
 			// Make sure the group is valid and throw an exception if not
-			if (componentMap.containsKey(entry.getGroup())) {
+			if (componentMap.containsKey(currentGroup)) {
 
 				// Get the Component and add the Entry
-				compRef = (ICEObject) getComponent(componentMap.get(entry
-						.getGroup()));
+				compRef = (ICEObject) getComponent(componentMap.get(currentGroup));
 				// Case handle for DataComponent or TableComponent
 
 				// If TableComponent, add entry to a temp list
-				if (rowTemplates.containsKey(entry.getGroup())) {
+				if (rowTemplates.containsKey(currentGroup)) {
 					// If the group exists, add to the array
-					tempArray = rowTemplates.get(entry.getGroup());
+					tempArray = rowTemplates.get(currentGroup);
 					tempArray.add(entry);
 				} else {
 					dataRef = (DataComponent) compRef;
@@ -374,7 +387,7 @@ public class PainfullySimpleForm extends Form {
 						.size()) ? lines.size() : emptyLines.get(i + 1);
 			} else {
 				throw new IOException("Entry " + entry.getName()
-						+ " has an invalid group! Group = " + entry.getGroup());
+						+ " has an invalid group! Group = " + currentGroup);
 			}
 
 		}
@@ -382,6 +395,117 @@ public class PainfullySimpleForm extends Form {
 		// finished!
 		return;
 
+	}
+
+	/**
+	 * Create a new IEntry from the given lines of text. 
+	 * 
+	 * @param inputStrings
+	 * @return
+	 * @throws IOException
+	 */
+	private IEntry loadFromPSFBlock(ArrayList<String> inputStrings) throws IOException {
+
+		// Local Declarations
+		ArrayList<String> linesToRemove = new ArrayList<String>();
+		String[] splitStrings = { "", "" };
+		ArrayList<String> validKeys = new ArrayList<String>();
+		IEntry retEntry = null;
+		String name = "", description = "", tag = "", defaultValue = "", valueType = "";
+		ArrayList<String> allowed = new ArrayList<String>();
+		
+		// This will only work if the string is not null
+		if (inputStrings != null) {
+			// Setup the list of valid keys
+			validKeys.add("name");
+			validKeys.add("description");
+			validKeys.add("defaultValue");
+			validKeys.add("allowedValueType");
+			validKeys.add("allowedValue");
+			validKeys.add("tag");
+//			validKeys.add("parent");
+			validKeys.add("group");
+			// Loop over all of the strings and parse the data
+			for (String currentString : inputStrings) {
+				// Search for any lines that are whitespace are comments
+				if (currentString.matches("^$|(?m)^\\s+$") || // Whitespace
+						currentString.startsWith("#") || // Comments with #
+						currentString.startsWith("//")) { // Comments with //
+					continue;
+				}
+				// Search for comments at the end of the line and remove them
+				if (currentString.contains("#")) {
+					currentString = currentString.replaceAll("\\#.*", "");
+				} else if (currentString.contains("//")) {
+					currentString = currentString.replaceAll("\\/\\/.*", "");
+				}
+				// Make sure the string contains an equal sign or throw an
+				// exception
+				if (!currentString.contains("=")) {
+					throw new IOException(
+							"String in Entry block does not contain an " + "equals sign! The string was at line "
+									+ inputStrings.indexOf(currentString) + ":\n" + currentString);
+				}
+				// Trim and split the string
+				splitStrings = currentString.trim().split("\\=");
+				// Get the name
+				if ("name".equals(splitStrings[0])) {
+					name = splitStrings[1];
+				}
+				// Get the description
+				else if ("description".equals(splitStrings[0])) {
+					description = splitStrings[1];
+				}
+				// Get the default value
+				else if ("defaultValue".equals(splitStrings[0])) {
+					defaultValue = splitStrings[1];
+				}
+				// Get the AllowedValueType
+				else if ("allowedValueType".equals(splitStrings[0])) {
+					// this.setAllowedValueType(AllowedValueType
+					// .valueOf(splitStrings[1]));
+					valueType = splitStrings[1];
+				}
+				// Get the AllowedValues
+				else if ("allowedValue".equals(splitStrings[0])) {
+//					this.setAllowedValues(Arrays.asList(splitStrings[1]));// allowedValues);
+					allowed.add(splitStrings[1]);
+				}
+				// Get the tag
+				else if ("tag".equals(splitStrings[0])) {
+					tag = splitStrings[1];
+				}
+				// Get the parent
+				// else if ("parent".equals(splitStrings[0])) {
+				// setParent(splitStrings[1]);
+				// }
+				// Get the group name
+				else if ("group".equals(splitStrings[0])) {
+					currentGroup = splitStrings[1];
+				}
+				// Check for an invalid tag. If it is found, throw an exception.
+				else if (!validKeys.contains(splitStrings[0])) {
+					throw new IOException("Invalid PSF statement: " + currentString);
+				}
+			}
+		}
+
+		
+		if ("Discrete".equals(valueType)) {
+			retEntry = new DiscreteEntry(allowed.toArray(new String[allowed.size()]));
+		} else if ("Continuous".equals(valueType)) {
+			retEntry = new ContinuousEntry(allowed.toArray(new String[allowed.size()]));
+		} else if ("Undefined".equals(valueType)) {
+			retEntry = new StringEntry();
+		}
+		
+		retEntry.setName(name);
+		retEntry.setDefaultValue(defaultValue);
+		retEntry.setValue(defaultValue);
+		retEntry.setDescription(description);
+		retEntry.setTag(tag);
+		
+		return retEntry;
 	}
 
 	/**

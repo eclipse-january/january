@@ -11,8 +11,6 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.entry;
 
-import org.eclipse.ice.datastructures.form.painfullySimpleForm.PainfullySimpleEntry;
-
 /**
  * This interface defines the "visitation" routines that implementations of
  * IEntry may use to reveal their types to visitors. It is one part of the
@@ -72,16 +70,6 @@ public interface IEntryVisitor {
 	 *            operation
 	 */
 	public void visit(ContinuousEntry entry);
-	
-	/**
-	 * This operation directs a visitor to perform its actions on the IEntryVisitor
-	 * as a PainfullySimpleEntry.
-	 * 
-	 * @param entry
-	 *            PainfullySimpleEntry which was originally called by the accept()
-	 *            operation
-	 */
-	public void visit(PainfullySimpleEntry entry);
 	
 	/**
 	 * This operation directs a visitor to perform its actions on the IEntryVisitor
