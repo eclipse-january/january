@@ -295,7 +295,6 @@ public abstract class AbstractEntry implements IEntry {
 				public void run() {
 					// Loop over all listeners and update them
 					for (int i = 0; i < listeners.size(); i++) {
-						logger.info("Notifying a listener " + listeners.get(i).getClass() + ", " + listeners.size());
 						listeners.get(i).update(AbstractEntry.this);
 					}
 					return;
@@ -416,7 +415,6 @@ public abstract class AbstractEntry implements IEntry {
 
 		// Register the listener if it is not null
 		if (listener != null) {
-			logger.info("Adding " + listener.getClass().getSimpleName() + " as a listener to " + getName() + " " + getClass().getSimpleName());
 			listeners.add(listener);
 		}
 		return;
@@ -451,7 +449,6 @@ public abstract class AbstractEntry implements IEntry {
 		}
 		
 		if (newValue != null) {
-			logger.info("Setting new value " + value);
 			this.value = newValue;
 			isModified = true;
 			notifyListeners();
