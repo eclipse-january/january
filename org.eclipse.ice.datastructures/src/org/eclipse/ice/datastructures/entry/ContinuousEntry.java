@@ -90,7 +90,12 @@ public class ContinuousEntry extends DiscreteEntry {
 			try {
 				newValueDouble = Double.valueOf(newValue);
 			} catch (NumberFormatException | NullPointerException e) {
-				errorMessage = newValue + " is an unacceptable value. The value must be a valid number.";
+				// Replace the default error values with the ones for this Entry
+				String error = continuousErrMsg;
+				error = error.replace("${incorrectValue}", newValue != null ? newValue : "null");
+				error = error.replace("${lowerBound}", getAllowedValues().get(0));
+				error = error.replace("${upperBound}", getAllowedValues().get(1));
+				this.errorMessage = error;
 				return false;
 			}
 			// Set the value if it is within the bounds
