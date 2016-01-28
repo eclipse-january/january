@@ -255,13 +255,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.ice.client.rcp"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.ice.client.widgets"
          download-size="0"
          install-size="0"
@@ -270,13 +263,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
 
    <plugin
          id="org.eclipse.ice.client.widgets.moose"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ice.client.widgets.rcp"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -396,13 +382,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
 
    <plugin
          id="org.eclipse.ice.viz.service.geometry"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ice.viz.service.jme3"
          download-size="0"
          install-size="0"
          version="0.0.0"
