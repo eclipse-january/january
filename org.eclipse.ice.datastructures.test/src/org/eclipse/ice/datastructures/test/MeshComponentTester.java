@@ -145,7 +145,7 @@ public class MeshComponentTester {
 		polygon = new NekPolygonController(new NekPolygonMesh(),
 				new AbstractView());
 		for (AbstractController edge : edges) {
-			polygon.addEntity(edge);
+			polygon.addEntityByCategory(edge, "Edges");
 		}
 		polygon.setProperty("Id", "1");
 		allShapes.add(polygon);
@@ -200,7 +200,7 @@ public class MeshComponentTester {
 		polygon = new NekPolygonController(new NekPolygonMesh(),
 				new AbstractView());
 		for (AbstractController edge : edges) {
-			polygon.addEntity(edge);
+			polygon.addEntityByCategory(edge, "Edges");
 		}
 		polygon.setProperty("Id", "2");
 		allShapes.add(polygon);
@@ -252,7 +252,7 @@ public class MeshComponentTester {
 		polygon = new NekPolygonController(new NekPolygonMesh(),
 				new AbstractView());
 		for (AbstractController edge : edges) {
-			polygon.addEntity(edge);
+			polygon.addEntityByCategory(edge, "Edges");
 		}
 		polygon.setProperty("Id", "3");
 		allShapes.add(polygon);
@@ -305,7 +305,7 @@ public class MeshComponentTester {
 		polygon = new NekPolygonController(new NekPolygonMesh(),
 				new AbstractView());
 		for (AbstractController edge : edges) {
-			polygon.addEntity(edge);
+			polygon.addEntityByCategory(edge, "Edges");
 		}
 		polygon.setProperty("Id", "4");
 		allShapes.add(polygon);
@@ -506,7 +506,7 @@ public class MeshComponentTester {
 		NekPolygonController polygon = new NekPolygonController(
 				new NekPolygonMesh(), new AbstractView());
 		for (AbstractController edge : edges) {
-			polygon.addEntity(edge);
+			polygon.addEntityByCategory(edge, "Edges");
 		}
 		polygon.setProperty("Id", "1");
 
@@ -538,7 +538,7 @@ public class MeshComponentTester {
 		polygon = new NekPolygonController(new NekPolygonMesh(),
 				new AbstractView());
 		for (AbstractController edge : edges) {
-			polygon.addEntity(edge);
+			polygon.addEntityByCategory(edge, "Edges");
 		}
 		polygon.setProperty("Id", "1");
 		unequalObject.addPolygon(polygon);
@@ -610,7 +610,7 @@ public class MeshComponentTester {
 		NekPolygonController shape = new NekPolygonController(
 				new NekPolygonMesh(), new AbstractView());
 		for (AbstractController edge : edges) {
-			shape.addEntity(edge);
+			shape.addEntityByCategory(edge, "Edges");
 		}
 		shape.setProperty("Id", "1");
 
@@ -631,7 +631,7 @@ public class MeshComponentTester {
 		NekPolygonController shape2 = new NekPolygonController(
 				new NekPolygonMesh(), new AbstractView());
 		for (AbstractController edge : edges) {
-			shape2.addEntity(edge);
+			shape2.addEntityByCategory(edge, "Edges");
 		}
 		shape2.setProperty("Id", "2");
 
@@ -782,15 +782,16 @@ public class MeshComponentTester {
 				.getEntitiesByCategory("Edges")) {
 			switch (edge.getProperty("Id")) {
 			case "1":
-				assertEquals(3f, ((EdgeController) edge).getLength(), 1e-7f);
+				assertEquals(1f, ((EdgeController) edge).getLength(), 1e-7f);
 				break;
 
 			case "2":
-				assertEquals(5f, ((EdgeController) edge).getLength(), 1e-7f);
+				assertEquals(1.4142135, ((EdgeController) edge).getLength(),
+						1e-7f);
 				break;
 
 			case "3":
-				assertEquals(4f, ((EdgeController) edge).getLength(), 1e-7f);
+				assertEquals(1f, ((EdgeController) edge).getLength(), 1e-7f);
 				break;
 
 			default:
