@@ -82,4 +82,27 @@ public interface IRemoteDataset extends ILazyDataset, IDynamicDataset {
 	 * A remote dataset may be connected and disconnected multiple times.
 	 */
 	public void disconnect() throws Exception;
+	
+	/**
+	 * If set to true the DataServer will not cache the dataset. 
+	 * If left as false: if the data server can figure out that the 
+	 * file is writing, it will reshape. However it cannot always 
+	 * determine this depending on the file and what is writing to 
+	 * it (SWMR can write without changing date stamp for instance)
+	 * 
+	 * Setting this boolean ensures that a given path, never will
+	 * cache on the data server.
+	 * 
+	 * Default value is false for MJPG streams and true for standard
+	 * remote datasets.
+	 *  
+	 * @param expectWrite
+	 */
+	public void setWritingExpected(boolean expectWrite);
+	
+	/**
+	 * 
+	 * @return true if the remote dataset has been warned that writing is expected.
+	 */
+	public boolean isWritingExpected();
 }
