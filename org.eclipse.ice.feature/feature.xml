@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.ice"
       label="ICE Infrastructure Feature"
-      version="2.1.8"
+      version="2.1.8.20160208"
       provider-name="ornl.gov"
       os="linux,macosx,win32"
       ws="cocoa,gtk,win32"
