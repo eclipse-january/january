@@ -16,8 +16,6 @@ import java.util.ArrayList;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAnyElement;
-import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -26,7 +24,10 @@ import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
-import org.eclipse.ice.datastructures.form.geometry.ICEGeometry;
+import org.eclipse.ice.viz.service.datastructures.VizObject.IManagedUpdateable;
+import org.eclipse.ice.viz.service.datastructures.VizObject.IManagedUpdateableListener;
+import org.eclipse.ice.viz.service.datastructures.VizObject.SubscriptionType;
+import org.eclipse.ice.viz.service.modeling.ShapeController;
 
 /**
  * <p>
@@ -39,7 +40,7 @@ import org.eclipse.ice.datastructures.form.geometry.ICEGeometry;
 @XmlRootElement(name = "GeometryComponent")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GeometryComponent extends ICEObject implements Component,
-		IUpdateableListener {
+		IUpdateableListener, IManagedUpdateableListener {
 	/**
 	 * <p>
 	 * The set of ComponentListeners observing the GeometryComponent
@@ -52,9 +53,7 @@ public class GeometryComponent extends ICEObject implements Component,
 	/**
 	 * The Geometry managed by the GeometryComponent
 	 */
-	@XmlAnyElement()
-	@XmlElementRef(name = "ICEGeometry", type = ICEGeometry.class)
-	private ICEGeometry geometry;
+	private ShapeController geometry;
 
 	/**
 	 * <p>
@@ -109,8 +108,11 @@ public class GeometryComponent extends ICEObject implements Component,
 	public GeometryComponent() {
 
 		// Create a new Geometry and register as its listener.
-		geometry = new ICEGeometry();
-		geometry.register(this);
+		// ShapeComponent model = new ShapeComponent();
+		// TODO Get the right factory from a service, instead of hard coding
+		// IControllerFactory factory = new JME3ControllerFactory();
+		// geometry = (Shape) factory.createController(model);
+		// geometry.register(this);
 
 		// Create a new listeners list
 		listeners = new ArrayList<IUpdateableListener>();
@@ -122,7 +124,7 @@ public class GeometryComponent extends ICEObject implements Component,
 	 * 
 	 * @return The held Geometry
 	 */
-	public ICEGeometry getGeometry() {
+	public ShapeController getGeometry() {
 		return geometry;
 	}
 
@@ -132,8 +134,11 @@ public class GeometryComponent extends ICEObject implements Component,
 	 * @param newGeometry
 	 *            the new Geometry to hold
 	 */
-	public void setGeometry(ICEGeometry newGeometry) {
+	public void setGeometry(ShapeController newGeometry) {
 		geometry = newGeometry;
+
+		// Set the shape as being the root node for the scene
+		geometry.setProperty("Root", "True");
 
 		// Register self as a listener for the geometry
 		geometry.register(this);
@@ -147,7 +152,8 @@ public class GeometryComponent extends ICEObject implements Component,
 	 * This operation returns the hashcode value of the GeometryComponent.
 	 * </p>
 	 * 
-	 * @return <p>
+	 * @return
+	 * 		<p>
 	 *         The hashcode of the ICEObject.
 	 *         </p>
 	 */
@@ -172,7 +178,8 @@ public class GeometryComponent extends ICEObject implements Component,
 	 *            <p>
 	 *            The other ICEObject that should be compared with this one.
 	 *            </p>
-	 * @return <p>
+	 * @return
+	 * 		<p>
 	 *         True if the ICEObjects are equal, false otherwise.
 	 *         </p>
 	 */
@@ -185,7 +192,8 @@ public class GeometryComponent extends ICEObject implements Component,
 		}
 		// Check that the other object is not null and an instance of the
 		// GeometryComponent
-		if (otherObject == null || !(otherObject instanceof GeometryComponent)) {
+		if (otherObject == null
+				|| !(otherObject instanceof GeometryComponent)) {
 			return false;
 		}
 		// Check that these objects have the same ICEObject data
@@ -226,7 +234,7 @@ public class GeometryComponent extends ICEObject implements Component,
 		super.copy(iceObject);
 
 		// Copy shapes list
-		this.setGeometry((ICEGeometry) iceObject.getGeometry().clone());
+		this.setGeometry((ShapeController) iceObject.getGeometry().clone());
 		// this.geometry.copy(iceObject.getGeometry());
 
 		this.notifyListeners();
@@ -239,7 +247,8 @@ public class GeometryComponent extends ICEObject implements Component,
 	 * copy.
 	 * </p>
 	 * 
-	 * @return <p>
+	 * @return
+	 * 		<p>
 	 *         The new clone
 	 *         </p>
 	 */
@@ -273,19 +282,19 @@ public class GeometryComponent extends ICEObject implements Component,
 		}
 		// Create a thread object that notifies all listeners
 
-		Thread notifyThread = new Thread() {
-
-			@Override
-			public void run() {
-				// Loop over all listeners and update them
-				for (int i = 0; i < listeners.size(); i++) {
-					listeners.get(i).update(geometryComponent);
-				}
-			}
-		};
+		// Thread notifyThread = new Thread() {
+		//
+		// @Override
+		// public void run() {
+		// // Loop over all listeners and update them
+		for (int i = 0; i < listeners.size(); i++) {
+			listeners.get(i).update(geometryComponent);
+		}
+		// }
+		// };
 
 		// Start the thread
-		notifyThread.start();
+		// notifyThread.start();
 
 	}
 
@@ -332,15 +341,48 @@ public class GeometryComponent extends ICEObject implements Component,
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ice.datastructures.ICEObject.IUpdateableListener#update(org.eclipse.ice.datastructures.ICEObject.IUpdateable)
+	 * 
+	 * @see
+	 * org.eclipse.ice.datastructures.ICEObject.IUpdateableListener#update(org.
+	 * eclipse.ice.datastructures.ICEObject.IUpdateable)
 	 */
 	@Override
 	public void update(IUpdateable component) {
 
 		// If the component is an IShape, we're receiving an event from one of
 		// our Geometry's children.
-		if (component instanceof ICEGeometry) {
-			notifyListeners();
-		}
+		notifyListeners();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.ice.viz.service.datastructures.VizObject.
+	 * IVizUpdateableListener#update(org.eclipse.ice.viz.service.datastructures.
+	 * VizObject.IVizUpdateable)
+	 */
+	@Override
+	public void update(IManagedUpdateable component,
+			SubscriptionType[] type) {
+
+		notifyListeners();
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.ice.viz.service.datastructures.VizObject.
+	 * IManagedVizUpdateableListener#getSubscriptions(org.eclipse.ice.viz.
+	 * service.datastructures.VizObject.IVizUpdateable)
+	 */
+	@Override
+	public ArrayList<SubscriptionType> getSubscriptions(
+			IManagedUpdateable source) {
+
+		// Register for all event types
+		ArrayList<SubscriptionType> types = new ArrayList<SubscriptionType>();
+		types.add(SubscriptionType.ALL);
+		return types;
 	}
 }

@@ -40,7 +40,8 @@ public interface IUpdateableListener {
 	 * Component.
 	 * </p>
 	 * 
-	 * @param component The component that was updated in some way.
+	 * @param component
+	 *            The component that was updated in some way.
 	 */
 	public void update(IUpdateable component);
 }
