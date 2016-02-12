@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ICEDataStructures
 Bundle-SymbolicName: org.eclipse.ice.datastructures;singleton:=true
-Bundle-Version: 2.1.8
+Bundle-Version: 2.1.8.20160208
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Service-Component: OSGI-INF/*.xml
 Meta-Persistence: META-INF/persistence.xml
@@ -10,7 +10,6 @@ Export-Package: org.eclipse.ice.datastructures.ICEObject,
  org.eclipse.ice.datastructures.componentVisitor,
  org.eclipse.ice.datastructures.form,
  org.eclipse.ice.datastructures.form.emf,
- org.eclipse.ice.datastructures.form.geometry,
  org.eclipse.ice.datastructures.form.iterator,
  org.eclipse.ice.datastructures.form.painfullySimpleForm,
  org.eclipse.ice.datastructures.jaxbclassprovider,
@@ -27,12 +26,8 @@ Import-Package: ca.odell.glazedlists,
  org.eclipse.emf.ecore.xmi,
  org.eclipse.emf.ecore.xmi.impl,
  org.eclipse.emf.ecore.xmi.util,
- org.eclipse.ice.viz.service.datastructures,
  org.eclipse.ice.viz.service.datastructures.VizObject,
- org.eclipse.ice.viz.service.datastructures.resource,
- org.eclipse.ice.viz.service.geometry.shapes,
- org.eclipse.ice.viz.service.jme3.geometry,
- org.eclipse.ice.viz.service.mesh.datastructures,
+ org.eclipse.ice.viz.service.modeling,
  org.eclipse.xsd,
  org.osgi.framework;version="1.6.0",
  org.slf4j;version="1.7.2"

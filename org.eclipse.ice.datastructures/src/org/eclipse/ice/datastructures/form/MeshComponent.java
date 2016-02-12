@@ -13,6 +13,7 @@
 package org.eclipse.ice.datastructures.form;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -21,14 +22,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.eclipse.ice.datastructures.ICEObject.Component;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
-import org.eclipse.ice.viz.service.datastructures.VizObject.IVizUpdateable;
-import org.eclipse.ice.viz.service.datastructures.VizObject.IVizUpdateableListener;
-import org.eclipse.ice.viz.service.mesh.datastructures.Edge;
-import org.eclipse.ice.viz.service.mesh.datastructures.IMeshPart;
-import org.eclipse.ice.viz.service.mesh.datastructures.IMeshPartVisitor;
-import org.eclipse.ice.viz.service.mesh.datastructures.Polygon;
-import org.eclipse.ice.viz.service.mesh.datastructures.Vertex;
-import org.eclipse.ice.viz.service.mesh.datastructures.VizMeshComponent;
+import org.eclipse.ice.viz.service.datastructures.VizObject.IManagedUpdateable;
+import org.eclipse.ice.viz.service.datastructures.VizObject.IManagedUpdateableListener;
+import org.eclipse.ice.viz.service.datastructures.VizObject.SubscriptionType;
+import org.eclipse.ice.viz.service.modeling.AbstractController;
+import org.eclipse.ice.viz.service.modeling.AbstractController;
+import org.eclipse.ice.viz.service.modeling.AbstractMesh;
+import org.eclipse.ice.viz.service.modeling.AbstractView;
+import org.eclipse.ice.viz.service.modeling.FaceController;
 
 /**
  * <p>
@@ -42,13 +43,28 @@ import org.eclipse.ice.viz.service.mesh.datastructures.VizMeshComponent;
  */
 @XmlRootElement(name = "MeshComponent")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class MeshComponent extends ICEObject implements Component, IMeshPart,
-		IVizUpdateableListener {
+public class MeshComponent extends ICEObject
+		implements Component, IManagedUpdateableListener {
 
 	/**
 	 * The wrapped VizMeshComponent.
 	 */
-	private VizMeshComponent mesh;
+	private AbstractController mesh;
+
+	/**
+	 * The next free ID to assign to a Polygon.
+	 */
+	private int nextPolygonID = 1;
+
+	/**
+	 * The next free ID to assign to an Edge.
+	 */
+	private int nextEdgeID = 1;
+
+	/**
+	 * The next free ID to assign to a Vertex.
+	 */
+	private int nextVertexID = 1;
 
 	/**
 	 * <p>
@@ -59,7 +75,8 @@ public class MeshComponent extends ICEObject implements Component, IMeshPart,
 	 */
 	public MeshComponent() {
 		super();
-		mesh = new VizMeshComponent();
+		mesh = new AbstractController(new AbstractMesh(),
+				new AbstractView());
 		mesh.register(this);
 		return;
 	}
@@ -69,7 +86,7 @@ public class MeshComponent extends ICEObject implements Component, IMeshPart,
 	 * 
 	 * @return The wrapped VizMeshComponent
 	 */
-	public VizMeshComponent getMesh() {
+	public AbstractController getMesh() {
 		return mesh;
 	}
 
@@ -79,7 +96,7 @@ public class MeshComponent extends ICEObject implements Component, IMeshPart,
 	 * @param newMesh
 	 *            The new mesh to hold
 	 */
-	public void setMesh(VizMeshComponent newMesh) {
+	public void setMesh(AbstractController newMesh) {
 		mesh = newMesh;
 	}
 
@@ -97,49 +114,21 @@ public class MeshComponent extends ICEObject implements Component, IMeshPart,
 	 *            The new polygon to add to the existing list.
 	 *            </p>
 	 */
-	public void addPolygon(Polygon polygon) {
-		mesh.addPolygon(polygon);
+	public void addPolygon(FaceController polygon) {
+		mesh.addEntity(polygon);
 		notifyListeners();
 
 		return;
 	}
-
+	
 	/**
-	 * <p>
-	 * Removes a polygon from the MeshComponent. This will also remove any
-	 * vertices and edges used only by this polygon. If a polygon was removed, a
-	 * notification is sent to listeners.
-	 * </p>
+	 * Remove the given polygon from the MeshComponent.
 	 * 
-	 * @param id
-	 *            <p>
-	 *            The ID of the polygon to remove from the existing list.
-	 *            </p>
+	 * @param polygon The polygon to be removed from the list.
 	 */
-	public void removePolygon(int id) {
-		mesh.removePolygon(id);
+	public void removePolygon(FaceController polygon){
+		mesh.removeEntity(polygon);
 		notifyListeners();
-
-		return;
-	}
-
-	/**
-	 * <p>
-	 * Removes a list polygons from the MeshComponent. This will also remove any
-	 * vertices and edges used by these polygons. If a polygon was removed, a
-	 * notification is sent to listeners.
-	 * </p>
-	 * 
-	 * @param ids
-	 *            <p>
-	 *            An ArrayList containing the IDs of the polygons to remove from
-	 *            the MeshComponent.
-	 *            </p>
-	 */
-	public void removePolygons(ArrayList<Integer> ids) {
-		mesh.removePolygons(ids);
-		notifyListeners();
-		return;
 	}
 
 	/**
@@ -148,30 +137,13 @@ public class MeshComponent extends ICEObject implements Component, IMeshPart,
 	 * IDs.
 	 * </p>
 	 * 
-	 * @return <p>
+	 * @return
+	 * 		<p>
 	 *         A list of polygons contained in this MeshComponent.
 	 *         </p>
 	 */
-	public ArrayList<Polygon> getPolygons() {
-		return mesh.getPolygons();
-	}
-
-	/**
-	 * <p>
-	 * Gets a Polygon instance corresponding to an ID.
-	 * </p>
-	 * 
-	 * @param id
-	 *            <p>
-	 *            The ID of the polygon.
-	 *            </p>
-	 * @return <p>
-	 *         The polygon referred to by the ID, or null if there is no polygon
-	 *         with the ID.
-	 *         </p>
-	 */
-	public Polygon getPolygon(int id) {
-		return mesh.getPolygon(id);
+	public List<AbstractController> getPolygons() {
+		return mesh.getEntities();
 	}
 
 	/**
@@ -179,57 +151,17 @@ public class MeshComponent extends ICEObject implements Component, IMeshPart,
 	 * Returns the next available ID for polygons.
 	 * </p>
 	 * 
-	 * @return <p>
+	 * @return
+	 * 		<p>
 	 *         The greatest polygon ID (or zero) plus one.
 	 *         </p>
 	 */
 	public int getNextPolygonId() {
-		return mesh.getNextPolygonId();
-	}
 
-	/**
-	 * <p>
-	 * Sets the list of all polygons stored in the MeshComponent.
-	 * </p>
-	 * 
-	 * @param polygons
-	 *            <p>
-	 *            The list of polygons to replace the existing list of polygons
-	 *            in the MeshComponent.
-	 *            </p>
-	 */
-	public void setPolygons(ArrayList<Polygon> polygons) {
-		mesh.setPolygons(polygons);
-	}
-
-	/**
-	 * <p>
-	 * Gets a list of all vertices associated with this MeshComponent.
-	 * </p>
-	 * 
-	 * @return <p>
-	 *         All vertices managed by this MeshComponent.
-	 *         </p>
-	 */
-	public ArrayList<Vertex> getVertices() {
-		return mesh.getVertices();
-	}
-
-	/**
-	 * <p>
-	 * Gets a Vertex instance corresponding to an ID.
-	 * </p>
-	 * 
-	 * @param id
-	 *            <p>
-	 *            The ID of the vertex.
-	 *            </p>
-	 * @return <p>
-	 *         The vertex referred to by the ID, or null if the ID is invalid.
-	 *         </p>
-	 */
-	public Vertex getVertex(int id) {
-		return mesh.getVertex(id);
+		// Increment the next polygon id then return its original value
+		int temp = nextPolygonID;
+		nextPolygonID++;
+		return temp;
 	}
 
 	/**
@@ -237,42 +169,17 @@ public class MeshComponent extends ICEObject implements Component, IMeshPart,
 	 * Returns the next available ID for vertices.
 	 * </p>
 	 * 
-	 * @return <p>
+	 * @return
+	 * 		<p>
 	 *         The greatest vertex ID (or zero) plus one.
 	 *         </p>
 	 */
 	public int getNextVertexId() {
-		return mesh.getNextVertexId();
-	}
 
-	/**
-	 * <p>
-	 * Gets a list of all edges associated with this MeshComponent.
-	 * </p>
-	 * 
-	 * @return <p>
-	 *         All edges managed by this MeshComponent.
-	 *         </p>
-	 */
-	public ArrayList<Edge> getEdges() {
-		return mesh.getEdges();
-	}
-
-	/**
-	 * <p>
-	 * Gets an Edge instance corresponding to an ID.
-	 * </p>
-	 * 
-	 * @param id
-	 *            <p>
-	 *            The ID of the edge.
-	 *            </p>
-	 * @return <p>
-	 *         The edge referred to by the ID, or null if the ID is invalid.
-	 *         </p>
-	 */
-	public Edge getEdge(int id) {
-		return mesh.getEdge(id);
+		// Increment the next polygon id then return its original value
+		int temp = nextVertexID;
+		nextVertexID++;
+		return temp;
 	}
 
 	/**
@@ -280,113 +187,17 @@ public class MeshComponent extends ICEObject implements Component, IMeshPart,
 	 * Returns the next available ID for edges.
 	 * </p>
 	 * 
-	 * @return <p>
+	 * @return
+	 * 		<p>
 	 *         The greatest edge ID (or zero) plus one.
 	 *         </p>
 	 */
 	public int getNextEdgeId() {
-		return mesh.getNextEdgeId();
-	}
 
-	/**
-	 * <p>
-	 * Returns a list of Edges attached to the Vertex with the specified ID.
-	 * </p>
-	 * 
-	 * @param id
-	 *            <p>
-	 *            The ID of the vertex.
-	 *            </p>
-	 * @return <p>
-	 *         An ArrayList of Edges that are attached to the vertex with the
-	 *         specified ID. If there are no such edges, e.g., if the vertex ID
-	 *         is invalid, the list will be empty.
-	 *         </p>
-	 */
-	public ArrayList<Edge> getEdgesFromVertex(int id) {
-		return getEdgesFromVertex(id);
-	}
-
-	/**
-	 * <p>
-	 * Returns a list of Polygons containing the Vertex with the specified ID.
-	 * </p>
-	 * 
-	 * @param id
-	 *            <p>
-	 *            The ID of the vertex.
-	 *            </p>
-	 * @return <p>
-	 *         An ArrayList of Polygons that contain the vertex with the
-	 *         specified ID. If there are no such polygons, e.g., if the vertex
-	 *         ID is invalid, the list will be empty.
-	 *         </p>
-	 */
-	public ArrayList<Polygon> getPolygonsFromVertex(int id) {
-		return mesh.getPolygonsFromVertex(id);
-	}
-
-	/**
-	 * <p>
-	 * Returns a list of Polygons containing the Edge with the specified ID.
-	 * </p>
-	 * 
-	 * @param id
-	 *            <p>
-	 *            The ID of the edge.
-	 *            </p>
-	 * @return <p>
-	 *         An ArrayList of Polygons that contain the edge with the specified
-	 *         ID. If there are no such polygons, e.g., if the edge ID is
-	 *         invalid, the list will be empty.
-	 *         </p>
-	 */
-	public ArrayList<Polygon> getPolygonsFromEdge(int id) {
-		return mesh.getPolygonsFromEdge(id);
-	}
-
-	/**
-	 * <p>
-	 * Returns an Edge that connects two specified vertices if one exists.
-	 * </p>
-	 * 
-	 * @param firstId
-	 *            <p>
-	 *            The ID of the first vertex.
-	 *            </p>
-	 * @param secondId
-	 *            <p>
-	 *            The ID of the second vertex.
-	 *            </p>
-	 * 
-	 * @return <p>
-	 *         An Edge instance that connects the first and second vertices, or
-	 *         null if no such edge exists.
-	 *         </p>
-	 */
-	public Edge getEdgeFromVertices(int firstId, int secondId) {
-		return mesh.getEdgeFromVertices(firstId, secondId);
-
-	}
-
-	/**
-	 * <p>
-	 * Returns a list containing all Polygons in the MeshComponent whose
-	 * vertices are a subset of the supplied list of vertices.
-	 * </p>
-	 * 
-	 * @param vertices
-	 *            <p>
-	 *            A collection of vertices.
-	 *            </p>
-	 * @return <p>
-	 *         An ArrayList of all Polygons in the MeshComponent that are
-	 *         composed of some subset of the specified vertices.
-	 *         </p>
-	 */
-	public ArrayList<Polygon> getPolygonsFromVertices(ArrayList<Vertex> vertices) {
-		return mesh.getPolygonsFromVertices(vertices);
-
+		// Increment the next edge id then return its original value
+		int temp = nextEdgeID;
+		nextEdgeID++;
+		return temp;
 	}
 
 	/**
@@ -394,7 +205,8 @@ public class MeshComponent extends ICEObject implements Component, IMeshPart,
 	 * This operation returns the hash value of the MeshComponent.
 	 * </p>
 	 * 
-	 * @return <p>
+	 * @return
+	 * 		<p>
 	 *         The hashcode of the ICEObject.
 	 *         </p>
 	 */
@@ -414,7 +226,8 @@ public class MeshComponent extends ICEObject implements Component, IMeshPart,
 	 *            <p>
 	 *            The other ICEObject that should be compared with this one.
 	 *            </p>
-	 * @return <p>
+	 * @return
+	 * 		<p>
 	 *         True if the ICEObjects are equal, false otherwise.
 	 *         </p>
 	 */
@@ -473,7 +286,8 @@ public class MeshComponent extends ICEObject implements Component, IMeshPart,
 	 * This operation returns a clone of the MeshComponent using a deep copy.
 	 * </p>
 	 * 
-	 * @return <p>
+	 * @return
+	 * 		<p>
 	 *         The new clone
 	 *         </p>
 	 */
@@ -504,31 +318,44 @@ public class MeshComponent extends ICEObject implements Component, IMeshPart,
 		return;
 	}
 
-	/**
-	 * <p>
-	 * This method calls the {@link IMeshPartVisitor}'s visit method.
-	 * </p>
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param visitor
-	 *            <p>
-	 *            The {@link IMeshPartVisitor} that is visiting this
-	 *            {@link IMeshPart}.
-	 *            </p>
+	 * @see org.eclipse.ice.viz.service.datastructures.VizObject.
+	 * IManagedVizUpdateableListener#update(org.eclipse.ice.viz.service.
+	 * datastructures.VizObject.IManagedVizUpdateable,
+	 * org.eclipse.ice.viz.service.datastructures.VizObject.
+	 * UpdateableSubscriptionType[])
 	 */
 	@Override
-	public void acceptMeshVisitor(IMeshPartVisitor visitor) {
-		if (visitor != null) {
-			visitor.visit(this);
+	public void update(IManagedUpdateable component,
+			SubscriptionType[] types) {
+
+		// Only pass on updates for the root part's list of children changing,
+		// in order to refresh the tree view of components.
+		for (SubscriptionType type : types) {
+			if (type == SubscriptionType.CHILD) {
+				notifyListeners();
+			}
 		}
-		return;
+
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.ice.viz.service.datastructures.VizObject.
+	 * IManagedVizUpdateableListener#getSubscriptions(org.eclipse.ice.viz.
+	 * service.datastructures.VizObject.IVizUpdateable)
+	 */
 	@Override
-	public void update(IVizUpdateable component) {
-		notifyListeners();
-		
+	public ArrayList<SubscriptionType> getSubscriptions(
+			IManagedUpdateable source) {
+
+		// Register for all event types
+		ArrayList<SubscriptionType> types = new ArrayList<SubscriptionType>();
+		types.add(SubscriptionType.ALL);
+		return types;
 	}
-
-
 
 }

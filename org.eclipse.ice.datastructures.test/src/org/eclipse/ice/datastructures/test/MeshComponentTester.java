@@ -15,22 +15,22 @@ package org.eclipse.ice.datastructures.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.JAXBException;
-
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.form.MeshComponent;
-import org.eclipse.ice.viz.service.mesh.datastructures.Edge;
-import org.eclipse.ice.viz.service.mesh.datastructures.Polygon;
-import org.eclipse.ice.viz.service.mesh.datastructures.Vertex;
+import org.eclipse.ice.viz.service.mesh.datastructures.NekPolygonController;
+import org.eclipse.ice.viz.service.mesh.datastructures.NekPolygonMesh;
+import org.eclipse.ice.viz.service.modeling.AbstractController;
+import org.eclipse.ice.viz.service.modeling.AbstractView;
+import org.eclipse.ice.viz.service.modeling.EdgeController;
+import org.eclipse.ice.viz.service.modeling.FaceEdgeController;
+import org.eclipse.ice.viz.service.modeling.FaceEdgeMesh;
+import org.eclipse.ice.viz.service.modeling.LinearEdgeMesh;
+import org.eclipse.ice.viz.service.modeling.VertexController;
+import org.eclipse.ice.viz.service.modeling.VertexMesh;
 import org.junit.Test;
 
 /**
@@ -57,10 +57,6 @@ public class MeshComponentTester {
 		// Make sure the shapes List was initialized.
 		assertNotNull(component.getPolygons());
 		assertTrue(component.getPolygons().isEmpty());
-		assertNotNull(component.getEdges());
-		assertTrue(component.getEdges().isEmpty());
-		assertNotNull(component.getVertices());
-		assertTrue(component.getVertices().isEmpty());
 
 		// Check the initially available IDs for polygons, edges, and vertices.
 		assertEquals(1, component.getNextPolygonId());
@@ -102,379 +98,301 @@ public class MeshComponentTester {
 
 		// These variables will be used to construct polygons to add to the
 		// mesh.
-		Polygon polygon;
-		ArrayList<Vertex> vertices = new ArrayList<Vertex>();
-		ArrayList<Edge> edges = new ArrayList<Edge>();
+		NekPolygonController polygon;
+		ArrayList<AbstractController> vertices = new ArrayList<AbstractController>();
+		ArrayList<AbstractController> edges = new ArrayList<AbstractController>();
 
 		// These lists hold values that we will use to check the contents of the
 		// component.
-		ArrayList<Polygon> allShapes = new ArrayList<Polygon>();
-		ArrayList<Edge> allEdges = new ArrayList<Edge>();
-		ArrayList<Vertex> allVertices = new ArrayList<Vertex>();
+		ArrayList<AbstractController> allShapes = new ArrayList<AbstractController>();
+		ArrayList<AbstractController> allEdges = new ArrayList<AbstractController>();
+		ArrayList<AbstractController> allVertices = new ArrayList<AbstractController>();
 
 		// Create a MeshComponent to test.
 		MeshComponent mesh = new MeshComponent();
 
 		// Initially, everything should be empty.
 		assertEquals(allShapes, mesh.getPolygons());
-		assertEquals(allEdges, mesh.getEdges());
-		for (Edge e : allEdges) {
-			assertEquals(e, mesh.getEdge(e.getId()));
-		}
-		assertEquals(allVertices, mesh.getVertices());
-		for (Vertex v : allVertices) {
-			assertEquals(v, mesh.getVertex(v.getId()));
-		}
 
 		/* ---- Make a square of area 1 cornered on the origin. ---- */
 		// Set up the vertices.
-		vertices.add(new Vertex(0f, 0f, 0f));
-		vertices.add(new Vertex(1f, 0f, 0f));
-		vertices.add(new Vertex(1f, 0f, 1f));
-		vertices.add(new Vertex(0f, 0f, 1f));
+		vertices.add(new VertexController(new VertexMesh(0f, 0f, 0f),
+				new AbstractView()));
+		vertices.add(new VertexController(new VertexMesh(1f, 0f, 0f),
+				new AbstractView()));
+		vertices.add(new VertexController(new VertexMesh(1f, 0f, 1f),
+				new AbstractView()));
+		vertices.add(new VertexController(new VertexMesh(0f, 0f, 1f),
+				new AbstractView()));
 		for (int i = 0; i < 4; i++) {
 			allVertices.add(vertices.get(i));
-			vertices.get(i).setId(allVertices.size());
+			vertices.get(i).setProperty("Id",
+					Integer.toString(allVertices.size()));
 		}
 		// Set up the edges.
 		for (int i = 0; i < 4; i++) {
-			edges.add(new Edge(vertices.get(i), vertices.get((i + 1) % 4)));
+			edges.add(
+					new EdgeController(
+							new LinearEdgeMesh(
+									(VertexController) vertices.get(i),
+									(VertexController) vertices
+											.get((i + 1) % 4)),
+					new AbstractView()));
 			allEdges.add(edges.get(i));
-			edges.get(i).setId(allEdges.size());
+			edges.get(i).setProperty("Id", Integer.toString(allEdges.size()));
 		}
 		// Initialize the polygon.
-		polygon = new Polygon(edges, vertices);
-		polygon.setId(1);
+		polygon = new NekPolygonController(new NekPolygonMesh(),
+				new AbstractView());
+		for (AbstractController edge : edges) {
+			polygon.addEntityByCategory(edge, "Edges");
+		}
+		polygon.setProperty("Id", "1");
 		allShapes.add(polygon);
 
 		// Add the shape and verify the contents of the component.
 		mesh.addPolygon(polygon);
 		assertEquals(allShapes, mesh.getPolygons());
-		assertEquals(allEdges, mesh.getEdges());
-		for (Edge e : allEdges) {
-			assertEquals(e, mesh.getEdge(e.getId()));
-		}
-		assertEquals(allVertices, mesh.getVertices());
-		for (Vertex v : allVertices) {
-			assertEquals(v, mesh.getVertex(v.getId()));
-		}
-		assertEquals(polygon, mesh.getPolygon(polygon.getId()));
 
-		// Check the next available IDs.
-		assertEquals(allShapes.size() + 1, mesh.getNextPolygonId());
-		assertEquals(allEdges.size() + 1, mesh.getNextEdgeId());
-		assertEquals(allVertices.size() + 1, mesh.getNextVertexId());
+		// Collect all the edges and vertices of all polygons
+		ArrayList<AbstractController> meshEdges = new ArrayList<AbstractController>();
+		ArrayList<AbstractController> meshVertices = new ArrayList<AbstractController>();
+		for (AbstractController entity : mesh.getPolygons()) {
+			meshEdges.addAll(entity.getEntitiesByCategory("Edges"));
+			meshVertices.addAll(entity.getEntitiesByCategory("Vertices"));
+		}
+
+		assertTrue(compareLists(allEdges, meshEdges));
+		assertTrue(compareLists(allVertices, meshVertices));
+		assertEquals(polygon, mesh.getPolygons().get(0));
+
 		/* --------------------------------------------------------- */
 
 		/* ---- Make a square of area 1 attached below the origin. ---- */
 		// Set up the vertices. The bottom two vertices of the first square are
 		// re-used. For the one in position (0,0,1), use the same vertex. For
 		// the one in position (1,0,1), use a clone.
-		vertices.set(0, (Vertex) vertices.get(3).clone());
+		vertices.set(0, (AbstractController) vertices.get(3).clone());
 		vertices.set(1, vertices.get(2));
-		vertices.set(2, new Vertex(1f, 0f, 2f));
-		vertices.set(3, new Vertex(0f, 0f, 2f));
+		vertices.set(2, new VertexController(new VertexMesh(1f, 0f, 2f),
+				new AbstractView()));
+		vertices.set(3, new VertexController(new VertexMesh(0f, 0f, 2f),
+				new AbstractView()));
 		for (int i = 2; i < 4; i++) {
 			allVertices.add(vertices.get(i));
-			vertices.get(i).setId(allVertices.size());
+			vertices.get(i).setProperty("Id",
+					Integer.toString(allVertices.size()));
 		}
 		// Set up the edges. Use a clone of the shared edge.
 		edges.set(0, edges.get(2));
 		for (int i = 1; i < 4; i++) {
-			edges.set(i, new Edge(vertices.get(i), vertices.get((i + 1) % 4)));
+			edges.set(i,
+					new EdgeController(
+							new LinearEdgeMesh(
+									(VertexController) vertices.get(i),
+									(VertexController) vertices
+											.get((i + 1) % 4)),
+					new AbstractView()));
 			allEdges.add(edges.get(i));
-			edges.get(i).setId(allEdges.size());
+			edges.get(i).setProperty("Id", Integer.toString(allEdges.size()));
 		}
 		// Initialize the polygon.
-		polygon = new Polygon(edges, vertices);
-		polygon.setId(2);
+		polygon = new NekPolygonController(new NekPolygonMesh(),
+				new AbstractView());
+		for (AbstractController edge : edges) {
+			polygon.addEntityByCategory(edge, "Edges");
+		}
+		polygon.setProperty("Id", "2");
 		allShapes.add(polygon);
 
 		// Add the shape and verify the contents of the component.
 		mesh.addPolygon(polygon);
 		assertEquals(allShapes, mesh.getPolygons());
-		assertEquals(allEdges, mesh.getEdges());
-		for (Edge e : allEdges) {
-			assertEquals(e, mesh.getEdge(e.getId()));
-		}
-		assertEquals(allVertices, mesh.getVertices());
-		for (Vertex v : allVertices) {
-			assertEquals(v, mesh.getVertex(v.getId()));
-		}
-		assertEquals(polygon, mesh.getPolygon(polygon.getId()));
 
-		// Check the next available IDs.
-		assertEquals(allShapes.size() + 1, mesh.getNextPolygonId());
-		assertEquals(allEdges.size() + 1, mesh.getNextEdgeId());
-		assertEquals(allVertices.size() + 1, mesh.getNextVertexId());
+		// Collect all the edges and vertices of all polygons
+		meshEdges = new ArrayList<AbstractController>();
+		meshVertices = new ArrayList<AbstractController>();
+		for (AbstractController entity : mesh.getPolygons()) {
+			meshEdges.addAll(entity.getEntitiesByCategory("Edges"));
+			meshVertices.addAll(entity.getEntitiesByCategory("Vertices"));
+		}
+
+		assertTrue(compareLists(allEdges, meshEdges));
+		assertTrue(compareLists(allVertices, meshVertices));
+		assertTrue(polygon.equals(mesh.getPolygons().get(1)));
 		/* ------------------------------------------------------------ */
 
 		/* ---- Add a new square with the same bottom-right vertex. ---- */
 		// Set up the vertices.
 		vertices.set(0, vertices.get(2));
-		vertices.set(1, new Vertex(2f, 0f, 2f));
-		vertices.set(2, new Vertex(2f, 0f, 3f));
-		vertices.set(3, new Vertex(1f, 0f, 3f));
+		vertices.set(1, new VertexController(new VertexMesh(2f, 0f, 2f),
+				new AbstractView()));
+		vertices.set(2, new VertexController(new VertexMesh(2f, 0f, 3f),
+				new AbstractView()));
+		vertices.set(3, new VertexController(new VertexMesh(1f, 0f, 3f),
+				new AbstractView()));
 		for (int i = 1; i < 4; i++) {
 			allVertices.add(vertices.get(i));
-			vertices.get(i).setId(allVertices.size());
+			vertices.get(i).setProperty("Id",
+					Integer.toString(allVertices.size()));
 		}
 		// Set up the edges.
 		for (int i = 0; i < 4; i++) {
-			edges.set(i, new Edge(vertices.get(i), vertices.get((i + 1) % 4)));
+			edges.set(i,
+					new EdgeController(
+							new LinearEdgeMesh(
+									(VertexController) vertices.get(i),
+									(VertexController) vertices
+											.get((i + 1) % 4)),
+					new AbstractView()));
 			allEdges.add(edges.get(i));
-			edges.get(i).setId(allEdges.size());
+			edges.get(i).setProperty("Id", Integer.toString(allEdges.size()));
 		}
 		// Initialize the polygon.
-		polygon = new Polygon(edges, vertices);
-		polygon.setId(3);
+		polygon = new NekPolygonController(new NekPolygonMesh(),
+				new AbstractView());
+		for (AbstractController edge : edges) {
+			polygon.addEntityByCategory(edge, "Edges");
+		}
+		polygon.setProperty("Id", "3");
 		allShapes.add(polygon);
 
 		// Add the shape and verify the contents of the component.
 		mesh.addPolygon(polygon);
-		assertEquals(allShapes, mesh.getPolygons());
-		assertEquals(allEdges, mesh.getEdges());
-		for (Edge e : allEdges) {
-			assertEquals(e, mesh.getEdge(e.getId()));
-		}
-		assertEquals(allVertices, mesh.getVertices());
-		for (Vertex v : allVertices) {
-			assertEquals(v, mesh.getVertex(v.getId()));
-		}
-		assertEquals(polygon, mesh.getPolygon(polygon.getId()));
 
-		// Check the next available IDs.
-		assertEquals(allShapes.size() + 1, mesh.getNextPolygonId());
-		assertEquals(allEdges.size() + 1, mesh.getNextEdgeId());
-		assertEquals(allVertices.size() + 1, mesh.getNextVertexId());
+		// Get the current lists of edges and vertices from the mesh
+		meshEdges = new ArrayList<AbstractController>();
+		meshVertices = new ArrayList<AbstractController>();
+		for (AbstractController entity : mesh.getPolygons()) {
+			meshEdges.addAll(entity.getEntitiesByCategory("Edges"));
+			meshVertices.addAll(entity.getEntitiesByCategory("Vertices"));
+		}
+
+		assertEquals(allShapes, mesh.getPolygons());
+		assertTrue(compareLists(allEdges, meshEdges));
+		assertTrue(compareLists(allVertices, meshVertices));
+		assertEquals(polygon, mesh.getPolygons().get(2));
 		/* ------------------------------------------------------------- */
 
 		/* ---- Add a disjoint polygon (attached to nothing). ---- */
 		// Set up the vertices.
-		vertices.set(0, new Vertex(10f, 0, 10f));
-		vertices.set(1, new Vertex(11f, 0f, 10f));
-		vertices.set(2, new Vertex(11f, 0f, 11f));
-		vertices.set(3, new Vertex(10f, 0f, 11f));
+		vertices.set(0, new VertexController(new VertexMesh(10f, 0, 10f),
+				new AbstractView()));
+		vertices.set(1, new VertexController(new VertexMesh(11f, 0f, 10f),
+				new AbstractView()));
+		vertices.set(2, new VertexController(new VertexMesh(11f, 0f, 11f),
+				new AbstractView()));
+		vertices.set(3, new VertexController(new VertexMesh(10f, 0f, 11f),
+				new AbstractView()));
 		for (int i = 0; i < 4; i++) {
 			allVertices.add(vertices.get(i));
-			vertices.get(i).setId(allVertices.size());
+			vertices.get(i).setProperty("Id",
+					Integer.toString(allVertices.size()));
 		}
 		// Set up the edges.
 		for (int i = 0; i < 4; i++) {
-			edges.set(i, new Edge(vertices.get(i), vertices.get((i + 1) % 4)));
+			edges.set(i,
+					new EdgeController(
+							new LinearEdgeMesh(
+									(VertexController) vertices.get(i),
+									(VertexController) vertices
+											.get((i + 1) % 4)),
+					new AbstractView()));
 			allEdges.add(edges.get(i));
-			edges.get(i).setId(allEdges.size());
+			edges.get(i).setProperty("Id", Integer.toString(allEdges.size()));
 		}
 		// Initialize the polygon.
-		polygon = new Polygon(edges, vertices);
-		polygon.setId(4);
+		polygon = new NekPolygonController(new NekPolygonMesh(),
+				new AbstractView());
+		for (AbstractController edge : edges) {
+			polygon.addEntityByCategory(edge, "Edges");
+		}
+		polygon.setProperty("Id", "4");
 		allShapes.add(polygon);
 
 		// Add the shape and verify the contents of the component.
 		mesh.addPolygon(polygon);
 		assertEquals(allShapes, mesh.getPolygons());
-		assertEquals(allEdges, mesh.getEdges());
-		for (Edge e : allEdges) {
-			assertEquals(e, mesh.getEdge(e.getId()));
-		}
-		assertEquals(allVertices, mesh.getVertices());
-		for (Vertex v : allVertices) {
-			assertEquals(v, mesh.getVertex(v.getId()));
-		}
-		assertEquals(polygon, mesh.getPolygon(polygon.getId()));
 
-		// Check the next available IDs.
-		assertEquals(allShapes.size() + 1, mesh.getNextPolygonId());
-		assertEquals(allEdges.size() + 1, mesh.getNextEdgeId());
-		assertEquals(allVertices.size() + 1, mesh.getNextVertexId());
+		// Get the current lists of edges and vertices from the mesh
+		meshEdges = new ArrayList<AbstractController>();
+		meshVertices = new ArrayList<AbstractController>();
+		for (AbstractController entity : mesh.getPolygons()) {
+			meshEdges.addAll(entity.getEntitiesByCategory("Edges"));
+			meshVertices.addAll(entity.getEntitiesByCategory("Vertices"));
+		}
+
+		assertTrue(compareLists(allEdges, meshEdges));
+		assertTrue(compareLists(allVertices, meshVertices));
+		assertEquals(polygon, mesh.getPolygons().get(3));
 		/* ------------------------------------------------------- */
 
 		// ---- Check the helper methods. ---- //
-
-		// First, check getEdgeFromVertices(). We should be able to check the ID
-		// for valid combinations of vertex IDs passed into the method.
-
-		// Try an invalid call: the same vertex ID and an invalid vertex ID.
-		// These should return null.
-		assertNull(mesh.getEdgeFromVertices(1, 1));
-		assertNull(mesh.getEdgeFromVertices(0, 1));
-
-		// Try more valid values.
-		assertNotNull(mesh.getEdgeFromVertices(1, 2));
-		assertEquals(1, mesh.getEdgeFromVertices(1, 2).getId());
-		assertNotNull(mesh.getEdgeFromVertices(3, 5));
-		assertEquals(5, mesh.getEdgeFromVertices(3, 5).getId());
-		assertNotNull(mesh.getEdgeFromVertices(13, 12));
-		assertEquals(14, mesh.getEdgeFromVertices(13, 12).getId());
-		// Try another invalid value.
-		assertNull(mesh.getEdgeFromVertices(9, 3));
-
-		// Next, check getPolygonsFromVertices(). We should be able to check the
-		// IDs of the polygons expected to be returned from the method.
-
-		ArrayList<Polygon> polygonList;
-
-		// Passing in a null argument should result in an empty list.
-		ArrayList<Vertex> vertexList = null;
-		assertTrue(mesh.getPolygonsFromVertices(vertexList).isEmpty());
-
-		// Initialize the list of vertices and add the first three. There
-		// shouldn't be enough vertices to yield a polygon from the method.
-		vertexList = new ArrayList<Vertex>();
-		for (int i = 0; i < 3; i++) {
-			vertexList.add(allVertices.get(i));
-		}
-		polygonList = mesh.getPolygonsFromVertices(vertexList);
-		assertTrue(polygonList.isEmpty());
-
-		// Add the third vertex twice. It shouldn't change anything.
-		vertexList.add(allVertices.get(2));
-		polygonList = mesh.getPolygonsFromVertices(vertexList);
-		assertTrue(polygonList.isEmpty());
-
-		// Add the fourth vertex. We should get the first polygon.
-		vertexList.add(allVertices.get(3));
-		polygonList = mesh.getPolygonsFromVertices(vertexList);
-		assertEquals(1, polygonList.size());
-		assertEquals(1, polygonList.get(0).getId());
-
-		// Add the next three vertices. We should get the first two polygons.
-		for (int i = 4; i < 7; i++) {
-			vertexList.add(allVertices.get(i));
-		}
-		polygonList = mesh.getPolygonsFromVertices(vertexList);
-		assertEquals(2, polygonList.size());
-		assertEquals(1, polygonList.get(0).getId());
-		assertEquals(2, polygonList.get(1).getId());
-		// ----------------------------------- //
 
 		/* ---- Remove the second polygon we added. ---- */
 		int nextPolygonId = allShapes.size() + 1;
 		int nextEdgeId = allEdges.size() + 1;
 		int nextVertexId = allVertices.size() + 1;
 
-		polygon = (Polygon) allShapes.get(1);
+		polygon = (NekPolygonController) allShapes.get(1);
 		allShapes.remove(polygon);
 		// Get the vertices that will be removed.
 		vertices.clear();
-		vertices.add(polygon.getVertices().get(3));
-		for (Vertex v : vertices) {
+		vertices.add(polygon.getEntitiesByCategory("Vertices").get(3));
+		for (AbstractController v : vertices) {
 			allVertices.remove(v);
 		}
 		// Get the edges that will be removed.
 		edges.clear();
-		edges.add(polygon.getEdges().get(1));
-		edges.add(polygon.getEdges().get(2));
-		edges.add(polygon.getEdges().get(3));
-		for (Edge e : edges) {
+		edges.add(polygon.getEntitiesByCategory("Edges").get(1));
+		edges.add(polygon.getEntitiesByCategory("Edges").get(2));
+		edges.add(polygon.getEntitiesByCategory("Edges").get(3));
+		for (AbstractController e : edges) {
 			allEdges.remove(e);
 		}
 		// Remove the shape and verify the contents of the component.
-		mesh.removePolygon(polygon.getId());
+		mesh.removePolygon(polygon);
 		assertEquals(allShapes, mesh.getPolygons());
-		assertEquals(allEdges, mesh.getEdges());
-		for (Edge e : allEdges) {
-			assertEquals(e, mesh.getEdge(e.getId()));
-		}
-		assertEquals(allVertices, mesh.getVertices());
-		for (Vertex v : allVertices) {
-			assertEquals(v, mesh.getVertex(v.getId()));
+
+		// Get the current edges and vertices
+		meshEdges.clear();
+		meshVertices.clear();
+		for (AbstractController entity : mesh.getPolygons()) {
+			meshEdges.addAll(entity.getEntitiesByCategory("Edges"));
+			meshVertices.addAll(entity.getEntitiesByCategory("Vertices"));
 		}
 
-		// Check the next available IDs.
-		// We didn't remove the highest-indexed polygon, so these don't change.
-		assertEquals(nextPolygonId, mesh.getNextPolygonId());
-		assertEquals(nextEdgeId, mesh.getNextEdgeId());
-		assertEquals(nextVertexId, mesh.getNextVertexId());
+		assertEquals(allEdges, meshEdges);
+		assertEquals(allVertices, meshVertices);
 		/* --------------------------------------------- */
 
 		/* ---- Remove the third polygon we added. ---- */
-		polygon = (Polygon) allShapes.get(1);
+		polygon = (NekPolygonController) allShapes.get(1);
 		allShapes.remove(polygon);
 		// Get the vertices that will be removed.
-		for (Vertex v : polygon.getVertices()) {
+		for (AbstractController v : polygon.getEntitiesByCategory("Vertices")) {
 			allVertices.remove(v);
 		}
 		// Get the edges that will be removed.
-		for (Edge e : polygon.getEdges()) {
+		for (AbstractController e : polygon.getEntitiesByCategory("Edges")) {
 			allEdges.remove(e);
 		}
 
 		// Remove the shape and verify the contents of the component.
-		mesh.removePolygon(polygon.getId());
+		mesh.removePolygon(polygon);
 		assertEquals(allShapes, mesh.getPolygons());
-		assertEquals(allEdges, mesh.getEdges());
-		for (Edge e : allEdges) {
-			assertEquals(e, mesh.getEdge(e.getId()));
-		}
-		assertEquals(allVertices, mesh.getVertices());
-		for (Vertex v : allVertices) {
-			assertEquals(v, mesh.getVertex(v.getId()));
+
+		// Get the current edges and vertices
+		meshEdges.clear();
+		meshVertices.clear();
+		for (AbstractController entity : mesh.getPolygons()) {
+			meshEdges.addAll(entity.getEntitiesByCategory("Edges"));
+			meshVertices.addAll(entity.getEntitiesByCategory("Vertices"));
 		}
 
-		// Check the next available IDs.
-		// We didn't remove the highest-indexed polygon, so these don't change.
-		assertEquals(nextPolygonId, mesh.getNextPolygonId());
-		assertEquals(nextEdgeId, mesh.getNextEdgeId());
-		assertEquals(nextVertexId, mesh.getNextVertexId());
+		assertEquals(allEdges, meshEdges);
+		assertEquals(allVertices, meshVertices);
 		/* -------------------------------------------- */
-
-		// ---- Check the helper methods. ---- //
-
-		// First, check getEdgeFromVertices(). We should be able to check the ID
-		// for valid combinations of vertex IDs passed into the method.
-
-		// Try an invalid call: the same vertex ID and an invalid vertex ID.
-		// These should return null.
-		assertNull(mesh.getEdgeFromVertices(1, 1));
-		assertNull(mesh.getEdgeFromVertices(0, 1));
-
-		// Try more valid values.
-		assertNotNull(mesh.getEdgeFromVertices(1, 2));
-		assertEquals(1, mesh.getEdgeFromVertices(1, 2).getId());
-		assertNull(mesh.getEdgeFromVertices(3, 5)); // This edge from the second
-													// quad is now invalid.
-		assertNotNull(mesh.getEdgeFromVertices(13, 12));
-		assertEquals(14, mesh.getEdgeFromVertices(13, 12).getId());
-		// Try another invalid value.
-		assertNull(mesh.getEdgeFromVertices(9, 3));
-
-		// Next, check getPolygonsFromVertices(). We should be able to check the
-		// IDs of the polygons expected to be returned from the method.
-
-		// Passing in a null argument should result in an empty list.
-		vertexList = null;
-		assertTrue(mesh.getPolygonsFromVertices(vertexList).isEmpty());
-
-		// Initialize the list of vertices and add the first three. There
-		// shouldn't be enough vertices to yield a polygon from the method.
-		vertexList = new ArrayList<Vertex>();
-		for (int i = 0; i < 3; i++) {
-			vertexList.add(allVertices.get(i));
-		}
-		polygonList = mesh.getPolygonsFromVertices(vertexList);
-		assertTrue(polygonList.isEmpty());
-
-		// Add the third vertex twice. It shouldn't change anything.
-		vertexList.add(allVertices.get(2));
-		polygonList = mesh.getPolygonsFromVertices(vertexList);
-		assertTrue(polygonList.isEmpty());
-
-		// Add the fourth vertex. We should get the first polygon.
-		vertexList.add(allVertices.get(3));
-		polygonList = mesh.getPolygonsFromVertices(vertexList);
-		assertEquals(1, polygonList.size());
-		assertEquals(1, polygonList.get(0).getId());
-
-		// Add the next three vertices. We should get now only get the first
-		// polygon, because the second one has been removed.
-		for (int i = 4; i < 7; i++) {
-			vertexList.add(allVertices.get(i));
-		}
-		polygonList = mesh.getPolygonsFromVertices(vertexList);
-		assertEquals(1, polygonList.size());
-		assertEquals(1, polygonList.get(0).getId());
-		// ----------------------------------- //
 
 		// TODO - More complicated tests, like overlapping polygons, different
 		// references to the same vertex/edge (i.e., vertex1.equals(vertex2),
@@ -483,68 +401,77 @@ public class MeshComponentTester {
 		return;
 	}
 
-
-
-
-
-	/**
-	 * <p>
-	 * This operation checks the ability of the MeshComponent to persist itself
-	 * to XML and to load itself from an XML input stream.
-	 * </p>
-	 * @throws IOException 
-	 * @throws JAXBException 
-	 * @throws NullPointerException 
-	 * 
-	 */
-	@Test
-	public void checkLoadingFromXML() throws NullPointerException, JAXBException, IOException {
-
-		// Local Declarations
-		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
-		ArrayList<Class> classList = new ArrayList<Class>();
-		classList.add(MeshComponent.class);
-
-		// Create a simple polygon to add the the component.
-		ArrayList<Vertex> vertices = new ArrayList<Vertex>();
-		vertices.add(new Vertex(0f, 0f, 0f));
-		vertices.add(new Vertex(1f, 0f, 0f));
-		vertices.add(new Vertex(0f, 0f, 1f));
-		for (int i = 0; i < 3; i++) {
-			vertices.get(i).setId(i + 1);
-		}
-		ArrayList<Edge> edges = new ArrayList<Edge>();
-		for (int i = 0; i < 3; i++) {
-			edges.add(new Edge(vertices.get(i), vertices.get((i + 1) % 3)));
-			edges.get(i).setId(i + 1);
-		}
-		Polygon shape = new Polygon(edges, vertices);
-
-		// Create a MeshComponent to test.
-		MeshComponent component = new MeshComponent();
-
-		// Customize it.
-		component.setId(42);
-		component.setName("YAMC");
-		component.setDescription("Yet Another MeshComponent");
-		component.addPolygon(shape);
-		// Load it into XML.
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		xmlHandler.write(component, classList, outputStream);
-
-		// Convert the output stream data to an input stream.
-		ByteArrayInputStream inputStream = new ByteArrayInputStream(
-				outputStream.toByteArray());
-
-		// Load the input stream's contents into a new component.
-		MeshComponent loadedComponent = new MeshComponent();
-		loadedComponent = (MeshComponent) xmlHandler.read(classList, inputStream);
-
-		// Make sure the two components match.
-		assertTrue(component.equals(loadedComponent));
-
-		return;
-	}
+	// Reimplement this test if JAXB persistence is ever added to the mesh
+	// editor
+	// /**
+	// * <p>
+	// * This operation checks the ability of the MeshComponent to persist
+	// itself
+	// * to XML and to load itself from an XML input stream.
+	// * </p>
+	// * @throws IOException
+	// * @throws JAXBException
+	// * @throws NullPointerException
+	// *
+	// */
+	// @Test
+	// public void checkLoadingFromXML() throws NullPointerException,
+	// JAXBException, IOException {
+	//
+	// // Local Declarations
+	// ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
+	// ArrayList<Class> classList = new ArrayList<Class>();
+	// classList.add(MeshComponent.class);
+	//
+	// // Create a simple polygon to add the the component.
+	// ArrayList<Vertex> vertices = new ArrayList<Vertex>();
+	// vertices.add(new Vertex( new VertexComponent(0f, 0f, 0f), new
+	// AbstractView()));
+	// vertices.add(new Vertex( new VertexComponent(1f, 0f, 0f), new
+	// AbstractView()));
+	// vertices.add(new Vertex( new VertexComponent(0f, 0f, 1f), new
+	// AbstractView()));
+	// for (int i = 0; i < 3; i++) {
+	// vertices.get(i).setProperty("Id", Integer.toString(i + 1));
+	// }
+	// ArrayList<Edge> edges = new ArrayList<Edge>();
+	// for (int i = 0; i < 3; i++) {
+	// edges.add(new Edge(new EdgeComponent((Vertex) vertices.get(i), (Vertex)
+	// vertices.get((i + 1) % 3)), new AbstractView()));
+	// edges.get(i).setProperty("Id", Integer.toString(i + 1));
+	// }
+	// NekPolygon shape = new NekPolygon(new NekPolygonComponent(), new
+	// AbstractView());
+	// for(AbstractController edge : edges){
+	// shape.addEntity(edge);
+	// }
+	//
+	// // Create a MeshComponent to test.
+	// MeshComponent component = new MeshComponent();
+	//
+	// // Customize it.
+	// component.setId(42);
+	// component.setName("YAMC");
+	// component.setDescription("Yet Another MeshComponent");
+	// component.addPolygon(shape);
+	// // Load it into XML.
+	// ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+	// xmlHandler.write(component, classList, outputStream);
+	//
+	// // Convert the output stream data to an input stream.
+	// ByteArrayInputStream inputStream = new ByteArrayInputStream(
+	// outputStream.toByteArray());
+	//
+	// // Load the input stream's contents into a new component.
+	// MeshComponent loadedComponent = new MeshComponent();
+	// loadedComponent = (MeshComponent) xmlHandler.read(classList,
+	// inputStream);
+	//
+	// // Make sure the two components match.
+	// assertTrue(component.equals(loadedComponent));
+	//
+	// return;
+	// }
 
 	/**
 	 * <p>
@@ -557,20 +484,31 @@ public class MeshComponentTester {
 	public void checkEquality() {
 
 		// Create a simple polygon to add the the component.
-		ArrayList<Vertex> vertices = new ArrayList<Vertex>();
-		vertices.add(new Vertex(0f, 0f, 0f));
-		vertices.add(new Vertex(1f, 0f, 0f));
-		vertices.add(new Vertex(0f, 0f, 1f));
+		ArrayList<VertexController> vertices = new ArrayList<VertexController>();
+		vertices.add(new VertexController(new VertexMesh(0f, 0f, 0f),
+				new AbstractView()));
+		vertices.add(new VertexController(new VertexMesh(1f, 0f, 0f),
+				new AbstractView()));
+		vertices.add(new VertexController(new VertexMesh(0f, 0f, 1f),
+				new AbstractView()));
 		for (int i = 0; i < 3; i++) {
-			vertices.get(i).setId(i + 1);
+			vertices.get(i).setProperty("Id", Integer.toString(i + 1));
 		}
-		ArrayList<Edge> edges = new ArrayList<Edge>();
+		ArrayList<EdgeController> edges = new ArrayList<EdgeController>();
 		for (int i = 0; i < 3; i++) {
-			edges.add(new Edge(vertices.get(i), vertices.get((i + 1) % 3)));
-			edges.get(i).setId(i + 1);
+			edges.add(
+					new FaceEdgeController(
+							new FaceEdgeMesh(vertices.get(i),
+									vertices.get((i + 1) % 3)),
+							new AbstractView()));
+			edges.get(i).setProperty("Id", Integer.toString(i + 1));
 		}
-		Polygon polygon = new Polygon(edges, vertices);
-		polygon.setId(1);
+		NekPolygonController polygon = new NekPolygonController(
+				new NekPolygonMesh(), new AbstractView());
+		for (AbstractController edge : edges) {
+			polygon.addEntityByCategory(edge, "Edges");
+		}
+		polygon.setProperty("Id", "1");
 
 		// Initialize objects for testing.
 		MeshComponent object = new MeshComponent();
@@ -582,18 +520,27 @@ public class MeshComponentTester {
 		object.addPolygon(polygon);
 
 		equalObject.setName("YAMC");
-		equalObject.addPolygon((Polygon) polygon.clone());
+		equalObject.addPolygon((NekPolygonController) polygon.clone());
 
 		// Set up the unequalObject.
 		unequalObject.setName("YAMC");
-		vertices.set(2, new Vertex(0f, 0f, 2f));
-		vertices.get(2).setId(3);
+		vertices.set(2, new VertexController(new VertexMesh(0f, 0f, 2f),
+				new AbstractView()));
+		vertices.get(2).setProperty("Id", "3");
 		for (int i = 1; i < 3; i++) {
-			edges.set(i, new Edge(vertices.get(i), vertices.get((i + 1) % 3)));
-			edges.get(i).setId(i + 1);
+			edges.set(i,
+					new FaceEdgeController(
+							new FaceEdgeMesh(vertices.get(i),
+									vertices.get((i + 1) % 3)),
+							new AbstractView()));
+			edges.get(i).setProperty("Id", Integer.toString(i + 1));
 		}
-		polygon = new Polygon(edges, vertices);
-		polygon.setId(1);
+		polygon = new NekPolygonController(new NekPolygonMesh(),
+				new AbstractView());
+		for (AbstractController edge : edges) {
+			polygon.addEntityByCategory(edge, "Edges");
+		}
+		polygon.setProperty("Id", "1");
 		unequalObject.addPolygon(polygon);
 
 		// Make sure the references are different.
@@ -641,32 +588,52 @@ public class MeshComponentTester {
 		 */
 
 		// Create a simple polygon to add the the component.
-		ArrayList<Vertex> vertices = new ArrayList<Vertex>();
-		vertices.add(new Vertex(0f, 0f, 0f));
-		vertices.add(new Vertex(1f, 0f, 0f));
-		vertices.add(new Vertex(0f, 0f, 1f));
+		ArrayList<VertexController> vertices = new ArrayList<VertexController>();
+		vertices.add(new VertexController(new VertexMesh(0f, 0f, 0f),
+				new AbstractView()));
+		vertices.add(new VertexController(new VertexMesh(1f, 0f, 0f),
+				new AbstractView()));
+		vertices.add(new VertexController(new VertexMesh(0f, 0f, 1f),
+				new AbstractView()));
 		for (int i = 0; i < 3; i++) {
-			vertices.get(i).setId(i + 1);
+			vertices.get(i).setProperty("Id", Integer.toString(i + 1));
 		}
-		ArrayList<Edge> edges = new ArrayList<Edge>();
+		ArrayList<EdgeController> edges = new ArrayList<EdgeController>();
 		for (int i = 0; i < 3; i++) {
-			edges.add(new Edge(vertices.get(i), vertices.get((i + 1) % 3)));
-			edges.get(i).setId(i + 1);
+			edges.add(
+					new EdgeController(
+							new LinearEdgeMesh(vertices.get(i),
+									vertices.get((i + 1) % 3)),
+							new AbstractView()));
+			edges.get(i).setProperty("Id", Integer.toString(i + 1));
 		}
-		Polygon shape = new Polygon(edges, vertices);
-		shape.setId(1);
+		NekPolygonController shape = new NekPolygonController(
+				new NekPolygonMesh(), new AbstractView());
+		for (AbstractController edge : edges) {
+			shape.addEntityByCategory(edge, "Edges");
+		}
+		shape.setProperty("Id", "1");
 
 		vertices.set(0, vertices.get(1));
 		vertices.set(1, vertices.get(2));
-		vertices.set(2, new Vertex(1f, 0f, 1f));
-		vertices.get(2).setId(4);
+		vertices.set(2, new VertexController(new VertexMesh(1f, 0f, 1f),
+				new AbstractView()));
+		vertices.get(2).setProperty("Id", "4");
 		edges.set(0, edges.get(1));
 		for (int i = 1; i < 3; i++) {
-			edges.set(i, new Edge(vertices.get(i), vertices.get((i + 1) % 3)));
-			edges.get(i).setId(i + 3);
+			edges.set(i,
+					new EdgeController(
+							new LinearEdgeMesh(vertices.get(i),
+									vertices.get((i + 1) % 3)),
+							new AbstractView()));
+			edges.get(i).setProperty("Id", Integer.toString(i + 3));
 		}
-		Polygon shape2 = new Polygon(edges, vertices);
-		shape2.setId(2);
+		NekPolygonController shape2 = new NekPolygonController(
+				new NekPolygonMesh(), new AbstractView());
+		for (AbstractController edge : edges) {
+			shape2.addEntityByCategory(edge, "Edges");
+		}
+		shape2.setProperty("Id", "2");
 
 		// Initialize objects for testing.
 		MeshComponent object = new MeshComponent();
@@ -708,44 +675,159 @@ public class MeshComponentTester {
 		// vertices.
 
 		// The first triangle should be an isosceles right triangle.
-		assertEquals(1f, object.getEdge(1).getLength(), 1e-7f);
-		assertEquals(Math.sqrt(2), object.getEdge(2).getLength(), 1e-7f);
-		assertEquals(1f, object.getEdge(3).getLength(), 1e-7f);
+		for (AbstractController polygon : object.getPolygons()) {
+			for (AbstractController edge : polygon
+					.getEntitiesByCategory("Edges")) {
+				switch (edge.getProperty("Id")) {
+				case "1":
+					assertEquals(1f, ((EdgeController) edge).getLength(),
+							1e-7f);
+					break;
+
+				case "2":
+					assertEquals(Math.sqrt(2),
+							((EdgeController) edge).getLength(), 1e-7f);
+					break;
+
+				case "3":
+					assertEquals(1f, ((EdgeController) edge).getLength(),
+							1e-7f);
+					break;
+
+				default:
+					break;
+				}
+			}
+		}
 
 		// The same dimensions apply to the copy.
-		assertEquals(1f, copy.getEdge(1).getLength(), 1e-7f);
-		assertEquals(Math.sqrt(2), copy.getEdge(2).getLength(), 1e-7f);
-		assertEquals(1f, copy.getEdge(3).getLength(), 1e-7f);
+		for (AbstractController polygon : copy.getPolygons()) {
+			for (AbstractController edge : polygon
+					.getEntitiesByCategory("Edges")) {
+				switch (edge.getProperty("Id")) {
+				case "1":
+					assertEquals(1f, ((EdgeController) edge).getLength(),
+							1e-7f);
+					break;
+
+				case "2":
+					assertEquals(Math.sqrt(2),
+							((EdgeController) edge).getLength(), 1e-7f);
+					break;
+
+				case "3":
+					assertEquals(1f, ((EdgeController) edge).getLength(),
+							1e-7f);
+					break;
+
+				default:
+					break;
+				}
+			}
+		}
 
 		// Create listeners for the edges in the copy to make sure they were all
 		// updated.
 		List<TestComponentListener> listeners = new ArrayList<TestComponentListener>();
-		for (Edge edge : copy.getEdges()) {
+		for (AbstractController edge : copy.getPolygons().get(0)
+				.getEntitiesByCategory("Edges")) {
 			TestComponentListener listener = new TestComponentListener();
 			edge.register(listener);
 			listeners.add(listener);
 		}
 
-		// Make the copy into a 30-60-90 triangle.
-		copy.getVertex(2).setLocation(3f, 0f, 0f);
-		copy.getVertex(3).setLocation(0f, 0f, 4f);
+		for (AbstractController vertex : copy.getPolygons().get(0)
+				.getEntitiesByCategory("Vertices")) {
+			if ("2".equals(vertex.getProperty("Id"))) {
+				((VertexController) vertex).updateLocation(3f, 0f, 0f);
+			} else if ("3".equals(vertex.getProperty("Id"))) {
+				((VertexController) vertex).updateLocation(0f, 0f, 4f);
+			}
+		}
 
 		// The first triangle should still be an isosceles right triangle.
-		assertEquals(1f, object.getEdge(1).getLength(), 1e-7f);
-		assertEquals(Math.sqrt(2), object.getEdge(2).getLength(), 1e-7f);
-		assertEquals(1f, object.getEdge(3).getLength(), 1e-7f);
+		for (AbstractController polygon : object.getPolygons()) {
+			for (AbstractController edge : polygon
+					.getEntitiesByCategory("Edges")) {
+				switch (edge.getProperty("Id")) {
+				case "1":
+					assertEquals(1f, ((EdgeController) edge).getLength(),
+							1e-7f);
+					break;
+
+				case "2":
+					assertEquals(Math.sqrt(2),
+							((EdgeController) edge).getLength(), 1e-7f);
+					break;
+
+				case "3":
+					assertEquals(1f, ((EdgeController) edge).getLength(),
+							1e-7f);
+					break;
+
+				default:
+					break;
+				}
+			}
+		}
 
 		// Make sure the edges in the copy's first triangle were updated.
-		for (int i = 1; i < 4; i++) {
+		for (int i = 0; i < 3; i++) {
 			assertTrue(listeners.get(i).wasNotified());
 			listeners.get(i).reset();
 		}
 
 		// The copy's first triangle should now be a 3-4-5 triangle.
-		assertEquals(3f, copy.getEdge(1).getLength(), 1e-7f);
-		assertEquals(5f, copy.getEdge(2).getLength(), 1e-7f);
-		assertEquals(4f, copy.getEdge(3).getLength(), 1e-7f);
+		for (AbstractController edge : copy.getPolygons().get(0)
+				.getEntitiesByCategory("Edges")) {
+			switch (edge.getProperty("Id")) {
+			case "1":
+				assertEquals(1f, ((EdgeController) edge).getLength(), 1e-7f);
+				break;
+
+			case "2":
+				assertEquals(1.4142135, ((EdgeController) edge).getLength(),
+						1e-7f);
+				break;
+
+			case "3":
+				assertEquals(1f, ((EdgeController) edge).getLength(), 1e-7f);
+				break;
+
+			default:
+				break;
+			}
+		}
 
 		return;
+	}
+
+	/**
+	 * Compares two ArrayLists to check them for equality.
+	 * 
+	 * @param first
+	 * @param second
+	 * @return True if the lists contain the same set of objects, false
+	 *         otherwise
+	 */
+	public <T, U> boolean compareLists(ArrayList<T> first,
+			ArrayList<U> second) {
+
+		// Check that each object in the first list is in the second
+		for (T object : first) {
+			if (!second.contains(object)) {
+				return false;
+			}
+		}
+
+		// Check that each object in the second list is in the first
+		for (U object : second) {
+			if (!first.contains(object)) {
+				return false;
+			}
+		}
+
+		// If no discrepancies were found, the lists must be equal
+		return true;
 	}
 }
