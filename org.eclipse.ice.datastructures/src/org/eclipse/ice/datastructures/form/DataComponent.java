@@ -14,7 +14,8 @@ package org.eclipse.ice.datastructures.form;
 
 import java.util.ArrayList;
 
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlAnyElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.eclipse.ice.datastructures.ICEObject.Component;
@@ -22,6 +23,7 @@ import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
+import org.eclipse.ice.datastructures.entry.IEntry;
 
 /**
  * <p>
@@ -38,8 +40,9 @@ public class DataComponent extends ICEObject implements Component,
 		IUpdateableListener {
 	/**
 	 */
-	@XmlElement(name = "Entry")
-	private ArrayList<Entry> entries;
+	@XmlElementWrapper
+	@XmlAnyElement(lax=true)
+	private ArrayList<IEntry> entries;
 
 	/**
 	 * <p>
@@ -50,7 +53,7 @@ public class DataComponent extends ICEObject implements Component,
 	public DataComponent() {
 
 		// Setup the list of Entries
-		entries = new ArrayList<Entry>();
+		entries = new ArrayList<IEntry>();
 
 	}
 
@@ -64,7 +67,7 @@ public class DataComponent extends ICEObject implements Component,
 	 *            The new Entry that will be added to the Form.
 	 *            </p>
 	 */
-	public void addEntry(Entry newEntry) {
+	public void addEntry(IEntry newEntry) {
 
 		// Add the Entry if it is not null
 		if (newEntry != null) {
@@ -94,7 +97,7 @@ public class DataComponent extends ICEObject implements Component,
 	 *            Entry is dependent.
 	 *            </p>
 	 */
-	public void addEntry(Entry newEntry, String... parentNames) {
+	public void addEntry(IEntry newEntry, String... parentNames) {
 
 		// FIXME - Do we need this?
 
@@ -164,9 +167,9 @@ public class DataComponent extends ICEObject implements Component,
 	 *         The Entry with name entryName.
 	 *         </p>
 	 */
-	public Entry retrieveEntry(String entryName) {
+	public IEntry retrieveEntry(String entryName) {
 
-		for (Entry j : entries) {
+		for (IEntry j : entries) {
 			if (j.getName().equals(entryName)) {
 				return j;
 			}
@@ -189,12 +192,12 @@ public class DataComponent extends ICEObject implements Component,
 	 *         been provided.
 	 *         </p>
 	 */
-	public ArrayList<Entry> retrieveReadyEntries() {
+	public ArrayList<IEntry> retrieveReadyEntries() {
 
 		// Local Declarations
-		ArrayList<Entry> readyEntryList = new ArrayList<Entry>();
+		ArrayList<IEntry> readyEntryList = new ArrayList<IEntry>();
 
-		for (Entry i : entries) {
+		for (IEntry i : entries) {
 			if (i.isReady()) {
 				readyEntryList.add(i);
 			}
@@ -213,7 +216,7 @@ public class DataComponent extends ICEObject implements Component,
 	 *         The list of all Entries stored in the Form.
 	 *         </p>
 	 */
-	public ArrayList<Entry> retrieveAllEntries() {
+	public ArrayList<IEntry> retrieveAllEntries() {
 		return entries;
 	}
 
@@ -236,7 +239,7 @@ public class DataComponent extends ICEObject implements Component,
 	 */
 	public boolean contains(String entryName) {
 
-		for (Entry i : entries) {
+		for (IEntry i : entries) {
 			if (i.getName().equals(entryName)) {
 				return true;
 			}
@@ -281,7 +284,7 @@ public class DataComponent extends ICEObject implements Component,
 		DataComponent castedComponent = (DataComponent) otherDataComponent;
 
 		// Check that their Entries are equal
-		for (Entry entry : this.entries) {
+		for (IEntry entry : this.entries) {
 			// Check that the other DataComponent has entry
 			// Note that ArrayList<E>.contains() uses E.equals()
 			if (!castedComponent.entries.contains(entry)) {
@@ -311,7 +314,7 @@ public class DataComponent extends ICEObject implements Component,
 
 		// Compute hash code from DataComponent data
 		hash = 31 * hash + super.hashCode();
-		for (Entry entry : this.entries) {
+		for (IEntry entry : this.entries) {
 			hash = 31 * hash + entry.hashCode();
 		}
 		return hash;
@@ -342,7 +345,7 @@ public class DataComponent extends ICEObject implements Component,
 
 			// Copy entries
 			for (int i = 0; i < otherDataComponent.entries.size(); i++) {
-				entries.add((Entry) otherDataComponent.entries.get(i).clone());
+				entries.add((IEntry) otherDataComponent.entries.get(i).clone());
 			}
 
 			notifyListeners();
@@ -378,7 +381,7 @@ public class DataComponent extends ICEObject implements Component,
 	@Override
 	public void update(String updatedKey, String newValue) {
 
-		for (Entry i : entries) {
+		for (IEntry i : entries) {
 			i.update(updatedKey, newValue);
 		}
 

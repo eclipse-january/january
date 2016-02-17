@@ -35,6 +35,7 @@ import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
 import org.eclipse.ice.datastructures.ICEObject.ListComponent;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
 import org.eclipse.ice.datastructures.componentVisitor.IReactorComponent;
+import org.eclipse.ice.datastructures.entry.IEntry;
 import org.eclipse.ice.datastructures.form.emf.EMFComponent;
 
 /**
@@ -1203,7 +1204,7 @@ public class TreeComposite extends ICEObject implements Composite,
 			addDataNodeToList(component);
 			// DataComponent also need their Entries to have listeners
 			// registered
-			for (Entry entry : component.retrieveAllEntries()) {
+			for (IEntry entry : component.retrieveAllEntries()) {
 				for (IUpdateableListener listener : listeners) {
 					entry.register(listener);
 				}

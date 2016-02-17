@@ -24,6 +24,7 @@ import org.eclipse.ice.datastructures.ICEObject.Component;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
+import org.eclipse.ice.datastructures.entry.IEntry;
 
 /**
  * <p>
@@ -59,7 +60,7 @@ public class TableComponent extends ICEObject implements Component {
 	 * value for key = 0 is the Row Template.
 	 * </p>
 	 */
-	private Hashtable<Integer, ArrayList<Entry>> rowTable;
+	private Hashtable<Integer, ArrayList<IEntry>> rowTable;
 	/**
 	 * <p>
 	 * A list containing the names of the columns.
@@ -153,7 +154,7 @@ public class TableComponent extends ICEObject implements Component {
 	 *         The set of Entries that represent the row in the table.
 	 *         </p>
 	 */
-	public ArrayList<Entry> getRow(int index) {
+	public ArrayList<IEntry> getRow(int index) {
 
 		// return null if index does not exist
 		// Index shift -> index 0 of rowComponents are the column tags and are
@@ -165,7 +166,7 @@ public class TableComponent extends ICEObject implements Component {
 		}
 
 		// create a new arraylist
-		ArrayList<Entry> rowArray = new ArrayList<Entry>();
+		ArrayList<IEntry> rowArray = new ArrayList<IEntry>();
 
 		// copy entries into rowArray
 		// Index shift -> index 0 of rowComponents are the column tags and are
@@ -218,7 +219,7 @@ public class TableComponent extends ICEObject implements Component {
 
 		// copy contents of template into new row
 		for (int i = 0; i < rowComponents.get(0).retrieveAllEntries().size(); i++) {
-			dataComponent.addEntry((Entry) rowComponents.get(0)
+			dataComponent.addEntry((IEntry) rowComponents.get(0)
 					.retrieveAllEntries().get(i).clone());
 		}
 
@@ -292,7 +293,7 @@ public class TableComponent extends ICEObject implements Component {
 	 *            table.
 	 *            </p>
 	 */
-	public void setRowTemplate(ArrayList<Entry> template) {
+	public void setRowTemplate(ArrayList<IEntry> template) {
 
 		// Local Declarations
 		int i = 0;
@@ -334,7 +335,7 @@ public class TableComponent extends ICEObject implements Component {
 	 *         table.
 	 *         </p>
 	 */
-	public ArrayList<Entry> getRowTemplate() {
+	public ArrayList<IEntry> getRowTemplate() {
 		// Local Declarations
 		int i = 0;
 
@@ -344,7 +345,7 @@ public class TableComponent extends ICEObject implements Component {
 		}
 
 		// Create a new ArrayList and return it.
-		ArrayList<Entry> rowTemplate = new ArrayList<Entry>();
+		ArrayList<IEntry> rowTemplate = new ArrayList<IEntry>();
 
 		for (i = 0; i < rowComponents.get(0).retrieveAllEntries().size(); i++) {
 			rowTemplate.add(rowComponents.get(0).retrieveAllEntries().get(i));

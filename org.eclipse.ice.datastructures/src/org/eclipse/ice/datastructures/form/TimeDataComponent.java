@@ -13,11 +13,16 @@
 package org.eclipse.ice.datastructures.form;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.eclipse.ice.datastructures.ICEObject.Component;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
+import org.eclipse.ice.datastructures.entry.ContinuousEntry;
+import org.eclipse.ice.datastructures.entry.DiscreteEntry;
+import org.eclipse.ice.datastructures.entry.IEntry;
+import org.eclipse.ice.datastructures.entry.StringEntry;
 
 /**
  * <p>
@@ -83,109 +88,79 @@ public class TimeDataComponent extends DataComponent {
 		super();
 
 		// Setup entries
-		Entry entry;
+		IEntry entry1, entry2, entry3, entry4, entry5;
 		int entryCount = 0;
 
 		// Setup Entries for comparison
-		entry = new Entry() {
-			@Override
-			protected void setup() {
-				this.setName("Enable Regular Mode");
-				this.tag = "MODE";
-				this.setDescription("Time loop's mode.  Can be Regular (true) or Explicit (false)");
-				this.defaultValue = "True";
-				this.value = this.defaultValue;
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("True");
-				this.allowedValues.add("False");
-				this.allowedValueType = AllowedValueType.Discrete;
-			}
-		};
+		entry1 = new DiscreteEntry();
+		List<String> allowed = new ArrayList<String>();
+		allowed.add("True");
+		allowed.add("False");
+		entry1.setAllowedValues(allowed);
+		entry1.setDefaultValue("True");
+		entry1.setTag("MODE");
+		entry1.setName("Enable Regular Mode");
+		entry1.setDescription("Time loop's mode.  Can be Regular (true) or Explicit (false)");
 		entryCount++;
-		entry.setId(entryCount);
-		super.addEntry(entry);
+		entry1.setId(entryCount);
+		addEntry(entry1);
 
 		// Entry: START
-		entry = new Entry() {
-			@Override
-			protected void setup() {
-				this.setName("Start");
-				this.tag = "START";
-				this.setDescription("Time loop's start time. Can start between allowed values.");
-				this.defaultValue = "0";
-				this.value = this.defaultValue;
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("0");
-				this.allowedValues.add("99999999");
-				this.allowedValueType = AllowedValueType.Continuous;
-				this.parent = "Enable Regular Mode";
-			}
-		};
+		entry2 = new ContinuousEntry();
+		List<String> allowed2 = new ArrayList<String>();
+		allowed.add("0");
+		allowed.add("99999999");
+		entry2.setAllowedValues(allowed2);
+		entry2.setName("Start");
+		entry2.setTag("START");
+		entry2.setDescription("Time loop's start time. Can start between allowed values.");
+		entry2.setDefaultValue("0");
 		entryCount++;
-		entry.setId(entryCount);
-		super.addEntry(entry);
+		entry2.setId(entryCount);
+		addEntry(entry2);
 
 		// Entry: FINISH
-		entry = new Entry() {
-			@Override
-			protected void setup() {
-				this.setName("Finish");
-				this.tag = "FINISH";
-				this.setDescription("Time loop's finish time. Can finish between allowed values.");
-				this.defaultValue = "30";
-				this.value = this.defaultValue;
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("1");
-				this.allowedValues.add("999999");
-				this.allowedValueType = AllowedValueType.Continuous;
-				this.parent = "Enable Regular Mode";
-			}
-		};
+		entry3 = new ContinuousEntry();
+		List<String> allowed3 = new ArrayList<String>();
+		allowed.add("1");
+		allowed.add("99999999");
+		entry3.setAllowedValues(allowed3);
+		entry3.setName("Finish");
+		entry3.setTag("FINISH");
+		entry3.setDescription("Time loop's finish time. Can finish between allowed values.");
+		entry3.setDefaultValue("30");
 		entryCount++;
-		entry.setId(entryCount);
-		super.addEntry(entry);
+		entry3.setId(entryCount);
+		addEntry(entry3);
 
 		// Entry: NSTEP
-		entry = new Entry() {
-			@Override
-			protected void setup() {
-				this.setName("The number to step");
-				this.tag = "NSTEP";
-				this.setDescription("Time loop's number to step.  Can be set between allowed values.");
-				this.defaultValue = "1";
-				this.value = this.defaultValue;
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("1");
-				this.allowedValues.add("99999999");
-				this.allowedValueType = AllowedValueType.Continuous;
-				this.parent = "Enable Regular Mode";
-			}
-		};
+		entry4 = new ContinuousEntry();
+		List<String> allowed4 = new ArrayList<String>();
+		allowed.add("1");
+		allowed.add("99999999");
+		entry4.setAllowedValues(allowed4);
+		entry4.setName("The number to step");
+		entry4.setTag("NSTEP");
+		entry4.setDescription("Time loop's number to step. Can be set between allowed values.");
+		entry4.setDefaultValue("1");
 		entryCount++;
-		entry.setId(entryCount);
-		super.addEntry(entry);
+		entry4.setId(entryCount);
+		addEntry(entry4);
 
 		// Entry: VALUES
-		entry = new Entry() {
-			@Override
-			protected void setup() {
-				this.setName("VALUES");
-				this.tag = "VALUES";
-				this.setDescription("Time loop's values.");
-				this.defaultValue = "4.4, 3.5, 3.6, 3.7";
-				this.value = this.defaultValue;
-				this.allowedValueType = AllowedValueType.Undefined;
-			}
-		};
+		entry5 = new StringEntry();
+		entry5.setName("VALUES");
+		entry5.setTag("VALUES");
+		entry5.setDescription("Time loop's values.");
+		entry5.setDefaultValue("4.4, 3.5, 3.6, 3.7");
 		entryCount++;
-		entry.setId(entryCount);
-		super.addEntry(entry);
+		entry5.setId(entryCount);
+		addEntry(entry5);
 
 		// Setup ICEObject info
 		this.setName("TimeDataComponent 1");
 		this.setId(1);
 		this.setDescription("TimeDataComponent 1's Description");
-
 
 	}
 
@@ -212,7 +187,8 @@ public class TimeDataComponent extends DataComponent {
 	 * This operation provides a deep copy of the TimeDataComponent.
 	 * </p>
 	 * 
-	 * @return <p>
+	 * @return
+	 * 		<p>
 	 *         The deep-copy clone of this DataComponent.
 	 *         </p>
 	 */
@@ -230,79 +206,6 @@ public class TimeDataComponent extends DataComponent {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ice.datastructures.form.DataComponent#addEntry(org.eclipse.ice.datastructures.form.Entry)
-	 */
-	@Override
-	public void addEntry(Entry newEntry) {
-
-		// Do nothing
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ice.datastructures.form.DataComponent#addEntry(org.eclipse.ice.datastructures.form.Entry, java.lang.String[])
-	 */
-	@Override
-	public void addEntry(Entry newEntry, String... parentNames) {
-
-		// Do nothing
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ice.datastructures.form.DataComponent#clearEntries()
-	 */
-	@Override
-	public void clearEntries() {
-
-		// Do nothing
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ice.datastructures.form.DataComponent#deleteEntry(java.lang.String)
-	 */
-	@Override
-	public void deleteEntry(String entryName) {
-
-		// Do nothing
-
-	}
-
-	/**
-	 * <p>
-	 * Overrides DataComponent's implementation of retrieveAllEntries. This will
-	 * return a list of entries in a shallow copied list. This way, entries can
-	 * not be added or removed indirectly via getter method.
-	 * </p>
-	 * 
-	 * @return <p>
-	 *         The list of all Entries stored in the Form.
-	 *         </p>
-	 */
-	@Override
-	public ArrayList<Entry> retrieveAllEntries() {
-
-		// Local Declarations
-		ArrayList<Entry> entries = new ArrayList<Entry>();
-
-		// Create a list of entries
-
-		for (int i = 0; i < super.retrieveAllEntries().size(); i++) {
-			entries.add(super.retrieveAllEntries().get(i));
-		}
-
-		// Return the entries
-		return entries;
-
-
-	}
-
 	/**
 	 * <p>
 	 * This operation is used to check equality between the DataComponent and
@@ -315,7 +218,8 @@ public class TimeDataComponent extends DataComponent {
 	 *            The other DataComponent to which this component should be
 	 *            compared.
 	 *            </p>
-	 * @return <p>
+	 * @return
+	 * 		<p>
 	 *         True if the DataComponents are equal, false otherwise.
 	 *         </p>
 	 */
@@ -324,8 +228,7 @@ public class TimeDataComponent extends DataComponent {
 
 		// Make sure it is an instance of TimeDataComponent, compare the rest
 		// normally
-		return otherDataComponent instanceof TimeDataComponent
-				&& super.equals(otherDataComponent);
+		return otherDataComponent instanceof TimeDataComponent && super.equals(otherDataComponent);
 
 	}
 

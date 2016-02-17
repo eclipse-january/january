@@ -21,12 +21,15 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
-import org.eclipse.ice.datastructures.form.AllowedValueType;
-import org.eclipse.ice.datastructures.form.Entry;
+import org.eclipse.ice.datastructures.entry.ContinuousEntry;
+import org.eclipse.ice.datastructures.entry.DiscreteEntry;
+import org.eclipse.ice.datastructures.entry.IEntry;
+import org.eclipse.ice.datastructures.entry.StringEntry;
 import org.eclipse.ice.datastructures.form.TimeDataComponent;
 import org.junit.Test;
 
@@ -52,102 +55,73 @@ public class TimeDataComponentTester {
 		String defaultName = "TimeDataComponent 1";
 		int defaultId = 1;
 		String defaultDescription = "TimeDataComponent 1's Description";
-		Entry entry1, entry2, entry3, entry4, entry5;
+		IEntry entry1, entry2, entry3, entry4, entry5;
 		TimeDataComponent timeComponent;
 		int entryCount = 0;
-		ArrayList<Entry> entryList = new ArrayList<Entry>();
+		ArrayList<IEntry> entryList = new ArrayList<IEntry>();
 
 		// Setup Entries for comparison
-		entry1 = new Entry() {
-			@Override
-			protected void setup() {
-				this.setName("Enable Regular Mode");
-				this.tag = "MODE";
-				this.setDescription("Time loop's mode.  Can be Regular (true) or Explicit (false)");
-				this.defaultValue = "True";
-				this.value = this.defaultValue;
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("True");
-				this.allowedValues.add("False");
-				this.allowedValueType = AllowedValueType.Discrete;
-			}
-		};
+		entry1 = new DiscreteEntry();
+		List<String> allowed = new ArrayList<String>();
+		allowed.add("True");
+		allowed.add("False");
+		entry1.setAllowedValues(allowed);
+		entry1.setDefaultValue("True");
+		entry1.setTag("MODE");
+		entry1.setName("Enable Regular Mode");
+		entry1.setDescription("Time loop's mode.  Can be Regular (true) or Explicit (false)");
 		entryCount++;
 		entry1.setId(entryCount);
 		entryList.add(entry1);
 
 		// Entry: START
-		entry2 = new Entry() {
-			@Override
-			protected void setup() {
-				this.setName("Start");
-				this.tag = "START";
-				this.setDescription("Time loop's start time. Can start between allowed values.");
-				this.defaultValue = "0";
-				this.value = this.defaultValue;
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("0");
-				this.allowedValues.add("99999999");
-				this.allowedValueType = AllowedValueType.Continuous;
-				this.parent = "Enable Regular Mode";
-			}
-		};
+		entry2 = new ContinuousEntry();
+		List<String> allowed2 = new ArrayList<String>();
+		allowed.add("0");
+		allowed.add("99999999");
+		entry2.setAllowedValues(allowed2);
+		entry2.setName("Start");
+		entry2.setTag("START");
+		entry2.setDescription("Time loop's start time. Can start between allowed values.");
+		entry2.setDefaultValue("0");
 		entryCount++;
 		entry2.setId(entryCount);
 		entryList.add(entry2);
 
 		// Entry: FINISH
-		entry3 = new Entry() {
-			@Override
-			protected void setup() {
-				this.setName("Finish");
-				this.tag = "FINISH";
-				this.setDescription("Time loop's finish time. Can finish between allowed values.");
-				this.defaultValue = "30";
-				this.value = this.defaultValue;
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("1");
-				this.allowedValues.add("999999");
-				this.allowedValueType = AllowedValueType.Continuous;
-				this.parent = "Enable Regular Mode";
-			}
-		};
+		entry3 = new ContinuousEntry();
+		List<String> allowed3 = new ArrayList<String>();
+		allowed.add("1");
+		allowed.add("99999999");
+		entry3.setAllowedValues(allowed3);
+		entry3.setName("Finish");
+		entry3.setTag("FINISH");
+		entry3.setDescription("Time loop's finish time. Can finish between allowed values.");
+		entry3.setDefaultValue("30");
 		entryCount++;
 		entry3.setId(entryCount);
 		entryList.add(entry3);
 
 		// Entry: NSTEP
-		entry4 = new Entry() {
-			@Override
-			protected void setup() {
-				this.setName("The number to step");
-				this.tag = "NSTEP";
-				this.setDescription("Time loop's number to step.  Can be set between allowed values.");
-				this.defaultValue = "1";
-				this.value = this.defaultValue;
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("1");
-				this.allowedValues.add("99999999");
-				this.allowedValueType = AllowedValueType.Continuous;
-				this.parent = "Enable Regular Mode";
-			}
-		};
+		entry4 = new ContinuousEntry();
+		List<String> allowed4 = new ArrayList<String>();
+		allowed.add("1");
+		allowed.add("99999999");
+		entry4.setAllowedValues(allowed4);
+		entry4.setName("The number to step");
+		entry4.setTag("NSTEP");
+		entry4.setDescription("Time loop's number to step. Can be set between allowed values.");
+		entry4.setDefaultValue("1");
 		entryCount++;
 		entry4.setId(entryCount);
 		entryList.add(entry4);
 
 		// Entry: VALUES
-		entry5 = new Entry() {
-			@Override
-			protected void setup() {
-				this.setName("VALUES");
-				this.tag = "VALUES";
-				this.setDescription("Time loop's values.");
-				this.defaultValue = "4.4, 3.5, 3.6, 3.7";
-				this.value = this.defaultValue;
-				this.allowedValueType = AllowedValueType.Undefined;
-			}
-		};
+		entry5 = new StringEntry();
+		entry5.setName("VALUES");
+		entry5.setTag("VALUES");
+		entry5.setDescription("Time loop's values.");
+		entry5.setDefaultValue("4.4, 3.5, 3.6, 3.7");
 		entryCount++;
 		entry5.setId(entryCount);
 		entryList.add(entry5);
@@ -202,63 +176,6 @@ public class TimeDataComponentTester {
 	}
 
 	/**
-	 * <p>
-	 * Checks the overridden operations concerning entry manipulation on
-	 * TimeDataComponent.
-	 * </p>
-	 * 
-	 */
-	@Test
-	public void checkEntryOperations() {
-
-
-		// Local Declarations
-		int size = 5;
-
-		// Show that certain Entry modification operations will not work as
-		// intended as on DataComponent
-		TimeDataComponent timeComponent = new TimeDataComponent();
-
-		// Show that there are 5 entries
-		assertEquals(size, timeComponent.retrieveAllEntries().size());
-
-		// Try to delete, add, or otherwise modify the contents of entries on
-		// TimeDataComponent numerical count
-
-		// Add entry
-		timeComponent.addEntry(new Entry());
-		// Show that there are 5 entries
-		assertEquals(size, timeComponent.retrieveAllEntries().size());
-
-		// Add entry with parents
-		timeComponent.addEntry(new Entry(), "Foo");
-		// Show that there are 5 entries
-		assertEquals(size, timeComponent.retrieveAllEntries().size());
-
-		// Clear or delete
-		timeComponent.clearEntries();
-		timeComponent.deleteEntry(timeComponent.retrieveAllEntries().get(0)
-				.getName());
-		// Show that there are 5 entries
-		assertEquals(size, timeComponent.retrieveAllEntries().size());
-
-		// Try to retrieve entries, edit the list, and see if it changes
-		// anything
-		timeComponent.retrieveAllEntries().remove(0);
-		// Show that there are 5 entries
-		assertEquals(size, timeComponent.retrieveAllEntries().size());
-
-		// Keep in mind you can CHANGE content ON an entry
-		String nameChanged = "BobbyLEEJONES";
-
-		timeComponent.retrieveAllEntries().get(0).setName(nameChanged);
-		assertEquals(nameChanged, timeComponent.retrieveAllEntries().get(0)
-				.getName());
-
-
-	}
-
-	/**
 	 * Checks loading and persisting to XML.
 	 * 
 	 * @throws IOException
@@ -277,6 +194,10 @@ public class TimeDataComponentTester {
 		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
 		ArrayList<Class> classList = new ArrayList<Class>();
 		classList.add(TimeDataComponent.class);
+		classList.add(StringEntry.class);
+		classList.add(DiscreteEntry.class);
+		classList.add(ContinuousEntry.class);
+
 
 		// Create the DataComponent
 		TimeDataComponent dataComponent = new TimeDataComponent();
