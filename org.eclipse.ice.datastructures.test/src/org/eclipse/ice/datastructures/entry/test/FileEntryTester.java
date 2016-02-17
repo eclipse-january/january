@@ -106,7 +106,7 @@ public class FileEntryTester {
 	
 		// We have 13 files in itemData right now
 		// MAKE SURE WE UPDATE THIS IF IT CHANGES
-		assertEquals(15, entry.getAllowedValues().size());
+		assertEquals(13, entry.getAllowedValues().size());
 		
 		// Now try it where we specify the file extension
 		FileEntry yamlFiles = new FileEntry("yaml");
@@ -124,7 +124,7 @@ public class FileEntryTester {
 		}
 		
 		entry.updateAvailableFiles();
-		assertEquals(16, entry.getAllowedValues().size());
+		assertEquals(14, entry.getAllowedValues().size());
 		
 		try {
 			file.delete(true, null);
