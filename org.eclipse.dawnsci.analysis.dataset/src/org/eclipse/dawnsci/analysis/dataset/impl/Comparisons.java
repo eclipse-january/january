@@ -1559,4 +1559,124 @@ public class Comparisons {
 		}
 		return r;
 	}
+
+	/**
+	 * Enumeration of monotonicity. NaNs are ignored or considered not equal
+	 */
+	public static enum Monotonicity {
+		/**
+		 * No order: x_0 != x_1 != x_2 ...
+		 */
+		NOT_ORDERED,
+		/**
+		 * All equal: x_0 == x_1 == x_2 ...
+		 */
+		ALL_EQUAL,
+		/**
+		 * Strictly decreasing x_0 > x_1 > x_2 ...
+		 */
+		STRICTLY_DECREASING,
+		/**
+		 * Non-increasing or weakly decreasing x_0 >= x_1 >= x_2 ...
+		 */
+		NONINCREASING,
+		/**
+		 * Non-decreasing or weakly increasing x_0 <= x_1 <= x_2 ...
+		 */
+		NONDECREASING,
+		/**
+		 * Strictly increasing x_0 < x_1 < x_2 ...
+		 */
+		STRICTLY_INCREASING,
+	}
+
+	/**
+	 * @param a
+	 * @return true if all elements are in a monotonic order
+	 * @see #findMonotonicity(Object)
+	 */
+	public static boolean isMonotonic(Object a) {
+		return findMonotonicity(a) != Monotonicity.NOT_ORDERED;
+	}
+
+	/**
+	 * @param a
+	 * @return true if all elements are in a strictly monotonic order
+	 * @see #findMonotonicity(Object)
+	 */
+	public static boolean isStrictlyMonotonic(Object a) {
+		Monotonicity mono = findMonotonicity(a);
+		return mono == Monotonicity.STRICTLY_DECREASING || mono == Monotonicity.STRICTLY_INCREASING;
+	}
+
+	/**
+	 * Find monotonicity. NaNs are ignored or considered not equal
+	 * @param a
+	 * @return monotonicity
+	 */
+	public static Monotonicity findMonotonicity(Object a) {
+		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		if (da.getRank() > 1) {
+			throw new IllegalArgumentException("Only 0 or 1D datasets are allowed");
+		}
+
+		if (da.getElementsPerItem() > 1) {
+			throw new IllegalArgumentException("Cannot compare compound datsets");
+		}
+
+		final IndexIterator it = da.getIterator();
+		double previous = Double.NaN;
+		while (Double.isNaN(previous) && it.hasNext()) { // look for first non-NaN
+			previous = da.getElementDoubleAbs(it.index);
+		}
+
+		Boolean increasing = null;
+		boolean equality = false;
+		while (it.hasNext()) { // look for first change
+			double next = da.getElementDoubleAbs(it.index);
+			if (!Double.isNaN(next)) {
+				if (previous != next) {
+					increasing = previous < next;
+					previous = next;
+					break;
+				} else if (!equality) {
+					equality = true;
+				}
+			}
+		}
+
+		if (increasing == null) {
+			return Double.isNaN(previous) ? Monotonicity.NOT_ORDERED : Monotonicity.ALL_EQUAL;
+		}
+
+		if (increasing) {
+			while (it.hasNext()) {
+				double next = da.getElementDoubleAbs(it.index);
+				if (!Double.isNaN(next)) {
+					if (previous > next) {
+						return Monotonicity.NOT_ORDERED;
+					} else if (previous < next) {
+						previous = next;
+					} else if (!equality) {
+						equality = true;
+					}
+				}
+			}
+			return equality ? Monotonicity.NONDECREASING : Monotonicity.STRICTLY_INCREASING;
+		}
+
+		while (it.hasNext()) {
+			double next = da.getElementDoubleAbs(it.index);
+			if (!Double.isNaN(next)) {
+				if (previous < next) {
+					return Monotonicity.NOT_ORDERED;
+				} else if (previous > next) {
+					previous = next;
+				} else if (!equality) {
+					equality = true;
+				}
+			}
+		}
+		return equality ? Monotonicity.NONINCREASING : Monotonicity.STRICTLY_DECREASING;
+	}
 }
