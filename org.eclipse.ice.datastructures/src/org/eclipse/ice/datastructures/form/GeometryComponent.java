@@ -19,15 +19,15 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import org.eclipse.eavp.viz.service.datastructures.VizObject.IManagedUpdateable;
+import org.eclipse.eavp.viz.service.datastructures.VizObject.IManagedUpdateableListener;
+import org.eclipse.eavp.viz.service.datastructures.VizObject.SubscriptionType;
+import org.eclipse.eavp.viz.service.modeling.ShapeController;
 import org.eclipse.ice.datastructures.ICEObject.Component;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
-import org.eclipse.ice.viz.service.datastructures.VizObject.IManagedUpdateable;
-import org.eclipse.ice.viz.service.datastructures.VizObject.IManagedUpdateableListener;
-import org.eclipse.ice.viz.service.datastructures.VizObject.SubscriptionType;
-import org.eclipse.ice.viz.service.modeling.ShapeController;
 
 /**
  * <p>
@@ -357,8 +357,8 @@ public class GeometryComponent extends ICEObject implements Component,
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.ice.viz.service.datastructures.VizObject.
-	 * IVizUpdateableListener#update(org.eclipse.ice.viz.service.datastructures.
+	 * @see org.eclipse.eavp.viz.service.datastructures.VizObject.
+	 * IVizUpdateableListener#update(org.eclipse.eavp.viz.service.datastructures.
 	 * VizObject.IVizUpdateable)
 	 */
 	@Override
@@ -372,7 +372,7 @@ public class GeometryComponent extends ICEObject implements Component,
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.ice.viz.service.datastructures.VizObject.
+	 * @see org.eclipse.eavp.viz.service.datastructures.VizObject.
 	 * IManagedVizUpdateableListener#getSubscriptions(org.eclipse.ice.viz.
 	 * service.datastructures.VizObject.IVizUpdateable)
 	 */

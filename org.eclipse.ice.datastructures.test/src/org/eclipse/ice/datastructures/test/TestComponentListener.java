@@ -17,13 +17,13 @@ import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.eclipse.eavp.viz.service.datastructures.VizObject.IManagedUpdateable;
+import org.eclipse.eavp.viz.service.datastructures.VizObject.IManagedUpdateableListener;
+import org.eclipse.eavp.viz.service.datastructures.VizObject.IVizUpdateable;
+import org.eclipse.eavp.viz.service.datastructures.VizObject.IVizUpdateableListener;
+import org.eclipse.eavp.viz.service.datastructures.VizObject.SubscriptionType;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
-import org.eclipse.ice.viz.service.datastructures.VizObject.IManagedUpdateable;
-import org.eclipse.ice.viz.service.datastructures.VizObject.IManagedUpdateableListener;
-import org.eclipse.ice.viz.service.datastructures.VizObject.IVizUpdateable;
-import org.eclipse.ice.viz.service.datastructures.VizObject.IVizUpdateableListener;
-import org.eclipse.ice.viz.service.datastructures.VizObject.SubscriptionType;
 
 /**
  * <p>
@@ -123,7 +123,7 @@ public class TestComponentListener implements IManagedUpdateableListener, IUpdat
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ice.viz.service.datastructures.IVizUpdateableListener#update(org.eclipse.ice.viz.service.datastructures.IVizUpdateable)
+	 * @see org.eclipse.eavp.viz.service.datastructures.IVizUpdateableListener#update(org.eclipse.eavp.viz.service.datastructures.IVizUpdateable)
 	 */
 	@Override
 	public void update(IVizUpdateable component) {
@@ -140,7 +140,7 @@ public class TestComponentListener implements IManagedUpdateableListener, IUpdat
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ice.viz.service.datastructures.VizObject.IManagedVizUpdateableListener#getSubscriptions(org.eclipse.ice.viz.service.datastructures.VizObject.IManagedVizUpdateable)
+	 * @see org.eclipse.eavp.viz.service.datastructures.VizObject.IManagedVizUpdateableListener#getSubscriptions(org.eclipse.eavp.viz.service.datastructures.VizObject.IManagedVizUpdateable)
 	 */
 	@Override
 	public ArrayList<SubscriptionType> getSubscriptions(IManagedUpdateable source) {

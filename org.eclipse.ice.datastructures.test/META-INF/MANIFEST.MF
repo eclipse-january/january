@@ -6,9 +6,9 @@ Bundle-Version: 2.1.8.20160208
 Require-Bundle: org.junit;bundle-version="4.8.2",
  org.eclipse.emf.ecore,
  org.eclipse.ice.datastructures,
- org.eclipse.ice.viz.service,
- org.eclipse.ice.viz.service.geometry,
- org.eclipse.ice.viz.service.mesh,
+ org.eclipse.eavp.viz.service,
+ org.eclipse.eavp.viz.service.geometry,
+ org.eclipse.eavp.viz.service.mesh,
  org.eclipse.platform;bundle-version="4.5.0",
  org.eclipse.core.resources
 Import-Package: ca.odell.glazedlists,
