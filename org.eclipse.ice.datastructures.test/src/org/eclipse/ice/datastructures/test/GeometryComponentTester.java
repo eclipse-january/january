@@ -20,14 +20,14 @@ import static org.junit.Assert.fail;
 
 import java.util.List;
 
+import org.eclipse.eavp.viz.service.geometry.shapes.OperatorType;
+import org.eclipse.eavp.viz.service.geometry.shapes.ShapeType;
 import org.eclipse.eavp.viz.service.modeling.AbstractController;
 import org.eclipse.eavp.viz.service.modeling.AbstractView;
 import org.eclipse.eavp.viz.service.modeling.ShapeController;
 import org.eclipse.eavp.viz.service.modeling.ShapeMesh;
 import org.eclipse.ice.datastructures.ICEObject.Component;
 import org.eclipse.ice.datastructures.form.GeometryComponent;
-import org.eclipse.ice.viz.service.geometry.shapes.OperatorType;
-import org.eclipse.ice.viz.service.geometry.shapes.ShapeType;
 import org.junit.Test;
 
 /**
