@@ -1146,6 +1146,21 @@ public class DatasetUtils {
 	}
 
 	/**
+	 * Slice (or fully load), if necessary, a lazy dataset and convert to our dataset implementation.
+	 * If a slice is necessary, this may cause resource problems when used on large datasets
+	 * and throw runtime exceptions
+	 * @param lazy can be null
+	 * @return Converted dataset or null
+	 */
+	public static Dataset sliceAndConvertLazyDataset(ILazyDataset lazy) {
+		if (lazy == null)
+			return null;
+
+		IDataset data = lazy instanceof IDataset ? (IDataset) lazy : lazy.getSlice();
+		return convertToDataset(data);
+	}
+
+	/**
 	 * Convert (if necessary) a dataset obeying the interface to our implementation
 	 * @param lazydata can be null
 	 * @return Converted dataset or null
@@ -1158,14 +1173,12 @@ public class DatasetUtils {
 			return (Dataset) lazydata;
 		}
 
-		int dtype = AbstractDataset.getDType(lazydata);
-
-		IDataset data;
-		if (lazydata instanceof IDataset) {
-			data = (IDataset) lazydata;
-		} else {
+		if (!(lazydata instanceof IDataset)) {
 			throw new IllegalArgumentException("This is a lazy dataset and should not be fully loaded - use getSlice");
 		}
+
+		IDataset data = (IDataset) lazydata;
+		int dtype = AbstractDataset.getDType(data);
 
 		final int isize = data.getElementsPerItem();
 		if (isize <= 0) {
