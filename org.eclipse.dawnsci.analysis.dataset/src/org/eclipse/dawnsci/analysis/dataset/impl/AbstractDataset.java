@@ -3331,15 +3331,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		if (led == null)
 			return null;
 
-		Dataset ed = null;
-		if (led instanceof IDataset) {
-			ed = DatasetUtils.convertToDataset(led);
-			if (!(led instanceof Dataset)) {
-				setError(ed); // set back
-			}
-		} else {
-			ed = DatasetUtils.convertToDataset(led.getSlice());
-			setError(ed);
+		Dataset ed = DatasetUtils.sliceAndConvertLazyDataset(led);
+		if (!(led instanceof Dataset)) {
+			setError(ed); // set back
 		}
 
 		// check for broadcast strides
@@ -3484,12 +3478,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 		if (!(emd instanceof ErrorMetadataImpl)) {
 			ILazyDataset led = emd.getError();
-			Dataset ed = null;
-			if (led instanceof IDataset) {
-				ed = (Dataset) led;
-			} else {
-				ed = DatasetUtils.convertToDataset(led.getSlice());
-			}
+			Dataset ed = DatasetUtils.sliceAndConvertLazyDataset(led);
 			emd  = new ErrorMetadataImpl();
 			setMetadata(emd);
 			((ErrorMetadataImpl) emd).setError(ed);
