@@ -16,7 +16,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.dawnsci.analysis.api.dataset.IDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.ILazyDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.Slice;
 import org.eclipse.dawnsci.analysis.api.dataset.SliceND;
@@ -216,7 +215,7 @@ public class AggregateDataset extends LazyDatasetBase implements ILazyDataset {
 	}
 
 	@Override
-	public IDataset getSlice(int[] start, int[] stop, int[] step) {
+	public Dataset getSlice(int[] start, int[] stop, int[] step) {
 		try {
 			return getSlice(null, new SliceND(shape, start, stop, step));
 		} catch (Exception e) {
@@ -226,12 +225,12 @@ public class AggregateDataset extends LazyDatasetBase implements ILazyDataset {
 	}
 
 	@Override
-	public IDataset getSlice(IMonitor monitor, int[] start, int[] stop, int[] step) throws Exception {
+	public Dataset getSlice(IMonitor monitor, int[] start, int[] stop, int[] step) throws Exception {
 		return getSlice(monitor, new SliceND(shape, start, stop, step));
 	}
 
 	@Override
-	public IDataset getSlice(IMonitor monitor, SliceND slice) throws Exception {
+	public Dataset getSlice(IMonitor monitor, SliceND slice) throws Exception {
 		int[] start = slice.getStart();
 		int[] stop  = slice.getStop();
 		int[] step  = slice.getStep();
@@ -275,13 +274,13 @@ public class AggregateDataset extends LazyDatasetBase implements ILazyDataset {
 		Dataset a = DatasetUtils.convertToDataset(od.getSlice(monitor, start, stop, step));
 		sliced.add(a.cast(dtype));
 
-		IDataset d = DatasetUtils.concatenate(sliced.toArray(new Dataset[0]), 0);
+		Dataset d = DatasetUtils.concatenate(sliced.toArray(new Dataset[0]), 0);
 		d.setName(name);
 		return d;
 	}
 
 	@Override
-	public IDataset getSlice(Slice... slice) {
+	public Dataset getSlice(Slice... slice) {
 		try {
 			return getSlice(null, slice);
 		} catch (Exception e) {
@@ -291,7 +290,7 @@ public class AggregateDataset extends LazyDatasetBase implements ILazyDataset {
 	}
 
 	@Override
-	public IDataset getSlice(SliceND slice) {
+	public Dataset getSlice(SliceND slice) {
 		try {
 			return getSlice(null, slice);
 		} catch (Exception e) {
@@ -301,16 +300,13 @@ public class AggregateDataset extends LazyDatasetBase implements ILazyDataset {
 	}
 
 	@Override
-	public IDataset getSlice(IMonitor monitor, Slice... slice) throws Exception {
+	public Dataset getSlice(IMonitor monitor, Slice... slice) throws Exception {
 		return getSlice(monitor, new SliceND(shape, slice));
 	}
 
 	@Override
-	public ILazyDataset getSliceView(Slice... slice) {
-		if (slice == null || slice.length == 0) {
-			return getSlice(new SliceND(shape));
-		}
-		return getSlice(new SliceND(shape, slice));
+	public AggregateDataset getSliceView(Slice... slice) {
+		return getSliceView(new SliceND(shape, slice));
 	}
 
 	@Override
@@ -329,7 +325,7 @@ public class AggregateDataset extends LazyDatasetBase implements ILazyDataset {
 	}
 
 	@Override
-	public ILazyDataset getTransposedView(int... axes) {
+	public AggregateDataset getTransposedView(int... axes) {
 		throw new UnsupportedOperationException("Not implemented");
 	}
 
