@@ -446,7 +446,7 @@ public class NumpyExamples {
     	
     	IDataset rand = Random.rand(new int[]{3,4});
     	
-    	IDataset line = DatasetUtils.linSpace(1, 3, 4, Dataset.FLOAT64);
+    	IDataset line = DatasetFactory.createLinearSpace(1, 3, 4, Dataset.FLOAT64);
     }
      
     /**two 2D arrays: one of x values, the other of y values
