@@ -494,4 +494,64 @@ public class DatasetFactory {
 		}
 		throw new IllegalArgumentException("dtype not a known compound type");
 	}
+
+	/**
+	 * Create a 1D dataset of linearly spaced values in closed interval
+	 * 
+	 * @param start
+	 * @param stop
+	 * @param length number of points
+	 * @param dtype
+	 * @return dataset with linearly spaced values
+	 */
+	public static Dataset createLinearSpace(final double start, final double stop, final int length, final int dtype) {
+		if (length < 1) {
+			throw new IllegalArgumentException("Length is less than one");
+		} else if (length == 1) {
+			return createFromObject(start, dtype);
+		} else {
+			Dataset ds = zeros(new int[] {length}, dtype);
+			double num = stop - start;
+			double den = length - 1;
+			double value;
+	
+			for (int i = 0; i < length; i++) {
+				value = start + (num * i) / den;
+				ds.setObjectAbs(i, value);
+			}
+	
+			return ds;
+		}
+	}
+
+	/**
+	 * Create a 1D dataset of logarithmically spaced values in closed interval. The base value is used to
+	 * determine the factor between values: factor = base ** step, where step is the interval between linearly
+	 * spaced sequence of points
+	 * 
+	 * @param start
+	 * @param stop
+	 * @param length number of points
+	 * @param base
+	 * @param dtype
+	 * @return dataset with logarithmically spaced values
+	 */
+	public static Dataset createLogSpace(final double start, final double stop, final int length, final double base, final int dtype) {
+		if (length < 1) {
+			throw new IllegalArgumentException("Length is less than one");
+		} else if (length == 1) {
+			return createFromObject(Math.pow(base, start), dtype);
+		} else {
+			Dataset ds = zeros(new int[] {length}, dtype);
+			double step = (stop - start) / (length - 1);
+			double value;
+	
+			for (int i = 0; i < length; i++) {
+				value = start + i * step;
+				ds.setObjectAbs(i, Math.pow(base, value));
+			}
+	
+			return ds;
+		}
+	}
 }

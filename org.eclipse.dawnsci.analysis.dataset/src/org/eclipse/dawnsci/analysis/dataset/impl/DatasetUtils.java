@@ -1002,26 +1002,10 @@ public class DatasetUtils {
 	 * @param length number of points
 	 * @param dtype
 	 * @return dataset with linearly spaced values
+	 * @deprecated Use {@link DatasetFactory#createLinearSpace(double,double,int,int)} instead
 	 */
 	public static Dataset linSpace(final double start, final double stop, final int length, final int dtype) {
-		if (length < 1) {
-			utilsLogger.error("Length is less than one");
-			throw new IllegalArgumentException("Length is less than one");
-		} else if (length == 1) {
-			return DatasetFactory.createFromObject(start, dtype);
-		} else {
-			Dataset ds = DatasetFactory.zeros(new int[] {length}, dtype);
-			double num = stop - start;
-			double den = length - 1;
-			double value;
-
-			for (int i = 0; i < length; i++) {
-				value = start + (num * i) / den;
-				ds.setObjectAbs(i, value);
-			}
-
-			return ds;
-		}
+		return DatasetFactory.createLinearSpace(start, stop, length, dtype);
 	}
 
 	/**
@@ -1035,25 +1019,10 @@ public class DatasetUtils {
 	 * @param base
 	 * @param dtype
 	 * @return dataset with logarithmically spaced values
+	 * @deprecated Use {@link DatasetFactory#createLogSpace(double,double,int,double,int)} instead
 	 */
 	public static Dataset logSpace(final double start, final double stop, final int length, final double base, final int dtype) {
-		if (length < 1) {
-			utilsLogger.error("Length is less than one");
-			throw new IllegalArgumentException("Length is less than one");
-		} else if (length == 1) {
-			return DatasetFactory.createFromObject(Math.pow(base, start), dtype);
-		} else {
-			Dataset ds = DatasetFactory.zeros(new int[] {length}, dtype);
-			double step = (stop - start) / (length - 1);
-			double value;
-
-			for (int i = 0; i < length; i++) {
-				value = start + i * step;
-				ds.setObjectAbs(i, Math.pow(base, value));
-			}
-
-			return ds;
-		}
+		return DatasetFactory.createLogSpace(start, stop, length, base, dtype);
 	}
 
 	/**
