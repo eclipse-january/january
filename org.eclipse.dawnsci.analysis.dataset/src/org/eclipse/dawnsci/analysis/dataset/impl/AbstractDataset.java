@@ -398,6 +398,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public Dataset flatten() {
+		if (stride != null) { // need to make a copy if not contiguous
+			return clone().flatten();
+		}
 		return reshape(size);
 	}
 
