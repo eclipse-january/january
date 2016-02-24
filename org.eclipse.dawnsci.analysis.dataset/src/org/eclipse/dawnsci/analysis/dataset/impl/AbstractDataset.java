@@ -1527,17 +1527,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	@Override
 	public Dataset getSliceView(Slice... slice) {
 		if (slice == null || slice.length == 0) {
-			int[] sOffset = new int[1];
-			int[] sStride = createStrides(this, sOffset);
-
-			AbstractDataset s = getView();
-			if (sStride.length != 0) { // special case of zero-rank dataset
-				s.stride = sStride;
-				s.offset = sOffset[0];
-				s.base = base == null ? this : base;
-			}
-
-			return s;
+			return getView();
 		}
 
 		return getSliceView(new SliceND(shape, slice));
@@ -1550,6 +1540,10 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	 */
 	@Override
 	public Dataset getSliceView(SliceND slice) {
+		if (slice.isAll()) {
+			return getView();
+		}
+
 		final int rank = shape.length;
 		int[] sStride = new int[rank];
 		int[] sOffset = new int[1];
