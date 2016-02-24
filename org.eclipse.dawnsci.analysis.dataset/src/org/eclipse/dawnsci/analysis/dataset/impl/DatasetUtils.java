@@ -1131,22 +1131,17 @@ public class DatasetUtils {
 
 	/**
 	 * Convert (if necessary) a dataset obeying the interface to our implementation
-	 * @param lazydata can be null
+	 * @param data can be null
 	 * @return Converted dataset or null
 	 */
-	public static Dataset convertToDataset(ILazyDataset lazydata) {
-		if (lazydata == null) 
+	public static Dataset convertToDataset(IDataset data) {
+		if (data == null)
 			return null;
 
-		if (lazydata instanceof Dataset) {
-			return (Dataset) lazydata;
+		if (data instanceof Dataset) {
+			return (Dataset) data;
 		}
 
-		if (!(lazydata instanceof IDataset)) {
-			throw new IllegalArgumentException("This is a lazy dataset and should not be fully loaded - use getSlice");
-		}
-
-		IDataset data = (IDataset) lazydata;
 		int dtype = AbstractDataset.getDType(data);
 
 		final int isize = data.getElementsPerItem();
@@ -1490,15 +1485,19 @@ public class DatasetUtils {
 		double y1, y2;
 
 		y2 = it.hasNext() ? y2 = d.getElementDoubleAbs(it.index) : 0;
-
-		for (int i = 1; it.hasNext(); i++) {
+		double x = 1;
+		while (it.hasNext()) {
 			y1 = y2;
 			y2 = d.getElementDoubleAbs(it.index);
 			// check if value lies within pair [y1, y2]
-			if ((y1 <= value && y2 > value) || (y1 > value && y2 <= value)) {
+			if ((y1 <= value && value < y2) || (y1 > value && y2 <= value)) {
 				final double f = (value - y2)/(y2 - y1); // negative distance from right to left
-				results.add(i + f);
+				results.add(x + f);
 			}
+			x++;
+		}
+		if (y2 == value) { // add end point of it intersects
+			results.add(x);
 		}
 
 		return results;
