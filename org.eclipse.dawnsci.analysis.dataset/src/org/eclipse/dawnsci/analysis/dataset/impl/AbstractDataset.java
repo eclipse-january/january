@@ -1529,11 +1529,13 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		if (slice == null || slice.length == 0) {
 			int[] sOffset = new int[1];
 			int[] sStride = createStrides(this, sOffset);
-			
+
 			AbstractDataset s = getView();
-			s.stride = sStride;
-			s.offset = sOffset[0];
-			s.base = base == null ? this : base;
+			if (sStride.length != 0) { // special case of zero-rank dataset
+				s.stride = sStride;
+				s.offset = sOffset[0];
+				s.base = base == null ? this : base;
+			}
 
 			return s;
 		}
