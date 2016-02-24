@@ -224,8 +224,8 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 			return getSlice(null, start, stop, step);
 		} catch (Exception e) {
 			logger.error("Problem slicing lazy dataset", e);
+			throw new RuntimeException("Problem slicing lazy dataset", e);
 		}
-		return null;
 	}
 
 	@Override
@@ -236,6 +236,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 			}
 			return getSlice(null, new SliceND(shape, slice));
 		} catch (Exception e) {
+			logger.error("Problem slicing lazy dataset", e);
 			throw new RuntimeException("Problem slicing lazy dataset", e);
 		}
 	}
@@ -246,8 +247,8 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 			return getSlice(null, slice);
 		} catch (Exception e) {
 			logger.error("Problem slicing lazy dataset", e);
+			throw new RuntimeException("Problem slicing lazy dataset", e);
 		}
-		return null;
 	}
 
 	@Override
@@ -422,10 +423,9 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 			try {
 				a = DatasetUtils.convertToDataset(loader.getDataset(monitor, nslice));
 			} catch (Exception e) {
-				// return a fake dataset to show that this has not worked, should not be used in general though.
-				logger.debug("Problem getting {}: {}", String.format("slice %s %s %s", Arrays.toString(slice.getStart()), Arrays.toString(slice.getStop()),
-								Arrays.toString(slice.getStep())), e);
-				a = new DoubleDataset(1);
+				logger.error("Problem getting {}: {}", String.format("slice %s %s %s from %s", Arrays.toString(slice.getStart()), Arrays.toString(slice.getStop()),
+								Arrays.toString(slice.getStep()), loader), e);
+				throw e;
 			}
 			a.setName(name + AbstractDataset.BLOCK_OPEN + nslice.toString() + AbstractDataset.BLOCK_CLOSE);
 			if (metadata != null && a instanceof LazyDatasetBase) {
