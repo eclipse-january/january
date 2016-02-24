@@ -9,7 +9,7 @@
 
 package org.eclipse.dawnsci.analysis.dataset.metadata;
 
-import org.eclipse.dawnsci.analysis.api.dataset.ILazyDataset;
+import org.eclipse.dawnsci.analysis.api.dataset.IDataset;
 import org.eclipse.dawnsci.analysis.api.metadata.MaskMetadata;
 import org.eclipse.dawnsci.analysis.api.metadata.Sliceable;
 import org.eclipse.dawnsci.analysis.api.metadata.Transposable;
@@ -23,9 +23,9 @@ public class MaskMetadataImpl implements MaskMetadata {
 	
 	@Transposable
 	@Sliceable
-	ILazyDataset mask;
+	IDataset mask;
 	
-	public MaskMetadataImpl(ILazyDataset mask) {
+	public MaskMetadataImpl(IDataset mask) {
 		this.mask = mask;
 	}
 
@@ -34,7 +34,7 @@ public class MaskMetadataImpl implements MaskMetadata {
 	}
 
 	@Override
-	public ILazyDataset getMask() {
+	public IDataset getMask() {
 		return mask;
 	}
 	

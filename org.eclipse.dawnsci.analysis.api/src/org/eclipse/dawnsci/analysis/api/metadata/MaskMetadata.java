@@ -12,7 +12,7 @@
 
 package org.eclipse.dawnsci.analysis.api.metadata;
 
-import org.eclipse.dawnsci.analysis.api.dataset.ILazyDataset;
+import org.eclipse.dawnsci.analysis.api.dataset.IDataset;
 
 /**
  * This metadata describes masking information associated with a dataset
@@ -23,5 +23,5 @@ public interface MaskMetadata extends MetadataType {
 	 * Get mask
 	 * @return mask
 	 */
-	public ILazyDataset getMask();
+	public IDataset getMask();
 }
