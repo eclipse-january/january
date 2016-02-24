@@ -573,7 +573,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 				}
 			}
 
-			ILazyDataset nlz = lz; //.clone();
+			ILazyDataset nlz = lz.getSliceView();
 			nlz.setShape(nshape);
 			return nlz;
 		}
