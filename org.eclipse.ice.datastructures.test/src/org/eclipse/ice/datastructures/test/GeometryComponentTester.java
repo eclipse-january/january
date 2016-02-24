@@ -20,10 +20,13 @@ import static org.junit.Assert.fail;
 
 import java.util.List;
 
+import org.eclipse.eavp.viz.service.geometry.shapes.GeometryMeshProperty;
 import org.eclipse.eavp.viz.service.geometry.shapes.OperatorType;
 import org.eclipse.eavp.viz.service.geometry.shapes.ShapeType;
 import org.eclipse.eavp.viz.service.modeling.AbstractController;
 import org.eclipse.eavp.viz.service.modeling.AbstractView;
+import org.eclipse.eavp.viz.service.modeling.IController;
+import org.eclipse.eavp.viz.service.modeling.MeshProperty;
 import org.eclipse.eavp.viz.service.modeling.ShapeController;
 import org.eclipse.eavp.viz.service.modeling.ShapeMesh;
 import org.eclipse.ice.datastructures.ICEObject.Component;
@@ -51,9 +54,11 @@ public class GeometryComponentTester {
 
 		// Create a shape
 		ShapeMesh geometryModel = new ShapeMesh();
-		geometryModel.setProperty("Type", ShapeType.Sphere.toString());
+		geometryModel.setProperty(MeshProperty.TYPE,
+				ShapeType.Sphere.toString());
 		AbstractView geometryView = new AbstractView();
-		ShapeController geometryShape = new ShapeController(geometryModel, geometryView);
+		ShapeController geometryShape = new ShapeController(geometryModel,
+				geometryView);
 
 		// Instantiate a GeometryComponent
 		GeometryComponent geometry = new GeometryComponent();
@@ -86,7 +91,7 @@ public class GeometryComponentTester {
 		assertEquals(2, geometry.getGeometry().getEntities().size());
 
 		// Steal the list from the GeometryComponent
-		List<AbstractController> shapes = geometry.getGeometry().getEntities();
+		List<IController> shapes = geometry.getGeometry().getEntities();
 		assertEquals(2, shapes.size());
 
 		// Remove a shape from the stolen list
@@ -143,9 +148,11 @@ public class GeometryComponentTester {
 
 		// Create a shape
 		ShapeMesh geometryModel = new ShapeMesh();
-		geometryModel.setProperty("Type", ShapeType.Sphere.toString());
+		geometryModel.setProperty(MeshProperty.TYPE,
+				ShapeType.Sphere.toString());
 		AbstractView geometryView = new AbstractView();
-		ShapeController geometryShape = new ShapeController(geometryModel, geometryView);
+		ShapeController geometryShape = new ShapeController(geometryModel,
+				geometryView);
 
 		// Create a new listener and add it to a GeometryComponent
 		GeometryComponent geometry = new GeometryComponent();
@@ -251,9 +258,11 @@ public class GeometryComponentTester {
 	public void checkEquality() {
 
 		ShapeMesh geometryModel = new ShapeMesh();
-		geometryModel.setProperty("Type", ShapeType.Sphere.toString());
+		geometryModel.setProperty(MeshProperty.TYPE,
+				ShapeType.Sphere.toString());
 		AbstractView geometryView = new AbstractView();
-		ShapeController geometryShape = new ShapeController(geometryModel, geometryView);
+		ShapeController geometryShape = new ShapeController(geometryModel,
+				geometryView);
 
 		// Create GeometryComponent to test
 		GeometryComponent component = new GeometryComponent();
@@ -263,13 +272,15 @@ public class GeometryComponentTester {
 		component.setGeometry(geometryShape);
 		equalComponent.setGeometry((ShapeController) geometryShape.clone());
 		unEqualComponent.setGeometry((ShapeController) geometryShape.clone());
-		transitiveComponent.setGeometry((ShapeController) geometryShape.clone());
+		transitiveComponent
+				.setGeometry((ShapeController) geometryShape.clone());
 
 		// Change values
 		ShapeController shape = (ShapeController) geometryShape.clone();
-		shape.setProperty("Type", ShapeType.Cylinder.toString());
+		shape.setProperty(MeshProperty.TYPE, ShapeType.Cylinder.toString());
 		ShapeController weirdShape = (ShapeController) geometryShape.clone();
-		shape.setProperty("Operator", OperatorType.Intersection.toString());
+		shape.setProperty(GeometryMeshProperty.OPERATOR,
+				OperatorType.Intersection.toString());
 
 		component.getGeometry().addEntity(shape);
 		equalComponent.getGeometry().addEntity(shape);
@@ -344,9 +355,11 @@ public class GeometryComponentTester {
 
 		// Create a shape
 		ShapeMesh geometryModel = new ShapeMesh();
-		geometryModel.setProperty("Type", ShapeType.Sphere.toString());
+		geometryModel.setProperty(MeshProperty.TYPE,
+				ShapeType.Sphere.toString());
 		AbstractView geometryView = new AbstractView();
-		ShapeController geometryShape = new ShapeController(geometryModel, geometryView);
+		ShapeController geometryShape = new ShapeController(geometryModel,
+				geometryView);
 
 		// Create a new GeometryComponent
 		GeometryComponent geometry = new GeometryComponent();
@@ -370,9 +383,11 @@ public class GeometryComponentTester {
 
 		// Create a shape
 		ShapeMesh geometryModel = new ShapeMesh();
-		geometryModel.setProperty("Type", ShapeType.Sphere.toString());
+		geometryModel.setProperty(MeshProperty.TYPE,
+				ShapeType.Sphere.toString());
 		AbstractView geometryView = new AbstractView();
-		ShapeController geometryShape = new ShapeController(geometryModel, geometryView);
+		ShapeController geometryShape = new ShapeController(geometryModel,
+				geometryView);
 
 		GeometryComponent geometry = new GeometryComponent();
 		GeometryComponent cloneGeometry;
@@ -386,12 +401,13 @@ public class GeometryComponentTester {
 
 		// Set up GeometryComponent-specific stuff
 		ShapeMesh sphereModel = new ShapeMesh();
-		sphereModel.setProperty("Type", ShapeType.Sphere.toString());
+		sphereModel.setProperty(MeshProperty.TYPE, ShapeType.Sphere.toString());
 		AbstractView sphereView = new AbstractView();
 		ShapeController sphere1 = new ShapeController(sphereModel, sphereView);
 
 		ShapeMesh cubeModel = new ShapeMesh();
-		cubeModel.setProperty("Operator", OperatorType.Union.toString());
+		cubeModel.setProperty(GeometryMeshProperty.OPERATOR,
+				OperatorType.Union.toString());
 		AbstractView cubeView = new AbstractView();
 		ShapeController cube1 = new ShapeController(cubeModel, cubeView);
 
