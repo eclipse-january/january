@@ -36,12 +36,13 @@ import org.eclipse.ice.datastructures.entry.IEntry;
  * @author Jay Jay Billings
  */
 @XmlRootElement(name = "DataComponent")
-public class DataComponent extends ICEObject implements Component,
-		IUpdateableListener {
+public class DataComponent extends ICEObject
+		implements Component, IUpdateableListener {
 	/**
+	 * The entries in this data component.
 	 */
 	@XmlElementWrapper
-	@XmlAnyElement(lax=true)
+	@XmlAnyElement(lax = true)
 	private ArrayList<IEntry> entries;
 
 	/**
@@ -163,7 +164,8 @@ public class DataComponent extends ICEObject implements Component,
 	 *            <p>
 	 *            The name of the Entry to retrieve from the Form.
 	 *            </p>
-	 * @return <p>
+	 * @return
+	 * 		<p>
 	 *         The Entry with name entryName.
 	 *         </p>
 	 */
@@ -185,7 +187,8 @@ public class DataComponent extends ICEObject implements Component,
 	 * as more information is provided to the Form and Item.
 	 * </p>
 	 * 
-	 * @return <p>
+	 * @return
+	 * 		<p>
 	 *         The list of Entries that are ready to be addressed. The Entries
 	 *         in this list are only the Entries that are not dependent on other
 	 *         Entries or Entries for which all of the needed information has
@@ -212,7 +215,8 @@ public class DataComponent extends ICEObject implements Component,
 	 * their dependency or preparation status.
 	 * </p>
 	 * 
-	 * @return <p>
+	 * @return
+	 * 		<p>
 	 *         The list of all Entries stored in the Form.
 	 *         </p>
 	 */
@@ -232,7 +236,8 @@ public class DataComponent extends ICEObject implements Component,
 	 *            The name of the Entry whose existence in the Form should be
 	 *            checked.
 	 *            </p>
-	 * @return <p>
+	 * @return
+	 * 		<p>
 	 *         True if the Entry with name entryName is in the form, false
 	 *         otherwise.
 	 *         </p>
@@ -260,7 +265,8 @@ public class DataComponent extends ICEObject implements Component,
 	 *            The other DataComponent to which this component should be
 	 *            compared.
 	 *            </p>
-	 * @return <p>
+	 * @return
+	 * 		<p>
 	 *         True if the DataComponents are equal, false otherwise.
 	 *         </p>
 	 */
@@ -302,7 +308,8 @@ public class DataComponent extends ICEObject implements Component,
 	 * This operation returns the hashcode value of the DataComponent.
 	 * </p>
 	 * 
-	 * @return <p>
+	 * @return
+	 * 		<p>
 	 *         The hashcode.
 	 *         </p>
 	 */
@@ -358,7 +365,8 @@ public class DataComponent extends ICEObject implements Component,
 	 * This operation provides a deep copy of the DataComponent.
 	 * </p>
 	 * 
-	 * @return <p>
+	 * @return
+	 * 		<p>
 	 *         The deep-copy clone of this DataComponent.
 	 *         </p>
 	 */
