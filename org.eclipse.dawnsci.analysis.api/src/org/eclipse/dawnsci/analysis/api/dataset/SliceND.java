@@ -23,10 +23,9 @@ public class SliceND {
 	private int[] lstop;
 	private int[] lstep;
 	private int[] lshape;
-	private int[] oshape;
+	private int[] oshape; // source or original shape
 	private int[] mshape;
 
-	private boolean allData;
 	private boolean expanded;
 
 	/**
@@ -41,7 +40,6 @@ public class SliceND {
 		Arrays.fill(lstep, 1);
 		lshape = shape.clone();
 		oshape = shape.clone();
-		allData = true;
 		mshape = oshape;
 		expanded = false;
 	}
@@ -84,8 +82,6 @@ public class SliceND {
 				}
 			}
 		}
-
-		checkAllData();
 	}
 
 	private void initMaxShape(int[] maxShape) {
@@ -172,28 +168,6 @@ public class SliceND {
 		for (int i = 0; i < rank; i++) {
 			internalSetSlice(i, start == null ? null : lstart[i], stop == null ? null : lstop[i], lstep[i]);
 		}
-
-		checkAllData();
-	}
-
-	/**
-	 * Check whether the slice covers the entire shape
-	 */
-	private void checkAllData() {
-		if (expanded) {
-			allData = false;
-			return;
-		}
-
-		allData = Arrays.equals(oshape, lshape);
-		if (allData) {
-			for (int i = 0; i < oshape.length; i++) {
-				if (lstep[i] < 0) {
-					allData = false;
-					break;
-				}
-			}
-		}
 	}
 
 	/**
@@ -205,7 +179,6 @@ public class SliceND {
 	 */
 	public void setSlice(int i, Integer start, Integer stop, int step) {
 		internalSetSlice(i, start, stop, step);
-		checkAllData();
 	}
 
 	/**
@@ -217,7 +190,6 @@ public class SliceND {
 	 */
 	public void setSlice(int i, int start, int stop, int step) {
 		internalSetSlice(i, start, stop, step);
-		checkAllData();
 	}
 
 	
@@ -342,9 +314,23 @@ public class SliceND {
 	}
 
 	/**
-	 * @return resulting shape
+	 * @return resulting shape (this can change if the start, stop, step arrays are changed)
 	 */
 	public int[] getShape() {
+		int r = lshape.length;
+		for (int i = 0; i < r; i++) {
+			int start = lstart[i];
+			int stop = lstop[i];
+			int step = lstep[i];
+			if (start == stop) {
+				lshape[i] = 0;
+			} else if (step > 0) {
+				lshape[i] = (stop - start - 1) / step + 1;
+			} else {
+				lshape[i] = (stop - start + 1) / step + 1;
+			}
+		}
+
 		return lshape;
 	}
 
@@ -361,6 +347,19 @@ public class SliceND {
 	}
 
 	public boolean isAll() {
+		if (expanded) {
+			return false;
+		}
+
+		boolean allData = Arrays.equals(oshape, getShape());
+		if (allData) {
+			for (int i = 0; i < lshape.length; i++) {
+				if (lstep[i] < 0) {
+					allData = false;
+					break;
+				}
+			}
+		}
 		return allData;
 	}
 
@@ -383,13 +382,12 @@ public class SliceND {
 	@Override
 	public SliceND clone() {
 		SliceND c = new SliceND(oshape);
-		for (int i = 0; i < oshape.length; i++) {
+		for (int i = 0; i < lshape.length; i++) {
 			c.lshape[i] = lshape[i];
 			c.lstart[i] = lstart[i];
 			c.lstop[i] = lstop[i];
 			c.lstep[i] = lstep[i];
 		}
-		c.allData = allData;
 		c.expanded = expanded;
 		return c;
 	}
