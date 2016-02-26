@@ -1560,12 +1560,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		s.metadata = copyMetadata();
 		s.sliceMetadata(true, slice);
 
-		if (slice.isAll()) {
-			s.setName(name);
-		} else {
-			s.setDirty();
-			s.setName(name + BLOCK_OPEN + slice + BLOCK_CLOSE);
-		}
+		s.setDirty();
+		s.setName(name + BLOCK_OPEN + slice + BLOCK_CLOSE);
+
 		return s;
 	}
 
