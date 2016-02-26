@@ -22,9 +22,9 @@ public class SliceND {
 	private int[] lstart;
 	private int[] lstop;
 	private int[] lstep;
-	private int[] lshape;
+	private transient int[] lshape; // latest shape
 	private int[] oshape; // source or original shape
-	private int[] mshape;
+	private int[] mshape; // max shape
 
 	private boolean expanded;
 
@@ -244,18 +244,15 @@ public class SliceND {
 			if (start >= stop) {
 				if (start < s || m == s) {
 					lstop[i] = start;
-					lshape[i] = 0;
 				} else { // override end
 					stop = start + step;
 					if (m != ILazyWriteableDataset.UNLIMITED && stop > m) {
 						stop = m;
 					}
 					lstop[i] = stop;
-					lshape[i] = 1;
 				}
 			} else {
 				lstop[i] = stop;
-				lshape[i] = (stop - start - 1) / step + 1;
 			}
 
 			if (lstop[i] > s) {
@@ -281,10 +278,8 @@ public class SliceND {
 			}
 			if (stop >= start) {
 				lstop[i] = start;
-				lshape[i] = 0;
 			} else {
 				lstop[i] = stop;
-				lshape[i] = (stop - start + 1) / step + 1;
 			}
 		}
 
@@ -383,7 +378,6 @@ public class SliceND {
 	public SliceND clone() {
 		SliceND c = new SliceND(oshape);
 		for (int i = 0; i < lshape.length; i++) {
-			c.lshape[i] = lshape[i];
 			c.lstart[i] = lstart[i];
 			c.lstop[i] = lstop[i];
 			c.lstep[i] = lstep[i];
