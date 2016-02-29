@@ -61,10 +61,11 @@ public class ICEObject implements IUpdateable {
 	/**
 	 * The context for this object. It should be used as described on
 	 * {@link org.eclipse.ice.datastructures.ICEObject.Identifiable}. It is not
-	 * persisted to XML because it only matters during runtime.
+	 * persisted to XML because it only matters during runtime. It's default
+	 * value is "ice-default."
 	 */
 	@XmlTransient
-	protected String context = "";
+	protected String context = "ice-default";
 
 	/**
 	 * The unique identification number of the ICEObject.

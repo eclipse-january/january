@@ -64,7 +64,7 @@ public class ICEObjectTester {
 		assertEquals(testObject.getDescription(), description);
 
 		// Check the context
-		assertTrue(testObject.getContext().isEmpty());
+		assertEquals("ice-default", testObject.getContext());
 		testObject.setContext("foo");
 		assertEquals("foo", testObject.getContext());
 
