@@ -22,6 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import org.eclipse.eavp.viz.service.datastructures.VizObject.IManagedUpdateable;
 import org.eclipse.eavp.viz.service.datastructures.VizObject.IManagedUpdateableListener;
 import org.eclipse.eavp.viz.service.datastructures.VizObject.SubscriptionType;
+import org.eclipse.eavp.viz.service.modeling.MeshProperty;
 import org.eclipse.eavp.viz.service.modeling.ShapeController;
 import org.eclipse.ice.datastructures.ICEObject.Component;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
@@ -39,8 +40,8 @@ import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
  */
 @XmlRootElement(name = "GeometryComponent")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GeometryComponent extends ICEObject implements Component,
-		IUpdateableListener, IManagedUpdateableListener {
+public class GeometryComponent extends ICEObject
+		implements Component, IUpdateableListener, IManagedUpdateableListener {
 	/**
 	 * <p>
 	 * The set of ComponentListeners observing the GeometryComponent
@@ -138,7 +139,7 @@ public class GeometryComponent extends ICEObject implements Component,
 		geometry = newGeometry;
 
 		// Set the shape as being the root node for the scene
-		geometry.setProperty("Root", "True");
+		geometry.setProperty(MeshProperty.ROOT, "True");
 
 		// Register self as a listener for the geometry
 		geometry.register(this);
@@ -358,12 +359,11 @@ public class GeometryComponent extends ICEObject implements Component,
 	 * (non-Javadoc)
 	 * 
 	 * @see org.eclipse.eavp.viz.service.datastructures.VizObject.
-	 * IVizUpdateableListener#update(org.eclipse.eavp.viz.service.datastructures.
-	 * VizObject.IVizUpdateable)
+	 * IVizUpdateableListener#update(org.eclipse.eavp.viz.service.
+	 * datastructures. VizObject.IVizUpdateable)
 	 */
 	@Override
-	public void update(IManagedUpdateable component,
-			SubscriptionType[] type) {
+	public void update(IManagedUpdateable component, SubscriptionType[] type) {
 
 		notifyListeners();
 

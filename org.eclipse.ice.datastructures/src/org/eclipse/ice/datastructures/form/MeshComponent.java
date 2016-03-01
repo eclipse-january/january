@@ -26,6 +26,7 @@ import org.eclipse.eavp.viz.service.modeling.AbstractController;
 import org.eclipse.eavp.viz.service.modeling.AbstractMesh;
 import org.eclipse.eavp.viz.service.modeling.AbstractView;
 import org.eclipse.eavp.viz.service.modeling.FaceController;
+import org.eclipse.eavp.viz.service.modeling.IController;
 import org.eclipse.ice.datastructures.ICEObject.Component;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
@@ -74,8 +75,7 @@ public class MeshComponent extends ICEObject
 	 */
 	public MeshComponent() {
 		super();
-		mesh = new AbstractController(new AbstractMesh(),
-				new AbstractView());
+		mesh = new AbstractController(new AbstractMesh(), new AbstractView());
 		mesh.register(this);
 		return;
 	}
@@ -85,7 +85,7 @@ public class MeshComponent extends ICEObject
 	 * 
 	 * @return The wrapped VizMeshComponent
 	 */
-	public AbstractController getMesh() {
+	public IController getMesh() {
 		return mesh;
 	}
 
@@ -119,13 +119,14 @@ public class MeshComponent extends ICEObject
 
 		return;
 	}
-	
+
 	/**
 	 * Remove the given polygon from the MeshComponent.
 	 * 
-	 * @param polygon The polygon to be removed from the list.
+	 * @param polygon
+	 *            The polygon to be removed from the list.
 	 */
-	public void removePolygon(FaceController polygon){
+	public void removePolygon(FaceController polygon) {
 		mesh.removeEntity(polygon);
 		notifyListeners();
 	}
@@ -141,7 +142,7 @@ public class MeshComponent extends ICEObject
 	 *         A list of polygons contained in this MeshComponent.
 	 *         </p>
 	 */
-	public List<AbstractController> getPolygons() {
+	public List<IController> getPolygons() {
 		return mesh.getEntities();
 	}
 
@@ -327,8 +328,7 @@ public class MeshComponent extends ICEObject
 	 * UpdateableSubscriptionType[])
 	 */
 	@Override
-	public void update(IManagedUpdateable component,
-			SubscriptionType[] types) {
+	public void update(IManagedUpdateable component, SubscriptionType[] types) {
 
 		// Only pass on updates for the root part's list of children changing,
 		// in order to refresh the tree view of components.
