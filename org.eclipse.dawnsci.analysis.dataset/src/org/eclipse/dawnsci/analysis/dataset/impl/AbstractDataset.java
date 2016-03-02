@@ -520,6 +520,10 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		case ARRAYFLOAT32:
 		case ARRAYFLOAT64:
 			return ARRAYFLOAT64;
+		case STRING:
+		case RGB:
+		case OBJECT:
+			return otype;
 		}
 		throw new IllegalArgumentException("Unsupported dataset type");
 	}
@@ -2517,10 +2521,14 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		Dataset ds;
 		if (obj instanceof Dataset) {
 			ds = (Dataset) obj;
-		} else if (!(obj instanceof IDataset)) {
-			ds = DatasetFactory.createFromObject(obj, isComplex() || getElementsPerItem() == 1 ? FLOAT64 : ARRAYFLOAT64);
-		} else {
+		} else if (obj instanceof IDataset) {
 			ds = DatasetUtils.convertToDataset((IDataset) obj);
+		} else {
+			int dtype = getDtype();
+			if (dtype != Dataset.BOOL) {
+				dtype = getLargestDType(dtype);
+			}
+			ds = DatasetFactory.createFromObject(obj, dtype);
 		}
 
 		return setSlicedView(getSliceView(slice), ds);
