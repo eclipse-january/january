@@ -1,46 +1,31 @@
 /*-
- *******************************************************************************
- * Copyright (c) 2011, 2014 Diamond Light Source Ltd.
+ * Copyright 2016 Diamond Light Source Ltd.
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Peter Chang - initial API and implementation and/or initial documentation
- *******************************************************************************/
+ */
 
 package org.eclipse.dawnsci.analysis.dataset.impl;
 
 /**
- * Class to run over a pair of contiguous datasets
+ * Class to run over a pair of contiguous datasets with only the second dataset read
  */
-public class ContiguousPairIterator extends BroadcastIterator {
+public class ContiguousSingleIterator extends BroadcastSelfIterator {
 	private final int aMax; // maximum index in array
 	private final int aStep; // step over items
 	private final int bMax; // maximum index in array
 	private final int bStep;
-	private final int oStep;
 
-	public ContiguousPairIterator(Dataset a, Dataset b, Dataset o, boolean createIfNull) {
-		super(a, b, o);
+	public ContiguousSingleIterator(Dataset a, Dataset b) {
+		super(a, b);
 		aStep = a.getElementsPerItem();
 		aMax = a.getSize() * aStep;
 		bStep = b.getElementsPerItem();
 		bMax = b.getSize() * bStep;
-		if (outputA) {
-			oStep = aStep;
-		} else if (outputB) {
-			oStep = bStep;
-		} else if (o != null) {
-			oStep = o.getElementsPerItem();
-		} else if (createIfNull) {
-			oDataset = createDataset(a, b, a.getShapeRef());
-			oStep = oDataset.getElementsPerItem();
-		} else {
-			oStep = 1;
-		}
 		maxShape = a.getShape();
+		asDouble = aDataset.hasFloatingPointElements();
 		reset();
 	}
 
@@ -49,23 +34,13 @@ public class ContiguousPairIterator extends BroadcastIterator {
 		aIndex += aStep;
 		bIndex += bStep;
 
-		if (outputA) {
-			oIndex = aIndex;
-		} else if (outputB) {
-			oIndex = bIndex;
-		} else {
-			oIndex += oStep;
-		}
-
 		if (aIndex >= aMax || bIndex >= bMax) {
 			return false;
 		}
 		if (read) {
 			if (asDouble) {
-				aDouble = aDataset.getElementDoubleAbs(aIndex);
 				bDouble = bDataset.getElementDoubleAbs(bIndex);
 			} else {
-				aLong = aDataset.getElementLongAbs(aIndex);
 				bLong = bDataset.getElementLongAbs(bIndex);
 			}
 		}
@@ -81,7 +56,6 @@ public class ContiguousPairIterator extends BroadcastIterator {
 	public void reset() {
 		aIndex = -aStep;
 		bIndex = -bStep;
-		oIndex = -oStep;
 		if (read) {
 			storeCurrentValues();
 		}

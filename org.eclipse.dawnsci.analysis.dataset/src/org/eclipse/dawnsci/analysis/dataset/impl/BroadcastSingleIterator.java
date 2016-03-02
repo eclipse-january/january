@@ -1,56 +1,43 @@
 /*-
- *******************************************************************************
- * Copyright (c) 2011, 2014 Diamond Light Source Ltd.
+ * Copyright 2016 Diamond Light Source Ltd.
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Peter Chang - initial API and implementation and/or initial documentation
- *******************************************************************************/
+ */
 
 package org.eclipse.dawnsci.analysis.dataset.impl;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
- * Class to run over a pair of datasets in parallel with NumPy broadcasting to promote shapes
- * which have lower rank and outputs to a third dataset
+ * Class to run over a pair of datasets in parallel with NumPy broadcasting of second dataset
  */
-public class BroadcastPairIterator extends BroadcastIterator {
+public class BroadcastSingleIterator extends BroadcastSelfIterator {
 	private int[] aShape;
 	private int[] bShape;
 	private int[] aStride;
 	private int[] bStride;
-	private int[] oStride;
 
 	final private int endrank;
 
 	private final int[] aDelta, bDelta;
-	private final int[] oDelta; // this being non-null means output is different from inputs
-	private final int aStep, bStep, oStep;
+	private final int aStep, bStep;
 	private int aMax, bMax;
-	private int aStart, bStart, oStart;
+	private int aStart, bStart;
 
 	/**
 	 * 
 	 * @param a
 	 * @param b
-	 * @param o (can be null for new dataset, a or b)
-	 * @param createIfNull
 	 */
-	public BroadcastPairIterator(Dataset a, Dataset b, Dataset o, boolean createIfNull) {
-		super(a, b, o);
-		List<int[]> fullShapes = broadcastShapes(a.getShapeRef(), b.getShapeRef(), o == null ? null : o.getShapeRef());
+	public BroadcastSingleIterator(Dataset a, Dataset b) {
+		super(a, b);
+		List<int[]> fullShapes = BroadcastIterator.broadcastShapes(a.getShapeRef(), b.getShapeRef());
 
 		maxShape = fullShapes.remove(0);
 
-		oStride = null;
-		if (o != null && !Arrays.equals(maxShape, o.getShapeRef())) {
-			throw new IllegalArgumentException("Output does not match broadcasted shape");
-		}
 		aShape = fullShapes.remove(0);
 		bShape = fullShapes.remove(0);
 
@@ -61,27 +48,6 @@ public class BroadcastPairIterator extends BroadcastIterator {
 		bDataset = b.reshape(bShape);
 		aStride = AbstractDataset.createBroadcastStrides(aDataset, maxShape);
 		bStride = AbstractDataset.createBroadcastStrides(bDataset, maxShape);
-		if (outputA) {
-			oStride = aStride;
-			oDelta = null;
-			oStep = 0;
-		} else if (outputB) {
-			oStride = bStride;
-			oDelta = null;
-			oStep = 0;
-		} else if (o != null) {
-			oStride = AbstractDataset.createBroadcastStrides(o, maxShape);
-			oDelta = new int[rank];
-			oStep = o.getElementsPerItem();
-		} else if (createIfNull) {
-			oDataset = createDataset(a, b, maxShape);
-			oStride = AbstractDataset.createBroadcastStrides(oDataset, maxShape);
-			oDelta = new int[rank];
-			oStep = oDataset.getElementsPerItem();
-		} else {
-			oDelta = null;
-			oStep = 0;
-		}
 
 		pos = new int[rank];
 		aDelta = new int[rank];
@@ -91,9 +57,6 @@ public class BroadcastPairIterator extends BroadcastIterator {
 		for (int j = endrank; j >= 0; j--) {
 			aDelta[j] = aStride[j] * aShape[j];
 			bDelta[j] = bStride[j] * bShape[j];
-			if (oDelta != null) {
-				oDelta[j] = oStride[j] * maxShape[j];
-			}
 		}
 		if (endrank < 0) {
 			aMax = aStep;
@@ -114,27 +77,21 @@ public class BroadcastPairIterator extends BroadcastIterator {
 		aMax += aStart;
 		bStart = bDataset.getOffset();
 		bMax += bStart;
-		oStart = oDelta == null ? 0 : oDataset.getOffset();
 		reset();
 	}
 
 	@Override
 	public boolean hasNext() {
 		int j = endrank;
-		int oldA = aIndex;
 		int oldB = bIndex;
 		for (; j >= 0; j--) {
 			pos[j]++;
 			aIndex += aStride[j];
 			bIndex += bStride[j];
-			if (oDelta != null)
-				oIndex += oStride[j];
 			if (pos[j] >= maxShape[j]) {
 				pos[j] = 0;
 				aIndex -= aDelta[j]; // reset these dimensions
 				bIndex -= bDelta[j];
-				if (oDelta != null)
-					oIndex -= oDelta[j];
 			} else {
 				break;
 			}
@@ -147,26 +104,12 @@ public class BroadcastPairIterator extends BroadcastIterator {
 			}
 			aIndex += aStep;
 			bIndex += bStep;
-			if (oDelta != null)
-				oIndex += oStep;
-		}
-		if (outputA) {
-			oIndex = aIndex;
-		} else if (outputB) {
-			oIndex = bIndex;
 		}
 
 		if (aIndex == aMax || bIndex == bMax)
 			return false;
 
 		if (read) {
-			if (oldA != aIndex) {
-				if (asDouble) {
-					aDouble = aDataset.getElementDoubleAbs(aIndex);
-				} else {
-					aLong = aDataset.getElementLongAbs(aIndex);
-				}
-			}
 			if (oldB != bIndex) {
 				if (asDouble) {
 					bDouble = bDataset.getElementDoubleAbs(bIndex);
@@ -202,11 +145,9 @@ public class BroadcastPairIterator extends BroadcastIterator {
 			pos[endrank] = -1;
 			aIndex = aStart - aStride[endrank];
 			bIndex = bStart - bStride[endrank];
-			oIndex = oStart - (oStride == null ? 0 : oStride[endrank]);
 		} else {
 			aIndex = aStart - aStep;
 			bIndex = bStart - bStep;
-			oIndex = oStart - oStep;
 		}
 
 		if (aIndex == 0 || bIndex == 0) { // for zero-ranked datasets

@@ -43,6 +43,7 @@ Mark up source class with following comment markers:
 // OMIT_UPCAST    - omit a cast to same type 
 // IGNORE_CLASS   - ignored dataset class used in line
 // GEN_COMMENT    - replace this with a message about generated class
+// BCAST_WITH_CAST - replace Double with Long if is not real with cast if necessary
 @SuppressWarnings("cast")
 '''
 
@@ -121,6 +122,7 @@ class transmutate(object):
             ("// OMIT_CAST_INT", self.omitcastint),
             ("// OMIT_UPCAST", self.omitupcast),
             ("// DEFAULT_VAL", self.defval),
+            ("// BCAST_WITH_CAST", self.broadcast),
             ("@SuppressWarnings(\"cast\")", self.omit),
             (srcclass, self.jclass)]
 
@@ -334,6 +336,19 @@ class transmutate(object):
         if self.isobj:
             return None
         return line.replace(self.sdef, self.ddef)
+
+    def broadcast(self, line):
+        if self.isobj or self.isbool:
+            i = line.find(" = ")
+            j = line.find(self.sgetel)
+            j = line.rfind(" ", i, j)
+            line = line[:i+ 3] + line[j+1:]
+            return line.replace(self.sgetel, self.dgetel)
+        if not self.isreal:
+            line = line.replace("Double", "Long")
+        if self.dprim in self.dconv:
+            line = self.addcast(line)
+        return line
 
     def processline(self, line):
         '''

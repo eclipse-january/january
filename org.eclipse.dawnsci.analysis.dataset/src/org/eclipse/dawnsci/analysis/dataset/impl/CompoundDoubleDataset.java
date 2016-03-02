@@ -1106,7 +1106,7 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 
 	@Override
 	CompoundDoubleDataset setSlicedView(Dataset view, Dataset d) {
-		final BroadcastIterator it = BroadcastIterator.createIterator(view, d);
+		final BroadcastSelfIterator it = BroadcastSelfIterator.createIterator(view, d);
 
 		final int is = view.getElementsPerItem();
 
@@ -1322,7 +1322,7 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 				throw new IllegalArgumentException("Argument does not have same number of elements per item or is not a non-compound dataset");
 			}
 		} else {
-			final BroadcastIterator it = BroadcastIterator.createIterator(this, bds);
+			final BroadcastSelfIterator it = BroadcastSelfIterator.createIterator(this, bds);
 			it.setOutputDouble(!useLong);
 			if (is == 1) {
 				if (useLong) {
@@ -1407,7 +1407,7 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 				throw new IllegalArgumentException("Argument does not have same number of elements per item or is not a non-compound dataset");
 			}
 		} else {
-			final BroadcastIterator it = BroadcastIterator.createIterator(this, bds);
+			final BroadcastSelfIterator it = BroadcastSelfIterator.createIterator(this, bds);
 			it.setOutputDouble(!useLong);
 			if (is == 1) {
 				if (useLong) {
@@ -1494,7 +1494,7 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 				}
 			}
 		} else {
-			final BroadcastIterator it = BroadcastIterator.createIterator(this, bds);
+			final BroadcastSelfIterator it = BroadcastSelfIterator.createIterator(this, bds);
 			it.setOutputDouble(!useLong);
 			if (useLong) {
 				if (is == 1) {
@@ -1591,7 +1591,7 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 				}
 			}
 		} else {
-			final BroadcastIterator it = BroadcastIterator.createIterator(this, bds);
+			final BroadcastSelfIterator it = BroadcastSelfIterator.createIterator(this, bds);
 			it.setOutputDouble(!useLong);
 			if (useLong) {
 				if (is == 1) {
@@ -1709,7 +1709,7 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 				}
 			}
 		} else {
-			final BroadcastIterator it = BroadcastIterator.createIterator(this, bds);
+			final BroadcastSelfIterator it = BroadcastSelfIterator.createIterator(this, bds);
 			it.setOutputDouble(!useLong);
 			if (useLong) {
 				if (is == 1) {

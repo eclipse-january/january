@@ -14,9 +14,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Base class for broadcast iterators. For speed, there are public members. Note, index is not updated
+ * Base class for broadcast iterators of pairs with output. For speed, there are public members. Note, index is not updated
  */
-public abstract class BroadcastIterator extends IndexIterator {
+public abstract class BroadcastIterator extends BroadcastIteratorBase {
 
 	public static BroadcastIterator createIterator(Dataset a, Dataset b) {
 		return createIterator(a, b, null, false);
@@ -263,14 +263,6 @@ public abstract class BroadcastIterator extends IndexIterator {
 	}
 
 	/**
-	 * Index in first dataset
-	 */
-	public int aIndex;
-	/**
-	 * Index in second dataset
-	 */
-	public int bIndex;
-	/**
 	 * Index in output dataset
 	 */
 	public int oIndex;
@@ -279,41 +271,24 @@ public abstract class BroadcastIterator extends IndexIterator {
 	 */
 	public double aDouble;
 	/**
-	 * Current value in second dataset
-	 */
-	public double bDouble;
-	/**
 	 * Current value in first dataset
 	 */
 	public long aLong;
-	/**
-	 * Current value in second dataset
-	 */
-	public long bLong;
-
-	protected boolean asDouble = true;
-
-	/**
-	 * position in dataset
-	 */
-	protected int[] pos;
-
 	/**
 	 * Output dataset
 	 */
 	protected Dataset oDataset;
 
-	protected Dataset aDataset;
-	protected Dataset bDataset;
 	final protected boolean outputA;
 	final protected boolean outputB;
 
 	protected BroadcastIterator(Dataset a, Dataset b, Dataset o) {
-		aDataset = a;
-		bDataset = b;
+		super(a, b);
 		oDataset = o;
 		outputA = a == o;
 		outputB = b == o;
+		read = AbstractDataset.isDTypeNumerical(a.getDtype()) && AbstractDataset.isDTypeNumerical(b.getDtype());
+		asDouble = aDataset.hasFloatingPointElements() || bDataset.hasFloatingPointElements();
 		checkItemSize(a, b, o);
 	}
 
@@ -325,31 +300,20 @@ public abstract class BroadcastIterator extends IndexIterator {
 	}
 
 	@Override
-	public int[] getPos() {
-		return pos;
-	}
-
-	/**
-	 * @return true if output from iterator is double
-	 */
-	public boolean isOutputDouble() {
-		return asDouble;
-	}
-
-	/**
-	 * Set to output doubles
-	 * @param asDouble
-	 */
-	public void setOutputDouble(boolean asDouble) {
-		if (this.asDouble != asDouble) {
-			this.asDouble = asDouble;
-			storeCurrentValues();
+	protected void storeCurrentValues() {
+		if (aIndex >= 0) {
+			if (asDouble) {
+				aDouble = aDataset.getElementDoubleAbs(aIndex);
+			} else {
+				aLong = aDataset.getElementLongAbs(aIndex);
+			}
+		}
+		if (bIndex >= 0) {
+			if (asDouble) {
+				bDouble = bDataset.getElementDoubleAbs(bIndex);
+			} else {
+				bLong = bDataset.getElementLongAbs(bIndex);
+			}
 		}
 	}
-
-	/**
-	 * Read and store current values
-	 */
-	abstract protected void storeCurrentValues();
-
 }

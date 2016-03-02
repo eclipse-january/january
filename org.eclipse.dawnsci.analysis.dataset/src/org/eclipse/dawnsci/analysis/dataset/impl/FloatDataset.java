@@ -747,10 +747,10 @@ public class FloatDataset extends AbstractDataset {
 
 	@Override
 	FloatDataset setSlicedView(Dataset view, Dataset d) {
-		final BroadcastIterator it = BroadcastIterator.createIterator(view, d);
+		final BroadcastSelfIterator it = BroadcastSelfIterator.createIterator(view, d);
 
 		while (it.hasNext()) {
-			data[it.aIndex] = (float) d.getElementDoubleAbs(it.bIndex); // GET_ELEMENT_WITH_CAST
+			data[it.aIndex] = (float) it.bDouble; // BCAST_WITH_CAST d.getElementDoubleAbs(it.bIndex);
 		}
 		return this;
 	}
@@ -954,7 +954,7 @@ public class FloatDataset extends AbstractDataset {
 				}
 			}
 		} else {
-			final BroadcastIterator it = BroadcastIterator.createIterator(this, bds);
+			final BroadcastSelfIterator it = BroadcastSelfIterator.createIterator(this, bds);
 			it.setOutputDouble(!useLong);
 			if (useLong) {
 				while (it.hasNext()) {
@@ -988,7 +988,7 @@ public class FloatDataset extends AbstractDataset {
 				}
 			}
 		} else {
-			final BroadcastIterator it = BroadcastIterator.createIterator(this, bds);
+			final BroadcastSelfIterator it = BroadcastSelfIterator.createIterator(this, bds);
 			if (useLong) {
 				it.setOutputDouble(false);
 				while (it.hasNext()) {
@@ -1023,7 +1023,7 @@ public class FloatDataset extends AbstractDataset {
 				}
 			}
 		} else {
-			final BroadcastIterator it = BroadcastIterator.createIterator(this, bds);
+			final BroadcastSelfIterator it = BroadcastSelfIterator.createIterator(this, bds);
 			it.setOutputDouble(!useLong);
 			if (useLong) {
 				while (it.hasNext()) {
@@ -1066,7 +1066,7 @@ public class FloatDataset extends AbstractDataset {
 				// } // INT_USE
 			}
 		} else {
-			final BroadcastIterator it = BroadcastIterator.createIterator(this, bds);
+			final BroadcastSelfIterator it = BroadcastSelfIterator.createIterator(this, bds);
 			it.setOutputDouble(!useLong);
 			if (useLong) {
 				while (it.hasNext()) {
@@ -1127,7 +1127,7 @@ public class FloatDataset extends AbstractDataset {
 				// } // INT_USE
 			}
 		} else {
-			final BroadcastIterator it = BroadcastIterator.createIterator(this, bds);
+			final BroadcastSelfIterator it = BroadcastSelfIterator.createIterator(this, bds);
 			it.setOutputDouble(!useLong);
 			if (useLong) {
 				while (it.hasNext()) {

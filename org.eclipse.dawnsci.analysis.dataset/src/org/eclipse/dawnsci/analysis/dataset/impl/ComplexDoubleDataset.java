@@ -574,7 +574,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 
 	@Override
 	ComplexDoubleDataset setSlicedView(Dataset view, Dataset d) {
-		final BroadcastIterator it = BroadcastIterator.createIterator(view, d);
+		final BroadcastSelfIterator it = BroadcastSelfIterator.createIterator(view, d);
 
 		if (d instanceof ComplexFloatDataset || d instanceof ComplexDoubleDataset) {
 			while (it.hasNext()) {
@@ -669,7 +669,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 				}
 			}
 		} else {
-			final BroadcastIterator it = BroadcastIterator.createIterator(this, bds);
+			final BroadcastSelfIterator it = BroadcastSelfIterator.createIterator(this, bds);
 			it.setOutputDouble(!useLong);
 			if (useLong) { // note no complex longs
 				while (it.hasNext()) {
@@ -718,7 +718,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 				}
 			}
 		} else {
-			final BroadcastIterator it = BroadcastIterator.createIterator(this, bds);
+			final BroadcastSelfIterator it = BroadcastSelfIterator.createIterator(this, bds);
 			it.setOutputDouble(!useLong);
 			if (useLong) { // note no complex longs
 				while (it.hasNext()) {
