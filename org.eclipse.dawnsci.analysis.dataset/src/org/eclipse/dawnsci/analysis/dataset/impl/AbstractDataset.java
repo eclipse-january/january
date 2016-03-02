@@ -1268,10 +1268,12 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			int[] oshape = this.shape;
 			int orank = oshape.length;
 			int nrank = nshape.length;
+			int diff = nrank - orank;
 			int[] nstride = new int[nrank];
 			boolean ones = true;
+			// work forwards for broadcasting cases
 			for (int i = 0, j = 0; i < orank || j < nrank;) {
-				if (i < orank && j < nrank && oshape[i] == nshape[j]) {
+				if (j >= diff && i < orank && j < nrank && oshape[i] == nshape[j]) {
 					nstride[j++] = stride[i++];
 				} else if (j < nrank && nshape[j] == 1) {
 					nstride[j++] = 0;
