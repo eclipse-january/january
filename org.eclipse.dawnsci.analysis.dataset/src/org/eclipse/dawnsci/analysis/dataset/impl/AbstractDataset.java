@@ -157,6 +157,11 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		return dtype <= COMPLEX128 || dtype == RGB;
 	}
 
+	protected static boolean isDTypeInteger(int dtype) {
+		return dtype == INT8 || dtype == INT16 || dtype == INT32 || dtype == INT64 ||
+				dtype == ARRAYINT8 || dtype == ARRAYINT16 || dtype == ARRAYINT32 || dtype == ARRAYINT64 || dtype == RGB;
+	}
+
 	protected static boolean isDTypeFloating(int dtype) {
 		return dtype == FLOAT32 || dtype == FLOAT64 || dtype == COMPLEX64 || dtype == COMPLEX128 ||
 				dtype == ARRAYFLOAT32 || dtype == ARRAYFLOAT64;
@@ -164,6 +169,14 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	protected static boolean isDTypeComplex(int dtype) {
 		return dtype == COMPLEX64 || dtype == COMPLEX128;
+	}
+
+	/**
+	 * @param dtype
+	 * @return true if dataset type is numerical, i.e. a dataset contains numbers
+	 */
+	public static boolean isDTypeNumerical(int dtype) {
+		return isDTypeInteger(dtype) || isDTypeFloating(dtype) || dtype == BOOL;
 	}
 
 	protected int size; // number of items
