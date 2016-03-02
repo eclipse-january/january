@@ -28,7 +28,6 @@ import org.eclipse.eavp.viz.service.modeling.EdgeController;
 import org.eclipse.eavp.viz.service.modeling.FaceEdgeController;
 import org.eclipse.eavp.viz.service.modeling.FaceEdgeMesh;
 import org.eclipse.eavp.viz.service.modeling.IController;
-import org.eclipse.eavp.viz.service.modeling.IController;
 import org.eclipse.eavp.viz.service.modeling.LinearEdgeMesh;
 import org.eclipse.eavp.viz.service.modeling.MeshCategory;
 import org.eclipse.eavp.viz.service.modeling.MeshProperty;
@@ -150,7 +149,7 @@ public class MeshComponentTester {
 		polygon = new NekPolygonController(new NekPolygonMesh(),
 				new AbstractView());
 		for (IController edge : edges) {
-			polygon.addEntityByCategory(edge, MeshCategory.EDGES);
+			polygon.addEntityToCategory(edge, MeshCategory.EDGES);
 		}
 		polygon.setProperty(MeshProperty.ID, "1");
 		allShapes.add(polygon);
@@ -163,9 +162,10 @@ public class MeshComponentTester {
 		ArrayList<IController> meshEdges = new ArrayList<IController>();
 		ArrayList<IController> meshVertices = new ArrayList<IController>();
 		for (IController entity : mesh.getPolygons()) {
-			meshEdges.addAll(entity.getEntitiesByCategory(MeshCategory.EDGES));
+			meshEdges
+					.addAll(entity.getEntitiesFromCategory(MeshCategory.EDGES));
 			meshVertices.addAll(
-					entity.getEntitiesByCategory(MeshCategory.VERTICES));
+					entity.getEntitiesFromCategory(MeshCategory.VERTICES));
 		}
 
 		assertTrue(compareLists(allEdges, meshEdges));
@@ -208,7 +208,7 @@ public class MeshComponentTester {
 		polygon = new NekPolygonController(new NekPolygonMesh(),
 				new AbstractView());
 		for (IController edge : edges) {
-			polygon.addEntityByCategory(edge, MeshCategory.EDGES);
+			polygon.addEntityToCategory(edge, MeshCategory.EDGES);
 		}
 		polygon.setProperty(MeshProperty.ID, "2");
 		allShapes.add(polygon);
@@ -221,9 +221,10 @@ public class MeshComponentTester {
 		meshEdges = new ArrayList<IController>();
 		meshVertices = new ArrayList<IController>();
 		for (IController entity : mesh.getPolygons()) {
-			meshEdges.addAll(entity.getEntitiesByCategory(MeshCategory.EDGES));
+			meshEdges
+					.addAll(entity.getEntitiesFromCategory(MeshCategory.EDGES));
 			meshVertices.addAll(
-					entity.getEntitiesByCategory(MeshCategory.VERTICES));
+					entity.getEntitiesFromCategory(MeshCategory.VERTICES));
 		}
 
 		assertTrue(compareLists(allEdges, meshEdges));
@@ -262,7 +263,7 @@ public class MeshComponentTester {
 		polygon = new NekPolygonController(new NekPolygonMesh(),
 				new AbstractView());
 		for (IController edge : edges) {
-			polygon.addEntityByCategory(edge, MeshCategory.EDGES);
+			polygon.addEntityToCategory(edge, MeshCategory.EDGES);
 		}
 		polygon.setProperty(MeshProperty.ID, "3");
 		allShapes.add(polygon);
@@ -274,9 +275,10 @@ public class MeshComponentTester {
 		meshEdges = new ArrayList<IController>();
 		meshVertices = new ArrayList<IController>();
 		for (IController entity : mesh.getPolygons()) {
-			meshEdges.addAll(entity.getEntitiesByCategory(MeshCategory.EDGES));
+			meshEdges
+					.addAll(entity.getEntitiesFromCategory(MeshCategory.EDGES));
 			meshVertices.addAll(
-					entity.getEntitiesByCategory(MeshCategory.VERTICES));
+					entity.getEntitiesFromCategory(MeshCategory.VERTICES));
 		}
 
 		assertEquals(allShapes, mesh.getPolygons());
@@ -317,7 +319,7 @@ public class MeshComponentTester {
 		polygon = new NekPolygonController(new NekPolygonMesh(),
 				new AbstractView());
 		for (IController edge : edges) {
-			polygon.addEntityByCategory(edge, MeshCategory.EDGES);
+			polygon.addEntityToCategory(edge, MeshCategory.EDGES);
 		}
 		polygon.setProperty(MeshProperty.ID, "4");
 		allShapes.add(polygon);
@@ -330,9 +332,10 @@ public class MeshComponentTester {
 		meshEdges = new ArrayList<IController>();
 		meshVertices = new ArrayList<IController>();
 		for (IController entity : mesh.getPolygons()) {
-			meshEdges.addAll(entity.getEntitiesByCategory(MeshCategory.EDGES));
+			meshEdges
+					.addAll(entity.getEntitiesFromCategory(MeshCategory.EDGES));
 			meshVertices.addAll(
-					entity.getEntitiesByCategory(MeshCategory.VERTICES));
+					entity.getEntitiesFromCategory(MeshCategory.VERTICES));
 		}
 
 		assertTrue(compareLists(allEdges, meshEdges));
@@ -352,15 +355,15 @@ public class MeshComponentTester {
 		// Get the vertices that will be removed.
 		vertices.clear();
 		vertices.add(
-				polygon.getEntitiesByCategory(MeshCategory.VERTICES).get(3));
+				polygon.getEntitiesFromCategory(MeshCategory.VERTICES).get(3));
 		for (IController v : vertices) {
 			allVertices.remove(v);
 		}
 		// Get the edges that will be removed.
 		edges.clear();
-		edges.add(polygon.getEntitiesByCategory(MeshCategory.EDGES).get(1));
-		edges.add(polygon.getEntitiesByCategory(MeshCategory.EDGES).get(2));
-		edges.add(polygon.getEntitiesByCategory(MeshCategory.EDGES).get(3));
+		edges.add(polygon.getEntitiesFromCategory(MeshCategory.EDGES).get(1));
+		edges.add(polygon.getEntitiesFromCategory(MeshCategory.EDGES).get(2));
+		edges.add(polygon.getEntitiesFromCategory(MeshCategory.EDGES).get(3));
 		for (IController e : edges) {
 			allEdges.remove(e);
 		}
@@ -372,9 +375,10 @@ public class MeshComponentTester {
 		meshEdges.clear();
 		meshVertices.clear();
 		for (IController entity : mesh.getPolygons()) {
-			meshEdges.addAll(entity.getEntitiesByCategory(MeshCategory.EDGES));
+			meshEdges
+					.addAll(entity.getEntitiesFromCategory(MeshCategory.EDGES));
 			meshVertices.addAll(
-					entity.getEntitiesByCategory(MeshCategory.VERTICES));
+					entity.getEntitiesFromCategory(MeshCategory.VERTICES));
 		}
 
 		assertEquals(allEdges, meshEdges);
@@ -386,12 +390,12 @@ public class MeshComponentTester {
 		allShapes.remove(polygon);
 		// Get the vertices that will be removed.
 		for (IController v : polygon
-				.getEntitiesByCategory(MeshCategory.VERTICES)) {
+				.getEntitiesFromCategory(MeshCategory.VERTICES)) {
 			allVertices.remove(v);
 		}
 		// Get the edges that will be removed.
 		for (IController e : polygon
-				.getEntitiesByCategory(MeshCategory.EDGES)) {
+				.getEntitiesFromCategory(MeshCategory.EDGES)) {
 			allEdges.remove(e);
 		}
 
@@ -403,9 +407,10 @@ public class MeshComponentTester {
 		meshEdges.clear();
 		meshVertices.clear();
 		for (IController entity : mesh.getPolygons()) {
-			meshEdges.addAll(entity.getEntitiesByCategory(MeshCategory.EDGES));
+			meshEdges
+					.addAll(entity.getEntitiesFromCategory(MeshCategory.EDGES));
 			meshVertices.addAll(
-					entity.getEntitiesByCategory(MeshCategory.VERTICES));
+					entity.getEntitiesFromCategory(MeshCategory.VERTICES));
 		}
 
 		assertEquals(allEdges, meshEdges);
@@ -525,7 +530,7 @@ public class MeshComponentTester {
 		NekPolygonController polygon = new NekPolygonController(
 				new NekPolygonMesh(), new AbstractView());
 		for (IController edge : edges) {
-			polygon.addEntityByCategory(edge, MeshCategory.EDGES);
+			polygon.addEntityToCategory(edge, MeshCategory.EDGES);
 		}
 		polygon.setProperty(MeshProperty.ID, "1");
 
@@ -557,7 +562,7 @@ public class MeshComponentTester {
 		polygon = new NekPolygonController(new NekPolygonMesh(),
 				new AbstractView());
 		for (IController edge : edges) {
-			polygon.addEntityByCategory(edge, MeshCategory.EDGES);
+			polygon.addEntityToCategory(edge, MeshCategory.EDGES);
 		}
 		polygon.setProperty(MeshProperty.ID, "1");
 		unequalObject.addPolygon(polygon);
@@ -630,7 +635,7 @@ public class MeshComponentTester {
 		NekPolygonController shape = new NekPolygonController(
 				new NekPolygonMesh(), new AbstractView());
 		for (IController edge : edges) {
-			shape.addEntityByCategory(edge, MeshCategory.EDGES);
+			shape.addEntityToCategory(edge, MeshCategory.EDGES);
 		}
 		shape.setProperty(MeshProperty.ID, "1");
 
@@ -651,7 +656,7 @@ public class MeshComponentTester {
 		NekPolygonController shape2 = new NekPolygonController(
 				new NekPolygonMesh(), new AbstractView());
 		for (IController edge : edges) {
-			shape2.addEntityByCategory(edge, MeshCategory.EDGES);
+			shape2.addEntityToCategory(edge, MeshCategory.EDGES);
 		}
 		shape2.setProperty(MeshProperty.ID, "2");
 
@@ -696,22 +701,19 @@ public class MeshComponentTester {
 
 		// The first triangle should be an isosceles right triangle.
 		for (IController polygon : object.getPolygons()) {
-			for (IController edge : polygon
-					.getEntitiesByCategory(MeshCategory.EDGES)) {
+			for (EdgeController edge : polygon.getEntitiesFromCategory(
+					MeshCategory.EDGES, EdgeController.class)) {
 				switch (edge.getProperty(MeshProperty.ID)) {
 				case "1":
-					assertEquals(1f, ((EdgeController) edge).getLength(),
-							1e-7f);
+					assertEquals(1f, edge.getLength(), 1e-7f);
 					break;
 
 				case "2":
-					assertEquals(Math.sqrt(2),
-							((EdgeController) edge).getLength(), 1e-7f);
+					assertEquals(Math.sqrt(2), edge.getLength(), 1e-7f);
 					break;
 
 				case "3":
-					assertEquals(1f, ((EdgeController) edge).getLength(),
-							1e-7f);
+					assertEquals(1f, edge.getLength(), 1e-7f);
 					break;
 
 				default:
@@ -722,22 +724,19 @@ public class MeshComponentTester {
 
 		// The same dimensions apply to the copy.
 		for (IController polygon : copy.getPolygons()) {
-			for (IController edge : polygon
-					.getEntitiesByCategory(MeshCategory.EDGES)) {
+			for (EdgeController edge : polygon.getEntitiesFromCategory(
+					MeshCategory.EDGES, EdgeController.class)) {
 				switch (edge.getProperty(MeshProperty.ID)) {
 				case "1":
-					assertEquals(1f, ((EdgeController) edge).getLength(),
-							1e-7f);
+					assertEquals(1f, edge.getLength(), 1e-7f);
 					break;
 
 				case "2":
-					assertEquals(Math.sqrt(2),
-							((EdgeController) edge).getLength(), 1e-7f);
+					assertEquals(Math.sqrt(2), edge.getLength(), 1e-7f);
 					break;
 
 				case "3":
-					assertEquals(1f, ((EdgeController) edge).getLength(),
-							1e-7f);
+					assertEquals(1f, edge.getLength(), 1e-7f);
 					break;
 
 				default:
@@ -750,14 +749,14 @@ public class MeshComponentTester {
 		// updated.
 		List<TestComponentListener> listeners = new ArrayList<TestComponentListener>();
 		for (IController edge : copy.getPolygons().get(0)
-				.getEntitiesByCategory(MeshCategory.EDGES)) {
+				.getEntitiesFromCategory(MeshCategory.EDGES)) {
 			TestComponentListener listener = new TestComponentListener();
 			edge.register(listener);
 			listeners.add(listener);
 		}
 
 		for (IController vertex : copy.getPolygons().get(0)
-				.getEntitiesByCategory(MeshCategory.VERTICES)) {
+				.getEntitiesFromCategory(MeshCategory.VERTICES)) {
 			if ("2".equals(vertex.getProperty(MeshProperty.ID))) {
 				((VertexController) vertex).updateLocation(3f, 0f, 0f);
 			} else if ("3".equals(vertex.getProperty(MeshProperty.ID))) {
@@ -767,22 +766,19 @@ public class MeshComponentTester {
 
 		// The first triangle should still be an isosceles right triangle.
 		for (IController polygon : object.getPolygons()) {
-			for (IController edge : polygon
-					.getEntitiesByCategory(MeshCategory.EDGES)) {
+			for (EdgeController edge : polygon.getEntitiesFromCategory(
+					MeshCategory.EDGES, EdgeController.class)) {
 				switch (edge.getProperty(MeshProperty.ID)) {
 				case "1":
-					assertEquals(1f, ((EdgeController) edge).getLength(),
-							1e-7f);
+					assertEquals(1f, edge.getLength(), 1e-7f);
 					break;
 
 				case "2":
-					assertEquals(Math.sqrt(2),
-							((EdgeController) edge).getLength(), 1e-7f);
+					assertEquals(Math.sqrt(2), edge.getLength(), 1e-7f);
 					break;
 
 				case "3":
-					assertEquals(1f, ((EdgeController) edge).getLength(),
-							1e-7f);
+					assertEquals(1f, edge.getLength(), 1e-7f);
 					break;
 
 				default:
@@ -798,20 +794,20 @@ public class MeshComponentTester {
 		}
 
 		// The copy's first triangle should now be a 3-4-5 triangle.
-		for (IController edge : copy.getPolygons().get(0)
-				.getEntitiesByCategory(MeshCategory.EDGES)) {
+		for (EdgeController edge : copy.getPolygons().get(0)
+				.getEntitiesFromCategory(MeshCategory.EDGES,
+						EdgeController.class)) {
 			switch (edge.getProperty(MeshProperty.ID)) {
 			case "1":
-				assertEquals(1f, ((EdgeController) edge).getLength(), 1e-7f);
+				assertEquals(1f, edge.getLength(), 1e-7f);
 				break;
 
 			case "2":
-				assertEquals(1.4142135, ((EdgeController) edge).getLength(),
-						1e-7f);
+				assertEquals(1.4142135, edge.getLength(), 1e-7f);
 				break;
 
 			case "3":
-				assertEquals(1f, ((EdgeController) edge).getLength(), 1e-7f);
+				assertEquals(1f, edge.getLength(), 1e-7f);
 				break;
 
 			default:
