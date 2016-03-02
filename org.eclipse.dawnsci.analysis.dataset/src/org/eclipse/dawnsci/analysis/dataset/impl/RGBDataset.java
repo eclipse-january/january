@@ -377,30 +377,20 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	}
 
 	@Override
-	public RGBDataset getSlice(final int[] start, final int[] stop, final int[] step) {
-		IndexIterator siter = getSliceIterator(start, stop, step);
+	public RGBDataset getSlice(SliceIterator siter) {
+		CompoundShortDataset base = super.getSlice(siter);
 
-		RGBDataset result = new RGBDataset(siter.getShape());
-		short[] rdata = result.data;
-		IndexIterator riter = result.getIterator();
-
-		while (siter.hasNext() && riter.hasNext()) {
-			for (int i = 0; i < isize; i++)
-				rdata[riter.index + i] = data[siter.index + i];
-		}
-
-		return result;
+		RGBDataset slice = new RGBDataset();
+		copyToView(base, slice, false, false);
+		slice.setData();
+		return slice;
 	}
 
 	@Override
 	public RGBDataset getView() {
 		RGBDataset view = new RGBDataset();
-		view.name = new String(name);
-		view.size = size;
-		view.shape = shape.clone();
-		view.odata = view.data = data;
-		view.metadata = metadata;
-
+		copyToView(this, view, true, true);
+		view.setData();
 		return view;
 	}
 

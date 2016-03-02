@@ -63,7 +63,7 @@ public class StringDataset extends StringDatasetBase {
 	public StringDataset getView() {
 		StringDataset view = new StringDataset();
 		copyToView(this, view, true, true);
-		view.data = data;
+		view.setData();
 		return view;
 	}
 
@@ -74,8 +74,9 @@ public class StringDataset extends StringDatasetBase {
 
 	@Override
 	public StringDataset getSlice(SliceIterator siter) {
-		StringDataset slice = new StringDataset();
 		StringDatasetBase base = super.getSlice(siter);
+
+		StringDataset slice = new StringDataset();
 		copyToView(base, slice, false, false);
 		slice.setData();
 		return slice;
@@ -243,13 +244,6 @@ public class StringDataset extends StringDatasetBase {
 	public String getStringAbs(final int index) {
 		return stringFormat instanceof MessageFormat ? stringFormat.format(data[index]) :
 				String.format("%s", data[index]);
-	}
-
-	@Override
-	public StringDataset getSlice(final int[] start, final int[] stop, final int[] step) {
-		StringDatasetBase result = (StringDatasetBase) super.getSlice(start, stop, step);
-
-		return new StringDataset(result.data, result.shape);
 	}
 
 	@Override

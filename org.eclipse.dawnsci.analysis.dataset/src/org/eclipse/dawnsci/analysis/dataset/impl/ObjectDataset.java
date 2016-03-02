@@ -62,7 +62,7 @@ public class ObjectDataset extends ObjectDatasetBase {
 	public ObjectDataset getView() {
 		ObjectDataset view = new ObjectDataset();
 		copyToView(this, view, true, true);
-		view.data = data;
+		view.setData();
 		return view;
 	}
 
@@ -73,8 +73,9 @@ public class ObjectDataset extends ObjectDatasetBase {
 
 	@Override
 	public ObjectDataset getSlice(SliceIterator siter) {
-		ObjectDataset slice = new ObjectDataset();
 		ObjectDatasetBase base = super.getSlice(siter);
+
+		ObjectDataset slice = new ObjectDataset();
 		copyToView(base, slice, false, false);
 		slice.setData();
 		return slice;
@@ -242,13 +243,6 @@ public class ObjectDataset extends ObjectDatasetBase {
 	public String getStringAbs(final int index) {
 		return stringFormat instanceof MessageFormat ? stringFormat.format(data[index]) :
 				String.format("%s", data[index]);
-	}
-
-	@Override
-	public ObjectDataset getSlice(final int[] start, final int[] stop, final int[] step) {
-		ObjectDatasetBase result = (ObjectDatasetBase) super.getSlice(start, stop, step);
-
-		return new ObjectDataset(result.data, result.shape);
 	}
 
 	@Override
