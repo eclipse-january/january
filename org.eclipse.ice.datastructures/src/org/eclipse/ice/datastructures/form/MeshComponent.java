@@ -22,9 +22,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.eclipse.eavp.viz.service.datastructures.VizObject.IManagedUpdateable;
 import org.eclipse.eavp.viz.service.datastructures.VizObject.IManagedUpdateableListener;
 import org.eclipse.eavp.viz.service.datastructures.VizObject.SubscriptionType;
-import org.eclipse.eavp.viz.service.modeling.AbstractController;
-import org.eclipse.eavp.viz.service.modeling.AbstractMesh;
-import org.eclipse.eavp.viz.service.modeling.AbstractView;
+import org.eclipse.eavp.viz.service.modeling.BasicController;
+import org.eclipse.eavp.viz.service.modeling.BasicMesh;
+import org.eclipse.eavp.viz.service.modeling.BasicView;
 import org.eclipse.eavp.viz.service.modeling.FaceController;
 import org.eclipse.eavp.viz.service.modeling.IController;
 import org.eclipse.ice.datastructures.ICEObject.Component;
@@ -49,7 +49,7 @@ public class MeshComponent extends ICEObject
 	/**
 	 * The wrapped VizMeshComponent.
 	 */
-	private AbstractController mesh;
+	private BasicController mesh;
 
 	/**
 	 * The next free ID to assign to a Polygon.
@@ -75,7 +75,7 @@ public class MeshComponent extends ICEObject
 	 */
 	public MeshComponent() {
 		super();
-		mesh = new AbstractController(new AbstractMesh(), new AbstractView());
+		mesh = new BasicController(new BasicMesh(), new BasicView());
 		mesh.register(this);
 		return;
 	}
@@ -95,7 +95,7 @@ public class MeshComponent extends ICEObject
 	 * @param newMesh
 	 *            The new mesh to hold
 	 */
-	public void setMesh(AbstractController newMesh) {
+	public void setMesh(BasicController newMesh) {
 		mesh = newMesh;
 	}
 
