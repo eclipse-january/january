@@ -4,6 +4,7 @@
       label="ICE Infrastructure Feature"
       version="2.1.8.20160208"
       provider-name="Oak Ridge National Laboratory"
+      plugin="org.eclipse.ice.client.rcp"
       os="linux,macosx,win32"
       ws="cocoa,gtk,win32"
       arch="x86,x86_64">
