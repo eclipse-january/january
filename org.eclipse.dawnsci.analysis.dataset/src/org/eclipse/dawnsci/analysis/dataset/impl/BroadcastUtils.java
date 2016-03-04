@@ -22,7 +22,7 @@ public final class BroadcastUtils {
 	 * @param newShape
 	 * @return broadcasted shape and full new shape or null if it cannot be done
 	 */
-	public static int[][] calcBroadcastShapes(int[] oldShape, int size, int... newShape) {
+	public static int[][] calculateBroadcastShapes(int[] oldShape, int size, int... newShape) {
 		if (newShape == null)
 			return null;
 	
@@ -207,13 +207,13 @@ public final class BroadcastUtils {
 	/**
 	 * Create a stride array from a dataset to a broadcast shape
 	 * @param isize
-	 * @param shape
+	 * @param oShape original shape
 	 * @param oStride original stride
 	 * @param broadcastShape
 	 * @return stride array
 	 */
-	public static int[] createBroadcastStrides(final int isize, final int[] shape, final int[] oStride, final int[] broadcastShape) {
-		int rank = shape.length;
+	public static int[] createBroadcastStrides(final int isize, final int[] oShape, final int[] oStride, final int[] broadcastShape) {
+		int rank = oShape.length;
 		if (broadcastShape.length != rank) {
 			throw new IllegalArgumentException("Dataset must have same rank as broadcast shape");
 		}
@@ -222,16 +222,16 @@ public final class BroadcastUtils {
 		if (oStride == null) {
 			int s = isize;
 			for (int j = rank - 1; j >= 0; j--) {
-				if (broadcastShape[j] == shape[j]) {
+				if (broadcastShape[j] == oShape[j]) {
 					stride[j] = s;
-					s *= shape[j];
+					s *= oShape[j];
 				} else {
 					stride[j] = 0;
 				}
 			}
 		} else {
 			for (int j = 0; j < rank; j++) {
-				if (broadcastShape[j] == shape[j]) {
+				if (broadcastShape[j] == oShape[j]) {
 					stride[j] = oStride[j];
 				} else {
 					stride[j] = 0;
