@@ -34,7 +34,7 @@ public class BroadcastSingleIterator extends BroadcastSelfIterator {
 	 */
 	public BroadcastSingleIterator(Dataset a, Dataset b) {
 		super(a, b);
-		List<int[]> fullShapes = BroadcastIterator.broadcastShapes(a.getShapeRef(), b.getShapeRef());
+		List<int[]> fullShapes = BroadcastUtils.broadcastShapes(a.getShapeRef(), b.getShapeRef());
 
 		maxShape = fullShapes.remove(0);
 

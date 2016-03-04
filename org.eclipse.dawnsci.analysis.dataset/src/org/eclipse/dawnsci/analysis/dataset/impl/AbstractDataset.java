@@ -3370,7 +3370,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		private int bOffset;
 
 		public BroadcastStride(Dataset d, final int[] newShape) {
-			d.setShape(BroadcastIterator.padShape(d.getShapeRef(), newShape.length - d.getRank())); // set to padded shape
+			d.setShape(BroadcastUtils.padShape(d.getShapeRef(), newShape.length - d.getRank())); // set to padded shape
 			bStride = createBroadcastStrides(d, newShape);
 			nShape = newShape.clone();
 			bOffset = d.getOffset();

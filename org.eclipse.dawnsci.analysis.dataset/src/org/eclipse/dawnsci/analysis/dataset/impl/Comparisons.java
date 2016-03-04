@@ -50,7 +50,7 @@ public class Comparisons {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 
-		List<int[]> sl = BroadcastIterator.broadcastShapes(da.getShapeRef(), db.getShapeRef(), o == null ? null : o.getShapeRef());
+		List<int[]> sl = BroadcastUtils.broadcastShapes(da.getShapeRef(), db.getShapeRef(), o == null ? null : o.getShapeRef());
 
 		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
 
@@ -197,7 +197,7 @@ public class Comparisons {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 
-		List<int[]> sl = BroadcastIterator.broadcastShapes(da.getShapeRef(), db.getShapeRef(), o == null ? null : o.getShapeRef());
+		List<int[]> sl = BroadcastUtils.broadcastShapes(da.getShapeRef(), db.getShapeRef(), o == null ? null : o.getShapeRef());
 
 		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
 
@@ -292,7 +292,7 @@ public class Comparisons {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 
-		List<int[]> sl = BroadcastIterator.broadcastShapes(da.getShapeRef(), db.getShapeRef(), o == null ? null : o.getShapeRef());
+		List<int[]> sl = BroadcastUtils.broadcastShapes(da.getShapeRef(), db.getShapeRef(), o == null ? null : o.getShapeRef());
 
 		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
 
@@ -402,7 +402,7 @@ public class Comparisons {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 
-		List<int[]> sl = BroadcastIterator.broadcastShapes(da.getShapeRef(), db.getShapeRef(), o == null ? null : o.getShapeRef());
+		List<int[]> sl = BroadcastUtils.broadcastShapes(da.getShapeRef(), db.getShapeRef(), o == null ? null : o.getShapeRef());
 
 		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
 
@@ -512,7 +512,7 @@ public class Comparisons {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 
-		List<int[]> sl = BroadcastIterator.broadcastShapes(da.getShapeRef(), db.getShapeRef(), o == null ? null : o.getShapeRef());
+		List<int[]> sl = BroadcastUtils.broadcastShapes(da.getShapeRef(), db.getShapeRef(), o == null ? null : o.getShapeRef());
 
 		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
 
@@ -623,7 +623,7 @@ public class Comparisons {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 
-		List<int[]> sl = BroadcastIterator.broadcastShapes(da.getShapeRef(), db.getShapeRef(), o == null ? null : o.getShapeRef());
+		List<int[]> sl = BroadcastUtils.broadcastShapes(da.getShapeRef(), db.getShapeRef(), o == null ? null : o.getShapeRef());
 
 		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
 
@@ -725,7 +725,7 @@ public class Comparisons {
 	public static BooleanDataset withinRange(Object a, BooleanDataset o, Number lo, Number hi) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 
-		List<int[]> sl = BroadcastIterator.broadcastShapes(da.getShapeRef(), o == null ? null : o.getShapeRef());
+		List<int[]> sl = BroadcastUtils.broadcastShapes(da.getShapeRef(), o == null ? null : o.getShapeRef());
 
 		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
 
@@ -1001,7 +1001,7 @@ public class Comparisons {
 	public static BooleanDataset logicalNot(Object a, BooleanDataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 
-		List<int[]> sl = BroadcastIterator.broadcastShapes(da.getShapeRef(), o == null ? null : o.getShapeRef());
+		List<int[]> sl = BroadcastUtils.broadcastShapes(da.getShapeRef(), o == null ? null : o.getShapeRef());
 
 		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
 
@@ -1053,7 +1053,7 @@ public class Comparisons {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 
-		List<int[]> sl = BroadcastIterator.broadcastShapes(da.getShapeRef(), db.getShapeRef(), o == null ? null : o.getShapeRef());
+		List<int[]> sl = BroadcastUtils.broadcastShapes(da.getShapeRef(), db.getShapeRef(), o == null ? null : o.getShapeRef());
 
 		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
 
@@ -1128,7 +1128,7 @@ public class Comparisons {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 
-		List<int[]> sl = BroadcastIterator.broadcastShapes(da.getShapeRef(), db.getShapeRef(), o == null ? null : o.getShapeRef());
+		List<int[]> sl = BroadcastUtils.broadcastShapes(da.getShapeRef(), db.getShapeRef(), o == null ? null : o.getShapeRef());
 
 		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
 
@@ -1203,7 +1203,7 @@ public class Comparisons {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 
-		List<int[]> sl = BroadcastIterator.broadcastShapes(da.getShapeRef(), db.getShapeRef(), o == null ? null : o.getShapeRef());
+		List<int[]> sl = BroadcastUtils.broadcastShapes(da.getShapeRef(), db.getShapeRef(), o == null ? null : o.getShapeRef());
 
 		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
 
@@ -1306,7 +1306,7 @@ public class Comparisons {
 	public static BooleanDataset isNaN(Object a, BooleanDataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 
-		List<int[]> sl = BroadcastIterator.broadcastShapes(da.getShapeRef(), o == null ? null : o.getShapeRef());
+		List<int[]> sl = BroadcastUtils.broadcastShapes(da.getShapeRef(), o == null ? null : o.getShapeRef());
 
 		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
 
@@ -1365,7 +1365,7 @@ public class Comparisons {
 	public static BooleanDataset isInfinite(Object a, BooleanDataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 
-		List<int[]> sl = BroadcastIterator.broadcastShapes(da.getShapeRef(), o == null ? null : o.getShapeRef());
+		List<int[]> sl = BroadcastUtils.broadcastShapes(da.getShapeRef(), o == null ? null : o.getShapeRef());
 
 		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
 
@@ -1460,7 +1460,7 @@ public class Comparisons {
 	private static BooleanDataset isEqual(Object a, BooleanDataset o, final double match) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 
-		List<int[]> sl = BroadcastIterator.broadcastShapes(da.getShapeRef(), o == null ? null : o.getShapeRef());
+		List<int[]> sl = BroadcastUtils.broadcastShapes(da.getShapeRef(), o == null ? null : o.getShapeRef());
 
 		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
 
@@ -1521,7 +1521,7 @@ public class Comparisons {
 	public static BooleanDataset isFinite(Object a, BooleanDataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
 
-		List<int[]> sl = BroadcastIterator.broadcastShapes(da.getShapeRef(), o == null ? null : o.getShapeRef());
+		List<int[]> sl = BroadcastUtils.broadcastShapes(da.getShapeRef(), o == null ? null : o.getShapeRef());
 
 		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
 

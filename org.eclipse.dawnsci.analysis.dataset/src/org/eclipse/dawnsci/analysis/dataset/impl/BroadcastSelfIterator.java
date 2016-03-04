@@ -24,22 +24,11 @@ public abstract class BroadcastSelfIterator extends BroadcastIteratorBase {
 		return new BroadcastSingleIterator(a, b);
 	}
 
-	private static void checkItemSize(Dataset a, Dataset b) {
-		final int isa = a.getElementsPerItem();
-		final int isb = b.getElementsPerItem();
-		if (isa != isb && isa != 1 && isb != 1) {
-			// exempt single-value dataset case too
-			if ((isa == 1 || b.getSize() != 1) && (isb == 1 || a.getSize() != 1) ) {
-				throw new IllegalArgumentException("Can not broadcast where number of elements per item mismatch and one does not equal another");
-			}
-		}
-	}
-
 	protected BroadcastSelfIterator(Dataset a, Dataset b) {
 		super(a, b);
 		read = AbstractDataset.isDTypeNumerical(b.getDtype());
 		asDouble = aDataset.hasFloatingPointElements();
-		checkItemSize(a, b);
+		BroadcastUtils.checkItemSize(a, b, null);
 	}
 
 	@Override
