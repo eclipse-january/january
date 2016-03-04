@@ -11,6 +11,7 @@ package org.eclipse.dawnsci.analysis.examples.dataset.impl;
 
 import org.eclipse.dawnsci.analysis.api.dataset.Slice;
 import org.eclipse.dawnsci.analysis.dataset.impl.BroadcastIterator;
+import org.eclipse.dawnsci.analysis.dataset.impl.BroadcastUtils;
 import org.eclipse.dawnsci.analysis.dataset.impl.CompoundDataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.Dataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.DatasetFactory;
@@ -71,7 +72,7 @@ public class BroadcastIteratorTest {
 
 	private void checkBroadcastShape(Dataset a, String msg, int[] bShape, int[] cShape, int... newShape) {
 		int[][] answer = bShape == null && cShape == null ? null : new int[][] { bShape, cShape };
-		int[][] result = BroadcastIterator.calcBroadcastShapes(a.getShapeRef(), a.getSize(), newShape);
+		int[][] result = BroadcastUtils.calcBroadcastShapes(a.getShapeRef(), a.getSize(), newShape);
 		Assert.assertArrayEquals("Broadcasting " + msg, answer, result);
 	}
 

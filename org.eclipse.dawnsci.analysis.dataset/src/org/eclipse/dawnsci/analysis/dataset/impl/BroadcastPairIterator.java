@@ -43,7 +43,7 @@ public class BroadcastPairIterator extends BroadcastIterator {
 	 */
 	public BroadcastPairIterator(Dataset a, Dataset b, Dataset o, boolean createIfNull) {
 		super(a, b, o);
-		List<int[]> fullShapes = broadcastShapes(a.getShapeRef(), b.getShapeRef(), o == null ? null : o.getShapeRef());
+		List<int[]> fullShapes = BroadcastUtils.broadcastShapes(a.getShapeRef(), b.getShapeRef(), o == null ? null : o.getShapeRef());
 
 		maxShape = fullShapes.remove(0);
 
@@ -74,7 +74,7 @@ public class BroadcastPairIterator extends BroadcastIterator {
 			oDelta = new int[rank];
 			oStep = o.getElementsPerItem();
 		} else if (createIfNull) {
-			oDataset = createDataset(a, b, maxShape);
+			oDataset = BroadcastUtils.createDataset(a, b, maxShape);
 			oStride = AbstractDataset.createBroadcastStrides(oDataset, maxShape);
 			oDelta = new int[rank];
 			oStep = oDataset.getElementsPerItem();
