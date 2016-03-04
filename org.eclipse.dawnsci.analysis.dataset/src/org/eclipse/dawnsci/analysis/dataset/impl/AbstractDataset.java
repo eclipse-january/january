@@ -1675,15 +1675,18 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		}
 		int index = offset;
 		for (int i = 0; i < rank; i++) {
-			final int si = shape[i];
-			int ni = n[i];
-			if (ni < 0) {
-				ni += si;
+			final int st = stride[i];
+			if (st != 0) { // not broadcasted
+				final int si = shape[i];
+				int ni = n[i];
+				if (ni < 0) {
+					ni += si;
+				}
+				if (ni < 0 || ni >= si) {
+					throwAIOOBException(ni, si, i);
+				}
+				index += st * ni;
 			}
-			if (ni < 0 || ni >= si) {
-				throwAIOOBException(ni, si, i);
-			}
-			index += stride[i] * ni;
 		}
 		return index;
 	}
