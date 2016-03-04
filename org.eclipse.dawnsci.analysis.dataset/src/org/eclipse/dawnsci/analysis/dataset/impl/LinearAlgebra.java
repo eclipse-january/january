@@ -394,7 +394,7 @@ public class LinearAlgebra {
 		int[] shapeA = removeAxisFromShape(a.getShapeRef(), axisA);
 		int[] shapeB = removeAxisFromShape(b.getShapeRef(), axisB);
 
-		List<int[]> fullShapes = BroadcastIterator.broadcastShapes(shapeA, shapeB);
+		List<int[]> fullShapes = BroadcastUtils.broadcastShapes(shapeA, shapeB);
 
 		int[] maxShape = fullShapes.get(0);
 		Dataset c = DatasetFactory.zeros(maxShape, AbstractDataset.getBestDType(a.getDtype(), b.getDtype()));
@@ -426,7 +426,7 @@ public class LinearAlgebra {
 		int[] shapeA = removeAxisFromShape(a.getShapeRef(), axisA);
 		int[] shapeB = removeAxisFromShape(b.getShapeRef(), axisB);
 
-		List<int[]> fullShapes = BroadcastIterator.broadcastShapes(shapeA, shapeB);
+		List<int[]> fullShapes = BroadcastUtils.broadcastShapes(shapeA, shapeB);
 
 		int[] maxShape = fullShapes.get(0);
 		int rankC = maxShape.length + 1;
