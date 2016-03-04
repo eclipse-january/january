@@ -1490,54 +1490,6 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		return newShape;
 	}
 
-	/**
-	 * Create a stride array from a dataset to a broadcast shape
-	 * @param a dataset
-	 * @param broadcastShape
-	 * @return stride array
-	 */
-	public static int[] createBroadcastStrides(Dataset a, final int[] broadcastShape) {
-		return createBroadcastStrides(a.getElementsPerItem(), a.getShapeRef(), a.getStrides(), broadcastShape);
-	}
-
-	/**
-	 * Create a stride array from a dataset to a broadcast shape
-	 * @param isize
-	 * @param shape
-	 * @param oStride original stride
-	 * @param broadcastShape
-	 * @return stride array
-	 */
-	public static int[] createBroadcastStrides(final int isize, final int[] shape, final int[] oStride, final int[] broadcastShape) {
-		int rank = shape.length;
-		if (broadcastShape.length != rank) {
-			throw new IllegalArgumentException("Dataset must have same rank as broadcast shape");
-		}
-
-		int[] stride = new int[rank];
-		if (oStride == null) {
-			int s = isize;
-			for (int j = rank - 1; j >= 0; j--) {
-				if (broadcastShape[j] == shape[j]) {
-					stride[j] = s;
-					s *= shape[j];
-				} else {
-					stride[j] = 0;
-				}
-			}
-		} else {
-			for (int j = 0; j < rank; j++) {
-				if (broadcastShape[j] == shape[j]) {
-					stride[j] = oStride[j];
-				} else {
-					stride[j] = 0;
-				}
-			}
-		}
-
-		return stride;
-	}
-
 	@Override
 	public Dataset getSliceView(final int[] start, final int[] stop, final int[] step) {
 		return getSliceView(new SliceND(shape, start, stop, step));
@@ -3371,7 +3323,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 		public BroadcastStride(Dataset d, final int[] newShape) {
 			d.setShape(BroadcastUtils.padShape(d.getShapeRef(), newShape.length - d.getRank())); // set to padded shape
-			bStride = createBroadcastStrides(d, newShape);
+			bStride = BroadcastUtils.createBroadcastStrides(d, newShape);
 			nShape = newShape.clone();
 			bOffset = d.getOffset();
 		}

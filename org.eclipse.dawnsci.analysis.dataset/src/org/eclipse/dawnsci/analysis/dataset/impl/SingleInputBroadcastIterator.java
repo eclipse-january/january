@@ -98,7 +98,7 @@ public class SingleInputBroadcastIterator extends IndexIterator {
 		endrank = rank - 1;
 
 		aDataset = a.reshape(aShape);
-		aStride = AbstractDataset.createBroadcastStrides(aDataset, maxShape);
+		aStride = BroadcastUtils.createBroadcastStrides(aDataset, maxShape);
 		outputA = o == a;
 		if (outputA) {
 			oStride = aStride;
@@ -106,7 +106,7 @@ public class SingleInputBroadcastIterator extends IndexIterator {
 			oStep = 0;
 			oDataset = aDataset;
 		} else if (o != null) {
-			oStride = AbstractDataset.createBroadcastStrides(o, maxShape);
+			oStride = BroadcastUtils.createBroadcastStrides(o, maxShape);
 			oDelta = new int[rank];
 			oStep = o.getElementsPerItem();
 			oDataset = o;
@@ -120,7 +120,7 @@ public class SingleInputBroadcastIterator extends IndexIterator {
 				dt = AbstractDataset.getBestFloatDType(dt);
 			}
 			oDataset = DatasetFactory.zeros(is, maxShape, dt);
-			oStride = AbstractDataset.createBroadcastStrides(oDataset, maxShape);
+			oStride = BroadcastUtils.createBroadcastStrides(oDataset, maxShape);
 			oDelta = new int[rank];
 			oStep = oDataset.getElementsPerItem();
 		} else {

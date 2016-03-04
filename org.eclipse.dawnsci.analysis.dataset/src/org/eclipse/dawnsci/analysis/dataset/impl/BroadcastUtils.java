@@ -78,46 +78,6 @@ public final class BroadcastUtils {
 	}
 
 	/**
-	 * Create a broadcasting stride array from dataset and slice information
-	 * @param isize
-	 * @param oShape original shape
-	 * @param oStride original stride
-	 * @param oOffset original offset (only used if there is an original stride)
-	 * @param bShape broadcast shape
-	 * @param stride output stride
-	 * @param offset output offset
-	 * @return new shape
-	 */
-	public static int[] createStrides(final int isize, final int[] oShape, final int[] oStride, final int oOffset, final int[] bShape, final int[] stride, final int[] offset) {
-		final int rank = bShape.length;
-		int pad = rank - oShape.length;
-		if (pad < 0) {
-			throw new IllegalArgumentException("Broadcast rank must be greater than or equal to original rank");
-		}
-	
-		final int[] shape = padShape(oShape, pad);
-	
-		if (oStride == null) {
-			int s = isize;
-			offset[0] += 0;
-			for (int j = rank - 1; j >= 0; j--) {
-				stride[j] = s;
-				offset[0] += 0;
-				s *= shape[j];
-			}
-		} else {
-			offset[0] = oOffset;
-			for (int j = 0; j < rank; j++) {
-				int s = oStride[j];
-				stride[j] = s;
-				offset[0] += 0;
-			}
-		}
-	
-		return null;
-	}
-
-	/**
 	 * Take in shapes and broadcast them to same rank
 	 * @param shapes
 	 * @return list of broadcasted shapes plus the first entry is the maximum shape
@@ -232,5 +192,53 @@ public final class BroadcastUtils {
 				throw new IllegalArgumentException("Can not output to dataset whose number of elements per item mismatch inputs'");
 			}
 		}
+	}
+
+	/**
+	 * Create a stride array from a dataset to a broadcast shape
+	 * @param a dataset
+	 * @param broadcastShape
+	 * @return stride array
+	 */
+	public static int[] createBroadcastStrides(Dataset a, final int[] broadcastShape) {
+		return createBroadcastStrides(a.getElementsPerItem(), a.getShapeRef(), a.getStrides(), broadcastShape);
+	}
+
+	/**
+	 * Create a stride array from a dataset to a broadcast shape
+	 * @param isize
+	 * @param shape
+	 * @param oStride original stride
+	 * @param broadcastShape
+	 * @return stride array
+	 */
+	public static int[] createBroadcastStrides(final int isize, final int[] shape, final int[] oStride, final int[] broadcastShape) {
+		int rank = shape.length;
+		if (broadcastShape.length != rank) {
+			throw new IllegalArgumentException("Dataset must have same rank as broadcast shape");
+		}
+	
+		int[] stride = new int[rank];
+		if (oStride == null) {
+			int s = isize;
+			for (int j = rank - 1; j >= 0; j--) {
+				if (broadcastShape[j] == shape[j]) {
+					stride[j] = s;
+					s *= shape[j];
+				} else {
+					stride[j] = 0;
+				}
+			}
+		} else {
+			for (int j = 0; j < rank; j++) {
+				if (broadcastShape[j] == shape[j]) {
+					stride[j] = oStride[j];
+				} else {
+					stride[j] = 0;
+				}
+			}
+		}
+	
+		return stride;
 	}
 }

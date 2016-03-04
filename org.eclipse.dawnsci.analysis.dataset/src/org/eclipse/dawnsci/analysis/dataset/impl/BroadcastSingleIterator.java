@@ -46,8 +46,8 @@ public class BroadcastSingleIterator extends BroadcastSelfIterator {
 
 		aDataset = a.reshape(aShape);
 		bDataset = b.reshape(bShape);
-		aStride = AbstractDataset.createBroadcastStrides(aDataset, maxShape);
-		bStride = AbstractDataset.createBroadcastStrides(bDataset, maxShape);
+		aStride = BroadcastUtils.createBroadcastStrides(aDataset, maxShape);
+		bStride = BroadcastUtils.createBroadcastStrides(bDataset, maxShape);
 
 		pos = new int[rank];
 		aDelta = new int[rank];
