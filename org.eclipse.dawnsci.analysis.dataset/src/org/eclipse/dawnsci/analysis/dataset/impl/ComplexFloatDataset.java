@@ -570,12 +570,12 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 
 		if (d instanceof ComplexFloatDataset || d instanceof ComplexFloatDataset) {
 			while (it.hasNext()) {
-				data[it.aIndex] = (float) it.bDouble; // ADD_CAST
+				data[it.aIndex] = (float) it.bDouble; // BCAST_WITH_CAST d.getElementDoubleAbs(it.bIndex);
 				data[it.aIndex + 1] = (float) d.getElementDoubleAbs(it.bIndex + 1); // GET_ELEMENT_WITH_CAST
 			}
 		} else {
 			while (it.hasNext()) {
-				data[it.aIndex] = (float) it.bDouble; // ADD_CAST
+				data[it.aIndex] = (float) it.bDouble; // BCAST_WITH_CAST d.getElementDoubleAbs(it.bIndex);
 				data[it.aIndex + 1] = 0;
 			}
 		}

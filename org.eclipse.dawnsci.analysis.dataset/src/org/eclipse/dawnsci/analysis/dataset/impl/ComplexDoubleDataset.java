@@ -578,12 +578,12 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 
 		if (d instanceof ComplexFloatDataset || d instanceof ComplexDoubleDataset) {
 			while (it.hasNext()) {
-				data[it.aIndex] = it.bDouble; // ADD_CAST
+				data[it.aIndex] = it.bDouble; // BCAST_WITH_CAST d.getElementDoubleAbs(it.bIndex);
 				data[it.aIndex + 1] = d.getElementDoubleAbs(it.bIndex + 1); // GET_ELEMENT_WITH_CAST
 			}
 		} else {
 			while (it.hasNext()) {
-				data[it.aIndex] = it.bDouble; // ADD_CAST
+				data[it.aIndex] = it.bDouble; // BCAST_WITH_CAST d.getElementDoubleAbs(it.bIndex);
 				data[it.aIndex + 1] = 0;
 			}
 		}

@@ -654,7 +654,7 @@ public class DatasetUtils {
 					c = new CompoundIntegerDataset(a);
 				break;
 			case Dataset.ARRAYINT64:
-				if (a instanceof AbstractDataset)
+				if (a instanceof CompoundDataset)
 					c = new CompoundLongDataset((CompoundDataset) a);
 				else
 					c = new CompoundLongDataset(a);

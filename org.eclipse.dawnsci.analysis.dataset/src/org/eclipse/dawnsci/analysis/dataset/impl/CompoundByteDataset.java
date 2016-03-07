@@ -1113,7 +1113,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 		if (is > 1) {
 			if (d.getElementsPerItem() == 1) {
 				while (it.hasNext()) {
-					final byte bv = (byte) it.bDouble; // PRIM_TYPE // ADD_CAST
+					final byte bv = (byte) it.bLong; // PRIM_TYPE // BCAST_WITH_CAST d.getElementLongAbs(it.bIndex);
 					data[it.aIndex] = bv;
 					for (int j = 1; j < is; j++) {
 						data[it.aIndex + j] = bv;
@@ -1121,7 +1121,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 				}
 			} else {
 				while (it.hasNext()) {
-					data[it.aIndex] = (byte) it.bDouble; // ADD_CAST
+					data[it.aIndex] = (byte) it.bLong; // BCAST_WITH_CAST d.getElementLongAbs(it.bIndex);
 					for (int j = 1; j < is; j++) {
 						data[it.aIndex + j] = (byte) d.getElementLongAbs(it.bIndex + j); // GET_ELEMENT_WITH_CAST
 					}
@@ -1129,7 +1129,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 			}
 		} else {
 			while (it.hasNext()) {
-				data[it.aIndex] = (byte) it.bDouble; // ADD_CAST
+				data[it.aIndex] = (byte) it.bLong; // BCAST_WITH_CAST d.getElementLongAbs(it.bIndex);
 			}
 		}
 		return this;

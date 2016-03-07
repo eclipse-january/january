@@ -1113,7 +1113,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 		if (is > 1) {
 			if (d.getElementsPerItem() == 1) {
 				while (it.hasNext()) {
-					final float bv = (float) it.bDouble; // PRIM_TYPE // ADD_CAST
+					final float bv = (float) it.bDouble; // PRIM_TYPE // BCAST_WITH_CAST d.getElementDoubleAbs(it.bIndex);
 					data[it.aIndex] = bv;
 					for (int j = 1; j < is; j++) {
 						data[it.aIndex + j] = bv;
@@ -1121,7 +1121,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 				}
 			} else {
 				while (it.hasNext()) {
-					data[it.aIndex] = (float) it.bDouble; // ADD_CAST
+					data[it.aIndex] = (float) it.bDouble; // BCAST_WITH_CAST d.getElementDoubleAbs(it.bIndex);
 					for (int j = 1; j < is; j++) {
 						data[it.aIndex + j] = (float) d.getElementDoubleAbs(it.bIndex + j); // GET_ELEMENT_WITH_CAST
 					}
@@ -1129,7 +1129,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 			}
 		} else {
 			while (it.hasNext()) {
-				data[it.aIndex] = (float) it.bDouble; // ADD_CAST
+				data[it.aIndex] = (float) it.bDouble; // BCAST_WITH_CAST d.getElementDoubleAbs(it.bIndex);
 			}
 		}
 		return this;

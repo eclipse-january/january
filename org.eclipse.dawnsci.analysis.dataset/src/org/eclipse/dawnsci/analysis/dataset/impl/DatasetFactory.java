@@ -176,9 +176,12 @@ public class DatasetFactory {
 		if (obj instanceof IDataset)
 			return DatasetUtils.cast((IDataset) obj, dtype);
 
-		Class<? extends Object> ca = obj.getClass().getComponentType();
-		if (ca != null && (ca.isPrimitive() || ca.equals(String.class))) {
-			return DatasetUtils.cast(createFromPrimitiveArray(obj, AbstractDataset.getDTypeFromClass(ca)), dtype);
+		if (AbstractDataset.isDTypeElemental(dtype)) {
+			// only convert for elemental datasets
+			Class<? extends Object> ca = obj.getClass().getComponentType();
+			if (ca != null && (ca.isPrimitive() || ca.equals(String.class))) {
+				return DatasetUtils.cast(createFromPrimitiveArray(obj, AbstractDataset.getDTypeFromClass(ca)), dtype);
+			}
 		}
 
 		switch (dtype) {
