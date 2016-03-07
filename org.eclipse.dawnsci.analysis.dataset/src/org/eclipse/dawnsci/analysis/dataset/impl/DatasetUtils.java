@@ -2172,32 +2172,32 @@ public class DatasetUtils {
 	 */
 	public static Dataset choose(IntegerDataset index, Object[] choices, boolean throwAIOOBE, boolean clip) {
 		final int n = choices.length;
+		Object[] all = new Object[n + 1];
+		System.arraycopy(choices, 0, all, 0, n);
+		all[n] = index;
+		Dataset[] dChoices = BroadcastUtils.convertAndBroadcast(all);
 		int dt = -1;
 		int ds = -1;
 		int mr = -1;
-		for (Object a : choices) {
-			final int r, s, t;
-			if (a instanceof Dataset) {
-				r = ((Dataset) a).getRank();
-				t = ((Dataset) a).getDtype();
-				s = ((Dataset) a).getElementsPerItem();
-			} else {
-				r = 0;
-				t = AbstractDataset.getDTypeFromObject(a);
-				s = 1;
-			}
-			if (t > dt)
-				dt = t;
-			if (s > ds)
-				ds = s;
+		for (int i = 0; i < n; i++) {
+			Dataset a = dChoices[i];
+			int r = a.getRank();
 			if (r > mr)
 				mr = r;
+			int t = a.getDtype();
+			if (t > dt)
+				dt = t;
+			int s = a.getElementsPerItem();
+			if (s > ds)
+				ds = s;
 		}
 		if (dt < 0 || ds < 1) {
 			throw new IllegalArgumentException("Dataset types of choices are invalid");
 		}
-		
-		Dataset r = DatasetFactory.zeros(ds, index.getShapeRef(), dt);
+		index = (IntegerDataset) dChoices[n];
+		dChoices[n] = null;
+
+		Dataset r = DatasetFactory.zeros(ds, index.getShape(), dt);
 		IndexIterator iter = index.getIterator(true);
 		final int[] pos = iter.getPos();
 		int i = 0;
@@ -2222,8 +2222,79 @@ public class DatasetUtils {
 					j %= n;
 				}
 			}
-			Object c = choices[j];
-			r.setObjectAbs(i++, c instanceof IDataset ? ((IDataset) c).getObject(pos) : c);
+			Dataset c = dChoices[j];
+			r.setObjectAbs(i++, c.getObject(pos));
+		}
+		return r;
+	}
+
+	/**
+	 * Choose content from choices where condition is true, otherwise use default
+	 * @param index integer dataset (ideally, items should be in [0, n) range, if there are n choices)
+	 * @param choices array of datasets or objects
+	 * @param throwAIOOBE if true, throw array index out of bound exception
+	 * @param clip true to clip else wrap indices out of bounds; only used when throwAOOBE is false
+	 * @return dataset
+	 */
+	public static Dataset choose2(IntegerDataset index, Object[] choices, boolean throwAIOOBE, boolean clip) {
+		final int n = choices.length;
+		Dataset[] dChoices = new Dataset[n];
+		int dt = -1;
+		int ds = -1;
+		int mr = -1;
+		int[][] shapes = new int[n+1][];
+		for (int i = 0; i < n; i++) {
+			Dataset a = DatasetFactory.createFromObject(choices[i]);
+			dChoices[i] = a;
+			shapes[i] = a.getShapeRef();
+			int r = a.getRank();
+			if (r > mr)
+				mr = r;
+			int t = a.getDtype();
+			if (t > dt)
+				dt = t;
+			int s = a.getElementsPerItem();
+			if (s > ds)
+				ds = s;
+		}
+		shapes[n] = index.getShapeRef();
+		if (dt < 0 || ds < 1) {
+			throw new IllegalArgumentException("Dataset types of choices are invalid");
+		}
+		List<int[]> nShapes = BroadcastUtils.broadcastShapes(shapes);
+		int[] mshape = nShapes.get(0);
+		for (int i = 0; i < n; i++) {
+			dChoices[i] = dChoices[i].getBroadcastView(mshape);
+		}
+		index = (IntegerDataset) index.getBroadcastView(mshape);
+
+		Dataset r = DatasetFactory.zeros(ds, mshape, dt);
+		IndexIterator iter = index.getIterator(true);
+		final int[] pos = iter.getPos();
+		int i = 0;
+		while (iter.hasNext()) {
+			int j = index.getAbs(iter.index);
+			if (j < 0) {
+				if (throwAIOOBE)
+					throw new ArrayIndexOutOfBoundsException(j);
+				if (clip) {
+					j = 0;
+				} else {
+					j %= n;
+					j += n; // as remainder still negative
+				}
+			}
+			if (j >= n) {
+				if (throwAIOOBE)
+					throw new ArrayIndexOutOfBoundsException(j);
+				if (clip) {
+					j = n - 1;
+				} else {
+					j %= n;
+				}
+			}
+			Dataset c = dChoices[j];
+			r.setObjectAbs(i++, c.getObject(pos));
 		}
 		return r;
 	}

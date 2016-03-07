@@ -241,4 +241,29 @@ public final class BroadcastUtils {
 	
 		return stride;
 	}
+
+	/**
+	 * Converts and broadcast all objects as datasets of same shape
+	 * @param objects
+	 * @return all as broadcasted to same shape
+	 */
+	public static Dataset[] convertAndBroadcast(Object... objects) {
+		final int n = objects.length;
+
+		Dataset[] datasets = new Dataset[n];
+		int[][] shapes = new int[n][];
+		for (int i = 0; i < n; i++) {
+			Dataset d = DatasetFactory.createFromObject(objects[i]);
+			datasets[i] = d;
+			shapes[i] = d.getShapeRef();
+		}
+
+		List<int[]> nShapes = BroadcastUtils.broadcastShapes(shapes);
+		int[] mshape = nShapes.get(0);
+		for (int i = 0; i < n; i++) {
+			datasets[i] = datasets[i].getBroadcastView(mshape);
+		}
+
+		return datasets;
+	}
 }
