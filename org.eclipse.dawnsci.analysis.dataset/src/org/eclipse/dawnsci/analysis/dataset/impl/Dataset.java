@@ -206,6 +206,11 @@ public interface Dataset extends IErrorDataset {
 	public Dataset getView();
 
 	/**
+	 * @return view of dataset that is broadcasted to given shape
+	 */
+	public Dataset getBroadcastView(int... shape);
+
+	/**
 	 * @param showData
 	 * @return string representation
 	 */

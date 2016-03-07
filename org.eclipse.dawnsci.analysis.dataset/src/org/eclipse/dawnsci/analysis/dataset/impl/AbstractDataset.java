@@ -1491,6 +1491,25 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	@Override
+	public Dataset getBroadcastView(int... broadcastShape) {
+		AbstractDataset view = getView();
+		
+		if (!Arrays.equals(shape, broadcastShape)) {
+			List<int[]> nShapes = BroadcastUtils.broadcastShapesToMax(broadcastShape, shape);
+			view.setShape(nShapes.get(0));
+			view.stride = BroadcastUtils.createBroadcastStrides(view, broadcastShape);
+			view.shape = broadcastShape.clone();
+			view.size = calcSize(broadcastShape);
+			if (view.name == null || view.name.isEmpty()) {
+				view.name = "Broadcast from " + Arrays.toString(shape);
+			} else {
+				view.name = "Broadcast of " + view.name + " from " + Arrays.toString(shape);
+			}
+		}
+		return view;
+	}
+
+	@Override
 	public Dataset getSliceView(final int[] start, final int[] stop, final int[] step) {
 		return getSliceView(new SliceND(shape, start, stop, step));
 	}
