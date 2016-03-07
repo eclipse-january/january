@@ -2085,7 +2085,33 @@ public class DatasetUtils {
 	}
 
 	/**
-	 * Select content from choices where condition is true, otherwise use default
+	 * Select content according where condition is true. All inputs are broadcasted to a maximum shape
+	 * @param condition boolean dataset
+	 * @param x
+	 * @param y
+	 * @return dataset where content is x or y depending on whether condition is true or otherwise 
+	 */
+	public static Dataset select(BooleanDataset condition, Object x, Object y) {
+		Object[] all = new Object[] {condition, x, y};
+		Dataset[] dAll = BroadcastUtils.convertAndBroadcast(all);
+		condition = (BooleanDataset) dAll[0];
+		Dataset dx = dAll[1];
+		Dataset dy = dAll[2];
+		int dt = AbstractDataset.getBestDType(dx.getDtype(),dy.getDtype());
+		int ds = Math.max(dx.getElementsPerItem(), dy.getElementsPerItem());
+
+		Dataset r = DatasetFactory.zeros(ds, condition.getShapeRef(), dt);
+		IndexIterator iter = condition.getIterator(true);
+		final int[] pos = iter.getPos();
+		int i = 0;
+		while (iter.hasNext()) {
+			r.setObjectAbs(i++, condition.getElementBooleanAbs(iter.index) ? dx.getObject(pos) : dy.getObject(pos));
+		}
+		return r;
+	}
+
+	/**
+	 * Select content from choices where condition is true, otherwise use default. All inputs are broadcasted to a maximum shape
 	 * @param conditions array of boolean datasets
 	 * @param choices array of datasets or objects
 	 * @param def default value (can be a dataset)
@@ -2096,19 +2122,22 @@ public class DatasetUtils {
 		if (choices.length != n) {
 			throw new IllegalArgumentException("Choices list is not same length as conditions list");
 		}
+		Object[] all = new Object[2*n];
+		System.arraycopy(conditions, 0, all, 0, n);
+		System.arraycopy(choices, 0, all, n, n);
+		Dataset[] dAll = BroadcastUtils.convertAndBroadcast(all);
+		conditions = new BooleanDataset[n];
+		Dataset[] dChoices = new Dataset[n];
+		System.arraycopy(dAll, 0, conditions, 0, n);
+		System.arraycopy(dAll, n, dChoices, 0, n);
 		int dt = -1;
 		int ds = -1;
-		for (Object a : choices) {
-			final int s, t;
-			if (a instanceof Dataset) {
-				t = ((Dataset) a).getDtype();
-				s = ((Dataset) a).getElementsPerItem();
-			} else {
-				t = AbstractDataset.getDTypeFromObject(a);
-				s = 1;
-			}
+		for (int i = 0; i < n; i++) {
+			Dataset a = dChoices[i];
+			int t = a.getDtype();
 			if (t > dt)
 				dt = t;
+			int s = a.getElementsPerItem();
 			if (s > ds)
 				ds = s;
 		}
@@ -2117,53 +2146,27 @@ public class DatasetUtils {
 		}
 
 		Dataset r = DatasetFactory.zeros(ds, conditions[0].getShapeRef(), dt);
-		for (AbstractDataset a : conditions) {
-			r.checkCompatibility(a);
-		}
-		for (Object a : choices) {
-			if (a instanceof ILazyDataset)
-				r.checkCompatibility((ILazyDataset) a);
-		}
-	
+		Dataset d = DatasetFactory.createFromObject(def).getBroadcastView(r.getShapeRef());
 		PositionIterator iter = new PositionIterator(r.getShapeRef());
 		final int[] pos = iter.getPos();
 		int i = 0;
-		if (def instanceof Dataset) {
-			Dataset d = (Dataset) def;
-			r.checkCompatibility(d);
-			while (iter.hasNext()) {
-				int j = 0;
-				for (; j < n; j++) {
-					if (conditions[j].get(pos)) {
-						Object x = choices[j] instanceof Dataset ? ((Dataset) choices[j]).getObject(pos) : choices[j];
-						r.setObjectAbs(i++, x);
-						break;
-					}
-				}
-				if (j == n) {
-					r.setObjectAbs(i++, d.getObject(pos));
+		while (iter.hasNext()) {
+			int j = 0;
+			for (; j < n; j++) {
+				if (conditions[j].get(pos)) {
+					r.setObjectAbs(i++, dChoices[j].getObject(pos));
+					break;
 				}
 			}
-		} else {
-			while (iter.hasNext()) {
-				int j = 0;
-				for (; j < n; j++) {
-					if (conditions[j].get(pos)) {
-						Object x = choices[j] instanceof Dataset ? ((Dataset) choices[j]).getObject(pos) : choices[j];
-						r.setObjectAbs(i++, x);
-						break;
-					}
-				}
-				if (j == n) {
-					r.setObjectAbs(i++, def);
-				}
+			if (j == n) {
+				r.setObjectAbs(i++, d.getObject(pos));
 			}
 		}
 		return r;
 	}
 
 	/**
-	 * Choose content from choices where condition is true, otherwise use default
+	 * Choose content from choices where condition is true, otherwise use default. All inputs are broadcasted to a maximum shape
 	 * @param index integer dataset (ideally, items should be in [0, n) range, if there are n choices)
 	 * @param choices array of datasets or objects
 	 * @param throwAIOOBE if true, throw array index out of bound exception
@@ -2198,77 +2201,6 @@ public class DatasetUtils {
 		dChoices[n] = null;
 
 		Dataset r = DatasetFactory.zeros(ds, index.getShape(), dt);
-		IndexIterator iter = index.getIterator(true);
-		final int[] pos = iter.getPos();
-		int i = 0;
-		while (iter.hasNext()) {
-			int j = index.getAbs(iter.index);
-			if (j < 0) {
-				if (throwAIOOBE)
-					throw new ArrayIndexOutOfBoundsException(j);
-				if (clip) {
-					j = 0;
-				} else {
-					j %= n;
-					j += n; // as remainder still negative
-				}
-			}
-			if (j >= n) {
-				if (throwAIOOBE)
-					throw new ArrayIndexOutOfBoundsException(j);
-				if (clip) {
-					j = n - 1;
-				} else {
-					j %= n;
-				}
-			}
-			Dataset c = dChoices[j];
-			r.setObjectAbs(i++, c.getObject(pos));
-		}
-		return r;
-	}
-
-	/**
-	 * Choose content from choices where condition is true, otherwise use default
-	 * @param index integer dataset (ideally, items should be in [0, n) range, if there are n choices)
-	 * @param choices array of datasets or objects
-	 * @param throwAIOOBE if true, throw array index out of bound exception
-	 * @param clip true to clip else wrap indices out of bounds; only used when throwAOOBE is false
-	 * @return dataset
-	 */
-	public static Dataset choose2(IntegerDataset index, Object[] choices, boolean throwAIOOBE, boolean clip) {
-		final int n = choices.length;
-		Dataset[] dChoices = new Dataset[n];
-		int dt = -1;
-		int ds = -1;
-		int mr = -1;
-		int[][] shapes = new int[n+1][];
-		for (int i = 0; i < n; i++) {
-			Dataset a = DatasetFactory.createFromObject(choices[i]);
-			dChoices[i] = a;
-			shapes[i] = a.getShapeRef();
-			int r = a.getRank();
-			if (r > mr)
-				mr = r;
-			int t = a.getDtype();
-			if (t > dt)
-				dt = t;
-			int s = a.getElementsPerItem();
-			if (s > ds)
-				ds = s;
-		}
-		shapes[n] = index.getShapeRef();
-		if (dt < 0 || ds < 1) {
-			throw new IllegalArgumentException("Dataset types of choices are invalid");
-		}
-		List<int[]> nShapes = BroadcastUtils.broadcastShapes(shapes);
-		int[] mshape = nShapes.get(0);
-		for (int i = 0; i < n; i++) {
-			dChoices[i] = dChoices[i].getBroadcastView(mshape);
-		}
-		index = (IntegerDataset) index.getBroadcastView(mshape);
-
-		Dataset r = DatasetFactory.zeros(ds, mshape, dt);
 		IndexIterator iter = index.getIterator(true);
 		final int[] pos = iter.getPos();
 		int i = 0;
