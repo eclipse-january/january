@@ -64,4 +64,16 @@ public interface ILazyWriteableDataset extends IDynamicDataset {
 	 * @throws Exception 
 	 */
 	public void setSlice(final IMonitor monitor, final IDataset data, final int[] start, final int[] stop, final int[] step) throws Exception;
+
+	/**
+	 * Get the value used to fill an un-initialized dataset
+	 * @return fill value
+	 */
+	public Object getFillValue();
+
+	/**
+	 * Set the value used to fill an un-initialized dataset
+	 * @param fill
+	 */
+	public void setFillValue(Object fill);
 }

@@ -26,6 +26,7 @@ import org.eclipse.dawnsci.analysis.api.monitor.IMonitor;
 public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWriteableDataset {
 	private int[] chunks;
 	private ILazySaver saver;
+	private Object fillValue;
 
 	/**
 	 * Create a lazy dataset
@@ -113,7 +114,7 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 	}
 
 	@Override
-	public void setChunking(int[] chunks) {
+	public void setChunking(int... chunks) {
 		this.chunks = chunks == null ? null : chunks.clone();
 	}
 
@@ -216,5 +217,15 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 			return new SliceND(oShape, maxShape, nstart, nstop, nstep);
 		}
 		return base.createSlice(nstart, nstop, nstep);
+	}
+
+	@Override
+	public Object getFillValue() {
+		return fillValue;
+	}
+
+	@Override
+	public void setFillValue(Object fill) {
+		fillValue = fill;
 	}
 }
