@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.eclipse.ice</groupId>
+		<artifactId>org.eclipse.ice.build</artifactId>
+		<relativePath>../org.eclipse.ice.parent/pom.xml</relativePath>
+		<version>2.1.8.20160208</version>
+	</parent>
+	<groupId>org.eclipse.ice</groupId>
+	<artifactId>org.eclipse.eavp.viz.service.geometry.test</artifactId>
+	<packaging>eclipse-test-plugin</packaging>
+
+	<build>
+		<plugins>
+			<!-- Configure the build to handle SWTBot -->
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-surefire-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<useUIHarness>true</useUIHarness>
+					<useUIThread>false</useUIThread>
+					<product>org.eclipse.sdk.ide</product>
+					<application>org.eclipse.ui.ide.workbench</application>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<properties>
+		<sonar.skip>true</sonar.skip>
+	</properties>
+	</project>
