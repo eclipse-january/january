@@ -9,7 +9,7 @@
  *   Robert Smith
  *   
  *******************************************************************************/
-package org.eclipse.eavp.viz.service.modeling;
+package org.eclipse.eavp.viz.modeling.properties;
 
 /**
  * This interface is for enumerations that define the properties an IMesh may
