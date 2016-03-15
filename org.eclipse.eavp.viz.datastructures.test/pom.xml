@@ -10,7 +10,7 @@
 		<version>2.1.8.20160208</version>
 	</parent>
 	<groupId>org.eclipse.eavp</groupId>
-	<artifactId>org.eclipse.eavp.viz.service.geometry.test</artifactId>
+	<artifactId>org.eclipse.eavp.viz.datastructures.test</artifactId>
 	<packaging>eclipse-test-plugin</packaging>
 
 	<build>
