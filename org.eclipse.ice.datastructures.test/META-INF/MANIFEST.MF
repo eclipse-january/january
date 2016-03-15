@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ICEDataStructuresTest
 Bundle-SymbolicName: org.eclipse.ice.datastructures.test;singleton:=true
-Bundle-Version: 2.1.8.20160208
+Bundle-Version: 2.1.8.qualifier
 Require-Bundle: org.junit;bundle-version="4.8.2",
  org.eclipse.emf.ecore,
  org.eclipse.ice.datastructures,
