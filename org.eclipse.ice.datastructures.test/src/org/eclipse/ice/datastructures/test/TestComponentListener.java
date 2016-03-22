@@ -17,11 +17,11 @@ import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.eclipse.eavp.viz.service.datastructures.VizObject.IManagedUpdateable;
-import org.eclipse.eavp.viz.service.datastructures.VizObject.IManagedUpdateableListener;
-import org.eclipse.eavp.viz.service.datastructures.VizObject.IVizUpdateable;
-import org.eclipse.eavp.viz.service.datastructures.VizObject.IVizUpdateableListener;
-import org.eclipse.eavp.viz.service.datastructures.VizObject.SubscriptionType;
+import org.eclipse.eavp.viz.datastructures.VizObject.IManagedUpdateable;
+import org.eclipse.eavp.viz.datastructures.VizObject.IManagedUpdateableListener;
+import org.eclipse.eavp.viz.datastructures.VizObject.IVizUpdateable;
+import org.eclipse.eavp.viz.datastructures.VizObject.IVizUpdateableListener;
+import org.eclipse.eavp.viz.datastructures.VizObject.SubscriptionType;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
 

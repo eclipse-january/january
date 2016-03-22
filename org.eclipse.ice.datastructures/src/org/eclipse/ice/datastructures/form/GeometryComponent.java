@@ -19,11 +19,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import org.eclipse.eavp.viz.service.datastructures.VizObject.IManagedUpdateable;
-import org.eclipse.eavp.viz.service.datastructures.VizObject.IManagedUpdateableListener;
-import org.eclipse.eavp.viz.service.datastructures.VizObject.SubscriptionType;
-import org.eclipse.eavp.viz.service.modeling.MeshProperty;
-import org.eclipse.eavp.viz.service.modeling.ShapeController;
+import org.eclipse.eavp.viz.modeling.properties.MeshProperty;
+import org.eclipse.eavp.viz.modeling.ShapeController;
+import org.eclipse.eavp.viz.datastructures.VizObject.IManagedUpdateable;
+import org.eclipse.eavp.viz.datastructures.VizObject.IManagedUpdateableListener;
+import org.eclipse.eavp.viz.datastructures.VizObject.SubscriptionType;
 import org.eclipse.ice.datastructures.ICEObject.Component;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
