@@ -160,6 +160,9 @@ public class DiscreteEntry extends AbstractEntry {
 	@Override
 	public void setAllowedValues(List<String> values) {
 		allowedValues = values;
+		if (allowedValues != null && !allowedValues.isEmpty()) {
+			setValue(allowedValues.get(0));
+		}
 	}
 
 	/*
