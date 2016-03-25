@@ -7,7 +7,7 @@
 		<groupId>ICE</groupId>
 		<artifactId>org.eclipse.ice.build</artifactId>
 		<version>2.1.8-SNAPSHOT</version>
-		<relativePath>../${pom-filename}</relativePath>
+		<relativePath>../org.eclipse.ice.parent/pom.xml</relativePath>
 	</parent>
 	<groupId>ICE</groupId>
 	<artifactId>org.eclipse.ice.datastructures.test</artifactId>
