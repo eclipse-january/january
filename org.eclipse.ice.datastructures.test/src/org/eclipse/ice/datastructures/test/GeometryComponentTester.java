@@ -18,21 +18,19 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
-import javax.xml.bind.JAXBException;
-
+import org.eclipse.eavp.viz.service.geometry.shapes.GeometryMeshProperty;
+import org.eclipse.eavp.viz.service.geometry.shapes.OperatorType;
+import org.eclipse.eavp.viz.service.geometry.shapes.ShapeType;
+import org.eclipse.eavp.viz.modeling.base.BasicController;
+import org.eclipse.eavp.viz.modeling.base.BasicView;
+import org.eclipse.eavp.viz.modeling.base.IController;
+import org.eclipse.eavp.viz.modeling.properties.MeshProperty;
+import org.eclipse.eavp.viz.modeling.ShapeController;
+import org.eclipse.eavp.viz.modeling.ShapeMesh;
 import org.eclipse.ice.datastructures.ICEObject.Component;
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
 import org.eclipse.ice.datastructures.form.GeometryComponent;
-import org.eclipse.ice.datastructures.form.geometry.ICEGeometry;
-import org.eclipse.ice.datastructures.form.geometry.ICEShape;
-import org.eclipse.ice.viz.service.geometry.shapes.Geometry;
-import org.eclipse.ice.viz.service.geometry.shapes.OperatorType;
-import org.eclipse.ice.viz.service.geometry.shapes.ShapeType;
 import org.junit.Test;
 
 /**
@@ -45,56 +43,60 @@ import org.junit.Test;
 public class GeometryComponentTester {
 	/**
 	 * <p>
-	 * Checks whether a ComplexShape and a PrimitiveShape <span
-	 * style="font-size:16pt;"></span>can be added, returned, and removed from a
-	 * GeometryComponent
+	 * Checks whether a ComplexShape and a PrimitiveShape
+	 * <span style="font-size:16pt;"></span>can be added, returned, and removed
+	 * from a GeometryComponent
 	 * </p>
 	 * 
 	 */
 	@Test
 	public void checkAddShapes() {
 
+		// Create a shape
+		ShapeMesh geometryModel = new ShapeMesh();
+		geometryModel.setProperty(MeshProperty.TYPE,
+				ShapeType.Sphere.toString());
+		BasicView geometryView = new BasicView();
+		ShapeController geometryShape = new ShapeController(geometryModel,
+				geometryView);
+
 		// Instantiate a GeometryComponent
 		GeometryComponent geometry = new GeometryComponent();
-		geometry.setGeometry(new ICEGeometry());
+		geometry.setGeometry(geometryShape);
 
 		// Add a PrimitiveShape
-		ICEShape sphere = new ICEShape(ShapeType.Sphere);
-		geometry.getGeometry().addShape(sphere);
-		assertEquals(1, geometry.getGeometry().getShapes().size());
-		assertEquals(sphere, geometry.getGeometry().getShapes().get(0));
+		ShapeController sphere = (ShapeController) geometryShape.clone();
+		geometry.getGeometry().addEntity(sphere);
+		assertEquals(1, geometry.getGeometry().getEntities().size());
+		assertEquals(sphere, geometry.getGeometry().getEntities().get(0));
 
 		// Add a ComplexShape
-		ICEShape complex = new ICEShape(OperatorType.Union);
-		geometry.getGeometry().addShape(complex);
-		assertEquals(2, geometry.getGeometry().getShapes().size());
-		assertEquals(complex, geometry.getGeometry().getShapes().get(1));
+		ShapeController complex = (ShapeController) geometryShape.clone();
+		geometry.getGeometry().addEntity(complex);
+		assertEquals(2, geometry.getGeometry().getEntities().size());
+		assertEquals(complex, geometry.getGeometry().getEntities().get(1));
 
 		// Try adding null
-		geometry.getGeometry().addShape(null);
-		assertEquals(2, geometry.getGeometry().getShapes().size());
+		geometry.getGeometry().addEntity(null);
+		assertEquals(2, geometry.getGeometry().getEntities().size());
 
 		// Add a shape with an unknown concrete type
-		ICEShape unknownShape = new ICEShape(ShapeType.None);
-		geometry.getGeometry().addShape(unknownShape);
-		assertEquals(3, geometry.getGeometry().getShapes().size());
-		assertEquals(unknownShape, geometry.getGeometry().getShapes().get(2));
+		ShapeController unknownShape = (ShapeController) geometryShape.clone();
+		geometry.getGeometry().addEntity(unknownShape);
+		assertEquals(3, geometry.getGeometry().getEntities().size());
+		assertEquals(unknownShape, geometry.getGeometry().getEntities().get(2));
 
 		// Remove the second shape
-		geometry.getGeometry().removeShape(complex);
-		assertEquals(2, geometry.getGeometry().getShapes().size());
+		geometry.getGeometry().removeEntity(complex);
+		assertEquals(2, geometry.getGeometry().getEntities().size());
 
 		// Steal the list from the GeometryComponent
-		ArrayList<ICEShape> shapes = geometry.getGeometry().getShapes();
+		List<IController> shapes = geometry.getGeometry().getEntities();
 		assertEquals(2, shapes.size());
 
 		// Remove a shape from the stolen list
 		shapes.remove(0);
 		assertEquals(1, shapes.size());
-
-		// Give it to the GeometryComponent
-		geometry.getGeometry().setShapes(shapes);
-		assertEquals(1, geometry.getGeometry().getShapes().size());
 
 	}
 
@@ -144,14 +146,23 @@ public class GeometryComponentTester {
 	@Test
 	public void checkNotifications() {
 
+		// Create a shape
+		ShapeMesh geometryModel = new ShapeMesh();
+		geometryModel.setProperty(MeshProperty.TYPE,
+				ShapeType.Sphere.toString());
+		BasicView geometryView = new BasicView();
+		ShapeController geometryShape = new ShapeController(geometryModel,
+				geometryView);
+
 		// Create a new listener and add it to a GeometryComponent
 		GeometryComponent geometry = new GeometryComponent();
-		geometry.setGeometry(new ICEGeometry());
+		geometry.setGeometry(geometryShape);
 		TestComponentListener listener = new TestComponentListener();
 		geometry.register(listener);
 
 		// Modify geometryComponent's shapes list
-		geometry.getGeometry().addShape(new ICEShape(ShapeType.Cube));
+		geometry.getGeometry()
+				.addEntity((BasicController) geometryShape.clone());
 
 		// Check that the listener was notified and reset the listener
 		assertTrue(listener.wasNotified());
@@ -180,54 +191,61 @@ public class GeometryComponentTester {
 
 	}
 
-	/**
-	 * <p>
-	 * This operation checks the ability of the GeometryComponent to persist
-	 * itself to XML and to load itself from an XML input stream.
-	 * </p>
-	 * 
-	 * @throws IOException
-	 * @throws JAXBException
-	 * @throws NullPointerException
-	 * 
-	 */
-	@Test
-	public void checkLoadingFromXML() throws NullPointerException,
-			JAXBException, IOException {
-		// Local Declarations
-		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
-		ArrayList<Class> classList = new ArrayList<Class>();
-		classList.add(GeometryComponent.class);
-		classList.add(Geometry.class);
-
-		// Instantiate a GeometryComponent
-		GeometryComponent geometry = new GeometryComponent();
-		geometry.setGeometry(new ICEGeometry());
-		geometry.getGeometry().addShape(new ICEShape(ShapeType.Sphere));
-		geometry.setId(25);
-		geometry.setDescription("description");
-		geometry.setName("name");
-
-		// Load it into XML
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		xmlHandler.write(geometry, classList, outputStream);
-
-		// convert information inside of outputStream to inputStream
-		ByteArrayInputStream inputStream = new ByteArrayInputStream(
-				outputStream.toByteArray());
-
-		String xmlFile2 = new String(outputStream.toByteArray());
-		// System.err.println(xmlFile2);
-
-		// load contents into xml
-		GeometryComponent loadGeometry = new GeometryComponent();
-		loadGeometry = (GeometryComponent) xmlHandler.read(classList,
-				inputStream);
-
-		// Check contents
-		assertTrue(loadGeometry.equals(geometry));
-
-	}
+	// Reimplement test if JAXB persistence is ever supported for the geometry
+	// editor
+	// /**
+	// * <p>
+	// * This operation checks the ability of the GeometryComponent to persist
+	// * itself to XML and to load itself from an XML input stream.
+	// * </p>
+	// *
+	// * @throws IOException
+	// * @throws JAXBException
+	// * @throws NullPointerException
+	// *
+	// */
+	// @Test
+	// public void checkLoadingFromXML()
+	// throws NullPointerException, JAXBException, IOException {
+	//
+	// // Create a shape
+	// ShapeComponent geometryModel = new ShapeComponent();
+	// geometryModel.setProperty("Type", ShapeType.Sphere.toString());
+	// AbstractView geometryView = new AbstractView();
+	// Shape geometryShape = new Shape(geometryModel, geometryView);
+	//
+	// // Local Declarations
+	// ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
+	// ArrayList<Class> classList = new ArrayList<Class>();
+	// classList.add(GeometryComponent.class);
+	//
+	// // Instantiate a GeometryComponent
+	// GeometryComponent geometry = new GeometryComponent();
+	// geometry.setGeometry(geometryShape);
+	// geometry.setId(25);
+	// geometry.setDescription("description");
+	// geometry.setName("name");
+	//
+	// // Load it into XML
+	// ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+	// xmlHandler.write(geometry, classList, outputStream);
+	//
+	// // convert information inside of outputStream to inputStream
+	// ByteArrayInputStream inputStream = new ByteArrayInputStream(
+	// outputStream.toByteArray());
+	//
+	// String xmlFile2 = new String(outputStream.toByteArray());
+	// // System.err.println(xmlFile2);
+	//
+	// // load contents into xml
+	// GeometryComponent loadGeometry = new GeometryComponent();
+	// loadGeometry = (GeometryComponent) xmlHandler.read(classList,
+	// inputStream);
+	//
+	// // Check contents
+	// assertTrue(loadGeometry.equals(geometry));
+	//
+	// }
 
 	/**
 	 * <p>
@@ -238,25 +256,37 @@ public class GeometryComponentTester {
 	 */
 	@Test
 	public void checkEquality() {
+
+		ShapeMesh geometryModel = new ShapeMesh();
+		geometryModel.setProperty(MeshProperty.TYPE,
+				ShapeType.Sphere.toString());
+		BasicView geometryView = new BasicView();
+		ShapeController geometryShape = new ShapeController(geometryModel,
+				geometryView);
+
 		// Create GeometryComponent to test
 		GeometryComponent component = new GeometryComponent();
 		GeometryComponent equalComponent = new GeometryComponent();
 		GeometryComponent unEqualComponent = new GeometryComponent();
 		GeometryComponent transitiveComponent = new GeometryComponent();
-		component.setGeometry(new ICEGeometry());
-		equalComponent.setGeometry(new ICEGeometry());
-		unEqualComponent.setGeometry(new ICEGeometry());
-		transitiveComponent.setGeometry(new ICEGeometry());
+		component.setGeometry(geometryShape);
+		equalComponent.setGeometry((ShapeController) geometryShape.clone());
+		unEqualComponent.setGeometry((ShapeController) geometryShape.clone());
+		transitiveComponent
+				.setGeometry((ShapeController) geometryShape.clone());
 
 		// Change values
-		ICEShape shape = new ICEShape(ShapeType.Cylinder);
-		ICEShape weirdShape = new ICEShape(OperatorType.Intersection);
+		ShapeController shape = (ShapeController) geometryShape.clone();
+		shape.setProperty(MeshProperty.TYPE, ShapeType.Cylinder.toString());
+		ShapeController weirdShape = (ShapeController) geometryShape.clone();
+		shape.setProperty(GeometryMeshProperty.OPERATOR,
+				OperatorType.Intersection.toString());
 
-		component.getGeometry().addShape(shape);
-		equalComponent.getGeometry().addShape(shape);
-		transitiveComponent.getGeometry().addShape(shape);
+		component.getGeometry().addEntity(shape);
+		equalComponent.getGeometry().addEntity(shape);
+		transitiveComponent.getGeometry().addEntity(shape);
 
-		unEqualComponent.getGeometry().addShape(weirdShape);
+		unEqualComponent.getGeometry().addEntity(weirdShape);
 
 		// Set ICEObject data
 		component.setId(1);
@@ -323,13 +353,21 @@ public class GeometryComponentTester {
 	@Test
 	public void checkCreation() {
 
+		// Create a shape
+		ShapeMesh geometryModel = new ShapeMesh();
+		geometryModel.setProperty(MeshProperty.TYPE,
+				ShapeType.Sphere.toString());
+		BasicView geometryView = new BasicView();
+		ShapeController geometryShape = new ShapeController(geometryModel,
+				geometryView);
+
 		// Create a new GeometryComponent
 		GeometryComponent geometry = new GeometryComponent();
-		geometry.setGeometry(new ICEGeometry());
+		geometry.setGeometry(geometryShape);
 
 		// Check that the shapes list exists but is empty
-		assertNotNull(geometry.getGeometry().getShapes());
-		assertTrue(geometry.getGeometry().getShapes().isEmpty());
+		assertNotNull(geometry.getGeometry().getEntities());
+		assertTrue(geometry.getGeometry().getEntities().isEmpty());
 
 	}
 
@@ -343,10 +381,18 @@ public class GeometryComponentTester {
 	@Test
 	public void checkCopying() {
 
+		// Create a shape
+		ShapeMesh geometryModel = new ShapeMesh();
+		geometryModel.setProperty(MeshProperty.TYPE,
+				ShapeType.Sphere.toString());
+		BasicView geometryView = new BasicView();
+		ShapeController geometryShape = new ShapeController(geometryModel,
+				geometryView);
+
 		GeometryComponent geometry = new GeometryComponent();
 		GeometryComponent cloneGeometry;
 		GeometryComponent copyGeometry;
-		geometry.setGeometry(new ICEGeometry());
+		geometry.setGeometry(geometryShape);
 
 		// Set up ICEObject stuff for GeometryComponent
 		geometry.setId(25);
@@ -354,11 +400,19 @@ public class GeometryComponentTester {
 		geometry.setName("Geometry name");
 
 		// Set up GeometryComponent-specific stuff
-		ICEShape sphere1 = new ICEShape(ShapeType.Sphere);
-		ICEShape cube1 = new ICEShape(OperatorType.Union);
+		ShapeMesh sphereModel = new ShapeMesh();
+		sphereModel.setProperty(MeshProperty.TYPE, ShapeType.Sphere.toString());
+		BasicView sphereView = new BasicView();
+		ShapeController sphere1 = new ShapeController(sphereModel, sphereView);
 
-		geometry.getGeometry().addShape(sphere1);
-		geometry.getGeometry().addShape(cube1);
+		ShapeMesh cubeModel = new ShapeMesh();
+		cubeModel.setProperty(GeometryMeshProperty.OPERATOR,
+				OperatorType.Union.toString());
+		BasicView cubeView = new BasicView();
+		ShapeController cube1 = new ShapeController(cubeModel, cubeView);
+
+		geometry.getGeometry().addEntity(sphere1);
+		geometry.getGeometry().addEntity(cube1);
 
 		// Clone contents
 		cloneGeometry = (GeometryComponent) geometry.clone();

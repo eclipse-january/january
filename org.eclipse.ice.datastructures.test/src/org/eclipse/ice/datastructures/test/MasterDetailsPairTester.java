@@ -27,10 +27,13 @@ import java.util.ArrayList;
 import javax.xml.bind.JAXBException;
 
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
-import org.eclipse.ice.datastructures.form.AllowedValueType;
+import org.eclipse.ice.datastructures.entry.ContinuousEntry;
+import org.eclipse.ice.datastructures.entry.DiscreteEntry;
+import org.eclipse.ice.datastructures.entry.IEntry;
+import org.eclipse.ice.datastructures.entry.StringEntry;
 import org.eclipse.ice.datastructures.form.DataComponent;
-import org.eclipse.ice.datastructures.form.Entry;
 import org.eclipse.ice.datastructures.form.MasterDetailsPair;
+import org.eclipse.ice.datastructures.jaxbclassprovider.ICEJAXBClassProvider;
 import org.junit.Test;
 
 /**
@@ -54,32 +57,13 @@ public class MasterDetailsPairTester {
 		// Local Declarations
 		DataComponent dComponent = new DataComponent();
 		DataComponent dComponent2 = new DataComponent();
-		Entry entry1 = new Entry();
-		Entry entry2 = new Entry();
-
-		// Create two entries for the DataComponent (Details).
-		entry1 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("0");
-				this.allowedValues.add("50");
-				this.defaultValue = "25";
-				this.allowedValueType = AllowedValueType.Continuous;
-			}
-		};
-
-		entry2 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("Apple");
-				this.allowedValues.add("Orange");
-				this.defaultValue = "Orange";
-				this.allowedValueType = AllowedValueType.Discrete;
-			}
-		};
-
+		IEntry entry1 = new ContinuousEntry("0", "50");
+		IEntry entry2 = new DiscreteEntry("Apple", "Orange");
+		entry1.setDefaultValue("25");
+		entry2.setDefaultValue("Orange");
+		entry1.setValue("25");
+		entry2.setValue("Orange");
+		
 		// Add the entries to seperate DataComponents
 		dComponent.addEntry(entry1);
 		dComponent2.addEntry(entry2);
@@ -165,33 +149,12 @@ public class MasterDetailsPairTester {
 		// Local Declarations
 		MasterDetailsPair cloneMaster, copyMaster = null;
 		DataComponent dComponent = new DataComponent();
-		Entry entry1 = new Entry();
-		Entry entry2 = new Entry();
-
-		// Create entries for DataComponent
-		// Create a continuous 0-50 entry.
-		entry1 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("0");
-				this.allowedValues.add("50");
-				this.defaultValue = "25";
-				this.allowedValueType = AllowedValueType.Continuous;
-			}
-		};
-
-		// Create a Discrete entry with Apple and Orange as values.
-		entry2 = new Entry() {
-			@Override
-			protected void setup() {
-				this.allowedValues = new ArrayList<String>();
-				this.allowedValues.add("Apple");
-				this.allowedValues.add("Orange");
-				this.defaultValue = "Orange";
-				this.allowedValueType = AllowedValueType.Discrete;
-			}
-		};
+		IEntry entry1 = new ContinuousEntry("0", "50");
+		IEntry entry2 = new DiscreteEntry("Apple", "Orange");
+		entry1.setDefaultValue("25");
+		entry2.setDefaultValue("Orange");
+		entry1.setValue("25");
+		entry2.setValue("Orange");
 
 		// Add entries to DataComponent (Details)
 		dComponent.addEntry(entry1);
@@ -245,7 +208,7 @@ public class MasterDetailsPairTester {
 		// Setup DataComponent
 		dComponent = new DataComponent();
 		dComponent.setName(MasterType1);
-		Entry entry = new Entry();
+		IEntry entry = new StringEntry();
 		// Add entry to dComponent
 		dComponent.addEntry(entry);
 
@@ -342,13 +305,14 @@ public class MasterDetailsPairTester {
 		MasterDetailsPair loadDetailsP = new MasterDetailsPair();
 		DataComponent detailsComp = new DataComponent();
 		String MasterType1 = "TypeOne!";
-		Entry entry;
+		IEntry entry;
 		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
 		ArrayList<Class> classList = new ArrayList<Class>();
 		classList.add(MasterDetailsPair.class);
-
+		classList.addAll(new ICEJAXBClassProvider().getClasses());
+		
 		// Setup DataComponent
-		entry = new Entry();
+		entry = new StringEntry();
 		entry.setValue("Values!");
 		detailsComp.addEntry(entry);
 

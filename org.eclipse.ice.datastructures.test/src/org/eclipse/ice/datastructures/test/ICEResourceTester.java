@@ -24,12 +24,16 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.xml.bind.JAXBException;
 
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
-import org.eclipse.ice.datastructures.form.AllowedValueType;
-import org.eclipse.ice.datastructures.form.Entry;
+import org.eclipse.ice.datastructures.entry.ContinuousEntry;
+import org.eclipse.ice.datastructures.entry.DiscreteEntry;
+import org.eclipse.ice.datastructures.entry.IEntry;
+import org.eclipse.ice.datastructures.entry.StringEntry;
+import org.eclipse.ice.datastructures.jaxbclassprovider.ICEJAXBClassProvider;
 import org.eclipse.ice.datastructures.resource.ICEResource;
 import org.junit.Test;
 
@@ -196,49 +200,27 @@ public class ICEResourceTester {
 		// Local declarations
 		ICEResource resource = null;
 		File file;
-		Entry prop1, prop2, prop3;
-		ArrayList<Entry> properties;
+		IEntry prop1, prop2, prop3;
+		ArrayList<IEntry> properties;
 
 		// Create some entries
 
 		// Prop1 is a discrete with true and false
-		prop1 = new Entry() {
-
-			@Override
-			protected void setup() {
-				allowedValues = new ArrayList<String>(2);
-				allowedValues.add("true");
-				allowedValues.add("false");
-				this.defaultValue = "true";
-				this.allowedValueType = AllowedValueType.Discrete;
-			}
-		};
-
+		prop1 = new DiscreteEntry();
+		prop1.setAllowedValues(Arrays.asList("true","false"));
+		prop1.setDefaultValue("true");
+		
 		// Prop2 is continuous between 1 and 100. Default 5
-		prop2 = new Entry() {
-
-			@Override
-			protected void setup() {
-				allowedValues = new ArrayList<String>(2);
-				allowedValues.add("1");
-				allowedValues.add("100");
-				this.defaultValue = "5";
-				this.allowedValueType = AllowedValueType.Continuous;
-			}
-		};
+		prop2 = new ContinuousEntry();
+		prop2.setAllowedValues(Arrays.asList("1","100"));
+		prop2.setDefaultValue("5");
 
 		// Prop3 is undefined. Value is "Ughn the Barbarian"
-		prop3 = new Entry() {
-
-			@Override
-			protected void setup() {
-				this.allowedValueType = AllowedValueType.Undefined;
-				this.value = "Ughn the Barbarian";
-			}
-		};
+		prop3 = new StringEntry();
+		prop3.setValue("Ughn the Barbarian");
 
 		// Add the props to the properties list
-		properties = new ArrayList<Entry>();
+		properties = new ArrayList<IEntry>();
 
 		properties.add(prop1);
 		properties.add(prop2);
@@ -282,7 +264,7 @@ public class ICEResourceTester {
 		assertTrue(properties.equals(resource.getProperties()));
 
 		// Assert you can pass an empty arraylist and it will reset the list
-		resource.setProperties(new ArrayList<Entry>());
+		resource.setProperties(new ArrayList<IEntry>());
 
 		// check that the properties is empty
 		assertNotNull(resource.getProperties());
@@ -300,12 +282,12 @@ public class ICEResourceTester {
 	@Test
 	public void checkEquality() {
 		// Local declaration
-		Entry entry = new Entry();
-		ArrayList<Entry> properties = null;
+		IEntry entry = new StringEntry();
+		ArrayList<IEntry> properties = null;
 
 		// setup entry and add to properties list
 		entry.setName("Bob");
-		properties = new ArrayList<Entry>();
+		properties = new ArrayList<IEntry>();
 		properties.add(entry);
 
 		// Create an ICEResource
@@ -488,52 +470,31 @@ public class ICEResourceTester {
 		String filename2 = "ICEResourceTestFile2.testFile";
 		File testFile = new File(filename);
 		File testFile2 = new File(filename2);
-		Entry prop1, prop2, prop3;
-		ArrayList<Entry> properties = null;
+		IEntry prop1, prop2, prop3;
+		ArrayList<IEntry> properties = null;
 		ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
 		ArrayList<Class> classList = new ArrayList<Class>();
 		classList.add(ICEResource.class);
-
+		classList.addAll(new ICEJAXBClassProvider().getClasses());
 		// Create some entries
 
+
 		// Prop1 is a discrete with true and false
-		prop1 = new Entry() {
-
-			@Override
-			protected void setup() {
-				allowedValues = new ArrayList<String>(2);
-				allowedValues.add("true");
-				allowedValues.add("false");
-				this.defaultValue = "true";
-				this.allowedValueType = AllowedValueType.Discrete;
-			}
-		};
-
+		prop1 = new DiscreteEntry();
+		prop1.setAllowedValues(Arrays.asList("true","false"));
+		prop1.setDefaultValue("true");
+		
 		// Prop2 is continuous between 1 and 100. Default 5
-		prop2 = new Entry() {
-
-			@Override
-			protected void setup() {
-				allowedValues = new ArrayList<String>(2);
-				allowedValues.add("1");
-				allowedValues.add("100");
-				this.defaultValue = "5";
-				this.allowedValueType = AllowedValueType.Continuous;
-			}
-		};
+		prop2 = new ContinuousEntry();
+		prop2.setAllowedValues(Arrays.asList("1","100"));
+		prop2.setDefaultValue("5");
 
 		// Prop3 is undefined. Value is "Ughn the Barbarian"
-		prop3 = new Entry() {
-
-			@Override
-			protected void setup() {
-				this.allowedValueType = AllowedValueType.Undefined;
-				this.value = "Ughn the Barbarian";
-			}
-		};
+		prop3 = new StringEntry();
+		prop3.setValue("Ughn the Barbarian");
 
 		// Add the props to the properties list
-		properties = new ArrayList<Entry>();
+		properties = new ArrayList<IEntry>();
 
 		properties.add(prop1);
 		properties.add(prop2);

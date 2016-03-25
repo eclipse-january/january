@@ -29,11 +29,9 @@ import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.junit.Test;
 
 /**
- * <p>
  * The ICEObjectTester is responsible for testing the ICEObject class. It only
- * tests the name, id, and description properties as well as persistence.
- * It also checks equality, hashCode computation, copying, and cloning.
- * </p>
+ * tests the name, id, and description properties as well as persistence. It
+ * also checks equality, hashCode computation, copying, and cloning.
  * 
  * @author Jay Jay Billings
  */
@@ -53,18 +51,24 @@ public class ICEObjectTester {
 				+ "our Lord 2011";
 
 		// Create the ICEObject
-		ICEObject testNC = new ICEObject();
+		ICEObject testObject = new ICEObject();
 
 		// Set up the id, name and description
-		testNC.setId(id);
-		testNC.setName(name);
-		testNC.setDescription(description);
+		testObject.setId(id);
+		testObject.setName(name);
+		testObject.setDescription(description);
 
 		// Check the id, name and description
-		assertEquals(testNC.getId(), id);
-		assertEquals(testNC.getName(), name);
-		assertEquals(testNC.getDescription(), description);
+		assertEquals(testObject.getId(), id);
+		assertEquals(testObject.getName(), name);
+		assertEquals(testObject.getDescription(), description);
 
+		// Check the context
+		assertEquals("ice-default", testObject.getContext());
+		testObject.setContext("foo");
+		assertEquals("foo", testObject.getContext());
+
+		return;
 	}
 
 	/**
@@ -80,13 +84,14 @@ public class ICEObjectTester {
 		String description = "The 1st day of the ninth month in the year of "
 				+ "our Lord 2011";
 		ICEObject testNC = new ICEObject();
-		
+
 		// Test to show valid usage of clone
 
 		// Set up the id, name and description
 		testNC.setId(id);
 		testNC.setName(name);
 		testNC.setDescription(description);
+		testNC.setContext("foo");
 
 		// Run clone operation
 		ICEObject cloneNC = (ICEObject) testNC.clone();
@@ -118,6 +123,7 @@ public class ICEObjectTester {
 		assertEquals(testNC.getId(), testNC2.getId());
 		assertEquals(testNC.getName(), testNC2.getName());
 		assertEquals(testNC.getDescription(), testNC2.getDescription());
+		assertEquals(testNC.getContext(), testNC2.getContext());
 
 		// Test to show an invalid use of copy - null args
 
@@ -147,13 +153,15 @@ public class ICEObjectTester {
 	 * This operation checks the ability of the ICEObject to persist itself to
 	 * XML and to load itself from an XML input stream.
 	 * </p>
-	 * @throws IOException 
-	 * @throws JAXBException 
-	 * @throws NullPointerException 
+	 * 
+	 * @throws IOException
+	 * @throws JAXBException
+	 * @throws NullPointerException
 	 * 
 	 */
 	@Test
-	public void checkXMLPersistence() throws NullPointerException, JAXBException, IOException {
+	public void checkXMLPersistence()
+			throws NullPointerException, JAXBException, IOException {
 		// TODO Auto-generated method stub
 
 		/*
@@ -213,6 +221,7 @@ public class ICEObjectTester {
 		testICEObject.setName("ICE ICEObject");
 		testICEObject.setDescription("This is an ICEObject that will "
 				+ "be used for testing equality with other ICEObjects.");
+		testICEObject.setContext("foo");
 
 		// Create another ICEObject to assert Equality with the last
 		ICEObject equalObject = new ICEObject();
@@ -222,6 +231,7 @@ public class ICEObjectTester {
 		equalObject.setName("ICE ICEObject");
 		equalObject.setDescription("This is an ICEObject that will "
 				+ "be used for testing equality with other ICEObjects.");
+		equalObject.setContext("foo");
 
 		// Create an ICEObject that is not equal to testICEObject
 		ICEObject unEqualObject = new ICEObject();
@@ -241,6 +251,7 @@ public class ICEObjectTester {
 		transitiveObject.setName("ICE ICEObject");
 		transitiveObject.setDescription("This is an ICEObject that will "
 				+ "be used for testing equality with other ICEObjects.");
+		transitiveObject.setContext("foo");
 
 		// Assert that these two ICEObjects are equal
 		assertTrue(testICEObject.equals(equalObject));

@@ -26,6 +26,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.eclipse.ice.datastructures.ICEObject.Component;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
+import org.eclipse.ice.datastructures.entry.AbstractEntry;
+import org.eclipse.ice.datastructures.entry.IEntry;
 
 /**
  * This class extends {@link TreeComposite} to create TreeComposites that have
@@ -185,34 +187,34 @@ public class AdaptiveTreeComposite extends TreeComposite {
 					List<Component> newDataNodes = getDataNodes();
 					DataComponent newParamData = 
 							(DataComponent) newDataNodes.get(0);
-					Map<String, Entry> newParamMap = 
-							new HashMap<String, Entry>();
-					for (Entry currEntry : newParamData.retrieveAllEntries()) {
+					Map<String, IEntry> newParamMap = 
+							new HashMap<String, IEntry>();
+					for (IEntry currEntry : newParamData.retrieveAllEntries()) {
 						newParamMap.put(currEntry.getName(), currEntry);
 					}
 					
 					// Get the old type's "standard" parameter list, also put 
 					// those entries in a HashMap
 					TreeComposite oldTypeTree = typesMap.get(oldType);
-					HashMap<String, Entry> oldTypeParamMap = null;
+					HashMap<String, IEntry> oldTypeParamMap = null;
 					if (oldTypeTree != null) {
 						DataComponent oldTypeParameters = (DataComponent) 
 								oldTypeTree.getDataNodes().get(0);
-						oldTypeParamMap = new HashMap<String, Entry>();
-						for (Entry currEntry : oldTypeParameters.retrieveAllEntries()) {
+						oldTypeParamMap = new HashMap<String, IEntry>();
+						for (IEntry currEntry : oldTypeParameters.retrieveAllEntries()) {
 							oldTypeParamMap.put(currEntry.getName(), currEntry);
 						}
 					}
 					
 					// Iterate through the old parameter list and look for 
 					// matches in the new parameter map
-					for (Entry currEntry : oldParamData.retrieveAllEntries()) {
+					for (IEntry currEntry : oldParamData.retrieveAllEntries()) {
 						// Look for a match in the new parameter HashMap
 						if (newParamMap.containsKey(currEntry.getName())) {
 							// Copy the data into the new parameter list
-							Entry newEntry = newParamMap.get(currEntry.getName());
+							IEntry newEntry = newParamMap.get(currEntry.getName());
 							boolean req = currEntry.isRequired();
-							newEntry.copy(currEntry);
+							((AbstractEntry)newEntry).copy((AbstractEntry) currEntry);
 							newEntry.setRequired(req);
 						}
 						

@@ -26,12 +26,14 @@ import org.eclipse.ice.datastructures.ICEObject.Component;
  */
 @XmlRootElement(name = "ReactorComponent")
 public interface IReactorComponent extends Component {
+
 	/**
 	 * <p>
 	 * This operation returns the contents of the ILWRComponent as a string.
 	 * </p>
 	 * 
-	 * @return <p>
+	 * @return
+	 * 		<p>
 	 *         The contents of the LWRComponent as a string.
 	 *         </p>
 	 */

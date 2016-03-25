@@ -28,8 +28,9 @@ import javax.xml.bind.JAXBException;
 
 import org.eclipse.ice.datastructures.ICEObject.Component;
 import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
+import org.eclipse.ice.datastructures.entry.IEntry;
+import org.eclipse.ice.datastructures.entry.StringEntry;
 import org.eclipse.ice.datastructures.form.DataComponent;
-import org.eclipse.ice.datastructures.form.Entry;
 import org.eclipse.ice.datastructures.form.Form;
 import org.eclipse.ice.datastructures.form.ResourceComponent;
 import org.eclipse.ice.datastructures.jaxbclassprovider.ICEJAXBClassProvider;
@@ -291,12 +292,12 @@ public class FormTester {
 		DataComponent comp1 = new DataComponent();
 		DataComponent comp2 = new DataComponent();
 		DataComponent unEqualComponent = new DataComponent();
-		ArrayList<Entry> entries = new ArrayList<Entry>();
+		ArrayList<IEntry> entries = new ArrayList<IEntry>();
 
 		// Create list of Entries
 		for (int i = 0; i < 10; i++) {
 			// Create Entry, add to list, and set data
-			entries.add(new Entry());
+			entries.add(new StringEntry());
 			(entries.get(i)).setId(i);
 			(entries.get(i)).setName("Test Entry " + i);
 			(entries.get(i)).setValue("Value" + i);
@@ -405,10 +406,10 @@ public class FormTester {
 
 		DataComponent dataComponent = new DataComponent();
 		DataComponent dataComponent2 = new DataComponent();
-		Entry entry1 = new Entry();
-		Entry entry2 = new Entry();
-		Entry entry3 = new Entry();
-		Entry entry4 = new Entry();
+		IEntry entry1 = new StringEntry();
+		IEntry entry2 = new StringEntry();
+		IEntry entry3 = new StringEntry();
+		IEntry entry4 = new StringEntry();
 
 		// Listener
 		TestComponentListener listener = new TestComponentListener();
@@ -526,10 +527,10 @@ public class FormTester {
 
 		DataComponent dataComponent = new DataComponent();
 		DataComponent dataComponent2 = new DataComponent();
-		Entry entry1 = new Entry();
-		Entry entry2 = new Entry();
-		Entry entry3 = new Entry();
-		Entry entry4 = new Entry();
+		IEntry entry1 = new StringEntry();
+		IEntry entry2 = new StringEntry();
+		IEntry entry3 = new StringEntry();
+		IEntry entry4 = new StringEntry();
 
 		ArrayList<ICEResource> resources = new ArrayList<ICEResource>();
 

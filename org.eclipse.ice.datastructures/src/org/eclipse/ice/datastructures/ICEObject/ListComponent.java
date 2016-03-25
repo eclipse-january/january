@@ -79,15 +79,15 @@ import ca.odell.glazedlists.gui.WritableTableFormat;
  */
 @XmlRootElement(name = "ListComponent")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ListComponent<T> extends TransformedList<T, T> implements
-		Component, WritableTableFormat<T> {
+public class ListComponent<T> extends TransformedList<T, T>
+		implements Component, WritableTableFormat<T> {
 
 	/**
 	 * Logger for handling event messages and other information.
 	 */
 	@XmlTransient
 	protected final Logger logger;
-	
+
 	/**
 	 * The ICEJAXBHandler used to marshal the class to and from XML.
 	 */
@@ -106,14 +106,17 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 
 	/**
 	 * A BasicEventList that is used to store the identity of this component.
-	 * Index 0 - the unique id, cast to a String Index 1 - the name Index 2 -
-	 * the description
+	 * Index 0 - the unique id, cast to a String; Index 1 - the name; Index 2 -
+	 * the description; Index 3 - the context
 	 * 
 	 * Doing this makes it possible to use the built-in updates provided by the
 	 * BasicEventList instead of implementing our own here since these
 	 * properties are not part of the Transformed list per se and will not have
 	 * events posted for them. It also makes almost every other operation easy
 	 * to implement too.
+	 * 
+	 * The context for this object is at index 3. It should be used as described
+	 * on {@link org.eclipse.ice.datastructures.ICEObject.Identifiable}.
 	 */
 	protected BasicEventList<String> idList;
 
@@ -168,17 +171,18 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 	 */
 	protected ListComponent(EventList<T> source) {
 		super(source);
-		
+
 		// Create the logger
 		logger = LoggerFactory.getLogger(getClass());
-		
+
 		// Store the source list locally too so that JAXB gets it
 		jaxbSourceList = (BasicEventList<T>) source;
-		// Set it all up
+		// Set up the ids - id, name, description and context
 		idList = new BasicEventList<String>();
 		idList.add("1");
 		idList.add("ICE Object");
 		idList.add("ICE Object");
+		idList.add("");
 		// Setup the listener map
 		listenerMap = new HashMap<IUpdateableListener, ListEventListener<Object>>();
 	}
@@ -340,6 +344,7 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see ca.odell.glazedlists.TransformedList#isWritable()
 	 */
 	@Override
@@ -357,6 +362,7 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#clone()
 	 */
 	@Override
@@ -442,7 +448,10 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 
 	/*
 	 * (non-Javadoc)
-	 * @see ca.odell.glazedlists.gui.WritableTableFormat#setColumnValue(java.lang.Object, java.lang.Object, int)
+	 * 
+	 * @see
+	 * ca.odell.glazedlists.gui.WritableTableFormat#setColumnValue(java.lang.
+	 * Object, java.lang.Object, int)
 	 */
 	@Override
 	public T setColumnValue(T baseObject, Object editedValue, int column) {
@@ -536,6 +545,28 @@ public class ListComponent<T> extends TransformedList<T, T> implements
 
 		// Remove the listener from the TransformedList's source EventList.
 		super.source.removeListEventListener(listChangeListener);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.ice.datastructures.ICEObject.Identifiable#getContext()
+	 */
+	@Override
+	public String getContext() {
+		return idList.get(3);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ice.datastructures.ICEObject.Identifiable#setContext(java.
+	 * lang.String)
+	 */
+	@Override
+	public void setContext(String context) {
+		idList.set(3, context);
 	}
 
 }

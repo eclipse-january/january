@@ -14,12 +14,16 @@ package org.eclipse.ice.datastructures.test;
 
 import static org.junit.Assert.fail;
 
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.eclipse.eavp.viz.datastructures.VizObject.IManagedUpdateable;
+import org.eclipse.eavp.viz.datastructures.VizObject.IManagedUpdateableListener;
+import org.eclipse.eavp.viz.datastructures.VizObject.IVizUpdateable;
+import org.eclipse.eavp.viz.datastructures.VizObject.IVizUpdateableListener;
+import org.eclipse.eavp.viz.datastructures.VizObject.SubscriptionType;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
 import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
-import org.eclipse.ice.viz.service.datastructures.VizObject.IVizUpdateable;
-import org.eclipse.ice.viz.service.datastructures.VizObject.IVizUpdateableListener;
 
 /**
  * <p>
@@ -33,7 +37,7 @@ import org.eclipse.ice.viz.service.datastructures.VizObject.IVizUpdateableListen
  * 
  * @author Jay Jay Billings
  */
-public class TestComponentListener implements IUpdateableListener,
+public class TestComponentListener implements IManagedUpdateableListener, IUpdateableListener,
 		IVizUpdateableListener {
 
 	/**
@@ -119,7 +123,7 @@ public class TestComponentListener implements IUpdateableListener,
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ice.viz.service.datastructures.IVizUpdateableListener#update(org.eclipse.ice.viz.service.datastructures.IVizUpdateable)
+	 * @see org.eclipse.eavp.viz.service.datastructures.IVizUpdateableListener#update(org.eclipse.eavp.viz.service.datastructures.IVizUpdateable)
 	 */
 	@Override
 	public void update(IVizUpdateable component) {
@@ -131,6 +135,27 @@ public class TestComponentListener implements IUpdateableListener,
 		System.out.println("TestComponentListener Message: Updated!");
 
 		return;
+		
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.eavp.viz.service.datastructures.VizObject.IManagedVizUpdateableListener#getSubscriptions(org.eclipse.eavp.viz.service.datastructures.VizObject.IManagedVizUpdateable)
+	 */
+	@Override
+	public ArrayList<SubscriptionType> getSubscriptions(IManagedUpdateable source) {
+		ArrayList<SubscriptionType> types = new ArrayList<SubscriptionType>();
+		types.add(SubscriptionType.ALL);
+		return types;
+	}
+
+	@Override
+	public void update(IManagedUpdateable component, SubscriptionType[] type) {
+		// Update the flag
+		wasNotified.set(true);
+
+		// Dump some debug information
+		System.out.println("TestComponentListener Message: Updated!");
 		
 	}
 }
