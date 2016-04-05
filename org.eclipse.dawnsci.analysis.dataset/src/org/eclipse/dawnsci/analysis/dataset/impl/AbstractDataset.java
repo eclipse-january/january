@@ -802,6 +802,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			return;
 		}
 
+		Class<?> clazz = obj.getClass();
 		if (obj instanceof List<?>) {
 			List<?> jl = (List<?>) obj;
 			int l = jl.size();
@@ -811,14 +812,19 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 				pos[depth]++;
 			}
 			pos[depth] = 0;
-		} else if (obj.getClass().isArray()) {
+		} else if (clazz.isArray()) {
 			int l = Array.getLength(obj);
-			for (int i = 0; i < l; i++) {
-				Object lo = Array.get(obj, i);
-				fillData(lo, depth + 1, pos);
-				pos[depth]++;
+			Class<?> cClazz = clazz.getComponentType();
+			if (cClazz.isPrimitive() && cClazz.equals(elementClass())) {
+				System.arraycopy(obj, 0, odata, get1DIndex(pos), l);
+			} else {
+				for (int i = 0; i < l; i++) {
+					Object lo = Array.get(obj, i);
+					fillData(lo, depth + 1, pos);
+					pos[depth]++;
+				}
+				pos[depth] = 0;
 			}
-			pos[depth] = 0;
 		} else if (obj instanceof IDataset) {
 			boolean[] a = new boolean[shape.length];
 			for (int i = depth; i < a.length; i++)
