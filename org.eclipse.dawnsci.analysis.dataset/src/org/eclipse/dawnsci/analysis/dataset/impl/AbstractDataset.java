@@ -814,13 +814,17 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			pos[depth] = 0;
 		} else if (clazz.isArray()) {
 			int l = Array.getLength(obj);
-			Class<?> cClazz = clazz.getComponentType();
-			if (cClazz.isPrimitive() && getDTypeFromClass(cClazz) == getDTypeFromClass(elementClass())) {
+			if (clazz.equals(odata.getClass())) {
 				System.arraycopy(obj, 0, odata, get1DIndex(pos), l);
+			} else if (clazz.getComponentType().isPrimitive()) {
+				for (int i = 0; i < l; i++) {
+					set(Array.get(obj, i), pos);
+					pos[depth]++;
+				}
+				pos[depth] = 0;
 			} else {
 				for (int i = 0; i < l; i++) {
-					Object lo = Array.get(obj, i);
-					fillData(lo, depth + 1, pos);
+					fillData(Array.get(obj, i), depth + 1, pos);
 					pos[depth]++;
 				}
 				pos[depth] = 0;
