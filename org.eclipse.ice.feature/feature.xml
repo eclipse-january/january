@@ -210,4 +210,25 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          version="0.0.0"
          unpack="false"/>
 
+   <plugin
+         id="com.spotify.docker-client.shaded"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="bcpkix"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="bcprov"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
 </feature>
