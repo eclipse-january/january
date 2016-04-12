@@ -24,8 +24,12 @@ import javax.xml.bind.annotation.XmlTransient;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceChangeEvent;
+import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.IResourceDelta;
+import org.eclipse.core.resources.IResourceDeltaVisitor;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
 import org.eclipse.ice.datastructures.ICEObject.Identifiable;
 
 /**
@@ -38,7 +42,7 @@ import org.eclipse.ice.datastructures.ICEObject.Identifiable;
  */
 @XmlRootElement(name = "FileEntry")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class FileEntry extends DiscreteEntry {
+public class FileEntry extends DiscreteEntry implements IResourceChangeListener {
 
 	/**
 	 * Reference to the selected file.
@@ -88,7 +92,7 @@ public class FileEntry extends DiscreteEntry {
 		super(files);
 		contextId = "org.eclipse.ice.client.widgets.FileEntry";
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -109,9 +113,12 @@ public class FileEntry extends DiscreteEntry {
 	 *            The project this Entry belongs to.
 	 */
 	public void setProject(IProject projectSpace) {
-		project = projectSpace;
-		generateAllowedValues();
-		isModified = true;
+		if (projectSpace != null) {
+			project = projectSpace;
+			generateAllowedValues();
+			isModified = true;
+			ResourcesPlugin.getWorkspace().addResourceChangeListener(this, IResourceChangeEvent.POST_CHANGE);
+		}
 	}
 
 	/*
@@ -146,14 +153,6 @@ public class FileEntry extends DiscreteEntry {
 		} else {
 			return null;
 		}
-	}
-
-	/**
-	 * Public operation that lets clients update the list of files, eg after a
-	 * file has been imported to a project.
-	 */
-	public void updateAvailableFiles() {
-		generateAllowedValues();
 	}
 
 	/*
@@ -275,14 +274,45 @@ public class FileEntry extends DiscreteEntry {
 
 		return hash;
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ice.datastructures.entry.DiscreteEntry#accept(org.eclipse.ice.datastructures.entry.IEntryVisitor)
+	 * 
+	 * @see
+	 * org.eclipse.ice.datastructures.entry.DiscreteEntry#accept(org.eclipse.ice
+	 * .datastructures.entry.IEntryVisitor)
 	 */
 	@Override
 	public void accept(IEntryVisitor visitor) {
 		visitor.visit(this);
 	}
-	
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.core.resources.IResourceChangeListener#resourceChanged(org.
+	 * eclipse.core.resources.IResourceChangeEvent)
+	 */
+	@Override
+	public void resourceChanged(IResourceChangeEvent event) {
+		if (project != null) {
+			if (event.getType() == IResourceChangeEvent.POST_CHANGE) {
+				try {
+					event.getDelta().accept(new IResourceDeltaVisitor() {
+						public boolean visit(IResourceDelta delta) throws CoreException {
+							IProject p = delta.getResource().getProject();
+							if (p != null && p.getName().equals(project.getName())) {
+								generateAllowedValues();
+								notifyListeners();
+							}
+							return true;
+						}
+					});
+				} catch (CoreException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 }

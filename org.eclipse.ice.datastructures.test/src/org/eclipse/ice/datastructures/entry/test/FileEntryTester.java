@@ -123,7 +123,6 @@ public class FileEntryTester {
 			fail();
 		}
 		
-		entry.updateAvailableFiles();
 		assertEquals(14, entry.getAllowedValues().size());
 		
 		try {
