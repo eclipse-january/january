@@ -409,9 +409,27 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		return getTransposedView(axes);
 	}
 
+	private boolean isContiguous() {
+		if (stride == null)
+			return true;
+
+		if (offset != 0)
+			return false;
+
+		int s = getElementsPerItem();
+		for (int j = getRank() - 1; j >= 0; j--) {
+			if (stride[j] != s) {
+				return false;
+			}
+			s *= shape[j];
+		}
+
+		return true;
+	}
+
 	@Override
 	public Dataset flatten() {
-		if (stride != null) { // need to make a copy if not contiguous
+		if (!isContiguous()) { // need to make a copy if not contiguous
 			return clone().flatten();
 		}
 		return reshape(size);
