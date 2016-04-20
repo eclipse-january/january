@@ -37,4 +37,8 @@ public class DataListenerDelegate {
 		}
 	}
 
+	public boolean hasDataListeners() {
+		return eventListenerlist.length()>0;
+	}
+
 }

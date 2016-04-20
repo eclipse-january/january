@@ -131,4 +131,8 @@ final class EventListenerList {
 		array = newArray;
 	}
 
+	
+	public int length() {
+		return array!=null?array.length:0;
+	}
 }
