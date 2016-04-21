@@ -41,4 +41,10 @@ public class DataListenerDelegate {
 		return eventListenerlist.length()>0;
 	}
 
+	public void clear() {
+		for (Iterator<Object> iterator = eventListenerlist.getListeners(IDataListener.class); iterator.hasNext();) {
+			eventListenerlist.removeListener(IDataListener.class, iterator.next());
+		}
+	}
+
 }
