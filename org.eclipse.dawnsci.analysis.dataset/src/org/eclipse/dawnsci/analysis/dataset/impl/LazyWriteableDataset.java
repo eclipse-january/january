@@ -190,8 +190,7 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 			}
 
 			saver.setSlice(monitor, data, nslice);
-			oShape = nslice.getSourceShape();
-			shape = slice.getSourceShape();
+			refreshShape();
 			eventDelegate.fire(new DataEvent(name, shape));
 		}
 	}
