@@ -7,8 +7,8 @@
 <listEntry value="2"/>
 </listAttribute>
 <mapAttribute key="org.eclipse.debug.core.environmentVariables">
-<mapEntry key="LD_LIBRARY_PATH" value="${project_loc:ncsa.hdf}/lib/${target.os}-${target.arch}"/>
-<mapEntry key="PATH" value="${project_loc:ncsa.hdf}/lib/${target.os}-${target.arch}"/>
+<mapEntry key="LD_LIBRARY_PATH" value="${project_loc:hdf.hdf5lib}/lib/${target.os}-${target.arch}"/>
+<mapEntry key="PATH" value="${project_loc:hdf.hdf5lib}\lib\${target.os}-${target.arch}"/>
 </mapAttribute>
 <stringAttribute key="org.eclipse.jdt.junit.CONTAINER" value="=org.eclipse.dawnsci.hdf5.test/src"/>
 <booleanAttribute key="org.eclipse.jdt.junit.KEEPRUNNING_ATTR" value="true"/>
