@@ -134,7 +134,7 @@ public class AxesMetadataImpl implements AxesMetadata {
 				view.setShape(newShape);
 			}
 			return view;
-		}
+		} else if (allAxes.length == axisData.getRank()) return axisData;
 		
 		return null;
 		
@@ -148,20 +148,20 @@ public class AxesMetadataImpl implements AxesMetadata {
 	public int[] refresh(int[] shape) {
 		int[] maxShape = shape.clone();
 
-		AxesMetadataImpl ai = this;
-		for (int i = 0 ; i < ai.getAxes().length; i++) {
-			ILazyDataset[] axis = ai.getAxis(i);
+
+		for (int i = 0 ; i < allAxes.length; i++) {
+			List<ILazyDataset> axis = allAxes[i];
 			if (axis == null) continue;
-			for (int j = 0; j < axis.length; j++) {
-				ILazyDataset l = axis[j];
+			for (int j = 0; j < axis.size(); j++) {
+				ILazyDataset l = axis.get(j);
 				if (l == null) continue;
-				int[] dims = ai.getDimensions(l);
+				int[] dims = dimensionMap.get(l);
 
 				if (l instanceof IDynamicDataset) {
 					if (l.getSize() == 1) {
 						l.setShape(new int[]{1});
 					} else {
-						l = l.squeezeEnds();
+						l = l.getSliceView().squeezeEnds();
 					}
 
 					((IDynamicDataset) l).refreshShape();
@@ -174,6 +174,7 @@ public class AxesMetadataImpl implements AxesMetadata {
 					Arrays.fill(newShape, 1);
 					newShape[i] = k;
 					l.setShape(newShape);
+					axis.set(j, l);
 				} else {
 					int[] newShape = shape.clone();
 					Arrays.fill(newShape, 1);
@@ -181,8 +182,9 @@ public class AxesMetadataImpl implements AxesMetadata {
 						int[] s = l.getShape();
 						if (s[dims[k]] < maxShape[k]) maxShape[k] = dims[k];
 						newShape[k] = s[dims[k]];
-						l.setShape(newShape);
 					}
+					l.setShape(newShape);
+					axis.set(j, l);
 				}
 			}
 
