@@ -17,16 +17,19 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.eclipse.eavp.viz.modeling.base.BasicController;
-import org.eclipse.eavp.viz.modeling.base.BasicMesh;
-import org.eclipse.eavp.viz.modeling.base.BasicView;
-import org.eclipse.eavp.viz.modeling.FaceController;
-import org.eclipse.eavp.viz.modeling.base.IController;
 import org.eclipse.eavp.viz.datastructures.VizObject.IManagedUpdateable;
 import org.eclipse.eavp.viz.datastructures.VizObject.IManagedUpdateableListener;
 import org.eclipse.eavp.viz.datastructures.VizObject.SubscriptionType;
+import org.eclipse.eavp.viz.modeling.FaceController;
+import org.eclipse.eavp.viz.modeling.base.BasicController;
+import org.eclipse.eavp.viz.modeling.base.BasicMesh;
+import org.eclipse.eavp.viz.modeling.base.BasicView;
+import org.eclipse.eavp.viz.modeling.base.IController;
+import org.eclipse.eavp.viz.service.IVizService;
+import org.eclipse.eavp.viz.service.mesh.datastructures.MeshDescription;
 import org.eclipse.ice.datastructures.ICEObject.Component;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
@@ -42,9 +45,14 @@ import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
  * @author Robert Smith
  */
 @XmlRootElement(name = "MeshComponent")
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.NONE)
 public class MeshComponent extends ICEObject
 		implements Component, IManagedUpdateableListener {
+
+	/**
+	 * A compressed description of the mesh, used for persistence
+	 */
+	private MeshDescription compressedMesh;
 
 	/**
 	 * The wrapped VizMeshComponent.
@@ -67,6 +75,11 @@ public class MeshComponent extends ICEObject
 	private int nextVertexID = 1;
 
 	/**
+	 * The service which will be rendering this component.
+	 */
+	private IVizService service;
+
+	/**
 	 * <p>
 	 * The default constructor for a MeshComponent. Initializes the list of
 	 * polygons and any associated bookkeeping structures.
@@ -75,8 +88,12 @@ public class MeshComponent extends ICEObject
 	 */
 	public MeshComponent() {
 		super();
+
+		// Initialize the data members
 		mesh = new BasicController(new BasicMesh(), new BasicView());
 		mesh.register(this);
+		compressedMesh = null;
+		service = null;
 		return;
 	}
 
@@ -97,6 +114,7 @@ public class MeshComponent extends ICEObject
 	 */
 	public void setMesh(BasicController newMesh) {
 		mesh = newMesh;
+		mesh.register(this);
 	}
 
 	/**
@@ -132,13 +150,26 @@ public class MeshComponent extends ICEObject
 	}
 
 	/**
+	 * Returns the component's mesh, compressed into a MeshDescription for easy
+	 * use in persistence for JAXB.
+	 * 
+	 * This function exists for use by JAXB and is not intended to be called.
+	 * 
+	 * @return
+	 */
+	@XmlElement
+	private MeshDescription getCompressedMesh() {
+		return new MeshDescription(mesh);
+	}
+
+	/**
 	 * <p>
 	 * Gets a list of all polygons stored in the MeshComponent ordered by their
 	 * IDs.
 	 * </p>
 	 * 
 	 * @return
-	 * 		<p>
+	 *         <p>
 	 *         A list of polygons contained in this MeshComponent.
 	 *         </p>
 	 */
@@ -152,7 +183,7 @@ public class MeshComponent extends ICEObject
 	 * </p>
 	 * 
 	 * @return
-	 * 		<p>
+	 *         <p>
 	 *         The greatest polygon ID (or zero) plus one.
 	 *         </p>
 	 */
@@ -170,7 +201,7 @@ public class MeshComponent extends ICEObject
 	 * </p>
 	 * 
 	 * @return
-	 * 		<p>
+	 *         <p>
 	 *         The greatest vertex ID (or zero) plus one.
 	 *         </p>
 	 */
@@ -188,7 +219,7 @@ public class MeshComponent extends ICEObject
 	 * </p>
 	 * 
 	 * @return
-	 * 		<p>
+	 *         <p>
 	 *         The greatest edge ID (or zero) plus one.
 	 *         </p>
 	 */
@@ -201,12 +232,49 @@ public class MeshComponent extends ICEObject
 	}
 
 	/**
+	 * Sets the component's contents based on the compressed form of a
+	 * MeshDescription.
+	 * 
+	 * This function is intended for use by JAXB for persistence and is not
+	 * intended for use.
+	 * 
+	 * @param description
+	 *            The compressed description the component's new data.
+	 */
+	private void setCompressedMesh(MeshDescription description) {
+		compressedMesh = description;
+	}
+
+	/**
+	 * Setter method for the service being used to render this component.
+	 * 
+	 * @param service
+	 *            The service providing the rendering support used to view this
+	 *            component's contents.
+	 */
+	public void setService(IVizService service) {
+		this.service = service;
+
+		// If a persisted mesh has been loaded into the component, we can now
+		// unpack it
+		if (compressedMesh != null) {
+
+			mesh = (BasicController) compressedMesh
+					.unpack(service.getFactory());
+			mesh.register(this);
+
+			// The full mesh is now in memory, so delete the compressed version
+			compressedMesh = null;
+		}
+	}
+
+	/**
 	 * <p>
 	 * This operation returns the hash value of the MeshComponent.
 	 * </p>
 	 * 
 	 * @return
-	 * 		<p>
+	 *         <p>
 	 *         The hashcode of the ICEObject.
 	 *         </p>
 	 */
@@ -227,7 +295,7 @@ public class MeshComponent extends ICEObject
 	 *            The other ICEObject that should be compared with this one.
 	 *            </p>
 	 * @return
-	 * 		<p>
+	 *         <p>
 	 *         True if the ICEObjects are equal, false otherwise.
 	 *         </p>
 	 */
@@ -287,7 +355,7 @@ public class MeshComponent extends ICEObject
 	 * </p>
 	 * 
 	 * @return
-	 * 		<p>
+	 *         <p>
 	 *         The new clone
 	 *         </p>
 	 */
@@ -330,14 +398,8 @@ public class MeshComponent extends ICEObject
 	@Override
 	public void update(IManagedUpdateable component, SubscriptionType[] types) {
 
-		// Only pass on updates for the root part's list of children changing,
-		// in order to refresh the tree view of components.
-		for (SubscriptionType type : types) {
-			if (type == SubscriptionType.CHILD) {
-				notifyListeners();
-			}
-		}
-
+		// Notify own listeners of the change
+		notifyListeners();
 	}
 
 	/*
@@ -351,9 +413,12 @@ public class MeshComponent extends ICEObject
 	public ArrayList<SubscriptionType> getSubscriptions(
 			IManagedUpdateable source) {
 
-		// Register for all event types
+		// Register to listen when a part is added/removed/moved or when a
+		// property is changed
 		ArrayList<SubscriptionType> types = new ArrayList<SubscriptionType>();
-		types.add(SubscriptionType.ALL);
+		types.add(SubscriptionType.CHILD);
+		types.add(SubscriptionType.PROPERTY);
+		types.add(SubscriptionType.TRANSFORMATION);
 		return types;
 	}
 
