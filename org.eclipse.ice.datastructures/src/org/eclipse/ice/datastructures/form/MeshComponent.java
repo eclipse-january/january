@@ -32,6 +32,7 @@ import org.eclipse.eavp.viz.service.IVizService;
 import org.eclipse.eavp.viz.service.mesh.datastructures.MeshDescription;
 import org.eclipse.ice.datastructures.ICEObject.Component;
 import org.eclipse.ice.datastructures.ICEObject.ICEObject;
+import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
 import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
 
 /**
@@ -386,6 +387,36 @@ public class MeshComponent extends ICEObject
 		return;
 	}
 
+	/**
+	 * Notify all listeners that a change has occurred, providing them with the
+	 * given component as the source.
+	 * 
+	 * @param component
+	 *            The object to serve as the source of the update.
+	 */
+	private void notifyListeners(IUpdateable component) {
+
+		// Only process the update if there are listeners
+		if (listeners != null && !listeners.isEmpty()) {
+			// Create a thread on which to notify the listeners.
+			Thread notifierThread = new Thread() {
+				@Override
+				public void run() {
+					// Loop over all listeners and update them
+					for (int i = 0; i < listeners.size(); i++) {
+						listeners.get(i).update(component);
+					}
+					return;
+				}
+			};
+
+			// Launch the thread and do the notifications
+			notifierThread.start();
+		}
+
+		return;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -398,8 +429,22 @@ public class MeshComponent extends ICEObject
 	@Override
 	public void update(IManagedUpdateable component, SubscriptionType[] types) {
 
-		// Notify own listeners of the change
-		notifyListeners();
+		// If something other than a property changed, then notify the listeners
+		// as normal
+		if (types.length != 1 || !SubscriptionType.PROPERTY.equals(types[0])) {
+
+			// Notify own listeners of the change
+			notifyListeners();
+		}
+
+		// If only a property changed, send a new ICEObject as a special signal
+		// that the MeshComponent should not necessarily be considered as
+		// updated, leaving it to the listener to check if the meshcomponent is
+		// equal to the source in case sepcial behavior is required.
+		else {
+			notifyListeners(new ICEObject());
+		}
+
 	}
 
 	/*
