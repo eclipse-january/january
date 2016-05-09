@@ -24,7 +24,6 @@ import java.util.Map;
 
 import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
-import org.apache.commons.math3.stat.descriptive.moment.Variance;
 import org.eclipse.dawnsci.analysis.api.dataset.IDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.ILazyDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.Slice;
@@ -3288,12 +3287,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	public Number variance(boolean isDatasetWholePopulation) {
 		SummaryStatistics stats = getStatistics(false);
 
-		if (isDatasetWholePopulation) {
-			Variance newVar = (Variance) stats.getVarianceImpl().copy();
-			newVar.setBiasCorrected(false);
-			return newVar.getResult();
-		}
-		return stats.getVariance();
+		return isDatasetWholePopulation ? stats.getPopulationVariance() : stats.getVariance();
 	}
 
 	@Override
