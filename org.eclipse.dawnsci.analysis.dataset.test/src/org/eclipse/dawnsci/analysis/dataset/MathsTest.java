@@ -152,13 +152,15 @@ public class MathsTest {
 		int n;
 		int eCount = 0;
 
+		System.out.println("Adding");
+
 		for (String dn : classes.keySet()) {
 			final int dtype = classes.get(dn);
 			Random.seed(12735L);
 			for (String en : classes.keySet()) {
 				final int etype = classes.get(en);
 
-				System.out.println("Adding " + dn + " to " + en);
+				verbosePrintf("%s to %s, ", dn, en);
 
 				n = 32;
 				for (int i = 0; i < SITER; i++) {
@@ -187,7 +189,7 @@ public class MathsTest {
 					try {
 						c = Maths.add(a, b);
 					} catch (IllegalArgumentException e) {
-						verbosePrintf("Could not perform this operation: %s", e.getMessage());
+						verbosePrintf("Could not perform this operation: %s\n\n", e.getMessage());
 						eCount++;
 						continue;
 					}
@@ -275,7 +277,7 @@ public class MathsTest {
 
 			Random.seed(12735L);
 			n = 32;
-			System.out.println("Adding constant to " + dn);
+			verbosePrintf("constant to %s, ", dn);
 			for (int i = 0; i < SITER; i++) {
 				if (dtype < Dataset.ARRAYINT8) {
 					a = Random.randn(n);
@@ -293,7 +295,7 @@ public class MathsTest {
 				try {
 					c = Maths.add(a, dv);
 				} catch (IllegalArgumentException e) {
-					verbosePrintf("Could not perform this operation: %s", e.getMessage());
+					verbosePrintf("Could not perform this operation: %s\n\n", e.getMessage());
 					eCount++;
 					continue;
 				}
@@ -353,13 +355,14 @@ public class MathsTest {
 		int n;
 		int eCount = 0;
 
+		System.out.println("Subtracting");
 		for (String dn : classes.keySet()) {
 			final int dtype = classes.get(dn);
 			Random.seed(12735L);
 			for (String en : classes.keySet()) {
 				final int etype = classes.get(en);
 
-				System.out.println("Subtracting " + dn + " to " + en);
+				verbosePrintf("%s to %s, ", dn, en);
 
 				n = 32;
 				for (int i = 0; i < SITER; i++) {
@@ -388,7 +391,7 @@ public class MathsTest {
 					try {
 						c = Maths.subtract(a, b);
 					} catch (IllegalArgumentException e) {
-						verbosePrintf("Could not perform this operation: %s", e.getMessage());
+						verbosePrintf("Could not perform this operation: %s\n", e.getMessage());
 						eCount++;
 						continue;
 					}
@@ -477,7 +480,7 @@ public class MathsTest {
 
 			Random.seed(12735L);
 			n = 32;
-			System.out.println("Subtracting constant from " + dn);
+			verbosePrintf("constant from %s, ", dn);
 			for (int i = 0; i < SITER; i++) {
 				if (dtype < Dataset.ARRAYINT8) {
 					a = Random.randn(n);
@@ -495,7 +498,7 @@ public class MathsTest {
 				try {
 					c = Maths.subtract(a, dv);
 				} catch (IllegalArgumentException e) {
-					verbosePrintf("Could not perform this operation: %s", e.getMessage());
+					verbosePrintf("Could not perform this operation: %s\n", e.getMessage());
 					eCount++;
 					continue;
 				}
@@ -541,7 +544,7 @@ public class MathsTest {
 
 			Random.seed(12735L);
 			n = 32;
-			System.out.println("Subtracting " + dn + " from constant");
+			verbosePrintf("%s from constant, ", dn);
 			for (int i = 0; i < SITER; i++) {
 				if (dtype < Dataset.ARRAYINT8) {
 					a = Random.randn(n);
@@ -559,7 +562,7 @@ public class MathsTest {
 				try {
 					c = Maths.subtract(dv, a);
 				} catch (IllegalArgumentException e) {
-					verbosePrintf("Could not perform this operation: %s", e.getMessage());
+					verbosePrintf("Could not perform this operation: %s\n", e.getMessage());
 					eCount++;
 					continue;
 				}
@@ -618,6 +621,7 @@ public class MathsTest {
 		int n;
 		int eCount = 0;
 
+		System.out.println("Multiplying");
 		for (String dn : classes.keySet()) {
 			final int dtype = classes.get(dn);
 			Random.seed(12735L);
@@ -625,8 +629,7 @@ public class MathsTest {
 			for (String en : classes.keySet()) {
 				final int etype = classes.get(en);
 
-				System.out.println("Multiplying " + dn + " by " + en);
-
+				verbosePrintf("%s by %s, ", dn, en);
 				n = 32;
 				for (int i = 0; i < SITER; i++) {
 					if (dtype < Dataset.ARRAYINT8) {
@@ -654,7 +657,7 @@ public class MathsTest {
 					try {
 						c = Maths.multiply(a, b);
 					} catch (IllegalArgumentException e) {
-						verbosePrintf("Could not perform this operation: %s", e.getMessage());
+						verbosePrintf("Could not perform this operation: %s\n", e.getMessage());
 						eCount++;
 						continue;
 					}
@@ -744,7 +747,7 @@ public class MathsTest {
 
 			Random.seed(12735L);
 			n = 32;
-			System.out.println("Multiplying constant with " + dn);
+			verbosePrintf("constant with %s, ", dn);
 			for (int i = 0; i < SITER; i++) {
 				if (dtype < Dataset.ARRAYINT8) {
 					a = Random.randn(n);
@@ -762,7 +765,7 @@ public class MathsTest {
 				try {
 					c = Maths.multiply(a, dv);
 				} catch (IllegalArgumentException e) {
-					verbosePrintf("Could not perform this operation: %s", e.getMessage());
+					verbosePrintf("Could not perform this operation: %s\n", e.getMessage());
 					eCount++;
 					continue;
 				}
@@ -821,6 +824,7 @@ public class MathsTest {
 		int n;
 		int eCount = 0;
 
+		System.out.println("Dividing");
 		for (String dn : classes.keySet()) {
 			final int dtype = classes.get(dn);
 			Random.seed(12735L);
@@ -828,8 +832,7 @@ public class MathsTest {
 			for (String en : classes.keySet()) {
 				final int etype = classes.get(en);
 
-				System.out.println("Dividing " + dn + " by " + en);
-
+				verbosePrintf("%s by %s, ", dn, en);
 				n = 32;
 				for (int i = 0; i < SITER; i++) {
 					if (dtype < Dataset.ARRAYINT8) {
@@ -857,7 +860,7 @@ public class MathsTest {
 					try {
 						c = Maths.divide(a, b);
 					} catch (IllegalArgumentException e) {
-						verbosePrintf("Could not perform this operation: %s", e.getMessage());
+						verbosePrintf("Could not perform this operation: %s\n", e.getMessage());
 						eCount++;
 						continue;
 					}
@@ -989,7 +992,7 @@ public class MathsTest {
 
 			Random.seed(12735L);
 			n = 32;
-			System.out.println("Dividing " + dn + " by constant");
+			verbosePrintf("%s by constant, ", dn);
 			for (int i = 0; i < SITER; i++) {
 				if (dtype < Dataset.ARRAYINT8) {
 					a = Random.randn(n);
@@ -1007,7 +1010,7 @@ public class MathsTest {
 				try {
 					c = Maths.divide(a, dv);
 				} catch (IllegalArgumentException e) {
-					verbosePrintf("Could not perform this operation: %s", e.getMessage());
+					verbosePrintf("Could not perform this operation: %s\n", e.getMessage());
 					eCount++;
 					continue;
 				}
@@ -1053,7 +1056,7 @@ public class MathsTest {
 
 			Random.seed(12735L);
 			n = 32;
-			System.out.println("Dividing constant by " + dn);
+			verbosePrintf("constant by %s, ", dn);
 			for (int i = 0; i < SITER; i++) {
 				if (dtype < Dataset.ARRAYINT8) {
 					a = Random.randn(n);
@@ -1071,7 +1074,7 @@ public class MathsTest {
 				try {
 					c = Maths.divide(dv, a);
 				} catch (IllegalArgumentException e) {
-					verbosePrintf("Could not perform this operation: %s", e.getMessage());
+					verbosePrintf("Could not perform this operation: %s\n", e.getMessage());
 					eCount++;
 					continue;
 				}
@@ -1130,6 +1133,7 @@ public class MathsTest {
 		int n;
 		int eCount = 0;
 
+		System.out.println("Remaindering");
 		for (String dn : classes.keySet()) {
 			final int dtype = classes.get(dn);
 			Random.seed(12735L);
@@ -1137,7 +1141,7 @@ public class MathsTest {
 			for (String en : classes.keySet()) {
 				final int etype = classes.get(en);
 
-				System.out.println("Remaindering " + dn + " by " + en);
+				verbosePrintf("%s by %s, ", dn, en);
 
 				n = 32;
 				for (int i = 0; i < SITER; i++) {
@@ -1233,7 +1237,7 @@ public class MathsTest {
 
 			Random.seed(12735L);
 			n = 32;
-			System.out.println("Remaindering " + dn + " by constant");
+			verbosePrintf("%s by constant, ", dn);
 			for (int i = 0; i < SITER; i++) {
 				if (dtype < Dataset.ARRAYINT8) {
 					a = Random.randn(n);
@@ -1290,7 +1294,7 @@ public class MathsTest {
 
 			Random.seed(12735L);
 			n = 32;
-			System.out.println("Remaindering constant by " + dn);
+			verbosePrintf("constant by %s, ", dn);
 			for (int i = 0; i < SITER; i++) {
 				if (dtype < Dataset.ARRAYINT8) {
 					a = Random.randn(n);
@@ -1360,6 +1364,7 @@ public class MathsTest {
 		int n;
 		int eCount = 0;
 
+		System.out.println("Powering");
 		for (String dn : classes.keySet()) {
 			final int dtype = classes.get(dn);
 			Random.seed(12735L);
@@ -1367,7 +1372,7 @@ public class MathsTest {
 			for (String en : classes.keySet()) {
 				final int etype = classes.get(en);
 
-				System.out.println("Powering " + dn + " by " + en);
+				verbosePrintf("%s by %s, ", dn, en);
 
 				n = 32;
 				for (int i = 0; i < SITER; i++) {
@@ -1485,7 +1490,7 @@ public class MathsTest {
 
 			Random.seed(12735L);
 			n = 32;
-			System.out.println("Powering " + dn + " by constant");
+			verbosePrintf("%s by constant, ", dn);
 			for (int i = 0; i < SITER; i++) {
 				if (dtype < Dataset.ARRAYINT8) {
 					a = Random.randn(n);
@@ -1549,7 +1554,7 @@ public class MathsTest {
 
 			Random.seed(12735L);
 			n = 32;
-			System.out.println("Powering constant by " + dn);
+			verbosePrintf("constant by %s, ", dn);
 			for (int i = 0; i < SITER; i++) {
 				if (dtype < Dataset.ARRAYINT8) {
 					a = Random.randn(n);
