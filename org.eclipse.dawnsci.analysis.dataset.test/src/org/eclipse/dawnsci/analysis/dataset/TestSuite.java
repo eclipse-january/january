@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ MathsTest.class,})
+@SuiteClasses({ AbstractDatasetTest.class,})
 //@SuiteClasses({ AbstractCompoundDatasetTest.class, AbstractDatasetTest.class, AggregateDatasetTest.class,
 //		BinaryOperationTest.class, BooleanDatasetTest.class, BooleanIteratorTest.class, BroadcastIteratorTest.class,
 //		BroadcastUtilsTest.class, ByteDatasetTest.class, ComparisonsTest.class, ComplexDoubleDatasetTest.class,
