@@ -337,7 +337,6 @@ public class MathsTest {
 		}
 	}
 
-	@Ignore
 	@Test
 	public void testSubtraction() {
 		Dataset a, b, c = null, d = null;
@@ -805,7 +804,6 @@ public class MathsTest {
 		}
 	}
 
-	@Ignore
 	@Test
 	public void testDivision() {
 		Dataset a, b, c = null, d = null;
@@ -1114,7 +1112,6 @@ public class MathsTest {
 		}
 	}
 
-	@Ignore
 	@Test
 	public void testRemainder() {
 		Dataset a, b, c = null, d = null;
@@ -2050,7 +2047,6 @@ public class MathsTest {
 		}
 	}
 
-	@Ignore
 	@Test
 	public void testBitwise() {
 		Dataset xa = DatasetFactory.createRange(-4, 4, 1, Dataset.INT8);
@@ -2092,7 +2088,6 @@ public class MathsTest {
 				Maths.unsignedRightShift(xa, xa), ABSERRD, ABSERRD);
 	}
 
-	@Ignore
 	@Test
 	public void testDivideTowardsFloor() {
 		Dataset xa = DatasetFactory.createRange(-4, 4, 1, Dataset.INT8);
@@ -2109,7 +2104,6 @@ public class MathsTest {
 				Maths.divideTowardsFloor(xa, -2.5f), true, ABSERRD, ABSERRD);
 	}
 
-	@Ignore
 	@Test
 	public void testFloorDivide() {
 		Dataset xa = DatasetFactory.createRange(-4, 4, 1, Dataset.INT8);
