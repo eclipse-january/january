@@ -120,7 +120,7 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 	}
 
 	@Override
-	public void setMaxShape(int[] maxShape) {
+	public void setMaxShape(int... maxShape) {
 		this.maxShape = maxShape == null ? shape.clone() : maxShape.clone();
 
 		if (this.maxShape.length > oShape.length) {
