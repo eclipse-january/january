@@ -14,9 +14,53 @@ import java.util.Arrays;
 import org.eclipse.dawnsci.analysis.dataset.impl.Dataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.IndexIterator;
 import org.junit.Assert;
+import org.junit.runner.Description;
+import org.junit.runner.notification.RunListener;
+import org.junit.runner.notification.RunNotifier;
+import org.junit.runners.Suite;
+import org.junit.runners.model.InitializationError;
+import org.junit.runners.model.RunnerBuilder;
 
 public class TestUtils {
-	
+	static RunListener listener;
+	static {
+		listener = new RunListener() {
+			@Override
+			public void testStarted(Description description) throws Exception {
+				System.out.println("Starting: " + description.getMethodName());
+				super.testStarted(description);
+			}
+
+			@Override
+			public void testFinished(Description description) throws Exception {
+				super.testFinished(description);
+				System.out.println("Finished: " + description.getMethodName());
+			}
+		};
+	}
+
+	/**
+	 * Suite that adds a Run listener that prints when methods start and finish
+	 */
+	public static class VerboseSuite extends Suite {
+
+		// TODO handle suites of suites properly
+		public VerboseSuite(Class<?> klass, RunnerBuilder builder) throws InitializationError {
+			super(klass, builder);
+		}
+
+		@Override
+		public void run(RunNotifier notifier) {
+			// To avoid duplicates need to do N-1 times if there's N levels of these suites
+			// Note, in this notifier implementation it does not matter if we try to remove
+			// a listener if is not contained with the notifier
+			notifier.removeListener(listener);
+
+			notifier.addListener(listener);
+			super.run(notifier);
+			notifier.removeListener(listener);
+		}
+	}
 
 	/**
 	 * Assert equality of datasets where each element is true if abs(a - b) <= absTol + relTol*abs(b)

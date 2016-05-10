@@ -145,8 +145,6 @@ public class MathsTest {
 		int n;
 		int eCount = 0;
 
-		System.out.println("Adding");
-
 		for (String dn : classes.keySet()) {
 			final int dtype = classes.get(dn);
 			Random.seed(12735L);
@@ -337,7 +335,6 @@ public class MathsTest {
 		if (eCount > 0) {
 			TestUtils.verbosePrintf("Number of exceptions caught: %d\n", eCount);
 		}
-		System.out.println("Adding done");
 	}
 
 	@Ignore
@@ -350,7 +347,6 @@ public class MathsTest {
 		int n;
 		int eCount = 0;
 
-		System.out.println("Subtracting");
 		for (String dn : classes.keySet()) {
 			final int dtype = classes.get(dn);
 			Random.seed(12735L);
@@ -605,7 +601,6 @@ public class MathsTest {
 		if (eCount > 0) {
 			TestUtils.verbosePrintf("Number of exceptions caught: %d\n", eCount);
 		}
-		System.out.println("Subtracting done");
 	}
 
 	@Test
@@ -617,7 +612,6 @@ public class MathsTest {
 		int n;
 		int eCount = 0;
 
-		System.out.println("Multiplying");
 		for (String dn : classes.keySet()) {
 			final int dtype = classes.get(dn);
 			Random.seed(12735L);
@@ -809,7 +803,6 @@ public class MathsTest {
 		if (eCount > 0) {
 			TestUtils.verbosePrintf("Number of exceptions caught: %d\n", eCount);
 		}
-		System.out.println("Multiplying done");
 	}
 
 	@Ignore
@@ -822,7 +815,6 @@ public class MathsTest {
 		int n;
 		int eCount = 0;
 
-		System.out.println("Dividing");
 		for (String dn : classes.keySet()) {
 			final int dtype = classes.get(dn);
 			Random.seed(12735L);
@@ -1120,7 +1112,6 @@ public class MathsTest {
 		if (eCount > 0) {
 			TestUtils.verbosePrintf("Number of exceptions caught: %d\n", eCount);
 		}
-		System.out.println("Dividing done");
 	}
 
 	@Ignore
@@ -1133,7 +1124,6 @@ public class MathsTest {
 		int n;
 		int eCount = 0;
 
-		System.out.println("Remaindering");
 		for (String dn : classes.keySet()) {
 			final int dtype = classes.get(dn);
 			Random.seed(12735L);
@@ -1353,7 +1343,6 @@ public class MathsTest {
 		if (eCount > 0) {
 			TestUtils.verbosePrintf("Number of exceptions caught: %d\n", eCount);
 		}
-		System.out.println("Remaindering done");
 	}
 
 	@Test
@@ -1365,7 +1354,6 @@ public class MathsTest {
 		int n;
 		int eCount = 0;
 
-		System.out.println("Powering");
 		for (String dn : classes.keySet()) {
 			final int dtype = classes.get(dn);
 			Random.seed(12735L);
@@ -1621,14 +1609,12 @@ public class MathsTest {
 		if (eCount > 0) {
 			TestUtils.verbosePrintf("Number of exceptions caught: %d\n", eCount);
 		}
-		System.out.println("Powering done");
 	}
 
 	@Test
 	public void testDifference() {
 		int[] data = {0,1,3,9,5,10};
 
-		System.out.println("Difference");
 		Dataset a = new IntegerDataset(data, null);
 		Dataset d = Maths.difference(a, 1, -1);
 		int[] tdata;
@@ -1685,8 +1671,6 @@ public class MathsTest {
 		d = Maths.difference(a.getSliceView(slices), 2, -1);
 		ta = Maths.difference(a.getSlice(slices), 2, -1);
 		checkDatasets(null, null, d, ta);
-
-		System.out.println("Difference done");
 	}
 
 	@Test
@@ -1694,7 +1678,6 @@ public class MathsTest {
 		double[] data = {1, 2, 4, 7, 11, 16};
 		double[] tdata;
 
-		System.out.println("Gradient");
 		Dataset a = new DoubleDataset(data, null);
 		Dataset d = Maths.gradient(a).get(0);
 		tdata = new double[] {1., 1.5, 2.5, 3.5, 4.5, 5.};
@@ -1774,8 +1757,6 @@ public class MathsTest {
 		d = Maths.gradient(a.getSliceView(slices)).get(0);
 		ta = Maths.gradient(a.getSlice(slices)).get(0);
 		checkDatasets(null, null, d, ta);
-
-		System.out.println("Gradient done");
 	}
 
 	/**
@@ -1787,7 +1768,6 @@ public class MathsTest {
 		DoubleDataset x;
 		double tol = 1e-6;
 
-		System.out.println("Rounding");
 		double[] val = { -1.7, -1.5, -1.2, 0.3, 1.4, 1.5, 1.6 };
 		t = new DoubleDataset(val);
 
@@ -1808,8 +1788,6 @@ public class MathsTest {
 		for (int i = 0, imax = t.getSize(); i < imax; i++) {
 			assertEquals(resRint[i], x.get(i), tol);
 		}
-
-		System.out.println("Rounding done");
 	}
 
 	private void checkInterpolate(Dataset a, double x) {
@@ -2025,7 +2003,6 @@ public class MathsTest {
 		Dataset xa = DatasetFactory.createRange(60, Dataset.INT32);
 		xa.iadd(1);
 
-		System.out.println("Linear interpolation");
 		double[] xc = {-1.25, -1, -0.25, 0, 0.25, 58.25, 59, 59.25, 60, 60.25};
 		for (double x : xc) {
 //			System.out.printf("%g\n", x);
@@ -2071,14 +2048,11 @@ public class MathsTest {
 				checkInterpolateArray(cxb, x, y);
 			}
 		}
-
-		System.out.println("Linear interpolation done");
 	}
 
 	@Ignore
 	@Test
 	public void testBitwise() {
-		System.out.println("Bitwise");
 		Dataset xa = DatasetFactory.createRange(-4, 4, 1, Dataset.INT8);
 		Dataset xb = DatasetFactory.createRange(8, Dataset.INT8);
 
@@ -2116,14 +2090,11 @@ public class MathsTest {
 				Maths.unsignedRightShift(xb, xa), ABSERRD, ABSERRD);
 		TestUtils.assertDatasetEquals(new ByteDataset(new byte[] {0, 0, 0, 0, 0, 0, 0, 0}),
 				Maths.unsignedRightShift(xa, xa), ABSERRD, ABSERRD);
-
-		System.out.println("Bitwise done");
 	}
 
 	@Ignore
 	@Test
 	public void testDivideTowardsFloor() {
-		System.out.println("Divide towards floor");
 		Dataset xa = DatasetFactory.createRange(-4, 4, 1, Dataset.INT8);
 		TestUtils.assertDatasetEquals(new ByteDataset(new byte[] {-2, -2, -1, -1,  0,  0,  1,  1}),
 				Maths.divideTowardsFloor(xa, 2), true, ABSERRD, ABSERRD);
@@ -2136,13 +2107,11 @@ public class MathsTest {
 
 		TestUtils.assertDatasetEquals(new FloatDataset(new float[] {1.6f, 1.2f, 0.8f, 0.4f, 0 , -0.4f, -0.8f, -1.2f}),
 				Maths.divideTowardsFloor(xa, -2.5f), true, ABSERRD, ABSERRD);
-		System.out.println("Divide towards floor done");
 	}
 
 	@Ignore
 	@Test
 	public void testFloorDivide() {
-		System.out.println("Floor divide");
 		Dataset xa = DatasetFactory.createRange(-4, 4, 1, Dataset.INT8);
 		TestUtils.assertDatasetEquals(new ByteDataset(new byte[] {-2, -2, -1, -1,  0,  0,  1,  1}),
 				Maths.floorDivide(xa, 2), true, ABSERRD, ABSERRD);
@@ -2155,13 +2124,10 @@ public class MathsTest {
 
 		TestUtils.assertDatasetEquals(new FloatDataset(new float[] {1, 1,  0,  0,  0, -1,  -1, -2}),
 				Maths.floorDivide(xa, -2.5f), true, ABSERRD, ABSERRD);
-
-		System.out.println("Floor divide done");
 	}
 
 	@Test
 	public void testFloorRemainder() {
-		System.out.println("Floor remainder");
 		Dataset xa = DatasetFactory.createRange(-4, 4, 1, Dataset.INT8);
 		TestUtils.assertDatasetEquals(new ByteDataset(new byte[] {0, 1, 0, 1, 0, 1, 0, 1}),
 				Maths.floorRemainder(xa, 2), true, ABSERRD, ABSERRD);
@@ -2174,7 +2140,5 @@ public class MathsTest {
 
 		TestUtils.assertDatasetEquals(new FloatDataset(new float[] {-1.5f, -0.5f, -2, -1, 0, -1.5f, -0.5f, -2}),
 				Maths.floorRemainder(xa, -2.5f), true, ABSERRD, ABSERRD);
-
-		System.out.println("Floor remainder done");
 	}
 }

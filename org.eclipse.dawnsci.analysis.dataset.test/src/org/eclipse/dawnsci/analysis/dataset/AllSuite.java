@@ -13,10 +13,9 @@
 package org.eclipse.dawnsci.analysis.dataset;
 
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
-@RunWith(Suite.class)
+@RunWith(TestUtils.VerboseSuite.class)
 @SuiteClasses({ AbstractCompoundDatasetTest.class, AbstractDatasetTest.class, AggregateDatasetTest.class,
 		BinaryOperationTest.class, BooleanDatasetTest.class, BooleanIteratorTest.class, BroadcastIteratorTest.class,
 		BroadcastUtilsTest.class, ByteDatasetTest.class, ComparisonsTest.class, ComplexDoubleDatasetTest.class,
@@ -28,7 +27,10 @@ import org.junit.runners.Suite.SuiteClasses;
 		PositionIteratorTest.class, RandomTest.class, RGBDatasetTest.class, ShortDatasetTest.class, SignalTest.class,
 		SingleInputBroadcastIteratorTest.class, SliceIteratorTest.class, SliceNDIteratorTest.class, SliceNDTest.class,
 		SliceTest.class, StatsTest.class, StrideIteratorTest.class, StringDatasetTest.class, SummedAreaTableTest.class,
-		UnsignedArithmetics.class })
-public class TestSuite {
+		UnsignedArithmetics.class,
+		org.eclipse.dawnsci.analysis.dataset.function.AllSuite.class,
+		org.eclipse.dawnsci.analysis.dataset.slice.AllSuite.class
+		})
+public class AllSuite {
 
 }
