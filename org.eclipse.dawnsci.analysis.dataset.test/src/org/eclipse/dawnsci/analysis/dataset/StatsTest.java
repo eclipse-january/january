@@ -23,6 +23,7 @@ import org.eclipse.dawnsci.analysis.dataset.impl.IntegerDataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.Maths;
 import org.eclipse.dawnsci.analysis.dataset.impl.Random;
 import org.eclipse.dawnsci.analysis.dataset.impl.Stats;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -144,6 +145,7 @@ public class StatsTest {
 		assertEquals("Product", 720, (Double) Stats.product(a, true), 1e-6);
 	}
 
+	@Ignore
 	@Test
 	public void testQuantileSpeed() {
 		int REPEAT = 5;
