@@ -811,6 +811,7 @@ public class MathsTest {
 		System.out.println("Multiplying done");
 	}
 
+	@Ignore
 	@Test
 	public void testDivision() {
 		Dataset a, b, c = null, d = null;
@@ -2117,6 +2118,7 @@ public class MathsTest {
 		System.out.println("Bitwise done");
 	}
 
+	@Ignore
 	@Test
 	public void testDivideTowardsFloor() {
 		System.out.println("Divide towards floor");
@@ -2135,6 +2137,7 @@ public class MathsTest {
 		System.out.println("Divide towards floor done");
 	}
 
+	@Ignore
 	@Test
 	public void testFloorDivide() {
 		System.out.println("Floor divide");
