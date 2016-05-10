@@ -337,6 +337,7 @@ public class MathsTest {
 		if (eCount > 0) {
 			TestUtils.verbosePrintf("Number of exceptions caught: %d\n", eCount);
 		}
+		System.out.println("Adding done");
 	}
 
 	@Test
@@ -603,6 +604,7 @@ public class MathsTest {
 		if (eCount > 0) {
 			TestUtils.verbosePrintf("Number of exceptions caught: %d\n", eCount);
 		}
+		System.out.println("Subtracting done");
 	}
 
 	@Test
@@ -806,9 +808,9 @@ public class MathsTest {
 		if (eCount > 0) {
 			TestUtils.verbosePrintf("Number of exceptions caught: %d\n", eCount);
 		}
+		System.out.println("Multiplying done");
 	}
 
-	@Ignore
 	@Test
 	public void testDivision() {
 		Dataset a, b, c = null, d = null;
@@ -1116,6 +1118,7 @@ public class MathsTest {
 		if (eCount > 0) {
 			TestUtils.verbosePrintf("Number of exceptions caught: %d\n", eCount);
 		}
+		System.out.println("Dividing done");
 	}
 
 	@Test
@@ -1347,6 +1350,7 @@ public class MathsTest {
 		if (eCount > 0) {
 			TestUtils.verbosePrintf("Number of exceptions caught: %d\n", eCount);
 		}
+		System.out.println("Remaindering done");
 	}
 
 	@Test
@@ -1614,6 +1618,7 @@ public class MathsTest {
 		if (eCount > 0) {
 			TestUtils.verbosePrintf("Number of exceptions caught: %d\n", eCount);
 		}
+		System.out.println("Powering done");
 	}
 
 	@Test
@@ -1677,6 +1682,8 @@ public class MathsTest {
 		d = Maths.difference(a.getSliceView(slices), 2, -1);
 		ta = Maths.difference(a.getSlice(slices), 2, -1);
 		checkDatasets(null, null, d, ta);
+
+		System.out.println("Difference done");
 	}
 
 	@Test
@@ -1764,12 +1771,13 @@ public class MathsTest {
 		d = Maths.gradient(a.getSliceView(slices)).get(0);
 		ta = Maths.gradient(a.getSlice(slices)).get(0);
 		checkDatasets(null, null, d, ta);
+
+		System.out.println("Gradient done");
 	}
 
 	/**
 	 * Test rounding
 	 */
-	@Ignore
 	@Test
 	public void testRounding() {
 		DoubleDataset t;
@@ -1797,6 +1805,8 @@ public class MathsTest {
 		for (int i = 0, imax = t.getSize(); i < imax; i++) {
 			assertEquals(resRint[i], x.get(i), tol);
 		}
+
+		System.out.println("Rounding done");
 	}
 
 	private void checkInterpolate(Dataset a, double x) {
@@ -2058,8 +2068,11 @@ public class MathsTest {
 				checkInterpolateArray(cxb, x, y);
 			}
 		}
+
+		System.out.println("Linear interpolation done");
 	}
 
+	@Ignore
 	@Test
 	public void testBitwise() {
 		System.out.println("Bitwise");
@@ -2100,6 +2113,8 @@ public class MathsTest {
 				Maths.unsignedRightShift(xb, xa), ABSERRD, ABSERRD);
 		TestUtils.assertDatasetEquals(new ByteDataset(new byte[] {0, 0, 0, 0, 0, 0, 0, 0}),
 				Maths.unsignedRightShift(xa, xa), ABSERRD, ABSERRD);
+
+		System.out.println("Bitwise done");
 	}
 
 	@Test
@@ -2117,6 +2132,7 @@ public class MathsTest {
 
 		TestUtils.assertDatasetEquals(new FloatDataset(new float[] {1.6f, 1.2f, 0.8f, 0.4f, 0 , -0.4f, -0.8f, -1.2f}),
 				Maths.divideTowardsFloor(xa, -2.5f), true, ABSERRD, ABSERRD);
+		System.out.println("Divide towards floor done");
 	}
 
 	@Test
@@ -2134,6 +2150,8 @@ public class MathsTest {
 
 		TestUtils.assertDatasetEquals(new FloatDataset(new float[] {1, 1,  0,  0,  0, -1,  -1, -2}),
 				Maths.floorDivide(xa, -2.5f), true, ABSERRD, ABSERRD);
+
+		System.out.println("Floor divide done");
 	}
 
 	@Test
@@ -2151,5 +2169,7 @@ public class MathsTest {
 
 		TestUtils.assertDatasetEquals(new FloatDataset(new float[] {-1.5f, -0.5f, -2, -1, 0, -1.5f, -0.5f, -2}),
 				Maths.floorRemainder(xa, -2.5f), true, ABSERRD, ABSERRD);
+
+		System.out.println("Floor remainder done");
 	}
 }
