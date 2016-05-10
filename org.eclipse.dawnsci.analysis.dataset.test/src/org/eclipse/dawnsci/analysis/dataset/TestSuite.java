@@ -27,7 +27,8 @@ import org.junit.runners.Suite.SuiteClasses;
 		LinearAlgebraTest.class, LongDatasetTest.class, MathsTest.class, ObjectDatasetTest.class,
 		PositionIteratorTest.class, RandomTest.class, RGBDatasetTest.class, ShortDatasetTest.class, SignalTest.class,
 		SingleInputBroadcastIteratorTest.class, SliceIteratorTest.class, SliceNDIteratorTest.class, SliceNDTest.class,
-		SliceTest.class, StatsTest.class, StrideIteratorTest.class, StringDatasetTest.class, SummedAreaTableTest.class,
+		SliceTest.class, StatsTest.class, StrideIteratorTest.class, StringDatasetTest.class,
+//		SummedAreaTableTest.class,
 		UnsignedArithmetics.class })
 public class TestSuite {
 
