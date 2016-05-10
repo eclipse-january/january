@@ -1620,6 +1620,7 @@ public class MathsTest {
 	public void testDifference() {
 		int[] data = {0,1,3,9,5,10};
 
+		System.out.println("Difference");
 		Dataset a = new IntegerDataset(data, null);
 		Dataset d = Maths.difference(a, 1, -1);
 		int[] tdata;
@@ -1683,6 +1684,7 @@ public class MathsTest {
 		double[] data = {1, 2, 4, 7, 11, 16};
 		double[] tdata;
 
+		System.out.println("Gradient");
 		Dataset a = new DoubleDataset(data, null);
 		Dataset d = Maths.gradient(a).get(0);
 		tdata = new double[] {1., 1.5, 2.5, 3.5, 4.5, 5.};
@@ -1767,12 +1769,14 @@ public class MathsTest {
 	/**
 	 * Test rounding
 	 */
+	@Ignore
 	@Test
 	public void testRounding() {
 		DoubleDataset t;
 		DoubleDataset x;
 		double tol = 1e-6;
 
+		System.out.println("Rounding");
 		double[] val = { -1.7, -1.5, -1.2, 0.3, 1.4, 1.5, 1.6 };
 		t = new DoubleDataset(val);
 
@@ -2008,6 +2012,7 @@ public class MathsTest {
 		Dataset xa = DatasetFactory.createRange(60, Dataset.INT32);
 		xa.iadd(1);
 
+		System.out.println("Linear interpolation");
 		double[] xc = {-1.25, -1, -0.25, 0, 0.25, 58.25, 59, 59.25, 60, 60.25};
 		for (double x : xc) {
 //			System.out.printf("%g\n", x);
@@ -2057,6 +2062,7 @@ public class MathsTest {
 
 	@Test
 	public void testBitwise() {
+		System.out.println("Bitwise");
 		Dataset xa = DatasetFactory.createRange(-4, 4, 1, Dataset.INT8);
 		Dataset xb = DatasetFactory.createRange(8, Dataset.INT8);
 
@@ -2098,6 +2104,7 @@ public class MathsTest {
 
 	@Test
 	public void testDivideTowardsFloor() {
+		System.out.println("Divide towards floor");
 		Dataset xa = DatasetFactory.createRange(-4, 4, 1, Dataset.INT8);
 		TestUtils.assertDatasetEquals(new ByteDataset(new byte[] {-2, -2, -1, -1,  0,  0,  1,  1}),
 				Maths.divideTowardsFloor(xa, 2), true, ABSERRD, ABSERRD);
@@ -2114,6 +2121,7 @@ public class MathsTest {
 
 	@Test
 	public void testFloorDivide() {
+		System.out.println("Floor divide");
 		Dataset xa = DatasetFactory.createRange(-4, 4, 1, Dataset.INT8);
 		TestUtils.assertDatasetEquals(new ByteDataset(new byte[] {-2, -2, -1, -1,  0,  0,  1,  1}),
 				Maths.floorDivide(xa, 2), true, ABSERRD, ABSERRD);
@@ -2130,6 +2138,7 @@ public class MathsTest {
 
 	@Test
 	public void testFloorRemainder() {
+		System.out.println("Floor remainder");
 		Dataset xa = DatasetFactory.createRange(-4, 4, 1, Dataset.INT8);
 		TestUtils.assertDatasetEquals(new ByteDataset(new byte[] {0, 1, 0, 1, 0, 1, 0, 1}),
 				Maths.floorRemainder(xa, 2), true, ABSERRD, ABSERRD);
