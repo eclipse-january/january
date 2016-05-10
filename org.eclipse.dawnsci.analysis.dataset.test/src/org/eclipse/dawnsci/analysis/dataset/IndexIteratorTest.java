@@ -46,7 +46,7 @@ public class IndexIteratorTest {
 		Dataset ta;
 
 
-		System.out.println("Size: " + size);
+		TestUtils.verbosePrintf("Size: %d\n", size);
 
 		// 0D
 		ta = DatasetFactory.zeros(new int[] {}, type);
@@ -58,20 +58,20 @@ public class IndexIteratorTest {
 
 		// 2D
 		ta = DatasetFactory.createRange(0, size, 1, type).reshape(16, size / 16);
-		System.out.println(" Shape: " + Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
 		testDataset(ta);
 
 		ta = DatasetFactory.createRange(0, size, 1, type).reshape(size / 32, 32);
-		System.out.println(" Shape: " + Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
 		testDataset(ta);
 
 		// 3D
 		ta = DatasetFactory.createRange(0, size, 1, type).reshape(16, 8, size / (16 * 8));
-		System.out.println(" Shape: " + Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
 		testDataset(ta);
 
 		ta = DatasetFactory.createRange(0, size, 1, type).reshape(size / (16 * 8), 16, 8);
-		System.out.println(" Shape: " + Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
 		testDataset(ta);
 
 	}
@@ -178,8 +178,8 @@ public class IndexIteratorTest {
 			elapsed.add(System.nanoTime() - stime);
 		}
 		Collections.sort(elapsed);
-//		System.out.println("  Sliced shape: " + Arrays.toString(sliced.getShape()));
-//		System.out.println(String.format("    old  %5.2fus", elapsed.get(0)*1e-3));
+//		TestUtils.verbosePrintf("  Sliced shape: %s\n", Arrays.toString(sliced.getShape()));
+//		TestUtils.verbosePrintf("    old  %5.2fus\n", elapsed.get(0)*1e-3);
 
 		double[] sdata = (double[]) sliced.getBuffer();
 
@@ -192,7 +192,7 @@ public class IndexIteratorTest {
 			elapsed.add(System.nanoTime() - stime);
 		}
 		Collections.sort(elapsed);
-//		System.out.println(String.format("    iter %5.2fus", elapsed.get(0)*1e-3));
+//		TestUtils.verbosePrintf("    iter %5.2fus\n", elapsed.get(0)*1e-3);
 
 		double[] ndata = (double[]) nsliced.getBuffer();
 		IndexIterator iter = nsliced.getIterator();
@@ -231,7 +231,7 @@ public class IndexIteratorTest {
 		// 2D
 		ta = DatasetFactory.createRange(0, size, 1, type).reshape(size / 15, 15);
 //		ta.reshape(15, size / 15);
-		System.out.println(" Shape: " + Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
 		testSlicedDataset(ta, 0, 0, 3, 0);
 		testSlicedDataset(ta, 0, 0, 3, 1);
 		testSlicedDataset(ta, 2, 0, 3, 0);
@@ -270,7 +270,7 @@ public class IndexIteratorTest {
 		// 3D
 		ta = DatasetFactory.createRange(0, size, 1, type).reshape(size / 10, 2, 5);
 //		ta.reshape(5, size / 10, 2);
-		System.out.println(" Shape: " + Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
 
 		testSlicedDataset(ta, 0, 0, 3, 0);
 		testSlicedDataset(ta, 0, 0, 3, 1);

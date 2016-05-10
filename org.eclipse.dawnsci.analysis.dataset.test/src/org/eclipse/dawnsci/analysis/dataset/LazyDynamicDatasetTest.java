@@ -26,7 +26,7 @@ public class LazyDynamicDatasetTest {
 		
 		@Override
 		public void dataChangePerformed(DataEvent evt) {
-			System.err.println("New shape: " + Arrays.toString(evt.getShape()));
+			TestUtils.verbosePrintf("New shape: %s\n", Arrays.toString(evt.getShape()));
 			count++;
 		}
 	}

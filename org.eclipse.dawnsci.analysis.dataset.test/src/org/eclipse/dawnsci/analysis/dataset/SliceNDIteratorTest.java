@@ -36,8 +36,8 @@ public class SliceNDIteratorTest {
 
 		int size = 0;
 		while (it.hasNext()) {
-			System.err.println(size + ": " + Arrays.toString(it.getPos()) + " or " + Arrays.toString(it.getUsedPos()));
-			System.err.println("         " + it.getOutputSlice());
+			TestUtils.verbosePrintf(size + ": " + Arrays.toString(it.getPos()) + " or " + Arrays.toString(it.getUsedPos()));
+			TestUtils.verbosePrintf("         " + it.getOutputSlice());
 			if (size == (6*7 + 3*7 + 5)) {
 				assertArrayEquals(new int[]{3, 0, 3, 5}, it.getPos());
 				assertArrayEquals(new int[]{3, 3, 5}, it.getUsedPos());

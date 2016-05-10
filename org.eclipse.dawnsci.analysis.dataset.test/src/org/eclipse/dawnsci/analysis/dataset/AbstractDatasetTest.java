@@ -339,20 +339,20 @@ public class AbstractDatasetTest {
 		a.set(Double.NaN, 0);
 		a.setShape(3, 4);
 		a.sort(-1);
-		System.out.println(a);
+		TestUtils.verbosePrintf("%s\n", a.toString());
 		assertEquals("First element", 1, a.getDouble(0,0), 1e-6);
 		assertTrue("0,3 element", Double.isNaN(a.getDouble(0,3)));
 		assertEquals("Final element", 11, a.getDouble(2,3), 1e-6);
 
 		a.sort(0);
-		System.out.println(a);
+		TestUtils.verbosePrintf("%s\n", a.toString());
 		assertEquals("First element", 1, a.getDouble(0,0), 1e-6);
 		assertEquals("0,3 element", 7, a.getDouble(0,3), 1e-6);
 		assertTrue("Final element", Double.isNaN(a.getDouble(2,3)));
 
 		a.set(12, 0);
 		a.sort(null);
-		System.out.println(a);
+		TestUtils.verbosePrintf("%s\n", a.toString());
 		assertEquals("First element", 2, a.getDouble(0), 1e-6);
 		assertEquals("2,2 element", 12, a.getDouble(2,2), 1e-6);
 		assertTrue("Final element", Double.isNaN(a.getDouble(2,3)));
@@ -382,34 +382,34 @@ public class AbstractDatasetTest {
 		Dataset t;
 
 		t = DatasetUtils.take(a, new int[] {0, 2, 4}, null);
-		System.out.println(t);
+		TestUtils.verbosePrintf("%s\n", t.toString());
 
 		t = DatasetUtils.take(a, new int[] {0, 2, 4}, 0);
-		System.out.println(t);
+		TestUtils.verbosePrintf("%s\n", t.toString());
 
 		a.setShape(new int[] {3,4});
-		System.out.println(a);
+		TestUtils.verbosePrintf("%s\n", a.toString());
 
 		t = DatasetUtils.take(a, new int[] {0}, 0);
-		System.out.println(t);
+		TestUtils.verbosePrintf("%s\n", t.toString());
 
 		t = DatasetUtils.take(a, new int[] {1}, 0);
-		System.out.println(t);
+		TestUtils.verbosePrintf("%s\n", t.toString());
 
 		t = DatasetUtils.take(a, new int[] {2}, 0);
-		System.out.println(t);
+		TestUtils.verbosePrintf("%s\n", t.toString());
 
 		t = DatasetUtils.take(a, new int[] {0}, 1);
-		System.out.println(t);
+		TestUtils.verbosePrintf("%s\n", t.toString());
 
 		t = DatasetUtils.take(a, new int[] {1}, 1);
-		System.out.println(t);
+		TestUtils.verbosePrintf("%s\n", t.toString());
 
 		t = DatasetUtils.take(a, new int[] {2}, 1);
-		System.out.println(t);
+		TestUtils.verbosePrintf("%s\n", t.toString());
 
 		t = DatasetUtils.take(a, new int[] {3}, 1);
-		System.out.println(t);
+		TestUtils.verbosePrintf("%s\n", t.toString());
 	}
 
 	/**
@@ -565,7 +565,7 @@ public class AbstractDatasetTest {
 
 		long start, end;
 
-		System.out.printf("Tile %sx%d Block %dx%d: ", rows, cols, srows, scols);
+		TestUtils.verbosePrintf("Tile %sx%d Block %dx%d: ", rows, cols, srows, scols);
 
 		final int nrows = rows/srows;
 		final int ncols = cols/scols;
@@ -589,13 +589,13 @@ public class AbstractDatasetTest {
 		}
 		end = System.currentTimeMillis();
 		long diff1 = end - start;
-		System.out.printf("array = %d ms, ", diff1);
+		TestUtils.verbosePrintf("array = %d ms, ", diff1);
 
 		start = System.currentTimeMillis();
 		final Dataset tiled = DatasetUtils.tile(a, nrows, ncols);
 		end = System.currentTimeMillis();
 		long diff2 = end - start;
-		System.out.printf("tile = %d ms\n", diff2);
+		TestUtils.verbosePrintf("tile = %d ms\n", diff2);
 
 		assertEquals(rows, tiled.getShape()[0]);
 		assertEquals(cols, tiled.getShape()[1]);

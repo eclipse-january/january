@@ -56,7 +56,7 @@ public class StatsTest {
 		for (int i = 0; i < 5; i++)
 			res = Stats.residual(ta, tb);
 		start += System.nanoTime();
-		System.out.printf("New residual takes %.3fms\n", start*1e-6);
+		TestUtils.verbosePrintf("New residual takes %.3fms\n", start*1e-6);
 
 		DoubleDataset tw = new DoubleDataset(ta.getSize());
 		double wv = 2.5;
@@ -69,7 +69,7 @@ public class StatsTest {
 		for (int i = 0; i < 5; i++)
 			ores = (Number) Maths.square(Maths.subtract(ta, tb)).sum();
 		start += System.nanoTime();
-		System.out.printf("Old residual takes %.3fms\n", start*1e-6);
+		TestUtils.verbosePrintf("Old residual takes %.3fms\n", start*1e-6);
 		assertEquals(msg, res, ores.doubleValue(), 1e-14*res);
 
 		Number owres = (Number) Maths.multiply(Maths.square(Maths.subtract(ta, tb)), tw).sum();
@@ -158,7 +158,7 @@ public class StatsTest {
 		long[] times = new long[REPEAT]; // in nanoseconds
 		double[] vs;
 
-		System.out.printf("Dataset: mean = %g (%g, %g)\n", a.mean(), a.min().doubleValue(), a.max().doubleValue());
+		TestUtils.verbosePrintf("Dataset: mean = %g (%g, %g)\n", a.mean(), a.min().doubleValue(), a.max().doubleValue());
 		vs = Stats.quantile(a, LOW, HIGH);
 		for (int i = 0; i < REPEAT; i++) {
 			times[i] = -System.nanoTime();
@@ -166,7 +166,7 @@ public class StatsTest {
 			times[i] += System.nanoTime();
 		}
 		Arrays.sort(times);
-		System.out.printf("Low/High (%g/%g) took %.2fms\n", vs[0], vs[1], times[0]/1e6);
+		TestUtils.verbosePrintf("Low/High (%g/%g) took %.2fms\n", vs[0], vs[1], times[0]/1e6);
 
 		double s = a.getSize();
 		double lx = s*LOW;
@@ -182,7 +182,7 @@ public class StatsTest {
 				times[i] += System.nanoTime();
 			}
 			Arrays.sort(times);
-			System.out.printf("%4d: Low/High (%g/%g - %.4f/%.4f) took %.2fms\n", l, vs[0], vs[1], vs[2]/s, 1-vs[3]/s, times[0]/1e6);
+			TestUtils.verbosePrintf("%4d: Low/High (%g/%g - %.4f/%.4f) took %.2fms\n", l, vs[0], vs[1], vs[2]/s, 1-vs[3]/s, times[0]/1e6);
 		}
 
 		ls = new int[] {640, 1024, 8192};
@@ -194,7 +194,7 @@ public class StatsTest {
 				times[i] += System.nanoTime();
 			}
 			Arrays.sort(times);
-			System.out.printf("%4d: Low/High (%g/%g - %.4f/%.4f) took %.2fms\n", l, vs[0], vs[1], vs[2]/s, 1-vs[3]/s, times[0]/1e6);
+			TestUtils.verbosePrintf("%4d: Low/High (%g/%g - %.4f/%.4f) took %.2fms\n", l, vs[0], vs[1], vs[2]/s, 1-vs[3]/s, times[0]/1e6);
 		}
 
 		vs = Stats.outlierValuesMap(a, (int) lx, (int) hx);
@@ -204,7 +204,7 @@ public class StatsTest {
 			times[i] += System.nanoTime();
 		}
 		Arrays.sort(times);
-		System.out.printf("Low/High (%g/%g - %.4f/%.4f) took %.2fms\n", vs[0], vs[1], vs[2]/s, 1-vs[3]/s, times[0]/1e6);
+		TestUtils.verbosePrintf("Low/High (%g/%g - %.4f/%.4f) took %.2fms\n", vs[0], vs[1], vs[2]/s, 1-vs[3]/s, times[0]/1e6);
 
 		double[] qs = Stats.quantile(a, LOW, HIGH);
 		assertEquals("Lower quantile", qs[0], vs[0], 1e-4*qs[0]);

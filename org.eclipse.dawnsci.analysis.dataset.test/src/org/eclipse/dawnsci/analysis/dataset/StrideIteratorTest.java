@@ -59,20 +59,20 @@ public class StrideIteratorTest {
 
 		// 2D
 		ta = DatasetFactory.createRange(0, size, 1, type).reshape(16, size / 16);
-		System.out.println(" Shape: " + Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
 		testDataset(ta);
 
 		ta = DatasetFactory.createRange(0, size, 1, type).reshape(size / 32, 32);
-		System.out.println(" Shape: " + Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
 		testDataset(ta);
 
 		// 3D
 		ta = DatasetFactory.createRange(0, size, 1, type).reshape(16, 8, size / (16 * 8));
-		System.out.println(" Shape: " + Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
 		testDataset(ta);
 
 		ta = DatasetFactory.createRange(0, size, 1, type).reshape(size / (16 * 8), 16, 8);
-		System.out.println(" Shape: " + Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
 		testDataset(ta);
 
 	}
@@ -233,8 +233,8 @@ public class StrideIteratorTest {
 		SliceIterator siter = (SliceIterator) t.getSliceIterator(starts, null, steps);
 
 		sliced = oldSlice(t, siter);
-		System.out.println("  Slicing : " + start + "@" + startaxis + ", " + step + "@" + stepaxis);
-		System.out.println("  Sliced shape: " + Arrays.toString(sliced.getShape()));
+		TestUtils.verbosePrintf("  Slicing : %d@%d, %d@%d\n", start, startaxis, step, stepaxis);
+		TestUtils.verbosePrintf("  Sliced shape: %s\n", Arrays.toString(sliced.getShape()));
 		elapsed.clear();
 		for (int i = 0; i < nloop; i++) {
 			stime = System.nanoTime();
@@ -242,7 +242,7 @@ public class StrideIteratorTest {
 			elapsed.add(System.nanoTime() - stime);
 		}
 		Collections.sort(elapsed);
-		System.out.println(String.format("    old  %5.2fus", elapsed.get(0)*1e-3));
+		TestUtils.verbosePrintf("    old  %5.2fus\n", elapsed.get(0)*1e-3);
 
 		Dataset nsliced = null;
 
@@ -253,7 +253,7 @@ public class StrideIteratorTest {
 			elapsed.add(System.nanoTime() - stime);
 		}
 		Collections.sort(elapsed);
-		System.out.println(String.format("    iter %5.2fus", elapsed.get(0)*1e-3));
+		TestUtils.verbosePrintf("    iter %5.2fus\n", elapsed.get(0)*1e-3);
 		double current = elapsed.get(0);
 
 		nsliced = newSlice(t, starts, null, steps);
@@ -264,7 +264,7 @@ public class StrideIteratorTest {
 			elapsed.add(System.nanoTime() - stime);
 		}
 		Collections.sort(elapsed);
-		System.out.println(String.format("    strides %5.2fus (%.2f)", elapsed.get(0)*1e-3, elapsed.get(0)/current));
+		TestUtils.verbosePrintf("    strides %5.2fus (%.2f)\n", elapsed.get(0)*1e-3, elapsed.get(0)/current);
 
 		checkSliced(sliced, nsliced);
 	}
@@ -311,7 +311,7 @@ public class StrideIteratorTest {
 	private void testSliceIterationND(int size, int type) {
 		Dataset ta;
 
-		System.out.println(" Size: " + size);
+		TestUtils.verbosePrintf(" Size: %d\n", size);
 
 		// 1D
 		ta = DatasetFactory.createRange(0, size, 1, type);
@@ -325,7 +325,7 @@ public class StrideIteratorTest {
 		// 2D
 		ta = DatasetFactory.createRange(0, size, 1, type).reshape(size / 15, 15);
 		ta.setShape(15, size / 15);
-		System.out.println(" Shape: " + Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
 		testSlicedDataset(ta, 0, 0, 3, 0);
 		testSlicedDataset(ta, 0, 0, 3, 1);
 		testSlicedDataset(ta, 2, 0, 3, 0);
@@ -367,7 +367,7 @@ public class StrideIteratorTest {
 		// 3D
 		ta = DatasetFactory.createRange(0, size, 1, type).reshape(size / 10, 2, 5);
 		ta.setShape(5, size / 20, 4);
-		System.out.println(" Shape: " + Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
 
 		testSlicedDataset(ta, 0, 0, 3, 0);
 		testSlicedDataset(ta, 0, 0, 3, 1);

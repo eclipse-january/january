@@ -80,4 +80,12 @@ public class TestUtils {
 		double t = Math.max(absTol, relTol*Math.max(Math.abs(e), Math.abs(a)));
 		Assert.assertEquals(s, e, a, t);
 	}
+
+	static boolean verboseOutput = false;
+
+	public static void verbosePrintf(String fmt, Object... args) {
+		if (verboseOutput) {
+			System.out.printf(fmt, args);
+		}
+	}
 }

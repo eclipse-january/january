@@ -24,7 +24,7 @@ public class LazyDatasetTest {
 		try {
 			l.setShape(shape);
 			if (well)
-				System.out.println("Succeeded setting shape for " + msg);
+				TestUtils.verbosePrintf("Succeeded setting shape for %s\n", msg);
 			else
 				Assert.fail("Should have thrown exception for " + msg);
 		} catch (IllegalArgumentException iae) {
@@ -32,7 +32,7 @@ public class LazyDatasetTest {
 			if (well)
 				Assert.fail("Unexpected exception for " + msg);
 			else
-				System.out.println("Correctly failed setting shape for " + msg);
+				TestUtils.verbosePrintf("Correctly failed setting shape for %s\n", msg);
 		} catch (Exception e) {
 			msg += ": " + e.getMessage();
 			if (well)
@@ -124,17 +124,17 @@ public class LazyDatasetTest {
 		Slice[] slice;
 		slice = new Slice[]{new Slice(1, null, 3), new Slice(1), new Slice(1, 3), null};
 		ILazyDataset l = ld.getSliceView(null, shape, null);
-		System.out.println(l);
+		TestUtils.verbosePrintf("%s\n", l.toString());
 		Assert.assertEquals("Full slice", d, l.getSlice());
 		l = ld.getSliceView(slice);
-		System.out.println(l);
+		TestUtils.verbosePrintf("%s\n", l.toString());
 		Assert.assertEquals("Part slice", d.getSlice(slice), l.getSlice());
 
 		l = ld.getSliceView();
-		System.out.println(l);
+		TestUtils.verbosePrintf("%s\n", l.toString());
 		Assert.assertEquals("Full slice", d, l.getSlice());
 		l = ld.getSliceView(slice);
-		System.out.println(l);
+		TestUtils.verbosePrintf("%s\n", l.toString());
 		Assert.assertEquals("Part slice", d.getSlice(slice), l.getSlice());
 
 		l = ld.getSliceView();
@@ -249,7 +249,7 @@ public class LazyDatasetTest {
 	}
 
 	@Test
-    public void testSlicePadRankSlice() {
+	public void testSlicePadRankSlice() {
 		Dataset data = Random.rand(new int[] { 10 });
 		data.setName("random");
 		LazyDataset ld = LazyDataset.createLazyDataset(data);
@@ -259,5 +259,5 @@ public class LazyDatasetTest {
 		LazyDataset view = sv.getSliceView(new int[] { 0, 0, 0 }, new int[] { 1, 1, 4 }, null);
 		TestUtils.assertDatasetEquals(data.getSliceView(new Slice(5)).reshape(1, 1, 5).getSliceView(null, null, new Slice(4)),
 				view.getSlice(), true, 1e-14, 1e-14);
-    }
+	}
 }

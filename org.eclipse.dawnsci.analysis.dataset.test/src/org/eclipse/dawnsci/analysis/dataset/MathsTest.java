@@ -46,14 +46,6 @@ public class MathsTest {
 	private final static int ISIZEB = 3;
 	private final static int MAXISIZE = Math.max(ISIZEA, ISIZEB);
 
-	private static boolean verboseOutput = false;
-
-	private void verbosePrintf(String fmt, Object... args) {
-		if (verboseOutput) {
-			System.out.printf(fmt, args);
-		}
-	}
-
 	@Before
 	public void setUpClass() {
 		classes = new LinkedHashMap<String, Integer>();
@@ -160,7 +152,7 @@ public class MathsTest {
 			for (String en : classes.keySet()) {
 				final int etype = classes.get(en);
 
-				verbosePrintf("%s to %s, ", dn, en);
+				TestUtils.verbosePrintf("%s to %s, ", dn, en);
 
 				n = 32;
 				for (int i = 0; i < SITER; i++) {
@@ -189,7 +181,7 @@ public class MathsTest {
 					try {
 						c = Maths.add(a, b);
 					} catch (IllegalArgumentException e) {
-						verbosePrintf("Could not perform this operation: %s\n\n", e.getMessage());
+						TestUtils.verbosePrintf("Could not perform this operation: %s\n\n", e.getMessage());
 						eCount++;
 						continue;
 					}
@@ -267,7 +259,7 @@ public class MathsTest {
 					start += System.nanoTime();
 					double otime = ((double) start) / d.getSize();
 	
-					verbosePrintf("Time taken by add for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.
+					TestUtils.verbosePrintf("Time taken by add for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.
 								* (otime - ntime) / otime);
 					checkDatasets(a, b, c, d);
 
@@ -277,7 +269,7 @@ public class MathsTest {
 
 			Random.seed(12735L);
 			n = 32;
-			verbosePrintf("constant to %s, ", dn);
+			TestUtils.verbosePrintf("constant to %s, ", dn);
 			for (int i = 0; i < SITER; i++) {
 				if (dtype < Dataset.ARRAYINT8) {
 					a = Random.randn(n);
@@ -295,7 +287,7 @@ public class MathsTest {
 				try {
 					c = Maths.add(a, dv);
 				} catch (IllegalArgumentException e) {
-					verbosePrintf("Could not perform this operation: %s\n\n", e.getMessage());
+					TestUtils.verbosePrintf("Could not perform this operation: %s\n\n", e.getMessage());
 					eCount++;
 					continue;
 				}
@@ -334,7 +326,7 @@ public class MathsTest {
 
 				double otime = ((double) start)/d.getSize();
 	
-				verbosePrintf("Time taken by add for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.*(otime - ntime)/otime);
+				TestUtils.verbosePrintf("Time taken by add for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.*(otime - ntime)/otime);
 				checkDatasets(a, dv, c, d);
 
 				n *= SSTEP;
@@ -342,7 +334,7 @@ public class MathsTest {
 		}
 
 		if (eCount > 0) {
-			verbosePrintf("Number of exceptions caught: %d\n", eCount);
+			TestUtils.verbosePrintf("Number of exceptions caught: %d\n", eCount);
 		}
 	}
 
@@ -362,7 +354,7 @@ public class MathsTest {
 			for (String en : classes.keySet()) {
 				final int etype = classes.get(en);
 
-				verbosePrintf("%s to %s, ", dn, en);
+				TestUtils.verbosePrintf("%s to %s, ", dn, en);
 
 				n = 32;
 				for (int i = 0; i < SITER; i++) {
@@ -391,7 +383,7 @@ public class MathsTest {
 					try {
 						c = Maths.subtract(a, b);
 					} catch (IllegalArgumentException e) {
-						verbosePrintf("Could not perform this operation: %s\n", e.getMessage());
+						TestUtils.verbosePrintf("Could not perform this operation: %s\n", e.getMessage());
 						eCount++;
 						continue;
 					}
@@ -470,7 +462,7 @@ public class MathsTest {
 					start += System.nanoTime();
 
 					double otime = ((double) start) / d.getSize();
-					verbosePrintf("Time taken by sub for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.
+					TestUtils.verbosePrintf("Time taken by sub for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.
 							* (otime - ntime) / otime);
 					checkDatasets(a, b, c, d);
 
@@ -480,7 +472,7 @@ public class MathsTest {
 
 			Random.seed(12735L);
 			n = 32;
-			verbosePrintf("constant from %s, ", dn);
+			TestUtils.verbosePrintf("constant from %s, ", dn);
 			for (int i = 0; i < SITER; i++) {
 				if (dtype < Dataset.ARRAYINT8) {
 					a = Random.randn(n);
@@ -498,7 +490,7 @@ public class MathsTest {
 				try {
 					c = Maths.subtract(a, dv);
 				} catch (IllegalArgumentException e) {
-					verbosePrintf("Could not perform this operation: %s\n", e.getMessage());
+					TestUtils.verbosePrintf("Could not perform this operation: %s\n", e.getMessage());
 					eCount++;
 					continue;
 				}
@@ -536,7 +528,7 @@ public class MathsTest {
 				start += System.nanoTime();
 				double otime = ((double) start)/d.getSize();
 
-				verbosePrintf("Time taken by add for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.*(otime - ntime)/otime);
+				TestUtils.verbosePrintf("Time taken by add for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.*(otime - ntime)/otime);
 				checkDatasets(a, dv, c, d);
 
 				n *= SSTEP;
@@ -544,7 +536,7 @@ public class MathsTest {
 
 			Random.seed(12735L);
 			n = 32;
-			verbosePrintf("%s from constant, ", dn);
+			TestUtils.verbosePrintf("%s from constant, ", dn);
 			for (int i = 0; i < SITER; i++) {
 				if (dtype < Dataset.ARRAYINT8) {
 					a = Random.randn(n);
@@ -562,7 +554,7 @@ public class MathsTest {
 				try {
 					c = Maths.subtract(dv, a);
 				} catch (IllegalArgumentException e) {
-					verbosePrintf("Could not perform this operation: %s\n", e.getMessage());
+					TestUtils.verbosePrintf("Could not perform this operation: %s\n", e.getMessage());
 					eCount++;
 					continue;
 				}
@@ -600,7 +592,7 @@ public class MathsTest {
 				start += System.nanoTime();
 				double otime = ((double) start)/d.getSize();
 
-				verbosePrintf("Time taken by sub for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.*(otime - ntime)/otime);
+				TestUtils.verbosePrintf("Time taken by sub for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.*(otime - ntime)/otime);
 				checkDatasets(dv, a, c, d);
 
 				n *= SSTEP;
@@ -608,7 +600,7 @@ public class MathsTest {
 		}
 
 		if (eCount > 0) {
-			verbosePrintf("Number of exceptions caught: %d\n", eCount);
+			TestUtils.verbosePrintf("Number of exceptions caught: %d\n", eCount);
 		}
 	}
 
@@ -629,7 +621,7 @@ public class MathsTest {
 			for (String en : classes.keySet()) {
 				final int etype = classes.get(en);
 
-				verbosePrintf("%s by %s, ", dn, en);
+				TestUtils.verbosePrintf("%s by %s, ", dn, en);
 				n = 32;
 				for (int i = 0; i < SITER; i++) {
 					if (dtype < Dataset.ARRAYINT8) {
@@ -657,7 +649,7 @@ public class MathsTest {
 					try {
 						c = Maths.multiply(a, b);
 					} catch (IllegalArgumentException e) {
-						verbosePrintf("Could not perform this operation: %s\n", e.getMessage());
+						TestUtils.verbosePrintf("Could not perform this operation: %s\n", e.getMessage());
 						eCount++;
 						continue;
 					}
@@ -736,7 +728,7 @@ public class MathsTest {
 					start += System.nanoTime();
 					double otime = ((double) start) / d.getSize();
 
-					verbosePrintf("Time taken by mul for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.
+					TestUtils.verbosePrintf("Time taken by mul for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.
 								* (otime - ntime) / otime);
 
 					checkDatasets(a, b, c, d);
@@ -747,7 +739,7 @@ public class MathsTest {
 
 			Random.seed(12735L);
 			n = 32;
-			verbosePrintf("constant with %s, ", dn);
+			TestUtils.verbosePrintf("constant with %s, ", dn);
 			for (int i = 0; i < SITER; i++) {
 				if (dtype < Dataset.ARRAYINT8) {
 					a = Random.randn(n);
@@ -765,7 +757,7 @@ public class MathsTest {
 				try {
 					c = Maths.multiply(a, dv);
 				} catch (IllegalArgumentException e) {
-					verbosePrintf("Could not perform this operation: %s\n", e.getMessage());
+					TestUtils.verbosePrintf("Could not perform this operation: %s\n", e.getMessage());
 					eCount++;
 					continue;
 				}
@@ -803,7 +795,7 @@ public class MathsTest {
 				start += System.nanoTime();
 				double otime = ((double) start)/d.getSize();
 
-				verbosePrintf("Time taken by mul for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.*(otime - ntime)/otime);
+				TestUtils.verbosePrintf("Time taken by mul for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.*(otime - ntime)/otime);
 				checkDatasets(a, dv, c, d);
 
 				n *= SSTEP;
@@ -811,7 +803,7 @@ public class MathsTest {
 		}
 
 		if (eCount > 0) {
-			verbosePrintf("Number of exceptions caught: %d\n", eCount);
+			TestUtils.verbosePrintf("Number of exceptions caught: %d\n", eCount);
 		}
 	}
 
@@ -832,7 +824,7 @@ public class MathsTest {
 			for (String en : classes.keySet()) {
 				final int etype = classes.get(en);
 
-				verbosePrintf("%s by %s, ", dn, en);
+				TestUtils.verbosePrintf("%s by %s, ", dn, en);
 				n = 32;
 				for (int i = 0; i < SITER; i++) {
 					if (dtype < Dataset.ARRAYINT8) {
@@ -860,7 +852,7 @@ public class MathsTest {
 					try {
 						c = Maths.divide(a, b);
 					} catch (IllegalArgumentException e) {
-						verbosePrintf("Could not perform this operation: %s\n", e.getMessage());
+						TestUtils.verbosePrintf("Could not perform this operation: %s\n", e.getMessage());
 						eCount++;
 						continue;
 					}
@@ -982,7 +974,7 @@ public class MathsTest {
 					start += System.nanoTime();
 					double otime = ((double) start) / d.getSize();
 
-					verbosePrintf("Time taken by div for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.
+					TestUtils.verbosePrintf("Time taken by div for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.
 								* (otime - ntime) / otime);
 					checkDatasets(a, b, c, d);
 
@@ -992,7 +984,7 @@ public class MathsTest {
 
 			Random.seed(12735L);
 			n = 32;
-			verbosePrintf("%s by constant, ", dn);
+			TestUtils.verbosePrintf("%s by constant, ", dn);
 			for (int i = 0; i < SITER; i++) {
 				if (dtype < Dataset.ARRAYINT8) {
 					a = Random.randn(n);
@@ -1010,7 +1002,7 @@ public class MathsTest {
 				try {
 					c = Maths.divide(a, dv);
 				} catch (IllegalArgumentException e) {
-					verbosePrintf("Could not perform this operation: %s\n", e.getMessage());
+					TestUtils.verbosePrintf("Could not perform this operation: %s\n", e.getMessage());
 					eCount++;
 					continue;
 				}
@@ -1048,7 +1040,7 @@ public class MathsTest {
 				start += System.nanoTime();
 				double otime = ((double) start)/d.getSize();
 
-				verbosePrintf("Time taken by div for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.*(otime - ntime)/otime);
+				TestUtils.verbosePrintf("Time taken by div for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.*(otime - ntime)/otime);
 				checkDatasets(a, dv, c, d);
 
 				n *= SSTEP;
@@ -1056,7 +1048,7 @@ public class MathsTest {
 
 			Random.seed(12735L);
 			n = 32;
-			verbosePrintf("constant by %s, ", dn);
+			TestUtils.verbosePrintf("constant by %s, ", dn);
 			for (int i = 0; i < SITER; i++) {
 				if (dtype < Dataset.ARRAYINT8) {
 					a = Random.randn(n);
@@ -1074,7 +1066,7 @@ public class MathsTest {
 				try {
 					c = Maths.divide(dv, a);
 				} catch (IllegalArgumentException e) {
-					verbosePrintf("Could not perform this operation: %s\n", e.getMessage());
+					TestUtils.verbosePrintf("Could not perform this operation: %s\n", e.getMessage());
 					eCount++;
 					continue;
 				}
@@ -1112,7 +1104,7 @@ public class MathsTest {
 				start += System.nanoTime();
 				double otime = ((double) start)/d.getSize();
 
-				verbosePrintf("Time taken by div for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.*(otime - ntime)/otime);
+				TestUtils.verbosePrintf("Time taken by div for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.*(otime - ntime)/otime);
 				checkDatasets(dv, a, c, d);
 
 				n *= SSTEP;
@@ -1120,7 +1112,7 @@ public class MathsTest {
 		}
 
 		if (eCount > 0) {
-			verbosePrintf("Number of exceptions caught: %d\n", eCount);
+			TestUtils.verbosePrintf("Number of exceptions caught: %d\n", eCount);
 		}
 	}
 
@@ -1141,7 +1133,7 @@ public class MathsTest {
 			for (String en : classes.keySet()) {
 				final int etype = classes.get(en);
 
-				verbosePrintf("%s by %s, ", dn, en);
+				TestUtils.verbosePrintf("%s by %s, ", dn, en);
 
 				n = 32;
 				for (int i = 0; i < SITER; i++) {
@@ -1170,11 +1162,11 @@ public class MathsTest {
 					try {
 						c = Maths.remainder(a, b);
 					} catch (IllegalArgumentException e) {
-						verbosePrintf("Could not perform this operation: ", e.getMessage());
+						TestUtils.verbosePrintf("Could not perform this operation: ", e.getMessage());
 						eCount++;
 						continue;
 					} catch (UnsupportedOperationException ue) {
-						verbosePrintf("Could not perform this operation: ", ue.getMessage());
+						TestUtils.verbosePrintf("Could not perform this operation: ", ue.getMessage());
 						continue;
 					}
 					start += System.nanoTime();
@@ -1227,7 +1219,7 @@ public class MathsTest {
 					start += System.nanoTime();
 					double otime = ((double) start) / d.getSize();
 
-					verbosePrintf("Time taken by rem for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.
+					TestUtils.verbosePrintf("Time taken by rem for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.
 								* (otime - ntime) / otime);
 					checkDatasets(a, b, c, d);
 
@@ -1237,7 +1229,7 @@ public class MathsTest {
 
 			Random.seed(12735L);
 			n = 32;
-			verbosePrintf("%s by constant, ", dn);
+			TestUtils.verbosePrintf("%s by constant, ", dn);
 			for (int i = 0; i < SITER; i++) {
 				if (dtype < Dataset.ARRAYINT8) {
 					a = Random.randn(n);
@@ -1255,11 +1247,11 @@ public class MathsTest {
 				try {
 					c = Maths.remainder(a, dv);
 				} catch (IllegalArgumentException e) {
-					verbosePrintf("Could not perform this operation: ", e.getMessage());
+					TestUtils.verbosePrintf("Could not perform this operation: ", e.getMessage());
 					eCount++;
 					continue;
 				} catch (UnsupportedOperationException ue) {
-					verbosePrintf("Could not perform this operation: ", ue.getMessage());
+					TestUtils.verbosePrintf("Could not perform this operation: ", ue.getMessage());
 					continue;
 				}
 				start += System.nanoTime();
@@ -1286,7 +1278,7 @@ public class MathsTest {
 				start += System.nanoTime();
 				double otime = ((double) start)/d.getSize();
 
-				verbosePrintf("Time taken by rem for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.*(otime - ntime)/otime);
+				TestUtils.verbosePrintf("Time taken by rem for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.*(otime - ntime)/otime);
 				checkDatasets(a, dv, c, d);
 
 				n *= SSTEP;
@@ -1294,7 +1286,7 @@ public class MathsTest {
 
 			Random.seed(12735L);
 			n = 32;
-			verbosePrintf("constant by %s, ", dn);
+			TestUtils.verbosePrintf("constant by %s, ", dn);
 			for (int i = 0; i < SITER; i++) {
 				if (dtype < Dataset.ARRAYINT8) {
 					a = Random.randn(n);
@@ -1312,11 +1304,11 @@ public class MathsTest {
 				try {
 					c = Maths.remainder(dv, a);
 				} catch (IllegalArgumentException e) {
-					verbosePrintf("Could not perform this operation: ", e.getMessage());
+					TestUtils.verbosePrintf("Could not perform this operation: ", e.getMessage());
 					eCount++;
 					continue;
 				} catch (UnsupportedOperationException ue) {
-					verbosePrintf("Could not perform this operation: ", ue.getMessage());
+					TestUtils.verbosePrintf("Could not perform this operation: ", ue.getMessage());
 					continue;
 				}
 				start += System.nanoTime();
@@ -1343,7 +1335,7 @@ public class MathsTest {
 				start += System.nanoTime();
 				double otime = ((double) start)/d.getSize();
 
-				verbosePrintf("Time taken by rem for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.*(otime - ntime)/otime);
+				TestUtils.verbosePrintf("Time taken by rem for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.*(otime - ntime)/otime);
 				checkDatasets(dv, a, c, d);
 
 				n *= SSTEP;
@@ -1351,7 +1343,7 @@ public class MathsTest {
 		}
 
 		if (eCount > 0) {
-			verbosePrintf("Number of exceptions caught: %d\n", eCount);
+			TestUtils.verbosePrintf("Number of exceptions caught: %d\n", eCount);
 		}
 	}
 
@@ -1372,7 +1364,7 @@ public class MathsTest {
 			for (String en : classes.keySet()) {
 				final int etype = classes.get(en);
 
-				verbosePrintf("%s by %s, ", dn, en);
+				TestUtils.verbosePrintf("%s by %s, ", dn, en);
 
 				n = 32;
 				for (int i = 0; i < SITER; i++) {
@@ -1401,7 +1393,7 @@ public class MathsTest {
 					try {
 						c = Maths.power(a, b);
 					} catch (IllegalArgumentException e) {
-						verbosePrintf("Could not perform this operation: ", e.getMessage());
+						TestUtils.verbosePrintf("Could not perform this operation: ", e.getMessage());
 						eCount++;
 						continue;
 					}
@@ -1480,7 +1472,7 @@ public class MathsTest {
 					start += System.nanoTime();
 					double otime = ((double) start) / d.getSize();
 
-					verbosePrintf("Time taken by pow for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.
+					TestUtils.verbosePrintf("Time taken by pow for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.
 								* (otime - ntime) / otime);
 					checkDatasets(a, b, c, d);
 
@@ -1490,7 +1482,7 @@ public class MathsTest {
 
 			Random.seed(12735L);
 			n = 32;
-			verbosePrintf("%s by constant, ", dn);
+			TestUtils.verbosePrintf("%s by constant, ", dn);
 			for (int i = 0; i < SITER; i++) {
 				if (dtype < Dataset.ARRAYINT8) {
 					a = Random.randn(n);
@@ -1508,7 +1500,7 @@ public class MathsTest {
 				try {
 					c = Maths.power(a, dv);
 				} catch (IllegalArgumentException e) {
-					verbosePrintf("Could not perform this operation: ", e.getMessage());
+					TestUtils.verbosePrintf("Could not perform this operation: ", e.getMessage());
 					eCount++;
 					continue;
 				}
@@ -1546,7 +1538,7 @@ public class MathsTest {
 				start += System.nanoTime();
 				double otime = ((double) start)/d.getSize();
 
-				verbosePrintf("Time taken by pow for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.*(otime - ntime)/otime);
+				TestUtils.verbosePrintf("Time taken by pow for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.*(otime - ntime)/otime);
 				checkDatasets(a, dv, c, d);
 
 				n *= SSTEP;
@@ -1554,7 +1546,7 @@ public class MathsTest {
 
 			Random.seed(12735L);
 			n = 32;
-			verbosePrintf("constant by %s, ", dn);
+			TestUtils.verbosePrintf("constant by %s, ", dn);
 			for (int i = 0; i < SITER; i++) {
 				if (dtype < Dataset.ARRAYINT8) {
 					a = Random.randn(n);
@@ -1572,7 +1564,7 @@ public class MathsTest {
 				try {
 					c = Maths.power(dv, a);
 				} catch (IllegalArgumentException e) {
-					verbosePrintf("Could not perform this operation: ", e.getMessage());
+					TestUtils.verbosePrintf("Could not perform this operation: ", e.getMessage());
 					eCount++;
 					continue;
 				}
@@ -1610,7 +1602,7 @@ public class MathsTest {
 				start += System.nanoTime();
 				double otime = ((double) start)/d.getSize();
 
-				verbosePrintf("Time taken by pow for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.*(otime - ntime)/otime);
+				TestUtils.verbosePrintf("Time taken by pow for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.*(otime - ntime)/otime);
 				checkDatasets(dv, a, c, d);
 
 				n *= SSTEP;
@@ -1618,7 +1610,7 @@ public class MathsTest {
 		}
 
 		if (eCount > 0) {
-			verbosePrintf("Number of exceptions caught: %d\n", eCount);
+			TestUtils.verbosePrintf("Number of exceptions caught: %d\n", eCount);
 		}
 	}
 
