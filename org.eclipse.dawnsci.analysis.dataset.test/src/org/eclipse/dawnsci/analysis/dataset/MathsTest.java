@@ -804,6 +804,7 @@ public class MathsTest {
 		}
 	}
 
+//	@Ignore
 	@Test
 	public void testDivision() {
 		Dataset a, b, c = null, d = null;
@@ -813,6 +814,7 @@ public class MathsTest {
 		int n;
 		int eCount = 0;
 
+		TestUtils.verboseOutput = true;
 		for (String dn : classes.keySet()) {
 			final int dtype = classes.get(dn);
 			Random.seed(12735L);
@@ -1110,6 +1112,7 @@ public class MathsTest {
 		if (eCount > 0) {
 			TestUtils.verbosePrintf("Number of exceptions caught: %d\n", eCount);
 		}
+		TestUtils.verboseOutput = true;
 	}
 
 	@Test
