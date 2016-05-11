@@ -66,7 +66,7 @@ public class MathsTest {
 		classes.put("ArrayL", Dataset.ARRAYINT64);
 		classes.put("ArrayF", Dataset.ARRAYFLOAT32);
 		classes.put("ArrayD", Dataset.ARRAYFLOAT64);
-		TestUtils.verboseOutput = true;
+		TestUtils.verboseOutput = false;
 	}
 
 	@After
