@@ -32,6 +32,7 @@ import org.eclipse.dawnsci.analysis.dataset.impl.IndexIterator;
 import org.eclipse.dawnsci.analysis.dataset.impl.IntegerDataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.Maths;
 import org.eclipse.dawnsci.analysis.dataset.impl.Random;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -65,8 +66,14 @@ public class MathsTest {
 		classes.put("ArrayL", Dataset.ARRAYINT64);
 		classes.put("ArrayF", Dataset.ARRAYFLOAT32);
 		classes.put("ArrayD", Dataset.ARRAYFLOAT64);
+		TestUtils.verboseOutput = true;
 	}
 
+	@After
+	public void closeDown() {
+		TestUtils.verboseOutput = false;
+	}
+	
 	private Map<String, Integer> classes;
 
 	private void checkDatasets(Object a, Object b, Dataset c, Dataset d) {
@@ -814,7 +821,6 @@ public class MathsTest {
 		int n;
 		int eCount = 0;
 
-		TestUtils.verboseOutput = true;
 		for (String dn : classes.keySet()) {
 			final int dtype = classes.get(dn);
 			Random.seed(12735L);
@@ -1112,7 +1118,6 @@ public class MathsTest {
 		if (eCount > 0) {
 			TestUtils.verbosePrintf("Number of exceptions caught: %d\n", eCount);
 		}
-		TestUtils.verboseOutput = true;
 	}
 
 	@Test
