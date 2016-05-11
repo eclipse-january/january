@@ -104,14 +104,14 @@ public class FileEntryTester {
 		FileEntry entry = new FileEntry();
 		entry.setProject(project);
 	
-		// We have 13 files in itemData right now
+		// We have 7 files in itemData right now
 		// MAKE SURE WE UPDATE THIS IF IT CHANGES
-		assertEquals(13, entry.getAllowedValues().size());
+		assertEquals(7, entry.getAllowedValues().size());
 		
 		// Now try it where we specify the file extension
 		FileEntry yamlFiles = new FileEntry("yaml");
 		yamlFiles.setProject(project);
-		assertEquals(3, yamlFiles.getAllowedValues().size());
+		assertEquals(1, yamlFiles.getAllowedValues().size());
 		
 		// Check that if we add a file and update, 
 		// the allowed values change to record that
@@ -123,7 +123,7 @@ public class FileEntryTester {
 			fail();
 		}
 		
-		assertEquals(14, entry.getAllowedValues().size());
+		assertEquals(8, entry.getAllowedValues().size());
 		
 		try {
 			file.delete(true, null);
@@ -143,7 +143,7 @@ public class FileEntryTester {
 		// so set the expected path.
 		String separator = System.getProperty("file.separator");
 		String actualPath = System.getProperty("user.home") + separator + "ICETests"
-				+ separator + "itemData" + separator + "bison.yaml";
+				+ separator + "itemData" + separator + "moose_test.yaml";
 		
 		// Create a FileEntry over yaml files. 
 		FileEntry entry = new FileEntry("yaml");
@@ -153,7 +153,7 @@ public class FileEntryTester {
 		assertFalse(entry.setValue("hello.yaml"));
 		
 		// Set the allowed value.
-		assertTrue(entry.setValue("bison.yaml"));
+		assertTrue(entry.setValue("moose_test.yaml"));
 		
 		// Make sure the IFile was set correctly.
 		assertEquals(actualPath, entry.getAbsoluteFilePath());
