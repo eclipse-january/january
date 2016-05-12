@@ -546,7 +546,7 @@ public class AbstractDatasetTest {
 	}
 
 	@Test
-	public void testTileSpeed() throws Exception {
+	public void testTileSpeed() {
 		int[][] blocks = {{1024,1}, {256,4}, {64,16}, {32,32}, {16,64}, {4, 256}, {1,1024}};
 //		int[][] blocks = {{1024,64}, {256,64}, {64,64}, {32,64}, {16,64}, {4, 64}, {1,64}};
 
@@ -560,7 +560,7 @@ public class AbstractDatasetTest {
 		}
 	}
 
-	private void runTile(final int srows, final int scols, final int rows, final int cols) throws Exception {
+	private void runTile(final int srows, final int scols, final int rows, final int cols) {
 		Dataset a = DatasetFactory.createRange(srows*scols, Dataset.FLOAT64).reshape(srows, scols);
 
 		long start, end;
@@ -599,12 +599,10 @@ public class AbstractDatasetTest {
 
 		assertEquals(rows, tiled.getShape()[0]);
 		assertEquals(cols, tiled.getShape()[1]);
-		if (!tiled.equals(b))
-			throw new Exception("Datasets not equal!");
+		assertEquals("Datasets not equal", tiled, b);
 
-		if (diff2 > (diff1 * 20))
-			throw new Exception("Creation of tile took more than 20x as long as array creation of same size! (It took "
-					+ diff2 + ")");
+		assertTrue("Creation of tile took more than 25x as long as array creation of same size! (It took "
+				+ diff2 + ")", diff2 <= (diff1 * 25));
 	}
 
 	/**
