@@ -35,7 +35,6 @@ import org.eclipse.dawnsci.analysis.dataset.impl.Random;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class MathsTest {
@@ -344,7 +343,6 @@ public class MathsTest {
 		}
 	}
 
-	@Ignore
 	@Test
 	public void testSubtraction() {
 		Dataset a, b, c = null, d = null;
@@ -812,7 +810,6 @@ public class MathsTest {
 		}
 	}
 
-	@Ignore
 	@Test
 	public void testDivision() {
 		Dataset a, b, c = null, d = null;
@@ -1121,7 +1118,6 @@ public class MathsTest {
 		}
 	}
 
-	@Ignore
 	@Test
 	public void testRemainder() {
 		Dataset a, b, c = null, d = null;
