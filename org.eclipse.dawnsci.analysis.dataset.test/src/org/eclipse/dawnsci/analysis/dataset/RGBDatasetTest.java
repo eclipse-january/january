@@ -11,6 +11,7 @@ package org.eclipse.dawnsci.analysis.dataset;
 
 import static org.junit.Assert.assertEquals;
 
+import org.eclipse.dawnsci.analysis.asserts.TestUtils;
 import org.eclipse.dawnsci.analysis.dataset.impl.CompoundDataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.CompoundShortDataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.Dataset;

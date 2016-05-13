@@ -15,6 +15,7 @@ import java.util.Arrays;
 
 import org.eclipse.dawnsci.analysis.api.dataset.Slice;
 import org.eclipse.dawnsci.analysis.api.dataset.SliceND;
+import org.eclipse.dawnsci.analysis.asserts.TestUtils;
 import org.eclipse.dawnsci.analysis.dataset.impl.SliceNDIterator;
 import org.junit.Test;
 

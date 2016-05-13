@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.eclipse.dawnsci.analysis.dataset;
+package org.eclipse.dawnsci.analysis.asserts;
 
 import java.util.Arrays;
 
@@ -27,14 +27,18 @@ public class TestUtils {
 		listener = new RunListener() {
 			@Override
 			public void testStarted(Description description) throws Exception {
-				System.out.println("Starting: " + description.getMethodName());
+				if (verbosity != Verbosity.QUIET) {
+					System.out.println("Starting: " + description.getMethodName());
+				}
 				super.testStarted(description);
 			}
 
 			@Override
 			public void testFinished(Description description) throws Exception {
 				super.testFinished(description);
-				System.out.println("Finished: " + description.getMethodName());
+				if (verbosity != Verbosity.QUIET) {
+					System.out.println("Finished: " + description.getMethodName());
+				}
 			}
 		};
 	}
@@ -125,10 +129,29 @@ public class TestUtils {
 		Assert.assertEquals(s, e, a, t);
 	}
 
-	static boolean verboseOutput = false;
+	public static enum Verbosity {
+		/**
+		 * Completely quiet
+		 */
+		QUIET,
+		/**
+		 * Output test method entry and exit
+		 */
+		TEST_METHOD,
+		/**
+		 * Output all
+		 */
+		VERBOSE;
+	}
+
+	private static Verbosity verbosity = Verbosity.QUIET;
+
+	public static void setVerbosity(Verbosity verbosity) {
+		TestUtils.verbosity = verbosity;
+	}
 
 	public static void verbosePrintf(String fmt, Object... args) {
-		if (verboseOutput) {
+		if (verbosity == Verbosity.VERBOSE) {
 			System.out.printf(fmt, args);
 		}
 	}

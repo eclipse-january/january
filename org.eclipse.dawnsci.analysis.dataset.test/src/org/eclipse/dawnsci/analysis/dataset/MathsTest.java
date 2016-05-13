@@ -18,6 +18,8 @@ import java.util.Map;
 
 import org.apache.commons.math3.complex.Complex;
 import org.eclipse.dawnsci.analysis.api.dataset.Slice;
+import org.eclipse.dawnsci.analysis.asserts.TestUtils;
+import org.eclipse.dawnsci.analysis.asserts.TestUtils.Verbosity;
 import org.eclipse.dawnsci.analysis.dataset.impl.ByteDataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.ComplexDoubleDataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.CompoundDataset;
@@ -65,12 +67,12 @@ public class MathsTest {
 		classes.put("ArrayL", Dataset.ARRAYINT64);
 		classes.put("ArrayF", Dataset.ARRAYFLOAT32);
 		classes.put("ArrayD", Dataset.ARRAYFLOAT64);
-		TestUtils.verboseOutput = false;
+		TestUtils.setVerbosity(Verbosity.QUIET);
 	}
 
 	@After
 	public void closeDown() {
-		TestUtils.verboseOutput = false;
+		TestUtils.setVerbosity(Verbosity.QUIET);
 	}
 	
 	private Map<String, Integer> classes;

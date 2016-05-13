@@ -19,6 +19,7 @@ import java.util.List;
 import org.apache.commons.math3.complex.Complex;
 import org.eclipse.dawnsci.analysis.api.dataset.IDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.Slice;
+import org.eclipse.dawnsci.analysis.asserts.TestUtils;
 import org.eclipse.dawnsci.analysis.dataset.impl.AbstractDataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.BooleanDataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.Comparisons;
