@@ -1825,8 +1825,11 @@ public class MathsTest {
 		checkInterpolate2(xa, a, x);
 		xa = DatasetFactory.createRange(s-1, -1, -1, Dataset.FLOAT64);
 		checkInterpolate2(xa.getSliceView(new Slice(null, null, -1)), a, x);
+		checkInterpolate2(xa, a, x);
 
 		try {
+			Random.seed(1231);
+			xa = Random.randint(0, s, a.getShapeRef());
 			checkInterpolate2(xa, a, x);
 			Assert.fail("No exception raised");
 		} catch (IllegalArgumentException e) {

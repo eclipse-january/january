@@ -1757,7 +1757,7 @@ public class Maths {
 
 	/**
 	 * Linearly interpolate values at points in a 1D dataset corresponding to given coordinates.
-	 * @param x input 1-D coordinate dataset (must be non-decreasing)
+	 * @param x input 1-D coordinate dataset (must be ordered)
 	 * @param d input 1-D dataset
 	 * @param x0 coordinate values
 	 * @param left value to use when x0 lies left of domain. If null, then interpolate to zero by using leftmost interval
@@ -1769,9 +1769,10 @@ public class Maths {
 		assert d.getRank() == 1;
 	
 		DoubleDataset r = new DoubleDataset(x0.getShape());
-	
-		if (!Comparisons.isMonotonic(x, Monotonicity.NONDECREASING)) {
-			throw new IllegalArgumentException("Dataset x must be non-decreasing");
+
+		Monotonicity mono = Comparisons.findMonotonicity(x);
+		if (mono == Monotonicity.NOT_ORDERED) {
+			throw new IllegalArgumentException("Dataset x must be ordered");
 		}
 		DoubleDataset dx = (DoubleDataset) DatasetUtils.cast(x, Dataset.FLOAT64);
 		if (x == dx) {
@@ -1780,6 +1781,12 @@ public class Maths {
 		Dataset dx0 = DatasetUtils.convertToDataset(x0);
 		double[] xa = dx.getData();
 		int s = xa.length - 1;
+		if (mono == Monotonicity.STRICTLY_DECREASING || mono == Monotonicity.NONINCREASING) {
+			for (int i = 0; i <= s; i++) { // reverse order
+				xa[s - i] = x.getDouble(i);
+			}
+		}
+
 		IndexIterator it = dx0.getIterator();
 		int k = -1;
 		while (it.hasNext()) {
