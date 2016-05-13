@@ -1601,6 +1601,93 @@ public class Comparisons {
 
 	/**
 	 * @param a
+	 * @param monotonicity
+	 * @return true if all elements are in given monotonic ordering
+	 */
+	public static boolean isMonotonic(Object a, Monotonicity monotonicity) {
+		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		if (da.getRank() > 1) {
+			throw new IllegalArgumentException("Only 0 or 1D datasets are allowed");
+		}
+
+		if (da.getElementsPerItem() > 1) {
+			throw new IllegalArgumentException("Cannot compare compound datsets");
+		}
+
+		final IndexIterator it = da.getIterator();
+		double previous = Double.NaN;
+		while (Double.isNaN(previous) && it.hasNext()) { // look for first non-NaN
+			previous = da.getElementDoubleAbs(it.index);
+		}
+
+		Boolean increasing = null;
+		boolean equality = false;
+		while (it.hasNext()) { // look for first change
+			double next = da.getElementDoubleAbs(it.index);
+			if (!Double.isNaN(next)) {
+				if (previous != next) {
+					increasing = previous < next;
+					previous = next;
+					break;
+				} else if (!equality) {
+					equality = true;
+					if (monotonicity == Monotonicity.STRICTLY_DECREASING || monotonicity == Monotonicity.STRICTLY_DECREASING)
+						return false;
+				}
+			}
+		}
+
+		if (increasing == null) {
+			if (equality)
+				return monotonicity == Monotonicity.ALL_EQUAL || monotonicity == Monotonicity.NONDECREASING || monotonicity == Monotonicity.NONINCREASING;
+			return Double.isNaN(previous) ? monotonicity == Monotonicity.NOT_ORDERED : true;
+		}
+
+		if (increasing) {
+			if (monotonicity == Monotonicity.ALL_EQUAL || monotonicity == Monotonicity.NONINCREASING || monotonicity == Monotonicity.STRICTLY_DECREASING)
+				return false;
+
+			while (it.hasNext()) {
+				double next = da.getElementDoubleAbs(it.index);
+				if (!Double.isNaN(next)) {
+					if (previous > next) {
+						return monotonicity == Monotonicity.NOT_ORDERED;
+					} else if (previous < next) {
+						previous = next;
+					} else if (!equality) {
+						equality = true;
+						if (monotonicity == Monotonicity.STRICTLY_INCREASING)
+							return false;
+					}
+				}
+			}
+
+			return monotonicity != Monotonicity.NOT_ORDERED;
+		}
+
+		if (monotonicity == Monotonicity.ALL_EQUAL || monotonicity == Monotonicity.NONDECREASING || monotonicity == Monotonicity.STRICTLY_INCREASING)
+			return false;
+
+		while (it.hasNext()) {
+			double next = da.getElementDoubleAbs(it.index);
+			if (!Double.isNaN(next)) {
+				if (previous < next) {
+					return monotonicity == Monotonicity.NOT_ORDERED;
+				} else if (previous > next) {
+					previous = next;
+				} else if (!equality) {
+					equality = true;
+					if (monotonicity == Monotonicity.STRICTLY_DECREASING)
+						return false;
+				}
+			}
+		}
+
+		return monotonicity != Monotonicity.NOT_ORDERED;
+	}
+
+	/**
+	 * @param a
 	 * @return true if all elements are in a strictly monotonic order
 	 * @see #findMonotonicity(Object)
 	 */

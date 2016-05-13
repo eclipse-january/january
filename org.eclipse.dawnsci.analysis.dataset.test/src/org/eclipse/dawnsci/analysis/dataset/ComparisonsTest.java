@@ -13,6 +13,7 @@ import java.util.List;
 
 import org.eclipse.dawnsci.analysis.dataset.impl.BooleanDataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.Comparisons;
+import org.eclipse.dawnsci.analysis.dataset.impl.Comparisons.Monotonicity;
 import org.eclipse.dawnsci.analysis.dataset.impl.ComplexDoubleDataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.Dataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.DatasetFactory;
@@ -294,5 +295,91 @@ public class ComparisonsTest {
 		Assert.assertFalse(Comparisons.isStrictlyMonotonic(new double[] {0, 0, -1, -2, -6, Double.NaN, Double.NEGATIVE_INFINITY}));
 		Assert.assertTrue(Comparisons.isStrictlyMonotonic(new double[] {0, 1, 1.5, 2, 6, Double.NaN, Double.POSITIVE_INFINITY}));
 		Assert.assertTrue(Comparisons.isStrictlyMonotonic(new double[] {0.5, 0, -1, -2, -6, Double.NaN, Double.NEGATIVE_INFINITY}));
+
+		Assert.assertTrue(Comparisons.isMonotonic(1, Monotonicity.NOT_ORDERED));
+		Assert.assertTrue(Comparisons.isMonotonic(1, Monotonicity.ALL_EQUAL));
+		Assert.assertTrue(Comparisons.isMonotonic(1, Monotonicity.STRICTLY_DECREASING));
+		Assert.assertTrue(Comparisons.isMonotonic(1, Monotonicity.NONINCREASING));
+		Assert.assertTrue(Comparisons.isMonotonic(1, Monotonicity.NONDECREASING));
+		Assert.assertTrue(Comparisons.isMonotonic(1, Monotonicity.STRICTLY_INCREASING));
+
+		Assert.assertTrue(Comparisons.isMonotonic(Double.NaN, Monotonicity.NOT_ORDERED));
+		Assert.assertFalse(Comparisons.isMonotonic(Double.NaN, Monotonicity.ALL_EQUAL));
+		Assert.assertFalse(Comparisons.isMonotonic(Double.NaN, Monotonicity.STRICTLY_DECREASING));
+		Assert.assertFalse(Comparisons.isMonotonic(Double.NaN, Monotonicity.NONINCREASING));
+		Assert.assertFalse(Comparisons.isMonotonic(Double.NaN, Monotonicity.NONDECREASING));
+		Assert.assertFalse(Comparisons.isMonotonic(Double.NaN, Monotonicity.STRICTLY_INCREASING));
+
+		Assert.assertTrue(Comparisons.isMonotonic(Double.POSITIVE_INFINITY, Monotonicity.NOT_ORDERED));
+		Assert.assertTrue(Comparisons.isMonotonic(Double.POSITIVE_INFINITY, Monotonicity.ALL_EQUAL));
+		Assert.assertTrue(Comparisons.isMonotonic(Double.POSITIVE_INFINITY, Monotonicity.STRICTLY_DECREASING));
+		Assert.assertTrue(Comparisons.isMonotonic(Double.POSITIVE_INFINITY, Monotonicity.NONINCREASING));
+		Assert.assertTrue(Comparisons.isMonotonic(Double.POSITIVE_INFINITY, Monotonicity.NONDECREASING));
+		Assert.assertTrue(Comparisons.isMonotonic(Double.POSITIVE_INFINITY, Monotonicity.STRICTLY_INCREASING));
+
+		double[] x;
+
+		x = new double[] {0, 1, 1.5, 2, 6, Double.NaN, Double.POSITIVE_INFINITY};
+		Assert.assertTrue(Comparisons.isMonotonic(x, Monotonicity.STRICTLY_INCREASING));
+		Assert.assertTrue(Comparisons.isMonotonic(x, Monotonicity.NONDECREASING));
+
+		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.NOT_ORDERED));
+		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.ALL_EQUAL));
+		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.STRICTLY_DECREASING));
+		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.NONINCREASING));
+
+		x = new double[] {0, 1, 1, 2, 6, Double.NaN, Double.POSITIVE_INFINITY};
+		Assert.assertTrue(Comparisons.isMonotonic(x, Monotonicity.NONDECREASING));
+
+		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.NOT_ORDERED));
+		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.ALL_EQUAL));
+		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.STRICTLY_DECREASING));
+		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.NONINCREASING));
+		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.STRICTLY_INCREASING));
+
+		x = new double[] {0, -1, -1, -2, -6, Double.NaN, Double.NEGATIVE_INFINITY};
+		Assert.assertTrue(Comparisons.isMonotonic(x, Monotonicity.NONINCREASING));
+
+		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.NOT_ORDERED));
+		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.ALL_EQUAL));
+		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.STRICTLY_DECREASING));
+		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.NONDECREASING));
+		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.STRICTLY_INCREASING));
+
+		x = new double[] {0, -1, -1.5, -2, -6, Double.NaN, Double.NEGATIVE_INFINITY};
+		Assert.assertTrue(Comparisons.isMonotonic(x, Monotonicity.STRICTLY_DECREASING));
+		Assert.assertTrue(Comparisons.isMonotonic(x, Monotonicity.NONINCREASING));
+
+		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.NOT_ORDERED));
+		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.ALL_EQUAL));
+		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.NONDECREASING));
+		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.STRICTLY_INCREASING));
+
+		x = new double[] {0, 1, 0.5, 2, 6, Double.NaN, Double.POSITIVE_INFINITY};
+		Assert.assertTrue(Comparisons.isMonotonic(x, Monotonicity.NOT_ORDERED));
+
+		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.ALL_EQUAL));
+		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.STRICTLY_DECREASING));
+		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.NONINCREASING));
+		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.NONDECREASING));
+		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.STRICTLY_INCREASING));
+
+		x = new double[] {0, -1, 1.5, -2, -6, Double.NaN, Double.NEGATIVE_INFINITY};
+		Assert.assertTrue(Comparisons.isMonotonic(x, Monotonicity.NOT_ORDERED));
+
+		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.ALL_EQUAL));
+		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.STRICTLY_DECREASING));
+		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.NONINCREASING));
+		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.NONDECREASING));
+		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.STRICTLY_INCREASING));
+
+		x = new double[] {1, 1, Double.NaN};
+		Assert.assertTrue(Comparisons.isMonotonic(x, Monotonicity.ALL_EQUAL));
+		Assert.assertTrue(Comparisons.isMonotonic(x, Monotonicity.NONINCREASING));
+		Assert.assertTrue(Comparisons.isMonotonic(x, Monotonicity.NONDECREASING));
+
+		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.NOT_ORDERED));
+		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.STRICTLY_DECREASING));
+		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.STRICTLY_INCREASING));
 	}
 }
