@@ -545,20 +545,20 @@ public class AbstractDatasetTest {
 		}
 	}
 
-//	@Test
-//	public void testTileSpeed() throws Exception {
-//		int[][] blocks = {{1024,1}, {256,4}, {64,16}, {32,32}, {16,64}, {4, 256}, {1,1024}};
-////		int[][] blocks = {{1024,64}, {256,64}, {64,64}, {32,64}, {16,64}, {4, 64}, {1,64}};
-//
-//		int[][] shapes = { {1024, 2048}, {2048, 2048}, {2048, 1024} };
-//
-//		for (int b = 0; b < blocks.length; b++) {
-//			for (int s = 0; s < shapes.length; s++) {
-//				for (int n = 0; n < 3; n++)
-//					runTile(blocks[b][0], blocks[b][1], shapes[s][0], shapes[s][1]);
-//			}
-//		}
-//	}
+	@Test
+	public void testTileSpeed() throws Exception {
+		int[][] blocks = {{1024,1}, {256,4}, {64,16}, {32,32}, {16,64}, {4, 256}, {1,1024}};
+//		int[][] blocks = {{1024,64}, {256,64}, {64,64}, {32,64}, {16,64}, {4, 64}, {1,64}};
+
+		int[][] shapes = { {1024, 2048}, {2048, 2048}, {2048, 1024} };
+
+		for (int b = 0; b < blocks.length; b++) {
+			for (int s = 0; s < shapes.length; s++) {
+				for (int n = 0; n < 3; n++)
+					runTile(blocks[b][0], blocks[b][1], shapes[s][0], shapes[s][1]);
+			}
+		}
+	}
 
 	private void runTile(final int srows, final int scols, final int rows, final int cols) {
 		Dataset a = DatasetFactory.createRange(srows*scols, Dataset.FLOAT64).reshape(srows, scols);
