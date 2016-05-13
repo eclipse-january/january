@@ -381,5 +381,14 @@ public class ComparisonsTest {
 		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.NOT_ORDERED));
 		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.STRICTLY_DECREASING));
 		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.STRICTLY_INCREASING));
+
+		Dataset d = DatasetFactory.createRange(5, Dataset.INT32);
+		Assert.assertTrue(Comparisons.isMonotonic(d, Monotonicity.NONDECREASING));
+		Assert.assertTrue(Comparisons.isMonotonic(d, Monotonicity.STRICTLY_INCREASING));
+
+		Assert.assertFalse(Comparisons.isMonotonic(d, Monotonicity.NOT_ORDERED));
+		Assert.assertFalse(Comparisons.isMonotonic(d, Monotonicity.ALL_EQUAL));
+		Assert.assertFalse(Comparisons.isMonotonic(d, Monotonicity.STRICTLY_DECREASING));
+		Assert.assertFalse(Comparisons.isMonotonic(d, Monotonicity.NONINCREASING));
 	}
 }

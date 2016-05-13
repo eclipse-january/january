@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.apache.commons.math3.complex.Complex;
 import org.eclipse.dawnsci.analysis.api.dataset.IDataset;
+import org.eclipse.dawnsci.analysis.dataset.impl.Comparisons.Monotonicity;
 
 /**
  * Mathematics class
@@ -1756,7 +1757,7 @@ public class Maths {
 
 	/**
 	 * Linearly interpolate values at points in a 1D dataset corresponding to given coordinates.
-	 * @param x input 1-D coordinate dataset
+	 * @param x input 1-D coordinate dataset (must be non-decreasing)
 	 * @param d input 1-D dataset
 	 * @param x0 coordinate values
 	 * @param left value to use when x0 lies left of domain. If null, then interpolate to zero by using leftmost interval
@@ -1769,7 +1770,13 @@ public class Maths {
 	
 		DoubleDataset r = new DoubleDataset(x0.getShape());
 	
+		if (!Comparisons.isMonotonic(x, Monotonicity.NONDECREASING)) {
+			throw new IllegalArgumentException("Dataset x must be non-decreasing");
+		}
 		DoubleDataset dx = (DoubleDataset) DatasetUtils.cast(x, Dataset.FLOAT64);
+		if (x == dx) {
+			dx = (DoubleDataset) x.clone(); // make a copy as we need a contiguous array
+		}
 		Dataset dx0 = DatasetUtils.convertToDataset(x0);
 		double[] xa = dx.getData();
 		int s = xa.length - 1;

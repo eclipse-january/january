@@ -1819,7 +1819,24 @@ public class MathsTest {
 
 	private void checkInterpolate2(Dataset a, double x) {
 		int s = a.getShapeRef()[0];
-		Dataset dv = Maths.interpolate(DatasetFactory.createRange(s, Dataset.INT32), a, DatasetFactory.createFromObject(x), null, null);
+		Dataset xa = DatasetFactory.createRange(s, Dataset.FLOAT64);
+		checkInterpolate2(xa, a, x);
+		xa = DatasetFactory.createRange(s-1, -1, -1, Dataset.FLOAT64);
+		checkInterpolate2(xa.getSliceView(new Slice(null, null, -1)), a, x);
+
+		try {
+			checkInterpolate2(xa, a, x);
+			Assert.fail("No exception raised");
+		} catch (IllegalArgumentException e) {
+			
+		} catch (Exception e) {
+			Assert.fail("Wrong exception raised");
+		}
+	}
+
+	private void checkInterpolate2(Dataset xa, Dataset a, double x) {
+		int s = a.getShapeRef()[0];
+		Dataset dv = Maths.interpolate(xa, a, DatasetFactory.createFromObject(x), null, null);
 		double v = dv.getElementDoubleAbs(0);
 		if (x <= -1 || x >= s) {
 			Assert.assertEquals(0, v, 1e-15);
