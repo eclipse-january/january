@@ -546,7 +546,7 @@ public class AbstractDatasetTest {
 	}
 
 	@Test
-	public void testTileSpeed() throws Exception {
+	public void testTileSpeed() {
 		int[][] blocks = {{1024,1}, {256,4}, {64,16}, {32,32}, {16,64}, {4, 256}, {1,1024}};
 //		int[][] blocks = {{1024,64}, {256,64}, {64,64}, {32,64}, {16,64}, {4, 64}, {1,64}};
 
