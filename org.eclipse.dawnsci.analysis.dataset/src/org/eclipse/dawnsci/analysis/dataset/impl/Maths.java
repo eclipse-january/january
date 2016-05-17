@@ -1775,16 +1775,19 @@ public class Maths {
 			throw new IllegalArgumentException("Dataset x must be ordered");
 		}
 		DoubleDataset dx = (DoubleDataset) DatasetUtils.cast(x, Dataset.FLOAT64);
-		if (x == dx) {
-			dx = (DoubleDataset) x.clone(); // make a copy as we need a contiguous array
-		}
 		Dataset dx0 = DatasetUtils.convertToDataset(x0);
+		if (x == dx) {
+			dx = (DoubleDataset) x.flatten();
+		}
 		double[] xa = dx.getData();
 		int s = xa.length - 1;
-		if (mono == Monotonicity.STRICTLY_DECREASING || mono == Monotonicity.NONINCREASING) {
+		boolean isReversed = mono == Monotonicity.STRICTLY_DECREASING || mono == Monotonicity.NONINCREASING;
+		if (isReversed) {
+			double[] txa = xa.clone();
 			for (int i = 0; i <= s; i++) { // reverse order
-				xa[s - i] = x.getDouble(i);
+				txa[s - i] = xa[i];
 			}
+			xa = txa;
 		}
 
 		IndexIterator it = dx0.getIterator();
@@ -1805,7 +1808,7 @@ public class Maths {
 					if (t >= 0)
 						continue; // sets to zero
 					t /= d1;
-					r.setAbs(k, t * d.getDouble(0));
+					r.setAbs(k, t * d.getDouble(isReversed ? s : 0));
 				} else if (i == -s - 2) {
 					if (right != null) {
 						r.setAbs(k, right.doubleValue());
@@ -1816,14 +1819,19 @@ public class Maths {
 					if (t <= 0)
 						continue; // sets to zero
 					t /= d1;
-					r.setAbs(k, t * d.getDouble(s));
+					r.setAbs(k, t * d.getDouble(isReversed ? 0 : s));
 				} else {
 					i = -i - 1;
-					final double t = (xa[i] - v)/(xa[i] - xa[i - 1]);
-					r.setAbs(k, (1 - t) * d.getDouble(i) + t * d.getDouble(i - 1));
+					double t = (xa[i] - v)/(xa[i] - xa[i - 1]);
+					if (isReversed) {
+						i = s - i;
+						r.setAbs(k, t * d.getDouble(i + 1) + (1 - t) * d.getDouble(i));
+					} else {
+						r.setAbs(k, (1 - t) * d.getDouble(i) + t * d.getDouble(i - 1));
+					}
 				}
 			} else {
-				r.setAbs(k, d.getDouble(i));
+				r.setAbs(k, d.getDouble(isReversed ? s - i : i));
 			}
 		}
 		return r;

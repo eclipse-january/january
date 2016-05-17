@@ -1822,15 +1822,17 @@ public class MathsTest {
 	private void checkInterpolate2(Dataset a, double x) {
 		int s = a.getShapeRef()[0];
 		Dataset xa = DatasetFactory.createRange(s, Dataset.FLOAT64);
-		checkInterpolate2(xa, a, x);
+		double a1 = checkInterpolate2(xa, a, x, false);
 		xa = DatasetFactory.createRange(s-1, -1, -1, Dataset.FLOAT64);
-		checkInterpolate2(xa.getSliceView(new Slice(null, null, -1)), a, x);
-		checkInterpolate2(xa, a, x);
+		double a2 = checkInterpolate2(xa.getSliceView(new Slice(null, null, -1)), a, x, false);
+		TestUtils.assertEquals("Flipped x - but reflipped", a1, a2);
+		a2 = checkInterpolate2(xa, a.getSliceView(new Slice(null, null, -1)), x, true);
+		TestUtils.assertEquals("Flipped x and flipped a", a1, a2);
 
 		try {
 			Random.seed(1231);
 			xa = Random.randint(0, s, a.getShapeRef());
-			checkInterpolate2(xa, a, x);
+			checkInterpolate2(xa, a, x, false);
 			Assert.fail("No exception raised");
 		} catch (IllegalArgumentException e) {
 			
@@ -1839,13 +1841,13 @@ public class MathsTest {
 		}
 	}
 
-	private void checkInterpolate2(Dataset xa, Dataset a, double x) {
+	private double checkInterpolate2(Dataset xa, Dataset a, double x, boolean isXaReversed) {
 		int s = a.getShapeRef()[0];
 		Dataset dv = Maths.interpolate(xa, a, DatasetFactory.createFromObject(x), null, null);
 		double v = dv.getElementDoubleAbs(0);
 		if (x <= -1 || x >= s) {
 			Assert.assertEquals(0, v, 1e-15);
-			return;
+			return v;
 		}
 
 		int i = (int) Math.floor(x);
@@ -1853,14 +1855,21 @@ public class MathsTest {
 		double f2 = 0;
 		double t = x - i;
 		if (x < 0) {
-			f2 = a.getDouble(0);
+			f2 = a.getDouble(isXaReversed ? s - 1 : 0);
 		} else if (x >= s - 1) {
-			f1 = a.getDouble(i);
+			f1 = a.getDouble(isXaReversed ? 0 : s - 1);
 		} else {
-			f1 = a.getDouble(i);
-			f2 = a.getDouble(i + 1);
+			if (isXaReversed) {
+				i = s - 1 - i;
+				f1 = a.getDouble(i);
+				f2 = a.getDouble(i - 1);
+			} else {
+				f1 = a.getDouble(i);
+				f2 = a.getDouble(i + 1);
+			}
 		}
 		Assert.assertEquals((1 - t) * f1 + t * f2, v, 1e-15);
+		return v;
 	}
 
 	private void checkInterpolate3(Dataset a, double x) {
@@ -2029,6 +2038,7 @@ public class MathsTest {
 		xa.iadd(1);
 
 		double[] xc = {-1.25, -1, -0.25, 0, 0.25, 58.25, 59, 59.25, 60, 60.25};
+//		double[] xc = {59};
 		for (double x : xc) {
 //			System.out.printf("%g\n", x);
 			checkInterpolate(xa, x);
