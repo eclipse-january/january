@@ -81,7 +81,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 			odata = data = createArray(size);
 		} catch (Throwable t) {
 			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
-			throw t;
+			throw new IllegalArgumentException(t);
 		}
 	}
 
@@ -110,7 +110,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 			}
 		} catch (Throwable t) {
 			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
-			throw t;
+			throw new IllegalArgumentException(t);
 		}
 	}
 
@@ -128,7 +128,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 			odata = data = createArray(size);
 		} catch (Throwable t) {
 			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
-			throw t;
+			throw new IllegalArgumentException(t);
 		}
 
 		IndexIterator iter = dataset.getIterator();
@@ -184,7 +184,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 			odata = data = createArray(size);
 		} catch (Throwable t) {
 			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
-			throw t;
+			throw new IllegalArgumentException(t);
 		}
 
 		IndexIterator[] iters = new IndexIterator[isize];
@@ -219,7 +219,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 			odata = data = createArray(size);
 		} catch (Throwable t) {
 			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
-			throw t;
+			throw new IllegalArgumentException(t);
 		}
 		final int os = dataset.getElementsPerItem();
 
@@ -822,7 +822,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 			ndata = createArray(nsize);
 		} catch (Throwable t) {
 			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
-			throw t;
+			throw new IllegalArgumentException(t);
 		}
 
 		int i = 0;

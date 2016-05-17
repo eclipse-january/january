@@ -80,7 +80,7 @@ public class DoubleDataset extends AbstractDataset {
 			odata = data = createArray(size);
 		} catch (Throwable t) {
 			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
-			throw t;
+			throw new IllegalArgumentException(t);
 		}
 	}
 
@@ -130,7 +130,7 @@ public class DoubleDataset extends AbstractDataset {
 			}
 		} catch (Throwable t) {
 			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
-			throw t;
+			throw new IllegalArgumentException(t);
 		}
 	}
 
@@ -147,7 +147,7 @@ public class DoubleDataset extends AbstractDataset {
 			odata = data = createArray(size);
 		} catch (Throwable t) {
 			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
-			throw t;
+			throw new IllegalArgumentException(t);
 		}
 		IndexIterator iter = dataset.getIterator();
 		for (int i = 0; iter.hasNext(); i++) {
@@ -201,7 +201,7 @@ public class DoubleDataset extends AbstractDataset {
 			result.odata = result.data = createArray(result.size);
 		} catch (Throwable t) {
 			logger.error("Could not create a dataset of shape {}", Arrays.toString(result.shape), t);
-			throw t;
+			throw new IllegalArgumentException(t);
 		}
 
 		int[] pos = new int[result.shape.length];
@@ -584,9 +584,9 @@ public class DoubleDataset extends AbstractDataset {
 		final double[] ndata; // PRIM_TYPE
 		try {
 			ndata = createArray(nsize);
-		} catch (Exception e) {
-			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), e);
-			throw e;
+		} catch (Throwable t) {
+			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
+			throw new IllegalArgumentException(t);
 		}
 		for (int i = 0; iter.hasNext() && i < nsize; i++) {
 			ndata[i] = data[iter.index];

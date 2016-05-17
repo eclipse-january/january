@@ -120,15 +120,15 @@ public class BinaryOperationTest {
 			Object ex = expected[i];
 			String s = toString() + Arrays.toString(vs);
 			if (ex instanceof Boolean) {
-				assertEquals(s, ex, operation.booleanOperate((long) vs[0], (long) vs[1]));
+				assertEquals(s, ex, operation.booleanOperate((Long) vs[0], (Long) vs[1]));
 			} else if (ex instanceof Long) {
-				assertEquals(s, ex, operation.longOperate((long) vs[0], (long) vs[1]));
+				assertEquals(s, ex, operation.longOperate((Long) vs[0], (Long) vs[1]));
 			} else if (ex instanceof Double) {
-				TestUtils.assertEquals(s, (double) ex, operation.doubleOperate((double) vs[0], (double) vs[1]));
+				TestUtils.assertEquals(s, (Double) ex, operation.doubleOperate((Double) vs[0], (Double) vs[1]));
 			} else if (ex instanceof Complex) {
 				Complex cz = (Complex) ex;
 				double[] cpx = new double[2];
-				operation.complexOperate(cpx, (double) vs[0], (double) vs[1], (double) vs[2], (double) vs[3]);
+				operation.complexOperate(cpx, (Double) vs[0], (Double) vs[1], (Double) vs[2], (Double) vs[3]);
 				TestUtils.assertEquals(s + ": real", cz.getReal(), cpx[0], 1e-14, 7e-17);
 				TestUtils.assertEquals(s + ": imag", cz.getImaginary(), cpx[1]);
 			}

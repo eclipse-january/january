@@ -74,7 +74,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 			odata = data = createArray(size);
 		} catch (Throwable t) {
 			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
-			throw t;
+			throw new IllegalArgumentException(t);
 		}
 
 		for (int i = 0, n = 0; i < size; i++) {
@@ -109,7 +109,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 			odata = data = createArray(size);
 		} catch (Throwable t) {
 			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
-			throw t;
+			throw new IllegalArgumentException(t);
 		}
 
 		for (int i = 0, n = 0; i < size; i++) {
@@ -144,7 +144,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 			odata = data = createArray(size);
 		} catch (Throwable t) {
 			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
-			throw t;
+			throw new IllegalArgumentException(t);
 		}
 
 		for (int i = 0, n = 0; i < size; i++) {
