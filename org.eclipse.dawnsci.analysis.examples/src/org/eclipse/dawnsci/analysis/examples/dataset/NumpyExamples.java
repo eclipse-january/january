@@ -466,7 +466,7 @@ public class NumpyExamples {
     public void oGrid() {
     	Dataset[] indexes = new Dataset[] {DatasetFactory.createRange(9, Dataset.FLOAT64),
                 DatasetFactory.createRange(6, Dataset.FLOAT64)};
-    	List<Dataset> og = new ArrayList<>();
+    	List<Dataset> og = new ArrayList<Dataset>();
     	int rank = indexes.length;
     	int[] shape = new int[rank];
     	Arrays.fill(shape, 1);
