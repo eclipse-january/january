@@ -100,18 +100,14 @@ public class AxesMetadataImpl implements AxesMetadata {
 		allAxes[axisDim].add(sanitizeAxisData(axisData,axisDim));
 	}
 	
-	public void addAxis(ILazyDataset axisData, int... axisDim) {
-		if (allAxes[axisDim[0]] == null) {
-			allAxes[axisDim[0]] = new ArrayList<ILazyDataset>();
+	public void addAxis(int primary, ILazyDataset axisData, int... axisDim) {
+		if (allAxes[primary] == null) {
+			allAxes[primary] = new ArrayList<ILazyDataset>();
 		}
 		
 		ILazyDataset lz = sanitizeAxisData(axisData,axisDim);
-		allAxes[axisDim[0]].add(lz);
+		allAxes[primary].add(lz);
 		if (lz != null) dimensionMap.put(lz, axisDim);
-	}
-	
-	private int[] getDimensions(ILazyDataset lz) {
-		return dimensionMap.get(lz);
 	}
 
 	private ILazyDataset sanitizeAxisData(ILazyDataset axisData, int... axisDim) {
@@ -158,15 +154,20 @@ public class AxesMetadataImpl implements AxesMetadata {
 				int[] dims = dimensionMap.get(l);
 
 				if (l instanceof IDynamicDataset) {
+					
+					int[] test = l.getShape();
+					
 					if (l.getSize() == 1) {
 						l.setShape(new int[]{1});
 					} else {
+						if (dims != null) dimensionMap.remove(l);
 						l = l.getSliceView().squeezeEnds();
+						if (dims != null) dimensionMap.put(l, dims);
 					}
 
 					((IDynamicDataset) l).refreshShape();
 				}
-
+				// need to look at rank of l;
 				if (dims == null) {
 					int k = l.getShape()[0];
 					if (k < maxShape[i]) maxShape[i] = k;
