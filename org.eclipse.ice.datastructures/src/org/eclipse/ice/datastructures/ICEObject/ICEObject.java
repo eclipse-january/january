@@ -16,8 +16,11 @@ import java.util.ArrayList;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlTransient;
 
+import org.eclipse.ice.datastructures.form.GeometryComponent;
+import org.eclipse.ice.datastructures.form.MeshComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,6 +53,7 @@ import org.slf4j.LoggerFactory;
  * @author Jay Jay Billings
  */
 @XmlRootElement(name = "ICEObject")
+@XmlSeeAlso({GeometryComponent.class,MeshComponent.class})
 public class ICEObject implements IUpdateable {
 
 	/**
