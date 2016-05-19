@@ -28,7 +28,7 @@ import org.eclipse.eavp.viz.modeling.base.BasicView;
 import org.eclipse.eavp.viz.modeling.base.IController;
 import org.eclipse.eavp.viz.modeling.properties.MeshProperty;
 import org.eclipse.eavp.viz.modeling.ShapeController;
-import org.eclipse.eavp.viz.modeling.ShapeMesh;
+import org.eclipse.eavp.viz.modeling.Shape;
 import org.eclipse.ice.datastructures.ICEObject.Component;
 import org.eclipse.ice.datastructures.form.GeometryComponent;
 import org.junit.Test;
@@ -53,7 +53,7 @@ public class GeometryComponentTester {
 	public void checkAddShapes() {
 
 		// Create a shape
-		ShapeMesh geometryModel = new ShapeMesh();
+		Shape geometryModel = new Shape();
 		geometryModel.setProperty(MeshProperty.TYPE,
 				ShapeType.Sphere.toString());
 		BasicView geometryView = new BasicView();
@@ -147,7 +147,7 @@ public class GeometryComponentTester {
 	public void checkNotifications() {
 
 		// Create a shape
-		ShapeMesh geometryModel = new ShapeMesh();
+		Shape geometryModel = new Shape();
 		geometryModel.setProperty(MeshProperty.TYPE,
 				ShapeType.Sphere.toString());
 		BasicView geometryView = new BasicView();
@@ -257,7 +257,7 @@ public class GeometryComponentTester {
 	@Test
 	public void checkEquality() {
 
-		ShapeMesh geometryModel = new ShapeMesh();
+		Shape geometryModel = new Shape();
 		geometryModel.setProperty(MeshProperty.TYPE,
 				ShapeType.Sphere.toString());
 		BasicView geometryView = new BasicView();
@@ -354,7 +354,7 @@ public class GeometryComponentTester {
 	public void checkCreation() {
 
 		// Create a shape
-		ShapeMesh geometryModel = new ShapeMesh();
+		Shape geometryModel = new Shape();
 		geometryModel.setProperty(MeshProperty.TYPE,
 				ShapeType.Sphere.toString());
 		BasicView geometryView = new BasicView();
@@ -382,7 +382,7 @@ public class GeometryComponentTester {
 	public void checkCopying() {
 
 		// Create a shape
-		ShapeMesh geometryModel = new ShapeMesh();
+		Shape geometryModel = new Shape();
 		geometryModel.setProperty(MeshProperty.TYPE,
 				ShapeType.Sphere.toString());
 		BasicView geometryView = new BasicView();
@@ -400,12 +400,12 @@ public class GeometryComponentTester {
 		geometry.setName("Geometry name");
 
 		// Set up GeometryComponent-specific stuff
-		ShapeMesh sphereModel = new ShapeMesh();
+		Shape sphereModel = new Shape();
 		sphereModel.setProperty(MeshProperty.TYPE, ShapeType.Sphere.toString());
 		BasicView sphereView = new BasicView();
 		ShapeController sphere1 = new ShapeController(sphereModel, sphereView);
 
-		ShapeMesh cubeModel = new ShapeMesh();
+		Shape cubeModel = new Shape();
 		cubeModel.setProperty(GeometryMeshProperty.OPERATOR,
 				OperatorType.Union.toString());
 		BasicView cubeView = new BasicView();

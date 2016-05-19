@@ -24,7 +24,7 @@ import org.eclipse.eavp.viz.datastructures.VizObject.IManagedUpdateable;
 import org.eclipse.eavp.viz.datastructures.VizObject.IManagedUpdateableListener;
 import org.eclipse.eavp.viz.datastructures.VizObject.SubscriptionType;
 import org.eclipse.eavp.viz.modeling.ShapeController;
-import org.eclipse.eavp.viz.modeling.ShapeMesh;
+import org.eclipse.eavp.viz.modeling.Shape;
 import org.eclipse.eavp.viz.modeling.properties.MeshProperty;
 import org.eclipse.eavp.viz.service.IVizService;
 import org.eclipse.eavp.viz.service.geometry.persistence.PersistableShape;
@@ -155,7 +155,7 @@ public class GeometryComponent extends ICEObject
 	 */
 	@XmlElement(name = "Geometry")
 	private PersistableShape getPersistableGeometry() {
-		return PersistableShape.compress((ShapeMesh) geometry.getModel());
+		return PersistableShape.compress((Shape) geometry.getModel());
 	}
 
 	/**
