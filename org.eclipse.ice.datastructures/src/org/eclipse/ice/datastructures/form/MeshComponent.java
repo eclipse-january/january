@@ -261,7 +261,7 @@ public class MeshComponent extends ICEObject
 		if (compressedMesh != null) {
 
 			mesh = (BasicController) compressedMesh
-					.unpack(service.getFactory());
+					.unpack(service.getControllerProviderFactory());
 			mesh.register(this);
 
 			// The full mesh is now in memory, so delete the compressed version

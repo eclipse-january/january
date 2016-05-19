@@ -207,7 +207,7 @@ public class GeometryComponent extends ICEObject
 			}
 
 			// Set the component's contents to a full version of the geometry
-			geometry = compressedGeometry.unpack(service.getFactory());
+			geometry = compressedGeometry.unpack(service.getControllerProviderFactory());
 			geometry.register(this);
 
 			// The full geometry is now in memory, so delete the compressed
