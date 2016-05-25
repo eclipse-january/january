@@ -186,7 +186,7 @@ public class Slice implements Cloneable, Serializable {
 	public boolean setPosition(int beg) {
 		boolean end = false;
 		int len = getNumSteps();
-		int max = getNumSteps(beg, length);
+		int max = getNumSteps(beg, length, step);
 		if (len > max) {
 			len = max;
 			end = true;
@@ -298,11 +298,11 @@ public class Slice implements Cloneable, Serializable {
 				return 0;
 			if (step < 0 && stop > beg)
 				return 0;
-			return getNumSteps(beg, stop);
+			return getNumSteps(beg, stop, step);
 		}
 		int beg = start == null ? (step > 0 ? 0: length-1) : start;
 		int end = stop == null ? (step > 0 ? length : -1) : stop;
-		return getNumSteps(beg, end);
+		return getNumSteps(beg, end, step);
 	}
 
 	/**

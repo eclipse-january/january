@@ -854,6 +854,50 @@ public class SliceNDTest {
 		lstop[0] = -8;
 		slice = new SliceND(new int[] {7}, null, lstop, step);
 		Assert.assertFalse(slice.isAll());
+	}
 
+	/**
+	 * Test that demonstrates Python slicing behaviour.
+	 * <p>
+	 * Negative end points are always wrapped once so that for negative steps, to specify
+	 * explicitly stopping at the beginning, you need to use -length-1
+	 */
+	@Test
+	public void testSliceNDNegativeStepEndPoints() {
+		// ::-1 => 511:-1:-1
+		SliceND slice = new SliceND(new int[] {512}, null, null, new int[] {-1});
+		Assert.assertEquals(511, slice.getStart()[0]);
+		Assert.assertEquals(512, slice.getShape()[0]);
+		Assert.assertEquals(-1, slice.getStop()[0]);
+
+		// :-1:-1 => 511:511:-1
+		slice = new SliceND(new int[] {512}, null, new int[] {-1}, new int[] {-1});
+		Assert.assertEquals(511, slice.getStart()[0]);
+		Assert.assertEquals(0, slice.getShape()[0]);
+		Assert.assertEquals(511, slice.getStop()[0]);
+
+		// :-513:-1 => 511:-1:-1
+		slice = new SliceND(new int[] {512}, null, new int[] {-513}, new int[] {-1});
+		Assert.assertEquals(511, slice.getStart()[0]);
+		Assert.assertEquals(512, slice.getShape()[0]);
+		Assert.assertEquals(-1, slice.getStop()[0]);
+
+		// 511::-1 => 511:-1:-1
+		slice = new SliceND(new int[] {512}, new int[] {511}, null, new int[] {-1});
+		Assert.assertEquals(511, slice.getStart()[0]);
+		Assert.assertEquals(512, slice.getShape()[0]);
+		Assert.assertEquals(-1, slice.getStop()[0]);
+
+		// 511:-1:-1 => 511:511:-1
+		slice = new SliceND(new int[] {512}, new int[] {511}, new int[] {-1}, new int[] {-1});
+		Assert.assertEquals(511, slice.getStart()[0]);
+		Assert.assertEquals(0, slice.getShape()[0]);
+		Assert.assertEquals(511, slice.getStop()[0]);
+
+		// 511:-513:-1 => 511:-1:-1
+		slice = new SliceND(new int[] {512}, new int[] {511}, new int[] {-513}, new int[] {-1});
+		Assert.assertEquals(511, slice.getStart()[0]);
+		Assert.assertEquals(512, slice.getShape()[0]);
+		Assert.assertEquals(-1, slice.getStop()[0]);
 	}
 }
