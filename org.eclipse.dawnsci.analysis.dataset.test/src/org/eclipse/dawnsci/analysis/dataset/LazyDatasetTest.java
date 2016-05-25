@@ -114,6 +114,16 @@ public class LazyDatasetTest {
 		Assert.assertEquals("Full slice", nd, ld.getSlice());
 		slice = new Slice[]{null, new Slice(1), null, new Slice(1, 3), null, null, null};
 		Assert.assertEquals("Part slice", nd.getSlice(slice), ld.getSlice(slice));
+
+		// test negative slice
+		ld.setShape(shape);
+		slice = new Slice[]{new Slice(null, null, -1), null, null, null};
+		nd = ld.getSlice(slice);
+		Assert.assertEquals("Full negative slice", d.getSlice(slice), nd);
+
+		slice = new Slice[]{null, null, null, new Slice(null, null, -1)};
+		nd = ld.getSlice(slice);
+		Assert.assertEquals("Full negative slice", d.getSlice(slice), nd);
 	}
 
 	@Test
@@ -141,6 +151,15 @@ public class LazyDatasetTest {
 		l = ld.getSliceView();
 		l.squeezeEnds();
 		Assert.assertEquals("Full slice", 3, l.getSlice().getRank());
+
+		// test negative slice views
+		slice = new Slice[]{new Slice(null, null, -1), null, null, null};
+		l = ld.getSliceView(slice);
+		Assert.assertEquals("Full negative slice", d.getSlice(slice), l.getSlice());
+
+		slice = new Slice[]{null, null, null, new Slice(null, null, -1)};
+		l = ld.getSliceView(slice);
+		Assert.assertEquals("Full negative slice", d.getSlice(slice), l.getSlice());
 	}
 
 	@Test

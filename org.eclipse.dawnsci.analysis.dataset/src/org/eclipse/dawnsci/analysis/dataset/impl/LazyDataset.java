@@ -492,13 +492,24 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 				for (; i < r && j < shape.length; i++, j++) {
 					nstart[i] = lstart[j];
 					nstop[i]  = lstop[j];
-					nstep[i]  = lstep[j];
+					int d = lstep[j];
+					if (d < 0 && nstop[i] < 0) { // need to wrap around further
+						int l = base == null ? oShape[j]: base.shape[j];
+						nstop[i] -= l;
+					}
+					nstep[i]  = d;
 				}
 			} else {
 				for (; i < r && j < shape.length; i++, j++) {
-					nstart[i] = begSlice[j] + lstart[j] * delSlice[j];
-					nstop[i]  = begSlice[j] + (lstop[j] - 1) * delSlice[j] + 1;
-					nstep[i]  = lstep[j] * delSlice[j];
+					int b = begSlice[j];
+					int d = delSlice[j];
+					nstart[i] = b + lstart[j] * d;
+					nstop[i]  = b + (lstop[j] - 1) * d + (d >= 0 ? 1 : -1);
+					if (d < 0 && nstop[i] < 0) { // need to wrap around further
+						int l = base == null ? oShape[j]: base.shape[j];
+						nstop[i] -= l;
+					}
+					nstep[i]  = lstep[j] * d;
 				}
 			}
 			if (map != null) {
