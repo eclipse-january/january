@@ -38,23 +38,23 @@ public class Outliers {
 			Maths.abs(dif,dif);
 			//Lower median - Math.floor((n/2)+1) of sorted
 			dif.sort(null);
-			medAbs.setObjectAbs(count++, dif.getElementDoubleAbs((int)Math.floor((dif.getSize()/2)+1)));
+			medAbs.setObjectAbs(count++, lowMed(dif));
 		}
 		
 		
 		//Higher median - Math.floor((n+1)/2) of sorted
 		medAbs.sort(null);
-		double median = medAbs.getElementDoubleAbs((int)Math.floor((medAbs.getSize()+1)/2));
+		double median = highMed(medAbs);
 		
 		return median * SNSCALEFACTOR;
 	}
 	
 	public static double lowMed(Dataset data) {
-		return data.getElementDoubleAbs((int)Math.floor((data.getSize()/2)+1));
+		return data.getElementDoubleAbs((int)Math.floor((data.getSize()/2)));
 	}
 	
 	public static double highMed(Dataset data) {
-		return data.getElementDoubleAbs((int)Math.floor((data.getSize()+1)/2));
+		return data.getElementDoubleAbs((int)Math.floor((data.getSize()+1)/2-1));
 	}
 	
 	
