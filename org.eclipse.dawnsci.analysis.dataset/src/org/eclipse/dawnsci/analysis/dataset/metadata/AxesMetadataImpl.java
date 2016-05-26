@@ -29,19 +29,19 @@ public class AxesMetadataImpl implements AxesMetadata {
 	@Sliceable
 	final List<ILazyDataset>[] allAxes;
 	
-	final Map<ILazyDataset,int[]> dimensionMap;
+	final Map<Integer,int[]> dimensionMap;
 
 	@SuppressWarnings("unchecked")
 	public AxesMetadataImpl(int rank) {
 		allAxes = new List[rank];
-		dimensionMap = new HashMap<ILazyDataset,int[]>();
+		dimensionMap = new HashMap<Integer,int[]>();
 	}
 
 	@SuppressWarnings("unchecked")
 	public AxesMetadataImpl(AxesMetadataImpl axesMetadataImpl) {
 		int r = axesMetadataImpl.allAxes.length;
 		allAxes = new List[r];
-		dimensionMap = new HashMap<ILazyDataset,int[]>();
+		dimensionMap = new HashMap<Integer,int[]>();
 		for (int i = 0; i < r; i++) {
 			List<ILazyDataset> ol = axesMetadataImpl.allAxes[i];
 			if (ol == null)
@@ -50,7 +50,11 @@ public class AxesMetadataImpl implements AxesMetadata {
 			for (ILazyDataset l : ol) {
 				ILazyDataset lv = l == null ? null : l.getSliceView();
 				list.add(lv);
-				if (axesMetadataImpl.dimensionMap.containsKey(l)) dimensionMap.put(lv, axesMetadataImpl.dimensionMap.get(lv).clone());
+				if (lv != null) {
+					int ihc = System.identityHashCode(lv);
+					if (axesMetadataImpl.dimensionMap.containsKey(ihc)) dimensionMap.put(ihc, axesMetadataImpl.dimensionMap.get(lv).clone());
+				}
+				
 			}
 			allAxes[i] = list;
 		}
@@ -107,7 +111,7 @@ public class AxesMetadataImpl implements AxesMetadata {
 		
 		ILazyDataset lz = sanitizeAxisData(axisData,axisDim);
 		allAxes[primary].add(lz);
-		if (lz != null) dimensionMap.put(lz, axisDim);
+		if (lz != null) dimensionMap.put(System.identityHashCode(lz), axisDim);
 	}
 
 	private ILazyDataset sanitizeAxisData(ILazyDataset axisData, int... axisDim) {
@@ -151,18 +155,15 @@ public class AxesMetadataImpl implements AxesMetadata {
 			for (int j = 0; j < axis.size(); j++) {
 				ILazyDataset l = axis.get(j);
 				if (l == null) continue;
-				int[] dims = dimensionMap.get(l);
+				int iHashCode = System.identityHashCode(l);
+				int[] dims = dimensionMap.get(iHashCode);
 
 				if (l instanceof IDynamicDataset) {
-					
-					int[] test = l.getShape();
 					
 					if (l.getSize() == 1) {
 						l.setShape(new int[]{1});
 					} else {
-						if (dims != null) dimensionMap.remove(l);
-						l = l.getSliceView().squeezeEnds();
-						if (dims != null) dimensionMap.put(l, dims);
+						l = l.squeezeEnds();
 					}
 
 					((IDynamicDataset) l).refreshShape();
