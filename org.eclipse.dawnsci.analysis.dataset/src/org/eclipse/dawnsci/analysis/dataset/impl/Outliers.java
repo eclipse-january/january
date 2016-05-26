@@ -26,6 +26,12 @@ public class Outliers {
 	private final static double MADSCALEFACTOR = 1.4826;
 	private final static double SNSCALEFACTOR = 1.1926;
 	
+	/**
+	 * Returns the Median Absolute Deviation (MAD) and the median. 
+	 * @param data
+	 * 			The data for which the median and the MAD are to be calculated
+	 * @return A two-element array of doubles, consisting of the MAD and the median of the data
+	 */
 	public static double[] medianAbsoluteDeviation(Dataset data) {
 		
 		double median = (Double)Stats.median(data);
@@ -37,6 +43,14 @@ public class Outliers {
 		return new double[]{mad, median};
 	}
 	
+	/**
+	 * Returns the Sn estimator of Croux and Rousseeuw.
+	 * <p>
+	 * This is the simple O(n²) version of the calculation algorithm.
+	 * @param data
+	 * 			The data for which the estimator is to be calculated.
+	 * @return The value of the Sn estimator for the data
+	 */
 	public static double snNaive(Dataset data) {
 		
 		Dataset medAbs = DatasetFactory.zeros(data);
@@ -61,6 +75,14 @@ public class Outliers {
 		return median * SNSCALEFACTOR;
 	}
 	
+	/**
+	 * Returns the Sn estimator of Croux and Rousseeuw.
+	 * <p>
+	 * This is the complex O(nlog n) version of the calculation algorithm.
+	 * @param data
+	 * 			The data for which the estimator is to be calculated.
+	 * @return The value of the Sn estimator for the data
+	 */
 	public static double snFast(Dataset data) {
 		
 		Dataset sorted = data.clone();
@@ -83,12 +105,28 @@ public class Outliers {
 		return median * SNSCALEFACTOR;
 	}
 	
-	
-	
+	/**
+	 * Returns the lomed
+	 * <p>
+	 * Returns the lomed (low median) of a sorted Dataset.
+	 * @param data
+	 * 			A sorted Dataset for which the low median is to be calculated.  
+	 * @return
+	 * 		The value of the lomed of the data
+	 */
 	public static double lowMed(Dataset data) {
 		return data.getElementDoubleAbs((int)Math.floor((data.getSize()/2)));
 	}
 	
+	/**
+	 * Returns the himed
+	 * <p>
+	 * Returns the himed (high median) of a sorted Dataset.
+	 * @param data
+	 * 			A sorted Dataset for which the low median is to be calculated.  
+	 * @return
+	 * 		The value of the himed of the data
+	 */
 	public static double highMed(Dataset data) {
 		return data.getElementDoubleAbs((int)Math.floor((data.getSize()+1)/2-1));
 	}
