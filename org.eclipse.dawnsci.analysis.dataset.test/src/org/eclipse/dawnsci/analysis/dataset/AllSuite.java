@@ -29,6 +29,7 @@ import org.junit.runners.Suite.SuiteClasses;
 		SingleInputBroadcastIteratorTest.class, SliceIteratorTest.class, SliceNDIteratorTest.class, SliceNDTest.class,
 		SliceTest.class, StatsTest.class, StrideIteratorTest.class, StringDatasetTest.class, SummedAreaTableTest.class,
 		UnsignedArithmetics.class,
+		OutlierCorrectnessTest.class, OutlierStatsTest.class,
 		org.eclipse.dawnsci.analysis.dataset.function.AllSuite.class,
 		org.eclipse.dawnsci.analysis.dataset.slice.AllSuite.class
 		})
