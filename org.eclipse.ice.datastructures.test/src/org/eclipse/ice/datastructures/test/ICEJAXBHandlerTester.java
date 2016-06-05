@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 import javax.xml.bind.JAXBException;
 
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
+import org.eclipse.january.form.ICEJAXBHandler;
 import org.junit.Before;
 import org.junit.Test;
 

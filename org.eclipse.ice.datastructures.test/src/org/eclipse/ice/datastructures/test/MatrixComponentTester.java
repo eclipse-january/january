@@ -27,10 +27,10 @@ import java.util.Random;
 
 import javax.xml.bind.JAXBException;
 
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
-import org.eclipse.ice.datastructures.ICEObject.ICEObject;
-import org.eclipse.ice.datastructures.form.AllowedValueType;
-import org.eclipse.ice.datastructures.form.MatrixComponent;
+import org.eclipse.january.form.AllowedValueType;
+import org.eclipse.january.form.ICEJAXBHandler;
+import org.eclipse.january.form.ICEObject;
+import org.eclipse.january.form.MatrixComponent;
 import org.junit.Test;
 
 /**

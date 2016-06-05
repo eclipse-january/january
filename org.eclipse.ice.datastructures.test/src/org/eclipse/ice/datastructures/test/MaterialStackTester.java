@@ -23,20 +23,20 @@ import java.util.ArrayList;
 
 import javax.xml.bind.JAXBException;
 
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
-import org.eclipse.ice.datastructures.form.Material;
-import org.eclipse.ice.datastructures.form.MaterialStack;
+import org.eclipse.january.form.ICEJAXBHandler;
+import org.eclipse.january.form.Material;
+import org.eclipse.january.form.MaterialStack;
 import org.junit.Test;
 
 /**
- * Test class for {@link org.eclipse.ice.datastructures.form.MaterialStack}
+ * Test class for {@link org.eclipse.january.form.MaterialStack}
  * @author Jay Jay Billings, Kasper Gammeltoft
  *
  */
 public class MaterialStackTester {
 
 	/**
-	 * Test method for {@link org.eclipse.ice.datastructures.form.MaterialStack#MaterialStack()}.
+	 * Test method for {@link org.eclipse.january.form.MaterialStack#MaterialStack()}.
 	 */
 	@Test
 	public void testConstruction() {
@@ -51,7 +51,7 @@ public class MaterialStackTester {
 	}
 
 	/**
-	 * Test method for {@link org.eclipse.ice.datastructures.form.MaterialStack#getMaterial()}.
+	 * Test method for {@link org.eclipse.january.form.MaterialStack#getMaterial()}.
 	 */
 	@Test
 	public void testGetMaterial() {
@@ -62,7 +62,7 @@ public class MaterialStackTester {
 	}
 
 	/**
-	 * Test method for {@link org.eclipse.ice.datastructures.form.MaterialStack#getAmount()}.
+	 * Test method for {@link org.eclipse.january.form.MaterialStack#getAmount()}.
 	 */
 	@Test
 	public void testGetAmount() {
@@ -73,7 +73,7 @@ public class MaterialStackTester {
 	}
 
 	/**
-	 * Test method for {@link org.eclipse.ice.datastructures.form.MaterialStack#incrementAmount()}.
+	 * Test method for {@link org.eclipse.january.form.MaterialStack#incrementAmount()}.
 	 */
 	@Test
 	public void testIncrementAmount() {
@@ -89,7 +89,7 @@ public class MaterialStackTester {
 	}
 
 	/**
-	 * Test method for {@link org.eclipse.ice.datastructures.form.MaterialStack#equals(org.eclipse.ice.datastructures.form.MaterialStack)}.
+	 * Test method for {@link org.eclipse.january.form.MaterialStack#equals(org.eclipse.january.form.MaterialStack)}.
 	 */
 	@Test
 	public void testEqualsMaterialStack() {

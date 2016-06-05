@@ -26,8 +26,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.xmi.util.XMLProcessor;
-import org.eclipse.ice.datastructures.form.DataComponent;
-import org.eclipse.ice.datastructures.form.emf.EMFTreeComposite;
+import org.eclipse.january.form.DataComponent;
+import org.eclipse.january.form.emf.EMFTreeComposite;
 import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
@@ -157,16 +157,16 @@ public class EMFTreeCompositeTester {
 		EMFTreeComposite item = trees.get(1);
 		EMFTreeComposite shipOrder = trees.get(2);
 		EMFTreeComposite shipTo = trees.get(3);
-		
+
 		// Now make sure we have the correct number of child exemplars
 		assertEquals(1, docRoot.getChildExemplars().size());
-		assertTrue("ShiporderType".equals(docRoot.getChildExemplars().get(0)
-				.getName()));
+		assertTrue("ShiporderType"
+				.equals(docRoot.getChildExemplars().get(0).getName()));
 		assertEquals(2, shipOrder.getChildExemplars().size());
-		assertTrue("ShiptoType".equals(shipOrder.getChildExemplars().get(0)
-				.getName()));
-		assertTrue("ItemType".equals(shipOrder.getChildExemplars().get(1)
-				.getName()));
+		assertTrue("ShiptoType"
+				.equals(shipOrder.getChildExemplars().get(0).getName()));
+		assertTrue("ItemType"
+				.equals(shipOrder.getChildExemplars().get(1).getName()));
 		assertEquals(0, item.getChildExemplars().size());
 		assertEquals(0, shipTo.getChildExemplars().size());
 
@@ -214,8 +214,9 @@ public class EMFTreeCompositeTester {
 		// change the entry on the other clone
 		assertTrue(((DataComponent) clonedItem.getActiveDataNode())
 				.retrieveEntry("title").setValue("hello"));
-		assertFalse("hello".equals(((DataComponent) anotherClonedItem
-				.getActiveDataNode()).retrieveEntry("title").getValue()));
+		assertFalse("hello"
+				.equals(((DataComponent) anotherClonedItem.getActiveDataNode())
+						.retrieveEntry("title").getValue()));
 
 		// Clone the ShipTo tree and add it to the ShipOrder
 		EMFTreeComposite clonedShipTo = (EMFTreeComposite) shipTo.clone();
@@ -254,17 +255,21 @@ public class EMFTreeCompositeTester {
 
 		assertTrue(((DataComponent) shipOrder.getActiveDataNode())
 				.retrieveEntry("orderperson").setValue("hello"));
-		assertTrue("hello".equals(((DataComponent) shipOrder
-				.getActiveDataNode()).retrieveEntry("orderperson").getValue()));
-		assertFalse("hello".equals(((DataComponent) clonedOrder
-				.getActiveDataNode()).retrieveEntry("orderperson").getValue()));
+		assertTrue(
+				"hello".equals(((DataComponent) shipOrder.getActiveDataNode())
+						.retrieveEntry("orderperson").getValue()));
+		assertFalse(
+				"hello".equals(((DataComponent) clonedOrder.getActiveDataNode())
+						.retrieveEntry("orderperson").getValue()));
 
 		assertTrue(((DataComponent) clonedOrder.getActiveDataNode())
 				.retrieveEntry("orderperson").setValue("helloworld"));
-		assertTrue("helloworld".equals(((DataComponent) clonedOrder
-				.getActiveDataNode()).retrieveEntry("orderperson").getValue()));
-		assertFalse("helloworld".equals(((DataComponent) shipOrder
-				.getActiveDataNode()).retrieveEntry("orderperson").getValue()));
+		assertTrue("helloworld"
+				.equals(((DataComponent) clonedOrder.getActiveDataNode())
+						.retrieveEntry("orderperson").getValue()));
+		assertFalse("helloworld"
+				.equals(((DataComponent) shipOrder.getActiveDataNode())
+						.retrieveEntry("orderperson").getValue()));
 
 	}
 

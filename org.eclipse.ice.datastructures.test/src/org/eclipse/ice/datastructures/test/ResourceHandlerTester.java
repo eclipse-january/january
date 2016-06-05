@@ -20,9 +20,9 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
-import org.eclipse.ice.datastructures.resource.ICEResource;
-import org.eclipse.ice.datastructures.resource.ResourceHandler;
-import org.eclipse.ice.datastructures.resource.VizResource;
+import org.eclipse.january.form.ICEResource;
+import org.eclipse.january.form.ResourceHandler;
+import org.eclipse.january.form.VizResource;
 import org.junit.Test;
 
 /**

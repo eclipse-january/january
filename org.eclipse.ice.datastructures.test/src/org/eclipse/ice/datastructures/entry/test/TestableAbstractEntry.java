@@ -19,9 +19,9 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
-import org.eclipse.ice.datastructures.entry.AbstractEntry;
-import org.eclipse.ice.datastructures.entry.IEntryVisitor;
+import org.eclipse.january.form.AbstractEntry;
+import org.eclipse.january.form.IEntryVisitor;
+import org.eclipse.january.form.IUpdateable;
 
 /**
  * This class is simply for testing AbstractEntry.

@@ -21,7 +21,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.ice.datastructures.jaxbclassprovider.IJAXBClassProvider;
+import org.eclipse.january.form.IJAXBClassProvider;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.osgi.framework.BundleException;
@@ -37,7 +37,7 @@ public class IJAXBClassProviderTester {
 
 	/**
 	 * Test for
-	 * {@link org.eclipse.ice.datastructures.jaxbclassprovider.IJAXBClassProvider}
+	 * {@link org.eclipse.january.form.IJAXBClassProvider}
 	 * .
 	 *
 	 * @throws CoreException

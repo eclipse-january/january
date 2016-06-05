@@ -22,8 +22,8 @@ import org.eclipse.eavp.viz.datastructures.VizObject.IManagedUpdateableListener;
 import org.eclipse.eavp.viz.datastructures.VizObject.IVizUpdateable;
 import org.eclipse.eavp.viz.datastructures.VizObject.IVizUpdateableListener;
 import org.eclipse.eavp.viz.datastructures.VizObject.SubscriptionType;
-import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
-import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
+import org.eclipse.january.form.IUpdateable;
+import org.eclipse.january.form.IUpdateableListener;
 
 /**
  * <p>

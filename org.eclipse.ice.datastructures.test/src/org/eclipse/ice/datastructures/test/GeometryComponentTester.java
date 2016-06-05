@@ -29,8 +29,8 @@ import org.eclipse.eavp.viz.modeling.base.IController;
 import org.eclipse.eavp.viz.modeling.properties.MeshProperty;
 import org.eclipse.eavp.viz.modeling.ShapeController;
 import org.eclipse.eavp.viz.modeling.Shape;
-import org.eclipse.ice.datastructures.ICEObject.Component;
-import org.eclipse.ice.datastructures.form.GeometryComponent;
+import org.eclipse.january.form.Component;
+import org.eclipse.january.form.GeometryComponent;
 import org.junit.Test;
 
 /**

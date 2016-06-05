@@ -14,7 +14,7 @@ package org.eclipse.ice.datastructures.test;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.ice.datastructures.jaxbclassprovider.IJAXBClassProvider;
+import org.eclipse.january.form.IJAXBClassProvider;
 
 /**
  * This is a fake JAXBClassProvider that is registered with the framework for

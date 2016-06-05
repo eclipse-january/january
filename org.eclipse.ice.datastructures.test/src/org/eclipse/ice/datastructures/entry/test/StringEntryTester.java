@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.eclipse.ice.datastructures.entry.StringEntry;
+import org.eclipse.january.form.StringEntry;
 import org.junit.Test;
 
 /**

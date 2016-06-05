@@ -20,10 +20,10 @@ import static org.junit.Assert.fail;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import org.eclipse.ice.datastructures.form.TreeComposite;
-import org.eclipse.ice.datastructures.form.iterator.BreadthFirstTreeCompositeIterator;
-import org.eclipse.ice.datastructures.form.iterator.PostOrderTreeCompositeIterator;
-import org.eclipse.ice.datastructures.form.iterator.PreOrderTreeCompositeIterator;
+import org.eclipse.january.form.BreadthFirstTreeCompositeIterator;
+import org.eclipse.january.form.PostOrderTreeCompositeIterator;
+import org.eclipse.january.form.PreOrderTreeCompositeIterator;
+import org.eclipse.january.form.TreeComposite;
 import org.junit.Before;
 import org.junit.Test;
 

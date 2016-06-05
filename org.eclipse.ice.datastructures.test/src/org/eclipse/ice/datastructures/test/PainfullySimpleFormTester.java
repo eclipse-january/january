@@ -19,10 +19,10 @@ import static org.junit.Assert.fail;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.eclipse.ice.datastructures.entry.IEntry;
-import org.eclipse.ice.datastructures.form.DataComponent;
-import org.eclipse.ice.datastructures.form.TableComponent;
-import org.eclipse.ice.datastructures.form.painfullySimpleForm.PainfullySimpleForm;
+import org.eclipse.january.form.DataComponent;
+import org.eclipse.january.form.IEntry;
+import org.eclipse.january.form.PainfullySimpleForm;
+import org.eclipse.january.form.TableComponent;
 import org.junit.Before;
 import org.junit.Test;
 

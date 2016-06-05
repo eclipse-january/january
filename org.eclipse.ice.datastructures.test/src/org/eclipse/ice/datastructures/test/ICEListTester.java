@@ -20,8 +20,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
-import org.eclipse.ice.datastructures.ICEObject.ICEList;
+import org.eclipse.january.form.ICEJAXBHandler;
+import org.eclipse.january.form.ICEList;
 import org.junit.Test;
 
 /**

@@ -7,7 +7,7 @@
          name="ICE JAXB Class Provider"
          point="org.eclipse.ice.datastructures.jaxbClassProvider">
       <implementation
-            class="org.eclipse.ice.datastructures.jaxbclassprovider.ICEJAXBClassProvider">
+            class="org.eclipse.january.form.ICEJAXBClassProvider">
       </implementation>
    </extension>
 

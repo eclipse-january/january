@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ICEDataStructuresTest
-Bundle-SymbolicName: org.eclipse.ice.datastructures.test;singleton:=true
+Bundle-SymbolicName: org.eclipse.january.form.test;singleton:=true
 Bundle-Version: 2.1.8.qualifier
 Require-Bundle: org.junit;bundle-version="4.8.2",
  org.eclipse.emf.ecore,
- org.eclipse.ice.datastructures,
+ org.eclipse.january.form,
  org.eclipse.eavp.viz.service,
  org.eclipse.eavp.viz.service.geometry,
  org.eclipse.eavp.viz.service.mesh,
@@ -21,6 +21,7 @@ Import-Package: ca.odell.glazedlists,
  org.eclipse.emf.ecore.xmi,
  org.eclipse.emf.ecore.xmi.impl,
  org.eclipse.emf.ecore.xmi.util,
+ org.eclipse.january.form.emf,
  org.osgi.framework;version="1.6.0",
  org.osgi.util.tracker;version="1.5.0",
  org.slf4j;version="1.7.2"

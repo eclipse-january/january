@@ -31,12 +31,12 @@ import java.util.regex.Pattern;
 
 import javax.xml.bind.JAXBException;
 
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
-import org.eclipse.ice.datastructures.form.DataComponent;
-import org.eclipse.ice.datastructures.form.TreeComposite;
-import org.eclipse.ice.datastructures.form.emf.EMFComponent;
-import org.eclipse.ice.datastructures.form.emf.EMFTreeComposite;
-import org.eclipse.ice.datastructures.form.iterator.BreadthFirstTreeCompositeIterator;
+import org.eclipse.january.form.BreadthFirstTreeCompositeIterator;
+import org.eclipse.january.form.DataComponent;
+import org.eclipse.january.form.ICEJAXBHandler;
+import org.eclipse.january.form.TreeComposite;
+import org.eclipse.january.form.emf.EMFComponent;
+import org.eclipse.january.form.emf.EMFTreeComposite;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -124,9 +124,10 @@ public class EMFComponentTester {
 		DataComponent component = (DataComponent) shipOrder.getActiveDataNode();
 		assertEquals("ShiporderType Data", component.getName());
 		assertEquals(2, component.retrieveAllEntries().size());
-		assertEquals("orderperson", component.retrieveAllEntries().get(0)
-				.getName());
-		assertEquals("orderid", component.retrieveAllEntries().get(1).getName());
+		assertEquals("orderperson",
+				component.retrieveAllEntries().get(0).getName());
+		assertEquals("orderid",
+				component.retrieveAllEntries().get(1).getName());
 		assertTrue(component.retrieveEntry("orderperson").setValue("McCaskey"));
 		assertTrue(component.retrieveEntry("orderid").setValue(""));
 
@@ -145,8 +146,8 @@ public class EMFComponentTester {
 		assertEquals("ShiptoType Data", component.getName());
 		assertEquals(4, component.retrieveAllEntries().size());
 		assertTrue(component.retrieveEntry("name").setValue("name"));
-		assertTrue(component.retrieveEntry("address").setValue(
-				"1600 Pennsylvania Ave"));
+		assertTrue(component.retrieveEntry("address")
+				.setValue("1600 Pennsylvania Ave"));
 		assertTrue(component.retrieveEntry("city").setValue("city"));
 		assertTrue(component.retrieveEntry("country").setValue("country"));
 
@@ -238,21 +239,15 @@ public class EMFComponentTester {
 
 		// Not sure how else to test this except that we have
 		// the correct tree nodes.
-		assertEquals((Integer) 141,
-				(Integer) verificationMap.get("AnySingleValueType"));
-		assertEquals((Integer) 141,
-				(Integer) verificationMap.get("ParameterType"));
-		assertEquals((Integer) 10,
-				(Integer) verificationMap.get("ParameterSetType"));
-		assertEquals((Integer) 1,
-				(Integer) verificationMap.get("ParametersType"));
-		assertEquals((Integer) 1,
-				(Integer) verificationMap.get("BatteryMLDocType"));
-		assertEquals((Integer) 1, (Integer) verificationMap.get("ModelDBType1"));
-		assertEquals((Integer) 1, (Integer) verificationMap.get("ModelDBType"));
-		assertEquals((Integer) 1,
-				(Integer) verificationMap.get("DefinitionType"));
-		assertEquals((Integer) 1, (Integer) verificationMap.get("CategoryType"));
+		assertEquals((Integer) 141, verificationMap.get("AnySingleValueType"));
+		assertEquals((Integer) 141, verificationMap.get("ParameterType"));
+		assertEquals((Integer) 10, verificationMap.get("ParameterSetType"));
+		assertEquals((Integer) 1, verificationMap.get("ParametersType"));
+		assertEquals((Integer) 1, verificationMap.get("BatteryMLDocType"));
+		assertEquals((Integer) 1, verificationMap.get("ModelDBType1"));
+		assertEquals((Integer) 1, verificationMap.get("ModelDBType"));
+		assertEquals((Integer) 1, verificationMap.get("DefinitionType"));
+		assertEquals((Integer) 1, verificationMap.get("CategoryType"));
 
 	}
 
@@ -285,7 +280,8 @@ public class EMFComponentTester {
 					.readAllLines(Paths.get(expectedFilePath),
 							Charset.defaultCharset());
 			ArrayList<String> actualFileContents = (ArrayList<String>) Files
-					.readAllLines(Paths.get(filePath), Charset.defaultCharset());
+					.readAllLines(Paths.get(filePath),
+							Charset.defaultCharset());
 
 			assertTrue(actualFileContents.equals(exptectedFileContents));
 		} catch (IOException e) {
@@ -331,14 +327,14 @@ public class EMFComponentTester {
 		assertEquals(2, component.retrieveAllEntries().size());
 
 		assertEquals(3, shipOrder.getNumberOfChildren());
-		
-		int itemCount = 0; 
+
+		int itemCount = 0;
 		int shiptoCount = 0;
-		
+
 		for (int i = 0; i < 3; i++) {
 			TreeComposite child = shipOrder.getChildAtIndex(i);
 			assertNotNull(child);
-			
+
 			if ("ShiptoType".equals(child.getName())) {
 				shiptoCount++;
 				assertEquals(0, child.getNumberOfChildren());
@@ -357,13 +353,14 @@ public class EMFComponentTester {
 				fail();
 			}
 		}
-		
+
 		assertEquals(1, shiptoCount);
 		assertEquals(2, itemCount);
-		
+
 		String xmlString = emfComponent.saveToString();
 		assertNotNull(xmlString);
-		assertEquals(2, xmlString.split(Pattern.quote("<item>"), -1).length - 1);
+		assertEquals(2,
+				xmlString.split(Pattern.quote("<item>"), -1).length - 1);
 
 	}
 
@@ -385,7 +382,8 @@ public class EMFComponentTester {
 		EMFComponent component = emfComponent;
 		EMFComponent equalComponent = new EMFComponent(new File(filePath1));
 		EMFComponent unEqualComponent = new EMFComponent();
-		EMFComponent transitiveComponent = new EMFComponent(new File(filePath1));
+		EMFComponent transitiveComponent = new EMFComponent(
+				new File(filePath1));
 
 		// Set ICEObject data
 		component.setId(1);
@@ -457,7 +455,7 @@ public class EMFComponentTester {
 		EMFComponent newCopy = new EMFComponent();
 		newCopy.copy(emfComponent);
 		assertTrue(newCopy.equals(emfComponent));
-		
+
 		return;
 	}
 
@@ -473,8 +471,8 @@ public class EMFComponentTester {
 	 * 
 	 */
 	@Test
-	public void checkLoadingFromXML() throws NullPointerException,
-			JAXBException, IOException {
+	public void checkLoadingFromXML()
+			throws NullPointerException, JAXBException, IOException {
 		// Local declarations
 		int id = 5;
 		String name = "Bob";
@@ -484,7 +482,7 @@ public class EMFComponentTester {
 		classList.add(EMFComponent.class);
 
 		emfComponent = new EMFComponent();
-		
+
 		// set ICEObject info
 		emfComponent.setId(id);
 		emfComponent.setName(name);
@@ -507,8 +505,6 @@ public class EMFComponentTester {
 
 		// Check contents -- Why was this commented out? ~JJB 20141223 16:57
 		assertTrue(loadEMF.equals(emfComponent));
-
-
 
 	}
 }

@@ -31,8 +31,8 @@ import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
-import org.eclipse.ice.datastructures.entry.FileEntry;
+import org.eclipse.january.form.FileEntry;
+import org.eclipse.january.form.ICEJAXBHandler;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

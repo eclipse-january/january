@@ -27,8 +27,8 @@ import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
-import org.eclipse.ice.datastructures.entry.DiscreteEntry;
+import org.eclipse.january.form.DiscreteEntry;
+import org.eclipse.january.form.ICEJAXBHandler;
 import org.junit.Test;
 
 /**

@@ -25,12 +25,12 @@ import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
-import org.eclipse.ice.datastructures.entry.ContinuousEntry;
-import org.eclipse.ice.datastructures.entry.DiscreteEntry;
-import org.eclipse.ice.datastructures.entry.IEntry;
-import org.eclipse.ice.datastructures.entry.StringEntry;
-import org.eclipse.ice.datastructures.form.TimeDataComponent;
+import org.eclipse.january.form.ContinuousEntry;
+import org.eclipse.january.form.DiscreteEntry;
+import org.eclipse.january.form.ICEJAXBHandler;
+import org.eclipse.january.form.IEntry;
+import org.eclipse.january.form.StringEntry;
+import org.eclipse.january.form.TimeDataComponent;
 import org.junit.Test;
 
 /**

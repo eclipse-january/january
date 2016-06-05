@@ -28,13 +28,13 @@ import java.util.Arrays;
 
 import javax.xml.bind.JAXBException;
 
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
-import org.eclipse.ice.datastructures.entry.ContinuousEntry;
-import org.eclipse.ice.datastructures.entry.DiscreteEntry;
-import org.eclipse.ice.datastructures.entry.IEntry;
-import org.eclipse.ice.datastructures.entry.StringEntry;
-import org.eclipse.ice.datastructures.jaxbclassprovider.ICEJAXBClassProvider;
-import org.eclipse.ice.datastructures.resource.ICEResource;
+import org.eclipse.january.form.ContinuousEntry;
+import org.eclipse.january.form.DiscreteEntry;
+import org.eclipse.january.form.ICEJAXBClassProvider;
+import org.eclipse.january.form.ICEJAXBHandler;
+import org.eclipse.january.form.ICEResource;
+import org.eclipse.january.form.IEntry;
+import org.eclipse.january.form.StringEntry;
 import org.junit.Test;
 
 /**

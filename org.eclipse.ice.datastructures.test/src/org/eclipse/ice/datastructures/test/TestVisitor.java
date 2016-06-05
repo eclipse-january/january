@@ -12,21 +12,20 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.test;
 
-import org.eclipse.ice.datastructures.ICEObject.ListComponent;
-import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
-import org.eclipse.ice.datastructures.componentVisitor.IReactorComponent;
-import org.eclipse.ice.datastructures.form.AdaptiveTreeComposite;
-import org.eclipse.ice.datastructures.form.DataComponent;
-import org.eclipse.ice.datastructures.form.GeometryComponent;
-import org.eclipse.ice.datastructures.form.MasterDetailsComponent;
-import org.eclipse.ice.datastructures.form.MatrixComponent;
-import org.eclipse.ice.datastructures.form.MeshComponent;
-import org.eclipse.ice.datastructures.form.MeshComponent;
-import org.eclipse.ice.datastructures.form.ResourceComponent;
-import org.eclipse.ice.datastructures.form.TableComponent;
-import org.eclipse.ice.datastructures.form.TimeDataComponent;
-import org.eclipse.ice.datastructures.form.TreeComposite;
-import org.eclipse.ice.datastructures.form.emf.EMFComponent;
+import org.eclipse.january.form.AdaptiveTreeComposite;
+import org.eclipse.january.form.DataComponent;
+import org.eclipse.january.form.GeometryComponent;
+import org.eclipse.january.form.IComponentVisitor;
+import org.eclipse.january.form.IReactorComponent;
+import org.eclipse.january.form.ListComponent;
+import org.eclipse.january.form.MasterDetailsComponent;
+import org.eclipse.january.form.MatrixComponent;
+import org.eclipse.january.form.MeshComponent;
+import org.eclipse.january.form.ResourceComponent;
+import org.eclipse.january.form.TableComponent;
+import org.eclipse.january.form.TimeDataComponent;
+import org.eclipse.january.form.TreeComposite;
+import org.eclipse.january.form.emf.EMFComponent;
 
 /**
  * <p>
@@ -63,7 +62,8 @@ public class TestVisitor implements IComponentVisitor {
 	 * True if the TestVisitor was visited, false otherwise.
 	 * </p>
 	 * 
-	 * @return <p>
+	 * @return
+	 * 		<p>
 	 *         True if the TestVisitor was visited by a Component, false
 	 *         otherwise.
 	 *         </p>
@@ -212,12 +212,12 @@ public class TestVisitor implements IComponentVisitor {
 	@Override
 	public void visit(EMFComponent component) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void visit(ListComponent component) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

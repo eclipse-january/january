@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.util.XMLProcessor;
-import org.eclipse.ice.datastructures.form.emf.EMFEntry;
+import org.eclipse.january.form.emf.EMFEntry;
 import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
@@ -64,8 +64,7 @@ public class EMFEntryTester {
 		String separator = System.getProperty("file.separator");
 		String userDir = System.getProperty("user.home") + separator
 				+ "ICETests" + separator + "datastructuresData";
-		String filePath = userDir + separator
-				+ "shiporder.xsd";
+		String filePath = userDir + separator + "shiporder.xsd";
 		processor = null;
 
 		// Create the XMLProcessor
@@ -104,9 +103,8 @@ public class EMFEntryTester {
 	}
 
 	/**
-	 * Check that we can construct an EMFEntry which keeps 
-	 * track of normal ICE Entry data, but also keeps track of 
-	 * EAttribute data
+	 * Check that we can construct an EMFEntry which keeps track of normal ICE
+	 * Entry data, but also keeps track of EAttribute data
 	 */
 	@Test
 	public void checkConstruction() {
@@ -115,11 +113,11 @@ public class EMFEntryTester {
 		EMFEntry entry = new EMFEntry(attribute, ecoreNode);
 		assertTrue("name".equals(entry.getName()));
 		assertTrue(entry.setValue("McCaskey"));
-		assertTrue("McCaskey".equals((String) ecoreNode.eGet(attribute)));
+		assertTrue("McCaskey".equals(ecoreNode.eGet(attribute)));
 	}
 
 	/**
-	 * Check that EMFEntries can be cloned and copied. 
+	 * Check that EMFEntries can be cloned and copied.
 	 */
 	@Test
 	public void checkCopying() {

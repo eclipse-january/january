@@ -13,11 +13,11 @@ package org.eclipse.ice.datastructures.test;
 
 import static org.junit.Assert.assertTrue;
 
-import org.eclipse.ice.datastructures.ICEObject.Component;
-import org.eclipse.ice.datastructures.ICEObject.IUpdateable;
-import org.eclipse.ice.datastructures.ICEObject.IUpdateableListener;
-import org.eclipse.ice.datastructures.ICEObject.WrappedGlazedEventListener;
-import org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor;
+import org.eclipse.january.form.Component;
+import org.eclipse.january.form.IComponentVisitor;
+import org.eclipse.january.form.IUpdateable;
+import org.eclipse.january.form.IUpdateableListener;
+import org.eclipse.january.form.WrappedGlazedEventListener;
 import org.junit.Test;
 
 /**

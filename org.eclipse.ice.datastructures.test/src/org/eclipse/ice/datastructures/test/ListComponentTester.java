@@ -26,13 +26,13 @@ import java.util.ArrayList;
 
 import javax.xml.bind.JAXBException;
 
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
-import org.eclipse.ice.datastructures.ICEObject.ICEObject;
-import org.eclipse.ice.datastructures.ICEObject.IElementSource;
-import org.eclipse.ice.datastructures.ICEObject.ListComponent;
-import org.eclipse.ice.datastructures.componentVisitor.SelectiveComponentVisitor;
-import org.eclipse.ice.datastructures.resource.ICEResource;
-import org.eclipse.ice.datastructures.resource.VizResource;
+import org.eclipse.january.form.ICEJAXBHandler;
+import org.eclipse.january.form.ICEObject;
+import org.eclipse.january.form.ICEResource;
+import org.eclipse.january.form.IElementSource;
+import org.eclipse.january.form.ListComponent;
+import org.eclipse.january.form.SelectiveComponentVisitor;
+import org.eclipse.january.form.VizResource;
 import org.junit.Test;
 
 import ca.odell.glazedlists.EventList;

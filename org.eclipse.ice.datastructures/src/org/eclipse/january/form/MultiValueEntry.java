@@ -1,0 +1,48 @@
+package org.eclipse.january.form;
+
+import java.util.List;
+
+public class MultiValueEntry extends AbstractEntry {
+
+	@Override
+	public Object clone() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean setValue(String... values) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<String> getAllowedValues() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setAllowedValues(List<String> values) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void update(IUpdateable component) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public String[] getValues() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void accept(IEntryVisitor visitor) {
+		visitor.visit(this);
+	}
+
+}

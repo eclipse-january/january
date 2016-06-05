@@ -18,31 +18,30 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import org.eclipse.ice.datastructures.ICEObject.ListComponent;
-import org.eclipse.ice.datastructures.entry.ContinuousEntry;
-import org.eclipse.ice.datastructures.entry.DiscreteEntry;
-import org.eclipse.ice.datastructures.entry.ExecutableEntry;
-import org.eclipse.ice.datastructures.entry.FileEntry;
-import org.eclipse.ice.datastructures.entry.StringEntry;
-import org.eclipse.ice.datastructures.form.DataComponent;
-import org.eclipse.ice.datastructures.form.GeometryComponent;
-import org.eclipse.ice.datastructures.form.Material;
-import org.eclipse.ice.datastructures.form.MatrixComponent;
-import org.eclipse.ice.datastructures.form.MeshComponent;
-import org.eclipse.ice.datastructures.form.ResourceComponent;
-import org.eclipse.ice.datastructures.form.TableComponent;
-import org.eclipse.ice.datastructures.form.TimeDataComponent;
-import org.eclipse.ice.datastructures.form.TreeComposite;
-import org.eclipse.ice.datastructures.form.emf.EMFComponent;
-import org.eclipse.ice.datastructures.jaxbclassprovider.ICEJAXBClassProvider;
-import org.eclipse.ice.datastructures.jaxbclassprovider.IJAXBClassProvider;
-import org.eclipse.ice.datastructures.resource.VizResource;
+import org.eclipse.january.form.ContinuousEntry;
+import org.eclipse.january.form.DataComponent;
+import org.eclipse.january.form.DiscreteEntry;
+import org.eclipse.january.form.ExecutableEntry;
+import org.eclipse.january.form.FileEntry;
+import org.eclipse.january.form.GeometryComponent;
+import org.eclipse.january.form.ICEJAXBClassProvider;
+import org.eclipse.january.form.IJAXBClassProvider;
+import org.eclipse.january.form.ListComponent;
+import org.eclipse.january.form.Material;
+import org.eclipse.january.form.MatrixComponent;
+import org.eclipse.january.form.MeshComponent;
+import org.eclipse.january.form.ResourceComponent;
+import org.eclipse.january.form.StringEntry;
+import org.eclipse.january.form.TableComponent;
+import org.eclipse.january.form.TimeDataComponent;
+import org.eclipse.january.form.TreeComposite;
+import org.eclipse.january.form.emf.EMFComponent;
 import org.junit.Test;
 
 /**
- * This class tests the ICEJAXBClassProvider. Specifically, 
- * it checks that the correct classes are created and returned by 
- * its IJAXBClassProvider.getClasses() method. 
+ * This class tests the ICEJAXBClassProvider. Specifically, it checks that the
+ * correct classes are created and returned by its
+ * IJAXBClassProvider.getClasses() method.
  * 
  * @author Alex McCaskey
  *
@@ -53,27 +52,28 @@ public class ICEJAXBClassProviderTester {
 	 * Reference to the IJAXBClassProvider we are testing
 	 */
 	private IJAXBClassProvider provider;
-	
+
 	/**
-	 * This method checks that we can get a valid set of 
-	 * Classes from the ICEJAXBClassProvider. 
+	 * This method checks that we can get a valid set of Classes from the
+	 * ICEJAXBClassProvider.
 	 */
 	@Test
 	public void checkClassList() {
-		
+
 		// Create the class provider
 		provider = new ICEJAXBClassProvider();
 
 		// Check the name
-		assertTrue("ICE JAXB Class Provider".equals(provider.getProviderName()));
-		
-		// Get the list of classes, make sure its 
+		assertTrue(
+				"ICE JAXB Class Provider".equals(provider.getProviderName()));
+
+		// Get the list of classes, make sure its
 		// not null, and make sure we have 10 of them
 		List<Class> classList = provider.getClasses();
 		assertNotNull(classList);
 		assertEquals(19, classList.size());
-		
-		// Check that all the correct ones are there. 
+
+		// Check that all the correct ones are there.
 		assertTrue(classList.contains(ResourceComponent.class));
 		assertTrue(classList.contains(TableComponent.class));
 		assertTrue(classList.contains(MatrixComponent.class));

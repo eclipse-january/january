@@ -26,10 +26,10 @@ import java.util.ArrayList;
 
 import javax.xml.bind.JAXBException;
 
-import org.eclipse.ice.datastructures.ICEObject.ICEJAXBHandler;
-import org.eclipse.ice.datastructures.entry.IEntry;
-import org.eclipse.ice.datastructures.entry.StringEntry;
-import org.eclipse.ice.datastructures.form.DataComponent;
+import org.eclipse.january.form.DataComponent;
+import org.eclipse.january.form.ICEJAXBHandler;
+import org.eclipse.january.form.IEntry;
+import org.eclipse.january.form.StringEntry;
 import org.junit.Test;
 
 /**

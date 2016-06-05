@@ -12,8 +12,8 @@
  *******************************************************************************/
 package org.eclipse.ice.datastructures.test;
 
-import org.eclipse.ice.datastructures.form.Material;
-import org.eclipse.ice.datastructures.form.MaterialStack;
+import org.eclipse.january.form.Material;
+import org.eclipse.january.form.MaterialStack;
 
 /**
  * This is a utility class used by the Material tests to create materials with a

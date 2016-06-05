@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.eavp.viz.service.mesh.datastructures.NekPolygonController;
+import org.eclipse.january.form.MeshComponent;
 import org.eclipse.eavp.viz.service.mesh.datastructures.NekPolygon;
 import org.eclipse.eavp.viz.modeling.base.BasicController;
 import org.eclipse.eavp.viz.modeling.base.BasicView;
@@ -33,7 +34,6 @@ import org.eclipse.eavp.viz.modeling.properties.MeshCategory;
 import org.eclipse.eavp.viz.modeling.properties.MeshProperty;
 import org.eclipse.eavp.viz.modeling.VertexController;
 import org.eclipse.eavp.viz.modeling.Vertex;
-import org.eclipse.ice.datastructures.form.MeshComponent;
 import org.junit.Test;
 
 /**
