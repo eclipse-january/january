@@ -9,8 +9,8 @@
 		<version>2.1.8-SNAPSHOT</version>
 		<relativePath>../org.eclipse.ice.parent/pom.xml</relativePath>
 	</parent>
-	<groupId>org.eclipse.ice</groupId>
-	<artifactId>org.eclipse.ice.datastructures.test</artifactId>
+	<groupId>org.eclipse.january</groupId>
+	<artifactId>org.eclipse.january.form.test</artifactId>
 	<packaging>eclipse-test-plugin</packaging>
 	<properties>
 		<sonar.skip>true</sonar.skip>
