@@ -27,7 +27,7 @@
 						<extraRequirements>
 							<requirement>
 								<type>eclipse-plugin</type>
-								<id>org.eclipse.ice.datastructures</id>
+								<id>org.eclipse.january.form</id>
 								<versionRange>0.0.0</versionRange>
 							</requirement>
 						</extraRequirements>
@@ -37,4 +37,5 @@
 		</plugins>
 	</build>
 
+	<version>1.0.0-SNAPSHOT</version>
 </project>

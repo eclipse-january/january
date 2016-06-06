@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: ICEDataStructuresTest
+Bundle-Name: January Form Tests
 Bundle-SymbolicName: org.eclipse.january.form.test;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Require-Bundle: org.junit;bundle-version="4.8.2",

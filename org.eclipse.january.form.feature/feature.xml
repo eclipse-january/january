@@ -1,26 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.eclipse.ice"
-      label="ICE Infrastructure Feature"
-      version="2.1.8.qualifier"
-      provider-name="Oak Ridge National Laboratory"
-      plugin="org.eclipse.ice.client.rcp"
-      os="linux,macosx,win32"
-      ws="cocoa,gtk,win32"
-      arch="x86,x86_64">
+      id="org.eclipse.january.form.feature"
+      label="January Form Feature"
+      version="1.0.0.qualifier">
 
-   <description url="http://www.eclipse.org/ice">
-      This feature describes all of the infrastructure components available
-in the Eclipse Integrated Computational Environment.
+   <description url="http://www.eclipse.org/january">
+      This feature describes all of the form-like data structures available in Eclipse January.
    </description>
 
-   <copyright url="http://www.eclipse.org/ice">
+   <copyright url="http://www.eclipse.org/january">
       Copyright (c) 2011, 2014 UT-Battelle, LLC. All rights reserved.
-This program and the accompanying materials are made available under the terms of the Eclipse Public License
-v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html
+This program and the accompanying materials are made available
+under the terms of the Eclipse Public License
+v1.0 which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
    </copyright>
 
-   <license url="http://projects.eclipse.org/projects/technology.ice">
+   <license url="http://www.eclipse.org/january">
       Eclipse Foundation Software User Agreement
 
 July 1, 2014
@@ -78,147 +74,7 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
    </license>
 
    <plugin
-         id="org.eclipse.ice.caebat.batml"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ice.client"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ice.client.compatibility"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ice.client.widgets"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ice.client.widgets.moose"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ice.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ice.io"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ice.item"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ice.mesh"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ice.nek5000"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ice.persistence.xml"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ice.proteus"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ice.reactor.plant"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ice.vibe"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ice.developer"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ice.developer.moose"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ice.projectgeneration"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ice.client.rcp"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="com.spotify.docker-client.shaded"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="bcpkix"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="bcprov"
+         id="org.eclipse.january.form"
          download-size="0"
          install-size="0"
          version="0.0.0"
