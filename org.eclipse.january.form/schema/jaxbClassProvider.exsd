@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="org.eclipse.ice.datastructures" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.eclipse.january.form" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="org.eclipse.ice.datastructures" id="JAXBClassProvider" name="JAXB Class Provider"/>
+         <meta.schema plugin="org.eclipse.january.form" id="JAXBClassProvider" name="JAXB Class Provider"/>
       </appinfo>
       <documentation>
-         This Extension Point can be used by clients to automatically provide a class to ICE&apos;s JAXB-based persistence services. Extensions must realize the IJAXBProvider interface from org.eclipse.ice.datastructures.jaxbclassprovider.
+         This Extension Point can be used by clients to automatically provide a class to January&apos;s JAXB-based persistence services. Extensions must realize the IJAXBProvider interface from org.eclipse.january.form.jaxbclassprovider.
       </documentation>
    </annotation>
 
@@ -55,7 +55,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.ice.datastructures.jaxbclassprovider.IJAXBClassProvider"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.january.form.IJAXBClassProvider"/>
                </appinfo>
             </annotation>
          </attribute>

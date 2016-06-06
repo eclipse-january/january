@@ -63,7 +63,7 @@ public interface IJAXBClassProvider {
 		// Logger for handling event messages and other information.
 		Logger logger = LoggerFactory.getLogger(IJAXBClassProvider.class);
 		IJAXBClassProvider[] jaxbProviders = null;
-		String id = "org.eclipse.ice.datastructures.jaxbClassProvider";
+		String id = "org.eclipse.january.form.jaxbClassProvider";
 		IExtensionPoint point = Platform.getExtensionRegistry()
 				.getExtensionPoint(id);
 

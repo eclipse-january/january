@@ -2,29 +2,29 @@
 <persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
 	version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
-	<persistence-unit name="org.eclipse.ice.datastructures"
+	<persistence-unit name="org.eclipse.january"
 		transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-		<class>org.eclipse.ice.datastructures.ICEObject.ICEObject</class>
-		<class>org.eclipse.ice.datastructures.form.DataComponent</class>
-		<class>org.eclipse.ice.datastructures.form.TimeDataComponent</class>
-		<class>org.eclipse.ice.datastructures.form.Entry</class>
-		<class>org.eclipse.ice.datastructures.form.Form</class>
-		<class>org.eclipse.ice.datastructures.form.ResourceComponent</class>
-		<class>org.eclipse.ice.datastructures.form.TableComponent</class>
-		<class>org.eclipse.ice.datastructures.resource.ICEResource</class>
-		<class>org.eclipse.ice.datastructures.form.MatrixComponent</class>
-		<class>org.eclipse.ice.datastructures.form.MasterDetailsPair</class>
-		<class>org.eclipse.ice.datastructures.form.MasterDetailsComponent</class>
-		<class>org.eclipse.ice.datastructures.form.geometry.AbstractShape</class>
-		<class>org.eclipse.ice.datastructures.form.geometry.GeometryComponent</class>
-		<class>org.eclipse.ice.datastructures.form.geometry.PrimitiveShape</class>
-		<class>org.eclipse.ice.datastructures.form.geometry.ComplexShape</class>
-		<class>org.eclipse.ice.datastructures.form.geometry.Transformation</class>
-		<class>org.eclipse.ice.datastructures.form.painfullySimpleForm.PainfullySimpleForm</class>
-		<class>org.eclipse.ice.datastructures.form.painfullySimpleForm.PainfullySimpleEntry</class>
-		<class>org.eclipse.ice.datastructures.form.BasicEntryContentProvider</class>
-		<class>org.eclipse.ice.datastructures.form.TreeComposite</class>
+		<class>org.eclipse.january.form.ICEObject.ICEObject</class>
+		<class>org.eclipse.january.form.DataComponent</class>
+		<class>org.eclipse.january.form.TimeDataComponent</class>
+		<class>org.eclipse.january.form.Entry</class>
+		<class>org.eclipse.january.form.Form</class>
+		<class>org.eclipse.january.form.ResourceComponent</class>
+		<class>org.eclipse.january.form.TableComponent</class>
+		<class>org.eclipse.january.form.ICEResource</class>
+		<class>org.eclipse.january.form.MatrixComponent</class>
+		<class>org.eclipse.january.form.MasterDetailsPair</class>
+		<class>org.eclipse.january.form.MasterDetailsComponent</class>
+		<class>org.eclipse.january.form.geometry.AbstractShape</class>
+		<class>org.eclipse.january.form.geometry.GeometryComponent</class>
+		<class>org.eclipse.january.form.geometry.PrimitiveShape</class>
+		<class>org.eclipse.january.form.geometry.ComplexShape</class>
+		<class>org.eclipse.january.form.geometry.Transformation</class>
+		<class>org.eclipse.january.form.painfullySimpleForm.PainfullySimpleForm</class>
+		<class>org.eclipse.january.form.painfullySimpleForm.PainfullySimpleEntry</class>
+		<class>org.eclipse.january.form.BasicEntryContentProvider</class>
+		<class>org.eclipse.january.form.TreeComposite</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<!-- Embedded Derby Login -->

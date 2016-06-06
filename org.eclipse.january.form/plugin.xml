@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension-point id="org.eclipse.ice.datastructures.jaxbClassProvider" name="JAXB Class Provider" schema="schema/jaxbClassProvider.exsd"/>
+   <extension-point id="org.eclipse.january.form.jaxbClassProvider" name="JAXB Class Provider" schema="schema/jaxbClassProvider.exsd"/>
    <extension
          id="iceJAXBClassProvider"
          name="ICE JAXB Class Provider"
-         point="org.eclipse.ice.datastructures.jaxbClassProvider">
+         point="org.eclipse.january.form.jaxbClassProvider">
       <implementation
             class="org.eclipse.january.form.ICEJAXBClassProvider">
       </implementation>

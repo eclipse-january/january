@@ -4,9 +4,9 @@
    <extension
          id="fakeJAXBClassProvider"
          name="Fake JAXB Class Provider"
-         point="org.eclipse.ice.datastructures.jaxbClassProvider">
+         point="org.eclipse.january.form.jaxbClassProvider">
       <implementation
-            class="org.eclipse.ice.datastructures.test.FakeJAXBClassProvider">
+            class="org.eclipse.january.form.test.FakeJAXBClassProvider">
       </implementation>
    </extension>
 </plugin>
