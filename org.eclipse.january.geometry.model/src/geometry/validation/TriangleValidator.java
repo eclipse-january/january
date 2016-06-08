@@ -20,5 +20,7 @@ public interface TriangleValidator {
 	boolean validate();
 
 	boolean validateVertices(EList<Vertex> value);
+	boolean validateNormal(Vertex value);
+
 	boolean validateNormal(EList<BigDecimal> value);
 }

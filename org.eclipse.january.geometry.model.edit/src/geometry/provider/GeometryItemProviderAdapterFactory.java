@@ -233,6 +233,213 @@ public class GeometryItemProviderAdapterFactory extends GeometryAdapterFactory i
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link geometry.Tube} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected TubeItemProvider tubeItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link geometry.Tube}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createTubeAdapter() {
+		if (tubeItemProvider == null) {
+			tubeItemProvider = new TubeItemProvider(this);
+		}
+
+		return tubeItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link geometry.Operator} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected OperatorItemProvider operatorItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link geometry.Operator}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createOperatorAdapter() {
+		if (operatorItemProvider == null) {
+			operatorItemProvider = new OperatorItemProvider(this);
+		}
+
+		return operatorItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link geometry.Union} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected UnionItemProvider unionItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link geometry.Union}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createUnionAdapter() {
+		if (unionItemProvider == null) {
+			unionItemProvider = new UnionItemProvider(this);
+		}
+
+		return unionItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link geometry.Intersection} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected IntersectionItemProvider intersectionItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link geometry.Intersection}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createIntersectionAdapter() {
+		if (intersectionItemProvider == null) {
+			intersectionItemProvider = new IntersectionItemProvider(this);
+		}
+
+		return intersectionItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link geometry.Complement} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ComplementItemProvider complementItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link geometry.Complement}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createComplementAdapter() {
+		if (complementItemProvider == null) {
+			complementItemProvider = new ComplementItemProvider(this);
+		}
+
+		return complementItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link geometry.NamedNode} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NamedNodeItemProvider namedNodeItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link geometry.NamedNode}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNamedNodeAdapter() {
+		if (namedNodeItemProvider == null) {
+			namedNodeItemProvider = new NamedNodeItemProvider(this);
+		}
+
+		return namedNodeItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link geometry.Material} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected MaterialItemProvider materialItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link geometry.Material}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createMaterialAdapter() {
+		if (materialItemProvider == null) {
+			materialItemProvider = new MaterialItemProvider(this);
+		}
+
+		return materialItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link geometry.ShapeChangeEvent} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ShapeChangeEventItemProvider shapeChangeEventItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link geometry.ShapeChangeEvent}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createShapeChangeEventAdapter() {
+		if (shapeChangeEventItemProvider == null) {
+			shapeChangeEventItemProvider = new ShapeChangeEventItemProvider(this);
+		}
+
+		return shapeChangeEventItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link geometry.ASCIISTLGeometryImporter} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ASCIISTLGeometryImporterItemProvider asciistlGeometryImporterItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link geometry.ASCIISTLGeometryImporter}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createASCIISTLGeometryImporterAdapter() {
+		if (asciistlGeometryImporterItemProvider == null) {
+			asciistlGeometryImporterItemProvider = new ASCIISTLGeometryImporterItemProvider(this);
+		}
+
+		return asciistlGeometryImporterItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -338,6 +545,15 @@ public class GeometryItemProviderAdapterFactory extends GeometryAdapterFactory i
 		if (cubeItemProvider != null) cubeItemProvider.dispose();
 		if (cylinderItemProvider != null) cylinderItemProvider.dispose();
 		if (geometryItemProvider != null) geometryItemProvider.dispose();
+		if (tubeItemProvider != null) tubeItemProvider.dispose();
+		if (operatorItemProvider != null) operatorItemProvider.dispose();
+		if (unionItemProvider != null) unionItemProvider.dispose();
+		if (intersectionItemProvider != null) intersectionItemProvider.dispose();
+		if (complementItemProvider != null) complementItemProvider.dispose();
+		if (namedNodeItemProvider != null) namedNodeItemProvider.dispose();
+		if (materialItemProvider != null) materialItemProvider.dispose();
+		if (shapeChangeEventItemProvider != null) shapeChangeEventItemProvider.dispose();
+		if (asciistlGeometryImporterItemProvider != null) asciistlGeometryImporterItemProvider.dispose();
 	}
 
 }

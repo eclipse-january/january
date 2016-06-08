@@ -69,6 +69,9 @@ public class GeometrySwitch<T> extends Switch<T> {
 			case GeometryPackage.SHAPE: {
 				Shape shape = (Shape)theEObject;
 				T result = caseShape(shape);
+				if (result == null) result = caseNamedNode(shape);
+				if (result == null) result = caseISubjectShape(shape);
+				if (result == null) result = caseINode(shape);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -88,6 +91,9 @@ public class GeometrySwitch<T> extends Switch<T> {
 				Sphere sphere = (Sphere)theEObject;
 				T result = caseSphere(sphere);
 				if (result == null) result = caseShape(sphere);
+				if (result == null) result = caseNamedNode(sphere);
+				if (result == null) result = caseISubjectShape(sphere);
+				if (result == null) result = caseINode(sphere);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -95,6 +101,9 @@ public class GeometrySwitch<T> extends Switch<T> {
 				Cube cube = (Cube)theEObject;
 				T result = caseCube(cube);
 				if (result == null) result = caseShape(cube);
+				if (result == null) result = caseNamedNode(cube);
+				if (result == null) result = caseISubjectShape(cube);
+				if (result == null) result = caseINode(cube);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -102,12 +111,112 @@ public class GeometrySwitch<T> extends Switch<T> {
 				Cylinder cylinder = (Cylinder)theEObject;
 				T result = caseCylinder(cylinder);
 				if (result == null) result = caseShape(cylinder);
+				if (result == null) result = caseNamedNode(cylinder);
+				if (result == null) result = caseISubjectShape(cylinder);
+				if (result == null) result = caseINode(cylinder);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case GeometryPackage.GEOMETRY: {
 				Geometry geometry = (Geometry)theEObject;
 				T result = caseGeometry(geometry);
+				if (result == null) result = caseNamedNode(geometry);
+				if (result == null) result = caseINode(geometry);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GeometryPackage.TUBE: {
+				Tube tube = (Tube)theEObject;
+				T result = caseTube(tube);
+				if (result == null) result = caseShape(tube);
+				if (result == null) result = caseNamedNode(tube);
+				if (result == null) result = caseISubjectShape(tube);
+				if (result == null) result = caseINode(tube);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GeometryPackage.INODE: {
+				INode iNode = (INode)theEObject;
+				T result = caseINode(iNode);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GeometryPackage.OPERATOR: {
+				Operator operator = (Operator)theEObject;
+				T result = caseOperator(operator);
+				if (result == null) result = caseNamedNode(operator);
+				if (result == null) result = caseINode(operator);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GeometryPackage.UNION: {
+				Union union = (Union)theEObject;
+				T result = caseUnion(union);
+				if (result == null) result = caseOperator(union);
+				if (result == null) result = caseNamedNode(union);
+				if (result == null) result = caseINode(union);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GeometryPackage.INTERSECTION: {
+				Intersection intersection = (Intersection)theEObject;
+				T result = caseIntersection(intersection);
+				if (result == null) result = caseOperator(intersection);
+				if (result == null) result = caseNamedNode(intersection);
+				if (result == null) result = caseINode(intersection);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GeometryPackage.COMPLEMENT: {
+				Complement complement = (Complement)theEObject;
+				T result = caseComplement(complement);
+				if (result == null) result = caseOperator(complement);
+				if (result == null) result = caseNamedNode(complement);
+				if (result == null) result = caseINode(complement);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GeometryPackage.NAMED_NODE: {
+				NamedNode namedNode = (NamedNode)theEObject;
+				T result = caseNamedNode(namedNode);
+				if (result == null) result = caseINode(namedNode);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GeometryPackage.ISUBJECT_SHAPE: {
+				ISubjectShape iSubjectShape = (ISubjectShape)theEObject;
+				T result = caseISubjectShape(iSubjectShape);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GeometryPackage.ISHAPE_OBSERVER: {
+				IShapeObserver iShapeObserver = (IShapeObserver)theEObject;
+				T result = caseIShapeObserver(iShapeObserver);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GeometryPackage.MATERIAL: {
+				Material material = (Material)theEObject;
+				T result = caseMaterial(material);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GeometryPackage.SHAPE_CHANGE_EVENT: {
+				ShapeChangeEvent shapeChangeEvent = (ShapeChangeEvent)theEObject;
+				T result = caseShapeChangeEvent(shapeChangeEvent);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GeometryPackage.IGEOMETRY_IMPORTER: {
+				IGeometryImporter iGeometryImporter = (IGeometryImporter)theEObject;
+				T result = caseIGeometryImporter(iGeometryImporter);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GeometryPackage.ASCIISTL_GEOMETRY_IMPORTER: {
+				ASCIISTLGeometryImporter asciistlGeometryImporter = (ASCIISTLGeometryImporter)theEObject;
+				T result = caseASCIISTLGeometryImporter(asciistlGeometryImporter);
+				if (result == null) result = caseIGeometryImporter(asciistlGeometryImporter);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -217,6 +326,201 @@ public class GeometrySwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseGeometry(Geometry object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Tube</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Tube</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseTube(Tube object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>INode</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>INode</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseINode(INode object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Operator</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Operator</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseOperator(Operator object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Union</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Union</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseUnion(Union object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Intersection</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Intersection</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseIntersection(Intersection object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Complement</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Complement</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseComplement(Complement object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Named Node</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Named Node</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNamedNode(NamedNode object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>ISubject Shape</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>ISubject Shape</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseISubjectShape(ISubjectShape object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>IShape Observer</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>IShape Observer</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseIShapeObserver(IShapeObserver object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Material</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Material</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseMaterial(Material object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Shape Change Event</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Shape Change Event</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseShapeChangeEvent(ShapeChangeEvent object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>IGeometry Importer</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>IGeometry Importer</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseIGeometryImporter(IGeometryImporter object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>ASCIISTL Geometry Importer</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>ASCIISTL Geometry Importer</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseASCIISTLGeometryImporter(ASCIISTLGeometryImporter object) {
 		return null;
 	}
 

@@ -85,6 +85,87 @@ public interface GeometryFactory extends EFactory {
 	Geometry createGeometry();
 
 	/**
+	 * Returns a new object of class '<em>Tube</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Tube</em>'.
+	 * @generated
+	 */
+	Tube createTube();
+
+	/**
+	 * Returns a new object of class '<em>Operator</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Operator</em>'.
+	 * @generated
+	 */
+	Operator createOperator();
+
+	/**
+	 * Returns a new object of class '<em>Union</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Union</em>'.
+	 * @generated
+	 */
+	Union createUnion();
+
+	/**
+	 * Returns a new object of class '<em>Intersection</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Intersection</em>'.
+	 * @generated
+	 */
+	Intersection createIntersection();
+
+	/**
+	 * Returns a new object of class '<em>Complement</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Complement</em>'.
+	 * @generated
+	 */
+	Complement createComplement();
+
+	/**
+	 * Returns a new object of class '<em>Named Node</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Named Node</em>'.
+	 * @generated
+	 */
+	NamedNode createNamedNode();
+
+	/**
+	 * Returns a new object of class '<em>Material</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Material</em>'.
+	 * @generated
+	 */
+	Material createMaterial();
+
+	/**
+	 * Returns a new object of class '<em>Shape Change Event</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Shape Change Event</em>'.
+	 * @generated
+	 */
+	ShapeChangeEvent createShapeChangeEvent();
+
+	/**
+	 * Returns a new object of class '<em>ASCIISTL Geometry Importer</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>ASCIISTL Geometry Importer</em>'.
+	 * @generated
+	 */
+	ASCIISTLGeometryImporter createASCIISTLGeometryImporter();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

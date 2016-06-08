@@ -24,7 +24,6 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
@@ -63,8 +62,8 @@ public class TriangleItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addVerticesPropertyDescriptor(object);
 			addNormalPropertyDescriptor(object);
+			addVerticesPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -107,8 +106,8 @@ public class TriangleItemProvider
 				 GeometryPackage.Literals.TRIANGLE__NORMAL,
 				 true,
 				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 true,
+				 null,
 				 null,
 				 null));
 	}
@@ -125,6 +124,7 @@ public class TriangleItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
+			childrenFeatures.add(GeometryPackage.Literals.TRIANGLE__NORMAL);
 			childrenFeatures.add(GeometryPackage.Literals.TRIANGLE__VERTICES);
 		}
 		return childrenFeatures;
@@ -179,8 +179,6 @@ public class TriangleItemProvider
 
 		switch (notification.getFeatureID(Triangle.class)) {
 			case GeometryPackage.TRIANGLE__NORMAL:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-				return;
 			case GeometryPackage.TRIANGLE__VERTICES:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
@@ -201,8 +199,36 @@ public class TriangleItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
+				(GeometryPackage.Literals.TRIANGLE__NORMAL,
+				 GeometryFactory.eINSTANCE.createVertex()));
+
+		newChildDescriptors.add
+			(createChildParameter
 				(GeometryPackage.Literals.TRIANGLE__VERTICES,
 				 GeometryFactory.eINSTANCE.createVertex()));
+	}
+
+	/**
+	 * This returns the label text for {@link org.eclipse.emf.edit.command.CreateChildCommand}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String getCreateChildText(Object owner, Object feature, Object child, Collection<?> selection) {
+		Object childFeature = feature;
+		Object childObject = child;
+
+		boolean qualify =
+			childFeature == GeometryPackage.Literals.TRIANGLE__NORMAL ||
+			childFeature == GeometryPackage.Literals.TRIANGLE__VERTICES;
+
+		if (qualify) {
+			return getString
+				("_UI_CreateChild_text2",
+				 new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
+		}
+		return super.getCreateChildText(owner, feature, child, selection);
 	}
 
 	/**
