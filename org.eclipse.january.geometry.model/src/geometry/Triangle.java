@@ -2,8 +2,6 @@
  */
 package geometry;
 
-import java.math.BigDecimal;
-
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
@@ -21,8 +19,8 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link geometry.Triangle#getVertices <em>Vertices</em>}</li>
  *   <li>{@link geometry.Triangle#getNormal <em>Normal</em>}</li>
+ *   <li>{@link geometry.Triangle#getVertices <em>Vertices</em>}</li>
  * </ul>
  *
  * @see geometry.GeometryPackage#getTriangle()
@@ -40,24 +38,34 @@ public interface Triangle extends EObject {
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Vertices</em>' containment reference list.
 	 * @see geometry.GeometryPackage#getTriangle_Vertices()
-	 * @model containment="true" lower="3" upper="3"
+	 * @model containment="true" upper="3"
 	 * @generated
 	 */
 	EList<Vertex> getVertices();
 
 	/**
-	 * Returns the value of the '<em><b>Normal</b></em>' attribute list.
-	 * The list contents are of type {@link java.math.BigDecimal}.
+	 * Returns the value of the '<em><b>Normal</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * The normal, or normal vector, is a vector that is perpendicular to the surface of the triangle. It is computed by taking the cross product of any two vectors formed between the three vertices.
 	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Normal</em>' attribute list.
+	 * @return the value of the '<em>Normal</em>' containment reference.
+	 * @see #setNormal(Vertex)
 	 * @see geometry.GeometryPackage#getTriangle_Normal()
-	 * @model lower="3" upper="3"
+	 * @model containment="true"
 	 * @generated
 	 */
-	EList<BigDecimal> getNormal();
+	Vertex getNormal();
+
+	/**
+	 * Sets the value of the '{@link geometry.Triangle#getNormal <em>Normal</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Normal</em>' containment reference.
+	 * @see #getNormal()
+	 * @generated
+	 */
+	void setNormal(Vertex value);
 
 } // Triangle

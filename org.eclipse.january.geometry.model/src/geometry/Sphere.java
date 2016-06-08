@@ -16,37 +16,13 @@ package geometry;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link geometry.Sphere#getRadius <em>Radius</em>}</li>
  * </ul>
  *
  * @see geometry.GeometryPackage#getSphere()
- * @model
+ * @model features="radius" 
+ *        radiusDataType="org.eclipse.emf.ecore.EDouble" radiusSuppressedGetVisibility="true" radiusSuppressedSetVisibility="true"
  * @generated
  */
 public interface Sphere extends Shape {
-	/**
-	 * Returns the value of the '<em><b>Radius</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * The radius is the distance from the center of the sphere to any point on the surface. It is constant across the entire sphere.
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Radius</em>' attribute.
-	 * @see #setRadius(double)
-	 * @see geometry.GeometryPackage#getSphere_Radius()
-	 * @model
-	 * @generated
-	 */
-	double getRadius();
-
-	/**
-	 * Sets the value of the '{@link geometry.Sphere#getRadius <em>Radius</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Radius</em>' attribute.
-	 * @see #getRadius()
-	 * @generated
-	 */
-	void setRadius(double value);
 
 } // Sphere

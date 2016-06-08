@@ -17,11 +17,12 @@ package geometry;
  * </p>
  * <ul>
  *   <li>{@link geometry.Cylinder#getRadius <em>Radius</em>}</li>
- *   <li>{@link geometry.Cylinder#getHeight <em>Height</em>}</li>
  * </ul>
  *
  * @see geometry.GeometryPackage#getCylinder()
- * @model
+ * @model features="height" 
+ *        heightDataType="org.eclipse.emf.ecore.EDouble" heightSuppressedGetVisibility="true"
+ *        heightAnnotation="http://www.eclipse.org/emf/2002/GenModel supressedSetVisibility='true'"
  * @generated
  */
 public interface Cylinder extends Shape {
@@ -35,7 +36,7 @@ public interface Cylinder extends Shape {
 	 * @return the value of the '<em>Radius</em>' attribute.
 	 * @see #setRadius(double)
 	 * @see geometry.GeometryPackage#getCylinder_Radius()
-	 * @model
+	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel supressedGetVisibility='true' supressedSetVisibility='true'"
 	 * @generated
 	 */
 	double getRadius();
@@ -49,21 +50,6 @@ public interface Cylinder extends Shape {
 	 * @generated
 	 */
 	void setRadius(double value);
-
-	/**
-	 * Returns the value of the '<em><b>Height</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * The length of the central axis of the cylinder.
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Height</em>' attribute.
-	 * @see #setHeight(double)
-	 * @see geometry.GeometryPackage#getCylinder_Height()
-	 * @model
-	 * @generated
-	 */
-	double getHeight();
 
 	/**
 	 * Sets the value of the '{@link geometry.Cylinder#getHeight <em>Height</em>}' attribute.

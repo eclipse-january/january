@@ -12,20 +12,11 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
-import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
@@ -35,13 +26,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class ShapeItemProvider 
-	extends ItemProviderAdapter
-	implements
-		IEditingDomainItemProvider,
-		IStructuredItemContentProvider,
-		ITreeItemContentProvider,
-		IItemLabelProvider,
-		IItemPropertySource {
+	extends NamedNodeItemProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -65,7 +50,8 @@ public class ShapeItemProvider
 
 			addTrianglesPropertyDescriptor(object);
 			addCenterPropertyDescriptor(object);
-			addNamePropertyDescriptor(object);
+			addTypePropertyDescriptor(object);
+			addMaterialPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -115,23 +101,45 @@ public class ShapeItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Name feature.
+	 * This adds a property descriptor for the Type feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addNamePropertyDescriptor(Object object) {
+	protected void addTypePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Shape_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Shape_name_feature", "_UI_Shape_type"),
-				 GeometryPackage.Literals.SHAPE__NAME,
+				 getString("_UI_Shape_type_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Shape_type_feature", "_UI_Shape_type"),
+				 GeometryPackage.Literals.SHAPE__TYPE,
 				 true,
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Material feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addMaterialPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Shape_material_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Shape_material_feature", "_UI_Shape_type"),
+				 GeometryPackage.Literals.SHAPE__MATERIAL,
+				 true,
+				 false,
+				 true,
+				 null,
 				 null,
 				 null));
 	}
@@ -149,6 +157,7 @@ public class ShapeItemProvider
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(GeometryPackage.Literals.SHAPE__TRIANGLES);
+			childrenFeatures.add(GeometryPackage.Literals.SHAPE__MATERIAL);
 		}
 		return childrenFeatures;
 	}
@@ -204,10 +213,11 @@ public class ShapeItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(Shape.class)) {
-			case GeometryPackage.SHAPE__NAME:
+			case GeometryPackage.SHAPE__TYPE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case GeometryPackage.SHAPE__TRIANGLES:
+			case GeometryPackage.SHAPE__MATERIAL:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -229,17 +239,11 @@ public class ShapeItemProvider
 			(createChildParameter
 				(GeometryPackage.Literals.SHAPE__TRIANGLES,
 				 GeometryFactory.eINSTANCE.createTriangle()));
-	}
 
-	/**
-	 * Return the resource locator for this item provider's resources.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public ResourceLocator getResourceLocator() {
-		return GeometryEditPlugin.INSTANCE;
+		newChildDescriptors.add
+			(createChildParameter
+				(GeometryPackage.Literals.SHAPE__MATERIAL,
+				 GeometryFactory.eINSTANCE.createMaterial()));
 	}
 
 }

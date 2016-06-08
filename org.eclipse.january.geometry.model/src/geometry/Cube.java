@@ -16,37 +16,13 @@ package geometry;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link geometry.Cube#getSideLength <em>Side Length</em>}</li>
  * </ul>
  *
  * @see geometry.GeometryPackage#getCube()
- * @model
+ * @model features="sideLength" 
+ *        sideLengthDataType="org.eclipse.emf.ecore.EDouble" sideLengthSuppressedGetVisibility="true" sideLengthSuppressedSetVisibility="true"
  * @generated
  */
 public interface Cube extends Shape {
-	/**
-	 * Returns the value of the '<em><b>Side Length</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * The length of any side of the box.
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Side Length</em>' attribute.
-	 * @see #setSideLength(double)
-	 * @see geometry.GeometryPackage#getCube_SideLength()
-	 * @model
-	 * @generated
-	 */
-	double getSideLength();
-
-	/**
-	 * Sets the value of the '{@link geometry.Cube#getSideLength <em>Side Length</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Side Length</em>' attribute.
-	 * @see #getSideLength()
-	 * @generated
-	 */
-	void setSideLength(double value);
 
 } // Cube

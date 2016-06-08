@@ -96,6 +96,58 @@ public class GeometryAdapterFactory extends AdapterFactoryImpl {
 				return createGeometryAdapter();
 			}
 			@Override
+			public Adapter caseTube(Tube object) {
+				return createTubeAdapter();
+			}
+			@Override
+			public Adapter caseINode(INode object) {
+				return createINodeAdapter();
+			}
+			@Override
+			public Adapter caseOperator(Operator object) {
+				return createOperatorAdapter();
+			}
+			@Override
+			public Adapter caseUnion(Union object) {
+				return createUnionAdapter();
+			}
+			@Override
+			public Adapter caseIntersection(Intersection object) {
+				return createIntersectionAdapter();
+			}
+			@Override
+			public Adapter caseComplement(Complement object) {
+				return createComplementAdapter();
+			}
+			@Override
+			public Adapter caseNamedNode(NamedNode object) {
+				return createNamedNodeAdapter();
+			}
+			@Override
+			public Adapter caseISubjectShape(ISubjectShape object) {
+				return createISubjectShapeAdapter();
+			}
+			@Override
+			public Adapter caseIShapeObserver(IShapeObserver object) {
+				return createIShapeObserverAdapter();
+			}
+			@Override
+			public Adapter caseMaterial(Material object) {
+				return createMaterialAdapter();
+			}
+			@Override
+			public Adapter caseShapeChangeEvent(ShapeChangeEvent object) {
+				return createShapeChangeEventAdapter();
+			}
+			@Override
+			public Adapter caseIGeometryImporter(IGeometryImporter object) {
+				return createIGeometryImporterAdapter();
+			}
+			@Override
+			public Adapter caseASCIISTLGeometryImporter(ASCIISTLGeometryImporter object) {
+				return createASCIISTLGeometryImporterAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -210,6 +262,188 @@ public class GeometryAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createGeometryAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link geometry.Tube <em>Tube</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see geometry.Tube
+	 * @generated
+	 */
+	public Adapter createTubeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link geometry.INode <em>INode</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see geometry.INode
+	 * @generated
+	 */
+	public Adapter createINodeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link geometry.Operator <em>Operator</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see geometry.Operator
+	 * @generated
+	 */
+	public Adapter createOperatorAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link geometry.Union <em>Union</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see geometry.Union
+	 * @generated
+	 */
+	public Adapter createUnionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link geometry.Intersection <em>Intersection</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see geometry.Intersection
+	 * @generated
+	 */
+	public Adapter createIntersectionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link geometry.Complement <em>Complement</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see geometry.Complement
+	 * @generated
+	 */
+	public Adapter createComplementAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link geometry.NamedNode <em>Named Node</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see geometry.NamedNode
+	 * @generated
+	 */
+	public Adapter createNamedNodeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link geometry.ISubjectShape <em>ISubject Shape</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see geometry.ISubjectShape
+	 * @generated
+	 */
+	public Adapter createISubjectShapeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link geometry.IShapeObserver <em>IShape Observer</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see geometry.IShapeObserver
+	 * @generated
+	 */
+	public Adapter createIShapeObserverAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link geometry.Material <em>Material</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see geometry.Material
+	 * @generated
+	 */
+	public Adapter createMaterialAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link geometry.ShapeChangeEvent <em>Shape Change Event</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see geometry.ShapeChangeEvent
+	 * @generated
+	 */
+	public Adapter createShapeChangeEventAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link geometry.IGeometryImporter <em>IGeometry Importer</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see geometry.IGeometryImporter
+	 * @generated
+	 */
+	public Adapter createIGeometryImporterAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link geometry.ASCIISTLGeometryImporter <em>ASCIISTL Geometry Importer</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see geometry.ASCIISTLGeometryImporter
+	 * @generated
+	 */
+	public Adapter createASCIISTLGeometryImporterAdapter() {
 		return null;
 	}
 
