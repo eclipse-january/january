@@ -119,7 +119,6 @@ public class ASCIISTLGeometryImporterImpl extends MinimalEObjectImpl.Container i
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override

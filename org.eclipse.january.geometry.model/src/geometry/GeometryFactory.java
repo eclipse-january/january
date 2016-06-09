@@ -130,15 +130,6 @@ public interface GeometryFactory extends EFactory {
 	Complement createComplement();
 
 	/**
-	 * Returns a new object of class '<em>Named Node</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Named Node</em>'.
-	 * @generated
-	 */
-	NamedNode createNamedNode();
-
-	/**
 	 * Returns a new object of class '<em>Material</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -120,10 +120,6 @@ public class GeometryAdapterFactory extends AdapterFactoryImpl {
 				return createComplementAdapter();
 			}
 			@Override
-			public Adapter caseNamedNode(NamedNode object) {
-				return createNamedNodeAdapter();
-			}
-			@Override
 			public Adapter caseISubjectShape(ISubjectShape object) {
 				return createISubjectShapeAdapter();
 			}
@@ -346,20 +342,6 @@ public class GeometryAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createComplementAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link geometry.NamedNode <em>Named Node</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see geometry.NamedNode
-	 * @generated
-	 */
-	public Adapter createNamedNodeAdapter() {
 		return null;
 	}
 
