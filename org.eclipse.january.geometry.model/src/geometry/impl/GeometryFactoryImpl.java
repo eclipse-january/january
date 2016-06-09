@@ -70,7 +70,6 @@ public class GeometryFactoryImpl extends EFactoryImpl implements GeometryFactory
 			case GeometryPackage.UNION: return createUnion();
 			case GeometryPackage.INTERSECTION: return createIntersection();
 			case GeometryPackage.COMPLEMENT: return createComplement();
-			case GeometryPackage.NAMED_NODE: return createNamedNode();
 			case GeometryPackage.MATERIAL: return createMaterial();
 			case GeometryPackage.SHAPE_CHANGE_EVENT: return createShapeChangeEvent();
 			case GeometryPackage.ASCIISTL_GEOMETRY_IMPORTER: return createASCIISTLGeometryImporter();
@@ -231,16 +230,6 @@ public class GeometryFactoryImpl extends EFactoryImpl implements GeometryFactory
 	public Complement createComplement() {
 		ComplementImpl complement = new ComplementImpl();
 		return complement;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NamedNode createNamedNode() {
-		NamedNodeImpl namedNode = new NamedNodeImpl();
-		return namedNode;
 	}
 
 	/**

@@ -4,6 +4,9 @@
  */
 package geometry.validation;
 
+import geometry.INode;
+import org.eclipse.emf.common.util.EList;
+
 
 /**
  * A sample validator interface for {@link geometry.INode}.
@@ -13,5 +16,11 @@ package geometry.validation;
  */
 public interface INodeValidator {
 	boolean validate();
+
+	boolean validateName(String value);
+
+	boolean validateId(long value);
+
+	boolean validateNodes(EList<INode> value);
 
 }

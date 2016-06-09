@@ -4,9 +4,6 @@
  */
 package geometry.validation;
 
-import geometry.NamedNode;
-
-import org.eclipse.emf.common.util.EList;
 
 /**
  * A sample validator interface for {@link geometry.Operator}.
@@ -17,5 +14,4 @@ import org.eclipse.emf.common.util.EList;
 public interface OperatorValidator {
 	boolean validate();
 
-	boolean validateChildren(EList<NamedNode> value);
 }

@@ -348,29 +348,6 @@ public class GeometryItemProviderAdapterFactory extends GeometryAdapterFactory i
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link geometry.NamedNode} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected NamedNodeItemProvider namedNodeItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link geometry.NamedNode}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createNamedNodeAdapter() {
-		if (namedNodeItemProvider == null) {
-			namedNodeItemProvider = new NamedNodeItemProvider(this);
-		}
-
-		return namedNodeItemProvider;
-	}
-
-	/**
 	 * This keeps track of the one adapter used for all {@link geometry.Material} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -550,7 +527,6 @@ public class GeometryItemProviderAdapterFactory extends GeometryAdapterFactory i
 		if (unionItemProvider != null) unionItemProvider.dispose();
 		if (intersectionItemProvider != null) intersectionItemProvider.dispose();
 		if (complementItemProvider != null) complementItemProvider.dispose();
-		if (namedNodeItemProvider != null) namedNodeItemProvider.dispose();
 		if (materialItemProvider != null) materialItemProvider.dispose();
 		if (shapeChangeEventItemProvider != null) shapeChangeEventItemProvider.dispose();
 		if (asciistlGeometryImporterItemProvider != null) asciistlGeometryImporterItemProvider.dispose();

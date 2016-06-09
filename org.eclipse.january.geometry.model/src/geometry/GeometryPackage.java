@@ -70,70 +70,6 @@ public interface GeometryPackage extends EPackage {
 	int INODE = 8;
 
 	/**
-	 * The number of structural features of the '<em>INode</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INODE_FEATURE_COUNT = 0;
-
-	/**
-	 * The number of operations of the '<em>INode</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INODE_OPERATION_COUNT = 0;
-
-	/**
-	 * The meta object id for the '{@link geometry.impl.NamedNodeImpl <em>Named Node</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.NamedNodeImpl
-	 * @see geometry.impl.GeometryPackageImpl#getNamedNode()
-	 * @generated
-	 */
-	int NAMED_NODE = 13;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NAMED_NODE__NAME = INODE_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NAMED_NODE__ID = INODE_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of structural features of the '<em>Named Node</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NAMED_NODE_FEATURE_COUNT = INODE_FEATURE_COUNT + 2;
-
-	/**
-	 * The number of operations of the '<em>Named Node</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NAMED_NODE_OPERATION_COUNT = INODE_OPERATION_COUNT + 0;
-
-	/**
 	 * The meta object id for the '{@link geometry.impl.ShapeImpl <em>Shape</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -144,123 +80,6 @@ public interface GeometryPackage extends EPackage {
 	int SHAPE = 0;
 
 	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHAPE__NAME = NAMED_NODE__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHAPE__ID = NAMED_NODE__ID;
-
-	/**
-	 * The feature id for the '<em><b>Triangles</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHAPE__TRIANGLES = NAMED_NODE_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Center</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHAPE__CENTER = NAMED_NODE_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHAPE__TYPE = NAMED_NODE_FEATURE_COUNT + 2;
-
-	/**
-	 * The feature id for the '<em><b>Material</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHAPE__MATERIAL = NAMED_NODE_FEATURE_COUNT + 3;
-
-	/**
-	 * The number of structural features of the '<em>Shape</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHAPE_FEATURE_COUNT = NAMED_NODE_FEATURE_COUNT + 4;
-
-	/**
-	 * The operation id for the '<em>Register</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHAPE___REGISTER__ISHAPEOBSERVER = NAMED_NODE_OPERATION_COUNT + 0;
-
-	/**
-	 * The operation id for the '<em>Unregister</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHAPE___UNREGISTER__ISHAPEOBSERVER = NAMED_NODE_OPERATION_COUNT + 1;
-
-	/**
-	 * The operation id for the '<em>Get Property Names</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHAPE___GET_PROPERTY_NAMES = NAMED_NODE_OPERATION_COUNT + 2;
-
-	/**
-	 * The operation id for the '<em>Get Property</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHAPE___GET_PROPERTY__STRING = NAMED_NODE_OPERATION_COUNT + 3;
-
-	/**
-	 * The operation id for the '<em>Set Property</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHAPE___SET_PROPERTY__STRING_DOUBLE = NAMED_NODE_OPERATION_COUNT + 4;
-
-	/**
-	 * The number of operations of the '<em>Shape</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHAPE_OPERATION_COUNT = NAMED_NODE_OPERATION_COUNT + 5;
-
-	/**
 	 * The meta object id for the '{@link geometry.impl.TriangleImpl <em>Triangle</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -269,6 +88,278 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 */
 	int TRIANGLE = 1;
+
+	/**
+	 * The meta object id for the '{@link geometry.impl.VertexImpl <em>Vertex</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.impl.VertexImpl
+	 * @see geometry.impl.GeometryPackageImpl#getVertex()
+	 * @generated
+	 */
+	int VERTEX = 2;
+
+	/**
+	 * The meta object id for the '{@link geometry.impl.SphereImpl <em>Sphere</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.impl.SphereImpl
+	 * @see geometry.impl.GeometryPackageImpl#getSphere()
+	 * @generated
+	 */
+	int SPHERE = 3;
+
+	/**
+	 * The meta object id for the '{@link geometry.impl.CubeImpl <em>Cube</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.impl.CubeImpl
+	 * @see geometry.impl.GeometryPackageImpl#getCube()
+	 * @generated
+	 */
+	int CUBE = 4;
+
+	/**
+	 * The meta object id for the '{@link geometry.impl.CylinderImpl <em>Cylinder</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.impl.CylinderImpl
+	 * @see geometry.impl.GeometryPackageImpl#getCylinder()
+	 * @generated
+	 */
+	int CYLINDER = 5;
+
+	/**
+	 * The meta object id for the '{@link geometry.impl.GeometryImpl <em>Geometry</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.impl.GeometryImpl
+	 * @see geometry.impl.GeometryPackageImpl#getGeometry()
+	 * @generated
+	 */
+	int GEOMETRY = 6;
+
+	/**
+	 * The meta object id for the '{@link geometry.impl.TubeImpl <em>Tube</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.impl.TubeImpl
+	 * @see geometry.impl.GeometryPackageImpl#getTube()
+	 * @generated
+	 */
+	int TUBE = 7;
+
+	/**
+	 * The meta object id for the '{@link geometry.impl.OperatorImpl <em>Operator</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.impl.OperatorImpl
+	 * @see geometry.impl.GeometryPackageImpl#getOperator()
+	 * @generated
+	 */
+	int OPERATOR = 9;
+
+	/**
+	 * The meta object id for the '{@link geometry.impl.UnionImpl <em>Union</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.impl.UnionImpl
+	 * @see geometry.impl.GeometryPackageImpl#getUnion()
+	 * @generated
+	 */
+	int UNION = 10;
+
+	/**
+	 * The meta object id for the '{@link geometry.impl.IntersectionImpl <em>Intersection</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.impl.IntersectionImpl
+	 * @see geometry.impl.GeometryPackageImpl#getIntersection()
+	 * @generated
+	 */
+	int INTERSECTION = 11;
+
+	/**
+	 * The meta object id for the '{@link geometry.impl.ComplementImpl <em>Complement</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.impl.ComplementImpl
+	 * @see geometry.impl.GeometryPackageImpl#getComplement()
+	 * @generated
+	 */
+	int COMPLEMENT = 12;
+
+	/**
+	 * The meta object id for the '{@link geometry.ISubjectShape <em>ISubject Shape</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.ISubjectShape
+	 * @see geometry.impl.GeometryPackageImpl#getISubjectShape()
+	 * @generated
+	 */
+	int ISUBJECT_SHAPE = 13;
+
+	/**
+	 * The number of structural features of the '<em>ISubject Shape</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ISUBJECT_SHAPE_FEATURE_COUNT = 0;
+
+	/**
+	 * The operation id for the '<em>Register</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ISUBJECT_SHAPE___REGISTER__ISHAPEOBSERVER = 0;
+
+	/**
+	 * The operation id for the '<em>Unregister</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ISUBJECT_SHAPE___UNREGISTER__ISHAPEOBSERVER = 1;
+
+	/**
+	 * The number of operations of the '<em>ISubject Shape</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ISUBJECT_SHAPE_OPERATION_COUNT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE__NAME = ISUBJECT_SHAPE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE__ID = ISUBJECT_SHAPE_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE__NODES = ISUBJECT_SHAPE_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Triangles</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE__TRIANGLES = ISUBJECT_SHAPE_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Center</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE__CENTER = ISUBJECT_SHAPE_FEATURE_COUNT + 4;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE__TYPE = ISUBJECT_SHAPE_FEATURE_COUNT + 5;
+
+	/**
+	 * The feature id for the '<em><b>Material</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE__MATERIAL = ISUBJECT_SHAPE_FEATURE_COUNT + 6;
+
+	/**
+	 * The number of structural features of the '<em>Shape</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE_FEATURE_COUNT = ISUBJECT_SHAPE_FEATURE_COUNT + 7;
+
+	/**
+	 * The operation id for the '<em>Register</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE___REGISTER__ISHAPEOBSERVER = ISUBJECT_SHAPE___REGISTER__ISHAPEOBSERVER;
+
+	/**
+	 * The operation id for the '<em>Unregister</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE___UNREGISTER__ISHAPEOBSERVER = ISUBJECT_SHAPE___UNREGISTER__ISHAPEOBSERVER;
+
+	/**
+	 * The operation id for the '<em>Get Property Names</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE___GET_PROPERTY_NAMES = ISUBJECT_SHAPE_OPERATION_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Get Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE___GET_PROPERTY__STRING = ISUBJECT_SHAPE_OPERATION_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Set Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE___SET_PROPERTY__STRING_DOUBLE = ISUBJECT_SHAPE_OPERATION_COUNT + 2;
+
+	/**
+	 * The number of operations of the '<em>Shape</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE_OPERATION_COUNT = ISUBJECT_SHAPE_OPERATION_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Normal</b></em>' containment reference.
@@ -305,16 +396,6 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int TRIANGLE_OPERATION_COUNT = 0;
-
-	/**
-	 * The meta object id for the '{@link geometry.impl.VertexImpl <em>Vertex</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.VertexImpl
-	 * @see geometry.impl.GeometryPackageImpl#getVertex()
-	 * @generated
-	 */
-	int VERTEX = 2;
 
 	/**
 	 * The feature id for the '<em><b>X</b></em>' attribute.
@@ -362,16 +443,6 @@ public interface GeometryPackage extends EPackage {
 	int VERTEX_OPERATION_COUNT = 0;
 
 	/**
-	 * The meta object id for the '{@link geometry.impl.SphereImpl <em>Sphere</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.SphereImpl
-	 * @see geometry.impl.GeometryPackageImpl#getSphere()
-	 * @generated
-	 */
-	int SPHERE = 3;
-
-	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -388,6 +459,15 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int SPHERE__ID = SHAPE__ID;
+
+	/**
+	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SPHERE__NODES = SHAPE__NODES;
 
 	/**
 	 * The feature id for the '<em><b>Triangles</b></em>' containment reference list.
@@ -498,16 +578,6 @@ public interface GeometryPackage extends EPackage {
 	int SPHERE_OPERATION_COUNT = SHAPE_OPERATION_COUNT + 0;
 
 	/**
-	 * The meta object id for the '{@link geometry.impl.CubeImpl <em>Cube</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.CubeImpl
-	 * @see geometry.impl.GeometryPackageImpl#getCube()
-	 * @generated
-	 */
-	int CUBE = 4;
-
-	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -524,6 +594,15 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int CUBE__ID = SHAPE__ID;
+
+	/**
+	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CUBE__NODES = SHAPE__NODES;
 
 	/**
 	 * The feature id for the '<em><b>Triangles</b></em>' containment reference list.
@@ -634,16 +713,6 @@ public interface GeometryPackage extends EPackage {
 	int CUBE_OPERATION_COUNT = SHAPE_OPERATION_COUNT + 0;
 
 	/**
-	 * The meta object id for the '{@link geometry.impl.CylinderImpl <em>Cylinder</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.CylinderImpl
-	 * @see geometry.impl.GeometryPackageImpl#getCylinder()
-	 * @generated
-	 */
-	int CYLINDER = 5;
-
-	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -660,6 +729,15 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int CYLINDER__ID = SHAPE__ID;
+
+	/**
+	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CYLINDER__NODES = SHAPE__NODES;
 
 	/**
 	 * The feature id for the '<em><b>Triangles</b></em>' containment reference list.
@@ -778,17 +856,6 @@ public interface GeometryPackage extends EPackage {
 	 */
 	int CYLINDER_OPERATION_COUNT = SHAPE_OPERATION_COUNT + 0;
 
-
-	/**
-	 * The meta object id for the '{@link geometry.impl.GeometryImpl <em>Geometry</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.GeometryImpl
-	 * @see geometry.impl.GeometryPackageImpl#getGeometry()
-	 * @generated
-	 */
-	int GEOMETRY = 6;
-
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -796,7 +863,7 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GEOMETRY__NAME = NAMED_NODE__NAME;
+	int INODE__NAME = 0;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -805,7 +872,7 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GEOMETRY__ID = NAMED_NODE__ID;
+	int INODE__ID = 1;
 
 	/**
 	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
@@ -814,7 +881,52 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GEOMETRY__NODES = NAMED_NODE_FEATURE_COUNT + 0;
+	int INODE__NODES = 2;
+
+	/**
+	 * The number of structural features of the '<em>INode</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INODE_FEATURE_COUNT = 3;
+
+	/**
+	 * The number of operations of the '<em>INode</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INODE_OPERATION_COUNT = 0;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GEOMETRY__NAME = INODE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GEOMETRY__ID = INODE__ID;
+
+	/**
+	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GEOMETRY__NODES = INODE__NODES;
 
 	/**
 	 * The number of structural features of the '<em>Geometry</em>' class.
@@ -823,7 +935,7 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GEOMETRY_FEATURE_COUNT = NAMED_NODE_FEATURE_COUNT + 1;
+	int GEOMETRY_FEATURE_COUNT = INODE_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of operations of the '<em>Geometry</em>' class.
@@ -832,18 +944,7 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GEOMETRY_OPERATION_COUNT = NAMED_NODE_OPERATION_COUNT + 0;
-
-
-	/**
-	 * The meta object id for the '{@link geometry.impl.TubeImpl <em>Tube</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.TubeImpl
-	 * @see geometry.impl.GeometryPackageImpl#getTube()
-	 * @generated
-	 */
-	int TUBE = 7;
+	int GEOMETRY_OPERATION_COUNT = INODE_OPERATION_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -862,6 +963,15 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int TUBE__ID = SHAPE__ID;
+
+	/**
+	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TUBE__NODES = SHAPE__NODES;
 
 	/**
 	 * The feature id for the '<em><b>Triangles</b></em>' containment reference list.
@@ -990,23 +1100,13 @@ public interface GeometryPackage extends EPackage {
 	int TUBE_OPERATION_COUNT = SHAPE_OPERATION_COUNT + 0;
 
 	/**
-	 * The meta object id for the '{@link geometry.impl.OperatorImpl <em>Operator</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.OperatorImpl
-	 * @see geometry.impl.GeometryPackageImpl#getOperator()
-	 * @generated
-	 */
-	int OPERATOR = 9;
-
-	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATOR__NAME = NAMED_NODE__NAME;
+	int OPERATOR__NAME = INODE__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1015,16 +1115,16 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATOR__ID = NAMED_NODE__ID;
+	int OPERATOR__ID = INODE__ID;
 
 	/**
-	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATOR__CHILDREN = NAMED_NODE_FEATURE_COUNT + 0;
+	int OPERATOR__NODES = INODE__NODES;
 
 	/**
 	 * The number of structural features of the '<em>Operator</em>' class.
@@ -1033,7 +1133,7 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATOR_FEATURE_COUNT = NAMED_NODE_FEATURE_COUNT + 1;
+	int OPERATOR_FEATURE_COUNT = INODE_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of operations of the '<em>Operator</em>' class.
@@ -1042,17 +1142,7 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATOR_OPERATION_COUNT = NAMED_NODE_OPERATION_COUNT + 0;
-
-	/**
-	 * The meta object id for the '{@link geometry.impl.UnionImpl <em>Union</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.UnionImpl
-	 * @see geometry.impl.GeometryPackageImpl#getUnion()
-	 * @generated
-	 */
-	int UNION = 10;
+	int OPERATOR_OPERATION_COUNT = INODE_OPERATION_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1073,13 +1163,13 @@ public interface GeometryPackage extends EPackage {
 	int UNION__ID = OPERATOR__ID;
 
 	/**
-	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UNION__CHILDREN = OPERATOR__CHILDREN;
+	int UNION__NODES = OPERATOR__NODES;
 
 	/**
 	 * The number of structural features of the '<em>Union</em>' class.
@@ -1100,16 +1190,6 @@ public interface GeometryPackage extends EPackage {
 	int UNION_OPERATION_COUNT = OPERATOR_OPERATION_COUNT + 0;
 
 	/**
-	 * The meta object id for the '{@link geometry.impl.IntersectionImpl <em>Intersection</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.IntersectionImpl
-	 * @see geometry.impl.GeometryPackageImpl#getIntersection()
-	 * @generated
-	 */
-	int INTERSECTION = 11;
-
-	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1128,13 +1208,13 @@ public interface GeometryPackage extends EPackage {
 	int INTERSECTION__ID = OPERATOR__ID;
 
 	/**
-	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INTERSECTION__CHILDREN = OPERATOR__CHILDREN;
+	int INTERSECTION__NODES = OPERATOR__NODES;
 
 	/**
 	 * The number of structural features of the '<em>Intersection</em>' class.
@@ -1155,16 +1235,6 @@ public interface GeometryPackage extends EPackage {
 	int INTERSECTION_OPERATION_COUNT = OPERATOR_OPERATION_COUNT + 0;
 
 	/**
-	 * The meta object id for the '{@link geometry.impl.ComplementImpl <em>Complement</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.ComplementImpl
-	 * @see geometry.impl.GeometryPackageImpl#getComplement()
-	 * @generated
-	 */
-	int COMPLEMENT = 12;
-
-	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1183,13 +1253,13 @@ public interface GeometryPackage extends EPackage {
 	int COMPLEMENT__ID = OPERATOR__ID;
 
 	/**
-	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COMPLEMENT__CHILDREN = OPERATOR__CHILDREN;
+	int COMPLEMENT__NODES = OPERATOR__NODES;
 
 	/**
 	 * The number of structural features of the '<em>Complement</em>' class.
@@ -1210,52 +1280,6 @@ public interface GeometryPackage extends EPackage {
 	int COMPLEMENT_OPERATION_COUNT = OPERATOR_OPERATION_COUNT + 0;
 
 	/**
-	 * The meta object id for the '{@link geometry.ISubjectShape <em>ISubject Shape</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.ISubjectShape
-	 * @see geometry.impl.GeometryPackageImpl#getISubjectShape()
-	 * @generated
-	 */
-	int ISUBJECT_SHAPE = 14;
-
-	/**
-	 * The number of structural features of the '<em>ISubject Shape</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ISUBJECT_SHAPE_FEATURE_COUNT = 0;
-
-	/**
-	 * The operation id for the '<em>Register</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ISUBJECT_SHAPE___REGISTER__ISHAPEOBSERVER = 0;
-
-	/**
-	 * The operation id for the '<em>Unregister</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ISUBJECT_SHAPE___UNREGISTER__ISHAPEOBSERVER = 1;
-
-	/**
-	 * The number of operations of the '<em>ISubject Shape</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ISUBJECT_SHAPE_OPERATION_COUNT = 2;
-
-	/**
 	 * The meta object id for the '{@link geometry.IShapeObserver <em>IShape Observer</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1263,7 +1287,7 @@ public interface GeometryPackage extends EPackage {
 	 * @see geometry.impl.GeometryPackageImpl#getIShapeObserver()
 	 * @generated
 	 */
-	int ISHAPE_OBSERVER = 15;
+	int ISHAPE_OBSERVER = 14;
 
 	/**
 	 * The number of structural features of the '<em>IShape Observer</em>' class.
@@ -1300,7 +1324,7 @@ public interface GeometryPackage extends EPackage {
 	 * @see geometry.impl.GeometryPackageImpl#getMaterial()
 	 * @generated
 	 */
-	int MATERIAL = 16;
+	int MATERIAL = 15;
 
 	/**
 	 * The number of structural features of the '<em>Material</em>' class.
@@ -1328,7 +1352,7 @@ public interface GeometryPackage extends EPackage {
 	 * @see geometry.impl.GeometryPackageImpl#getShapeChangeEvent()
 	 * @generated
 	 */
-	int SHAPE_CHANGE_EVENT = 17;
+	int SHAPE_CHANGE_EVENT = 16;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -1374,7 +1398,7 @@ public interface GeometryPackage extends EPackage {
 	 * @see geometry.impl.GeometryPackageImpl#getIGeometryImporter()
 	 * @generated
 	 */
-	int IGEOMETRY_IMPORTER = 18;
+	int IGEOMETRY_IMPORTER = 17;
 
 	/**
 	 * The feature id for the '<em><b>File Types</b></em>' attribute list.
@@ -1429,7 +1453,7 @@ public interface GeometryPackage extends EPackage {
 	 * @see geometry.impl.GeometryPackageImpl#getASCIISTLGeometryImporter()
 	 * @generated
 	 */
-	int ASCIISTL_GEOMETRY_IMPORTER = 19;
+	int ASCIISTL_GEOMETRY_IMPORTER = 18;
 
 	/**
 	 * The feature id for the '<em><b>File Types</b></em>' attribute list.
@@ -1484,7 +1508,7 @@ public interface GeometryPackage extends EPackage {
 	 * @see geometry.impl.GeometryPackageImpl#getShapeChangeEventType()
 	 * @generated
 	 */
-	int SHAPE_CHANGE_EVENT_TYPE = 20;
+	int SHAPE_CHANGE_EVENT_TYPE = 19;
 
 
 	/**
@@ -1495,7 +1519,7 @@ public interface GeometryPackage extends EPackage {
 	 * @see geometry.impl.GeometryPackageImpl#getPath()
 	 * @generated
 	 */
-	int PATH = 21;
+	int PATH = 20;
 
 
 	/**
@@ -1742,17 +1766,6 @@ public interface GeometryPackage extends EPackage {
 	EClass getGeometry();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link geometry.Geometry#getNodes <em>Nodes</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Nodes</em>'.
-	 * @see geometry.Geometry#getNodes()
-	 * @see #getGeometry()
-	 * @generated
-	 */
-	EReference getGeometry_Nodes();
-
-	/**
 	 * Returns the meta object for class '{@link geometry.Tube <em>Tube</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1806,6 +1819,39 @@ public interface GeometryPackage extends EPackage {
 	EClass getINode();
 
 	/**
+	 * Returns the meta object for the attribute '{@link geometry.INode#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see geometry.INode#getName()
+	 * @see #getINode()
+	 * @generated
+	 */
+	EAttribute getINode_Name();
+
+	/**
+	 * Returns the meta object for the attribute '{@link geometry.INode#getId <em>Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Id</em>'.
+	 * @see geometry.INode#getId()
+	 * @see #getINode()
+	 * @generated
+	 */
+	EAttribute getINode_Id();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link geometry.INode#getNodes <em>Nodes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Nodes</em>'.
+	 * @see geometry.INode#getNodes()
+	 * @see #getINode()
+	 * @generated
+	 */
+	EReference getINode_Nodes();
+
+	/**
 	 * Returns the meta object for class '{@link geometry.Operator <em>Operator</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1814,17 +1860,6 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getOperator();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link geometry.Operator#getChildren <em>Children</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Children</em>'.
-	 * @see geometry.Operator#getChildren()
-	 * @see #getOperator()
-	 * @generated
-	 */
-	EReference getOperator_Children();
 
 	/**
 	 * Returns the meta object for class '{@link geometry.Union <em>Union</em>}'.
@@ -1855,38 +1890,6 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getComplement();
-
-	/**
-	 * Returns the meta object for class '{@link geometry.NamedNode <em>Named Node</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Named Node</em>'.
-	 * @see geometry.NamedNode
-	 * @generated
-	 */
-	EClass getNamedNode();
-
-	/**
-	 * Returns the meta object for the attribute '{@link geometry.NamedNode#getName <em>Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see geometry.NamedNode#getName()
-	 * @see #getNamedNode()
-	 * @generated
-	 */
-	EAttribute getNamedNode_Name();
-
-	/**
-	 * Returns the meta object for the attribute '{@link geometry.NamedNode#getId <em>Id</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Id</em>'.
-	 * @see geometry.NamedNode#getId()
-	 * @see #getNamedNode()
-	 * @generated
-	 */
-	EAttribute getNamedNode_Id();
 
 	/**
 	 * Returns the meta object for class '{@link geometry.ISubjectShape <em>ISubject Shape</em>}'.
@@ -2275,14 +2278,6 @@ public interface GeometryPackage extends EPackage {
 		EClass GEOMETRY = eINSTANCE.getGeometry();
 
 		/**
-		 * The meta object literal for the '<em><b>Nodes</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference GEOMETRY__NODES = eINSTANCE.getGeometry_Nodes();
-
-		/**
 		 * The meta object literal for the '{@link geometry.impl.TubeImpl <em>Tube</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2327,6 +2322,30 @@ public interface GeometryPackage extends EPackage {
 		EClass INODE = eINSTANCE.getINode();
 
 		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute INODE__NAME = eINSTANCE.getINode_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute INODE__ID = eINSTANCE.getINode_Id();
+
+		/**
+		 * The meta object literal for the '<em><b>Nodes</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference INODE__NODES = eINSTANCE.getINode_Nodes();
+
+		/**
 		 * The meta object literal for the '{@link geometry.impl.OperatorImpl <em>Operator</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2335,14 +2354,6 @@ public interface GeometryPackage extends EPackage {
 		 * @generated
 		 */
 		EClass OPERATOR = eINSTANCE.getOperator();
-
-		/**
-		 * The meta object literal for the '<em><b>Children</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference OPERATOR__CHILDREN = eINSTANCE.getOperator_Children();
 
 		/**
 		 * The meta object literal for the '{@link geometry.impl.UnionImpl <em>Union</em>}' class.
@@ -2373,32 +2384,6 @@ public interface GeometryPackage extends EPackage {
 		 * @generated
 		 */
 		EClass COMPLEMENT = eINSTANCE.getComplement();
-
-		/**
-		 * The meta object literal for the '{@link geometry.impl.NamedNodeImpl <em>Named Node</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see geometry.impl.NamedNodeImpl
-		 * @see geometry.impl.GeometryPackageImpl#getNamedNode()
-		 * @generated
-		 */
-		EClass NAMED_NODE = eINSTANCE.getNamedNode();
-
-		/**
-		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute NAMED_NODE__NAME = eINSTANCE.getNamedNode_Name();
-
-		/**
-		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute NAMED_NODE__ID = eINSTANCE.getNamedNode_Id();
 
 		/**
 		 * The meta object literal for the '{@link geometry.ISubjectShape <em>ISubject Shape</em>}' class.

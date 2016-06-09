@@ -3,8 +3,8 @@
 package geometry.impl;
 
 import geometry.GeometryPackage;
+import geometry.INode;
 import geometry.IShapeObserver;
-import geometry.ISubjectShape;
 import geometry.Material;
 import geometry.Shape;
 import geometry.Triangle;
@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -33,6 +34,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link geometry.impl.ShapeImpl#getName <em>Name</em>}</li>
+ *   <li>{@link geometry.impl.ShapeImpl#getId <em>Id</em>}</li>
+ *   <li>{@link geometry.impl.ShapeImpl#getNodes <em>Nodes</em>}</li>
  *   <li>{@link geometry.impl.ShapeImpl#getTriangles <em>Triangles</em>}</li>
  *   <li>{@link geometry.impl.ShapeImpl#getCenter <em>Center</em>}</li>
  *   <li>{@link geometry.impl.ShapeImpl#getType <em>Type</em>}</li>
@@ -41,7 +45,57 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class ShapeImpl extends NamedNodeImpl implements Shape {
+public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
+	/**
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String NAME_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String name = NAME_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getId()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final long ID_EDEFAULT = 0L;
+
+	/**
+	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getId()
+	 * @generated
+	 * @ordered
+	 */
+	protected long id = ID_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getNodes() <em>Nodes</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getNodes()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<INode> nodes;
+
 	/**
 	 * The cached value of the '{@link #getTriangles() <em>Triangles</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -109,6 +163,60 @@ public class ShapeImpl extends NamedNodeImpl implements Shape {
 	@Override
 	protected EClass eStaticClass() {
 		return GeometryPackage.Literals.SHAPE;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setName(String newName) {
+		String oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, GeometryPackage.SHAPE__NAME, oldName, name));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public long getId() {
+		return id;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setId(long newId) {
+		long oldId = id;
+		id = newId;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, GeometryPackage.SHAPE__ID, oldId, id));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<INode> getNodes() {
+		if (nodes == null) {
+			nodes = new EObjectContainmentEList<INode>(INode.class, this, GeometryPackage.SHAPE__NODES);
+		}
+		return nodes;
 	}
 
 	/**
@@ -288,6 +396,8 @@ public class ShapeImpl extends NamedNodeImpl implements Shape {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
+			case GeometryPackage.SHAPE__NODES:
+				return ((InternalEList<?>)getNodes()).basicRemove(otherEnd, msgs);
 			case GeometryPackage.SHAPE__TRIANGLES:
 				return ((InternalEList<?>)getTriangles()).basicRemove(otherEnd, msgs);
 			case GeometryPackage.SHAPE__MATERIAL:
@@ -304,6 +414,12 @@ public class ShapeImpl extends NamedNodeImpl implements Shape {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case GeometryPackage.SHAPE__NAME:
+				return getName();
+			case GeometryPackage.SHAPE__ID:
+				return getId();
+			case GeometryPackage.SHAPE__NODES:
+				return getNodes();
 			case GeometryPackage.SHAPE__TRIANGLES:
 				return getTriangles();
 			case GeometryPackage.SHAPE__CENTER:
@@ -326,6 +442,16 @@ public class ShapeImpl extends NamedNodeImpl implements Shape {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case GeometryPackage.SHAPE__NAME:
+				setName((String)newValue);
+				return;
+			case GeometryPackage.SHAPE__ID:
+				setId((Long)newValue);
+				return;
+			case GeometryPackage.SHAPE__NODES:
+				getNodes().clear();
+				getNodes().addAll((Collection<? extends INode>)newValue);
+				return;
 			case GeometryPackage.SHAPE__TRIANGLES:
 				getTriangles().clear();
 				getTriangles().addAll((Collection<? extends Triangle>)newValue);
@@ -351,6 +477,15 @@ public class ShapeImpl extends NamedNodeImpl implements Shape {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case GeometryPackage.SHAPE__NAME:
+				setName(NAME_EDEFAULT);
+				return;
+			case GeometryPackage.SHAPE__ID:
+				setId(ID_EDEFAULT);
+				return;
+			case GeometryPackage.SHAPE__NODES:
+				getNodes().clear();
+				return;
 			case GeometryPackage.SHAPE__TRIANGLES:
 				getTriangles().clear();
 				return;
@@ -375,6 +510,12 @@ public class ShapeImpl extends NamedNodeImpl implements Shape {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case GeometryPackage.SHAPE__NAME:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case GeometryPackage.SHAPE__ID:
+				return id != ID_EDEFAULT;
+			case GeometryPackage.SHAPE__NODES:
+				return nodes != null && !nodes.isEmpty();
 			case GeometryPackage.SHAPE__TRIANGLES:
 				return triangles != null && !triangles.isEmpty();
 			case GeometryPackage.SHAPE__CENTER:
@@ -393,15 +534,34 @@ public class ShapeImpl extends NamedNodeImpl implements Shape {
 	 * @generated
 	 */
 	@Override
-	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
-		if (baseClass == ISubjectShape.class) {
-			switch (baseOperationID) {
-				case GeometryPackage.ISUBJECT_SHAPE___REGISTER__ISHAPEOBSERVER: return GeometryPackage.SHAPE___REGISTER__ISHAPEOBSERVER;
-				case GeometryPackage.ISUBJECT_SHAPE___UNREGISTER__ISHAPEOBSERVER: return GeometryPackage.SHAPE___UNREGISTER__ISHAPEOBSERVER;
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+		if (baseClass == INode.class) {
+			switch (derivedFeatureID) {
+				case GeometryPackage.SHAPE__NAME: return GeometryPackage.INODE__NAME;
+				case GeometryPackage.SHAPE__ID: return GeometryPackage.INODE__ID;
+				case GeometryPackage.SHAPE__NODES: return GeometryPackage.INODE__NODES;
 				default: return -1;
 			}
 		}
-		return super.eDerivedOperationID(baseOperationID, baseClass);
+		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+		if (baseClass == INode.class) {
+			switch (baseFeatureID) {
+				case GeometryPackage.INODE__NAME: return GeometryPackage.SHAPE__NAME;
+				case GeometryPackage.INODE__ID: return GeometryPackage.SHAPE__ID;
+				case GeometryPackage.INODE__NODES: return GeometryPackage.SHAPE__NODES;
+				default: return -1;
+			}
+		}
+		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
 	}
 
 	/**
@@ -439,7 +599,11 @@ public class ShapeImpl extends NamedNodeImpl implements Shape {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (type: ");
+		result.append(" (name: ");
+		result.append(name);
+		result.append(", id: ");
+		result.append(id);
+		result.append(", type: ");
 		result.append(type);
 		result.append(')');
 		return result.toString();
