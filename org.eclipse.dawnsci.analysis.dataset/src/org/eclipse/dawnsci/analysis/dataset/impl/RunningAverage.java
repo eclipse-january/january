@@ -9,6 +9,7 @@
 
 package org.eclipse.dawnsci.analysis.dataset.impl;
 
+import org.eclipse.dawnsci.analysis.api.dataset.DatasetException;
 import org.eclipse.dawnsci.analysis.api.dataset.IDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.ILazyDataset;
 
@@ -70,13 +71,14 @@ public class RunningAverage {
 				}
 			} else { // only linear error available
 				ILazyDataset le = dataset.getError();
-				final IDataset e;
+				IDataset e = null;
 				if (le instanceof IDataset) {
 					e = (IDataset) le;
 				} else if (le != null) {
-					e = le.getSlice();
-				} else {
-					e = null;
+					try {
+						e = le.getSlice();
+					} catch (DatasetException e1) {
+					}
 				}
 				while (it.hasNext()) {
 					double m = average.getAbs(it.index);

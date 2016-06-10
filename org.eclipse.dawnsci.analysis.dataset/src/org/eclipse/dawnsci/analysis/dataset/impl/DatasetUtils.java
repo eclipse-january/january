@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.eclipse.dawnsci.analysis.api.dataset.DatasetException;
 import org.eclipse.dawnsci.analysis.api.dataset.IDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.ILazyDataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.function.Centroid;
@@ -1120,12 +1121,14 @@ public class DatasetUtils {
 	 * problems when used on large datasets and throw runtime exceptions
 	 * @param lazy can be null
 	 * @return Converted dataset or null
+	 * @throws DatasetException
 	 */
-	public static Dataset sliceAndConvertLazyDataset(ILazyDataset lazy) {
+	public static Dataset sliceAndConvertLazyDataset(ILazyDataset lazy) throws DatasetException {
 		if (lazy == null)
 			return null;
 
 		IDataset data = lazy instanceof IDataset ? (IDataset) lazy.getSliceView() : lazy.getSlice();
+
 		return convertToDataset(data);
 	}
 

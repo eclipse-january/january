@@ -15,6 +15,7 @@ import static org.junit.Assert.fail;
 
 import java.util.Arrays;
 
+import org.eclipse.dawnsci.analysis.api.dataset.DatasetException;
 import org.eclipse.dawnsci.analysis.api.dataset.ILazyDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.Slice;
 import org.eclipse.dawnsci.analysis.dataset.impl.AggregateDataset;
@@ -68,7 +69,7 @@ public class AggregateDatasetTest {
 	}
 
 	@Test
-	public void testUnextendedShape() {
+	public void testUnextendedShape() throws DatasetException {
 		AggregateDataset a = new AggregateDataset(false, datasets);
 		assertEquals("Incorrect rank", datasets[0].getRank(), a.getRank());
 		assertArrayEquals("Incorrect shape", new int[] {2*datasets.length, 6}, a.getShape());
@@ -98,7 +99,7 @@ public class AggregateDatasetTest {
 	}
 
 	@Test
-	public void testExtendedShape() {
+	public void testExtendedShape() throws DatasetException {
 		AggregateDataset a = new AggregateDataset(true, datasets);
 		assertEquals("Incorrect rank", datasets[0].getRank() + 1, a.getRank());
 		assertArrayEquals("Incorrect shape", new int[] {datasets.length, 2, 6}, a.getShape());
@@ -120,7 +121,7 @@ public class AggregateDatasetTest {
 	}
 
 	@Test
-	public void testRepeatedDataset() {
+	public void testRepeatedDataset() throws DatasetException {
 		Dataset a = DatasetFactory.createRange(3, Dataset.FLOAT64);
 		Dataset[] as = new Dataset[5];
 		Arrays.fill(as, a);

@@ -18,7 +18,7 @@ import org.junit.Test;
 public class LazyMathsTest {
 
 	@Test
-	public void testSum() {
+	public void testSum() throws Exception {
 		Dataset a = DatasetFactory.createRange(100, Dataset.FLOAT64);
 
 		AbstractDatasetTest.checkDatasets(a.sum(0), LazyMaths.sum(a, 0), 1e-9, 1e-15);
@@ -40,7 +40,7 @@ public class LazyMathsTest {
 	}
 
 	@Test
-	public void testProduct() {
+	public void testProduct() throws Exception {
 		Dataset a = DatasetFactory.createRange(100, Dataset.FLOAT64);
 		a.iadd(1.);
 		a.idivide(100.);
@@ -64,7 +64,7 @@ public class LazyMathsTest {
 	}
 	
 	@Test
-	public void testMeanIgnore() {
+	public void testMeanIgnore() throws Exception {
 
 		Dataset a = DatasetFactory.createRange(100, Dataset.FLOAT64);
 		a.setShape(10, 10);

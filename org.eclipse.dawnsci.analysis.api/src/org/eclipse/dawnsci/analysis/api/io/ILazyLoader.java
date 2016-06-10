@@ -12,6 +12,7 @@
 
 package org.eclipse.dawnsci.analysis.api.io;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import org.eclipse.dawnsci.analysis.api.dataset.IDataset;
@@ -33,7 +34,7 @@ public interface ILazyLoader extends Serializable {
 	 * @param mon
 	 * @param slice
 	 * @return a slice of a dataset
-	 * @throws Exception
+	 * @throws IOException
 	 */
-	public IDataset getDataset(IMonitor mon, SliceND slice) throws Exception;
+	public IDataset getDataset(IMonitor mon, SliceND slice) throws IOException;
 }

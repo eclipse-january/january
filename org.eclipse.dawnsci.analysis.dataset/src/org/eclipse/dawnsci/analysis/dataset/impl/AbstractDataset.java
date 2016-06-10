@@ -24,6 +24,7 @@ import java.util.Map;
 
 import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
+import org.eclipse.dawnsci.analysis.api.dataset.DatasetException;
 import org.eclipse.dawnsci.analysis.api.dataset.IDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.ILazyDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.Slice;
@@ -3347,7 +3348,12 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		if (led == null)
 			return null;
 
-		Dataset ed = DatasetUtils.sliceAndConvertLazyDataset(led);
+		Dataset ed = null;
+		try {
+			ed = DatasetUtils.sliceAndConvertLazyDataset(led);
+		} catch (DatasetException e) {
+			logger.error("Could not get data from lazy dataset", e);
+		}
 		if (!(led instanceof Dataset)) {
 			setError(ed); // set back
 		}
@@ -3494,10 +3500,15 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 		if (!(emd instanceof ErrorMetadataImpl)) {
 			ILazyDataset led = emd.getError();
-			Dataset ed = DatasetUtils.sliceAndConvertLazyDataset(led);
-			emd  = new ErrorMetadataImpl();
-			setMetadata(emd);
-			((ErrorMetadataImpl) emd).setError(ed);
+			Dataset ed;
+			try {
+				ed = DatasetUtils.sliceAndConvertLazyDataset(led);
+				emd  = new ErrorMetadataImpl();
+				setMetadata(emd);
+				((ErrorMetadataImpl) emd).setError(ed);
+			} catch (DatasetException e) {
+				logger.error("Could not get data from lazy dataset", e);
+			}
 		}
 
 		return ((ErrorMetadataImpl) emd).getSquaredError();

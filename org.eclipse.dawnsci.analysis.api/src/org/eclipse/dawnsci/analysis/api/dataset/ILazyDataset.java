@@ -81,8 +81,9 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 	 * @param step
 	 *            specifies the steps in the slice (can be null for unit steps)
 	 * @return The dataset of the sliced data
+	 * @throws DatasetException
 	 */
-	public IDataset getSlice(final int[] start, final int[] stop, final int[] step);
+	public IDataset getSlice(final int[] start, final int[] stop, final int[] step) throws DatasetException;
 
 	/**
 	 * Get a slice of the dataset. The returned dataset is a copied selection of items
@@ -95,26 +96,19 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 	 * @param step
 	 *            specifies the steps in the slice (can be null for unit steps)
 	 * @return The dataset of the sliced data
-	 * @throws Exception 
+	 * @throws DatasetException
 	 */
 	public IDataset getSlice(final IMonitor monitor, final int[] start, final int[] stop,
-			final int[] step) throws Exception;
+			final int[] step) throws DatasetException;
 
 	/**
 	 * Get a slice of the dataset. The returned dataset is a copied selection of items
 	 * 
 	 * @param slice an array of slice objects (the array can be null or contain nulls)
 	 * @return The dataset of the sliced data
+	 * @throws DatasetException
 	 */
-	public IDataset getSlice(final Slice... slice);
-
-	/**
-	 * Get a slice of the dataset. The returned dataset is a copied selection of items
-	 * 
-	 * @param slice an n-D slice
-	 * @return The dataset of the sliced data
-	 */
-	public IDataset getSlice(final SliceND slice);
+	public IDataset getSlice(final Slice... slice) throws DatasetException;
 
 	/**
 	 * Get a slice of the dataset. The returned dataset is a copied selection of items
@@ -122,9 +116,18 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 	 * @param monitor
 	 * @param slice an array of slice objects (the array can be null or contain nulls)
 	 * @return The dataset of the sliced data
-	 * @throws Exception 
+	 * @throws DatasetException
 	 */
-	public IDataset getSlice(final IMonitor monitor, final Slice... slice) throws Exception;
+	public IDataset getSlice(final IMonitor monitor, final Slice... slice) throws DatasetException;
+
+	/**
+	 * Get a slice of the dataset. The returned dataset is a copied selection of items
+	 * 
+	 * @param slice an n-D slice
+	 * @return The dataset of the sliced data
+	 * @throws DatasetException
+	 */
+	public IDataset getSlice(final SliceND slice) throws DatasetException;
 
 	/**
 	 * Get a slice of the dataset. The returned dataset is a copied selection of items
@@ -132,9 +135,9 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 	 * @param monitor
 	 * @param slice an n-D slice
 	 * @return The dataset of the sliced data
-	 * @throws Exception 
+	 * @throws DatasetException
 	 */
-	public IDataset getSlice(final IMonitor monitor, final SliceND slice) throws Exception;
+	public IDataset getSlice(final IMonitor monitor, final SliceND slice) throws DatasetException;
 
 	/**
 	 * Get a slice of the dataset. The returned lazy dataset is a view on a selection of items

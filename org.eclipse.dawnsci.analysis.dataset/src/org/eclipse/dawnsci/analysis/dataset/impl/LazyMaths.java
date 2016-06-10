@@ -14,6 +14,7 @@ package org.eclipse.dawnsci.analysis.dataset.impl;
 
 import java.util.Arrays;
 
+import org.eclipse.dawnsci.analysis.api.dataset.DatasetException;
 import org.eclipse.dawnsci.analysis.api.dataset.IDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.ILazyDataset;
 import org.slf4j.Logger;
@@ -32,8 +33,9 @@ public final class LazyMaths {
 	 * @param data
 	 * @param axis (can be negative)
 	 * @return sum along axis in lazy dataset
+	 * @throws DatasetException 
 	 */
-	public static Dataset sum(final ILazyDataset data, int axis) {
+	public static Dataset sum(final ILazyDataset data, int axis) throws DatasetException {
 		int[][] sliceInfo = new int[3][];
 		int[] shape = data.getShape();
 		final Dataset result = prepareDataset(axis, shape, sliceInfo);
@@ -57,8 +59,9 @@ public final class LazyMaths {
 	 * @param data
 	 * @param axis (can be negative)
 	 * @return product along axis in lazy dataset
+	 * @throws DatasetException 
 	 */
-	public static Dataset product(final ILazyDataset data, int axis) {
+	public static Dataset product(final ILazyDataset data, int axis) throws DatasetException {
 		int[][] sliceInfo = new int[3][];
 		int[] shape = data.getShape();
 		final Dataset result = prepareDataset(axis, shape, sliceInfo);
@@ -85,8 +88,9 @@ public final class LazyMaths {
 	 * @param data
 	 * @param ignoreAxes
 	 * @return mean when given axes are ignored in lazy dataset
+	 * @throws DatasetException 
 	 */
-	public static Dataset mean(int start, int stop, ILazyDataset data, int... ignoreAxes) {
+	public static Dataset mean(int start, int stop, ILazyDataset data, int... ignoreAxes) throws DatasetException {
 		int[] shape = data.getShape();
 		PositionIterator iter = new PositionIterator(shape, ignoreAxes);
 		int[] pos = iter.getPos();
@@ -115,7 +119,7 @@ public final class LazyMaths {
 		return  av != null ? av.getCurrentAverage().squeeze() : null;
 	}
 	
-	public static Dataset mean(ILazyDataset data, int... ignoreAxes) {
+	public static Dataset mean(ILazyDataset data, int... ignoreAxes) throws DatasetException {
 		return mean(0, Integer.MAX_VALUE -1 , data, ignoreAxes);
 	}
 

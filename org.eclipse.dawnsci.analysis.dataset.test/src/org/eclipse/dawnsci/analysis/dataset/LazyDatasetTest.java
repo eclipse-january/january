@@ -9,6 +9,7 @@
 
 package org.eclipse.dawnsci.analysis.dataset;
 
+import org.eclipse.dawnsci.analysis.api.dataset.DatasetException;
 import org.eclipse.dawnsci.analysis.api.dataset.ILazyDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.Slice;
 import org.eclipse.dawnsci.analysis.api.dataset.SliceND;
@@ -127,7 +128,7 @@ public class LazyDatasetTest {
 	}
 
 	@Test
-	public void testGetSliceView() {
+	public void testGetSliceView() throws Exception {
 		final int[] shape = new int[] {6, 2, 4, 1};
 		final Dataset d = Random.randn(shape);
 		LazyDataset ld = LazyDataset.createLazyDataset(d);
@@ -163,7 +164,7 @@ public class LazyDatasetTest {
 	}
 
 	@Test
-	public void testShape() {
+	public void testShape() throws DatasetException {
 		Dataset data = Random.rand(new int[] {1, 2, 3, 4});
 		data.setName("random");
 		LazyDataset ld = LazyDataset.createLazyDataset(data);
@@ -208,7 +209,7 @@ public class LazyDatasetTest {
 	}
 
 	@Test
-	public void testTranspose() {
+	public void testTranspose() throws DatasetException {
 		Dataset data = Random.rand(new int[] {1, 2, 3, 4});
 		data.setName("random");
 		LazyDataset ld = LazyDataset.createLazyDataset(data);
@@ -269,7 +270,7 @@ public class LazyDatasetTest {
 	}
 
 	@Test
-	public void testSlicePadRankSlice() {
+	public void testSlicePadRankSlice() throws DatasetException {
 		Dataset data = Random.rand(new int[] { 10 });
 		data.setName("random");
 		LazyDataset ld = LazyDataset.createLazyDataset(data);

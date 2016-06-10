@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import org.eclipse.dawnsci.analysis.api.dataset.DataEvent;
+import org.eclipse.dawnsci.analysis.api.dataset.DatasetException;
 import org.eclipse.dawnsci.analysis.api.dataset.IDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.ILazyWriteableDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.Slice;
@@ -87,17 +88,16 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 			}
 
 			@Override
-			public void initialize() throws Exception {
+			public void initialize() throws IOException {
 			}
 
 			@Override
-			public Dataset getDataset(IMonitor mon, SliceND slice)
-					throws Exception {
+			public Dataset getDataset(IMonitor mon, SliceND slice) throws IOException {
 				return d.getSlice(mon, slice);
 			}
 
 			@Override
-			public void setSlice(IMonitor mon, IDataset data, SliceND slice) throws Exception {
+			public void setSlice(IMonitor mon, IDataset data, SliceND slice) throws IOException {
 				if (slice.isExpanded()) {
 					Dataset od = d;
 					d = DatasetFactory.zeros(slice.getSourceShape(), od.getDtype());
@@ -161,14 +161,14 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 	 * 
 	 * @param data
 	 * @param slice an n-D slice
-	 * @throws Exception 
+	 * @throws DatasetException 
 	 */
-	public void setSlice(IDataset data, SliceND slice) throws Exception {
+	public void setSlice(IDataset data, SliceND slice) throws DatasetException {
 		setSlice(null, data, slice);
 	}
 
 	@Override
-	public void setSlice(IMonitor monitor, IDataset data, SliceND slice) throws Exception {
+	public void setSlice(IMonitor monitor, IDataset data, SliceND slice) throws DatasetException {
 		int[] dshape = data instanceof Dataset ? ((Dataset) data).getShapeRef() : data.getShape();
 		if (dshape.length == 0) { // fix zero-rank case
 			dshape = new int[] {1};
@@ -186,17 +186,21 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 			((ILazyWriteableDataset) base).setSlice(monitor, data, nslice);
 		} else {
 			if (saver == null || !saver.isFileWriteable()) {
-				throw new IOException("Cannot write to file!");
+				throw new DatasetException("Cannot write to file!");
 			}
 
-			saver.setSlice(monitor, data, nslice);
+			try {
+				saver.setSlice(monitor, data, nslice);
+			} catch (IOException e) {
+				throw new DatasetException("Could not saving dataset", e);
+			}
 			refreshShape();
 			eventDelegate.fire(new DataEvent(name, shape));
 		}
 	}
 
 	@Override
-	public void setSlice(IMonitor monitor, IDataset data, int[] start, int[] stop, int[] step) throws Exception {
+	public void setSlice(IMonitor monitor, IDataset data, int[] start, int[] stop, int[] step) throws DatasetException {
 		setSlice(monitor, data, new SliceND(shape, maxShape, start, stop, step));
 	}
 

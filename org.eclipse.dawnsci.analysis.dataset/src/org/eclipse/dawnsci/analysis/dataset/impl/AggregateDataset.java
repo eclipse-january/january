@@ -16,6 +16,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.dawnsci.analysis.api.dataset.DatasetException;
 import org.eclipse.dawnsci.analysis.api.dataset.ILazyDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.Slice;
 import org.eclipse.dawnsci.analysis.api.dataset.SliceND;
@@ -215,22 +216,17 @@ public class AggregateDataset extends LazyDatasetBase implements ILazyDataset {
 	}
 
 	@Override
-	public Dataset getSlice(int[] start, int[] stop, int[] step) {
-		try {
-			return getSlice(null, new SliceND(shape, start, stop, step));
-		} catch (Exception e) {
-			logger.error("Problem slicing aggregate dataset", e);
-		}
-		return null;
+	public Dataset getSlice(int[] start, int[] stop, int[] step) throws DatasetException {
+		return getSlice(null, new SliceND(shape, start, stop, step));
 	}
 
 	@Override
-	public Dataset getSlice(IMonitor monitor, int[] start, int[] stop, int[] step) throws Exception {
+	public Dataset getSlice(IMonitor monitor, int[] start, int[] stop, int[] step) throws DatasetException {
 		return getSlice(monitor, new SliceND(shape, start, stop, step));
 	}
 
 	@Override
-	public Dataset getSlice(IMonitor monitor, SliceND slice) throws Exception {
+	public Dataset getSlice(IMonitor monitor, SliceND slice) throws DatasetException {
 		int[] start = slice.getStart();
 		int[] stop  = slice.getStop();
 		int[] step  = slice.getStep();
@@ -256,7 +252,7 @@ public class AggregateDataset extends LazyDatasetBase implements ILazyDataset {
 		ILazyDataset nd; 
 		while (p < fe) {
 			
-			if (monitor!=null && monitor.isCancelled()) throw new Exception("Slice cancelled");
+			if (monitor!=null && monitor.isCancelled()) throw new DatasetException("Slice cancelled");
 			nd = data[map[p]];
 			if (nd != od) {
 				start[0] = op - offset[map[op]];
@@ -280,27 +276,17 @@ public class AggregateDataset extends LazyDatasetBase implements ILazyDataset {
 	}
 
 	@Override
-	public Dataset getSlice(Slice... slice) {
-		try {
-			return getSlice(null, slice);
-		} catch (Exception e) {
-			logger.error("Problem slicing aggregate dataset", e);
-		}
-		return null;
+	public Dataset getSlice(Slice... slice) throws DatasetException {
+		return getSlice(null, slice);
 	}
 
 	@Override
-	public Dataset getSlice(SliceND slice) {
-		try {
-			return getSlice(null, slice);
-		} catch (Exception e) {
-			logger.error("Problem slicing aggregate dataset", e);
-		}
-		return null;
+	public Dataset getSlice(SliceND slice) throws DatasetException {
+		return getSlice(null, slice);
 	}
 
 	@Override
-	public Dataset getSlice(IMonitor monitor, Slice... slice) throws Exception {
+	public Dataset getSlice(IMonitor monitor, Slice... slice) throws DatasetException {
 		return getSlice(monitor, new SliceND(shape, slice));
 	}
 

@@ -9,6 +9,8 @@
 
 package org.eclipse.dawnsci.analysis.api.io;
 
+import java.io.IOException;
+
 import org.eclipse.dawnsci.analysis.api.dataset.IDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.SliceND;
 import org.eclipse.dawnsci.analysis.api.monitor.IMonitor;
@@ -20,8 +22,9 @@ public interface ILazySaver extends ILazyLoader {
 
 	/**
 	 * Initialize dataset in file
+	 * @throws IOException
 	 */
-	public void initialize() throws Exception;
+	public void initialize() throws IOException;
 
 	/**
 	 * 
@@ -33,7 +36,7 @@ public interface ILazySaver extends ILazyLoader {
 	 * @param mon
 	 * @param data
 	 * @param slice
-	 * @throws Exception
+	 * @throws IOException
 	 */
-	public void setSlice(IMonitor mon, IDataset data, SliceND slice) throws Exception;
+	public void setSlice(IMonitor mon, IDataset data, SliceND slice) throws IOException;
 }

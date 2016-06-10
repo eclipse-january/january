@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.dawnsci.analysis.api.dataset.DatasetException;
 import org.eclipse.dawnsci.analysis.api.dataset.IDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.ILazyDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.SliceND;
@@ -357,7 +358,12 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 
 			if (asView || (lz instanceof IDataset))
 				return lz.getSliceView(stt, stp, ste);
-			return lz.getSlice(stt, stp, ste);
+			try {
+				return lz.getSlice(stt, stp, ste);
+			} catch (DatasetException e) {
+				logger.error("Could not slice dataset in metadata", e);
+				return null;
+			}
 		}
 	}
 
@@ -848,7 +854,12 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 				d = ed.cast(is == 1 ? Dataset.FLOAT64 : Dataset.ARRAYFLOAT64);
 			} else if (!keepLazy) {
 				final int is = getElementsPerItem();
-				d = DatasetUtils.cast(d.getSlice(), is == 1 ? Dataset.FLOAT64 : Dataset.ARRAYFLOAT64);
+				try {
+					d = DatasetUtils.cast(d.getSlice(), is == 1 ? Dataset.FLOAT64 : Dataset.ARRAYFLOAT64);
+				} catch (DatasetException e) {
+					logger.error("Could not get data from lazy dataset", e);
+					return null;
+				}
 			}
 		} else {
 			final int is = getElementsPerItem();

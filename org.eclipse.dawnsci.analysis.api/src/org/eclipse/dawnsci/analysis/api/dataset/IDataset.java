@@ -168,6 +168,16 @@ public interface IDataset extends ILazyDataset {
 	@Override
 	public IMetadata getMetadata();
 
+	@Override
+	public IDataset getSlice(int[] start, int[] stop, int[] step);
+
+	@Override
+	public IDataset getSlice(Slice... slice);
+
+	@Override
+	public IDataset getSlice(SliceND slice);
+
+	
 	/**
 	 * Get a slice of the dataset. The returned dataset is a view on a selection of items
 	 * 

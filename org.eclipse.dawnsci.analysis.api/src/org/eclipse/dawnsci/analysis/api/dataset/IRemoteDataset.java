@@ -25,13 +25,13 @@ public interface IRemoteDataset extends IFileConnection, ILazyDataset, IDynamicD
 	 * @return Data set 
 	 */
 	public String getDataset();
-	
+
 	/**
 	 * The data set location/name in the file
 	 * @param dataset
 	 */
 	public void setDataset(String dataset);
-	
+
 	/**
 	 * If set to true the DataServer will not cache the dataset. 
 	 * If left as false: if the data server can figure out that the 
@@ -48,9 +48,8 @@ public interface IRemoteDataset extends IFileConnection, ILazyDataset, IDynamicD
 	 * @param expectWrite
 	 */
 	public void setWritingExpected(boolean expectWrite);
-	
+
 	/**
-	 * 
 	 * @return true if the remote dataset has been warned that writing is expected.
 	 */
 	public boolean isWritingExpected();
@@ -70,10 +69,8 @@ public interface IRemoteDataset extends IFileConnection, ILazyDataset, IDynamicD
 	 * thread and this runs the connection)
 	 * 
 	 */
-	default String connect() throws Exception {
-        return connect(500, TimeUnit.MILLISECONDS);
-	}
-	
+	public String connect() throws DatasetException;
+
 	/**
 	 * Cannot will connect with the DataServer to start listening
 	 * to any updates to the file should it be written in the remote file system.
@@ -81,21 +78,17 @@ public interface IRemoteDataset extends IFileConnection, ILazyDataset, IDynamicD
 	 * are read. These properties must not change in the file while you are connected.
 	 * For instance if the file is ints when you connect, it must not change data class.
 	 * 
+	 * @param time
+	 * @param unit
 	 * @return the name of the thread started to run the connection or null if each event
 	 * is driven from the event thread of the service (for instance web sockets provide the
 	 * thread and this runs the connection)
 	 */
-	default String connect(long time, TimeUnit unit) throws Exception {
-		return null;
-	}
+	public String connect(long time, TimeUnit unit) throws DatasetException;
 
 	/**
 	 * Stops listening to the dataset changing and disconnects from the server.
 	 * A remote dataset may be connected and disconnected multiple times.
 	 */
-	default void disconnect() throws Exception {
-		
-	}
-
-
+	public void disconnect() throws DatasetException;
 }

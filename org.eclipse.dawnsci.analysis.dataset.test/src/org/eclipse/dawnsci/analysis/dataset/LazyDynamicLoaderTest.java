@@ -9,6 +9,7 @@
 
 package org.eclipse.dawnsci.analysis.dataset;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 import org.eclipse.dawnsci.analysis.api.dataset.IDataset;
@@ -29,7 +30,7 @@ import org.junit.Test;
 public class LazyDynamicLoaderTest {
 	
 	@Test
-	public void testLoader() {
+	public void testLoader() throws Exception {
 		
 		Dataset range = DatasetFactory.createRange(10*13*20*20,Dataset.INT64);
 		range.setShape(new int[]{10,13,20,20} );
@@ -165,7 +166,7 @@ public class LazyDynamicLoaderTest {
 		}
 
 		@Override
-		public IDataset getDataset(IMonitor mon, SliceND slice) throws Exception {
+		public IDataset getDataset(IMonitor mon, SliceND slice) throws IOException {
 			return data.getSlice(slice);
 		}
 		

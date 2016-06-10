@@ -13,6 +13,8 @@
 package org.eclipse.dawnsci.analysis.dataset.impl;
 
 
+import java.io.IOException;
+
 import org.apache.commons.math3.random.MersenneTwister;
 import org.apache.commons.math3.random.RandomDataGenerator;
 import org.apache.commons.math3.random.RandomGenerator;
@@ -217,7 +219,7 @@ public class Random {
 			}
 
 			@Override
-			public IDataset getDataset(IMonitor mon, SliceND slice) throws Exception {
+			public IDataset getDataset(IMonitor mon, SliceND slice) throws IOException {
 				return rand(slice.getShape());
 			}
 		});
