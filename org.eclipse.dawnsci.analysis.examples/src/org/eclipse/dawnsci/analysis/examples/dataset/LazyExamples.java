@@ -13,6 +13,7 @@ package org.eclipse.dawnsci.analysis.examples.dataset;
 
 import java.util.Arrays;
 
+import org.eclipse.dawnsci.analysis.api.dataset.DatasetException;
 import org.eclipse.dawnsci.analysis.api.dataset.IDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.ILazyDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.Slice;
@@ -39,9 +40,10 @@ public class LazyExamples {
 
 	/**
 	 * Lazy datasets can exist which are too big to fit in memory
+	 * @throws Exception 
 	 */
 	@Test
-	public void lazyLarge1() {
+	public void lazyLarge1() throws DatasetException {
 		
 		// At the time of writing this code, this data will not fit in memory
 		final ILazyDataset lz = Random.lazyRand(10000, 2048, 2048);
@@ -58,9 +60,10 @@ public class LazyExamples {
 	
 	/**
 	 * You may slice from lazy to lazy too.
+	 * @throws Exception 
 	 */
 	@Test
-	public void lazyLarge2() {
+	public void lazyLarge2() throws DatasetException {
 		
 		// At the time of writing this code, this data will not fit in memory
 		final ILazyDataset lz = Random.lazyRand(10000, 2048, 2048);
@@ -77,9 +80,10 @@ public class LazyExamples {
 	
 	/**
 	 * Lazy maths can be done on lazy datasets (also available from the GUI)
+	 * @throws Exception 
 	 */
 	@Test
-	public void lazyMaths() {
+	public void lazyMaths() throws DatasetException {
 
 		final ILazyDataset lz = Random.lazyRand(100, 2048, 2048);
 

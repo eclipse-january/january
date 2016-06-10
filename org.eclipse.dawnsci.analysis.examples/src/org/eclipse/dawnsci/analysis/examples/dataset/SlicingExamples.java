@@ -14,6 +14,7 @@ package org.eclipse.dawnsci.analysis.examples.dataset;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.dawnsci.analysis.api.dataset.DatasetException;
 import org.eclipse.dawnsci.analysis.api.dataset.IDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.ILazyDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.Slice;
@@ -34,9 +35,10 @@ public class SlicingExamples {
 
 	/**
 	 * Slice using basic int[]
+	 * @throws Exception 
 	 */
 	@Test
-	public void iterateImages1() {
+	public void iterateImages1() throws DatasetException {
 		
 		final ILazyDataset lz = Random.lazyRand(64, 100, 100);
 		int count = 0;
@@ -50,9 +52,10 @@ public class SlicingExamples {
 	
 	/**
 	 * Slice using basic Slice object
+	 * @throws Exception 
 	 */
 	@Test
-	public void iterateImages2() {
+	public void iterateImages2() throws DatasetException {
 		
 		final ILazyDataset lz = Random.lazyRand(64, 100, 100);
 		int count = 0;
