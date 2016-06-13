@@ -3,7 +3,6 @@
 package geometry.impl;
 
 import geometry.*;
-
 import java.nio.file.Path;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;

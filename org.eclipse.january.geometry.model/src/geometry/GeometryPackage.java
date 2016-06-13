@@ -60,136 +60,6 @@ public interface GeometryPackage extends EPackage {
 	GeometryPackage eINSTANCE = geometry.impl.GeometryPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link geometry.INode <em>INode</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.INode
-	 * @see geometry.impl.GeometryPackageImpl#getINode()
-	 * @generated
-	 */
-	int INODE = 8;
-
-	/**
-	 * The meta object id for the '{@link geometry.impl.ShapeImpl <em>Shape</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.ShapeImpl
-	 * @see geometry.impl.GeometryPackageImpl#getShape()
-	 * @generated
-	 */
-	int SHAPE = 0;
-
-	/**
-	 * The meta object id for the '{@link geometry.impl.TriangleImpl <em>Triangle</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.TriangleImpl
-	 * @see geometry.impl.GeometryPackageImpl#getTriangle()
-	 * @generated
-	 */
-	int TRIANGLE = 1;
-
-	/**
-	 * The meta object id for the '{@link geometry.impl.VertexImpl <em>Vertex</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.VertexImpl
-	 * @see geometry.impl.GeometryPackageImpl#getVertex()
-	 * @generated
-	 */
-	int VERTEX = 2;
-
-	/**
-	 * The meta object id for the '{@link geometry.impl.SphereImpl <em>Sphere</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.SphereImpl
-	 * @see geometry.impl.GeometryPackageImpl#getSphere()
-	 * @generated
-	 */
-	int SPHERE = 3;
-
-	/**
-	 * The meta object id for the '{@link geometry.impl.CubeImpl <em>Cube</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.CubeImpl
-	 * @see geometry.impl.GeometryPackageImpl#getCube()
-	 * @generated
-	 */
-	int CUBE = 4;
-
-	/**
-	 * The meta object id for the '{@link geometry.impl.CylinderImpl <em>Cylinder</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.CylinderImpl
-	 * @see geometry.impl.GeometryPackageImpl#getCylinder()
-	 * @generated
-	 */
-	int CYLINDER = 5;
-
-	/**
-	 * The meta object id for the '{@link geometry.impl.GeometryImpl <em>Geometry</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.GeometryImpl
-	 * @see geometry.impl.GeometryPackageImpl#getGeometry()
-	 * @generated
-	 */
-	int GEOMETRY = 6;
-
-	/**
-	 * The meta object id for the '{@link geometry.impl.TubeImpl <em>Tube</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.TubeImpl
-	 * @see geometry.impl.GeometryPackageImpl#getTube()
-	 * @generated
-	 */
-	int TUBE = 7;
-
-	/**
-	 * The meta object id for the '{@link geometry.impl.OperatorImpl <em>Operator</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.OperatorImpl
-	 * @see geometry.impl.GeometryPackageImpl#getOperator()
-	 * @generated
-	 */
-	int OPERATOR = 9;
-
-	/**
-	 * The meta object id for the '{@link geometry.impl.UnionImpl <em>Union</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.UnionImpl
-	 * @see geometry.impl.GeometryPackageImpl#getUnion()
-	 * @generated
-	 */
-	int UNION = 10;
-
-	/**
-	 * The meta object id for the '{@link geometry.impl.IntersectionImpl <em>Intersection</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.IntersectionImpl
-	 * @see geometry.impl.GeometryPackageImpl#getIntersection()
-	 * @generated
-	 */
-	int INTERSECTION = 11;
-
-	/**
-	 * The meta object id for the '{@link geometry.impl.ComplementImpl <em>Complement</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.ComplementImpl
-	 * @see geometry.impl.GeometryPackageImpl#getComplement()
-	 * @generated
-	 */
-	int COMPLEMENT = 12;
-
-	/**
 	 * The meta object id for the '{@link geometry.ISubjectShape <em>ISubject Shape</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -234,6 +104,16 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int ISUBJECT_SHAPE_OPERATION_COUNT = 2;
+
+	/**
+	 * The meta object id for the '{@link geometry.impl.ShapeImpl <em>Shape</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.impl.ShapeImpl
+	 * @see geometry.impl.GeometryPackageImpl#getShape()
+	 * @generated
+	 */
+	int SHAPE = 0;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -362,6 +242,16 @@ public interface GeometryPackage extends EPackage {
 	int SHAPE_OPERATION_COUNT = ISUBJECT_SHAPE_OPERATION_COUNT + 3;
 
 	/**
+	 * The meta object id for the '{@link geometry.impl.TriangleImpl <em>Triangle</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.impl.TriangleImpl
+	 * @see geometry.impl.GeometryPackageImpl#getTriangle()
+	 * @generated
+	 */
+	int TRIANGLE = 1;
+
+	/**
 	 * The feature id for the '<em><b>Normal</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -396,6 +286,16 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int TRIANGLE_OPERATION_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link geometry.impl.VertexImpl <em>Vertex</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.impl.VertexImpl
+	 * @see geometry.impl.GeometryPackageImpl#getVertex()
+	 * @generated
+	 */
+	int VERTEX = 2;
 
 	/**
 	 * The feature id for the '<em><b>X</b></em>' attribute.
@@ -441,6 +341,16 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int VERTEX_OPERATION_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link geometry.impl.SphereImpl <em>Sphere</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.impl.SphereImpl
+	 * @see geometry.impl.GeometryPackageImpl#getSphere()
+	 * @generated
+	 */
+	int SPHERE = 3;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -578,6 +488,16 @@ public interface GeometryPackage extends EPackage {
 	int SPHERE_OPERATION_COUNT = SHAPE_OPERATION_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link geometry.impl.CubeImpl <em>Cube</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.impl.CubeImpl
+	 * @see geometry.impl.GeometryPackageImpl#getCube()
+	 * @generated
+	 */
+	int CUBE = 4;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -711,6 +631,16 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int CUBE_OPERATION_COUNT = SHAPE_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link geometry.impl.CylinderImpl <em>Cylinder</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.impl.CylinderImpl
+	 * @see geometry.impl.GeometryPackageImpl#getCylinder()
+	 * @generated
+	 */
+	int CYLINDER = 5;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -857,6 +787,16 @@ public interface GeometryPackage extends EPackage {
 	int CYLINDER_OPERATION_COUNT = SHAPE_OPERATION_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link geometry.INode <em>INode</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.INode
+	 * @see geometry.impl.GeometryPackageImpl#getINode()
+	 * @generated
+	 */
+	int INODE = 8;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -902,6 +842,16 @@ public interface GeometryPackage extends EPackage {
 	int INODE_OPERATION_COUNT = 0;
 
 	/**
+	 * The meta object id for the '{@link geometry.impl.GeometryImpl <em>Geometry</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.impl.GeometryImpl
+	 * @see geometry.impl.GeometryPackageImpl#getGeometry()
+	 * @generated
+	 */
+	int GEOMETRY = 6;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -945,6 +895,16 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int GEOMETRY_OPERATION_COUNT = INODE_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link geometry.impl.TubeImpl <em>Tube</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.impl.TubeImpl
+	 * @see geometry.impl.GeometryPackageImpl#getTube()
+	 * @generated
+	 */
+	int TUBE = 7;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1100,6 +1060,16 @@ public interface GeometryPackage extends EPackage {
 	int TUBE_OPERATION_COUNT = SHAPE_OPERATION_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link geometry.impl.OperatorImpl <em>Operator</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.impl.OperatorImpl
+	 * @see geometry.impl.GeometryPackageImpl#getOperator()
+	 * @generated
+	 */
+	int OPERATOR = 9;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1143,6 +1113,16 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int OPERATOR_OPERATION_COUNT = INODE_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link geometry.impl.UnionImpl <em>Union</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.impl.UnionImpl
+	 * @see geometry.impl.GeometryPackageImpl#getUnion()
+	 * @generated
+	 */
+	int UNION = 10;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1190,6 +1170,16 @@ public interface GeometryPackage extends EPackage {
 	int UNION_OPERATION_COUNT = OPERATOR_OPERATION_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link geometry.impl.IntersectionImpl <em>Intersection</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.impl.IntersectionImpl
+	 * @see geometry.impl.GeometryPackageImpl#getIntersection()
+	 * @generated
+	 */
+	int INTERSECTION = 11;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1233,6 +1223,16 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int INTERSECTION_OPERATION_COUNT = OPERATOR_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link geometry.impl.ComplementImpl <em>Complement</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.impl.ComplementImpl
+	 * @see geometry.impl.GeometryPackageImpl#getComplement()
+	 * @generated
+	 */
+	int COMPLEMENT = 12;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1510,7 +1510,6 @@ public interface GeometryPackage extends EPackage {
 	 */
 	int SHAPE_CHANGE_EVENT_TYPE = 19;
 
-
 	/**
 	 * The meta object id for the '<em>Path</em>' data type.
 	 * <!-- begin-user-doc -->
@@ -1520,7 +1519,6 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 */
 	int PATH = 20;
-
 
 	/**
 	 * Returns the meta object for class '{@link geometry.Shape <em>Shape</em>}'.
@@ -1617,17 +1615,6 @@ public interface GeometryPackage extends EPackage {
 	EClass getTriangle();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link geometry.Triangle#getVertices <em>Vertices</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Vertices</em>'.
-	 * @see geometry.Triangle#getVertices()
-	 * @see #getTriangle()
-	 * @generated
-	 */
-	EReference getTriangle_Vertices();
-
-	/**
 	 * Returns the meta object for the containment reference '{@link geometry.Triangle#getNormal <em>Normal</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1637,6 +1624,17 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getTriangle_Normal();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link geometry.Triangle#getVertices <em>Vertices</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Vertices</em>'.
+	 * @see geometry.Triangle#getVertices()
+	 * @see #getTriangle()
+	 * @generated
+	 */
+	EReference getTriangle_Vertices();
 
 	/**
 	 * Returns the meta object for class '{@link geometry.Vertex <em>Vertex</em>}'.
@@ -2156,20 +2154,20 @@ public interface GeometryPackage extends EPackage {
 		EClass TRIANGLE = eINSTANCE.getTriangle();
 
 		/**
-		 * The meta object literal for the '<em><b>Vertices</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference TRIANGLE__VERTICES = eINSTANCE.getTriangle_Vertices();
-
-		/**
 		 * The meta object literal for the '<em><b>Normal</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference TRIANGLE__NORMAL = eINSTANCE.getTriangle_Normal();
+
+		/**
+		 * The meta object literal for the '<em><b>Vertices</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TRIANGLE__VERTICES = eINSTANCE.getTriangle_Vertices();
 
 		/**
 		 * The meta object literal for the '{@link geometry.impl.VertexImpl <em>Vertex</em>}' class.
