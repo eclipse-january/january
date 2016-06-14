@@ -4,7 +4,7 @@ package geometry.tests;
 
 import geometry.Cube;
 import geometry.GeometryFactory;
-
+import geometry.Tube;
 import junit.textui.TestRunner;
 
 /**
@@ -65,6 +65,25 @@ public class CubeTest extends ShapeTest {
 	@Override
 	protected void tearDown() throws Exception {
 		setFixture(null);
+	}
+	
+	/**
+	 * Check that only valid values are accepted for the properties.
+	 * 
+	 * @generated NOT
+	 */
+	public void checkProperties(){
+		
+		//The cube to be tested
+		Cube cube = GeometryFactory.eINSTANCE.createCube();
+		
+		//Check that the length can be set
+		cube.setSideLength(1);
+		assertEquals(1, cube.getSideLength());
+		
+		//Check that invalid values are ignored
+		cube.setSideLength(-1);
+		assertEquals(1, cube.getSideLength());
 	}
 
 } //CubeTest

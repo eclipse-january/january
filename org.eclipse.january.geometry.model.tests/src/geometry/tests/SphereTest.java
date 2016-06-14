@@ -2,6 +2,7 @@
  */
 package geometry.tests;
 
+import geometry.Cube;
 import geometry.GeometryFactory;
 import geometry.Sphere;
 
@@ -65,6 +66,25 @@ public class SphereTest extends ShapeTest {
 	@Override
 	protected void tearDown() throws Exception {
 		setFixture(null);
+	}
+	
+	/**
+	 * Check that only valid values are accepted for the properties.
+	 * 
+	 * @generated NOT
+	 */
+	public void checkProperties(){
+		
+		//The cube to be tested
+		Sphere sphere = GeometryFactory.eINSTANCE.createSphere();
+		
+		//Check that the radius can be set
+		sphere.setRadius(1);
+		assertEquals(1, sphere.getRadius());
+		
+		//Check that invalid values are ignored
+		sphere.setRadius(-1);
+		assertEquals(1, sphere.getRadius());
 	}
 
 } //SphereTest

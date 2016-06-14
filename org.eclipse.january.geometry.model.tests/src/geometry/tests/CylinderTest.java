@@ -2,6 +2,7 @@
  */
 package geometry.tests;
 
+import geometry.Cube;
 import geometry.Cylinder;
 import geometry.GeometryFactory;
 
@@ -65,6 +66,33 @@ public class CylinderTest extends ShapeTest {
 	@Override
 	protected void tearDown() throws Exception {
 		setFixture(null);
+	}
+	
+	/**
+	 * Check that only valid values are accepted for the properties.
+	 * 
+	 * @generated NOT
+	 */
+	public void checkProperties(){
+		
+		//The cube to be tested
+		Cylinder cylinder = GeometryFactory.eINSTANCE.createCylinder();
+		
+		//Check that the height can be set
+		cylinder.setHeight(1);
+		assertEquals(1, cylinder.getHeight());
+		
+		//Check that invalid values are ignored
+		cylinder.setHeight(-1);
+		assertEquals(1, cylinder.getHeight());
+		
+		//Check that the radius can be set
+		cylinder.setRadius(1);
+		assertEquals(1, cylinder.getRadius());
+		
+		//Check that invalid values are ignored
+		cylinder.setRadius(-1);
+		assertEquals(1, cylinder.getRadius());
 	}
 
 } //CylinderTest

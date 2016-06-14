@@ -143,13 +143,22 @@ public interface GeometryPackage extends EPackage {
 	int SHAPE__NODES = ISUBJECT_SHAPE_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE__TYPE = ISUBJECT_SHAPE_FEATURE_COUNT + 3;
+
+	/**
 	 * The feature id for the '<em><b>Triangles</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SHAPE__TRIANGLES = ISUBJECT_SHAPE_FEATURE_COUNT + 3;
+	int SHAPE__TRIANGLES = ISUBJECT_SHAPE_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Center</b></em>' reference.
@@ -158,16 +167,7 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SHAPE__CENTER = ISUBJECT_SHAPE_FEATURE_COUNT + 4;
-
-	/**
-	 * The feature id for the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHAPE__TYPE = ISUBJECT_SHAPE_FEATURE_COUNT + 5;
+	int SHAPE__CENTER = ISUBJECT_SHAPE_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Material</b></em>' containment reference.
@@ -380,6 +380,15 @@ public interface GeometryPackage extends EPackage {
 	int SPHERE__NODES = SHAPE__NODES;
 
 	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SPHERE__TYPE = SHAPE__TYPE;
+
+	/**
 	 * The feature id for the '<em><b>Triangles</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -396,15 +405,6 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int SPHERE__CENTER = SHAPE__CENTER;
-
-	/**
-	 * The feature id for the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SPHERE__TYPE = SHAPE__TYPE;
 
 	/**
 	 * The feature id for the '<em><b>Material</b></em>' containment reference.
@@ -525,6 +525,15 @@ public interface GeometryPackage extends EPackage {
 	int CUBE__NODES = SHAPE__NODES;
 
 	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CUBE__TYPE = SHAPE__TYPE;
+
+	/**
 	 * The feature id for the '<em><b>Triangles</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -541,15 +550,6 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int CUBE__CENTER = SHAPE__CENTER;
-
-	/**
-	 * The feature id for the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CUBE__TYPE = SHAPE__TYPE;
 
 	/**
 	 * The feature id for the '<em><b>Material</b></em>' containment reference.
@@ -670,6 +670,15 @@ public interface GeometryPackage extends EPackage {
 	int CYLINDER__NODES = SHAPE__NODES;
 
 	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CYLINDER__TYPE = SHAPE__TYPE;
+
+	/**
 	 * The feature id for the '<em><b>Triangles</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -686,15 +695,6 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int CYLINDER__CENTER = SHAPE__CENTER;
-
-	/**
-	 * The feature id for the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CYLINDER__TYPE = SHAPE__TYPE;
 
 	/**
 	 * The feature id for the '<em><b>Material</b></em>' containment reference.
@@ -824,13 +824,31 @@ public interface GeometryPackage extends EPackage {
 	int INODE__NODES = 2;
 
 	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INODE__TYPE = 3;
+
+	/**
+	 * The feature id for the '<em><b>Triangles</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INODE__TRIANGLES = 4;
+
+	/**
 	 * The number of structural features of the '<em>INode</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INODE_FEATURE_COUNT = 3;
+	int INODE_FEATURE_COUNT = 5;
 
 	/**
 	 * The number of operations of the '<em>INode</em>' class.
@@ -877,6 +895,24 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int GEOMETRY__NODES = INODE__NODES;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GEOMETRY__TYPE = INODE__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Triangles</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GEOMETRY__TRIANGLES = INODE__TRIANGLES;
 
 	/**
 	 * The number of structural features of the '<em>Geometry</em>' class.
@@ -934,6 +970,15 @@ public interface GeometryPackage extends EPackage {
 	int TUBE__NODES = SHAPE__NODES;
 
 	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TUBE__TYPE = SHAPE__TYPE;
+
+	/**
 	 * The feature id for the '<em><b>Triangles</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -950,15 +995,6 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int TUBE__CENTER = SHAPE__CENTER;
-
-	/**
-	 * The feature id for the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TUBE__TYPE = SHAPE__TYPE;
 
 	/**
 	 * The feature id for the '<em><b>Material</b></em>' containment reference.
@@ -1097,6 +1133,24 @@ public interface GeometryPackage extends EPackage {
 	int OPERATOR__NODES = INODE__NODES;
 
 	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATOR__TYPE = INODE__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Triangles</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATOR__TRIANGLES = INODE__TRIANGLES;
+
+	/**
 	 * The number of structural features of the '<em>Operator</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1150,6 +1204,24 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int UNION__NODES = OPERATOR__NODES;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNION__TYPE = OPERATOR__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Triangles</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNION__TRIANGLES = OPERATOR__TRIANGLES;
 
 	/**
 	 * The number of structural features of the '<em>Union</em>' class.
@@ -1207,6 +1279,24 @@ public interface GeometryPackage extends EPackage {
 	int INTERSECTION__NODES = OPERATOR__NODES;
 
 	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERSECTION__TYPE = OPERATOR__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Triangles</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERSECTION__TRIANGLES = OPERATOR__TRIANGLES;
+
+	/**
 	 * The number of structural features of the '<em>Intersection</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1260,6 +1350,24 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int COMPLEMENT__NODES = OPERATOR__NODES;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPLEMENT__TYPE = OPERATOR__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Triangles</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPLEMENT__TRIANGLES = OPERATOR__TRIANGLES;
 
 	/**
 	 * The number of structural features of the '<em>Complement</em>' class.
@@ -1531,17 +1639,6 @@ public interface GeometryPackage extends EPackage {
 	EClass getShape();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link geometry.Shape#getTriangles <em>Triangles</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Triangles</em>'.
-	 * @see geometry.Shape#getTriangles()
-	 * @see #getShape()
-	 * @generated
-	 */
-	EReference getShape_Triangles();
-
-	/**
 	 * Returns the meta object for the reference '{@link geometry.Shape#getCenter <em>Center</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1551,17 +1648,6 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getShape_Center();
-
-	/**
-	 * Returns the meta object for the attribute '{@link geometry.Shape#getType <em>Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Type</em>'.
-	 * @see geometry.Shape#getType()
-	 * @see #getShape()
-	 * @generated
-	 */
-	EAttribute getShape_Type();
 
 	/**
 	 * Returns the meta object for the containment reference '{@link geometry.Shape#getMaterial <em>Material</em>}'.
@@ -1690,11 +1776,11 @@ public interface GeometryPackage extends EPackage {
 	EClass getSphere();
 
 	/**
-	 * Returns the meta object for the attribute '{@link geometry.Sphere <em>Radius</em>}'.
+	 * Returns the meta object for the attribute '{@link geometry.Sphere#getRadius <em>Radius</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Radius</em>'.
-	 * @see geometry.Sphere
+	 * @see geometry.Sphere#getRadius()
 	 * @see #getSphere()
 	 * @generated
 	 */
@@ -1711,11 +1797,11 @@ public interface GeometryPackage extends EPackage {
 	EClass getCube();
 
 	/**
-	 * Returns the meta object for the attribute '{@link geometry.Cube <em>Side Length</em>}'.
+	 * Returns the meta object for the attribute '{@link geometry.Cube#getSideLength <em>Side Length</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Side Length</em>'.
-	 * @see geometry.Cube
+	 * @see geometry.Cube#getSideLength()
 	 * @see #getCube()
 	 * @generated
 	 */
@@ -1743,11 +1829,11 @@ public interface GeometryPackage extends EPackage {
 	EAttribute getCylinder_Radius();
 
 	/**
-	 * Returns the meta object for the attribute '{@link geometry.Cylinder <em>Height</em>}'.
+	 * Returns the meta object for the attribute '{@link geometry.Cylinder#getHeight <em>Height</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Height</em>'.
-	 * @see geometry.Cylinder
+	 * @see geometry.Cylinder#getHeight()
 	 * @see #getCylinder()
 	 * @generated
 	 */
@@ -1774,33 +1860,33 @@ public interface GeometryPackage extends EPackage {
 	EClass getTube();
 
 	/**
-	 * Returns the meta object for the attribute '{@link geometry.Tube <em>Height</em>}'.
+	 * Returns the meta object for the attribute '{@link geometry.Tube#getHeight <em>Height</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Height</em>'.
-	 * @see geometry.Tube
+	 * @see geometry.Tube#getHeight()
 	 * @see #getTube()
 	 * @generated
 	 */
 	EAttribute getTube_Height();
 
 	/**
-	 * Returns the meta object for the attribute '{@link geometry.Tube <em>Inner Radius</em>}'.
+	 * Returns the meta object for the attribute '{@link geometry.Tube#getInnerRadius <em>Inner Radius</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Inner Radius</em>'.
-	 * @see geometry.Tube
+	 * @see geometry.Tube#getInnerRadius()
 	 * @see #getTube()
 	 * @generated
 	 */
 	EAttribute getTube_InnerRadius();
 
 	/**
-	 * Returns the meta object for the attribute '{@link geometry.Tube <em>Radius</em>}'.
+	 * Returns the meta object for the attribute '{@link geometry.Tube#getRadius <em>Radius</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Radius</em>'.
-	 * @see geometry.Tube
+	 * @see geometry.Tube#getRadius()
 	 * @see #getTube()
 	 * @generated
 	 */
@@ -1848,6 +1934,28 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getINode_Nodes();
+
+	/**
+	 * Returns the meta object for the attribute '{@link geometry.INode#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type</em>'.
+	 * @see geometry.INode#getType()
+	 * @see #getINode()
+	 * @generated
+	 */
+	EAttribute getINode_Type();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link geometry.INode#getTriangles <em>Triangles</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Triangles</em>'.
+	 * @see geometry.INode#getTriangles()
+	 * @see #getINode()
+	 * @generated
+	 */
+	EReference getINode_Triangles();
 
 	/**
 	 * Returns the meta object for class '{@link geometry.Operator <em>Operator</em>}'.
@@ -2088,28 +2196,12 @@ public interface GeometryPackage extends EPackage {
 		EClass SHAPE = eINSTANCE.getShape();
 
 		/**
-		 * The meta object literal for the '<em><b>Triangles</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference SHAPE__TRIANGLES = eINSTANCE.getShape_Triangles();
-
-		/**
 		 * The meta object literal for the '<em><b>Center</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference SHAPE__CENTER = eINSTANCE.getShape_Center();
-
-		/**
-		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute SHAPE__TYPE = eINSTANCE.getShape_Type();
 
 		/**
 		 * The meta object literal for the '<em><b>Material</b></em>' containment reference feature.
@@ -2342,6 +2434,22 @@ public interface GeometryPackage extends EPackage {
 		 * @generated
 		 */
 		EReference INODE__NODES = eINSTANCE.getINode_Nodes();
+
+		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute INODE__TYPE = eINSTANCE.getINode_Type();
+
+		/**
+		 * The meta object literal for the '<em><b>Triangles</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference INODE__TRIANGLES = eINSTANCE.getINode_Triangles();
 
 		/**
 		 * The meta object literal for the '{@link geometry.impl.OperatorImpl <em>Operator</em>}' class.

@@ -2,19 +2,16 @@
  */
 package geometry.impl;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import geometry.Cube;
 import geometry.GeometryPackage;
 
-import org.eclipse.emf.common.notify.Notification;
-
-import org.eclipse.emf.ecore.EClass;
-
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Cube</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '
+ * <em><b>Cube</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -27,8 +24,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class CubeImpl extends ShapeImpl implements Cube {
 	/**
 	 * The default value of the '{@link #getSideLength() <em>Side Length</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getSideLength()
 	 * @generated
 	 * @ordered
@@ -37,8 +33,7 @@ public class CubeImpl extends ShapeImpl implements Cube {
 
 	/**
 	 * The cached value of the '{@link #getSideLength() <em>Side Length</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getSideLength()
 	 * @generated
 	 * @ordered
@@ -46,8 +41,7 @@ public class CubeImpl extends ShapeImpl implements Cube {
 	protected double sideLength = SIDE_LENGTH_EDEFAULT;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected CubeImpl() {
@@ -55,8 +49,7 @@ public class CubeImpl extends ShapeImpl implements Cube {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -65,29 +58,42 @@ public class CubeImpl extends ShapeImpl implements Cube {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public double getSideLength() {
 		return sideLength;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
 	 */
+	@Override
 	public void setSideLength(double newSideLength) {
-		double oldSideLength = sideLength;
-		sideLength = newSideLength;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, GeometryPackage.CUBE__SIDE_LENGTH, oldSideLength, sideLength));
+
+		// Ignore negative side lengths
+		if (newSideLength >= 0) {
+			double oldSideLength = sideLength;
+			sideLength = newSideLength;
+			if (eNotificationRequired())
+				eNotify(new ENotificationImpl(this, Notification.SET,
+						GeometryPackage.CUBE__SIDE_LENGTH, oldSideLength,
+						sideLength));
+		}
+
+		// Log an error for an invalid value
+		else {
+			logger.error("An attempt was made to change cube " + name + " " + id
+					+ "'s side length to the invalid value " + newSideLength
+					+ ".");
+		}
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -100,8 +106,7 @@ public class CubeImpl extends ShapeImpl implements Cube {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -115,8 +120,7 @@ public class CubeImpl extends ShapeImpl implements Cube {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -130,8 +134,7 @@ public class CubeImpl extends ShapeImpl implements Cube {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -144,8 +147,7 @@ public class CubeImpl extends ShapeImpl implements Cube {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -159,4 +161,4 @@ public class CubeImpl extends ShapeImpl implements Cube {
 		return result.toString();
 	}
 
-} //CubeImpl
+} // CubeImpl
