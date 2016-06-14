@@ -2,19 +2,16 @@
  */
 package geometry.impl;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import geometry.GeometryPackage;
 import geometry.Sphere;
 
-import org.eclipse.emf.common.notify.Notification;
-
-import org.eclipse.emf.ecore.EClass;
-
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Sphere</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '
+ * <em><b>Sphere</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -27,8 +24,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class SphereImpl extends ShapeImpl implements Sphere {
 	/**
 	 * The default value of the '{@link #getRadius() <em>Radius</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getRadius()
 	 * @generated
 	 * @ordered
@@ -37,8 +33,7 @@ public class SphereImpl extends ShapeImpl implements Sphere {
 
 	/**
 	 * The cached value of the '{@link #getRadius() <em>Radius</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getRadius()
 	 * @generated
 	 * @ordered
@@ -46,8 +41,7 @@ public class SphereImpl extends ShapeImpl implements Sphere {
 	protected double radius = RADIUS_EDEFAULT;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected SphereImpl() {
@@ -55,8 +49,7 @@ public class SphereImpl extends ShapeImpl implements Sphere {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -65,29 +58,37 @@ public class SphereImpl extends ShapeImpl implements Sphere {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public double getRadius() {
 		return radius;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
 	 */
+	@Override
 	public void setRadius(double newRadius) {
-		double oldRadius = radius;
-		radius = newRadius;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, GeometryPackage.SPHERE__RADIUS, oldRadius, radius));
+
+		// If the value is invalid, ignore it and log an error
+		if (newRadius >= 0) {
+			double oldRadius = radius;
+			radius = newRadius;
+			if (eNotificationRequired())
+				eNotify(new ENotificationImpl(this, Notification.SET,
+						GeometryPackage.SPHERE__RADIUS, oldRadius, radius));
+		} else {
+			logger.error("An attempt was made to change sphere " + name + " "
+					+ id + "'s radius to the invalid value " + newRadius + ".");
+		}
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -100,8 +101,7 @@ public class SphereImpl extends ShapeImpl implements Sphere {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -115,8 +115,7 @@ public class SphereImpl extends ShapeImpl implements Sphere {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -130,8 +129,7 @@ public class SphereImpl extends ShapeImpl implements Sphere {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -144,8 +142,7 @@ public class SphereImpl extends ShapeImpl implements Sphere {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -159,4 +156,4 @@ public class SphereImpl extends ShapeImpl implements Sphere {
 		return result.toString();
 	}
 
-} //SphereImpl
+} // SphereImpl

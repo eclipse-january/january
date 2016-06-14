@@ -21,6 +21,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link geometry.INode#getName <em>Name</em>}</li>
  *   <li>{@link geometry.INode#getId <em>Id</em>}</li>
  *   <li>{@link geometry.INode#getNodes <em>Nodes</em>}</li>
+ *   <li>{@link geometry.INode#getType <em>Type</em>}</li>
+ *   <li>{@link geometry.INode#getTriangles <em>Triangles</em>}</li>
  * </ul>
  *
  * @see geometry.GeometryPackage#getINode()
@@ -93,4 +95,48 @@ public interface INode extends EObject {
 	 * @generated
 	 */
 	EList<INode> getNodes();
+
+	/**
+	 * Returns the value of the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Type</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * A string representing the type of entity this node represents in the tree in a human readable way. Example values might include "cube", "sphere" or "intersection."
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Type</em>' attribute.
+	 * @see #setType(String)
+	 * @see geometry.GeometryPackage#getINode_Type()
+	 * @model
+	 * @generated
+	 */
+	String getType();
+
+	/**
+	 * Sets the value of the '{@link geometry.INode#getType <em>Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Type</em>' attribute.
+	 * @see #getType()
+	 * @generated
+	 */
+	void setType(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Triangles</b></em>' containment reference list.
+	 * The list contents are of type {@link geometry.Triangle}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * A series of triangles which comprise the mesh which will represent this object graphically. If this list is empty, it will be the responsibility of other classes to determine, based on this INode's "type", what mesh, if any, should be displayed for it.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Triangles</em>' containment reference list.
+	 * @see geometry.GeometryPackage#getINode_Triangles()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<Triangle> getTriangles();
 } // INode

@@ -2,19 +2,16 @@
  */
 package geometry.impl;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import geometry.Cylinder;
 import geometry.GeometryPackage;
 
-import org.eclipse.emf.common.notify.Notification;
-
-import org.eclipse.emf.ecore.EClass;
-
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Cylinder</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '
+ * <em><b>Cylinder</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -28,8 +25,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class CylinderImpl extends ShapeImpl implements Cylinder {
 	/**
 	 * The default value of the '{@link #getRadius() <em>Radius</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getRadius()
 	 * @generated
 	 * @ordered
@@ -38,8 +34,7 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 
 	/**
 	 * The cached value of the '{@link #getRadius() <em>Radius</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getRadius()
 	 * @generated
 	 * @ordered
@@ -48,8 +43,7 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 
 	/**
 	 * The default value of the '{@link #getHeight() <em>Height</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getHeight()
 	 * @generated
 	 * @ordered
@@ -58,8 +52,7 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 
 	/**
 	 * The cached value of the '{@link #getHeight() <em>Height</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getHeight()
 	 * @generated
 	 * @ordered
@@ -67,8 +60,7 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 	protected double height = HEIGHT_EDEFAULT;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected CylinderImpl() {
@@ -76,8 +68,7 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -86,50 +77,68 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public double getRadius() {
 		return radius;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
 	 */
+	@Override
 	public void setRadius(double newRadius) {
-		double oldRadius = radius;
-		radius = newRadius;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, GeometryPackage.CYLINDER__RADIUS, oldRadius, radius));
+
+		// If the new value is invalid, ignore it and log an error
+		if (newRadius >= 0) {
+			double oldRadius = radius;
+			radius = newRadius;
+			if (eNotificationRequired())
+				eNotify(new ENotificationImpl(this, Notification.SET,
+						GeometryPackage.CYLINDER__RADIUS, oldRadius, radius));
+		} else {
+			logger.error("An attempt was made to change cylinder " + name + " "
+					+ id + "'s radius to the invalid value " + newRadius + ".");
+		}
+
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public double getHeight() {
 		return height;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
 	 */
+	@Override
 	public void setHeight(double newHeight) {
-		double oldHeight = height;
-		height = newHeight;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, GeometryPackage.CYLINDER__HEIGHT, oldHeight, height));
+
+		// If the new value is invalid, ignore it and log an error
+		if (newHeight >= 0) {
+			double oldHeight = height;
+			height = newHeight;
+			if (eNotificationRequired())
+				eNotify(new ENotificationImpl(this, Notification.SET,
+						GeometryPackage.CYLINDER__HEIGHT, oldHeight, height));
+		} else {
+			logger.error("An attempt was made to change cylinder " + name + " "
+					+ id + "'s height to the invalid value " + newHeight + ".");
+		}
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -144,8 +153,7 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -162,8 +170,7 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -180,8 +187,7 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -196,8 +202,7 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -213,4 +218,4 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 		return result.toString();
 	}
 
-} //CylinderImpl
+} // CylinderImpl

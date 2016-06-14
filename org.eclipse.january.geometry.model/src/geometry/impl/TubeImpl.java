@@ -2,19 +2,16 @@
  */
 package geometry.impl;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import geometry.GeometryPackage;
 import geometry.Tube;
 
-import org.eclipse.emf.common.notify.Notification;
-
-import org.eclipse.emf.ecore.EClass;
-
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Tube</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '
+ * <em><b>Tube</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -29,8 +26,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class TubeImpl extends ShapeImpl implements Tube {
 	/**
 	 * The default value of the '{@link #getHeight() <em>Height</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getHeight()
 	 * @generated
 	 * @ordered
@@ -39,8 +35,7 @@ public class TubeImpl extends ShapeImpl implements Tube {
 
 	/**
 	 * The cached value of the '{@link #getHeight() <em>Height</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getHeight()
 	 * @generated
 	 * @ordered
@@ -49,8 +44,7 @@ public class TubeImpl extends ShapeImpl implements Tube {
 
 	/**
 	 * The default value of the '{@link #getInnerRadius() <em>Inner Radius</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getInnerRadius()
 	 * @generated
 	 * @ordered
@@ -59,8 +53,7 @@ public class TubeImpl extends ShapeImpl implements Tube {
 
 	/**
 	 * The cached value of the '{@link #getInnerRadius() <em>Inner Radius</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getInnerRadius()
 	 * @generated
 	 * @ordered
@@ -69,8 +62,7 @@ public class TubeImpl extends ShapeImpl implements Tube {
 
 	/**
 	 * The default value of the '{@link #getRadius() <em>Radius</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getRadius()
 	 * @generated
 	 * @ordered
@@ -79,8 +71,7 @@ public class TubeImpl extends ShapeImpl implements Tube {
 
 	/**
 	 * The cached value of the '{@link #getRadius() <em>Radius</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getRadius()
 	 * @generated
 	 * @ordered
@@ -88,8 +79,7 @@ public class TubeImpl extends ShapeImpl implements Tube {
 	protected double radius = RADIUS_EDEFAULT;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected TubeImpl() {
@@ -97,8 +87,7 @@ public class TubeImpl extends ShapeImpl implements Tube {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -107,71 +96,108 @@ public class TubeImpl extends ShapeImpl implements Tube {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public double getHeight() {
 		return height;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
 	 */
+	@Override
 	public void setHeight(double newHeight) {
-		double oldHeight = height;
-		height = newHeight;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, GeometryPackage.TUBE__HEIGHT, oldHeight, height));
+
+		// If the value is invalid, ignore it and log an error
+		if (newHeight <= 0) {
+			double oldHeight = height;
+			height = newHeight;
+			if (eNotificationRequired())
+				eNotify(new ENotificationImpl(this, Notification.SET,
+						GeometryPackage.TUBE__HEIGHT, oldHeight, height));
+		} else {
+			logger.error("An attempt was made to change tube " + name + " " + id
+					+ "'s height to the invalid value " + newHeight + ".");
+		}
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public double getInnerRadius() {
 		return innerRadius;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
 	 */
+	@Override
 	public void setInnerRadius(double newInnerRadius) {
-		double oldInnerRadius = innerRadius;
-		innerRadius = newInnerRadius;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, GeometryPackage.TUBE__INNER_RADIUS, oldInnerRadius, innerRadius));
+
+		// The inner radius must not be larger than the radius. Ignore the call
+		// if it is.
+		if (newInnerRadius <= radius && newInnerRadius >= 0) {
+			double oldInnerRadius = innerRadius;
+			innerRadius = newInnerRadius;
+			if (eNotificationRequired())
+				eNotify(new ENotificationImpl(this, Notification.SET,
+						GeometryPackage.TUBE__INNER_RADIUS, oldInnerRadius,
+						innerRadius));
+		}
+
+		// Log an error if the call was invalid
+		else {
+			String suffix = (newInnerRadius < 0) ? "."
+					: ", which is greater than its outer radius.";
+			logger.error("An attempt was made to change tube " + name + " " + id
+					+ "'s radius to the invalid value " + newInnerRadius
+					+ suffix);
+		}
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public double getRadius() {
 		return radius;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
 	 */
+	@Override
 	public void setRadius(double newRadius) {
-		double oldRadius = radius;
-		radius = newRadius;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, GeometryPackage.TUBE__RADIUS, oldRadius, radius));
+
+		// If the value is invalid, ignore it and log an error
+		if (newRadius >= innerRadius && newRadius >= 0) {
+			double oldRadius = radius;
+			radius = newRadius;
+			if (eNotificationRequired())
+				eNotify(new ENotificationImpl(this, Notification.SET,
+						GeometryPackage.TUBE__RADIUS, oldRadius, radius));
+		} else {
+			String suffix = (newRadius < 0) ? "."
+					: ", which is less than its inner radius.";
+			logger.error("An attempt was made to change cylinder " + name + " "
+					+ id + "'s radius to the invalid value " + newRadius
+					+ suffix);
+		}
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -188,8 +214,7 @@ public class TubeImpl extends ShapeImpl implements Tube {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -209,8 +234,7 @@ public class TubeImpl extends ShapeImpl implements Tube {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -230,8 +254,7 @@ public class TubeImpl extends ShapeImpl implements Tube {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -248,8 +271,7 @@ public class TubeImpl extends ShapeImpl implements Tube {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -267,4 +289,4 @@ public class TubeImpl extends ShapeImpl implements Tube {
 		return result.toString();
 	}
 
-} //TubeImpl
+} // TubeImpl
