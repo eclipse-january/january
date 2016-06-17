@@ -8,7 +8,7 @@
  * Contributors:
  *   Robert Smith
  *******************************************************************************/
-package org.eclipse.eavp.geometry.view.javafx.render;
+package org.eclipse.eavp.viz.modeling;
 
 /**
  * A collection of utility methods for use with the JavaFX mesh classes.
