@@ -6,11 +6,13 @@ import geometry.Geometry;
 import geometry.GeometryPackage;
 import geometry.INode;
 import geometry.Triangle;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
@@ -221,6 +223,17 @@ public class GeometryImpl extends MinimalEObjectImpl.Container implements Geomet
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public void changeDecoratorProperty(String property, EObject value) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -331,6 +344,21 @@ public class GeometryImpl extends MinimalEObjectImpl.Container implements Geomet
 				return triangles != null && !triangles.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case GeometryPackage.GEOMETRY___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT:
+				changeDecoratorProperty((String)arguments.get(0), (EObject)arguments.get(1));
+				return null;
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

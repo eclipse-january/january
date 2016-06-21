@@ -70,7 +70,6 @@ public class GeometryFactoryImpl extends EFactoryImpl implements GeometryFactory
 			case GeometryPackage.INTERSECTION: return createIntersection();
 			case GeometryPackage.COMPLEMENT: return createComplement();
 			case GeometryPackage.MATERIAL: return createMaterial();
-			case GeometryPackage.SHAPE_CHANGE_EVENT: return createShapeChangeEvent();
 			case GeometryPackage.ASCIISTL_GEOMETRY_IMPORTER: return createASCIISTLGeometryImporter();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -85,8 +84,6 @@ public class GeometryFactoryImpl extends EFactoryImpl implements GeometryFactory
 	@Override
 	public Object createFromString(EDataType eDataType, String initialValue) {
 		switch (eDataType.getClassifierID()) {
-			case GeometryPackage.SHAPE_CHANGE_EVENT_TYPE:
-				return createShapeChangeEventTypeFromString(eDataType, initialValue);
 			case GeometryPackage.PATH:
 				return createPathFromString(eDataType, initialValue);
 			default:
@@ -102,8 +99,6 @@ public class GeometryFactoryImpl extends EFactoryImpl implements GeometryFactory
 	@Override
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID()) {
-			case GeometryPackage.SHAPE_CHANGE_EVENT_TYPE:
-				return convertShapeChangeEventTypeToString(eDataType, instanceValue);
 			case GeometryPackage.PATH:
 				return convertPathToString(eDataType, instanceValue);
 			default:
@@ -246,39 +241,9 @@ public class GeometryFactoryImpl extends EFactoryImpl implements GeometryFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ShapeChangeEvent createShapeChangeEvent() {
-		ShapeChangeEventImpl shapeChangeEvent = new ShapeChangeEventImpl();
-		return shapeChangeEvent;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public ASCIISTLGeometryImporter createASCIISTLGeometryImporter() {
 		ASCIISTLGeometryImporterImpl asciistlGeometryImporter = new ASCIISTLGeometryImporterImpl();
 		return asciistlGeometryImporter;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ShapeChangeEventType createShapeChangeEventTypeFromString(EDataType eDataType, String initialValue) {
-		ShapeChangeEventType result = ShapeChangeEventType.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-		return result;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String convertShapeChangeEventTypeToString(EDataType eDataType, Object instanceValue) {
-		return instanceValue == null ? null : instanceValue.toString();
 	}
 
 	/**
