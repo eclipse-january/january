@@ -69,7 +69,6 @@ public class GeometrySwitch<T> extends Switch<T> {
 			case GeometryPackage.SHAPE: {
 				Shape shape = (Shape)theEObject;
 				T result = caseShape(shape);
-				if (result == null) result = caseISubjectShape(shape);
 				if (result == null) result = caseINode(shape);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -90,7 +89,6 @@ public class GeometrySwitch<T> extends Switch<T> {
 				Sphere sphere = (Sphere)theEObject;
 				T result = caseSphere(sphere);
 				if (result == null) result = caseShape(sphere);
-				if (result == null) result = caseISubjectShape(sphere);
 				if (result == null) result = caseINode(sphere);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -99,7 +97,6 @@ public class GeometrySwitch<T> extends Switch<T> {
 				Cube cube = (Cube)theEObject;
 				T result = caseCube(cube);
 				if (result == null) result = caseShape(cube);
-				if (result == null) result = caseISubjectShape(cube);
 				if (result == null) result = caseINode(cube);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -108,7 +105,6 @@ public class GeometrySwitch<T> extends Switch<T> {
 				Cylinder cylinder = (Cylinder)theEObject;
 				T result = caseCylinder(cylinder);
 				if (result == null) result = caseShape(cylinder);
-				if (result == null) result = caseISubjectShape(cylinder);
 				if (result == null) result = caseINode(cylinder);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -124,7 +120,6 @@ public class GeometrySwitch<T> extends Switch<T> {
 				Tube tube = (Tube)theEObject;
 				T result = caseTube(tube);
 				if (result == null) result = caseShape(tube);
-				if (result == null) result = caseISubjectShape(tube);
 				if (result == null) result = caseINode(tube);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -166,27 +161,9 @@ public class GeometrySwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case GeometryPackage.ISUBJECT_SHAPE: {
-				ISubjectShape iSubjectShape = (ISubjectShape)theEObject;
-				T result = caseISubjectShape(iSubjectShape);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case GeometryPackage.ISHAPE_OBSERVER: {
-				IShapeObserver iShapeObserver = (IShapeObserver)theEObject;
-				T result = caseIShapeObserver(iShapeObserver);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case GeometryPackage.MATERIAL: {
 				Material material = (Material)theEObject;
 				T result = caseMaterial(material);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case GeometryPackage.SHAPE_CHANGE_EVENT: {
-				ShapeChangeEvent shapeChangeEvent = (ShapeChangeEvent)theEObject;
-				T result = caseShapeChangeEvent(shapeChangeEvent);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -403,36 +380,6 @@ public class GeometrySwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>ISubject Shape</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>ISubject Shape</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseISubjectShape(ISubjectShape object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>IShape Observer</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>IShape Observer</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseIShapeObserver(IShapeObserver object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Material</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -444,21 +391,6 @@ public class GeometrySwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseMaterial(Material object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Shape Change Event</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Shape Change Event</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseShapeChangeEvent(ShapeChangeEvent object) {
 		return null;
 	}
 

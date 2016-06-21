@@ -139,15 +139,6 @@ public interface GeometryFactory extends EFactory {
 	Material createMaterial();
 
 	/**
-	 * Returns a new object of class '<em>Shape Change Event</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Shape Change Event</em>'.
-	 * @generated
-	 */
-	ShapeChangeEvent createShapeChangeEvent();
-
-	/**
 	 * Returns a new object of class '<em>ASCIISTL Geometry Importer</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

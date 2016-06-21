@@ -139,4 +139,19 @@ public interface INode extends EObject {
 	 * @generated
 	 */
 	EList<Triangle> getTriangles();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Fire a notification that will alert decorator pattern classes registered to this object that they should change their state.
+	 * 
+	 * This method is intended to cause change in the INode's graphical representation in a non-permanent way, by modifying qualities such as opacity which are purely concerned with rendering and do not belong to the modeling data itself.
+	 * 
+	 * "Property" should offer sufficient description for the client to determine "value"'s type.
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated
+	 */
+	void changeDecoratorProperty(String property, EObject value);
 } // INode

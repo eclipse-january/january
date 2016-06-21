@@ -11,6 +11,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
@@ -21,7 +22,6 @@ import org.slf4j.LoggerFactory;
 
 import geometry.GeometryPackage;
 import geometry.INode;
-import geometry.IShapeObserver;
 import geometry.Material;
 import geometry.Shape;
 import geometry.Triangle;
@@ -367,31 +367,19 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated NOT
+	 * @generated
 	 */
 	@Override
-	public void setProperty(String property, double value) {
+	public void setProperty(final String property, final double value) {
 		properties.put(property, value);
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public void register(IShapeObserver observer) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void unregister(IShapeObserver observer) {
+	public void changeDecoratorProperty(String property, EObject value) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -538,46 +526,6 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 	 * @generated
 	 */
 	@Override
-	public int eBaseStructuralFeatureID(int derivedFeatureID,
-			Class<?> baseClass) {
-		if (baseClass == INode.class) {
-			switch (derivedFeatureID) {
-				case GeometryPackage.SHAPE__NAME: return GeometryPackage.INODE__NAME;
-				case GeometryPackage.SHAPE__ID: return GeometryPackage.INODE__ID;
-				case GeometryPackage.SHAPE__NODES: return GeometryPackage.INODE__NODES;
-				case GeometryPackage.SHAPE__TYPE: return GeometryPackage.INODE__TYPE;
-				case GeometryPackage.SHAPE__TRIANGLES: return GeometryPackage.INODE__TRIANGLES;
-				default: return -1;
-			}
-		}
-		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public int eDerivedStructuralFeatureID(int baseFeatureID,
-			Class<?> baseClass) {
-		if (baseClass == INode.class) {
-			switch (baseFeatureID) {
-				case GeometryPackage.INODE__NAME: return GeometryPackage.SHAPE__NAME;
-				case GeometryPackage.INODE__ID: return GeometryPackage.SHAPE__ID;
-				case GeometryPackage.INODE__NODES: return GeometryPackage.SHAPE__NODES;
-				case GeometryPackage.INODE__TYPE: return GeometryPackage.SHAPE__TYPE;
-				case GeometryPackage.INODE__TRIANGLES: return GeometryPackage.SHAPE__TRIANGLES;
-				default: return -1;
-			}
-		}
-		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public Object eInvoke(int operationID, EList<?> arguments)
 			throws InvocationTargetException {
 		switch (operationID) {
@@ -588,11 +536,8 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 			case GeometryPackage.SHAPE___SET_PROPERTY__STRING_DOUBLE:
 				setProperty((String)arguments.get(0), (Double)arguments.get(1));
 				return null;
-			case GeometryPackage.SHAPE___REGISTER__ISHAPEOBSERVER:
-				register((IShapeObserver)arguments.get(0));
-				return null;
-			case GeometryPackage.SHAPE___UNREGISTER__ISHAPEOBSERVER:
-				unregister((IShapeObserver)arguments.get(0));
+			case GeometryPackage.SHAPE___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT:
+				changeDecoratorProperty((String)arguments.get(0), (EObject)arguments.get(1));
 				return null;
 		}
 		return super.eInvoke(operationID, arguments);

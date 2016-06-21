@@ -5,7 +5,6 @@ package geometry;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -60,52 +59,6 @@ public interface GeometryPackage extends EPackage {
 	GeometryPackage eINSTANCE = geometry.impl.GeometryPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link geometry.ISubjectShape <em>ISubject Shape</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.ISubjectShape
-	 * @see geometry.impl.GeometryPackageImpl#getISubjectShape()
-	 * @generated
-	 */
-	int ISUBJECT_SHAPE = 13;
-
-	/**
-	 * The number of structural features of the '<em>ISubject Shape</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ISUBJECT_SHAPE_FEATURE_COUNT = 0;
-
-	/**
-	 * The operation id for the '<em>Register</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ISUBJECT_SHAPE___REGISTER__ISHAPEOBSERVER = 0;
-
-	/**
-	 * The operation id for the '<em>Unregister</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ISUBJECT_SHAPE___UNREGISTER__ISHAPEOBSERVER = 1;
-
-	/**
-	 * The number of operations of the '<em>ISubject Shape</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ISUBJECT_SHAPE_OPERATION_COUNT = 2;
-
-	/**
 	 * The meta object id for the '{@link geometry.impl.ShapeImpl <em>Shape</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -116,132 +69,6 @@ public interface GeometryPackage extends EPackage {
 	int SHAPE = 0;
 
 	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHAPE__NAME = ISUBJECT_SHAPE_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHAPE__ID = ISUBJECT_SHAPE_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHAPE__NODES = ISUBJECT_SHAPE_FEATURE_COUNT + 2;
-
-	/**
-	 * The feature id for the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHAPE__TYPE = ISUBJECT_SHAPE_FEATURE_COUNT + 3;
-
-	/**
-	 * The feature id for the '<em><b>Triangles</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHAPE__TRIANGLES = ISUBJECT_SHAPE_FEATURE_COUNT + 4;
-
-	/**
-	 * The feature id for the '<em><b>Center</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHAPE__CENTER = ISUBJECT_SHAPE_FEATURE_COUNT + 5;
-
-	/**
-	 * The feature id for the '<em><b>Material</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHAPE__MATERIAL = ISUBJECT_SHAPE_FEATURE_COUNT + 6;
-
-	/**
-	 * The number of structural features of the '<em>Shape</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHAPE_FEATURE_COUNT = ISUBJECT_SHAPE_FEATURE_COUNT + 7;
-
-	/**
-	 * The operation id for the '<em>Register</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHAPE___REGISTER__ISHAPEOBSERVER = ISUBJECT_SHAPE___REGISTER__ISHAPEOBSERVER;
-
-	/**
-	 * The operation id for the '<em>Unregister</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHAPE___UNREGISTER__ISHAPEOBSERVER = ISUBJECT_SHAPE___UNREGISTER__ISHAPEOBSERVER;
-
-	/**
-	 * The operation id for the '<em>Get Property Names</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHAPE___GET_PROPERTY_NAMES = ISUBJECT_SHAPE_OPERATION_COUNT + 0;
-
-	/**
-	 * The operation id for the '<em>Get Property</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHAPE___GET_PROPERTY__STRING = ISUBJECT_SHAPE_OPERATION_COUNT + 1;
-
-	/**
-	 * The operation id for the '<em>Set Property</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHAPE___SET_PROPERTY__STRING_DOUBLE = ISUBJECT_SHAPE_OPERATION_COUNT + 2;
-
-	/**
-	 * The number of operations of the '<em>Shape</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHAPE_OPERATION_COUNT = ISUBJECT_SHAPE_OPERATION_COUNT + 3;
-
-	/**
 	 * The meta object id for the '{@link geometry.impl.TriangleImpl <em>Triangle</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -250,6 +77,245 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 */
 	int TRIANGLE = 1;
+
+	/**
+	 * The meta object id for the '{@link geometry.impl.VertexImpl <em>Vertex</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.impl.VertexImpl
+	 * @see geometry.impl.GeometryPackageImpl#getVertex()
+	 * @generated
+	 */
+	int VERTEX = 2;
+
+	/**
+	 * The meta object id for the '{@link geometry.impl.SphereImpl <em>Sphere</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.impl.SphereImpl
+	 * @see geometry.impl.GeometryPackageImpl#getSphere()
+	 * @generated
+	 */
+	int SPHERE = 3;
+
+	/**
+	 * The meta object id for the '{@link geometry.impl.CubeImpl <em>Cube</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.impl.CubeImpl
+	 * @see geometry.impl.GeometryPackageImpl#getCube()
+	 * @generated
+	 */
+	int CUBE = 4;
+
+	/**
+	 * The meta object id for the '{@link geometry.impl.CylinderImpl <em>Cylinder</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.impl.CylinderImpl
+	 * @see geometry.impl.GeometryPackageImpl#getCylinder()
+	 * @generated
+	 */
+	int CYLINDER = 5;
+
+	/**
+	 * The meta object id for the '{@link geometry.INode <em>INode</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.INode
+	 * @see geometry.impl.GeometryPackageImpl#getINode()
+	 * @generated
+	 */
+	int INODE = 8;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INODE__NAME = 0;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INODE__ID = 1;
+
+	/**
+	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INODE__NODES = 2;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INODE__TYPE = 3;
+
+	/**
+	 * The feature id for the '<em><b>Triangles</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INODE__TRIANGLES = 4;
+
+	/**
+	 * The number of structural features of the '<em>INode</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INODE_FEATURE_COUNT = 5;
+
+	/**
+	 * The operation id for the '<em>Change Decorator Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INODE___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT = 0;
+
+	/**
+	 * The number of operations of the '<em>INode</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INODE_OPERATION_COUNT = 1;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE__NAME = INODE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE__ID = INODE__ID;
+
+	/**
+	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE__NODES = INODE__NODES;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE__TYPE = INODE__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Triangles</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE__TRIANGLES = INODE__TRIANGLES;
+
+	/**
+	 * The feature id for the '<em><b>Center</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE__CENTER = INODE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Material</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE__MATERIAL = INODE_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Shape</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE_FEATURE_COUNT = INODE_FEATURE_COUNT + 2;
+
+	/**
+	 * The operation id for the '<em>Change Decorator Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT = INODE___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT;
+
+	/**
+	 * The operation id for the '<em>Get Property Names</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE___GET_PROPERTY_NAMES = INODE_OPERATION_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Get Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE___GET_PROPERTY__STRING = INODE_OPERATION_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Set Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE___SET_PROPERTY__STRING_DOUBLE = INODE_OPERATION_COUNT + 2;
+
+	/**
+	 * The number of operations of the '<em>Shape</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE_OPERATION_COUNT = INODE_OPERATION_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Normal</b></em>' containment reference.
@@ -286,16 +352,6 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int TRIANGLE_OPERATION_COUNT = 0;
-
-	/**
-	 * The meta object id for the '{@link geometry.impl.VertexImpl <em>Vertex</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.VertexImpl
-	 * @see geometry.impl.GeometryPackageImpl#getVertex()
-	 * @generated
-	 */
-	int VERTEX = 2;
 
 	/**
 	 * The feature id for the '<em><b>X</b></em>' attribute.
@@ -341,16 +397,6 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int VERTEX_OPERATION_COUNT = 0;
-
-	/**
-	 * The meta object id for the '{@link geometry.impl.SphereImpl <em>Sphere</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.SphereImpl
-	 * @see geometry.impl.GeometryPackageImpl#getSphere()
-	 * @generated
-	 */
-	int SPHERE = 3;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -434,22 +480,13 @@ public interface GeometryPackage extends EPackage {
 	int SPHERE_FEATURE_COUNT = SHAPE_FEATURE_COUNT + 1;
 
 	/**
-	 * The operation id for the '<em>Register</em>' operation.
+	 * The operation id for the '<em>Change Decorator Property</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SPHERE___REGISTER__ISHAPEOBSERVER = SHAPE___REGISTER__ISHAPEOBSERVER;
-
-	/**
-	 * The operation id for the '<em>Unregister</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SPHERE___UNREGISTER__ISHAPEOBSERVER = SHAPE___UNREGISTER__ISHAPEOBSERVER;
+	int SPHERE___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT = SHAPE___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT;
 
 	/**
 	 * The operation id for the '<em>Get Property Names</em>' operation.
@@ -486,16 +523,6 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int SPHERE_OPERATION_COUNT = SHAPE_OPERATION_COUNT + 0;
-
-	/**
-	 * The meta object id for the '{@link geometry.impl.CubeImpl <em>Cube</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.CubeImpl
-	 * @see geometry.impl.GeometryPackageImpl#getCube()
-	 * @generated
-	 */
-	int CUBE = 4;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -579,22 +606,13 @@ public interface GeometryPackage extends EPackage {
 	int CUBE_FEATURE_COUNT = SHAPE_FEATURE_COUNT + 1;
 
 	/**
-	 * The operation id for the '<em>Register</em>' operation.
+	 * The operation id for the '<em>Change Decorator Property</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CUBE___REGISTER__ISHAPEOBSERVER = SHAPE___REGISTER__ISHAPEOBSERVER;
-
-	/**
-	 * The operation id for the '<em>Unregister</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CUBE___UNREGISTER__ISHAPEOBSERVER = SHAPE___UNREGISTER__ISHAPEOBSERVER;
+	int CUBE___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT = SHAPE___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT;
 
 	/**
 	 * The operation id for the '<em>Get Property Names</em>' operation.
@@ -631,16 +649,6 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int CUBE_OPERATION_COUNT = SHAPE_OPERATION_COUNT + 0;
-
-	/**
-	 * The meta object id for the '{@link geometry.impl.CylinderImpl <em>Cylinder</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.CylinderImpl
-	 * @see geometry.impl.GeometryPackageImpl#getCylinder()
-	 * @generated
-	 */
-	int CYLINDER = 5;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -733,22 +741,13 @@ public interface GeometryPackage extends EPackage {
 	int CYLINDER_FEATURE_COUNT = SHAPE_FEATURE_COUNT + 2;
 
 	/**
-	 * The operation id for the '<em>Register</em>' operation.
+	 * The operation id for the '<em>Change Decorator Property</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CYLINDER___REGISTER__ISHAPEOBSERVER = SHAPE___REGISTER__ISHAPEOBSERVER;
-
-	/**
-	 * The operation id for the '<em>Unregister</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CYLINDER___UNREGISTER__ISHAPEOBSERVER = SHAPE___UNREGISTER__ISHAPEOBSERVER;
+	int CYLINDER___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT = SHAPE___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT;
 
 	/**
 	 * The operation id for the '<em>Get Property Names</em>' operation.
@@ -785,79 +784,6 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int CYLINDER_OPERATION_COUNT = SHAPE_OPERATION_COUNT + 0;
-
-	/**
-	 * The meta object id for the '{@link geometry.INode <em>INode</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.INode
-	 * @see geometry.impl.GeometryPackageImpl#getINode()
-	 * @generated
-	 */
-	int INODE = 8;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INODE__NAME = 0;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INODE__ID = 1;
-
-	/**
-	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INODE__NODES = 2;
-
-	/**
-	 * The feature id for the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INODE__TYPE = 3;
-
-	/**
-	 * The feature id for the '<em><b>Triangles</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INODE__TRIANGLES = 4;
-
-	/**
-	 * The number of structural features of the '<em>INode</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INODE_FEATURE_COUNT = 5;
-
-	/**
-	 * The number of operations of the '<em>INode</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INODE_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link geometry.impl.GeometryImpl <em>Geometry</em>}' class.
@@ -922,6 +848,15 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int GEOMETRY_FEATURE_COUNT = INODE_FEATURE_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Change Decorator Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GEOMETRY___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT = INODE___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT;
 
 	/**
 	 * The number of operations of the '<em>Geometry</em>' class.
@@ -1042,22 +977,13 @@ public interface GeometryPackage extends EPackage {
 	int TUBE_FEATURE_COUNT = SHAPE_FEATURE_COUNT + 3;
 
 	/**
-	 * The operation id for the '<em>Register</em>' operation.
+	 * The operation id for the '<em>Change Decorator Property</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TUBE___REGISTER__ISHAPEOBSERVER = SHAPE___REGISTER__ISHAPEOBSERVER;
-
-	/**
-	 * The operation id for the '<em>Unregister</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TUBE___UNREGISTER__ISHAPEOBSERVER = SHAPE___UNREGISTER__ISHAPEOBSERVER;
+	int TUBE___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT = SHAPE___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT;
 
 	/**
 	 * The operation id for the '<em>Get Property Names</em>' operation.
@@ -1160,6 +1086,15 @@ public interface GeometryPackage extends EPackage {
 	int OPERATOR_FEATURE_COUNT = INODE_FEATURE_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Change Decorator Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATOR___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT = INODE___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT;
+
+	/**
 	 * The number of operations of the '<em>Operator</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1231,6 +1166,15 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int UNION_FEATURE_COUNT = OPERATOR_FEATURE_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Change Decorator Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNION___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT = OPERATOR___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT;
 
 	/**
 	 * The number of operations of the '<em>Union</em>' class.
@@ -1306,6 +1250,15 @@ public interface GeometryPackage extends EPackage {
 	int INTERSECTION_FEATURE_COUNT = OPERATOR_FEATURE_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Change Decorator Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERSECTION___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT = OPERATOR___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT;
+
+	/**
 	 * The number of operations of the '<em>Intersection</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1379,6 +1332,15 @@ public interface GeometryPackage extends EPackage {
 	int COMPLEMENT_FEATURE_COUNT = OPERATOR_FEATURE_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Change Decorator Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPLEMENT___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT = OPERATOR___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT;
+
+	/**
 	 * The number of operations of the '<em>Complement</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1388,43 +1350,6 @@ public interface GeometryPackage extends EPackage {
 	int COMPLEMENT_OPERATION_COUNT = OPERATOR_OPERATION_COUNT + 0;
 
 	/**
-	 * The meta object id for the '{@link geometry.IShapeObserver <em>IShape Observer</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.IShapeObserver
-	 * @see geometry.impl.GeometryPackageImpl#getIShapeObserver()
-	 * @generated
-	 */
-	int ISHAPE_OBSERVER = 14;
-
-	/**
-	 * The number of structural features of the '<em>IShape Observer</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ISHAPE_OBSERVER_FEATURE_COUNT = 0;
-
-	/**
-	 * The operation id for the '<em>Update</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ISHAPE_OBSERVER___UPDATE__SHAPECHANGEEVENT_ISUBJECTSHAPE = 0;
-
-	/**
-	 * The number of operations of the '<em>IShape Observer</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ISHAPE_OBSERVER_OPERATION_COUNT = 1;
-
-	/**
 	 * The meta object id for the '{@link geometry.impl.MaterialImpl <em>Material</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1432,7 +1357,7 @@ public interface GeometryPackage extends EPackage {
 	 * @see geometry.impl.GeometryPackageImpl#getMaterial()
 	 * @generated
 	 */
-	int MATERIAL = 15;
+	int MATERIAL = 13;
 
 	/**
 	 * The number of structural features of the '<em>Material</em>' class.
@@ -1453,52 +1378,6 @@ public interface GeometryPackage extends EPackage {
 	int MATERIAL_OPERATION_COUNT = 0;
 
 	/**
-	 * The meta object id for the '{@link geometry.impl.ShapeChangeEventImpl <em>Shape Change Event</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.ShapeChangeEventImpl
-	 * @see geometry.impl.GeometryPackageImpl#getShapeChangeEvent()
-	 * @generated
-	 */
-	int SHAPE_CHANGE_EVENT = 16;
-
-	/**
-	 * The feature id for the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHAPE_CHANGE_EVENT__TYPE = 0;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHAPE_CHANGE_EVENT__VALUE = 1;
-
-	/**
-	 * The number of structural features of the '<em>Shape Change Event</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHAPE_CHANGE_EVENT_FEATURE_COUNT = 2;
-
-	/**
-	 * The number of operations of the '<em>Shape Change Event</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHAPE_CHANGE_EVENT_OPERATION_COUNT = 0;
-
-	/**
 	 * The meta object id for the '{@link geometry.IGeometryImporter <em>IGeometry Importer</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1506,7 +1385,7 @@ public interface GeometryPackage extends EPackage {
 	 * @see geometry.impl.GeometryPackageImpl#getIGeometryImporter()
 	 * @generated
 	 */
-	int IGEOMETRY_IMPORTER = 17;
+	int IGEOMETRY_IMPORTER = 14;
 
 	/**
 	 * The feature id for the '<em><b>File Types</b></em>' attribute list.
@@ -1561,7 +1440,7 @@ public interface GeometryPackage extends EPackage {
 	 * @see geometry.impl.GeometryPackageImpl#getASCIISTLGeometryImporter()
 	 * @generated
 	 */
-	int ASCIISTL_GEOMETRY_IMPORTER = 18;
+	int ASCIISTL_GEOMETRY_IMPORTER = 15;
 
 	/**
 	 * The feature id for the '<em><b>File Types</b></em>' attribute list.
@@ -1609,16 +1488,6 @@ public interface GeometryPackage extends EPackage {
 	int ASCIISTL_GEOMETRY_IMPORTER_OPERATION_COUNT = IGEOMETRY_IMPORTER_OPERATION_COUNT + 0;
 
 	/**
-	 * The meta object id for the '{@link geometry.ShapeChangeEventType <em>Shape Change Event Type</em>}' enum.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.ShapeChangeEventType
-	 * @see geometry.impl.GeometryPackageImpl#getShapeChangeEventType()
-	 * @generated
-	 */
-	int SHAPE_CHANGE_EVENT_TYPE = 19;
-
-	/**
 	 * The meta object id for the '<em>Path</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1626,7 +1495,7 @@ public interface GeometryPackage extends EPackage {
 	 * @see geometry.impl.GeometryPackageImpl#getPath()
 	 * @generated
 	 */
-	int PATH = 20;
+	int PATH = 16;
 
 	/**
 	 * Returns the meta object for class '{@link geometry.Shape <em>Shape</em>}'.
@@ -1958,6 +1827,16 @@ public interface GeometryPackage extends EPackage {
 	EReference getINode_Triangles();
 
 	/**
+	 * Returns the meta object for the '{@link geometry.INode#changeDecoratorProperty(java.lang.String, org.eclipse.emf.ecore.EObject) <em>Change Decorator Property</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Change Decorator Property</em>' operation.
+	 * @see geometry.INode#changeDecoratorProperty(java.lang.String, org.eclipse.emf.ecore.EObject)
+	 * @generated
+	 */
+	EOperation getINode__ChangeDecoratorProperty__String_EObject();
+
+	/**
 	 * Returns the meta object for class '{@link geometry.Operator <em>Operator</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1998,56 +1877,6 @@ public interface GeometryPackage extends EPackage {
 	EClass getComplement();
 
 	/**
-	 * Returns the meta object for class '{@link geometry.ISubjectShape <em>ISubject Shape</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>ISubject Shape</em>'.
-	 * @see geometry.ISubjectShape
-	 * @generated
-	 */
-	EClass getISubjectShape();
-
-	/**
-	 * Returns the meta object for the '{@link geometry.ISubjectShape#register(geometry.IShapeObserver) <em>Register</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Register</em>' operation.
-	 * @see geometry.ISubjectShape#register(geometry.IShapeObserver)
-	 * @generated
-	 */
-	EOperation getISubjectShape__Register__IShapeObserver();
-
-	/**
-	 * Returns the meta object for the '{@link geometry.ISubjectShape#unregister(geometry.IShapeObserver) <em>Unregister</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Unregister</em>' operation.
-	 * @see geometry.ISubjectShape#unregister(geometry.IShapeObserver)
-	 * @generated
-	 */
-	EOperation getISubjectShape__Unregister__IShapeObserver();
-
-	/**
-	 * Returns the meta object for class '{@link geometry.IShapeObserver <em>IShape Observer</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>IShape Observer</em>'.
-	 * @see geometry.IShapeObserver
-	 * @generated
-	 */
-	EClass getIShapeObserver();
-
-	/**
-	 * Returns the meta object for the '{@link geometry.IShapeObserver#update(geometry.ShapeChangeEvent, geometry.ISubjectShape) <em>Update</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Update</em>' operation.
-	 * @see geometry.IShapeObserver#update(geometry.ShapeChangeEvent, geometry.ISubjectShape)
-	 * @generated
-	 */
-	EOperation getIShapeObserver__Update__ShapeChangeEvent_ISubjectShape();
-
-	/**
 	 * Returns the meta object for class '{@link geometry.Material <em>Material</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2056,38 +1885,6 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getMaterial();
-
-	/**
-	 * Returns the meta object for class '{@link geometry.ShapeChangeEvent <em>Shape Change Event</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Shape Change Event</em>'.
-	 * @see geometry.ShapeChangeEvent
-	 * @generated
-	 */
-	EClass getShapeChangeEvent();
-
-	/**
-	 * Returns the meta object for the attribute '{@link geometry.ShapeChangeEvent#getType <em>Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Type</em>'.
-	 * @see geometry.ShapeChangeEvent#getType()
-	 * @see #getShapeChangeEvent()
-	 * @generated
-	 */
-	EAttribute getShapeChangeEvent_Type();
-
-	/**
-	 * Returns the meta object for the attribute '{@link geometry.ShapeChangeEvent#getValue <em>Value</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Value</em>'.
-	 * @see geometry.ShapeChangeEvent#getValue()
-	 * @see #getShapeChangeEvent()
-	 * @generated
-	 */
-	EAttribute getShapeChangeEvent_Value();
 
 	/**
 	 * Returns the meta object for class '{@link geometry.IGeometryImporter <em>IGeometry Importer</em>}'.
@@ -2140,16 +1937,6 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getASCIISTLGeometryImporter();
-
-	/**
-	 * Returns the meta object for enum '{@link geometry.ShapeChangeEventType <em>Shape Change Event Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for enum '<em>Shape Change Event Type</em>'.
-	 * @see geometry.ShapeChangeEventType
-	 * @generated
-	 */
-	EEnum getShapeChangeEventType();
 
 	/**
 	 * Returns the meta object for data type '{@link java.nio.file.Path <em>Path</em>}'.
@@ -2452,6 +2239,14 @@ public interface GeometryPackage extends EPackage {
 		EReference INODE__TRIANGLES = eINSTANCE.getINode_Triangles();
 
 		/**
+		 * The meta object literal for the '<em><b>Change Decorator Property</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation INODE___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT = eINSTANCE.getINode__ChangeDecoratorProperty__String_EObject();
+
+		/**
 		 * The meta object literal for the '{@link geometry.impl.OperatorImpl <em>Operator</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2492,50 +2287,6 @@ public interface GeometryPackage extends EPackage {
 		EClass COMPLEMENT = eINSTANCE.getComplement();
 
 		/**
-		 * The meta object literal for the '{@link geometry.ISubjectShape <em>ISubject Shape</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see geometry.ISubjectShape
-		 * @see geometry.impl.GeometryPackageImpl#getISubjectShape()
-		 * @generated
-		 */
-		EClass ISUBJECT_SHAPE = eINSTANCE.getISubjectShape();
-
-		/**
-		 * The meta object literal for the '<em><b>Register</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation ISUBJECT_SHAPE___REGISTER__ISHAPEOBSERVER = eINSTANCE.getISubjectShape__Register__IShapeObserver();
-
-		/**
-		 * The meta object literal for the '<em><b>Unregister</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation ISUBJECT_SHAPE___UNREGISTER__ISHAPEOBSERVER = eINSTANCE.getISubjectShape__Unregister__IShapeObserver();
-
-		/**
-		 * The meta object literal for the '{@link geometry.IShapeObserver <em>IShape Observer</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see geometry.IShapeObserver
-		 * @see geometry.impl.GeometryPackageImpl#getIShapeObserver()
-		 * @generated
-		 */
-		EClass ISHAPE_OBSERVER = eINSTANCE.getIShapeObserver();
-
-		/**
-		 * The meta object literal for the '<em><b>Update</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation ISHAPE_OBSERVER___UPDATE__SHAPECHANGEEVENT_ISUBJECTSHAPE = eINSTANCE.getIShapeObserver__Update__ShapeChangeEvent_ISubjectShape();
-
-		/**
 		 * The meta object literal for the '{@link geometry.impl.MaterialImpl <em>Material</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2544,32 +2295,6 @@ public interface GeometryPackage extends EPackage {
 		 * @generated
 		 */
 		EClass MATERIAL = eINSTANCE.getMaterial();
-
-		/**
-		 * The meta object literal for the '{@link geometry.impl.ShapeChangeEventImpl <em>Shape Change Event</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see geometry.impl.ShapeChangeEventImpl
-		 * @see geometry.impl.GeometryPackageImpl#getShapeChangeEvent()
-		 * @generated
-		 */
-		EClass SHAPE_CHANGE_EVENT = eINSTANCE.getShapeChangeEvent();
-
-		/**
-		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute SHAPE_CHANGE_EVENT__TYPE = eINSTANCE.getShapeChangeEvent_Type();
-
-		/**
-		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute SHAPE_CHANGE_EVENT__VALUE = eINSTANCE.getShapeChangeEvent_Value();
 
 		/**
 		 * The meta object literal for the '{@link geometry.IGeometryImporter <em>IGeometry Importer</em>}' class.
@@ -2614,16 +2339,6 @@ public interface GeometryPackage extends EPackage {
 		 * @generated
 		 */
 		EClass ASCIISTL_GEOMETRY_IMPORTER = eINSTANCE.getASCIISTLGeometryImporter();
-
-		/**
-		 * The meta object literal for the '{@link geometry.ShapeChangeEventType <em>Shape Change Event Type</em>}' enum.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see geometry.ShapeChangeEventType
-		 * @see geometry.impl.GeometryPackageImpl#getShapeChangeEventType()
-		 * @generated
-		 */
-		EEnum SHAPE_CHANGE_EVENT_TYPE = eINSTANCE.getShapeChangeEventType();
 
 		/**
 		 * The meta object literal for the '<em>Path</em>' data type.

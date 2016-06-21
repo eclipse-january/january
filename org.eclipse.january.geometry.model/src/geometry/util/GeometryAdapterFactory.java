@@ -120,20 +120,8 @@ public class GeometryAdapterFactory extends AdapterFactoryImpl {
 				return createComplementAdapter();
 			}
 			@Override
-			public Adapter caseISubjectShape(ISubjectShape object) {
-				return createISubjectShapeAdapter();
-			}
-			@Override
-			public Adapter caseIShapeObserver(IShapeObserver object) {
-				return createIShapeObserverAdapter();
-			}
-			@Override
 			public Adapter caseMaterial(Material object) {
 				return createMaterialAdapter();
-			}
-			@Override
-			public Adapter caseShapeChangeEvent(ShapeChangeEvent object) {
-				return createShapeChangeEventAdapter();
 			}
 			@Override
 			public Adapter caseIGeometryImporter(IGeometryImporter object) {
@@ -346,34 +334,6 @@ public class GeometryAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link geometry.ISubjectShape <em>ISubject Shape</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see geometry.ISubjectShape
-	 * @generated
-	 */
-	public Adapter createISubjectShapeAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link geometry.IShapeObserver <em>IShape Observer</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see geometry.IShapeObserver
-	 * @generated
-	 */
-	public Adapter createIShapeObserverAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link geometry.Material <em>Material</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -384,20 +344,6 @@ public class GeometryAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createMaterialAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link geometry.ShapeChangeEvent <em>Shape Change Event</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see geometry.ShapeChangeEvent
-	 * @generated
-	 */
-	public Adapter createShapeChangeEventAdapter() {
 		return null;
 	}
 
