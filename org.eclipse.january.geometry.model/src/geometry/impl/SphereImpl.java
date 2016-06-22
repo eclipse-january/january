@@ -42,10 +42,14 @@ public class SphereImpl extends ShapeImpl implements Sphere {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
+	 * 
+	 * @generated NOT
 	 */
 	protected SphereImpl() {
 		super();
+
+		// Set the shape's type
+		type = "sphere";
 	}
 
 	/**

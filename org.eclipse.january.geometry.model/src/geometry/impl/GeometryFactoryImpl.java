@@ -86,6 +86,8 @@ public class GeometryFactoryImpl extends EFactoryImpl implements GeometryFactory
 		switch (eDataType.getClassifierID()) {
 			case GeometryPackage.PATH:
 				return createPathFromString(eDataType, initialValue);
+			case GeometryPackage.OBJECT:
+				return createObjectFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -101,6 +103,8 @@ public class GeometryFactoryImpl extends EFactoryImpl implements GeometryFactory
 		switch (eDataType.getClassifierID()) {
 			case GeometryPackage.PATH:
 				return convertPathToString(eDataType, instanceValue);
+			case GeometryPackage.OBJECT:
+				return convertObjectToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -261,6 +265,24 @@ public class GeometryFactoryImpl extends EFactoryImpl implements GeometryFactory
 	 * @generated
 	 */
 	public String convertPathToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Object createObjectFromString(EDataType eDataType, String initialValue) {
+		return super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertObjectToString(EDataType eDataType, Object instanceValue) {
 		return super.convertToString(eDataType, instanceValue);
 	}
 
