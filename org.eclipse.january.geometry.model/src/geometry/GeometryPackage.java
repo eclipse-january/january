@@ -174,13 +174,22 @@ public interface GeometryPackage extends EPackage {
 	int INODE__TRIANGLES = 4;
 
 	/**
+	 * The feature id for the '<em><b>Center</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INODE__CENTER = 5;
+
+	/**
 	 * The number of structural features of the '<em>INode</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INODE_FEATURE_COUNT = 5;
+	int INODE_FEATURE_COUNT = 6;
 
 	/**
 	 * The operation id for the '<em>Change Decorator Property</em>' operation.
@@ -252,7 +261,7 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SHAPE__CENTER = INODE_FEATURE_COUNT + 0;
+	int SHAPE__CENTER = INODE__CENTER;
 
 	/**
 	 * The feature id for the '<em><b>Material</b></em>' containment reference.
@@ -261,7 +270,7 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SHAPE__MATERIAL = INODE_FEATURE_COUNT + 1;
+	int SHAPE__MATERIAL = INODE_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Shape</em>' class.
@@ -270,7 +279,7 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SHAPE_FEATURE_COUNT = INODE_FEATURE_COUNT + 2;
+	int SHAPE_FEATURE_COUNT = INODE_FEATURE_COUNT + 1;
 
 	/**
 	 * The operation id for the '<em>Change Decorator Property</em>' operation.
@@ -841,6 +850,15 @@ public interface GeometryPackage extends EPackage {
 	int GEOMETRY__TRIANGLES = INODE__TRIANGLES;
 
 	/**
+	 * The feature id for the '<em><b>Center</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GEOMETRY__CENTER = INODE__CENTER;
+
+	/**
 	 * The number of structural features of the '<em>Geometry</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1077,6 +1095,15 @@ public interface GeometryPackage extends EPackage {
 	int OPERATOR__TRIANGLES = INODE__TRIANGLES;
 
 	/**
+	 * The feature id for the '<em><b>Center</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATOR__CENTER = INODE__CENTER;
+
+	/**
 	 * The number of structural features of the '<em>Operator</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1157,6 +1184,15 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int UNION__TRIANGLES = OPERATOR__TRIANGLES;
+
+	/**
+	 * The feature id for the '<em><b>Center</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNION__CENTER = OPERATOR__CENTER;
 
 	/**
 	 * The number of structural features of the '<em>Union</em>' class.
@@ -1241,6 +1277,15 @@ public interface GeometryPackage extends EPackage {
 	int INTERSECTION__TRIANGLES = OPERATOR__TRIANGLES;
 
 	/**
+	 * The feature id for the '<em><b>Center</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERSECTION__CENTER = OPERATOR__CENTER;
+
+	/**
 	 * The number of structural features of the '<em>Intersection</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1321,6 +1366,15 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int COMPLEMENT__TRIANGLES = OPERATOR__TRIANGLES;
+
+	/**
+	 * The feature id for the '<em><b>Center</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPLEMENT__CENTER = OPERATOR__CENTER;
 
 	/**
 	 * The number of structural features of the '<em>Complement</em>' class.
@@ -1498,6 +1552,16 @@ public interface GeometryPackage extends EPackage {
 	int PATH = 16;
 
 	/**
+	 * The meta object id for the '<em>Object</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see java.lang.Object
+	 * @see geometry.impl.GeometryPackageImpl#getObject()
+	 * @generated
+	 */
+	int OBJECT = 17;
+
+	/**
 	 * Returns the meta object for class '{@link geometry.Shape <em>Shape</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1506,17 +1570,6 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getShape();
-
-	/**
-	 * Returns the meta object for the reference '{@link geometry.Shape#getCenter <em>Center</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Center</em>'.
-	 * @see geometry.Shape#getCenter()
-	 * @see #getShape()
-	 * @generated
-	 */
-	EReference getShape_Center();
 
 	/**
 	 * Returns the meta object for the containment reference '{@link geometry.Shape#getMaterial <em>Material</em>}'.
@@ -1827,11 +1880,22 @@ public interface GeometryPackage extends EPackage {
 	EReference getINode_Triangles();
 
 	/**
-	 * Returns the meta object for the '{@link geometry.INode#changeDecoratorProperty(java.lang.String, org.eclipse.emf.ecore.EObject) <em>Change Decorator Property</em>}' operation.
+	 * Returns the meta object for the reference '{@link geometry.INode#getCenter <em>Center</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Center</em>'.
+	 * @see geometry.INode#getCenter()
+	 * @see #getINode()
+	 * @generated
+	 */
+	EReference getINode_Center();
+
+	/**
+	 * Returns the meta object for the '{@link geometry.INode#changeDecoratorProperty(java.lang.String, java.lang.Object) <em>Change Decorator Property</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the '<em>Change Decorator Property</em>' operation.
-	 * @see geometry.INode#changeDecoratorProperty(java.lang.String, org.eclipse.emf.ecore.EObject)
+	 * @see geometry.INode#changeDecoratorProperty(java.lang.String, java.lang.Object)
 	 * @generated
 	 */
 	EOperation getINode__ChangeDecoratorProperty__String_EObject();
@@ -1950,6 +2014,17 @@ public interface GeometryPackage extends EPackage {
 	EDataType getPath();
 
 	/**
+	 * Returns the meta object for data type '{@link java.lang.Object <em>Object</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Object</em>'.
+	 * @see java.lang.Object
+	 * @model instanceClass="java.lang.Object"
+	 * @generated
+	 */
+	EDataType getObject();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1981,14 +2056,6 @@ public interface GeometryPackage extends EPackage {
 		 * @generated
 		 */
 		EClass SHAPE = eINSTANCE.getShape();
-
-		/**
-		 * The meta object literal for the '<em><b>Center</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference SHAPE__CENTER = eINSTANCE.getShape_Center();
 
 		/**
 		 * The meta object literal for the '<em><b>Material</b></em>' containment reference feature.
@@ -2239,6 +2306,14 @@ public interface GeometryPackage extends EPackage {
 		EReference INODE__TRIANGLES = eINSTANCE.getINode_Triangles();
 
 		/**
+		 * The meta object literal for the '<em><b>Center</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference INODE__CENTER = eINSTANCE.getINode_Center();
+
+		/**
 		 * The meta object literal for the '<em><b>Change Decorator Property</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2349,6 +2424,16 @@ public interface GeometryPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType PATH = eINSTANCE.getPath();
+
+		/**
+		 * The meta object literal for the '<em>Object</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see java.lang.Object
+		 * @see geometry.impl.GeometryPackageImpl#getObject()
+		 * @generated
+		 */
+		EDataType OBJECT = eINSTANCE.getObject();
 
 	}
 

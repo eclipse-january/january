@@ -6,6 +6,7 @@ package geometry.validation;
 
 import geometry.INode;
 import geometry.Triangle;
+import geometry.Vertex;
 import org.eclipse.emf.common.util.EList;
 
 
@@ -27,5 +28,7 @@ public interface INodeValidator {
 	boolean validateType(String value);
 
 	boolean validateTriangles(EList<Triangle> value);
+
+	boolean validateCenter(Vertex value);
 
 }

@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link geometry.INode#getNodes <em>Nodes</em>}</li>
  *   <li>{@link geometry.INode#getType <em>Type</em>}</li>
  *   <li>{@link geometry.INode#getTriangles <em>Triangles</em>}</li>
+ *   <li>{@link geometry.INode#getCenter <em>Center</em>}</li>
  * </ul>
  *
  * @see geometry.GeometryPackage#getINode()
@@ -141,6 +142,31 @@ public interface INode extends EObject {
 	EList<Triangle> getTriangles();
 
 	/**
+	 * Returns the value of the '<em><b>Center</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Each shape is centered on a special vertex.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Center</em>' reference.
+	 * @see #setCenter(Vertex)
+	 * @see geometry.GeometryPackage#getINode_Center()
+	 * @model required="true"
+	 * @generated
+	 */
+	Vertex getCenter();
+
+	/**
+	 * Sets the value of the '{@link geometry.INode#getCenter <em>Center</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Center</em>' reference.
+	 * @see #getCenter()
+	 * @generated
+	 */
+	void setCenter(Vertex value);
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
@@ -150,8 +176,8 @@ public interface INode extends EObject {
 	 * 
 	 * "Property" should offer sufficient description for the client to determine "value"'s type.
 	 * <!-- end-model-doc -->
-	 * @model
+	 * @model valueDataType="geometry.Object"
 	 * @generated
 	 */
-	void changeDecoratorProperty(String property, EObject value);
+	void changeDecoratorProperty(String property, Object value);
 } // INode

@@ -2,31 +2,32 @@
  */
 package geometry.impl;
 
+import org.eclipse.emf.ecore.EClass;
+
 import geometry.GeometryPackage;
 import geometry.Union;
 
-import org.eclipse.emf.ecore.EClass;
-
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Union</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '
+ * <em><b>Union</b></em>'. <!-- end-user-doc -->
  *
  * @generated
  */
 public class UnionImpl extends OperatorImpl implements Union {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
 	 */
 	protected UnionImpl() {
 		super();
+
+		// Set the object's type
+		type = "union";
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -34,4 +35,4 @@ public class UnionImpl extends OperatorImpl implements Union {
 		return GeometryPackage.Literals.UNION;
 	}
 
-} //UnionImpl
+} // UnionImpl

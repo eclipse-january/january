@@ -61,10 +61,14 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
+	 * 
+	 * @generated NOT
 	 */
 	protected CylinderImpl() {
 		super();
+
+		// Set the object's type
+		type = "cylinder";
 	}
 
 	/**

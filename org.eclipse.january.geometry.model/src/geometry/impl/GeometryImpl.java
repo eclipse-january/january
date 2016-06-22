@@ -6,13 +6,13 @@ import geometry.Geometry;
 import geometry.GeometryPackage;
 import geometry.INode;
 import geometry.Triangle;
+import geometry.Vertex;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link geometry.impl.GeometryImpl#getNodes <em>Nodes</em>}</li>
  *   <li>{@link geometry.impl.GeometryImpl#getType <em>Type</em>}</li>
  *   <li>{@link geometry.impl.GeometryImpl#getTriangles <em>Triangles</em>}</li>
+ *   <li>{@link geometry.impl.GeometryImpl#getCenter <em>Center</em>}</li>
  * </ul>
  *
  * @generated
@@ -111,6 +112,16 @@ public class GeometryImpl extends MinimalEObjectImpl.Container implements Geomet
 	 * @ordered
 	 */
 	protected EList<Triangle> triangles;
+
+	/**
+	 * The cached value of the '{@link #getCenter() <em>Center</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCenter()
+	 * @generated
+	 * @ordered
+	 */
+	protected Vertex center;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -223,7 +234,45 @@ public class GeometryImpl extends MinimalEObjectImpl.Container implements Geomet
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void changeDecoratorProperty(String property, EObject value) {
+	public Vertex getCenter() {
+		if (center != null && center.eIsProxy()) {
+			InternalEObject oldCenter = (InternalEObject)center;
+			center = (Vertex)eResolveProxy(oldCenter);
+			if (center != oldCenter) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, GeometryPackage.GEOMETRY__CENTER, oldCenter, center));
+			}
+		}
+		return center;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Vertex basicGetCenter() {
+		return center;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setCenter(Vertex newCenter) {
+		Vertex oldCenter = center;
+		center = newCenter;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, GeometryPackage.GEOMETRY__CENTER, oldCenter, center));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void changeDecoratorProperty(String property, Object value) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -263,6 +312,9 @@ public class GeometryImpl extends MinimalEObjectImpl.Container implements Geomet
 				return getType();
 			case GeometryPackage.GEOMETRY__TRIANGLES:
 				return getTriangles();
+			case GeometryPackage.GEOMETRY__CENTER:
+				if (resolve) return getCenter();
+				return basicGetCenter();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -293,6 +345,9 @@ public class GeometryImpl extends MinimalEObjectImpl.Container implements Geomet
 				getTriangles().clear();
 				getTriangles().addAll((Collection<? extends Triangle>)newValue);
 				return;
+			case GeometryPackage.GEOMETRY__CENTER:
+				setCenter((Vertex)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -320,6 +375,9 @@ public class GeometryImpl extends MinimalEObjectImpl.Container implements Geomet
 			case GeometryPackage.GEOMETRY__TRIANGLES:
 				getTriangles().clear();
 				return;
+			case GeometryPackage.GEOMETRY__CENTER:
+				setCenter((Vertex)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -342,6 +400,8 @@ public class GeometryImpl extends MinimalEObjectImpl.Container implements Geomet
 				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
 			case GeometryPackage.GEOMETRY__TRIANGLES:
 				return triangles != null && !triangles.isEmpty();
+			case GeometryPackage.GEOMETRY__CENTER:
+				return center != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -355,7 +415,7 @@ public class GeometryImpl extends MinimalEObjectImpl.Container implements Geomet
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
 			case GeometryPackage.GEOMETRY___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT:
-				changeDecoratorProperty((String)arguments.get(0), (EObject)arguments.get(1));
+				changeDecoratorProperty((String)arguments.get(0), arguments.get(1));
 				return null;
 		}
 		return super.eInvoke(operationID, arguments);

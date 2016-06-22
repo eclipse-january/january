@@ -42,10 +42,14 @@ public class CubeImpl extends ShapeImpl implements Cube {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
+	 * 
+	 * @generated NOT
 	 */
 	protected CubeImpl() {
 		super();
+
+		// Set the object's type
+		type = "cube";
 	}
 
 	/**
