@@ -180,4 +180,41 @@ public interface INode extends EObject {
 	 * @generated
 	 */
 	void changeDecoratorProperty(String property, Object value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Get the names of all properties set for this shape.
+	 * <!-- end-model-doc -->
+	 * @model kind="operation"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='//Return a list of the properties\' keys.\r\nreturn new BasicEList<String>(properties.keySet());'"
+	 * @generated
+	 */
+	EList<String> getPropertyNames();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Get the value for one of the shape's properties.
+	 * @param property The name of the property whose value is to be returned.
+	 * <!-- end-model-doc -->
+	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel body='return properties.get(property);'"
+	 * @generated
+	 */
+	double getProperty(String property);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Set one of the Shape's properties.
+	 * @param property The name of the property whose value is being set.
+	 * @param value The property's new value.
+	 * <!-- end-model-doc -->
+	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel body='properties.put(property, value);'"
+	 * @generated
+	 */
+	void setProperty(String property, double value);
 } // INode

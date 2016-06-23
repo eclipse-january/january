@@ -198,7 +198,34 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INODE___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT = 0;
+	int INODE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT = 0;
+
+	/**
+	 * The operation id for the '<em>Get Property Names</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INODE___GET_PROPERTY_NAMES = 1;
+
+	/**
+	 * The operation id for the '<em>Get Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INODE___GET_PROPERTY__STRING = 2;
+
+	/**
+	 * The operation id for the '<em>Set Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INODE___SET_PROPERTY__STRING_DOUBLE = 3;
 
 	/**
 	 * The number of operations of the '<em>INode</em>' class.
@@ -207,7 +234,7 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INODE_OPERATION_COUNT = 1;
+	int INODE_OPERATION_COUNT = 4;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -288,16 +315,16 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SHAPE___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT = INODE___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT;
+	int SHAPE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT = INODE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT;
 
 	/**
-	 * The operation id for the '<em>Get Property Names</em>' operation.
+	 * The operation id for the '<em>Set Property</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SHAPE___GET_PROPERTY_NAMES = INODE_OPERATION_COUNT + 0;
+	int SHAPE___SET_PROPERTY__STRING_DOUBLE = INODE_OPERATION_COUNT + 0;
 
 	/**
 	 * The operation id for the '<em>Get Property</em>' operation.
@@ -309,13 +336,13 @@ public interface GeometryPackage extends EPackage {
 	int SHAPE___GET_PROPERTY__STRING = INODE_OPERATION_COUNT + 1;
 
 	/**
-	 * The operation id for the '<em>Set Property</em>' operation.
+	 * The operation id for the '<em>Get Property Names</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SHAPE___SET_PROPERTY__STRING_DOUBLE = INODE_OPERATION_COUNT + 2;
+	int SHAPE___GET_PROPERTY_NAMES = INODE_OPERATION_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Shape</em>' class.
@@ -495,16 +522,16 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SPHERE___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT = SHAPE___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT;
+	int SPHERE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT = SHAPE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT;
 
 	/**
-	 * The operation id for the '<em>Get Property Names</em>' operation.
+	 * The operation id for the '<em>Set Property</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SPHERE___GET_PROPERTY_NAMES = SHAPE___GET_PROPERTY_NAMES;
+	int SPHERE___SET_PROPERTY__STRING_DOUBLE = SHAPE___SET_PROPERTY__STRING_DOUBLE;
 
 	/**
 	 * The operation id for the '<em>Get Property</em>' operation.
@@ -516,13 +543,13 @@ public interface GeometryPackage extends EPackage {
 	int SPHERE___GET_PROPERTY__STRING = SHAPE___GET_PROPERTY__STRING;
 
 	/**
-	 * The operation id for the '<em>Set Property</em>' operation.
+	 * The operation id for the '<em>Get Property Names</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SPHERE___SET_PROPERTY__STRING_DOUBLE = SHAPE___SET_PROPERTY__STRING_DOUBLE;
+	int SPHERE___GET_PROPERTY_NAMES = SHAPE___GET_PROPERTY_NAMES;
 
 	/**
 	 * The number of operations of the '<em>Sphere</em>' class.
@@ -621,16 +648,16 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CUBE___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT = SHAPE___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT;
+	int CUBE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT = SHAPE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT;
 
 	/**
-	 * The operation id for the '<em>Get Property Names</em>' operation.
+	 * The operation id for the '<em>Set Property</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CUBE___GET_PROPERTY_NAMES = SHAPE___GET_PROPERTY_NAMES;
+	int CUBE___SET_PROPERTY__STRING_DOUBLE = SHAPE___SET_PROPERTY__STRING_DOUBLE;
 
 	/**
 	 * The operation id for the '<em>Get Property</em>' operation.
@@ -642,13 +669,13 @@ public interface GeometryPackage extends EPackage {
 	int CUBE___GET_PROPERTY__STRING = SHAPE___GET_PROPERTY__STRING;
 
 	/**
-	 * The operation id for the '<em>Set Property</em>' operation.
+	 * The operation id for the '<em>Get Property Names</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CUBE___SET_PROPERTY__STRING_DOUBLE = SHAPE___SET_PROPERTY__STRING_DOUBLE;
+	int CUBE___GET_PROPERTY_NAMES = SHAPE___GET_PROPERTY_NAMES;
 
 	/**
 	 * The number of operations of the '<em>Cube</em>' class.
@@ -756,16 +783,16 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CYLINDER___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT = SHAPE___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT;
+	int CYLINDER___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT = SHAPE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT;
 
 	/**
-	 * The operation id for the '<em>Get Property Names</em>' operation.
+	 * The operation id for the '<em>Set Property</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CYLINDER___GET_PROPERTY_NAMES = SHAPE___GET_PROPERTY_NAMES;
+	int CYLINDER___SET_PROPERTY__STRING_DOUBLE = SHAPE___SET_PROPERTY__STRING_DOUBLE;
 
 	/**
 	 * The operation id for the '<em>Get Property</em>' operation.
@@ -777,13 +804,13 @@ public interface GeometryPackage extends EPackage {
 	int CYLINDER___GET_PROPERTY__STRING = SHAPE___GET_PROPERTY__STRING;
 
 	/**
-	 * The operation id for the '<em>Set Property</em>' operation.
+	 * The operation id for the '<em>Get Property Names</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CYLINDER___SET_PROPERTY__STRING_DOUBLE = SHAPE___SET_PROPERTY__STRING_DOUBLE;
+	int CYLINDER___GET_PROPERTY_NAMES = SHAPE___GET_PROPERTY_NAMES;
 
 	/**
 	 * The number of operations of the '<em>Cylinder</em>' class.
@@ -874,7 +901,34 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GEOMETRY___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT = INODE___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT;
+	int GEOMETRY___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT = INODE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT;
+
+	/**
+	 * The operation id for the '<em>Get Property Names</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GEOMETRY___GET_PROPERTY_NAMES = INODE___GET_PROPERTY_NAMES;
+
+	/**
+	 * The operation id for the '<em>Get Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GEOMETRY___GET_PROPERTY__STRING = INODE___GET_PROPERTY__STRING;
+
+	/**
+	 * The operation id for the '<em>Set Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GEOMETRY___SET_PROPERTY__STRING_DOUBLE = INODE___SET_PROPERTY__STRING_DOUBLE;
 
 	/**
 	 * The number of operations of the '<em>Geometry</em>' class.
@@ -1001,16 +1055,16 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TUBE___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT = SHAPE___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT;
+	int TUBE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT = SHAPE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT;
 
 	/**
-	 * The operation id for the '<em>Get Property Names</em>' operation.
+	 * The operation id for the '<em>Set Property</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TUBE___GET_PROPERTY_NAMES = SHAPE___GET_PROPERTY_NAMES;
+	int TUBE___SET_PROPERTY__STRING_DOUBLE = SHAPE___SET_PROPERTY__STRING_DOUBLE;
 
 	/**
 	 * The operation id for the '<em>Get Property</em>' operation.
@@ -1022,13 +1076,13 @@ public interface GeometryPackage extends EPackage {
 	int TUBE___GET_PROPERTY__STRING = SHAPE___GET_PROPERTY__STRING;
 
 	/**
-	 * The operation id for the '<em>Set Property</em>' operation.
+	 * The operation id for the '<em>Get Property Names</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TUBE___SET_PROPERTY__STRING_DOUBLE = SHAPE___SET_PROPERTY__STRING_DOUBLE;
+	int TUBE___GET_PROPERTY_NAMES = SHAPE___GET_PROPERTY_NAMES;
 
 	/**
 	 * The number of operations of the '<em>Tube</em>' class.
@@ -1119,7 +1173,34 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATOR___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT = INODE___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT;
+	int OPERATOR___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT = INODE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT;
+
+	/**
+	 * The operation id for the '<em>Get Property Names</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATOR___GET_PROPERTY_NAMES = INODE___GET_PROPERTY_NAMES;
+
+	/**
+	 * The operation id for the '<em>Get Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATOR___GET_PROPERTY__STRING = INODE___GET_PROPERTY__STRING;
+
+	/**
+	 * The operation id for the '<em>Set Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATOR___SET_PROPERTY__STRING_DOUBLE = INODE___SET_PROPERTY__STRING_DOUBLE;
 
 	/**
 	 * The number of operations of the '<em>Operator</em>' class.
@@ -1210,7 +1291,34 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UNION___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT = OPERATOR___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT;
+	int UNION___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT = OPERATOR___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT;
+
+	/**
+	 * The operation id for the '<em>Get Property Names</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNION___GET_PROPERTY_NAMES = OPERATOR___GET_PROPERTY_NAMES;
+
+	/**
+	 * The operation id for the '<em>Get Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNION___GET_PROPERTY__STRING = OPERATOR___GET_PROPERTY__STRING;
+
+	/**
+	 * The operation id for the '<em>Set Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNION___SET_PROPERTY__STRING_DOUBLE = OPERATOR___SET_PROPERTY__STRING_DOUBLE;
 
 	/**
 	 * The number of operations of the '<em>Union</em>' class.
@@ -1301,7 +1409,34 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INTERSECTION___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT = OPERATOR___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT;
+	int INTERSECTION___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT = OPERATOR___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT;
+
+	/**
+	 * The operation id for the '<em>Get Property Names</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERSECTION___GET_PROPERTY_NAMES = OPERATOR___GET_PROPERTY_NAMES;
+
+	/**
+	 * The operation id for the '<em>Get Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERSECTION___GET_PROPERTY__STRING = OPERATOR___GET_PROPERTY__STRING;
+
+	/**
+	 * The operation id for the '<em>Set Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERSECTION___SET_PROPERTY__STRING_DOUBLE = OPERATOR___SET_PROPERTY__STRING_DOUBLE;
 
 	/**
 	 * The number of operations of the '<em>Intersection</em>' class.
@@ -1392,7 +1527,34 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPLEMENT___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT = OPERATOR___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT;
+	int COMPLEMENT___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT = OPERATOR___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT;
+
+	/**
+	 * The operation id for the '<em>Get Property Names</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPLEMENT___GET_PROPERTY_NAMES = OPERATOR___GET_PROPERTY_NAMES;
+
+	/**
+	 * The operation id for the '<em>Get Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPLEMENT___GET_PROPERTY__STRING = OPERATOR___GET_PROPERTY__STRING;
+
+	/**
+	 * The operation id for the '<em>Set Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPLEMENT___SET_PROPERTY__STRING_DOUBLE = OPERATOR___SET_PROPERTY__STRING_DOUBLE;
 
 	/**
 	 * The number of operations of the '<em>Complement</em>' class.
@@ -1898,7 +2060,37 @@ public interface GeometryPackage extends EPackage {
 	 * @see geometry.INode#changeDecoratorProperty(java.lang.String, java.lang.Object)
 	 * @generated
 	 */
-	EOperation getINode__ChangeDecoratorProperty__String_EObject();
+	EOperation getINode__ChangeDecoratorProperty__String_Object();
+
+	/**
+	 * Returns the meta object for the '{@link geometry.INode#getPropertyNames() <em>Get Property Names</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Property Names</em>' operation.
+	 * @see geometry.INode#getPropertyNames()
+	 * @generated
+	 */
+	EOperation getINode__GetPropertyNames();
+
+	/**
+	 * Returns the meta object for the '{@link geometry.INode#getProperty(java.lang.String) <em>Get Property</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Property</em>' operation.
+	 * @see geometry.INode#getProperty(java.lang.String)
+	 * @generated
+	 */
+	EOperation getINode__GetProperty__String();
+
+	/**
+	 * Returns the meta object for the '{@link geometry.INode#setProperty(java.lang.String, double) <em>Set Property</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Set Property</em>' operation.
+	 * @see geometry.INode#setProperty(java.lang.String, double)
+	 * @generated
+	 */
+	EOperation getINode__SetProperty__String_double();
 
 	/**
 	 * Returns the meta object for class '{@link geometry.Operator <em>Operator</em>}'.
@@ -2319,7 +2511,31 @@ public interface GeometryPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation INODE___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT = eINSTANCE.getINode__ChangeDecoratorProperty__String_EObject();
+		EOperation INODE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT = eINSTANCE.getINode__ChangeDecoratorProperty__String_Object();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Property Names</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation INODE___GET_PROPERTY_NAMES = eINSTANCE.getINode__GetPropertyNames();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Property</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation INODE___GET_PROPERTY__STRING = eINSTANCE.getINode__GetProperty__String();
+
+		/**
+		 * The meta object literal for the '<em><b>Set Property</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation INODE___SET_PROPERTY__STRING_DOUBLE = eINSTANCE.getINode__SetProperty__String_double();
 
 		/**
 		 * The meta object literal for the '{@link geometry.impl.OperatorImpl <em>Operator</em>}' class.

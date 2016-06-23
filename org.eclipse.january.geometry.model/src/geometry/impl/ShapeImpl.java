@@ -349,17 +349,6 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 	 * @generated NOT
 	 */
 	@Override
-	public EList<String> getPropertyNames() {
-		// Return a list of the properties' keys.
-		return new BasicEList<String>(properties.keySet());
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated NOT
-	 */
-	@Override
 	public double getProperty(String property) {
 		return properties.get(property);
 	}
@@ -374,10 +363,22 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 */
+	@Override
+	public EList<String> getPropertyNames() {
+		// Return a list of the properties' keys.
+		return new BasicEList<String>(properties.keySet());
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	@Override
 	public void changeDecoratorProperty(String property, Object value) {
 
 		// Send a notification for the shape's set property method with the
@@ -533,14 +534,14 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 	public Object eInvoke(int operationID, EList<?> arguments)
 			throws InvocationTargetException {
 		switch (operationID) {
-			case GeometryPackage.SHAPE___GET_PROPERTY_NAMES:
-				return getPropertyNames();
-			case GeometryPackage.SHAPE___GET_PROPERTY__STRING:
-				return getProperty((String)arguments.get(0));
 			case GeometryPackage.SHAPE___SET_PROPERTY__STRING_DOUBLE:
 				setProperty((String)arguments.get(0), (Double)arguments.get(1));
 				return null;
-			case GeometryPackage.SHAPE___CHANGE_DECORATOR_PROPERTY__STRING_EOBJECT:
+			case GeometryPackage.SHAPE___GET_PROPERTY__STRING:
+				return getProperty((String)arguments.get(0));
+			case GeometryPackage.SHAPE___GET_PROPERTY_NAMES:
+				return getPropertyNames();
+			case GeometryPackage.SHAPE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT:
 				changeDecoratorProperty((String)arguments.get(0), arguments.get(1));
 				return null;
 		}
