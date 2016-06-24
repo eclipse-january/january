@@ -7,6 +7,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import geometry.Cylinder;
+import geometry.GeometryFactory;
 import geometry.GeometryPackage;
 
 /**
@@ -220,6 +221,22 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 		result.append(height);
 		result.append(')');
 		return result.toString();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see geometry.impl.OperatorImpl#clone()
+	 */
+	@Override
+	public Object clone() {
+
+		// Create a new cylinder
+		Cylinder clone = GeometryFactory.eINSTANCE.createCylinder();
+
+		// Make the operator a copy of this
+		clone.copy(this);
+		return clone;
 	}
 
 } // CylinderImpl

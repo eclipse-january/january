@@ -6,6 +6,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import geometry.GeometryFactory;
 import geometry.GeometryPackage;
 import geometry.Tube;
 
@@ -287,6 +288,22 @@ public class TubeImpl extends ShapeImpl implements Tube {
 		result.append(radius);
 		result.append(')');
 		return result.toString();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see geometry.impl.OperatorImpl#clone()
+	 */
+	@Override
+	public Object clone() {
+
+		// Create a new tube
+		Tube clone = GeometryFactory.eINSTANCE.createTube();
+
+		// Make the operator a copy of this
+		clone.copy(this);
+		return clone;
 	}
 
 } // TubeImpl

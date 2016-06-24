@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link geometry.INode#getType <em>Type</em>}</li>
  *   <li>{@link geometry.INode#getTriangles <em>Triangles</em>}</li>
  *   <li>{@link geometry.INode#getCenter <em>Center</em>}</li>
+ *   <li>{@link geometry.INode#getParent <em>Parent</em>}</li>
  * </ul>
  *
  * @see geometry.GeometryPackage#getINode()
@@ -167,6 +168,32 @@ public interface INode extends EObject {
 	void setCenter(Vertex value);
 
 	/**
+	 * Returns the value of the '<em><b>Parent</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Parent</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Parent</em>' reference.
+	 * @see #setParent(INode)
+	 * @see geometry.GeometryPackage#getINode_Parent()
+	 * @model
+	 * @generated
+	 */
+	INode getParent();
+
+	/**
+	 * Sets the value of the '{@link geometry.INode#getParent <em>Parent</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Parent</em>' reference.
+	 * @see #getParent()
+	 * @generated
+	 */
+	void setParent(INode value);
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
@@ -217,4 +244,52 @@ public interface INode extends EObject {
 	 * @generated
 	 */
 	void setProperty(String property, double value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Add a child to the list of children nodes contained by this object.
+	 * 
+	 * It is intended that users will use addNode() instead of adding objects directly to the nodes list to properly maintain the child's parent attribute.
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated
+	 */
+	void addNode(INode child);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Remove a child from the list of children nodes contained by this object.
+	 * 
+	 * It is intended that users will use removeNode() instead of adding objects directly to the nodes list to properly maintain the child's parent attribute.
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated
+	 */
+	void removeNode(INode child);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Make this object a copy of the source object, if the source object is of an appropriate type.
+	 * <!-- end-model-doc -->
+	 * @model sourceDataType="geometry.Object"
+	 * @generated
+	 */
+	void copy(Object source);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Create a copy of this object.
+	 * <!-- end-model-doc -->
+	 * @model dataType="geometry.Object"
+	 * @generated
+	 */
+	Object clone();
 } // INode
