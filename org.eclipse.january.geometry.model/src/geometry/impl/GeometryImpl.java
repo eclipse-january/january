@@ -35,6 +35,7 @@ import geometry.Vertex;
  * <li>{@link geometry.impl.GeometryImpl#getType <em>Type</em>}</li>
  * <li>{@link geometry.impl.GeometryImpl#getTriangles <em>Triangles</em>}</li>
  * <li>{@link geometry.impl.GeometryImpl#getCenter <em>Center</em>}</li>
+ * <li>{@link geometry.impl.GeometryImpl#getParent <em>Parent</em>}</li>
  * </ul>
  *
  * @generated
@@ -125,6 +126,16 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 	 * @ordered
 	 */
 	protected Vertex center;
+
+	/**
+	 * The cached value of the '{@link #getParent() <em>Parent</em>}' reference.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @see #getParent()
+	 * @generated
+	 * @ordered
+	 */
+	protected INode parent;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -294,6 +305,49 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 	 * @generated
 	 */
 	@Override
+	public INode getParent() {
+		if (parent != null && parent.eIsProxy()) {
+			InternalEObject oldParent = (InternalEObject) parent;
+			parent = (INode) eResolveProxy(oldParent);
+			if (parent != oldParent) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
+							GeometryPackage.GEOMETRY__PARENT, oldParent,
+							parent));
+			}
+		}
+		return parent;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public INode basicGetParent() {
+		return parent;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public void setParent(INode newParent) {
+		INode oldParent = parent;
+		parent = newParent;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET,
+					GeometryPackage.GEOMETRY__PARENT, oldParent, parent));
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
 	public void changeDecoratorProperty(String property, Object value) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
@@ -330,6 +384,63 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 	 */
 	@Override
 	public void setProperty(final String property, final double value) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	@Override
+	public void addNode(INode child) {
+
+		// Set self as the child's parent
+		child.setParent(this);
+
+		// Add the child to the list
+		nodes.add(child);
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	@Override
+	public void removeNode(INode child) {
+		// If the node is not already a child of this, fail silently
+		if (nodes.contains(child)) {
+
+			// Remove self as child's parent.
+			child.setParent(null);
+
+			// Remove the child from the list
+			nodes.remove(child);
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	@Override
+	public void copy(Object source) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	@Override
+	public Object clone() {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -375,6 +486,10 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 			if (resolve)
 				return getCenter();
 			return basicGetCenter();
+		case GeometryPackage.GEOMETRY__PARENT:
+			if (resolve)
+				return getParent();
+			return basicGetParent();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -408,6 +523,9 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 		case GeometryPackage.GEOMETRY__CENTER:
 			setCenter((Vertex) newValue);
 			return;
+		case GeometryPackage.GEOMETRY__PARENT:
+			setParent((INode) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -438,6 +556,9 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 		case GeometryPackage.GEOMETRY__CENTER:
 			setCenter((Vertex) null);
 			return;
+		case GeometryPackage.GEOMETRY__PARENT:
+			setParent((INode) null);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -464,6 +585,8 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 			return triangles != null && !triangles.isEmpty();
 		case GeometryPackage.GEOMETRY__CENTER:
 			return center != null;
+		case GeometryPackage.GEOMETRY__PARENT:
+			return parent != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -488,6 +611,17 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 		case GeometryPackage.GEOMETRY___SET_PROPERTY__STRING_DOUBLE:
 			setProperty((String) arguments.get(0), (Double) arguments.get(1));
 			return null;
+		case GeometryPackage.GEOMETRY___ADD_NODE__INODE:
+			addNode((INode) arguments.get(0));
+			return null;
+		case GeometryPackage.GEOMETRY___REMOVE_NODE__INODE:
+			removeNode((INode) arguments.get(0));
+			return null;
+		case GeometryPackage.GEOMETRY___COPY__OBJECT:
+			copy(arguments.get(0));
+			return null;
+		case GeometryPackage.GEOMETRY___CLONE:
+			return clone();
 		}
 		return super.eInvoke(operationID, arguments);
 	}

@@ -6,6 +6,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import geometry.GeometryFactory;
 import geometry.GeometryPackage;
 import geometry.Sphere;
 
@@ -158,6 +159,22 @@ public class SphereImpl extends ShapeImpl implements Sphere {
 		result.append(radius);
 		result.append(')');
 		return result.toString();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see geometry.impl.OperatorImpl#clone()
+	 */
+	@Override
+	public Object clone() {
+
+		// Create a new sphere
+		Sphere clone = GeometryFactory.eINSTANCE.createSphere();
+
+		// Make the operator a copy of this
+		clone.copy(this);
+		return clone;
 	}
 
 } // SphereImpl

@@ -7,6 +7,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import geometry.Cube;
+import geometry.GeometryFactory;
 import geometry.GeometryPackage;
 
 /**
@@ -163,6 +164,22 @@ public class CubeImpl extends ShapeImpl implements Cube {
 		result.append(sideLength);
 		result.append(')');
 		return result.toString();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see geometry.impl.OperatorImpl#clone()
+	 */
+	@Override
+	public Object clone() {
+
+		// Create a new cube
+		Cube clone = GeometryFactory.eINSTANCE.createCube();
+
+		// Make the operator a copy of this
+		clone.copy(this);
+		return clone;
 	}
 
 } // CubeImpl

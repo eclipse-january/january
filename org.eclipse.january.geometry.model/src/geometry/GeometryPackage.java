@@ -183,13 +183,22 @@ public interface GeometryPackage extends EPackage {
 	int INODE__CENTER = 5;
 
 	/**
+	 * The feature id for the '<em><b>Parent</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INODE__PARENT = 6;
+
+	/**
 	 * The number of structural features of the '<em>INode</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INODE_FEATURE_COUNT = 6;
+	int INODE_FEATURE_COUNT = 7;
 
 	/**
 	 * The operation id for the '<em>Change Decorator Property</em>' operation.
@@ -228,13 +237,49 @@ public interface GeometryPackage extends EPackage {
 	int INODE___SET_PROPERTY__STRING_DOUBLE = 3;
 
 	/**
+	 * The operation id for the '<em>Add Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INODE___ADD_NODE__INODE = 4;
+
+	/**
+	 * The operation id for the '<em>Remove Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INODE___REMOVE_NODE__INODE = 5;
+
+	/**
+	 * The operation id for the '<em>Copy</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INODE___COPY__OBJECT = 6;
+
+	/**
+	 * The operation id for the '<em>Clone</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INODE___CLONE = 7;
+
+	/**
 	 * The number of operations of the '<em>INode</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INODE_OPERATION_COUNT = 4;
+	int INODE_OPERATION_COUNT = 8;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -291,6 +336,15 @@ public interface GeometryPackage extends EPackage {
 	int SHAPE__CENTER = INODE__CENTER;
 
 	/**
+	 * The feature id for the '<em><b>Parent</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE__PARENT = INODE__PARENT;
+
+	/**
 	 * The feature id for the '<em><b>Material</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -316,6 +370,42 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int SHAPE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT = INODE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT;
+
+	/**
+	 * The operation id for the '<em>Add Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE___ADD_NODE__INODE = INODE___ADD_NODE__INODE;
+
+	/**
+	 * The operation id for the '<em>Remove Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE___REMOVE_NODE__INODE = INODE___REMOVE_NODE__INODE;
+
+	/**
+	 * The operation id for the '<em>Copy</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE___COPY__OBJECT = INODE___COPY__OBJECT;
+
+	/**
+	 * The operation id for the '<em>Clone</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHAPE___CLONE = INODE___CLONE;
 
 	/**
 	 * The operation id for the '<em>Set Property</em>' operation.
@@ -489,6 +579,15 @@ public interface GeometryPackage extends EPackage {
 	int SPHERE__CENTER = SHAPE__CENTER;
 
 	/**
+	 * The feature id for the '<em><b>Parent</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SPHERE__PARENT = SHAPE__PARENT;
+
+	/**
 	 * The feature id for the '<em><b>Material</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -523,6 +622,42 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int SPHERE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT = SHAPE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT;
+
+	/**
+	 * The operation id for the '<em>Add Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SPHERE___ADD_NODE__INODE = SHAPE___ADD_NODE__INODE;
+
+	/**
+	 * The operation id for the '<em>Remove Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SPHERE___REMOVE_NODE__INODE = SHAPE___REMOVE_NODE__INODE;
+
+	/**
+	 * The operation id for the '<em>Copy</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SPHERE___COPY__OBJECT = SHAPE___COPY__OBJECT;
+
+	/**
+	 * The operation id for the '<em>Clone</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SPHERE___CLONE = SHAPE___CLONE;
 
 	/**
 	 * The operation id for the '<em>Set Property</em>' operation.
@@ -615,6 +750,15 @@ public interface GeometryPackage extends EPackage {
 	int CUBE__CENTER = SHAPE__CENTER;
 
 	/**
+	 * The feature id for the '<em><b>Parent</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CUBE__PARENT = SHAPE__PARENT;
+
+	/**
 	 * The feature id for the '<em><b>Material</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -649,6 +793,42 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int CUBE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT = SHAPE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT;
+
+	/**
+	 * The operation id for the '<em>Add Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CUBE___ADD_NODE__INODE = SHAPE___ADD_NODE__INODE;
+
+	/**
+	 * The operation id for the '<em>Remove Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CUBE___REMOVE_NODE__INODE = SHAPE___REMOVE_NODE__INODE;
+
+	/**
+	 * The operation id for the '<em>Copy</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CUBE___COPY__OBJECT = SHAPE___COPY__OBJECT;
+
+	/**
+	 * The operation id for the '<em>Clone</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CUBE___CLONE = SHAPE___CLONE;
 
 	/**
 	 * The operation id for the '<em>Set Property</em>' operation.
@@ -741,6 +921,15 @@ public interface GeometryPackage extends EPackage {
 	int CYLINDER__CENTER = SHAPE__CENTER;
 
 	/**
+	 * The feature id for the '<em><b>Parent</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CYLINDER__PARENT = SHAPE__PARENT;
+
+	/**
 	 * The feature id for the '<em><b>Material</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -784,6 +973,42 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int CYLINDER___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT = SHAPE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT;
+
+	/**
+	 * The operation id for the '<em>Add Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CYLINDER___ADD_NODE__INODE = SHAPE___ADD_NODE__INODE;
+
+	/**
+	 * The operation id for the '<em>Remove Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CYLINDER___REMOVE_NODE__INODE = SHAPE___REMOVE_NODE__INODE;
+
+	/**
+	 * The operation id for the '<em>Copy</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CYLINDER___COPY__OBJECT = SHAPE___COPY__OBJECT;
+
+	/**
+	 * The operation id for the '<em>Clone</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CYLINDER___CLONE = SHAPE___CLONE;
 
 	/**
 	 * The operation id for the '<em>Set Property</em>' operation.
@@ -886,6 +1111,15 @@ public interface GeometryPackage extends EPackage {
 	int GEOMETRY__CENTER = INODE__CENTER;
 
 	/**
+	 * The feature id for the '<em><b>Parent</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GEOMETRY__PARENT = INODE__PARENT;
+
+	/**
 	 * The number of structural features of the '<em>Geometry</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -929,6 +1163,42 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int GEOMETRY___SET_PROPERTY__STRING_DOUBLE = INODE___SET_PROPERTY__STRING_DOUBLE;
+
+	/**
+	 * The operation id for the '<em>Add Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GEOMETRY___ADD_NODE__INODE = INODE___ADD_NODE__INODE;
+
+	/**
+	 * The operation id for the '<em>Remove Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GEOMETRY___REMOVE_NODE__INODE = INODE___REMOVE_NODE__INODE;
+
+	/**
+	 * The operation id for the '<em>Copy</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GEOMETRY___COPY__OBJECT = INODE___COPY__OBJECT;
+
+	/**
+	 * The operation id for the '<em>Clone</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GEOMETRY___CLONE = INODE___CLONE;
 
 	/**
 	 * The number of operations of the '<em>Geometry</em>' class.
@@ -1004,6 +1274,15 @@ public interface GeometryPackage extends EPackage {
 	int TUBE__CENTER = SHAPE__CENTER;
 
 	/**
+	 * The feature id for the '<em><b>Parent</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TUBE__PARENT = SHAPE__PARENT;
+
+	/**
 	 * The feature id for the '<em><b>Material</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1056,6 +1335,42 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int TUBE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT = SHAPE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT;
+
+	/**
+	 * The operation id for the '<em>Add Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TUBE___ADD_NODE__INODE = SHAPE___ADD_NODE__INODE;
+
+	/**
+	 * The operation id for the '<em>Remove Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TUBE___REMOVE_NODE__INODE = SHAPE___REMOVE_NODE__INODE;
+
+	/**
+	 * The operation id for the '<em>Copy</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TUBE___COPY__OBJECT = SHAPE___COPY__OBJECT;
+
+	/**
+	 * The operation id for the '<em>Clone</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TUBE___CLONE = SHAPE___CLONE;
 
 	/**
 	 * The operation id for the '<em>Set Property</em>' operation.
@@ -1158,6 +1473,15 @@ public interface GeometryPackage extends EPackage {
 	int OPERATOR__CENTER = INODE__CENTER;
 
 	/**
+	 * The feature id for the '<em><b>Parent</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATOR__PARENT = INODE__PARENT;
+
+	/**
 	 * The number of structural features of the '<em>Operator</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1201,6 +1525,42 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int OPERATOR___SET_PROPERTY__STRING_DOUBLE = INODE___SET_PROPERTY__STRING_DOUBLE;
+
+	/**
+	 * The operation id for the '<em>Add Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATOR___ADD_NODE__INODE = INODE___ADD_NODE__INODE;
+
+	/**
+	 * The operation id for the '<em>Remove Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATOR___REMOVE_NODE__INODE = INODE___REMOVE_NODE__INODE;
+
+	/**
+	 * The operation id for the '<em>Copy</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATOR___COPY__OBJECT = INODE___COPY__OBJECT;
+
+	/**
+	 * The operation id for the '<em>Clone</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATOR___CLONE = INODE___CLONE;
 
 	/**
 	 * The number of operations of the '<em>Operator</em>' class.
@@ -1276,6 +1636,15 @@ public interface GeometryPackage extends EPackage {
 	int UNION__CENTER = OPERATOR__CENTER;
 
 	/**
+	 * The feature id for the '<em><b>Parent</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNION__PARENT = OPERATOR__PARENT;
+
+	/**
 	 * The number of structural features of the '<em>Union</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1319,6 +1688,42 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int UNION___SET_PROPERTY__STRING_DOUBLE = OPERATOR___SET_PROPERTY__STRING_DOUBLE;
+
+	/**
+	 * The operation id for the '<em>Add Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNION___ADD_NODE__INODE = OPERATOR___ADD_NODE__INODE;
+
+	/**
+	 * The operation id for the '<em>Remove Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNION___REMOVE_NODE__INODE = OPERATOR___REMOVE_NODE__INODE;
+
+	/**
+	 * The operation id for the '<em>Copy</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNION___COPY__OBJECT = OPERATOR___COPY__OBJECT;
+
+	/**
+	 * The operation id for the '<em>Clone</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNION___CLONE = OPERATOR___CLONE;
 
 	/**
 	 * The number of operations of the '<em>Union</em>' class.
@@ -1394,6 +1799,15 @@ public interface GeometryPackage extends EPackage {
 	int INTERSECTION__CENTER = OPERATOR__CENTER;
 
 	/**
+	 * The feature id for the '<em><b>Parent</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERSECTION__PARENT = OPERATOR__PARENT;
+
+	/**
 	 * The number of structural features of the '<em>Intersection</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1437,6 +1851,42 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int INTERSECTION___SET_PROPERTY__STRING_DOUBLE = OPERATOR___SET_PROPERTY__STRING_DOUBLE;
+
+	/**
+	 * The operation id for the '<em>Add Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERSECTION___ADD_NODE__INODE = OPERATOR___ADD_NODE__INODE;
+
+	/**
+	 * The operation id for the '<em>Remove Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERSECTION___REMOVE_NODE__INODE = OPERATOR___REMOVE_NODE__INODE;
+
+	/**
+	 * The operation id for the '<em>Copy</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERSECTION___COPY__OBJECT = OPERATOR___COPY__OBJECT;
+
+	/**
+	 * The operation id for the '<em>Clone</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERSECTION___CLONE = OPERATOR___CLONE;
 
 	/**
 	 * The number of operations of the '<em>Intersection</em>' class.
@@ -1512,6 +1962,15 @@ public interface GeometryPackage extends EPackage {
 	int COMPLEMENT__CENTER = OPERATOR__CENTER;
 
 	/**
+	 * The feature id for the '<em><b>Parent</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPLEMENT__PARENT = OPERATOR__PARENT;
+
+	/**
 	 * The number of structural features of the '<em>Complement</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1555,6 +2014,42 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int COMPLEMENT___SET_PROPERTY__STRING_DOUBLE = OPERATOR___SET_PROPERTY__STRING_DOUBLE;
+
+	/**
+	 * The operation id for the '<em>Add Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPLEMENT___ADD_NODE__INODE = OPERATOR___ADD_NODE__INODE;
+
+	/**
+	 * The operation id for the '<em>Remove Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPLEMENT___REMOVE_NODE__INODE = OPERATOR___REMOVE_NODE__INODE;
+
+	/**
+	 * The operation id for the '<em>Copy</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPLEMENT___COPY__OBJECT = OPERATOR___COPY__OBJECT;
+
+	/**
+	 * The operation id for the '<em>Clone</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPLEMENT___CLONE = OPERATOR___CLONE;
 
 	/**
 	 * The number of operations of the '<em>Complement</em>' class.
@@ -2053,6 +2548,17 @@ public interface GeometryPackage extends EPackage {
 	EReference getINode_Center();
 
 	/**
+	 * Returns the meta object for the reference '{@link geometry.INode#getParent <em>Parent</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Parent</em>'.
+	 * @see geometry.INode#getParent()
+	 * @see #getINode()
+	 * @generated
+	 */
+	EReference getINode_Parent();
+
+	/**
 	 * Returns the meta object for the '{@link geometry.INode#changeDecoratorProperty(java.lang.String, java.lang.Object) <em>Change Decorator Property</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2091,6 +2597,46 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getINode__SetProperty__String_double();
+
+	/**
+	 * Returns the meta object for the '{@link geometry.INode#addNode(geometry.INode) <em>Add Node</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Add Node</em>' operation.
+	 * @see geometry.INode#addNode(geometry.INode)
+	 * @generated
+	 */
+	EOperation getINode__AddNode__INode();
+
+	/**
+	 * Returns the meta object for the '{@link geometry.INode#removeNode(geometry.INode) <em>Remove Node</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Remove Node</em>' operation.
+	 * @see geometry.INode#removeNode(geometry.INode)
+	 * @generated
+	 */
+	EOperation getINode__RemoveNode__INode();
+
+	/**
+	 * Returns the meta object for the '{@link geometry.INode#copy(java.lang.Object) <em>Copy</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Copy</em>' operation.
+	 * @see geometry.INode#copy(java.lang.Object)
+	 * @generated
+	 */
+	EOperation getINode__Copy__Object();
+
+	/**
+	 * Returns the meta object for the '{@link geometry.INode#clone() <em>Clone</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Clone</em>' operation.
+	 * @see geometry.INode#clone()
+	 * @generated
+	 */
+	EOperation getINode__Clone();
 
 	/**
 	 * Returns the meta object for class '{@link geometry.Operator <em>Operator</em>}'.
@@ -2506,6 +3052,14 @@ public interface GeometryPackage extends EPackage {
 		EReference INODE__CENTER = eINSTANCE.getINode_Center();
 
 		/**
+		 * The meta object literal for the '<em><b>Parent</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference INODE__PARENT = eINSTANCE.getINode_Parent();
+
+		/**
 		 * The meta object literal for the '<em><b>Change Decorator Property</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2536,6 +3090,38 @@ public interface GeometryPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation INODE___SET_PROPERTY__STRING_DOUBLE = eINSTANCE.getINode__SetProperty__String_double();
+
+		/**
+		 * The meta object literal for the '<em><b>Add Node</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation INODE___ADD_NODE__INODE = eINSTANCE.getINode__AddNode__INode();
+
+		/**
+		 * The meta object literal for the '<em><b>Remove Node</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation INODE___REMOVE_NODE__INODE = eINSTANCE.getINode__RemoveNode__INode();
+
+		/**
+		 * The meta object literal for the '<em><b>Copy</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation INODE___COPY__OBJECT = eINSTANCE.getINode__Copy__Object();
+
+		/**
+		 * The meta object literal for the '<em><b>Clone</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation INODE___CLONE = eINSTANCE.getINode__Clone();
 
 		/**
 		 * The meta object literal for the '{@link geometry.impl.OperatorImpl <em>Operator</em>}' class.

@@ -31,4 +31,6 @@ public interface INodeValidator {
 
 	boolean validateCenter(Vertex value);
 
+	boolean validateParent(INode value);
+
 }
