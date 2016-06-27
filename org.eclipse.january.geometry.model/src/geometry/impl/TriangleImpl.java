@@ -2,21 +2,25 @@
  */
 package geometry.impl;
 
+import geometry.GeometryPackage;
+import geometry.Triangle;
+import geometry.Vertex;
+
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
-import geometry.GeometryPackage;
-import geometry.Triangle;
-import geometry.Vertex;
 
 /**
  * <!-- begin-user-doc -->
@@ -77,20 +81,6 @@ public class TriangleImpl extends MinimalEObjectImpl.Container implements Triang
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public EList<Vertex> getVertices() {
-		if (vertices == null) {
-			vertices = new EObjectContainmentEList<Vertex>(Vertex.class, this, GeometryPackage.TRIANGLE__VERTICES);
-		}
-		return vertices;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public Vertex getNormal() {
 		return normal;
 	}
@@ -115,7 +105,6 @@ public class TriangleImpl extends MinimalEObjectImpl.Container implements Triang
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	public void setNormal(Vertex newNormal) {
 		if (newNormal != normal) {
 			NotificationChain msgs = null;
@@ -128,6 +117,18 @@ public class TriangleImpl extends MinimalEObjectImpl.Container implements Triang
 		}
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, GeometryPackage.TRIANGLE__NORMAL, newNormal, newNormal));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Vertex> getVertices() {
+		if (vertices == null) {
+			vertices = new EObjectContainmentEList<Vertex>(Vertex.class, this, GeometryPackage.TRIANGLE__VERTICES);
+		}
+		return vertices;
 	}
 
 	/**

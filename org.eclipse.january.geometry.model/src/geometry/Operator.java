@@ -2,6 +2,7 @@
  */
 package geometry;
 
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Operator</b></em>'.
@@ -13,5 +14,4 @@ package geometry;
  * @generated
  */
 public interface Operator extends INode {
-
 } // Operator

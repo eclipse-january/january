@@ -2,6 +2,7 @@
  */
 package geometry;
 
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Geometry</b></em>'.
@@ -17,5 +18,4 @@ package geometry;
  * @generated
  */
 public interface Geometry extends INode {
-
 } // Geometry

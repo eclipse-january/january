@@ -30,7 +30,6 @@ package geometry;
  * @generated
  */
 public interface Tube extends Shape {
-
 	/**
 	 * Returns the value of the '<em><b>Height</b></em>' attribute.
 	 * The default value is <code>"0.0"</code>.
@@ -108,4 +107,5 @@ public interface Tube extends Shape {
 	 * @generated
 	 */
 	void setRadius(double value);
+
 } // Tube

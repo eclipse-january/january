@@ -29,21 +29,6 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Triangle extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Vertices</b></em>' containment reference list.
-	 * The list contents are of type {@link geometry.Vertex}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * Each triangle has exactly three vertices where its edges meet.
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Vertices</em>' containment reference list.
-	 * @see geometry.GeometryPackage#getTriangle_Vertices()
-	 * @model containment="true" upper="3"
-	 * @generated
-	 */
-	EList<Vertex> getVertices();
-
-	/**
 	 * Returns the value of the '<em><b>Normal</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -67,5 +52,20 @@ public interface Triangle extends EObject {
 	 * @generated
 	 */
 	void setNormal(Vertex value);
+
+	/**
+	 * Returns the value of the '<em><b>Vertices</b></em>' containment reference list.
+	 * The list contents are of type {@link geometry.Vertex}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Each triangle has exactly three vertices where its edges meet.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Vertices</em>' containment reference list.
+	 * @see geometry.GeometryPackage#getTriangle_Vertices()
+	 * @model containment="true" upper="3"
+	 * @generated
+	 */
+	EList<Vertex> getVertices();
 
 } // Triangle

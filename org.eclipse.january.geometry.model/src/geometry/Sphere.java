@@ -24,7 +24,6 @@ package geometry;
  * @generated
  */
 public interface Sphere extends Shape {
-
 	/**
 	 * Returns the value of the '<em><b>Radius</b></em>' attribute.
 	 * <!-- begin-user-doc -->

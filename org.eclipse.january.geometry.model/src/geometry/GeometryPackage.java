@@ -59,66 +59,6 @@ public interface GeometryPackage extends EPackage {
 	GeometryPackage eINSTANCE = geometry.impl.GeometryPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link geometry.impl.ShapeImpl <em>Shape</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.ShapeImpl
-	 * @see geometry.impl.GeometryPackageImpl#getShape()
-	 * @generated
-	 */
-	int SHAPE = 0;
-
-	/**
-	 * The meta object id for the '{@link geometry.impl.TriangleImpl <em>Triangle</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.TriangleImpl
-	 * @see geometry.impl.GeometryPackageImpl#getTriangle()
-	 * @generated
-	 */
-	int TRIANGLE = 1;
-
-	/**
-	 * The meta object id for the '{@link geometry.impl.VertexImpl <em>Vertex</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.VertexImpl
-	 * @see geometry.impl.GeometryPackageImpl#getVertex()
-	 * @generated
-	 */
-	int VERTEX = 2;
-
-	/**
-	 * The meta object id for the '{@link geometry.impl.SphereImpl <em>Sphere</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.SphereImpl
-	 * @see geometry.impl.GeometryPackageImpl#getSphere()
-	 * @generated
-	 */
-	int SPHERE = 3;
-
-	/**
-	 * The meta object id for the '{@link geometry.impl.CubeImpl <em>Cube</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.CubeImpl
-	 * @see geometry.impl.GeometryPackageImpl#getCube()
-	 * @generated
-	 */
-	int CUBE = 4;
-
-	/**
-	 * The meta object id for the '{@link geometry.impl.CylinderImpl <em>Cylinder</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see geometry.impl.CylinderImpl
-	 * @see geometry.impl.GeometryPackageImpl#getCylinder()
-	 * @generated
-	 */
-	int CYLINDER = 5;
-
-	/**
 	 * The meta object id for the '{@link geometry.INode <em>INode</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -280,6 +220,16 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int INODE_OPERATION_COUNT = 8;
+
+	/**
+	 * The meta object id for the '{@link geometry.impl.ShapeImpl <em>Shape</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.impl.ShapeImpl
+	 * @see geometry.impl.GeometryPackageImpl#getShape()
+	 * @generated
+	 */
+	int SHAPE = 0;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -444,6 +394,16 @@ public interface GeometryPackage extends EPackage {
 	int SHAPE_OPERATION_COUNT = INODE_OPERATION_COUNT + 3;
 
 	/**
+	 * The meta object id for the '{@link geometry.impl.TriangleImpl <em>Triangle</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.impl.TriangleImpl
+	 * @see geometry.impl.GeometryPackageImpl#getTriangle()
+	 * @generated
+	 */
+	int TRIANGLE = 1;
+
+	/**
 	 * The feature id for the '<em><b>Normal</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -478,6 +438,16 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int TRIANGLE_OPERATION_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link geometry.impl.VertexImpl <em>Vertex</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.impl.VertexImpl
+	 * @see geometry.impl.GeometryPackageImpl#getVertex()
+	 * @generated
+	 */
+	int VERTEX = 2;
 
 	/**
 	 * The feature id for the '<em><b>X</b></em>' attribute.
@@ -523,6 +493,16 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int VERTEX_OPERATION_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link geometry.impl.SphereImpl <em>Sphere</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.impl.SphereImpl
+	 * @see geometry.impl.GeometryPackageImpl#getSphere()
+	 * @generated
+	 */
+	int SPHERE = 3;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -696,6 +676,16 @@ public interface GeometryPackage extends EPackage {
 	int SPHERE_OPERATION_COUNT = SHAPE_OPERATION_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link geometry.impl.CubeImpl <em>Cube</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.impl.CubeImpl
+	 * @see geometry.impl.GeometryPackageImpl#getCube()
+	 * @generated
+	 */
+	int CUBE = 4;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -865,6 +855,16 @@ public interface GeometryPackage extends EPackage {
 	 * @ordered
 	 */
 	int CUBE_OPERATION_COUNT = SHAPE_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link geometry.impl.CylinderImpl <em>Cylinder</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see geometry.impl.CylinderImpl
+	 * @see geometry.impl.GeometryPackageImpl#getCylinder()
+	 * @generated
+	 */
+	int CYLINDER = 5;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2218,6 +2218,7 @@ public interface GeometryPackage extends EPackage {
 	 */
 	int OBJECT = 17;
 
+
 	/**
 	 * Returns the meta object for class '{@link geometry.Shape <em>Shape</em>}'.
 	 * <!-- begin-user-doc -->
@@ -2240,14 +2241,14 @@ public interface GeometryPackage extends EPackage {
 	EReference getShape_Material();
 
 	/**
-	 * Returns the meta object for the '{@link geometry.Shape#getPropertyNames() <em>Get Property Names</em>}' operation.
+	 * Returns the meta object for the '{@link geometry.Shape#setProperty(java.lang.String, double) <em>Set Property</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Property Names</em>' operation.
-	 * @see geometry.Shape#getPropertyNames()
+	 * @return the meta object for the '<em>Set Property</em>' operation.
+	 * @see geometry.Shape#setProperty(java.lang.String, double)
 	 * @generated
 	 */
-	EOperation getShape__GetPropertyNames();
+	EOperation getShape__SetProperty__String_double();
 
 	/**
 	 * Returns the meta object for the '{@link geometry.Shape#getProperty(java.lang.String) <em>Get Property</em>}' operation.
@@ -2260,14 +2261,14 @@ public interface GeometryPackage extends EPackage {
 	EOperation getShape__GetProperty__String();
 
 	/**
-	 * Returns the meta object for the '{@link geometry.Shape#setProperty(java.lang.String, double) <em>Set Property</em>}' operation.
+	 * Returns the meta object for the '{@link geometry.Shape#getPropertyNames() <em>Get Property Names</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Set Property</em>' operation.
-	 * @see geometry.Shape#setProperty(java.lang.String, double)
+	 * @return the meta object for the '<em>Get Property Names</em>' operation.
+	 * @see geometry.Shape#getPropertyNames()
 	 * @generated
 	 */
-	EOperation getShape__SetProperty__String_double();
+	EOperation getShape__GetPropertyNames();
 
 	/**
 	 * Returns the meta object for class '{@link geometry.Triangle <em>Triangle</em>}'.
@@ -2804,12 +2805,12 @@ public interface GeometryPackage extends EPackage {
 		EReference SHAPE__MATERIAL = eINSTANCE.getShape_Material();
 
 		/**
-		 * The meta object literal for the '<em><b>Get Property Names</b></em>' operation.
+		 * The meta object literal for the '<em><b>Set Property</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation SHAPE___GET_PROPERTY_NAMES = eINSTANCE.getShape__GetPropertyNames();
+		EOperation SHAPE___SET_PROPERTY__STRING_DOUBLE = eINSTANCE.getShape__SetProperty__String_double();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Property</b></em>' operation.
@@ -2820,12 +2821,12 @@ public interface GeometryPackage extends EPackage {
 		EOperation SHAPE___GET_PROPERTY__STRING = eINSTANCE.getShape__GetProperty__String();
 
 		/**
-		 * The meta object literal for the '<em><b>Set Property</b></em>' operation.
+		 * The meta object literal for the '<em><b>Get Property Names</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation SHAPE___SET_PROPERTY__STRING_DOUBLE = eINSTANCE.getShape__SetProperty__String_double();
+		EOperation SHAPE___GET_PROPERTY_NAMES = eINSTANCE.getShape__GetPropertyNames();
 
 		/**
 		 * The meta object literal for the '{@link geometry.impl.TriangleImpl <em>Triangle</em>}' class.
