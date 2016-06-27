@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.lang.SerializationUtils;
+import org.eclipse.dawnsci.analysis.api.dataset.MetadataException;
 
 
 /**
@@ -118,13 +119,13 @@ public class Metadata implements IMetadata {
 	}
 
 	@Override
-	public Serializable getMetaValue(String key) throws Exception {
+	public Serializable getMetaValue(String key) throws MetadataException {
 		return metadata == null ? null : metadata.get(key);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Collection<String> getMetaNames() throws Exception {
+	public Collection<String> getMetaNames() throws MetadataException {
 		return metadata == null ? (Collection<String>) Collections.EMPTY_SET : Collections.unmodifiableCollection(metadata.keySet());
 	}
 

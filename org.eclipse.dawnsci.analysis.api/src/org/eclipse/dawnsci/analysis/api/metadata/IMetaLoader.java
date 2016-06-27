@@ -12,6 +12,8 @@
 
 package org.eclipse.dawnsci.analysis.api.metadata;
 
+import java.io.IOException;
+
 import org.eclipse.dawnsci.analysis.api.monitor.IMonitor;
 
 /**
@@ -25,7 +27,7 @@ public interface IMetaLoader {
 	 * This can be read in more cheaply than the entire data.
 	 * @param mon
 	 */
-	public void loadMetadata(IMonitor mon) throws Exception ;
+	public void loadMetadata(IMonitor mon) throws IOException ;
 	
     /**
      * Returns an object containing some data about the data file
