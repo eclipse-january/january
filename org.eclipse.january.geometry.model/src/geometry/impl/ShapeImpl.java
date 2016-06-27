@@ -16,12 +16,12 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import geometry.GeometryFactory;
 import geometry.GeometryPackage;
 import geometry.INode;
 import geometry.Material;
+import geometry.Operator;
 import geometry.Shape;
 import geometry.Triangle;
 import geometry.Vertex;
@@ -157,14 +157,6 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 	protected Material material;
 
 	/**
-	 * Logger for handling event messages and other information.
-	 * 
-	 * @generated NOT
-	 */
-	protected static final Logger logger = LoggerFactory
-			.getLogger(ShapeImpl.class);
-
-	/**
 	 * The map of the shape's physical properties. Property names are mapped to
 	 * their values.
 	 * 
@@ -179,6 +171,9 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 	 */
 	protected ShapeImpl() {
 		super();
+
+		// Initialize the center
+		center = GeometryFactory.eINSTANCE.createVertex();
 	}
 
 	/**
@@ -438,7 +433,7 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public void setProperty(final String property, final double value) {
@@ -448,7 +443,7 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public double getProperty(final String property) {
@@ -458,7 +453,7 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public EList<String> getPropertyNames() {
@@ -469,61 +464,141 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public void changeDecoratorProperty(String property, Object value) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+
+		// Send a notification for the shape's set property method with the
+		// property name placed instead of the previous value. By convention,
+		// decorator classes will be set to interpret this non-standard
+		// notification message correctly and other listeners will ignore it.
+		eNotify(new ENotificationImpl(this, Notification.SET,
+				GeometryPackage.SHAPE___SET_PROPERTY__STRING_DOUBLE, property,
+				value));
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public void addNode(INode child) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+
+		// If the node is already in the list, fail silently
+		if (!nodes.contains(child)) {
+
+			// Set the child's parent to this
+			child.setParent(this);
+
+			// Add the child to the list of nodes
+			nodes.add(child);
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public void removeNode(INode child) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+
+		// If the node isn't in the list, fail silently
+		if (!nodes.contains(child)) {
+
+			// Remove this as the child's parent
+			child.setParent(null);
+
+			// Remove the child from the list of nodes
+			nodes.remove(child);
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public void copy(Object source) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+
+		// If the source object is not an Operator, fail silently
+		if (source instanceof Operator) {
+
+			// Cast the object as an operator
+			Operator castSource = (Operator) source;
+
+			// Copy the object's center
+			center.setX(castSource.getCenter().getX());
+			center.setY(castSource.getCenter().getY());
+			center.setZ(castSource.getCenter().getZ());
+
+			// Copy the object's data members
+			id = castSource.getId();
+			name = castSource.getName();
+			type = castSource.getType();
+
+			// Clear the list of child nodes
+			for (INode node : nodes) {
+				removeNode(node);
+			}
+
+			// Add clones of each of the source's nodes
+			for (INode node : castSource.getNodes()) {
+				addNode((INode) node.clone());
+			}
+
+			// Make the properties map a copy of the source's
+			properties.clear();
+			for (String property : castSource.getPropertyNames()) {
+				properties.put(property, castSource.getProperty(property));
+			}
+
+			// Copy the triangles from the source
+			triangles.clear();
+			for (Triangle triangle : castSource.getTriangles()) {
+
+				// Create a new triangle
+				Triangle cloneTriangle = GeometryFactory.eINSTANCE
+						.createTriangle();
+
+				// Create a copy of each vertex from the current triangle and
+				// add it to the clone under construction
+				for (Vertex vertex : triangle.getVertices()) {
+
+					Vertex cloneVertex = GeometryFactory.eINSTANCE
+							.createVertex();
+					cloneVertex.setX(vertex.getX());
+					cloneVertex.setY(vertex.getY());
+					cloneVertex.setZ(vertex.getZ());
+
+					cloneTriangle.getVertices().add(cloneVertex);
+				}
+
+				// Make the normal vector a copy of the source triangle's
+				cloneTriangle.getNormal().setX(triangle.getNormal().getX());
+				cloneTriangle.getNormal().setY(triangle.getNormal().getY());
+				cloneTriangle.getNormal().setZ(triangle.getNormal().getZ());
+			}
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public Object clone() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+
+		// Create a new operator
+		Operator clone = GeometryFactory.eINSTANCE.createOperator();
+
+		// Make it a copy of this
+		clone.copy(this);
+		return clone;
 	}
 
 	/**

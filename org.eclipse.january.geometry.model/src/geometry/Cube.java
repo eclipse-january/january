@@ -24,7 +24,6 @@ package geometry;
  * @generated
  */
 public interface Cube extends Shape {
-
 	/**
 	 * Returns the value of the '<em><b>Side Length</b></em>' attribute.
 	 * <!-- begin-user-doc -->

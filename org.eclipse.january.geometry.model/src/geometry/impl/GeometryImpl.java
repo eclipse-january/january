@@ -7,7 +7,6 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -17,6 +16,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import geometry.Geometry;
+import geometry.GeometryFactory;
 import geometry.GeometryPackage;
 import geometry.INode;
 import geometry.Triangle;
@@ -51,6 +51,7 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 	 * @ordered
 	 */
 	protected static final String NAME_EDEFAULT = null;
+
 	/**
 	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -60,6 +61,7 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 	 * @ordered
 	 */
 	protected String name = NAME_EDEFAULT;
+
 	/**
 	 * The default value of the '{@link #getId() <em>Id</em>}' attribute. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
@@ -69,6 +71,7 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 	 * @ordered
 	 */
 	protected static final long ID_EDEFAULT = 0L;
+
 	/**
 	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
@@ -78,6 +81,7 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 	 * @ordered
 	 */
 	protected long id = ID_EDEFAULT;
+
 	/**
 	 * The cached value of the '{@link #getNodes() <em>Nodes</em>}' containment
 	 * reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -97,6 +101,7 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 	 * @ordered
 	 */
 	protected static final String TYPE_EDEFAULT = null;
+
 	/**
 	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -357,12 +362,13 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
-	 * @generated NOT
+	 * @generated
 	 */
 	@Override
 	public EList<String> getPropertyNames() {
-		// A geometry has no properties of its own, so return an empty list
-		return new BasicEList<String>();
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -397,11 +403,15 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 	@Override
 	public void addNode(INode child) {
 
-		// Set self as the child's parent
-		child.setParent(this);
+		// If the node is already in the list, fail silently
+		if (!nodes.contains(child)) {
 
-		// Add the child to the list
-		nodes.add(child);
+			// Set the child's parent to this
+			child.setParent(this);
+
+			// Add the child to the list of nodes
+			nodes.add(child);
+		}
 	}
 
 	/**
@@ -411,13 +421,14 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 	 */
 	@Override
 	public void removeNode(INode child) {
-		// If the node is not already a child of this, fail silently
-		if (nodes.contains(child)) {
 
-			// Remove self as child's parent.
+		// If the node isn't in the list, fail silently
+		if (!nodes.contains(child)) {
+
+			// Remove this as the child's parent
 			child.setParent(null);
 
-			// Remove the child from the list
+			// Remove the child from the list of nodes
 			nodes.remove(child);
 		}
 	}
@@ -429,9 +440,20 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 	 */
 	@Override
 	public void copy(Object source) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+
+		// Fail silently if the source is not a geometry
+		if (source instanceof Geometry) {
+
+			// Empty the list of nodes
+			for (INode node : nodes) {
+				removeNode(node);
+			}
+
+			// Add a clone of each of the other geometry's nodes
+			for (INode node : ((Geometry) source).getNodes()) {
+				addNode((INode) node.clone());
+			}
+		}
 	}
 
 	/**
@@ -441,9 +463,13 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 	 */
 	@Override
 	public Object clone() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+
+		// Create another geometry
+		Geometry clone = GeometryFactory.eINSTANCE.createGeometry();
+
+		// Make the geometry a copy of this
+		clone.copy(this);
+		return clone;
 	}
 
 	/**

@@ -3,6 +3,7 @@
 package geometry;
 
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -32,7 +33,6 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface INode extends EObject {
-
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -101,10 +101,6 @@ public interface INode extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Type</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Type</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * A string representing the type of entity this node represents in the tree in a human readable way. Example values might include "cube", "sphere" or "intersection."
@@ -292,4 +288,5 @@ public interface INode extends EObject {
 	 * @generated
 	 */
 	Object clone();
+
 } // INode

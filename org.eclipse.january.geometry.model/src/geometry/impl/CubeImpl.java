@@ -7,7 +7,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import geometry.Cube;
-import geometry.GeometryFactory;
 import geometry.GeometryPackage;
 
 /**
@@ -17,15 +16,16 @@ import geometry.GeometryPackage;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link geometry.impl.CubeImpl#getSideLength <em>Side Length</em>}</li>
+ * <li>{@link geometry.impl.CubeImpl#getSideLength <em>Side Length</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class CubeImpl extends ShapeImpl implements Cube {
 	/**
-	 * The default value of the '{@link #getSideLength() <em>Side Length</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The default value of the '{@link #getSideLength() <em>Side Length</em>}'
+	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getSideLength()
 	 * @generated
 	 * @ordered
@@ -33,8 +33,9 @@ public class CubeImpl extends ShapeImpl implements Cube {
 	protected static final double SIDE_LENGTH_EDEFAULT = 0.0;
 
 	/**
-	 * The cached value of the '{@link #getSideLength() <em>Side Length</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The cached value of the '{@link #getSideLength() <em>Side Length</em>}'
+	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getSideLength()
 	 * @generated
 	 * @ordered
@@ -49,12 +50,13 @@ public class CubeImpl extends ShapeImpl implements Cube {
 	protected CubeImpl() {
 		super();
 
-		// Set the object's type
+		// Initialize the type
 		type = "cube";
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -64,6 +66,7 @@ public class CubeImpl extends ShapeImpl implements Cube {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -74,112 +77,91 @@ public class CubeImpl extends ShapeImpl implements Cube {
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
-	 * @generated NOT
+	 * @generated
 	 */
 	@Override
 	public void setSideLength(double newSideLength) {
-
-		// Ignore negative side lengths
-		if (newSideLength >= 0) {
-			double oldSideLength = sideLength;
-			sideLength = newSideLength;
-			if (eNotificationRequired())
-				eNotify(new ENotificationImpl(this, Notification.SET,
-						GeometryPackage.CUBE__SIDE_LENGTH, oldSideLength,
-						sideLength));
-		}
-
-		// Log an error for an invalid value
-		else {
-			logger.error("An attempt was made to change cube " + name + " " + id
-					+ "'s side length to the invalid value " + newSideLength
-					+ ".");
-		}
+		double oldSideLength = sideLength;
+		sideLength = newSideLength;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET,
+					GeometryPackage.CUBE__SIDE_LENGTH, oldSideLength,
+					sideLength));
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case GeometryPackage.CUBE__SIDE_LENGTH:
-				return getSideLength();
+		case GeometryPackage.CUBE__SIDE_LENGTH:
+			return getSideLength();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case GeometryPackage.CUBE__SIDE_LENGTH:
-				setSideLength((Double)newValue);
-				return;
+		case GeometryPackage.CUBE__SIDE_LENGTH:
+			setSideLength((Double) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case GeometryPackage.CUBE__SIDE_LENGTH:
-				setSideLength(SIDE_LENGTH_EDEFAULT);
-				return;
+		case GeometryPackage.CUBE__SIDE_LENGTH:
+			setSideLength(SIDE_LENGTH_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case GeometryPackage.CUBE__SIDE_LENGTH:
-				return sideLength != SIDE_LENGTH_EDEFAULT;
+		case GeometryPackage.CUBE__SIDE_LENGTH:
+			return sideLength != SIDE_LENGTH_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
+		if (eIsProxy())
+			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (sideLength: ");
 		result.append(sideLength);
 		result.append(')');
 		return result.toString();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see geometry.impl.OperatorImpl#clone()
-	 */
-	@Override
-	public Object clone() {
-
-		// Create a new cube
-		Cube clone = GeometryFactory.eINSTANCE.createCube();
-
-		// Make the operator a copy of this
-		clone.copy(this);
-		return clone;
 	}
 
 } // CubeImpl

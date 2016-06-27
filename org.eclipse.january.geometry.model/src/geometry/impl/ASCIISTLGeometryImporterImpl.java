@@ -2,20 +2,26 @@
  */
 package geometry.impl;
 
-import java.lang.reflect.InvocationTargetException;
-import java.nio.file.Path;
-import java.util.Collection;
-
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
-
 import geometry.ASCIISTLGeometryImporter;
 import geometry.Geometry;
 import geometry.GeometryPackage;
+
+import java.lang.reflect.InvocationTargetException;
+
+import java.nio.file.Path;
+
+import java.util.Collection;
+
+import org.eclipse.emf.common.notify.Notification;
+
+import org.eclipse.emf.common.util.EList;
+
+import org.eclipse.emf.ecore.EClass;
+
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -86,7 +92,6 @@ public class ASCIISTLGeometryImporterImpl extends MinimalEObjectImpl.Container i
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	public EList<String> getFileTypes() {
 		if (fileTypes == null) {
 			fileTypes = new EDataTypeUniqueEList<String>(String.class, this, GeometryPackage.ASCIISTL_GEOMETRY_IMPORTER__FILE_TYPES);
@@ -99,7 +104,6 @@ public class ASCIISTLGeometryImporterImpl extends MinimalEObjectImpl.Container i
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	public String getDescription() {
 		return description;
 	}
@@ -109,7 +113,6 @@ public class ASCIISTLGeometryImporterImpl extends MinimalEObjectImpl.Container i
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	public void setDescription(String newDescription) {
 		String oldDescription = description;
 		description = newDescription;
@@ -118,10 +121,10 @@ public class ASCIISTLGeometryImporterImpl extends MinimalEObjectImpl.Container i
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	public Geometry load(Path path) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
