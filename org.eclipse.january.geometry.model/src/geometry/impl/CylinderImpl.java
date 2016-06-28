@@ -2,12 +2,20 @@
  */
 package geometry.impl;
 
+import java.util.ArrayList;
+
+import org.eclipse.eavp.viz.modeling.MeshUtils;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import geometry.Cylinder;
+import geometry.GeometryFactory;
 import geometry.GeometryPackage;
+import geometry.Triangle;
+import geometry.Vertex;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '
@@ -64,15 +72,41 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 	protected double height = HEIGHT_EDEFAULT;
 
 	/**
+	 * The resolution of the cylinder, measured in the number of points used to
+	 * describe the circles at its ends.
+	 * 
+	 * @generated NOT
+	 */
+	final private int RESOLUTION = 50;
+
+	/**
+	 * The number of vertical segments into which the mesh will be divided.
+	 * 
+	 * @generated NOT
+	 */
+	final private int SEGMENTS = 2;
+
+	/**
+	 * The last height used in drawing the mesh.
+	 * 
+	 * @generated NOT
+	 */
+	protected double prevHeight = HEIGHT_EDEFAULT;
+
+	/**
+	 * The last radius used in drawing the mesh.
+	 * 
+	 * @generated NOT
+	 */
+	protected double prevRadius = RADIUS_EDEFAULT;
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @generated NOT
 	 */
 	protected CylinderImpl() {
 		super();
-
-		// Initialize the type
-		type = "cylinder";
 	}
 
 	/**
@@ -218,6 +252,167 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 		result.append(height);
 		result.append(')');
 		return result.toString();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see geometry.impl.ShapeImpl#getTriangles()
+	 * 
+	 * @generated NOT
+	 */
+	@Override
+	public EList<Triangle> getTriangles() {
+
+		// If the properties have not changed since the last time the mesh was
+		// recalculated, return the current mesh
+		if (prevRadius == radius && prevHeight == height) {
+			return triangles;
+		}
+
+		// Update to the new properties
+		prevRadius = radius;
+		prevHeight = height;
+
+		// Clear the previous list
+		triangles = new BasicEList<Triangle>();
+
+		// Make an array of vertices to form the triangles
+		ArrayList<Vertex> vertices = new ArrayList<Vertex>();
+
+		// The x and z vertices for the cylinder
+		float[] circle = new float[RESOLUTION * 2];
+
+		// Get the unit circle's coordinates
+		circle = MeshUtils.createCircle((float) radius, RESOLUTION);
+
+		// The number of coordinates required to specify every 3D vertex for a
+		// cylinder of with SEGMENTS extra circles above the base circle and
+		// RESOLUTION points per circle.
+		int blockSize = (SEGMENTS + 1) * RESOLUTION * 3;
+
+		// Iterate through the points, one circle along the clyinder at a time,
+		// adding them to the vertex array
+		for (int i = 0; i <= SEGMENTS; i++) {
+			for (int j = 0; j < RESOLUTION; j++) {
+
+				Vertex vertex = GeometryFactory.eINSTANCE.createVertex();
+
+				// X and Z coordinate of the unit circle
+				vertex.setX(circle[j * 2]);
+				vertex.setZ(circle[j * 2 + 1]);
+
+				// Y coordinate of the current segment's height
+				vertex.setY(-height / 2 + i * height / SEGMENTS);
+
+				// Add the vertex to the list
+				vertices.add(vertex);
+			}
+		}
+
+		// Add a vertex at the center of the bottom circle
+		Vertex bottom = GeometryFactory.eINSTANCE.createVertex();
+		bottom.setX(0);
+		bottom.setY(-height / 2);
+		bottom.setZ(0);
+		vertices.add(bottom);
+
+		// Add a vertex at the center of the top circle
+		Vertex top = GeometryFactory.eINSTANCE.createVertex();
+		top.setX(0);
+		top.setY(height / 2);
+		top.setZ(0);
+		vertices.add(top);
+
+		// Construct the side out of identical vertical segments, one at a time.
+		for (int axialSegment = 0; axialSegment < SEGMENTS; axialSegment++) {
+
+			// Add two triangles for each vertex along the current circle
+			for (int radialSegment = 0; radialSegment < RESOLUTION; radialSegment++) {
+
+				// Create a new triangle
+				Triangle t0 = GeometryFactory.eINSTANCE.createTriangle();
+
+				// Create a triangle between the current vertex, the next vertex
+				// along the circle, and the vertex immediately above this one.
+				t0.getVertices()
+						.add((Vertex) vertices
+								.get((axialSegment + 1) * RESOLUTION
+										+ ((radialSegment + 1) % RESOLUTION))
+								.clone());
+				t0.getVertices()
+						.add((Vertex) vertices
+								.get(axialSegment * RESOLUTION
+										+ ((radialSegment + 1) % RESOLUTION))
+								.clone());
+				t0.getVertices()
+						.add((Vertex) vertices
+								.get(axialSegment * RESOLUTION + radialSegment)
+								.clone());
+
+				// Add it to the list
+				triangles.add(t0);
+
+				// Create the second triangle
+				Triangle t1 = GeometryFactory.eINSTANCE.createTriangle();
+
+				// Create a triangle between the current vertex, the vertex
+				// immediately above it, and the last one along the circle from
+				// that one.
+				t1.getVertices()
+						.add((Vertex) vertices
+								.get(axialSegment * RESOLUTION + radialSegment)
+								.clone());
+				t1.getVertices()
+						.add((Vertex) vertices.get(
+								(axialSegment + 1) * RESOLUTION + radialSegment)
+								.clone());
+				t1.getVertices()
+						.add((Vertex) vertices
+								.get((axialSegment + 1) * RESOLUTION
+										+ ((radialSegment + 1) % RESOLUTION))
+								.clone());
+
+				// Add the second triangle to the list
+				triangles.add(t1);
+			}
+		}
+
+		// Add two triangles for each vertex along the top and bottom circles
+		for (int radialSegment = 0; radialSegment < RESOLUTION; radialSegment++) {
+
+			// Create a new triangle
+			Triangle t0 = GeometryFactory.eINSTANCE.createTriangle();
+
+			// Create a triangle between the current vertex,the next vertex
+			// along the circle, and the center point.
+			t0.getVertices().add((Vertex) vertices.get(blockSize / 3).clone());
+			t0.getVertices().add((Vertex) vertices.get(radialSegment).clone());
+			t0.getVertices().add((Vertex) vertices
+					.get((radialSegment + 1) % RESOLUTION).clone());
+
+			// Add it to the list
+			triangles.add(t0);
+
+			// Create the second triangle
+			Triangle t1 = GeometryFactory.eINSTANCE.createTriangle();
+
+			// Create a triangle between the current vertex,the next vertex
+			// along the circle, and the center point.
+			t1.getVertices().add(vertices.get(((SEGMENTS) * RESOLUTION)
+					+ ((radialSegment + 1) % RESOLUTION)));
+			t1.getVertices()
+					.add((Vertex) vertices
+							.get(((SEGMENTS) * RESOLUTION) + radialSegment)
+							.clone());
+			t1.getVertices()
+					.add((Vertex) vertices.get(blockSize / 3 + 1).clone());
+
+			// Add the second triangle to the list
+			triangles.add(t1);
+		}
+
+		return triangles;
 	}
 
 } // CylinderImpl

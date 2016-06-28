@@ -28,7 +28,6 @@ public class ComplementImpl extends OperatorImpl implements Complement {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
