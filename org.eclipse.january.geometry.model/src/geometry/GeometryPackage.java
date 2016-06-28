@@ -486,13 +486,22 @@ public interface GeometryPackage extends EPackage {
 	int VERTEX_FEATURE_COUNT = 3;
 
 	/**
+	 * The operation id for the '<em>Clone</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERTEX___CLONE = 0;
+
+	/**
 	 * The number of operations of the '<em>Vertex</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VERTEX_OPERATION_COUNT = 0;
+	int VERTEX_OPERATION_COUNT = 1;
 
 	/**
 	 * The meta object id for the '{@link geometry.impl.SphereImpl <em>Sphere</em>}' class.
@@ -2346,6 +2355,16 @@ public interface GeometryPackage extends EPackage {
 	EAttribute getVertex_Z();
 
 	/**
+	 * Returns the meta object for the '{@link geometry.Vertex#clone() <em>Clone</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Clone</em>' operation.
+	 * @see geometry.Vertex#clone()
+	 * @generated
+	 */
+	EOperation getVertex__Clone();
+
+	/**
 	 * Returns the meta object for class '{@link geometry.Sphere <em>Sphere</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2887,6 +2906,14 @@ public interface GeometryPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute VERTEX__Z = eINSTANCE.getVertex_Z();
+
+		/**
+		 * The meta object literal for the '<em><b>Clone</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation VERTEX___CLONE = eINSTANCE.getVertex__Clone();
 
 		/**
 		 * The meta object literal for the '{@link geometry.impl.SphereImpl <em>Sphere</em>}' class.

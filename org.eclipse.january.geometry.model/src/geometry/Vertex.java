@@ -102,4 +102,15 @@ public interface Vertex extends EObject {
 	 */
 	void setZ(double value);
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Create a copy of this vertex.
+	 * <!-- end-model-doc -->
+	 * @model dataType="geometry.Object"
+	 * @generated
+	 */
+	Object clone();
+
 } // Vertex

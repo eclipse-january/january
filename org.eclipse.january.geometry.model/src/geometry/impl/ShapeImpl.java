@@ -167,12 +167,13 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
-	 * @generated
+	 * @generated NOT
 	 */
 	protected ShapeImpl() {
 		super();
 
-		// Initialize the center
+		// Initialize the data members
+		properties = new HashMap<String, Double>();
 		center = GeometryFactory.eINSTANCE.createVertex();
 	}
 
@@ -438,6 +439,14 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 	@Override
 	public void setProperty(final String property, final double value) {
 		properties.put(property, value);
+
+		// Fire an update. We will store the property name in the old value
+		// field in place of the actual previous value. Observers will be
+		// responsible for correctly handling this specially formatted
+		// notification.
+		eNotify(new ENotificationImpl(this, Notification.SET,
+				GeometryPackage.SHAPE___SET_PROPERTY__STRING_DOUBLE, property,
+				value));
 	}
 
 	/**
