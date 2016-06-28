@@ -3338,11 +3338,6 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	 */
 	protected abstract void setItemDirect(final int dindex, final int sindex, final Object src);
 
-	@Override
-	public boolean hasErrors() {
-		return super.getError() != null;
-	}
-
 	protected Dataset getInternalError() {
 		ILazyDataset led = super.getError();
 		if (led == null)

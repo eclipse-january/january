@@ -228,4 +228,25 @@ public interface IDataset extends ILazyDataset {
 	 */
 	@Override
 	IDataset getTransposedView(int... axes);
+
+	/**
+	 * 
+	 * @return the error dataset, constructing one if necessary
+	 */
+	@Override
+	public IDataset getError();
+
+	/**
+	 * Get the error for a given position.
+	 * @param pos
+	 * @return error value (symmetric)
+	 */
+	public double getError(int... pos);
+
+	/**
+	 * Get the error values for a single point in the dataset
+	 * @param pos of the point to be referenced 
+	 * @return the values of the error at this point (can be null when no error defined)
+	 */
+	public double[] getErrorArray(int... pos);
 }

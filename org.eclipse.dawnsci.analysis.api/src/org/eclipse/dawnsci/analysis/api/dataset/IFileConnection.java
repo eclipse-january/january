@@ -9,8 +9,6 @@
 
 package org.eclipse.dawnsci.analysis.api.dataset;
 
-import java.util.concurrent.TimeUnit;
-
 public interface IFileConnection {
 
 	/**

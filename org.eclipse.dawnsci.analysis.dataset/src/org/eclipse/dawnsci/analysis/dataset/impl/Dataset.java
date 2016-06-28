@@ -15,7 +15,7 @@ package org.eclipse.dawnsci.analysis.dataset.impl;
 import java.io.Serializable;
 
 import org.eclipse.dawnsci.analysis.api.dataset.Dtype;
-import org.eclipse.dawnsci.analysis.api.dataset.IErrorDataset;
+import org.eclipse.dawnsci.analysis.api.dataset.IDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.ILazyDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.Slice;
 import org.eclipse.dawnsci.analysis.api.dataset.SliceND;
@@ -35,7 +35,7 @@ import org.eclipse.dawnsci.analysis.api.monitor.IMonitor;
  * be a wholly contiguous slice of a dataset; a copy or new dataset satisfies this criterion.
  * </p>
  */
-public interface Dataset extends IErrorDataset {
+public interface Dataset extends IDataset {
 	/**
 	 * Boolean
 	 */

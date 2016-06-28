@@ -221,7 +221,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 
 		return (List<T>) metadata.get(findMetadataTypeSubInterfaces(clazz));
 	}
-	
+
 	@Override
 	public <T extends MetadataType> T getFirstMetadata(Class<T> clazz) {
 		try {
@@ -911,6 +911,11 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	public ILazyDataset getError() {
 		ErrorMetadata emd = getErrorMetadata();
 		return emd == null ? null : emd.getError();
+	}
+
+	@Override
+	public boolean hasErrors() {
+		return getError() != null;
 	}
 
 	/**
