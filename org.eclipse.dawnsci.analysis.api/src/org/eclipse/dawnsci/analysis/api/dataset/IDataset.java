@@ -28,9 +28,9 @@ public interface IDataset extends ILazyDataset {
 	public void setStringFormat(Format format);
 
 	/**
-	 * @return Size of an item in dataset (in bytes)
+	 * @return Size of an item in dataset in bytes
 	 */
-	public int getItemsize();
+	public int getItemBytes();
 
 	/**
 	 * @param pos
@@ -146,12 +146,12 @@ public interface IDataset extends ILazyDataset {
 	public Number max(boolean... switches);
 
 	/**
-	 * @return Position of minimum value
+	 * @return Position of minimum value (or first position if there are more than one)
 	 */
 	public int[] minPos();
 
 	/**
-	 * @return Position of maximum value
+	 * @return Position of maximum value (or first position if there are more than one)
 	 */
 	public int[] maxPos();
 

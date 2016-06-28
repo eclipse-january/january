@@ -146,7 +146,7 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 
 	@Override
 	public LazyDynamicDataset clone() {
-		LazyDynamicDataset ret = new LazyDynamicDataset(new String(name), getDtype(), getElementsPerItem(), 
+		LazyDynamicDataset ret = new LazyDynamicDataset(new String(name), getDType(), getElementsPerItem(), 
 				oShape, maxShape, loader);
 		ret.shape = shape;
 		ret.size = size;

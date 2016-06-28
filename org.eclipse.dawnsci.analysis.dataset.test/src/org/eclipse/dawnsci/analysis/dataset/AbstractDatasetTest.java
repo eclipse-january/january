@@ -1452,8 +1452,8 @@ public class AbstractDatasetTest {
 		assertEquals("Rank", 0, a.getRank());
 		assertEquals("Shape", 0, a.getShape().length);
 		assertEquals("Value", new Complex(1.0, -0.5), a.getObject());
-		assertEquals("Real view value", 1.0, a.realView().getObject());
-		assertEquals("Imaginary view value", -0.5, ((ComplexDoubleDataset) a).imagView().getObject());
+		assertEquals("Real view value", 1.0, a.getRealView().getObject());
+		assertEquals("Imaginary view value", -0.5, ((ComplexDoubleDataset) a).getImaginaryView().getObject());
 
 		a = DatasetFactory.createFromObject(1.f);
 		assertEquals("Rank", 0, a.getRank());
@@ -1647,9 +1647,9 @@ public class AbstractDatasetTest {
 	}
 
 	public static void checkDatasets(Dataset expected, Dataset calc, boolean valuesOnly, double relTol, double absTol) {
-		int type = expected.getDtype();
+		int type = expected.getDType();
 		if (!valuesOnly) {
-			Assert.assertEquals("Type", type, calc.getDtype());
+			Assert.assertEquals("Type", type, calc.getDType());
 			Assert.assertEquals("Items", expected.getElementsPerItem(), calc.getElementsPerItem());
 		}
 		Assert.assertEquals("Size", expected.getSize(), calc.getSize());
@@ -1668,7 +1668,7 @@ public class AbstractDatasetTest {
 		final int cis = calc.getElementsPerItem();
 		final int is = Math.max(eis, cis);
 
-		if (expected.elementClass().equals(Boolean.class)) {
+		if (expected.getElementClass().equals(Boolean.class)) {
 			while (at.hasNext() && bt.hasNext()) {
 				for (int j = 0; j < is; j++) {
 					boolean e = j >= eis ? false : expected.getElementBooleanAbs(at.index + j);

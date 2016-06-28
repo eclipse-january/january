@@ -24,7 +24,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	private static final int ISIZE = 3; // number of elements per item
 
 	@Override
-	public int getDtype() {
+	public int getDType() {
 		return Dataset.RGB;
 	}
 

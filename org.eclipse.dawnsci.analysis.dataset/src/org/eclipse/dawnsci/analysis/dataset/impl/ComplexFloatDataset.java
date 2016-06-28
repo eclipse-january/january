@@ -33,7 +33,7 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 	private static final int ISIZE = 2; // number of elements per item
 
 	@Override
-	public int getDtype() {
+	public int getDType() {
 		return Dataset.COMPLEX64; // DATA_TYPE
 	}
 
@@ -486,7 +486,10 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 		setItem(new float[] {dr, di}, pos); // PRIM_TYPE
 	}
 
-	public FloatDataset imag() { // CLASS_TYPE
+	/**
+	 * @return imaginary part of dataset as new dataset
+	 */
+	public FloatDataset getImaginary() { // CLASS_TYPE
 		FloatDataset rdataset = new FloatDataset(shape); // CLASS_TYPE
 		IndexIterator iter = getIterator();
 		IndexIterator riter = rdataset.getIterator();
@@ -501,7 +504,7 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 	/**
 	 * @return view of imaginary values
 	 */
-	public FloatDataset imagView() { // CLASS_TYPE
+	public FloatDataset getImaginaryView() { // CLASS_TYPE
 		return getElementsView(1);
 	}
 
@@ -638,7 +641,7 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 	@Override
 	public ComplexFloatDataset iadd(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		boolean useLong = bds.elementClass().equals(Long.class);
+		boolean useLong = bds.getElementClass().equals(Long.class);
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
 			if (useLong) { // note no complex longs
@@ -687,7 +690,7 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 	@Override
 	public ComplexFloatDataset isubtract(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		boolean useLong = bds.elementClass().equals(Long.class);
+		boolean useLong = bds.getElementClass().equals(Long.class);
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
 			if (useLong) { // note no complex longs
@@ -736,7 +739,7 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 	@Override
 	public ComplexFloatDataset imultiply(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		boolean useLong = bds.elementClass().equals(Long.class);
+		boolean useLong = bds.getElementClass().equals(Long.class);
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
 			if (useLong) { // note no complex longs
@@ -795,7 +798,7 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 	@Override
 	public ComplexFloatDataset idivide(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		boolean useLong = bds.elementClass().equals(Long.class);
+		boolean useLong = bds.getElementClass().equals(Long.class);
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
 			if (useLong) { // note no complex longs

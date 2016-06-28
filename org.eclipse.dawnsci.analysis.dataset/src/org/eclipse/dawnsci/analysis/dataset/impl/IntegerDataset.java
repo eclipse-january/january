@@ -54,7 +54,7 @@ public class IntegerDataset extends AbstractDataset {
 	}
 
 	@Override
-	public int getDtype() {
+	public int getDType() {
 		return INT32; // DATA_TYPE
 	}
 
@@ -916,7 +916,7 @@ public class IntegerDataset extends AbstractDataset {
 	@Override
 	public IntegerDataset iadd(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		boolean useLong = bds.elementClass().equals(Long.class);
+		boolean useLong = bds.getElementClass().equals(Long.class);
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
 			if (useLong) {
@@ -950,7 +950,7 @@ public class IntegerDataset extends AbstractDataset {
 	@Override
 	public IntegerDataset isubtract(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		boolean useLong = bds.elementClass().equals(Long.class);
+		boolean useLong = bds.getElementClass().equals(Long.class);
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
 			if (useLong) {
@@ -985,7 +985,7 @@ public class IntegerDataset extends AbstractDataset {
 	@Override
 	public IntegerDataset imultiply(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		boolean useLong = bds.elementClass().equals(Long.class);
+		boolean useLong = bds.getElementClass().equals(Long.class);
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
 			if (useLong) {
@@ -1019,7 +1019,7 @@ public class IntegerDataset extends AbstractDataset {
 	@Override
 	public IntegerDataset idivide(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		boolean useLong = bds.elementClass().equals(Long.class);
+		boolean useLong = bds.getElementClass().equals(Long.class);
 		if (bds.getSize() == 1) {
 			if (useLong) {
 				final long lb = bds.getElementLongAbs(0);
@@ -1075,7 +1075,7 @@ public class IntegerDataset extends AbstractDataset {
 	@Override
 	public IntegerDataset iremainder(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		boolean useLong = bds.elementClass().equals(Long.class);
+		boolean useLong = bds.getElementClass().equals(Long.class);
 		if (bds.getSize() == 1) {
 			if (useLong) {
 				final long lb = bds.getElementLongAbs(0);

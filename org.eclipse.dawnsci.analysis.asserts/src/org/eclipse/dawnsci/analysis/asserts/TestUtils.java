@@ -91,7 +91,7 @@ public class TestUtils {
 		Assert.assertArrayEquals("Shape", expected.getShape(), calc.getShape());
 		Assert.assertEquals("Itemsize", expected.getElementsPerItem(), calc.getElementsPerItem());
 		if (testDtype) {
-			Assert.assertEquals("Dataset type", expected.getDtype(), calc.getDtype());
+			Assert.assertEquals("Dataset type", expected.getDType(), calc.getDType());
 		}
 		IndexIterator at = calc.getIterator(true);
 		IndexIterator bt = expected.getIterator();

@@ -152,7 +152,7 @@ public class DatasetUtils {
 		}
 		int[] ashape = a.getShape();
 		final int rank = ashape.length;
-		final int at = a.getDtype();
+		final int at = a.getDType();
 		final int ilen = indices.length;
 		final int is = a.getElementsPerItem();
 
@@ -444,12 +444,12 @@ public class DatasetUtils {
 		}
 		for (int ind : indices) {
 			if (ind > imax) {
-				result.add(DatasetFactory.zeros(is, new int[] {0}, a.getDtype()));
+				result.add(DatasetFactory.zeros(is, new int[] {0}, a.getDType()));
 			} else {
 				nshape[axis] = ind - oind;
 				start[axis] = oind;
 				stop[axis] = ind;
-				Dataset n = DatasetFactory.zeros(is, nshape, a.getDtype());
+				Dataset n = DatasetFactory.zeros(is, nshape, a.getDType());
 				IndexIterator iter = a.getSliceIterator(start, stop, step);
 
 				a.fillDataset(n, iter);
@@ -462,7 +462,7 @@ public class DatasetUtils {
 			nshape[axis] = imax - oind;
 			start[axis] = oind;
 			stop[axis] = imax;
-			Dataset n = DatasetFactory.zeros(is, nshape, a.getDtype());
+			Dataset n = DatasetFactory.zeros(is, nshape, a.getDType());
 			IndexIterator iter = a.getSliceIterator(start, stop, step);
 
 			a.fillDataset(n, iter);
@@ -531,7 +531,7 @@ public class DatasetUtils {
 			newShape[axis] = nlen;
 		}
 
-		Dataset rdata = DatasetFactory.zeros(is, newShape, a.getDtype());
+		Dataset rdata = DatasetFactory.zeros(is, newShape, a.getDType());
 		Serializable nbuf = rdata.getBuffer();
 
 		int csize = is; // chunk size
@@ -578,7 +578,7 @@ public class DatasetUtils {
 	 */
 	public static Dataset resize(final Dataset a, final int... shape) {
 		int size = a.getSize();
-		Dataset rdata = DatasetFactory.zeros(a.getElementsPerItem(), shape, a.getDtype());
+		Dataset rdata = DatasetFactory.zeros(a.getElementsPerItem(), shape, a.getDType());
 		IndexIterator it = rdata.getIterator();
 		while (it.hasNext()) {
 			rdata.setObjectAbs(it.index, a.getObjectAbs(it.index % size));
@@ -597,7 +597,7 @@ public class DatasetUtils {
 	public static Dataset cast(final IDataset d, final int dtype) {
 		Dataset a = convertToDataset(d);
 
-		if (a.getDtype() == dtype) {
+		if (a.getDType() == dtype) {
 			return a;
 		}
 
@@ -706,7 +706,7 @@ public class DatasetUtils {
 	 * @param isize item size
 	 */
 	public static Dataset cast(final Dataset a, final boolean repeat, final int dtype, final int isize) {
-		if (a.getDtype() == dtype && a.getElementsPerItem() == isize) {
+		if (a.getDType() == dtype && a.getElementsPerItem() == isize) {
 			return a;
 		}
 		if (isize <= 0) {
@@ -842,7 +842,7 @@ public class DatasetUtils {
 	 */
 	public static Dataset makeUnsigned(IDataset a) {
 		Dataset d = convertToDataset(a);
-		int dtype = d.getDtype();
+		int dtype = d.getDType();
 		switch (dtype) {
 		case Dataset.INT32:
 			d = new LongDataset(d);
@@ -878,7 +878,7 @@ public class DatasetUtils {
 	 * @param bitWidth width of original primitive in bits
 	 */
 	public static void unwrapUnsigned(Dataset a, final int bitWidth) {
-		final int dtype = a.getDtype();
+		final int dtype = a.getDType();
 		final double dv = 1L << bitWidth;
 		final int isize = a.getElementsPerItem();
 		IndexIterator it = a.getIterator();
@@ -1058,7 +1058,7 @@ public class DatasetUtils {
 	 * @return diagonal matrix
 	 */
 	public static Dataset diag(final Dataset a, final int offset) {
-		final int dtype = a.getDtype();
+		final int dtype = a.getDType();
 		final int rank = a.getRank();
 		final int is = a.getElementsPerItem();
 
@@ -1213,7 +1213,7 @@ public class DatasetUtils {
 		if (datasets == null || datasets.length == 0)
 			return null;
 
-		switch (datasets[0].getDtype()) {
+		switch (datasets[0].getDType()) {
 		case Dataset.INT8:
 			return new CompoundByteDataset(datasets);
 		case Dataset.INT16:
@@ -1239,7 +1239,7 @@ public class DatasetUtils {
 	 * @return compound dataset
 	 */
 	public static CompoundDataset createCompoundDatasetFromLastAxis(final Dataset a, final boolean shareData) {
-		switch (a.getDtype()) {
+		switch (a.getDType()) {
 		case Dataset.INT8:
 			return CompoundByteDataset.createCompoundDatasetWithLastDimension(a, shareData);
 		case Dataset.INT16:
@@ -1279,7 +1279,7 @@ public class DatasetUtils {
 	 * @return coerced copy of dataset
 	 */
 	public static Dataset coerce(Dataset a, Object obj) {
-		final int dt = a.getDtype();
+		final int dt = a.getDType();
 		final int ot = AbstractDataset.getDTypeFromClass(obj.getClass());
 
 		return cast(a.clone(), AbstractDataset.getBestDType(dt, ot));
@@ -1391,7 +1391,7 @@ public class DatasetUtils {
 
 		for (int i = 0; i < rank; i++) {
 			Dataset axis = axes[i];
-			Dataset coord = DatasetFactory.zeros(nshape, axis.getDtype());
+			Dataset coord = DatasetFactory.zeros(nshape, axis.getDType());
 			result.add(coord);
 
 			final int alen = axis.getSize();
@@ -1602,7 +1602,7 @@ public class DatasetUtils {
 		}
 		Object matrix;
 
-		switch (a.getDtype()) {
+		switch (a.getDType()) {
 		case Dataset.BOOL:
 			matrix = Array.newInstance(boolean.class, a.getShape());
 			break;
@@ -1847,7 +1847,7 @@ public class DatasetUtils {
 
 		IndexIterator it = a.getIterator();
 		final int n = values.getSize();
-		if (values.getDtype() == Dataset.INT64) {
+		if (values.getDType() == Dataset.INT64) {
 			while (it.hasNext()) {
 				long x = a.getElementLongAbs(it.index);
 	
@@ -1931,7 +1931,7 @@ public class DatasetUtils {
 		IndexIterator it = a.getIterator();
 		int i = -1;
 		final int n = values.getSize();
-		if (values.getDtype() == Dataset.INT64) {
+		if (values.getDType() == Dataset.INT64) {
 			while (it.hasNext()) {
 				i++;
 				long x = a.getElementLongAbs(it.index);
@@ -2026,7 +2026,7 @@ public class DatasetUtils {
 		} else {
 			PositionIterator pi = a.getPositionIterator(axis);
 			int s = a.getShapeRef()[axis];
-			Dataset u = DatasetFactory.zeros(is, new int[] {s}, a.getDtype());
+			Dataset u = DatasetFactory.zeros(is, new int[] {s}, a.getDType());
 			Dataset v = DatasetFactory.zeros(u);
 			int[] pos = pi.getPos();
 			boolean[] hit = pi.getOmit();
@@ -2100,7 +2100,7 @@ public class DatasetUtils {
 		condition = (BooleanDataset) dAll[0];
 		Dataset dx = dAll[1];
 		Dataset dy = dAll[2];
-		int dt = AbstractDataset.getBestDType(dx.getDtype(),dy.getDtype());
+		int dt = AbstractDataset.getBestDType(dx.getDType(),dy.getDType());
 		int ds = Math.max(dx.getElementsPerItem(), dy.getElementsPerItem());
 
 		Dataset r = DatasetFactory.zeros(ds, condition.getShapeRef(), dt);
@@ -2137,7 +2137,7 @@ public class DatasetUtils {
 		int ds = -1;
 		for (int i = 0; i < n; i++) {
 			Dataset a = dChoices[i];
-			int t = a.getDtype();
+			int t = a.getDType();
 			if (t > dt)
 				dt = t;
 			int s = a.getElementsPerItem();
@@ -2190,7 +2190,7 @@ public class DatasetUtils {
 			int r = a.getRank();
 			if (r > mr)
 				mr = r;
-			int t = a.getDtype();
+			int t = a.getDType();
 			if (t > dt)
 				dt = t;
 			int s = a.getElementsPerItem();
@@ -2364,7 +2364,7 @@ public class DatasetUtils {
 					}
 				}
 			}
-			c = DatasetFactory.zeros(new int[] {size}, a.getDtype());
+			c = DatasetFactory.zeros(new int[] {size}, a.getDType());
 	
 			int i = 0;
 			if (it.isOutputDouble()) {
@@ -2390,7 +2390,7 @@ public class DatasetUtils {
 	 * @return name of dataset type
 	 */
 	public static String getDTypeName(Dataset a) {
-		int d = a.getDtype();
+		int d = a.getDType();
 		int e = a.getElementsPerItem();
 		int isize = a.getItemsize();
 		if (AbstractDataset.isDTypeComplex(d)) {

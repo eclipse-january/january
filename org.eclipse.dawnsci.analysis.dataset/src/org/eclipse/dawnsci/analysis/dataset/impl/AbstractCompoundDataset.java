@@ -914,7 +914,7 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 			}
 		}
 
-		int ihash = ((int) hash) * 19 + getDtype() * 17 + getElementsPerItem();
+		int ihash = ((int) hash) * 19 + getDType() * 17 + getElementsPerItem();
 		setStoredValue(STORE_SHAPELESS_HASH, ihash);
 	}
 

@@ -49,7 +49,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 	}
 
 	@Override
-	public int getDtype() {
+	public int getDType() {
 		return Dataset.ARRAYFLOAT32; // DATA_TYPE
 	}
 
@@ -350,7 +350,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 			logger.error("Need a single-element dataset");
 			throw new IllegalArgumentException("Need a single-element dataset");
 		}
-		if (a.getDtype() != Dataset.FLOAT32) { // DATA_TYPE
+		if (a.getDType() != Dataset.FLOAT32) { // DATA_TYPE
 			logger.error("Dataset type must be float"); // PRIM_TYPE
 			throw new IllegalArgumentException("Dataset type must be float"); // PRIM_TYPE
 		}
@@ -841,7 +841,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 	}
 
 	@Override
-	public FloatDataset real() { // CLASS_TYPE
+	public FloatDataset getReal() { // CLASS_TYPE
 		FloatDataset rdataset = new FloatDataset(shape); // CLASS_TYPE
 		IndexIterator iter = getIterator();
 		IndexIterator riter = rdataset.getIterator();
@@ -854,7 +854,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 	}
 
 	@Override
-	public Dataset realView() {
+	public Dataset getRealView() {
 		return getElementsView(0);
 	}
 
@@ -912,7 +912,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 		if (element < 0 || element > isize) {
 			throw new IllegalArgumentException(String.format("Invalid choice of element: %d/%d", element, isize));
 		}
-		if (elementClass() != destination.elementClass()) {
+		if (getElementClass() != destination.getElementClass()) {
 			throw new IllegalArgumentException("Element class of destination does not match this dataset");
 		}
 
@@ -933,7 +933,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 		if (element < 0 || element > isize) {
 			throw new IllegalArgumentException(String.format("Invalid choice of element: %d/%d", element, isize));
 		}
-		if (elementClass() != source.elementClass()) {
+		if (getElementClass() != source.getElementClass()) {
 			throw new IllegalArgumentException("Element class of destination does not match this dataset");
 		}
 
@@ -1284,7 +1284,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 	@Override
 	public CompoundFloatDataset iadd(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		boolean useLong = bds.elementClass().equals(Long.class);
+		boolean useLong = bds.getElementClass().equals(Long.class);
 		int is = bds.getElementsPerItem();
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
@@ -1369,7 +1369,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 	@Override
 	public CompoundFloatDataset isubtract(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		boolean useLong = bds.elementClass().equals(Long.class);
+		boolean useLong = bds.getElementClass().equals(Long.class);
 		int is = bds.getElementsPerItem();
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
@@ -1454,7 +1454,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 	@Override
 	public CompoundFloatDataset imultiply(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		boolean useLong = bds.elementClass().equals(Long.class);
+		boolean useLong = bds.getElementClass().equals(Long.class);
 		int is = bds.getElementsPerItem();
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
@@ -1541,7 +1541,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 	@Override
 	public CompoundFloatDataset idivide(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		boolean useLong = bds.elementClass().equals(Long.class);
+		boolean useLong = bds.getElementClass().equals(Long.class);
 		int is = bds.getElementsPerItem();
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
@@ -1661,7 +1661,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 	@Override
 	public CompoundFloatDataset iremainder(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		boolean useLong = bds.elementClass().equals(Long.class);
+		boolean useLong = bds.getElementClass().equals(Long.class);
 		int is = bds.getElementsPerItem();
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();

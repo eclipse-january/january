@@ -49,7 +49,7 @@ public class CompoundLongDataset extends AbstractCompoundDataset {
 	}
 
 	@Override
-	public int getDtype() {
+	public int getDType() {
 		return Dataset.ARRAYINT64; // DATA_TYPE
 	}
 
@@ -350,7 +350,7 @@ public class CompoundLongDataset extends AbstractCompoundDataset {
 			logger.error("Need a single-element dataset");
 			throw new IllegalArgumentException("Need a single-element dataset");
 		}
-		if (a.getDtype() != Dataset.INT64) { // DATA_TYPE
+		if (a.getDType() != Dataset.INT64) { // DATA_TYPE
 			logger.error("Dataset type must be long"); // PRIM_TYPE
 			throw new IllegalArgumentException("Dataset type must be long"); // PRIM_TYPE
 		}
@@ -841,7 +841,7 @@ public class CompoundLongDataset extends AbstractCompoundDataset {
 	}
 
 	@Override
-	public LongDataset real() { // CLASS_TYPE
+	public LongDataset getReal() { // CLASS_TYPE
 		LongDataset rdataset = new LongDataset(shape); // CLASS_TYPE
 		IndexIterator iter = getIterator();
 		IndexIterator riter = rdataset.getIterator();
@@ -854,7 +854,7 @@ public class CompoundLongDataset extends AbstractCompoundDataset {
 	}
 
 	@Override
-	public Dataset realView() {
+	public Dataset getRealView() {
 		return getElementsView(0);
 	}
 
@@ -912,7 +912,7 @@ public class CompoundLongDataset extends AbstractCompoundDataset {
 		if (element < 0 || element > isize) {
 			throw new IllegalArgumentException(String.format("Invalid choice of element: %d/%d", element, isize));
 		}
-		if (elementClass() != destination.elementClass()) {
+		if (getElementClass() != destination.getElementClass()) {
 			throw new IllegalArgumentException("Element class of destination does not match this dataset");
 		}
 
@@ -933,7 +933,7 @@ public class CompoundLongDataset extends AbstractCompoundDataset {
 		if (element < 0 || element > isize) {
 			throw new IllegalArgumentException(String.format("Invalid choice of element: %d/%d", element, isize));
 		}
-		if (elementClass() != source.elementClass()) {
+		if (getElementClass() != source.getElementClass()) {
 			throw new IllegalArgumentException("Element class of destination does not match this dataset");
 		}
 
@@ -1262,7 +1262,7 @@ public class CompoundLongDataset extends AbstractCompoundDataset {
 	@Override
 	public CompoundLongDataset iadd(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		boolean useLong = bds.elementClass().equals(Long.class);
+		boolean useLong = bds.getElementClass().equals(Long.class);
 		int is = bds.getElementsPerItem();
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
@@ -1347,7 +1347,7 @@ public class CompoundLongDataset extends AbstractCompoundDataset {
 	@Override
 	public CompoundLongDataset isubtract(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		boolean useLong = bds.elementClass().equals(Long.class);
+		boolean useLong = bds.getElementClass().equals(Long.class);
 		int is = bds.getElementsPerItem();
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
@@ -1432,7 +1432,7 @@ public class CompoundLongDataset extends AbstractCompoundDataset {
 	@Override
 	public CompoundLongDataset imultiply(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		boolean useLong = bds.elementClass().equals(Long.class);
+		boolean useLong = bds.getElementClass().equals(Long.class);
 		int is = bds.getElementsPerItem();
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
@@ -1519,7 +1519,7 @@ public class CompoundLongDataset extends AbstractCompoundDataset {
 	@Override
 	public CompoundLongDataset idivide(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		boolean useLong = bds.elementClass().equals(Long.class);
+		boolean useLong = bds.getElementClass().equals(Long.class);
 		int is = bds.getElementsPerItem();
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
@@ -1649,7 +1649,7 @@ public class CompoundLongDataset extends AbstractCompoundDataset {
 	@Override
 	public CompoundLongDataset iremainder(final Object b) {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		boolean useLong = bds.elementClass().equals(Long.class);
+		boolean useLong = bds.getElementClass().equals(Long.class);
 		int is = bds.getElementsPerItem();
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();

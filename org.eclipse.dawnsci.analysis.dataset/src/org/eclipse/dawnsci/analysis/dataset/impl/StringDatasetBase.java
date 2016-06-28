@@ -53,7 +53,7 @@ public class StringDatasetBase extends AbstractDataset {
 	}
 
 	@Override
-	public int getDtype() {
+	public int getDType() {
 		return STRING; // DATA_TYPE
 	}
 

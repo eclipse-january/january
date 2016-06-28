@@ -48,7 +48,7 @@ public class Stats {
 			a.setStoredValue(STORE_QUARTILE1, Double.valueOf(pQuantile(s, 0.25)));
 			a.setStoredValue(STORE_QUARTILE3, Double.valueOf(pQuantile(s, 0.75)));
 		} else {
-			Dataset w = DatasetFactory.zeros(a.getShapeRef(), a.getDtype());
+			Dataset w = DatasetFactory.zeros(a.getShapeRef(), a.getDType());
 			a.setStoredValue(STORE_MEDIAN, new double[is]);
 			a.setStoredValue(STORE_QUARTILE1, new double[is]);
 			a.setStoredValue(STORE_QUARTILE3, new double[is]);
@@ -92,7 +92,7 @@ public class Stats {
 				a.setStoredValue(STORE_QUARTILE1 + "-" + axis, pQuantile(s, axis, 0.25));
 				a.setStoredValue(STORE_QUARTILE3 + "-" + axis, pQuantile(s, axis, 0.75));
 			} else {
-				Dataset w = DatasetFactory.zeros(a.getShapeRef(), a.getDtype());
+				Dataset w = DatasetFactory.zeros(a.getShapeRef(), a.getDType());
 				for (int j = 0; j < is; j++) {
 					((CompoundDataset) a).copyElements(w, j);
 					w.sort(axis);
@@ -100,11 +100,11 @@ public class Stats {
 					CompoundDoubleDataset s;
 					final Dataset c = pQuantile(w, axis, 0.5);
 					if (j == 0) {
-						s = (CompoundDoubleDataset) DatasetFactory.zeros(is, c.getShapeRef(), c.getDtype());
+						s = (CompoundDoubleDataset) DatasetFactory.zeros(is, c.getShapeRef(), c.getDType());
 						a.setStoredValue(STORE_MEDIAN + "-" + axis, s);
-						s = (CompoundDoubleDataset) DatasetFactory.zeros(is, c.getShapeRef(), c.getDtype());
+						s = (CompoundDoubleDataset) DatasetFactory.zeros(is, c.getShapeRef(), c.getDType());
 						a.setStoredValue(STORE_QUARTILE1 + "-" + axis, s);
-						s = (CompoundDoubleDataset) DatasetFactory.zeros(is, c.getShapeRef(), c.getDtype());
+						s = (CompoundDoubleDataset) DatasetFactory.zeros(is, c.getShapeRef(), c.getDType());
 						a.setStoredValue(STORE_QUARTILE3 + "-" + axis, s);
 					}
 					s = (CompoundDoubleDataset) a.getStoredValue(STORE_MEDIAN + "-" + axis);
@@ -252,7 +252,7 @@ public class Stats {
 				points[i] = pQuantile(s, axis, q);
 			}
 		} else {
-			Dataset w = DatasetFactory.zeros(a.getShapeRef(), a.getDtype());
+			Dataset w = DatasetFactory.zeros(a.getShapeRef(), a.getDType());
 			for (int j = 0; j < is; j++) {
 				((CompoundDataset) a).copyElements(w, j);
 				w.sort(axis);
@@ -264,7 +264,7 @@ public class Stats {
 					}
 					final Dataset c = pQuantile(w, axis, q);
 					if (j == 0) {
-						points[i] = DatasetFactory.zeros(is, c.getShapeRef(), c.getDtype());
+						points[i] = DatasetFactory.zeros(is, c.getShapeRef(), c.getDType());
 					}
 					((CompoundDoubleDataset) points[i]).setElements(c, j);
 				}
@@ -622,7 +622,7 @@ public class Stats {
 	 * @return product of all items in dataset
 	 */
 	public static Object product(final Dataset a, final boolean ignoreNaNs) {
-		return typedProduct(a, a.getDtype(), ignoreNaNs);
+		return typedProduct(a, a.getDType(), ignoreNaNs);
 	}
 
 	/**
@@ -762,7 +762,7 @@ public class Stats {
 	 * @return product of items along axis in dataset
 	 */
 	public static Dataset product(final Dataset a, final boolean ignoreNaNs, final int axis) {
-		return typedProduct(a, a.getDtype(), ignoreNaNs, axis);
+		return typedProduct(a, a.getDType(), ignoreNaNs, axis);
 	}
 
 	/**
@@ -1050,7 +1050,7 @@ public class Stats {
 	 */
 	public static Dataset cumulativeProduct(final Dataset a, boolean ignoreNaNs, int axis) {
 		axis = a.checkAxis(axis);
-		int dtype = a.getDtype();
+		int dtype = a.getDType();
 		int[] oshape = a.getShape();
 		int alen = oshape[axis];
 		oshape[axis] = 1;
@@ -1326,7 +1326,7 @@ public class Stats {
 	 */
 	public static Dataset cumulativeSum(final Dataset a, boolean ignoreNaNs, int axis) {
 		axis = a.checkAxis(axis);
-		int dtype = a.getDtype();
+		int dtype = a.getDType();
 		int[] oshape = a.getShape();
 		int alen = oshape[axis];
 		oshape[axis] = 1;

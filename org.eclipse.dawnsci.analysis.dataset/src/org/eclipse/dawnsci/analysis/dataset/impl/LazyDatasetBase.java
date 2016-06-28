@@ -66,11 +66,11 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	/**
 	 * @return type of dataset item
 	 */
-	abstract public int getDtype();
+	abstract public int getDType();
 
 	@Override
-	public Class<?> elementClass() {
-		return AbstractDataset.elementClass(getDtype());
+	public Class<?> getElementClass() {
+		return AbstractDataset.elementClass(getDType());
 	}
 
 	@Override
@@ -91,7 +91,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		}
 	
 		LazyDatasetBase other = (LazyDatasetBase) obj;
-		if (getDtype() != other.getDtype()) {
+		if (getDType() != other.getDType()) {
 			return false;
 		}
 		if (getElementsPerItem() != other.getElementsPerItem()) {
@@ -105,7 +105,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 
 	@Override
 	public int hashCode() {
-		int hash = getDtype() * 17 + getElementsPerItem();
+		int hash = getDType() * 17 + getElementsPerItem();
 		int rank = shape.length;
 		for (int i = 0; i < rank; i++) {
 			hash = hash*17 + shape[i];

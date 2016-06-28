@@ -29,7 +29,7 @@ public class ComplexDoubleDatasetTest {
 		double[] da = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
 		ComplexDoubleDataset a = new ComplexDoubleDataset(da);
 
-		assertEquals(Dataset.COMPLEX128, a.getDtype());
+		assertEquals(Dataset.COMPLEX128, a.getDType());
 		assertEquals(2, a.getElementsPerItem());
 		assertEquals(16, a.getItemsize());
 
@@ -58,7 +58,7 @@ public class ComplexDoubleDatasetTest {
 		assertEquals(1.0, z.getComplex(0).getImaginary(), 1e-6);
 
 		Dataset aa = Maths.abs(a);
-		assertEquals(Dataset.FLOAT64, aa.getDtype());
+		assertEquals(Dataset.FLOAT64, aa.getDType());
 		assertEquals(1, aa.getElementsPerItem());
 		assertEquals(8, aa.getItemsize());
 

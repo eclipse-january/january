@@ -73,7 +73,7 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 	 * @param dataset
 	 */
 	public static LazyWriteableDataset createLazyDataset(final Dataset dataset, final int[] maxShape) {
-		return new LazyWriteableDataset(dataset.getName(), dataset.getDtype(), dataset.getElementsPerItem(), dataset.getShape(),
+		return new LazyWriteableDataset(dataset.getName(), dataset.getDType(), dataset.getElementsPerItem(), dataset.getShape(),
 				maxShape, null,
 		new ILazySaver() {
 			Dataset d = dataset;
@@ -100,7 +100,7 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 			public void setSlice(IMonitor mon, IDataset data, SliceND slice) throws IOException {
 				if (slice.isExpanded()) {
 					Dataset od = d;
-					d = DatasetFactory.zeros(slice.getSourceShape(), od.getDtype());
+					d = DatasetFactory.zeros(slice.getSourceShape(), od.getDType());
 					d.setSlice(od, SliceND.createSlice(od, null, null));
 				}
 				d.setSlice(data, slice);
@@ -120,7 +120,7 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 
 	@Override
 	public LazyWriteableDataset clone() {
-		LazyWriteableDataset ret = new LazyWriteableDataset(new String(name), getDtype(), getElementsPerItem(), 
+		LazyWriteableDataset ret = new LazyWriteableDataset(new String(name), getDType(), getElementsPerItem(), 
 				oShape, maxShape, chunks, saver);
 		ret.shape = shape;
 		ret.size = size;

@@ -160,12 +160,12 @@ public final class BroadcastUtils {
 		final int rt;
 		final int ar = a.getRank();
 		final int br = b.getRank();
-		final int tt = AbstractDataset.getBestDType(a.getDtype(), b.getDtype());
+		final int tt = AbstractDataset.getBestDType(a.getDType(), b.getDType());
 		if (ar == 0 ^ br == 0) { // ignore type of zero-rank dataset unless it's floating point 
 			if (ar == 0) {
-				rt = a.hasFloatingPointElements() ? tt : b.getDtype();
+				rt = a.hasFloatingPointElements() ? tt : b.getDType();
 			} else {
-				rt = b.hasFloatingPointElements() ? tt : a.getDtype();
+				rt = b.hasFloatingPointElements() ? tt : a.getDType();
 			}
 		} else {
 			rt = tt;
@@ -185,7 +185,7 @@ public final class BroadcastUtils {
 				throw new IllegalArgumentException("Can not broadcast where number of elements per item mismatch and one does not equal another");
 			}
 		}
-		if (o != null && o.getDtype() != Dataset.BOOL) {
+		if (o != null && o.getDType() != Dataset.BOOL) {
 			final int ism = Math.max(isa, isb);
 			final int iso = o.getElementsPerItem();
 			if (iso != ism && ism != 1) {

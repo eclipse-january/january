@@ -53,7 +53,7 @@ public class ObjectDatasetBase extends AbstractDataset {
 	}
 
 	@Override
-	public int getDtype() {
+	public int getDType() {
 		return OBJECT; // DATA_TYPE
 	}
 

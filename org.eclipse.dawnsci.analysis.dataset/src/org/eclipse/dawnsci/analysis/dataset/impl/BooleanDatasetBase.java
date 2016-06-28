@@ -53,7 +53,7 @@ public class BooleanDatasetBase extends AbstractDataset {
 	}
 
 	@Override
-	public int getDtype() {
+	public int getDType() {
 		return BOOL; // DATA_TYPE
 	}
 

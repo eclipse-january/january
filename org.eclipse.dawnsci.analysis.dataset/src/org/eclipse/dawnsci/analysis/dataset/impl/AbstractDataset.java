@@ -256,7 +256,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public Dataset cast(final int dtype) {
-		if (getDtype() == dtype) {
+		if (getDType() == dtype) {
 			return this;
 		}
 		return DatasetUtils.cast(this, dtype);
@@ -264,7 +264,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public Dataset cast(final boolean repeat, final int dtype, final int isize) {
-		if (getDtype() == dtype && getElementsPerItem() == isize) {
+		if (getDType() == dtype && getElementsPerItem() == isize) {
 			return this;
 		}
 		return DatasetUtils.cast(this, repeat, dtype, isize);
@@ -298,8 +298,8 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		}
 
 		view.metadata = getMetadataMap(orig, cloneMetadata);
-		int odtype = orig.getDtype();
-		int vdtype = view.getDtype();
+		int odtype = orig.getDType();
+		int vdtype = view.getDType();
 		if (getBestDType(odtype, vdtype) != vdtype) {
 			view.storedValues = null; // as copy is a demotion
 		}
@@ -700,9 +700,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 				}
 			}
 		} else if (obj instanceof Dataset) {
-			return ((Dataset) obj).getDtype();
+			return ((Dataset) obj).getDType();
 		} else if (obj instanceof ILazyDataset) {
-			dtype = getDTypeFromClass(((ILazyDataset) obj).elementClass(), ((ILazyDataset) obj).getElementsPerItem());
+			dtype = getDTypeFromClass(((ILazyDataset) obj).getElementClass(), ((ILazyDataset) obj).getElementsPerItem());
 		} else {
 			dtype = getDTypeFromClass(obj.getClass());
 		}
@@ -724,8 +724,8 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	 */
 	public static int getDType(ILazyDataset d) {
 		if (d instanceof LazyDatasetBase)
-			return ((LazyDatasetBase) d).getDtype();
-		return getDTypeFromClass(d.elementClass(), d.getElementsPerItem());
+			return ((LazyDatasetBase) d).getDType();
+		return getDTypeFromClass(d.getElementClass(), d.getElementsPerItem());
 	}
 
 	/**
@@ -813,7 +813,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	 */
 	protected void fillData(Object obj, final int depth, final int[] pos) {
 		if (obj == null) {
-			int dtype = getDtype();
+			int dtype = getDType();
 			if (dtype == FLOAT32)
 				set(Float.NaN, pos);
 			else if (dtype == FLOAT64)
@@ -1058,7 +1058,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 		final int length = ((Number) selection.sum()).intValue();
 		final int is = getElementsPerItem();
-		Dataset r = DatasetFactory.zeros(is, new int[] { length }, getDtype());
+		Dataset r = DatasetFactory.zeros(is, new int[] { length }, getDType());
 		BooleanIterator biter = getBooleanIterator(selection);
 
 		int i = 0;
@@ -1072,7 +1072,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	@Override
 	public Dataset getBy1DIndex(IntegerDataset index) {
 		final int is = getElementsPerItem();
-		final Dataset r = DatasetFactory.zeros(is, index.getShape(), getDtype());
+		final Dataset r = DatasetFactory.zeros(is, index.getShape(), getDType());
 		final IntegerIterator iter = new IntegerIterator(index, size, is);
 
 		int i = 0;
@@ -1087,7 +1087,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	public Dataset getByIndexes(final Object... indexes) {
 		final IntegersIterator iter = new IntegersIterator(shape, indexes);
 		final int is = getElementsPerItem();
-		final Dataset r = DatasetFactory.zeros(is, iter.getShape(), getDtype());
+		final Dataset r = DatasetFactory.zeros(is, iter.getShape(), getDType());
 
 		final int[] pos = iter.getPos();
 		int i = 0;
@@ -1136,24 +1136,24 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	@Override
-	public Class<?> elementClass() {
-		return elementClass(getDtype());
+	public Class<?> getElementClass() {
+		return elementClass(getDType());
 	}
 
 	@Override
 	public boolean hasFloatingPointElements() {
-		Class<?> cls = elementClass();
+		Class<?> cls = getElementClass();
 		return cls == Float.class || cls == Double.class;
 	}
 
 	@Override
 	public int getElementsPerItem() {
-		return getElementsPerItem(getDtype());
+		return getElementsPerItem(getDType());
 	}
 
 	@Override
-	public int getItemsize() {
-		return getItemsize(getDtype(), getElementsPerItem());
+	public int getItemBytes() {
+		return getItemBytes(getDType(), getElementsPerItem());
 	}
 
 	/**
@@ -1180,8 +1180,8 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	 * @param dtype
 	 * @return length of single item in bytes
 	 */
-	public static int getItemsize(final int dtype) {
-		return getItemsize(dtype, getElementsPerItem(dtype));
+	public static int getItemBytes(final int dtype) {
+		return getItemBytes(dtype, getElementsPerItem(dtype));
 	}
 
 	/**
@@ -1190,7 +1190,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	 *            number of elements in an item
 	 * @return length of single item in bytes
 	 */
-	public static int getItemsize(final int dtype, final int isize) {
+	public static int getItemBytes(final int dtype, final int isize) {
 		int size;
 
 		switch (dtype) {
@@ -1268,7 +1268,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public int getNbytes() {
-		return getSize() * getItemsize();
+		return getSize() * getItemBytes();
 	}
 
 	/**
@@ -2377,7 +2377,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	 * @return a new dataset of same shape and type as input dataset, filled with zeros
 	 */
 	public static Dataset zeros(final Dataset dataset) {
-		return zeros(dataset, dataset.getDtype());
+		return zeros(dataset, dataset.getDType());
 	}
 
 	/**
@@ -2399,7 +2399,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	 * @return a new dataset of same shape and type as input dataset, filled with ones
 	 */
 	public static Dataset ones(final Dataset dataset) {
-		return ones(dataset, dataset.getDtype());
+		return ones(dataset, dataset.getDType());
 	}
 
 	/**
@@ -2471,17 +2471,17 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public boolean isComplex() {
-		int type = getDtype();
+		int type = getDType();
 		return type == COMPLEX64 || type == COMPLEX128;
 	}
 
 	@Override
-	public Dataset real() {
+	public Dataset getReal() {
 		return this;
 	}
 
 	@Override
-	public Dataset realView() {
+	public Dataset getRealView() {
 		return getView();
 	}
 
@@ -2540,7 +2540,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		} else if (obj instanceof IDataset) {
 			ds = DatasetUtils.convertToDataset((IDataset) obj);
 		} else {
-			int dtype = getDtype();
+			int dtype = getDType();
 			if (dtype != Dataset.BOOL) {
 				dtype = getLargestDType(dtype);
 			}
@@ -2734,7 +2734,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			}
 		}
 
-		int ihash = ((int) hash) * 19 + getDtype() * 17 + getElementsPerItem();
+		int ihash = ((int) hash) * 19 + getDType() * 17 + getElementsPerItem();
 		setStoredValue(storeName(ignoreNaNs, ignoreInfs, STORE_SHAPELESS_HASH), ihash);
 		storedValues.put(storeName(ignoreNaNs, ignoreInfs, STORE_MAX), hasNaNs ? Double.NaN : fromDoubleToNumber(amax));
 		storedValues.put(storeName(ignoreNaNs, ignoreInfs, STORE_MIN), hasNaNs ? Double.NaN : fromDoubleToNumber(amin));
@@ -2785,7 +2785,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 				stats.addValue(val);
 			}
 
-			int ihash = ((int) hash) * 19 + getDtype() * 17 + getElementsPerItem();
+			int ihash = ((int) hash) * 19 + getDType() * 17 + getElementsPerItem();
 			setStoredValue(storeName(ignoreNaNs, ignoreInfs, STORE_SHAPELESS_HASH), ihash);
 			storedValues.put(storeName(ignoreNaNs, ignoreInfs, STORE_MAX), hasNaNs ? Double.NaN : fromDoubleToNumber(stats.getMax()));
 			storedValues.put(storeName(ignoreNaNs, ignoreInfs, STORE_MIN), hasNaNs ? Double.NaN : fromDoubleToNumber(stats.getMin()));
@@ -2830,7 +2830,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			nshape[i - 1] = oshape[i];
 		}
 
-		final int dtype = getDtype();
+		final int dtype = getDType();
 		IntegerDataset count = new IntegerDataset(nshape);
 		Dataset max = DatasetFactory.zeros(nshape, dtype);
 		Dataset min = DatasetFactory.zeros(nshape, dtype);
@@ -3231,7 +3231,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public Object typedSum() {
-		return typedSum(getDtype());
+		return typedSum(getDType());
 	}
 
 	@Override

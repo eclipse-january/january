@@ -14,7 +14,7 @@ package org.eclipse.dawnsci.analysis.dataset.impl;
 
 import java.io.Serializable;
 
-import org.eclipse.dawnsci.analysis.api.dataset.Dtype;
+import org.eclipse.dawnsci.analysis.api.dataset.DType;
 import org.eclipse.dawnsci.analysis.api.dataset.IDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.ILazyDataset;
 import org.eclipse.dawnsci.analysis.api.dataset.Slice;
@@ -39,111 +39,111 @@ public interface Dataset extends IDataset {
 	/**
 	 * Boolean
 	 */
-	public static final int BOOL = Dtype.BOOL;
+	public static final int BOOL = DType.BOOL;
 
 	/**
 	 * Signed 8-bit integer
 	 */
-	public static final int INT8 = Dtype.INT8;
+	public static final int INT8 = DType.INT8;
 
 	/**
 	 * Signed 16-bit integer
 	 */
-	public static final int INT16 = Dtype.INT16;
+	public static final int INT16 = DType.INT16;
 
 	/**
 	 * Signed 32-bit integer
 	 */
-	public static final int INT32 = Dtype.INT32;
+	public static final int INT32 = DType.INT32;
 	/**
 	 * Integer (same as signed 32-bit integer)
 	 */
-	public static final int INT = Dtype.INT;
+	public static final int INT = DType.INT;
 
 	/**
 	 * Signed 64-bit integer
 	 */
-	public static final int INT64 = Dtype.INT64;
+	public static final int INT64 = DType.INT64;
 
 	/**
 	 * 32-bit floating point
 	 */
-	public static final int FLOAT32 = Dtype.FLOAT32;
+	public static final int FLOAT32 = DType.FLOAT32;
 
 	/**
 	 * 64-bit floating point
 	 */
-	public static final int FLOAT64 = Dtype.FLOAT64;
+	public static final int FLOAT64 = DType.FLOAT64;
 
 	/**
 	 * Floating point (same as 64-bit floating point)
 	 */
-	public static final int FLOAT = Dtype.FLOAT;
+	public static final int FLOAT = DType.FLOAT;
 
 	/**
 	 * 64-bit complex floating point (real and imaginary parts are 32-bit floats)
 	 */
-	public static final int COMPLEX64 = Dtype.COMPLEX64;
+	public static final int COMPLEX64 = DType.COMPLEX64;
 
 	/**
 	 * 128-bit complex floating point (real and imaginary parts are 64-bit floats)
 	 */
-	public static final int COMPLEX128 = Dtype.COMPLEX128;
+	public static final int COMPLEX128 = DType.COMPLEX128;
 
 	/**
 	 * Complex floating point (same as 64-bit floating point)
 	 */
-	public static final int COMPLEX = Dtype.COMPLEX;
+	public static final int COMPLEX = DType.COMPLEX;
 
 	/**
 	 * Date
 	 */
-	public static final int DATE = Dtype.DATE;
+	public static final int DATE = DType.DATE;
 
 	/**
 	 * String
 	 */
-	public static final int STRING = Dtype.STRING;
+	public static final int STRING = DType.STRING;
 	
 	/**
 	 * Object
 	 */
-	public static final int OBJECT = Dtype.OBJECT;
+	public static final int OBJECT = DType.OBJECT;
 
 	/**
 	 * Array of signed 8-bit integers
 	 */
-	public static final int ARRAYINT8 = Dtype.ARRAYINT8;
+	public static final int ARRAYINT8 = DType.ARRAYINT8;
 
 	/**
 	 * Array of signed 16-bit integers
 	 */
-	public static final int ARRAYINT16 = Dtype.ARRAYINT16;
+	public static final int ARRAYINT16 = DType.ARRAYINT16;
 
 	/**
 	 * Array of three signed 16-bit integers for RGB values
 	 */
-	public static final int RGB = Dtype.RGB;
+	public static final int RGB = DType.RGB;
 
 	/**
 	 * Array of signed 32-bit integers
 	 */
-	public static final int ARRAYINT32 = Dtype.ARRAYINT32;
+	public static final int ARRAYINT32 = DType.ARRAYINT32;
 
 	/**
 	 * Array of signed 64-bit integers
 	 */
-	public static final int ARRAYINT64 = Dtype.ARRAYINT64;
+	public static final int ARRAYINT64 = DType.ARRAYINT64;
 
 	/**
 	 * Array of 32-bit floating points
 	 */
-	public static final int ARRAYFLOAT32 = Dtype.ARRAYFLOAT32;
+	public static final int ARRAYFLOAT32 = DType.ARRAYFLOAT32;
 
 	/**
 	 * Array of 64-bit floating points
 	 */
-	public static final int ARRAYFLOAT64 = Dtype.ARRAYFLOAT64;
+	public static final int ARRAYFLOAT64 = DType.ARRAYFLOAT64;
 
 	/**
 	 * Multiplier
@@ -164,9 +164,9 @@ public interface Dataset extends IDataset {
 	public int[] getShapeRef();
 
 	/**
-	 * @return type of data item
+	 * @return type of dataset item
 	 */
-	public int getDtype();
+	public int getDType();
 
 	/**
 	 * @return a stride array (can be null)
@@ -300,12 +300,12 @@ public interface Dataset extends IDataset {
 	/**
 	 * @return real part of dataset as new dataset
 	 */
-	public Dataset real();
+	public Dataset getReal();
 
 	/**
-	 * @return real part of dataset as new dataset
+	 * @return real part of dataset as a view
 	 */
-	public Dataset realView();
+	public Dataset getRealView();
 
 	/**
 	 * Get the error array from the dataset of same shape. This will create a new dataset

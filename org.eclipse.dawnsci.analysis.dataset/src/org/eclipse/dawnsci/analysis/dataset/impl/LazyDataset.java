@@ -39,8 +39,8 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	protected int[]     oShape; // original shape
 	protected long      size;   // number of items
-	protected int       dtype;
-	protected int       isize; // number of elements per item
+	protected int       dtype;  // dataset type
+	protected int       isize;  // number of elements per item
 
 	protected ILazyLoader loader;
 	protected LazyDataset base = null; // used for transpose
@@ -91,7 +91,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	 * @param dataset
 	 */
 	public static LazyDataset createLazyDataset(final Dataset dataset) {
-		return new LazyDataset(dataset.getName(), dataset.getDtype(), dataset.getElementsPerItem(), dataset.getShape(),
+		return new LazyDataset(dataset.getName(), dataset.getDType(), dataset.getElementsPerItem(), dataset.getShape(),
 		new ILazyLoader() {
 			final Dataset d = dataset;
 			@Override
@@ -110,7 +110,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	 * Can return -1 for unknown
 	 */
 	@Override
-	public int getDtype() {
+	public int getDType() {
 		return dtype;
 	}
 
@@ -596,7 +596,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	 */
 	public static int getMaxSliceLength(ILazyDataset lazySet, int dimension) {
 		// size in bytes of each item
-		final double size = AbstractDataset.getItemsize(AbstractDataset.getDTypeFromClass(lazySet.elementClass()), lazySet.getElementsPerItem());
+		final double size = AbstractDataset.getItemBytes(AbstractDataset.getDTypeFromClass(lazySet.getElementClass()), lazySet.getElementsPerItem());
 		
 		// Max in bytes takes into account our minimum requirement
 		final double max  = Math.max(Runtime.getRuntime().totalMemory(), Runtime.getRuntime().maxMemory());

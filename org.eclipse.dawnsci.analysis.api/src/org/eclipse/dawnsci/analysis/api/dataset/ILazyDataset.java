@@ -28,7 +28,7 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 	/**
 	 * @return Boxed class of element
 	 */
-	public Class<?> elementClass();
+	public Class<?> getElementClass();
 
 	/**
 	 * @return Number of elements per item

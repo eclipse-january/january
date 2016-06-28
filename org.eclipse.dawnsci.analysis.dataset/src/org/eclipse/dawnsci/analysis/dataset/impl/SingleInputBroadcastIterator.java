@@ -112,7 +112,7 @@ public class SingleInputBroadcastIterator extends IndexIterator {
 			oDataset = o;
 		} else if (createIfNull) {
 			int is = aDataset.getElementsPerItem();
-			int dt = aDataset.getDtype();
+			int dt = aDataset.getDType();
 			if (aDataset.isComplex() && !allowComplex) {
 				is = 1;
 				dt = AbstractDataset.getBestFloatDType(dt);

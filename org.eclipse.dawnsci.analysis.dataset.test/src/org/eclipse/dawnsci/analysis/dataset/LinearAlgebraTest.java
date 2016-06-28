@@ -47,11 +47,11 @@ public class LinearAlgebraTest {
 		System.out.printf("Time taken %dus\n", start/1000);
 
 		assertArrayEquals("Shape", new int[] {5, 2}, c.getShape());
-		assertEquals("Type", Dataset.FLOAT32, c.getDtype());
+		assertEquals("Type", Dataset.FLOAT32, c.getDType());
 
 		Dataset d = new DoubleDataset(new double[] { 4400., 4730.,
 			4532.,  4874., 4664., 5018., 4796.,  5162., 4928.,  5306. }, 5, 2);
-		assertTrue("Data does not match", d.cast(c.getDtype()).equals(c));
+		assertTrue("Data does not match", d.cast(c.getDType()).equals(c));
 
 		int n = 16;
 		a = DatasetFactory.createRange(20*n, Dataset.FLOAT32).reshape(n, 4, 5);

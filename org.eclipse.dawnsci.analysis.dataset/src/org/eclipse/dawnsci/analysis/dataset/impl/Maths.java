@@ -126,7 +126,7 @@ public class Maths {
 		final int is = result.getElementsPerItem();
 		final double[] cpx;
 
-		switch (result.getDtype()) {
+		switch (result.getDType()) {
 		case Dataset.BOOL:
 			boolean[] bdata = ((BooleanDataset) result).getData();
 			it.setOutputDouble(false);
@@ -518,7 +518,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true, true, false);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 		final int as = da.getElementsPerItem();
 	
 		switch(dt) {
@@ -767,7 +767,7 @@ public class Maths {
 	 */
 	public static Dataset conjugate(final Object a, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		int at = da.getDtype();
+		int at = da.getDType();
 		IndexIterator it1 = da.getIterator();
 
 		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true, true, true);
@@ -821,7 +821,7 @@ public class Maths {
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 		switch (dt) {
 		case Dataset.BOOL:
 			boolean[] bdata = ((BooleanDataset) result).getData();
@@ -1083,7 +1083,7 @@ public class Maths {
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 		switch (dt) {
 		case Dataset.BOOL:
 			boolean[] bdata = ((BooleanDataset) result).getData();
@@ -1369,7 +1369,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true, false, false);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 	
 		switch(dt) {
 		case Dataset.INT8:
@@ -1638,7 +1638,7 @@ public class Maths {
 		if (!result.isComplex()) {
 			throw new IllegalArgumentException("Output dataset is not of complex type");
 		}
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, result);
 
 		switch (dt) {
@@ -2438,7 +2438,7 @@ public class Maths {
 			return;
 		int oi = it.index;
 
-		switch (a.getDtype()) {
+		switch (a.getDType()) {
 		case Dataset.INT8:
 			final byte[] i8data = ((ByteDataset) a).data;
 			final byte[] oi8data = ((ByteDataset) out).getData();
@@ -2614,7 +2614,7 @@ public class Maths {
 		}
 		indexes[n] = it.index;
 
-		switch (a.getDtype()) {
+		switch (a.getDType()) {
 		case Dataset.INT8:
 			final byte[] i8data = ((ByteDataset) a).data;
 			final byte[] oi8data = ((ByteDataset) out).getData();
@@ -2833,7 +2833,7 @@ public class Maths {
 	 */
 	public static Dataset difference(Dataset a, final int n, int axis) {
 		Dataset ds;
-		final int dt = a.getDtype();
+		final int dt = a.getDType();
 		final int rank = a.getRank();
 		final int is = a.getElementsPerItem();
 
@@ -2935,7 +2935,7 @@ public class Maths {
 		if (y.getSize() > x.getSize()) {
 			throw new IllegalArgumentException("Length of x dataset should be greater than or equal to y's");
 		}
-		int dtype = y.getDtype();
+		int dtype = y.getDType();
 		Dataset result;
 		switch (dtype) {
 		case Dataset.BOOL:
@@ -3005,7 +3005,7 @@ public class Maths {
 	 */
 	public static Dataset centralDifference(Dataset a, int axis) {
 		Dataset ds;
-		final int dt = a.getDtype();
+		final int dt = a.getDType();
 		final int rank = a.getRank();
 		final int is = a.getElementsPerItem();
 
@@ -3046,7 +3046,7 @@ public class Maths {
 	 */
 	private static void centralDifference(final Dataset a, final Dataset out) {
 		final int isize = a.getElementsPerItem();
-		final int dt = a.getDtype();
+		final int dt = a.getDType();
 
 		final int nlen = (out.getShapeRef()[0] - 1)*isize;
 		if (nlen < 1) {
@@ -3311,7 +3311,7 @@ public class Maths {
 				if (r == rank) {
 					g.idivide(centralDifference(dx, a));
 				} else {
-					final int dt = dx.getDtype();
+					final int dt = dx.getDType();
 					final int is = dx.getElementsPerItem();
 					final Dataset bdx = DatasetFactory.zeros(is, y.getShapeRef(), dt);
 					final PositionIterator pi = y.getPositionIterator(a);
@@ -3354,7 +3354,7 @@ public class Maths {
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -4242,7 +4242,7 @@ public class Maths {
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -5130,7 +5130,7 @@ public class Maths {
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -6018,7 +6018,7 @@ public class Maths {
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -6972,7 +6972,7 @@ public class Maths {
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -7934,7 +7934,7 @@ public class Maths {
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -9336,7 +9336,7 @@ public class Maths {
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -10236,7 +10236,7 @@ public class Maths {
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -11038,7 +11038,7 @@ public class Maths {
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -11971,7 +11971,7 @@ public class Maths {
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -12908,7 +12908,7 @@ public class Maths {
 		it.setOutputDouble(false);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -13231,7 +13231,7 @@ public class Maths {
 		it.setOutputDouble(false);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -13554,7 +13554,7 @@ public class Maths {
 		it.setOutputDouble(false);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -13877,7 +13877,7 @@ public class Maths {
 		it.setOutputDouble(false);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -14200,7 +14200,7 @@ public class Maths {
 		it.setOutputDouble(false);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -14524,7 +14524,7 @@ public class Maths {
 		final long unsignedMask;
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -14851,7 +14851,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true, true, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -15066,7 +15066,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -15617,7 +15617,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -16168,7 +16168,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -16743,7 +16743,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -17302,7 +17302,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -17861,7 +17861,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -18420,7 +18420,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -18971,7 +18971,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -19522,7 +19522,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -20097,7 +20097,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -20656,7 +20656,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -21215,7 +21215,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -21774,7 +21774,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -22325,7 +22325,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -22876,7 +22876,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -23427,7 +23427,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -23978,7 +23978,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -24537,7 +24537,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -25096,7 +25096,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -25655,7 +25655,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -26214,7 +26214,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -26765,7 +26765,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -27316,7 +27316,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -27867,7 +27867,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -28418,7 +28418,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -28969,7 +28969,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -29520,7 +29520,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -30071,7 +30071,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -30622,7 +30622,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 
 		switch(dt) {
 		case Dataset.INT8:
@@ -31177,7 +31177,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDtype();
+		final int dt = result.getDType();
 		final double pax = AbstractDataset.toReal(pa);
 		final double pbx = AbstractDataset.toReal(pb);
 

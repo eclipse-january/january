@@ -116,7 +116,7 @@ public class StringDataset extends StringDatasetBase {
 			hash = (hash * 19 + val) % Integer.MAX_VALUE;
 		}
 
-		int ihash = ((int) hash) * 19 + getDtype() * 17 + getElementsPerItem();
+		int ihash = ((int) hash) * 19 + getDType() * 17 + getElementsPerItem();
 		setStoredValue(storeName(ignoreNaNs, ignoreInfs, STORE_SHAPELESS_HASH), ihash);
 	}
 

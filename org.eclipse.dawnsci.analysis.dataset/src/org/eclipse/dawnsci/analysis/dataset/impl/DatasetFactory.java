@@ -379,7 +379,7 @@ public class DatasetFactory {
 	 * @return a new dataset of same shape and type as input dataset, filled with zeros
 	 */
 	public static Dataset zeros(final Dataset dataset) {
-		return zeros(dataset, dataset.getDtype());
+		return zeros(dataset, dataset.getDType());
 	}
 
 	/**
@@ -401,7 +401,7 @@ public class DatasetFactory {
 	 * @return a new dataset of same shape and type as input dataset, filled with ones
 	 */
 	public static Dataset ones(final Dataset dataset) {
-		return ones(dataset, dataset.getDtype());
+		return ones(dataset, dataset.getDType());
 	}
 
 	/**

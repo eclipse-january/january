@@ -23,9 +23,9 @@ public class ComplexFloatDatasetTest {
 		float[] da = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
 		ComplexFloatDataset a = new ComplexFloatDataset(da);
 
-		assertEquals(Dataset.COMPLEX64, a.getDtype());
+		assertEquals(Dataset.COMPLEX64, a.getDType());
 		assertEquals(2, a.getElementsPerItem());
-		assertEquals(8, a.getItemsize());
+		assertEquals(8, a.getItemBytes());
 
 		IndexIterator it = a.getIterator();
 		for (int i = 0; it.hasNext(); i++) {
@@ -40,9 +40,9 @@ public class ComplexFloatDatasetTest {
 		}
 
 		Dataset aa = Maths.abs(a);
-		assertEquals(Dataset.FLOAT32, aa.getDtype());
+		assertEquals(Dataset.FLOAT32, aa.getDType());
 		assertEquals(1, aa.getElementsPerItem());
-		assertEquals(4, aa.getItemsize());		
+		assertEquals(4, aa.getItemBytes());		
 
 		// test hashes
 		a.hashCode();
