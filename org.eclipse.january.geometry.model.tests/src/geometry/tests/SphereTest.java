@@ -2,9 +2,9 @@
  */
 package geometry.tests;
 
-import geometry.Cube;
-import geometry.GeometryFactory;
-import geometry.Sphere;
+import org.eclipse.january.geometry.Cube;
+import org.eclipse.january.geometry.GeometryFactory;
+import org.eclipse.january.geometry.Sphere;
 
 import junit.textui.TestRunner;
 

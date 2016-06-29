@@ -2,8 +2,8 @@
  */
 package geometry.tests;
 
-import geometry.GeometryFactory;
-import geometry.Union;
+import org.eclipse.january.geometry.GeometryFactory;
+import org.eclipse.january.geometry.Union;
 
 import junit.textui.TestRunner;
 

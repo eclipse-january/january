@@ -12,14 +12,15 @@
 package xtext.serializer;
 
 import com.google.inject.Inject;
-import geometry.Geometry;
-import geometry.GeometryPackage;
-import geometry.Shape;
-import geometry.Triangle;
-import geometry.Vertex;
+
 import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.january.geometry.Geometry;
+import org.eclipse.january.geometry.GeometryPackage;
+import org.eclipse.january.geometry.Shape;
+import org.eclipse.january.geometry.Triangle;
+import org.eclipse.january.geometry.Vertex;
 import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Parameter;
 import org.eclipse.xtext.ParserRule;

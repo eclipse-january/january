@@ -9,8 +9,8 @@
    <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
       <!-- @generated geometry -->
       <factory
-            uri="http://www.eclipse.org/"
-            class="geometry.provider.GeometryItemProviderAdapterFactory"
+            uri="http://www.eclipse.org/january/geometry"
+            class="org.eclipse.january.geometry.provider.GeometryItemProviderAdapterFactory"
             supportedTypes=
               "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
                org.eclipse.emf.edit.provider.IStructuredItemContentProvider

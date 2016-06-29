@@ -17,7 +17,7 @@ package xtext.validation
  *
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
-class STLValidator extends AbstractSTLValidator {
+class STLValidator extends xtext.validation.AbstractSTLValidator {
 	
 //	public static val INVALID_NAME = 'invalidName'
 //

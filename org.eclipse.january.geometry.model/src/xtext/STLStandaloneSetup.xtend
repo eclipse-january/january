@@ -15,7 +15,7 @@ package xtext
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
  */
-class STLStandaloneSetup extends STLStandaloneSetupGenerated {
+class STLStandaloneSetup extends xtext.STLStandaloneSetupGenerated {
 
 	def static void doSetup() {
 		new STLStandaloneSetup().createInjectorAndDoEMFRegistration()
