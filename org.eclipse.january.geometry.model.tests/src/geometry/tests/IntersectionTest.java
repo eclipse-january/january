@@ -2,8 +2,8 @@
  */
 package geometry.tests;
 
-import geometry.GeometryFactory;
-import geometry.Intersection;
+import org.eclipse.january.geometry.GeometryFactory;
+import org.eclipse.january.geometry.Intersection;
 
 import junit.textui.TestRunner;
 

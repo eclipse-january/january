@@ -30,7 +30,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
-
+import org.eclipse.january.geometry.GeometryFactory;
+import org.eclipse.january.geometry.GeometryPackage;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -69,8 +70,6 @@ import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.ISetSelectionTarget;
 
-import geometry.GeometryFactory;
-import geometry.GeometryPackage;
 import geometry.provider.GeometryEditPlugin;
 
 

@@ -2,8 +2,8 @@
  */
 package geometry.tests;
 
-import geometry.ASCIISTLGeometryImporter;
-import geometry.GeometryFactory;
+import org.eclipse.january.geometry.ASCIISTLGeometryImporter;
+import org.eclipse.january.geometry.GeometryFactory;
 
 import junit.framework.TestCase;
 
@@ -16,7 +16,7 @@ import junit.textui.TestRunner;
  * <p>
  * The following operations are tested:
  * <ul>
- *   <li>{@link geometry.IGeometryImporter#load(java.nio.file.Path) <em>Load</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.IGeometryImporter#load(java.nio.file.Path) <em>Load</em>}</li>
  * </ul>
  * </p>
  * @generated
@@ -93,10 +93,10 @@ public class ASCIISTLGeometryImporterTest extends TestCase {
 	}
 
 	/**
-	 * Tests the '{@link geometry.IGeometryImporter#load(java.nio.file.Path) <em>Load</em>}' operation.
+	 * Tests the '{@link org.eclipse.january.geometry.IGeometryImporter#load(java.nio.file.Path) <em>Load</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see geometry.IGeometryImporter#load(java.nio.file.Path)
+	 * @see org.eclipse.january.geometry.IGeometryImporter#load(java.nio.file.Path)
 	 * @generated
 	 */
 	public void testLoad__Path() {

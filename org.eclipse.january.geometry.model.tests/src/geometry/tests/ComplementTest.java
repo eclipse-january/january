@@ -2,8 +2,8 @@
  */
 package geometry.tests;
 
-import geometry.Complement;
-import geometry.GeometryFactory;
+import org.eclipse.january.geometry.Complement;
+import org.eclipse.january.geometry.GeometryFactory;
 
 import junit.textui.TestRunner;
 

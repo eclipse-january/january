@@ -9,8 +9,8 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated geometry -->
       <package
-            uri="http://www.eclipse.org/"
-            class="geometry.GeometryPackage"
+            uri="http://www.eclipse.org/january/geometry"
+            class="org.eclipse.january.geometry.GeometryPackage"
             genModel="model/geometry.genmodel"/>
    </extension>
 

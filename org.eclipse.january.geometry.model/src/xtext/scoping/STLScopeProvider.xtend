@@ -18,6 +18,6 @@ package xtext.scoping
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#scoping
  * on how and when to use it.
  */
-class STLScopeProvider extends AbstractSTLScopeProvider {
+class STLScopeProvider extends xtext.scoping.AbstractSTLScopeProvider {
 
 }

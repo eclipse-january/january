@@ -2,9 +2,10 @@
  */
 package geometry.tests;
 
-import geometry.Cube;
-import geometry.GeometryFactory;
-import geometry.Tube;
+import org.eclipse.january.geometry.Cube;
+import org.eclipse.january.geometry.GeometryFactory;
+import org.eclipse.january.geometry.Tube;
+
 import junit.textui.TestRunner;
 
 /**
