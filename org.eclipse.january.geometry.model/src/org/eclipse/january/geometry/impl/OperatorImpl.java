@@ -428,6 +428,10 @@ public class OperatorImpl extends MinimalEObjectImpl.Container
 			// Add the child to the list of nodes
 			nodes.add(child);
 		}
+
+		// Send a notification
+		eNotify(new ENotificationImpl(this, Notification.ADD,
+				GeometryPackage.INODE___ADD_NODE__INODE, null, child));
 	}
 
 	/**
