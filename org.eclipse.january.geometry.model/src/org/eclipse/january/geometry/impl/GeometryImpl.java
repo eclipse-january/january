@@ -7,6 +7,7 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -417,6 +418,17 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 
 			// Add the child to the list of nodes
 			nodes.add(child);
+
+			// Register to listen to each child
+			child.eAdapters().add(new AdapterImpl() {
+
+				@Override
+				public void notifyChanged(Notification notification) {
+
+					// Pass the notification along to own listeners
+					eNotify(notification);
+				}
+			});
 		}
 	}
 
