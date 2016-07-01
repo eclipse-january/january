@@ -4,6 +4,7 @@ package org.eclipse.january.geometry.impl;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.january.geometry.Complement;
+import org.eclipse.january.geometry.GeometryFactory;
 import org.eclipse.january.geometry.GeometryPackage;
 
 /**
@@ -33,6 +34,22 @@ public class ComplementImpl extends OperatorImpl implements Complement {
 	@Override
 	protected EClass eStaticClass() {
 		return GeometryPackage.Literals.COMPLEMENT;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	@Override
+	public Object clone() {
+
+		// Create a new complement
+		Complement clone = GeometryFactory.eINSTANCE.createComplement();
+
+		// Make it a copy of this
+		clone.copy(this);
+		return clone;
 	}
 
 } // ComplementImpl

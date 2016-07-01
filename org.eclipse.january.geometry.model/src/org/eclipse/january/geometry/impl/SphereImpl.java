@@ -108,7 +108,8 @@ public class SphereImpl extends ShapeImpl implements Sphere {
 		radius = newRadius;
 
 		// Update the properties map as well
-		if (properties.get("radius") != radius) {
+		if (properties.get("radius") == null
+				|| properties.get("radius") != radius) {
 			properties.put("radius", radius);
 		}
 		if (eNotificationRequired())
@@ -405,5 +406,21 @@ public class SphereImpl extends ShapeImpl implements Sphere {
 		}
 
 		super.setProperty(property, value);
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	@Override
+	public Object clone() {
+
+		// Create a new sphere
+		Sphere clone = GeometryFactory.eINSTANCE.createSphere();
+
+		// Make it a copy of this
+		clone.copy(this);
+		return clone;
 	}
 } // SphereImpl

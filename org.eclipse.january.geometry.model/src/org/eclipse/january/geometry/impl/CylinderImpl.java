@@ -145,7 +145,8 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 		radius = newRadius;
 
 		// Update the properties map as well
-		if (properties.get("radius") != radius) {
+		if (properties.get("radius") == null
+				|| properties.get("radius") != radius) {
 			properties.put("radius", radius);
 		}
 		if (eNotificationRequired())
@@ -174,7 +175,8 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 		height = newHeight;
 
 		// Update the properties map as well
-		if (properties.get("height") != height) {
+		if (properties.get("height") == null
+				|| properties.get("height") != height) {
 			properties.put("height", height);
 		}
 		if (eNotificationRequired())
@@ -448,5 +450,21 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 		}
 
 		super.setProperty(property, value);
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	@Override
+	public Object clone() {
+
+		// Create a new cylinder
+		Cylinder clone = GeometryFactory.eINSTANCE.createCylinder();
+
+		// Make it a copy of this
+		clone.copy(this);
+		return clone;
 	}
 } // CylinderImpl
