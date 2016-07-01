@@ -1,6 +1,6 @@
 /**
  */
-package geometry.presentation;
+package org.eclipse.january.geometry.presentation;
 
 
 import java.util.ArrayList;
@@ -30,8 +30,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
-import org.eclipse.january.geometry.GeometryFactory;
-import org.eclipse.january.geometry.GeometryPackage;
+
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -70,6 +69,8 @@ import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.ISetSelectionTarget;
 
+import org.eclipse.january.geometry.GeometryFactory;
+import org.eclipse.january.geometry.GeometryPackage;
 import org.eclipse.january.geometry.provider.GeometryEditPlugin;
 
 
@@ -394,7 +395,8 @@ public class GeometryModelWizard extends Wizard implements INewWizard {
 		 * @generated
 		 */
 		public void createControl(Composite parent) {
-			Composite composite = new Composite(parent, SWT.NONE); {
+			Composite composite = new Composite(parent, SWT.NONE);
+			{
 				GridLayout layout = new GridLayout();
 				layout.numColumns = 1;
 				layout.verticalSpacing = 12;

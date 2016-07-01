@@ -247,8 +247,8 @@ public class GeometryFactoryImpl extends EFactoryImpl implements GeometryFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ASCIISTLGeometryImporter createASCIISTLGeometryImporter() {
-		ASCIISTLGeometryImporterImpl asciistlGeometryImporter = new ASCIISTLGeometryImporterImpl();
+	public STLGeometryImporter createASCIISTLGeometryImporter() {
+		STLGeometryImporterImpl asciistlGeometryImporter = new STLGeometryImporterImpl();
 		return asciistlGeometryImporter;
 	}
 
