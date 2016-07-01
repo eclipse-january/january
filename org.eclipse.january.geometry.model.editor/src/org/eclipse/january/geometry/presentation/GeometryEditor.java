@@ -1,6 +1,6 @@
 /**
  */
-package geometry.presentation;
+package org.eclipse.january.geometry.presentation;
 
 
 import java.io.IOException;

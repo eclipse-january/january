@@ -22,11 +22,11 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import org.eclipse.january.geometry.ASCIISTLGeometryImporter;
+import org.eclipse.january.geometry.STLGeometryImporter;
 import org.eclipse.january.geometry.GeometryPackage;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.january.geometry.ASCIISTLGeometryImporter} object.
+ * This is the item provider adapter for a {@link org.eclipse.january.geometry.STLGeometryImporter} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
@@ -129,7 +129,7 @@ public class ASCIISTLGeometryImporterItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((ASCIISTLGeometryImporter)object).getDescription();
+		String label = ((STLGeometryImporter)object).getDescription();
 		return label == null || label.length() == 0 ?
 			getString("_UI_ASCIISTLGeometryImporter_type") :
 			getString("_UI_ASCIISTLGeometryImporter_type") + " " + label;
@@ -147,7 +147,7 @@ public class ASCIISTLGeometryImporterItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(ASCIISTLGeometryImporter.class)) {
+		switch (notification.getFeatureID(STLGeometryImporter.class)) {
 			case GeometryPackage.ASCIISTL_GEOMETRY_IMPORTER__FILE_TYPES:
 			case GeometryPackage.ASCIISTL_GEOMETRY_IMPORTER__DESCRIPTION:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));

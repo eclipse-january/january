@@ -145,7 +145,7 @@ public interface GeometryFactory extends EFactory {
 	 * @return a new object of class '<em>ASCIISTL Geometry Importer</em>'.
 	 * @generated
 	 */
-	ASCIISTLGeometryImporter createASCIISTLGeometryImporter();
+	STLGeometryImporter createASCIISTLGeometryImporter();
 
 	/**
 	 * Returns the package supported by this factory.

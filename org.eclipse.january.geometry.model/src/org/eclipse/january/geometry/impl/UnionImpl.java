@@ -28,7 +28,6 @@ public class UnionImpl extends OperatorImpl implements Union {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override

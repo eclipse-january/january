@@ -174,7 +174,7 @@ public class GeometrySwitch<T> extends Switch<T> {
 				return result;
 			}
 			case GeometryPackage.ASCIISTL_GEOMETRY_IMPORTER: {
-				ASCIISTLGeometryImporter asciistlGeometryImporter = (ASCIISTLGeometryImporter)theEObject;
+				STLGeometryImporter asciistlGeometryImporter = (STLGeometryImporter)theEObject;
 				T result = caseASCIISTLGeometryImporter(asciistlGeometryImporter);
 				if (result == null) result = caseIGeometryImporter(asciistlGeometryImporter);
 				if (result == null) result = defaultCase(theEObject);
@@ -420,7 +420,7 @@ public class GeometrySwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseASCIISTLGeometryImporter(ASCIISTLGeometryImporter object) {
+	public T caseASCIISTLGeometryImporter(STLGeometryImporter object) {
 		return null;
 	}
 

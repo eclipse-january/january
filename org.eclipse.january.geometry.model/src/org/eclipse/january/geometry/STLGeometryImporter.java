@@ -17,5 +17,5 @@ package org.eclipse.january.geometry;
  * @model
  * @generated
  */
-public interface ASCIISTLGeometryImporter extends IGeometryImporter {
+public interface STLGeometryImporter extends IGeometryImporter {
 } // ASCIISTLGeometryImporter

@@ -36,7 +36,7 @@ public class GeometryTests extends TestSuite {
 		suite.addTestSuite(CubeTest.class);
 		suite.addTestSuite(CylinderTest.class);
 		suite.addTestSuite(TubeTest.class);
-		suite.addTestSuite(ASCIISTLGeometryImporterTest.class);
+		suite.addTestSuite(STLGeometryImporterTest.class);
 		return suite;
 	}
 

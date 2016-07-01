@@ -2153,10 +2153,10 @@ public interface GeometryPackage extends EPackage {
 	int IGEOMETRY_IMPORTER_OPERATION_COUNT = 1;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.january.geometry.impl.ASCIISTLGeometryImporterImpl <em>ASCIISTL Geometry Importer</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.january.geometry.impl.STLGeometryImporterImpl <em>ASCIISTL Geometry Importer</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.eclipse.january.geometry.impl.ASCIISTLGeometryImporterImpl
+	 * @see org.eclipse.january.geometry.impl.STLGeometryImporterImpl
 	 * @see org.eclipse.january.geometry.impl.GeometryPackageImpl#getASCIISTLGeometryImporter()
 	 * @generated
 	 */
@@ -2721,11 +2721,11 @@ public interface GeometryPackage extends EPackage {
 	EOperation getIGeometryImporter__Load__Path();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.january.geometry.ASCIISTLGeometryImporter <em>ASCIISTL Geometry Importer</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.january.geometry.STLGeometryImporter <em>ASCIISTL Geometry Importer</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>ASCIISTL Geometry Importer</em>'.
-	 * @see org.eclipse.january.geometry.ASCIISTLGeometryImporter
+	 * @see org.eclipse.january.geometry.STLGeometryImporter
 	 * @generated
 	 */
 	EClass getASCIISTLGeometryImporter();
@@ -3182,10 +3182,10 @@ public interface GeometryPackage extends EPackage {
 		EOperation IGEOMETRY_IMPORTER___LOAD__PATH = eINSTANCE.getIGeometryImporter__Load__Path();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.january.geometry.impl.ASCIISTLGeometryImporterImpl <em>ASCIISTL Geometry Importer</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.january.geometry.impl.STLGeometryImporterImpl <em>ASCIISTL Geometry Importer</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipse.january.geometry.impl.ASCIISTLGeometryImporterImpl
+		 * @see org.eclipse.january.geometry.impl.STLGeometryImporterImpl
 		 * @see org.eclipse.january.geometry.impl.GeometryPackageImpl#getASCIISTLGeometryImporter()
 		 * @generated
 		 */
