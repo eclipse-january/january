@@ -2,7 +2,7 @@
  */
 package geometry.tests;
 
-import org.eclipse.january.geometry.ASCIISTLGeometryImporter;
+import org.eclipse.january.geometry.STLGeometryImporter;
 import org.eclipse.january.geometry.GeometryFactory;
 
 import junit.framework.TestCase;
@@ -21,7 +21,7 @@ import junit.textui.TestRunner;
  * </p>
  * @generated
  */
-public class ASCIISTLGeometryImporterTest extends TestCase {
+public class STLGeometryImporterTest extends TestCase {
 
 	/**
 	 * The fixture for this ASCIISTL Geometry Importer test case.
@@ -29,7 +29,7 @@ public class ASCIISTLGeometryImporterTest extends TestCase {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ASCIISTLGeometryImporter fixture = null;
+	protected STLGeometryImporter fixture = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -37,7 +37,7 @@ public class ASCIISTLGeometryImporterTest extends TestCase {
 	 * @generated
 	 */
 	public static void main(String[] args) {
-		TestRunner.run(ASCIISTLGeometryImporterTest.class);
+		TestRunner.run(STLGeometryImporterTest.class);
 	}
 
 	/**
@@ -46,7 +46,7 @@ public class ASCIISTLGeometryImporterTest extends TestCase {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ASCIISTLGeometryImporterTest(String name) {
+	public STLGeometryImporterTest(String name) {
 		super(name);
 	}
 
@@ -56,7 +56,7 @@ public class ASCIISTLGeometryImporterTest extends TestCase {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void setFixture(ASCIISTLGeometryImporter fixture) {
+	protected void setFixture(STLGeometryImporter fixture) {
 		this.fixture = fixture;
 	}
 
@@ -66,7 +66,7 @@ public class ASCIISTLGeometryImporterTest extends TestCase {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ASCIISTLGeometryImporter getFixture() {
+	protected STLGeometryImporter getFixture() {
 		return fixture;
 	}
 

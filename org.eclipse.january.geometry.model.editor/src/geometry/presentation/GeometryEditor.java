@@ -154,7 +154,7 @@ import org.eclipse.emf.edit.ui.util.EditUIUtil;
 
 import org.eclipse.emf.edit.ui.view.ExtendedPropertySheetPage;
 
-import geometry.provider.GeometryItemProviderAdapterFactory;
+import org.eclipse.january.geometry.provider.GeometryItemProviderAdapterFactory;
 
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 
