@@ -70,7 +70,7 @@ import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.ISetSelectionTarget;
 
-import geometry.provider.GeometryEditPlugin;
+import org.eclipse.january.geometry.provider.GeometryEditPlugin;
 
 
 import org.eclipse.core.runtime.Path;

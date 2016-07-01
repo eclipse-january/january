@@ -128,7 +128,7 @@ public class GeometryAdapterFactory extends AdapterFactoryImpl {
 				return createIGeometryImporterAdapter();
 			}
 			@Override
-			public Adapter caseASCIISTLGeometryImporter(ASCIISTLGeometryImporter object) {
+			public Adapter caseASCIISTLGeometryImporter(STLGeometryImporter object) {
 				return createASCIISTLGeometryImporterAdapter();
 			}
 			@Override
@@ -362,13 +362,13 @@ public class GeometryAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.january.geometry.ASCIISTLGeometryImporter <em>ASCIISTL Geometry Importer</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.january.geometry.STLGeometryImporter <em>ASCIISTL Geometry Importer</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.january.geometry.ASCIISTLGeometryImporter
+	 * @see org.eclipse.january.geometry.STLGeometryImporter
 	 * @generated
 	 */
 	public Adapter createASCIISTLGeometryImporterAdapter() {

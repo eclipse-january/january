@@ -371,7 +371,7 @@ public class GeometryItemProviderAdapterFactory extends GeometryAdapterFactory i
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.january.geometry.ASCIISTLGeometryImporter} instances.
+	 * This keeps track of the one adapter used for all {@link org.eclipse.january.geometry.STLGeometryImporter} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -379,7 +379,7 @@ public class GeometryItemProviderAdapterFactory extends GeometryAdapterFactory i
 	protected ASCIISTLGeometryImporterItemProvider asciistlGeometryImporterItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.eclipse.january.geometry.ASCIISTLGeometryImporter}.
+	 * This creates an adapter for a {@link org.eclipse.january.geometry.STLGeometryImporter}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
