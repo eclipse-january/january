@@ -3,6 +3,7 @@
 package org.eclipse.january.geometry.impl;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.january.geometry.GeometryFactory;
 import org.eclipse.january.geometry.GeometryPackage;
 import org.eclipse.january.geometry.Intersection;
 
@@ -33,6 +34,22 @@ public class IntersectionImpl extends OperatorImpl implements Intersection {
 	@Override
 	protected EClass eStaticClass() {
 		return GeometryPackage.Literals.INTERSECTION;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	@Override
+	public Object clone() {
+
+		// Create a new intersection
+		Intersection clone = GeometryFactory.eINSTANCE.createIntersection();
+
+		// Make it a copy of this
+		clone.copy(this);
+		return clone;
 	}
 
 } // IntersectionImpl

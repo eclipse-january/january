@@ -99,7 +99,8 @@ public class CubeImpl extends ShapeImpl implements Cube {
 		sideLength = newSideLength;
 
 		// Update the properties map as well
-		if (properties.get("sideLength") != sideLength) {
+		if (properties.get("sideLength") == null
+				|| properties.get("sideLength") != sideLength) {
 			properties.put("sideLength", sideLength);
 		}
 		if (eNotificationRequired())
@@ -370,5 +371,21 @@ public class CubeImpl extends ShapeImpl implements Cube {
 		}
 
 		super.setProperty(property, value);
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	@Override
+	public Object clone() {
+
+		// Create a new cube
+		Cube clone = GeometryFactory.eINSTANCE.createCube();
+
+		// Make it a copy of this
+		clone.copy(this);
+		return clone;
 	}
 } // CubeImpl

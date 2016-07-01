@@ -174,7 +174,8 @@ public class TubeImpl extends ShapeImpl implements Tube {
 		height = newHeight;
 
 		// Update the properties map as well
-		if (properties.get("height") != height) {
+		if (properties.get("height") == null
+				|| properties.get("height") != height) {
 			properties.put("height", height);
 		}
 		if (eNotificationRequired())
@@ -203,7 +204,8 @@ public class TubeImpl extends ShapeImpl implements Tube {
 		innerRadius = newInnerRadius;
 
 		// Update the properties map as well
-		if (properties.get("innerRadius") != innerRadius) {
+		if (properties.get("innerRadius") == null
+				|| properties.get("innerRadius") != innerRadius) {
 			properties.put("innerRadius", innerRadius);
 		}
 		if (eNotificationRequired())
@@ -233,7 +235,8 @@ public class TubeImpl extends ShapeImpl implements Tube {
 		radius = newRadius;
 
 		// Update the properties map as well
-		if (properties.get("radius") != radius) {
+		if (properties.get("radius") == null
+				|| properties.get("radius") != radius) {
 			properties.put("radius", radius);
 		}
 		if (eNotificationRequired())
@@ -646,5 +649,21 @@ public class TubeImpl extends ShapeImpl implements Tube {
 		}
 
 		super.setProperty(property, value);
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	@Override
+	public Object clone() {
+
+		// Create a new tube
+		Tube clone = GeometryFactory.eINSTANCE.createTube();
+
+		// Make it a copy of this
+		clone.copy(this);
+		return clone;
 	}
 } // TubeImpl

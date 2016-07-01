@@ -20,7 +20,6 @@ import org.eclipse.january.geometry.GeometryFactory;
 import org.eclipse.january.geometry.GeometryPackage;
 import org.eclipse.january.geometry.INode;
 import org.eclipse.january.geometry.Material;
-import org.eclipse.january.geometry.Operator;
 import org.eclipse.january.geometry.Shape;
 import org.eclipse.january.geometry.Triangle;
 import org.eclipse.january.geometry.Vertex;
@@ -182,6 +181,8 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 		// Initialize the data members
 		properties = new HashMap<String, Double>();
 		center = GeometryFactory.eINSTANCE.createVertex();
+		nodes = new BasicEList<INode>();
+		triangles = new BasicEList<Triangle>();
 	}
 
 	/**
@@ -540,11 +541,11 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 	@Override
 	public void copy(Object source) {
 
-		// If the source object is not an Operator, fail silently
-		if (source instanceof Operator) {
+		// If the source object is not aa shape, fail silently
+		if (source instanceof Shape) {
 
 			// Cast the object as an operator
-			Operator castSource = (Operator) source;
+			Shape castSource = (Shape) source;
 
 			// Copy the object's center
 			center.setX(castSource.getCenter().getX());
@@ -569,7 +570,7 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 			// Make the properties map a copy of the source's
 			properties.clear();
 			for (String property : castSource.getPropertyNames()) {
-				properties.put(property, castSource.getProperty(property));
+				setProperty(property, castSource.getProperty(property));
 			}
 
 			// Copy the triangles from the source
@@ -609,8 +610,8 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 	@Override
 	public Object clone() {
 
-		// Create a new operator
-		Operator clone = GeometryFactory.eINSTANCE.createOperator();
+		// Create a new shape
+		Shape clone = GeometryFactory.eINSTANCE.createShape();
 
 		// Make it a copy of this
 		clone.copy(this);

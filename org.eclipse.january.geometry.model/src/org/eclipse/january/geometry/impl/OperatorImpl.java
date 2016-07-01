@@ -169,6 +169,8 @@ public class OperatorImpl extends MinimalEObjectImpl.Container
 		// Initialize the data members
 		properties = new HashMap<String, Double>();
 		center = GeometryFactory.eINSTANCE.createVertex();
+		nodes = new BasicEList<INode>();
+		triangles = new BasicEList<Triangle>();
 	}
 
 	/**
