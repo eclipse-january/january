@@ -12,9 +12,9 @@
             id="org.eclipse.emf.ecore.Wizard.category.ID"
             name="%_UI_Wizard_category"/>
       <wizard
-            id="geometry.presentation.GeometryModelWizardID"
+            id="org.eclipse.january.geometry.presentation.GeometryModelWizardID"
             name="%_UI_GeometryModelWizard_label"
-            class="geometry.presentation.GeometryModelWizard"
+            class="org.eclipse.january.geometry.presentation.GeometryModelWizard"
             category="org.eclipse.emf.ecore.Wizard.category.ID"
             icon="icons/full/obj16/GeometryModelFile.gif">
          <description>%_UI_GeometryModelWizard_description</description>
@@ -25,13 +25,12 @@
    <extension point="org.eclipse.ui.editors">
       <!-- @generated geometry -->
       <editor
-            id="geometry.presentation.GeometryEditorID"
+            id="org.eclipse.january.geometry.presentation.GeometryEditorID"
             name="%_UI_GeometryEditor_label"
             icon="icons/full/obj16/GeometryModelFile.gif"
             extensions="geometry"
-            class="geometry.presentation.GeometryEditor"
-            contributorClass="geometry.presentation.GeometryActionBarContributor">
+            class="org.eclipse.january.geometry.presentation.GeometryEditor"
+            contributorClass="org.eclipse.january.geometry.presentation.GeometryActionBarContributor">
       </editor>
    </extension>
-
 </plugin>
