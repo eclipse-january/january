@@ -559,7 +559,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	/**
-	 * Find floating point dataset type that best fits given types The best type takes into account complex and array
+	 * Find floating point dataset type that best fits given types. The best type takes into account complex and array
 	 * datasets
 	 * 
 	 * @param otype
@@ -577,6 +577,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		case FLOAT32:
 		case ARRAYFLOAT32:
 		case COMPLEX64:
+		case RGB:
 			btype = FLOAT32; // demote, if necessary
 			break;
 		case INT32:
@@ -589,7 +590,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			btype = FLOAT64; // promote, if necessary
 			break;
 		default:
-			btype = otype; // for array datasets, preserve type
+			btype = otype; // for non-numeric datasets, preserve type
 			break;
 		}
 
