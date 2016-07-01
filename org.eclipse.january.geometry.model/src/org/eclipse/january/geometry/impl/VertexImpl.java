@@ -20,9 +20,9 @@ import org.eclipse.january.geometry.Vertex;
  * The following features are implemented:
  * </p>
  * <ul>
- * <li>{@link org.eclipse.january.geometry.impl.VertexImpl#getX <em>X</em>}</li>
- * <li>{@link org.eclipse.january.geometry.impl.VertexImpl#getY <em>Y</em>}</li>
- * <li>{@link org.eclipse.january.geometry.impl.VertexImpl#getZ <em>Z</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.impl.VertexImpl#getX <em>X</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.impl.VertexImpl#getY <em>Y</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.impl.VertexImpl#getZ <em>Z</em>}</li>
  * </ul>
  *
  * @generated
@@ -90,7 +90,6 @@ public class VertexImpl extends MinimalEObjectImpl.Container implements Vertex {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected VertexImpl() {
@@ -99,7 +98,6 @@ public class VertexImpl extends MinimalEObjectImpl.Container implements Vertex {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -109,7 +107,6 @@ public class VertexImpl extends MinimalEObjectImpl.Container implements Vertex {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -119,7 +116,6 @@ public class VertexImpl extends MinimalEObjectImpl.Container implements Vertex {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -127,13 +123,11 @@ public class VertexImpl extends MinimalEObjectImpl.Container implements Vertex {
 		double oldX = x;
 		x = newX;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					GeometryPackage.VERTEX__X, oldX, x));
+			eNotify(new ENotificationImpl(this, Notification.SET, GeometryPackage.VERTEX__X, oldX, x));
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -143,7 +137,6 @@ public class VertexImpl extends MinimalEObjectImpl.Container implements Vertex {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -151,13 +144,11 @@ public class VertexImpl extends MinimalEObjectImpl.Container implements Vertex {
 		double oldY = y;
 		y = newY;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					GeometryPackage.VERTEX__Y, oldY, y));
+			eNotify(new ENotificationImpl(this, Notification.SET, GeometryPackage.VERTEX__Y, oldY, y));
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -167,7 +158,6 @@ public class VertexImpl extends MinimalEObjectImpl.Container implements Vertex {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -175,8 +165,7 @@ public class VertexImpl extends MinimalEObjectImpl.Container implements Vertex {
 		double oldZ = z;
 		z = newZ;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					GeometryPackage.VERTEX__Z, oldZ, z));
+			eNotify(new ENotificationImpl(this, Notification.SET, GeometryPackage.VERTEX__Z, oldZ, z));
 	}
 
 	/**
@@ -199,106 +188,99 @@ public class VertexImpl extends MinimalEObjectImpl.Container implements Vertex {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case GeometryPackage.VERTEX__X:
-			return getX();
-		case GeometryPackage.VERTEX__Y:
-			return getY();
-		case GeometryPackage.VERTEX__Z:
-			return getZ();
+			case GeometryPackage.VERTEX__X:
+				return getX();
+			case GeometryPackage.VERTEX__Y:
+				return getY();
+			case GeometryPackage.VERTEX__Z:
+				return getZ();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case GeometryPackage.VERTEX__X:
-			setX((Double) newValue);
-			return;
-		case GeometryPackage.VERTEX__Y:
-			setY((Double) newValue);
-			return;
-		case GeometryPackage.VERTEX__Z:
-			setZ((Double) newValue);
-			return;
+			case GeometryPackage.VERTEX__X:
+				setX((Double)newValue);
+				return;
+			case GeometryPackage.VERTEX__Y:
+				setY((Double)newValue);
+				return;
+			case GeometryPackage.VERTEX__Z:
+				setZ((Double)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case GeometryPackage.VERTEX__X:
-			setX(X_EDEFAULT);
-			return;
-		case GeometryPackage.VERTEX__Y:
-			setY(Y_EDEFAULT);
-			return;
-		case GeometryPackage.VERTEX__Z:
-			setZ(Z_EDEFAULT);
-			return;
+			case GeometryPackage.VERTEX__X:
+				setX(X_EDEFAULT);
+				return;
+			case GeometryPackage.VERTEX__Y:
+				setY(Y_EDEFAULT);
+				return;
+			case GeometryPackage.VERTEX__Z:
+				setZ(Z_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case GeometryPackage.VERTEX__X:
-			return x != X_EDEFAULT;
-		case GeometryPackage.VERTEX__Y:
-			return y != Y_EDEFAULT;
-		case GeometryPackage.VERTEX__Z:
-			return z != Z_EDEFAULT;
+			case GeometryPackage.VERTEX__X:
+				return x != X_EDEFAULT;
+			case GeometryPackage.VERTEX__Y:
+				return y != Y_EDEFAULT;
+			case GeometryPackage.VERTEX__Z:
+				return z != Z_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eInvoke(int operationID, EList<?> arguments)
 			throws InvocationTargetException {
 		switch (operationID) {
-		case GeometryPackage.VERTEX___CLONE:
-			return clone();
+			case GeometryPackage.VERTEX___CLONE:
+				return clone();
 		}
 		return super.eInvoke(operationID, arguments);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
-			return super.toString();
+		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (x: ");
