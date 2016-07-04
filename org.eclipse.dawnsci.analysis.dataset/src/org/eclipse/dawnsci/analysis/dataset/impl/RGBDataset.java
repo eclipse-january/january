@@ -36,6 +36,11 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 		super(ISIZE, shape);
 	}
 
+	public RGBDataset(final short[] data, final int... shape) {
+		super(ISIZE, data, shape);
+	}
+
+	
 	/**
 	 * Copy a dataset
 	 * @param dataset
@@ -200,6 +205,19 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	}
 
 	/**
+	 * Create a RGB dataset from an object which could be a Java list, array (of arrays...) or Number. Ragged
+	 * sequences or arrays are padded with zeros. The item size is the last dimension of the corresponding
+	 * elemental dataset
+	 *
+	 * @param obj
+	 * @return dataset with contents given by input
+	 */
+	public static RGBDataset createFromObject(final Object obj) {
+		CompoundShortDataset result = (CompoundShortDataset) DatasetUtils.createCompoundDataset(ShortDataset.createFromObject(obj), ISIZE);
+		return new RGBDataset(result.data, result.shape);
+	}
+
+	/**
 	 * Create a RGB dataset from a compound dataset (no normalisation performed)
 	 * @param a
 	 * @return RGB dataset (grey if input dataset has less than 3 elements per item)
@@ -211,6 +229,11 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 		if (is < 3) {
 			return new RGBDataset(a);
 		}
+
+		if (a instanceof CompoundShortDataset && is == 3) {
+			return new RGBDataset((short[]) a.getBuffer(), a.getShapeRef());
+		}
+
 		final RGBDataset rgb = new RGBDataset(a.getShapeRef());
 		final IndexIterator it = a.getIterator();
 

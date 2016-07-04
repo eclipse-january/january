@@ -66,21 +66,23 @@ public class FloatDataset extends AbstractDataset {
 	 * @param shape
 	 */
 	public FloatDataset(final int... shape) {
-		if (shape.length == 1) {
-			size = shape[0];
-			if (size < 0) {
-				throw new IllegalArgumentException("Negative component in shape is not allowed");
+		if (shape != null) {
+			if (shape.length == 1) {
+				size = shape[0];
+				if (size < 0) {
+					throw new IllegalArgumentException("Negative component in shape is not allowed");
+				}
+			} else {
+				size = calcSize(shape);
 			}
-		} else {
-			size = calcSize(shape);
-		}
-		this.shape = shape.clone();
+			this.shape = shape.clone();
 
-		try {
-			odata = data = createArray(size);
-		} catch (Throwable t) {
-			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
-			throw new IllegalArgumentException(t);
+			try {
+				odata = data = createArray(size);
+			} catch (Throwable t) {
+				logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
+				throw new IllegalArgumentException(t);
+			}
 		}
 	}
 
@@ -135,7 +137,7 @@ public class FloatDataset extends AbstractDataset {
 	}
 
 	/**
-	 * Cast a dataset to this class type
+	 * Copy and cast a dataset to this class type
 	 * @param dataset
 	 */
 	public FloatDataset(final Dataset dataset) {
@@ -161,10 +163,13 @@ public class FloatDataset extends AbstractDataset {
 			return false;
 		}
 
-		if (getRank() == 0) // already true for zero-rank dataset
+		if (getRank() == 0 && !getClass().equals(obj.getClass())) // already true for zero-rank dataset
 			return true;
 
 		FloatDataset other = (FloatDataset) obj;
+//		if (size == 1) // for zero-rank datasets
+//			return getAbs(offset) == other.getAbs(other.offset);
+
 		IndexIterator iter = getIterator();
 		IndexIterator oiter = other.getIterator();
 		while (iter.hasNext() && oiter.hasNext()) {
@@ -194,18 +199,21 @@ public class FloatDataset extends AbstractDataset {
 	public static FloatDataset createFromObject(final Object obj) {
 		FloatDataset result = new FloatDataset();
 
-		result.shape = getShapeFromObject(obj);
-		result.size = calcSize(result.shape);
+		if (obj != null) {
+			result.shape = getShapeFromObject(obj);
+			result.size = calcSize(result.shape);
 
-		try {
-			result.odata = result.data = createArray(result.size);
-		} catch (Throwable t) {
-			logger.error("Could not create a dataset of shape {}", Arrays.toString(result.shape), t);
-			throw new IllegalArgumentException(t);
+			try {
+				result.odata = result.data = createArray(result.size);
+			} catch (Throwable t) {
+				logger.error("Could not create a dataset of shape {}", Arrays.toString(result.shape), t);
+				throw new IllegalArgumentException(t);
+			}
+
+			int[] pos = new int[result.shape.length];
+			result.fillData(obj, 0, pos);
 		}
 
-		int[] pos = new int[result.shape.length];
-		result.fillData(obj, 0, pos);
 		return result;
 	}
 	

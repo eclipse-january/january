@@ -52,7 +52,7 @@ public class Comparisons {
 
 		List<int[]> sl = BroadcastUtils.broadcastShapes(da.getShapeRef(), db.getShapeRef(), o == null ? null : o.getShapeRef());
 
-		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
+		final BooleanDataset r = o == null ? DatasetFactory.zeros(BooleanDataset.class, sl.get(0)) : o;
 
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, r);
 		final int as = da.getElementsPerItem();
@@ -199,7 +199,7 @@ public class Comparisons {
 
 		List<int[]> sl = BroadcastUtils.broadcastShapes(da.getShapeRef(), db.getShapeRef(), o == null ? null : o.getShapeRef());
 
-		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
+		final BooleanDataset r = o == null ? DatasetFactory.zeros(BooleanDataset.class, sl.get(0)) : o;
 
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, r);
 		it.setOutputDouble(true);
@@ -294,7 +294,7 @@ public class Comparisons {
 
 		List<int[]> sl = BroadcastUtils.broadcastShapes(da.getShapeRef(), db.getShapeRef(), o == null ? null : o.getShapeRef());
 
-		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
+		final BooleanDataset r = o == null ? DatasetFactory.zeros(BooleanDataset.class, sl.get(0)) : o;
 
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, r);
 		final int as = da.getElementsPerItem();
@@ -404,7 +404,7 @@ public class Comparisons {
 
 		List<int[]> sl = BroadcastUtils.broadcastShapes(da.getShapeRef(), db.getShapeRef(), o == null ? null : o.getShapeRef());
 
-		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
+		final BooleanDataset r = o == null ? DatasetFactory.zeros(BooleanDataset.class, sl.get(0)) : o;
 
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, r);
 		final int as = da.getElementsPerItem();
@@ -514,7 +514,7 @@ public class Comparisons {
 
 		List<int[]> sl = BroadcastUtils.broadcastShapes(da.getShapeRef(), db.getShapeRef(), o == null ? null : o.getShapeRef());
 
-		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
+		final BooleanDataset r = o == null ? DatasetFactory.zeros(BooleanDataset.class, sl.get(0)) : o;
 
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, r);
 		it.setOutputDouble(true);
@@ -625,7 +625,7 @@ public class Comparisons {
 
 		List<int[]> sl = BroadcastUtils.broadcastShapes(da.getShapeRef(), db.getShapeRef(), o == null ? null : o.getShapeRef());
 
-		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
+		final BooleanDataset r = o == null ? DatasetFactory.zeros(BooleanDataset.class, sl.get(0)) : o;
 
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, r);
 		it.setOutputDouble(true);
@@ -727,7 +727,7 @@ public class Comparisons {
 
 		List<int[]> sl = BroadcastUtils.broadcastShapes(da.getShapeRef(), o == null ? null : o.getShapeRef());
 
-		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
+		final BooleanDataset r = o == null ? DatasetFactory.zeros(BooleanDataset.class, sl.get(0)) : o;
 
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, r);
 		final int as = da.getElementsPerItem();
@@ -886,7 +886,7 @@ public class Comparisons {
 
 		int[] nshape = AbstractDataset.squeezeShape(oshape, false);
 
-		BooleanDataset result = new BooleanDataset(nshape);
+		BooleanDataset result = DatasetFactory.zeros(BooleanDataset.class, nshape);
 
 		IndexIterator qiter = result.getIterator(true);
 		int[] qpos = qiter.getPos();
@@ -951,7 +951,7 @@ public class Comparisons {
 
 		int[] nshape = AbstractDataset.squeezeShape(oshape, false);
 
-		BooleanDataset result = new BooleanDataset(nshape);
+		BooleanDataset result = DatasetFactory.zeros(BooleanDataset.class, nshape);
 
 		IndexIterator qiter = result.getIterator(true);
 		int[] qpos = qiter.getPos();
@@ -1003,7 +1003,7 @@ public class Comparisons {
 
 		List<int[]> sl = BroadcastUtils.broadcastShapes(da.getShapeRef(), o == null ? null : o.getShapeRef());
 
-		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
+		final BooleanDataset r = o == null ? DatasetFactory.zeros(BooleanDataset.class, sl.get(0)) : o;
 
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, r);
 		final int as = da.getElementsPerItem();
@@ -1055,7 +1055,7 @@ public class Comparisons {
 
 		List<int[]> sl = BroadcastUtils.broadcastShapes(da.getShapeRef(), db.getShapeRef(), o == null ? null : o.getShapeRef());
 
-		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
+		final BooleanDataset r = o == null ? DatasetFactory.zeros(BooleanDataset.class, sl.get(0)) : o;
 
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, r);
 		it.setOutputDouble(true);
@@ -1130,7 +1130,7 @@ public class Comparisons {
 
 		List<int[]> sl = BroadcastUtils.broadcastShapes(da.getShapeRef(), db.getShapeRef(), o == null ? null : o.getShapeRef());
 
-		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
+		final BooleanDataset r = o == null ? DatasetFactory.zeros(BooleanDataset.class, sl.get(0)) : o;
 
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, r);
 		it.setOutputDouble(true);
@@ -1205,7 +1205,7 @@ public class Comparisons {
 
 		List<int[]> sl = BroadcastUtils.broadcastShapes(da.getShapeRef(), db.getShapeRef(), o == null ? null : o.getShapeRef());
 
-		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
+		final BooleanDataset r = o == null ? DatasetFactory.zeros(BooleanDataset.class, sl.get(0)) : o;
 
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, r);
 		it.setOutputDouble(true);
@@ -1308,7 +1308,7 @@ public class Comparisons {
 
 		List<int[]> sl = BroadcastUtils.broadcastShapes(da.getShapeRef(), o == null ? null : o.getShapeRef());
 
-		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
+		final BooleanDataset r = o == null ? DatasetFactory.zeros(BooleanDataset.class, sl.get(0)) : o;
 
 		if (!da.hasFloatingPointElements()) {
 			if (r == o) {
@@ -1367,7 +1367,7 @@ public class Comparisons {
 
 		List<int[]> sl = BroadcastUtils.broadcastShapes(da.getShapeRef(), o == null ? null : o.getShapeRef());
 
-		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
+		final BooleanDataset r = o == null ? DatasetFactory.zeros(BooleanDataset.class, sl.get(0)) : o;
 
 		if (!da.hasFloatingPointElements()) {
 			if (r == o) {
@@ -1462,7 +1462,7 @@ public class Comparisons {
 
 		List<int[]> sl = BroadcastUtils.broadcastShapes(da.getShapeRef(), o == null ? null : o.getShapeRef());
 
-		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
+		final BooleanDataset r = o == null ? DatasetFactory.zeros(BooleanDataset.class, sl.get(0)) : o;
 
 		if (!da.hasFloatingPointElements()) {
 			if (r == o) {
@@ -1523,7 +1523,7 @@ public class Comparisons {
 
 		List<int[]> sl = BroadcastUtils.broadcastShapes(da.getShapeRef(), o == null ? null : o.getShapeRef());
 
-		final BooleanDataset r = o == null ? new BooleanDataset(sl.get(0)) : o;
+		final BooleanDataset r = o == null ? DatasetFactory.zeros(BooleanDataset.class, sl.get(0)) : o;
 
 		if (!da.hasFloatingPointElements()) {
 			r.fill(true);

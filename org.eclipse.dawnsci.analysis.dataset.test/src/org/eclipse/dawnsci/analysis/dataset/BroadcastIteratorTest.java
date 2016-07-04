@@ -24,33 +24,33 @@ public class BroadcastIteratorTest {
 	@Test
 	public void testBroadcastShape() {
 		Dataset a;
-		a = DoubleDataset.ones();
+		a = DatasetFactory.ones(DoubleDataset.class);
 		checkBroadcastShape(a, "scalar as scalar", new int[0], new int[0]);
 		checkBroadcastShape(a, "scalar as [1]", new int[] {1}, new int[] {1}, 1);
 		checkBroadcastShape(a, "scalar as [3]", new int[] {1}, new int[] {3}, 3);
 		checkBroadcastShape(a, "scalar as [3,4]", new int[] {1,1}, new int[] {3,4}, 3, 4);
 
-		a = DoubleDataset.ones(1);
+		a = DatasetFactory.ones(DoubleDataset.class, 1);
 		checkBroadcastShape(a, "[1] as scalar", new int[] {1}, new int[] {});
 		checkBroadcastShape(a, "[1] as [1]", new int[] {1}, new int[] {1}, 1);
 		checkBroadcastShape(a, "[1] as [3]", new int[] {1}, new int[] {3}, 3);
 		checkBroadcastShape(a, "[1] as [3,4]", new int[] {1,1}, new int[] {3,4}, 3, 4);
 
-		a = DoubleDataset.ones(1,1);
+		a = DatasetFactory.ones(DoubleDataset.class, 1,1);
 		checkBroadcastShape(a, "[1,1] as scalar", new int[] {1,1}, new int[] {});
 		checkBroadcastShape(a, "[1,1] as [1]", new int[] {1,1}, new int[] {1,1}, 1);
 		checkBroadcastShape(a, "[1,1] as [3]", new int[] {1,1}, new int[] {1,3}, 3);
 		checkBroadcastShape(a, "[1,1] as [1,3]", new int[] {1,1}, new int[] {1,3}, 1, 3);
 		checkBroadcastShape(a, "[1,1] as [3,4]", new int[] {1,1}, new int[] {3,4}, 3, 4);
 
-		a = DoubleDataset.ones(3);
+		a = DatasetFactory.ones(DoubleDataset.class, 3);
 		checkBroadcastShape(a, "[3] as scalar", null, null);
 		checkBroadcastShape(a, "[3] as [1]", new int[] {3}, new int[] {1}, 1);
 		checkBroadcastShape(a, "[3] as [3]", new int[] {3}, new int[] {3}, 3);
 		checkBroadcastShape(a, "[3] as [1,3]", new int[] {1,3}, new int[] {1,3}, 1, 3);
 		checkBroadcastShape(a, "[3] as [3,4]", null, null, 3, 4);
 
-		a = DoubleDataset.ones(3,1);
+		a = DatasetFactory.ones(DoubleDataset.class, 3,1);
 		checkBroadcastShape(a, "[3,1] as scalar", null, null);
 		checkBroadcastShape(a, "[3,1] as [1]", new int[] {3,1}, new int[] {1,1}, 1);
 		checkBroadcastShape(a, "[3,1] as [3]", new int[] {3,1}, new int[] {1,3}, 3);
@@ -59,7 +59,7 @@ public class BroadcastIteratorTest {
 		checkBroadcastShape(a, "[3,1] as [6,3,4]", new int[] {1,3,1}, new int[] {6,3,4}, 6, 3, 4);
 		checkBroadcastShape(a, "[3,1] as [3,4,6]", null, null, 3, 4, 6);
 
-		a = DoubleDataset.ones(1,3);
+		a = DatasetFactory.ones(DoubleDataset.class, 1,3);
 		checkBroadcastShape(a, "[1,3] as scalar", null, null);
 		checkBroadcastShape(a, "[1,3] as [1]", new int[] {1,3}, new int[] {1,1}, 1);
 		checkBroadcastShape(a, "[1,3] as [3]", new int[] {1,3}, new int[] {1,3}, 3);

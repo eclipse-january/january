@@ -428,8 +428,8 @@ public class Stats {
 	
 	
 		if (is == 1) {
-			sk = new DoubleDataset(nshape);
-			ku = new DoubleDataset(nshape);
+			sk = DatasetFactory.zeros(DoubleDataset.class, nshape);
+			ku = DatasetFactory.zeros(DoubleDataset.class, nshape);
 			final IndexIterator qiter = sk.getIterator(true);
 			final int[] qpos = qiter.getPos();
 			final int[] spos = oshape;
@@ -468,8 +468,8 @@ public class Stats {
 				ku.set(k.getResult(), spos);
 			}
 		} else {
-			sk = new CompoundDoubleDataset(is, nshape);
-			ku = new CompoundDoubleDataset(is, nshape);
+			sk = DatasetFactory.createFromObject(is, CompoundDoubleDataset.class, nshape);
+			ku = DatasetFactory.createFromObject(is, CompoundDoubleDataset.class, nshape);
 			final IndexIterator qiter = sk.getIterator(true);
 			final int[] qpos = qiter.getPos();
 			final int[] spos = oshape;

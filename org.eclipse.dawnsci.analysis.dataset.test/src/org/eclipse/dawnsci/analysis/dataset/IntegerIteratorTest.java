@@ -15,7 +15,6 @@ import java.util.List;
 
 import org.eclipse.dawnsci.analysis.dataset.impl.Dataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.DatasetFactory;
-import org.eclipse.dawnsci.analysis.dataset.impl.DoubleDataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.IndexIterator;
 import org.eclipse.dawnsci.analysis.dataset.impl.IntegerDataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.IntegerIterator;
@@ -28,14 +27,14 @@ public class IntegerIteratorTest {
 
 	@Before
 	public void setUpClass() {
-		a = new DoubleDataset(new double[] { 0, 1, 3, 5, -7, -9 });
-		b = new DoubleDataset(new double[] { 0.01, 1.2, 2.9, 5, -7.1, -9 });
+		a = DatasetFactory.createFromObject(new double[] { 0, 1, 3, 5, -7, -9 });
+		b = DatasetFactory.createFromObject(new double[] { 0.01, 1.2, 2.9, 5, -7.1, -9 });
 	}
 
 	@Test
 	public void testEqualTo() {
 		Dataset c = a.clone().reshape(2, 3);
-		IntegerDataset s = new IntegerDataset(new int[] {0, 3, 4}, null);
+		IntegerDataset s = DatasetFactory.createFromObject(IntegerDataset.class, new int[] {0, 3, 4}, null);
 
 		List<Integer> inds = new ArrayList<Integer>();
 
@@ -43,8 +42,8 @@ public class IntegerIteratorTest {
 		while (iter.hasNext())
 			inds.add((int) c.getElementLongAbs(iter.index));
 
-		checkDatasets((IntegerDataset) DatasetFactory.createFromList(inds),
-				new IntegerDataset(new int[] {0,5,-7}, null));
+		checkDatasets(DatasetFactory.createFromList(IntegerDataset.class, inds),
+				DatasetFactory.createFromObject(IntegerDataset.class, new int[] {0,5,-7}, null));
 	}
 
 	public void checkDatasets(IntegerDataset calc, IntegerDataset expected) {

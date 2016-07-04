@@ -70,7 +70,7 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 	 * Create a dataset using given data (real and imaginary parts are given separately)
 	 * @param realData
 	 * @param imagData
-	 * @param shape (can be null to create 1D dataset)
+	 * @param shape (can be null or zero-length to create 1D dataset)
 	 */
 	public ComplexFloatDataset(final float[] realData, final float[] imagData, int... shape) { // PRIM_TYPE
 		if (realData == null || imagData == null) {
@@ -120,7 +120,7 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 	}
 
 	/**
-	 * Cast a dataset to this complex type
+	 * Copy and cast a dataset to this complex type
 	 * @param dataset
 	 */
 	public ComplexFloatDataset(final Dataset dataset) {

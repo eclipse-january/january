@@ -19,8 +19,6 @@ import org.eclipse.dawnsci.analysis.dataset.impl.Dataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.DatasetFactory;
 import org.eclipse.dawnsci.analysis.dataset.impl.DatasetUtils;
 import org.eclipse.dawnsci.analysis.dataset.impl.DoubleDataset;
-import org.eclipse.dawnsci.analysis.dataset.impl.FloatDataset;
-import org.eclipse.dawnsci.analysis.dataset.impl.IntegerDataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.LinearAlgebra;
 import org.eclipse.dawnsci.analysis.dataset.impl.LinearAlgebra.NormOrder;
 import org.eclipse.dawnsci.analysis.dataset.impl.Maths;
@@ -49,7 +47,7 @@ public class LinearAlgebraTest {
 		assertArrayEquals("Shape", new int[] {5, 2}, c.getShape());
 		assertEquals("Type", Dataset.FLOAT32, c.getDType());
 
-		Dataset d = new DoubleDataset(new double[] { 4400., 4730.,
+		Dataset d = DatasetFactory.createFromObject(new double[] { 4400., 4730.,
 			4532.,  4874., 4664., 5018., 4796.,  5162., 4928.,  5306. }, 5, 2);
 		assertTrue("Data does not match", d.cast(c.getDType()).equals(c));
 
@@ -91,7 +89,7 @@ public class LinearAlgebraTest {
 	@Test
 	public void testRandomDot() {
 		Dataset a = Random.randn(123.5, 23.4, 100);
-//		a = new DoubleDataset(new double[] {166.332, 139.135, 145.899, 112.830, 125.682, 95.614 });
+//		a = DatasetFactory.createFromObject(new double[] {166.332, 139.135, 145.899, 112.830, 125.682, 95.614 });
 
 		Dataset aa = Maths.square(a);
 
@@ -118,9 +116,9 @@ public class LinearAlgebraTest {
 		Dataset a;
 		Dataset b;
 
-		a = DoubleDataset.createRange(2);
-		b = DoubleDataset.createRange(3);
-		TestUtils.assertDatasetEquals(new DoubleDataset(new double[] {0, 0, 0, 0, 1, 2}, 2, 3), LinearAlgebra.outerProduct(a, b),
+		a = DatasetFactory.createRange(DoubleDataset.class, 2);
+		b = DatasetFactory.createRange(DoubleDataset.class, 3);
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new double[] {0, 0, 0, 0, 1, 2}, 2, 3), LinearAlgebra.outerProduct(a, b),
 				1e-12, 1e-12);
 		
 		a = Random.randn(123.5, 23.4, 10);
@@ -137,47 +135,47 @@ public class LinearAlgebraTest {
 	public void testCross() {
 		Dataset a, b, c, d;
 
-		a = new IntegerDataset(new int[] {2, 3, 5}, 3);
-		b = new FloatDataset(new float[] {1, 4, 7, 2, 5, 8}, 2, 3);
+		a = DatasetFactory.createFromObject(new int[] {2, 3, 5}, 3);
+		b = DatasetFactory.createFromObject(new float[] {1, 4, 7, 2, 5, 8}, 2, 3);
 
 		c = LinearAlgebra.crossProduct(a, b);
-		TestUtils.assertDatasetEquals(new DoubleDataset(new double[] {1, -9, 5, -1, -6, 4}, 2, 3), c, 1e-15, 1e-15);
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new double[] {1, -9, 5, -1, -6, 4}, 2, 3), c, 1e-15, 1e-15);
 		d = LinearAlgebra.crossProduct(b, a);
 		TestUtils.assertDatasetEquals(Maths.negative(c), d, 1e-15, 1e-15);
 		c = LinearAlgebra.crossProduct(a, b, -1, -1, 0);
-		TestUtils.assertDatasetEquals(new DoubleDataset(new double[] {1, -1, -9, -6, 5, 4}, 3, 2), c, 1e-15, 1e-15);
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new double[] {1, -1, -9, -6, 5, 4}, 3, 2), c, 1e-15, 1e-15);
 		d = LinearAlgebra.crossProduct(b, a, -1, -1, 0);
 		TestUtils.assertDatasetEquals(Maths.negative(c), d, 1e-15, 1e-15);
 
-		a = new IntegerDataset(new int[] {2, 3, 0}, 3);
+		a = DatasetFactory.createFromObject(new int[] {2, 3, 0}, 3);
 		c = LinearAlgebra.crossProduct(a, b);
-		TestUtils.assertDatasetEquals(new DoubleDataset(new double[] {21, -14, 5, 24, -16, 4}, 2, 3), c, 1e-15, 1e-15);
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new double[] {21, -14, 5, 24, -16, 4}, 2, 3), c, 1e-15, 1e-15);
 		d = LinearAlgebra.crossProduct(b, a);
 		TestUtils.assertDatasetEquals(Maths.negative(c), d, 1e-15, 1e-15);
 
-		a = new IntegerDataset(new int[] {2, 3}, 2);
+		a = DatasetFactory.createFromObject(new int[] {2, 3}, 2);
 		c = LinearAlgebra.crossProduct(a, b);
-		TestUtils.assertDatasetEquals(new DoubleDataset(new double[] {21, -14, 5, 24, -16, 4}, 2, 3), c, 1e-15, 1e-15);
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new double[] {21, -14, 5, 24, -16, 4}, 2, 3), c, 1e-15, 1e-15);
 		d = LinearAlgebra.crossProduct(b, a);
 		TestUtils.assertDatasetEquals(Maths.negative(c), d, 1e-15, 1e-15);
 
-		a = new IntegerDataset(new int[] {2, 3, 5}, 3);
-		b = new FloatDataset(new float[] {1, 4, 0, 2, 5, 0}, 2, 3);
+		a = DatasetFactory.createFromObject(new int[] {2, 3, 5}, 3);
+		b = DatasetFactory.createFromObject(new float[] {1, 4, 0, 2, 5, 0}, 2, 3);
 		c = LinearAlgebra.crossProduct(a, b);
-		TestUtils.assertDatasetEquals(new DoubleDataset(new double[] {-20, 5, 5, -25, 10, 4}, 2, 3), c, 1e-15, 1e-15);
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new double[] {-20, 5, 5, -25, 10, 4}, 2, 3), c, 1e-15, 1e-15);
 		d = LinearAlgebra.crossProduct(b, a);
 		TestUtils.assertDatasetEquals(Maths.negative(c), d, 1e-15, 1e-15);
 
-		b = new FloatDataset(new float[] {1, 4, 2, 5}, 2, 2);
+		b = DatasetFactory.createFromObject(new float[] {1, 4, 2, 5}, 2, 2);
 		c = LinearAlgebra.crossProduct(a, b);
-		TestUtils.assertDatasetEquals(new DoubleDataset(new double[] {-20, 5, 5, -25, 10, 4}, 2, 3), c, 1e-15, 1e-15);
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new double[] {-20, 5, 5, -25, 10, 4}, 2, 3), c, 1e-15, 1e-15);
 		d = LinearAlgebra.crossProduct(b, a);
 		TestUtils.assertDatasetEquals(Maths.negative(c), d, 1e-15, 1e-15);
 
-		a = new IntegerDataset(new int[] {2, 3}, 2);
-		b = new FloatDataset(new float[] {1, 4, 2, 5}, 2, 2);
+		a = DatasetFactory.createFromObject(new int[] {2, 3}, 2);
+		b = DatasetFactory.createFromObject(new float[] {1, 4, 2, 5}, 2, 2);
 		c = LinearAlgebra.crossProduct(a, b);
-		TestUtils.assertDatasetEquals(new DoubleDataset(new double[] {5, 4}, 2), c, 1e-15, 1e-15);
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new double[] {5, 4}, 2), c, 1e-15, 1e-15);
 		d = LinearAlgebra.crossProduct(b, a);
 		TestUtils.assertDatasetEquals(Maths.negative(c), d, 1e-15, 1e-15);
 	}
@@ -233,36 +231,36 @@ public class LinearAlgebraTest {
 		assertEquals(40, LinearAlgebra.trace(a, 1, 0, 1).getInt());
 
 		a = DatasetFactory.createRange(60, Dataset.INT32).reshape(3, 4, 5);
-		TestUtils.assertDatasetEquals(new IntegerDataset(new int[]{36, 116, 196}, null), LinearAlgebra.trace(a, 0, 1, 2), true, 1e-12, 1e-12);
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new int[]{36, 116, 196}, null), LinearAlgebra.trace(a, 0, 1, 2), true, 1e-12, 1e-12);
 	}
 
 	@Test
 	public void testKronecker() {
-		Dataset a = DatasetFactory.createFromObject(new int[] {1, 10, 100}, Dataset.INT32);
-		Dataset b = DatasetFactory.createFromObject(new int[] {5, 6, 7}, Dataset.INT32);
+		Dataset a = DatasetFactory.createFromObject(Dataset.INT32, new int[] {1, 10, 100});
+		Dataset b = DatasetFactory.createFromObject(Dataset.INT32, new int[] {5, 6, 7});
 		
-		TestUtils.assertDatasetEquals(new IntegerDataset(new int[]{5, 6, 7, 50, 60, 70, 500, 600, 700}, null), LinearAlgebra.kroneckerProduct(a, b), true, 1e-12, 1e-12);
-		TestUtils.assertDatasetEquals(new IntegerDataset(new int[]{5, 50, 500, 6, 60, 600, 7, 70, 700}, null), LinearAlgebra.kroneckerProduct(b, a), true, 1e-12, 1e-12);
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new int[]{5, 6, 7, 50, 60, 70, 500, 600, 700}, null), LinearAlgebra.kroneckerProduct(a, b), true, 1e-12, 1e-12);
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new int[]{5, 50, 500, 6, 60, 600, 7, 70, 700}, null), LinearAlgebra.kroneckerProduct(b, a), true, 1e-12, 1e-12);
 
 		a = DatasetUtils.eye(2, 2, 0, Dataset.INT16);
 		b = DatasetFactory.ones(new int[] {2, 2}, Dataset.FLOAT32);
-		TestUtils.assertDatasetEquals(new FloatDataset(new float[]{1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1}, 4, 4), LinearAlgebra.kroneckerProduct(a, b), true, 1e-12, 1e-12);
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new float[]{1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1}, 4, 4), LinearAlgebra.kroneckerProduct(a, b), true, 1e-12, 1e-12);
 	}
 
 	@Test
 	public void testPower() {
-		Dataset a = new IntegerDataset(new int[] {0, 1, -1, 0}, 2, 2);
+		Dataset a = DatasetFactory.createFromObject(new int[] {0, 1, -1, 0}, 2, 2);
 
-		TestUtils.assertDatasetEquals(new IntegerDataset(new int[]{0, -1, 1, 0}, 2, 2), LinearAlgebra.power(a, 3), true, 1e-12, 1e-12);
-		TestUtils.assertDatasetEquals(new DoubleDataset(new double[]{0, 1, -1, 0}, 2, 2), LinearAlgebra.power(a, -3), true, 1e-12, 1e-12);
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new int[]{0, -1, 1, 0}, 2, 2), LinearAlgebra.power(a, 3), true, 1e-12, 1e-12);
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new double[]{0, 1, -1, 0}, 2, 2), LinearAlgebra.power(a, -3), true, 1e-12, 1e-12);
 
 		TestUtils.assertDatasetEquals(DatasetUtils.eye(4, 4, 0, Dataset.INT32), LinearAlgebra.power(DatasetFactory.zeros(new int[] {4, 4}, Dataset.INT32), 0), true, 1e-12, 1e-12);
 	}
 
 	@Test
 	public void testSolve() {
-		Dataset a = new IntegerDataset(new int[] {3, 1, 1, 2}, 2, 2);
-		Dataset b = new IntegerDataset(new int[] {9, 8}, null);
-		TestUtils.assertDatasetEquals(new DoubleDataset(new double[]{2, 3}), LinearAlgebra.solve(a, b), true, 1e-12, 1e-12);
+		Dataset a = DatasetFactory.createFromObject(new int[] {3, 1, 1, 2}, 2, 2);
+		Dataset b = DatasetFactory.createFromObject(new int[] {9, 8}, null);
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new double[]{2, 3}), LinearAlgebra.solve(a, b), true, 1e-12, 1e-12);
 	}
 }

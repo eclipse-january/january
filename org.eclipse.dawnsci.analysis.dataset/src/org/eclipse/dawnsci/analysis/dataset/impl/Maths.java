@@ -1768,7 +1768,7 @@ public class Maths {
 		assert x.getRank() == 1;
 		assert d.getRank() == 1;
 	
-		DoubleDataset r = new DoubleDataset(x0.getShape());
+		DoubleDataset r = DatasetFactory.zeros(DoubleDataset.class, x0.getShape());
 
 		Monotonicity mono = Comparisons.findMonotonicity(x);
 		if (mono == Monotonicity.NOT_ORDERED) {

@@ -67,21 +67,23 @@ public class CompoundShortDataset extends AbstractCompoundDataset {
 	 */
 	public CompoundShortDataset(final int itemSize, final int[] shape) {
 		isize = itemSize;
-		if (shape.length == 1) {
-			size = shape[0];
-			if (size < 0) {
-				throw new IllegalArgumentException("Negative component in shape is not allowed");
+		if (shape != null) {
+			if (shape.length == 1) {
+				size = shape[0];
+				if (size < 0) {
+					throw new IllegalArgumentException("Negative component in shape is not allowed");
+				}
+			} else {
+				size = calcSize(shape);
 			}
-		} else {
-			size = calcSize(shape);
-		}
-		this.shape = shape.clone();
+			this.shape = shape.clone();
 
-		try {
-			odata = data = createArray(size);
-		} catch (Throwable t) {
-			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
-			throw new IllegalArgumentException(t);
+			try {
+				odata = data = createArray(size);
+			} catch (Throwable t) {
+				logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
+				throw new IllegalArgumentException(t);
+			}
 		}
 	}
 
@@ -147,21 +149,20 @@ public class CompoundShortDataset extends AbstractCompoundDataset {
 	 *            (can be null to create 1D dataset)
 	 */
 	public CompoundShortDataset(final int itemSize, final short[] data, int... shape) { // PRIM_TYPE
-		if (data == null) {
-			throw new IllegalArgumentException("Data must not be null");
-		}
 		isize = itemSize;
-		if (shape == null || shape.length == 0) {
-			shape = new int[] { data.length / isize };
-		}
-		size = calcSize(shape);
-		if (size * isize != data.length) {
-			throw new IllegalArgumentException(String.format("Shape %s is not compatible with size of data array, %d",
-					Arrays.toString(shape), data.length / isize));
-		}
-		this.shape = shape.clone();
+		if (data != null) {
+			if (shape == null || (shape.length == 0 && data.length > isize)) {
+				shape = new int[] { data.length / isize };
+			}
+			size = calcSize(shape);
+			if (size * isize != data.length) {
+				throw new IllegalArgumentException(String.format("Shape %s is not compatible with size of data array, %d",
+						Arrays.toString(shape), data.length / isize));
+			}
+			this.shape = shape.clone();
 
-		odata = this.data = data;
+			odata = this.data = data;
+		}
 	}
 
 	/**
@@ -248,7 +249,7 @@ public class CompoundShortDataset extends AbstractCompoundDataset {
 			return false;
 		}
 
-		if (getRank() == 0) // already true for zero-rank dataset
+		if (getRank() == 0 && !getClass().equals(obj.getClass())) // already true for zero-rank dataset
 			return true;
 
 		CompoundShortDataset other = (CompoundShortDataset) obj;
@@ -275,7 +276,8 @@ public class CompoundShortDataset extends AbstractCompoundDataset {
 
 	/**
 	 * Create a dataset from an object which could be a Java list, array (of arrays...) or Number. Ragged
-	 * sequences or arrays are padded with zeros.
+	 * sequences or arrays are padded with zeros. The item size is the last dimension of the corresponding
+	 * elemental dataset
 	 *
 	 * @param obj
 	 * @return dataset with contents given by input
@@ -283,6 +285,19 @@ public class CompoundShortDataset extends AbstractCompoundDataset {
 	public static CompoundShortDataset createFromObject(final Object obj) {
 		ShortDataset result = ShortDataset.createFromObject(obj); // CLASS_TYPE
 		return (CompoundShortDataset) DatasetUtils.createCompoundDatasetFromLastAxis(result, true);
+	}
+
+	/**
+	 * Create a 1D dataset from an object which could be a Java list, array (of arrays...) or Number. Ragged
+	 * sequences or arrays are padded with zeros.
+	 *
+	 * @param itemSize
+	 * @param obj
+	 * @return dataset with contents given by input
+	 */
+	public static CompoundShortDataset createFromObject(final int itemSize, final Object obj) {
+		ShortDataset result = ShortDataset.createFromObject(obj);// CLASS_TYPE
+		return new CompoundShortDataset(itemSize, result.getData());
 	}
 
 	/**
@@ -355,7 +370,11 @@ public class CompoundShortDataset extends AbstractCompoundDataset {
 			throw new IllegalArgumentException("Dataset type must be short"); // PRIM_TYPE
 		}
 
-		final int[] shape = a.getShape();
+		final int[] shape = a.getShapeRef();
+		if (shape == null) {
+			return new CompoundShortDataset(0);
+		}
+
 		final int rank = shape.length - 1;
 		final int is = rank < 0 ? 1 : shape[rank];
 

@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Utilities for manipulating datasets
  */
+@SuppressWarnings("unchecked")
 public class DatasetUtils {
 
 	/**
@@ -96,7 +97,7 @@ public class DatasetUtils {
 	 * @param values
 	 * @return changed dataset
 	 */
-	public static Dataset put(final Dataset a, final Dataset indices, Object values) {
+	public static <T extends Dataset> T put(final T a, final Dataset indices, Object values) {
 		IndexIterator it = indices.getIterator();
 		Dataset vd = DatasetFactory.createFromObject(values).flatten();
 		int vlen = vd.getSize();
@@ -116,7 +117,7 @@ public class DatasetUtils {
 	 * @param values
 	 * @return changed dataset
 	 */
-	public static Dataset put(final Dataset a, final int[] indices, Object values) {
+	public static <T extends Dataset> T put(final T a, final int[] indices, Object values) {
 		int ilen = indices.length;
 		Dataset vd = DatasetFactory.createFromObject(values).flatten();
 		int vlen = vd.getSize();
@@ -134,7 +135,7 @@ public class DatasetUtils {
 	 * @param axis if null, then use flattened view
 	 * @return a sub-array
 	 */
-	public static Dataset take(final Dataset a, final Dataset indices, Integer axis) {
+	public static <T extends Dataset> T take(final T a, final Dataset indices, Integer axis) {
 		IntegerDataset indexes = (IntegerDataset) indices.flatten().cast(Dataset.INT32);
 		return take(a, indexes.getData(), axis);
 	}
@@ -145,7 +146,7 @@ public class DatasetUtils {
 	 * @param axis if null, then use flattened view
 	 * @return a sub-array
 	 */
-	public static Dataset take(final Dataset a, final int[] indices, Integer axis) {
+	public static <T extends Dataset> T take(final T a, final int[] indices, Integer axis) {
 		if (indices == null || indices.length == 0) {
 			utilsLogger.error("No indices given");
 			throw new IllegalArgumentException("No indices given");
@@ -188,7 +189,7 @@ public class DatasetUtils {
 			}
 		}
 		result.setDirty();
-		return result;
+		return (T) result;
 	}
 
 	/**
@@ -321,9 +322,9 @@ public class DatasetUtils {
 	 * @param axis to sort along
 	 * @return dataset sorted along axis
 	 */
-	public static Dataset sort(final Dataset a, final Integer axis) {
+	public static <T extends Dataset> T sort(final T a, final Integer axis) {
 		Dataset s = a.clone();
-		return s.sort(axis);
+		return (T) s.sort(axis);
 	}
 
 	/**
@@ -483,7 +484,7 @@ public class DatasetUtils {
 	 * @param axis
 	 * @return dataset
 	 */
-	public static Dataset repeat(Dataset a, int[] repeats, int axis) {
+	public static <T extends Dataset> T repeat(T a, int[] repeats, int axis) {
 		Serializable buf = a.getBuffer();
 		int[] shape = a.getShape();
 		int rank = shape.length;
@@ -567,7 +568,7 @@ public class DatasetUtils {
 			}
 		}
 
-		return rdata;
+		return (T) rdata;
 	}
 
 	/**
@@ -576,7 +577,7 @@ public class DatasetUtils {
 	 * @param shape
 	 * @return new dataset with new shape and items that are truncated or repeated, as necessary
 	 */
-	public static Dataset resize(final Dataset a, final int... shape) {
+	public static <T extends Dataset> T resize(final T a, final int... shape) {
 		int size = a.getSize();
 		Dataset rdata = DatasetFactory.zeros(a.getElementsPerItem(), shape, a.getDType());
 		IndexIterator it = rdata.getIterator();
@@ -584,25 +585,21 @@ public class DatasetUtils {
 			rdata.setObjectAbs(it.index, a.getObjectAbs(it.index % size));
 		}
 
-		return rdata;
+		return (T) rdata;
 	}
 
 	/**
-	 * Cast a dataset
+	 * Copy and cast a dataset
 	 * 
 	 * @param d
-	 *            The dataset to be cast.
+	 *            The dataset to be copied
 	 * @param dtype dataset type
+	 * @return copied dataset of given type
 	 */
-	public static Dataset cast(final IDataset d, final int dtype) {
+	public static Dataset copy(final IDataset d, final int dtype) {
 		Dataset a = convertToDataset(d);
 
-		if (a.getDType() == dtype) {
-			return a;
-		}
-
 		Dataset c = null;
-
 		try {
 			// copy across the data
 			switch (dtype) {
@@ -684,6 +681,12 @@ public class DatasetUtils {
 			case Dataset.COMPLEX128:
 				c = new ComplexDoubleDataset(a);
 				break;
+			case Dataset.RGB:
+				if (a instanceof CompoundDataset)
+					c = RGBDataset.createFromCompoundDataset((CompoundDataset) a);
+				else
+					c = new RGBDataset(a);
+				break;
 			default:
 				utilsLogger.error("Dataset of unknown type!");
 				break;
@@ -697,15 +700,59 @@ public class DatasetUtils {
 	}
 
 	/**
+	 * Copy and cast a dataset
+	 * 
+	 * @param clazz dataset class
+	 * @param d
+	 *            The dataset to be copied
+	 * @return copied dataset of given type
+	 */
+	public static <T extends Dataset> T copy(Class<T> clazz, final IDataset d) {
+		return (T) copy(d, DTypeUtils.getDType(clazz));
+	}
+
+
+	/**
 	 * Cast a dataset
 	 * 
-	 * @param a
+	 * @param d
+	 *            The dataset to be cast.
+	 * @param dtype dataset type
+	 * @return dataset of given type (or same dataset if already of the right type)
+	 */
+	public static Dataset cast(final IDataset d, final int dtype) {
+		Dataset a = convertToDataset(d);
+
+		if (a.getDType() == dtype) {
+			return a;
+		}
+		return copy(d, dtype);
+	}
+
+	/**
+	 * Cast a dataset
+	 * 
+	 * @param clazz dataset class
+	 * @param d
+	 *            The dataset to be cast.
+	 * @return dataset of given type (or same dataset if already of the right type)
+	 */
+	public static <T extends Dataset> T cast(Class<T> clazz, final IDataset d) {
+		return (T) cast(d, DTypeUtils.getDType(clazz));
+	}
+
+	/**
+	 * Cast a dataset
+	 * 
+	 * @param d
 	 *            The dataset to be cast.
 	 * @param repeat repeat elements over item
 	 * @param dtype dataset type
 	 * @param isize item size
 	 */
-	public static Dataset cast(final Dataset a, final boolean repeat, final int dtype, final int isize) {
+	public static Dataset cast(final IDataset d, final boolean repeat, final int dtype, final int isize) {
+		Dataset a = convertToDataset(d);
+
 		if (a.getDType() == dtype && a.getElementsPerItem() == isize) {
 			return a;
 		}
@@ -1057,7 +1104,7 @@ public class DatasetUtils {
 	 * @param offset
 	 * @return diagonal matrix
 	 */
-	public static Dataset diag(final Dataset a, final int offset) {
+	public static <T extends Dataset> T diag(final T a, final int offset) {
 		final int dtype = a.getDType();
 		final int rank = a.getRank();
 		final int is = a.getElementsPerItem();
@@ -1103,7 +1150,7 @@ public class DatasetUtils {
 			}
 		}
 
-		return result;
+		return (T) result;
 	}
 
 	/**
@@ -1213,25 +1260,121 @@ public class DatasetUtils {
 		if (datasets == null || datasets.length == 0)
 			return null;
 
-		switch (datasets[0].getDType()) {
+		return createCompoundDataset(datasets[0].getDType(), datasets);
+	}
+
+	/**
+	 * Create a compound dataset from given datasets
+	 * @param dtype
+	 * @param datasets
+	 * @return compound dataset or null if none given
+	 */
+	public static CompoundDataset createCompoundDataset(final int dtype, final Dataset... datasets) {
+		if (datasets == null || datasets.length == 0)
+			return null;
+
+		switch (dtype) {
 		case Dataset.INT8:
+		case Dataset.ARRAYINT8:
 			return new CompoundByteDataset(datasets);
 		case Dataset.INT16:
+		case Dataset.ARRAYINT16:
 			return new CompoundShortDataset(datasets);
 		case Dataset.INT32:
+		case Dataset.ARRAYINT32:
 			return new CompoundIntegerDataset(datasets);
 		case Dataset.INT64:
+		case Dataset.ARRAYINT64:
 			return new CompoundLongDataset(datasets);
 		case Dataset.FLOAT32:
+		case Dataset.ARRAYFLOAT32:
 			return new CompoundFloatDataset(datasets);
 		case Dataset.FLOAT64:
+		case Dataset.ARRAYFLOAT64:
 			return new CompoundDoubleDataset(datasets);
+		case Dataset.COMPLEX64:
+		case Dataset.COMPLEX128:
+			if (datasets.length > 2) {
+				utilsLogger.error("At most two datasets are allowed");
+				throw new IllegalArgumentException("At most two datasets are allowed");
+			} else if (datasets.length == 2) {
+				return dtype == Dataset.COMPLEX64 ? new ComplexFloatDataset(datasets[0], datasets[1]) : new ComplexDoubleDataset(datasets[0], datasets[1]);
+			}
+			return dtype == Dataset.COMPLEX64 ? new ComplexFloatDataset(datasets[0]) : new ComplexDoubleDataset(datasets[0]);
+		case Dataset.RGB:
+			if (datasets.length == 1) {
+				return new RGBDataset(datasets[0]);
+			} else if (datasets.length == 3) {
+				return new RGBDataset(datasets[0], datasets[1], datasets[2]);
+			} else {
+				utilsLogger.error("Only one or three datasets are allowed to create a RGB dataset");
+				throw new IllegalArgumentException("Only one or three datasets are allowed to create a RGB dataset");
+			}
 		default:
 			utilsLogger.error("Dataset type not supported for this operation");
 			throw new UnsupportedOperationException("Dataset type not supported");
 		}
 	}
 
+	/**
+	 * Create a compound dataset from given datasets
+	 * @param clazz dataset class
+	 * @param datasets
+	 * @return compound dataset or null if none given
+	 */
+	public static <T extends CompoundDataset> T createCompoundDataset(Class<T> clazz, final Dataset... datasets) {
+		return (T) createCompoundDataset(DTypeUtils.getDType(clazz), datasets);
+	}
+
+	/**
+	 * Create a compound dataset from given dataset
+	 * @param dataset
+	 * @param itemSize
+	 * @return compound dataset
+	 */
+	public static CompoundDataset createCompoundDataset(final Dataset dataset, final int itemSize) {
+		int[] shape = dataset.getShapeRef();
+		int[] nshape = shape;
+		if (shape != null && itemSize > 1) {
+			int size = AbstractDataset.calcSize(shape);
+			if (size % itemSize != 0) {
+				throw new IllegalArgumentException("Input dataset has number of items that is not a multiple of itemSize");
+			}
+			int d = shape.length;
+			int l = 1;
+			while (--d >= 0) {
+				l *= shape[d];
+				if (l % itemSize == 0) {
+					break;
+				}
+			}
+			assert d >= 0;
+			nshape = new int[d + 1];
+			for (int i = 0; i < d; i++) {
+				nshape[i] = shape[i];
+			}
+			nshape[d] = l / itemSize;
+		}
+		switch (dataset.getDType()) {
+		case Dataset.INT8:
+			return new CompoundByteDataset(itemSize, (byte[]) dataset.getBuffer(), nshape);
+		case Dataset.INT16:
+			return new CompoundShortDataset(itemSize, (short[]) dataset.getBuffer(), nshape);
+		case Dataset.INT32:
+			return new CompoundIntegerDataset(itemSize, (int[]) dataset.getBuffer(), nshape);
+		case Dataset.INT64:
+			return new CompoundLongDataset(itemSize, (long[]) dataset.getBuffer(), nshape);
+		case Dataset.FLOAT32:
+			return new CompoundFloatDataset(itemSize, (float[]) dataset.getBuffer(), nshape);
+		case Dataset.FLOAT64:
+			return new CompoundDoubleDataset(itemSize, (double[]) dataset.getBuffer(), nshape);
+		default:
+			utilsLogger.error("Dataset type not supported for this operation");
+			throw new UnsupportedOperationException("Dataset type not supported");
+		}
+	}
+
+	
 	/**
 	 * Create a compound dataset by using last axis as elements of an item
 	 * @param a
@@ -2007,7 +2150,7 @@ public class DatasetUtils {
 	 * @param axis if null, then roll flattened dataset
 	 * @return rolled dataset
 	 */
-	public static Dataset roll(final Dataset a, final int shift, final Integer axis) {
+	public static <T extends Dataset> T roll(final T a, final int shift, final Integer axis) {
 		Dataset r = DatasetFactory.zeros(a);
 		int is = a.getElementsPerItem();
 		if (axis == null) {
@@ -2045,7 +2188,7 @@ public class DatasetUtils {
 				r.setItemsOnAxes(pos, hit, v.getBuffer());
 			}
 		}
-		return r;
+		return (T) r;
 	}
 
 	/**
@@ -2055,7 +2198,7 @@ public class DatasetUtils {
 	 * @param start The position with it right of the destination of the rolled axis
 	 * @return dataset with rolled axis
 	 */
-	public static Dataset rollAxis(final Dataset a, int axis, int start) {
+	public static <T extends Dataset> T rollAxis(final T a, int axis, int start) {
 		int r = a.getRank();
 		if (axis < 0)
 			axis += r;
@@ -2084,7 +2227,7 @@ public class DatasetUtils {
 		for (int i = 0; i < r; i++) {
 			aa[i] = axes.get(i);
 		}
-		return a.getTransposedView(aa);
+		return (T) a.getTransposedView(aa);
 	}
 
 	/**

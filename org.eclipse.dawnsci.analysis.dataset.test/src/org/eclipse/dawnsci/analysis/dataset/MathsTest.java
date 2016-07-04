@@ -20,7 +20,6 @@ import org.apache.commons.math3.complex.Complex;
 import org.eclipse.dawnsci.analysis.api.dataset.Slice;
 import org.eclipse.dawnsci.analysis.asserts.TestUtils;
 import org.eclipse.dawnsci.analysis.asserts.TestUtils.Verbosity;
-import org.eclipse.dawnsci.analysis.dataset.impl.ByteDataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.ComplexDoubleDataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.CompoundDataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.CompoundDoubleDataset;
@@ -29,9 +28,7 @@ import org.eclipse.dawnsci.analysis.dataset.impl.Dataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.DatasetFactory;
 import org.eclipse.dawnsci.analysis.dataset.impl.DatasetUtils;
 import org.eclipse.dawnsci.analysis.dataset.impl.DoubleDataset;
-import org.eclipse.dawnsci.analysis.dataset.impl.FloatDataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.IndexIterator;
-import org.eclipse.dawnsci.analysis.dataset.impl.IntegerDataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.Maths;
 import org.eclipse.dawnsci.analysis.dataset.impl.Random;
 import org.junit.After;
@@ -1620,11 +1617,11 @@ public class MathsTest {
 	public void testDifference() {
 		int[] data = {0,1,3,9,5,10};
 
-		Dataset a = new IntegerDataset(data, null);
+		Dataset a = DatasetFactory.createFromObject(data);
 		Dataset d = Maths.difference(a, 1, -1);
 		int[] tdata;
 		tdata = new int[] {1,  2,  6, -4,  5};
-		Dataset ta = new IntegerDataset(tdata, null);
+		Dataset ta = DatasetFactory.createFromObject(tdata);
 		checkDatasets(null, null, d, ta);
 
 		Slice[] slices = new Slice[] {new Slice(3)};
@@ -1636,42 +1633,42 @@ public class MathsTest {
 		ta = Maths.difference(a.getSlice(slices), 1, -1);
 		checkDatasets(null, null, d, ta);
 
-		a = new ComplexDoubleDataset(new double[] {0, 1, 2, 3, 4, 5});
+		a = DatasetFactory.createFromObject(ComplexDoubleDataset.class, new double[] {0, 1, 2, 3, 4, 5});
 		d = Maths.difference(a, 1, -1);
-		ta = new ComplexDoubleDataset(new double[] {2, 2, 2, 2});
+		ta = DatasetFactory.createFromObject(ComplexDoubleDataset.class, new double[] {2, 2, 2, 2});
 		checkDatasets(null, null, d, ta);
 
 		d = Maths.difference(a.getSliceView(slices), 1, -1);
 		ta = Maths.difference(a.getSlice(slices), 1, -1);
 		checkDatasets(null, null, d, ta);
 
-		a = new CompoundDoubleDataset(2, new double[] {0, 1, 2, 3, 4, 5});
+		a = DatasetFactory.createFromObject(2, CompoundDoubleDataset.class, new double[] {0, 1, 2, 3, 4, 5});
 		d = Maths.difference(a, 1, -1);
-		ta = new CompoundDoubleDataset(2, new double[] {2, 2, 2, 2});
+		ta = DatasetFactory.createFromObject(2, CompoundDoubleDataset.class, new double[] {2, 2, 2, 2});
 		checkDatasets(null, null, d, ta);
 		d = Maths.difference(a.getSliceView(slices), 1, -1);
 		ta = Maths.difference(a.getSlice(slices), 1, -1);
 		checkDatasets(null, null, d, ta);
 
-		a = new ByteDataset(new byte[] {0, 1, 2, 4, 7, 11});
+		a = DatasetFactory.createFromObject(new byte[] {0, 1, 2, 4, 7, 11});
 		d = Maths.difference(a, 2, -1);
-		ta = new ByteDataset(new byte[] {0, 1, 1, 1});
+		ta = DatasetFactory.createFromObject(new byte[] {0, 1, 1, 1});
 		checkDatasets(null, null, d, ta);
 		d = Maths.difference(a.getSliceView(slices), 2, -1);
 		ta = Maths.difference(a.getSlice(slices), 2, -1);
 		checkDatasets(null, null, d, ta);
 
-		a = new CompoundShortDataset(2, new short[] {0, 1, 2, 3, 4, 5, 7, 6});
+		a = DatasetFactory.createFromObject(2, CompoundShortDataset.class, new short[] {0, 1, 2, 3, 4, 5, 7, 6});
 		d = Maths.difference(a, 2, -1);
-		ta = new CompoundShortDataset(2, new short[] {0, 0, 1, -1});
+		ta = DatasetFactory.createFromObject(2, CompoundShortDataset.class, new short[] {0, 0, 1, -1});
 		checkDatasets(null, null, d, ta);
 		d = Maths.difference(a.getSliceView(slices), 2, -1);
 		ta = Maths.difference(a.getSlice(slices), 2, -1);
 		checkDatasets(null, null, d, ta);
 
-		a = new CompoundDoubleDataset(2, new double[] {0, 1, 2, 3, 4, 5, 7, 6});
+		a = DatasetFactory.createFromObject(2, CompoundDoubleDataset.class, new double[] {0, 1, 2, 3, 4, 5, 7, 6});
 		d = Maths.difference(a, 2, -1);
-		ta = new CompoundDoubleDataset(2, new double[] {0, 0, 1, -1});
+		ta = DatasetFactory.createFromObject(2, CompoundDoubleDataset.class, new double[] {0, 0, 1, -1});
 		checkDatasets(null, null, d, ta);
 		d = Maths.difference(a.getSliceView(slices), 2, -1);
 		ta = Maths.difference(a.getSlice(slices), 2, -1);
@@ -1683,10 +1680,10 @@ public class MathsTest {
 		double[] data = {1, 2, 4, 7, 11, 16};
 		double[] tdata;
 
-		Dataset a = new DoubleDataset(data, null);
+		Dataset a = DatasetFactory.createFromObject(data);
 		Dataset d = Maths.gradient(a).get(0);
 		tdata = new double[] {1., 1.5, 2.5, 3.5, 4.5, 5.};
-		Dataset ta = new DoubleDataset(tdata, null);
+		Dataset ta = DatasetFactory.createFromObject(tdata);
 		checkDatasets(null, null, d, ta);
 		Slice[] slices = new Slice[] {new Slice(3)};
 		d = Maths.gradient(a.getSliceView(slices)).get(0);
@@ -1697,7 +1694,7 @@ public class MathsTest {
 		Dataset b = DatasetFactory.createRange(a.getShape()[0], a.getDType());
 		b.imultiply(2);
 		tdata = new double[] {0.5 , 0.75, 1.25, 1.75, 2.25, 2.5};
-		ta = new DoubleDataset(tdata, null);
+		ta = DatasetFactory.createFromObject(tdata);
 		d = Maths.gradient(a, b).get(0);
 		checkDatasets(null, null, d, ta);
 		d = Maths.gradient(a.getSliceView(slices), b.getSliceView(slices)).get(0);
@@ -1705,13 +1702,13 @@ public class MathsTest {
 		checkDatasets(null, null, d, ta);
 		
 		data = new double[] {1, 2, 6, 3, 4, 5};
-		a = new DoubleDataset(data, 2, 3);
+		a = DatasetFactory.createFromObject(data, 2, 3);
 		List<? extends Dataset> l = Maths.gradient(a);
 		tdata = new double[] { 2., 2., -1., 2., 2., -1.};
-		ta = new DoubleDataset(tdata, 2, 3);
+		ta = DatasetFactory.createFromObject(tdata, 2, 3);
 		checkDatasets(null, null, l.get(0), ta);
 		tdata = new double[] { 1., 2.5, 4., 1., 1., 1.};
-		ta = new DoubleDataset(tdata, 2, 3);
+		ta = DatasetFactory.createFromObject(tdata, 2, 3);
 		checkDatasets(null, null, l.get(1), ta);
 
 		b = DatasetFactory.createRange(a.getShape()[0], a.getDType());
@@ -1721,17 +1718,17 @@ public class MathsTest {
 
 		l = Maths.gradient(a, b, c);
 		tdata = new double[] { 2., 2., -1., 2., 2., -1.};
-		ta = new DoubleDataset(tdata, 2, 3);
+		ta = DatasetFactory.createFromObject(tdata, 2, 3);
 		ta.idivide(2);
 		checkDatasets(null, null, l.get(0), ta);
 		tdata = new double[] { 1., 2.5, 4., 1., 1., 1.};
-		ta = new DoubleDataset(tdata, 2, 3);
+		ta = DatasetFactory.createFromObject(tdata, 2, 3);
 		ta.idivide(-1.5);
 		checkDatasets(null, null, l.get(1), ta);
 
-		a = new ByteDataset(new byte[] {0, 1, 2, 4, 7, 11});
+		a = DatasetFactory.createFromObject(new byte[] {0, 1, 2, 4, 7, 11});
 		d = Maths.gradient(a).get(0);
-		ta = new ByteDataset(new byte[] {1, 1, 1, 2, 3, 4});
+		ta = DatasetFactory.createFromObject(new byte[] {1, 1, 1, 2, 3, 4});
 		checkDatasets(null, null, d, ta);
 
 		slices = new Slice[] {new Slice(-2, null, -1)};
@@ -1739,25 +1736,25 @@ public class MathsTest {
 		ta = Maths.gradient(a.getSlice(slices)).get(0);
 		checkDatasets(null, null, d, ta);
 
-		a = new ComplexDoubleDataset(new double[] {0, 1, 2, 3, 4, 5});
+		a = DatasetFactory.createFromObject(ComplexDoubleDataset.class, new double[] {0, 1, 2, 3, 4, 5});
 		d = Maths.gradient(a).get(0);
-		ta = new ComplexDoubleDataset(new double[] {2, 2, 2, 2, 2, 2});
+		ta = DatasetFactory.createFromObject(ComplexDoubleDataset.class, new double[] {2, 2, 2, 2, 2, 2});
 		checkDatasets(null, null, d, ta);
 		d = Maths.gradient(a.getSliceView(slices)).get(0);
 		ta = Maths.gradient(a.getSlice(slices)).get(0);
 		checkDatasets(null, null, d, ta);
 
-		a = new CompoundShortDataset(2, new short[] {0, 1, 2, 3, 4, 5, 7, 6});
+		a = DatasetFactory.createFromObject(2, CompoundShortDataset.class, new short[] {0, 1, 2, 3, 4, 5, 7, 6});
 		d = Maths.gradient(a).get(0);
-		ta = new CompoundShortDataset(2, new short[] {2, 2, 2, 2, 2, 1, 3, 1});
+		ta = DatasetFactory.createFromObject(2, CompoundShortDataset.class, new short[] {2, 2, 2, 2, 2, 1, 3, 1});
 		checkDatasets(null, null, d, ta);
 		d = Maths.gradient(a.getSliceView(slices)).get(0);
 		ta = Maths.gradient(a.getSlice(slices)).get(0);
 		checkDatasets(null, null, d, ta);
 
-		a = new CompoundDoubleDataset(2, new double[] {0, 1, 2, 3, 4, 5, 7, 6});
+		a = DatasetFactory.createFromObject(2, CompoundDoubleDataset.class, new double[] {0, 1, 2, 3, 4, 5, 7, 6});
 		d = Maths.gradient(a).get(0);
-		ta = new CompoundDoubleDataset(2, new double[] {2, 2, 2, 2, 2.5, 1.5, 3, 1});
+		ta = DatasetFactory.createFromObject(2, CompoundDoubleDataset.class, new double[] {2, 2, 2, 2, 2.5, 1.5, 3, 1});
 		checkDatasets(null, null, d, ta);
 		d = Maths.gradient(a.getSliceView(slices)).get(0);
 		ta = Maths.gradient(a.getSlice(slices)).get(0);
@@ -1774,7 +1771,7 @@ public class MathsTest {
 		double tol = 1e-6;
 
 		double[] val = { -1.7, -1.5, -1.2, 0.3, 1.4, 1.5, 1.6 };
-		t = new DoubleDataset(val);
+		t = DatasetFactory.createFromObject(DoubleDataset.class, val);
 
 		double[] resFloor = { -2, -2, -2, 0, 1, 1, 1 };
 		x = (DoubleDataset) Maths.floor(t);
@@ -2090,87 +2087,87 @@ public class MathsTest {
 		Dataset xa = DatasetFactory.createRange(-4, 4, 1, Dataset.INT8);
 		Dataset xb = DatasetFactory.createRange(8, Dataset.INT8);
 
-		TestUtils.assertDatasetEquals(new ByteDataset(new byte[] {0, 1, 2, 3, 0, 1, 2, 3}),
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new byte[] {0, 1, 2, 3, 0, 1, 2, 3}),
 				Maths.bitwiseAnd(xa, xb), ABSERRD, ABSERRD);
 
-		TestUtils.assertDatasetEquals(new ByteDataset(new byte[] {-4, -3, -2, -1, 4, 5, 6, 7}),
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new byte[] {-4, -3, -2, -1, 4, 5, 6, 7}),
 				Maths.bitwiseOr(xa, xb), ABSERRD, ABSERRD);
 
-		TestUtils.assertDatasetEquals(new ByteDataset(new byte[] {-4, -4, -4, -4, 4, 4, 4, 4}),
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new byte[] {-4, -4, -4, -4, 4, 4, 4, 4}),
 				Maths.bitwiseXor(xa, xb), ABSERRD, ABSERRD);
 
-		TestUtils.assertDatasetEquals(new ByteDataset(new byte[] {3, 2, 1, 0, -1, -2, -3, -4}),
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new byte[] {3, 2, 1, 0, -1, -2, -3, -4}),
 				Maths.bitwiseInvert(xa), ABSERRD, ABSERRD);
-		TestUtils.assertDatasetEquals(new ByteDataset(new byte[] {-1, -2, -3, -4, -5, -6, -7, -8}),
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new byte[] {-1, -2, -3, -4, -5, -6, -7, -8}),
 				Maths.bitwiseInvert(xb), ABSERRD, ABSERRD);
 
-		TestUtils.assertDatasetEquals(new ByteDataset(new byte[] {-4, -6, -8, -8, 0, 32, -128, -128}),
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new byte[] {-4, -6, -8, -8, 0, 32, -128, -128}),
 				Maths.leftShift(xa, xb), ABSERRD, ABSERRD);
-		TestUtils.assertDatasetEquals(new ByteDataset(new byte[] {0, 0, 0, 0, 4, 10, 24, 56}),
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new byte[] {0, 0, 0, 0, 4, 10, 24, 56}),
 				Maths.leftShift(xb, xa), ABSERRD, ABSERRD);
-		TestUtils.assertDatasetEquals(new ByteDataset(new byte[] {0, 0, 0, 0, 0, 2, 8, 24}),
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new byte[] {0, 0, 0, 0, 0, 2, 8, 24}),
 				Maths.leftShift(xa, xa), ABSERRD, ABSERRD);
 
-		TestUtils.assertDatasetEquals(new ByteDataset(new byte[] {-4, -2, -1, -1, 0, 0, 0, 0}),
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new byte[] {-4, -2, -1, -1, 0, 0, 0, 0}),
 				Maths.rightShift(xa, xb), ABSERRD, ABSERRD);
-		TestUtils.assertDatasetEquals(new ByteDataset(new byte[] {0, 0, 0, 0, 4, 2, 1, 0}),
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new byte[] {0, 0, 0, 0, 4, 2, 1, 0}),
 				Maths.rightShift(xb, xa), ABSERRD, ABSERRD);
-		TestUtils.assertDatasetEquals(new ByteDataset(new byte[] {-1, -1, -1, -1, 0, 0, 0, 0}),
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new byte[] {-1, -1, -1, -1, 0, 0, 0, 0}),
 				Maths.rightShift(xa, xa), ABSERRD, ABSERRD);
 
-		TestUtils.assertDatasetEquals(new ByteDataset(new byte[] {-4, 126, 63, 31, 0, 0, 0, 0}),
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new byte[] {-4, 126, 63, 31, 0, 0, 0, 0}),
 				Maths.unsignedRightShift(xa, xb), ABSERRD, ABSERRD);
-		TestUtils.assertDatasetEquals(new ByteDataset(new byte[] {0, 0, 0, 0, 4, 2, 1, 0}),
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new byte[] {0, 0, 0, 0, 4, 2, 1, 0}),
 				Maths.unsignedRightShift(xb, xa), ABSERRD, ABSERRD);
-		TestUtils.assertDatasetEquals(new ByteDataset(new byte[] {0, 0, 0, 0, 0, 0, 0, 0}),
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new byte[] {0, 0, 0, 0, 0, 0, 0, 0}),
 				Maths.unsignedRightShift(xa, xa), ABSERRD, ABSERRD);
 	}
 
 	@Test
 	public void testDivideTowardsFloor() {
 		Dataset xa = DatasetFactory.createRange(-4, 4, 1, Dataset.INT8);
-		TestUtils.assertDatasetEquals(new ByteDataset(new byte[] {-2, -2, -1, -1,  0,  0,  1,  1}),
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new byte[] {-2, -2, -1, -1,  0,  0,  1,  1}),
 				Maths.divideTowardsFloor(xa, 2), true, ABSERRD, ABSERRD);
 
-		TestUtils.assertDatasetEquals(new ByteDataset(new byte[] {2, 1, 1,  0,  0,  -1,  -1, -2}),
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new byte[] {2, 1, 1,  0,  0,  -1,  -1, -2}),
 				Maths.divideTowardsFloor(xa, -2), true, ABSERRD, ABSERRD);
 
-		TestUtils.assertDatasetEquals(new DoubleDataset(new double[] {-1.6, -1.2, -0.8, -0.4, 0, 0.4, 0.8, 1.2}),
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new double[] {-1.6, -1.2, -0.8, -0.4, 0, 0.4, 0.8, 1.2}),
 				Maths.divideTowardsFloor(xa, 2.5), true, ABSERRD, ABSERRD);
 
-		TestUtils.assertDatasetEquals(new FloatDataset(new float[] {1.6f, 1.2f, 0.8f, 0.4f, 0 , -0.4f, -0.8f, -1.2f}),
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new float[] {1.6f, 1.2f, 0.8f, 0.4f, 0 , -0.4f, -0.8f, -1.2f}),
 				Maths.divideTowardsFloor(xa, -2.5f), true, ABSERRD, ABSERRD);
 	}
 
 	@Test
 	public void testFloorDivide() {
 		Dataset xa = DatasetFactory.createRange(-4, 4, 1, Dataset.INT8);
-		TestUtils.assertDatasetEquals(new ByteDataset(new byte[] {-2, -2, -1, -1,  0,  0,  1,  1}),
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new byte[] {-2, -2, -1, -1,  0,  0,  1,  1}),
 				Maths.floorDivide(xa, 2), true, ABSERRD, ABSERRD);
 
-		TestUtils.assertDatasetEquals(new ByteDataset(new byte[] {2, 1, 1,  0,  0,  -1,  -1, -2}),
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new byte[] {2, 1, 1,  0,  0,  -1,  -1, -2}),
 				Maths.floorDivide(xa, -2), true, ABSERRD, ABSERRD);
 
-		TestUtils.assertDatasetEquals(new DoubleDataset(new double[] {-2, -2, -1, -1,  0,  0,  0,  1}),
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new double[] {-2, -2, -1, -1,  0,  0,  0,  1}),
 				Maths.floorDivide(xa, 2.5), true, ABSERRD, ABSERRD);
 
-		TestUtils.assertDatasetEquals(new FloatDataset(new float[] {1, 1,  0,  0,  0, -1,  -1, -2}),
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new float[] {1, 1,  0,  0,  0, -1,  -1, -2}),
 				Maths.floorDivide(xa, -2.5f), true, ABSERRD, ABSERRD);
 	}
 
 	@Test
 	public void testFloorRemainder() {
 		Dataset xa = DatasetFactory.createRange(-4, 4, 1, Dataset.INT8);
-		TestUtils.assertDatasetEquals(new ByteDataset(new byte[] {0, 1, 0, 1, 0, 1, 0, 1}),
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new byte[] {0, 1, 0, 1, 0, 1, 0, 1}),
 				Maths.floorRemainder(xa, 2), true, ABSERRD, ABSERRD);
 
-		TestUtils.assertDatasetEquals(new ByteDataset(new byte[] {0, -1, 0, -1, 0, -1, 0, -1}),
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new byte[] {0, -1, 0, -1, 0, -1, 0, -1}),
 				Maths.floorRemainder(xa, -2), true, ABSERRD, ABSERRD);
 
-		TestUtils.assertDatasetEquals(new DoubleDataset(new double[] {1, 2, 0.5, 1.5, 0, 1, 2, 0.5}),
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new double[] {1, 2, 0.5, 1.5, 0, 1, 2, 0.5}),
 				Maths.floorRemainder(xa, 2.5), true, ABSERRD, ABSERRD);
 
-		TestUtils.assertDatasetEquals(new FloatDataset(new float[] {-1.5f, -0.5f, -2, -1, 0, -1.5f, -0.5f, -2}),
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new float[] {-1.5f, -0.5f, -2, -1, 0, -1.5f, -0.5f, -2}),
 				Maths.floorRemainder(xa, -2.5f), true, ABSERRD, ABSERRD);
 	}
 }

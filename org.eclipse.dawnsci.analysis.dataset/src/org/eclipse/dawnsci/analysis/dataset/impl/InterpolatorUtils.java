@@ -60,7 +60,7 @@ public class InterpolatorUtils {
 	public static Dataset regridOld(Dataset data, Dataset x, Dataset y,
 			Dataset gridX, Dataset gridY) throws Exception {
 		
-		DoubleDataset result = new DoubleDataset(gridX.getShapeRef()[0], gridY.getShapeRef()[0]);
+		DoubleDataset result = DatasetFactory.zeros(DoubleDataset.class, gridX.getShapeRef()[0], gridY.getShapeRef()[0]);
 		
 		IndexIterator itx = gridX.getIterator();
 		
@@ -274,8 +274,8 @@ public class InterpolatorUtils {
 	}
 
 	private static InterpolatedPoint makePoint(Dataset x, Dataset y, int i, int j) {
-		DoubleDataset realPoint = new DoubleDataset(new double[] { x.getDouble(i, j), y.getDouble(i, j) }, 2);
-		DoubleDataset coordPoint = new DoubleDataset(new double[] { i, j }, 2);
+		Dataset realPoint = DatasetFactory.createFromObject(new double[] { x.getDouble(i, j), y.getDouble(i, j) });
+		Dataset coordPoint = DatasetFactory.createFromObject(new double[] { i, j });
 		return new InterpolatedPoint(realPoint, coordPoint);
 	}
 
@@ -401,7 +401,7 @@ public class InterpolatorUtils {
 	}
 	
 	public static Dataset remap1D(Dataset dataset, Dataset axis, Dataset outputAxis) {
-		DoubleDataset data = new DoubleDataset(outputAxis.getShapeRef());
+		Dataset data = DatasetFactory.zeros(DoubleDataset.class, outputAxis.getShapeRef());
 		for(int i = 0; i < outputAxis.getShapeRef()[0]; i++) {
 			double point = outputAxis.getDouble(i);
 			double position = getRealPositionAsIndex(axis, point);
@@ -451,7 +451,7 @@ public class InterpolatorUtils {
 		}
 		
 		resultSize[axisIndex] = outputAxis.getShapeRef()[0];
-		DoubleDataset result = new DoubleDataset(resultSize);
+		DoubleDataset result = DatasetFactory.zeros(DoubleDataset.class, resultSize);
 		
 		step[axisIndex] = dataset.getShapeRef()[axisIndex];
 		IndexIterator iter = dataset.getSliceIterator(start, stop, step);
@@ -504,7 +504,7 @@ public class InterpolatorUtils {
 		}
 		
 		resultSize[axisIndex] = outputAxis.getShapeRef()[0];
-		DoubleDataset result = new DoubleDataset(resultSize);
+		DoubleDataset result = DatasetFactory.zeros(DoubleDataset.class, resultSize);
 		
 		step[axisIndex] = dataset.getShapeRef()[axisIndex];
 		IndexIterator iter = dataset.getSliceIterator(start, stop, step);

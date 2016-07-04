@@ -331,6 +331,23 @@ public interface Dataset extends IDataset {
 	public void setErrorBuffer(Serializable buffer);
 
 	/**
+	 * Copy and cast a dataset
+	 * 
+	 * @param dtype
+	 *            dataset type
+	 * @return a converted copy of the dataset
+	 */
+	public Dataset copy(int dtype);
+
+	/**
+	 * Copy and cast a dataset
+	 * 
+	 * @param clazz dataset class
+	 * @return a converted copy of the dataset
+	 */
+	public <T extends Dataset> T copy(Class<T> clazz);
+
+	/**
 	 * Cast a dataset
 	 * 
 	 * @param dtype
@@ -338,6 +355,14 @@ public interface Dataset extends IDataset {
 	 * @return a converted dataset
 	 */
 	public Dataset cast(int dtype);
+
+	/**
+	 * Cast a dataset
+	 * 
+	 * @param clazz dataset class
+	 * @return a converted dataset
+	 */
+	public <T extends Dataset> T cast(Class<T> clazz);
 
 	/**
 	 * Cast a dataset

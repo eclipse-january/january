@@ -1044,7 +1044,7 @@ public class LinearAlgebra {
 	 */
 	public static Dataset[] calcSingularValueDecomposition(Dataset a) {
 		SingularValueDecomposition svd = new SingularValueDecomposition(createRealMatrix(a));
-		return new Dataset[] {createDataset(svd.getU()), new DoubleDataset(svd.getSingularValues()),
+		return new Dataset[] {createDataset(svd.getU()), DatasetFactory.createFromObject(svd.getSingularValues()),
 				createDataset(svd.getV())};
 	}
 
@@ -1097,9 +1097,9 @@ public class LinearAlgebra {
 
 		if (evd.hasComplexEigenvalues()) {
 			double[] iev = evd.getImagEigenvalues();
-			return new ComplexDoubleDataset(rev, iev);
+			return DatasetFactory.createComplexDataset(ComplexDoubleDataset.class, rev, iev);
 		}
-		return new DoubleDataset(rev);
+		return DatasetFactory.createFromObject(rev);
 	}
 
 	/**
@@ -1114,9 +1114,9 @@ public class LinearAlgebra {
 		double[] rev = evd.getRealEigenvalues();
 		if (evd.hasComplexEigenvalues()) {
 			double[] iev = evd.getImagEigenvalues();
-			results[0] = new ComplexDoubleDataset(rev, iev);
+			results[0] = DatasetFactory.createComplexDataset(ComplexDoubleDataset.class, rev, iev);
 		} else {
-			results[0] = new DoubleDataset(rev);
+			results[0] = DatasetFactory.createFromObject(rev);
 		}
 		results[1] = createDataset(evd.getV());
 		return results;
@@ -1250,7 +1250,7 @@ public class LinearAlgebra {
 	}
 
 	private static Dataset createDataset(RealVector v) {
-		DoubleDataset r = new DoubleDataset(v.getDimension());
+		DoubleDataset r = DatasetFactory.zeros(DoubleDataset.class, v.getDimension());
 		int size = r.getSize();
 		if (v instanceof ArrayRealVector) {
 			double[] data = ((ArrayRealVector) v).getDataRef();
@@ -1266,7 +1266,7 @@ public class LinearAlgebra {
 	}
 
 	private static Dataset createDataset(RealMatrix m) {
-		DoubleDataset r = new DoubleDataset(m.getRowDimension(), m.getColumnDimension());
+		DoubleDataset r = DatasetFactory.zeros(DoubleDataset.class, m.getRowDimension(), m.getColumnDimension());
 		if (m instanceof Array2DRowRealMatrix) {
 			double[][] data = ((Array2DRowRealMatrix) m).getDataRef();
 			IndexIterator it = r.getIterator(true);

@@ -66,21 +66,23 @@ public class DoubleDataset extends AbstractDataset {
 	 * @param shape
 	 */
 	public DoubleDataset(final int... shape) {
-		if (shape.length == 1) {
-			size = shape[0];
-			if (size < 0) {
-				throw new IllegalArgumentException("Negative component in shape is not allowed");
+		if (shape != null) {
+			if (shape.length == 1) {
+				size = shape[0];
+				if (size < 0) {
+					throw new IllegalArgumentException("Negative component in shape is not allowed");
+				}
+			} else {
+				size = calcSize(shape);
 			}
-		} else {
-			size = calcSize(shape);
-		}
-		this.shape = shape.clone();
-
-		try {
-			odata = data = createArray(size);
-		} catch (Throwable t) {
-			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
-			throw new IllegalArgumentException(t);
+			this.shape = shape.clone();
+	
+			try {
+				odata = data = createArray(size);
+			} catch (Throwable t) {
+				logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
+				throw new IllegalArgumentException(t);
+			}
 		}
 	}
 
@@ -135,7 +137,7 @@ public class DoubleDataset extends AbstractDataset {
 	}
 
 	/**
-	 * Cast a dataset to this class type
+	 * Copy and cast a dataset to this class type
 	 * @param dataset
 	 */
 	public DoubleDataset(final Dataset dataset) {
@@ -161,10 +163,13 @@ public class DoubleDataset extends AbstractDataset {
 			return false;
 		}
 
-		if (getRank() == 0) // already true for zero-rank dataset
+		if (getRank() == 0 && !getClass().equals(obj.getClass())) // already true for zero-rank dataset
 			return true;
 
 		DoubleDataset other = (DoubleDataset) obj;
+//		if (size == 1) // for zero-rank datasets
+//			return getAbs(offset) == other.getAbs(other.offset);
+
 		IndexIterator iter = getIterator();
 		IndexIterator oiter = other.getIterator();
 		while (iter.hasNext() && oiter.hasNext()) {
@@ -194,18 +199,21 @@ public class DoubleDataset extends AbstractDataset {
 	public static DoubleDataset createFromObject(final Object obj) {
 		DoubleDataset result = new DoubleDataset();
 
-		result.shape = getShapeFromObject(obj);
-		result.size = calcSize(result.shape);
-
-		try {
-			result.odata = result.data = createArray(result.size);
-		} catch (Throwable t) {
-			logger.error("Could not create a dataset of shape {}", Arrays.toString(result.shape), t);
-			throw new IllegalArgumentException(t);
+		if (obj != null) {
+			result.shape = getShapeFromObject(obj);
+			result.size = calcSize(result.shape);
+	
+			try {
+				result.odata = result.data = createArray(result.size);
+			} catch (Throwable t) {
+				logger.error("Could not create a dataset of shape {}", Arrays.toString(result.shape), t);
+				throw new IllegalArgumentException(t);
+			}
+	
+			int[] pos = new int[result.shape.length];
+			result.fillData(obj, 0, pos);
 		}
 
-		int[] pos = new int[result.shape.length];
-		result.fillData(obj, 0, pos);
 		return result;
 	}
 	 // NAN_OMIT

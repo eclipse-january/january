@@ -13,11 +13,22 @@
 package org.eclipse.dawnsci.analysis.dataset.impl;
 
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 
 import org.eclipse.dawnsci.analysis.api.dataset.IDataset;
 
 public class DatasetFactory {
+
+	/**
+	 * Create dataset with items ranging from 0 to given stop in steps of 1
+	 * @param stop
+	 * @return a new double dataset of given shape and type, filled with values determined by parameters
+	 */
+	public static Dataset createRange(final double stop) {
+		return createRange(0, stop, 1, Dataset.FLOAT64);
+	}
+
 
 	/**
 	 * Create dataset with items ranging from 0 to given stop in steps of 1
@@ -33,7 +44,7 @@ public class DatasetFactory {
 	 * Create dataset with items ranging from given start to given stop in given steps
 	 * @param start
 	 * @param stop
-	 * @param step
+	 * @param step spacing between items
 	 * @param dtype
 	 * @return a new 1D dataset of given type, filled with values determined by parameters
 	 */
@@ -81,7 +92,7 @@ public class DatasetFactory {
 	 * @param itemSize
 	 * @param start
 	 * @param stop
-	 * @param step
+	 * @param step spacing between items
 	 * @param dtype
 	 * @return a new 1D dataset of given type, filled with values determined by parameters
 	 */
@@ -127,35 +138,50 @@ public class DatasetFactory {
 		}
 		throw new IllegalArgumentException("dtype not known");
 	}
-
 	/**
 	 * Create a dataset from object (automatically detect dataset type)
-	 * 
+	 *
 	 * @param obj
 	 *            can be Java list, array or Number
 	 * @return dataset
 	 */
 	public static Dataset createFromObject(Object obj) {
-		if (obj instanceof IDataset)
-			return DatasetUtils.convertToDataset((IDataset) obj);
-		if (obj instanceof BigInteger) {
-			obj = ((BigInteger) obj).longValue();
-		}
-
-		final int dtype = AbstractDataset.getDTypeFromObject(obj);
-		return createFromObject(obj, dtype);
+		return createFromObject(obj, null);
 	}
 
 	/**
 	 * Create a dataset from object (automatically detect dataset type)
 	 * 
 	 * @param obj
-	 *            can be a Java list, array or Number
-	 * @param isUnsigned
-	 *            if true, interpret integer values as unsigned by increasing element bit width
+	 *            can be Java list, array or Number
+	 * @param shape can be null
 	 * @return dataset
 	 */
-	public static Dataset createFromObject(final Object obj, boolean isUnsigned) {
+	public static Dataset createFromObject(Object obj, int... shape) {
+		if (obj instanceof IDataset) {
+			Dataset d = DatasetUtils.convertToDataset((IDataset) obj);
+			if (shape != null) {
+				d.setShape(shape);
+			}
+			return d;
+		}
+		if (obj instanceof BigInteger) {
+			obj = ((BigInteger) obj).longValue();
+		}
+
+		final int dtype = AbstractDataset.getDTypeFromObject(obj);
+		return createFromObject(dtype, obj, shape);
+	}
+
+	/**
+	 * Create a dataset from object (automatically detect dataset type)
+	 * @param isUnsigned
+	 *            if true, interpret integer values as unsigned by increasing element bit width
+	 * @param obj
+	 *            can be a Java list, array or Number
+	 * @return dataset
+	 */
+	public static Dataset createFromObject(boolean isUnsigned, final Object obj) {
 		Dataset a = createFromObject(obj);
 		if (isUnsigned) {
 			a = DatasetUtils.makeUnsigned(a);
@@ -165,68 +191,138 @@ public class DatasetFactory {
 
 	/**
 	 * Create a dataset from object
-	 * 
+	 * @param dtype
 	 * @param obj
 	 *            can be a Java list, array or Number
-	 * @param dtype
 	 * @return dataset
 	 * @throws IllegalArgumentException if dataset type is not known
 	 */
-	public static Dataset createFromObject(final Object obj, final int dtype) {
-		if (obj instanceof IDataset)
-			return DatasetUtils.cast((IDataset) obj, dtype);
+	public static Dataset createFromObject(final int dtype, final Object obj) {
+		return createFromObject(dtype, obj, null);
+	}
 
-		if (AbstractDataset.isDTypeElemental(dtype)) {
-			// only convert for elemental datasets
-			Class<? extends Object> ca = obj.getClass().getComponentType();
+	/**
+	 * Create a dataset from object
+	 * @param dtype
+	 * @param obj
+	 *            can be a Java list, array or Number
+	 * @param shape can be null
+	 * @return dataset
+	 * @throws IllegalArgumentException if dataset type is not known
+	 */
+	public static Dataset createFromObject(final int dtype, final Object obj, final int... shape) {
+		return createFromObject(1, dtype, obj, shape);
+	}
+
+	/**
+	 * Create a dataset from object
+	 * @param itemSize
+	 * @param dtype
+	 * @param obj
+	 *            can be a Java list, array or Number
+	 * @param shape can be null
+	 * @return dataset
+	 * @throws IllegalArgumentException if dataset type is not known
+	 */
+	public static Dataset createFromObject(final int itemSize, final int dtype, final Object obj, final int... shape) {
+		Dataset d = null;
+
+		if (obj instanceof IDataset) {
+			d = itemSize == 1 ? DatasetUtils.cast((IDataset) obj, dtype) :
+				DatasetUtils.cast((IDataset) obj, false, dtype, itemSize);
+		} else {
+			// primitive arrays
+			Class<? extends Object> ca = obj == null ? null : obj.getClass().getComponentType();
 			if (ca != null && (ca.isPrimitive() || ca.equals(String.class))) {
-				return DatasetUtils.cast(createFromPrimitiveArray(obj, AbstractDataset.getDTypeFromClass(ca)), dtype);
+				switch (dtype) {
+				case Dataset.COMPLEX64:
+					return new ComplexFloatDataset(AbstractCompoundDataset.toFloatArray(obj, AbstractDataset.getLength(obj)), shape);
+				case Dataset.COMPLEX128:
+					return new ComplexDoubleDataset(AbstractCompoundDataset.toDoubleArray(obj, AbstractDataset.getLength(obj)), shape);
+				default:
+					d = createFromPrimitiveArray(AbstractDataset.getDTypeFromClass(ca), obj);
+					if (!AbstractDataset.isDTypeElemental(dtype)) {
+						if (dtype == Dataset.RGB) {
+							d = DatasetUtils.createCompoundDataset(d, 3);
+						} else {
+							d = itemSize == 1 ? DatasetUtils.createCompoundDatasetFromLastAxis(d, true) :
+								DatasetUtils.createCompoundDataset(d, itemSize);
+						}
+					}
+					d = DatasetUtils.cast(d, dtype);
+				}
+			} else {
+				switch (dtype) {
+				case Dataset.BOOL:
+					d = BooleanDataset.createFromObject(obj);
+					break;
+				case Dataset.INT8:
+					d = ByteDataset.createFromObject(obj);
+					break;
+				case Dataset.INT16:
+					d = ShortDataset.createFromObject(obj);
+					break;
+				case Dataset.INT32:
+					d = IntegerDataset.createFromObject(obj);
+					break;
+				case Dataset.INT64:
+					d = LongDataset.createFromObject(obj);
+					break;
+				case Dataset.ARRAYINT8:
+					d = CompoundByteDataset.createFromObject(itemSize, obj);
+					break;
+				case Dataset.ARRAYINT16:
+					d = CompoundShortDataset.createFromObject(itemSize, obj);
+					break;
+				case Dataset.ARRAYINT32:
+					d = CompoundIntegerDataset.createFromObject(itemSize, obj);
+					break;
+				case Dataset.ARRAYINT64:
+					d = CompoundLongDataset.createFromObject(itemSize, obj);
+					break;
+				case Dataset.FLOAT32:
+					d = FloatDataset.createFromObject(obj);
+					break;
+				case Dataset.FLOAT64:
+					d = DoubleDataset.createFromObject(obj);
+					break;
+				case Dataset.ARRAYFLOAT32:
+					d = CompoundFloatDataset.createFromObject(itemSize, obj);
+					break;
+				case Dataset.ARRAYFLOAT64:
+					d = CompoundDoubleDataset.createFromObject(itemSize, obj);
+					break;
+				case Dataset.COMPLEX64:
+					d = ComplexFloatDataset.createFromObject(obj);
+					break;
+				case Dataset.COMPLEX128:
+					d = ComplexDoubleDataset.createFromObject(obj);
+					break;
+				case Dataset.DATE:
+					d = DateDatasetImpl.createFromObject(obj);
+					break;
+				case Dataset.STRING:
+					d = StringDataset.createFromObject(obj);
+					break;
+				case Dataset.OBJECT:
+					d = ObjectDataset.createFromObject(obj);
+					break;
+				case Dataset.RGB:
+					d = RGBDataset.createFromObject(obj);
+					break;
+				default:
+					throw new IllegalArgumentException("Dataset type is not known");
+				}
 			}
 		}
 
-		switch (dtype) {
-		case Dataset.BOOL:
-			return BooleanDataset.createFromObject(obj);
-		case Dataset.INT8:
-			return ByteDataset.createFromObject(obj);
-		case Dataset.INT16:
-			return ShortDataset.createFromObject(obj);
-		case Dataset.INT32:
-			return IntegerDataset.createFromObject(obj);
-		case Dataset.INT64:
-			return LongDataset.createFromObject(obj);
-		case Dataset.ARRAYINT8:
-			return CompoundByteDataset.createFromObject(obj);
-		case Dataset.ARRAYINT16:
-			return CompoundShortDataset.createFromObject(obj);
-		case Dataset.ARRAYINT32:
-			return CompoundIntegerDataset.createFromObject(obj);
-		case Dataset.ARRAYINT64:
-			return CompoundLongDataset.createFromObject(obj);
-		case Dataset.FLOAT32:
-			return FloatDataset.createFromObject(obj);
-		case Dataset.FLOAT64:
-			return DoubleDataset.createFromObject(obj);
-		case Dataset.ARRAYFLOAT32:
-			return CompoundFloatDataset.createFromObject(obj);
-		case Dataset.ARRAYFLOAT64:
-			return CompoundDoubleDataset.createFromObject(obj);
-		case Dataset.COMPLEX64:
-			return ComplexFloatDataset.createFromObject(obj);
-		case Dataset.COMPLEX128:
-			return ComplexDoubleDataset.createFromObject(obj);
-		case Dataset.DATE:
-			return DateDatasetImpl.createFromObject(obj);
-		case Dataset.STRING:
-			return StringDataset.createFromObject(obj);
-		case Dataset.OBJECT:
-			return ObjectDataset.createFromObject(obj);
-		default:
-			throw new IllegalArgumentException("Dataset type is not known");
+		if (shape != null && !(shape.length == 0 && d.getSize() > 1)) { // allow zero-rank datasets
+			d.setShape(shape);
 		}
+		return d;
 	}
 
-	private static Dataset createFromPrimitiveArray(final Object array, final int dtype) {
+	private static Dataset createFromPrimitiveArray(final int dtype, final Object array) {
 		switch (dtype) {
 		case Dataset.BOOL:
 			return new BooleanDataset((boolean []) array);
@@ -244,6 +340,8 @@ public class DatasetFactory {
 			return new DoubleDataset((double []) array);
 		case Dataset.STRING:
 			return new StringDataset((String []) array);
+		case Dataset.DATE:
+			return new DateDatasetImpl((Date []) array);
 		default:
 			return null;
 		}
@@ -259,6 +357,7 @@ public class DatasetFactory {
 		if (objectList == null || objectList.size() == 0) {
 			throw new IllegalArgumentException("No list or zero-length list given");
 		}
+
 		Object obj = null;
 		for (Object o : objectList) {
 			if (o != null) {
@@ -269,19 +368,87 @@ public class DatasetFactory {
 		if (obj == null) {
 			return zeros(new int[objectList.size()], Dataset.OBJECT);
 		}
-		Class<? extends Object> clazz = obj.getClass();
-		if (AbstractDataset.isComponentSupported(clazz)) {
-			int dtype = AbstractDataset.getDTypeFromClass(clazz);
-			int len = objectList.size();
-			Dataset result = zeros(new int[] { len }, dtype);
 
-			int i = 0;
-			for (Object object : objectList) {
-				result.setObjectAbs(i++, object);
-			}
-			return result;
+		Class<? extends Object> clazz = obj.getClass();
+		if (!AbstractDataset.isComponentSupported(clazz)) {
+			throw new IllegalArgumentException("Class of list element not supported");
 		}
-		throw new IllegalArgumentException("Class of list element not supported");
+
+		int dtype = AbstractDataset.getDTypeFromClass(clazz);
+		return createFromList(dtype, objectList);
+	}
+
+	/**
+	 * Create dataset of given type from list
+	 *
+	 * @param dtype
+	 * @param objectList
+	 * @return dataset filled with values from list
+	 */
+	public static Dataset createFromList(final int dtype, List<?> objectList) {
+		int len = objectList.size();
+		Dataset result = zeros(new int[] { len }, dtype);
+
+		for (int i = 0; i < len; i++) {
+			result.setObjectAbs(i, objectList.get(i));
+		}
+		return result;
+	}
+
+	/**
+	 * Create compound dataset of given type from given parts
+	 *
+	 * @param objects
+	 * @return compound dataset
+	 */
+	public static CompoundDataset createCompoundDataset(Object... objects) {
+		Dataset[] datasets = new Dataset[objects.length];
+		for (int i = 0; i < objects.length; i++) {
+			datasets[i] = createFromObject(objects[i]);
+		}
+		return DatasetUtils.createCompoundDataset(datasets);
+	}
+
+	/**
+	 * Create compound dataset of given type from given parts
+	 *
+	 * @param dtype
+	 * @param objects
+	 * @return compound dataset
+	 */
+	public static CompoundDataset createCompoundDataset(final int dtype, Object... objects) {
+		Dataset[] datasets = new Dataset[objects.length];
+		for (int i = 0; i < objects.length; i++) {
+			datasets[i] = createFromObject(objects[i]);
+		}
+		return DatasetUtils.createCompoundDataset(dtype, datasets);
+	}
+
+	/**
+	 * Create complex dataset of given type from real and imaginary parts
+	 *
+	 * @param dtype
+	 * @param real
+	 * @param imag
+	 * @return complex dataset
+	 */
+	public static CompoundDataset createComplexDataset(final int dtype, Object real, Object imag) {
+		switch (dtype) {
+		case Dataset.COMPLEX64:
+			return new ComplexFloatDataset(createFromObject(real), createFromObject(imag));
+		case Dataset.COMPLEX128:
+			return new ComplexDoubleDataset(createFromObject(real), createFromObject(imag));
+		default:
+			throw new IllegalArgumentException("Dataset class must be a complex one");
+		}
+	}
+
+	/**
+	 * @param shape
+	 * @return a new double dataset of given shape, filled with zeros
+	 */
+	public static Dataset zeros(final int... shape) {
+		return zeros(shape, Dataset.FLOAT64);
 	}
 
 	/**
@@ -319,6 +486,8 @@ public class DatasetFactory {
 			return new ComplexDoubleDataset(shape);
 		case Dataset.STRING:
 			return new StringDataset(shape);
+		case Dataset.DATE:
+			return new DateDatasetImpl(shape);
 		case Dataset.OBJECT:
 			return new ObjectDataset(shape);
 		}
@@ -378,8 +547,9 @@ public class DatasetFactory {
 	 * @param dataset
 	 * @return a new dataset of same shape and type as input dataset, filled with zeros
 	 */
-	public static Dataset zeros(final Dataset dataset) {
-		return zeros(dataset, dataset.getDType());
+	@SuppressWarnings("unchecked")
+	public static <T extends Dataset> T zeros(final T dataset) {
+		return (T) zeros(dataset, dataset.getDType());
 	}
 
 	/**
@@ -400,8 +570,9 @@ public class DatasetFactory {
 	 * @param dataset
 	 * @return a new dataset of same shape and type as input dataset, filled with ones
 	 */
-	public static Dataset ones(final Dataset dataset) {
-		return ones(dataset, dataset.getDType());
+	@SuppressWarnings("unchecked")
+	public static <T extends Dataset> T ones(final T dataset) {
+		return (T) ones(dataset, dataset.getDType());
 	}
 
 	/**
@@ -416,6 +587,14 @@ public class DatasetFactory {
 		final int isize = AbstractDataset.isDTypeElemental(dtype) ? 1 :dataset.getElementsPerItem();
 
 		return ones(isize, shape, dtype);
+	}
+
+	/**
+	 * @param shape
+	 * @return a new double dataset of given shape, filled with ones
+	 */
+	public static Dataset ones(final int... shape) {
+		return ones(shape, Dataset.FLOAT64);
 	}
 
 	/**
@@ -511,7 +690,7 @@ public class DatasetFactory {
 		if (length < 1) {
 			throw new IllegalArgumentException("Length is less than one");
 		} else if (length == 1) {
-			return createFromObject(start, dtype);
+			return createFromObject(dtype, start);
 		} else {
 			Dataset ds = zeros(new int[] {length}, dtype);
 			double num = stop - start;
@@ -543,7 +722,7 @@ public class DatasetFactory {
 		if (length < 1) {
 			throw new IllegalArgumentException("Length is less than one");
 		} else if (length == 1) {
-			return createFromObject(Math.pow(base, start), dtype);
+			return createFromObject(dtype, Math.pow(base, start));
 		} else {
 			Dataset ds = zeros(new int[] {length}, dtype);
 			double step = (stop - start) / (length - 1);
@@ -556,5 +735,189 @@ public class DatasetFactory {
 	
 			return ds;
 		}
+	}
+
+	/**
+	 * Create dataset with items ranging from 0 to given stop in steps of 1
+	 * @param clazz
+	 * @param stop
+	 * @return a new dataset of given shape and type, filled with values determined by parameters
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T extends Dataset> T createRange(Class<T> clazz, final double stop) {
+		return (T) createRange(0, stop, 1, DTypeUtils.getDType(clazz));
+	}
+
+	/**
+	 * Create dataset with items ranging from given start to given stop in given steps
+	 * @param clazz dataset class
+	 * @param start
+	 * @param stop
+	 * @param step spacing between items
+	 * @return a new 1D dataset of given class, filled with values determined by parameters
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T extends Dataset> T createRange(Class<T> clazz, final double start, final double stop, final double step) {
+		return (T) createRange(start, stop, step, DTypeUtils.getDType(clazz));
+	}
+
+	/**
+	 * Create a dataset from object
+	 * @param clazz dataset class
+	 * @param obj
+	 *            can be a Java list, array or Number
+	 * @param shape can be null
+	 * @return dataset
+	 * @throws IllegalArgumentException if dataset type is not known
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T extends Dataset> T createFromObject(Class<T> clazz, Object obj, int... shape) {
+		return (T) createFromObject(1, DTypeUtils.getDType(clazz), obj, shape);
+	}
+
+	/**
+	 * Create a compound dataset from object
+	 * @param itemSize
+	 * @param clazz dataset class
+	 * @param obj
+	 *            can be a Java list, array or Number
+	 * @param shape can be null
+	 * @return dataset
+	 * @throws IllegalArgumentException if dataset type is not known
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T extends Dataset> T createFromObject(final int itemSize, Class<T> clazz, Object obj, int... shape) {
+		return (T) createFromObject(itemSize, DTypeUtils.getDType(clazz), obj, shape);
+	}
+
+	/**
+	 * Create dataset of given class from list
+	 *
+	 * @param clazz dataset class
+	 * @param objectList
+	 * @return dataset filled with values from list
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T extends Dataset> T createFromList(Class<T> clazz, List<?> objectList) {
+		return (T) createFromList(DTypeUtils.getDType(clazz), objectList);
+	}
+
+	/**
+	 * Create compound dataset of given class from given parts
+	 *
+	 * @param clazz
+	 * @param objects
+	 * @return compound dataset
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T extends Dataset> T createCompoundDataset(Class<T> clazz, Object... objects) {
+		return (T) createCompoundDataset(DTypeUtils.getDType(clazz), objects);
+	}
+
+	/**
+	 * Create complex dataset of given class from real and imaginary parts
+	 *
+	 * @param clazz dataset class
+	 * @param real
+	 * @param imag
+	 * @return complex dataset
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T extends Dataset> T createComplexDataset(Class<T> clazz, Object real, Object imag) {
+		return (T) createComplexDataset(DTypeUtils.getDType(clazz), real, imag);
+	}
+
+	/**
+	 * @param clazz dataset class
+	 * @param shape
+	 * @return a new dataset of given shape and class, filled with zeros
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T extends Dataset> T zeros(Class<T> clazz, int... shape) {
+		return (T) zeros(shape, DTypeUtils.getDType(clazz));
+	}
+
+	/**
+	 * @param itemSize
+	 *            if equal to 1, then non-compound dataset is returned
+	 * @param clazz dataset class
+	 * @param shape
+	 * @return a new dataset of given item size, shape and class, filled with zeros
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T extends Dataset> T zeros(int itemSize, Class<T> clazz, int... shape) {
+		return (T) zeros(itemSize, shape, DTypeUtils.getDType(clazz));
+	}
+
+	/**
+	 * @param dataset
+	 * @param clazz dataset class
+	 * @return a new dataset of given class with same shape as input dataset, filled with zeros
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T extends Dataset> T zeros(Dataset dataset, Class<T> clazz) {
+		return (T) zeros(dataset, DTypeUtils.getDType(clazz));
+	}
+
+	/**
+	 * @param clazz dataset class
+	 * @param shape
+	 * @return a new dataset of given shape and class, filled with ones
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T extends Dataset> T ones(Class<T> clazz, int... shape) {
+		return (T) ones(shape, DTypeUtils.getDType(clazz));
+	}
+
+	/**
+	 * @param itemSize
+	 *            if equal to 1, then non-compound dataset is returned
+	 * @param clazz dataset class
+	 * @param shape
+	 * @return a new dataset of given item size, shape and class, filled with ones
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T extends Dataset> T ones(int itemSize, Class<T> clazz, int... shape) {
+		return (T) ones(itemSize, shape, DTypeUtils.getDType(clazz));
+	}
+
+	/**
+	 * @param dataset
+	 * @param clazz dataset class
+	 * @return a new dataset of given class with same shape as input dataset, filled with ones
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T extends Dataset> T ones(Dataset dataset, Class<T> clazz) {
+		return (T) ones(dataset, DTypeUtils.getDType(clazz));
+	}
+
+	/**
+	 * Create a 1D dataset of linearly spaced values in closed interval
+	 * 
+	 * @param clazz dataset class
+	 * @param start
+	 * @param stop
+	 * @param length number of points
+	 * @return dataset with linearly spaced values
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T extends Dataset> T createLinearSpace(Class<T> clazz, final double start, final double stop, final int length) {
+		return (T) createLinearSpace(start, stop, length, DTypeUtils.getDType(clazz));
+	}
+
+	/**
+	 * Create a 1D dataset of logarithmically spaced values in closed interval. The base value is used to
+	 * determine the factor between values: factor = base ** step, where step is the interval between linearly
+	 * spaced sequence of points
+	 * 
+	 * @param start
+	 * @param stop
+	 * @param length number of points
+	 * @param base
+	 * @return dataset with logarithmically spaced values
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T extends Dataset> T createLogSpace(Class<T> clazz, final double start, final double stop, final int length, final double base) {
+		return (T) createLogSpace(start, stop, length, base, DTypeUtils.getDType(clazz));
 	}
 }

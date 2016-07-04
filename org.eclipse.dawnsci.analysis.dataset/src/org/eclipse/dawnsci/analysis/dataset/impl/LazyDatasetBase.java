@@ -864,7 +864,15 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 			}
 		} else {
 			final int is = getElementsPerItem();
-			d = DatasetFactory.createFromObject(blob, is == 1 ? Dataset.FLOAT64 : Dataset.ARRAYFLOAT64);
+			if (is == 1) {
+				d = DatasetFactory.createFromObject(Dataset.FLOAT64, blob);
+			} else {
+				try {
+					d = DatasetFactory.createFromObject(is, Dataset.ARRAYFLOAT64, blob);
+				} catch (IllegalArgumentException e) { // if only single value supplied try again
+					d = DatasetFactory.createFromObject(Dataset.FLOAT64, blob);
+				}
+			}
 			if (d.getSize() == getSize() && !Arrays.equals(d.getShape(), shape)) {
 				d.setShape(shape.clone());
 			}

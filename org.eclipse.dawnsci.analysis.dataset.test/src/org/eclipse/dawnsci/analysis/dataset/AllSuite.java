@@ -20,7 +20,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({ AbstractCompoundDatasetTest.class, AbstractDatasetTest.class, AggregateDatasetTest.class,
 		BinaryOperationTest.class, BooleanDatasetTest.class, BooleanIteratorTest.class, BroadcastIteratorTest.class,
 		BroadcastUtilsTest.class, ByteDatasetTest.class, ComparisonsTest.class, ComplexDoubleDatasetTest.class,
-		ComplexFloatDatasetTest.class, DateDatasetTest.class, DCTTest.class, DoubleDatasetTest.class, FFTTest.class,
+		ComplexFloatDatasetTest.class, DatasetFactoryTest.class, DateDatasetTest.class, DCTTest.class, DoubleDatasetTest.class, FFTTest.class,
 		FloatDatasetTest.class, ImageTest.class, IndexIteratorTest.class, IntegerDatasetTest.class,
 		IntegerIteratorTest.class, IntegersIteratorTest.class, InterpolatorUtilsTest.class, LazyDatasetTest.class,
 		LazyDynamicDatasetTest.class, LazyDynamicLoaderTest.class, LazyMathsTest.class, LazyWriteableDatasetTest.class,

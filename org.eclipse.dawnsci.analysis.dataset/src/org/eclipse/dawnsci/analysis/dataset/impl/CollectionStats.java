@@ -73,13 +73,13 @@ public class CollectionStats {
 			                               final StatFunction   function) throws Exception {
 		
 		int[] shape = assertShapes(sets);
-		final DoubleDataset result = new DoubleDataset(shape);
+		final DoubleDataset result = DatasetFactory.zeros(DoubleDataset.class, shape);
         final double[] rData = result.getData();
         final IndexIterator iter = new PositionIterator(shape);
         final int[] pos = iter.getPos();
 
         final int len = sets.size();
-		final DoubleDataset pixel = new DoubleDataset(len);
+		final DoubleDataset pixel = DatasetFactory.zeros(DoubleDataset.class, len);
 		final double[] pData = pixel.getData();
         for (int i = 0; iter.hasNext(); i++) {
 			for (int ipix = 0; ipix < len; ipix++) {

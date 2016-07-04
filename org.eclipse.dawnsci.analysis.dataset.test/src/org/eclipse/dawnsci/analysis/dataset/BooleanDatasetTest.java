@@ -14,6 +14,7 @@ import static org.junit.Assert.assertEquals;
 import org.eclipse.dawnsci.analysis.api.dataset.Slice;
 import org.eclipse.dawnsci.analysis.dataset.impl.BooleanDataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.Dataset;
+import org.eclipse.dawnsci.analysis.dataset.impl.DatasetFactory;
 import org.eclipse.dawnsci.analysis.dataset.impl.IndexIterator;
 import org.junit.Test;
 
@@ -22,14 +23,14 @@ public class BooleanDatasetTest {
 	@Test
 	public void testConstructor() {
 		boolean[] da = { false, true, false, true, false, true, false, true, false, true, false, true};
-		BooleanDataset a = new BooleanDataset(da);
+		BooleanDataset a = DatasetFactory.createFromObject(BooleanDataset.class, da);
 
 		IndexIterator it = a.getIterator();
 		for (int i = 0; it.hasNext(); i++) {
 			assertEquals(i % 2 != 0, a.getElementBooleanAbs(it.index));
 		}
 
-		BooleanDataset b = new BooleanDataset(da, 3, 4);
+		BooleanDataset b = DatasetFactory.createFromObject(BooleanDataset.class, da, 3, 4);
 
 		it = b.getIterator();
 		for (int i = 0; it.hasNext(); i++) {
@@ -44,7 +45,7 @@ public class BooleanDatasetTest {
 	@Test
 	public void testGetter() {
 		boolean[] da = { false, true, false, true, false, true, false, true, false, true, false, true};
-		BooleanDataset a = new BooleanDataset(da);
+		BooleanDataset a = DatasetFactory.createFromObject(BooleanDataset.class, da);
 		int l = da.length;
 		for (int i = 0; i < l; i++) {
 			assertEquals(da[i], a.getBoolean(i));

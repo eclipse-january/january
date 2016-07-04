@@ -154,7 +154,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	public static final int ARRAYFLOAT64 = Dataset.ARRAYFLOAT64;
 
 	protected static boolean isDTypeElemental(int dtype) {
-		return dtype <= COMPLEX128 || dtype == RGB;
+		return dtype <= DATE;
 	}
 
 	protected static boolean isDTypeInteger(int dtype) {
@@ -234,8 +234,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		if (!Arrays.equals(shape, other.getShapeRef())) {
 			return false;
 		}
-		if (getRank() == 0) // for zero-rank datasets
-			return other.getObjectAbs(0).equals(getObjectAbs(0));
+
 		return true;
 	}
 
@@ -255,11 +254,29 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	@Override
+	public Dataset copy(final int dtype) {
+		if (getDType() == dtype) {
+			return this;
+		}
+		return DatasetUtils.copy(this, dtype);
+	}
+
+	@Override
+	public <T extends Dataset> T copy(Class<T> clazz) {
+		return DatasetUtils.copy(clazz, this);
+	}
+
+	@Override
 	public Dataset cast(final int dtype) {
 		if (getDType() == dtype) {
 			return this;
 		}
 		return DatasetUtils.cast(this, dtype);
+	}
+
+	@Override
+	public <T extends Dataset> T cast(Class<T> clazz) {
+		return DatasetUtils.cast(clazz, this);
 	}
 
 	@Override
@@ -481,6 +498,28 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	/**
+	 * @param b
+	 * @return length of object
+	 */
+	public static final int getLength(final Object b) {
+		if (b instanceof Number) {
+			return 1;
+		} else if (b instanceof Complex) {
+			return 1;
+		} else if (b instanceof List<?>) {
+			List<?> jl = (List<?>) b;
+			return jl.size();
+		} else if (b.getClass().isArray()) {
+			return Array.getLength(b);
+		} else if (b instanceof IDataset) {
+			IDataset db = (Dataset) b;
+			return db.getSize();
+		}
+
+		throw new IllegalArgumentException("Cannot find length as object not supported");
+	}
+
+	/**
 	 * Find dataset type that best fits given types The best type takes into account complex and array datasets
 	 * 
 	 * @param atype
@@ -635,6 +674,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		return result;
 	}
 
+	
 	/**
 	 * Get dataset type from a class
 	 * 
@@ -1244,10 +1284,6 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public int getSize() {
-		if (odata == null) {
-			throw new NullPointerException("The data object inside the dataset has not been allocated, "
-					+ "this suggests a failed or absent construction of the dataset");
-		}
 		return size;
 	}
 
@@ -1263,7 +1299,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public int getRank() {
-		return shape.length;
+		return shape == null ? 0 : shape.length;
 	}
 
 	@Override
@@ -2327,7 +2363,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	 * @return dataset
 	 */
 	public static Dataset array(final Object obj, boolean isUnsigned) {
-		return DatasetFactory.createFromObject(obj, isUnsigned);
+		return DatasetFactory.createFromObject(isUnsigned, obj);
 	}
 
 	/**
@@ -2339,7 +2375,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	 * @return dataset
 	 */
 	public static Dataset array(final Object obj, final int dtype) {
-		return DatasetFactory.createFromObject(obj, dtype);
+		return DatasetFactory.createFromObject(dtype, obj);
 	}
 
 	/**
@@ -2544,7 +2580,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			if (dtype != Dataset.BOOL) {
 				dtype = getLargestDType(dtype);
 			}
-			ds = DatasetFactory.createFromObject(obj, dtype);
+			ds = DatasetFactory.createFromObject(dtype, obj);
 		}
 
 		return setSlicedView(getSliceView(slice), ds);
