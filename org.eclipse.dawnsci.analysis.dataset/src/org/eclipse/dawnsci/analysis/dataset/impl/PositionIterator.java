@@ -20,7 +20,7 @@ import org.eclipse.dawnsci.analysis.api.dataset.SliceND;
  * <p>Class to provide iteration through a dataset</p>
  * <p>Instantiate an iterator and use it in a while loop:
  * <pre>
- * Dataset ds = DatasetUtils.linSpace(0,10,0.25, Dataset.FLOAT64);
+ * Dataset ds = DatasetFactory.createLinearSpace(DoubleDataset.class, 0, 10, 0.25);
  * PositionIterator iter = ds.getPositionIterator();
  * int[] pos = iter.getPos()
  *

@@ -1043,37 +1043,6 @@ public class DatasetUtils {
 	}
 
 	/**
-	 * Create a 1D dataset of linearly spaced values in closed interval
-	 * 
-	 * @param start
-	 * @param stop
-	 * @param length number of points
-	 * @param dtype
-	 * @return dataset with linearly spaced values
-	 * @deprecated Use {@link DatasetFactory#createLinearSpace(double,double,int,int)} instead
-	 */
-	public static Dataset linSpace(final double start, final double stop, final int length, final int dtype) {
-		return DatasetFactory.createLinearSpace(start, stop, length, dtype);
-	}
-
-	/**
-	 * Create a 1D dataset of logarithmically spaced values in closed interval. The base value is used to
-	 * determine the factor between values: factor = base ** step, where step is the interval between linearly
-	 * spaced sequence of points
-	 * 
-	 * @param start
-	 * @param stop
-	 * @param length number of points
-	 * @param base
-	 * @param dtype
-	 * @return dataset with logarithmically spaced values
-	 * @deprecated Use {@link DatasetFactory#createLogSpace(double,double,int,double,int)} instead
-	 */
-	public static Dataset logSpace(final double start, final double stop, final int length, final double base, final int dtype) {
-		return DatasetFactory.createLogSpace(start, stop, length, base, dtype);
-	}
-
-	/**
 	 * @param rows
 	 * @param cols
 	 * @param offset

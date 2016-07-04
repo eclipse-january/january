@@ -16,7 +16,7 @@ package org.eclipse.dawnsci.analysis.dataset.impl;
  * <p>Class to provide iteration through whole data array that backs a dataset</p>
  * <p>Instantiate an iterator and use it in a while loop:
  * <pre>
- *  DoubleDataset ds = (DoubleDataset) DatasetUtils.linSpace(0,10,0.25, Dataset.FLOAT64);
+ *  DoubleDataset ds = DatasetFactory.createLinearSpace(DoubleDataset.class, 0, 10, 0.25);
  *  IndexIterator iter = ds.getIterator();
  *  double[] data = ds.getData();
  *  

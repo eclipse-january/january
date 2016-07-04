@@ -303,28 +303,6 @@ public class CompoundShortDataset extends AbstractCompoundDataset {
 	/**
 	 * @param stop
 	 * @return a new 1D dataset, filled with values determined by parameters
-	 * @deprecated Use {@link #createRange(int, double)}
-	 */
-	@Deprecated
-	public static CompoundShortDataset arange(final int itemSize, final double stop) {
-		return createRange(itemSize, 0, stop, 1);
-	}
-
-	/**
-	 * @param start
-	 * @param stop
-	 * @param step
-	 * @return a new 1D dataset, filled with values determined by parameters
-	 * @deprecated Use {@link #createRange(int, double, double, double)}
-	 */
-	@Deprecated
-	public static CompoundShortDataset arange(final int itemSize, final double start, final double stop, final double step) {
-		return createRange(itemSize, start, stop, step);
-	}
-
-	/**
-	 * @param stop
-	 * @return a new 1D dataset, filled with values determined by parameters
 	 */
 	public static CompoundShortDataset createRange(final int itemSize, final double stop) {
 		return createRange(itemSize, 0., stop, 1.);

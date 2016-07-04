@@ -218,28 +218,6 @@ public class FloatDataset extends AbstractDataset {
 	}
 	
 	/**
-	 * @param stop
-	 * @return a new 1D dataset, filled with values determined by parameters
-	 * @deprecated Use {@link #createRange(double)}
-	 */
-	@Deprecated
-	public static FloatDataset arange(final double stop) {
-		return createRange(0, stop, 1);
-	}
-	
-	/**
-	 * @param start
-	 * @param stop
-	 * @param step
-	 * @return a new 1D dataset, filled with values determined by parameters
-	 * @deprecated Use {@link #createRange(double, double, double)}
-	 */
-	@Deprecated
-	public static FloatDataset arange(final double start, final double stop, final double step) {
-		return createRange(start, stop, step);
-	}
-	
-	/**
 	 *
 	 * @param stop
 	 * @return a new 1D dataset, filled with values determined by parameters
