@@ -50,10 +50,10 @@ public class NumpyExamples {
 
 	@Before
 	public void create() {
-		a = new DoubleDataset(new double[]{1,2,3,6,4,5,8,9,7}, 3, 3);
-		b = new DoubleDataset(new double[]{1.1,2.2,3.3,4.4,5.5,6.6}, 2, 3);
-		c = new DoubleDataset(new double[]{1.1,2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9}, 3, 3);
-		v = new DoubleDataset(new double[]{7,1,9});
+		a = DatasetFactory.createFromObject(new double[]{1,2,3,6,4,5,8,9,7}, 3, 3);
+		b = DatasetFactory.createFromObject(new double[]{1.1,2.2,3.3,4.4,5.5,6.6}, 2, 3);
+		c = DatasetFactory.createFromObject(new double[]{1.1,2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9}, 3, 3);
+		v = DatasetFactory.createFromObject(new double[]{7,1,9});
 	}
 	
 	/**
@@ -92,7 +92,7 @@ public class NumpyExamples {
 	 */
 	@Test
 	public void createMatrix() {
-		IDataset set = new DoubleDataset(new double[]{1,2,3,4,5,6}, 2,3);
+		IDataset set = DatasetFactory.createFromObject(new double[]{1,2,3,4,5,6}, 2,3);
 		System.out.println("Created a dataset : "+set);
 	}
 	
@@ -106,8 +106,8 @@ public class NumpyExamples {
 		
 		IDataset h1 = DatasetUtils.concatenate(new IDataset[]{a,c},   1);
 
-		IDataset c = new DoubleDataset(new double[]{1,2,3,4,5,6}, 2, 3);
-		IDataset d = new DoubleDataset(new double[]{1,2,3,4,5,6}, 2, 3);
+		IDataset c = DatasetFactory.createFromObject(new double[]{1,2,3,4,5,6}, 2, 3);
+		IDataset d = DatasetFactory.createFromObject(new double[]{1,2,3,4,5,6}, 2, 3);
 		IDataset h2 = DatasetUtils.concatenate(new IDataset[]{c,d},   1);
 		IDataset m  = DatasetUtils.concatenate(new IDataset[]{h1,h2}, 0);
 		
@@ -560,7 +560,7 @@ public class NumpyExamples {
       	System.out.println("Result of a && b "+bs);
   	
     	// Or more useful (?)
-    	final IDataset booleans = new BooleanDataset(2,3);
+    	final IDataset booleans = DatasetFactory.zeros(BooleanDataset.class, 2, 3);
        	booleans.set(true, 0,0);
        	booleans.set(true, 1,1);
        	booleans.set(true, 1,2);
@@ -674,7 +674,7 @@ public class NumpyExamples {
     */
     @Test
     public void cholesky() {
-    	Dataset c = LinearAlgebra.calcCholeskyDecomposition(new DoubleDataset(new double[] {9, 0, 1.5, 0, 3, 2, 1.5, 2, 4}, 3, 3));
+    	Dataset c = LinearAlgebra.calcCholeskyDecomposition(DatasetFactory.createFromObject(new double[] {9, 0, 1.5, 0, 3, 2, 1.5, 2, 4}, 3, 3));
     	System.out.println("Choleskey decomposition of a " + c);
     }
     
@@ -779,8 +779,8 @@ public class NumpyExamples {
     	// uk.ac.diamond.scisoft.analysis.fitting.Fitter;
     	// uk.ac.diamond.scisoft.analysis.fitting.functions.Quadratic;
 
-//		DoubleDataset x = new DoubleDataset(new double[] {102,134,156});
-//		DoubleDataset y = new DoubleDataset(new double[] {102.1,134.2,156.3});
+//		DoubleDataset x = DatasetFactory.createFromObject(new double[] {102,134,156});
+//		DoubleDataset y = DatasetFactory.createFromObject(new double[] {102.1,134.2,156.3});
 //
 //		Quadratic q = new Quadratic(new double[] {0, 1, 0});
 //		try {

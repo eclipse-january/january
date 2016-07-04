@@ -17,7 +17,6 @@ import java.util.Arrays;
 
 import org.eclipse.dawnsci.analysis.dataset.impl.Dataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.DatasetFactory;
-import org.eclipse.dawnsci.analysis.dataset.impl.DoubleDataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.IndexIterator;
 import org.eclipse.dawnsci.analysis.dataset.impl.PositionIterator;
 import org.eclipse.dawnsci.analysis.dataset.impl.StrideIterator;
@@ -58,7 +57,7 @@ public class IterationExamples {
 	@Test
 	public void positionIterator() {
 		
-		final Dataset data = new DoubleDataset(new double[]{1,2,3,4,5,6,7,8}, 2,2,2);
+		final Dataset data = DatasetFactory.createFromObject(new double[]{1,2,3,4,5,6,7,8}, 2,2,2);
 		
 		// The position iterator allows you to iterate over dataset but fixing axis 0
 		PositionIterator it = data.getPositionIterator(0);		
