@@ -2430,12 +2430,11 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			if (dtype != Dataset.BOOL) {
 				dtype = getLargestDType(dtype);
 			}
-			ds = DatasetFactory.createFromObject(dtype, obj);
+			ds = DatasetFactory.createFromObject(getElementsPerItem(), dtype, obj);
 		}
 
 		return setSlicedView(getSliceView(slice), ds);
 	}
-
 
 	@Override
 	public Dataset setSlice(final Object obj, final int[] start, final int[] stop, final int[] step) {
