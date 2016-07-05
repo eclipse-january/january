@@ -29,6 +29,7 @@ import org.eclipse.dawnsci.analysis.dataset.impl.BooleanDataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.Comparisons;
 import org.eclipse.dawnsci.analysis.dataset.impl.ComplexDoubleDataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.CompoundDataset;
+import org.eclipse.dawnsci.analysis.dataset.impl.DTypeUtils;
 import org.eclipse.dawnsci.analysis.dataset.impl.Dataset;
 import org.eclipse.dawnsci.analysis.dataset.impl.DatasetFactory;
 import org.eclipse.dawnsci.analysis.dataset.impl.DatasetUtils;
@@ -46,10 +47,10 @@ import org.junit.Test;
 public class AbstractDatasetTest {
 	@Test
 	public void testBestDType() {
-		assertEquals(Dataset.FLOAT32, AbstractDataset.getBestDType(Dataset.INT16, Dataset.FLOAT32));
-		assertEquals(Dataset.FLOAT64, AbstractDataset.getBestDType(Dataset.INT32, Dataset.FLOAT32));
-		assertEquals(Dataset.COMPLEX64, AbstractDataset.getBestDType(Dataset.FLOAT32, Dataset.COMPLEX64));
-		assertEquals(Dataset.COMPLEX128, AbstractDataset.getBestDType(Dataset.INT32, Dataset.COMPLEX64));
+		assertEquals(Dataset.FLOAT32, DTypeUtils.getBestDType(Dataset.INT16, Dataset.FLOAT32));
+		assertEquals(Dataset.FLOAT64, DTypeUtils.getBestDType(Dataset.INT32, Dataset.FLOAT32));
+		assertEquals(Dataset.COMPLEX64, DTypeUtils.getBestDType(Dataset.FLOAT32, Dataset.COMPLEX64));
+		assertEquals(Dataset.COMPLEX128, DTypeUtils.getBestDType(Dataset.INT32, Dataset.COMPLEX64));
 	}
 
 	@Test

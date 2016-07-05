@@ -25,8 +25,8 @@ public class DatasetFactory {
 	 * @param stop
 	 * @return a new double dataset of given shape and type, filled with values determined by parameters
 	 */
-	public static Dataset createRange(final double stop) {
-		return createRange(0, stop, 1, Dataset.FLOAT64);
+	public static DoubleDataset createRange(final double stop) {
+		return createRange(DoubleDataset.class, 0, stop, 1);
 	}
 
 
@@ -169,7 +169,7 @@ public class DatasetFactory {
 			obj = ((BigInteger) obj).longValue();
 		}
 
-		final int dtype = AbstractDataset.getDTypeFromObject(obj);
+		final int dtype = DTypeUtils.getDTypeFromObject(obj);
 		return createFromObject(dtype, obj, shape);
 	}
 
@@ -236,12 +236,12 @@ public class DatasetFactory {
 			if (ca != null && (ca.isPrimitive() || ca.equals(String.class))) {
 				switch (dtype) {
 				case Dataset.COMPLEX64:
-					return new ComplexFloatDataset(AbstractCompoundDataset.toFloatArray(obj, AbstractDataset.getLength(obj)), shape);
+					return new ComplexFloatDataset(DTypeUtils.toFloatArray(obj, DTypeUtils.getLength(obj)), shape);
 				case Dataset.COMPLEX128:
-					return new ComplexDoubleDataset(AbstractCompoundDataset.toDoubleArray(obj, AbstractDataset.getLength(obj)), shape);
+					return new ComplexDoubleDataset(DTypeUtils.toDoubleArray(obj, DTypeUtils.getLength(obj)), shape);
 				default:
-					d = createFromPrimitiveArray(AbstractDataset.getDTypeFromClass(ca), obj);
-					if (!AbstractDataset.isDTypeElemental(dtype)) {
+					d = createFromPrimitiveArray(DTypeUtils.getDTypeFromClass(ca), obj);
+					if (!DTypeUtils.isDTypeElemental(dtype)) {
 						if (dtype == Dataset.RGB) {
 							d = DatasetUtils.createCompoundDataset(d, 3);
 						} else {
@@ -370,11 +370,11 @@ public class DatasetFactory {
 		}
 
 		Class<? extends Object> clazz = obj.getClass();
-		if (!AbstractDataset.isComponentSupported(clazz)) {
+		if (!DTypeUtils.isClassSupportedAsElement(clazz)) {
 			throw new IllegalArgumentException("Class of list element not supported");
 		}
 
-		int dtype = AbstractDataset.getDTypeFromClass(clazz);
+		int dtype = DTypeUtils.getDTypeFromClass(clazz);
 		return createFromList(dtype, objectList);
 	}
 
@@ -447,8 +447,8 @@ public class DatasetFactory {
 	 * @param shape
 	 * @return a new double dataset of given shape, filled with zeros
 	 */
-	public static Dataset zeros(final int... shape) {
-		return zeros(shape, Dataset.FLOAT64);
+	public static DoubleDataset zeros(final int... shape) {
+		return zeros(DoubleDataset.class, shape);
 	}
 
 	/**
@@ -561,7 +561,7 @@ public class DatasetFactory {
 	 */
 	public static Dataset zeros(final Dataset dataset, final int dtype) {
 		final int[] shape = dataset.getShapeRef();
-		final int isize = AbstractDataset.isDTypeElemental(dtype) ? 1 :dataset.getElementsPerItem();
+		final int isize = DTypeUtils.isDTypeElemental(dtype) ? 1 :dataset.getElementsPerItem();
 
 		return zeros(isize, shape, dtype);
 	}
@@ -584,7 +584,7 @@ public class DatasetFactory {
 	 */
 	public static Dataset ones(final Dataset dataset, final int dtype) {
 		final int[] shape = dataset.getShapeRef();
-		final int isize = AbstractDataset.isDTypeElemental(dtype) ? 1 :dataset.getElementsPerItem();
+		final int isize = DTypeUtils.isDTypeElemental(dtype) ? 1 :dataset.getElementsPerItem();
 
 		return ones(isize, shape, dtype);
 	}
@@ -593,8 +593,8 @@ public class DatasetFactory {
 	 * @param shape
 	 * @return a new double dataset of given shape, filled with ones
 	 */
-	public static Dataset ones(final int... shape) {
-		return ones(shape, Dataset.FLOAT64);
+	public static DoubleDataset ones(final int... shape) {
+		return ones(DoubleDataset.class, shape);
 	}
 
 	/**

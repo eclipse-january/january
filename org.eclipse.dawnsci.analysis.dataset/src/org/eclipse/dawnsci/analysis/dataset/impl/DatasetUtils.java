@@ -71,8 +71,8 @@ public class DatasetUtils {
 			nshape[i] = ashape[i];
 		}
 		nshape[axis] += bshape[axis];
-		final int ot = AbstractDataset.getDType(b);
-		final int dt = AbstractDataset.getDType(a);
+		final int ot = DTypeUtils.getDType(b);
+		final int dt = DTypeUtils.getDType(a);
 		Dataset ds = DatasetFactory.zeros(a.getElementsPerItem(), nshape, dt > ot ? dt : ot);
 		IndexIterator iter = ds.getIterator(true);
 		int[] pos = iter.getPos();
@@ -236,7 +236,7 @@ public class DatasetUtils {
 			newShape[i] = shape[i]*reps[i];
 		}
 
-		Dataset tdata = DatasetFactory.zeros(a.getElementsPerItem(), newShape, AbstractDataset.getDType(a));
+		Dataset tdata = DatasetFactory.zeros(a.getElementsPerItem(), newShape, DTypeUtils.getDType(a));
 
 		// decide which way to put slices
 		boolean manyColumns;
@@ -343,13 +343,13 @@ public class DatasetUtils {
 			return convertToDataset(a.clone());
 		}
 		int[] ashape = a.getShape();
-		int at = AbstractDataset.getDType(a);
+		int at = DTypeUtils.getDType(a);
 		int anum = as.length;
 		int isize = a.getElementsPerItem();
 
 		int i = 1;
 		for (; i < anum; i++) {
-			if (at != AbstractDataset.getDType(as[i])) {
+			if (at != DTypeUtils.getDType(as[i])) {
 				utilsLogger.error("Datasets are not of same type");
 				break;
 			}
@@ -1161,7 +1161,7 @@ public class DatasetUtils {
 			return (Dataset) data;
 		}
 
-		int dtype = AbstractDataset.getDType(data);
+		int dtype = DTypeUtils.getDType(data);
 
 		final int isize = data.getElementsPerItem();
 		if (isize <= 0) {
@@ -1392,9 +1392,9 @@ public class DatasetUtils {
 	 */
 	public static Dataset coerce(Dataset a, Object obj) {
 		final int dt = a.getDType();
-		final int ot = AbstractDataset.getDTypeFromClass(obj.getClass());
+		final int ot = DTypeUtils.getDTypeFromClass(obj.getClass());
 
-		return cast(a.clone(), AbstractDataset.getBestDType(dt, ot));
+		return cast(a.clone(), DTypeUtils.getBestDType(dt, ot));
 	}
 
 	/**
@@ -1755,7 +1755,7 @@ public class DatasetUtils {
 	 */
 	public static void removeNansAndInfinities(Dataset a, final Number value) {
 		if (a instanceof DoubleDataset) {
-			final double dvalue = AbstractDataset.toReal(value);
+			final double dvalue = DTypeUtils.toReal(value);
 			final DoubleDataset set = (DoubleDataset) a;
 			final IndexIterator it = set.getIterator();
 			final double[] data = set.getData();
@@ -1765,7 +1765,7 @@ public class DatasetUtils {
 					data[it.index] = dvalue;
 			}
 		} else if (a instanceof FloatDataset) {
-			final float fvalue = (float) AbstractDataset.toReal(value);
+			final float fvalue = (float) DTypeUtils.toReal(value);
 			final FloatDataset set = (FloatDataset) a;
 			final IndexIterator it = set.getIterator();
 			final float[] data = set.getData();
@@ -1775,7 +1775,7 @@ public class DatasetUtils {
 					data[it.index] = fvalue;
 			}
 		} else if (a instanceof CompoundDoubleDataset) {
-			final double dvalue = AbstractDataset.toReal(value);
+			final double dvalue = DTypeUtils.toReal(value);
 			final CompoundDoubleDataset set = (CompoundDoubleDataset) a;
 			final int is = set.getElementsPerItem();
 			final IndexIterator it = set.getIterator();
@@ -1788,7 +1788,7 @@ public class DatasetUtils {
 				}
 			}
 		} else if (a instanceof CompoundFloatDataset) {
-			final float fvalue = (float) AbstractDataset.toReal(value);
+			final float fvalue = (float) DTypeUtils.toReal(value);
 			final CompoundFloatDataset set = (CompoundFloatDataset) a;
 			final int is = set.getElementsPerItem();
 			final IndexIterator it = set.getIterator();
@@ -2212,7 +2212,7 @@ public class DatasetUtils {
 		condition = (BooleanDataset) dAll[0];
 		Dataset dx = dAll[1];
 		Dataset dy = dAll[2];
-		int dt = AbstractDataset.getBestDType(dx.getDType(),dy.getDType());
+		int dt = DTypeUtils.getBestDType(dx.getDType(),dy.getDType());
 		int ds = Math.max(dx.getElementsPerItem(), dy.getElementsPerItem());
 
 		Dataset r = DatasetFactory.zeros(ds, condition.getShapeRef(), dt);
@@ -2495,35 +2495,5 @@ public class DatasetUtils {
 	
 			return c;
 		}
-	}
-
-	/**
-	 * @param a
-	 * @return name of dataset type
-	 */
-	public static String getDTypeName(Dataset a) {
-		int d = a.getDType();
-		int e = a.getElementsPerItem();
-		int isize = a.getItemsize();
-		if (AbstractDataset.isDTypeComplex(d)) {
-			return "COMPLEX" + isize*8;
-		} else if (d == Dataset.RGB) {
-			return "RGB";
-		}
-
-		String prefix = e > 1 ? ("ARRAY of " + e + " ") : "";
-		if (AbstractDataset.isDTypeFloating(d)) {
-			return prefix + "FLOAT" + isize*8;
-		}
-		switch (d) {
-		case Dataset.BOOL:
-			return prefix + "BOOLEAN";
-		case Dataset.STRING:
-			return prefix + "STRING";
-		case Dataset.OBJECT:
-			return prefix + "OBJECT";
-		}
-
-		return prefix + "INT" + isize*8;
 	}
 }

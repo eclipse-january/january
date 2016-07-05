@@ -170,9 +170,9 @@ public class AggregateDataset extends LazyDatasetBase implements ILazyDataset {
 
 		for (ILazyDataset d : data) {
 			if (d instanceof LazyDatasetBase) {
-				dtype = AbstractDataset.getBestDType(dtype, ((LazyDatasetBase) d).getDType());
+				dtype = DTypeUtils.getBestDType(dtype, ((LazyDatasetBase) d).getDType());
 			} else {
-				dtype = AbstractDataset.getBestDType(dtype, AbstractDataset.getDTypeFromClass(d.getElementClass(), d.getElementsPerItem()));
+				dtype = DTypeUtils.getBestDType(dtype, DTypeUtils.getDTypeFromClass(d.getElementClass(), d.getElementsPerItem()));
 			}
 		}
 
@@ -187,7 +187,7 @@ public class AggregateDataset extends LazyDatasetBase implements ILazyDataset {
 
 	@Override
 	public Class<?> getElementClass() {
-		return AbstractDataset.elementClass(dtype);
+		return DTypeUtils.getElementClass(dtype);
 	}
 
 	@Override

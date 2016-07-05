@@ -385,7 +385,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 
 	@Override
 	public CompoundByteDataset fill(final Object obj) {
-		byte[] vr = toByteArray(obj, isize); // PRIM_TYPE // CLASS_TYPE
+		byte[] vr = DTypeUtils.toByteArray(obj, isize); // PRIM_TYPE // CLASS_TYPE
 		IndexIterator iter = getIterator();
 
 		while (iter.hasNext()) {
@@ -742,18 +742,18 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 
 	@Override
 	public void setObjectAbs(final int index, final Object obj) {
-		byte[] oa = toByteArray(obj, isize); // PRIM_TYPE // CLASS_TYPE
+		byte[] oa = DTypeUtils.toByteArray(obj, isize); // PRIM_TYPE // CLASS_TYPE
 		setAbs(index, oa);
 	}
 
 	@Override
 	public void set(final Object obj, final int i) {
-		setItem(toByteArray(obj, isize), i); // CLASS_TYPE
+		setItem(DTypeUtils.toByteArray(obj, isize), i); // CLASS_TYPE
 	}
 
 	@Override
 	public void set(final Object obj, final int i, final int j) {
-		setItem(toByteArray(obj, isize), i, j); // CLASS_TYPE
+		setItem(DTypeUtils.toByteArray(obj, isize), i, j); // CLASS_TYPE
 	}
 
 	@Override
@@ -762,7 +762,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 			pos = new int[shape.length];
 		}
 
-		setItem(toByteArray(obj, isize), pos); // CLASS_TYPE
+		setItem(DTypeUtils.toByteArray(obj, isize), pos); // CLASS_TYPE
 	}
 
 	/**
@@ -988,7 +988,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 			}
 		} else {
 			try {
-				final byte[] vr = toByteArray(o, isize); // PRIM_TYPE // CLASS_TYPE
+				final byte[] vr = DTypeUtils.toByteArray(o, isize); // PRIM_TYPE // CLASS_TYPE
 
 				final BooleanIterator biter = getBooleanIterator(selection);
 
@@ -1039,7 +1039,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 			}
 		} else {
 			try {
-				final byte[] vr = toByteArray(o, isize); // PRIM_TYPE // CLASS_TYPE
+				final byte[] vr = DTypeUtils.toByteArray(o, isize); // PRIM_TYPE // CLASS_TYPE
 
 				final IntegerIterator iter = new IntegerIterator(index, size, isize);
 
@@ -1088,7 +1088,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 			}
 		} else {
 			try {
-				final byte[] vr = toByteArray(o, isize); // PRIM_TYPE // CLASS_TYPE
+				final byte[] vr = DTypeUtils.toByteArray(o, isize); // PRIM_TYPE // CLASS_TYPE
 
 				while (iter.hasNext()) {
 					setAbs(get1DIndex(pos), vr);
@@ -1176,7 +1176,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 					}
 				} else {
 					while (siter.hasNext() && oiter.hasNext()) {
-						final byte[] val = toByteArray(ds.getObject(pos), isize); // PRIM_TYPE // CLASS_TYPE
+						final byte[] val = DTypeUtils.toByteArray(ds.getObject(pos), isize); // PRIM_TYPE // CLASS_TYPE
 						for (int i = 0; i < isize; i++)
 							data[siter.index + i] = val[i];
 					}
@@ -1184,7 +1184,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 			}
 		} else {
 			try {
-				final byte[] vr = toByteArray(o, isize); // PRIM_TYPE // CLASS_TYPE
+				final byte[] vr = DTypeUtils.toByteArray(o, isize); // PRIM_TYPE // CLASS_TYPE
 
 				while (siter.hasNext()) {
 					for (int i = 0; i < isize; i++)

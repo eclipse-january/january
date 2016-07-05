@@ -22,23 +22,23 @@ $ python fromcpddouble.py ../CompoundDoubleDataset.java
 from markers import transmutate #@UnresolvedImport
 
 # default dataset definition
-defds = { "CompoundDoubleDataset":["FLOAT64", "Double", "double", "getElementDoubleAbs", "toReal(obj)", "%.8g",
+defds = { "CompoundDoubleDataset":["FLOAT64", "Double", "double", "getElementDoubleAbs", "DTypeUtils.toReal(obj)", "%.8g",
 "NaN"] }
 
 defkey = defds.keys()[0]
 
 # all other dataset definitions
-fds = { "CompoundFloatDataset":["FLOAT32", "Float", "float", "getElementDoubleAbs", "(float) toReal(obj)", "%.8g",
+fds = { "CompoundFloatDataset":["FLOAT32", "Float", "float", "getElementDoubleAbs", "(float) DTypeUtils.toReal(obj)", "%.8g",
 "NaN"] }
 
 allds = { 
-"CompoundIntegerDataset":["INT32", "Integer", "int", "getElementLongAbs", "(int) toLong(obj)", "%d",
+"CompoundIntegerDataset":["INT32", "Integer", "int", "getElementLongAbs", "(int) DTypeUtils.toLong(obj)", "%d",
 "MIN_VALUE"],
-"CompoundLongDataset":["INT64", "Long", "long", "getElementLongAbs", "toLong(obj)", "%d",
+"CompoundLongDataset":["INT64", "Long", "long", "getElementLongAbs", "DTypeUtils.toLong(obj)", "%d",
 "MIN_VALUE"],
-"CompoundShortDataset":["INT16", "Short", "short", "getElementLongAbs", "(short) toLong(obj)", "%d",
+"CompoundShortDataset":["INT16", "Short", "short", "getElementLongAbs", "(short) DTypeUtils.toLong(obj)", "%d",
 "MIN_VALUE"],
-"CompoundByteDataset":["INT8", "Byte", "byte", "getElementLongAbs", "(byte) toLong(obj)", "%d",
+"CompoundByteDataset":["INT8", "Byte", "byte", "getElementLongAbs", "(byte) DTypeUtils.toLong(obj)", "%d",
 "MIN_VALUE"]
  }
 

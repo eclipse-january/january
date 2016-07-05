@@ -26,7 +26,7 @@ public abstract class BroadcastSelfIterator extends BroadcastIteratorBase {
 
 	protected BroadcastSelfIterator(Dataset a, Dataset b) {
 		super(a, b);
-		read = AbstractDataset.isDTypeNumerical(b.getDType());
+		read = DTypeUtils.isDTypeNumerical(b.getDType());
 		asDouble = aDataset.hasFloatingPointElements();
 		BroadcastUtils.checkItemSize(a, b, null);
 	}

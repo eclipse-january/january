@@ -71,7 +71,7 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 	 * @param saver
 	 */
 	public LazyWriteableDataset(String name, Class<?> clazz, int elements, int[] shape, int[] maxShape, int[] chunks, ILazySaver saver) {
-		this(name, AbstractDataset.getDTypeFromClass(clazz), elements, shape, maxShape, chunks, saver);
+		this(name, DTypeUtils.getDTypeFromClass(clazz), elements, shape, maxShape, chunks, saver);
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 	 * @param saver
 	 */
 	public LazyWriteableDataset(String name, Class<?> clazz, int[] shape, int[] maxShape, int[] chunks, ILazySaver saver) {
-		this(name, AbstractDataset.getDTypeFromClass(clazz), 1, shape, maxShape, chunks, saver);
+		this(name, DTypeUtils.getDTypeFromClass(clazz), 1, shape, maxShape, chunks, saver);
 	}
 
 	/**

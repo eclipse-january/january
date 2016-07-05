@@ -17,12 +17,10 @@ import java.lang.reflect.Array;
 import java.text.Format;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
 import org.eclipse.dawnsci.analysis.api.dataset.DatasetException;
 import org.eclipse.dawnsci.analysis.api.dataset.IDataset;
@@ -43,141 +41,6 @@ import org.eclipse.dawnsci.analysis.dataset.metadata.ErrorMetadataImpl;
  * Data items can be boolean, integer, float, complex float, vector float, etc
  */
 public abstract class AbstractDataset extends LazyDatasetBase implements Dataset {
-
-	/**
-	 * Boolean
-	 */
-	public static final int BOOL = Dataset.BOOL;
-
-	/**
-	 * Signed 8-bit integer
-	 */
-	public static final int INT8 = Dataset.INT8;
-
-	/**
-	 * Signed 16-bit integer
-	 */
-	public static final int INT16 = Dataset.INT16;
-
-	/**
-	 * Signed 32-bit integer
-	 */
-	public static final int INT32 = Dataset.INT32;
-	/**
-	 * Integer (same as signed 32-bit integer)
-	 */
-	public static final int INT = Dataset.INT;
-
-	/**
-	 * Signed 64-bit integer
-	 */
-	public static final int INT64 = Dataset.INT64;
-
-	/**
-	 * 32-bit floating point
-	 */
-	public static final int FLOAT32 = Dataset.FLOAT32;
-
-	/**
-	 * 64-bit floating point
-	 */
-	public static final int FLOAT64 = Dataset.FLOAT64;
-
-	/**
-	 * Floating point (same as 64-bit floating point)
-	 */
-	public static final int FLOAT = Dataset.FLOAT;
-
-	/**
-	 * 64-bit complex floating point (real and imaginary parts are 32-bit floats)
-	 */
-	public static final int COMPLEX64 = Dataset.COMPLEX64;
-
-	/**
-	 * 128-bit complex floating point (real and imaginary parts are 64-bit floats)
-	 */
-	public static final int COMPLEX128 = Dataset.COMPLEX128;
-
-	/**
-	 * Complex floating point (same as 64-bit floating point)
-	 */
-	public static final int COMPLEX = Dataset.COMPLEX;
-
-	/**
-	 * Date
-	 */
-	public static final int DATE = Dataset.DATE;
-
-	/**
-	 * String
-	 */
-	public static final int STRING = Dataset.STRING;
-	
-	/**
-	 * Object
-	 */
-	public static final int OBJECT = Dataset.OBJECT;
-
-	/**
-	 * Array of signed 8-bit integers
-	 */
-	public static final int ARRAYINT8 = Dataset.ARRAYINT8;
-
-	/**
-	 * Array of signed 16-bit integers
-	 */
-	public static final int ARRAYINT16 = Dataset.ARRAYINT16;
-
-	/**
-	 * Array of three signed 16-bit integers for RGB values
-	 */
-	public static final int RGB = Dataset.RGB;
-
-	/**
-	 * Array of signed 32-bit integers
-	 */
-	public static final int ARRAYINT32 = Dataset.ARRAYINT32;
-
-	/**
-	 * Array of signed 64-bit integers
-	 */
-	public static final int ARRAYINT64 = Dataset.ARRAYINT64;
-
-	/**
-	 * Array of 32-bit floating points
-	 */
-	public static final int ARRAYFLOAT32 = Dataset.ARRAYFLOAT32;
-
-	/**
-	 * Array of 64-bit floating points
-	 */
-	public static final int ARRAYFLOAT64 = Dataset.ARRAYFLOAT64;
-
-	protected static boolean isDTypeElemental(int dtype) {
-		return dtype <= DATE;
-	}
-
-	protected static boolean isDTypeInteger(int dtype) {
-		return dtype == INT8 || dtype == INT16 || dtype == INT32 || dtype == INT64 ||
-				dtype == ARRAYINT8 || dtype == ARRAYINT16 || dtype == ARRAYINT32 || dtype == ARRAYINT64 || dtype == RGB;
-	}
-
-	protected static boolean isDTypeFloating(int dtype) {
-		return dtype == FLOAT32 || dtype == FLOAT64 || dtype == COMPLEX64 || dtype == COMPLEX128 ||
-				dtype == ARRAYFLOAT32 || dtype == ARRAYFLOAT64;
-	}
-
-	protected static boolean isDTypeComplex(int dtype) {
-		return dtype == COMPLEX64 || dtype == COMPLEX128;
-	}
-
-	/**
-	 * @param dtype
-	 * @return true if dataset type is numerical, i.e. a dataset contains numbers
-	 */
-	public static boolean isDTypeNumerical(int dtype) {
-		return isDTypeInteger(dtype) || isDTypeFloating(dtype) || dtype == BOOL;
-	}
 
 	protected int size; // number of items
 
@@ -317,7 +180,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		view.metadata = getMetadataMap(orig, cloneMetadata);
 		int odtype = orig.getDType();
 		int vdtype = view.getDType();
-		if (getBestDType(odtype, vdtype) != vdtype) {
+		if (DTypeUtils.getBestDType(odtype, vdtype) != vdtype) {
 			view.storedValues = null; // as copy is a demotion
 		}
 		if (odtype != vdtype && view.storedValues != null) {
@@ -498,277 +361,6 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	/**
-	 * @param b
-	 * @return length of object
-	 */
-	public static final int getLength(final Object b) {
-		if (b instanceof Number) {
-			return 1;
-		} else if (b instanceof Complex) {
-			return 1;
-		} else if (b instanceof List<?>) {
-			List<?> jl = (List<?>) b;
-			return jl.size();
-		} else if (b.getClass().isArray()) {
-			return Array.getLength(b);
-		} else if (b instanceof IDataset) {
-			IDataset db = (Dataset) b;
-			return db.getSize();
-		}
-
-		throw new IllegalArgumentException("Cannot find length as object not supported");
-	}
-
-	/**
-	 * Find dataset type that best fits given types The best type takes into account complex and array datasets
-	 * 
-	 * @param atype
-	 *            first dataset type
-	 * @param btype
-	 *            second dataset type
-	 * @return best dataset type
-	 */
-	public static int getBestDType(final int atype, final int btype) {
-		int besttype;
-
-		int a = atype >= ARRAYINT8 ? atype / ARRAYMUL : atype;
-		int b = btype >= ARRAYINT8 ? btype / ARRAYMUL : btype;
-
-		if (isDTypeFloating(a)) {
-			if (!isDTypeFloating(b)) {
-				b = getBestFloatDType(b);
-				if (isDTypeComplex(a)) {
-					b += COMPLEX64 - FLOAT32;
-				}
-			}
-		} else if (isDTypeFloating(b)) {
-			a = getBestFloatDType(a);
-			if (isDTypeComplex(b)) {
-				a += COMPLEX64 - FLOAT32;
-			}
-		}
-		besttype = a > b ? a : b;
-
-		if (atype >= ARRAYINT8 || btype >= ARRAYINT8) {
-			if (besttype >= COMPLEX64) {
-				throw new IllegalArgumentException("Complex type cannot be promoted to compound type");
-			}
-			besttype *= ARRAYMUL;
-		}
-
-		return besttype;
-	}
-
-	/**
-	 * The largest dataset type suitable for a summation of around a few thousand items without changing from the "kind"
-	 * of dataset
-	 * 
-	 * @param otype
-	 * @return largest dataset type available for given dataset type
-	 */
-	public static int getLargestDType(final int otype) {
-		switch (otype) {
-		case BOOL:
-		case INT8:
-		case INT16:
-			return INT32;
-		case INT32:
-		case INT64:
-			return INT64;
-		case FLOAT32:
-		case FLOAT64:
-			return FLOAT64;
-		case COMPLEX64:
-		case COMPLEX128:
-			return COMPLEX128;
-		case ARRAYINT8:
-		case ARRAYINT16:
-			return ARRAYINT32;
-		case ARRAYINT32:
-		case ARRAYINT64:
-			return ARRAYINT64;
-		case ARRAYFLOAT32:
-		case ARRAYFLOAT64:
-			return ARRAYFLOAT64;
-		case STRING:
-		case RGB:
-		case OBJECT:
-			return otype;
-		}
-		throw new IllegalArgumentException("Unsupported dataset type");
-	}
-
-	/**
-	 * Find floating point dataset type that best fits given types. The best type takes into account complex and array
-	 * datasets
-	 * 
-	 * @param otype
-	 *            old dataset type
-	 * @return best dataset type
-	 */
-	public static int getBestFloatDType(final int otype) {
-		int btype;
-		switch (otype) {
-		case BOOL:
-		case INT8:
-		case INT16:
-		case ARRAYINT8:
-		case ARRAYINT16:
-		case FLOAT32:
-		case ARRAYFLOAT32:
-		case COMPLEX64:
-		case RGB:
-			btype = FLOAT32; // demote, if necessary
-			break;
-		case INT32:
-		case INT64:
-		case ARRAYINT32:
-		case ARRAYINT64:
-		case FLOAT64:
-		case ARRAYFLOAT64:
-		case COMPLEX128:
-			btype = FLOAT64; // promote, if necessary
-			break;
-		default:
-			btype = otype; // for non-numeric datasets, preserve type
-			break;
-		}
-
-		return btype;
-	}
-
-	/**
-	 * Find floating point dataset type that best fits given class The best type takes into account complex and array
-	 * datasets
-	 * 
-	 * @param cls
-	 *            of an item or element
-	 * @return best dataset type
-	 */
-	public static int getBestFloatDType(Class<? extends Object> cls) {
-		return getBestFloatDType(getDTypeFromClass(cls));
-	}
-
-	transient private static final Map<Class<?>, Integer> dtypeMap = createDTypeMap();
-
-	private static Map<Class<?>, Integer> createDTypeMap() {
-		Map<Class<?>, Integer> result = new HashMap<Class<?>, Integer>();
-		result.put(Boolean.class, BOOL);
-		result.put(Byte.class, INT8);
-		result.put(Short.class, INT16);
-		result.put(Integer.class, INT32);
-		result.put(Long.class, INT64);
-		result.put(Float.class, FLOAT32);
-		result.put(Double.class, FLOAT64);
-		result.put(boolean.class, BOOL);
-		result.put(byte.class, INT8);
-		result.put(short.class, INT16);
-		result.put(int.class, INT32);
-		result.put(long.class, INT64);
-		result.put(float.class, FLOAT32);
-		result.put(double.class, FLOAT64);
-		result.put(Complex.class, COMPLEX128);
-		result.put(String.class, STRING);
-		result.put(Date.class, DATE);
-		result.put(Object.class, OBJECT);
-		return result;
-	}
-
-	
-	/**
-	 * Get dataset type from a class
-	 * 
-	 * @param cls
-	 * @return dataset type
-	 */
-	public static int getDTypeFromClass(Class<? extends Object> cls) {
-		return getDTypeFromClass(cls, 1);
-	}
-
-	/**
-	 * Get dataset type from a class
-	 * 
-	 * @param cls
-	 * @return dataset type
-	 */
-	public static int getDTypeFromClass(Class<? extends Object> cls, int isize) {
-		Integer dtype = dtypeMap.get(cls);
-		if (dtype == null) {
-			throw new IllegalArgumentException("Class of object not supported");
-		}
-		if (isize != 1) {
-			if (dtype < FLOAT64)
-				dtype *= ARRAYMUL;
-		}
-		return dtype;
-	}
-
-	/**
-	 * Get dataset type from an object. The following are supported: Java Number objects, Apache common math Complex
-	 * objects, Java arrays and lists
-	 * 
-	 * @param obj
-	 * @return dataset type
-	 */
-	public static int getDTypeFromObject(Object obj) {
-		int dtype = -1;
-	
-		if (obj == null) {
-			return dtype;
-		}
-
-		if (obj instanceof List<?>) {
-			List<?> jl = (List<?>) obj;
-			int l = jl.size();
-			for (int i = 0; i < l; i++) {
-				int ldtype = getDTypeFromObject(jl.get(i));
-				if (ldtype > dtype) {
-					dtype = ldtype;
-				}
-			}
-		} else if (obj.getClass().isArray()) {
-			Class<?> ca = obj.getClass().getComponentType();
-			if (isComponentSupported(ca)) {
-				return getDTypeFromClass(ca);
-			}
-			int l = Array.getLength(obj);
-			for (int i = 0; i < l; i++) {
-				Object lo = Array.get(obj, i);
-				int ldtype = getDTypeFromObject(lo);
-				if (ldtype > dtype) {
-					dtype = ldtype;
-				}
-			}
-		} else if (obj instanceof Dataset) {
-			return ((Dataset) obj).getDType();
-		} else if (obj instanceof ILazyDataset) {
-			dtype = getDTypeFromClass(((ILazyDataset) obj).getElementClass(), ((ILazyDataset) obj).getElementsPerItem());
-		} else {
-			dtype = getDTypeFromClass(obj.getClass());
-		}
-		return dtype;
-	}
-
-	/**
-	 * @param comp
-	 * @return true if supported
-	 */
-	public static boolean isComponentSupported(Class<? extends Object> comp) {
-		return comp.isPrimitive() || Number.class.isAssignableFrom(comp) || comp.equals(Boolean.class) || comp.equals(Complex.class) || comp.equals(String.class);
-	}
-
-	/**
-	 * Get dataset type from given dataset
-	 * @param d
-	 * @return dataset type
-	 */
-	public static int getDType(ILazyDataset d) {
-		if (d instanceof LazyDatasetBase)
-			return ((LazyDatasetBase) d).getDType();
-		return getDTypeFromClass(d.getElementClass(), d.getElementsPerItem());
-	}
-
-	/**
 	 * Get shape from object (array or list supported)
 	 * @param obj
 	 * @return shape
@@ -816,7 +408,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		if (ca != null) {
 			final int l = Array.getLength(obj);
 			updateShape(ldims, depth, l);
-			if (isComponentSupported(ca)) {
+			if (DTypeUtils.isClassSupportedAsElement(ca)) {
 				return true;
 			}
 			for (int i = 0; i < l; i++) {
@@ -895,122 +487,6 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			setSlice(obj, getSliceIteratorFromAxes(pos, a));
 		} else {
 			set(obj, pos);
-		}
-	}
-
-	protected static boolean toBoolean(final Object b) {
-		if (b instanceof Number) {
-			return ((Number) b).longValue() != 0;
-		} else if (b instanceof Boolean) {
-			return ((Boolean) b).booleanValue();
-		} else if (b instanceof Complex) {
-			return ((Complex) b).getReal() != 0;
-		} else if (b instanceof Dataset) {
-			Dataset db = (Dataset) b;
-			if (db.getSize() != 1) {
-				logger.error("Given dataset must have only one item");
-				throw new IllegalArgumentException("Given dataset must have only one item");
-			}
-			return toBoolean(db.getObjectAbs(0));
-		} else if (b instanceof IDataset) {
-			IDataset db = (IDataset) b;
-			if (db.getSize() != 1) {
-				logger.error("Given dataset must have only one item");
-				throw new IllegalArgumentException("Given dataset must have only one item");
-			}
-			return toBoolean(db.getObject(new int[db.getRank()]));
-		} else {
-			logger.error("Argument is of unsupported class");
-			throw new IllegalArgumentException("Argument is of unsupported class");
-		}
-	}
-
-	protected static long toLong(final Object b) {
-		if (b instanceof Number) {
-			return ((Number) b).longValue();
-		} else if (b instanceof Boolean) {
-			return ((Boolean) b).booleanValue() ? 1 : 0;
-		} else if (b instanceof Complex) {
-			return (long) ((Complex) b).getReal();
-		} else if (b instanceof Dataset) {
-			Dataset db = (Dataset) b;
-			if (db.getSize() != 1) {
-				logger.error("Given dataset must have only one item");
-				throw new IllegalArgumentException("Given dataset must have only one item");
-			}
-			return toLong(db.getObjectAbs(0));
-		} else if (b instanceof IDataset) {
-			IDataset db = (IDataset) b;
-			if (db.getSize() != 1) {
-				logger.error("Given dataset must have only one item");
-				throw new IllegalArgumentException("Given dataset must have only one item");
-			}
-			return toLong(db.getObject(new int[db.getRank()]));
-		} else {
-			logger.error("Argument is of unsupported class");
-			throw new IllegalArgumentException("Argument is of unsupported class");
-		}
-	}
-
-	protected static double toReal(final Object b) {
-		if (b instanceof Number) {
-			return ((Number) b).doubleValue();
-		} else if (b instanceof Boolean) {
-			return ((Boolean) b).booleanValue() ? 1 : 0;
-		} else if (b instanceof Complex) {
-			return ((Complex) b).getReal();
-		} else if (b.getClass().isArray()) {
-			if (Array.getLength(b) == 0)
-				return 0;
-			return toReal(Array.get(b, 0));
-		} else if (b instanceof Dataset) {
-			Dataset db = (Dataset) b;
-			if (db.getSize() != 1) {
-				logger.error("Given dataset must have only one item");
-				throw new IllegalArgumentException("Given dataset must have only one item");
-			}
-			return toReal(db.getObjectAbs(0));
-		} else if (b instanceof IDataset) {
-			IDataset db = (Dataset) b;
-			if (db.getSize() != 1) {
-				logger.error("Given dataset must have only one item");
-				throw new IllegalArgumentException("Given dataset must have only one item");
-			}
-			return toReal(db.getObject(new int[db.getRank()]));
-		} else {
-			logger.error("Argument is of unsupported class");
-			throw new IllegalArgumentException("Argument is of unsupported class");
-		}
-	}
-
-	protected static double toImag(final Object b) {
-		if (b instanceof Number) {
-			return 0;
-		} else if (b instanceof Boolean) {
-			return 0;
-		} else if (b instanceof Complex) {
-			return ((Complex) b).getImaginary();
-		} else if (b.getClass().isArray()) {
-			if (Array.getLength(b) < 2)
-				return 0;
-			return toReal(Array.get(b, 1));
-		} else if (b instanceof Dataset) {
-			Dataset db = (Dataset) b;
-			if (db.getSize() != 1) {
-				logger.error("Given dataset must have only one item");
-				throw new IllegalArgumentException("Given dataset must have only one item");
-			}
-			return toImag(db.getObjectAbs(0));
-		} else if (b instanceof IDataset) {
-			IDataset db = (Dataset) b;
-			if (db.getSize() != 1) {
-				logger.error("Given dataset must have only one item");
-				throw new IllegalArgumentException("Given dataset must have only one item");
-			}
-			return toImag(db.getObject(new int[db.getRank()]));
-		} else {
-			logger.error("Argument is of unsupported class");
-			throw new IllegalArgumentException("Argument is of unsupported class");
 		}
 	}
 
@@ -1138,46 +614,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		return r;
 	}
 
-	/**
-	 * @param dtype
-	 * @return (boxed) class of constituent element
-	 */
-	public static Class<?> elementClass(final int dtype) {
-		switch (dtype) {
-		case BOOL:
-			return Boolean.class;
-		case INT8:
-		case ARRAYINT8:
-			return Byte.class;
-		case INT16:
-		case ARRAYINT16:
-		case RGB:
-			return Short.class;
-		case INT32:
-		case ARRAYINT32:
-			return Integer.class;
-		case INT64:
-		case ARRAYINT64:
-			return Long.class;
-		case FLOAT32:
-		case ARRAYFLOAT32:
-			return Float.class;
-		case FLOAT64:
-		case ARRAYFLOAT64:
-			return Double.class;
-		case COMPLEX64:
-			return Float.class;
-		case COMPLEX128:
-			return Double.class;
-		case STRING:
-			return String.class;
-		}
-		return Object.class;
-	}
-
 	@Override
 	public Class<?> getElementClass() {
-		return elementClass(getDType());
+		return DTypeUtils.getElementClass(getDType());
 	}
 
 	@Override
@@ -1188,88 +627,12 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public int getElementsPerItem() {
-		return getElementsPerItem(getDType());
+		return DTypeUtils.getElementsPerItem(getDType());
 	}
 
 	@Override
 	public int getItemBytes() {
-		return getItemBytes(getDType(), getElementsPerItem());
-	}
-
-	/**
-	 * @param dtype
-	 * @return number of elements per item
-	 */
-	public static int getElementsPerItem(final int dtype) {
-		switch (dtype) {
-		case ARRAYINT8:
-		case ARRAYINT16:
-		case ARRAYINT32:
-		case ARRAYINT64:
-		case ARRAYFLOAT32:
-		case ARRAYFLOAT64:
-			throw new UnsupportedOperationException("Multi-element type unsupported");
-		case COMPLEX64:
-		case COMPLEX128:
-			return 2;
-		}
-		return 1;
-	}
-
-	/**
-	 * @param dtype
-	 * @return length of single item in bytes
-	 */
-	public static int getItemBytes(final int dtype) {
-		return getItemBytes(dtype, getElementsPerItem(dtype));
-	}
-
-	/**
-	 * @param dtype
-	 * @param isize
-	 *            number of elements in an item
-	 * @return length of single item in bytes
-	 */
-	public static int getItemBytes(final int dtype, final int isize) {
-		int size;
-
-		switch (dtype) {
-		case BOOL:
-			size = 1; // How is this defined?
-			break;
-		case INT8:
-		case ARRAYINT8:
-			size = Byte.SIZE / 8;
-			break;
-		case INT16:
-		case ARRAYINT16:
-		case RGB:
-			size = Short.SIZE / 8;
-			break;
-		case INT32:
-		case ARRAYINT32:
-			size = Integer.SIZE / 8;
-			break;
-		case INT64:
-		case ARRAYINT64:
-			size = Long.SIZE / 8;
-			break;
-		case FLOAT32:
-		case ARRAYFLOAT32:
-		case COMPLEX64:
-			size = Float.SIZE / 8;
-			break;
-		case FLOAT64:
-		case ARRAYFLOAT64:
-		case COMPLEX128:
-			size = Double.SIZE / 8;
-			break;
-		default:
-			size = 0;
-			break;
-		}
-
-		return size * isize;
+		return DTypeUtils.getItemBytes(getDType(), getElementsPerItem());
 	}
 
 	@Override
@@ -2428,7 +1791,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		} else {
 			int dtype = getDType();
 			if (dtype != Dataset.BOOL) {
-				dtype = getLargestDType(dtype);
+				dtype = DTypeUtils.getLargestDType(dtype);
 			}
 			ds = DatasetFactory.createFromObject(getElementsPerItem(), dtype, obj);
 		}
@@ -2721,7 +2084,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		Dataset min = DatasetFactory.zeros(nshape, dtype);
 		IntegerDataset maxIndex = new IntegerDataset(nshape);
 		IntegerDataset minIndex = new IntegerDataset(nshape);
-		Dataset sum = DatasetFactory.zeros(nshape, getLargestDType(dtype));
+		Dataset sum = DatasetFactory.zeros(nshape, DTypeUtils.getLargestDType(dtype));
 		DoubleDataset mean = new DoubleDataset(nshape);
 		DoubleDataset var = new DoubleDataset(nshape);
 
@@ -2871,24 +2234,6 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	 * @return number from given double
 	 */
 	abstract protected Number fromDoubleToNumber(double x);
-
-	// return biggest native primitive if integer (should test for 64bit?)
-	private static Number fromDoubleToBiggestNumber(double x, int dtype) {
-		switch (dtype) {
-		case BOOL:
-		case INT8:
-		case INT16:
-		case INT32:
-			return Integer.valueOf((int) (long) x);
-		case INT64:
-			return Long.valueOf((long) x);
-		case FLOAT32:
-			return Float.valueOf((float) x);
-		case FLOAT64:
-			return Double.valueOf(x);
-		}
-		return null;
-	}
 
 	private SummaryStatistics getStatistics(boolean ignoreNaNs) {
 		boolean ignoreInfs = false; // TODO
@@ -3121,7 +2466,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public Object typedSum(int dtype) {
-		return fromDoubleToBiggestNumber(getStatistics(false).getSum(), dtype);
+		return DTypeUtils.fromDoubleToBiggestNumber(getStatistics(false).getSum(), dtype);
 	}
 
 	@Override

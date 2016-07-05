@@ -385,7 +385,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 
 	@Override
 	public CompoundFloatDataset fill(final Object obj) {
-		float[] vr = toFloatArray(obj, isize); // PRIM_TYPE // CLASS_TYPE
+		float[] vr = DTypeUtils.toFloatArray(obj, isize); // PRIM_TYPE // CLASS_TYPE
 		IndexIterator iter = getIterator();
 
 		while (iter.hasNext()) {
@@ -742,18 +742,18 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 
 	@Override
 	public void setObjectAbs(final int index, final Object obj) {
-		float[] oa = toFloatArray(obj, isize); // PRIM_TYPE // CLASS_TYPE
+		float[] oa = DTypeUtils.toFloatArray(obj, isize); // PRIM_TYPE // CLASS_TYPE
 		setAbs(index, oa);
 	}
 
 	@Override
 	public void set(final Object obj, final int i) {
-		setItem(toFloatArray(obj, isize), i); // CLASS_TYPE
+		setItem(DTypeUtils.toFloatArray(obj, isize), i); // CLASS_TYPE
 	}
 
 	@Override
 	public void set(final Object obj, final int i, final int j) {
-		setItem(toFloatArray(obj, isize), i, j); // CLASS_TYPE
+		setItem(DTypeUtils.toFloatArray(obj, isize), i, j); // CLASS_TYPE
 	}
 
 	@Override
@@ -762,7 +762,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 			pos = new int[shape.length];
 		}
 
-		setItem(toFloatArray(obj, isize), pos); // CLASS_TYPE
+		setItem(DTypeUtils.toFloatArray(obj, isize), pos); // CLASS_TYPE
 	}
 
 	/**
@@ -988,7 +988,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 			}
 		} else {
 			try {
-				final float[] vr = toFloatArray(o, isize); // PRIM_TYPE // CLASS_TYPE
+				final float[] vr = DTypeUtils.toFloatArray(o, isize); // PRIM_TYPE // CLASS_TYPE
 
 				final BooleanIterator biter = getBooleanIterator(selection);
 
@@ -1039,7 +1039,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 			}
 		} else {
 			try {
-				final float[] vr = toFloatArray(o, isize); // PRIM_TYPE // CLASS_TYPE
+				final float[] vr = DTypeUtils.toFloatArray(o, isize); // PRIM_TYPE // CLASS_TYPE
 
 				final IntegerIterator iter = new IntegerIterator(index, size, isize);
 
@@ -1088,7 +1088,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 			}
 		} else {
 			try {
-				final float[] vr = toFloatArray(o, isize); // PRIM_TYPE // CLASS_TYPE
+				final float[] vr = DTypeUtils.toFloatArray(o, isize); // PRIM_TYPE // CLASS_TYPE
 
 				while (iter.hasNext()) {
 					setAbs(get1DIndex(pos), vr);
@@ -1176,7 +1176,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 					}
 				} else {
 					while (siter.hasNext() && oiter.hasNext()) {
-						final float[] val = toFloatArray(ds.getObject(pos), isize); // PRIM_TYPE // CLASS_TYPE
+						final float[] val = DTypeUtils.toFloatArray(ds.getObject(pos), isize); // PRIM_TYPE // CLASS_TYPE
 						for (int i = 0; i < isize; i++)
 							data[siter.index + i] = val[i];
 					}
@@ -1184,7 +1184,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 			}
 		} else {
 			try {
-				final float[] vr = toFloatArray(o, isize); // PRIM_TYPE // CLASS_TYPE
+				final float[] vr = DTypeUtils.toFloatArray(o, isize); // PRIM_TYPE // CLASS_TYPE
 
 				while (siter.hasNext()) {
 					for (int i = 0; i < isize; i++)

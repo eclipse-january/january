@@ -22,28 +22,28 @@ $ python fromdouble.py ../DoubleDataset.java
 from markers import transmutate #@UnresolvedImport
 
 # default dataset definition
-defds = { "DoubleDataset":["FLOAT64", "Double", "double", "getElementDoubleAbs", "toReal(obj)", "%.8g",
+defds = { "DoubleDataset":["FLOAT64", "Double", "double", "getElementDoubleAbs", "DTypeUtils.toReal(obj)", "%.8g",
 "NaN"] }
 
 defkey = defds.keys()[0]
 
 # all other dataset definitions
-fds = { "FloatDataset":["FLOAT32", "Float", "float", "getElementDoubleAbs", "(float) toReal(obj)", "%.8g",
+fds = { "FloatDataset":["FLOAT32", "Float", "float", "getElementDoubleAbs", "(float) DTypeUtils.toReal(obj)", "%.8g",
 "NaN"] }
 
 allds = { 
-"IntegerDataset":["INT32", "Integer", "int", "getElementLongAbs", "(int) toLong(obj)", "%d",
+"IntegerDataset":["INT32", "Integer", "int", "getElementLongAbs", "(int) DTypeUtils.toLong(obj)", "%d",
 "MIN_VALUE"],
-"LongDataset":["INT64", "Long", "long", "getElementLongAbs", "toLong(obj)", "%d",
+"LongDataset":["INT64", "Long", "long", "getElementLongAbs", "DTypeUtils.toLong(obj)", "%d",
 "MIN_VALUE"],
-"ShortDataset":["INT16", "Short", "short", "getElementLongAbs", "(short) toLong(obj)", "%d",
+"ShortDataset":["INT16", "Short", "short", "getElementLongAbs", "(short) DTypeUtils.toLong(obj)", "%d",
 "MIN_VALUE"],
-"ByteDataset":["INT8", "Byte", "byte", "getElementLongAbs", "(byte) toLong(obj)", "%d",
+"ByteDataset":["INT8", "Byte", "byte", "getElementLongAbs", "(byte) DTypeUtils.toLong(obj)", "%d",
 "MIN_VALUE"]
  }
 
 bds = {
-"BooleanDatasetBase":["BOOL", "Boolean", "boolean", "getElementBooleanAbs", "toBoolean(obj)", "%b", "FALSE"]
+"BooleanDatasetBase":["BOOL", "Boolean", "boolean", "getElementBooleanAbs", "DTypeUtils.toBoolean(obj)", "%b", "FALSE"]
  }
 
 ods = {

@@ -385,7 +385,7 @@ public class CompoundShortDataset extends AbstractCompoundDataset {
 
 	@Override
 	public CompoundShortDataset fill(final Object obj) {
-		short[] vr = toShortArray(obj, isize); // PRIM_TYPE // CLASS_TYPE
+		short[] vr = DTypeUtils.toShortArray(obj, isize); // PRIM_TYPE // CLASS_TYPE
 		IndexIterator iter = getIterator();
 
 		while (iter.hasNext()) {
@@ -742,18 +742,18 @@ public class CompoundShortDataset extends AbstractCompoundDataset {
 
 	@Override
 	public void setObjectAbs(final int index, final Object obj) {
-		short[] oa = toShortArray(obj, isize); // PRIM_TYPE // CLASS_TYPE
+		short[] oa = DTypeUtils.toShortArray(obj, isize); // PRIM_TYPE // CLASS_TYPE
 		setAbs(index, oa);
 	}
 
 	@Override
 	public void set(final Object obj, final int i) {
-		setItem(toShortArray(obj, isize), i); // CLASS_TYPE
+		setItem(DTypeUtils.toShortArray(obj, isize), i); // CLASS_TYPE
 	}
 
 	@Override
 	public void set(final Object obj, final int i, final int j) {
-		setItem(toShortArray(obj, isize), i, j); // CLASS_TYPE
+		setItem(DTypeUtils.toShortArray(obj, isize), i, j); // CLASS_TYPE
 	}
 
 	@Override
@@ -762,7 +762,7 @@ public class CompoundShortDataset extends AbstractCompoundDataset {
 			pos = new int[shape.length];
 		}
 
-		setItem(toShortArray(obj, isize), pos); // CLASS_TYPE
+		setItem(DTypeUtils.toShortArray(obj, isize), pos); // CLASS_TYPE
 	}
 
 	/**
@@ -988,7 +988,7 @@ public class CompoundShortDataset extends AbstractCompoundDataset {
 			}
 		} else {
 			try {
-				final short[] vr = toShortArray(o, isize); // PRIM_TYPE // CLASS_TYPE
+				final short[] vr = DTypeUtils.toShortArray(o, isize); // PRIM_TYPE // CLASS_TYPE
 
 				final BooleanIterator biter = getBooleanIterator(selection);
 
@@ -1039,7 +1039,7 @@ public class CompoundShortDataset extends AbstractCompoundDataset {
 			}
 		} else {
 			try {
-				final short[] vr = toShortArray(o, isize); // PRIM_TYPE // CLASS_TYPE
+				final short[] vr = DTypeUtils.toShortArray(o, isize); // PRIM_TYPE // CLASS_TYPE
 
 				final IntegerIterator iter = new IntegerIterator(index, size, isize);
 
@@ -1088,7 +1088,7 @@ public class CompoundShortDataset extends AbstractCompoundDataset {
 			}
 		} else {
 			try {
-				final short[] vr = toShortArray(o, isize); // PRIM_TYPE // CLASS_TYPE
+				final short[] vr = DTypeUtils.toShortArray(o, isize); // PRIM_TYPE // CLASS_TYPE
 
 				while (iter.hasNext()) {
 					setAbs(get1DIndex(pos), vr);
@@ -1176,7 +1176,7 @@ public class CompoundShortDataset extends AbstractCompoundDataset {
 					}
 				} else {
 					while (siter.hasNext() && oiter.hasNext()) {
-						final short[] val = toShortArray(ds.getObject(pos), isize); // PRIM_TYPE // CLASS_TYPE
+						final short[] val = DTypeUtils.toShortArray(ds.getObject(pos), isize); // PRIM_TYPE // CLASS_TYPE
 						for (int i = 0; i < isize; i++)
 							data[siter.index + i] = val[i];
 					}
@@ -1184,7 +1184,7 @@ public class CompoundShortDataset extends AbstractCompoundDataset {
 			}
 		} else {
 			try {
-				final short[] vr = toShortArray(o, isize); // PRIM_TYPE // CLASS_TYPE
+				final short[] vr = DTypeUtils.toShortArray(o, isize); // PRIM_TYPE // CLASS_TYPE
 
 				while (siter.hasNext()) {
 					for (int i = 0; i < isize; i++)

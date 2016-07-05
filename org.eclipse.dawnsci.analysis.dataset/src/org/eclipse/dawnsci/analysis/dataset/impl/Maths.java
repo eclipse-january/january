@@ -31178,8 +31178,8 @@ public class Maths {
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
 		final int dt = result.getDType();
-		final double pax = AbstractDataset.toReal(pa);
-		final double pbx = AbstractDataset.toReal(pb);
+		final double pax = DTypeUtils.toReal(pa);
+		final double pbx = DTypeUtils.toReal(pb);
 
 		switch(dt) {
 		case Dataset.INT8:

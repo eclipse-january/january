@@ -87,7 +87,7 @@ public class LinearAlgebra {
 			if (bchoice[i])
 				dshape[d++] = bshape[i];
 		}
-		int dtype = AbstractDataset.getBestDType(a.getDType(), b.getDType());
+		int dtype = DTypeUtils.getBestDType(a.getDType(), b.getDType());
 		Dataset data = DatasetFactory.zeros(dshape, dtype);
 
 		SliceIterator ita = a.getSliceIteratorFromAxes(null, achoice);
@@ -172,7 +172,7 @@ public class LinearAlgebra {
 			if (bchoice[i])
 				dshape[d++] = bshape[i];
 		}
-		int dtype = AbstractDataset.getBestDType(a.getDType(), b.getDType());
+		int dtype = DTypeUtils.getBestDType(a.getDType(), b.getDType());
 		Dataset data = DatasetFactory.zeros(dshape, dtype);
 
 		SliceIterator ita = a.getSliceIteratorFromAxes(null, achoice);
@@ -249,7 +249,7 @@ public class LinearAlgebra {
 		if (isa != 1 || isb != 1) {
 			throw new UnsupportedOperationException("Compound datasets not supported");
 		}
-		Dataset o = DatasetFactory.zeros(shape, AbstractDataset.getBestDType(a.getDType(), b.getDType()));
+		Dataset o = DatasetFactory.zeros(shape, DTypeUtils.getBestDType(a.getDType(), b.getDType()));
 
 		IndexIterator ita = a.getIterator();
 		IndexIterator itb = b.getIterator();
@@ -397,7 +397,7 @@ public class LinearAlgebra {
 		List<int[]> fullShapes = BroadcastUtils.broadcastShapes(shapeA, shapeB);
 
 		int[] maxShape = fullShapes.get(0);
-		Dataset c = DatasetFactory.zeros(maxShape, AbstractDataset.getBestDType(a.getDType(), b.getDType()));
+		Dataset c = DatasetFactory.zeros(maxShape, DTypeUtils.getBestDType(a.getDType(), b.getDType()));
 
 		PositionIterator ita = a.getPositionIterator(axisA);
 		PositionIterator itb = b.getPositionIterator(axisB);
@@ -437,7 +437,7 @@ public class LinearAlgebra {
 			throw new IllegalArgumentException("Axis C argument exceeds rank");
 		}
 		maxShape = addAxisToShape(maxShape, axisC, 3);
-		Dataset c = DatasetFactory.zeros(maxShape, AbstractDataset.getBestDType(a.getDType(), b.getDType()));
+		Dataset c = DatasetFactory.zeros(maxShape, DTypeUtils.getBestDType(a.getDType(), b.getDType()));
 
 		PositionIterator ita = a.getPositionIterator(axisA);
 		PositionIterator itb = b.getPositionIterator(axisB);
@@ -612,7 +612,7 @@ public class LinearAlgebra {
 		for (int i = 0; i < r; i++) {
 			nShape[i] = aShape[i] * bShape[i];
 		}
-		Dataset kron = DatasetFactory.zeros(nShape, AbstractDataset.getBestDType(a.getDType(), b.getDType()));
+		Dataset kron = DatasetFactory.zeros(nShape, DTypeUtils.getBestDType(a.getDType(), b.getDType()));
 		IndexIterator ita = a.getIterator(true);
 		IndexIterator itb = b.getIterator(true);
 		int[] pa = ita.getPos();

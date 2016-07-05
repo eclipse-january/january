@@ -22,13 +22,13 @@ $ python fromcpxdouble.py ../ComplexDoubleDataset.java
 from markers import transmutate #@UnresolvedImport
 
 # default dataset definition
-defds = { "ComplexDoubleDataset":["COMPLEX128", "Double", "double", "getElementDoubleAbs", "toReal(obj)", "%.8g",
+defds = { "ComplexDoubleDataset":["COMPLEX128", "Double", "double", "getElementDoubleAbs", "DTypeUtils.toReal(obj)", "%.8g",
 "NaN"] }
 
 defkey = defds.keys()[0]
 
 # all other dataset definitions
-fds = { "ComplexFloatDataset":["COMPLEX64", "Float", "float", "getElementDoubleAbs", "(float) toReal(obj)", "%.8g",
+fds = { "ComplexFloatDataset":["COMPLEX64", "Float", "float", "getElementDoubleAbs", "(float) DTypeUtils.toReal(obj)", "%.8g",
 "NaN"] }
 
 def generateclass(dclass):

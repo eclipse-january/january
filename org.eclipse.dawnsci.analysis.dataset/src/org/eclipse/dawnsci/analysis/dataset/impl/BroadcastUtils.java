@@ -160,7 +160,7 @@ public final class BroadcastUtils {
 		final int rt;
 		final int ar = a.getRank();
 		final int br = b.getRank();
-		final int tt = AbstractDataset.getBestDType(a.getDType(), b.getDType());
+		final int tt = DTypeUtils.getBestDType(a.getDType(), b.getDType());
 		if (ar == 0 ^ br == 0) { // ignore type of zero-rank dataset unless it's floating point 
 			if (ar == 0) {
 				rt = a.hasFloatingPointElements() ? tt : b.getDType();

@@ -252,7 +252,7 @@ public class ShortDataset extends AbstractDataset {
 
 	@Override
 	public ShortDataset fill(final Object obj) {
-		short dv = (short) toLong(obj); // PRIM_TYPE // FROM_OBJECT
+		short dv = (short) DTypeUtils.toLong(obj); // PRIM_TYPE // FROM_OBJECT
 		IndexIterator iter = getIterator();
 		while (iter.hasNext()) {
 			data[iter.index] = dv;
@@ -349,7 +349,7 @@ public class ShortDataset extends AbstractDataset {
 			throw new IndexOutOfBoundsException("Index given is outside dataset");
 		}
 
-		setAbs(index, (short) toLong(obj)); // FROM_OBJECT
+		setAbs(index, (short) DTypeUtils.toLong(obj)); // FROM_OBJECT
 	}
 
 	/**
@@ -545,12 +545,12 @@ public class ShortDataset extends AbstractDataset {
 
 	@Override
 	public void set(final Object obj, final int i) {
-		setItem((short) toLong(obj), i); // FROM_OBJECT
+		setItem((short) DTypeUtils.toLong(obj), i); // FROM_OBJECT
 	}
 
 	@Override
 	public void set(final Object obj, final int i, final int j) {
-		setItem((short) toLong(obj), i, j); // FROM_OBJECT
+		setItem((short) DTypeUtils.toLong(obj), i, j); // FROM_OBJECT
 	}
 
 	@Override
@@ -559,7 +559,7 @@ public class ShortDataset extends AbstractDataset {
 			pos = new int[shape.length];
 		}
 
-		setItem((short) toLong(obj), pos); // FROM_OBJECT
+		setItem((short) DTypeUtils.toLong(obj), pos); // FROM_OBJECT
 	}
 
 
@@ -665,7 +665,7 @@ public class ShortDataset extends AbstractDataset {
 				data[biter.index] = (short) ds.getElementLongAbs(oiter.index); // GET_ELEMENT_WITH_CAST
 			}
 		} else {
-			final short dv = (short) toLong(obj); // PRIM_TYPE // FROM_OBJECT
+			final short dv = (short) DTypeUtils.toLong(obj); // PRIM_TYPE // FROM_OBJECT
 			final BooleanIterator biter = getBooleanIterator(selection);
 
 			while (biter.hasNext()) {
@@ -692,7 +692,7 @@ public class ShortDataset extends AbstractDataset {
 				data[iter.index] = (short) ds.getElementLongAbs(oiter.index); // GET_ELEMENT_WITH_CAST
 			}
 		} else {
-			final short dv = (short) toLong(obj); // PRIM_TYPE // FROM_OBJECT
+			final short dv = (short) DTypeUtils.toLong(obj); // PRIM_TYPE // FROM_OBJECT
 			IntegerIterator iter = new IntegerIterator(index, size);
 
 			while (iter.hasNext()) {
@@ -721,7 +721,7 @@ public class ShortDataset extends AbstractDataset {
 				setItem((short) ds.getElementLongAbs(oiter.index), pos); // GET_ELEMENT_WITH_CAST
 			}
 		} else {
-			final short dv = (short) toLong(obj); // PRIM_TYPE // FROM_OBJECT
+			final short dv = (short) DTypeUtils.toLong(obj); // PRIM_TYPE // FROM_OBJECT
 
 			while (iter.hasNext()) {
 				setItem(dv, pos);
@@ -769,7 +769,7 @@ public class ShortDataset extends AbstractDataset {
 			}
 		} else {
 			try {
-				short v = (short) toLong(obj); // PRIM_TYPE // FROM_OBJECT
+				short v = (short) DTypeUtils.toLong(obj); // PRIM_TYPE // FROM_OBJECT
 
 				while (siter.hasNext())
 					data[siter.index] = v;

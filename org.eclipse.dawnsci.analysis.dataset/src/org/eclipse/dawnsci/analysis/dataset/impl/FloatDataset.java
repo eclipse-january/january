@@ -252,7 +252,7 @@ public class FloatDataset extends AbstractDataset {
 
 	@Override
 	public FloatDataset fill(final Object obj) {
-		float dv = (float) toReal(obj); // PRIM_TYPE // FROM_OBJECT
+		float dv = (float) DTypeUtils.toReal(obj); // PRIM_TYPE // FROM_OBJECT
 		IndexIterator iter = getIterator();
 		while (iter.hasNext()) {
 			data[iter.index] = dv;
@@ -349,7 +349,7 @@ public class FloatDataset extends AbstractDataset {
 			throw new IndexOutOfBoundsException("Index given is outside dataset");
 		}
 
-		setAbs(index, (float) toReal(obj)); // FROM_OBJECT
+		setAbs(index, (float) DTypeUtils.toReal(obj)); // FROM_OBJECT
 	}
 
 	/**
@@ -545,12 +545,12 @@ public class FloatDataset extends AbstractDataset {
 
 	@Override
 	public void set(final Object obj, final int i) {
-		setItem((float) toReal(obj), i); // FROM_OBJECT
+		setItem((float) DTypeUtils.toReal(obj), i); // FROM_OBJECT
 	}
 
 	@Override
 	public void set(final Object obj, final int i, final int j) {
-		setItem((float) toReal(obj), i, j); // FROM_OBJECT
+		setItem((float) DTypeUtils.toReal(obj), i, j); // FROM_OBJECT
 	}
 
 	@Override
@@ -559,7 +559,7 @@ public class FloatDataset extends AbstractDataset {
 			pos = new int[shape.length];
 		}
 
-		setItem((float) toReal(obj), pos); // FROM_OBJECT
+		setItem((float) DTypeUtils.toReal(obj), pos); // FROM_OBJECT
 	}
 
 
@@ -665,7 +665,7 @@ public class FloatDataset extends AbstractDataset {
 				data[biter.index] = (float) ds.getElementDoubleAbs(oiter.index); // GET_ELEMENT_WITH_CAST
 			}
 		} else {
-			final float dv = (float) toReal(obj); // PRIM_TYPE // FROM_OBJECT
+			final float dv = (float) DTypeUtils.toReal(obj); // PRIM_TYPE // FROM_OBJECT
 			final BooleanIterator biter = getBooleanIterator(selection);
 
 			while (biter.hasNext()) {
@@ -692,7 +692,7 @@ public class FloatDataset extends AbstractDataset {
 				data[iter.index] = (float) ds.getElementDoubleAbs(oiter.index); // GET_ELEMENT_WITH_CAST
 			}
 		} else {
-			final float dv = (float) toReal(obj); // PRIM_TYPE // FROM_OBJECT
+			final float dv = (float) DTypeUtils.toReal(obj); // PRIM_TYPE // FROM_OBJECT
 			IntegerIterator iter = new IntegerIterator(index, size);
 
 			while (iter.hasNext()) {
@@ -721,7 +721,7 @@ public class FloatDataset extends AbstractDataset {
 				setItem((float) ds.getElementDoubleAbs(oiter.index), pos); // GET_ELEMENT_WITH_CAST
 			}
 		} else {
-			final float dv = (float) toReal(obj); // PRIM_TYPE // FROM_OBJECT
+			final float dv = (float) DTypeUtils.toReal(obj); // PRIM_TYPE // FROM_OBJECT
 
 			while (iter.hasNext()) {
 				setItem(dv, pos);
@@ -769,7 +769,7 @@ public class FloatDataset extends AbstractDataset {
 			}
 		} else {
 			try {
-				float v = (float) toReal(obj); // PRIM_TYPE // FROM_OBJECT
+				float v = (float) DTypeUtils.toReal(obj); // PRIM_TYPE // FROM_OBJECT
 
 				while (siter.hasNext())
 					data[siter.index] = v;

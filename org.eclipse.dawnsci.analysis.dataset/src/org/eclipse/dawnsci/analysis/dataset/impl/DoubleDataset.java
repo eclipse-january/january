@@ -252,7 +252,7 @@ public class DoubleDataset extends AbstractDataset {
 
 	@Override
 	public DoubleDataset fill(final Object obj) {
-		double dv = toReal(obj); // PRIM_TYPE // FROM_OBJECT
+		double dv = DTypeUtils.toReal(obj); // PRIM_TYPE // FROM_OBJECT
 		IndexIterator iter = getIterator();
 		while (iter.hasNext()) {
 			data[iter.index] = dv;
@@ -349,7 +349,7 @@ public class DoubleDataset extends AbstractDataset {
 			throw new IndexOutOfBoundsException("Index given is outside dataset");
 		}
 
-		setAbs(index, toReal(obj)); // FROM_OBJECT
+		setAbs(index, DTypeUtils.toReal(obj)); // FROM_OBJECT
 	}
 
 	/**
@@ -545,12 +545,12 @@ public class DoubleDataset extends AbstractDataset {
 
 	@Override
 	public void set(final Object obj, final int i) {
-		setItem(toReal(obj), i); // FROM_OBJECT
+		setItem(DTypeUtils.toReal(obj), i); // FROM_OBJECT
 	}
 
 	@Override
 	public void set(final Object obj, final int i, final int j) {
-		setItem(toReal(obj), i, j); // FROM_OBJECT
+		setItem(DTypeUtils.toReal(obj), i, j); // FROM_OBJECT
 	}
 
 	@Override
@@ -559,7 +559,7 @@ public class DoubleDataset extends AbstractDataset {
 			pos = new int[shape.length];
 		}
 
-		setItem(toReal(obj), pos); // FROM_OBJECT
+		setItem(DTypeUtils.toReal(obj), pos); // FROM_OBJECT
 	}
 
 
@@ -665,7 +665,7 @@ public class DoubleDataset extends AbstractDataset {
 				data[biter.index] = ds.getElementDoubleAbs(oiter.index); // GET_ELEMENT_WITH_CAST
 			}
 		} else {
-			final double dv = toReal(obj); // PRIM_TYPE // FROM_OBJECT
+			final double dv = DTypeUtils.toReal(obj); // PRIM_TYPE // FROM_OBJECT
 			final BooleanIterator biter = getBooleanIterator(selection);
 
 			while (biter.hasNext()) {
@@ -692,7 +692,7 @@ public class DoubleDataset extends AbstractDataset {
 				data[iter.index] = ds.getElementDoubleAbs(oiter.index); // GET_ELEMENT_WITH_CAST
 			}
 		} else {
-			final double dv = toReal(obj); // PRIM_TYPE // FROM_OBJECT
+			final double dv = DTypeUtils.toReal(obj); // PRIM_TYPE // FROM_OBJECT
 			IntegerIterator iter = new IntegerIterator(index, size);
 
 			while (iter.hasNext()) {
@@ -721,7 +721,7 @@ public class DoubleDataset extends AbstractDataset {
 				setItem(ds.getElementDoubleAbs(oiter.index), pos); // GET_ELEMENT_WITH_CAST
 			}
 		} else {
-			final double dv = toReal(obj); // PRIM_TYPE // FROM_OBJECT
+			final double dv = DTypeUtils.toReal(obj); // PRIM_TYPE // FROM_OBJECT
 
 			while (iter.hasNext()) {
 				setItem(dv, pos);
@@ -769,7 +769,7 @@ public class DoubleDataset extends AbstractDataset {
 			}
 		} else {
 			try {
-				double v = toReal(obj); // PRIM_TYPE // FROM_OBJECT
+				double v = DTypeUtils.toReal(obj); // PRIM_TYPE // FROM_OBJECT
 
 				while (siter.hasNext())
 					data[siter.index] = v;

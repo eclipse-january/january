@@ -115,9 +115,9 @@ public class SingleInputBroadcastIterator extends IndexIterator {
 			int dt = aDataset.getDType();
 			if (aDataset.isComplex() && !allowComplex) {
 				is = 1;
-				dt = AbstractDataset.getBestFloatDType(dt);
+				dt = DTypeUtils.getBestFloatDType(dt);
 			} else if (!aDataset.hasFloatingPointElements() && !allowInteger) {
-				dt = AbstractDataset.getBestFloatDType(dt);
+				dt = DTypeUtils.getBestFloatDType(dt);
 			}
 			oDataset = DatasetFactory.zeros(is, maxShape, dt);
 			oStride = BroadcastUtils.createBroadcastStrides(oDataset, maxShape);

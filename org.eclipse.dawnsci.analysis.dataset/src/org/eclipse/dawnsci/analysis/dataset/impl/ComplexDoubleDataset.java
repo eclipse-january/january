@@ -207,8 +207,8 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 
 	@Override
 	public ComplexDoubleDataset fill(final Object obj) {
-		double vr = toReal(obj); // PRIM_TYPE // ADD_CAST
-		double vi = toImag(obj); // PRIM_TYPE // ADD_CAST
+		double vr = DTypeUtils.toReal(obj); // PRIM_TYPE // ADD_CAST
+		double vi = DTypeUtils.toImag(obj); // PRIM_TYPE // ADD_CAST
 		IndexIterator iter = getIterator();
 
 		while (iter.hasNext()) {
@@ -280,7 +280,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	@SuppressWarnings("cast")
 	@Override
 	public void setObjectAbs(final int index, final Object obj) {
-		setAbs(index, (double) toReal(obj), (double) toImag(obj)); // PRIM_TYPE
+		setAbs(index, (double) DTypeUtils.toReal(obj), (double) DTypeUtils.toImag(obj)); // PRIM_TYPE
 	}
 
 	/**
@@ -422,13 +422,13 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	@SuppressWarnings("cast")
 	@Override
 	public void set(final Object obj, final int i) {
-		setItem(new double[] {(double) toReal(obj), (double) toImag(obj)}, i); // PRIM_TYPE
+		setItem(new double[] {(double) DTypeUtils.toReal(obj), (double) DTypeUtils.toImag(obj)}, i); // PRIM_TYPE
 	}
 
 	@SuppressWarnings("cast")
 	@Override
 	public void set(final Object obj, final int i, final int j) {
-		setItem(new double[] {(double) toReal(obj), (double) toImag(obj)}, i, j); // PRIM_TYPE
+		setItem(new double[] {(double) DTypeUtils.toReal(obj), (double) DTypeUtils.toImag(obj)}, i, j); // PRIM_TYPE
 	}
 
 	@SuppressWarnings("cast")
@@ -438,7 +438,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 			pos = new int[shape.length];
 		}
 
-		setItem(new double[] {(double) toReal(obj), (double) toImag(obj)}, pos); // PRIM_TYPE
+		setItem(new double[] {(double) DTypeUtils.toReal(obj), (double) DTypeUtils.toImag(obj)}, pos); // PRIM_TYPE
 	}
 
 	/**
@@ -609,8 +609,8 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 			super.setSlice(o, siter);
 		} else {
 			try {
-				double vr = toReal(o); // PRIM_TYPE // ADD_CAST
-				double vi = toImag(o); // PRIM_TYPE // ADD_CAST
+				double vr = DTypeUtils.toReal(o); // PRIM_TYPE // ADD_CAST
+				double vi = DTypeUtils.toImag(o); // PRIM_TYPE // ADD_CAST
 
 				while (siter.hasNext()) {
 					data[siter.index]     = vr;

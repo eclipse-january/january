@@ -226,7 +226,7 @@ public class BooleanDatasetBase extends AbstractDataset {
 
 	@Override
 	public BooleanDatasetBase fill(final Object obj) {
-		boolean dv = toBoolean(obj); // PRIM_TYPE // FROM_OBJECT
+		boolean dv = DTypeUtils.toBoolean(obj); // PRIM_TYPE // FROM_OBJECT
 		IndexIterator iter = getIterator();
 		while (iter.hasNext()) {
 			data[iter.index] = dv;
@@ -323,7 +323,7 @@ public class BooleanDatasetBase extends AbstractDataset {
 			throw new IndexOutOfBoundsException("Index given is outside dataset");
 		}
 
-		setAbs(index, toBoolean(obj)); // FROM_OBJECT
+		setAbs(index, DTypeUtils.toBoolean(obj)); // FROM_OBJECT
 	}
 
 	/**
@@ -519,12 +519,12 @@ public class BooleanDatasetBase extends AbstractDataset {
 
 	@Override
 	public void set(final Object obj, final int i) {
-		setItem(toBoolean(obj), i); // FROM_OBJECT
+		setItem(DTypeUtils.toBoolean(obj), i); // FROM_OBJECT
 	}
 
 	@Override
 	public void set(final Object obj, final int i, final int j) {
-		setItem(toBoolean(obj), i, j); // FROM_OBJECT
+		setItem(DTypeUtils.toBoolean(obj), i, j); // FROM_OBJECT
 	}
 
 	@Override
@@ -533,7 +533,7 @@ public class BooleanDatasetBase extends AbstractDataset {
 			pos = new int[shape.length];
 		}
 
-		setItem(toBoolean(obj), pos); // FROM_OBJECT
+		setItem(DTypeUtils.toBoolean(obj), pos); // FROM_OBJECT
 	}
 
 
@@ -621,7 +621,7 @@ public class BooleanDatasetBase extends AbstractDataset {
 				data[biter.index] = ds.getElementBooleanAbs(oiter.index); // GET_ELEMENT_WITH_CAST
 			}
 		} else {
-			final boolean dv = toBoolean(obj); // PRIM_TYPE // FROM_OBJECT
+			final boolean dv = DTypeUtils.toBoolean(obj); // PRIM_TYPE // FROM_OBJECT
 			final BooleanIterator biter = getBooleanIterator(selection);
 
 			while (biter.hasNext()) {
@@ -648,7 +648,7 @@ public class BooleanDatasetBase extends AbstractDataset {
 				data[iter.index] = ds.getElementBooleanAbs(oiter.index); // GET_ELEMENT_WITH_CAST
 			}
 		} else {
-			final boolean dv = toBoolean(obj); // PRIM_TYPE // FROM_OBJECT
+			final boolean dv = DTypeUtils.toBoolean(obj); // PRIM_TYPE // FROM_OBJECT
 			IntegerIterator iter = new IntegerIterator(index, size);
 
 			while (iter.hasNext()) {
@@ -677,7 +677,7 @@ public class BooleanDatasetBase extends AbstractDataset {
 				setItem(ds.getElementBooleanAbs(oiter.index), pos); // GET_ELEMENT_WITH_CAST
 			}
 		} else {
-			final boolean dv = toBoolean(obj); // PRIM_TYPE // FROM_OBJECT
+			final boolean dv = DTypeUtils.toBoolean(obj); // PRIM_TYPE // FROM_OBJECT
 
 			while (iter.hasNext()) {
 				setItem(dv, pos);
@@ -725,7 +725,7 @@ public class BooleanDatasetBase extends AbstractDataset {
 			}
 		} else {
 			try {
-				boolean v = toBoolean(obj); // PRIM_TYPE // FROM_OBJECT
+				boolean v = DTypeUtils.toBoolean(obj); // PRIM_TYPE // FROM_OBJECT
 
 				while (siter.hasNext())
 					data[siter.index] = v;

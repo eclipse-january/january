@@ -58,7 +58,7 @@ public abstract class BroadcastIterator extends BroadcastIteratorBase {
 		oDataset = o;
 		outputA = a == o;
 		outputB = b == o;
-		read = AbstractDataset.isDTypeNumerical(a.getDType()) && AbstractDataset.isDTypeNumerical(b.getDType());
+		read = DTypeUtils.isDTypeNumerical(a.getDType()) && DTypeUtils.isDTypeNumerical(b.getDType());
 		asDouble = aDataset.hasFloatingPointElements() || bDataset.hasFloatingPointElements();
 		BroadcastUtils.checkItemSize(a, b, o);
 	}
