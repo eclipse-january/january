@@ -433,8 +433,8 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 		// decorator classes will be set to interpret this non-standard
 		// notification message correctly and other listeners will ignore it.
 		eNotify(new ENotificationImpl(this, Notification.SET,
-				GeometryPackage.SHAPE___SET_PROPERTY__STRING_DOUBLE, property,
-				value));
+				GeometryPackage.INODE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT,
+				property, value));
 	}
 
 	/**

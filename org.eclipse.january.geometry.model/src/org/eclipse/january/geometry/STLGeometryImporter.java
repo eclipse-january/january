@@ -13,7 +13,7 @@ package org.eclipse.january.geometry;
  * <!-- end-model-doc -->
  *
  *
- * @see org.eclipse.january.geometry.GeometryPackage#getASCIISTLGeometryImporter()
+ * @see org.eclipse.january.geometry.GeometryPackage#getSTLGeometryImporter()
  * @model
  * @generated
  */

@@ -2,22 +2,20 @@
  */
 package org.eclipse.january.geometry.tests;
 
-import junit.textui.TestRunner;
-
 import org.eclipse.january.geometry.GeometryFactory;
 import org.eclipse.january.geometry.Sphere;
 
+import junit.textui.TestRunner;
+
 /**
- * <!-- begin-user-doc -->
- * A test case for the model object '<em><b>Sphere</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A test case for the model object '
+ * <em><b>Sphere</b></em>'. <!-- end-user-doc -->
  * @generated
  */
 public class SphereTest extends ShapeTest {
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public static void main(String[] args) {
@@ -25,9 +23,9 @@ public class SphereTest extends ShapeTest {
 	}
 
 	/**
-	 * Constructs a new Sphere test case with the given name.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Constructs a new Sphere test case with the given name. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public SphereTest(String name) {
@@ -46,8 +44,7 @@ public class SphereTest extends ShapeTest {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see junit.framework.TestCase#setUp()
 	 * @generated
 	 */
@@ -57,8 +54,7 @@ public class SphereTest extends ShapeTest {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see junit.framework.TestCase#tearDown()
 	 * @generated
 	 */
@@ -67,4 +63,28 @@ public class SphereTest extends ShapeTest {
 		setFixture(null);
 	}
 
-} //SphereTest
+	/**
+	 * Check that only valid values are accepted for the properties.
+	 * 
+	 * @generated NOT
+	 */
+	public void checkProperties() {
+
+		// The sphere for testing
+		Sphere sphere = getFixture();
+
+		// Check that the radius can be set
+		sphere.setRadius(1d);
+		assertEquals(1d, sphere.getRadius());
+
+		// Check that invalid values are ignored
+		sphere.setRadius(-1);
+		assertEquals(1, sphere.getRadius());
+
+		// Check that the property map is in sync with the variable
+		assertEquals(1d, sphere.getProperty("radius"));
+		sphere.setProperty("radius", 2d);
+		assertEquals(2d, sphere.getRadius());
+	}
+
+} // SphereTest

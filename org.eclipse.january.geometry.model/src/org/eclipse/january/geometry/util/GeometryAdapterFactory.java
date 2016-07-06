@@ -128,8 +128,28 @@ public class GeometryAdapterFactory extends AdapterFactoryImpl {
 				return createIGeometryImporterAdapter();
 			}
 			@Override
-			public Adapter caseASCIISTLGeometryImporter(STLGeometryImporter object) {
-				return createASCIISTLGeometryImporterAdapter();
+			public Adapter caseSTLGeometryImporter(STLGeometryImporter object) {
+				return createSTLGeometryImporterAdapter();
+			}
+			@Override
+			public Adapter casePipe(Pipe object) {
+				return createPipeAdapter();
+			}
+			@Override
+			public Adapter caseBoundingBox(BoundingBox object) {
+				return createBoundingBoxAdapter();
+			}
+			@Override
+			public Adapter caseJunction(Junction object) {
+				return createJunctionAdapter();
+			}
+			@Override
+			public Adapter caseHeatExchanger(HeatExchanger object) {
+				return createHeatExchangerAdapter();
+			}
+			@Override
+			public Adapter caseReactor(Reactor object) {
+				return createReactorAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -362,7 +382,7 @@ public class GeometryAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.january.geometry.STLGeometryImporter <em>ASCIISTL Geometry Importer</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.january.geometry.STLGeometryImporter <em>STL Geometry Importer</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -371,7 +391,77 @@ public class GeometryAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.january.geometry.STLGeometryImporter
 	 * @generated
 	 */
-	public Adapter createASCIISTLGeometryImporterAdapter() {
+	public Adapter createSTLGeometryImporterAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.january.geometry.Pipe <em>Pipe</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.january.geometry.Pipe
+	 * @generated
+	 */
+	public Adapter createPipeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.january.geometry.BoundingBox <em>Bounding Box</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.january.geometry.BoundingBox
+	 * @generated
+	 */
+	public Adapter createBoundingBoxAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.january.geometry.Junction <em>Junction</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.january.geometry.Junction
+	 * @generated
+	 */
+	public Adapter createJunctionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.january.geometry.HeatExchanger <em>Heat Exchanger</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.january.geometry.HeatExchanger
+	 * @generated
+	 */
+	public Adapter createHeatExchangerAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.january.geometry.Reactor <em>Reactor</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.january.geometry.Reactor
+	 * @generated
+	 */
+	public Adapter createReactorAdapter() {
 		return null;
 	}
 

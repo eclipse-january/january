@@ -2,17 +2,23 @@
  */
 package org.eclipse.january.geometry.tests;
 
-import junit.framework.TestCase;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.january.geometry.GeometryFactory;
+import org.eclipse.january.geometry.GeometryPackage;
+import org.eclipse.january.geometry.Operator;
+import org.eclipse.january.geometry.Shape;
+import org.eclipse.january.geometry.Vertex;
+
+import junit.framework.TestCase;
 import junit.textui.TestRunner;
 
-import org.eclipse.january.geometry.GeometryFactory;
-import org.eclipse.january.geometry.Operator;
-
 /**
- * <!-- begin-user-doc -->
- * A test case for the model object '<em><b>Operator</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A test case for the model object '
+ * <em><b>Operator</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following operations are tested:
  * <ul>
@@ -32,15 +38,14 @@ public class OperatorTest extends TestCase {
 
 	/**
 	 * The fixture for this Operator test case.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 */
 	protected Operator fixture = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public static void main(String[] args) {
@@ -48,9 +53,9 @@ public class OperatorTest extends TestCase {
 	}
 
 	/**
-	 * Constructs a new Operator test case with the given name.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Constructs a new Operator test case with the given name. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public OperatorTest(String name) {
@@ -78,8 +83,7 @@ public class OperatorTest extends TestCase {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see junit.framework.TestCase#setUp()
 	 * @generated
 	 */
@@ -89,8 +93,7 @@ public class OperatorTest extends TestCase {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see junit.framework.TestCase#tearDown()
 	 * @generated
 	 */
@@ -100,107 +103,257 @@ public class OperatorTest extends TestCase {
 	}
 
 	/**
-	 * Tests the '{@link org.eclipse.january.geometry.INode#changeDecoratorProperty(java.lang.String, java.lang.Object) <em>Change Decorator Property</em>}' operation.
-	 * <!-- begin-user-doc -->
+	 * Tests the '
+	 * {@link org.eclipse.january.geometry.INode#changeDecoratorProperty(java.lang.String, java.lang.Object)
+	 * <em>Change Decorator Property</em>}' operation. <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.eclipse.january.geometry.INode#changeDecoratorProperty(java.lang.String, java.lang.Object)
-	 * @generated
+	 * 
+	 * @see org.eclipse.january.geometry.INode#changeDecoratorProperty(java.lang.String,
+	 *      java.lang.Object)
+	 * @generated NOT
 	 */
 	public void testChangeDecoratorProperty__String_Object() {
-		// TODO: implement this operation test method
-		// Ensure that you remove @generated or mark it @generated NOT
-		fail();
+
+		// Whether or not a notification was received
+		AtomicBoolean notified = new AtomicBoolean();
+		notified.set(false);
+
+		// Add an adapter to check for notifications
+		fixture.eAdapters().add(new AdapterImpl() {
+
+			@Override
+			public void notifyChanged(Notification notification) {
+
+				// Check that the notification has the right feature ID, the
+				// property name as the old value, and the property value as the
+				// new value
+				if (notification.getFeatureID(
+						GeometryFactory.class) == GeometryPackage.INODE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT
+						&& "test".equals(notification.getOldValue())
+						&& "value".equals((notification.getNewValue()))) {
+					notified.set(true);
+				}
+			}
+
+		});
+		fixture.changeDecoratorProperty("test", "value");
+
+		// Check that the notification was received
+		assertTrue(notified.get());
 	}
 
 	/**
-	 * Tests the '{@link org.eclipse.january.geometry.INode#getPropertyNames() <em>Get Property Names</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Tests the '{@link org.eclipse.january.geometry.INode#getPropertyNames()
+	 * <em>Get Property Names</em>}' operation. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
 	 * @see org.eclipse.january.geometry.INode#getPropertyNames()
-	 * @generated
+	 * @generated NOT
 	 */
 	public void testGetPropertyNames() {
-		// TODO: implement this operation test method
-		// Ensure that you remove @generated or mark it @generated NOT
-		fail();
+
+		// Give the operator some properties
+		fixture.setProperty("name1", 1);
+		fixture.setProperty("name2", 2);
+		fixture.setProperty("name3", 3);
+
+		// Get the list of property names and check that it is populated
+		// correctly
+		List<String> names = fixture.getPropertyNames();
+		assertTrue(names.contains("name1"));
+		assertTrue(names.contains("name2"));
+		assertTrue(names.contains("name3"));
 	}
 
 	/**
-	 * Tests the '{@link org.eclipse.january.geometry.INode#getProperty(java.lang.String) <em>Get Property</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Tests the '
+	 * {@link org.eclipse.january.geometry.INode#getProperty(java.lang.String)
+	 * <em>Get Property</em>}' operation. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
 	 * @see org.eclipse.january.geometry.INode#getProperty(java.lang.String)
-	 * @generated
+	 * @generated NOT
 	 */
 	public void testGetProperty__String() {
-		// TODO: implement this operation test method
-		// Ensure that you remove @generated or mark it @generated NOT
-		fail();
+
+		// Set some properties
+		fixture.setProperty("property1", 1);
+		fixture.setProperty("property2", 2);
+		fixture.setProperty("property3", 3);
+
+		// Check that the properties were saved
+		assertEquals(1d, fixture.getProperty("property1"));
+		assertEquals(2d, fixture.getProperty("property2"));
+		assertEquals(3d, fixture.getProperty("property3"));
 	}
 
 	/**
-	 * Tests the '{@link org.eclipse.january.geometry.INode#setProperty(java.lang.String, double) <em>Set Property</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.january.geometry.INode#setProperty(java.lang.String, double)
-	 * @generated
+	 * Tests the '
+	 * {@link org.eclipse.january.geometry.INode#setProperty(java.lang.String, double)
+	 * <em>Set Property</em>}' operation. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
+	 * @see org.eclipse.january.geometry.INode#setProperty(java.lang.String,
+	 *      double)
+	 * @generated NOT
 	 */
 	public void testSetProperty__String_double() {
-		// TODO: implement this operation test method
-		// Ensure that you remove @generated or mark it @generated NOT
-		fail();
+		// Nothing to do. See testGetProperty_String() instead
 	}
 
 	/**
-	 * Tests the '{@link org.eclipse.january.geometry.INode#addNode(org.eclipse.january.geometry.INode) <em>Add Node</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Tests the '
+	 * {@link org.eclipse.january.geometry.INode#addNode(org.eclipse.january.geometry.INode)
+	 * <em>Add Node</em>}' operation. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see org.eclipse.january.geometry.INode#addNode(org.eclipse.january.geometry.INode)
-	 * @generated
+	 * @generated NOT
 	 */
 	public void testAddNode__INode() {
-		// TODO: implement this operation test method
-		// Ensure that you remove @generated or mark it @generated NOT
-		fail();
+
+		// Create two child nodes
+		Operator child1 = GeometryFactory.eINSTANCE.createOperator();
+		child1.setName("child1");
+		Operator child2 = GeometryFactory.eINSTANCE.createOperator();
+		child2.setName("child2");
+
+		// Add the children to a test object
+		fixture.addNode(child1);
+		fixture.addNode(child2);
+
+		// Check that the children are in the nodes list
+		assertTrue("child1".equals(fixture.getNodes().get(0).getName()));
+		assertTrue("child2".equals(fixture.getNodes().get(1).getName()));
+
+		// Try adding null
+		fixture.addNode(null);
+
+		// The list shouldn't have changed
+		assertEquals(2, fixture.getNodes().size());
+
+		// Try adding a node that's already in the list
+		fixture.addNode(child1);
+
+		// The list shouldn't have changed
+		assertEquals(2, fixture.getNodes().size());
+
+		// Remove a child from the list
+		fixture.removeNode(child1);
+
+		// Check that the child is now gone
+		assertEquals(1, fixture.getNodes().size());
+		assertTrue("child2".equals(fixture.getNodes().get(0).getName()));
+
+		// Try removing it again
+		fixture.removeNode(child1);
+
+		// The list shouldn't have changed
+		assertEquals(1, fixture.getNodes().size());
+
+		// Try removing null
+		fixture.removeNode(null);
+
+		// The list shouldn't have changed
+		assertEquals(1, fixture.getNodes().size());
 	}
 
 	/**
-	 * Tests the '{@link org.eclipse.january.geometry.INode#removeNode(org.eclipse.january.geometry.INode) <em>Remove Node</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Tests the '
+	 * {@link org.eclipse.january.geometry.INode#removeNode(org.eclipse.january.geometry.INode)
+	 * <em>Remove Node</em>}' operation. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
 	 * @see org.eclipse.january.geometry.INode#removeNode(org.eclipse.january.geometry.INode)
-	 * @generated
+	 * @generated NOT
 	 */
 	public void testRemoveNode__INode() {
-		// TODO: implement this operation test method
-		// Ensure that you remove @generated or mark it @generated NOT
-		fail();
+		// Nothing to do, see testAddNode_INode() instead
 	}
 
 	/**
-	 * Tests the '{@link org.eclipse.january.geometry.INode#copy(java.lang.Object) <em>Copy</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Tests the '
+	 * {@link org.eclipse.january.geometry.INode#copy(java.lang.Object)
+	 * <em>Copy</em>}' operation. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see org.eclipse.january.geometry.INode#copy(java.lang.Object)
-	 * @generated
+	 * @generated NOT
 	 */
 	public void testCopy__Object() {
-		// TODO: implement this operation test method
-		// Ensure that you remove @generated or mark it @generated NOT
-		fail();
+
+		// Create two shapes
+		Shape shape1 = GeometryFactory.eINSTANCE.createShape();
+		shape1.setName("shape1");
+		Shape shape2 = GeometryFactory.eINSTANCE.createShape();
+		shape2.setName("shape2");
+
+		// Add the shapes to the operator
+		fixture.addNode(shape1);
+		fixture.addNode(shape2);
+
+		// Set the operator's center
+		Vertex center = GeometryFactory.eINSTANCE.createVertex();
+		center.setX(8d);
+		fixture.setCenter(center);
+
+		// Set the operator's data members.
+		fixture.setId(1);
+		fixture.setName("test");
+		fixture.setType("testType");
+		fixture.setProperty("testProperty", 4);
+
+		// Set the operator's parent
+		Operator parent = GeometryFactory.eINSTANCE.createOperator();
+		fixture.setParent(parent);
+
+		// Create a copy
+		Operator clone = GeometryFactory.eINSTANCE.createOperator();
+		clone.copy(fixture);
+
+		// The clone's nodes should have also been cloned
+		assertTrue("shape1".equals(clone.getNodes().get(0).getName()));
+		assertTrue("shape2".equals(clone.getNodes().get(1).getName()));
+
+		// Check that the operator has the correct center
+		assertTrue(8d == clone.getCenter().getX());
+
+		// Check the operator's data members
+		assertTrue(1 == clone.getId());
+		assertTrue("test".equals(clone.getName()));
+		assertTrue("testType".equals(clone.getType()));
+		assertTrue("testProperty".equals(clone.getProperty("testProperty")));
+
+		// The clone should not kept a reference to the original's parent
+		assertNull(fixture.getParent());
+
+		// Try to copy something that isn't an operator
+		fixture.copy("invalid object");
+
+		// Make sure that nothing changed
+		assertTrue("shape1".equals(clone.getNodes().get(0).getName()));
+		assertTrue("shape2".equals(clone.getNodes().get(1).getName()));
+
+		// Check that the operator has the correct center
+		assertTrue(8d == clone.getCenter().getX());
+
+		// Check the operator's data members
+		assertTrue(1 == clone.getId());
+		assertTrue("test".equals(clone.getName()));
+		assertTrue("testType".equals(clone.getType()));
+		assertTrue("testProperty".equals(clone.getProperty("testProperty")));
 	}
 
 	/**
-	 * Tests the '{@link org.eclipse.january.geometry.INode#clone() <em>Clone</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Tests the '{@link org.eclipse.january.geometry.INode#clone()
+	 * <em>Clone</em>}' operation. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see org.eclipse.january.geometry.INode#clone()
-	 * @generated
+	 * @generated NOT
 	 */
 	public void testClone() {
-		// TODO: implement this operation test method
-		// Ensure that you remove @generated or mark it @generated NOT
-		fail();
+
+		// Check that clones are of the proper type
+		assertTrue(fixture.clone() instanceof Operator);
 	}
 
-} //OperatorTest
+} // OperatorTest

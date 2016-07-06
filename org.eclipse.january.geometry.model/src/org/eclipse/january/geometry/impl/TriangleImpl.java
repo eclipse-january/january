@@ -2,7 +2,10 @@
  */
 package org.eclipse.january.geometry.impl;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -129,6 +132,80 @@ public class TriangleImpl extends MinimalEObjectImpl.Container
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	@Override
+	public boolean equals(Object otherObject) {
+
+		// To be equal, the other object must be a triangle
+		if (otherObject instanceof Triangle) {
+			Triangle otherTriangle = (Triangle) otherObject;
+
+			// Check that the normal vectors are equal
+			if (normal.equals(otherTriangle.getNormal())) {
+
+				// Get the other triangle's vertices
+				EList<Vertex> otherVertices = otherTriangle.getVertices();
+
+				// The triangles must both be either initialized (ie having
+				// three vertices) or not to be equal
+				if (vertices.size() == otherVertices.size()) {
+
+					// If any vertex is in one list but not the other, the
+					// triangles are not equal
+					for (Vertex vertex : vertices) {
+						if (!otherVertices.contains(vertex)) {
+							return false;
+						}
+					}
+
+					// All tests passed, the triangles are equal
+					return true;
+				}
+
+			}
+		}
+
+		// One of the tests failed, so the triangles are not equal
+		return false;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	@Override
+	public int hashCode() {
+
+		// Add the normal's hash code
+		int hash = 31;
+		hash = hash * 31 + normal.hashCode();
+
+		// The list of hash codes from the vertices
+		ArrayList<Integer> vertexHashes = new ArrayList<Integer>();
+
+		// Get each vertex's hash code
+		for (Vertex vertex : vertices) {
+			vertexHashes.add(vertex.hashCode());
+		}
+
+		// We must reorder the hashes so that two triangles will have the same
+		// hash code if they have the same vertices, regardless of order in the
+		// list
+		Collections.sort(vertexHashes);
+
+		// Add each vertex's hash, multiplying by 31 each time.
+		for (Integer vHash : vertexHashes) {
+			hash = hash * 31 + normal.hashCode();
+		}
+
+		return hash;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -207,6 +284,22 @@ public class TriangleImpl extends MinimalEObjectImpl.Container
 				return vertices != null && !vertices.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments)
+			throws InvocationTargetException {
+		switch (operationID) {
+			case GeometryPackage.TRIANGLE___EQUALS__OBJECT:
+				return equals(arguments.get(0));
+			case GeometryPackage.TRIANGLE___HASH_CODE:
+				return hashCode();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 } // TriangleImpl

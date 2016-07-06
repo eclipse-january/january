@@ -139,13 +139,58 @@ public interface GeometryFactory extends EFactory {
 	Material createMaterial();
 
 	/**
-	 * Returns a new object of class '<em>ASCIISTL Geometry Importer</em>'.
+	 * Returns a new object of class '<em>STL Geometry Importer</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>ASCIISTL Geometry Importer</em>'.
+	 * @return a new object of class '<em>STL Geometry Importer</em>'.
 	 * @generated
 	 */
-	STLGeometryImporter createASCIISTLGeometryImporter();
+	STLGeometryImporter createSTLGeometryImporter();
+
+	/**
+	 * Returns a new object of class '<em>Pipe</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Pipe</em>'.
+	 * @generated
+	 */
+	Pipe createPipe();
+
+	/**
+	 * Returns a new object of class '<em>Bounding Box</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Bounding Box</em>'.
+	 * @generated
+	 */
+	BoundingBox createBoundingBox();
+
+	/**
+	 * Returns a new object of class '<em>Junction</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Junction</em>'.
+	 * @generated
+	 */
+	Junction createJunction();
+
+	/**
+	 * Returns a new object of class '<em>Heat Exchanger</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Heat Exchanger</em>'.
+	 * @generated
+	 */
+	HeatExchanger createHeatExchanger();
+
+	/**
+	 * Returns a new object of class '<em>Reactor</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Reactor</em>'.
+	 * @generated
+	 */
+	Reactor createReactor();
 
 	/**
 	 * Returns the package supported by this factory.

@@ -2,22 +2,21 @@
  */
 package org.eclipse.january.geometry.tests;
 
-import junit.textui.TestRunner;
-
 import org.eclipse.january.geometry.GeometryFactory;
 import org.eclipse.january.geometry.Union;
+import org.junit.Test;
+
+import junit.textui.TestRunner;
 
 /**
- * <!-- begin-user-doc -->
- * A test case for the model object '<em><b>Union</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A test case for the model object '
+ * <em><b>Union</b></em>'. <!-- end-user-doc -->
  * @generated
  */
 public class UnionTest extends OperatorTest {
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public static void main(String[] args) {
@@ -26,8 +25,8 @@ public class UnionTest extends OperatorTest {
 
 	/**
 	 * Constructs a new Union test case with the given name.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public UnionTest(String name) {
@@ -46,8 +45,7 @@ public class UnionTest extends OperatorTest {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see junit.framework.TestCase#setUp()
 	 * @generated
 	 */
@@ -57,8 +55,7 @@ public class UnionTest extends OperatorTest {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see junit.framework.TestCase#tearDown()
 	 * @generated
 	 */
@@ -67,4 +64,16 @@ public class UnionTest extends OperatorTest {
 		setFixture(null);
 	}
 
-} //UnionTest
+	/**
+	 * Check that the clone operation returns a copy.
+	 * 
+	 * @generated NOT
+	 */
+	@Test
+	public void checkClone() {
+
+		// Check that clones are of the proper type
+		assertTrue(fixture.clone() instanceof Union);
+	}
+
+} // UnionTest

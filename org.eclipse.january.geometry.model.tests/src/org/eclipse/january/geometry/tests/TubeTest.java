@@ -2,22 +2,20 @@
  */
 package org.eclipse.january.geometry.tests;
 
-import junit.textui.TestRunner;
-
 import org.eclipse.january.geometry.GeometryFactory;
 import org.eclipse.january.geometry.Tube;
 
+import junit.textui.TestRunner;
+
 /**
- * <!-- begin-user-doc -->
- * A test case for the model object '<em><b>Tube</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A test case for the model object '
+ * <em><b>Tube</b></em>'. <!-- end-user-doc -->
  * @generated
  */
 public class TubeTest extends ShapeTest {
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public static void main(String[] args) {
@@ -26,8 +24,8 @@ public class TubeTest extends ShapeTest {
 
 	/**
 	 * Constructs a new Tube test case with the given name.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public TubeTest(String name) {
@@ -36,8 +34,8 @@ public class TubeTest extends ShapeTest {
 
 	/**
 	 * Returns the fixture for this Tube test case.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -46,8 +44,7 @@ public class TubeTest extends ShapeTest {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see junit.framework.TestCase#setUp()
 	 * @generated
 	 */
@@ -57,8 +54,7 @@ public class TubeTest extends ShapeTest {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see junit.framework.TestCase#tearDown()
 	 * @generated
 	 */
@@ -67,4 +63,53 @@ public class TubeTest extends ShapeTest {
 		setFixture(null);
 	}
 
-} //TubeTest
+	/**
+	 * Check that only valid values are accepted for the properties.
+	 * 
+	 * @generated NOT
+	 */
+	public void checkProperties() {
+
+		// The tube for testing
+		Tube tube = getFixture();
+
+		// Check that the height can be set
+		tube.setHeight(1d);
+		assertEquals(1d, tube.getHeight());
+
+		// Check that invalid values are ignored
+		tube.setHeight(-1d);
+		assertEquals(1d, tube.getHeight());
+
+		// Check that the radii can be set
+		tube.setInnerRadius(1d);
+		assertEquals(1d, tube.getInnerRadius());
+		tube.setRadius(2d);
+		assertEquals(2d, tube.getInnerRadius());
+
+		// Check that invalid values are ignored
+		tube.setInnerRadius(-1d);
+		assertEquals(1d, tube.getInnerRadius());
+		tube.setRadius(-1d);
+		assertEquals(2d, tube.getRadius());
+
+		// innerRadius <= radius
+		tube.setInnerRadius(3d);
+		assertEquals(1d, tube.getInnerRadius());
+		tube.setRadius(0.5d);
+		assertEquals(2d, tube.getRadius());
+
+		// Check that the property map is in sync with the variable
+		assertEquals(1d, tube.getProperty("height"));
+		tube.setProperty("height", 2d);
+		assertEquals(2d, tube.getHeight());
+		assertEquals(2d, tube.getProperty("radius"));
+		tube.setProperty("radius", 3d);
+		assertEquals(3d, tube.getInnerRadius());
+		assertEquals(1d, tube.getProperty("innerRadius"));
+		tube.setProperty("innerRadius", 2d);
+		assertEquals(2d, tube.getInnerRadius());
+
+	}
+
+} // TubeTest

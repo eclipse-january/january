@@ -68,4 +68,20 @@ public interface Triangle extends EObject {
 	 */
 	EList<Vertex> getVertices();
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model otherObjectDataType="org.eclipse.january.geometry.Object"
+	 * @generated
+	 */
+	boolean equals(Object otherObject);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	int hashCode();
+
 } // Triangle

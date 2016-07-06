@@ -431,13 +431,31 @@ public interface GeometryPackage extends EPackage {
 	int TRIANGLE_FEATURE_COUNT = 2;
 
 	/**
+	 * The operation id for the '<em>Equals</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIANGLE___EQUALS__OBJECT = 0;
+
+	/**
+	 * The operation id for the '<em>Hash Code</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIANGLE___HASH_CODE = 1;
+
+	/**
 	 * The number of operations of the '<em>Triangle</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRIANGLE_OPERATION_COUNT = 0;
+	int TRIANGLE_OPERATION_COUNT = 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.january.geometry.impl.VertexImpl <em>Vertex</em>}' class.
@@ -495,13 +513,31 @@ public interface GeometryPackage extends EPackage {
 	int VERTEX___CLONE = 0;
 
 	/**
+	 * The operation id for the '<em>Equals</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERTEX___EQUALS__OBJECT = 1;
+
+	/**
+	 * The operation id for the '<em>Hash Code</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERTEX___HASH_CODE = 2;
+
+	/**
 	 * The number of operations of the '<em>Vertex</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VERTEX_OPERATION_COUNT = 1;
+	int VERTEX_OPERATION_COUNT = 3;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.january.geometry.impl.SphereImpl <em>Sphere</em>}' class.
@@ -2153,14 +2189,14 @@ public interface GeometryPackage extends EPackage {
 	int IGEOMETRY_IMPORTER_OPERATION_COUNT = 1;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.january.geometry.impl.STLGeometryImporterImpl <em>ASCIISTL Geometry Importer</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.january.geometry.impl.STLGeometryImporterImpl <em>STL Geometry Importer</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.eclipse.january.geometry.impl.STLGeometryImporterImpl
-	 * @see org.eclipse.january.geometry.impl.GeometryPackageImpl#getASCIISTLGeometryImporter()
+	 * @see org.eclipse.january.geometry.impl.GeometryPackageImpl#getSTLGeometryImporter()
 	 * @generated
 	 */
-	int ASCIISTL_GEOMETRY_IMPORTER = 15;
+	int STL_GEOMETRY_IMPORTER = 15;
 
 	/**
 	 * The feature id for the '<em><b>File Types</b></em>' attribute list.
@@ -2169,7 +2205,7 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ASCIISTL_GEOMETRY_IMPORTER__FILE_TYPES = IGEOMETRY_IMPORTER__FILE_TYPES;
+	int STL_GEOMETRY_IMPORTER__FILE_TYPES = IGEOMETRY_IMPORTER__FILE_TYPES;
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
@@ -2178,16 +2214,16 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ASCIISTL_GEOMETRY_IMPORTER__DESCRIPTION = IGEOMETRY_IMPORTER__DESCRIPTION;
+	int STL_GEOMETRY_IMPORTER__DESCRIPTION = IGEOMETRY_IMPORTER__DESCRIPTION;
 
 	/**
-	 * The number of structural features of the '<em>ASCIISTL Geometry Importer</em>' class.
+	 * The number of structural features of the '<em>STL Geometry Importer</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ASCIISTL_GEOMETRY_IMPORTER_FEATURE_COUNT = IGEOMETRY_IMPORTER_FEATURE_COUNT + 0;
+	int STL_GEOMETRY_IMPORTER_FEATURE_COUNT = IGEOMETRY_IMPORTER_FEATURE_COUNT + 0;
 
 	/**
 	 * The operation id for the '<em>Load</em>' operation.
@@ -2196,16 +2232,966 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ASCIISTL_GEOMETRY_IMPORTER___LOAD__PATH = IGEOMETRY_IMPORTER___LOAD__PATH;
+	int STL_GEOMETRY_IMPORTER___LOAD__PATH = IGEOMETRY_IMPORTER___LOAD__PATH;
 
 	/**
-	 * The number of operations of the '<em>ASCIISTL Geometry Importer</em>' class.
+	 * The number of operations of the '<em>STL Geometry Importer</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ASCIISTL_GEOMETRY_IMPORTER_OPERATION_COUNT = IGEOMETRY_IMPORTER_OPERATION_COUNT + 0;
+	int STL_GEOMETRY_IMPORTER_OPERATION_COUNT = IGEOMETRY_IMPORTER_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.january.geometry.impl.PipeImpl <em>Pipe</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.january.geometry.impl.PipeImpl
+	 * @see org.eclipse.january.geometry.impl.GeometryPackageImpl#getPipe()
+	 * @generated
+	 */
+	int PIPE = 16;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PIPE__NAME = TUBE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PIPE__ID = TUBE__ID;
+
+	/**
+	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PIPE__NODES = TUBE__NODES;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PIPE__TYPE = TUBE__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Triangles</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PIPE__TRIANGLES = TUBE__TRIANGLES;
+
+	/**
+	 * The feature id for the '<em><b>Center</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PIPE__CENTER = TUBE__CENTER;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PIPE__PARENT = TUBE__PARENT;
+
+	/**
+	 * The feature id for the '<em><b>Material</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PIPE__MATERIAL = TUBE__MATERIAL;
+
+	/**
+	 * The feature id for the '<em><b>Height</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PIPE__HEIGHT = TUBE__HEIGHT;
+
+	/**
+	 * The feature id for the '<em><b>Inner Radius</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PIPE__INNER_RADIUS = TUBE__INNER_RADIUS;
+
+	/**
+	 * The feature id for the '<em><b>Radius</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PIPE__RADIUS = TUBE__RADIUS;
+
+	/**
+	 * The feature id for the '<em><b>Num Rods</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PIPE__NUM_RODS = TUBE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Pitch</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PIPE__PITCH = TUBE_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Rod Diameter</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PIPE__ROD_DIAMETER = TUBE_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Rotation X</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PIPE__ROTATION_X = TUBE_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Rotation Y</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PIPE__ROTATION_Y = TUBE_FEATURE_COUNT + 4;
+
+	/**
+	 * The feature id for the '<em><b>Rotation Z</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PIPE__ROTATION_Z = TUBE_FEATURE_COUNT + 5;
+
+	/**
+	 * The number of structural features of the '<em>Pipe</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PIPE_FEATURE_COUNT = TUBE_FEATURE_COUNT + 6;
+
+	/**
+	 * The operation id for the '<em>Change Decorator Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PIPE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT = TUBE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT;
+
+	/**
+	 * The operation id for the '<em>Get Property Names</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PIPE___GET_PROPERTY_NAMES = TUBE___GET_PROPERTY_NAMES;
+
+	/**
+	 * The operation id for the '<em>Get Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PIPE___GET_PROPERTY__STRING = TUBE___GET_PROPERTY__STRING;
+
+	/**
+	 * The operation id for the '<em>Set Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PIPE___SET_PROPERTY__STRING_DOUBLE = TUBE___SET_PROPERTY__STRING_DOUBLE;
+
+	/**
+	 * The operation id for the '<em>Add Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PIPE___ADD_NODE__INODE = TUBE___ADD_NODE__INODE;
+
+	/**
+	 * The operation id for the '<em>Remove Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PIPE___REMOVE_NODE__INODE = TUBE___REMOVE_NODE__INODE;
+
+	/**
+	 * The operation id for the '<em>Copy</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PIPE___COPY__OBJECT = TUBE___COPY__OBJECT;
+
+	/**
+	 * The operation id for the '<em>Clone</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PIPE___CLONE = TUBE___CLONE;
+
+	/**
+	 * The operation id for the '<em>Get Lower Edge</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PIPE___GET_LOWER_EDGE = TUBE_OPERATION_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Get Upper Edge</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PIPE___GET_UPPER_EDGE = TUBE_OPERATION_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Pipe</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PIPE_OPERATION_COUNT = TUBE_OPERATION_COUNT + 2;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.january.geometry.impl.BoundingBoxImpl <em>Bounding Box</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.january.geometry.impl.BoundingBoxImpl
+	 * @see org.eclipse.january.geometry.impl.GeometryPackageImpl#getBoundingBox()
+	 * @generated
+	 */
+	int BOUNDING_BOX = 17;
+
+	/**
+	 * The feature id for the '<em><b>Max X</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BOUNDING_BOX__MAX_X = 0;
+
+	/**
+	 * The feature id for the '<em><b>Max Y</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BOUNDING_BOX__MAX_Y = 1;
+
+	/**
+	 * The feature id for the '<em><b>Max Z</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BOUNDING_BOX__MAX_Z = 2;
+
+	/**
+	 * The feature id for the '<em><b>Min X</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BOUNDING_BOX__MIN_X = 3;
+
+	/**
+	 * The feature id for the '<em><b>Min Y</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BOUNDING_BOX__MIN_Y = 4;
+
+	/**
+	 * The feature id for the '<em><b>Min Z</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BOUNDING_BOX__MIN_Z = 5;
+
+	/**
+	 * The number of structural features of the '<em>Bounding Box</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BOUNDING_BOX_FEATURE_COUNT = 6;
+
+	/**
+	 * The number of operations of the '<em>Bounding Box</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BOUNDING_BOX_OPERATION_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.january.geometry.impl.JunctionImpl <em>Junction</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.january.geometry.impl.JunctionImpl
+	 * @see org.eclipse.january.geometry.impl.GeometryPackageImpl#getJunction()
+	 * @generated
+	 */
+	int JUNCTION = 18;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JUNCTION__NAME = SHAPE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JUNCTION__ID = SHAPE__ID;
+
+	/**
+	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JUNCTION__NODES = SHAPE__NODES;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JUNCTION__TYPE = SHAPE__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Triangles</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JUNCTION__TRIANGLES = SHAPE__TRIANGLES;
+
+	/**
+	 * The feature id for the '<em><b>Center</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JUNCTION__CENTER = SHAPE__CENTER;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JUNCTION__PARENT = SHAPE__PARENT;
+
+	/**
+	 * The feature id for the '<em><b>Material</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JUNCTION__MATERIAL = SHAPE__MATERIAL;
+
+	/**
+	 * The feature id for the '<em><b>Height</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JUNCTION__HEIGHT = SHAPE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>ZIn</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JUNCTION__ZIN = SHAPE_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>ZOut</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JUNCTION__ZOUT = SHAPE_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Input</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JUNCTION__INPUT = SHAPE_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Output</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JUNCTION__OUTPUT = SHAPE_FEATURE_COUNT + 4;
+
+	/**
+	 * The number of structural features of the '<em>Junction</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JUNCTION_FEATURE_COUNT = SHAPE_FEATURE_COUNT + 5;
+
+	/**
+	 * The operation id for the '<em>Change Decorator Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JUNCTION___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT = SHAPE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT;
+
+	/**
+	 * The operation id for the '<em>Get Property Names</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JUNCTION___GET_PROPERTY_NAMES = SHAPE___GET_PROPERTY_NAMES;
+
+	/**
+	 * The operation id for the '<em>Get Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JUNCTION___GET_PROPERTY__STRING = SHAPE___GET_PROPERTY__STRING;
+
+	/**
+	 * The operation id for the '<em>Set Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JUNCTION___SET_PROPERTY__STRING_DOUBLE = SHAPE___SET_PROPERTY__STRING_DOUBLE;
+
+	/**
+	 * The operation id for the '<em>Add Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JUNCTION___ADD_NODE__INODE = SHAPE___ADD_NODE__INODE;
+
+	/**
+	 * The operation id for the '<em>Remove Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JUNCTION___REMOVE_NODE__INODE = SHAPE___REMOVE_NODE__INODE;
+
+	/**
+	 * The operation id for the '<em>Copy</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JUNCTION___COPY__OBJECT = SHAPE___COPY__OBJECT;
+
+	/**
+	 * The operation id for the '<em>Clone</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JUNCTION___CLONE = SHAPE___CLONE;
+
+	/**
+	 * The number of operations of the '<em>Junction</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JUNCTION_OPERATION_COUNT = SHAPE_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.january.geometry.impl.HeatExchangerImpl <em>Heat Exchanger</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.january.geometry.impl.HeatExchangerImpl
+	 * @see org.eclipse.january.geometry.impl.GeometryPackageImpl#getHeatExchanger()
+	 * @generated
+	 */
+	int HEAT_EXCHANGER = 19;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HEAT_EXCHANGER__NAME = SHAPE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HEAT_EXCHANGER__ID = SHAPE__ID;
+
+	/**
+	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HEAT_EXCHANGER__NODES = SHAPE__NODES;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HEAT_EXCHANGER__TYPE = SHAPE__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Triangles</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HEAT_EXCHANGER__TRIANGLES = SHAPE__TRIANGLES;
+
+	/**
+	 * The feature id for the '<em><b>Center</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HEAT_EXCHANGER__CENTER = SHAPE__CENTER;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HEAT_EXCHANGER__PARENT = SHAPE__PARENT;
+
+	/**
+	 * The feature id for the '<em><b>Material</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HEAT_EXCHANGER__MATERIAL = SHAPE__MATERIAL;
+
+	/**
+	 * The feature id for the '<em><b>Pipe</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HEAT_EXCHANGER__PIPE = SHAPE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Input</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HEAT_EXCHANGER__INPUT = SHAPE_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Output</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HEAT_EXCHANGER__OUTPUT = SHAPE_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>Heat Exchanger</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HEAT_EXCHANGER_FEATURE_COUNT = SHAPE_FEATURE_COUNT + 3;
+
+	/**
+	 * The operation id for the '<em>Change Decorator Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HEAT_EXCHANGER___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT = SHAPE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT;
+
+	/**
+	 * The operation id for the '<em>Get Property Names</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HEAT_EXCHANGER___GET_PROPERTY_NAMES = SHAPE___GET_PROPERTY_NAMES;
+
+	/**
+	 * The operation id for the '<em>Get Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HEAT_EXCHANGER___GET_PROPERTY__STRING = SHAPE___GET_PROPERTY__STRING;
+
+	/**
+	 * The operation id for the '<em>Set Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HEAT_EXCHANGER___SET_PROPERTY__STRING_DOUBLE = SHAPE___SET_PROPERTY__STRING_DOUBLE;
+
+	/**
+	 * The operation id for the '<em>Add Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HEAT_EXCHANGER___ADD_NODE__INODE = SHAPE___ADD_NODE__INODE;
+
+	/**
+	 * The operation id for the '<em>Remove Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HEAT_EXCHANGER___REMOVE_NODE__INODE = SHAPE___REMOVE_NODE__INODE;
+
+	/**
+	 * The operation id for the '<em>Copy</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HEAT_EXCHANGER___COPY__OBJECT = SHAPE___COPY__OBJECT;
+
+	/**
+	 * The operation id for the '<em>Clone</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HEAT_EXCHANGER___CLONE = SHAPE___CLONE;
+
+	/**
+	 * The number of operations of the '<em>Heat Exchanger</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HEAT_EXCHANGER_OPERATION_COUNT = SHAPE_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.january.geometry.impl.ReactorImpl <em>Reactor</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.january.geometry.impl.ReactorImpl
+	 * @see org.eclipse.january.geometry.impl.GeometryPackageImpl#getReactor()
+	 * @generated
+	 */
+	int REACTOR = 20;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REACTOR__NAME = SHAPE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REACTOR__ID = SHAPE__ID;
+
+	/**
+	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REACTOR__NODES = SHAPE__NODES;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REACTOR__TYPE = SHAPE__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Triangles</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REACTOR__TRIANGLES = SHAPE__TRIANGLES;
+
+	/**
+	 * The feature id for the '<em><b>Center</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REACTOR__CENTER = SHAPE__CENTER;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REACTOR__PARENT = SHAPE__PARENT;
+
+	/**
+	 * The feature id for the '<em><b>Material</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REACTOR__MATERIAL = SHAPE__MATERIAL;
+
+	/**
+	 * The feature id for the '<em><b>Pipes</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REACTOR__PIPES = SHAPE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Reactor</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REACTOR_FEATURE_COUNT = SHAPE_FEATURE_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Change Decorator Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REACTOR___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT = SHAPE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT;
+
+	/**
+	 * The operation id for the '<em>Get Property Names</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REACTOR___GET_PROPERTY_NAMES = SHAPE___GET_PROPERTY_NAMES;
+
+	/**
+	 * The operation id for the '<em>Get Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REACTOR___GET_PROPERTY__STRING = SHAPE___GET_PROPERTY__STRING;
+
+	/**
+	 * The operation id for the '<em>Set Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REACTOR___SET_PROPERTY__STRING_DOUBLE = SHAPE___SET_PROPERTY__STRING_DOUBLE;
+
+	/**
+	 * The operation id for the '<em>Add Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REACTOR___ADD_NODE__INODE = SHAPE___ADD_NODE__INODE;
+
+	/**
+	 * The operation id for the '<em>Remove Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REACTOR___REMOVE_NODE__INODE = SHAPE___REMOVE_NODE__INODE;
+
+	/**
+	 * The operation id for the '<em>Copy</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REACTOR___COPY__OBJECT = SHAPE___COPY__OBJECT;
+
+	/**
+	 * The operation id for the '<em>Clone</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REACTOR___CLONE = SHAPE___CLONE;
+
+	/**
+	 * The number of operations of the '<em>Reactor</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REACTOR_OPERATION_COUNT = SHAPE_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '<em>Path</em>' data type.
@@ -2215,7 +3201,7 @@ public interface GeometryPackage extends EPackage {
 	 * @see org.eclipse.january.geometry.impl.GeometryPackageImpl#getPath()
 	 * @generated
 	 */
-	int PATH = 16;
+	int PATH = 21;
 
 	/**
 	 * The meta object id for the '<em>Object</em>' data type.
@@ -2225,7 +3211,7 @@ public interface GeometryPackage extends EPackage {
 	 * @see org.eclipse.january.geometry.impl.GeometryPackageImpl#getObject()
 	 * @generated
 	 */
-	int OBJECT = 17;
+	int OBJECT = 22;
 
 
 	/**
@@ -2282,6 +3268,26 @@ public interface GeometryPackage extends EPackage {
 	EReference getTriangle_Vertices();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.january.geometry.Triangle#equals(java.lang.Object) <em>Equals</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Equals</em>' operation.
+	 * @see org.eclipse.january.geometry.Triangle#equals(java.lang.Object)
+	 * @generated
+	 */
+	EOperation getTriangle__Equals__Object();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.january.geometry.Triangle#hashCode() <em>Hash Code</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Hash Code</em>' operation.
+	 * @see org.eclipse.january.geometry.Triangle#hashCode()
+	 * @generated
+	 */
+	EOperation getTriangle__HashCode();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.january.geometry.Vertex <em>Vertex</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2333,6 +3339,26 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getVertex__Clone();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.january.geometry.Vertex#equals(java.lang.Object) <em>Equals</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Equals</em>' operation.
+	 * @see org.eclipse.january.geometry.Vertex#equals(java.lang.Object)
+	 * @generated
+	 */
+	EOperation getVertex__Equals__Object();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.january.geometry.Vertex#hashCode() <em>Hash Code</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Hash Code</em>' operation.
+	 * @see org.eclipse.january.geometry.Vertex#hashCode()
+	 * @generated
+	 */
+	EOperation getVertex__HashCode();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.january.geometry.Sphere <em>Sphere</em>}'.
@@ -2721,14 +3747,315 @@ public interface GeometryPackage extends EPackage {
 	EOperation getIGeometryImporter__Load__Path();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.january.geometry.STLGeometryImporter <em>ASCIISTL Geometry Importer</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.january.geometry.STLGeometryImporter <em>STL Geometry Importer</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>ASCIISTL Geometry Importer</em>'.
+	 * @return the meta object for class '<em>STL Geometry Importer</em>'.
 	 * @see org.eclipse.january.geometry.STLGeometryImporter
 	 * @generated
 	 */
-	EClass getASCIISTLGeometryImporter();
+	EClass getSTLGeometryImporter();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.january.geometry.Pipe <em>Pipe</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Pipe</em>'.
+	 * @see org.eclipse.january.geometry.Pipe
+	 * @generated
+	 */
+	EClass getPipe();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.january.geometry.Pipe#getNumRods <em>Num Rods</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Num Rods</em>'.
+	 * @see org.eclipse.january.geometry.Pipe#getNumRods()
+	 * @see #getPipe()
+	 * @generated
+	 */
+	EAttribute getPipe_NumRods();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.january.geometry.Pipe#getPitch <em>Pitch</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Pitch</em>'.
+	 * @see org.eclipse.january.geometry.Pipe#getPitch()
+	 * @see #getPipe()
+	 * @generated
+	 */
+	EAttribute getPipe_Pitch();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.january.geometry.Pipe#getRodDiameter <em>Rod Diameter</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Rod Diameter</em>'.
+	 * @see org.eclipse.january.geometry.Pipe#getRodDiameter()
+	 * @see #getPipe()
+	 * @generated
+	 */
+	EAttribute getPipe_RodDiameter();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.january.geometry.Pipe#getRotationX <em>Rotation X</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Rotation X</em>'.
+	 * @see org.eclipse.january.geometry.Pipe#getRotationX()
+	 * @see #getPipe()
+	 * @generated
+	 */
+	EAttribute getPipe_RotationX();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.january.geometry.Pipe#getRotationY <em>Rotation Y</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Rotation Y</em>'.
+	 * @see org.eclipse.january.geometry.Pipe#getRotationY()
+	 * @see #getPipe()
+	 * @generated
+	 */
+	EAttribute getPipe_RotationY();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.january.geometry.Pipe#getRotationZ <em>Rotation Z</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Rotation Z</em>'.
+	 * @see org.eclipse.january.geometry.Pipe#getRotationZ()
+	 * @see #getPipe()
+	 * @generated
+	 */
+	EAttribute getPipe_RotationZ();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.january.geometry.Pipe#getLowerEdge() <em>Get Lower Edge</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Lower Edge</em>' operation.
+	 * @see org.eclipse.january.geometry.Pipe#getLowerEdge()
+	 * @generated
+	 */
+	EOperation getPipe__GetLowerEdge();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.january.geometry.Pipe#getUpperEdge() <em>Get Upper Edge</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Upper Edge</em>' operation.
+	 * @see org.eclipse.january.geometry.Pipe#getUpperEdge()
+	 * @generated
+	 */
+	EOperation getPipe__GetUpperEdge();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.january.geometry.BoundingBox <em>Bounding Box</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Bounding Box</em>'.
+	 * @see org.eclipse.january.geometry.BoundingBox
+	 * @generated
+	 */
+	EClass getBoundingBox();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.january.geometry.BoundingBox#getMaxX <em>Max X</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Max X</em>'.
+	 * @see org.eclipse.january.geometry.BoundingBox#getMaxX()
+	 * @see #getBoundingBox()
+	 * @generated
+	 */
+	EAttribute getBoundingBox_MaxX();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.january.geometry.BoundingBox#getMaxY <em>Max Y</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Max Y</em>'.
+	 * @see org.eclipse.january.geometry.BoundingBox#getMaxY()
+	 * @see #getBoundingBox()
+	 * @generated
+	 */
+	EAttribute getBoundingBox_MaxY();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.january.geometry.BoundingBox#getMaxZ <em>Max Z</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Max Z</em>'.
+	 * @see org.eclipse.january.geometry.BoundingBox#getMaxZ()
+	 * @see #getBoundingBox()
+	 * @generated
+	 */
+	EAttribute getBoundingBox_MaxZ();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.january.geometry.BoundingBox#getMinX <em>Min X</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Min X</em>'.
+	 * @see org.eclipse.january.geometry.BoundingBox#getMinX()
+	 * @see #getBoundingBox()
+	 * @generated
+	 */
+	EAttribute getBoundingBox_MinX();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.january.geometry.BoundingBox#getMinY <em>Min Y</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Min Y</em>'.
+	 * @see org.eclipse.january.geometry.BoundingBox#getMinY()
+	 * @see #getBoundingBox()
+	 * @generated
+	 */
+	EAttribute getBoundingBox_MinY();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.january.geometry.BoundingBox#getMinZ <em>Min Z</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Min Z</em>'.
+	 * @see org.eclipse.january.geometry.BoundingBox#getMinZ()
+	 * @see #getBoundingBox()
+	 * @generated
+	 */
+	EAttribute getBoundingBox_MinZ();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.january.geometry.Junction <em>Junction</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Junction</em>'.
+	 * @see org.eclipse.january.geometry.Junction
+	 * @generated
+	 */
+	EClass getJunction();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.january.geometry.Junction#getHeight <em>Height</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Height</em>'.
+	 * @see org.eclipse.january.geometry.Junction#getHeight()
+	 * @see #getJunction()
+	 * @generated
+	 */
+	EAttribute getJunction_Height();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.january.geometry.Junction#getZIn <em>ZIn</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>ZIn</em>'.
+	 * @see org.eclipse.january.geometry.Junction#getZIn()
+	 * @see #getJunction()
+	 * @generated
+	 */
+	EAttribute getJunction_ZIn();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.january.geometry.Junction#getZOut <em>ZOut</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>ZOut</em>'.
+	 * @see org.eclipse.january.geometry.Junction#getZOut()
+	 * @see #getJunction()
+	 * @generated
+	 */
+	EAttribute getJunction_ZOut();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.january.geometry.Junction#getInput <em>Input</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Input</em>'.
+	 * @see org.eclipse.january.geometry.Junction#getInput()
+	 * @see #getJunction()
+	 * @generated
+	 */
+	EReference getJunction_Input();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.january.geometry.Junction#getOutput <em>Output</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Output</em>'.
+	 * @see org.eclipse.january.geometry.Junction#getOutput()
+	 * @see #getJunction()
+	 * @generated
+	 */
+	EReference getJunction_Output();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.january.geometry.HeatExchanger <em>Heat Exchanger</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Heat Exchanger</em>'.
+	 * @see org.eclipse.january.geometry.HeatExchanger
+	 * @generated
+	 */
+	EClass getHeatExchanger();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.january.geometry.HeatExchanger#getPipe <em>Pipe</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Pipe</em>'.
+	 * @see org.eclipse.january.geometry.HeatExchanger#getPipe()
+	 * @see #getHeatExchanger()
+	 * @generated
+	 */
+	EReference getHeatExchanger_Pipe();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.january.geometry.HeatExchanger#getInput <em>Input</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Input</em>'.
+	 * @see org.eclipse.january.geometry.HeatExchanger#getInput()
+	 * @see #getHeatExchanger()
+	 * @generated
+	 */
+	EReference getHeatExchanger_Input();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.january.geometry.HeatExchanger#getOutput <em>Output</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Output</em>'.
+	 * @see org.eclipse.january.geometry.HeatExchanger#getOutput()
+	 * @see #getHeatExchanger()
+	 * @generated
+	 */
+	EReference getHeatExchanger_Output();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.january.geometry.Reactor <em>Reactor</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Reactor</em>'.
+	 * @see org.eclipse.january.geometry.Reactor
+	 * @generated
+	 */
+	EClass getReactor();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.january.geometry.Reactor#getPipes <em>Pipes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Pipes</em>'.
+	 * @see org.eclipse.january.geometry.Reactor#getPipes()
+	 * @see #getReactor()
+	 * @generated
+	 */
+	EReference getReactor_Pipes();
 
 	/**
 	 * Returns the meta object for data type '{@link java.nio.file.Path <em>Path</em>}'.
@@ -2820,6 +4147,22 @@ public interface GeometryPackage extends EPackage {
 		EReference TRIANGLE__VERTICES = eINSTANCE.getTriangle_Vertices();
 
 		/**
+		 * The meta object literal for the '<em><b>Equals</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TRIANGLE___EQUALS__OBJECT = eINSTANCE.getTriangle__Equals__Object();
+
+		/**
+		 * The meta object literal for the '<em><b>Hash Code</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TRIANGLE___HASH_CODE = eINSTANCE.getTriangle__HashCode();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.january.geometry.impl.VertexImpl <em>Vertex</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2860,6 +4203,22 @@ public interface GeometryPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation VERTEX___CLONE = eINSTANCE.getVertex__Clone();
+
+		/**
+		 * The meta object literal for the '<em><b>Equals</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation VERTEX___EQUALS__OBJECT = eINSTANCE.getVertex__Equals__Object();
+
+		/**
+		 * The meta object literal for the '<em><b>Hash Code</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation VERTEX___HASH_CODE = eINSTANCE.getVertex__HashCode();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.january.geometry.impl.SphereImpl <em>Sphere</em>}' class.
@@ -3182,14 +4541,248 @@ public interface GeometryPackage extends EPackage {
 		EOperation IGEOMETRY_IMPORTER___LOAD__PATH = eINSTANCE.getIGeometryImporter__Load__Path();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.january.geometry.impl.STLGeometryImporterImpl <em>ASCIISTL Geometry Importer</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.january.geometry.impl.STLGeometryImporterImpl <em>STL Geometry Importer</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see org.eclipse.january.geometry.impl.STLGeometryImporterImpl
-		 * @see org.eclipse.january.geometry.impl.GeometryPackageImpl#getASCIISTLGeometryImporter()
+		 * @see org.eclipse.january.geometry.impl.GeometryPackageImpl#getSTLGeometryImporter()
 		 * @generated
 		 */
-		EClass ASCIISTL_GEOMETRY_IMPORTER = eINSTANCE.getASCIISTLGeometryImporter();
+		EClass STL_GEOMETRY_IMPORTER = eINSTANCE.getSTLGeometryImporter();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.january.geometry.impl.PipeImpl <em>Pipe</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.january.geometry.impl.PipeImpl
+		 * @see org.eclipse.january.geometry.impl.GeometryPackageImpl#getPipe()
+		 * @generated
+		 */
+		EClass PIPE = eINSTANCE.getPipe();
+
+		/**
+		 * The meta object literal for the '<em><b>Num Rods</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PIPE__NUM_RODS = eINSTANCE.getPipe_NumRods();
+
+		/**
+		 * The meta object literal for the '<em><b>Pitch</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PIPE__PITCH = eINSTANCE.getPipe_Pitch();
+
+		/**
+		 * The meta object literal for the '<em><b>Rod Diameter</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PIPE__ROD_DIAMETER = eINSTANCE.getPipe_RodDiameter();
+
+		/**
+		 * The meta object literal for the '<em><b>Rotation X</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PIPE__ROTATION_X = eINSTANCE.getPipe_RotationX();
+
+		/**
+		 * The meta object literal for the '<em><b>Rotation Y</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PIPE__ROTATION_Y = eINSTANCE.getPipe_RotationY();
+
+		/**
+		 * The meta object literal for the '<em><b>Rotation Z</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PIPE__ROTATION_Z = eINSTANCE.getPipe_RotationZ();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Lower Edge</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PIPE___GET_LOWER_EDGE = eINSTANCE.getPipe__GetLowerEdge();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Upper Edge</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PIPE___GET_UPPER_EDGE = eINSTANCE.getPipe__GetUpperEdge();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.january.geometry.impl.BoundingBoxImpl <em>Bounding Box</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.january.geometry.impl.BoundingBoxImpl
+		 * @see org.eclipse.january.geometry.impl.GeometryPackageImpl#getBoundingBox()
+		 * @generated
+		 */
+		EClass BOUNDING_BOX = eINSTANCE.getBoundingBox();
+
+		/**
+		 * The meta object literal for the '<em><b>Max X</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BOUNDING_BOX__MAX_X = eINSTANCE.getBoundingBox_MaxX();
+
+		/**
+		 * The meta object literal for the '<em><b>Max Y</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BOUNDING_BOX__MAX_Y = eINSTANCE.getBoundingBox_MaxY();
+
+		/**
+		 * The meta object literal for the '<em><b>Max Z</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BOUNDING_BOX__MAX_Z = eINSTANCE.getBoundingBox_MaxZ();
+
+		/**
+		 * The meta object literal for the '<em><b>Min X</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BOUNDING_BOX__MIN_X = eINSTANCE.getBoundingBox_MinX();
+
+		/**
+		 * The meta object literal for the '<em><b>Min Y</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BOUNDING_BOX__MIN_Y = eINSTANCE.getBoundingBox_MinY();
+
+		/**
+		 * The meta object literal for the '<em><b>Min Z</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BOUNDING_BOX__MIN_Z = eINSTANCE.getBoundingBox_MinZ();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.january.geometry.impl.JunctionImpl <em>Junction</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.january.geometry.impl.JunctionImpl
+		 * @see org.eclipse.january.geometry.impl.GeometryPackageImpl#getJunction()
+		 * @generated
+		 */
+		EClass JUNCTION = eINSTANCE.getJunction();
+
+		/**
+		 * The meta object literal for the '<em><b>Height</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute JUNCTION__HEIGHT = eINSTANCE.getJunction_Height();
+
+		/**
+		 * The meta object literal for the '<em><b>ZIn</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute JUNCTION__ZIN = eINSTANCE.getJunction_ZIn();
+
+		/**
+		 * The meta object literal for the '<em><b>ZOut</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute JUNCTION__ZOUT = eINSTANCE.getJunction_ZOut();
+
+		/**
+		 * The meta object literal for the '<em><b>Input</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference JUNCTION__INPUT = eINSTANCE.getJunction_Input();
+
+		/**
+		 * The meta object literal for the '<em><b>Output</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference JUNCTION__OUTPUT = eINSTANCE.getJunction_Output();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.january.geometry.impl.HeatExchangerImpl <em>Heat Exchanger</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.january.geometry.impl.HeatExchangerImpl
+		 * @see org.eclipse.january.geometry.impl.GeometryPackageImpl#getHeatExchanger()
+		 * @generated
+		 */
+		EClass HEAT_EXCHANGER = eINSTANCE.getHeatExchanger();
+
+		/**
+		 * The meta object literal for the '<em><b>Pipe</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference HEAT_EXCHANGER__PIPE = eINSTANCE.getHeatExchanger_Pipe();
+
+		/**
+		 * The meta object literal for the '<em><b>Input</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference HEAT_EXCHANGER__INPUT = eINSTANCE.getHeatExchanger_Input();
+
+		/**
+		 * The meta object literal for the '<em><b>Output</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference HEAT_EXCHANGER__OUTPUT = eINSTANCE.getHeatExchanger_Output();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.january.geometry.impl.ReactorImpl <em>Reactor</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.january.geometry.impl.ReactorImpl
+		 * @see org.eclipse.january.geometry.impl.GeometryPackageImpl#getReactor()
+		 * @generated
+		 */
+		EClass REACTOR = eINSTANCE.getReactor();
+
+		/**
+		 * The meta object literal for the '<em><b>Pipes</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference REACTOR__PIPES = eINSTANCE.getReactor_Pipes();
 
 		/**
 		 * The meta object literal for the '<em>Path</em>' data type.

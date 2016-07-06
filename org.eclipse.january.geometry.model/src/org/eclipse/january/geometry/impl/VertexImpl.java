@@ -188,6 +188,47 @@ public class VertexImpl extends MinimalEObjectImpl.Container implements Vertex {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	@Override
+	public boolean equals(Object otherObject) {
+
+		// To be equal, the other object must also be a vertex
+		if (otherObject instanceof Vertex) {
+			Vertex otherVertex = (Vertex) otherObject;
+
+			// If each of the coordinates are equal, the vertices are equal
+			if (Math.abs(x - otherVertex.getX()) <= 0.01
+					&& Math.abs(y - otherVertex.getY()) <= 0.01
+					&& Math.abs(z - otherVertex.getZ()) <= 0.01) {
+				return true;
+			}
+		}
+
+		// One of the tests failed, so they are not equal
+		return false;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	@Override
+	public int hashCode() {
+
+		// Add the hash of each coordinate, multiplying by 31 each time.
+		int hash = 31;
+		hash = hash * 31 + Double.valueOf(x).hashCode();
+		hash = hash * 31 + Double.valueOf(y).hashCode();
+		hash = hash * 31 + Double.valueOf(z).hashCode();
+
+		return hash;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -270,6 +311,10 @@ public class VertexImpl extends MinimalEObjectImpl.Container implements Vertex {
 		switch (operationID) {
 			case GeometryPackage.VERTEX___CLONE:
 				return clone();
+			case GeometryPackage.VERTEX___EQUALS__OBJECT:
+				return equals(arguments.get(0));
+			case GeometryPackage.VERTEX___HASH_CODE:
+				return hashCode();
 		}
 		return super.eInvoke(operationID, arguments);
 	}

@@ -72,7 +72,12 @@ public class GeometryFactoryImpl extends EFactoryImpl implements GeometryFactory
 			case GeometryPackage.INTERSECTION: return createIntersection();
 			case GeometryPackage.COMPLEMENT: return createComplement();
 			case GeometryPackage.MATERIAL: return createMaterial();
-			case GeometryPackage.ASCIISTL_GEOMETRY_IMPORTER: return createASCIISTLGeometryImporter();
+			case GeometryPackage.STL_GEOMETRY_IMPORTER: return createSTLGeometryImporter();
+			case GeometryPackage.PIPE: return createPipe();
+			case GeometryPackage.BOUNDING_BOX: return createBoundingBox();
+			case GeometryPackage.JUNCTION: return createJunction();
+			case GeometryPackage.HEAT_EXCHANGER: return createHeatExchanger();
+			case GeometryPackage.REACTOR: return createReactor();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -247,9 +252,59 @@ public class GeometryFactoryImpl extends EFactoryImpl implements GeometryFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public STLGeometryImporter createASCIISTLGeometryImporter() {
-		STLGeometryImporterImpl asciistlGeometryImporter = new STLGeometryImporterImpl();
-		return asciistlGeometryImporter;
+	public STLGeometryImporter createSTLGeometryImporter() {
+		STLGeometryImporterImpl stlGeometryImporter = new STLGeometryImporterImpl();
+		return stlGeometryImporter;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Pipe createPipe() {
+		PipeImpl pipe = new PipeImpl();
+		return pipe;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public BoundingBox createBoundingBox() {
+		BoundingBoxImpl boundingBox = new BoundingBoxImpl();
+		return boundingBox;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Junction createJunction() {
+		JunctionImpl junction = new JunctionImpl();
+		return junction;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public HeatExchanger createHeatExchanger() {
+		HeatExchangerImpl heatExchanger = new HeatExchangerImpl();
+		return heatExchanger;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Reactor createReactor() {
+		ReactorImpl reactor = new ReactorImpl();
+		return reactor;
 	}
 
 	/**
