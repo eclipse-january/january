@@ -11,8 +11,8 @@
  *******************************************************************************/
 package org.eclipse.dawnsci.analysis.examples.dataset;
 
-import org.eclipse.dawnsci.analysis.dataset.impl.Dataset;
-import org.eclipse.dawnsci.analysis.dataset.impl.Random;
+import org.eclipse.january.dataset.Dataset;
+import org.eclipse.january.dataset.Random;
 import org.junit.Test;
 
 /**

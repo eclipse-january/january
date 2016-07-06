@@ -15,11 +15,11 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 
-import org.eclipse.dawnsci.analysis.dataset.impl.Dataset;
-import org.eclipse.dawnsci.analysis.dataset.impl.DatasetFactory;
-import org.eclipse.dawnsci.analysis.dataset.impl.IndexIterator;
-import org.eclipse.dawnsci.analysis.dataset.impl.PositionIterator;
-import org.eclipse.dawnsci.analysis.dataset.impl.StrideIterator;
+import org.eclipse.january.dataset.Dataset;
+import org.eclipse.january.dataset.DatasetFactory;
+import org.eclipse.january.dataset.IndexIterator;
+import org.eclipse.january.dataset.PositionIterator;
+import org.eclipse.january.dataset.StrideIterator;
 import org.junit.Test;
 
 
