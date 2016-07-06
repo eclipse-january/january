@@ -1,4 +1,4 @@
-/*
+/*-
  * Copyright (c) 2012 Diamond Light Source Ltd.
  *
  * All rights reserved. This program and the accompanying materials
@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.eclipse.dawnsci.analysis.examples.slice;
+package org.eclipse.january.dataset;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -147,7 +147,35 @@ public class SliceTest {
 
 		sl = new Slice(null, null, 15).setLength(4096);
 		assertEquals(274, sl.getNumSteps());
-		
+	}
+
+	@Test
+	public void testSliceEndPoints() {
+		Slice sl;
+
+		sl = new Slice(null, null, 1).setLength(1);
+		assertEquals(1, sl.getNumSteps());
+
+		sl = new Slice(null, null, 1).setLength(5);
+		assertEquals(5, sl.getNumSteps());
+		sl = new Slice(null, 5, 1).setLength(5);
+		assertEquals(5, sl.getNumSteps());
+		sl = new Slice(0, null, 1).setLength(5);
+		assertEquals(5, sl.getNumSteps());
+		sl = new Slice(0, 5, 1).setLength(5);
+		assertEquals(5, sl.getNumSteps());
+
+		sl = new Slice(null, null, -1).setLength(1);
+		assertEquals(1, sl.getNumSteps());
+
+		sl = new Slice(null, null, -1).setLength(5);
+		assertEquals(5, sl.getNumSteps());
+		sl = new Slice(null, -1, -1).setLength(5);
+		assertEquals(5, sl.getNumSteps());
+		sl = new Slice(4, null, -1).setLength(5);
+		assertEquals(5, sl.getNumSteps());
+		sl = new Slice(4, -1, -1).setLength(5);
+		assertEquals(5, sl.getNumSteps());
 	}
 
 	@Test

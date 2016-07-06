@@ -1,4 +1,4 @@
-/*
+/*-
  * Copyright (c) 2015 Diamond Light Source Ltd.
  *
  * All rights reserved. This program and the accompanying materials
@@ -7,12 +7,13 @@
  * http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.eclipse.dawnsci.analysis.examples.slice;
+package org.eclipse.january.dataset;
 
 import static org.junit.Assert.*;
 
 import java.util.Arrays;
 
+import org.eclipse.january.asserts.TestUtils;
 import org.eclipse.january.dataset.Slice;
 import org.eclipse.january.dataset.SliceND;
 import org.eclipse.january.dataset.SliceNDIterator;
@@ -36,8 +37,8 @@ public class SliceNDIteratorTest {
 
 		int size = 0;
 		while (it.hasNext()) {
-			System.err.println(size + ": " + Arrays.toString(it.getPos()) + " or " + Arrays.toString(it.getUsedPos()));
-			System.err.println("         " + it.getOutputSlice());
+			TestUtils.verbosePrintf(size + ": " + Arrays.toString(it.getPos()) + " or " + Arrays.toString(it.getUsedPos()));
+			TestUtils.verbosePrintf("         " + it.getOutputSlice());
 			if (size == (6*7 + 3*7 + 5)) {
 				assertArrayEquals(new int[]{3, 0, 3, 5}, it.getPos());
 				assertArrayEquals(new int[]{3, 3, 5}, it.getUsedPos());

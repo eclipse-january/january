@@ -1,0 +1,21 @@
+
+This directory contains some python scripts for auto-generating Java.
+It is not active code but code used to write code.
+
+The following classes are generated/amended by these scripts:
+org.eclipse.january.dataset.Maths,
+org.eclipse.january.dataset.FloatDataset,
+org.eclipse.january.dataset.IntegerDataset,
+org.eclipse.january.dataset.LongDataset,
+org.eclipse.january.dataset.ShortDataset,
+org.eclipse.january.dataset.ByteDataset,
+org.eclipse.january.dataset.BooleanDatasetBase
+org.eclipse.january.dataset.StringDatasetBase
+org.eclipse.january.dataset.ObjectDatasetBase
+
+org.eclipse.january.dataset.Compound*Dataset,
+org.eclipse.january.dataset.ComplexFloatDataset
+
+The file functions.txt defines functions for the org.eclipse.january.dataset.Maths class 
+This class also has a fixed part which includes its license header.
+

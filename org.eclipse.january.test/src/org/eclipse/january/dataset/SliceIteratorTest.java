@@ -1,4 +1,4 @@
-/*
+/*-
  * Copyright (c) 2012 Diamond Light Source Ltd.
  *
  * All rights reserved. This program and the accompanying materials
@@ -7,12 +7,13 @@
  * http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.eclipse.dawnsci.analysis.examples.slice;
+package org.eclipse.january.dataset;
 
 import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 
+import org.eclipse.january.asserts.TestUtils;
 import org.eclipse.january.dataset.Dataset;
 import org.eclipse.january.dataset.DatasetFactory;
 import org.eclipse.january.dataset.SliceIterator;
@@ -40,7 +41,7 @@ public class SliceIteratorTest {
 	private void testIterationsND(int size, int type) {
 		Dataset ta;
 
-		System.out.println("Size: " + size);
+		TestUtils.verbosePrintf("Size: %d\n", size);
 
 		// 0D
 		ta = DatasetFactory.zeros(new int[] {}, type);
@@ -57,7 +58,7 @@ public class SliceIteratorTest {
 
 		// 2D
 		ta.setShape(16, size / 16);
-		System.out.println(" Shape: " + Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
 		testDataset(ta);
 		testDatasetSteps(ta, new int[] {1, 2});
 		testDatasetSteps(ta, new int[] {3, 1});
@@ -66,7 +67,7 @@ public class SliceIteratorTest {
 		testDatasetAxes(ta, new boolean[] {false, true});
 
 		ta.setShape(size / 32, 32);
-		System.out.println(" Shape: " + Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
 		testDataset(ta);
 		testDatasetSteps(ta, new int[] {1, 2});
 		testDatasetSteps(ta, new int[] {3, 1});
@@ -76,7 +77,7 @@ public class SliceIteratorTest {
 
 		// 3D
 		ta.setShape(16, 8, size / (16 * 8));
-		System.out.println(" Shape: " + Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
 		testDataset(ta);
 		testDatasetSteps(ta, new int[] {1, 1, 3});
 		testDatasetSteps(ta, new int[] {1, 2, 1});
@@ -93,7 +94,7 @@ public class SliceIteratorTest {
 		testDatasetAxes(ta, new boolean[] {false, false, false});
 
 		ta.setShape(size / (16 * 8), 16, 8);
-		System.out.println(" Shape: " + Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
 		testDataset(ta);
 		testDatasetSteps(ta, new int[] {1, 1, 3});
 		testDatasetSteps(ta, new int[] {1, 2, 1});
@@ -133,7 +134,7 @@ public class SliceIteratorTest {
 		}
 
 		while (iter.hasNext()) {
-//			System.out.println("        " + Arrays.toString(pos));
+//			TestUtils.verbosePrintf("        %s\n", Arrays.toString(pos));
 			for (int j = 0; j <= endrank; j++) {
 				assertEquals("  step: " + Arrays.toString(step) + "; shape: " + Arrays.toString(shape) + "; dim " + j,
 						tpos[j], pos[j], 1e-5*tpos[j]);
@@ -169,7 +170,7 @@ public class SliceIteratorTest {
 		int[] tpos = new int[shape.length];
 
 		while (iter.hasNext()) {
-//			System.out.println("        " + Arrays.toString(pos));
+//			TestUtils.verbosePrintf("        %s\n", Arrays.toString(pos));
 			for (int j = 0; j <= endrank; j++) {
 				assertEquals("  axes: " + Arrays.toString(axes) + "; shape: " + Arrays.toString(shape) + "; dim " + j,
 						tpos[j], pos[j], 1e-5*tpos[j]);

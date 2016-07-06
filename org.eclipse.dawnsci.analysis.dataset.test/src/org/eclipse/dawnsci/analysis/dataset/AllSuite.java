@@ -12,26 +12,19 @@
 
 package org.eclipse.dawnsci.analysis.dataset;
 
-import org.eclipse.dawnsci.analysis.asserts.TestUtils;
+import org.eclipse.dawnsci.analysis.dataset.DCTTest;
+import org.eclipse.dawnsci.analysis.dataset.FFTTest;
+import org.eclipse.dawnsci.analysis.dataset.ImageTest;
+import org.eclipse.dawnsci.analysis.dataset.SignalTest;
+import org.eclipse.dawnsci.analysis.dataset.SummedAreaTableTest;
+import org.eclipse.january.asserts.TestUtils;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(TestUtils.VerboseSuite.class)
-@SuiteClasses({ AbstractCompoundDatasetTest.class, AbstractDatasetTest.class, AggregateDatasetTest.class,
-		BinaryOperationTest.class, BooleanDatasetTest.class, BooleanIteratorTest.class, BroadcastIteratorTest.class,
-		BroadcastUtilsTest.class, ByteDatasetTest.class, ComparisonsTest.class, ComplexDoubleDatasetTest.class,
-		ComplexFloatDatasetTest.class, DatasetFactoryTest.class, DateDatasetTest.class, DCTTest.class, DoubleDatasetTest.class, FFTTest.class,
-		FloatDatasetTest.class, ImageTest.class, IndexIteratorTest.class, IntegerDatasetTest.class,
-		IntegerIteratorTest.class, IntegersIteratorTest.class, InterpolatorUtilsTest.class, LazyDatasetTest.class,
-		LazyDynamicDatasetTest.class, LazyDynamicLoaderTest.class, LazyMathsTest.class, LazyWriteableDatasetTest.class,
-		LinearAlgebraTest.class, LongDatasetTest.class, MathsTest.class, ObjectDatasetTest.class,
-		PositionIteratorTest.class, RandomTest.class, RGBDatasetTest.class, ShortDatasetTest.class, SignalTest.class,
-		SingleInputBroadcastIteratorTest.class, SliceIteratorTest.class, SliceNDIteratorTest.class, SliceNDTest.class,
-		SliceTest.class, StatsTest.class, StrideIteratorTest.class, StringDatasetTest.class, SummedAreaTableTest.class,
-		UnsignedArithmetics.class,
-		OutlierCorrectnessTest.class, OutlierStatsTest.class,
-		org.eclipse.dawnsci.analysis.dataset.function.AllSuite.class,
-		org.eclipse.dawnsci.analysis.dataset.slice.AllSuite.class
+@SuiteClasses({ DCTTest.class, FFTTest.class, ImageTest.class, SignalTest.class, SummedAreaTableTest.class,
+	org.eclipse.dawnsci.analysis.dataset.function.AllSuite.class,
+	org.eclipse.dawnsci.analysis.dataset.slicer.AllSuite.class,
 		})
 public class AllSuite {
 

@@ -1,0 +1,79 @@
+/*-
+ * Copyright 2015 Diamond Light Source Ltd.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
+
+package org.eclipse.january.dataset;
+
+import org.eclipse.january.IMonitor;
+import org.eclipse.january.io.ILazySaver;
+
+/**
+ * This sub-interface adds the ability to write to a lazy dataset slice-by-slice
+ */
+public interface ILazyWriteableDataset extends IDynamicDataset {
+
+	/**
+	 * See {@link IDynamicDataset#UNLIMITED}
+	 */
+	public static final int UNLIMITED = IDynamicDataset.UNLIMITED;
+
+	/**
+	 * Get chunking
+	 * @return chunks (can be null)
+	 */
+	public int[] getChunking();
+
+	/**
+	 * Set chunking
+	 * @param chunks chunk shape
+	 */
+	public void setChunking(int... chunks);
+
+	/**
+	 * Set saver
+	 * @param saver
+	 */
+	public void setSaver(ILazySaver saver);
+
+	/**
+	 * Set a slice of the dataset
+	 * 
+	 * @param monitor
+	 * @param data
+	 * @param slice an n-D slice
+	 * @throws DatasetException
+	 */
+	public void setSlice(final IMonitor monitor, final IDataset data, final SliceND slice) throws DatasetException;
+
+	/**
+	 * Set a slice of the dataset
+	 * 
+	 * @param monitor
+	 * @param data
+	 * @param start
+	 *            specifies the starting indexes (can be null for origin)
+	 * @param stop
+	 *            specifies the stopping indexes (can be null for end)
+	 * @param step
+	 *            specifies the steps in the slice (can be null for unit steps)
+	 * @throws DatasetException
+	 */
+	public void setSlice(final IMonitor monitor, final IDataset data, final int[] start, final int[] stop, final int[] step) throws DatasetException;
+
+	/**
+	 * Get the value used to fill an un-initialized dataset
+	 * @return fill value
+	 */
+	public Object getFillValue();
+
+	/**
+	 * Set the value used to fill an un-initialized dataset
+	 * @param fill
+	 */
+	public void setFillValue(Object fill);
+}
