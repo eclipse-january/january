@@ -7,9 +7,7 @@ Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: geometry.tests,
- january.geometry.tests,
- org.eclipse.january.geometry.tests
+Export-Package: org.eclipse.january.geometry.tests
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.january.geometry.model;visibility:=reexport,
  org.eclipse.emf.ecore.xmi;visibility:=reexport,

@@ -2,22 +2,20 @@
  */
 package org.eclipse.january.geometry.tests;
 
-import junit.textui.TestRunner;
-
 import org.eclipse.january.geometry.Cube;
 import org.eclipse.january.geometry.GeometryFactory;
 
+import junit.textui.TestRunner;
+
 /**
- * <!-- begin-user-doc -->
- * A test case for the model object '<em><b>Cube</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A test case for the model object '
+ * <em><b>Cube</b></em>'. <!-- end-user-doc -->
  * @generated
  */
 public class CubeTest extends ShapeTest {
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public static void main(String[] args) {
@@ -26,8 +24,8 @@ public class CubeTest extends ShapeTest {
 
 	/**
 	 * Constructs a new Cube test case with the given name.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public CubeTest(String name) {
@@ -36,8 +34,8 @@ public class CubeTest extends ShapeTest {
 
 	/**
 	 * Returns the fixture for this Cube test case.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -46,8 +44,7 @@ public class CubeTest extends ShapeTest {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see junit.framework.TestCase#setUp()
 	 * @generated
 	 */
@@ -57,8 +54,7 @@ public class CubeTest extends ShapeTest {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see junit.framework.TestCase#tearDown()
 	 * @generated
 	 */
@@ -67,4 +63,28 @@ public class CubeTest extends ShapeTest {
 		setFixture(null);
 	}
 
-} //CubeTest
+	/**
+	 * Check that only valid values are accepted for the properties.
+	 * 
+	 * @generated NOT
+	 */
+	public void checkProperties() {
+
+		// The cube for testing
+		Cube cube = getFixture();
+
+		// Check that the length can be set
+		cube.setSideLength(1d);
+		assertEquals(1d, cube.getSideLength());
+
+		// Check that invalid values are ignored
+		cube.setSideLength(-1d);
+		assertEquals(1d, cube.getSideLength());
+
+		// Check that the property map is in sync with the variable
+		assertEquals(1d, cube.getProperty("sideLength"));
+		cube.setProperty("sideLength", 2d);
+		assertEquals(2d, cube.getSideLength());
+	}
+
+} // CubeTest

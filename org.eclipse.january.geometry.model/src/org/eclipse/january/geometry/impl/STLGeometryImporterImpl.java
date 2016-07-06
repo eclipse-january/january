@@ -98,7 +98,7 @@ public class STLGeometryImporterImpl extends MinimalEObjectImpl.Container implem
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return GeometryPackage.Literals.ASCIISTL_GEOMETRY_IMPORTER;
+		return GeometryPackage.Literals.STL_GEOMETRY_IMPORTER;
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class STLGeometryImporterImpl extends MinimalEObjectImpl.Container implem
 	 */
 	public EList<String> getFileTypes() {
 		if (fileTypes == null) {
-			fileTypes = new EDataTypeUniqueEList<String>(String.class, this, GeometryPackage.ASCIISTL_GEOMETRY_IMPORTER__FILE_TYPES);
+			fileTypes = new EDataTypeUniqueEList<String>(String.class, this, GeometryPackage.STL_GEOMETRY_IMPORTER__FILE_TYPES);
 		}
 		return fileTypes;
 	}
@@ -131,7 +131,7 @@ public class STLGeometryImporterImpl extends MinimalEObjectImpl.Container implem
 		String oldDescription = description;
 		description = newDescription;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, GeometryPackage.ASCIISTL_GEOMETRY_IMPORTER__DESCRIPTION, oldDescription, description));
+			eNotify(new ENotificationImpl(this, Notification.SET, GeometryPackage.STL_GEOMETRY_IMPORTER__DESCRIPTION, oldDescription, description));
 	}
 
 	/**
@@ -245,9 +245,9 @@ public class STLGeometryImporterImpl extends MinimalEObjectImpl.Container implem
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case GeometryPackage.ASCIISTL_GEOMETRY_IMPORTER__FILE_TYPES:
+			case GeometryPackage.STL_GEOMETRY_IMPORTER__FILE_TYPES:
 				return getFileTypes();
-			case GeometryPackage.ASCIISTL_GEOMETRY_IMPORTER__DESCRIPTION:
+			case GeometryPackage.STL_GEOMETRY_IMPORTER__DESCRIPTION:
 				return getDescription();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -262,11 +262,11 @@ public class STLGeometryImporterImpl extends MinimalEObjectImpl.Container implem
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case GeometryPackage.ASCIISTL_GEOMETRY_IMPORTER__FILE_TYPES:
+			case GeometryPackage.STL_GEOMETRY_IMPORTER__FILE_TYPES:
 				getFileTypes().clear();
 				getFileTypes().addAll((Collection<? extends String>)newValue);
 				return;
-			case GeometryPackage.ASCIISTL_GEOMETRY_IMPORTER__DESCRIPTION:
+			case GeometryPackage.STL_GEOMETRY_IMPORTER__DESCRIPTION:
 				setDescription((String)newValue);
 				return;
 		}
@@ -281,10 +281,10 @@ public class STLGeometryImporterImpl extends MinimalEObjectImpl.Container implem
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case GeometryPackage.ASCIISTL_GEOMETRY_IMPORTER__FILE_TYPES:
+			case GeometryPackage.STL_GEOMETRY_IMPORTER__FILE_TYPES:
 				getFileTypes().clear();
 				return;
-			case GeometryPackage.ASCIISTL_GEOMETRY_IMPORTER__DESCRIPTION:
+			case GeometryPackage.STL_GEOMETRY_IMPORTER__DESCRIPTION:
 				setDescription(DESCRIPTION_EDEFAULT);
 				return;
 		}
@@ -299,9 +299,9 @@ public class STLGeometryImporterImpl extends MinimalEObjectImpl.Container implem
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case GeometryPackage.ASCIISTL_GEOMETRY_IMPORTER__FILE_TYPES:
+			case GeometryPackage.STL_GEOMETRY_IMPORTER__FILE_TYPES:
 				return fileTypes != null && !fileTypes.isEmpty();
-			case GeometryPackage.ASCIISTL_GEOMETRY_IMPORTER__DESCRIPTION:
+			case GeometryPackage.STL_GEOMETRY_IMPORTER__DESCRIPTION:
 				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
 		}
 		return super.eIsSet(featureID);
@@ -315,7 +315,7 @@ public class STLGeometryImporterImpl extends MinimalEObjectImpl.Container implem
 	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
-			case GeometryPackage.ASCIISTL_GEOMETRY_IMPORTER___LOAD__PATH:
+			case GeometryPackage.STL_GEOMETRY_IMPORTER___LOAD__PATH:
 				return load((Path)arguments.get(0));
 		}
 		return super.eInvoke(operationID, arguments);

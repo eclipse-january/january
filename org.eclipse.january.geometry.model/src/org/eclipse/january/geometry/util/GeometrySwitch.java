@@ -173,10 +173,49 @@ public class GeometrySwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case GeometryPackage.ASCIISTL_GEOMETRY_IMPORTER: {
-				STLGeometryImporter asciistlGeometryImporter = (STLGeometryImporter)theEObject;
-				T result = caseASCIISTLGeometryImporter(asciistlGeometryImporter);
-				if (result == null) result = caseIGeometryImporter(asciistlGeometryImporter);
+			case GeometryPackage.STL_GEOMETRY_IMPORTER: {
+				STLGeometryImporter stlGeometryImporter = (STLGeometryImporter)theEObject;
+				T result = caseSTLGeometryImporter(stlGeometryImporter);
+				if (result == null) result = caseIGeometryImporter(stlGeometryImporter);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GeometryPackage.PIPE: {
+				Pipe pipe = (Pipe)theEObject;
+				T result = casePipe(pipe);
+				if (result == null) result = caseTube(pipe);
+				if (result == null) result = caseShape(pipe);
+				if (result == null) result = caseINode(pipe);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GeometryPackage.BOUNDING_BOX: {
+				BoundingBox boundingBox = (BoundingBox)theEObject;
+				T result = caseBoundingBox(boundingBox);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GeometryPackage.JUNCTION: {
+				Junction junction = (Junction)theEObject;
+				T result = caseJunction(junction);
+				if (result == null) result = caseShape(junction);
+				if (result == null) result = caseINode(junction);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GeometryPackage.HEAT_EXCHANGER: {
+				HeatExchanger heatExchanger = (HeatExchanger)theEObject;
+				T result = caseHeatExchanger(heatExchanger);
+				if (result == null) result = caseShape(heatExchanger);
+				if (result == null) result = caseINode(heatExchanger);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GeometryPackage.REACTOR: {
+				Reactor reactor = (Reactor)theEObject;
+				T result = caseReactor(reactor);
+				if (result == null) result = caseShape(reactor);
+				if (result == null) result = caseINode(reactor);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -410,17 +449,92 @@ public class GeometrySwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>ASCIISTL Geometry Importer</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>STL Geometry Importer</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>ASCIISTL Geometry Importer</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>STL Geometry Importer</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseASCIISTLGeometryImporter(STLGeometryImporter object) {
+	public T caseSTLGeometryImporter(STLGeometryImporter object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Pipe</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Pipe</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T casePipe(Pipe object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Bounding Box</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Bounding Box</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseBoundingBox(BoundingBox object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Junction</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Junction</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseJunction(Junction object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Heat Exchanger</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Heat Exchanger</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseHeatExchanger(HeatExchanger object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Reactor</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Reactor</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseReactor(Reactor object) {
 		return null;
 	}
 

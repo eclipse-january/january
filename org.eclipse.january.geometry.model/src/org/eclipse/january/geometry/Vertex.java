@@ -113,4 +113,20 @@ public interface Vertex extends EObject {
 	 */
 	Object clone();
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model otherObjectDataType="org.eclipse.january.geometry.Object"
+	 * @generated
+	 */
+	boolean equals(Object otherObject);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	int hashCode();
+
 } // Vertex

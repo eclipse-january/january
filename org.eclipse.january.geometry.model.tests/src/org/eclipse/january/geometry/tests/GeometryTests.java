@@ -32,6 +32,7 @@ public class GeometryTests extends TestSuite {
 	public static Test suite() {
 		TestSuite suite = new GeometryTests("geometry Tests");
 		suite.addTestSuite(ShapeTest.class);
+		suite.addTestSuite(TriangleTest.class);
 		suite.addTestSuite(VertexTest.class);
 		suite.addTestSuite(SphereTest.class);
 		suite.addTestSuite(CubeTest.class);
@@ -42,7 +43,7 @@ public class GeometryTests extends TestSuite {
 		suite.addTestSuite(UnionTest.class);
 		suite.addTestSuite(IntersectionTest.class);
 		suite.addTestSuite(ComplementTest.class);
-		suite.addTestSuite(ASCIISTLGeometryImporterTest.class);
+		suite.addTestSuite(STLGeometryImporterTest.class);
 		return suite;
 	}
 

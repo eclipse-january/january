@@ -13,6 +13,7 @@ import org.eclipse.emf.ecore.EReference;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
+import org.eclipse.january.geometry.BoundingBox;
 import org.eclipse.january.geometry.STLGeometryImporter;
 import org.eclipse.january.geometry.Complement;
 import org.eclipse.january.geometry.Cube;
@@ -20,11 +21,15 @@ import org.eclipse.january.geometry.Cylinder;
 import org.eclipse.january.geometry.Geometry;
 import org.eclipse.january.geometry.GeometryFactory;
 import org.eclipse.january.geometry.GeometryPackage;
+import org.eclipse.january.geometry.HeatExchanger;
 import org.eclipse.january.geometry.IGeometryImporter;
 import org.eclipse.january.geometry.INode;
 import org.eclipse.january.geometry.Intersection;
+import org.eclipse.january.geometry.Junction;
 import org.eclipse.january.geometry.Material;
 import org.eclipse.january.geometry.Operator;
+import org.eclipse.january.geometry.Pipe;
+import org.eclipse.january.geometry.Reactor;
 import org.eclipse.january.geometry.Shape;
 import org.eclipse.january.geometry.Sphere;
 import org.eclipse.january.geometry.Triangle;
@@ -149,7 +154,42 @@ public class GeometryPackageImpl extends EPackageImpl implements GeometryPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass asciistlGeometryImporterEClass = null;
+	private EClass stlGeometryImporterEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass pipeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass boundingBoxEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass junctionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass heatExchangerEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass reactorEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -276,6 +316,24 @@ public class GeometryPackageImpl extends EPackageImpl implements GeometryPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getTriangle__Equals__Object() {
+		return triangleEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getTriangle__HashCode() {
+		return triangleEClass.getEOperations().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getVertex() {
 		return vertexEClass;
 	}
@@ -314,6 +372,24 @@ public class GeometryPackageImpl extends EPackageImpl implements GeometryPackage
 	 */
 	public EOperation getVertex__Clone() {
 		return vertexEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getVertex__Equals__Object() {
+		return vertexEClass.getEOperations().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getVertex__HashCode() {
+		return vertexEClass.getEOperations().get(2);
 	}
 
 	/**
@@ -654,8 +730,260 @@ public class GeometryPackageImpl extends EPackageImpl implements GeometryPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getASCIISTLGeometryImporter() {
-		return asciistlGeometryImporterEClass;
+	public EClass getSTLGeometryImporter() {
+		return stlGeometryImporterEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getPipe() {
+		return pipeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getPipe_NumRods() {
+		return (EAttribute)pipeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getPipe_Pitch() {
+		return (EAttribute)pipeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getPipe_RodDiameter() {
+		return (EAttribute)pipeEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getPipe_RotationX() {
+		return (EAttribute)pipeEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getPipe_RotationY() {
+		return (EAttribute)pipeEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getPipe_RotationZ() {
+		return (EAttribute)pipeEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getPipe__GetLowerEdge() {
+		return pipeEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getPipe__GetUpperEdge() {
+		return pipeEClass.getEOperations().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getBoundingBox() {
+		return boundingBoxEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getBoundingBox_MaxX() {
+		return (EAttribute)boundingBoxEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getBoundingBox_MaxY() {
+		return (EAttribute)boundingBoxEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getBoundingBox_MaxZ() {
+		return (EAttribute)boundingBoxEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getBoundingBox_MinX() {
+		return (EAttribute)boundingBoxEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getBoundingBox_MinY() {
+		return (EAttribute)boundingBoxEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getBoundingBox_MinZ() {
+		return (EAttribute)boundingBoxEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getJunction() {
+		return junctionEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getJunction_Height() {
+		return (EAttribute)junctionEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getJunction_ZIn() {
+		return (EAttribute)junctionEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getJunction_ZOut() {
+		return (EAttribute)junctionEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getJunction_Input() {
+		return (EReference)junctionEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getJunction_Output() {
+		return (EReference)junctionEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getHeatExchanger() {
+		return heatExchangerEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getHeatExchanger_Pipe() {
+		return (EReference)heatExchangerEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getHeatExchanger_Input() {
+		return (EReference)heatExchangerEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getHeatExchanger_Output() {
+		return (EReference)heatExchangerEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getReactor() {
+		return reactorEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getReactor_Pipes() {
+		return (EReference)reactorEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -710,12 +1038,16 @@ public class GeometryPackageImpl extends EPackageImpl implements GeometryPackage
 		triangleEClass = createEClass(TRIANGLE);
 		createEReference(triangleEClass, TRIANGLE__NORMAL);
 		createEReference(triangleEClass, TRIANGLE__VERTICES);
+		createEOperation(triangleEClass, TRIANGLE___EQUALS__OBJECT);
+		createEOperation(triangleEClass, TRIANGLE___HASH_CODE);
 
 		vertexEClass = createEClass(VERTEX);
 		createEAttribute(vertexEClass, VERTEX__X);
 		createEAttribute(vertexEClass, VERTEX__Y);
 		createEAttribute(vertexEClass, VERTEX__Z);
 		createEOperation(vertexEClass, VERTEX___CLONE);
+		createEOperation(vertexEClass, VERTEX___EQUALS__OBJECT);
+		createEOperation(vertexEClass, VERTEX___HASH_CODE);
 
 		sphereEClass = createEClass(SPHERE);
 		createEAttribute(sphereEClass, SPHERE__RADIUS);
@@ -766,7 +1098,40 @@ public class GeometryPackageImpl extends EPackageImpl implements GeometryPackage
 		createEAttribute(iGeometryImporterEClass, IGEOMETRY_IMPORTER__DESCRIPTION);
 		createEOperation(iGeometryImporterEClass, IGEOMETRY_IMPORTER___LOAD__PATH);
 
-		asciistlGeometryImporterEClass = createEClass(ASCIISTL_GEOMETRY_IMPORTER);
+		stlGeometryImporterEClass = createEClass(STL_GEOMETRY_IMPORTER);
+
+		pipeEClass = createEClass(PIPE);
+		createEAttribute(pipeEClass, PIPE__NUM_RODS);
+		createEAttribute(pipeEClass, PIPE__PITCH);
+		createEAttribute(pipeEClass, PIPE__ROD_DIAMETER);
+		createEAttribute(pipeEClass, PIPE__ROTATION_X);
+		createEAttribute(pipeEClass, PIPE__ROTATION_Y);
+		createEAttribute(pipeEClass, PIPE__ROTATION_Z);
+		createEOperation(pipeEClass, PIPE___GET_LOWER_EDGE);
+		createEOperation(pipeEClass, PIPE___GET_UPPER_EDGE);
+
+		boundingBoxEClass = createEClass(BOUNDING_BOX);
+		createEAttribute(boundingBoxEClass, BOUNDING_BOX__MAX_X);
+		createEAttribute(boundingBoxEClass, BOUNDING_BOX__MAX_Y);
+		createEAttribute(boundingBoxEClass, BOUNDING_BOX__MAX_Z);
+		createEAttribute(boundingBoxEClass, BOUNDING_BOX__MIN_X);
+		createEAttribute(boundingBoxEClass, BOUNDING_BOX__MIN_Y);
+		createEAttribute(boundingBoxEClass, BOUNDING_BOX__MIN_Z);
+
+		junctionEClass = createEClass(JUNCTION);
+		createEAttribute(junctionEClass, JUNCTION__HEIGHT);
+		createEAttribute(junctionEClass, JUNCTION__ZIN);
+		createEAttribute(junctionEClass, JUNCTION__ZOUT);
+		createEReference(junctionEClass, JUNCTION__INPUT);
+		createEReference(junctionEClass, JUNCTION__OUTPUT);
+
+		heatExchangerEClass = createEClass(HEAT_EXCHANGER);
+		createEReference(heatExchangerEClass, HEAT_EXCHANGER__PIPE);
+		createEReference(heatExchangerEClass, HEAT_EXCHANGER__INPUT);
+		createEReference(heatExchangerEClass, HEAT_EXCHANGER__OUTPUT);
+
+		reactorEClass = createEClass(REACTOR);
+		createEReference(reactorEClass, REACTOR__PIPES);
 
 		// Create data types
 		pathEDataType = createEDataType(PATH);
@@ -811,7 +1176,11 @@ public class GeometryPackageImpl extends EPackageImpl implements GeometryPackage
 		unionEClass.getESuperTypes().add(this.getOperator());
 		intersectionEClass.getESuperTypes().add(this.getOperator());
 		complementEClass.getESuperTypes().add(this.getOperator());
-		asciistlGeometryImporterEClass.getESuperTypes().add(this.getIGeometryImporter());
+		stlGeometryImporterEClass.getESuperTypes().add(this.getIGeometryImporter());
+		pipeEClass.getESuperTypes().add(this.getTube());
+		junctionEClass.getESuperTypes().add(this.getShape());
+		heatExchangerEClass.getESuperTypes().add(this.getShape());
+		reactorEClass.getESuperTypes().add(this.getShape());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(shapeEClass, Shape.class, "Shape", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -821,12 +1190,22 @@ public class GeometryPackageImpl extends EPackageImpl implements GeometryPackage
 		initEReference(getTriangle_Normal(), this.getVertex(), null, "normal", null, 0, 1, Triangle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTriangle_Vertices(), this.getVertex(), null, "vertices", null, 0, 3, Triangle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		EOperation op = initEOperation(getTriangle__Equals__Object(), ecorePackage.getEBoolean(), "equals", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getObject(), "otherObject", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getTriangle__HashCode(), ecorePackage.getEInt(), "hashCode", 0, 1, IS_UNIQUE, IS_ORDERED);
+
 		initEClass(vertexEClass, Vertex.class, "Vertex", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getVertex_X(), ecorePackage.getEDouble(), "x", null, 0, 1, Vertex.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getVertex_Y(), ecorePackage.getEDouble(), "y", null, 0, 1, Vertex.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getVertex_Z(), ecorePackage.getEDouble(), "z", null, 0, 1, Vertex.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getVertex__Clone(), this.getObject(), "clone", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = initEOperation(getVertex__Equals__Object(), ecorePackage.getEBoolean(), "equals", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getObject(), "otherObject", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getVertex__HashCode(), ecorePackage.getEInt(), "hashCode", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(sphereEClass, Sphere.class, "Sphere", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getSphere_Radius(), ecorePackage.getEDouble(), "radius", null, 0, 1, Sphere.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -854,7 +1233,7 @@ public class GeometryPackageImpl extends EPackageImpl implements GeometryPackage
 		initEReference(getINode_Center(), this.getVertex(), null, "center", null, 1, 1, INode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getINode_Parent(), this.getINode(), null, "parent", null, 0, 1, INode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		EOperation op = initEOperation(getINode__ChangeDecoratorProperty__String_Object(), null, "changeDecoratorProperty", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getINode__ChangeDecoratorProperty__String_Object(), null, "changeDecoratorProperty", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "property", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getObject(), "value", 0, 1, IS_UNIQUE, IS_ORDERED);
 
@@ -895,7 +1274,42 @@ public class GeometryPackageImpl extends EPackageImpl implements GeometryPackage
 		op = initEOperation(getIGeometryImporter__Load__Path(), this.getGeometry(), "load", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getPath(), "path", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEClass(asciistlGeometryImporterEClass, STLGeometryImporter.class, "ASCIISTLGeometryImporter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(stlGeometryImporterEClass, STLGeometryImporter.class, "STLGeometryImporter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(pipeEClass, Pipe.class, "Pipe", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getPipe_NumRods(), ecorePackage.getEInt(), "numRods", null, 0, 1, Pipe.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPipe_Pitch(), ecorePackage.getEInt(), "pitch", null, 0, 1, Pipe.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPipe_RodDiameter(), ecorePackage.getEInt(), "rodDiameter", null, 0, 1, Pipe.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPipe_RotationX(), ecorePackage.getEDouble(), "rotationX", null, 0, 1, Pipe.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPipe_RotationY(), ecorePackage.getEDouble(), "rotationY", null, 0, 1, Pipe.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPipe_RotationZ(), ecorePackage.getEDouble(), "rotationZ", null, 0, 1, Pipe.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEOperation(getPipe__GetLowerEdge(), this.getBoundingBox(), "getLowerEdge", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getPipe__GetUpperEdge(), this.getBoundingBox(), "getUpperEdge", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEClass(boundingBoxEClass, BoundingBox.class, "BoundingBox", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getBoundingBox_MaxX(), ecorePackage.getEDouble(), "maxX", null, 0, 1, BoundingBox.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getBoundingBox_MaxY(), ecorePackage.getEDouble(), "maxY", "0.0", 0, 1, BoundingBox.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getBoundingBox_MaxZ(), ecorePackage.getEDouble(), "maxZ", "0.0", 0, 1, BoundingBox.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getBoundingBox_MinX(), ecorePackage.getEDouble(), "minX", "0.0", 0, 1, BoundingBox.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getBoundingBox_MinY(), ecorePackage.getEDouble(), "minY", "0.0", 0, 1, BoundingBox.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getBoundingBox_MinZ(), ecorePackage.getEDouble(), "minZ", "0.0", 0, 1, BoundingBox.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(junctionEClass, Junction.class, "Junction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getJunction_Height(), ecorePackage.getEDouble(), "height", null, 0, 1, Junction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getJunction_ZIn(), ecorePackage.getEDouble(), "zIn", null, 0, 1, Junction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getJunction_ZOut(), ecorePackage.getEDouble(), "zOut", null, 0, 1, Junction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getJunction_Input(), this.getPipe(), null, "input", null, 0, -1, Junction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getJunction_Output(), this.getPipe(), null, "output", null, 0, -1, Junction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(heatExchangerEClass, HeatExchanger.class, "HeatExchanger", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getHeatExchanger_Pipe(), this.getPipe(), null, "pipe", null, 0, 1, HeatExchanger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getHeatExchanger_Input(), this.getJunction(), null, "input", null, 0, 1, HeatExchanger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getHeatExchanger_Output(), this.getJunction(), null, "output", null, 0, 1, HeatExchanger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(reactorEClass, Reactor.class, "Reactor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getReactor_Pipes(), this.getPipe(), null, "pipes", null, 0, -1, Reactor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize data types
 		initEDataType(pathEDataType, Path.class, "Path", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
