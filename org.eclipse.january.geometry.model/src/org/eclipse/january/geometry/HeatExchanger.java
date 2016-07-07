@@ -10,6 +10,8 @@ package org.eclipse.january.geometry;
  *
  * <!-- begin-model-doc -->
  * A heat exchanger is a wrapper around a pipe shape. It represents connections between up to four junctions. The HeatExchanger will be drawn as a box around the pipe and two additional cylindrical shells which connect the box to up to two junction. 
+ * 
+ * This class is part of the nuclear reactor example code, and is included here as an example of extending the model.
  * <!-- end-model-doc -->
  *
  * <p>

@@ -883,6 +883,15 @@ public class GeometryPackageImpl extends EPackageImpl implements GeometryPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getBoundingBox__AddArea__BoundingBox() {
+		return boundingBoxEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getJunction() {
 		return junctionEClass;
 	}
@@ -1117,6 +1126,7 @@ public class GeometryPackageImpl extends EPackageImpl implements GeometryPackage
 		createEAttribute(boundingBoxEClass, BOUNDING_BOX__MIN_X);
 		createEAttribute(boundingBoxEClass, BOUNDING_BOX__MIN_Y);
 		createEAttribute(boundingBoxEClass, BOUNDING_BOX__MIN_Z);
+		createEOperation(boundingBoxEClass, BOUNDING_BOX___ADD_AREA__BOUNDINGBOX);
 
 		junctionEClass = createEClass(JUNCTION);
 		createEAttribute(junctionEClass, JUNCTION__HEIGHT);
@@ -1295,6 +1305,9 @@ public class GeometryPackageImpl extends EPackageImpl implements GeometryPackage
 		initEAttribute(getBoundingBox_MinX(), ecorePackage.getEDouble(), "minX", "0.0", 0, 1, BoundingBox.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getBoundingBox_MinY(), ecorePackage.getEDouble(), "minY", "0.0", 0, 1, BoundingBox.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getBoundingBox_MinZ(), ecorePackage.getEDouble(), "minZ", "0.0", 0, 1, BoundingBox.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		op = initEOperation(getBoundingBox__AddArea__BoundingBox(), null, "addArea", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getBoundingBox(), "area", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(junctionEClass, Junction.class, "Junction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getJunction_Height(), ecorePackage.getEDouble(), "height", null, 0, 1, Junction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

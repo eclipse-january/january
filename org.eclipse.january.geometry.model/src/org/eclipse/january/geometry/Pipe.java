@@ -10,6 +10,8 @@ package org.eclipse.january.geometry;
  *
  * <!-- begin-model-doc -->
  * A pipe is a directional tube. It has a definite top and a definite bottom, and has been extended to include data about rods important to a nuclear reactor model.
+ * 
+ * This class is part of the nuclear reactor example code, and is included here as an example of extending the model.
  * <!-- end-model-doc -->
  *
  * <p>
@@ -191,7 +193,7 @@ public interface Pipe extends Tube {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * Get the bounding box encompassing the lower (input) edge of the pipe.
+	 * Get the bounding box encompassing the lower (output) edge of the pipe.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation"
 	 * @generated
@@ -202,7 +204,7 @@ public interface Pipe extends Tube {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * Get the bounding box surrounding the top (output) edge of the pipe.
+	 * Get the bounding box surrounding the top (inputt) edge of the pipe.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation"
 	 * @generated

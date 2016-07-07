@@ -10,7 +10,9 @@ import org.eclipse.emf.common.util.EList;
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
- * A junction shape between pipes in a reactor. A junction is drawn as a box around the lower ends of its output pipes and the upper ends of its input pipes. 
+ * A junction shape between pipes in a reactor. A junction is drawn as a box around the lower ends of its input pipes and the upper ends of its output pipes. 
+ * 
+ * This class is part of the nuclear reactor example code, and is included here as an example of extending the model.
  * <!-- end-model-doc -->
  *
  * <p>
