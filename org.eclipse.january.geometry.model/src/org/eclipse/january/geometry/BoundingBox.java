@@ -185,4 +185,15 @@ public interface BoundingBox extends EObject {
 	 */
 	void setMinZ(double value);
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Adds the given bounding box's area to the area represented by this one. If the bounding box is contained within this one, there will be no change. If it is partially or wholly outside, this bounding box will be enlargened by the minimal amount required to contain it. 
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated
+	 */
+	void addArea(BoundingBox area);
+
 } // BoundingBox

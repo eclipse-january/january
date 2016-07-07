@@ -385,10 +385,10 @@ public class PipeImpl extends TubeImpl implements Pipe {
 	private BoundingBox createEdgeBounds(boolean lower) {
 
 		// The points for a properly sized 2D circle
-		float[] pointsOrig = MeshUtils.createCircle((float) radius, RESOLUTION);
+		double[] pointsOrig = MeshUtils.createCircle(radius, RESOLUTION);
 
 		// The points comprising the pipe's lip
-		float[] points = new float[RESOLUTION * 3];
+		double[] points = new double[RESOLUTION * 3];
 
 		// Calculate the 3D points by setting the 2D circle to the correct
 		// height
@@ -399,45 +399,24 @@ public class PipeImpl extends TubeImpl implements Pipe {
 			points[i * 3 + 2] = pointsOrig[i * 2 + 1];
 		}
 
-		// Consider each point one at a time
+		// Rotate the points
+		points = MeshUtils.rotatePoints(points, rotationX, rotationY,
+				rotationZ);
+
+		// Move the points so that the pipe will be centered correctly
 		for (int i = 0; i < points.length / 3; i++) {
-
-			// Apply the rotation to the point
-			float x = points[i * 3];
-			float y = points[i * 3 + 1];
-			float z = points[i * 3 + 2];
-
-			// Rotate about the z axis
-			float tempY = (float) (x * Math.sin(rotationZ)
-					+ y * Math.cos(rotationZ));
-			x = (float) (x * Math.cos(rotationZ) - y * Math.sin(rotationZ));
-			y = tempY;
-
-			// Rotate about the y axis
-			float tempX = (float) (z * Math.sin(rotationY)
-					+ x * Math.cos(rotationY));
-			z = (float) (z * Math.cos(rotationY) - x * Math.sin(rotationY));
-			x = tempX;
-
-			// Rotate about the x axis
-			tempY = (float) (y * Math.cos(rotationX) - z * Math.sin(rotationX));
-			z = (float) (y * Math.sin(rotationX) + z * Math.cos(rotationX));
-			y = tempY;
-
-			// Move the points so that the pipe will be centered correctly
-			points[i * 3] = (float) (points[i * 3] + center.getX());
-			points[i * 3 + 1] = (float) (points[i * 3 + 1] + center.getY());
-			points[i * 3 + 2] = (float) (points[i * 3 + 2] + center.getZ());
-
+			points[i * 3] = (points[i * 3] + center.getX());
+			points[i * 3 + 1] = (points[i * 3 + 1] + center.getY());
+			points[i * 3 + 2] = (points[i * 3 + 2] + center.getZ());
 		}
 
 		// Initialize the extrema with the first point
-		float minX = points[0];
-		float minY = points[1];
-		float minZ = points[2];
-		float maxX = points[0];
-		float maxY = points[1];
-		float maxZ = points[2];
+		double minX = points[0];
+		double minY = points[1];
+		double minZ = points[2];
+		double maxX = points[0];
+		double maxY = points[1];
+		double maxZ = points[2];
 
 		// Compare each point to the current extrema, setting the
 		// minimum/maximum values if they are lower/higher

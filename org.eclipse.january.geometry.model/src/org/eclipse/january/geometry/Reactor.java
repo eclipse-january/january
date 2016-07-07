@@ -11,6 +11,8 @@ import org.eclipse.emf.common.util.EList;
  *
  * <!-- begin-model-doc -->
  * A shape representing the core reactor in a nuclear reactor. It is represented by a cut away of a capsule shape around a series of pipes, consisting of two strainght rectangular sides along its shortest dimension, a curved side along the middle dimension, and the largest dimension left open to show the pipes within.
+ * 
+ * This class is part of the nuclear reactor example code, and is included here as an example of extending the model.
  * <!-- end-model-doc -->
  *
  * <p>

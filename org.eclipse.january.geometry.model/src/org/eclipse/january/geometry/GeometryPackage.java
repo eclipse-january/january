@@ -2588,13 +2588,22 @@ public interface GeometryPackage extends EPackage {
 	int BOUNDING_BOX_FEATURE_COUNT = 6;
 
 	/**
+	 * The operation id for the '<em>Add Area</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BOUNDING_BOX___ADD_AREA__BOUNDINGBOX = 0;
+
+	/**
 	 * The number of operations of the '<em>Bounding Box</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int BOUNDING_BOX_OPERATION_COUNT = 0;
+	int BOUNDING_BOX_OPERATION_COUNT = 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.january.geometry.impl.JunctionImpl <em>Junction</em>}' class.
@@ -3929,6 +3938,16 @@ public interface GeometryPackage extends EPackage {
 	EAttribute getBoundingBox_MinZ();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.january.geometry.BoundingBox#addArea(org.eclipse.january.geometry.BoundingBox) <em>Add Area</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Add Area</em>' operation.
+	 * @see org.eclipse.january.geometry.BoundingBox#addArea(org.eclipse.january.geometry.BoundingBox)
+	 * @generated
+	 */
+	EOperation getBoundingBox__AddArea__BoundingBox();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.january.geometry.Junction <em>Junction</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4681,6 +4700,14 @@ public interface GeometryPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute BOUNDING_BOX__MIN_Z = eINSTANCE.getBoundingBox_MinZ();
+
+		/**
+		 * The meta object literal for the '<em><b>Add Area</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation BOUNDING_BOX___ADD_AREA__BOUNDINGBOX = eINSTANCE.getBoundingBox__AddArea__BoundingBox();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.january.geometry.impl.JunctionImpl <em>Junction</em>}' class.
