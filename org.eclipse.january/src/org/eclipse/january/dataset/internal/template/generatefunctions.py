@@ -193,7 +193,7 @@ def beginmethod(name, jdoc=None, params=0):
 
     print("\t\tfinal Dataset result = it.getOutput();")
     print("\t\tfinal int is = result.getElementsPerItem();")
-    print("\t\tfinal int dt = result.getDtype();")
+    print("\t\tfinal int dt = result.getDType();")
     for p in plist:
         print("\t\tfinal double %s = AbstractDataset.toReal(%s);" % (p+"x", p))
 #        print("\t\tfinal double %s = AbstractDataset.toImag(%s);" % (p+"y", p))
