@@ -425,8 +425,8 @@ public class MeshUtils {
 
 		// The points defining the tube
 		double[] points = innerRadius != radius
-				? new double[2 * resolution * (segments + 1)]
-				: new double[resolution * (segments + 1)];
+				? new double[(2 * resolution * (segments + 1)) * 3]
+				: new double[(resolution * (segments + 1)) * 3];
 
 		// The y coordinate of the pipe's bottom edge
 		double base = height / -2d;
@@ -854,10 +854,17 @@ public class MeshUtils {
 		double x = axis.getX();
 		double y = axis.getY();
 		double z = axis.getZ();
+		
+		//Normalize the vector
+		double vectorLength = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
+		x /= vectorLength;
+		y /= vectorLength;
+		z /= vectorLength;
 
 		// Get the sin and (1 - cos) for the magnitude of the rotation
 		double sin = Math.sin(magnitude);
-		double cos = 1 - Math.cos(magnitude);
+		double cos = Math.cos(magnitude);
+		double inverseCos = 1 - Math.cos(magnitude);
 
 		// The matrix is the identity matrix I + sin(magnitude)S + (1 -
 		// cos(magnitude)S ^2, where S is:
@@ -865,35 +872,42 @@ public class MeshUtils {
 		// axis.z, 0, -axis.x
 		// -axis.y, axis.x, 0
 
-		// Start with the identity matrix
-		matrix[0][0] = 1;
-		matrix[0][1] = 0;
-		matrix[0][2] = 0;
-		matrix[1][1] = 1;
-		matrix[1][1] = 0;
-		matrix[1][2] = 0;
-		matrix[2][2] = 1;
-		matrix[2][1] = 0;
-		matrix[2][2] = 0;
-
-		// Add sin(theta) * S
-		matrix[0][1] += sin * -z;
-		matrix[0][2] += sin * y;
-		matrix[1][0] += sin * z;
-		matrix[1][2] += sin * -x;
-		matrix[2][0] += sin * -y;
-		matrix[2][1] += sin * x;
-
-		// Add (1 - cos(theta)) * S ^ 2
-		matrix[0][0] += cos * (-Math.pow(z, 2) - Math.pow(y, 2));
-		matrix[0][1] += cos * x * y;
-		matrix[0][2] += cos * z * x;
-		matrix[1][0] += cos * x * y;
-		matrix[1][1] += cos * (-Math.pow(z, 2) - Math.pow(x, 2));
-		matrix[1][2] += cos * z * y;
-		matrix[2][0] += cos * z * x;
-		matrix[2][1] += cos * z * y;
-		matrix[2][2] += cos * (-Math.pow(y, 2) - Math.pow(x, 2));
+//		// Start with the identity matrix
+//		matrix[0][0] = 1;
+//		matrix[0][1] = 0;
+//		matrix[0][2] = 0;
+//		matrix[1][1] = 1;
+//		matrix[1][1] = 0;
+//		matrix[1][2] = 0;
+//		matrix[2][2] = 1;
+//		matrix[2][1] = 0;
+//		matrix[2][2] = 0;
+//
+//		// Add sin(theta) * S
+//		matrix[0][1] += sin * -z;
+//		matrix[0][2] += sin * y;
+//		matrix[1][0] += sin * z;
+//		matrix[1][2] += sin * -x;
+//		matrix[2][0] += sin * -y;
+//		matrix[2][1] += sin * x;
+//
+//		// Add (1 - cos(theta)) * S ^ 2
+//		matrix[0][0] += cos * (-Math.pow(z, 2) - Math.pow(y, 2));
+//		matrix[0][1] += cos * x * y;
+//		matrix[0][2] += cos * z * x;
+//		matrix[1][0] += cos * x * y;
+//		matrix[1][1] += cos * (-Math.pow(z, 2) - Math.pow(x, 2));
+//		matrix[1][2] += cos * z * y;
+//		matrix[2][0] += cos * z * x;
+//		matrix[2][1] += cos * z * y;
+//		matrix[2][2] += cos * (-Math.pow(y, 2) - Math.pow(x, 2));
+		
+		//Fill the matrix for a rotation about the axis
+		matrix[0][0] = cos + Math.pow(x, 2) * inverseCos;
+		matrix[0][1] = x * y * inverseCos - z * sin;
+		matrix[0][2] = x * z * inverseCos + y * sin;
+		matrix[1][0] = y * x + inverseCos + z * sin;
+		matrix[1]
 
 		// Apply the rotation matrix to each vector of three coordinates
 		for (int i = 0; i < points.length / 3; i++) {
