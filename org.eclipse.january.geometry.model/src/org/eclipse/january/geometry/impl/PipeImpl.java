@@ -12,6 +12,7 @@ import org.eclipse.january.geometry.BoundingBox;
 import org.eclipse.january.geometry.GeometryFactory;
 import org.eclipse.january.geometry.GeometryPackage;
 import org.eclipse.january.geometry.Pipe;
+import org.eclipse.january.geometry.Triangle;
 import org.eclipse.january.geometry.util.MeshUtils;
 
 /**
@@ -457,6 +458,39 @@ public class PipeImpl extends TubeImpl implements Pipe {
 		box.setMinZ(minZ);
 
 		return box;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see geometry.impl.ShapeImpl#getTriangles()
+	 * 
+	 * @generated NOT
+	 */
+	@Override
+	public EList<Triangle> getTriangles() {
+
+		// If the attributes have not changed since the last time the mesh was
+		// recalculated, return the current mesh
+		if (prevHeight == height && prevInnerRadius == innerRadius
+				&& prevRadius == radius) {
+			return triangles;
+		}
+
+		// Update to the current attributes
+		prevRadius = radius;
+		prevHeight = height;
+
+		//Get the points and rotate them
+		double[] vertices = MeshUtils.createTube(height, radius, radius,
+				RESOLUTION, SEGMENTS);
+		vertices = MeshUtils.rotatePoints(vertices, rotationX, rotationY, rotationZ);
+		
+		// Replace the previous list with a a new tube's triangles.
+		triangles.clear();
+		triangles = MeshUtils.createTubeMesh(vertices, RESOLUTION, SEGMENTS);
+
+		return triangles;
 	}
 
 	/**

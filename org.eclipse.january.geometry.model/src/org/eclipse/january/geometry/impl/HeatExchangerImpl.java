@@ -461,6 +461,21 @@ public class HeatExchangerImpl extends ShapeImpl implements HeatExchanger {
 		return triangles;
 
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.january.geometry.impl.ShapeImpl#setCenter(org.eclipse.january.geometry.Vertex)
+	 * 
+	 * @generated NOT
+	 */
+	public void setCenter(Vertex newCenter){
+		
+		//If the exchanger has a pipe, move its center too
+		if(pipe != null){
+			pipe.setCenter(newCenter);
+		}
+		super.setCenter(newCenter);
+	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
