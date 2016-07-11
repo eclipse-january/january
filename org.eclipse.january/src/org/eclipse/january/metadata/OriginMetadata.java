@@ -21,6 +21,16 @@ import org.eclipse.january.dataset.Slice;
 public interface OriginMetadata extends DimensionMetadata {
 
 	/**
+	 * Initialize origin of dataset
+	 * @param parent
+	 * @param outSlice
+	 * @param dataDims
+	 * @param filePath
+	 * @param datasetName
+	 */
+	public void initialize(ILazyDataset parent, Slice[] outSlice, int[] dataDims, String filePath, String datasetName);
+
+	/**
 	 * 
 	 * @return ILazyDataset
 	 */

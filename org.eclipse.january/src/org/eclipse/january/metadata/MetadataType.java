@@ -16,6 +16,9 @@ import java.io.Serializable;
 
 /**
  * This is a marker interface for all metadata items which can be associated with a dataset.
+ * <p>
+ * All sub-interfaces must have an initialize method and all implementations must have a null constructor.
+ * 
  */
 public interface MetadataType extends Serializable, Cloneable {
 

@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.january.DatasetException;
+import org.eclipse.january.MetadataException;
 import org.eclipse.january.metadata.ErrorMetadata;
 import org.eclipse.january.metadata.IMetadata;
 import org.eclipse.january.metadata.MetadataType;
@@ -37,6 +39,8 @@ import org.slf4j.LoggerFactory;
  * Common base for both lazy and normal dataset implementations
  */
 public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
+
+	protected static final long serialVersionUID = 767926846438976050L;
 
 	protected static final Logger logger = LoggerFactory.getLogger(LazyDatasetBase.class);
 
@@ -178,12 +182,16 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	}
 
 	/**
-	 * Dig down to interface (or class) that directly extends (or implements) MetadataType
+	 * Dig down to first interface (or class that directly extends or implements) MetadataType
 	 * @param clazz
 	 * @return sub-interface
 	 */
 	@SuppressWarnings("unchecked")
-	static Class<? extends MetadataType> findMetadataTypeSubInterfaces(Class<? extends MetadataType> clazz) {
+	public static Class<? extends MetadataType> findMetadataTypeSubInterfaces(Class<? extends MetadataType> clazz) {
+		if (clazz.isInterface()) {
+			return clazz;
+		}
+
 		Class<?> sclazz = clazz.getSuperclass();
 		if (sclazz != null && !sclazz.equals(Object.class)) // recurse up class hierarchy
 			return findMetadataTypeSubInterfaces((Class<? extends MetadataType>) sclazz);

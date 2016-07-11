@@ -14,6 +14,7 @@ package org.eclipse.january.dataset;
 
 import java.util.List;
 
+import org.eclipse.january.MetadataException;
 import org.eclipse.january.metadata.IMetadata;
 import org.eclipse.january.metadata.MetadataType;
 

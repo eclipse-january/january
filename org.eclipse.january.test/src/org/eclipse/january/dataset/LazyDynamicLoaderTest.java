@@ -13,17 +13,11 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import org.eclipse.january.IMonitor;
-import org.eclipse.january.dataset.Dataset;
-import org.eclipse.january.dataset.DatasetFactory;
-import org.eclipse.january.dataset.IDataset;
-import org.eclipse.january.dataset.LazyDynamicDataset;
-import org.eclipse.january.dataset.SliceND;
-import org.eclipse.january.dataset.SliceNDIterator;
 import org.eclipse.january.io.ILazyDynamicLoader;
 import org.eclipse.january.io.ILazyLoader;
 import org.eclipse.january.metadata.AxesMetadata;
-import org.eclipse.january.metadata.internal.AxesMetadataImpl;
-import org.eclipse.january.metadata.internal.DynamicMetadataUtils;
+import org.eclipse.january.metadata.DynamicMetadataUtils;
+import org.eclipse.january.metadata.MetadataFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -37,7 +31,7 @@ public class LazyDynamicLoaderTest {
 		
 		LazyDynamicDataset dataset = getDataset(range,2,"data");
 		
-		AxesMetadata ax = new AxesMetadataImpl(4);
+		AxesMetadata ax = MetadataFactory.createMetadata(AxesMetadata.class, 4);
 		ax.setAxis(0, DatasetFactory.createRange(10, Dataset.INT64));
 		ax.setAxis(1, DatasetFactory.createRange(13, Dataset.INT64));
 		dataset.addMetadata(ax);
@@ -77,7 +71,7 @@ public class LazyDynamicLoaderTest {
 		LazyDynamicDataset ax1 = getDataset(DatasetFactory.createRange(10, Dataset.INT64),0,"ax0");
 		LazyDynamicDataset ax2 = getDataset(DatasetFactory.createRange(13, Dataset.INT64),0,"ax1");
 		
-		AxesMetadata ax = new AxesMetadataImpl(4);
+		AxesMetadata ax = MetadataFactory.createMetadata(AxesMetadata.class, 4);
 		ax.setAxis(0, ax1);
 		ax.setAxis(1, ax2);
 		dataset.addMetadata(ax);

@@ -14,9 +14,10 @@ package org.eclipse.january.metadata;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.january.dataset.MetadataException;
+import org.eclipse.january.MetadataException;
 import org.eclipse.january.io.IDataAnalysisObject;
 
 /**
@@ -32,7 +33,13 @@ public interface IMetadata extends IDataAnalysisObject, MetadataType, Serializab
 	 * Update this when there are any serious changes to API
 	 */
 	static final long serialVersionUID = 8640458661665962384L;
-	
+
+	/**
+	 * Initialize metadata
+	 * @param metadata
+	 */
+	public void initialize(Map<String, ? extends Serializable> metadata);
+
 	/**
 	 * 
 	 * @return the path to the original file, or null if there was not a file.
@@ -89,4 +96,25 @@ public interface IMetadata extends IDataAnalysisObject, MetadataType, Serializab
 	 */
 	@Override
 	public IMetadata clone();
+
+	public void setFilePath(String filename);
+
+	/**
+	 * Add name and shape of a dataset to metadata
+	 * 
+	 * @param name
+	 * @param shape (can be null or zero-length)
+	 * 
+	 * (NOTE method should be public, people can define loaders outside this
+	 * package like the DESY FIO loader for instance.)
+	 */
+	public void addDataInfo(String n, int... shape);
+
+	public void addNames(Collection<String> names);
+
+	/**
+	 * Set metadata map
+	 * @param metadata
+	 */
+	public void setMetadata(Map<String, ? extends Serializable> map);
 }

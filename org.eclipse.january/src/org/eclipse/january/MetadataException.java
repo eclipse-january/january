@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.eclipse.january.dataset;
+package org.eclipse.january;
 
 /**
  * Exception associated with metadata

@@ -7,11 +7,9 @@
  * http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.eclipse.january.metadata.internal;
+package org.eclipse.january.metadata;
 
 import java.util.List;
-
-import org.eclipse.january.metadata.AxesMetadata;
 
 public class DynamicMetadataUtils {
 
@@ -21,7 +19,7 @@ public class DynamicMetadataUtils {
 		if (axm == null) return maxShape;
 		
 		for (AxesMetadata a : axm) {
-			AxesMetadataImpl ai = (AxesMetadataImpl)a;
+			AxesMetadata ai = a;
 			int[] s = ai.refresh(shape);
 			for (int i = 0; i < s.length; i++) {
 				if (maxShape[i] > s[i]) maxShape[i] = s[i];

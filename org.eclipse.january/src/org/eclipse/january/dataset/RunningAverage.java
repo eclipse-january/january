@@ -9,6 +9,8 @@
 
 package org.eclipse.january.dataset;
 
+import org.eclipse.january.DatasetException;
+
 /**
  * A running mean class
  */

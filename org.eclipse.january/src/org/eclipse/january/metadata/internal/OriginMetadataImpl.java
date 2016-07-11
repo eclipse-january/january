@@ -14,7 +14,9 @@ import org.eclipse.january.dataset.Slice;
 import org.eclipse.january.metadata.OriginMetadata;
 
 public class OriginMetadataImpl extends DimensionMetadataImpl implements OriginMetadata {
-	
+
+	private static final long serialVersionUID = 8024625240713615948L;
+
 	private ILazyDataset parent;
 	private Slice[] outSlice;
 	private Slice[] currentSlice;
@@ -22,16 +24,21 @@ public class OriginMetadataImpl extends DimensionMetadataImpl implements OriginM
 	private String datasetName;
 	private String filePath;
 
-	public OriginMetadataImpl(ILazyDataset parent, Slice[] outSlice, int[] dataDims, String filePath, String datasetName) {
-		super(dataDims, null, null);
+	public OriginMetadataImpl() {
+	}
+
+	@Override
+	public void initialize(ILazyDataset parent, Slice[] outSlice, int[] dataDims, String filePath, String datasetName) {
+		super.initialize(dataDims, null, null);
 		this.parent = parent;
 		this.outSlice = outSlice;
 		this.datasetName = datasetName;
 		this.filePath = filePath;
 	}
 
-	public OriginMetadataImpl(OriginMetadataImpl origin) {
-		super(null, null, null);
+	private OriginMetadataImpl(OriginMetadataImpl origin) {
+		super();
+		super.initialize(null, null, null);
 		parent = origin.parent == null ? null : origin.parent;
 		outSlice = origin.outSlice == null ? null : origin.outSlice.clone();
 		shape = origin.shape == null ? null : origin.shape.clone();

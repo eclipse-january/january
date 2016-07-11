@@ -22,6 +22,12 @@ import org.eclipse.january.dataset.ILazyDataset;
 public interface AxesMetadata extends MetadataType {
 
 	/**
+	 * 
+	 * @param rank
+	 */
+	void initialize(int rank);
+
+	/**
 	 * Get axis datasets
 	 * @return all axis datasets, any nulls represent default integer indexes, 
 	 * each axis is the main specified axis. i.e the result of getAxis(n)[0]
@@ -43,5 +49,15 @@ public interface AxesMetadata extends MetadataType {
 	 */
 	public void setAxis(int axisDim, ILazyDataset... axisData);
 	
-	public AxesMetadata createAxesMetadata(int rank);
+	/**
+	 * Add axis data to given dimension. This dataset must be one dimensional or match rank
+	 * with the associating dataset
+	 * @param axisDim dimension (n.b. this is zero-based)
+	 * @param axisData dataset for axis
+	 */
+	public void addAxis(int i, ILazyDataset lazyDataset);
+
+	public void addAxis(int primary, ILazyDataset iLazyDataset, int... axisDims);
+
+	int[] refresh(int[] shape);
 }

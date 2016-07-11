@@ -9,6 +9,7 @@
 
 package org.eclipse.january.dataset;
 
+import org.eclipse.january.DatasetException;
 import org.eclipse.january.IMonitor;
 import org.eclipse.january.io.ILazySaver;
 

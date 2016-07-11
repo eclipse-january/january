@@ -13,6 +13,7 @@
 package org.eclipse.january.metadata;
 
 
+import java.io.File;
 import java.util.Date;
 
 /**
@@ -22,6 +23,12 @@ import java.util.Date;
  * It is intended that implementations of this interface will be through an adapter
  */
 public interface IExtendedMetadata extends IMetadata {
+
+	/**
+	 * Initialize with a file
+	 * @param f file
+	 */
+	public void initialize(File f);
 
 	/**
 	 * This should be the timestamp of when the experiment or measurement took place which should

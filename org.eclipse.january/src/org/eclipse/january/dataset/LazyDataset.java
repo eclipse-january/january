@@ -22,15 +22,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.january.DatasetException;
 import org.eclipse.january.IMonitor;
 import org.eclipse.january.io.ILazyLoader;
+import org.eclipse.january.metadata.MetadataFactory;
 import org.eclipse.january.metadata.MetadataType;
+import org.eclipse.january.metadata.OriginMetadata;
 import org.eclipse.january.metadata.Reshapeable;
 import org.eclipse.january.metadata.Sliceable;
 import org.eclipse.january.metadata.Transposable;
-import org.eclipse.january.metadata.internal.OriginMetadataImpl;
 
 public class LazyDataset extends LazyDatasetBase implements Serializable, Cloneable {
+
+	protected static final long serialVersionUID = LazyDatasetBase.serialVersionUID;
 
 	protected int[]     oShape; // original shape
 	protected long      size;   // number of items
@@ -88,6 +92,8 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	public static LazyDataset createLazyDataset(final Dataset dataset) {
 		return new LazyDataset(dataset.getName(), dataset.getDType(), dataset.getElementsPerItem(), dataset.getShape(),
 		new ILazyLoader() {
+			private static final long serialVersionUID = -6725268922780517523L;
+
 			final Dataset d = dataset;
 			@Override
 			public boolean isFileReadable() {
@@ -424,7 +430,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 		}
 		if (slice != null)
 			a.setShape(slice.getShape());
-		a.addMetadata(new OriginMetadataImpl(this, nslice.convertToSlice(), oShape, null, name));
+		a.addMetadata(MetadataFactory.createMetadata(OriginMetadata.class, this, nslice.convertToSlice(), oShape, null, name));
 		
 		return a;
 	}

@@ -20,6 +20,14 @@ import org.eclipse.january.metadata.MetadataType;
 public interface PeemMetadata extends MetadataType {
 
 	/**
+	 * Initialize PEEM metadata
+	 * @param xyPosition
+	 * @param scaling
+	 * @param fieldOfView
+	 */
+	public void initialize(double[] xyPosition, double scaling, double fieldOfView);
+
+	/**
 	 * 
 	 * @return X/y motor position in microns
 	 */

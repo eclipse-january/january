@@ -14,6 +14,7 @@ package org.eclipse.january.dataset;
 
 import java.util.Arrays;
 
+import org.eclipse.january.DatasetException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

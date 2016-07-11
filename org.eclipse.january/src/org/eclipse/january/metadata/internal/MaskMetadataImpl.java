@@ -24,12 +24,16 @@ public class MaskMetadataImpl implements MaskMetadata {
 	@Transposable
 	@Sliceable
 	IDataset mask;
-	
-	public MaskMetadataImpl(IDataset mask) {
+
+	public MaskMetadataImpl() {
+	}
+
+	@Override
+	public void initialize(IDataset mask) {
 		this.mask = mask;
 	}
 
-	public MaskMetadataImpl(MaskMetadataImpl mask) {
+	private MaskMetadataImpl(MaskMetadataImpl mask) {
 		this.mask = mask == null ? null : mask.mask.getSliceView();
 	}
 

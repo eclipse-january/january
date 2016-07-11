@@ -19,6 +19,11 @@ import org.eclipse.january.dataset.ILazyDataset;
  */
 public interface ARPESMetadata extends MetadataType {
 
+	/**
+	 * Initialize
+	 */
+	public void initialize();
+
 	// Constants for the scan
 	public double getPhotonEnergy();
 	public double getWorkFunction();

@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.lang.SerializationUtils;
-import org.eclipse.january.dataset.MetadataException;
+import org.eclipse.january.MetadataException;
 
 
 /**
@@ -44,10 +44,16 @@ public class Metadata implements IMetadata {
 	}
 
 	public Metadata(Map<String, ? extends Serializable> metadata) {
+		initialize(metadata);
+	}
+
+	@Override
+	public void initialize(Map<String, ? extends Serializable> metadata) {
 		this.metadata = metadata;
 	}
 
-	public Metadata(Collection<String> names) {
+	@Override
+	public void addNames(Collection<String> names) {
 		if (names != null) {
 			for (String n : names) {
 				shapes.put(n, null);
@@ -59,6 +65,7 @@ public class Metadata implements IMetadata {
 	 * Set metadata map
 	 * @param metadata
 	 */
+	@Override
 	public void setMetadata(Map<String, ? extends Serializable> metadata) {
 		this.metadata = metadata;
 	}
@@ -79,15 +86,6 @@ public class Metadata implements IMetadata {
 		userObjects = objects;
 	}
 
-	/**
-	 * Add name and shape of a dataset to metadata
-	 * 
-	 * @param name
-	 * @param shape (can be null or zero-length)
-	 * 
-	 * (NOTE method should be public, people can define loaders outside this
-	 * package like the DESY FIO loader for instance.)
-	 */
 	public void addDataInfo(String name, int... shape) {
 		shapes.put(name, shape == null || shape.length == 0 ? null : shape);
 	}
@@ -178,6 +176,7 @@ public class Metadata implements IMetadata {
 		return filePath;
 	}
 
+	@Override
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
 	}

@@ -14,6 +14,14 @@ package org.eclipse.january.metadata;
 
 public interface DimensionMetadata extends MetadataType {
 
+	/**
+	 * Initialize dimension metadata
+	 * @param shape
+	 * @param maxShape
+	 * @param chunkShape
+	 */
+	public void initialize(int[] shape, int[] maxShape, int[] chunkShape);
+
 	public int[] getDataDimensions();
 
 	public int[] getDataMaxDimensions();

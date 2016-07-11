@@ -14,6 +14,7 @@ package org.eclipse.january.dataset;
 
 import java.io.Serializable;
 
+import org.eclipse.january.DatasetException;
 import org.eclipse.january.IMonitor;
 import org.eclipse.january.INameable;
 import org.eclipse.january.metadata.MetadataType;

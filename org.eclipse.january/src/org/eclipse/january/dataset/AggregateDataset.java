@@ -16,6 +16,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.january.DatasetException;
 import org.eclipse.january.IMonitor;
 
 /**

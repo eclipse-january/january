@@ -12,17 +12,23 @@ import org.eclipse.january.metadata.PeemMetadata;
 
 public class PeemMetadataImpl implements PeemMetadata {
 
+	private static final long serialVersionUID = -7393352300851539973L;
+
 	private double[] xyMotorPosition;
 	private double scaling = 512 / 50;
 	private double fieldOfView = 50;
 
-	public PeemMetadataImpl(double[] xyPosition, double scaling, double fieldOfView) {
+	public PeemMetadataImpl() {
+	}
+
+	@Override
+	public void initialize(double[] xyPosition, double scaling, double fieldOfView) {
 		this.xyMotorPosition = xyPosition;
 		this.scaling = scaling;
 		this.fieldOfView = fieldOfView;
 	}
 
-	public PeemMetadataImpl(PeemMetadata metadata) {
+	private PeemMetadataImpl(PeemMetadata metadata) {
 		super();
 		this.xyMotorPosition = metadata.getXYMotorPosition();
 		this.scaling = metadata.getScaling();

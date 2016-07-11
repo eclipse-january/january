@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
+import org.eclipse.january.DatasetException;
 import org.eclipse.january.IMonitor;
 import org.eclipse.january.metadata.ErrorMetadata;
 import org.eclipse.january.metadata.MetadataType;

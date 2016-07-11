@@ -11,6 +11,8 @@ package org.eclipse.january.dataset;
 
 import java.util.concurrent.TimeUnit;
 
+import org.eclipse.january.DatasetException;
+
 /**
  * A Remote dataset is a lazy dataset which exists in a remote
  * location. It uses a connection to the DataServer to provide the

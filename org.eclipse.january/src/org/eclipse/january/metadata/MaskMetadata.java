@@ -20,6 +20,12 @@ import org.eclipse.january.dataset.IDataset;
 public interface MaskMetadata extends MetadataType {
 
 	/**
+	 * Initialize mask
+	 * @param mask
+	 */
+	public void initialize(IDataset mask);
+
+	/**
 	 * Get mask
 	 * @return mask
 	 */

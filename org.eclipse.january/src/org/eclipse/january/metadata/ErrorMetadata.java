@@ -19,9 +19,17 @@ import org.eclipse.january.dataset.ILazyDataset;
  */
 public interface ErrorMetadata extends MetadataType {
 
+	public void initialize();
+
 	/**
 	 * Get error dataset
 	 * @return error dataset
 	 */
 	public ILazyDataset getError();
+
+	/**
+	 * Set the error
+	 * @param error
+	 */
+	public void setError(ILazyDataset error);
 }

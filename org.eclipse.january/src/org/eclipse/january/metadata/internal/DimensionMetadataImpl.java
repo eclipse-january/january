@@ -14,17 +14,23 @@ import org.eclipse.january.metadata.MetadataType;
 
 public class DimensionMetadataImpl implements DimensionMetadata {
 
+	private static final long serialVersionUID = -8414494547115738924L;
+
 	protected int[] shape;
 	private int[] maxShape;
 	private int[] chunkShape;
 
-	public DimensionMetadataImpl(int[] shape, int[] maxShape, int[] chunkShape) {
+	public DimensionMetadataImpl() {
+	}
+
+	@Override
+	public void initialize(int[] shape, int[] maxShape, int[] chunkShape) {
 		this.shape = shape;
 		this.maxShape = maxShape;
 		this.chunkShape = chunkShape;
 	}
 
-	public DimensionMetadataImpl(DimensionMetadataImpl dim) {
+	protected DimensionMetadataImpl(DimensionMetadataImpl dim) {
 		this.shape = dim.shape.clone();
 		this.maxShape = dim.maxShape == null ? null : dim.maxShape.clone();
 		this.chunkShape = dim.chunkShape == null ? null : dim.chunkShape.clone();

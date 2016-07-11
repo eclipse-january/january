@@ -31,6 +31,8 @@ import org.eclipse.january.metadata.Transposable;
  */
 public class ErrorMetadataImpl implements ErrorMetadata, Serializable {
 
+	private static final long serialVersionUID = -4365046277441185058L;
+
 	@Transposable
 	@Sliceable
 	@Reshapeable
@@ -48,7 +50,11 @@ public class ErrorMetadataImpl implements ErrorMetadata, Serializable {
 	public ErrorMetadataImpl() {
 	}
 
-	public ErrorMetadataImpl(ErrorMetadataImpl error) {
+	@Override
+	public void initialize() {
+	}
+
+	private ErrorMetadataImpl(ErrorMetadataImpl error) {
 		this.error = error.error == null ? null : error.error.getSliceView();
 		this.sqError = error.sqError == null ? null : error.sqError.getSliceView();
 	}
@@ -63,6 +69,7 @@ public class ErrorMetadataImpl implements ErrorMetadata, Serializable {
 		return error;
 	}
 
+	@Override
 	public void setError(ILazyDataset error) {
 		this.error = sanitizeErrorData(error);
 		this.sqError = null;

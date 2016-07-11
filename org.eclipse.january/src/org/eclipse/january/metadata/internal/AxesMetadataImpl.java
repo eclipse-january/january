@@ -24,21 +24,26 @@ import org.eclipse.january.metadata.Transposable;
 
 public class AxesMetadataImpl implements AxesMetadata {
 
+	private static final long serialVersionUID = -3602919073785450882L;
+
 	@Transposable
 	@Reshapeable(matchRank = true)
-	@Sliceable
-	final List<ILazyDataset>[] allAxes;
+	@Sliceable List<ILazyDataset>[] allAxes;
 	
-	final Map<Integer,int[]> dimensionMap;
+	Map<Integer,int[]> dimensionMap;
 
+	public AxesMetadataImpl() {
+	}
+
+	@Override
 	@SuppressWarnings("unchecked")
-	public AxesMetadataImpl(int rank) {
+	public void initialize(int rank) {
 		allAxes = new List[rank];
 		dimensionMap = new HashMap<Integer,int[]>();
 	}
 
 	@SuppressWarnings("unchecked")
-	public AxesMetadataImpl(AxesMetadataImpl axesMetadataImpl) {
+	private AxesMetadataImpl(AxesMetadataImpl axesMetadataImpl) {
 		int r = axesMetadataImpl.allAxes.length;
 		allAxes = new List[r];
 		dimensionMap = new HashMap<Integer,int[]>();
@@ -141,10 +146,6 @@ public class AxesMetadataImpl implements AxesMetadata {
 	}
 
 	@Override
-	public AxesMetadata createAxesMetadata(int rank) {
-		return new AxesMetadataImpl(rank);
-	}
-	
 	public int[] refresh(int[] shape) {
 		int[] maxShape = shape.clone();
 
