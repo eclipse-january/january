@@ -237,14 +237,14 @@ public class HeatExchangerImpl extends ShapeImpl implements HeatExchanger {
 		// vector a distance equal to half the pipe's length. Since tubes'
 		// translations are based on their central point, this will shift the
 		// tube so that one end is at the intersection point and the other is at
-		// the target.
+		// the target. Also subtract the center point from this translation, so that they will be attached to the heat exchanger centered around the origin. 
 		Vertex intersectionPoint = GeometryFactory.eINSTANCE.createVertex();
 		intersectionPoint
-				.setX(intersection[0] + (normalizedDirect[0] * length / 2));
+				.setX(intersection[0] + (normalizedDirect[0] * length / 2) - center.getX());
 		intersectionPoint
-				.setY(intersection[1] + (normalizedDirect[1] * length / 2));
+				.setY(intersection[1] + (normalizedDirect[1] * length / 2) - center.getY());
 		intersectionPoint
-				.setZ(intersection[2] + (normalizedDirect[2] * length / 2));
+				.setZ(intersection[2] + (normalizedDirect[2] * length / 2) - center.getZ());
 		vertices = MeshUtils.centerPoints(vertices, intersectionPoint);
 
 		// Get the triangles that define the tube
