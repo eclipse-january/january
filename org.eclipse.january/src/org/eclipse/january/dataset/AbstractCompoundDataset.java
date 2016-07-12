@@ -532,7 +532,7 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 		int alen = oshape[axis];
 		oshape[axis] = 1;
 
-		int[] nshape = squeezeShape(oshape, false);
+		int[] nshape = ShapeUtils.squeezeShape(oshape, false);
 
 		IntegerDataset count = new IntegerDataset(nshape);
 		CompoundDoubleDataset sum = new CompoundDoubleDataset(isize, nshape);

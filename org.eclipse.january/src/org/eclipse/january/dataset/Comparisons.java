@@ -882,7 +882,7 @@ public class Comparisons {
 		int alen = oshape[axis];
 		oshape[axis] = 1;
 
-		int[] nshape = AbstractDataset.squeezeShape(oshape, false);
+		int[] nshape = ShapeUtils.squeezeShape(oshape, false);
 
 		BooleanDataset result = DatasetFactory.zeros(BooleanDataset.class, nshape);
 
@@ -947,7 +947,7 @@ public class Comparisons {
 		int alen = oshape[axis];
 		oshape[axis] = 1;
 
-		int[] nshape = AbstractDataset.squeezeShape(oshape, false);
+		int[] nshape = ShapeUtils.squeezeShape(oshape, false);
 
 		BooleanDataset result = DatasetFactory.zeros(BooleanDataset.class, nshape);
 

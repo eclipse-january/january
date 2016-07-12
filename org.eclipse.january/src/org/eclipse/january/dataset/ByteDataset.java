@@ -71,7 +71,7 @@ public class ByteDataset extends AbstractDataset {
 					throw new IllegalArgumentException("Negative component in shape is not allowed");
 				}
 			} else {
-				size = calcSize(shape);
+				size = ShapeUtils.calcSize(shape);
 			}
 			this.shape = shape.clone();
 
@@ -97,7 +97,7 @@ public class ByteDataset extends AbstractDataset {
 		if (shape == null || shape.length == 0) {
 			shape = new int[] { data.length };
 		}
-		size = calcSize(shape);
+		size = ShapeUtils.calcSize(shape);
 		if (size != data.length) {
 			throw new IllegalArgumentException(String.format("Shape %s is not compatible with size of data array, %d",
 					Arrays.toString(shape), data.length));
@@ -198,8 +198,8 @@ public class ByteDataset extends AbstractDataset {
 		ByteDataset result = new ByteDataset();
 
 		if (obj != null) {
-			result.shape = getShapeFromObject(obj);
-			result.size = calcSize(result.shape);
+			result.shape = ShapeUtils.getShapeFromObject(obj);
+			result.size = ShapeUtils.calcSize(result.shape);
 
 			try {
 				result.odata = result.data = createArray(result.size);
@@ -564,7 +564,7 @@ public class ByteDataset extends AbstractDataset {
 	@Override
 	public void resize(int... newShape) {
 		final IndexIterator iter = getIterator();
-		final int nsize = calcSize(newShape);
+		final int nsize = ShapeUtils.calcSize(newShape);
 		final byte[] ndata; // PRIM_TYPE
 		try {
 			ndata = createArray(nsize);
@@ -708,7 +708,7 @@ public class ByteDataset extends AbstractDataset {
 
 		if (obj instanceof Dataset) {
 			final Dataset ds = (Dataset) obj;
-			if (calcSize(iter.getShape()) != ds.getSize()) {
+			if (ShapeUtils.calcSize(iter.getShape()) != ds.getSize()) {
 				throw new IllegalArgumentException(
 						"Number of items in index datasets does not match number of items in dataset");
 			}
@@ -746,7 +746,7 @@ public class ByteDataset extends AbstractDataset {
 			final IDataset ds = (IDataset) obj;
 			final int[] oshape = ds.getShape();
 
-			if (!areShapesCompatible(siter.getShape(), oshape)) {
+			if (!ShapeUtils.areShapesCompatible(siter.getShape(), oshape)) {
 				throw new IllegalArgumentException(String.format(
 						"Input dataset is not compatible with slice: %s cf %s", Arrays.toString(oshape),
 						Arrays.toString(siter.getShape())));
@@ -784,11 +784,11 @@ public class ByteDataset extends AbstractDataset {
 		byte[] ddata = (byte[]) dest.getBuffer(); // PRIM_TYPE
 
 		SliceIterator siter = getSliceIteratorFromAxes(pos, axes);
-		int[] sshape = squeezeShape(siter.getShape(), false);
+		int[] sshape = ShapeUtils.squeezeShape(siter.getShape(), false);
 
 		IndexIterator diter = dest.getSliceIterator(null, sshape, null);
 
-		if (ddata.length < calcSize(sshape)) {
+		if (ddata.length < ShapeUtils.calcSize(sshape)) {
 			throw new IllegalArgumentException("destination array is not large enough");
 		}
 
@@ -802,7 +802,7 @@ public class ByteDataset extends AbstractDataset {
 
 		SliceIterator siter = getSliceIteratorFromAxes(pos, axes);
 
-		if (sdata.length < calcSize(siter.getShape())) {
+		if (sdata.length < ShapeUtils.calcSize(siter.getShape())) {
 			throw new IllegalArgumentException("destination array is not large enough");
 		}
 

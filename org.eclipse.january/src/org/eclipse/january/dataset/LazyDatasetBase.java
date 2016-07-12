@@ -307,7 +307,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 			this.stop = stop;
 			this.step = step;
 			this.oShape = oShape;
-			oSize = AbstractDataset.calcLongSize(oShape);
+			oSize = ShapeUtils.calcLongSize(oShape);
 		}
 
 		@Override

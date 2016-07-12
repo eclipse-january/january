@@ -20,8 +20,8 @@ public class DateDatasetImpl extends StringDataset implements DateDataset {
 
 	public static DateDatasetImpl createFromObject(final Object obj) {
 		final DateDatasetImpl result = new DateDatasetImpl();
-		result.shape = getShapeFromObject(obj);
-		result.size = calcSize(result.shape);
+		result.shape = ShapeUtils.getShapeFromObject(obj);
+		result.size = ShapeUtils.calcSize(result.shape);
 		result.odata = result.data = createArray(result.size);
 		
 		final int[] pos = new int[result.shape.length];

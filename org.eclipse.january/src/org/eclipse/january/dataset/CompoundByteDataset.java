@@ -72,7 +72,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 					throw new IllegalArgumentException("Negative component in shape is not allowed");
 				}
 			} else {
-				size = calcSize(shape);
+				size = ShapeUtils.calcSize(shape);
 			}
 			this.shape = shape.clone();
 
@@ -152,7 +152,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 			if (shape == null || (shape.length == 0 && data.length > isize)) {
 				shape = new int[] { data.length / isize };
 			}
-			size = calcSize(shape);
+			size = ShapeUtils.calcSize(shape);
 			if (size * isize != data.length) {
 				throw new IllegalArgumentException(String.format("Shape %s is not compatible with size of data array, %d",
 						Arrays.toString(shape), data.length / isize));
@@ -176,7 +176,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 			datasets[0].checkCompatibility(datasets[i]);
 
 		isize = datasets.length;
-		size = calcSize(datasets[0].getShapeRef());
+		size = ShapeUtils.calcSize(datasets[0].getShapeRef());
 		shape = datasets[0].getShape();
 
 		try {
@@ -357,7 +357,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 		CompoundByteDataset result = new CompoundByteDataset(is);
 
 		result.shape = rank > 0 ? Arrays.copyOf(shape, rank) : (rank < 0 ? new int[] {} : new int[] {1});
-		result.size = AbstractDataset.calcSize(result.shape);
+		result.size = ShapeUtils.calcSize(result.shape);
 		result.odata = shareData ? a.getBuffer() : a.clone().getBuffer();
 		result.setName(a.getName());
 		result.setData();
@@ -374,7 +374,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 			nshape[rank-1] = is;
 
 		result.shape = nshape;
-		result.size = AbstractDataset.calcSize(nshape);
+		result.size = ShapeUtils.calcSize(nshape);
 		result.odata = shareData ? data : data.clone();
 		result.setName(name);
 		result.setData();
@@ -811,7 +811,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	@Override
 	public void resize(int... newShape) {
 		IndexIterator iter = getIterator();
-		int nsize = calcSize(newShape);
+		int nsize = ShapeUtils.calcSize(newShape);
 		byte[] ndata; // PRIM_TYPE
 		try {
 			ndata = createArray(nsize);
@@ -1059,7 +1059,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 
 		if (o instanceof Dataset) {
 			Dataset ds = (Dataset) o;
-			if (calcSize(iter.getShape()) != ds.getSize()) {
+			if (ShapeUtils.calcSize(iter.getShape()) != ds.getSize()) {
 				throw new IllegalArgumentException(
 						"Number of items in selection does not match number of items in dataset");
 			}
@@ -1136,7 +1136,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 			final IDataset ds = (IDataset) o;
 			final int[] oshape = ds.getShape();
 
-			if (!areShapesCompatible(siter.getShape(), oshape)) {
+			if (!ShapeUtils.areShapesCompatible(siter.getShape(), oshape)) {
 				throw new IllegalArgumentException(String.format(
 						"Input dataset is not compatible with slice: %s cf %s", Arrays.toString(oshape),
 						Arrays.toString(siter.getShape())));
@@ -1207,11 +1207,11 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 		}
 
 		SliceIterator siter = getSliceIteratorFromAxes(pos, axes);
-		int[] sshape = squeezeShape(siter.getShape(), false);
+		int[] sshape = ShapeUtils.squeezeShape(siter.getShape(), false);
 
 		IndexIterator diter = dest.getSliceIterator(null, sshape, null);
 
-		if (ddata.length < calcSize(sshape)) {
+		if (ddata.length < ShapeUtils.calcSize(sshape)) {
 			throw new IllegalArgumentException("destination array is not large enough");
 		}
 
@@ -1227,7 +1227,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 
 		SliceIterator siter = getSliceIteratorFromAxes(pos, axes);
 
-		if (sdata.length < calcSize(siter.getShape())) {
+		if (sdata.length < ShapeUtils.calcSize(siter.getShape())) {
 			throw new IllegalArgumentException("source array is not large enough");
 		}
 

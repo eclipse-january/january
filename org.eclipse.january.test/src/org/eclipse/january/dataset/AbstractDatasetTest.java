@@ -22,7 +22,6 @@ import java.util.List;
 
 import org.apache.commons.math3.complex.Complex;
 import org.eclipse.january.asserts.TestUtils;
-import org.eclipse.january.dataset.AbstractDataset;
 import org.eclipse.january.dataset.BooleanDataset;
 import org.eclipse.january.dataset.Comparisons;
 import org.eclipse.january.dataset.ComplexDoubleDataset;
@@ -55,66 +54,66 @@ public class AbstractDatasetTest {
 
 	@Test
 	public void testCompatibleShapes() {
-		assertTrue("[] and []", AbstractDataset.areShapesCompatible(new int[] {}, new int[] {}));
-		assertTrue("[1] and []", AbstractDataset.areShapesCompatible(new int[] {1}, new int[] {}));
-		assertFalse("[2] and []", AbstractDataset.areShapesCompatible(new int[] {2}, new int[] {}));
-		assertTrue("[2] and [2]", AbstractDataset.areShapesCompatible(new int[] {2}, new int[] {2}));
-		assertTrue("[3] and [3]", AbstractDataset.areShapesCompatible(new int[] {3}, new int[] {3}));
-		assertTrue("[1,2] and [2]", AbstractDataset.areShapesCompatible(new int[] {1,2}, new int[] {2}));
-		assertTrue("[2] and [1,2]", AbstractDataset.areShapesCompatible(new int[] {2}, new int[] {1,2}));
-		assertFalse("[10,10] and [10,10,10]", AbstractDataset.areShapesCompatible(new int[] {10,10}, new int[] {10,10,10}));
-		assertFalse("[10,10,10] and [10,10]", AbstractDataset.areShapesCompatible(new int[] {10,10,10}, new int[] {10,10}));
-		assertTrue("[2] and [2,1,1,1]", AbstractDataset.areShapesCompatible(new int[] {2}, new int[] {2,1,1,1}));
-		assertTrue("[2,1] and [2,1,1,1]", AbstractDataset.areShapesCompatible(new int[] {2,1}, new int[] {2,1,1,1}));
-		assertFalse("[2,1] and [3,1,1,2]", AbstractDataset.areShapesCompatible(new int[] {2,1}, new int[] {3,1,1,2}));
-		assertFalse("[2,1] and [3,1,1,1]", AbstractDataset.areShapesCompatible(new int[] {2,1}, new int[] {3,1,1,1}));
-		assertTrue("[1,2,1] and [2,1,1,1]", AbstractDataset.areShapesCompatible(new int[] {1,2,1}, new int[] {2,1,1,1}));
-		assertTrue("[1,2,1,3] and [2,1,1,1,3]", AbstractDataset.areShapesCompatible(new int[] {1,2,1,3}, new int[] {2,1,1,1,3}));
-		assertTrue("[2,1,1] and [1,1,2]", AbstractDataset.areShapesCompatible(new int[] {2,1,1}, new int[] {1,1,2}));
-		assertFalse("[2,1,1] and [1,1,3]", AbstractDataset.areShapesCompatible(new int[] {2,1,1}, new int[] {1,1,3}));
-		assertFalse("[2,1,4] and [2,1,1,3]", AbstractDataset.areShapesCompatible(new int[] {2,1,4}, new int[] {2,1,1,3}));
-		assertFalse("[2,1,4] and [2,1,3]", AbstractDataset.areShapesCompatible(new int[] {2,1,4}, new int[] {2,1,3}));
-		assertFalse("[2,4] and [2,3]", AbstractDataset.areShapesCompatible(new int[] {2,4}, new int[] {2,3}));
-		assertTrue("[2,1,4] and [2,1,4]", AbstractDataset.areShapesCompatible(new int[] {2,1,4}, new int[] {2,1,4}));
-		assertTrue("[2,1,4] and [2,1,1,4]", AbstractDataset.areShapesCompatible(new int[] {2,1,4}, new int[] {2,1,1,4}));
-		assertFalse("[2,4] and [2,4,3]", AbstractDataset.areShapesCompatible(new int[] {2,4}, new int[] {2,4,3}));
-		assertFalse("[2,1,4] and [2,4,3]", AbstractDataset.areShapesCompatible(new int[] {2,1,4}, new int[] {2,4,3}));
-		assertTrue(AbstractDataset.areShapesCompatible(new int[] {}, new int[] {}, 0));
-		assertTrue(AbstractDataset.areShapesCompatible(new int[] {2}, new int[] {3}, 0));
-		assertFalse(AbstractDataset.areShapesCompatible(new int[] {2,4}, new int[] {3,4}, 1));
-		assertTrue(AbstractDataset.areShapesCompatible(new int[] {2,4}, new int[] {3,4}, 0));
+		assertTrue("[] and []", ShapeUtils.areShapesCompatible(new int[] {}, new int[] {}));
+		assertTrue("[1] and []", ShapeUtils.areShapesCompatible(new int[] {1}, new int[] {}));
+		assertFalse("[2] and []", ShapeUtils.areShapesCompatible(new int[] {2}, new int[] {}));
+		assertTrue("[2] and [2]", ShapeUtils.areShapesCompatible(new int[] {2}, new int[] {2}));
+		assertTrue("[3] and [3]", ShapeUtils.areShapesCompatible(new int[] {3}, new int[] {3}));
+		assertTrue("[1,2] and [2]", ShapeUtils.areShapesCompatible(new int[] {1,2}, new int[] {2}));
+		assertTrue("[2] and [1,2]", ShapeUtils.areShapesCompatible(new int[] {2}, new int[] {1,2}));
+		assertFalse("[10,10] and [10,10,10]", ShapeUtils.areShapesCompatible(new int[] {10,10}, new int[] {10,10,10}));
+		assertFalse("[10,10,10] and [10,10]", ShapeUtils.areShapesCompatible(new int[] {10,10,10}, new int[] {10,10}));
+		assertTrue("[2] and [2,1,1,1]", ShapeUtils.areShapesCompatible(new int[] {2}, new int[] {2,1,1,1}));
+		assertTrue("[2,1] and [2,1,1,1]", ShapeUtils.areShapesCompatible(new int[] {2,1}, new int[] {2,1,1,1}));
+		assertFalse("[2,1] and [3,1,1,2]", ShapeUtils.areShapesCompatible(new int[] {2,1}, new int[] {3,1,1,2}));
+		assertFalse("[2,1] and [3,1,1,1]", ShapeUtils.areShapesCompatible(new int[] {2,1}, new int[] {3,1,1,1}));
+		assertTrue("[1,2,1] and [2,1,1,1]", ShapeUtils.areShapesCompatible(new int[] {1,2,1}, new int[] {2,1,1,1}));
+		assertTrue("[1,2,1,3] and [2,1,1,1,3]", ShapeUtils.areShapesCompatible(new int[] {1,2,1,3}, new int[] {2,1,1,1,3}));
+		assertTrue("[2,1,1] and [1,1,2]", ShapeUtils.areShapesCompatible(new int[] {2,1,1}, new int[] {1,1,2}));
+		assertFalse("[2,1,1] and [1,1,3]", ShapeUtils.areShapesCompatible(new int[] {2,1,1}, new int[] {1,1,3}));
+		assertFalse("[2,1,4] and [2,1,1,3]", ShapeUtils.areShapesCompatible(new int[] {2,1,4}, new int[] {2,1,1,3}));
+		assertFalse("[2,1,4] and [2,1,3]", ShapeUtils.areShapesCompatible(new int[] {2,1,4}, new int[] {2,1,3}));
+		assertFalse("[2,4] and [2,3]", ShapeUtils.areShapesCompatible(new int[] {2,4}, new int[] {2,3}));
+		assertTrue("[2,1,4] and [2,1,4]", ShapeUtils.areShapesCompatible(new int[] {2,1,4}, new int[] {2,1,4}));
+		assertTrue("[2,1,4] and [2,1,1,4]", ShapeUtils.areShapesCompatible(new int[] {2,1,4}, new int[] {2,1,1,4}));
+		assertFalse("[2,4] and [2,4,3]", ShapeUtils.areShapesCompatible(new int[] {2,4}, new int[] {2,4,3}));
+		assertFalse("[2,1,4] and [2,4,3]", ShapeUtils.areShapesCompatible(new int[] {2,1,4}, new int[] {2,4,3}));
+		assertTrue(ShapeUtils.areShapesCompatible(new int[] {}, new int[] {}, 0));
+		assertTrue(ShapeUtils.areShapesCompatible(new int[] {2}, new int[] {3}, 0));
+		assertFalse(ShapeUtils.areShapesCompatible(new int[] {2,4}, new int[] {3,4}, 1));
+		assertTrue(ShapeUtils.areShapesCompatible(new int[] {2,4}, new int[] {3,4}, 0));
 //		assertTrue(AbstractDataset.areShapesCompatible(new int[] {}, new int[] {}));
 	}
 
 	@Test
 	public void testBroadcastCompatibleShapes() {
-		assertTrue("[] and []", AbstractDataset.areShapesBroadcastCompatible(new int[] {}, new int[] {}));
-		assertTrue("[1] and []", AbstractDataset.areShapesBroadcastCompatible(new int[] {1}, new int[] {}));
-		assertTrue("[2] and []", AbstractDataset.areShapesBroadcastCompatible(new int[] {2}, new int[] {}));
-		assertTrue("[2] and [2]", AbstractDataset.areShapesBroadcastCompatible(new int[] {2}, new int[] {2}));
-		assertTrue("[3] and [3]", AbstractDataset.areShapesBroadcastCompatible(new int[] {3}, new int[] {3}));
-		assertTrue("[1,2] and [2]", AbstractDataset.areShapesBroadcastCompatible(new int[] {1,2}, new int[] {2}));
-		assertTrue("[2] and [1,2]", AbstractDataset.areShapesBroadcastCompatible(new int[] {2}, new int[] {1,2}));
-		assertTrue("[4,2] and [1,2]", AbstractDataset.areShapesBroadcastCompatible(new int[] {4,2}, new int[] {1,2}));
-		assertTrue("[10,10] and [10,10,10]", AbstractDataset.areShapesBroadcastCompatible(new int[] {10,10}, new int[] {10,10,10}));
-		assertTrue("[10,10,10] and [10,10]", AbstractDataset.areShapesBroadcastCompatible(new int[] {10,10,10}, new int[] {10,10}));
+		assertTrue("[] and []", ShapeUtils.areShapesBroadcastCompatible(new int[] {}, new int[] {}));
+		assertTrue("[1] and []", ShapeUtils.areShapesBroadcastCompatible(new int[] {1}, new int[] {}));
+		assertTrue("[2] and []", ShapeUtils.areShapesBroadcastCompatible(new int[] {2}, new int[] {}));
+		assertTrue("[2] and [2]", ShapeUtils.areShapesBroadcastCompatible(new int[] {2}, new int[] {2}));
+		assertTrue("[3] and [3]", ShapeUtils.areShapesBroadcastCompatible(new int[] {3}, new int[] {3}));
+		assertTrue("[1,2] and [2]", ShapeUtils.areShapesBroadcastCompatible(new int[] {1,2}, new int[] {2}));
+		assertTrue("[2] and [1,2]", ShapeUtils.areShapesBroadcastCompatible(new int[] {2}, new int[] {1,2}));
+		assertTrue("[4,2] and [1,2]", ShapeUtils.areShapesBroadcastCompatible(new int[] {4,2}, new int[] {1,2}));
+		assertTrue("[10,10] and [10,10,10]", ShapeUtils.areShapesBroadcastCompatible(new int[] {10,10}, new int[] {10,10,10}));
+		assertTrue("[10,10,10] and [10,10]", ShapeUtils.areShapesBroadcastCompatible(new int[] {10,10,10}, new int[] {10,10}));
 
 		
-		assertTrue("[2] and [2,1,1,1]", AbstractDataset.areShapesBroadcastCompatible(new int[] {2}, new int[] {2,1,1,1}));
-		assertTrue("[2,1] and [2,1,1,1]", AbstractDataset.areShapesBroadcastCompatible(new int[] {2,1}, new int[] {2,1,1,1}));
-		assertTrue("[2,1] and [3,1,1,2]", AbstractDataset.areShapesBroadcastCompatible(new int[] {2,1}, new int[] {3,1,1,2}));
-		assertTrue("[2,1] and [3,1,1,1]", AbstractDataset.areShapesBroadcastCompatible(new int[] {2,1}, new int[] {3,1,1,1}));
-		assertTrue("[1,2,1] and [2,1,1,1]", AbstractDataset.areShapesBroadcastCompatible(new int[] {1,2,1}, new int[] {2,1,1,1}));
-		assertTrue("[1,2,1,3] and [2,1,1,1,3]", AbstractDataset.areShapesBroadcastCompatible(new int[] {1,2,1,3}, new int[] {2,1,1,1,3}));
-		assertTrue("[2,1,1] and [1,1,2]", AbstractDataset.areShapesBroadcastCompatible(new int[] {2,1,1}, new int[] {1,1,2}));
-		assertTrue("[2,1,1] and [1,1,3]", AbstractDataset.areShapesBroadcastCompatible(new int[] {2,1,1}, new int[] {1,1,3}));
-		assertFalse("[2,1,4] and [2,1,1,3]", AbstractDataset.areShapesBroadcastCompatible(new int[] {2,1,4}, new int[] {2,1,1,3}));
-		assertFalse("[2,1,4] and [2,1,3]", AbstractDataset.areShapesBroadcastCompatible(new int[] {2,1,4}, new int[] {2,1,3}));
-		assertFalse("[2,4] and [2,3]", AbstractDataset.areShapesBroadcastCompatible(new int[] {2,4}, new int[] {2,3}));
-		assertTrue("[2,1,4] and [2,1,4]", AbstractDataset.areShapesBroadcastCompatible(new int[] {2,1,4}, new int[] {2,1,4}));
-		assertTrue("[2,1,4] and [2,1,1,4]", AbstractDataset.areShapesBroadcastCompatible(new int[] {2,1,4}, new int[] {2,1,1,4}));
-		assertFalse("[2,4] and [2,4,3]", AbstractDataset.areShapesBroadcastCompatible(new int[] {2,4}, new int[] {2,4,3}));
-		assertFalse("[2,1,4] and [2,4,3]", AbstractDataset.areShapesBroadcastCompatible(new int[] {2,1,4}, new int[] {2,4,3}));
+		assertTrue("[2] and [2,1,1,1]", ShapeUtils.areShapesBroadcastCompatible(new int[] {2}, new int[] {2,1,1,1}));
+		assertTrue("[2,1] and [2,1,1,1]", ShapeUtils.areShapesBroadcastCompatible(new int[] {2,1}, new int[] {2,1,1,1}));
+		assertTrue("[2,1] and [3,1,1,2]", ShapeUtils.areShapesBroadcastCompatible(new int[] {2,1}, new int[] {3,1,1,2}));
+		assertTrue("[2,1] and [3,1,1,1]", ShapeUtils.areShapesBroadcastCompatible(new int[] {2,1}, new int[] {3,1,1,1}));
+		assertTrue("[1,2,1] and [2,1,1,1]", ShapeUtils.areShapesBroadcastCompatible(new int[] {1,2,1}, new int[] {2,1,1,1}));
+		assertTrue("[1,2,1,3] and [2,1,1,1,3]", ShapeUtils.areShapesBroadcastCompatible(new int[] {1,2,1,3}, new int[] {2,1,1,1,3}));
+		assertTrue("[2,1,1] and [1,1,2]", ShapeUtils.areShapesBroadcastCompatible(new int[] {2,1,1}, new int[] {1,1,2}));
+		assertTrue("[2,1,1] and [1,1,3]", ShapeUtils.areShapesBroadcastCompatible(new int[] {2,1,1}, new int[] {1,1,3}));
+		assertFalse("[2,1,4] and [2,1,1,3]", ShapeUtils.areShapesBroadcastCompatible(new int[] {2,1,4}, new int[] {2,1,1,3}));
+		assertFalse("[2,1,4] and [2,1,3]", ShapeUtils.areShapesBroadcastCompatible(new int[] {2,1,4}, new int[] {2,1,3}));
+		assertFalse("[2,4] and [2,3]", ShapeUtils.areShapesBroadcastCompatible(new int[] {2,4}, new int[] {2,3}));
+		assertTrue("[2,1,4] and [2,1,4]", ShapeUtils.areShapesBroadcastCompatible(new int[] {2,1,4}, new int[] {2,1,4}));
+		assertTrue("[2,1,4] and [2,1,1,4]", ShapeUtils.areShapesBroadcastCompatible(new int[] {2,1,4}, new int[] {2,1,1,4}));
+		assertFalse("[2,4] and [2,4,3]", ShapeUtils.areShapesBroadcastCompatible(new int[] {2,4}, new int[] {2,4,3}));
+		assertFalse("[2,1,4] and [2,4,3]", ShapeUtils.areShapesBroadcastCompatible(new int[] {2,1,4}, new int[] {2,4,3}));
 	}
 
 	@Test
@@ -433,50 +432,50 @@ public class AbstractDatasetTest {
 
 		int[] os, ns;
 		os = new int[] { 1, 1 };
-		ns = AbstractDataset.squeezeShape(os, false);
+		ns = ShapeUtils.squeezeShape(os, false);
 		assertEquals(0, ns.length);
-		ns = AbstractDataset.squeezeShape(os, true);
+		ns = ShapeUtils.squeezeShape(os, true);
 		assertEquals(0, ns.length);
 
 		os = new int[] { 2, 1, 5 };
-		ns = AbstractDataset.squeezeShape(os, false);
+		ns = ShapeUtils.squeezeShape(os, false);
 		assertEquals(2, ns.length);
 		assertEquals(2, ns[0]);
 		assertEquals(5, ns[1]);
-		ns = AbstractDataset.squeezeShape(os, true);
+		ns = ShapeUtils.squeezeShape(os, true);
 		assertEquals(3, ns.length);
 		assertEquals(2, ns[0]);
 		assertEquals(1, ns[1]);
 		assertEquals(5, ns[2]);
 
 		os = new int[] { 2, 1, 5, 1 };
-		ns = AbstractDataset.squeezeShape(os, false);
+		ns = ShapeUtils.squeezeShape(os, false);
 		assertEquals(2, ns.length);
 		assertEquals(2, ns[0]);
 		assertEquals(5, ns[1]);
-		ns = AbstractDataset.squeezeShape(os, true);
+		ns = ShapeUtils.squeezeShape(os, true);
 		assertEquals(3, ns.length);
 		assertEquals(2, ns[0]);
 		assertEquals(1, ns[1]);
 		assertEquals(5, ns[2]);
 
 		os = new int[] { 1, 2, 1, 5 };
-		ns = AbstractDataset.squeezeShape(os, false);
+		ns = ShapeUtils.squeezeShape(os, false);
 		assertEquals(2, ns.length);
 		assertEquals(2, ns[0]);
 		assertEquals(5, ns[1]);
-		ns = AbstractDataset.squeezeShape(os, true);
+		ns = ShapeUtils.squeezeShape(os, true);
 		assertEquals(3, ns.length);
 		assertEquals(2, ns[0]);
 		assertEquals(1, ns[1]);
 		assertEquals(5, ns[2]);
 
 		os = new int[] { 1, 2, 1, 5, 1 };
-		ns = AbstractDataset.squeezeShape(os, false);
+		ns = ShapeUtils.squeezeShape(os, false);
 		assertEquals(2, ns.length);
 		assertEquals(2, ns[0]);
 		assertEquals(5, ns[1]);
-		ns = AbstractDataset.squeezeShape(os, true);
+		ns = ShapeUtils.squeezeShape(os, true);
 		assertEquals(3, ns.length);
 		assertEquals(2, ns[0]);
 		assertEquals(1, ns[1]);
@@ -1143,7 +1142,7 @@ public class AbstractDatasetTest {
 		IndexIterator iter = s.getIterator(true);
 		int[] pos = iter.getPos();
 		while (iter.hasNext()) {
-			assertEquals(iter.index, ((AbstractDataset) s).get1DIndex(pos));
+			assertEquals(iter.index, s.get1DIndex(pos));
 			int[] p = s.getNDPosition(iter.index);
 			assertArrayEquals(Arrays.toString(pos) + " : " + Arrays.toString(p), pos, p);
 		}
@@ -1270,7 +1269,7 @@ public class AbstractDatasetTest {
 		
 		// check compatibility
 		try {
-			AbstractDataset.checkCompatibility(a, error);
+			ShapeUtils.checkCompatibility(a, error);
 		} catch (Exception e) {
 			fail("Error shape is not the same as input datasets");
 		}
@@ -1291,7 +1290,7 @@ public class AbstractDatasetTest {
 		
 		// check compatibility
 		try {
-			AbstractDataset.checkCompatibility(a, error2);
+			ShapeUtils.checkCompatibility(a, error2);
 		} catch (Exception e) {
 			fail("Error shape is not the same as input datasets");
 		}
@@ -1320,7 +1319,7 @@ public class AbstractDatasetTest {
 		
 		// check compatibility
 		try {
-			AbstractDataset.checkCompatibility(a, error);
+			ShapeUtils.checkCompatibility(a, error);
 		} catch (Exception e) {
 			fail("Error shape is not the same as input datasets");
 		}
@@ -1341,7 +1340,7 @@ public class AbstractDatasetTest {
 		
 		// check compatibility
 		try {
-			AbstractDataset.checkCompatibility(a, error2);
+			ShapeUtils.checkCompatibility(a, error2);
 		} catch (Exception e) {
 			fail("Error shape is not the same as input datasets");
 		}
@@ -1372,7 +1371,7 @@ public class AbstractDatasetTest {
 		// now for pulling out the full error array and check compatibility
 		Dataset error = a.getError();
 		try {
-			AbstractDataset.checkCompatibility(a, error);
+			ShapeUtils.checkCompatibility(a, error);
 		} catch (Exception e) {
 			fail("Error shape is not the same as input datasets");
 		}
@@ -1388,7 +1387,7 @@ public class AbstractDatasetTest {
 		// now for pulling out the full error array and check compatibility
 		error = a.getError();
 		try {
-			AbstractDataset.checkCompatibility(a, error);
+			ShapeUtils.checkCompatibility(a, error);
 		} catch (Exception e) {
 			fail("Error shape is not the same as input datasets");
 		}
@@ -1404,7 +1403,7 @@ public class AbstractDatasetTest {
 		// now for pulling out the full error array and check compatibility
 		error = a.getError();
 		try {
-			AbstractDataset.checkCompatibility(a, error);
+			ShapeUtils.checkCompatibility(a, error);
 		} catch (Exception e) {
 			fail("Error shape is not the same as input datasets");
 		}
@@ -1797,24 +1796,24 @@ public class AbstractDatasetTest {
 		int[] xxxlarge = new int[] {1024, 1024, 1024, 1024};
 		int[] bad = new int[] {1024, -1, 1024};
 
-		assertEquals(0, AbstractDataset.calcLongSize(zero));
-		assertEquals(0, AbstractDataset.calcSize(zero));
+		assertEquals(0, ShapeUtils.calcLongSize(zero));
+		assertEquals(0, ShapeUtils.calcSize(zero));
 
-		assertEquals(1, AbstractDataset.calcLongSize(one));
-		assertEquals(1, AbstractDataset.calcSize(one));
+		assertEquals(1, ShapeUtils.calcLongSize(one));
+		assertEquals(1, ShapeUtils.calcSize(one));
 
-		assertEquals(2, AbstractDataset.calcLongSize(small));
-		assertEquals(2, AbstractDataset.calcSize(small));
+		assertEquals(2, ShapeUtils.calcLongSize(small));
+		assertEquals(2, ShapeUtils.calcSize(small));
 
-		assertEquals(1024*1024, AbstractDataset.calcLongSize(medium));
-		assertEquals(1024*1024, AbstractDataset.calcSize(medium));
+		assertEquals(1024*1024, ShapeUtils.calcLongSize(medium));
+		assertEquals(1024*1024, ShapeUtils.calcSize(medium));
 
-		assertEquals(1024*1024*1024, AbstractDataset.calcLongSize(large));
-		assertEquals(1024*1024*1024, AbstractDataset.calcSize(large));
+		assertEquals(1024*1024*1024, ShapeUtils.calcLongSize(large));
+		assertEquals(1024*1024*1024, ShapeUtils.calcSize(large));
 
-		assertEquals(1024*1024*1024*1024L, AbstractDataset.calcLongSize(xxxlarge));
+		assertEquals(1024*1024*1024*1024L, ShapeUtils.calcLongSize(xxxlarge));
 		try {
-			AbstractDataset.calcSize(xxxlarge);
+			ShapeUtils.calcSize(xxxlarge);
 			fail("Should have thrown an illegal argument exception");
 		} catch (IllegalArgumentException e) {
 			// expected
@@ -1823,7 +1822,7 @@ public class AbstractDatasetTest {
 		}
 
 		try {
-			AbstractDataset.calcLongSize(bad);
+			ShapeUtils.calcLongSize(bad);
 			fail("Should have thrown an illegal argument exception");
 		} catch (IllegalArgumentException e) {
 			// expected
@@ -1832,7 +1831,7 @@ public class AbstractDatasetTest {
 		}
 
 		try {
-			AbstractDataset.calcSize(bad);
+			ShapeUtils.calcSize(bad);
 			fail("Should have thrown an illegal argument exception");
 		} catch (IllegalArgumentException e) {
 			// expected
@@ -2041,7 +2040,7 @@ public class AbstractDatasetTest {
 	private Dataset checkBroadcast2D(Dataset a, boolean broadcastFirstDim, int... broadcastShape) {
 		Dataset b = a.getBroadcastView(broadcastShape);
 		Assert.assertArrayEquals(broadcastShape, b.getShape());
-		int size = AbstractDataset.calcSize(broadcastShape);
+		int size = ShapeUtils.calcSize(broadcastShape);
 		Assert.assertEquals(size, b.getSize());
 
 		IndexIterator it = b.getIterator(true);

@@ -150,7 +150,7 @@ public class Stats {
 		f -= qpt;
 
 		oshape[axis] = 1;
-		int[] qshape = AbstractDataset.squeezeShape(oshape, false);
+		int[] qshape = ShapeUtils.squeezeShape(oshape, false);
 		Dataset qds = DatasetFactory.zeros(is, qshape, Dataset.FLOAT64);
 
 		IndexIterator qiter = qds.getIterator(true);
@@ -422,7 +422,7 @@ public class Stats {
 		final int alen = oshape[axis];
 		oshape[axis] = 1;
 	
-		final int[] nshape = AbstractDataset.squeezeShape(oshape, false);
+		final int[] nshape = ShapeUtils.squeezeShape(oshape, false);
 		final Dataset sk;
 		final Dataset ku;
 	
@@ -1010,7 +1010,7 @@ public class Stats {
 			}
 		}
 
-		result.setShape(AbstractDataset.squeezeShape(oshape, axis));
+		result.setShape(ShapeUtils.squeezeShape(oshape, axis));
 		return result;
 	}
 

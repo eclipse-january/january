@@ -79,7 +79,7 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 			shape = new int[] {dsize};
 		}
 		isize = ISIZE;
-		size = calcSize(shape);
+		size = ShapeUtils.calcSize(shape);
 		if (size != dsize) {
 			throw new IllegalArgumentException(String.format("Shape %s is not compatible with size of data array, %d",
 					Arrays.toString(shape), dsize));
@@ -157,8 +157,8 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 	public static ComplexFloatDataset createFromObject(final Object obj) {
 		ComplexFloatDataset result = new ComplexFloatDataset();
 
-		result.shape = getShapeFromObject(obj);
-		result.size = calcSize(result.shape);
+		result.shape = ShapeUtils.getShapeFromObject(obj);
+		result.size = ShapeUtils.calcSize(result.shape);
 
 		try {
 			result.odata = result.data = result.createArray(result.size);
@@ -566,7 +566,7 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 		if (o instanceof ComplexFloatDataset) {
 			ComplexFloatDataset zds = (ComplexFloatDataset) o;
 
-			if (!areShapesCompatible(siter.getShape(), zds.shape)) {
+			if (!ShapeUtils.areShapesCompatible(siter.getShape(), zds.shape)) {
 				throw new IllegalArgumentException(String.format(
 						"Input dataset is not compatible with slice: %s cf %s", Arrays.toString(zds.shape),
 						Arrays.toString(siter.getShape())));
@@ -582,7 +582,7 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 		} else if (o instanceof ComplexDoubleDataset) { // IGNORE_CLASS
 			ComplexDoubleDataset zds = (ComplexDoubleDataset) o; // IGNORE_CLASS
 
-			if (!areShapesCompatible(siter.getShape(), zds.shape)) {
+			if (!ShapeUtils.areShapesCompatible(siter.getShape(), zds.shape)) {
 				throw new IllegalArgumentException(String.format(
 						"Input dataset is not compatible with slice: %s cf %s", Arrays.toString(zds.shape),
 						Arrays.toString(siter.getShape())));

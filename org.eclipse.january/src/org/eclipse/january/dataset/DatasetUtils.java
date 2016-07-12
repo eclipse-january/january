@@ -350,7 +350,7 @@ public class DatasetUtils {
 				utilsLogger.error("Datasets are not of same type");
 				break;
 			}
-			if (!AbstractDataset.areShapesCompatible(ashape, as[i].getShape(), axis)) {
+			if (!ShapeUtils.areShapesCompatible(ashape, as[i].getShape(), axis)) {
 				utilsLogger.error("Datasets' shapes are not equal");
 				break;
 			}
@@ -1302,7 +1302,7 @@ public class DatasetUtils {
 		int[] shape = dataset.getShapeRef();
 		int[] nshape = shape;
 		if (shape != null && itemSize > 1) {
-			int size = AbstractDataset.calcSize(shape);
+			int size = ShapeUtils.calcSize(shape);
 			if (size % itemSize != 0) {
 				throw new IllegalArgumentException("Input dataset has number of items that is not a multiple of itemSize");
 			}
@@ -2394,7 +2394,7 @@ public class DatasetUtils {
 		int[] pos = it.getPos();
 		while (it.hasNext()) {
 			int n = indices.getInt(pos);
-			int[] p = AbstractDataset.getNDPositionFromShape(n, shape);
+			int[] p = ShapeUtils.getNDPositionFromShape(n, shape);
 			for (int i = 0; i < rank; i++) {
 				posns.get(i).setItem(p[i], pos);
 			}
@@ -2460,7 +2460,7 @@ public class DatasetUtils {
 				}
 				tPos[i] = j;
 			}
-			indexes.set(AbstractDataset.getFlat1DIndex(shape, tPos), iPos);
+			indexes.set(ShapeUtils.getFlat1DIndex(shape, tPos), iPos);
 		}
 
 		return indexes;
@@ -2493,7 +2493,7 @@ public class DatasetUtils {
 			final int length = ((Number) b.sum()).intValue();
 	
 			BroadcastPairIterator it = new BroadcastPairIterator(a, b, null, false);
-			int size = AbstractDataset.calcSize(it.getShape());
+			int size = ShapeUtils.calcSize(it.getShape());
 			Dataset c;
 			if (length < size) {
 				int[] ashape = it.getFirstShape();

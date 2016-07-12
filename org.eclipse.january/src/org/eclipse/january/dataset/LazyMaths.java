@@ -49,7 +49,7 @@ public final class LazyMaths {
 			result.iadd(data.getSlice(start, stop, step));
 		}
 
-		result.setShape(AbstractDataset.squeezeShape(shape, axis));
+		result.setShape(ShapeUtils.squeezeShape(shape, axis));
 		return result;
 	}
 
@@ -76,7 +76,7 @@ public final class LazyMaths {
 			result.imultiply(data.getSlice(start, stop, step));
 		}
 
-		result.setShape(AbstractDataset.squeezeShape(shape, axis));
+		result.setShape(ShapeUtils.squeezeShape(shape, axis));
 		return result;
 	}
 

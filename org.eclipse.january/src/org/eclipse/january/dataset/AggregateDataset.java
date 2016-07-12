@@ -89,7 +89,7 @@ public class AggregateDataset extends LazyDatasetBase implements ILazyDataset {
 		isize = itemSize;
 		this.shape = shape.clone();
 		try {
-			size = AbstractDataset.calcSize(shape);
+			size = ShapeUtils.calcSize(shape);
 		} catch (IllegalArgumentException e) {
 			size = Integer.MAX_VALUE; // this indicates that the entire dataset cannot be read in! 
 		}
@@ -109,7 +109,7 @@ public class AggregateDataset extends LazyDatasetBase implements ILazyDataset {
 		final int[] s = shapes[0];
 		final int axis = extend ? -1 : 0;
 		for (int j = 1; j < shapes.length; j++) {
-			if (!AbstractDataset.areShapesCompatible(s, shapes[j], axis))
+			if (!ShapeUtils.areShapesCompatible(s, shapes[j], axis))
 				throw new IllegalArgumentException("Dataset '" + datasets[j].getName() + "' has wrong shape");
 		}
 
@@ -143,7 +143,7 @@ public class AggregateDataset extends LazyDatasetBase implements ILazyDataset {
 			}
 		}
 		try {
-			size = AbstractDataset.calcSize(shape);
+			size = ShapeUtils.calcSize(shape);
 		} catch (IllegalArgumentException e) {
 			size = Integer.MAX_VALUE; // this indicates that the entire dataset cannot be read in! 
 		}

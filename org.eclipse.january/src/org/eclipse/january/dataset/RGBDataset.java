@@ -68,7 +68,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 			shape = new int[] {dsize};
 		}
 		isize = ISIZE;
-		size = calcSize(shape);
+		size = ShapeUtils.calcSize(shape);
 		if (size != dsize) {
 			logger.error("Shape is not compatible with size of data array");
 			throw new IllegalArgumentException("Shape is not compatible with size of data array");
@@ -103,7 +103,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 			shape = new int[] {dsize};
 		}
 		isize = ISIZE;
-		size = calcSize(shape);
+		size = ShapeUtils.calcSize(shape);
 		if (size != dsize) {
 			logger.error("Shape is not compatible with size of data array");
 			throw new IllegalArgumentException("Shape is not compatible with size of data array");
@@ -138,7 +138,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 			shape = new int[] {dsize};
 		}
 		isize = ISIZE;
-		size = calcSize(shape);
+		size = ShapeUtils.calcSize(shape);
 		if (size != dsize) {
 			logger.error("Shape is not compatible with size of data array");
 			throw new IllegalArgumentException("Shape is not compatible with size of data array");

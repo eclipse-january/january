@@ -68,7 +68,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 		this.dtype = dtype;
 		this.isize = elements;
 		try {
-			size = AbstractDataset.calcLongSize(shape);
+			size = ShapeUtils.calcLongSize(shape);
 		} catch (IllegalArgumentException e) {
 			size = Long.MAX_VALUE; // this indicates that the entire dataset cannot be read in! 
 		}
@@ -216,7 +216,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	@Override
 	public LazyDataset squeezeEnds() {
-		setShapeInternal(AbstractDataset.squeezeShape(shape, true));
+		setShapeInternal(ShapeUtils.squeezeShape(shape, true));
 		return this;
 	}
 
@@ -259,7 +259,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	 */
 	private void setShapeInternal(int... nShape) {
 		
-		long nsize = AbstractDataset.calcLongSize(nShape);
+		long nsize = ShapeUtils.calcLongSize(nShape);
 		if (nsize != size) {
 			throw new IllegalArgumentException("Size of new shape is not equal to current size");
 		}
@@ -346,7 +346,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 		int[] nShape = slice.getShape();
 		view.shape = nShape;
-		view.size = AbstractDataset.calcLongSize(nShape);
+		view.size = ShapeUtils.calcLongSize(nShape);
 		if (begSlice == null) {
 			view.begSlice = lstart.clone();
 			view.delSlice = lstep.clone();

@@ -105,7 +105,7 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 		this.shape = newShape.clone();
 		this.oShape = this.shape;
 		try {
-			size = AbstractDataset.calcLongSize(shape);
+			size = ShapeUtils.calcLongSize(shape);
 		} catch (IllegalArgumentException e) {
 			size = Long.MAX_VALUE; // this indicates that the entire dataset cannot be read in! 
 		}

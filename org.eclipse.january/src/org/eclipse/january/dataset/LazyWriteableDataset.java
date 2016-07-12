@@ -39,7 +39,7 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 		this.chunks = chunks == null ? null : chunks.clone();
 		this.saver = saver;
 
-		size = AbstractDataset.calcLongSize(this.shape);
+		size = ShapeUtils.calcLongSize(this.shape);
 	}
 
 	/**

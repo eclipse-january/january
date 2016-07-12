@@ -16,7 +16,6 @@ import static org.junit.Assert.fail;
 
 import java.util.Arrays;
 
-import org.eclipse.january.dataset.AbstractDataset;
 import org.eclipse.january.dataset.CompoundDataset;
 import org.eclipse.january.dataset.CompoundDoubleDataset;
 import org.eclipse.january.dataset.CompoundIntegerDataset;
@@ -495,7 +494,7 @@ public class AbstractCompoundDatasetTest {
 		
 		// check compatibility
 		try {
-			AbstractDataset.checkCompatibility(a, error);
+			ShapeUtils.checkCompatibility(a, error);
 		} catch (Exception e) {
 			fail("Error shape is not the same as input datasets");
 		}
@@ -532,7 +531,7 @@ public class AbstractCompoundDatasetTest {
 		
 		// check compatibility
 		try {
-			AbstractDataset.checkCompatibility(a, error2);
+			ShapeUtils.checkCompatibility(a, error2);
 		} catch (Exception e) {
 			fail("Error shape is not the same as input datasets");
 		}
@@ -571,7 +570,7 @@ public class AbstractCompoundDatasetTest {
 		
 		// check compatibility
 		try {
-			AbstractDataset.checkCompatibility(a, error2);
+			ShapeUtils.checkCompatibility(a, error2);
 		} catch (Exception e) {
 			fail("Error shape is not the same as input datasets");
 		}
