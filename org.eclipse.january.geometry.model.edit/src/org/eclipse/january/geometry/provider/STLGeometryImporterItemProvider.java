@@ -31,7 +31,7 @@ import org.eclipse.january.geometry.GeometryPackage;
  * <!-- end-user-doc -->
  * @generated
  */
-public class ASCIISTLGeometryImporterItemProvider 
+public class STLGeometryImporterItemProvider 
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -45,7 +45,7 @@ public class ASCIISTLGeometryImporterItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ASCIISTLGeometryImporterItemProvider(AdapterFactory adapterFactory) {
+	public STLGeometryImporterItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -148,8 +148,8 @@ public class ASCIISTLGeometryImporterItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(STLGeometryImporter.class)) {
-			case GeometryPackage.ASCIISTL_GEOMETRY_IMPORTER__FILE_TYPES:
-			case GeometryPackage.ASCIISTL_GEOMETRY_IMPORTER__DESCRIPTION:
+			case GeometryPackage.STL_GEOMETRY_IMPORTER__FILE_TYPES:
+			case GeometryPackage.STL_GEOMETRY_IMPORTER__DESCRIPTION:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

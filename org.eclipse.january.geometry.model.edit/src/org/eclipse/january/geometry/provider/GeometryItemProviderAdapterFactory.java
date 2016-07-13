@@ -376,7 +376,7 @@ public class GeometryItemProviderAdapterFactory extends GeometryAdapterFactory i
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ASCIISTLGeometryImporterItemProvider asciistlGeometryImporterItemProvider;
+	protected STLGeometryImporterItemProvider stlGeometryImporterItemProvider;
 
 	/**
 	 * This creates an adapter for a {@link org.eclipse.january.geometry.STLGeometryImporter}.
@@ -385,12 +385,12 @@ public class GeometryItemProviderAdapterFactory extends GeometryAdapterFactory i
 	 * @generated
 	 */
 	@Override
-	public Adapter createASCIISTLGeometryImporterAdapter() {
-		if (asciistlGeometryImporterItemProvider == null) {
-			asciistlGeometryImporterItemProvider = new ASCIISTLGeometryImporterItemProvider(this);
+	public Adapter createSTLGeometryImporterAdapter() {
+		if (stlGeometryImporterItemProvider == null) {
+			stlGeometryImporterItemProvider = new STLGeometryImporterItemProvider(this);
 		}
 
-		return asciistlGeometryImporterItemProvider;
+		return stlGeometryImporterItemProvider;
 	}
 
 	/**
@@ -505,7 +505,7 @@ public class GeometryItemProviderAdapterFactory extends GeometryAdapterFactory i
 		if (intersectionItemProvider != null) intersectionItemProvider.dispose();
 		if (complementItemProvider != null) complementItemProvider.dispose();
 		if (materialItemProvider != null) materialItemProvider.dispose();
-		if (asciistlGeometryImporterItemProvider != null) asciistlGeometryImporterItemProvider.dispose();
+		if (stlGeometryImporterItemProvider != null) stlGeometryImporterItemProvider.dispose();
 	}
 
 }

@@ -11,6 +11,8 @@
  *******************************************************************************/
 package xtext
 
+import com.google.inject.Injector
+import org.eclipse.emf.ecore.EPackage
 
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
@@ -19,5 +21,12 @@ class STLStandaloneSetup extends xtext.STLStandaloneSetupGenerated {
 
 	def static void doSetup() {
 		new STLStandaloneSetup().createInjectorAndDoEMFRegistration()
+	}
+	
+	override void register(Injector injector) {
+		if (!EPackage.Registry.INSTANCE.containsKey("http://www.eclipse.org/january/geometry")) {
+			EPackage.Registry.INSTANCE.put("http://www.eclipse.org/january/geometry", org.eclipse.january.geometry.GeometryPackage.eINSTANCE);
+		}
+		super.register(injector);
 	}
 }

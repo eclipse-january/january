@@ -17,8 +17,7 @@ import org.antlr.runtime.*;
 import java.util.Stack;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
+
 /*******************************************************************************
  * Copyright (c) 2016 UT-Battelle, LLC.
  * All rights reserved. This program and the accompanying materials
@@ -33,7 +32,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalSTLParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_INT", "RULE_STRING", "RULE_ID", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'solid'", "'endsolid'", "'facet'", "'normal'", "'outer'", "'loop'", "'endloop'", "'endfacet'", "'vertex'", "'-'", "'+'", "'.'", "'E'", "'e'", "'\\r'", "'\\n'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_INT", "RULE_STRING", "RULE_ID", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'solid'", "'\\n'", "'endsolid'", "'facet'", "'normal'", "'outer'", "'loop'", "'vertex'", "'endloop'", "'endfacet'", "'-'", "'+'", "'.'", "'E'", "'e'"
     };
     public static final int RULE_STRING=5;
     public static final int RULE_SL_COMMENT=8;
@@ -50,7 +49,6 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
     public static final int RULE_ID=6;
     public static final int RULE_WS=9;
     public static final int RULE_ANY_OTHER=10;
-    public static final int T__26=26;
     public static final int RULE_INT=4;
     public static final int T__22=22;
     public static final int RULE_ML_COMMENT=7;
@@ -111,18 +109,14 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
             // InternalSTL.g:72:49: (iv_ruleGeometry= ruleGeometry EOF )
             // InternalSTL.g:73:2: iv_ruleGeometry= ruleGeometry EOF
             {
-            if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getGeometryRule()); 
-            }
+             newCompositeNode(grammarAccess.getGeometryRule()); 
             pushFollow(FOLLOW_1);
             iv_ruleGeometry=ruleGeometry();
 
             state._fsp--;
-            if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-               current =iv_ruleGeometry; 
-            }
-            match(input,EOF,FOLLOW_2); if (state.failed) return current;
+
+             current =iv_ruleGeometry; 
+            match(input,EOF,FOLLOW_2); 
 
             }
 
@@ -140,12 +134,13 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleGeometry"
-    // InternalSTL.g:79:1: ruleGeometry returns [EObject current=null] : ( () otherlv_1= 'solid' ( (lv_name_2_0= ruleELine ) )? ( (lv_nodes_3_0= ruleShape_Impl ) ) otherlv_4= 'endsolid' ) ;
+    // InternalSTL.g:79:1: ruleGeometry returns [EObject current=null] : ( () otherlv_1= 'solid' ( (lv_name_2_0= ruleEString ) )? ( (lv_nodes_3_0= ruleShape_Impl ) ) (otherlv_4= '\\n' )? otherlv_5= 'endsolid' ( ruleEString )? ) ;
     public final EObject ruleGeometry() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_1=null;
         Token otherlv_4=null;
+        Token otherlv_5=null;
         AntlrDatatypeRuleToken lv_name_2_0 = null;
 
         EObject lv_nodes_3_0 = null;
@@ -155,32 +150,28 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSTL.g:85:2: ( ( () otherlv_1= 'solid' ( (lv_name_2_0= ruleELine ) )? ( (lv_nodes_3_0= ruleShape_Impl ) ) otherlv_4= 'endsolid' ) )
-            // InternalSTL.g:86:2: ( () otherlv_1= 'solid' ( (lv_name_2_0= ruleELine ) )? ( (lv_nodes_3_0= ruleShape_Impl ) ) otherlv_4= 'endsolid' )
+            // InternalSTL.g:85:2: ( ( () otherlv_1= 'solid' ( (lv_name_2_0= ruleEString ) )? ( (lv_nodes_3_0= ruleShape_Impl ) ) (otherlv_4= '\\n' )? otherlv_5= 'endsolid' ( ruleEString )? ) )
+            // InternalSTL.g:86:2: ( () otherlv_1= 'solid' ( (lv_name_2_0= ruleEString ) )? ( (lv_nodes_3_0= ruleShape_Impl ) ) (otherlv_4= '\\n' )? otherlv_5= 'endsolid' ( ruleEString )? )
             {
-            // InternalSTL.g:86:2: ( () otherlv_1= 'solid' ( (lv_name_2_0= ruleELine ) )? ( (lv_nodes_3_0= ruleShape_Impl ) ) otherlv_4= 'endsolid' )
-            // InternalSTL.g:87:3: () otherlv_1= 'solid' ( (lv_name_2_0= ruleELine ) )? ( (lv_nodes_3_0= ruleShape_Impl ) ) otherlv_4= 'endsolid'
+            // InternalSTL.g:86:2: ( () otherlv_1= 'solid' ( (lv_name_2_0= ruleEString ) )? ( (lv_nodes_3_0= ruleShape_Impl ) ) (otherlv_4= '\\n' )? otherlv_5= 'endsolid' ( ruleEString )? )
+            // InternalSTL.g:87:3: () otherlv_1= 'solid' ( (lv_name_2_0= ruleEString ) )? ( (lv_nodes_3_0= ruleShape_Impl ) ) (otherlv_4= '\\n' )? otherlv_5= 'endsolid' ( ruleEString )?
             {
             // InternalSTL.g:87:3: ()
             // InternalSTL.g:88:4: 
             {
-            if ( state.backtracking==0 ) {
 
-              				current = forceCreateModelElement(
-              					grammarAccess.getGeometryAccess().getGeometryAction_0(),
-              					current);
-              			
-            }
+            				current = forceCreateModelElement(
+            					grammarAccess.getGeometryAccess().getGeometryAction_0(),
+            					current);
+            			
 
             }
 
-            otherlv_1=(Token)match(input,11,FOLLOW_3); if (state.failed) return current;
-            if ( state.backtracking==0 ) {
+            otherlv_1=(Token)match(input,11,FOLLOW_3); 
 
-              			newLeafNode(otherlv_1, grammarAccess.getGeometryAccess().getSolidKeyword_1());
-              		
-            }
-            // InternalSTL.g:98:3: ( (lv_name_2_0= ruleELine ) )?
+            			newLeafNode(otherlv_1, grammarAccess.getGeometryAccess().getSolidKeyword_1());
+            		
+            // InternalSTL.g:98:3: ( (lv_name_2_0= ruleEString ) )?
             int alt1=2;
             int LA1_0 = input.LA(1);
 
@@ -189,34 +180,30 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
             }
             switch (alt1) {
                 case 1 :
-                    // InternalSTL.g:99:4: (lv_name_2_0= ruleELine )
+                    // InternalSTL.g:99:4: (lv_name_2_0= ruleEString )
                     {
-                    // InternalSTL.g:99:4: (lv_name_2_0= ruleELine )
-                    // InternalSTL.g:100:5: lv_name_2_0= ruleELine
+                    // InternalSTL.g:99:4: (lv_name_2_0= ruleEString )
+                    // InternalSTL.g:100:5: lv_name_2_0= ruleEString
                     {
-                    if ( state.backtracking==0 ) {
 
-                      					newCompositeNode(grammarAccess.getGeometryAccess().getNameELineParserRuleCall_2_0());
-                      				
-                    }
+                    					newCompositeNode(grammarAccess.getGeometryAccess().getNameEStringParserRuleCall_2_0());
+                    				
                     pushFollow(FOLLOW_4);
-                    lv_name_2_0=ruleELine();
+                    lv_name_2_0=ruleEString();
 
                     state._fsp--;
-                    if (state.failed) return current;
-                    if ( state.backtracking==0 ) {
 
-                      					if (current==null) {
-                      						current = createModelElementForParent(grammarAccess.getGeometryRule());
-                      					}
-                      					set(
-                      						current,
-                      						"name",
-                      						lv_name_2_0,
-                      						"xtext.STL.ELine");
-                      					afterParserOrEnumRuleCall();
-                      				
-                    }
+
+                    					if (current==null) {
+                    						current = createModelElementForParent(grammarAccess.getGeometryRule());
+                    					}
+                    					set(
+                    						current,
+                    						"name",
+                    						lv_name_2_0,
+                    						"xtext.STL.EString");
+                    					afterParserOrEnumRuleCall();
+                    				
 
                     }
 
@@ -232,52 +219,93 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
             // InternalSTL.g:118:4: (lv_nodes_3_0= ruleShape_Impl )
             // InternalSTL.g:119:5: lv_nodes_3_0= ruleShape_Impl
             {
-            if ( state.backtracking==0 ) {
 
-              					newCompositeNode(grammarAccess.getGeometryAccess().getNodesShape_ImplParserRuleCall_3_0());
-              				
-            }
+            					newCompositeNode(grammarAccess.getGeometryAccess().getNodesShape_ImplParserRuleCall_3_0());
+            				
             pushFollow(FOLLOW_5);
             lv_nodes_3_0=ruleShape_Impl();
 
             state._fsp--;
-            if (state.failed) return current;
-            if ( state.backtracking==0 ) {
 
-              					if (current==null) {
-              						current = createModelElementForParent(grammarAccess.getGeometryRule());
-              					}
-              					add(
-              						current,
-              						"nodes",
-              						lv_nodes_3_0,
-              						"xtext.STL.Shape_Impl");
-              					afterParserOrEnumRuleCall();
-              				
-            }
+
+            					if (current==null) {
+            						current = createModelElementForParent(grammarAccess.getGeometryRule());
+            					}
+            					add(
+            						current,
+            						"nodes",
+            						lv_nodes_3_0,
+            						"xtext.STL.Shape_Impl");
+            					afterParserOrEnumRuleCall();
+            				
 
             }
 
 
             }
 
-            otherlv_4=(Token)match(input,12,FOLLOW_2); if (state.failed) return current;
-            if ( state.backtracking==0 ) {
+            // InternalSTL.g:136:3: (otherlv_4= '\\n' )?
+            int alt2=2;
+            int LA2_0 = input.LA(1);
 
-              			newLeafNode(otherlv_4, grammarAccess.getGeometryAccess().getEndsolidKeyword_4());
-              		
+            if ( (LA2_0==12) ) {
+                alt2=1;
+            }
+            switch (alt2) {
+                case 1 :
+                    // InternalSTL.g:137:4: otherlv_4= '\\n'
+                    {
+                    otherlv_4=(Token)match(input,12,FOLLOW_6); 
+
+                    				newLeafNode(otherlv_4, grammarAccess.getGeometryAccess().getControl000aKeyword_4());
+                    			
+
+                    }
+                    break;
+
             }
 
+            otherlv_5=(Token)match(input,13,FOLLOW_7); 
+
+            			newLeafNode(otherlv_5, grammarAccess.getGeometryAccess().getEndsolidKeyword_5());
+            		
+            // InternalSTL.g:146:3: ( ruleEString )?
+            int alt3=2;
+            int LA3_0 = input.LA(1);
+
+            if ( ((LA3_0>=RULE_STRING && LA3_0<=RULE_ID)) ) {
+                alt3=1;
+            }
+            switch (alt3) {
+                case 1 :
+                    // InternalSTL.g:147:4: ruleEString
+                    {
+
+                    				newCompositeNode(grammarAccess.getGeometryAccess().getEStringParserRuleCall_6());
+                    			
+                    pushFollow(FOLLOW_2);
+                    ruleEString();
+
+                    state._fsp--;
+
+
+                    				afterParserOrEnumRuleCall();
+                    			
+
+                    }
+                    break;
+
             }
 
 
             }
 
-            if ( state.backtracking==0 ) {
-
-              	leaveRule();
 
             }
+
+
+            	leaveRule();
+
         }
 
             catch (RecognitionException re) {
@@ -292,7 +320,7 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleShape_Impl"
-    // InternalSTL.g:144:1: entryRuleShape_Impl returns [EObject current=null] : iv_ruleShape_Impl= ruleShape_Impl EOF ;
+    // InternalSTL.g:159:1: entryRuleShape_Impl returns [EObject current=null] : iv_ruleShape_Impl= ruleShape_Impl EOF ;
     public final EObject entryRuleShape_Impl() throws RecognitionException {
         EObject current = null;
 
@@ -300,21 +328,17 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSTL.g:144:51: (iv_ruleShape_Impl= ruleShape_Impl EOF )
-            // InternalSTL.g:145:2: iv_ruleShape_Impl= ruleShape_Impl EOF
+            // InternalSTL.g:159:51: (iv_ruleShape_Impl= ruleShape_Impl EOF )
+            // InternalSTL.g:160:2: iv_ruleShape_Impl= ruleShape_Impl EOF
             {
-            if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getShape_ImplRule()); 
-            }
+             newCompositeNode(grammarAccess.getShape_ImplRule()); 
             pushFollow(FOLLOW_1);
             iv_ruleShape_Impl=ruleShape_Impl();
 
             state._fsp--;
-            if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-               current =iv_ruleShape_Impl; 
-            }
-            match(input,EOF,FOLLOW_2); if (state.failed) return current;
+
+             current =iv_ruleShape_Impl; 
+            match(input,EOF,FOLLOW_2); 
 
             }
 
@@ -332,7 +356,7 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleShape_Impl"
-    // InternalSTL.g:151:1: ruleShape_Impl returns [EObject current=null] : ( () ( (lv_triangles_1_0= ruleTriangle ) )* ) ;
+    // InternalSTL.g:166:1: ruleShape_Impl returns [EObject current=null] : ( () ( (lv_triangles_1_0= ruleTriangle ) )* ) ;
     public final EObject ruleShape_Impl() throws RecognitionException {
         EObject current = null;
 
@@ -343,66 +367,60 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSTL.g:157:2: ( ( () ( (lv_triangles_1_0= ruleTriangle ) )* ) )
-            // InternalSTL.g:158:2: ( () ( (lv_triangles_1_0= ruleTriangle ) )* )
+            // InternalSTL.g:172:2: ( ( () ( (lv_triangles_1_0= ruleTriangle ) )* ) )
+            // InternalSTL.g:173:2: ( () ( (lv_triangles_1_0= ruleTriangle ) )* )
             {
-            // InternalSTL.g:158:2: ( () ( (lv_triangles_1_0= ruleTriangle ) )* )
-            // InternalSTL.g:159:3: () ( (lv_triangles_1_0= ruleTriangle ) )*
+            // InternalSTL.g:173:2: ( () ( (lv_triangles_1_0= ruleTriangle ) )* )
+            // InternalSTL.g:174:3: () ( (lv_triangles_1_0= ruleTriangle ) )*
             {
-            // InternalSTL.g:159:3: ()
-            // InternalSTL.g:160:4: 
+            // InternalSTL.g:174:3: ()
+            // InternalSTL.g:175:4: 
             {
-            if ( state.backtracking==0 ) {
 
-              				current = forceCreateModelElement(
-              					grammarAccess.getShape_ImplAccess().getShapeAction_0(),
-              					current);
-              			
-            }
+            				current = forceCreateModelElement(
+            					grammarAccess.getShape_ImplAccess().getShapeAction_0(),
+            					current);
+            			
 
             }
 
-            // InternalSTL.g:166:3: ( (lv_triangles_1_0= ruleTriangle ) )*
-            loop2:
+            // InternalSTL.g:181:3: ( (lv_triangles_1_0= ruleTriangle ) )*
+            loop4:
             do {
-                int alt2=2;
-                int LA2_0 = input.LA(1);
+                int alt4=2;
+                int LA4_0 = input.LA(1);
 
-                if ( (LA2_0==13) ) {
-                    alt2=1;
+                if ( (LA4_0==14) ) {
+                    alt4=1;
                 }
 
 
-                switch (alt2) {
+                switch (alt4) {
             	case 1 :
-            	    // InternalSTL.g:167:4: (lv_triangles_1_0= ruleTriangle )
+            	    // InternalSTL.g:182:4: (lv_triangles_1_0= ruleTriangle )
             	    {
-            	    // InternalSTL.g:167:4: (lv_triangles_1_0= ruleTriangle )
-            	    // InternalSTL.g:168:5: lv_triangles_1_0= ruleTriangle
+            	    // InternalSTL.g:182:4: (lv_triangles_1_0= ruleTriangle )
+            	    // InternalSTL.g:183:5: lv_triangles_1_0= ruleTriangle
             	    {
-            	    if ( state.backtracking==0 ) {
 
-            	      					newCompositeNode(grammarAccess.getShape_ImplAccess().getTrianglesTriangleParserRuleCall_1_0());
-            	      				
-            	    }
-            	    pushFollow(FOLLOW_6);
+            	    					newCompositeNode(grammarAccess.getShape_ImplAccess().getTrianglesTriangleParserRuleCall_1_0());
+            	    				
+            	    pushFollow(FOLLOW_8);
             	    lv_triangles_1_0=ruleTriangle();
 
             	    state._fsp--;
-            	    if (state.failed) return current;
-            	    if ( state.backtracking==0 ) {
 
-            	      					if (current==null) {
-            	      						current = createModelElementForParent(grammarAccess.getShape_ImplRule());
-            	      					}
-            	      					add(
-            	      						current,
-            	      						"triangles",
-            	      						lv_triangles_1_0,
-            	      						"xtext.STL.Triangle");
-            	      					afterParserOrEnumRuleCall();
-            	      				
-            	    }
+
+            	    					if (current==null) {
+            	    						current = createModelElementForParent(grammarAccess.getShape_ImplRule());
+            	    					}
+            	    					add(
+            	    						current,
+            	    						"triangles",
+            	    						lv_triangles_1_0,
+            	    						"xtext.STL.Triangle");
+            	    					afterParserOrEnumRuleCall();
+            	    				
 
             	    }
 
@@ -411,7 +429,7 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop2;
+            	    break loop4;
                 }
             } while (true);
 
@@ -421,11 +439,9 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
 
             }
 
-            if ( state.backtracking==0 ) {
 
-              	leaveRule();
+            	leaveRule();
 
-            }
         }
 
             catch (RecognitionException re) {
@@ -440,7 +456,7 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTriangle"
-    // InternalSTL.g:189:1: entryRuleTriangle returns [EObject current=null] : iv_ruleTriangle= ruleTriangle EOF ;
+    // InternalSTL.g:204:1: entryRuleTriangle returns [EObject current=null] : iv_ruleTriangle= ruleTriangle EOF ;
     public final EObject entryRuleTriangle() throws RecognitionException {
         EObject current = null;
 
@@ -448,21 +464,17 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSTL.g:189:49: (iv_ruleTriangle= ruleTriangle EOF )
-            // InternalSTL.g:190:2: iv_ruleTriangle= ruleTriangle EOF
+            // InternalSTL.g:204:49: (iv_ruleTriangle= ruleTriangle EOF )
+            // InternalSTL.g:205:2: iv_ruleTriangle= ruleTriangle EOF
             {
-            if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getTriangleRule()); 
-            }
+             newCompositeNode(grammarAccess.getTriangleRule()); 
             pushFollow(FOLLOW_1);
             iv_ruleTriangle=ruleTriangle();
 
             state._fsp--;
-            if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-               current =iv_ruleTriangle; 
-            }
-            match(input,EOF,FOLLOW_2); if (state.failed) return current;
+
+             current =iv_ruleTriangle; 
+            match(input,EOF,FOLLOW_2); 
 
             }
 
@@ -480,7 +492,7 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTriangle"
-    // InternalSTL.g:196:1: ruleTriangle returns [EObject current=null] : ( () otherlv_1= 'facet' (otherlv_2= 'normal' ( (lv_normal_3_0= ruleVertex ) ) ) otherlv_4= 'outer' otherlv_5= 'loop' ( (lv_vertices_6_0= ruleVertex ) )* otherlv_7= 'endloop' otherlv_8= 'endfacet' ) ;
+    // InternalSTL.g:211:1: ruleTriangle returns [EObject current=null] : ( () otherlv_1= 'facet' (otherlv_2= 'normal' ( (lv_normal_3_0= ruleVertex ) ) ) otherlv_4= 'outer' otherlv_5= 'loop' (otherlv_6= 'vertex' ( (lv_vertices_7_0= ruleVertex ) ) )* otherlv_8= 'endloop' otherlv_9= 'endfacet' ) ;
     public final EObject ruleTriangle() throws RecognitionException {
         EObject current = null;
 
@@ -488,80 +500,71 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
         Token otherlv_2=null;
         Token otherlv_4=null;
         Token otherlv_5=null;
-        Token otherlv_7=null;
+        Token otherlv_6=null;
         Token otherlv_8=null;
+        Token otherlv_9=null;
         EObject lv_normal_3_0 = null;
 
-        EObject lv_vertices_6_0 = null;
+        EObject lv_vertices_7_0 = null;
 
 
 
         	enterRule();
 
         try {
-            // InternalSTL.g:202:2: ( ( () otherlv_1= 'facet' (otherlv_2= 'normal' ( (lv_normal_3_0= ruleVertex ) ) ) otherlv_4= 'outer' otherlv_5= 'loop' ( (lv_vertices_6_0= ruleVertex ) )* otherlv_7= 'endloop' otherlv_8= 'endfacet' ) )
-            // InternalSTL.g:203:2: ( () otherlv_1= 'facet' (otherlv_2= 'normal' ( (lv_normal_3_0= ruleVertex ) ) ) otherlv_4= 'outer' otherlv_5= 'loop' ( (lv_vertices_6_0= ruleVertex ) )* otherlv_7= 'endloop' otherlv_8= 'endfacet' )
+            // InternalSTL.g:217:2: ( ( () otherlv_1= 'facet' (otherlv_2= 'normal' ( (lv_normal_3_0= ruleVertex ) ) ) otherlv_4= 'outer' otherlv_5= 'loop' (otherlv_6= 'vertex' ( (lv_vertices_7_0= ruleVertex ) ) )* otherlv_8= 'endloop' otherlv_9= 'endfacet' ) )
+            // InternalSTL.g:218:2: ( () otherlv_1= 'facet' (otherlv_2= 'normal' ( (lv_normal_3_0= ruleVertex ) ) ) otherlv_4= 'outer' otherlv_5= 'loop' (otherlv_6= 'vertex' ( (lv_vertices_7_0= ruleVertex ) ) )* otherlv_8= 'endloop' otherlv_9= 'endfacet' )
             {
-            // InternalSTL.g:203:2: ( () otherlv_1= 'facet' (otherlv_2= 'normal' ( (lv_normal_3_0= ruleVertex ) ) ) otherlv_4= 'outer' otherlv_5= 'loop' ( (lv_vertices_6_0= ruleVertex ) )* otherlv_7= 'endloop' otherlv_8= 'endfacet' )
-            // InternalSTL.g:204:3: () otherlv_1= 'facet' (otherlv_2= 'normal' ( (lv_normal_3_0= ruleVertex ) ) ) otherlv_4= 'outer' otherlv_5= 'loop' ( (lv_vertices_6_0= ruleVertex ) )* otherlv_7= 'endloop' otherlv_8= 'endfacet'
+            // InternalSTL.g:218:2: ( () otherlv_1= 'facet' (otherlv_2= 'normal' ( (lv_normal_3_0= ruleVertex ) ) ) otherlv_4= 'outer' otherlv_5= 'loop' (otherlv_6= 'vertex' ( (lv_vertices_7_0= ruleVertex ) ) )* otherlv_8= 'endloop' otherlv_9= 'endfacet' )
+            // InternalSTL.g:219:3: () otherlv_1= 'facet' (otherlv_2= 'normal' ( (lv_normal_3_0= ruleVertex ) ) ) otherlv_4= 'outer' otherlv_5= 'loop' (otherlv_6= 'vertex' ( (lv_vertices_7_0= ruleVertex ) ) )* otherlv_8= 'endloop' otherlv_9= 'endfacet'
             {
-            // InternalSTL.g:204:3: ()
-            // InternalSTL.g:205:4: 
+            // InternalSTL.g:219:3: ()
+            // InternalSTL.g:220:4: 
             {
-            if ( state.backtracking==0 ) {
 
-              				current = forceCreateModelElement(
-              					grammarAccess.getTriangleAccess().getTriangleAction_0(),
-              					current);
-              			
-            }
+            				current = forceCreateModelElement(
+            					grammarAccess.getTriangleAccess().getTriangleAction_0(),
+            					current);
+            			
 
             }
 
-            otherlv_1=(Token)match(input,13,FOLLOW_7); if (state.failed) return current;
-            if ( state.backtracking==0 ) {
+            otherlv_1=(Token)match(input,14,FOLLOW_9); 
 
-              			newLeafNode(otherlv_1, grammarAccess.getTriangleAccess().getFacetKeyword_1());
-              		
-            }
-            // InternalSTL.g:215:3: (otherlv_2= 'normal' ( (lv_normal_3_0= ruleVertex ) ) )
-            // InternalSTL.g:216:4: otherlv_2= 'normal' ( (lv_normal_3_0= ruleVertex ) )
+            			newLeafNode(otherlv_1, grammarAccess.getTriangleAccess().getFacetKeyword_1());
+            		
+            // InternalSTL.g:230:3: (otherlv_2= 'normal' ( (lv_normal_3_0= ruleVertex ) ) )
+            // InternalSTL.g:231:4: otherlv_2= 'normal' ( (lv_normal_3_0= ruleVertex ) )
             {
-            otherlv_2=(Token)match(input,14,FOLLOW_8); if (state.failed) return current;
-            if ( state.backtracking==0 ) {
+            otherlv_2=(Token)match(input,15,FOLLOW_10); 
 
-              				newLeafNode(otherlv_2, grammarAccess.getTriangleAccess().getNormalKeyword_2_0());
-              			
-            }
-            // InternalSTL.g:220:4: ( (lv_normal_3_0= ruleVertex ) )
-            // InternalSTL.g:221:5: (lv_normal_3_0= ruleVertex )
+            				newLeafNode(otherlv_2, grammarAccess.getTriangleAccess().getNormalKeyword_2_0());
+            			
+            // InternalSTL.g:235:4: ( (lv_normal_3_0= ruleVertex ) )
+            // InternalSTL.g:236:5: (lv_normal_3_0= ruleVertex )
             {
-            // InternalSTL.g:221:5: (lv_normal_3_0= ruleVertex )
-            // InternalSTL.g:222:6: lv_normal_3_0= ruleVertex
+            // InternalSTL.g:236:5: (lv_normal_3_0= ruleVertex )
+            // InternalSTL.g:237:6: lv_normal_3_0= ruleVertex
             {
-            if ( state.backtracking==0 ) {
 
-              						newCompositeNode(grammarAccess.getTriangleAccess().getNormalVertexParserRuleCall_2_1_0());
-              					
-            }
-            pushFollow(FOLLOW_9);
+            						newCompositeNode(grammarAccess.getTriangleAccess().getNormalVertexParserRuleCall_2_1_0());
+            					
+            pushFollow(FOLLOW_11);
             lv_normal_3_0=ruleVertex();
 
             state._fsp--;
-            if (state.failed) return current;
-            if ( state.backtracking==0 ) {
 
-              						if (current==null) {
-              							current = createModelElementForParent(grammarAccess.getTriangleRule());
-              						}
-              						set(
-              							current,
-              							"normal",
-              							lv_normal_3_0,
-              							"xtext.STL.Vertex");
-              						afterParserOrEnumRuleCall();
-              					
-            }
+
+            						if (current==null) {
+            							current = createModelElementForParent(grammarAccess.getTriangleRule());
+            						}
+            						set(
+            							current,
+            							"normal",
+            							lv_normal_3_0,
+            							"xtext.STL.Vertex");
+            						afterParserOrEnumRuleCall();
+            					
 
             }
 
@@ -571,59 +574,61 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,15,FOLLOW_10); if (state.failed) return current;
-            if ( state.backtracking==0 ) {
+            otherlv_4=(Token)match(input,16,FOLLOW_12); 
 
-              			newLeafNode(otherlv_4, grammarAccess.getTriangleAccess().getOuterKeyword_3());
-              		
-            }
-            otherlv_5=(Token)match(input,16,FOLLOW_11); if (state.failed) return current;
-            if ( state.backtracking==0 ) {
+            			newLeafNode(otherlv_4, grammarAccess.getTriangleAccess().getOuterKeyword_3());
+            		
+            otherlv_5=(Token)match(input,17,FOLLOW_13); 
 
-              			newLeafNode(otherlv_5, grammarAccess.getTriangleAccess().getLoopKeyword_4());
-              		
-            }
-            // InternalSTL.g:248:3: ( (lv_vertices_6_0= ruleVertex ) )*
-            loop3:
+            			newLeafNode(otherlv_5, grammarAccess.getTriangleAccess().getLoopKeyword_4());
+            		
+            // InternalSTL.g:263:3: (otherlv_6= 'vertex' ( (lv_vertices_7_0= ruleVertex ) ) )*
+            loop5:
             do {
-                int alt3=2;
-                int LA3_0 = input.LA(1);
+                int alt5=2;
+                int LA5_0 = input.LA(1);
 
-                if ( (LA3_0==19) ) {
-                    alt3=1;
+                if ( (LA5_0==18) ) {
+                    alt5=1;
                 }
 
 
-                switch (alt3) {
+                switch (alt5) {
             	case 1 :
-            	    // InternalSTL.g:249:4: (lv_vertices_6_0= ruleVertex )
+            	    // InternalSTL.g:264:4: otherlv_6= 'vertex' ( (lv_vertices_7_0= ruleVertex ) )
             	    {
-            	    // InternalSTL.g:249:4: (lv_vertices_6_0= ruleVertex )
-            	    // InternalSTL.g:250:5: lv_vertices_6_0= ruleVertex
-            	    {
-            	    if ( state.backtracking==0 ) {
+            	    otherlv_6=(Token)match(input,18,FOLLOW_10); 
 
-            	      					newCompositeNode(grammarAccess.getTriangleAccess().getVerticesVertexParserRuleCall_5_0());
-            	      				
-            	    }
-            	    pushFollow(FOLLOW_11);
-            	    lv_vertices_6_0=ruleVertex();
+            	    				newLeafNode(otherlv_6, grammarAccess.getTriangleAccess().getVertexKeyword_5_0());
+            	    			
+            	    // InternalSTL.g:268:4: ( (lv_vertices_7_0= ruleVertex ) )
+            	    // InternalSTL.g:269:5: (lv_vertices_7_0= ruleVertex )
+            	    {
+            	    // InternalSTL.g:269:5: (lv_vertices_7_0= ruleVertex )
+            	    // InternalSTL.g:270:6: lv_vertices_7_0= ruleVertex
+            	    {
+
+            	    						newCompositeNode(grammarAccess.getTriangleAccess().getVerticesVertexParserRuleCall_5_1_0());
+            	    					
+            	    pushFollow(FOLLOW_13);
+            	    lv_vertices_7_0=ruleVertex();
 
             	    state._fsp--;
-            	    if (state.failed) return current;
-            	    if ( state.backtracking==0 ) {
 
-            	      					if (current==null) {
-            	      						current = createModelElementForParent(grammarAccess.getTriangleRule());
-            	      					}
-            	      					add(
-            	      						current,
-            	      						"vertices",
-            	      						lv_vertices_6_0,
-            	      						"xtext.STL.Vertex");
-            	      					afterParserOrEnumRuleCall();
-            	      				
+
+            	    						if (current==null) {
+            	    							current = createModelElementForParent(grammarAccess.getTriangleRule());
+            	    						}
+            	    						add(
+            	    							current,
+            	    							"vertices",
+            	    							lv_vertices_7_0,
+            	    							"xtext.STL.Vertex");
+            	    						afterParserOrEnumRuleCall();
+            	    					
+
             	    }
+
 
             	    }
 
@@ -632,33 +637,27 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop3;
+            	    break loop5;
                 }
             } while (true);
 
-            otherlv_7=(Token)match(input,17,FOLLOW_12); if (state.failed) return current;
-            if ( state.backtracking==0 ) {
+            otherlv_8=(Token)match(input,19,FOLLOW_14); 
 
-              			newLeafNode(otherlv_7, grammarAccess.getTriangleAccess().getEndloopKeyword_6());
-              		
-            }
-            otherlv_8=(Token)match(input,18,FOLLOW_2); if (state.failed) return current;
-            if ( state.backtracking==0 ) {
+            			newLeafNode(otherlv_8, grammarAccess.getTriangleAccess().getEndloopKeyword_6());
+            		
+            otherlv_9=(Token)match(input,20,FOLLOW_2); 
 
-              			newLeafNode(otherlv_8, grammarAccess.getTriangleAccess().getEndfacetKeyword_7());
-              		
-            }
+            			newLeafNode(otherlv_9, grammarAccess.getTriangleAccess().getEndfacetKeyword_7());
+            		
 
             }
 
 
             }
 
-            if ( state.backtracking==0 ) {
 
-              	leaveRule();
+            	leaveRule();
 
-            }
         }
 
             catch (RecognitionException re) {
@@ -673,7 +672,7 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleVertex"
-    // InternalSTL.g:279:1: entryRuleVertex returns [EObject current=null] : iv_ruleVertex= ruleVertex EOF ;
+    // InternalSTL.g:300:1: entryRuleVertex returns [EObject current=null] : iv_ruleVertex= ruleVertex EOF ;
     public final EObject entryRuleVertex() throws RecognitionException {
         EObject current = null;
 
@@ -681,21 +680,17 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSTL.g:279:47: (iv_ruleVertex= ruleVertex EOF )
-            // InternalSTL.g:280:2: iv_ruleVertex= ruleVertex EOF
+            // InternalSTL.g:300:47: (iv_ruleVertex= ruleVertex EOF )
+            // InternalSTL.g:301:2: iv_ruleVertex= ruleVertex EOF
             {
-            if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getVertexRule()); 
-            }
+             newCompositeNode(grammarAccess.getVertexRule()); 
             pushFollow(FOLLOW_1);
             iv_ruleVertex=ruleVertex();
 
             state._fsp--;
-            if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-               current =iv_ruleVertex; 
-            }
-            match(input,EOF,FOLLOW_2); if (state.failed) return current;
+
+             current =iv_ruleVertex; 
+            match(input,EOF,FOLLOW_2); 
 
             }
 
@@ -713,146 +708,125 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleVertex"
-    // InternalSTL.g:286:1: ruleVertex returns [EObject current=null] : ( () otherlv_1= 'vertex' ( (lv_x_2_0= ruleEDouble ) ) ( (lv_y_3_0= ruleEDouble ) ) ( (lv_z_4_0= ruleEDouble ) ) ) ;
+    // InternalSTL.g:307:1: ruleVertex returns [EObject current=null] : ( () ( (lv_x_1_0= ruleEDouble ) ) ( (lv_y_2_0= ruleEDouble ) ) ( (lv_z_3_0= ruleEDouble ) ) ) ;
     public final EObject ruleVertex() throws RecognitionException {
         EObject current = null;
 
-        Token otherlv_1=null;
-        AntlrDatatypeRuleToken lv_x_2_0 = null;
+        AntlrDatatypeRuleToken lv_x_1_0 = null;
 
-        AntlrDatatypeRuleToken lv_y_3_0 = null;
+        AntlrDatatypeRuleToken lv_y_2_0 = null;
 
-        AntlrDatatypeRuleToken lv_z_4_0 = null;
+        AntlrDatatypeRuleToken lv_z_3_0 = null;
 
 
 
         	enterRule();
 
         try {
-            // InternalSTL.g:292:2: ( ( () otherlv_1= 'vertex' ( (lv_x_2_0= ruleEDouble ) ) ( (lv_y_3_0= ruleEDouble ) ) ( (lv_z_4_0= ruleEDouble ) ) ) )
-            // InternalSTL.g:293:2: ( () otherlv_1= 'vertex' ( (lv_x_2_0= ruleEDouble ) ) ( (lv_y_3_0= ruleEDouble ) ) ( (lv_z_4_0= ruleEDouble ) ) )
+            // InternalSTL.g:313:2: ( ( () ( (lv_x_1_0= ruleEDouble ) ) ( (lv_y_2_0= ruleEDouble ) ) ( (lv_z_3_0= ruleEDouble ) ) ) )
+            // InternalSTL.g:314:2: ( () ( (lv_x_1_0= ruleEDouble ) ) ( (lv_y_2_0= ruleEDouble ) ) ( (lv_z_3_0= ruleEDouble ) ) )
             {
-            // InternalSTL.g:293:2: ( () otherlv_1= 'vertex' ( (lv_x_2_0= ruleEDouble ) ) ( (lv_y_3_0= ruleEDouble ) ) ( (lv_z_4_0= ruleEDouble ) ) )
-            // InternalSTL.g:294:3: () otherlv_1= 'vertex' ( (lv_x_2_0= ruleEDouble ) ) ( (lv_y_3_0= ruleEDouble ) ) ( (lv_z_4_0= ruleEDouble ) )
+            // InternalSTL.g:314:2: ( () ( (lv_x_1_0= ruleEDouble ) ) ( (lv_y_2_0= ruleEDouble ) ) ( (lv_z_3_0= ruleEDouble ) ) )
+            // InternalSTL.g:315:3: () ( (lv_x_1_0= ruleEDouble ) ) ( (lv_y_2_0= ruleEDouble ) ) ( (lv_z_3_0= ruleEDouble ) )
             {
-            // InternalSTL.g:294:3: ()
-            // InternalSTL.g:295:4: 
+            // InternalSTL.g:315:3: ()
+            // InternalSTL.g:316:4: 
             {
-            if ( state.backtracking==0 ) {
 
-              				current = forceCreateModelElement(
-              					grammarAccess.getVertexAccess().getVertexAction_0(),
-              					current);
-              			
-            }
+            				current = forceCreateModelElement(
+            					grammarAccess.getVertexAccess().getVertexAction_0(),
+            					current);
+            			
 
             }
 
-            otherlv_1=(Token)match(input,19,FOLLOW_13); if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-
-              			newLeafNode(otherlv_1, grammarAccess.getVertexAccess().getVertexKeyword_1());
-              		
-            }
-            // InternalSTL.g:305:3: ( (lv_x_2_0= ruleEDouble ) )
-            // InternalSTL.g:306:4: (lv_x_2_0= ruleEDouble )
+            // InternalSTL.g:322:3: ( (lv_x_1_0= ruleEDouble ) )
+            // InternalSTL.g:323:4: (lv_x_1_0= ruleEDouble )
             {
-            // InternalSTL.g:306:4: (lv_x_2_0= ruleEDouble )
-            // InternalSTL.g:307:5: lv_x_2_0= ruleEDouble
+            // InternalSTL.g:323:4: (lv_x_1_0= ruleEDouble )
+            // InternalSTL.g:324:5: lv_x_1_0= ruleEDouble
             {
-            if ( state.backtracking==0 ) {
 
-              					newCompositeNode(grammarAccess.getVertexAccess().getXEDoubleParserRuleCall_2_0());
-              				
-            }
-            pushFollow(FOLLOW_13);
-            lv_x_2_0=ruleEDouble();
+            					newCompositeNode(grammarAccess.getVertexAccess().getXEDoubleParserRuleCall_1_0());
+            				
+            pushFollow(FOLLOW_10);
+            lv_x_1_0=ruleEDouble();
 
             state._fsp--;
-            if (state.failed) return current;
-            if ( state.backtracking==0 ) {
 
-              					if (current==null) {
-              						current = createModelElementForParent(grammarAccess.getVertexRule());
-              					}
-              					set(
-              						current,
-              						"x",
-              						lv_x_2_0,
-              						"xtext.STL.EDouble");
-              					afterParserOrEnumRuleCall();
-              				
-            }
+
+            					if (current==null) {
+            						current = createModelElementForParent(grammarAccess.getVertexRule());
+            					}
+            					set(
+            						current,
+            						"x",
+            						lv_x_1_0,
+            						"xtext.STL.EDouble");
+            					afterParserOrEnumRuleCall();
+            				
 
             }
 
 
             }
 
-            // InternalSTL.g:324:3: ( (lv_y_3_0= ruleEDouble ) )
-            // InternalSTL.g:325:4: (lv_y_3_0= ruleEDouble )
+            // InternalSTL.g:341:3: ( (lv_y_2_0= ruleEDouble ) )
+            // InternalSTL.g:342:4: (lv_y_2_0= ruleEDouble )
             {
-            // InternalSTL.g:325:4: (lv_y_3_0= ruleEDouble )
-            // InternalSTL.g:326:5: lv_y_3_0= ruleEDouble
+            // InternalSTL.g:342:4: (lv_y_2_0= ruleEDouble )
+            // InternalSTL.g:343:5: lv_y_2_0= ruleEDouble
             {
-            if ( state.backtracking==0 ) {
 
-              					newCompositeNode(grammarAccess.getVertexAccess().getYEDoubleParserRuleCall_3_0());
-              				
-            }
-            pushFollow(FOLLOW_13);
-            lv_y_3_0=ruleEDouble();
+            					newCompositeNode(grammarAccess.getVertexAccess().getYEDoubleParserRuleCall_2_0());
+            				
+            pushFollow(FOLLOW_10);
+            lv_y_2_0=ruleEDouble();
 
             state._fsp--;
-            if (state.failed) return current;
-            if ( state.backtracking==0 ) {
 
-              					if (current==null) {
-              						current = createModelElementForParent(grammarAccess.getVertexRule());
-              					}
-              					set(
-              						current,
-              						"y",
-              						lv_y_3_0,
-              						"xtext.STL.EDouble");
-              					afterParserOrEnumRuleCall();
-              				
-            }
+
+            					if (current==null) {
+            						current = createModelElementForParent(grammarAccess.getVertexRule());
+            					}
+            					set(
+            						current,
+            						"y",
+            						lv_y_2_0,
+            						"xtext.STL.EDouble");
+            					afterParserOrEnumRuleCall();
+            				
 
             }
 
 
             }
 
-            // InternalSTL.g:343:3: ( (lv_z_4_0= ruleEDouble ) )
-            // InternalSTL.g:344:4: (lv_z_4_0= ruleEDouble )
+            // InternalSTL.g:360:3: ( (lv_z_3_0= ruleEDouble ) )
+            // InternalSTL.g:361:4: (lv_z_3_0= ruleEDouble )
             {
-            // InternalSTL.g:344:4: (lv_z_4_0= ruleEDouble )
-            // InternalSTL.g:345:5: lv_z_4_0= ruleEDouble
+            // InternalSTL.g:361:4: (lv_z_3_0= ruleEDouble )
+            // InternalSTL.g:362:5: lv_z_3_0= ruleEDouble
             {
-            if ( state.backtracking==0 ) {
 
-              					newCompositeNode(grammarAccess.getVertexAccess().getZEDoubleParserRuleCall_4_0());
-              				
-            }
+            					newCompositeNode(grammarAccess.getVertexAccess().getZEDoubleParserRuleCall_3_0());
+            				
             pushFollow(FOLLOW_2);
-            lv_z_4_0=ruleEDouble();
+            lv_z_3_0=ruleEDouble();
 
             state._fsp--;
-            if (state.failed) return current;
-            if ( state.backtracking==0 ) {
 
-              					if (current==null) {
-              						current = createModelElementForParent(grammarAccess.getVertexRule());
-              					}
-              					set(
-              						current,
-              						"z",
-              						lv_z_4_0,
-              						"xtext.STL.EDouble");
-              					afterParserOrEnumRuleCall();
-              				
-            }
+
+            					if (current==null) {
+            						current = createModelElementForParent(grammarAccess.getVertexRule());
+            					}
+            					set(
+            						current,
+            						"z",
+            						lv_z_3_0,
+            						"xtext.STL.EDouble");
+            					afterParserOrEnumRuleCall();
+            				
 
             }
 
@@ -865,11 +839,9 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
 
             }
 
-            if ( state.backtracking==0 ) {
 
-              	leaveRule();
+            	leaveRule();
 
-            }
         }
 
             catch (RecognitionException re) {
@@ -884,7 +856,7 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleEDouble"
-    // InternalSTL.g:366:1: entryRuleEDouble returns [String current=null] : iv_ruleEDouble= ruleEDouble EOF ;
+    // InternalSTL.g:383:1: entryRuleEDouble returns [String current=null] : iv_ruleEDouble= ruleEDouble EOF ;
     public final String entryRuleEDouble() throws RecognitionException {
         String current = null;
 
@@ -892,21 +864,17 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSTL.g:366:47: (iv_ruleEDouble= ruleEDouble EOF )
-            // InternalSTL.g:367:2: iv_ruleEDouble= ruleEDouble EOF
+            // InternalSTL.g:383:47: (iv_ruleEDouble= ruleEDouble EOF )
+            // InternalSTL.g:384:2: iv_ruleEDouble= ruleEDouble EOF
             {
-            if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getEDoubleRule()); 
-            }
+             newCompositeNode(grammarAccess.getEDoubleRule()); 
             pushFollow(FOLLOW_1);
             iv_ruleEDouble=ruleEDouble();
 
             state._fsp--;
-            if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-               current =iv_ruleEDouble.getText(); 
-            }
-            match(input,EOF,FOLLOW_2); if (state.failed) return current;
+
+             current =iv_ruleEDouble.getText(); 
+            match(input,EOF,FOLLOW_2); 
 
             }
 
@@ -924,7 +892,7 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEDouble"
-    // InternalSTL.g:373:1: ruleEDouble returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' | kw= '+' )? (this_INT_2= RULE_INT )? kw= '.' this_INT_4= RULE_INT ( (kw= 'E' | kw= 'e' ) (kw= '-' | kw= '+' )? this_INT_9= RULE_INT )? ) ;
+    // InternalSTL.g:390:1: ruleEDouble returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' | kw= '+' )? (this_INT_2= RULE_INT )? kw= '.' this_INT_4= RULE_INT ( (kw= 'E' | kw= 'e' ) (kw= '-' | kw= '+' )? this_INT_9= RULE_INT )? ) ;
     public final AntlrDatatypeRuleToken ruleEDouble() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -937,207 +905,180 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSTL.g:379:2: ( ( (kw= '-' | kw= '+' )? (this_INT_2= RULE_INT )? kw= '.' this_INT_4= RULE_INT ( (kw= 'E' | kw= 'e' ) (kw= '-' | kw= '+' )? this_INT_9= RULE_INT )? ) )
-            // InternalSTL.g:380:2: ( (kw= '-' | kw= '+' )? (this_INT_2= RULE_INT )? kw= '.' this_INT_4= RULE_INT ( (kw= 'E' | kw= 'e' ) (kw= '-' | kw= '+' )? this_INT_9= RULE_INT )? )
+            // InternalSTL.g:396:2: ( ( (kw= '-' | kw= '+' )? (this_INT_2= RULE_INT )? kw= '.' this_INT_4= RULE_INT ( (kw= 'E' | kw= 'e' ) (kw= '-' | kw= '+' )? this_INT_9= RULE_INT )? ) )
+            // InternalSTL.g:397:2: ( (kw= '-' | kw= '+' )? (this_INT_2= RULE_INT )? kw= '.' this_INT_4= RULE_INT ( (kw= 'E' | kw= 'e' ) (kw= '-' | kw= '+' )? this_INT_9= RULE_INT )? )
             {
-            // InternalSTL.g:380:2: ( (kw= '-' | kw= '+' )? (this_INT_2= RULE_INT )? kw= '.' this_INT_4= RULE_INT ( (kw= 'E' | kw= 'e' ) (kw= '-' | kw= '+' )? this_INT_9= RULE_INT )? )
-            // InternalSTL.g:381:3: (kw= '-' | kw= '+' )? (this_INT_2= RULE_INT )? kw= '.' this_INT_4= RULE_INT ( (kw= 'E' | kw= 'e' ) (kw= '-' | kw= '+' )? this_INT_9= RULE_INT )?
+            // InternalSTL.g:397:2: ( (kw= '-' | kw= '+' )? (this_INT_2= RULE_INT )? kw= '.' this_INT_4= RULE_INT ( (kw= 'E' | kw= 'e' ) (kw= '-' | kw= '+' )? this_INT_9= RULE_INT )? )
+            // InternalSTL.g:398:3: (kw= '-' | kw= '+' )? (this_INT_2= RULE_INT )? kw= '.' this_INT_4= RULE_INT ( (kw= 'E' | kw= 'e' ) (kw= '-' | kw= '+' )? this_INT_9= RULE_INT )?
             {
-            // InternalSTL.g:381:3: (kw= '-' | kw= '+' )?
-            int alt4=3;
-            int LA4_0 = input.LA(1);
+            // InternalSTL.g:398:3: (kw= '-' | kw= '+' )?
+            int alt6=3;
+            int LA6_0 = input.LA(1);
 
-            if ( (LA4_0==20) ) {
-                alt4=1;
+            if ( (LA6_0==21) ) {
+                alt6=1;
             }
-            else if ( (LA4_0==21) ) {
-                alt4=2;
+            else if ( (LA6_0==22) ) {
+                alt6=2;
             }
-            switch (alt4) {
+            switch (alt6) {
                 case 1 :
-                    // InternalSTL.g:382:4: kw= '-'
+                    // InternalSTL.g:399:4: kw= '-'
                     {
-                    kw=(Token)match(input,20,FOLLOW_14); if (state.failed) return current;
-                    if ( state.backtracking==0 ) {
+                    kw=(Token)match(input,21,FOLLOW_15); 
 
-                      				current.merge(kw);
-                      				newLeafNode(kw, grammarAccess.getEDoubleAccess().getHyphenMinusKeyword_0_0());
-                      			
-                    }
+                    				current.merge(kw);
+                    				newLeafNode(kw, grammarAccess.getEDoubleAccess().getHyphenMinusKeyword_0_0());
+                    			
 
                     }
                     break;
                 case 2 :
-                    // InternalSTL.g:388:4: kw= '+'
+                    // InternalSTL.g:405:4: kw= '+'
                     {
-                    kw=(Token)match(input,21,FOLLOW_14); if (state.failed) return current;
-                    if ( state.backtracking==0 ) {
+                    kw=(Token)match(input,22,FOLLOW_15); 
 
-                      				current.merge(kw);
-                      				newLeafNode(kw, grammarAccess.getEDoubleAccess().getPlusSignKeyword_0_1());
-                      			
-                    }
+                    				current.merge(kw);
+                    				newLeafNode(kw, grammarAccess.getEDoubleAccess().getPlusSignKeyword_0_1());
+                    			
 
                     }
                     break;
 
             }
 
-            // InternalSTL.g:394:3: (this_INT_2= RULE_INT )?
-            int alt5=2;
-            int LA5_0 = input.LA(1);
+            // InternalSTL.g:411:3: (this_INT_2= RULE_INT )?
+            int alt7=2;
+            int LA7_0 = input.LA(1);
 
-            if ( (LA5_0==RULE_INT) ) {
-                alt5=1;
+            if ( (LA7_0==RULE_INT) ) {
+                alt7=1;
             }
-            switch (alt5) {
+            switch (alt7) {
                 case 1 :
-                    // InternalSTL.g:395:4: this_INT_2= RULE_INT
+                    // InternalSTL.g:412:4: this_INT_2= RULE_INT
                     {
-                    this_INT_2=(Token)match(input,RULE_INT,FOLLOW_15); if (state.failed) return current;
-                    if ( state.backtracking==0 ) {
+                    this_INT_2=(Token)match(input,RULE_INT,FOLLOW_16); 
 
-                      				current.merge(this_INT_2);
-                      			
-                    }
-                    if ( state.backtracking==0 ) {
+                    				current.merge(this_INT_2);
+                    			
 
-                      				newLeafNode(this_INT_2, grammarAccess.getEDoubleAccess().getINTTerminalRuleCall_1());
-                      			
-                    }
+                    				newLeafNode(this_INT_2, grammarAccess.getEDoubleAccess().getINTTerminalRuleCall_1());
+                    			
 
                     }
                     break;
 
             }
 
-            kw=(Token)match(input,22,FOLLOW_16); if (state.failed) return current;
-            if ( state.backtracking==0 ) {
+            kw=(Token)match(input,23,FOLLOW_17); 
 
-              			current.merge(kw);
-              			newLeafNode(kw, grammarAccess.getEDoubleAccess().getFullStopKeyword_2());
-              		
-            }
-            this_INT_4=(Token)match(input,RULE_INT,FOLLOW_17); if (state.failed) return current;
-            if ( state.backtracking==0 ) {
+            			current.merge(kw);
+            			newLeafNode(kw, grammarAccess.getEDoubleAccess().getFullStopKeyword_2());
+            		
+            this_INT_4=(Token)match(input,RULE_INT,FOLLOW_18); 
 
-              			current.merge(this_INT_4);
-              		
-            }
-            if ( state.backtracking==0 ) {
+            			current.merge(this_INT_4);
+            		
 
-              			newLeafNode(this_INT_4, grammarAccess.getEDoubleAccess().getINTTerminalRuleCall_3());
-              		
-            }
-            // InternalSTL.g:415:3: ( (kw= 'E' | kw= 'e' ) (kw= '-' | kw= '+' )? this_INT_9= RULE_INT )?
-            int alt8=2;
-            int LA8_0 = input.LA(1);
+            			newLeafNode(this_INT_4, grammarAccess.getEDoubleAccess().getINTTerminalRuleCall_3());
+            		
+            // InternalSTL.g:432:3: ( (kw= 'E' | kw= 'e' ) (kw= '-' | kw= '+' )? this_INT_9= RULE_INT )?
+            int alt10=2;
+            int LA10_0 = input.LA(1);
 
-            if ( ((LA8_0>=23 && LA8_0<=24)) ) {
-                alt8=1;
+            if ( ((LA10_0>=24 && LA10_0<=25)) ) {
+                alt10=1;
             }
-            switch (alt8) {
+            switch (alt10) {
                 case 1 :
-                    // InternalSTL.g:416:4: (kw= 'E' | kw= 'e' ) (kw= '-' | kw= '+' )? this_INT_9= RULE_INT
+                    // InternalSTL.g:433:4: (kw= 'E' | kw= 'e' ) (kw= '-' | kw= '+' )? this_INT_9= RULE_INT
                     {
-                    // InternalSTL.g:416:4: (kw= 'E' | kw= 'e' )
-                    int alt6=2;
-                    int LA6_0 = input.LA(1);
+                    // InternalSTL.g:433:4: (kw= 'E' | kw= 'e' )
+                    int alt8=2;
+                    int LA8_0 = input.LA(1);
 
-                    if ( (LA6_0==23) ) {
-                        alt6=1;
+                    if ( (LA8_0==24) ) {
+                        alt8=1;
                     }
-                    else if ( (LA6_0==24) ) {
-                        alt6=2;
+                    else if ( (LA8_0==25) ) {
+                        alt8=2;
                     }
                     else {
-                        if (state.backtracking>0) {state.failed=true; return current;}
                         NoViableAltException nvae =
-                            new NoViableAltException("", 6, 0, input);
+                            new NoViableAltException("", 8, 0, input);
 
                         throw nvae;
                     }
-                    switch (alt6) {
+                    switch (alt8) {
                         case 1 :
-                            // InternalSTL.g:417:5: kw= 'E'
+                            // InternalSTL.g:434:5: kw= 'E'
                             {
-                            kw=(Token)match(input,23,FOLLOW_18); if (state.failed) return current;
-                            if ( state.backtracking==0 ) {
+                            kw=(Token)match(input,24,FOLLOW_19); 
 
-                              					current.merge(kw);
-                              					newLeafNode(kw, grammarAccess.getEDoubleAccess().getEKeyword_4_0_0());
-                              				
-                            }
+                            					current.merge(kw);
+                            					newLeafNode(kw, grammarAccess.getEDoubleAccess().getEKeyword_4_0_0());
+                            				
 
                             }
                             break;
                         case 2 :
-                            // InternalSTL.g:423:5: kw= 'e'
+                            // InternalSTL.g:440:5: kw= 'e'
                             {
-                            kw=(Token)match(input,24,FOLLOW_18); if (state.failed) return current;
-                            if ( state.backtracking==0 ) {
+                            kw=(Token)match(input,25,FOLLOW_19); 
 
-                              					current.merge(kw);
-                              					newLeafNode(kw, grammarAccess.getEDoubleAccess().getEKeyword_4_0_1());
-                              				
-                            }
+                            					current.merge(kw);
+                            					newLeafNode(kw, grammarAccess.getEDoubleAccess().getEKeyword_4_0_1());
+                            				
 
                             }
                             break;
 
                     }
 
-                    // InternalSTL.g:429:4: (kw= '-' | kw= '+' )?
-                    int alt7=3;
-                    int LA7_0 = input.LA(1);
+                    // InternalSTL.g:446:4: (kw= '-' | kw= '+' )?
+                    int alt9=3;
+                    int LA9_0 = input.LA(1);
 
-                    if ( (LA7_0==20) ) {
-                        alt7=1;
+                    if ( (LA9_0==21) ) {
+                        alt9=1;
                     }
-                    else if ( (LA7_0==21) ) {
-                        alt7=2;
+                    else if ( (LA9_0==22) ) {
+                        alt9=2;
                     }
-                    switch (alt7) {
+                    switch (alt9) {
                         case 1 :
-                            // InternalSTL.g:430:5: kw= '-'
+                            // InternalSTL.g:447:5: kw= '-'
                             {
-                            kw=(Token)match(input,20,FOLLOW_16); if (state.failed) return current;
-                            if ( state.backtracking==0 ) {
+                            kw=(Token)match(input,21,FOLLOW_17); 
 
-                              					current.merge(kw);
-                              					newLeafNode(kw, grammarAccess.getEDoubleAccess().getHyphenMinusKeyword_4_1_0());
-                              				
-                            }
+                            					current.merge(kw);
+                            					newLeafNode(kw, grammarAccess.getEDoubleAccess().getHyphenMinusKeyword_4_1_0());
+                            				
 
                             }
                             break;
                         case 2 :
-                            // InternalSTL.g:436:5: kw= '+'
+                            // InternalSTL.g:453:5: kw= '+'
                             {
-                            kw=(Token)match(input,21,FOLLOW_16); if (state.failed) return current;
-                            if ( state.backtracking==0 ) {
+                            kw=(Token)match(input,22,FOLLOW_17); 
 
-                              					current.merge(kw);
-                              					newLeafNode(kw, grammarAccess.getEDoubleAccess().getPlusSignKeyword_4_1_1());
-                              				
-                            }
+                            					current.merge(kw);
+                            					newLeafNode(kw, grammarAccess.getEDoubleAccess().getPlusSignKeyword_4_1_1());
+                            				
 
                             }
                             break;
 
                     }
 
-                    this_INT_9=(Token)match(input,RULE_INT,FOLLOW_2); if (state.failed) return current;
-                    if ( state.backtracking==0 ) {
+                    this_INT_9=(Token)match(input,RULE_INT,FOLLOW_2); 
 
-                      				current.merge(this_INT_9);
-                      			
-                    }
-                    if ( state.backtracking==0 ) {
+                    				current.merge(this_INT_9);
+                    			
 
-                      				newLeafNode(this_INT_9, grammarAccess.getEDoubleAccess().getINTTerminalRuleCall_4_2());
-                      			
-                    }
+                    				newLeafNode(this_INT_9, grammarAccess.getEDoubleAccess().getINTTerminalRuleCall_4_2());
+                    			
 
                     }
                     break;
@@ -1150,11 +1091,9 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
 
             }
 
-            if ( state.backtracking==0 ) {
 
-              	leaveRule();
+            	leaveRule();
 
-            }
         }
 
             catch (RecognitionException re) {
@@ -1168,30 +1107,26 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
     // $ANTLR end "ruleEDouble"
 
 
-    // $ANTLR start "entryRuleELine"
-    // InternalSTL.g:454:1: entryRuleELine returns [String current=null] : iv_ruleELine= ruleELine EOF ;
-    public final String entryRuleELine() throws RecognitionException {
+    // $ANTLR start "entryRuleEString"
+    // InternalSTL.g:471:1: entryRuleEString returns [String current=null] : iv_ruleEString= ruleEString EOF ;
+    public final String entryRuleEString() throws RecognitionException {
         String current = null;
 
-        AntlrDatatypeRuleToken iv_ruleELine = null;
+        AntlrDatatypeRuleToken iv_ruleEString = null;
 
 
         try {
-            // InternalSTL.g:454:45: (iv_ruleELine= ruleELine EOF )
-            // InternalSTL.g:455:2: iv_ruleELine= ruleELine EOF
+            // InternalSTL.g:471:47: (iv_ruleEString= ruleEString EOF )
+            // InternalSTL.g:472:2: iv_ruleEString= ruleEString EOF
             {
-            if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getELineRule()); 
-            }
+             newCompositeNode(grammarAccess.getEStringRule()); 
             pushFollow(FOLLOW_1);
-            iv_ruleELine=ruleELine();
+            iv_ruleEString=ruleEString();
 
             state._fsp--;
-            if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-               current =iv_ruleELine.getText(); 
-            }
-            match(input,EOF,FOLLOW_2); if (state.failed) return current;
+
+             current =iv_ruleEString.getText(); 
+            match(input,EOF,FOLLOW_2); 
 
             }
 
@@ -1205,26 +1140,25 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "entryRuleELine"
+    // $ANTLR end "entryRuleEString"
 
 
-    // $ANTLR start "ruleELine"
-    // InternalSTL.g:461:1: ruleELine returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_STRING_0= RULE_STRING | (this_ID_1= RULE_ID ( ( '\\r' | '\\n' )=> ( (kw= '\\r' )? | kw= '\\n' ) ) ) ) ;
-    public final AntlrDatatypeRuleToken ruleELine() throws RecognitionException {
+    // $ANTLR start "ruleEString"
+    // InternalSTL.g:478:1: ruleEString returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_STRING_0= RULE_STRING | this_ID_1= RULE_ID ) ;
+    public final AntlrDatatypeRuleToken ruleEString() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
         Token this_STRING_0=null;
         Token this_ID_1=null;
-        Token kw=null;
 
 
         	enterRule();
 
         try {
-            // InternalSTL.g:467:2: ( (this_STRING_0= RULE_STRING | (this_ID_1= RULE_ID ( ( '\\r' | '\\n' )=> ( (kw= '\\r' )? | kw= '\\n' ) ) ) ) )
-            // InternalSTL.g:468:2: (this_STRING_0= RULE_STRING | (this_ID_1= RULE_ID ( ( '\\r' | '\\n' )=> ( (kw= '\\r' )? | kw= '\\n' ) ) ) )
+            // InternalSTL.g:484:2: ( (this_STRING_0= RULE_STRING | this_ID_1= RULE_ID ) )
+            // InternalSTL.g:485:2: (this_STRING_0= RULE_STRING | this_ID_1= RULE_ID )
             {
-            // InternalSTL.g:468:2: (this_STRING_0= RULE_STRING | (this_ID_1= RULE_ID ( ( '\\r' | '\\n' )=> ( (kw= '\\r' )? | kw= '\\n' ) ) ) )
+            // InternalSTL.g:485:2: (this_STRING_0= RULE_STRING | this_ID_1= RULE_ID )
             int alt11=2;
             int LA11_0 = input.LA(1);
 
@@ -1235,7 +1169,6 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
                 alt11=2;
             }
             else {
-                if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
                     new NoViableAltException("", 11, 0, input);
 
@@ -1243,112 +1176,28 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
             }
             switch (alt11) {
                 case 1 :
-                    // InternalSTL.g:469:3: this_STRING_0= RULE_STRING
+                    // InternalSTL.g:486:3: this_STRING_0= RULE_STRING
                     {
-                    this_STRING_0=(Token)match(input,RULE_STRING,FOLLOW_2); if (state.failed) return current;
-                    if ( state.backtracking==0 ) {
+                    this_STRING_0=(Token)match(input,RULE_STRING,FOLLOW_2); 
 
-                      			current.merge(this_STRING_0);
-                      		
-                    }
-                    if ( state.backtracking==0 ) {
+                    			current.merge(this_STRING_0);
+                    		
 
-                      			newLeafNode(this_STRING_0, grammarAccess.getELineAccess().getSTRINGTerminalRuleCall_0());
-                      		
-                    }
+                    			newLeafNode(this_STRING_0, grammarAccess.getEStringAccess().getSTRINGTerminalRuleCall_0());
+                    		
 
                     }
                     break;
                 case 2 :
-                    // InternalSTL.g:477:3: (this_ID_1= RULE_ID ( ( '\\r' | '\\n' )=> ( (kw= '\\r' )? | kw= '\\n' ) ) )
+                    // InternalSTL.g:494:3: this_ID_1= RULE_ID
                     {
-                    // InternalSTL.g:477:3: (this_ID_1= RULE_ID ( ( '\\r' | '\\n' )=> ( (kw= '\\r' )? | kw= '\\n' ) ) )
-                    // InternalSTL.g:478:4: this_ID_1= RULE_ID ( ( '\\r' | '\\n' )=> ( (kw= '\\r' )? | kw= '\\n' ) )
-                    {
-                    this_ID_1=(Token)match(input,RULE_ID,FOLLOW_19); if (state.failed) return current;
-                    if ( state.backtracking==0 ) {
+                    this_ID_1=(Token)match(input,RULE_ID,FOLLOW_2); 
 
-                      				current.merge(this_ID_1);
-                      			
-                    }
-                    if ( state.backtracking==0 ) {
+                    			current.merge(this_ID_1);
+                    		
 
-                      				newLeafNode(this_ID_1, grammarAccess.getELineAccess().getIDTerminalRuleCall_1_0());
-                      			
-                    }
-                    // InternalSTL.g:485:4: ( ( '\\r' | '\\n' )=> ( (kw= '\\r' )? | kw= '\\n' ) )
-                    // InternalSTL.g:486:5: ( '\\r' | '\\n' )=> ( (kw= '\\r' )? | kw= '\\n' )
-                    {
-                    // InternalSTL.g:487:5: ( (kw= '\\r' )? | kw= '\\n' )
-                    int alt10=2;
-                    int LA10_0 = input.LA(1);
-
-                    if ( (LA10_0==EOF||(LA10_0>=12 && LA10_0<=13)||LA10_0==25) ) {
-                        alt10=1;
-                    }
-                    else if ( (LA10_0==26) ) {
-                        alt10=2;
-                    }
-                    else {
-                        if (state.backtracking>0) {state.failed=true; return current;}
-                        NoViableAltException nvae =
-                            new NoViableAltException("", 10, 0, input);
-
-                        throw nvae;
-                    }
-                    switch (alt10) {
-                        case 1 :
-                            // InternalSTL.g:488:6: (kw= '\\r' )?
-                            {
-                            // InternalSTL.g:488:6: (kw= '\\r' )?
-                            int alt9=2;
-                            int LA9_0 = input.LA(1);
-
-                            if ( (LA9_0==25) ) {
-                                alt9=1;
-                            }
-                            switch (alt9) {
-                                case 1 :
-                                    // InternalSTL.g:489:7: kw= '\\r'
-                                    {
-                                    kw=(Token)match(input,25,FOLLOW_2); if (state.failed) return current;
-                                    if ( state.backtracking==0 ) {
-
-                                      							current.merge(kw);
-                                      							newLeafNode(kw, grammarAccess.getELineAccess().getControl000dKeyword_1_1_0_0());
-                                      						
-                                    }
-
-                                    }
-                                    break;
-
-                            }
-
-
-                            }
-                            break;
-                        case 2 :
-                            // InternalSTL.g:496:6: kw= '\\n'
-                            {
-                            kw=(Token)match(input,26,FOLLOW_2); if (state.failed) return current;
-                            if ( state.backtracking==0 ) {
-
-                              						current.merge(kw);
-                              						newLeafNode(kw, grammarAccess.getELineAccess().getControl000aKeyword_1_1_0_1());
-                              					
-                            }
-
-                            }
-                            break;
-
-                    }
-
-
-                    }
-
-
-                    }
-
+                    			newLeafNode(this_ID_1, grammarAccess.getEStringAccess().getIDTerminalRuleCall_1());
+                    		
 
                     }
                     break;
@@ -1358,11 +1207,9 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
 
             }
 
-            if ( state.backtracking==0 ) {
 
-              	leaveRule();
+            	leaveRule();
 
-            }
         }
 
             catch (RecognitionException re) {
@@ -1373,7 +1220,7 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "ruleELine"
+    // $ANTLR end "ruleEString"
 
     // Delegated rules
 
@@ -1382,22 +1229,22 @@ public class InternalSTLParser extends AbstractInternalAntlrParser {
 
     public static final BitSet FOLLOW_1 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_2 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_3 = new BitSet(new long[]{0x0000000000003060L});
-    public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x0000000000003000L});
-    public static final BitSet FOLLOW_5 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x0000000000002002L});
-    public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0000000000080000L});
+    public static final BitSet FOLLOW_3 = new BitSet(new long[]{0x0000000000007060L});
+    public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x0000000000007000L});
+    public static final BitSet FOLLOW_5 = new BitSet(new long[]{0x0000000000003000L});
+    public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x0000000000002000L});
+    public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x0000000000000062L});
+    public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0000000000004002L});
     public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0000000000010000L});
-    public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x00000000000A0000L});
-    public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0000000000040000L});
-    public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x0000000000700010L});
-    public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0000000000400010L});
-    public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x0000000000400000L});
-    public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0000000001800002L});
-    public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0000000000300010L});
-    public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0000000006000002L});
+    public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0000000000E00010L});
+    public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x00000000000C0000L});
+    public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0000000000100000L});
+    public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x0000000000800010L});
+    public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x0000000000800000L});
+    public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0000000003000002L});
+    public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0000000000600010L});
 
 }

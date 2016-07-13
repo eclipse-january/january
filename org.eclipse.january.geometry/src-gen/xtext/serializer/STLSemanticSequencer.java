@@ -65,7 +65,7 @@ public class STLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Geometry returns Geometry
 	 *
 	 * Constraint:
-	 *     (name=ELine? nodes+=Shape_Impl)
+	 *     (name=EString? nodes+=Shape_Impl)
 	 */
 	protected void sequence_Geometry(ISerializationContext context, Geometry semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -113,9 +113,9 @@ public class STLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, GeometryPackage.Literals.VERTEX__Z));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getVertexAccess().getXEDoubleParserRuleCall_2_0(), semanticObject.getX());
-		feeder.accept(grammarAccess.getVertexAccess().getYEDoubleParserRuleCall_3_0(), semanticObject.getY());
-		feeder.accept(grammarAccess.getVertexAccess().getZEDoubleParserRuleCall_4_0(), semanticObject.getZ());
+		feeder.accept(grammarAccess.getVertexAccess().getXEDoubleParserRuleCall_1_0(), semanticObject.getX());
+		feeder.accept(grammarAccess.getVertexAccess().getYEDoubleParserRuleCall_2_0(), semanticObject.getY());
+		feeder.accept(grammarAccess.getVertexAccess().getZEDoubleParserRuleCall_3_0(), semanticObject.getZ());
 		feeder.finish();
 	}
 	
