@@ -38,7 +38,7 @@ Workflow {
 		language = StandardLanguage {
 			name = "xtext.STL"
 			fileExtensions = "stl"
-			referencedResource = "platform:/resource/org.eclipse.january.geometry/model/org.eclipse.january.geometry.genmodel"
+			referencedResource = "platform:/resource/org.eclipse.january.geometry.model/model/org.eclipse.january.geometry.genmodel"
 			
 			fragment = ecore2xtext.Ecore2XtextValueConverterServiceFragment2 auto-inject {}
 

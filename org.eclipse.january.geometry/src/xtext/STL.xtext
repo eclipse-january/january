@@ -6,9 +6,9 @@ import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 Geometry returns Geometry:
 	{Geometry}
 	'solid'
-	(name=ELine)?
-	(nodes+=Shape_Impl)
-	'endsolid'
+	(name=EString)?
+	(nodes+=Shape_Impl) '\n'?
+	'endsolid' EString?
 ;
 
 Shape_Impl returns Shape:
@@ -20,14 +20,13 @@ Triangle returns Triangle:
 	{Triangle}
 	'facet' ('normal' normal=Vertex)
 		'outer' 'loop'
-			(vertices+=Vertex)*
+			('vertex' vertices+=Vertex)*
 		'endloop'
 	'endfacet'
 ;
 
 Vertex returns Vertex:
 	{Vertex}
-	'vertex'
 	x=EDouble
 	y=EDouble
 	z=EDouble
@@ -38,6 +37,4 @@ EDouble returns ecore::EDouble:
 	
 EString returns ecore::EString:
 	STRING | ID;
-	
-ELine returns ecore::EString:
-    STRING | ID -> ('\r'? | '\n');
+

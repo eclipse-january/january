@@ -158,10 +158,9 @@ public class STLGeometryImporterImpl extends MinimalEObjectImpl.Container implem
 		// If they contents are valid, get the first element
 		if(contents != null && !contents.isEmpty()) {
 			Geometry g = (Geometry) contents.get(0);
-						
+			
 			// If the geometry has no nodes, or the shape has no triangles, try loading from binary
 			if (g.getNodes().isEmpty() || ( (Shape)g.getNodes().get(0)).getTriangles().isEmpty()) {
-								
 				geometry = loadBinary(path);
 			} else {
 				// Otherwise, return this geometry

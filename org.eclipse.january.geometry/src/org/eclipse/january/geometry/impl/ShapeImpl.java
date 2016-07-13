@@ -164,8 +164,6 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 		// Initialize the data members
 		properties = new HashMap<String, Double>();
 		center = GeometryFactory.eINSTANCE.createVertex();
-		nodes = new BasicEList<INode>();
-		triangles = new BasicEList<Triangle>();
 	}
 
 	/**
