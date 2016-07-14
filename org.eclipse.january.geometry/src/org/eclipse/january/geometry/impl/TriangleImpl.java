@@ -61,9 +61,6 @@ public class TriangleImpl extends MinimalEObjectImpl.Container
 	 */
 	protected TriangleImpl() {
 		super();
-
-		// Initialize the normal vector
-		normal = GeometryFactory.eINSTANCE.createVertex();
 	}
 
 	/**
@@ -143,14 +140,14 @@ public class TriangleImpl extends MinimalEObjectImpl.Container
 			Triangle otherTriangle = (Triangle) otherObject;
 
 			// Check that the normal vectors are equal
-			if (normal.equals(otherTriangle.getNormal())) {
+			if (getNormal().equals(otherTriangle.getNormal())) {
 
 				// Get the other triangle's vertices
 				EList<Vertex> otherVertices = otherTriangle.getVertices();
 
 				// The triangles must both be either initialized (ie having
 				// three vertices) or not to be equal
-				if (vertices.size() == otherVertices.size()) {
+				if (getVertices().size() == otherVertices.size()) {
 
 					// If any vertex is in one list but not the other, the
 					// triangles are not equal
@@ -181,13 +178,13 @@ public class TriangleImpl extends MinimalEObjectImpl.Container
 
 		// Add the normal's hash code
 		int hash = 31;
-		hash = hash * 31 + normal.hashCode();
+		hash = hash * 31 + getNormal().hashCode();
 
 		// The list of hash codes from the vertices
 		ArrayList<Integer> vertexHashes = new ArrayList<Integer>();
 
 		// Get each vertex's hash code
-		for (Vertex vertex : vertices) {
+		for (Vertex vertex : getVertices()) {
 			vertexHashes.add(vertex.hashCode());
 		}
 

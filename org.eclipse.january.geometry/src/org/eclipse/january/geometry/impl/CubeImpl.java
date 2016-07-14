@@ -183,7 +183,7 @@ public class CubeImpl extends ShapeImpl implements Cube {
 		// If the side length has not changed since the last time the mesh was
 		// recalculated, return the current mesh
 		if (prevSideLength == sideLength) {
-			return triangles;
+			return getTriangles();
 		}
 
 		// Update to the current side length

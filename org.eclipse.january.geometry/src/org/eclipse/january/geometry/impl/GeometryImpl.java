@@ -374,7 +374,7 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 	public void addNode(INode child) {
 
 		// If the node is already in the list, fail silently
-		if (!nodes.contains(child)) {
+		if (!getNodes().contains(child)) {
 
 			// Set the child's parent to this
 			child.setParent(this);
@@ -404,7 +404,7 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 	public void removeNode(INode child) {
 
 		// If the node isn't in the list, fail silently
-		if (nodes.contains(child)) {
+		if (getNodes().contains(child)) {
 
 			// Remove this as the child's parent
 			child.setParent(null);
@@ -426,7 +426,7 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 		if (source instanceof Geometry) {
 
 			// Empty the list of nodes
-			for (INode node : nodes) {
+			for (INode node : getNodes()) {
 				removeNode(node);
 			}
 

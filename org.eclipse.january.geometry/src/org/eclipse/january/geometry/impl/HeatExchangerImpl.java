@@ -104,7 +104,7 @@ public class HeatExchangerImpl extends ShapeImpl implements HeatExchanger {
 	protected EList<Triangle> createPipeToPoint(Vertex point) {
 
 		// Get the primary tube's start point
-		BoundingBox start = pipe.getLowerEdge();
+		BoundingBox start = getPipe().getLowerEdge();
 		double[] startPoint = new double[3];
 		startPoint[0] = (start.getMaxX() - start.getMinX()) / 2
 				+ start.getMinX();
