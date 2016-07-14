@@ -444,7 +444,7 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 	public void addNode(INode child) {
 
 		// If the node is already in the list, fail silently
-		if (!nodes.contains(child)) {
+		if (!getNodes().contains(child)) {
 
 			// Set the child's parent to this
 			child.setParent(this);
@@ -463,7 +463,7 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 	public void removeNode(INode child) {
 
 		// If the node isn't in the list, fail silently
-		if (!nodes.contains(child)) {
+		if (!getNodes().contains(child)) {
 
 			// Remove this as the child's parent
 			child.setParent(null);
@@ -488,7 +488,7 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 			Shape castSource = (Shape) source;
 
 			// Copy the object's center
-			center.setX(castSource.getCenter().getX());
+			getCenter().setX(castSource.getCenter().getX());
 			center.setY(castSource.getCenter().getY());
 			center.setZ(castSource.getCenter().getZ());
 
@@ -514,7 +514,7 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 			}
 
 			// Copy the triangles from the source
-			triangles.clear();
+			getTriangles().clear();
 			for (Triangle triangle : castSource.getTriangles()) {
 
 				// Create a new triangle

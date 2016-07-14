@@ -183,7 +183,7 @@ public class CubeImpl extends ShapeImpl implements Cube {
 		// If the side length has not changed since the last time the mesh was
 		// recalculated, return the current mesh
 		if (prevSideLength == sideLength) {
-			return triangles;
+			return getTriangles();
 		}
 
 		// Update to the current side length
@@ -193,7 +193,7 @@ public class CubeImpl extends ShapeImpl implements Cube {
 		double[] points = MeshUtils.createRectangularPrism(1, 1, 1);
 
 		// Replace the previous list
-		triangles.clear();
+		getTriangles().clear();
 		triangles = MeshUtils.createRectangularPrismMesh(points);
 		return triangles;
 	}
