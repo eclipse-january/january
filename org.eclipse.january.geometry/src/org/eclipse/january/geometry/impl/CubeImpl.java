@@ -193,7 +193,9 @@ public class CubeImpl extends ShapeImpl implements Cube {
 		double[] points = MeshUtils.createRectangularPrism(1, 1, 1);
 
 		// Replace the previous list
-		triangles.clear();
+		if (triangles != null) {
+			triangles.clear();
+		}
 		triangles = MeshUtils.createRectangularPrismMesh(points);
 		return triangles;
 	}
