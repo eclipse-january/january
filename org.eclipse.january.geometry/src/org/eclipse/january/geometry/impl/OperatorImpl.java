@@ -154,8 +154,6 @@ public class OperatorImpl extends MinimalEObjectImpl.Container
 		// Initialize the data members
 		properties = new HashMap<String, Double>();
 		center = GeometryFactory.eINSTANCE.createVertex();
-		nodes = new BasicEList<INode>();
-		triangles = new BasicEList<Triangle>();
 	}
 
 	/**
@@ -386,7 +384,7 @@ public class OperatorImpl extends MinimalEObjectImpl.Container
 	public void addNode(INode child) {
 
 		// If the node is already in the list, fail silently
-		if (!nodes.contains(child)) {
+		if (!getNodes().contains(child)) {
 
 			// Set the child's parent to this
 			child.setParent(this);
@@ -409,7 +407,7 @@ public class OperatorImpl extends MinimalEObjectImpl.Container
 	public void removeNode(INode child) {
 
 		// If the node isn't in the list, fail silently
-		if (nodes.contains(child)) {
+		if (getNodes().contains(child)) {
 
 			// Remove this as the child's parent
 			child.setParent(null);
@@ -439,7 +437,7 @@ public class OperatorImpl extends MinimalEObjectImpl.Container
 			Operator castSource = (Operator) source;
 
 			// Copy the object's center
-			center.setX(castSource.getCenter().getX());
+			getCenter().setX(castSource.getCenter().getX());
 			center.setY(castSource.getCenter().getY());
 			center.setZ(castSource.getCenter().getZ());
 
@@ -449,7 +447,7 @@ public class OperatorImpl extends MinimalEObjectImpl.Container
 			type = castSource.getType();
 
 			// Clear the list of child nodes
-			for (INode node : nodes) {
+			for (INode node : getNodes()) {
 				removeNode(node);
 			}
 
@@ -465,7 +463,7 @@ public class OperatorImpl extends MinimalEObjectImpl.Container
 			}
 
 			// Copy the triangles from the source
-			triangles.clear();
+			getTriangles().clear();
 			for (Triangle triangle : castSource.getTriangles()) {
 
 				// Create a new triangle
