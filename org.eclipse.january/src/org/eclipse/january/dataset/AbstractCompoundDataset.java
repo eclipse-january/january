@@ -637,24 +637,6 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 	}
 
 	@Override
-	public Number positiveMin(boolean ignoreInvalids) {
-		logger.error("Cannot compare compound numbers");
-		throw new UnsupportedOperationException("Cannot compare compound numbers");
-	}
-
-	@Override
-	public Number positiveMax(boolean ignoreNaNs, boolean ignoreInfs) {
-		logger.error("Cannot compare compound numbers");
-		throw new UnsupportedOperationException("Cannot compare compound numbers");
-	}
-
-	@Override
-	public Number positiveMin(boolean ignoreNaNs, boolean ignoreInfs) {
-		logger.error("Cannot compare compound numbers");
-		throw new UnsupportedOperationException("Cannot compare compound numbers");
-	}
-
-	@Override
 	public int[] maxPos(boolean ignoreNaNs) {
 		logger.error("Cannot compare compound numbers");
 		throw new UnsupportedOperationException("Cannot compare compound numbers");

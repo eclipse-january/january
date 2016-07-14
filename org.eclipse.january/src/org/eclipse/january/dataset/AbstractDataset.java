@@ -1517,8 +1517,6 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	protected static final String STORE_SUM = "sum";
 	protected static final String STORE_MEAN = "mean";
 	protected static final String STORE_VAR = "var";
-	private static final String STORE_POS_MAX = "+max";
-	private static final String STORE_POS_MIN = "+min";
 	protected static final String STORE_COUNT = "count";
 	private static final String STORE_INDEX = "Index";
 	protected static final String STORE_BROADCAST = "Broadcast";
@@ -1598,8 +1596,6 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		IndexIterator iter = getIterator();
 		double amax = Double.NEGATIVE_INFINITY;
 		double amin = Double.POSITIVE_INFINITY;
-		double pmax = Double.MIN_VALUE;
-		double pmin = Double.POSITIVE_INFINITY;
 		double hash = 0;
 		boolean hasNaNs = false;
 
@@ -1624,22 +1620,12 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			if (val < amin) {
 				amin = val;
 			}
-			if (val > 0) {
-				if (val < pmin) {
-					pmin = val;
-				}
-				if (val > pmax) {
-					pmax = val;
-				}
-			}
 		}
 
 		int ihash = ((int) hash) * 19 + getDType() * 17 + getElementsPerItem();
 		setStoredValue(storeName(ignoreNaNs, ignoreInfs, STORE_SHAPELESS_HASH), ihash);
 		storedValues.put(storeName(ignoreNaNs, ignoreInfs, STORE_MAX), hasNaNs ? Double.NaN : fromDoubleToNumber(amax));
 		storedValues.put(storeName(ignoreNaNs, ignoreInfs, STORE_MIN), hasNaNs ? Double.NaN : fromDoubleToNumber(amin));
-		storedValues.put(storeName(ignoreNaNs, ignoreInfs, STORE_POS_MAX), hasNaNs ? Double.NaN : fromDoubleToNumber(pmax));
-		storedValues.put(storeName(ignoreNaNs, ignoreInfs, STORE_POS_MIN), hasNaNs ? Double.NaN : fromDoubleToNumber(pmin));
 	}
 
 	/**
@@ -1657,8 +1643,6 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		if (storedValues == null || !storedValues.containsKey(STORE_HASH)) {
 			boolean hasNaNs = false;
 			double hash = 0;
-			double pmax = Double.MIN_VALUE;
-			double pmin = Double.POSITIVE_INFINITY;
 
 			while (iter.hasNext()) {
 				final double val = getElementDoubleAbs(iter.index);
@@ -1674,14 +1658,6 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 				} else {
 					hash = (hash * 19 + val) % Integer.MAX_VALUE;
 				}
-				if (val > 0) {
-					if (val < pmin) {
-						pmin = val;
-					}
-					if (val > pmax) {
-						pmax = val;
-					}
-				}
 				stats.addValue(val);
 			}
 
@@ -1689,8 +1665,6 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			setStoredValue(storeName(ignoreNaNs, ignoreInfs, STORE_SHAPELESS_HASH), ihash);
 			storedValues.put(storeName(ignoreNaNs, ignoreInfs, STORE_MAX), hasNaNs ? Double.NaN : fromDoubleToNumber(stats.getMax()));
 			storedValues.put(storeName(ignoreNaNs, ignoreInfs, STORE_MIN), hasNaNs ? Double.NaN : fromDoubleToNumber(stats.getMin()));
-			storedValues.put(storeName(ignoreNaNs, ignoreInfs, STORE_POS_MAX), hasNaNs ? Double.NaN : fromDoubleToNumber(pmax));
-			storedValues.put(storeName(ignoreNaNs, ignoreInfs, STORE_POS_MIN), hasNaNs ? Double.NaN : fromDoubleToNumber(pmin));
 			storedValues.put(name, stats);
 		} else {
 			while (iter.hasNext()) {
@@ -1975,16 +1949,6 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	@Override
-	public Number positiveMax(boolean ignoreInvalids) {
-		return (Number) getMaxMin(ignoreInvalids, ignoreInvalids, STORE_POS_MAX);
-	}
-
-	@Override
-	public Number positiveMax(boolean ignoreNaNs, boolean ignoreInfs) {
-		return (Number) getMaxMin(ignoreNaNs, ignoreInfs, STORE_POS_MAX);
-	}
-
-	@Override
 	public Dataset max(int axis) {
 		return max(false, axis);
 	}
@@ -1999,16 +1963,6 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		boolean igNan = ignoreInvalids!=null && ignoreInvalids.length>0 ? ignoreInvalids[0] : false;
 		boolean igInf = ignoreInvalids!=null && ignoreInvalids.length>1 ? ignoreInvalids[1] : igNan;
 		return (Number) getMaxMin(igNan, igInf, STORE_MIN);
-	}
-
-	@Override
-	public Number positiveMin(boolean ignoreInvalids) {
-		return (Number) getMaxMin(ignoreInvalids, ignoreInvalids, STORE_POS_MIN);
-	}
-
-	@Override
-	public Number positiveMin(boolean ignoreNaNs, boolean ignoreInfs) {
-		return (Number) getMaxMin(ignoreNaNs, ignoreInfs, STORE_POS_MIN);
 	}
 
 	@Override

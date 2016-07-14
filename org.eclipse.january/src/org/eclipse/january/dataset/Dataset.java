@@ -999,19 +999,6 @@ public interface Dataset extends IDataset {
 	public int[] minPos(boolean ignoreInvalids);
 
 	/**
-	 * @param ignoreInvalids if true, ignore NaNs and infinities
-	 * @return minimum positive value (or infinity if there are no positive values)
-	 */
-	public Number positiveMax(boolean ignoreInvalids);
-
-	/**
-	 * @param ignoreNaNs if true, ignore NaNs
-	 * @param ignoreInfs if true, ignore infinities
-	 * @return maximum positive value (or Double.MIN_VALUE=2^-1024 if there are no positive values)
-	 */
-	public Number positiveMax(boolean ignoreNaNs, boolean ignoreInfs);
-
-	/**
 	 * See {@link #max(boolean ignoreNaNs, int axis)} with ignoreNaNs = false
 	 * @param axis
 	 * @return maxima along axis in dataset
@@ -1024,19 +1011,6 @@ public interface Dataset extends IDataset {
 	 * @return maxima along axis in dataset
 	 */
 	public Dataset max(boolean ignoreNaNs, int axis);
-
-	/**
-	 * @param ignoreInvalids if true, ignore NaNs and infinities
-	 * @return minimum positive value (or infinity if there are no positive values)
-	 */
-	public Number positiveMin(boolean ignoreInvalids);
-
-	/**
-	 * @param ignoreNaNs if true, ignore NaNs
-	 * @param ignoreInfs if true, ignore infinities
-	 * @return minimum positive value (or infinity if there are no positive values)
-	 */
-	public Number positiveMin(boolean ignoreNaNs, boolean ignoreInfs);
 
 	/**
 	 * See {@link #min(boolean ignoreNaNs, int axis)} with ignoreNaNs = false
