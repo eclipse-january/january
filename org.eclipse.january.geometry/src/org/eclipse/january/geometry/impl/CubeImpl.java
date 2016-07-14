@@ -197,6 +197,7 @@ public class CubeImpl extends ShapeImpl implements Cube {
 			triangles.clear();
 		}
 		triangles = MeshUtils.createRectangularPrismMesh(points);
+		
 		return triangles;
 	}
 

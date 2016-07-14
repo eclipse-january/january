@@ -154,6 +154,7 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 
 		// Initialize the properties
 		properties = new HashMap<String, Double>();
+		center = GeometryFactory.eINSTANCE.createVertex();
 	}
 
 	/**

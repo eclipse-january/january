@@ -61,6 +61,7 @@ public class TriangleImpl extends MinimalEObjectImpl.Container
 	 */
 	protected TriangleImpl() {
 		super();
+		normal = GeometryFactory.eINSTANCE.createVertex();
 	}
 
 	/**
