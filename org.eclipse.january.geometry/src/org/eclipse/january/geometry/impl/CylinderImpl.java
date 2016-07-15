@@ -263,8 +263,8 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 
 		// If the properties have not changed since the last time the mesh was
 		// recalculated, return the current mesh
-		if (prevRadius == radius && prevHeight == height) {
-			return getTriangles();
+		if (prevRadius == radius && prevHeight == height && triangles != null) {
+			return triangles;
 		}
 
 		// Update to the new properties

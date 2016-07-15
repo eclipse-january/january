@@ -189,7 +189,7 @@ public class SphereImpl extends ShapeImpl implements Sphere {
 
 		// If the side length has not changed since the last time the mesh was
 		// recalculated, return the current mesh
-		if (prevRadius == radius) {
+		if (prevRadius == radius && triangles != null) {
 			return triangles;
 		}
 

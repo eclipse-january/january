@@ -362,8 +362,8 @@ public class TubeImpl extends ShapeImpl implements Tube {
 		// If the attributes have not changed since the last time the mesh was
 		// recalculated, return the current mesh
 		if (prevHeight == height && prevInnerRadius == innerRadius
-				&& prevRadius == radius) {
-			return getTriangles();
+				&& prevRadius == radius && triangles != null) {
+			return triangles;
 		}
 
 		// Update to the current radius
@@ -372,7 +372,9 @@ public class TubeImpl extends ShapeImpl implements Tube {
 		// Replace the previous list with a a new tube's triangles.
 		double[] vertices = MeshUtils.createTube(height, radius, radius,
 				RESOLUTION, SEGMENTS);
-		getTriangles().clear();
+		if (triangles != null) {
+			triangles.clear();
+		}
 		triangles = MeshUtils.createTubeMesh(vertices, RESOLUTION, SEGMENTS);
 
 		return triangles;
