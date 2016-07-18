@@ -208,7 +208,7 @@ public class CubeImpl extends ShapeImpl implements Cube {
 		prevSideLength = sideLength;
 
 		// Get the coordinates for the vertices
-		double[] points = MeshUtils.createRectangularPrism(1, 1, 1);
+		double[] points = MeshUtils.createRectangularPrism(sideLength, sideLength, sideLength);
 
 		// Initialize the list if it does not exist
 		if (triangles == null) {
