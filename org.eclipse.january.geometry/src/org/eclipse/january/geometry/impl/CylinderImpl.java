@@ -9,6 +9,7 @@ import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.BasicInternalEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.january.geometry.Cylinder;
 import org.eclipse.january.geometry.GeometryFactory;
@@ -274,7 +275,7 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 
 		// Clear the previous list
 		if (triangles == null) {
-			triangles = new BasicEList<Triangle>();
+			triangles = new BasicInternalEList<Triangle>(Triangle.class);
 		} else {
 			triangles.clear();
 		}

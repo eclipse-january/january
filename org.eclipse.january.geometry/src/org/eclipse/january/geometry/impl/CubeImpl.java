@@ -7,6 +7,7 @@ import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.BasicInternalEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.january.geometry.Cube;
 import org.eclipse.january.geometry.GeometryFactory;
@@ -203,11 +204,11 @@ public class CubeImpl extends ShapeImpl implements Cube {
 		prevSideLength = sideLength;
 
 		// Get the coordinates for the vertices
-		double[] points = MeshUtils.createRectangularPrism(1, 1, 1);
+		double[] points = MeshUtils.createRectangularPrism(sideLength, sideLength, sideLength);
 
 		// Initialize the list if it does not exist
 		if (triangles == null) {
-			triangles = new BasicEList<Triangle>();
+			triangles = new BasicInternalEList<Triangle>(Triangle.class);
 		} else {
 			triangles.clear();
 		}

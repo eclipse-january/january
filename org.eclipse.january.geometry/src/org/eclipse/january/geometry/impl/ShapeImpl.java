@@ -164,6 +164,7 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 		// Initialize the data members
 		properties = new HashMap<String, Double>();
 		center = GeometryFactory.eINSTANCE.createVertex();
+		setProperty("scale", 1.0);
 	}
 
 	/**
@@ -260,6 +261,22 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 			triangles = new EObjectContainmentEList<Triangle>(Triangle.class, this, GeometryPackage.SHAPE__TRIANGLES);
 		}
 		return triangles;
+	}
+	
+	/**
+	 * Helper method for scaling the shape's mesh
+	 * @generated NOT
+	 */
+	private void scaleTriangles(double scale) {
+		if (triangles != null) {
+			for(Triangle tri : triangles) {
+				for(Vertex vertex : tri.getVertices()) {
+					vertex.setX(vertex.getX()*scale);
+					vertex.setY(vertex.getY()*scale);
+					vertex.setZ(vertex.getZ()*scale);
+				}
+			}
+		}
 	}
 
 	/**
@@ -391,6 +408,12 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 	 */
 	@Override
 	public void setProperty(final String property, final double value) {
+
+		if (property.equals("scale") && properties.get(property) != null 
+				&& value != properties.get(property)) {
+			scaleTriangles(value);
+		}
+		
 		properties.put(property, value);
 
 		// Fire an update. We will store the property name in the old value

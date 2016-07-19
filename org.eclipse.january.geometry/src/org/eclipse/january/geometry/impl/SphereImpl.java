@@ -9,6 +9,7 @@ import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.BasicInternalEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.january.geometry.GeometryFactory;
 import org.eclipse.january.geometry.GeometryPackage;
@@ -199,7 +200,7 @@ public class SphereImpl extends ShapeImpl implements Sphere {
 
 		// Clear the previous list
 		if (triangles == null) {
-			triangles = new BasicEList<Triangle>();
+			triangles = new BasicInternalEList<Triangle>(Triangle.class);
 		} else {
 			triangles.clear();
 		}
