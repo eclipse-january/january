@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.january.geometry.GeometryFactory;
 import org.eclipse.january.geometry.GeometryPackage;
 import org.eclipse.january.geometry.Triangle;
 import org.eclipse.january.geometry.Vertex;
@@ -83,7 +84,12 @@ public class TriangleImpl extends MinimalEObjectImpl.Container
 	 */
 	@Override
 	public Vertex getNormal() {
-		return normal;
+		if (normal != null) {
+			return normal;
+		} else {
+			normal = GeometryFactory.eINSTANCE.createVertex();
+			return normal;
+		}
 	}
 
 	/**

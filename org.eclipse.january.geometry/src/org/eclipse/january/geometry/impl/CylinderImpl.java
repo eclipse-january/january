@@ -23,16 +23,19 @@ import org.eclipse.january.geometry.util.MeshUtils;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.january.geometry.impl.CylinderImpl#getRadius <em>Radius</em>}</li>
- *   <li>{@link org.eclipse.january.geometry.impl.CylinderImpl#getHeight <em>Height</em>}</li>
+ * <li>{@link org.eclipse.january.geometry.impl.CylinderImpl#getRadius
+ * <em>Radius</em>}</li>
+ * <li>{@link org.eclipse.january.geometry.impl.CylinderImpl#getHeight
+ * <em>Height</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class CylinderImpl extends ShapeImpl implements Cylinder {
 	/**
-	 * The default value of the '{@link #getRadius() <em>Radius</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The default value of the '{@link #getRadius() <em>Radius</em>}'
+	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getRadius()
 	 * @generated
 	 * @ordered
@@ -42,6 +45,7 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 	/**
 	 * The cached value of the '{@link #getRadius() <em>Radius</em>}' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getRadius()
 	 * @generated
 	 * @ordered
@@ -49,8 +53,9 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 	protected double radius = RADIUS_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getHeight() <em>Height</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The default value of the '{@link #getHeight() <em>Height</em>}'
+	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getHeight()
 	 * @generated
 	 * @ordered
@@ -60,6 +65,7 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 	/**
 	 * The cached value of the '{@link #getHeight() <em>Height</em>}' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getHeight()
 	 * @generated
 	 * @ordered
@@ -97,6 +103,7 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected CylinderImpl() {
@@ -105,6 +112,7 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -114,6 +122,7 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -143,6 +152,7 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -172,75 +182,81 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case GeometryPackage.CYLINDER__RADIUS:
-				return getRadius();
-			case GeometryPackage.CYLINDER__HEIGHT:
-				return getHeight();
+		case GeometryPackage.CYLINDER__RADIUS:
+			return getRadius();
+		case GeometryPackage.CYLINDER__HEIGHT:
+			return getHeight();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case GeometryPackage.CYLINDER__RADIUS:
-				setRadius((Double)newValue);
-				return;
-			case GeometryPackage.CYLINDER__HEIGHT:
-				setHeight((Double)newValue);
-				return;
+		case GeometryPackage.CYLINDER__RADIUS:
+			setRadius((Double) newValue);
+			return;
+		case GeometryPackage.CYLINDER__HEIGHT:
+			setHeight((Double) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case GeometryPackage.CYLINDER__RADIUS:
-				setRadius(RADIUS_EDEFAULT);
-				return;
-			case GeometryPackage.CYLINDER__HEIGHT:
-				setHeight(HEIGHT_EDEFAULT);
-				return;
+		case GeometryPackage.CYLINDER__RADIUS:
+			setRadius(RADIUS_EDEFAULT);
+			return;
+		case GeometryPackage.CYLINDER__HEIGHT:
+			setHeight(HEIGHT_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case GeometryPackage.CYLINDER__RADIUS:
-				return radius != RADIUS_EDEFAULT;
-			case GeometryPackage.CYLINDER__HEIGHT:
-				return height != HEIGHT_EDEFAULT;
+		case GeometryPackage.CYLINDER__RADIUS:
+			return radius != RADIUS_EDEFAULT;
+		case GeometryPackage.CYLINDER__HEIGHT:
+			return height != HEIGHT_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
+		if (eIsProxy())
+			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (radius: ");
@@ -263,11 +279,12 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 
 		// If the properties have not changed since the last time the mesh was
 		// recalculated, return the current mesh
-		if (prevRadius == radius && prevHeight == height) {
+		if (prevRadius == radius && prevHeight == height && triangles != null
+				&& !triangles.isEmpty()) {
 
-			if(triangles != null){
+			if (triangles != null) {
 				return triangles;
-			} else { 
+			} else {
 				triangles = new BasicEList<Triangle>();
 				return triangles;
 			}
@@ -404,10 +421,8 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 			// along the circle, and the center point.
 			t1.getVertices().add(vertices.get(((SEGMENTS) * RESOLUTION)
 					+ ((radialSegment + 1) % RESOLUTION)));
-			t1.getVertices()
-					.add((Vertex) vertices
-							.get(((SEGMENTS) * RESOLUTION) + radialSegment)
-							.clone());
+			t1.getVertices().add((Vertex) vertices
+					.get(((SEGMENTS) * RESOLUTION) + radialSegment).clone());
 			t1.getVertices()
 					.add((Vertex) vertices.get(blockSize / 3 + 1).clone());
 
