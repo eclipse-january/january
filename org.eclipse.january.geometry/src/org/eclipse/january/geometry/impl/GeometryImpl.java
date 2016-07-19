@@ -216,6 +216,7 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 	public EList<INode> getNodes() {
 		if (nodes == null) {
 			nodes = new EObjectContainmentEList<INode>(INode.class, this, GeometryPackage.GEOMETRY__NODES);
+			//nodes = new BasicEList<INode>();
 		}
 		return nodes;
 	}

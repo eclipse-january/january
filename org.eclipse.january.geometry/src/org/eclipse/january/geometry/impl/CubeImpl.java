@@ -7,6 +7,7 @@ import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.january.geometry.Cube;
 import org.eclipse.january.geometry.GeometryFactory;
 import org.eclipse.january.geometry.GeometryPackage;
@@ -194,13 +195,7 @@ public class CubeImpl extends ShapeImpl implements Cube {
 
 		// If the side length has not changed since the last time the mesh was
 		// recalculated, return the current mesh
-		if (prevSideLength == sideLength) {
-
-			// Initialize the list if it does not exist
-			if (triangles == null) {
-				triangles = new BasicEList<Triangle>();
-			}
-
+		if (prevSideLength == sideLength && triangles != null) {
 			return triangles;
 		}
 
@@ -219,7 +214,7 @@ public class CubeImpl extends ShapeImpl implements Cube {
 
 		// Replace the previous list
 
-		triangles = MeshUtils.createRectangularPrismMesh(points);
+		triangles.addAll(MeshUtils.createRectangularPrismMesh(points));
 		
 		return triangles;
 	}

@@ -9,6 +9,7 @@ import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.january.geometry.Cylinder;
 import org.eclipse.january.geometry.GeometryFactory;
 import org.eclipse.january.geometry.GeometryPackage;
@@ -263,8 +264,8 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 
 		// If the properties have not changed since the last time the mesh was
 		// recalculated, return the current mesh
-		if (prevRadius == radius && prevHeight == height) {
-			return getTriangles();
+		if (prevRadius == radius && prevHeight == height && triangles != null) {
+			return triangles;
 		}
 
 		// Update to the new properties
@@ -272,7 +273,11 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 		prevHeight = height;
 
 		// Clear the previous list
-		triangles = new BasicEList<Triangle>();
+		if (triangles == null) {
+			triangles = new BasicEList<Triangle>();
+		} else {
+			triangles.clear();
+		}
 
 		// Make an array of vertices to form the triangles
 		ArrayList<Vertex> vertices = new ArrayList<Vertex>();

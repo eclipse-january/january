@@ -3,9 +3,11 @@
 package org.eclipse.january.geometry.impl;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.january.geometry.GeometryFactory;
 import org.eclipse.january.geometry.GeometryPackage;
 import org.eclipse.january.geometry.Triangle;
@@ -362,18 +364,23 @@ public class TubeImpl extends ShapeImpl implements Tube {
 		// If the attributes have not changed since the last time the mesh was
 		// recalculated, return the current mesh
 		if (prevHeight == height && prevInnerRadius == innerRadius
-				&& prevRadius == radius) {
-			return getTriangles();
+				&& prevRadius == radius && triangles != null) {
+			return triangles;
 		}
 
 		// Update to the current radius
 		prevRadius = radius;
+		
+		if (triangles == null) {
+			triangles = new BasicEList<Triangle>();
+		} else {
+			triangles.clear();
+		}
 
 		// Replace the previous list with a a new tube's triangles.
 		double[] vertices = MeshUtils.createTube(height, radius, radius,
 				RESOLUTION, SEGMENTS);
-		getTriangles().clear();
-		triangles = MeshUtils.createTubeMesh(vertices, RESOLUTION, SEGMENTS);
+		triangles = (MeshUtils.createTubeMesh(vertices, RESOLUTION, SEGMENTS));
 
 		return triangles;
 	}

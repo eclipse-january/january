@@ -9,6 +9,7 @@ import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.january.geometry.GeometryFactory;
 import org.eclipse.january.geometry.GeometryPackage;
 import org.eclipse.january.geometry.Sphere;
@@ -189,7 +190,7 @@ public class SphereImpl extends ShapeImpl implements Sphere {
 
 		// If the side length has not changed since the last time the mesh was
 		// recalculated, return the current mesh
-		if (prevRadius == radius) {
+		if (prevRadius == radius && triangles != null) {
 			return triangles;
 		}
 
@@ -197,7 +198,11 @@ public class SphereImpl extends ShapeImpl implements Sphere {
 		prevRadius = radius;
 
 		// Clear the previous list
-		triangles = new BasicEList<Triangle>();
+		if (triangles == null) {
+			triangles = new BasicEList<Triangle>();
+		} else {
+			triangles.clear();
+		}
 
 		// Make an array of the vertices along each circle
 		ArrayList<Vertex> vertices = new ArrayList<Vertex>();
