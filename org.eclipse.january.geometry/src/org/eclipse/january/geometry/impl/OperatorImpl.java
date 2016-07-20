@@ -154,6 +154,7 @@ public class OperatorImpl extends MinimalEObjectImpl.Container
 		// Initialize the data members
 		properties = new HashMap<String, Double>();
 		center = GeometryFactory.eINSTANCE.createVertex();
+		setProperty("scale", 1.0);
 	}
 
 	/**
@@ -217,6 +218,16 @@ public class OperatorImpl extends MinimalEObjectImpl.Container
 			nodes = new EObjectContainmentEList<INode>(INode.class, this, GeometryPackage.OPERATOR__NODES);
 		}
 		return nodes;
+	}
+	
+	/**
+	 * @generated NOT
+	 */
+	@Override
+	public void addNodes(EList<INode> children) {
+		for (INode node : children) {
+			addNode(node);
+		}
 	}
 
 	/**
@@ -373,6 +384,14 @@ public class OperatorImpl extends MinimalEObjectImpl.Container
 	@Override
 	public void setProperty(final String property, final double value) {
 		properties.put(property, value);
+		
+		if (property.equals("scale")) {
+			for(INode node : getNodes()) {
+				if (node instanceof ShapeImpl) {
+					node.setProperty(property, value);
+				}
+			}
+		}
 	}
 
 	/**

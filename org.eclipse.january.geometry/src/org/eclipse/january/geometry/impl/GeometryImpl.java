@@ -401,6 +401,13 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 			});
 		}
 	}
+	
+	@Override
+	public void addNodes(EList<INode> children) {
+		for (INode node : children) {
+			addNode(node);
+		}
+	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->

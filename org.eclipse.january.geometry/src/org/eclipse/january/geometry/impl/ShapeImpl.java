@@ -229,6 +229,16 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 		}
 		return nodes;
 	}
+	
+	/**
+	 * @generated NOT
+	 */
+	@Override
+	public void addNodes(EList<INode> children) {
+		for (INode node : children) {
+			addNode(node);
+		}
+	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -409,9 +419,13 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 	@Override
 	public void setProperty(final String property, final double value) {
 
-		if (property.equals("scale") && properties.get(property) != null 
-				&& value != properties.get(property)) {
-			scaleTriangles(value);
+		if (property.equals("scale")) {
+			if (properties.get("scale") == null) {
+				properties.put("scale", value);
+				scaleTriangles(value);
+			} else if (!properties.get("scale").equals(value)) {
+				scaleTriangles(value);
+			}
 		}
 		
 		properties.put(property, value);
@@ -526,7 +540,7 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 			type = castSource.getType();
 
 			// Clear the list of child nodes
-			for (INode node : nodes) {
+			for (INode node : getNodes()) {
 				removeNode(node);
 			}
 
@@ -566,6 +580,7 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 				cloneTriangle.getNormal().setX(triangle.getNormal().getX());
 				cloneTriangle.getNormal().setY(triangle.getNormal().getY());
 				cloneTriangle.getNormal().setZ(triangle.getNormal().getZ());
+				getTriangles().add(cloneTriangle);
 			}
 		}
 	}

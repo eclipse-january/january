@@ -91,35 +91,12 @@ ruleGeometry returns [EObject current=null]
 					$current);
 			}
 		)
-		otherlv_1='solid'
-		{
-			newLeafNode(otherlv_1, grammarAccess.getGeometryAccess().getSolidKeyword_1());
-		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getGeometryAccess().getNameEStringParserRuleCall_2_0());
+					newCompositeNode(grammarAccess.getGeometryAccess().getNodesShape_ImplParserRuleCall_1_0());
 				}
-				lv_name_2_0=ruleEString
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getGeometryRule());
-					}
-					set(
-						$current,
-						"name",
-						lv_name_2_0,
-						"xtext.STL.EString");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)?
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getGeometryAccess().getNodesShape_ImplParserRuleCall_3_0());
-				}
-				lv_nodes_3_0=ruleShape_Impl
+				lv_nodes_1_0=ruleShape_Impl
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getGeometryRule());
@@ -127,31 +104,12 @@ ruleGeometry returns [EObject current=null]
 					add(
 						$current,
 						"nodes",
-						lv_nodes_3_0,
+						lv_nodes_1_0,
 						"xtext.STL.Shape_Impl");
 					afterParserOrEnumRuleCall();
 				}
 			)
-		)
-		(
-			otherlv_4='\n'
-			{
-				newLeafNode(otherlv_4, grammarAccess.getGeometryAccess().getControl000aKeyword_4());
-			}
-		)?
-		otherlv_5='endsolid'
-		{
-			newLeafNode(otherlv_5, grammarAccess.getGeometryAccess().getEndsolidKeyword_5());
-		}
-		(
-			{
-				newCompositeNode(grammarAccess.getGeometryAccess().getEStringParserRuleCall_6());
-			}
-			ruleEString
-			{
-				afterParserOrEnumRuleCall();
-			}
-		)?
+		)*
 	)
 ;
 
@@ -178,12 +136,56 @@ ruleShape_Impl returns [EObject current=null]
 					$current);
 			}
 		)
+		otherlv_1='solid'
+		{
+			newLeafNode(otherlv_1, grammarAccess.getShape_ImplAccess().getSolidKeyword_1());
+		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getShape_ImplAccess().getTrianglesTriangleParserRuleCall_1_0());
+					newCompositeNode(grammarAccess.getShape_ImplAccess().getNameEStringParserRuleCall_2_0());
 				}
-				lv_triangles_1_0=ruleTriangle
+				lv_name_2_0=ruleEString
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getShape_ImplRule());
+					}
+					set(
+						$current,
+						"name",
+						lv_name_2_0,
+						"xtext.STL.EString");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)?
+		(
+			this_ID_3=RULE_ID
+			{
+				newLeafNode(this_ID_3, grammarAccess.getShape_ImplAccess().getIDTerminalRuleCall_3_0());
+			}
+			    |
+			this_WS_4=RULE_WS
+			{
+				newLeafNode(this_WS_4, grammarAccess.getShape_ImplAccess().getWSTerminalRuleCall_3_1());
+			}
+			    |
+			this_STRING_5=RULE_STRING
+			{
+				newLeafNode(this_STRING_5, grammarAccess.getShape_ImplAccess().getSTRINGTerminalRuleCall_3_2());
+			}
+			    |
+			this_INT_6=RULE_INT
+			{
+				newLeafNode(this_INT_6, grammarAccess.getShape_ImplAccess().getINTTerminalRuleCall_3_3());
+			}
+		)*
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getShape_ImplAccess().getTrianglesTriangleParserRuleCall_4_0());
+				}
+				lv_triangles_7_0=ruleTriangle
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getShape_ImplRule());
@@ -191,11 +193,51 @@ ruleShape_Impl returns [EObject current=null]
 					add(
 						$current,
 						"triangles",
-						lv_triangles_1_0,
+						lv_triangles_7_0,
 						"xtext.STL.Triangle");
 					afterParserOrEnumRuleCall();
 				}
 			)
+		)*
+		(
+			this_WS_8=RULE_WS
+			{
+				newLeafNode(this_WS_8, grammarAccess.getShape_ImplAccess().getWSTerminalRuleCall_5());
+			}
+		)*
+		otherlv_9='endsolid'
+		{
+			newLeafNode(otherlv_9, grammarAccess.getShape_ImplAccess().getEndsolidKeyword_6());
+		}
+		(
+			{
+				newCompositeNode(grammarAccess.getShape_ImplAccess().getEStringParserRuleCall_7());
+			}
+			ruleEString
+			{
+				afterParserOrEnumRuleCall();
+			}
+		)?
+		(
+			this_ID_11=RULE_ID
+			{
+				newLeafNode(this_ID_11, grammarAccess.getShape_ImplAccess().getIDTerminalRuleCall_8_0());
+			}
+			    |
+			this_WS_12=RULE_WS
+			{
+				newLeafNode(this_WS_12, grammarAccess.getShape_ImplAccess().getWSTerminalRuleCall_8_1());
+			}
+			    |
+			this_STRING_13=RULE_STRING
+			{
+				newLeafNode(this_STRING_13, grammarAccess.getShape_ImplAccess().getSTRINGTerminalRuleCall_8_2());
+			}
+			    |
+			this_INT_14=RULE_INT
+			{
+				newLeafNode(this_INT_14, grammarAccess.getShape_ImplAccess().getINTTerminalRuleCall_8_3());
+			}
 		)*
 	)
 ;
