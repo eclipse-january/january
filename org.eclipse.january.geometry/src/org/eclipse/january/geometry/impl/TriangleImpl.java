@@ -85,7 +85,12 @@ public class TriangleImpl extends MinimalEObjectImpl.Container
 	 */
 	@Override
 	public Vertex getNormal() {
-		return normal;
+		if (normal != null) {
+			return normal;
+		} else {
+			normal = GeometryFactory.eINSTANCE.createVertex();
+			return normal;
+		}
 	}
 
 	/**

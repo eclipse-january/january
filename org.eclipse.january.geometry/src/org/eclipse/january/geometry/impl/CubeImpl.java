@@ -22,8 +22,8 @@ import org.eclipse.january.geometry.util.MeshUtils;
  * The following features are implemented:
  * </p>
  * <ul>
- * <li>{@link org.eclipse.january.geometry.impl.CubeImpl#getSideLength
- * <em>Side Length</em>}</li>
+ * <li>{@link org.eclipse.january.geometry.impl.CubeImpl#getSideLength <em>Side
+ * Length</em>}</li>
  * </ul>
  *
  * @generated
@@ -196,7 +196,14 @@ public class CubeImpl extends ShapeImpl implements Cube {
 
 		// If the side length has not changed since the last time the mesh was
 		// recalculated, return the current mesh
-		if (prevSideLength == sideLength && triangles != null) {
+		if (prevSideLength == sideLength && triangles != null
+				&& !triangles.isEmpty()) {
+
+			// Initialize the list if it does not exist
+			if (triangles == null) {
+				triangles = new BasicEList<Triangle>();
+			}
+
 			return triangles;
 		}
 
@@ -204,7 +211,9 @@ public class CubeImpl extends ShapeImpl implements Cube {
 		prevSideLength = sideLength;
 
 		// Get the coordinates for the vertices
-		double[] points = MeshUtils.createRectangularPrism(sideLength, sideLength, sideLength);
+
+		double[] points = MeshUtils.createRectangularPrism(sideLength,
+				sideLength, sideLength);
 
 		// Initialize the list if it does not exist
 		if (triangles == null) {
