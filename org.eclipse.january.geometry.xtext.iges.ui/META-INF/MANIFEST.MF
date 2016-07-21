@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.eclipse.january.geometry.xtext.iges.ui
-Bundle-Vendor: My Company
+Bundle-Vendor: Oak Ridge National Laboratory
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: org.eclipse.january.geometry.xtext.iges.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
