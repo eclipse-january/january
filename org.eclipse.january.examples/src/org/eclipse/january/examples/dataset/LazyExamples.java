@@ -1,6 +1,5 @@
 /*-
- *******************************************************************************
- * Copyright (c) 2011, 2014 Diamond Light Source Ltd.
+ * Copyright (c) 2011, 2014, 2016 Diamond Light Source Ltd.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,8 +7,9 @@
  *
  * Contributors:
  *    Matthew Gerring - initial API and implementation and/or initial documentation
- *******************************************************************************/
-package org.eclipse.dawnsci.analysis.examples.dataset;
+ */
+
+package org.eclipse.january.examples.dataset;
 
 import java.util.Arrays;
 

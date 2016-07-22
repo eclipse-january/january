@@ -1,6 +1,5 @@
 /*-
- *******************************************************************************
- * Copyright (c) 2011, 2014 Diamond Light Source Ltd.
+ * Copyright (c) 2011, 2014, 2016 Diamond Light Source Ltd.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,14 +7,14 @@
  *
  * Contributors:
  *    Matthew Gerring - initial API and implementation and/or initial documentation
- *******************************************************************************/
-package org.eclipse.dawnsci.analysis.examples.dataset;
+ **/
+
+package org.eclipse.january.examples.dataset;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.eclipse.dawnsci.analysis.dataset.impl.FFT;
 import org.eclipse.january.dataset.BooleanDataset;
 import org.eclipse.january.dataset.Comparisons;
 import org.eclipse.january.dataset.Dataset;
@@ -722,30 +721,6 @@ public class NumpyExamples {
 
     	Dataset x = LinearAlgebra.calcConjugateGradient(a, s);
     	System.out.println("x is " + x);
-    }
-    
-    /**Fourier transform of a
-     * fft(a)                       fft(a)
-     */
-    @Test
-    public void fft() {
-    	
-    	Dataset    a = Random.rand(new int[]{100, 100});
-    	Dataset  fft = FFT.fft(a);
-    	System.out.println("The fft is "+fft);
-    }
-    
-    
-    /**
-     * inverse Fourier transform of a
-     * ifft(a)                       ifft(a)
-     * 
-     */
-    @Test
-    public void ifft() {
-    	Dataset    a = Random.rand(new int[]{100, 100});
-    	Dataset ifft = FFT.ifft(a);
-    	System.out.println("The ifft is "+ifft);
     }
     
     /**sort the matrix

@@ -1,6 +1,5 @@
 /*-
- *******************************************************************************
- * Copyright (c) 2011, 2014 Diamond Light Source Ltd.
+ * Copyright (c) 2011, 2014, 2016 Diamond Light Source Ltd.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,21 +7,15 @@
  *
  * Contributors:
  *    Matthew Gerring - initial API and implementation and/or initial documentation
- *******************************************************************************/
-package org.eclipse.dawnsci.analysis.examples.dataset;
+ */
 
-import java.util.HashMap;
-import java.util.Map;
+package org.eclipse.january.examples.dataset;
 
-import org.eclipse.dawnsci.analysis.dataset.slicer.SliceViewIterator;
-import org.eclipse.dawnsci.analysis.dataset.slicer.SliceVisitor;
-import org.eclipse.dawnsci.analysis.dataset.slicer.Slicer;
 import org.eclipse.january.DatasetException;
 import org.eclipse.january.dataset.IDataset;
 import org.eclipse.january.dataset.ILazyDataset;
 import org.eclipse.january.dataset.Random;
 import org.eclipse.january.dataset.Slice;
-import org.eclipse.january.dataset.SliceND;
 import org.junit.Test;
 
 /**
@@ -68,33 +61,4 @@ public class SlicingExamples {
 	}
 
 
-	/**
-	 * Slice visitor
-	 */
-	@Test
-	public void slicerImages() throws Exception {
-		
-		final ILazyDataset         lz   = Random.lazyRand(64, 100, 100);
-		final Map<Integer, String> dims = new HashMap<Integer, String>();
-		dims.put(0, "all");
-		SliceND slice = Slicer.getSliceNDFromSliceDimensions(dims, lz.getShape());
-		int[] axes = Slicer.getDataDimensions(lz.getShape(), dims);
-		final SliceViewIterator it = new SliceViewIterator(lz, slice, axes);
-		Slicer.visit(it, new SliceVisitor() {
-			
-			private int count = 0;
-			@Override
-			public void visit(IDataset data) throws Exception {
-				
-                IDataset image = data.squeeze(); // We squeeze the slice to get the image.
-                ++count;
-                System.out.println("Image "+count+" "+image);
-			}
-			@Override
-			public boolean isCancelled() {
-				return false;
-			}
-		});
-	}
-	
 }
