@@ -1,6 +1,6 @@
 ###
 # *******************************************************************************
-# * Copyright (c) 2011, 2014 Diamond Light Source Ltd.
+# * Copyright (c) 2011, 2016 Diamond Light Source Ltd.
 # * All rights reserved. This program and the accompanying materials
 # * are made available under the terms of the Eclipse Public License v1.0
 # * which accompanies this distribution, and is available at
@@ -31,7 +31,7 @@ defkey = defds.keys()[0]
 fds = { "CompoundFloatDataset":["FLOAT32", "Float", "float", "getElementDoubleAbs", "(float) DTypeUtils.toReal(obj)", "%.8g",
 "NaN"] }
 
-allds = { 
+allds = {
 "CompoundIntegerDataset":["INT32", "Integer", "int", "getElementLongAbs", "(int) DTypeUtils.toLong(obj)", "%d",
 "MIN_VALUE"],
 "CompoundLongDataset":["INT64", "Long", "long", "getElementLongAbs", "DTypeUtils.toLong(obj)", "%d",

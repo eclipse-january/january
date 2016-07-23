@@ -1,6 +1,6 @@
 ###
 # *******************************************************************************
-# * Copyright (c) 2011, 2014 Diamond Light Source Ltd.
+# * Copyright (c) 2011, 2016 Diamond Light Source Ltd.
 # * All rights reserved. This program and the accompanying materials
 # * are made available under the terms of the Eclipse Public License v1.0
 # * which accompanies this distribution, and is available at
@@ -37,10 +37,10 @@ Mark up source class with following comment markers:
 // INT_EXCEPTION  - surround with try/catch for integer arithmetic exception
 // INT_USE        - use commented out code for integer types
 // ADD_CAST       - add a cast to primitive type
-// OMIT_SAME_CAST - omit a cast to same type 
-// OMIT_REAL_CAST - omit a cast to real type 
-// OMIT_CAST_INT  - omit a cast for int type 
-// OMIT_UPCAST    - omit a cast to same type 
+// OMIT_SAME_CAST - omit a cast to same type
+// OMIT_REAL_CAST - omit a cast to real type
+// OMIT_CAST_INT  - omit a cast for int type
+// OMIT_UPCAST    - omit a cast to same type
 // IGNORE_CLASS   - ignored dataset class used in line
 // GEN_COMMENT    - replace this with a message about generated class
 // BCAST_WITH_CAST - replace Double with Long if is not real with cast if necessary
@@ -197,7 +197,7 @@ class transmutate(object):
         return l
 
 #    t.rfind(separator.split(t)[-1]
-    
+
     def addcastmethod(self, line, method):
         # find first part of identifier
         bits = line.split(method)

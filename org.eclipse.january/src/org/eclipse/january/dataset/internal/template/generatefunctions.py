@@ -1,6 +1,6 @@
 ###
 # *******************************************************************************
-# * Copyright (c) 2011, 2014 Diamond Light Source Ltd.
+# * Copyright (c) 2011, 2016 Diamond Light Source Ltd.
 # * All rights reserved. This program and the accompanying materials
 # * are made available under the terms of the Eclipse Public License v1.0
 # * which accompanies this distribution, and is available at
@@ -21,7 +21,7 @@ $ python generatefunctions.py functions.txt ../Maths.java > Maths.java
 
 The format is
 
-func: [number of parameters]  
+func: [number of parameters]
   foo - javadoc for foo
 integer:
   ox = ix + 1
@@ -38,7 +38,7 @@ as shown in the example. If integer code is not specified, then a case
 is automatically generated with a promoted dataset type: int 8 & 16 to
 float32 and int 32 & 64 to float64.
 
-An "ifunc" allows integer datasets to be output. 
+An "ifunc" allows integer datasets to be output.
 
 Or a binary operation can be specified like:
 biop: [number of parameters] [(s|u) [(s|u)]]
@@ -287,7 +287,7 @@ def transtext(text, jtype, otype=None, lprefix="\t\t\t\t\t", is_int=True, overri
         otype = jtype
     vars = deftemps(text, jtype, lprefix, vars)
 
-    is_real = (otype == "float" and not is_int) or otype == "double" 
+    is_real = (otype == "float" and not is_int) or otype == "double"
 
     if is_int:
         jprim = "long"
