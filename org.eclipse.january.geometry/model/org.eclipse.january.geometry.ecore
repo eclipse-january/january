@@ -16,16 +16,33 @@
       <eParameters name="otherObject" eType="#//Object"/>
     </eOperations>
     <eOperations name="hashCode" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eOperations name="getVertices" upperBound="-1" eType="#//Vertex">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Get the three vertices making up the triangle, in order vertex1, vertex2, vertex3."/>
+      </eAnnotations>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="normal" eType="#//Vertex"
         containment="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The normal, or normal vector, is a vector that is perpendicular to the surface of the triangle. It is computed by taking the cross product of any two vectors formed between the three vertices."/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="vertices" upperBound="3"
-        eType="#//Vertex" containment="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="vertex1" eType="#//Vertex"
+        containment="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="Each triangle has exactly three vertices where its edges meet."/>
+        <details key="documentation" value="The first of the three ordered vertices that make up the triangle."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="vertex2" eType="#//Vertex"
+        containment="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The second of the three ordered vertices that make up the triangle."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="vertex3" eType="#//Vertex"
+        containment="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The third of the three ordered vertices that make up the triangle."/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>

@@ -290,9 +290,14 @@ public class ReactorImpl extends ShapeImpl implements Reactor {
 					}
 					
 					//Add the vertices from the first half to the top triangle and the vertices from the second half to the bottom
-					for(int j : indices){
-						top.getVertices().add((Vertex) vertices.get(j).clone());
-						bottom.getVertices().add((Vertex) vertices.get(archSize + j).clone()); 
+					for(int j : indices){						
+						top.setVertex1(vertices.get(indices[0]));
+						top.setVertex2(vertices.get(indices[1]));
+						top.setVertex3(vertices.get(indices[2]));
+						
+						bottom.setVertex1(vertices.get(archSize + indices[0]));
+						bottom.setVertex2(vertices.get(archSize + indices[1]));
+						bottom.setVertex3(vertices.get(archSize + indices[2]));
 					}
 					
 					//Add both triangles to the list
@@ -325,8 +330,13 @@ public class ReactorImpl extends ShapeImpl implements Reactor {
 					
 					//Add the vertices from the first half to the top triangle and the vertices from the second half to the bottom
 					for(int j : indices){
-						top.getVertices().add((Vertex) vertices.get(j).clone());
-						bottom.getVertices().add((Vertex) vertices.get(archSize + j).clone()); 
+						top.setVertex1(vertices.get(indices[0]));
+						top.setVertex2(vertices.get(indices[1]));
+						top.setVertex3(vertices.get(indices[2]));
+						
+						bottom.setVertex1(vertices.get(archSize + indices[0]));
+						bottom.setVertex2(vertices.get(archSize + indices[1]));
+						bottom.setVertex3(vertices.get(archSize + indices[2]));
 					}
 					
 					//Add both triangles to the list
@@ -359,8 +369,13 @@ public class ReactorImpl extends ShapeImpl implements Reactor {
 					
 					//Add the vertices from the first half to the top triangle and the vertices from the second half to the bottom
 					for(int j : indices){
-						top.getVertices().add((Vertex) vertices.get(j).clone());
-						bottom.getVertices().add((Vertex) vertices.get(archSize + j).clone()); 
+						top.setVertex1(vertices.get(indices[0]));
+						top.setVertex2(vertices.get(indices[1]));
+						top.setVertex3(vertices.get(indices[2]));
+						
+						bottom.setVertex1(vertices.get(archSize + indices[0]));
+						bottom.setVertex2(vertices.get(archSize + indices[1]));
+						bottom.setVertex3(vertices.get(archSize + indices[2]));
 					}
 					
 					//Add both triangles to the list
@@ -391,8 +406,13 @@ public class ReactorImpl extends ShapeImpl implements Reactor {
 					
 					//Add the vertices from the first half to the top triangle and the vertices from the second half to the bottom
 					for(int j : indices){
-						top.getVertices().add((Vertex) vertices.get(j).clone());
-						bottom.getVertices().add((Vertex) vertices.get(archSize + j).clone()); 
+						top.setVertex1(vertices.get(indices[0]));
+						top.setVertex2(vertices.get(indices[1]));
+						top.setVertex3(vertices.get(indices[2]));
+						
+						bottom.setVertex1(vertices.get(archSize + indices[0]));
+						bottom.setVertex2(vertices.get(archSize + indices[1]));
+						bottom.setVertex3(vertices.get(archSize + indices[2]));
 					}
 					
 					//Add both triangles to the list

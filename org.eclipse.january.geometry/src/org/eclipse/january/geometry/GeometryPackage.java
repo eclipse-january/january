@@ -40,7 +40,7 @@ public interface GeometryPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://www.eclipse.org/january/geometry";
+	String eNS_URI = "http://www.eclipse.org/january/geometry/model";
 
 	/**
 	 * The package namespace name.
@@ -48,7 +48,7 @@ public interface GeometryPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_PREFIX = "org.eclipse.january.geometry";
+	String eNS_PREFIX = "org.eclipse.january.geometry.model";
 
 	/**
 	 * The singleton instance of the package.
@@ -413,13 +413,31 @@ public interface GeometryPackage extends EPackage {
 	int TRIANGLE__NORMAL = 0;
 
 	/**
-	 * The feature id for the '<em><b>Vertices</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Vertex1</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRIANGLE__VERTICES = 1;
+	int TRIANGLE__VERTEX1 = 1;
+
+	/**
+	 * The feature id for the '<em><b>Vertex2</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIANGLE__VERTEX2 = 2;
+
+	/**
+	 * The feature id for the '<em><b>Vertex3</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIANGLE__VERTEX3 = 3;
 
 	/**
 	 * The number of structural features of the '<em>Triangle</em>' class.
@@ -428,7 +446,7 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TRIANGLE_FEATURE_COUNT = 2;
+	int TRIANGLE_FEATURE_COUNT = 4;
 
 	/**
 	 * The operation id for the '<em>Equals</em>' operation.
@@ -449,13 +467,22 @@ public interface GeometryPackage extends EPackage {
 	int TRIANGLE___HASH_CODE = 1;
 
 	/**
+	 * The operation id for the '<em>Get Vertices</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIANGLE___GET_VERTICES = 2;
+
+	/**
 	 * The number of operations of the '<em>Triangle</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRIANGLE_OPERATION_COUNT = 2;
+	int TRIANGLE_OPERATION_COUNT = 3;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.january.geometry.impl.VertexImpl <em>Vertex</em>}' class.
@@ -3266,15 +3293,37 @@ public interface GeometryPackage extends EPackage {
 	EReference getTriangle_Normal();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.january.geometry.Triangle#getVertices <em>Vertices</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.eclipse.january.geometry.Triangle#getVertex1 <em>Vertex1</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Vertices</em>'.
-	 * @see org.eclipse.january.geometry.Triangle#getVertices()
+	 * @return the meta object for the containment reference '<em>Vertex1</em>'.
+	 * @see org.eclipse.january.geometry.Triangle#getVertex1()
 	 * @see #getTriangle()
 	 * @generated
 	 */
-	EReference getTriangle_Vertices();
+	EReference getTriangle_Vertex1();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.january.geometry.Triangle#getVertex2 <em>Vertex2</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Vertex2</em>'.
+	 * @see org.eclipse.january.geometry.Triangle#getVertex2()
+	 * @see #getTriangle()
+	 * @generated
+	 */
+	EReference getTriangle_Vertex2();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.january.geometry.Triangle#getVertex3 <em>Vertex3</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Vertex3</em>'.
+	 * @see org.eclipse.january.geometry.Triangle#getVertex3()
+	 * @see #getTriangle()
+	 * @generated
+	 */
+	EReference getTriangle_Vertex3();
 
 	/**
 	 * Returns the meta object for the '{@link org.eclipse.january.geometry.Triangle#equals(java.lang.Object) <em>Equals</em>}' operation.
@@ -3295,6 +3344,16 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getTriangle__HashCode();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.january.geometry.Triangle#getVertices() <em>Get Vertices</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Vertices</em>' operation.
+	 * @see org.eclipse.january.geometry.Triangle#getVertices()
+	 * @generated
+	 */
+	EOperation getTriangle__GetVertices();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.january.geometry.Vertex <em>Vertex</em>}'.
@@ -4158,12 +4217,28 @@ public interface GeometryPackage extends EPackage {
 		EReference TRIANGLE__NORMAL = eINSTANCE.getTriangle_Normal();
 
 		/**
-		 * The meta object literal for the '<em><b>Vertices</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Vertex1</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference TRIANGLE__VERTICES = eINSTANCE.getTriangle_Vertices();
+		EReference TRIANGLE__VERTEX1 = eINSTANCE.getTriangle_Vertex1();
+
+		/**
+		 * The meta object literal for the '<em><b>Vertex2</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TRIANGLE__VERTEX2 = eINSTANCE.getTriangle_Vertex2();
+
+		/**
+		 * The meta object literal for the '<em><b>Vertex3</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TRIANGLE__VERTEX3 = eINSTANCE.getTriangle_Vertex3();
 
 		/**
 		 * The meta object literal for the '<em><b>Equals</b></em>' operation.
@@ -4180,6 +4255,14 @@ public interface GeometryPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation TRIANGLE___HASH_CODE = eINSTANCE.getTriangle__HashCode();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Vertices</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TRIANGLE___GET_VERTICES = eINSTANCE.getTriangle__GetVertices();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.january.geometry.impl.VertexImpl <em>Vertex</em>}' class.

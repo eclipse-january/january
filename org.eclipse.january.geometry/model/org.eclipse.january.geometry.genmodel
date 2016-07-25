@@ -5,8 +5,7 @@
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
     operationReflection="true" importOrganizing="true">
   <foreignModel>org.eclipse.january.geometry.ecore</foreignModel>
-  <genPackages prefix="Geometry" basePackage="org.eclipse.january" disposableProviderFactory="true"
-      ecorePackage="org.eclipse.january.geometry.ecore#/">
+  <genPackages prefix="Geometry" disposableProviderFactory="true" ecorePackage="org.eclipse.january.geometry.ecore#/">
     <genDataTypes ecoreDataType="org.eclipse.january.geometry.ecore#//Path"/>
     <genDataTypes ecoreDataType="org.eclipse.january.geometry.ecore#//Object"/>
     <genClasses ecoreClass="org.eclipse.january.geometry.ecore#//Shape">
@@ -14,11 +13,14 @@
     </genClasses>
     <genClasses ecoreClass="org.eclipse.january.geometry.ecore#//Triangle">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.january.geometry.ecore#//Triangle/normal"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.january.geometry.ecore#//Triangle/vertices"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.january.geometry.ecore#//Triangle/vertex1"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.january.geometry.ecore#//Triangle/vertex2"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.january.geometry.ecore#//Triangle/vertex3"/>
       <genOperations ecoreOperation="org.eclipse.january.geometry.ecore#//Triangle/equals">
         <genParameters ecoreParameter="org.eclipse.january.geometry.ecore#//Triangle/equals/otherObject"/>
       </genOperations>
       <genOperations ecoreOperation="org.eclipse.january.geometry.ecore#//Triangle/hashCode"/>
+      <genOperations ecoreOperation="org.eclipse.january.geometry.ecore#//Triangle/getVertices"/>
     </genClasses>
     <genClasses ecoreClass="org.eclipse.january.geometry.ecore#//Vertex">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.january.geometry.ecore#//Vertex/x"/>

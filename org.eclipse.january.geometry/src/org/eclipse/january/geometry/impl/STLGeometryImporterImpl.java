@@ -215,7 +215,14 @@ public class STLGeometryImporterImpl extends MinimalEObjectImpl.Container implem
 					vertex.setY(buffer.getFloat());
 					vertex.setZ(buffer.getFloat());
 					
-					triangle.getVertices().add(vertex);
+					//Set the vertex to the appropriate position in the triangle
+					if(j == 0){
+						triangle.setVertex1(vertex);
+					} else if(j == 1){
+						triangle.setVertex2(vertex);
+					} else {
+						triangle.setVertex3(vertex);
+					}
 				}
 
 				// Not used- sometimes gives color information or texture info

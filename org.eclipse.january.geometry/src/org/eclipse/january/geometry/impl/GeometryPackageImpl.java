@@ -307,8 +307,26 @@ public class GeometryPackageImpl extends EPackageImpl implements GeometryPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTriangle_Vertices() {
+	public EReference getTriangle_Vertex1() {
 		return (EReference)triangleEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTriangle_Vertex2() {
+		return (EReference)triangleEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTriangle_Vertex3() {
+		return (EReference)triangleEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -327,6 +345,15 @@ public class GeometryPackageImpl extends EPackageImpl implements GeometryPackage
 	 */
 	public EOperation getTriangle__HashCode() {
 		return triangleEClass.getEOperations().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getTriangle__GetVertices() {
+		return triangleEClass.getEOperations().get(2);
 	}
 
 	/**
@@ -1046,9 +1073,12 @@ public class GeometryPackageImpl extends EPackageImpl implements GeometryPackage
 
 		triangleEClass = createEClass(TRIANGLE);
 		createEReference(triangleEClass, TRIANGLE__NORMAL);
-		createEReference(triangleEClass, TRIANGLE__VERTICES);
+		createEReference(triangleEClass, TRIANGLE__VERTEX1);
+		createEReference(triangleEClass, TRIANGLE__VERTEX2);
+		createEReference(triangleEClass, TRIANGLE__VERTEX3);
 		createEOperation(triangleEClass, TRIANGLE___EQUALS__OBJECT);
 		createEOperation(triangleEClass, TRIANGLE___HASH_CODE);
+		createEOperation(triangleEClass, TRIANGLE___GET_VERTICES);
 
 		vertexEClass = createEClass(VERTEX);
 		createEAttribute(vertexEClass, VERTEX__X);
@@ -1198,12 +1228,16 @@ public class GeometryPackageImpl extends EPackageImpl implements GeometryPackage
 
 		initEClass(triangleEClass, Triangle.class, "Triangle", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTriangle_Normal(), this.getVertex(), null, "normal", null, 0, 1, Triangle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getTriangle_Vertices(), this.getVertex(), null, "vertices", null, 0, 3, Triangle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTriangle_Vertex1(), this.getVertex(), null, "vertex1", null, 0, 1, Triangle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTriangle_Vertex2(), this.getVertex(), null, "vertex2", null, 0, 1, Triangle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTriangle_Vertex3(), this.getVertex(), null, "vertex3", null, 0, 1, Triangle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		EOperation op = initEOperation(getTriangle__Equals__Object(), ecorePackage.getEBoolean(), "equals", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getObject(), "otherObject", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getTriangle__HashCode(), ecorePackage.getEInt(), "hashCode", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getTriangle__GetVertices(), this.getVertex(), "getVertices", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(vertexEClass, Vertex.class, "Vertex", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getVertex_X(), ecorePackage.getEDouble(), "x", null, 0, 1, Vertex.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

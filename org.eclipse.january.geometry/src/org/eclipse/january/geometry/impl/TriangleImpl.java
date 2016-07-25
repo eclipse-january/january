@@ -4,18 +4,16 @@ package org.eclipse.january.geometry.impl;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.january.geometry.GeometryFactory;
 import org.eclipse.january.geometry.GeometryPackage;
 import org.eclipse.january.geometry.Triangle;
@@ -28,10 +26,10 @@ import org.eclipse.january.geometry.Vertex;
  * The following features are implemented:
  * </p>
  * <ul>
- * <li>{@link org.eclipse.january.geometry.impl.TriangleImpl#getNormal
- * <em>Normal</em>}</li>
- * <li>{@link org.eclipse.january.geometry.impl.TriangleImpl#getVertices
- * <em>Vertices</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.impl.TriangleImpl#getNormal <em>Normal</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.impl.TriangleImpl#getVertex1 <em>Vertex1</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.impl.TriangleImpl#getVertex2 <em>Vertex2</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.impl.TriangleImpl#getVertex3 <em>Vertex3</em>}</li>
  * </ul>
  *
  * @generated
@@ -39,9 +37,8 @@ import org.eclipse.january.geometry.Vertex;
 public class TriangleImpl extends MinimalEObjectImpl.Container
 		implements Triangle {
 	/**
-	 * The cached value of the '{@link #getNormal() <em>Normal</em>}'
-	 * containment reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The cached value of the '{@link #getNormal() <em>Normal</em>}' containment reference.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getNormal()
 	 * @generated
 	 * @ordered
@@ -49,14 +46,34 @@ public class TriangleImpl extends MinimalEObjectImpl.Container
 	protected Vertex normal;
 
 	/**
-	 * The cached value of the '{@link #getVertices() <em>Vertices</em>}'
-	 * containment reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @see #getVertices()
+	 * The cached value of the '{@link #getVertex1() <em>Vertex1</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getVertex1()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Vertex> vertices;
+	protected Vertex vertex1;
+
+	/**
+	 * The cached value of the '{@link #getVertex2() <em>Vertex2</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getVertex2()
+	 * @generated
+	 * @ordered
+	 */
+	protected Vertex vertex2;
+
+	/**
+	 * The cached value of the '{@link #getVertex3() <em>Vertex3</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getVertex3()
+	 * @generated
+	 * @ordered
+	 */
+	protected Vertex vertex3;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -70,7 +87,6 @@ public class TriangleImpl extends MinimalEObjectImpl.Container
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -80,22 +96,15 @@ public class TriangleImpl extends MinimalEObjectImpl.Container
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Vertex getNormal() {
-		if (normal != null) {
-			return normal;
-		} else {
-			normal = GeometryFactory.eINSTANCE.createVertex();
-			return normal;
-		}
+		return normal;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public NotificationChain basicSetNormal(Vertex newNormal,
@@ -103,20 +112,14 @@ public class TriangleImpl extends MinimalEObjectImpl.Container
 		Vertex oldNormal = normal;
 		normal = newNormal;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this,
-					Notification.SET, GeometryPackage.TRIANGLE__NORMAL,
-					oldNormal, newNormal);
-			if (msgs == null)
-				msgs = notification;
-			else
-				msgs.add(notification);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, GeometryPackage.TRIANGLE__NORMAL, oldNormal, newNormal);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -124,36 +127,157 @@ public class TriangleImpl extends MinimalEObjectImpl.Container
 		if (newNormal != normal) {
 			NotificationChain msgs = null;
 			if (normal != null)
-				msgs = ((InternalEObject) normal)
-						.eInverseRemove(this,
-								EOPPOSITE_FEATURE_BASE
-										- GeometryPackage.TRIANGLE__NORMAL,
-								null, msgs);
+				msgs = ((InternalEObject)normal).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - GeometryPackage.TRIANGLE__NORMAL, null, msgs);
 			if (newNormal != null)
-				msgs = ((InternalEObject) newNormal)
-						.eInverseAdd(this,
-								EOPPOSITE_FEATURE_BASE
-										- GeometryPackage.TRIANGLE__NORMAL,
-								null, msgs);
+				msgs = ((InternalEObject)newNormal).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - GeometryPackage.TRIANGLE__NORMAL, null, msgs);
 			msgs = basicSetNormal(newNormal, msgs);
-			if (msgs != null)
-				msgs.dispatch();
-		} else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					GeometryPackage.TRIANGLE__NORMAL, newNormal, newNormal));
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, GeometryPackage.TRIANGLE__NORMAL, newNormal, newNormal));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Vertex getVertex1() {
+		return vertex1;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetVertex1(Vertex newVertex1, NotificationChain msgs) {
+		Vertex oldVertex1 = vertex1;
+		vertex1 = newVertex1;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, GeometryPackage.TRIANGLE__VERTEX1, oldVertex1, newVertex1);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setVertex1(Vertex newVertex1) {
+		if (newVertex1 != vertex1) {
+			NotificationChain msgs = null;
+			if (vertex1 != null)
+				msgs = ((InternalEObject)vertex1).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - GeometryPackage.TRIANGLE__VERTEX1, null, msgs);
+			if (newVertex1 != null)
+				msgs = ((InternalEObject)newVertex1).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - GeometryPackage.TRIANGLE__VERTEX1, null, msgs);
+			msgs = basicSetVertex1(newVertex1, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, GeometryPackage.TRIANGLE__VERTEX1, newVertex1, newVertex1));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Vertex getVertex2() {
+		return vertex2;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetVertex2(Vertex newVertex2, NotificationChain msgs) {
+		Vertex oldVertex2 = vertex2;
+		vertex2 = newVertex2;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, GeometryPackage.TRIANGLE__VERTEX2, oldVertex2, newVertex2);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setVertex2(Vertex newVertex2) {
+		if (newVertex2 != vertex2) {
+			NotificationChain msgs = null;
+			if (vertex2 != null)
+				msgs = ((InternalEObject)vertex2).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - GeometryPackage.TRIANGLE__VERTEX2, null, msgs);
+			if (newVertex2 != null)
+				msgs = ((InternalEObject)newVertex2).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - GeometryPackage.TRIANGLE__VERTEX2, null, msgs);
+			msgs = basicSetVertex2(newVertex2, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, GeometryPackage.TRIANGLE__VERTEX2, newVertex2, newVertex2));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Vertex getVertex3() {
+		return vertex3;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetVertex3(Vertex newVertex3, NotificationChain msgs) {
+		Vertex oldVertex3 = vertex3;
+		vertex3 = newVertex3;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, GeometryPackage.TRIANGLE__VERTEX3, oldVertex3, newVertex3);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setVertex3(Vertex newVertex3) {
+		if (newVertex3 != vertex3) {
+			NotificationChain msgs = null;
+			if (vertex3 != null)
+				msgs = ((InternalEObject)vertex3).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - GeometryPackage.TRIANGLE__VERTEX3, null, msgs);
+			if (newVertex3 != null)
+				msgs = ((InternalEObject)newVertex3).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - GeometryPackage.TRIANGLE__VERTEX3, null, msgs);
+			msgs = basicSetVertex3(newVertex3, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, GeometryPackage.TRIANGLE__VERTEX3, newVertex3, newVertex3));
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public EList<Vertex> getVertices() {
-		if (vertices == null) {
-			vertices = new EObjectContainmentEList<Vertex>(Vertex.class, this,
-					GeometryPackage.TRIANGLE__VERTICES);
-		}
+
+		//Create a list of all the vertices
+		EList<Vertex> vertices = new BasicEList<Vertex>();
+		vertices.add(vertex1);
+		vertices.add(vertex2);
+		vertices.add(vertex3);
 		return vertices;
 	}
 
@@ -182,7 +306,7 @@ public class TriangleImpl extends MinimalEObjectImpl.Container
 
 						// If any vertex is in one list but not the other, the
 						// triangles are not equal
-						for (Vertex vertex : vertices) {
+						for (Vertex vertex : getVertices()) {
 							if (!otherVertices.contains(vertex)) {
 								return false;
 							}
@@ -244,105 +368,123 @@ public class TriangleImpl extends MinimalEObjectImpl.Container
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-		case GeometryPackage.TRIANGLE__NORMAL:
-			return basicSetNormal(null, msgs);
-		case GeometryPackage.TRIANGLE__VERTICES:
-			return ((InternalEList<?>) getVertices()).basicRemove(otherEnd,
-					msgs);
+			case GeometryPackage.TRIANGLE__NORMAL:
+				return basicSetNormal(null, msgs);
+			case GeometryPackage.TRIANGLE__VERTEX1:
+				return basicSetVertex1(null, msgs);
+			case GeometryPackage.TRIANGLE__VERTEX2:
+				return basicSetVertex2(null, msgs);
+			case GeometryPackage.TRIANGLE__VERTEX3:
+				return basicSetVertex3(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case GeometryPackage.TRIANGLE__NORMAL:
-			return getNormal();
-		case GeometryPackage.TRIANGLE__VERTICES:
-			return getVertices();
+			case GeometryPackage.TRIANGLE__NORMAL:
+				return getNormal();
+			case GeometryPackage.TRIANGLE__VERTEX1:
+				return getVertex1();
+			case GeometryPackage.TRIANGLE__VERTEX2:
+				return getVertex2();
+			case GeometryPackage.TRIANGLE__VERTEX3:
+				return getVertex3();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case GeometryPackage.TRIANGLE__NORMAL:
-			setNormal((Vertex) newValue);
-			return;
-		case GeometryPackage.TRIANGLE__VERTICES:
-			getVertices().clear();
-			getVertices().addAll((Collection<? extends Vertex>) newValue);
-			return;
+			case GeometryPackage.TRIANGLE__NORMAL:
+				setNormal((Vertex)newValue);
+				return;
+			case GeometryPackage.TRIANGLE__VERTEX1:
+				setVertex1((Vertex)newValue);
+				return;
+			case GeometryPackage.TRIANGLE__VERTEX2:
+				setVertex2((Vertex)newValue);
+				return;
+			case GeometryPackage.TRIANGLE__VERTEX3:
+				setVertex3((Vertex)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case GeometryPackage.TRIANGLE__NORMAL:
-			setNormal((Vertex) null);
-			return;
-		case GeometryPackage.TRIANGLE__VERTICES:
-			getVertices().clear();
-			return;
+			case GeometryPackage.TRIANGLE__NORMAL:
+				setNormal((Vertex)null);
+				return;
+			case GeometryPackage.TRIANGLE__VERTEX1:
+				setVertex1((Vertex)null);
+				return;
+			case GeometryPackage.TRIANGLE__VERTEX2:
+				setVertex2((Vertex)null);
+				return;
+			case GeometryPackage.TRIANGLE__VERTEX3:
+				setVertex3((Vertex)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case GeometryPackage.TRIANGLE__NORMAL:
-			return normal != null;
-		case GeometryPackage.TRIANGLE__VERTICES:
-			return vertices != null && !vertices.isEmpty();
+			case GeometryPackage.TRIANGLE__NORMAL:
+				return normal != null;
+			case GeometryPackage.TRIANGLE__VERTEX1:
+				return vertex1 != null;
+			case GeometryPackage.TRIANGLE__VERTEX2:
+				return vertex2 != null;
+			case GeometryPackage.TRIANGLE__VERTEX3:
+				return vertex3 != null;
 		}
 		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eInvoke(int operationID, EList<?> arguments)
 			throws InvocationTargetException {
 		switch (operationID) {
-		case GeometryPackage.TRIANGLE___EQUALS__OBJECT:
-			return equals(arguments.get(0));
-		case GeometryPackage.TRIANGLE___HASH_CODE:
-			return hashCode();
+			case GeometryPackage.TRIANGLE___EQUALS__OBJECT:
+				return equals(arguments.get(0));
+			case GeometryPackage.TRIANGLE___HASH_CODE:
+				return hashCode();
+			case GeometryPackage.TRIANGLE___GET_VERTICES:
+				return getVertices();
 		}
 		return super.eInvoke(operationID, arguments);
 	}

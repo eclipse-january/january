@@ -270,86 +270,86 @@ public class MeshUtils {
 		// the right hand rule.
 		// Left side face 1
 		Triangle t0 = GeometryFactory.eINSTANCE.createTriangle();
-		t0.getVertices().add((Vertex) v2.clone());
-		t0.getVertices().add((Vertex) v0.clone());
-		t0.getVertices().add((Vertex) v1.clone());
+		t0.setVertex1(v2);
+		t0.setVertex1(v0);
+		t0.setVertex1(v1);
 		triangles.add(t0);
 
 		// Left side Face 2
 		Triangle t1 = GeometryFactory.eINSTANCE.createTriangle();
-		t1.getVertices().add((Vertex) v3.clone());
-		t1.getVertices().add((Vertex) v2.clone());
-		t1.getVertices().add((Vertex) v1.clone());
+		t1.setVertex1(v3);
+		t1.setVertex1(v2);
+		t1.setVertex1(v1);
 		triangles.add(t1);
 
 		// Top side Face 1
 		Triangle t2 = GeometryFactory.eINSTANCE.createTriangle();
-		t2.getVertices().add((Vertex) v2.clone());
-		t2.getVertices().add((Vertex) v3.clone());
-		t2.getVertices().add((Vertex) v7.clone());
+		t2.setVertex1(v2);
+		t2.setVertex1(v0);
+		t2.setVertex1(v1);
 		triangles.add(t2);
 
 		// Top side Face 2
 		Triangle t3 = GeometryFactory.eINSTANCE.createTriangle();
-		t3.getVertices().add((Vertex) v2.clone());
-		t3.getVertices().add((Vertex) v7.clone());
-		t3.getVertices().add((Vertex) v6.clone());
+		t3.setVertex1(v2);
+		t3.setVertex1(v0);
+		t3.setVertex1(v1);
 		triangles.add(t3);
 
 		// Front side Face 1
 		Triangle t4 = GeometryFactory.eINSTANCE.createTriangle();
-		t4.getVertices().add((Vertex) v2.clone());
-		t4.getVertices().add((Vertex) v6.clone());
-		t4.getVertices().add((Vertex) v0.clone());
+		t4.setVertex1(v2);
+		t4.setVertex1(v0);
+		t4.setVertex1(v1);
 		triangles.add(t4);
 
 		// Front side Face 2
 		Triangle t5 = GeometryFactory.eINSTANCE.createTriangle();
-		t5.getVertices().add((Vertex) v6.clone());
-		t5.getVertices().add((Vertex) v4.clone());
-		t5.getVertices().add((Vertex) v0.clone());
+		t5.setVertex1(v2);
+		t5.setVertex1(v0);
+		t5.setVertex1(v1);
 		triangles.add(t5);
 
 		// Back side Face 1
 		Triangle t6 = GeometryFactory.eINSTANCE.createTriangle();
-		t6.getVertices().add((Vertex) v7.clone());
-		t6.getVertices().add((Vertex) v3.clone());
-		t6.getVertices().add((Vertex) v1.clone());
+		t6.setVertex1(v2);
+		t6.setVertex1(v0);
+		t6.setVertex1(v1);
 		triangles.add(t6);
 
 		// Back side Face 2
 		Triangle t7 = GeometryFactory.eINSTANCE.createTriangle();
-		t7.getVertices().add((Vertex) v7.clone());
-		t7.getVertices().add((Vertex) v1.clone());
-		t7.getVertices().add((Vertex) v5.clone());
+		t7.setVertex1(v2);
+		t7.setVertex1(v0);
+		t7.setVertex1(v1);
 		triangles.add(t7);
 
 		// Bottom side Face 1
 		Triangle t8 = GeometryFactory.eINSTANCE.createTriangle();
-		t8.getVertices().add((Vertex) v1.clone());
-		t8.getVertices().add((Vertex) v0.clone());
-		t8.getVertices().add((Vertex) v5.clone());
+		t8.setVertex1(v2);
+		t8.setVertex1(v0);
+		t8.setVertex1(v1);
 		triangles.add(t8);
 
 		// Bottom side Face 2
 		Triangle t9 = GeometryFactory.eINSTANCE.createTriangle();
-		t9.getVertices().add((Vertex) v5.clone());
-		t9.getVertices().add((Vertex) v0.clone());
-		t9.getVertices().add((Vertex) v4.clone());
+		t9.setVertex1(v2);
+		t9.setVertex1(v0);
+		t9.setVertex1(v1);
 		triangles.add(t9);
 
 		// Right side Face 1
 		Triangle t10 = GeometryFactory.eINSTANCE.createTriangle();
-		t10.getVertices().add((Vertex) v6.clone());
-		t10.getVertices().add((Vertex) v7.clone());
-		t10.getVertices().add((Vertex) v4.clone());
+		t10.setVertex1(v2);
+		t10.setVertex1(v0);
+		t10.setVertex1(v1);
 		triangles.add(t10);
 
 		// Right side Face 2
 		Triangle t11 = GeometryFactory.eINSTANCE.createTriangle();
-		t11.getVertices().add((Vertex) v7.clone());
-		t11.getVertices().add((Vertex) v5.clone());
-		t11.getVertices().add((Vertex) v4.clone());
+		t11.setVertex1(v2);
+		t11.setVertex1(v0);
+		t11.setVertex1(v1);
 		triangles.add(t11);
 
 		return triangles;
@@ -565,20 +565,14 @@ public class MeshUtils {
 
 				// Create a triangle between the current vertex, the next vertex
 				// along the circle, and the vertex immediately above this one.
-				innerTri0.getVertices()
-						.add((Vertex) vertices
-								.get(axialSegment * resolution + radialSegment)
-								.clone());
-				innerTri0.getVertices()
-						.add((Vertex) vertices
+				innerTri0.setVertex1((Vertex) vertices
+								.get(axialSegment * resolution + radialSegment));
+				innerTri0.setVertex2((Vertex) vertices
 								.get(axialSegment * resolution
-										+ ((radialSegment + 1) % resolution))
-								.clone());
-				innerTri0.getVertices()
-						.add((Vertex) vertices
+										+ ((radialSegment + 1) % resolution)));
+				innerTri0.setVertex3((Vertex) vertices
 								.get((axialSegment + 1) * resolution
-										+ ((radialSegment + 1) % resolution))
-								.clone());
+										+ ((radialSegment + 1) % resolution)));
 
 				// Add the triangle to the list
 				triangles.add(innerTri0);
@@ -589,19 +583,13 @@ public class MeshUtils {
 				// Create a triangle between the current vertex, the vertex
 				// immediately above it, and the last one along the circle from
 				// that one.
-				innerTri1.getVertices()
-						.add((Vertex) vertices
+				innerTri1.setVertex1((Vertex) vertices
 								.get((axialSegment + 1) * resolution
-										+ ((radialSegment + 1) % resolution))
-								.clone());
-				innerTri1.getVertices()
-						.add((Vertex) vertices.get(
-								(axialSegment + 1) * resolution + radialSegment)
-								.clone());
-				innerTri1.getVertices()
-						.add((Vertex) vertices
-								.get(axialSegment * resolution + radialSegment)
-								.clone());
+										+ ((radialSegment + 1) % resolution)));
+				innerTri1.setVertex2((Vertex) vertices.get(
+								(axialSegment + 1) * resolution + radialSegment));
+				innerTri1.setVertex3((Vertex) vertices
+								.get(axialSegment * resolution + radialSegment));
 
 				// Add the triangle to the list
 				triangles.add(innerTri1);
@@ -617,23 +605,18 @@ public class MeshUtils {
 					// vertex
 					// along the circle, and the vertex immediately above this
 					// one.
-					outerTri0.getVertices()
-							.add((Vertex) vertices.get(vertexBlockSize
+					outerTri0.setVertex1((Vertex) vertices.get(vertexBlockSize
 									+ (axialSegment + 1) * resolution
-									+ ((radialSegment + 1) % resolution))
-									.clone());
+									+ ((radialSegment + 1) % resolution)));
 					outerTri0
-							.getVertices().add(
+							.setVertex2(
 									(Vertex) vertices
 											.get(vertexBlockSize
 													+ axialSegment * resolution
 													+ ((radialSegment + 1)
-															% resolution))
-											.clone());
-					outerTri0.getVertices()
-							.add((Vertex) vertices.get(vertexBlockSize
-									+ axialSegment * resolution + radialSegment)
-									.clone());
+															% resolution)));
+					outerTri0.setVertex3((Vertex) vertices.get(vertexBlockSize
+									+ axialSegment * resolution + radialSegment));
 
 					// Add the triangle to the list
 					triangles.add(outerTri0);
@@ -646,19 +629,14 @@ public class MeshUtils {
 					// immediately above it, and the last one along the circle
 					// from
 					// that one.
-					outerTri1.getVertices()
-							.add((Vertex) vertices.get(vertexBlockSize
-									+ axialSegment * resolution + radialSegment)
-									.clone());
-					outerTri1.getVertices()
-							.add((Vertex) vertices.get(vertexBlockSize
+					outerTri1.setVertex1((Vertex) vertices.get(vertexBlockSize
+									+ axialSegment * resolution + radialSegment));
+					outerTri1.setVertex2((Vertex) vertices.get(vertexBlockSize
 									+ (axialSegment + 1) * resolution
-									+ radialSegment).clone());
-					outerTri1.getVertices()
-							.add((Vertex) vertices.get(vertexBlockSize
+									+ radialSegment));
+					outerTri1.setVertex3((Vertex) vertices.get(vertexBlockSize
 									+ (axialSegment + 1) * resolution
-									+ ((radialSegment + 1) % resolution))
-									.clone());
+									+ ((radialSegment + 1) % resolution)));
 
 					// Add the triangle to the list
 					triangles.add(outerTri1);
@@ -681,16 +659,11 @@ public class MeshUtils {
 					// along the circle, and the corresponding vertex on the
 					// other
 					// edge.
-					bottomTri0.getVertices()
-							.add((Vertex) vertices.get(vertexBlockSize
-									+ ((radialSegment + 1) % resolution))
-									.clone());
-					bottomTri0.getVertices()
-							.add((Vertex) vertices
-									.get((radialSegment + 1) % resolution)
-									.clone());
-					bottomTri0.getVertices()
-							.add((Vertex) vertices.get(radialSegment).clone());
+					bottomTri0.setVertex1((Vertex) vertices.get(vertexBlockSize
+									+ ((radialSegment + 1) % resolution)));
+					bottomTri0.setVertex2((Vertex) vertices
+									.get((radialSegment + 1) % resolution));
+					bottomTri0.setVertex3((Vertex) vertices.get(radialSegment));
 
 					// Add the triangle to the list
 					triangles.add(bottomTri0);
@@ -702,22 +675,17 @@ public class MeshUtils {
 					// Create a triangle between the current vertex, the
 					// corresponding vertex on the other edge, and the last one
 					// along the circle from the other edge.
-					bottomTri1.getVertices()
-							.add((Vertex) vertices.get(
-									((segments) * resolution) + radialSegment)
-									.clone());
-					bottomTri1.getVertices()
-							.add((Vertex) vertices.get(((segments) * resolution)
-									+ ((radialSegment + 1) % resolution))
-									.clone());
+					bottomTri1.setVertex1((Vertex) vertices.get(
+									((segments) * resolution) + radialSegment));
+					bottomTri1.setVertex2((Vertex) vertices.get(((segments) * resolution)
+									+ ((radialSegment + 1) % resolution)));
 					bottomTri1
-							.getVertices().add(
+							.setVertex3(
 									(Vertex) vertices
 											.get(((segments) * resolution)
 													+ vertexBlockSize
 													+ ((radialSegment + 1)
-															% resolution))
-											.clone());
+															% resolution)));
 
 					// Add the triangle to the list
 					triangles.add(bottomTri1);
@@ -729,16 +697,11 @@ public class MeshUtils {
 					// Create a triangle between the current vertex, the
 					// corresponding vertex on the other edge, and the last one
 					// along the circle from the other edge.
-					topTri0.getVertices()
-							.add((Vertex) vertices.get(radialSegment).clone());
-					topTri0.getVertices()
-							.add((Vertex) vertices
-									.get(vertexBlockSize + radialSegment)
-									.clone());
-					topTri0.getVertices()
-							.add((Vertex) vertices.get(vertexBlockSize
-									+ ((radialSegment + 1) % resolution))
-									.clone());
+					topTri0.setVertex1((Vertex) vertices.get(radialSegment));
+					topTri0.setVertex2((Vertex) vertices
+									.get(vertexBlockSize + radialSegment));
+					topTri0.setVertex3((Vertex) vertices.get(vertexBlockSize
+									+ ((radialSegment + 1) % resolution)));
 
 					// Add the triangle to the list
 					triangles.add(topTri0);
@@ -751,19 +714,14 @@ public class MeshUtils {
 					// immediately above it, and the last one along the circle
 					// from
 					// that one.
-					topTri1.getVertices().add((Vertex) vertices
+					topTri1.setVertex1((Vertex) vertices
 							.get(((segments) * resolution) + vertexBlockSize
-									+ ((radialSegment + 1) % resolution))
-							.clone());
-					topTri1.getVertices()
-							.add((Vertex) vertices
+									+ ((radialSegment + 1) % resolution)));
+					topTri1.setVertex2((Vertex) vertices
 									.get(((segments) * resolution)
-											+ vertexBlockSize + radialSegment)
-									.clone());
-					topTri1.getVertices()
-							.add((Vertex) vertices.get(
-									((segments) * resolution) + radialSegment)
-									.clone());
+											+ vertexBlockSize + radialSegment));
+					topTri1.setVertex3((Vertex) vertices.get(
+									((segments) * resolution) + radialSegment));
 
 					// Add the triangle to the list
 					triangles.add(topTri1);

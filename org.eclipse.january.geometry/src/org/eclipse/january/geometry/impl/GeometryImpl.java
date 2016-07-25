@@ -216,7 +216,6 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 	public EList<INode> getNodes() {
 		if (nodes == null) {
 			nodes = new EObjectContainmentEList<INode>(INode.class, this, GeometryPackage.GEOMETRY__NODES);
-			//nodes = new BasicEList<INode>();
 		}
 		return nodes;
 	}
@@ -267,8 +266,6 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, GeometryPackage.GEOMETRY__CENTER, oldCenter, center));
 			}
-		} else {
-			center = GeometryFactory.eINSTANCE.createVertex();
 		}
 		return center;
 	}
@@ -278,9 +275,6 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 	 * @generated
 	 */
 	public Vertex basicGetCenter() {
-		if (center == null) {
-			center = GeometryFactory.eINSTANCE.createVertex();
-		}
 		return center;
 	}
 
