@@ -65,7 +65,7 @@ public class STLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Geometry returns Geometry
 	 *
 	 * Constraint:
-	 *     (name=EString? nodes+=Shape_Impl)
+	 *     nodes+=Shape_Impl*
 	 */
 	protected void sequence_Geometry(ISerializationContext context, Geometry semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -77,7 +77,7 @@ public class STLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Shape_Impl returns Shape
 	 *
 	 * Constraint:
-	 *     triangles+=Triangle*
+	 *     (name=EString? triangles+=Triangle*)
 	 */
 	protected void sequence_Shape_Impl(ISerializationContext context, Shape semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

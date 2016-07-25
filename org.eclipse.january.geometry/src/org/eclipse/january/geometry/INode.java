@@ -253,6 +253,13 @@ public interface INode extends EObject {
 	 * @generated
 	 */
 	void addNode(INode child);
+	
+	/**
+	 * Allows for multiple nodes to be added simultaneously, maintaining the parent reference for each new node.
+	 * @param children List of nodes to add as children under this node
+	 * @generated NOT
+	 */
+	void addNodes(EList<INode> children);
 
 	/**
 	 * <!-- begin-user-doc -->

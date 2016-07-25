@@ -35,28 +35,59 @@ public class STLGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "xtext.STL.Geometry");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cGeometryAction_0 = (Action)cGroup.eContents().get(0);
-		private final Keyword cSolidKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cNameEStringParserRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
-		private final Assignment cNodesAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cNodesShape_ImplParserRuleCall_3_0 = (RuleCall)cNodesAssignment_3.eContents().get(0);
-		private final Keyword cControl000aKeyword_4 = (Keyword)cGroup.eContents().get(4);
-		private final Keyword cEndsolidKeyword_5 = (Keyword)cGroup.eContents().get(5);
-		private final RuleCall cEStringParserRuleCall_6 = (RuleCall)cGroup.eContents().get(6);
+		private final Assignment cNodesAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNodesShape_ImplParserRuleCall_1_0 = (RuleCall)cNodesAssignment_1.eContents().get(0);
 		
 		//Geometry:
-		//	{Geometry}
-		//	'solid'
-		//	name=EString?
-		//	nodes+=Shape_Impl '\n'?
-		//	'endsolid' EString?;
+		//	{Geometry} nodes+=Shape_Impl*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{Geometry} 'solid' name=EString? nodes+=Shape_Impl '\n'? 'endsolid' EString?
+		//{Geometry} nodes+=Shape_Impl*
 		public Group getGroup() { return cGroup; }
 		
 		//{Geometry}
 		public Action getGeometryAction_0() { return cGeometryAction_0; }
+		
+		//nodes+=Shape_Impl*
+		public Assignment getNodesAssignment_1() { return cNodesAssignment_1; }
+		
+		//Shape_Impl
+		public RuleCall getNodesShape_ImplParserRuleCall_1_0() { return cNodesShape_ImplParserRuleCall_1_0; }
+	}
+	public class Shape_ImplElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "xtext.STL.Shape_Impl");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cShapeAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cSolidKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cNameEStringParserRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
+		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
+		private final RuleCall cIDTerminalRuleCall_3_0 = (RuleCall)cAlternatives_3.eContents().get(0);
+		private final RuleCall cWSTerminalRuleCall_3_1 = (RuleCall)cAlternatives_3.eContents().get(1);
+		private final RuleCall cSTRINGTerminalRuleCall_3_2 = (RuleCall)cAlternatives_3.eContents().get(2);
+		private final RuleCall cINTTerminalRuleCall_3_3 = (RuleCall)cAlternatives_3.eContents().get(3);
+		private final Assignment cTrianglesAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cTrianglesTriangleParserRuleCall_4_0 = (RuleCall)cTrianglesAssignment_4.eContents().get(0);
+		private final RuleCall cWSTerminalRuleCall_5 = (RuleCall)cGroup.eContents().get(5);
+		private final Keyword cEndsolidKeyword_6 = (Keyword)cGroup.eContents().get(6);
+		private final RuleCall cEStringParserRuleCall_7 = (RuleCall)cGroup.eContents().get(7);
+		private final Alternatives cAlternatives_8 = (Alternatives)cGroup.eContents().get(8);
+		private final RuleCall cIDTerminalRuleCall_8_0 = (RuleCall)cAlternatives_8.eContents().get(0);
+		private final RuleCall cWSTerminalRuleCall_8_1 = (RuleCall)cAlternatives_8.eContents().get(1);
+		private final RuleCall cSTRINGTerminalRuleCall_8_2 = (RuleCall)cAlternatives_8.eContents().get(2);
+		private final RuleCall cINTTerminalRuleCall_8_3 = (RuleCall)cAlternatives_8.eContents().get(3);
+		
+		//Shape_Impl Shape:
+		//	{Shape} 'solid' name=EString? (ID | WS | STRING | INT)* triangles+=Triangle* WS* 'endsolid' EString? (ID | WS |
+		//	STRING | INT)*
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{Shape} 'solid' name=EString? (ID | WS | STRING | INT)* triangles+=Triangle* WS* 'endsolid' EString? (ID | WS | STRING |
+		//INT)*
+		public Group getGroup() { return cGroup; }
+		
+		//{Shape}
+		public Action getShapeAction_0() { return cShapeAction_0; }
 		
 		//'solid'
 		public Keyword getSolidKeyword_1() { return cSolidKeyword_1; }
@@ -67,43 +98,50 @@ public class STLGrammarAccess extends AbstractGrammarElementFinder {
 		//EString
 		public RuleCall getNameEStringParserRuleCall_2_0() { return cNameEStringParserRuleCall_2_0; }
 		
-		//nodes+=Shape_Impl
-		public Assignment getNodesAssignment_3() { return cNodesAssignment_3; }
+		//(ID | WS | STRING | INT)*
+		public Alternatives getAlternatives_3() { return cAlternatives_3; }
 		
-		//Shape_Impl
-		public RuleCall getNodesShape_ImplParserRuleCall_3_0() { return cNodesShape_ImplParserRuleCall_3_0; }
+		//ID
+		public RuleCall getIDTerminalRuleCall_3_0() { return cIDTerminalRuleCall_3_0; }
 		
-		//'\n'?
-		public Keyword getControl000aKeyword_4() { return cControl000aKeyword_4; }
+		//WS
+		public RuleCall getWSTerminalRuleCall_3_1() { return cWSTerminalRuleCall_3_1; }
 		
-		//'endsolid'
-		public Keyword getEndsolidKeyword_5() { return cEndsolidKeyword_5; }
+		//STRING
+		public RuleCall getSTRINGTerminalRuleCall_3_2() { return cSTRINGTerminalRuleCall_3_2; }
 		
-		//EString?
-		public RuleCall getEStringParserRuleCall_6() { return cEStringParserRuleCall_6; }
-	}
-	public class Shape_ImplElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "xtext.STL.Shape_Impl");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cShapeAction_0 = (Action)cGroup.eContents().get(0);
-		private final Assignment cTrianglesAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cTrianglesTriangleParserRuleCall_1_0 = (RuleCall)cTrianglesAssignment_1.eContents().get(0);
-		
-		//Shape_Impl Shape:
-		//	{Shape} triangles+=Triangle*
-		@Override public ParserRule getRule() { return rule; }
-		
-		//{Shape} triangles+=Triangle*
-		public Group getGroup() { return cGroup; }
-		
-		//{Shape}
-		public Action getShapeAction_0() { return cShapeAction_0; }
+		//INT
+		public RuleCall getINTTerminalRuleCall_3_3() { return cINTTerminalRuleCall_3_3; }
 		
 		//triangles+=Triangle*
-		public Assignment getTrianglesAssignment_1() { return cTrianglesAssignment_1; }
+		public Assignment getTrianglesAssignment_4() { return cTrianglesAssignment_4; }
 		
 		//Triangle
-		public RuleCall getTrianglesTriangleParserRuleCall_1_0() { return cTrianglesTriangleParserRuleCall_1_0; }
+		public RuleCall getTrianglesTriangleParserRuleCall_4_0() { return cTrianglesTriangleParserRuleCall_4_0; }
+		
+		//WS*
+		public RuleCall getWSTerminalRuleCall_5() { return cWSTerminalRuleCall_5; }
+		
+		//'endsolid'
+		public Keyword getEndsolidKeyword_6() { return cEndsolidKeyword_6; }
+		
+		//EString?
+		public RuleCall getEStringParserRuleCall_7() { return cEStringParserRuleCall_7; }
+		
+		//(ID | WS | STRING | INT)*
+		public Alternatives getAlternatives_8() { return cAlternatives_8; }
+		
+		//ID
+		public RuleCall getIDTerminalRuleCall_8_0() { return cIDTerminalRuleCall_8_0; }
+		
+		//WS
+		public RuleCall getWSTerminalRuleCall_8_1() { return cWSTerminalRuleCall_8_1; }
+		
+		//STRING
+		public RuleCall getSTRINGTerminalRuleCall_8_2() { return cSTRINGTerminalRuleCall_8_2; }
+		
+		//INT
+		public RuleCall getINTTerminalRuleCall_8_3() { return cINTTerminalRuleCall_8_3; }
 	}
 	public class TriangleElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "xtext.STL.Triangle");
@@ -124,11 +162,7 @@ public class STLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cEndfacetKeyword_7 = (Keyword)cGroup.eContents().get(7);
 		
 		//Triangle:
-		//	{Triangle}
-		//	'facet' ('normal' normal=Vertex)
-		//	'outer' 'loop' ('vertex' vertices+=Vertex)*
-		//	'endloop'
-		//	'endfacet';
+		//	{Triangle} 'facet' ('normal' normal=Vertex) 'outer' 'loop' ('vertex' vertices+=Vertex)* 'endloop' 'endfacet';
 		@Override public ParserRule getRule() { return rule; }
 		
 		//{Triangle} 'facet' ('normal' normal=Vertex) 'outer' 'loop' ('vertex' vertices+=Vertex)* 'endloop' 'endfacet'
@@ -188,9 +222,7 @@ public class STLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cZEDoubleParserRuleCall_3_0 = (RuleCall)cZAssignment_3.eContents().get(0);
 		
 		//Vertex:
-		//	{Vertex} x=EDouble
-		//	y=EDouble
-		//	z=EDouble;
+		//	{Vertex} x=EDouble y=EDouble z=EDouble;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//{Vertex} x=EDouble y=EDouble z=EDouble
@@ -357,11 +389,7 @@ public class STLGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//Geometry:
-	//	{Geometry}
-	//	'solid'
-	//	name=EString?
-	//	nodes+=Shape_Impl '\n'?
-	//	'endsolid' EString?;
+	//	{Geometry} nodes+=Shape_Impl*;
 	public GeometryElements getGeometryAccess() {
 		return pGeometry;
 	}
@@ -371,7 +399,8 @@ public class STLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Shape_Impl Shape:
-	//	{Shape} triangles+=Triangle*
+	//	{Shape} 'solid' name=EString? (ID | WS | STRING | INT)* triangles+=Triangle* WS* 'endsolid' EString? (ID | WS |
+	//	STRING | INT)*
 	public Shape_ImplElements getShape_ImplAccess() {
 		return pShape_Impl;
 	}
@@ -381,11 +410,7 @@ public class STLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Triangle:
-	//	{Triangle}
-	//	'facet' ('normal' normal=Vertex)
-	//	'outer' 'loop' ('vertex' vertices+=Vertex)*
-	//	'endloop'
-	//	'endfacet';
+	//	{Triangle} 'facet' ('normal' normal=Vertex) 'outer' 'loop' ('vertex' vertices+=Vertex)* 'endloop' 'endfacet';
 	public TriangleElements getTriangleAccess() {
 		return pTriangle;
 	}
@@ -395,9 +420,7 @@ public class STLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Vertex:
-	//	{Vertex} x=EDouble
-	//	y=EDouble
-	//	z=EDouble;
+	//	{Vertex} x=EDouble y=EDouble z=EDouble;
 	public VertexElements getVertexAccess() {
 		return pVertex;
 	}
@@ -439,8 +462,7 @@ public class STLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//terminal STRING:
-	//	'"' ('\\' . | !('\\' | '"'))* '"' |
-	//	"'" ('\\' . | !('\\' | "'"))* "'";
+	//	'"' ('\\' . | !('\\' | '"'))* '"' | "'" ('\\' . | !('\\' | "'"))* "'";
 	public TerminalRule getSTRINGRule() {
 		return gaTerminals.getSTRINGRule();
 	}

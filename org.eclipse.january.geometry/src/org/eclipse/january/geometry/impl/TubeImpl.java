@@ -7,6 +7,8 @@ import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.BasicInternalEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.january.geometry.GeometryFactory;
 import org.eclipse.january.geometry.GeometryPackage;
 import org.eclipse.january.geometry.Triangle;
@@ -388,18 +390,25 @@ public class TubeImpl extends ShapeImpl implements Tube {
 			if (triangles != null) {
 				return triangles;
 			} else {
-				triangles = new BasicEList<Triangle>();
+				triangles = new BasicInternalEList<Triangle>(Triangle.class);
 				return triangles;
 			}
 		}
 
 		// Update to the current radius
 		prevRadius = radius;
+		
+		if (triangles == null) {
+			triangles = new BasicInternalEList<Triangle>(Triangle.class);
+		} else {
+			triangles.clear();
+		}
 
 		// Replace the previous list with a a new tube's triangles.
 		double[] vertices = MeshUtils.createTube(height, innerRadius, radius,
 				RESOLUTION, SEGMENTS);
-		triangles = MeshUtils.createTubeMesh(vertices, RESOLUTION, SEGMENTS);
+
+		triangles.addAll(MeshUtils.createTubeMesh(vertices, RESOLUTION, SEGMENTS));
 
 		return triangles;
 	}

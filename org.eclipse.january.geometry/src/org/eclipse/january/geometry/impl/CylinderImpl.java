@@ -9,6 +9,8 @@ import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.BasicInternalEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.january.geometry.Cylinder;
 import org.eclipse.january.geometry.GeometryFactory;
 import org.eclipse.january.geometry.GeometryPackage;
@@ -285,7 +287,7 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 			if (triangles != null) {
 				return triangles;
 			} else {
-				triangles = new BasicEList<Triangle>();
+				triangles = new BasicInternalEList<Triangle>(Triangle.class);
 				return triangles;
 			}
 		}
@@ -295,7 +297,11 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 		prevHeight = height;
 
 		// Clear the previous list
-		triangles = new BasicEList<Triangle>();
+		if (triangles == null) {
+			triangles = new BasicInternalEList<Triangle>(Triangle.class);
+		} else {
+			triangles.clear();
+		}
 
 		// Make an array of vertices to form the triangles
 		ArrayList<Vertex> vertices = new ArrayList<Vertex>();

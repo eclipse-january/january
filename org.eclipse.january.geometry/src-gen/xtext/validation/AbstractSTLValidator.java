@@ -20,8 +20,8 @@ public abstract class AbstractSTLValidator extends AbstractDeclarativeValidator 
 	
 	@Override
 	protected List<EPackage> getEPackages() {
-	    List<EPackage> result = new ArrayList<EPackage>();
-	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.eclipse.org/january/geometry"));
+		List<EPackage> result = new ArrayList<EPackage>();
+		result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.eclipse.org/january/geometry"));
 		return result;
 	}
 	
