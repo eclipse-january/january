@@ -6,8 +6,8 @@
 	<parent>
 		<groupId>org.eclipse.eavp</groupId>
 		<artifactId>org.eclipse.eavp.build</artifactId>
+				<version>2.1.8-SNAPSHOT</version>
 		<relativePath>../org.eclipse.eavp.parent/pom.xml</relativePath>
-		<version>2.1.8-SNAPSHOT</version>
 	</parent>
 	<groupId>org.eclipse.eavp</groupId>
 	<artifactId>org.eclipse.january.geometry.model</artifactId>
@@ -30,6 +30,10 @@
 							<type>p2-installable-unit</type>
 							<artifactId>org.eclipse.sdk.feature.group</artifactId>
 						</dependency>
+						      <dependency>
+        <groupId>org.apache.maven.surefire</groupId>
+        <artifactId>surefire-junit47</artifactId>
+      </dependency>
 					</dependencies>
 				</configuration>
 			</plugin>
