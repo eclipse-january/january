@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<viewpoint:DAnalysis xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" xmi:id="_0LfH4EhEEeawyM-EOROaeA" version="11.0.0.201604141600">
-  <semanticResources>http://www.eclipse.org/emf/2002/Ecore</semanticResources>
+<viewpoint:DAnalysis xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" xmi:id="_0LfH4EhEEeawyM-EOROaeA" version="10.1.0.201509162000">
   <semanticResources>model/org.eclipse.january.geometry.ecore</semanticResources>
-  <semanticResources>model/org.eclipse.january.geometry.genmodel</semanticResources>
 </viewpoint:DAnalysis>

@@ -491,15 +491,21 @@ public class OperatorImpl extends MinimalEObjectImpl.Container
 
 				// Create a copy of each vertex from the current triangle and
 				// add it to the clone under construction
-				cloneTriangle.setVertex1((Vertex) triangle.getVertex1().clone());
-				cloneTriangle.setVertex2((Vertex) triangle.getVertex2().clone()); 
-				cloneTriangle.setVertex3((Vertex) triangle.getVertex3().clone()); 
+				for (Vertex vertex : triangle.getVertices()) {
+
+					Vertex cloneVertex = GeometryFactory.eINSTANCE
+							.createVertex();
+					cloneVertex.setX(vertex.getX());
+					cloneVertex.setY(vertex.getY());
+					cloneVertex.setZ(vertex.getZ());
+
+					cloneTriangle.getVertices().add(cloneVertex);
+				}
 
 				// Make the normal vector a copy of the source triangle's
-				cloneTriangle.setNormal((Vertex) triangle.getNormal().clone());
-				
-				//Add the finished triangle to the list
-				triangles.add(cloneTriangle);
+				cloneTriangle.getNormal().setX(triangle.getNormal().getX());
+				cloneTriangle.getNormal().setY(triangle.getNormal().getY());
+				cloneTriangle.getNormal().setZ(triangle.getNormal().getZ());
 			}
 		}
 	}

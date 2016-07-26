@@ -20,9 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.january.geometry.Triangle#getNormal <em>Normal</em>}</li>
- *   <li>{@link org.eclipse.january.geometry.Triangle#getVertex1 <em>Vertex1</em>}</li>
- *   <li>{@link org.eclipse.january.geometry.Triangle#getVertex2 <em>Vertex2</em>}</li>
- *   <li>{@link org.eclipse.january.geometry.Triangle#getVertex3 <em>Vertex3</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.Triangle#getVertices <em>Vertices</em>}</li>
  * </ul>
  *
  * @see org.eclipse.january.geometry.GeometryPackage#getTriangle()
@@ -56,87 +54,16 @@ public interface Triangle extends EObject {
 	void setNormal(Vertex value);
 
 	/**
-	 * Returns the value of the '<em><b>Vertex1</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Vertices</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.january.geometry.Vertex}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * The first of the three ordered vertices that make up the triangle.
+	 * Each triangle has exactly three vertices where its edges meet.
 	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Vertex1</em>' containment reference.
-	 * @see #setVertex1(Vertex)
-	 * @see org.eclipse.january.geometry.GeometryPackage#getTriangle_Vertex1()
-	 * @model containment="true"
-	 * @generated
-	 */
-	Vertex getVertex1();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.january.geometry.Triangle#getVertex1 <em>Vertex1</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Vertex1</em>' containment reference.
-	 * @see #getVertex1()
-	 * @generated
-	 */
-	void setVertex1(Vertex value);
-
-	/**
-	 * Returns the value of the '<em><b>Vertex2</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * The second of the three ordered vertices that make up the triangle.
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Vertex2</em>' containment reference.
-	 * @see #setVertex2(Vertex)
-	 * @see org.eclipse.january.geometry.GeometryPackage#getTriangle_Vertex2()
-	 * @model containment="true"
-	 * @generated
-	 */
-	Vertex getVertex2();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.january.geometry.Triangle#getVertex2 <em>Vertex2</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Vertex2</em>' containment reference.
-	 * @see #getVertex2()
-	 * @generated
-	 */
-	void setVertex2(Vertex value);
-
-	/**
-	 * Returns the value of the '<em><b>Vertex3</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * The third of the three ordered vertices that make up the triangle.
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Vertex3</em>' containment reference.
-	 * @see #setVertex3(Vertex)
-	 * @see org.eclipse.january.geometry.GeometryPackage#getTriangle_Vertex3()
-	 * @model containment="true"
-	 * @generated
-	 */
-	Vertex getVertex3();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.january.geometry.Triangle#getVertex3 <em>Vertex3</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Vertex3</em>' containment reference.
-	 * @see #getVertex3()
-	 * @generated
-	 */
-	void setVertex3(Vertex value);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * Get the three vertices making up the triangle, in order vertex1, vertex2, vertex3.
-	 * <!-- end-model-doc -->
-	 * @model kind="operation"
+	 * @return the value of the '<em>Vertices</em>' containment reference list.
+	 * @see org.eclipse.january.geometry.GeometryPackage#getTriangle_Vertices()
+	 * @model containment="true" upper="3"
 	 * @generated
 	 */
 	EList<Vertex> getVertices();
