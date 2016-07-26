@@ -35,7 +35,7 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 		return Dataset.COMPLEX64; // DATA_TYPE
 	}
 
-	public ComplexFloatDataset() {
+	ComplexFloatDataset() {
 		super(ISIZE);
 	}
 
@@ -43,7 +43,7 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 	 * Create a zero-filled dataset of given shape
 	 * @param shape
 	 */
-	public ComplexFloatDataset(final int... shape) {
+	ComplexFloatDataset(final int... shape) {
 		super(ISIZE, shape);
 	}
 
@@ -52,7 +52,7 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 	 * @param data
 	 * @param shape (can be null to create 1D dataset)
 	 */
-	public ComplexFloatDataset(final float[] data, final int... shape) { // PRIM_TYPE
+	ComplexFloatDataset(final float[] data, final int... shape) { // PRIM_TYPE
 		super(ISIZE, data, shape);
 	}
 
@@ -60,7 +60,7 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 	 * Copy a dataset
 	 * @param dataset
 	 */
-	public ComplexFloatDataset(final ComplexFloatDataset dataset) {
+	ComplexFloatDataset(final ComplexFloatDataset dataset) {
 		super(dataset);
 	}
 
@@ -70,7 +70,7 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 	 * @param imagData
 	 * @param shape (can be null or zero-length to create 1D dataset)
 	 */
-	public ComplexFloatDataset(final float[] realData, final float[] imagData, int... shape) { // PRIM_TYPE
+	ComplexFloatDataset(final float[] realData, final float[] imagData, int... shape) { // PRIM_TYPE
 		if (realData == null || imagData == null) {
 			throw new IllegalArgumentException("Data must not be null");
 		}
@@ -104,7 +104,7 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 	 * @param real
 	 * @param imag
 	 */
-	public ComplexFloatDataset(final Dataset real, final Dataset imag) {
+	ComplexFloatDataset(final Dataset real, final Dataset imag) {
 		super(ISIZE, real.getShapeRef());
 		real.checkCompatibility(imag);
 
@@ -121,7 +121,7 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 	 * Copy and cast a dataset to this complex type
 	 * @param dataset
 	 */
-	public ComplexFloatDataset(final Dataset dataset) {
+	ComplexFloatDataset(final Dataset dataset) {
 		super(ISIZE, dataset.getShapeRef());
 		copyToView(dataset, this, true, false);
 		offset = 0;
@@ -154,7 +154,7 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 	 * @param obj
 	 * @return dataset with contents given by input
 	 */
-	public static ComplexFloatDataset createFromObject(final Object obj) {
+	static ComplexFloatDataset createFromObject(final Object obj) {
 		ComplexFloatDataset result = new ComplexFloatDataset();
 
 		result.shape = ShapeUtils.getShapeFromObject(obj);
@@ -176,7 +176,7 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 	 * @param stop
 	 * @return a new 1D dataset, filled with values determined by parameters
 	 */
-	public static ComplexFloatDataset createRange(final double stop) {
+	static ComplexFloatDataset createRange(final double stop) {
 		return createRange(0, stop, 1);
 	}
 
@@ -186,7 +186,7 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 	 * @param step
 	 * @return a new 1D dataset, filled with values determined by parameters
 	 */
-	public static ComplexFloatDataset createRange(final double start, final double stop, final double step) {
+	static ComplexFloatDataset createRange(final double start, final double stop, final double step) {
 		int size = calcSteps(start, stop, step);
 		ComplexFloatDataset result = new ComplexFloatDataset(size);
 		for (int i = 0; i < size; i ++) {
@@ -199,7 +199,7 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 	 * @param shape
 	 * @return a dataset filled with ones
 	 */
-	public static ComplexFloatDataset ones(final int... shape) {
+	static ComplexFloatDataset ones(final int... shape) {
 		return new ComplexFloatDataset(shape).fill(1);
 	}
 

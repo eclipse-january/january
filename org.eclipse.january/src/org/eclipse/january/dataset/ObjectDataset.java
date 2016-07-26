@@ -21,7 +21,7 @@ public class ObjectDataset extends ObjectDatasetBase {
 	// pin UID to base class
 	private static final long serialVersionUID = Dataset.serialVersionUID;
 
-	public ObjectDataset() {
+	ObjectDataset() {
 		super();
 	}
 
@@ -29,7 +29,7 @@ public class ObjectDataset extends ObjectDatasetBase {
 	 * Create a null-filled dataset of given shape
 	 * @param shape
 	 */
-	public ObjectDataset(final int... shape) {
+	ObjectDataset(final int... shape) {
 		super(shape);
 	}
 
@@ -38,7 +38,7 @@ public class ObjectDataset extends ObjectDatasetBase {
 	 * @param data
 	 * @param shape (can be null to create 1D dataset)
 	 */
-	public ObjectDataset(final Object[] data, int... shape) {
+	ObjectDataset(final Object[] data, int... shape) {
 		super(data, shape);
 	}
 
@@ -46,7 +46,7 @@ public class ObjectDataset extends ObjectDatasetBase {
 	 * Copy a dataset
 	 * @param dataset
 	 */
-	public ObjectDataset(final ObjectDataset dataset) {
+	ObjectDataset(final ObjectDataset dataset) {
 		super(dataset);
 	}
 
@@ -54,7 +54,7 @@ public class ObjectDataset extends ObjectDatasetBase {
 	 * Cast a dataset to this class type
 	 * @param dataset
 	 */
-	public ObjectDataset(final Dataset dataset) {
+	ObjectDataset(final Dataset dataset) {
 		super(dataset);
 	}
 
@@ -88,7 +88,7 @@ public class ObjectDataset extends ObjectDatasetBase {
 	 * @param obj
 	 * @return dataset with contents given by input
 	 */
-	public static ObjectDataset createFromObject(final Object obj) {
+	static ObjectDataset createFromObject(final Object obj) {
 		ObjectDatasetBase result = ObjectDatasetBase.createFromObject(obj);
 		ObjectDataset ds = new ObjectDataset(result.data, result.shape);
 		if (result.shape.length == 0)
@@ -100,7 +100,7 @@ public class ObjectDataset extends ObjectDatasetBase {
 	 * @param shape
 	 * @return a dataset filled with ones
 	 */
-	public static ObjectDataset ones(final int... shape) {
+	static ObjectDataset ones(final int... shape) {
 		throw new UnsupportedOperationException("Unsupported method for class");
 	}
 

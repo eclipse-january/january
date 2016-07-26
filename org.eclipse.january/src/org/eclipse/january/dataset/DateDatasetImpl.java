@@ -18,7 +18,7 @@ public class DateDatasetImpl extends StringDataset implements DateDataset {
 	private static final SimpleDateFormat ISO8601_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 	
 
-	public static DateDatasetImpl createFromObject(final Object obj) {
+	static DateDatasetImpl createFromObject(final Object obj) {
 		final DateDatasetImpl result = new DateDatasetImpl();
 		result.shape = ShapeUtils.getShapeFromObject(obj);
 		result.size = ShapeUtils.calcSize(result.shape);
@@ -30,15 +30,15 @@ public class DateDatasetImpl extends StringDataset implements DateDataset {
 		return result;
 	}
 	
-	public DateDatasetImpl() {
+	DateDatasetImpl() {
 		super();
 	}
 	
-	public DateDatasetImpl(final int... shape) {
+	DateDatasetImpl(final int... shape) {
 		super(shape);
 	}
 	
-	public DateDatasetImpl(final Date[] data, int... shape) {
+	DateDatasetImpl(final Date[] data, int... shape) {
 		super(datesToStrings(data), shape);
 	}
 	

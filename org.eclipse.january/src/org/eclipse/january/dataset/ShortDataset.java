@@ -56,14 +56,14 @@ public class ShortDataset extends AbstractDataset {
 		return INT16; // DATA_TYPE
 	}
 
-	public ShortDataset() {
+	ShortDataset() {
 	}
 
 	/**
 	 * Create a zero-filled dataset of given shape
 	 * @param shape
 	 */
-	public ShortDataset(final int... shape) {
+	ShortDataset(final int... shape) {
 		if (shape != null) {
 			if (shape.length == 1) {
 				size = shape[0];
@@ -90,7 +90,7 @@ public class ShortDataset extends AbstractDataset {
 	 * @param shape
 	 *            (can be null to create 1D dataset)
 	 */
-	public ShortDataset(final short[] data, int... shape) { // PRIM_TYPE
+	ShortDataset(final short[] data, int... shape) { // PRIM_TYPE
 		if (data == null) {
 			throw new IllegalArgumentException("Data must not be null");
 		}
@@ -111,7 +111,7 @@ public class ShortDataset extends AbstractDataset {
 	 * Copy a dataset
 	 * @param dataset
 	 */
-	public ShortDataset(final ShortDataset dataset) {
+	ShortDataset(final ShortDataset dataset) {
 		copyToView(dataset, this, true, true);
 
 		try {
@@ -138,7 +138,7 @@ public class ShortDataset extends AbstractDataset {
 	 * Copy and cast a dataset to this class type
 	 * @param dataset
 	 */
-	public ShortDataset(final Dataset dataset) {
+	ShortDataset(final Dataset dataset) {
 		copyToView(dataset, this, true, false);
 		offset = 0;
 		stride = null;
@@ -194,7 +194,7 @@ public class ShortDataset extends AbstractDataset {
 	 * @param obj
 	 * @return dataset with contents given by input
 	 */
-	public static ShortDataset createFromObject(final Object obj) {
+	static ShortDataset createFromObject(final Object obj) {
 		ShortDataset result = new ShortDataset();
 
 		if (obj != null) {
@@ -220,7 +220,7 @@ public class ShortDataset extends AbstractDataset {
 	 * @param stop
 	 * @return a new 1D dataset, filled with values determined by parameters
 	 */
-	public static ShortDataset createRange(final double stop) {
+	static ShortDataset createRange(final double stop) {
 		return createRange(0, stop, 1);
 	}
 	
@@ -231,7 +231,7 @@ public class ShortDataset extends AbstractDataset {
 	 * @param step
 	 * @return a new 1D dataset, filled with values determined by parameters
 	 */
-	public static ShortDataset createRange(final double start, final double stop, final double step) {
+	static ShortDataset createRange(final double start, final double stop, final double step) {
 		int size = calcSteps(start, stop, step);
 		ShortDataset result = new ShortDataset(size);
 		for (int i = 0; i < size; i++) {
@@ -244,7 +244,7 @@ public class ShortDataset extends AbstractDataset {
 	 * @param shape
 	 * @return a dataset filled with ones
 	 */
-	public static ShortDataset ones(final int... shape) {
+	static ShortDataset ones(final int... shape) {
 		return new ShortDataset(shape).fill(1);
 	}
 

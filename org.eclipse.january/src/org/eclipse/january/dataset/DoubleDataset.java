@@ -56,14 +56,14 @@ public class DoubleDataset extends AbstractDataset {
 		return FLOAT64; // DATA_TYPE
 	}
 
-	public DoubleDataset() {
+	DoubleDataset() {
 	}
 
 	/**
 	 * Create a zero-filled dataset of given shape
 	 * @param shape
 	 */
-	public DoubleDataset(final int... shape) {
+	DoubleDataset(final int... shape) {
 		if (shape != null) {
 			if (shape.length == 1) {
 				size = shape[0];
@@ -90,7 +90,7 @@ public class DoubleDataset extends AbstractDataset {
 	 * @param shape
 	 *            (can be null to create 1D dataset)
 	 */
-	public DoubleDataset(final double[] data, int... shape) { // PRIM_TYPE
+	DoubleDataset(final double[] data, int... shape) { // PRIM_TYPE
 		if (data == null) {
 			throw new IllegalArgumentException("Data must not be null");
 		}
@@ -111,7 +111,7 @@ public class DoubleDataset extends AbstractDataset {
 	 * Copy a dataset
 	 * @param dataset
 	 */
-	public DoubleDataset(final DoubleDataset dataset) {
+	DoubleDataset(final DoubleDataset dataset) {
 		copyToView(dataset, this, true, true);
 
 		try {
@@ -138,7 +138,7 @@ public class DoubleDataset extends AbstractDataset {
 	 * Copy and cast a dataset to this class type
 	 * @param dataset
 	 */
-	public DoubleDataset(final Dataset dataset) {
+	DoubleDataset(final Dataset dataset) {
 		copyToView(dataset, this, true, false);
 		offset = 0;
 		stride = null;
@@ -194,7 +194,7 @@ public class DoubleDataset extends AbstractDataset {
 	 * @param obj
 	 * @return dataset with contents given by input
 	 */
-	public static DoubleDataset createFromObject(final Object obj) {
+	static DoubleDataset createFromObject(final Object obj) {
 		DoubleDataset result = new DoubleDataset();
 
 		if (obj != null) {
@@ -220,7 +220,7 @@ public class DoubleDataset extends AbstractDataset {
 	 * @param stop // NAN_OMIT
 	 * @return a new 1D dataset, filled with values determined by parameters // NAN_OMIT
 	 */ // NAN_OMIT
-	public static DoubleDataset createRange(final double stop) { // NAN_OMIT
+	static DoubleDataset createRange(final double stop) { // NAN_OMIT
 		return createRange(0, stop, 1); // NAN_OMIT
 	} // NAN_OMIT
 	 // NAN_OMIT
@@ -231,7 +231,7 @@ public class DoubleDataset extends AbstractDataset {
 	 * @param step // NAN_OMIT
 	 * @return a new 1D dataset, filled with values determined by parameters // NAN_OMIT
 	 */ // NAN_OMIT
-	public static DoubleDataset createRange(final double start, final double stop, final double step) { // NAN_OMIT
+	static DoubleDataset createRange(final double start, final double stop, final double step) { // NAN_OMIT
 		int size = calcSteps(start, stop, step); // NAN_OMIT
 		DoubleDataset result = new DoubleDataset(size); // NAN_OMIT
 		for (int i = 0; i < size; i++) { // NAN_OMIT
@@ -244,7 +244,7 @@ public class DoubleDataset extends AbstractDataset {
 	 * @param shape
 	 * @return a dataset filled with ones
 	 */
-	public static DoubleDataset ones(final int... shape) {
+	static DoubleDataset ones(final int... shape) {
 		return new DoubleDataset(shape).fill(1);
 	}
 

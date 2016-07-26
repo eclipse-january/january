@@ -51,10 +51,10 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 		return Dataset.ARRAYINT8; // DATA_TYPE
 	}
 
-	public CompoundByteDataset() {
+	CompoundByteDataset() {
 	}
 
-	public CompoundByteDataset(final int itemSize) {
+	CompoundByteDataset(final int itemSize) {
 		isize = itemSize;
 	}
 
@@ -63,7 +63,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	 * @param itemSize
 	 * @param shape
 	 */
-	public CompoundByteDataset(final int itemSize, final int[] shape) {
+	CompoundByteDataset(final int itemSize, final int[] shape) {
 		isize = itemSize;
 		if (shape != null) {
 			if (shape.length == 1) {
@@ -89,7 +89,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	 * Copy a dataset
 	 * @param dataset
 	 */
-	public CompoundByteDataset(final CompoundByteDataset dataset) {
+	CompoundByteDataset(final CompoundByteDataset dataset) {
 		isize = dataset.isize;
 
 		copyToView(dataset, this, true, true);
@@ -118,7 +118,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	 * Create a dataset using given dataset
 	 * @param dataset
 	 */
-	public CompoundByteDataset(final CompoundDataset dataset) {
+	CompoundByteDataset(final CompoundDataset dataset) {
 		copyToView(dataset, this, true, false);
 		offset = 0;
 		stride = null;
@@ -146,7 +146,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	 * @param shape
 	 *            (can be null to create 1D dataset)
 	 */
-	public CompoundByteDataset(final int itemSize, final byte[] data, int... shape) { // PRIM_TYPE
+	CompoundByteDataset(final int itemSize, final byte[] data, int... shape) { // PRIM_TYPE
 		isize = itemSize;
 		if (data != null) {
 			if (shape == null || (shape.length == 0 && data.length > isize)) {
@@ -167,7 +167,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	 * Create a dataset using given datasets
 	 * @param datasets
 	 */
-	public CompoundByteDataset(final Dataset... datasets) {
+	CompoundByteDataset(final Dataset... datasets) {
 		if (datasets.length < 1) {
 			throw new IllegalArgumentException("Array of datasets must have length greater than zero");
 		}
@@ -208,7 +208,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	 *            repeat first element
 	 * @param dataset
 	 */
-	public CompoundByteDataset(final int itemSize, final boolean repeat, final Dataset dataset) {
+	CompoundByteDataset(final int itemSize, final boolean repeat, final Dataset dataset) {
 		isize = itemSize;
 		size = dataset.getSize();
 		shape = dataset.getShape();
@@ -280,7 +280,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	 * @param obj
 	 * @return dataset with contents given by input
 	 */
-	public static CompoundByteDataset createFromObject(final Object obj) {
+	static CompoundByteDataset createFromObject(final Object obj) {
 		ByteDataset result = ByteDataset.createFromObject(obj); // CLASS_TYPE
 		return (CompoundByteDataset) DatasetUtils.createCompoundDatasetFromLastAxis(result, true);
 	}
@@ -302,7 +302,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	 * @param stop
 	 * @return a new 1D dataset, filled with values determined by parameters
 	 */
-	public static CompoundByteDataset createRange(final int itemSize, final double stop) {
+	static CompoundByteDataset createRange(final int itemSize, final double stop) {
 		return createRange(itemSize, 0., stop, 1.);
 	}
 
@@ -312,7 +312,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	 * @param step
 	 * @return a new 1D dataset, filled with values determined by parameters
 	 */
-	public static CompoundByteDataset createRange(final int itemSize, final double start, final double stop,
+	static CompoundByteDataset createRange(final int itemSize, final double start, final double stop,
 			final double step) {
 		int size = calcSteps(start, stop, step);
 		CompoundByteDataset result = new CompoundByteDataset(itemSize, new int[] { size });
@@ -326,7 +326,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	 * @param shape
 	 * @return a dataset filled with ones
 	 */
-	public static CompoundByteDataset ones(final int itemSize, final int... shape) {
+	static CompoundByteDataset ones(final int itemSize, final int... shape) {
 		return new CompoundByteDataset(itemSize, shape).fill(1);
 	}
 

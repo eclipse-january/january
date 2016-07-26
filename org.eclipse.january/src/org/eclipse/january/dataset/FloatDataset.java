@@ -56,14 +56,14 @@ public class FloatDataset extends AbstractDataset {
 		return FLOAT32; // DATA_TYPE
 	}
 
-	public FloatDataset() {
+	FloatDataset() {
 	}
 
 	/**
 	 * Create a zero-filled dataset of given shape
 	 * @param shape
 	 */
-	public FloatDataset(final int... shape) {
+	FloatDataset(final int... shape) {
 		if (shape != null) {
 			if (shape.length == 1) {
 				size = shape[0];
@@ -90,7 +90,7 @@ public class FloatDataset extends AbstractDataset {
 	 * @param shape
 	 *            (can be null to create 1D dataset)
 	 */
-	public FloatDataset(final float[] data, int... shape) { // PRIM_TYPE
+	FloatDataset(final float[] data, int... shape) { // PRIM_TYPE
 		if (data == null) {
 			throw new IllegalArgumentException("Data must not be null");
 		}
@@ -111,7 +111,7 @@ public class FloatDataset extends AbstractDataset {
 	 * Copy a dataset
 	 * @param dataset
 	 */
-	public FloatDataset(final FloatDataset dataset) {
+	FloatDataset(final FloatDataset dataset) {
 		copyToView(dataset, this, true, true);
 
 		try {
@@ -138,7 +138,7 @@ public class FloatDataset extends AbstractDataset {
 	 * Copy and cast a dataset to this class type
 	 * @param dataset
 	 */
-	public FloatDataset(final Dataset dataset) {
+	FloatDataset(final Dataset dataset) {
 		copyToView(dataset, this, true, false);
 		offset = 0;
 		stride = null;
@@ -194,7 +194,7 @@ public class FloatDataset extends AbstractDataset {
 	 * @param obj
 	 * @return dataset with contents given by input
 	 */
-	public static FloatDataset createFromObject(final Object obj) {
+	static FloatDataset createFromObject(final Object obj) {
 		FloatDataset result = new FloatDataset();
 
 		if (obj != null) {
@@ -220,7 +220,7 @@ public class FloatDataset extends AbstractDataset {
 	 * @param stop
 	 * @return a new 1D dataset, filled with values determined by parameters
 	 */
-	public static FloatDataset createRange(final double stop) {
+	static FloatDataset createRange(final double stop) {
 		return createRange(0, stop, 1);
 	}
 	
@@ -231,7 +231,7 @@ public class FloatDataset extends AbstractDataset {
 	 * @param step
 	 * @return a new 1D dataset, filled with values determined by parameters
 	 */
-	public static FloatDataset createRange(final double start, final double stop, final double step) {
+	static FloatDataset createRange(final double start, final double stop, final double step) {
 		int size = calcSteps(start, stop, step);
 		FloatDataset result = new FloatDataset(size);
 		for (int i = 0; i < size; i++) {
@@ -244,7 +244,7 @@ public class FloatDataset extends AbstractDataset {
 	 * @param shape
 	 * @return a dataset filled with ones
 	 */
-	public static FloatDataset ones(final int... shape) {
+	static FloatDataset ones(final int... shape) {
 		return new FloatDataset(shape).fill(1);
 	}
 

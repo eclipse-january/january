@@ -51,10 +51,10 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 		return Dataset.ARRAYFLOAT32; // DATA_TYPE
 	}
 
-	public CompoundFloatDataset() {
+	CompoundFloatDataset() {
 	}
 
-	public CompoundFloatDataset(final int itemSize) {
+	CompoundFloatDataset(final int itemSize) {
 		isize = itemSize;
 	}
 
@@ -63,7 +63,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 	 * @param itemSize
 	 * @param shape
 	 */
-	public CompoundFloatDataset(final int itemSize, final int[] shape) {
+	CompoundFloatDataset(final int itemSize, final int[] shape) {
 		isize = itemSize;
 		if (shape != null) {
 			if (shape.length == 1) {
@@ -89,7 +89,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 	 * Copy a dataset
 	 * @param dataset
 	 */
-	public CompoundFloatDataset(final CompoundFloatDataset dataset) {
+	CompoundFloatDataset(final CompoundFloatDataset dataset) {
 		isize = dataset.isize;
 
 		copyToView(dataset, this, true, true);
@@ -118,7 +118,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 	 * Create a dataset using given dataset
 	 * @param dataset
 	 */
-	public CompoundFloatDataset(final CompoundDataset dataset) {
+	CompoundFloatDataset(final CompoundDataset dataset) {
 		copyToView(dataset, this, true, false);
 		offset = 0;
 		stride = null;
@@ -146,7 +146,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 	 * @param shape
 	 *            (can be null to create 1D dataset)
 	 */
-	public CompoundFloatDataset(final int itemSize, final float[] data, int... shape) { // PRIM_TYPE
+	CompoundFloatDataset(final int itemSize, final float[] data, int... shape) { // PRIM_TYPE
 		isize = itemSize;
 		if (data != null) {
 			if (shape == null || (shape.length == 0 && data.length > isize)) {
@@ -167,7 +167,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 	 * Create a dataset using given datasets
 	 * @param datasets
 	 */
-	public CompoundFloatDataset(final Dataset... datasets) {
+	CompoundFloatDataset(final Dataset... datasets) {
 		if (datasets.length < 1) {
 			throw new IllegalArgumentException("Array of datasets must have length greater than zero");
 		}
@@ -208,7 +208,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 	 *            repeat first element
 	 * @param dataset
 	 */
-	public CompoundFloatDataset(final int itemSize, final boolean repeat, final Dataset dataset) {
+	CompoundFloatDataset(final int itemSize, final boolean repeat, final Dataset dataset) {
 		isize = itemSize;
 		size = dataset.getSize();
 		shape = dataset.getShape();
@@ -280,7 +280,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 	 * @param obj
 	 * @return dataset with contents given by input
 	 */
-	public static CompoundFloatDataset createFromObject(final Object obj) {
+	static CompoundFloatDataset createFromObject(final Object obj) {
 		FloatDataset result = FloatDataset.createFromObject(obj); // CLASS_TYPE
 		return (CompoundFloatDataset) DatasetUtils.createCompoundDatasetFromLastAxis(result, true);
 	}
@@ -302,7 +302,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 	 * @param stop
 	 * @return a new 1D dataset, filled with values determined by parameters
 	 */
-	public static CompoundFloatDataset createRange(final int itemSize, final double stop) {
+	static CompoundFloatDataset createRange(final int itemSize, final double stop) {
 		return createRange(itemSize, 0., stop, 1.);
 	}
 
@@ -312,7 +312,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 	 * @param step
 	 * @return a new 1D dataset, filled with values determined by parameters
 	 */
-	public static CompoundFloatDataset createRange(final int itemSize, final double start, final double stop,
+	static CompoundFloatDataset createRange(final int itemSize, final double start, final double stop,
 			final double step) {
 		int size = calcSteps(start, stop, step);
 		CompoundFloatDataset result = new CompoundFloatDataset(itemSize, new int[] { size });
@@ -326,7 +326,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 	 * @param shape
 	 * @return a dataset filled with ones
 	 */
-	public static CompoundFloatDataset ones(final int itemSize, final int... shape) {
+	static CompoundFloatDataset ones(final int itemSize, final int... shape) {
 		return new CompoundFloatDataset(itemSize, shape).fill(1);
 	}
 

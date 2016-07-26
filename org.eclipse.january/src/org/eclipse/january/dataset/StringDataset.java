@@ -21,7 +21,7 @@ public class StringDataset extends StringDatasetBase {
 	// pin UID to base class
 	private static final long serialVersionUID = Dataset.serialVersionUID;
 
-	public StringDataset() {
+	StringDataset() {
 		super();
 	}
 
@@ -29,7 +29,7 @@ public class StringDataset extends StringDatasetBase {
 	 * Create a null-filled dataset of given shape
 	 * @param shape
 	 */
-	public StringDataset(final int... shape) {
+	StringDataset(final int... shape) {
 		super(shape);
 	}
 
@@ -39,7 +39,7 @@ public class StringDataset extends StringDatasetBase {
 	 * @param shape
 	 *            (can be null to create 1D dataset)
 	 */
-	public StringDataset(final String[] data, int... shape) {
+	StringDataset(final String[] data, int... shape) {
 		super(data, shape);
 	}
 
@@ -47,7 +47,7 @@ public class StringDataset extends StringDatasetBase {
 	 * Copy a dataset
 	 * @param dataset
 	 */
-	public StringDataset(final StringDataset dataset) {
+	StringDataset(final StringDataset dataset) {
 		super(dataset);
 	}
 
@@ -55,7 +55,7 @@ public class StringDataset extends StringDatasetBase {
 	 * Cast a dataset to this class type
 	 * @param dataset
 	 */
-	public StringDataset(final Dataset dataset) {
+	StringDataset(final Dataset dataset) {
 		super(dataset);
 	}
 
@@ -89,7 +89,7 @@ public class StringDataset extends StringDatasetBase {
 	 * @param obj
 	 * @return dataset with contents given by input
 	 */
-	public static StringDataset createFromObject(final Object obj) {
+	static StringDataset createFromObject(final Object obj) {
 		StringDatasetBase result = StringDatasetBase.createFromObject(obj);
 		StringDataset ds = new StringDataset(result.data, result.shape);
 		if (result.shape.length == 0)
@@ -101,7 +101,7 @@ public class StringDataset extends StringDatasetBase {
 	 * @param shape
 	 * @return a dataset filled with ones
 	 */
-	public static StringDataset ones(final int... shape) {
+	static StringDataset ones(final int... shape) {
 		throw new UnsupportedOperationException("Unsupported method for class");
 	}
 

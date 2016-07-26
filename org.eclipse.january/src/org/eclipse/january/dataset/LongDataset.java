@@ -56,14 +56,14 @@ public class LongDataset extends AbstractDataset {
 		return INT64; // DATA_TYPE
 	}
 
-	public LongDataset() {
+	LongDataset() {
 	}
 
 	/**
 	 * Create a zero-filled dataset of given shape
 	 * @param shape
 	 */
-	public LongDataset(final int... shape) {
+	LongDataset(final int... shape) {
 		if (shape != null) {
 			if (shape.length == 1) {
 				size = shape[0];
@@ -90,7 +90,7 @@ public class LongDataset extends AbstractDataset {
 	 * @param shape
 	 *            (can be null to create 1D dataset)
 	 */
-	public LongDataset(final long[] data, int... shape) { // PRIM_TYPE
+	LongDataset(final long[] data, int... shape) { // PRIM_TYPE
 		if (data == null) {
 			throw new IllegalArgumentException("Data must not be null");
 		}
@@ -111,7 +111,7 @@ public class LongDataset extends AbstractDataset {
 	 * Copy a dataset
 	 * @param dataset
 	 */
-	public LongDataset(final LongDataset dataset) {
+	LongDataset(final LongDataset dataset) {
 		copyToView(dataset, this, true, true);
 
 		try {
@@ -138,7 +138,7 @@ public class LongDataset extends AbstractDataset {
 	 * Copy and cast a dataset to this class type
 	 * @param dataset
 	 */
-	public LongDataset(final Dataset dataset) {
+	LongDataset(final Dataset dataset) {
 		copyToView(dataset, this, true, false);
 		offset = 0;
 		stride = null;
@@ -194,7 +194,7 @@ public class LongDataset extends AbstractDataset {
 	 * @param obj
 	 * @return dataset with contents given by input
 	 */
-	public static LongDataset createFromObject(final Object obj) {
+	static LongDataset createFromObject(final Object obj) {
 		LongDataset result = new LongDataset();
 
 		if (obj != null) {
@@ -220,7 +220,7 @@ public class LongDataset extends AbstractDataset {
 	 * @param stop
 	 * @return a new 1D dataset, filled with values determined by parameters
 	 */
-	public static LongDataset createRange(final double stop) {
+	static LongDataset createRange(final double stop) {
 		return createRange(0, stop, 1);
 	}
 	
@@ -231,7 +231,7 @@ public class LongDataset extends AbstractDataset {
 	 * @param step
 	 * @return a new 1D dataset, filled with values determined by parameters
 	 */
-	public static LongDataset createRange(final double start, final double stop, final double step) {
+	static LongDataset createRange(final double start, final double stop, final double step) {
 		int size = calcSteps(start, stop, step);
 		LongDataset result = new LongDataset(size);
 		for (int i = 0; i < size; i++) {
@@ -244,7 +244,7 @@ public class LongDataset extends AbstractDataset {
 	 * @param shape
 	 * @return a dataset filled with ones
 	 */
-	public static LongDataset ones(final int... shape) {
+	static LongDataset ones(final int... shape) {
 		return new LongDataset(shape).fill(1);
 	}
 

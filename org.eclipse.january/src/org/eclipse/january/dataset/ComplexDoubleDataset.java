@@ -35,7 +35,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 		return Dataset.COMPLEX128; // DATA_TYPE
 	}
 
-	public ComplexDoubleDataset() {
+	ComplexDoubleDataset() {
 		super(ISIZE);
 	}
 
@@ -43,7 +43,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	 * Create a zero-filled dataset of given shape
 	 * @param shape
 	 */
-	public ComplexDoubleDataset(final int... shape) {
+	ComplexDoubleDataset(final int... shape) {
 		super(ISIZE, shape);
 	}
 
@@ -52,7 +52,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	 * @param data
 	 * @param shape (can be null to create 1D dataset)
 	 */
-	public ComplexDoubleDataset(final double[] data, final int... shape) { // PRIM_TYPE
+	ComplexDoubleDataset(final double[] data, final int... shape) { // PRIM_TYPE
 		super(ISIZE, data, shape);
 	}
 
@@ -60,7 +60,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	 * Copy a dataset
 	 * @param dataset
 	 */
-	public ComplexDoubleDataset(final ComplexDoubleDataset dataset) {
+	ComplexDoubleDataset(final ComplexDoubleDataset dataset) {
 		super(dataset);
 	}
 
@@ -70,7 +70,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	 * @param imagData
 	 * @param shape (can be null or zero-length to create 1D dataset)
 	 */
-	public ComplexDoubleDataset(final double[] realData, final double[] imagData, int... shape) { // PRIM_TYPE
+	ComplexDoubleDataset(final double[] realData, final double[] imagData, int... shape) { // PRIM_TYPE
 		if (realData == null || imagData == null) {
 			throw new IllegalArgumentException("Data must not be null");
 		}
@@ -104,7 +104,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	 * @param real
 	 * @param imag
 	 */
-	public ComplexDoubleDataset(final Dataset real, final Dataset imag) {
+	ComplexDoubleDataset(final Dataset real, final Dataset imag) {
 		super(ISIZE, real.getShapeRef());
 		real.checkCompatibility(imag);
 
@@ -121,7 +121,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	 * Copy and cast a dataset to this complex type
 	 * @param dataset
 	 */
-	public ComplexDoubleDataset(final Dataset dataset) {
+	ComplexDoubleDataset(final Dataset dataset) {
 		super(ISIZE, dataset.getShapeRef());
 		copyToView(dataset, this, true, false);
 		offset = 0;
@@ -154,7 +154,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	 * @param obj
 	 * @return dataset with contents given by input
 	 */
-	public static ComplexDoubleDataset createFromObject(final Object obj) {
+	static ComplexDoubleDataset createFromObject(final Object obj) {
 		ComplexDoubleDataset result = new ComplexDoubleDataset();
 
 		result.shape = ShapeUtils.getShapeFromObject(obj);
@@ -176,7 +176,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	 * @param stop
 	 * @return a new 1D dataset, filled with values determined by parameters
 	 */
-	public static ComplexDoubleDataset createRange(final double stop) {
+	static ComplexDoubleDataset createRange(final double stop) {
 		return createRange(0, stop, 1);
 	}
 
@@ -186,7 +186,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	 * @param step
 	 * @return a new 1D dataset, filled with values determined by parameters
 	 */
-	public static ComplexDoubleDataset createRange(final double start, final double stop, final double step) {
+	static ComplexDoubleDataset createRange(final double start, final double stop, final double step) {
 		int size = calcSteps(start, stop, step);
 		ComplexDoubleDataset result = new ComplexDoubleDataset(size);
 		for (int i = 0; i < size; i ++) {
@@ -199,7 +199,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	 * @param shape
 	 * @return a dataset filled with ones
 	 */
-	public static ComplexDoubleDataset ones(final int... shape) {
+	static ComplexDoubleDataset ones(final int... shape) {
 		return new ComplexDoubleDataset(shape).fill(1);
 	}
 

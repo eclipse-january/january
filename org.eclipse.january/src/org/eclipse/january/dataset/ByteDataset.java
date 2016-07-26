@@ -56,14 +56,14 @@ public class ByteDataset extends AbstractDataset {
 		return INT8; // DATA_TYPE
 	}
 
-	public ByteDataset() {
+	ByteDataset() {
 	}
 
 	/**
 	 * Create a zero-filled dataset of given shape
 	 * @param shape
 	 */
-	public ByteDataset(final int... shape) {
+	ByteDataset(final int... shape) {
 		if (shape != null) {
 			if (shape.length == 1) {
 				size = shape[0];
@@ -90,7 +90,7 @@ public class ByteDataset extends AbstractDataset {
 	 * @param shape
 	 *            (can be null to create 1D dataset)
 	 */
-	public ByteDataset(final byte[] data, int... shape) { // PRIM_TYPE
+	ByteDataset(final byte[] data, int... shape) { // PRIM_TYPE
 		if (data == null) {
 			throw new IllegalArgumentException("Data must not be null");
 		}
@@ -111,7 +111,7 @@ public class ByteDataset extends AbstractDataset {
 	 * Copy a dataset
 	 * @param dataset
 	 */
-	public ByteDataset(final ByteDataset dataset) {
+	ByteDataset(final ByteDataset dataset) {
 		copyToView(dataset, this, true, true);
 
 		try {
@@ -138,7 +138,7 @@ public class ByteDataset extends AbstractDataset {
 	 * Copy and cast a dataset to this class type
 	 * @param dataset
 	 */
-	public ByteDataset(final Dataset dataset) {
+	ByteDataset(final Dataset dataset) {
 		copyToView(dataset, this, true, false);
 		offset = 0;
 		stride = null;
@@ -194,7 +194,7 @@ public class ByteDataset extends AbstractDataset {
 	 * @param obj
 	 * @return dataset with contents given by input
 	 */
-	public static ByteDataset createFromObject(final Object obj) {
+	static ByteDataset createFromObject(final Object obj) {
 		ByteDataset result = new ByteDataset();
 
 		if (obj != null) {
@@ -220,7 +220,7 @@ public class ByteDataset extends AbstractDataset {
 	 * @param stop
 	 * @return a new 1D dataset, filled with values determined by parameters
 	 */
-	public static ByteDataset createRange(final double stop) {
+	static ByteDataset createRange(final double stop) {
 		return createRange(0, stop, 1);
 	}
 	
@@ -231,7 +231,7 @@ public class ByteDataset extends AbstractDataset {
 	 * @param step
 	 * @return a new 1D dataset, filled with values determined by parameters
 	 */
-	public static ByteDataset createRange(final double start, final double stop, final double step) {
+	static ByteDataset createRange(final double start, final double stop, final double step) {
 		int size = calcSteps(start, stop, step);
 		ByteDataset result = new ByteDataset(size);
 		for (int i = 0; i < size; i++) {
@@ -244,7 +244,7 @@ public class ByteDataset extends AbstractDataset {
 	 * @param shape
 	 * @return a dataset filled with ones
 	 */
-	public static ByteDataset ones(final int... shape) {
+	static ByteDataset ones(final int... shape) {
 		return new ByteDataset(shape).fill(1);
 	}
 

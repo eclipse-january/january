@@ -51,10 +51,10 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 		return Dataset.ARRAYINT32; // DATA_TYPE
 	}
 
-	public CompoundIntegerDataset() {
+	CompoundIntegerDataset() {
 	}
 
-	public CompoundIntegerDataset(final int itemSize) {
+	CompoundIntegerDataset(final int itemSize) {
 		isize = itemSize;
 	}
 
@@ -63,7 +63,7 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 	 * @param itemSize
 	 * @param shape
 	 */
-	public CompoundIntegerDataset(final int itemSize, final int[] shape) {
+	CompoundIntegerDataset(final int itemSize, final int[] shape) {
 		isize = itemSize;
 		if (shape != null) {
 			if (shape.length == 1) {
@@ -89,7 +89,7 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 	 * Copy a dataset
 	 * @param dataset
 	 */
-	public CompoundIntegerDataset(final CompoundIntegerDataset dataset) {
+	CompoundIntegerDataset(final CompoundIntegerDataset dataset) {
 		isize = dataset.isize;
 
 		copyToView(dataset, this, true, true);
@@ -118,7 +118,7 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 	 * Create a dataset using given dataset
 	 * @param dataset
 	 */
-	public CompoundIntegerDataset(final CompoundDataset dataset) {
+	CompoundIntegerDataset(final CompoundDataset dataset) {
 		copyToView(dataset, this, true, false);
 		offset = 0;
 		stride = null;
@@ -146,7 +146,7 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 	 * @param shape
 	 *            (can be null to create 1D dataset)
 	 */
-	public CompoundIntegerDataset(final int itemSize, final int[] data, int... shape) { // PRIM_TYPE
+	CompoundIntegerDataset(final int itemSize, final int[] data, int... shape) { // PRIM_TYPE
 		isize = itemSize;
 		if (data != null) {
 			if (shape == null || (shape.length == 0 && data.length > isize)) {
@@ -167,7 +167,7 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 	 * Create a dataset using given datasets
 	 * @param datasets
 	 */
-	public CompoundIntegerDataset(final Dataset... datasets) {
+	CompoundIntegerDataset(final Dataset... datasets) {
 		if (datasets.length < 1) {
 			throw new IllegalArgumentException("Array of datasets must have length greater than zero");
 		}
@@ -208,7 +208,7 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 	 *            repeat first element
 	 * @param dataset
 	 */
-	public CompoundIntegerDataset(final int itemSize, final boolean repeat, final Dataset dataset) {
+	CompoundIntegerDataset(final int itemSize, final boolean repeat, final Dataset dataset) {
 		isize = itemSize;
 		size = dataset.getSize();
 		shape = dataset.getShape();
@@ -280,7 +280,7 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 	 * @param obj
 	 * @return dataset with contents given by input
 	 */
-	public static CompoundIntegerDataset createFromObject(final Object obj) {
+	static CompoundIntegerDataset createFromObject(final Object obj) {
 		IntegerDataset result = IntegerDataset.createFromObject(obj); // CLASS_TYPE
 		return (CompoundIntegerDataset) DatasetUtils.createCompoundDatasetFromLastAxis(result, true);
 	}
@@ -302,7 +302,7 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 	 * @param stop
 	 * @return a new 1D dataset, filled with values determined by parameters
 	 */
-	public static CompoundIntegerDataset createRange(final int itemSize, final double stop) {
+	static CompoundIntegerDataset createRange(final int itemSize, final double stop) {
 		return createRange(itemSize, 0., stop, 1.);
 	}
 
@@ -312,7 +312,7 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 	 * @param step
 	 * @return a new 1D dataset, filled with values determined by parameters
 	 */
-	public static CompoundIntegerDataset createRange(final int itemSize, final double start, final double stop,
+	static CompoundIntegerDataset createRange(final int itemSize, final double start, final double stop,
 			final double step) {
 		int size = calcSteps(start, stop, step);
 		CompoundIntegerDataset result = new CompoundIntegerDataset(itemSize, new int[] { size });
@@ -326,7 +326,7 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 	 * @param shape
 	 * @return a dataset filled with ones
 	 */
-	public static CompoundIntegerDataset ones(final int itemSize, final int... shape) {
+	static CompoundIntegerDataset ones(final int itemSize, final int... shape) {
 		return new CompoundIntegerDataset(itemSize, shape).fill(1);
 	}
 

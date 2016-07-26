@@ -22,7 +22,7 @@ public class BooleanDataset extends BooleanDatasetBase {
 	// pin UID to base class
 	private static final long serialVersionUID = Dataset.serialVersionUID;
 
-	public BooleanDataset() {
+	BooleanDataset() {
 		super();
 	}
 
@@ -30,7 +30,7 @@ public class BooleanDataset extends BooleanDatasetBase {
 	 * Create a false-filled dataset of given shape
 	 * @param shape
 	 */
-	public BooleanDataset(final int... shape) {
+	BooleanDataset(final int... shape) {
 		super(shape);
 	}
 
@@ -39,7 +39,7 @@ public class BooleanDataset extends BooleanDatasetBase {
 	 * @param data
 	 * @param shape (can be null to create 1D dataset)
 	 */
-	public BooleanDataset(final boolean[] data, int... shape) {
+	BooleanDataset(final boolean[] data, int... shape) {
 		super(data, shape);
 	}
 
@@ -47,7 +47,7 @@ public class BooleanDataset extends BooleanDatasetBase {
 	 * Copy a dataset
 	 * @param dataset
 	 */
-	public BooleanDataset(final BooleanDataset dataset) {
+	BooleanDataset(final BooleanDataset dataset) {
 		super(dataset);
 	}
 
@@ -55,7 +55,7 @@ public class BooleanDataset extends BooleanDatasetBase {
 	 * Cast a dataset to this class type
 	 * @param dataset
 	 */
-	public BooleanDataset(final Dataset dataset) {
+	BooleanDataset(final Dataset dataset) {
 		super(dataset);
 	}
 
@@ -79,7 +79,7 @@ public class BooleanDataset extends BooleanDatasetBase {
 	 * @param obj
 	 * @return dataset with contents given by input
 	 */
-	public static BooleanDataset createFromObject(final Object obj) {
+	static BooleanDataset createFromObject(final Object obj) {
 		BooleanDatasetBase result = BooleanDatasetBase.createFromObject(obj);
 		return new BooleanDataset(result.data, result.shape);
 	}
@@ -88,7 +88,7 @@ public class BooleanDataset extends BooleanDatasetBase {
 	 * @param shape
 	 * @return a dataset filled with trues
 	 */
-	public static BooleanDataset ones(final int... shape) {
+	static BooleanDataset ones(final int... shape) {
 		BooleanDatasetBase result = BooleanDatasetBase.ones(shape);
 		return new BooleanDataset(result.data, result.shape);
 	}
