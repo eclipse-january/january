@@ -59,9 +59,9 @@ public class ObjectDataset extends ObjectDatasetBase {
 	}
 
 	@Override
-	public ObjectDataset getView() {
+	public ObjectDataset getView(boolean deepCopyMetadata) {
 		ObjectDataset view = new ObjectDataset();
-		copyToView(this, view, true, true);
+		copyToView(this, view, true, deepCopyMetadata);
 		view.setData();
 		return view;
 	}

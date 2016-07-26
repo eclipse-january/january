@@ -249,9 +249,9 @@ public class ObjectDatasetBase extends AbstractDataset {
 	}
 
 	@Override
-	public ObjectDatasetBase getView() {
+	public ObjectDatasetBase getView(boolean deepCopyMetadata) {
 		ObjectDatasetBase view = new ObjectDatasetBase();
-		copyToView(this, view, true, true);
+		copyToView(this, view, true, deepCopyMetadata);
 		view.setData();
 		return view;
 	}

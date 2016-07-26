@@ -60,9 +60,9 @@ public class StringDataset extends StringDatasetBase {
 	}
 
 	@Override
-	public StringDataset getView() {
+	public StringDataset getView(boolean deepCopyMetadata) {
 		StringDataset view = new StringDataset();
-		copyToView(this, view, true, true);
+		copyToView(this, view, true, deepCopyMetadata);
 		view.setData();
 		return view;
 	}

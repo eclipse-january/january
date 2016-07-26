@@ -249,9 +249,9 @@ public class BooleanDatasetBase extends AbstractDataset {
 	}
 
 	@Override
-	public BooleanDatasetBase getView() {
+	public BooleanDatasetBase getView(boolean deepCopyMetadata) {
 		BooleanDatasetBase view = new BooleanDatasetBase();
-		copyToView(this, view, true, true);
+		copyToView(this, view, true, deepCopyMetadata);
 		view.setData();
 		return view;
 	}

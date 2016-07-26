@@ -411,9 +411,9 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	}
 
 	@Override
-	public CompoundByteDataset getView() {
+	public CompoundByteDataset getView(boolean deepCopyMetadata) {
 		CompoundByteDataset view = new CompoundByteDataset(isize);
-		copyToView(this, view, true, true);
+		copyToView(this, view, true, deepCopyMetadata);
 		view.setData();
 		return view;
 	}

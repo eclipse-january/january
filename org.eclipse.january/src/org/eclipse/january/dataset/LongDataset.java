@@ -276,9 +276,9 @@ public class LongDataset extends AbstractDataset {
 	}
 
 	@Override
-	public LongDataset getView() {
+	public LongDataset getView(boolean deepCopyMetadata) {
 		LongDataset view = new LongDataset();
-		copyToView(this, view, true, true);
+		copyToView(this, view, true, deepCopyMetadata);
 		view.setData();
 		return view;
 	}

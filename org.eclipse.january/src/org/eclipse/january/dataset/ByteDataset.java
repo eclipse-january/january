@@ -276,9 +276,9 @@ public class ByteDataset extends AbstractDataset {
 	}
 
 	@Override
-	public ByteDataset getView() {
+	public ByteDataset getView(boolean deepCopyMetadata) {
 		ByteDataset view = new ByteDataset();
-		copyToView(this, view, true, true);
+		copyToView(this, view, true, deepCopyMetadata);
 		view.setData();
 		return view;
 	}

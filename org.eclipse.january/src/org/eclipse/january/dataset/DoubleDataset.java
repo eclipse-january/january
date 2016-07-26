@@ -276,9 +276,9 @@ public class DoubleDataset extends AbstractDataset {
 	}
 
 	@Override
-	public DoubleDataset getView() {
+	public DoubleDataset getView(boolean deepCopyMetadata) {
 		DoubleDataset view = new DoubleDataset();
-		copyToView(this, view, true, true);
+		copyToView(this, view, true, deepCopyMetadata);
 		view.setData();
 		return view;
 	}

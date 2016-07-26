@@ -147,7 +147,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	@Override
-	abstract public AbstractDataset getView();
+	abstract public AbstractDataset getView(boolean deepCopyMetadata);
 
 	/**
 	 * Copy fields from original to view
@@ -229,7 +229,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	public Dataset getTransposedView(int... axes) {
 		axes = checkPermutatedAxes(shape, axes);
 
-		AbstractDataset t = getView();
+		AbstractDataset t = getView(true);
 		if (axes == null || getRank() == 1)
 			return t;
 
@@ -794,7 +794,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public Dataset getBroadcastView(int... broadcastShape) {
-		AbstractDataset view = getView();
+		AbstractDataset view = getView(true);
 		
 		if (!Arrays.equals(shape, broadcastShape)) {
 			List<int[]> nShapes = BroadcastUtils.broadcastShapesToMax(broadcastShape, shape);
@@ -819,7 +819,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	@Override
 	public Dataset getSliceView(Slice... slice) {
 		if (slice == null || slice.length == 0) {
-			return getView();
+			return getView(true);
 		}
 
 		return getSliceView(new SliceND(shape, slice));
@@ -833,7 +833,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	@Override
 	public Dataset getSliceView(SliceND slice) {
 		if (slice.isAll()) {
-			return getView();
+			return getView(true);
 		}
 
 		final int rank = shape.length;
@@ -842,7 +842,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 		int[] sShape = createStrides(slice, this, sStride, sOffset);
 	
-		AbstractDataset s = getView();
+		AbstractDataset s = getView(false);
 		s.shape = sShape;
 		s.size = ShapeUtils.calcSize(sShape);
 		s.stride = sStride;
@@ -1347,7 +1347,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public Dataset reshape(final int... shape) {
-		Dataset a = getView();
+		Dataset a = getView(true);
 		try {
 			a.setShape(shape);
 		} catch (IllegalArgumentException e) {
@@ -1383,7 +1383,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public Dataset getRealView() {
-		return getView();
+		return getView(true);
 	}
 
 	@Override

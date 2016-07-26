@@ -219,9 +219,9 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 	}
 
 	@Override
-	public ComplexFloatDataset getView() {
+	public ComplexFloatDataset getView(boolean deepCopyMetadata) {
 		ComplexFloatDataset view = new ComplexFloatDataset();
-		copyToView(this, view, true, true);
+		copyToView(this, view, true, deepCopyMetadata);
 		view.data = data;
 		return view;
 	}

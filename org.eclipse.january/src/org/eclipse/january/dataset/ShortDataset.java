@@ -276,9 +276,9 @@ public class ShortDataset extends AbstractDataset {
 	}
 
 	@Override
-	public ShortDataset getView() {
+	public ShortDataset getView(boolean deepCopyMetadata) {
 		ShortDataset view = new ShortDataset();
-		copyToView(this, view, true, true);
+		copyToView(this, view, true, deepCopyMetadata);
 		view.setData();
 		return view;
 	}

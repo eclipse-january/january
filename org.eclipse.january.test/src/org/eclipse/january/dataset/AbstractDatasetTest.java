@@ -882,7 +882,7 @@ public class AbstractDatasetTest {
 	@Test
 	public void testView() {
 		Dataset a = DatasetFactory.createRange(20, Dataset.FLOAT64);
-		Dataset b = a.getView();
+		Dataset b = a.getView(true);
 		assertEquals(true, a.equals(b));
 	}
 

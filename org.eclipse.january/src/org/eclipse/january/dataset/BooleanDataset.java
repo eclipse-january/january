@@ -60,9 +60,9 @@ public class BooleanDataset extends BooleanDatasetBase {
 	}
 
 	@Override
-	public BooleanDataset getView() {
+	public BooleanDataset getView(boolean deepCopyMetadata) {
 		BooleanDataset view = new BooleanDataset();
-		copyToView(this, view, true, true);
+		copyToView(this, view, true, deepCopyMetadata);
 		view.setData();
 		return view;
 	}

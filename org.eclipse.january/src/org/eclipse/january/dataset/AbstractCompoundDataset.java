@@ -201,7 +201,7 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 	}
 
 	@Override
-	abstract public AbstractCompoundDataset getView();
+	abstract public AbstractCompoundDataset getView(boolean deepCopyMetadata);
 
 	@Override
 	public CompoundDataset ifloorDivide(Object o) {

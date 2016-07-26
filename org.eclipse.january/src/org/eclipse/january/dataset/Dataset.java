@@ -193,9 +193,10 @@ public interface Dataset extends IDataset {
 	public Dataset synchronizedCopy();
 
 	/**
+	 * @param deepCopyMetadata if true then deep-copy metadata
 	 * @return whole view of dataset (i.e. data buffer is shared)
 	 */
-	public Dataset getView();
+	public Dataset getView(boolean deepCopyMetadata);
 
 	/**
 	 * @return view of dataset that is broadcasted to given shape

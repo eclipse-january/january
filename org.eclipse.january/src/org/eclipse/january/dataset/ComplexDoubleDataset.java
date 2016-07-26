@@ -219,9 +219,9 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	}
 
 	@Override
-	public ComplexDoubleDataset getView() {
+	public ComplexDoubleDataset getView(boolean deepCopyMetadata) {
 		ComplexDoubleDataset view = new ComplexDoubleDataset();
-		copyToView(this, view, true, true);
+		copyToView(this, view, true, deepCopyMetadata);
 		view.data = data;
 		return view;
 	}

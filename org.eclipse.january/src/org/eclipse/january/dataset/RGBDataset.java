@@ -410,9 +410,9 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	}
 
 	@Override
-	public RGBDataset getView() {
+	public RGBDataset getView(boolean deepCopyMetadata) {
 		RGBDataset view = new RGBDataset();
-		copyToView(this, view, true, true);
+		copyToView(this, view, true, deepCopyMetadata);
 		view.setData();
 		return view;
 	}

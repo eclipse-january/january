@@ -411,9 +411,9 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 	}
 
 	@Override
-	public CompoundIntegerDataset getView() {
+	public CompoundIntegerDataset getView(boolean deepCopyMetadata) {
 		CompoundIntegerDataset view = new CompoundIntegerDataset(isize);
-		copyToView(this, view, true, true);
+		copyToView(this, view, true, deepCopyMetadata);
 		view.setData();
 		return view;
 	}

@@ -249,9 +249,9 @@ public class StringDatasetBase extends AbstractDataset {
 	}
 
 	@Override
-	public StringDatasetBase getView() {
+	public StringDatasetBase getView(boolean deepCopyMetadata) {
 		StringDatasetBase view = new StringDatasetBase();
-		copyToView(this, view, true, true);
+		copyToView(this, view, true, deepCopyMetadata);
 		view.setData();
 		return view;
 	}

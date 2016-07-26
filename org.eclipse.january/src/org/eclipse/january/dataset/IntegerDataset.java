@@ -276,9 +276,9 @@ public class IntegerDataset extends AbstractDataset {
 	}
 
 	@Override
-	public IntegerDataset getView() {
+	public IntegerDataset getView(boolean deepCopyMetadata) {
 		IntegerDataset view = new IntegerDataset();
-		copyToView(this, view, true, true);
+		copyToView(this, view, true, deepCopyMetadata);
 		view.setData();
 		return view;
 	}

@@ -276,9 +276,9 @@ public class FloatDataset extends AbstractDataset {
 	}
 
 	@Override
-	public FloatDataset getView() {
+	public FloatDataset getView(boolean deepCopyMetadata) {
 		FloatDataset view = new FloatDataset();
-		copyToView(this, view, true, true);
+		copyToView(this, view, true, deepCopyMetadata);
 		view.setData();
 		return view;
 	}
