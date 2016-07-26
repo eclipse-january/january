@@ -251,78 +251,70 @@ public class STLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	public class EDoubleElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "xtext.STL.EDouble");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
-		private final Alternatives cAlternatives_0_0 = (Alternatives)cGroup_0.eContents().get(0);
-		private final Keyword cHyphenMinusKeyword_0_0_0 = (Keyword)cAlternatives_0_0.eContents().get(0);
-		private final Keyword cPlusSignKeyword_0_0_1 = (Keyword)cAlternatives_0_0.eContents().get(1);
-		private final RuleCall cINTTerminalRuleCall_0_1 = (RuleCall)cGroup_0.eContents().get(1);
-		private final Keyword cFullStopKeyword_0_2 = (Keyword)cGroup_0.eContents().get(2);
-		private final RuleCall cINTTerminalRuleCall_0_3 = (RuleCall)cGroup_0.eContents().get(3);
-		private final Group cGroup_0_4 = (Group)cGroup_0.eContents().get(4);
-		private final Alternatives cAlternatives_0_4_0 = (Alternatives)cGroup_0_4.eContents().get(0);
-		private final Keyword cEKeyword_0_4_0_0 = (Keyword)cAlternatives_0_4_0.eContents().get(0);
-		private final Keyword cEKeyword_0_4_0_1 = (Keyword)cAlternatives_0_4_0.eContents().get(1);
-		private final Alternatives cAlternatives_0_4_1 = (Alternatives)cGroup_0_4.eContents().get(1);
-		private final Keyword cHyphenMinusKeyword_0_4_1_0 = (Keyword)cAlternatives_0_4_1.eContents().get(0);
-		private final Keyword cPlusSignKeyword_0_4_1_1 = (Keyword)cAlternatives_0_4_1.eContents().get(1);
-		private final RuleCall cINTTerminalRuleCall_0_4_2 = (RuleCall)cGroup_0_4.eContents().get(2);
-		private final RuleCall cINTTerminalRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Keyword cHyphenMinusKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
+		private final Keyword cPlusSignKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
+		private final RuleCall cINTTerminalRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
+		private final Keyword cFullStopKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final RuleCall cINTTerminalRuleCall_3 = (RuleCall)cGroup.eContents().get(3);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Alternatives cAlternatives_4_0 = (Alternatives)cGroup_4.eContents().get(0);
+		private final Keyword cEKeyword_4_0_0 = (Keyword)cAlternatives_4_0.eContents().get(0);
+		private final Keyword cEKeyword_4_0_1 = (Keyword)cAlternatives_4_0.eContents().get(1);
+		private final Alternatives cAlternatives_4_1 = (Alternatives)cGroup_4.eContents().get(1);
+		private final Keyword cHyphenMinusKeyword_4_1_0 = (Keyword)cAlternatives_4_1.eContents().get(0);
+		private final Keyword cPlusSignKeyword_4_1_1 = (Keyword)cAlternatives_4_1.eContents().get(1);
+		private final RuleCall cINTTerminalRuleCall_4_2 = (RuleCall)cGroup_4.eContents().get(2);
 		
 		//EDouble ecore::EDouble:
-		//	('-' | '+')? INT? '.' INT (('E' | 'e') ('-' | '+')? INT)? | INT
+		//	('-' | '+')? INT? '.' INT (('E' | 'e') ('-' | '+')? INT)?
 		@Override public ParserRule getRule() { return rule; }
 		
-		//('-' | '+')? INT? '.' INT (('E' | 'e') ('-' | '+')? INT)? | INT
-		public Alternatives getAlternatives() { return cAlternatives; }
-		
 		//('-' | '+')? INT? '.' INT (('E' | 'e') ('-' | '+')? INT)?
-		public Group getGroup_0() { return cGroup_0; }
+		public Group getGroup() { return cGroup; }
 		
 		//('-' | '+')?
-		public Alternatives getAlternatives_0_0() { return cAlternatives_0_0; }
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 		
 		//'-'
-		public Keyword getHyphenMinusKeyword_0_0_0() { return cHyphenMinusKeyword_0_0_0; }
+		public Keyword getHyphenMinusKeyword_0_0() { return cHyphenMinusKeyword_0_0; }
 		
 		//'+'
-		public Keyword getPlusSignKeyword_0_0_1() { return cPlusSignKeyword_0_0_1; }
+		public Keyword getPlusSignKeyword_0_1() { return cPlusSignKeyword_0_1; }
 		
 		//INT?
-		public RuleCall getINTTerminalRuleCall_0_1() { return cINTTerminalRuleCall_0_1; }
+		public RuleCall getINTTerminalRuleCall_1() { return cINTTerminalRuleCall_1; }
 		
 		//'.'
-		public Keyword getFullStopKeyword_0_2() { return cFullStopKeyword_0_2; }
+		public Keyword getFullStopKeyword_2() { return cFullStopKeyword_2; }
 		
 		//INT
-		public RuleCall getINTTerminalRuleCall_0_3() { return cINTTerminalRuleCall_0_3; }
+		public RuleCall getINTTerminalRuleCall_3() { return cINTTerminalRuleCall_3; }
 		
 		//(('E' | 'e') ('-' | '+')? INT)?
-		public Group getGroup_0_4() { return cGroup_0_4; }
+		public Group getGroup_4() { return cGroup_4; }
 		
 		//('E' | 'e')
-		public Alternatives getAlternatives_0_4_0() { return cAlternatives_0_4_0; }
+		public Alternatives getAlternatives_4_0() { return cAlternatives_4_0; }
 		
 		//'E'
-		public Keyword getEKeyword_0_4_0_0() { return cEKeyword_0_4_0_0; }
+		public Keyword getEKeyword_4_0_0() { return cEKeyword_4_0_0; }
 		
 		//'e'
-		public Keyword getEKeyword_0_4_0_1() { return cEKeyword_0_4_0_1; }
+		public Keyword getEKeyword_4_0_1() { return cEKeyword_4_0_1; }
 		
 		//('-' | '+')?
-		public Alternatives getAlternatives_0_4_1() { return cAlternatives_0_4_1; }
+		public Alternatives getAlternatives_4_1() { return cAlternatives_4_1; }
 		
 		//'-'
-		public Keyword getHyphenMinusKeyword_0_4_1_0() { return cHyphenMinusKeyword_0_4_1_0; }
+		public Keyword getHyphenMinusKeyword_4_1_0() { return cHyphenMinusKeyword_4_1_0; }
 		
 		//'+'
-		public Keyword getPlusSignKeyword_0_4_1_1() { return cPlusSignKeyword_0_4_1_1; }
+		public Keyword getPlusSignKeyword_4_1_1() { return cPlusSignKeyword_4_1_1; }
 		
 		//INT
-		public RuleCall getINTTerminalRuleCall_0_4_2() { return cINTTerminalRuleCall_0_4_2; }
-		
-		//INT
-		public RuleCall getINTTerminalRuleCall_1() { return cINTTerminalRuleCall_1; }
+		public RuleCall getINTTerminalRuleCall_4_2() { return cINTTerminalRuleCall_4_2; }
 	}
 	public class EStringElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "xtext.STL.EString");
@@ -438,7 +430,7 @@ public class STLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//EDouble ecore::EDouble:
-	//	('-' | '+')? INT? '.' INT (('E' | 'e') ('-' | '+')? INT)? | INT
+	//	('-' | '+')? INT? '.' INT (('E' | 'e') ('-' | '+')? INT)?
 	public EDoubleElements getEDoubleAccess() {
 		return pEDouble;
 	}

@@ -438,84 +438,74 @@ ruleEDouble returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()
 }:
 	(
 		(
+			kw='-'
+			{
+				$current.merge(kw);
+				newLeafNode(kw, grammarAccess.getEDoubleAccess().getHyphenMinusKeyword_0_0());
+			}
+			    |
+			kw='+'
+			{
+				$current.merge(kw);
+				newLeafNode(kw, grammarAccess.getEDoubleAccess().getPlusSignKeyword_0_1());
+			}
+		)?
+		(
+			this_INT_2=RULE_INT
+			{
+				$current.merge(this_INT_2);
+			}
+			{
+				newLeafNode(this_INT_2, grammarAccess.getEDoubleAccess().getINTTerminalRuleCall_1());
+			}
+		)?
+		kw='.'
+		{
+			$current.merge(kw);
+			newLeafNode(kw, grammarAccess.getEDoubleAccess().getFullStopKeyword_2());
+		}
+		this_INT_4=RULE_INT
+		{
+			$current.merge(this_INT_4);
+		}
+		{
+			newLeafNode(this_INT_4, grammarAccess.getEDoubleAccess().getINTTerminalRuleCall_3());
+		}
+		(
+			(
+				kw='E'
+				{
+					$current.merge(kw);
+					newLeafNode(kw, grammarAccess.getEDoubleAccess().getEKeyword_4_0_0());
+				}
+				    |
+				kw='e'
+				{
+					$current.merge(kw);
+					newLeafNode(kw, grammarAccess.getEDoubleAccess().getEKeyword_4_0_1());
+				}
+			)
 			(
 				kw='-'
 				{
 					$current.merge(kw);
-					newLeafNode(kw, grammarAccess.getEDoubleAccess().getHyphenMinusKeyword_0_0_0());
+					newLeafNode(kw, grammarAccess.getEDoubleAccess().getHyphenMinusKeyword_4_1_0());
 				}
 				    |
 				kw='+'
 				{
 					$current.merge(kw);
-					newLeafNode(kw, grammarAccess.getEDoubleAccess().getPlusSignKeyword_0_0_1());
+					newLeafNode(kw, grammarAccess.getEDoubleAccess().getPlusSignKeyword_4_1_1());
 				}
 			)?
-			(
-				this_INT_2=RULE_INT
-				{
-					$current.merge(this_INT_2);
-				}
-				{
-					newLeafNode(this_INT_2, grammarAccess.getEDoubleAccess().getINTTerminalRuleCall_0_1());
-				}
-			)?
-			kw='.'
+			this_INT_9=RULE_INT
 			{
-				$current.merge(kw);
-				newLeafNode(kw, grammarAccess.getEDoubleAccess().getFullStopKeyword_0_2());
-			}
-			this_INT_4=RULE_INT
-			{
-				$current.merge(this_INT_4);
+				$current.merge(this_INT_9);
 			}
 			{
-				newLeafNode(this_INT_4, grammarAccess.getEDoubleAccess().getINTTerminalRuleCall_0_3());
+				newLeafNode(this_INT_9, grammarAccess.getEDoubleAccess().getINTTerminalRuleCall_4_2());
 			}
-			(
-				(
-					kw='E'
-					{
-						$current.merge(kw);
-						newLeafNode(kw, grammarAccess.getEDoubleAccess().getEKeyword_0_4_0_0());
-					}
-					    |
-					kw='e'
-					{
-						$current.merge(kw);
-						newLeafNode(kw, grammarAccess.getEDoubleAccess().getEKeyword_0_4_0_1());
-					}
-				)
-				(
-					kw='-'
-					{
-						$current.merge(kw);
-						newLeafNode(kw, grammarAccess.getEDoubleAccess().getHyphenMinusKeyword_0_4_1_0());
-					}
-					    |
-					kw='+'
-					{
-						$current.merge(kw);
-						newLeafNode(kw, grammarAccess.getEDoubleAccess().getPlusSignKeyword_0_4_1_1());
-					}
-				)?
-				this_INT_9=RULE_INT
-				{
-					$current.merge(this_INT_9);
-				}
-				{
-					newLeafNode(this_INT_9, grammarAccess.getEDoubleAccess().getINTTerminalRuleCall_0_4_2());
-				}
-			)?
-		)
-		    |
-		this_INT_10=RULE_INT
-		{
-			$current.merge(this_INT_10);
-		}
-		{
-			newLeafNode(this_INT_10, grammarAccess.getEDoubleAccess().getINTTerminalRuleCall_1());
-		}
+		)?
 	)
 ;
 
