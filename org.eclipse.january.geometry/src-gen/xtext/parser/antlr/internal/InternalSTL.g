@@ -302,82 +302,38 @@ ruleTriangle returns [EObject current=null]
 		{
 			newLeafNode(otherlv_5, grammarAccess.getTriangleAccess().getLoopKeyword_4());
 		}
-		otherlv_6='vertex'
-		{
-			newLeafNode(otherlv_6, grammarAccess.getTriangleAccess().getVertexKeyword_5());
-		}
 		(
+			otherlv_6='vertex'
+			{
+				newLeafNode(otherlv_6, grammarAccess.getTriangleAccess().getVertexKeyword_5_0());
+			}
 			(
-				{
-					newCompositeNode(grammarAccess.getTriangleAccess().getVertex1VertexParserRuleCall_6_0());
-				}
-				lv_vertex1_7_0=ruleVertex
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getTriangleRule());
+				(
+					{
+						newCompositeNode(grammarAccess.getTriangleAccess().getVerticesVertexParserRuleCall_5_1_0());
 					}
-					set(
-						$current,
-						"vertex1",
-						lv_vertex1_7_0,
-						"xtext.STL.Vertex");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)
-		otherlv_8='vertex'
-		{
-			newLeafNode(otherlv_8, grammarAccess.getTriangleAccess().getVertexKeyword_7());
-		}
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getTriangleAccess().getVertex2VertexParserRuleCall_8_0());
-				}
-				lv_vertex2_9_0=ruleVertex
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getTriangleRule());
+					lv_vertices_7_0=ruleVertex
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getTriangleRule());
+						}
+						add(
+							$current,
+							"vertices",
+							lv_vertices_7_0,
+							"xtext.STL.Vertex");
+						afterParserOrEnumRuleCall();
 					}
-					set(
-						$current,
-						"vertex2",
-						lv_vertex2_9_0,
-						"xtext.STL.Vertex");
-					afterParserOrEnumRuleCall();
-				}
+				)
 			)
-		)
-		otherlv_10='vertex'
+		)*
+		otherlv_8='endloop'
 		{
-			newLeafNode(otherlv_10, grammarAccess.getTriangleAccess().getVertexKeyword_9());
+			newLeafNode(otherlv_8, grammarAccess.getTriangleAccess().getEndloopKeyword_6());
 		}
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getTriangleAccess().getVertex3VertexParserRuleCall_10_0());
-				}
-				lv_vertex3_11_0=ruleVertex
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getTriangleRule());
-					}
-					set(
-						$current,
-						"vertex3",
-						lv_vertex3_11_0,
-						"xtext.STL.Vertex");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)
-		otherlv_12='endloop'
+		otherlv_9='endfacet'
 		{
-			newLeafNode(otherlv_12, grammarAccess.getTriangleAccess().getEndloopKeyword_11());
-		}
-		otherlv_13='endfacet'
-		{
-			newLeafNode(otherlv_13, grammarAccess.getTriangleAccess().getEndfacetKeyword_12());
+			newLeafNode(otherlv_9, grammarAccess.getTriangleAccess().getEndfacetKeyword_7());
 		}
 	)
 ;
@@ -482,74 +438,84 @@ ruleEDouble returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()
 }:
 	(
 		(
-			kw='-'
-			{
-				$current.merge(kw);
-				newLeafNode(kw, grammarAccess.getEDoubleAccess().getHyphenMinusKeyword_0_0());
-			}
-			    |
-			kw='+'
-			{
-				$current.merge(kw);
-				newLeafNode(kw, grammarAccess.getEDoubleAccess().getPlusSignKeyword_0_1());
-			}
-		)?
-		(
-			this_INT_2=RULE_INT
-			{
-				$current.merge(this_INT_2);
-			}
-			{
-				newLeafNode(this_INT_2, grammarAccess.getEDoubleAccess().getINTTerminalRuleCall_1());
-			}
-		)?
-		kw='.'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getEDoubleAccess().getFullStopKeyword_2());
-		}
-		this_INT_4=RULE_INT
-		{
-			$current.merge(this_INT_4);
-		}
-		{
-			newLeafNode(this_INT_4, grammarAccess.getEDoubleAccess().getINTTerminalRuleCall_3());
-		}
-		(
-			(
-				kw='E'
-				{
-					$current.merge(kw);
-					newLeafNode(kw, grammarAccess.getEDoubleAccess().getEKeyword_4_0_0());
-				}
-				    |
-				kw='e'
-				{
-					$current.merge(kw);
-					newLeafNode(kw, grammarAccess.getEDoubleAccess().getEKeyword_4_0_1());
-				}
-			)
 			(
 				kw='-'
 				{
 					$current.merge(kw);
-					newLeafNode(kw, grammarAccess.getEDoubleAccess().getHyphenMinusKeyword_4_1_0());
+					newLeafNode(kw, grammarAccess.getEDoubleAccess().getHyphenMinusKeyword_0_0_0());
 				}
 				    |
 				kw='+'
 				{
 					$current.merge(kw);
-					newLeafNode(kw, grammarAccess.getEDoubleAccess().getPlusSignKeyword_4_1_1());
+					newLeafNode(kw, grammarAccess.getEDoubleAccess().getPlusSignKeyword_0_0_1());
 				}
 			)?
-			this_INT_9=RULE_INT
+			(
+				this_INT_2=RULE_INT
+				{
+					$current.merge(this_INT_2);
+				}
+				{
+					newLeafNode(this_INT_2, grammarAccess.getEDoubleAccess().getINTTerminalRuleCall_0_1());
+				}
+			)?
+			kw='.'
 			{
-				$current.merge(this_INT_9);
+				$current.merge(kw);
+				newLeafNode(kw, grammarAccess.getEDoubleAccess().getFullStopKeyword_0_2());
+			}
+			this_INT_4=RULE_INT
+			{
+				$current.merge(this_INT_4);
 			}
 			{
-				newLeafNode(this_INT_9, grammarAccess.getEDoubleAccess().getINTTerminalRuleCall_4_2());
+				newLeafNode(this_INT_4, grammarAccess.getEDoubleAccess().getINTTerminalRuleCall_0_3());
 			}
-		)?
+			(
+				(
+					kw='E'
+					{
+						$current.merge(kw);
+						newLeafNode(kw, grammarAccess.getEDoubleAccess().getEKeyword_0_4_0_0());
+					}
+					    |
+					kw='e'
+					{
+						$current.merge(kw);
+						newLeafNode(kw, grammarAccess.getEDoubleAccess().getEKeyword_0_4_0_1());
+					}
+				)
+				(
+					kw='-'
+					{
+						$current.merge(kw);
+						newLeafNode(kw, grammarAccess.getEDoubleAccess().getHyphenMinusKeyword_0_4_1_0());
+					}
+					    |
+					kw='+'
+					{
+						$current.merge(kw);
+						newLeafNode(kw, grammarAccess.getEDoubleAccess().getPlusSignKeyword_0_4_1_1());
+					}
+				)?
+				this_INT_9=RULE_INT
+				{
+					$current.merge(this_INT_9);
+				}
+				{
+					newLeafNode(this_INT_9, grammarAccess.getEDoubleAccess().getINTTerminalRuleCall_0_4_2());
+				}
+			)?
+		)
+		    |
+		this_INT_10=RULE_INT
+		{
+			$current.merge(this_INT_10);
+		}
+		{
+			newLeafNode(this_INT_10, grammarAccess.getEDoubleAccess().getINTTerminalRuleCall_1());
+		}
 	)
 ;
 

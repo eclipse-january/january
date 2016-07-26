@@ -53,6 +53,7 @@ public class STLParser extends AbstractContentAssistParser {
 					put(grammarAccess.getShape_ImplAccess().getGroup(), "rule__Shape_Impl__Group__0");
 					put(grammarAccess.getTriangleAccess().getGroup(), "rule__Triangle__Group__0");
 					put(grammarAccess.getTriangleAccess().getGroup_2(), "rule__Triangle__Group_2__0");
+					put(grammarAccess.getTriangleAccess().getGroup_5(), "rule__Triangle__Group_5__0");
 					put(grammarAccess.getVertexAccess().getGroup(), "rule__Vertex__Group__0");
 					put(grammarAccess.getEDoubleAccess().getGroup(), "rule__EDouble__Group__0");
 					put(grammarAccess.getEDoubleAccess().getGroup_4(), "rule__EDouble__Group_4__0");
@@ -60,9 +61,7 @@ public class STLParser extends AbstractContentAssistParser {
 					put(grammarAccess.getShape_ImplAccess().getNameAssignment_2(), "rule__Shape_Impl__NameAssignment_2");
 					put(grammarAccess.getShape_ImplAccess().getTrianglesAssignment_4(), "rule__Shape_Impl__TrianglesAssignment_4");
 					put(grammarAccess.getTriangleAccess().getNormalAssignment_2_1(), "rule__Triangle__NormalAssignment_2_1");
-					put(grammarAccess.getTriangleAccess().getVertex1Assignment_6(), "rule__Triangle__Vertex1Assignment_6");
-					put(grammarAccess.getTriangleAccess().getVertex2Assignment_8(), "rule__Triangle__Vertex2Assignment_8");
-					put(grammarAccess.getTriangleAccess().getVertex3Assignment_10(), "rule__Triangle__Vertex3Assignment_10");
+					put(grammarAccess.getTriangleAccess().getVerticesAssignment_5_1(), "rule__Triangle__VerticesAssignment_5_1");
 					put(grammarAccess.getVertexAccess().getXAssignment_1(), "rule__Vertex__XAssignment_1");
 					put(grammarAccess.getVertexAccess().getYAssignment_2(), "rule__Vertex__YAssignment_2");
 					put(grammarAccess.getVertexAccess().getZAssignment_3(), "rule__Vertex__ZAssignment_3");

@@ -20,9 +20,7 @@ Triangle returns Triangle:
 	{Triangle}
 	'facet' ('normal' normal=Vertex)
 		'outer' 'loop'
-			'vertex' vertex1 = Vertex
-			'vertex' vertex2 = Vertex
-			'vertex' vertex3 = Vertex
+			('vertex' vertices += Vertex)*
 		'endloop'
 	'endfacet'
 ;
@@ -35,7 +33,7 @@ Vertex returns Vertex:
 ;
 
 EDouble returns ecore::EDouble:
-	('-'|'+')? INT? '.' INT (('E'|'e') ('-'|'+')? INT)?;
+	(('-'|'+')? INT? '.' INT (('E'|'e') ('-'|'+')? INT)?) | INT;
 	
 EString returns ecore::EString:
 	STRING | ID;

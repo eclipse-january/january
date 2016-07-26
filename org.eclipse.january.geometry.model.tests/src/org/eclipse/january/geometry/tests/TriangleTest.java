@@ -130,9 +130,9 @@ public class TriangleTest extends TestCase {
 
 		// Set the triangle's vertices
 		fixture.setNormal(equalNormal);
-		fixture.setVertex1(equalV1);
-		fixture.setVertex2(equalV2);
-		fixture.setVertex3(equalV3);
+		fixture.getVertices().add(equalV1);
+		fixture.getVertices().add(equalV2);
+		fixture.getVertices().add(equalV3);
 
 		// Triangles should equal themselves
 		assertTrue(fixture.equals(fixture));
@@ -147,9 +147,9 @@ public class TriangleTest extends TestCase {
 		// Create a triangle with the same values as the fixture
 		Triangle equalTri = GeometryFactory.eINSTANCE.createTriangle();
 		equalTri.setNormal(equalNormal);
-		equalTri.setVertex1(equalV1);
-		equalTri.setVertex2(equalV2);
-		equalTri.setVertex3(equalV3);
+		equalTri.getVertices().add(equalV1);
+		equalTri.getVertices().add(equalV2);
+		equalTri.getVertices().add(equalV3);
 
 		// Two equivalent triangles should be equal
 		assertTrue(fixture.equals(equalTri));
@@ -162,9 +162,9 @@ public class TriangleTest extends TestCase {
 		// vertices specified in a different order
 		Triangle rotatedTri = GeometryFactory.eINSTANCE.createTriangle();
 		rotatedTri.setNormal(equalNormal);
-		rotatedTri.setVertex1(equalV2);
-		rotatedTri.setVertex2(equalV3);
-		rotatedTri.setVertex3(equalV1);
+		rotatedTri.getVertices().add(equalV2);
+		rotatedTri.getVertices().add(equalV3);
+		rotatedTri.getVertices().add(equalV1);
 
 		// The triangles should be equal despite their vertices being in a
 		// different order
@@ -180,9 +180,9 @@ public class TriangleTest extends TestCase {
 		// Create a triangle with different values from the fixture
 		Triangle unequalTri = GeometryFactory.eINSTANCE.createTriangle();
 		unequalTri.setNormal(equalNormal);
-		unequalTri.setVertex1(equalV1);
-		unequalTri.setVertex2(equalV2);
-		unequalTri.setVertex3(unequalV);
+		unequalTri.getVertices().add(equalV1);
+		unequalTri.getVertices().add(equalV2);
+		unequalTri.getVertices().add(unequalV);
 
 		// Triangels with different vertices should not be equal
 		assertFalse(fixture.equals(unequalTri));

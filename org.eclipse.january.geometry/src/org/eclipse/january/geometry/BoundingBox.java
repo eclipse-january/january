@@ -208,35 +208,22 @@ public interface BoundingBox extends EObject {
 		BoundingBox bounds = null;
 		if (!shape.getTriangles().isEmpty()) {
 			bounds = GeometryFactory.eINSTANCE.createBoundingBox();
-			double minx = shape.getTriangles().get(0).getVertex1().getX();
+			double minx = shape.getTriangles().get(0).getVertices().get(0).getX();
 			double maxx = minx;
-			double miny = shape.getTriangles().get(0).getVertex1().getY();
+			double miny = shape.getTriangles().get(0).getVertices().get(0).getY();
 			double maxy = miny;
-			double minz = shape.getTriangles().get(0).getVertex1().getZ();
+			double minz = shape.getTriangles().get(0).getVertices().get(0).getZ();
 			double maxz = minz;
 			
 			for(Triangle tri : shape.getTriangles()) {
-				Vertex v1 = tri.getVertex1();
-				minx = Math.min(minx, v1.getX());
-				maxx = Math.max(maxx, v1.getX());
-				miny = Math.min(miny, v1.getY());
-				maxy = Math.max(maxy, v1.getY());
-				minz = Math.min(minz, v1.getZ());
-				maxz = Math.max(maxz, v1.getZ());
-				Vertex v2 = tri.getVertex2();
-				minx = Math.min(minx, v2.getX());
-				maxx = Math.max(maxx, v2.getX());
-				miny = Math.min(miny, v2.getY());
-				maxy = Math.max(maxy, v2.getY());
-				minz = Math.min(minz, v2.getZ());
-				maxz = Math.max(maxz, v2.getZ());
-				Vertex v3 = tri.getVertex3();
-				minx = Math.min(minx, v3.getX());
-				maxx = Math.max(maxx, v3.getX());
-				miny = Math.min(miny, v3.getY());
-				maxy = Math.max(maxy, v3.getY());
-				minz = Math.min(minz, v3.getZ());
-				maxz = Math.max(maxz, v3.getZ());
+				for (Vertex vert : tri.getVertices()) {
+					minx = Math.min(minx, vert.getX());
+					maxx = Math.max(maxx, vert.getX());
+					miny = Math.min(miny, vert.getY());
+					maxy = Math.max(maxy, vert.getY());
+					minz = Math.min(minz, vert.getZ());
+					maxz = Math.max(maxz, vert.getZ());
+				}
 			}
 			Vertex center = shape.getCenter();
 			bounds.setMinX(minx + center.getX());
