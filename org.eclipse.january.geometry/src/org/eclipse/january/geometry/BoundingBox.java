@@ -195,5 +195,84 @@ public interface BoundingBox extends EObject {
 	 * @generated
 	 */
 	void addArea(BoundingBox area);
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated NOT
+	 */
+	static BoundingBox getBounds(Shape shape) {
+		BoundingBox bounds = null;
+		if (!shape.getTriangles().isEmpty()) {
+			bounds = GeometryFactory.eINSTANCE.createBoundingBox();
+			double minx = shape.getTriangles().get(0).getVertex1().getX();
+			double maxx = minx;
+			double miny = shape.getTriangles().get(0).getVertex1().getY();
+			double maxy = miny;
+			double minz = shape.getTriangles().get(0).getVertex1().getZ();
+			double maxz = minz;
+			
+			for(Triangle tri : shape.getTriangles()) {
+				Vertex v1 = tri.getVertex1();
+				minx = Math.min(minx, v1.getX());
+				maxx = Math.max(maxx, v1.getX());
+				miny = Math.min(miny, v1.getY());
+				maxy = Math.max(maxy, v1.getY());
+				minz = Math.min(minz, v1.getZ());
+				maxz = Math.max(maxz, v1.getZ());
+				Vertex v2 = tri.getVertex2();
+				minx = Math.min(minx, v2.getX());
+				maxx = Math.max(maxx, v2.getX());
+				miny = Math.min(miny, v2.getY());
+				maxy = Math.max(maxy, v2.getY());
+				minz = Math.min(minz, v2.getZ());
+				maxz = Math.max(maxz, v2.getZ());
+				Vertex v3 = tri.getVertex3();
+				minx = Math.min(minx, v3.getX());
+				maxx = Math.max(maxx, v3.getX());
+				miny = Math.min(miny, v3.getY());
+				maxy = Math.max(maxy, v3.getY());
+				minz = Math.min(minz, v3.getZ());
+				maxz = Math.max(maxz, v3.getZ());
+			}
+			Vertex center = shape.getCenter();
+			bounds.setMinX(minx + center.getX());
+			bounds.setMinY(miny + center.getY());
+			bounds.setMinZ(minz + center.getZ());
+			bounds.setMaxX(maxx + center.getX());
+			bounds.setMaxY(maxy + center.getY());
+			bounds.setMaxZ(maxz + center.getZ());
+		}
+		return bounds;
+	}
+	
+	static BoundingBox getBounds(Union union) {
+		BoundingBox bounds = null;
+		if (union != null && !union.getNodes().isEmpty()) {
+			bounds = GeometryFactory.eINSTANCE.createBoundingBox();
+			for(INode node : union.getNodes()) {
+				if (node instanceof Shape) {
+					bounds.addArea(getBounds((Shape) node));
+				}
+			}
+		}
+		return bounds;
+	}
+	
+	static Vertex getCenter(BoundingBox bounds) {
+		Vertex vert = null;
+		if (bounds != null) {
+			vert = GeometryFactory.eINSTANCE.createVertex();
+			vert.setX((bounds.getMinX() + bounds.getMaxX()) / 2);
+			vert.setY((bounds.getMinY() + bounds.getMaxY()) / 2);
+			vert.setZ((bounds.getMinZ() + bounds.getMaxZ()) / 2);
+		}
+		return vert;
+	}
+	
+	
 
 } // BoundingBox

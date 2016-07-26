@@ -11,6 +11,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.january.geometry.BoundingBox;
 import org.eclipse.january.geometry.GeometryPackage;
+import org.eclipse.january.geometry.Shape;
+import org.eclipse.january.geometry.Triangle;
+import org.eclipse.january.geometry.Vertex;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '
@@ -318,6 +321,7 @@ public class BoundingBoxImpl extends MinimalEObjectImpl.Container
 			minZ = area.getMinZ();
 		}
 	}
+	
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->

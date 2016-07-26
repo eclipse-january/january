@@ -143,6 +143,9 @@ public class TriangleImpl extends MinimalEObjectImpl.Container
 	 * @generated
 	 */
 	public Vertex getVertex1() {
+		if (vertex1 == null) {
+			vertex1 = GeometryFactory.eINSTANCE.createVertex();
+		}
 		return vertex1;
 	}
 
@@ -186,6 +189,9 @@ public class TriangleImpl extends MinimalEObjectImpl.Container
 	 * @generated
 	 */
 	public Vertex getVertex2() {
+		if (vertex2 == null) {
+			vertex2 = GeometryFactory.eINSTANCE.createVertex();
+		}
 		return vertex2;
 	}
 
@@ -229,6 +235,9 @@ public class TriangleImpl extends MinimalEObjectImpl.Container
 	 * @generated
 	 */
 	public Vertex getVertex3() {
+		if (vertex3 == null) {
+			vertex3 = GeometryFactory.eINSTANCE.createVertex();
+		}
 		return vertex3;
 	}
 
@@ -347,11 +356,11 @@ public class TriangleImpl extends MinimalEObjectImpl.Container
 
 		// The list of hash codes from the vertices
 		ArrayList<Integer> vertexHashes = new ArrayList<Integer>();
-
+		
 		// Get each vertex's hash code
-		for (Vertex vertex : getVertices()) {
-			vertexHashes.add(vertex.hashCode());
-		}
+		vertexHashes.add(getVertex1().hashCode());
+		vertexHashes.add(getVertex2().hashCode());
+		vertexHashes.add(getVertex3().hashCode());
 
 		// We must reorder the hashes so that two triangles will have the same
 		// hash code if they have the same vertices, regardless of order in the
