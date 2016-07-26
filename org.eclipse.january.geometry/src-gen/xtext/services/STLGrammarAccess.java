@@ -154,18 +154,25 @@ public class STLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cNormalVertexParserRuleCall_2_1_0 = (RuleCall)cNormalAssignment_2_1.eContents().get(0);
 		private final Keyword cOuterKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Keyword cLoopKeyword_4 = (Keyword)cGroup.eContents().get(4);
-		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
-		private final Keyword cVertexKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
-		private final Assignment cVerticesAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
-		private final RuleCall cVerticesVertexParserRuleCall_5_1_0 = (RuleCall)cVerticesAssignment_5_1.eContents().get(0);
-		private final Keyword cEndloopKeyword_6 = (Keyword)cGroup.eContents().get(6);
-		private final Keyword cEndfacetKeyword_7 = (Keyword)cGroup.eContents().get(7);
+		private final Keyword cVertexKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final Assignment cVertex1Assignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final RuleCall cVertex1VertexParserRuleCall_6_0 = (RuleCall)cVertex1Assignment_6.eContents().get(0);
+		private final Keyword cVertexKeyword_7 = (Keyword)cGroup.eContents().get(7);
+		private final Assignment cVertex2Assignment_8 = (Assignment)cGroup.eContents().get(8);
+		private final RuleCall cVertex2VertexParserRuleCall_8_0 = (RuleCall)cVertex2Assignment_8.eContents().get(0);
+		private final Keyword cVertexKeyword_9 = (Keyword)cGroup.eContents().get(9);
+		private final Assignment cVertex3Assignment_10 = (Assignment)cGroup.eContents().get(10);
+		private final RuleCall cVertex3VertexParserRuleCall_10_0 = (RuleCall)cVertex3Assignment_10.eContents().get(0);
+		private final Keyword cEndloopKeyword_11 = (Keyword)cGroup.eContents().get(11);
+		private final Keyword cEndfacetKeyword_12 = (Keyword)cGroup.eContents().get(12);
 		
 		//Triangle:
-		//	{Triangle} 'facet' ('normal' normal=Vertex) 'outer' 'loop' ('vertex' vertices+=Vertex)* 'endloop' 'endfacet';
+		//	{Triangle} 'facet' ('normal' normal=Vertex) 'outer' 'loop' 'vertex' vertex1=Vertex 'vertex' vertex2=Vertex 'vertex'
+		//	vertex3=Vertex 'endloop' 'endfacet';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{Triangle} 'facet' ('normal' normal=Vertex) 'outer' 'loop' ('vertex' vertices+=Vertex)* 'endloop' 'endfacet'
+		//{Triangle} 'facet' ('normal' normal=Vertex) 'outer' 'loop' 'vertex' vertex1=Vertex 'vertex' vertex2=Vertex 'vertex'
+		//vertex3=Vertex 'endloop' 'endfacet'
 		public Group getGroup() { return cGroup; }
 		
 		//{Triangle}
@@ -192,23 +199,38 @@ public class STLGrammarAccess extends AbstractGrammarElementFinder {
 		//'loop'
 		public Keyword getLoopKeyword_4() { return cLoopKeyword_4; }
 		
-		//('vertex' vertices+=Vertex)*
-		public Group getGroup_5() { return cGroup_5; }
-		
 		//'vertex'
-		public Keyword getVertexKeyword_5_0() { return cVertexKeyword_5_0; }
+		public Keyword getVertexKeyword_5() { return cVertexKeyword_5; }
 		
-		//vertices+=Vertex
-		public Assignment getVerticesAssignment_5_1() { return cVerticesAssignment_5_1; }
+		//vertex1=Vertex
+		public Assignment getVertex1Assignment_6() { return cVertex1Assignment_6; }
 		
 		//Vertex
-		public RuleCall getVerticesVertexParserRuleCall_5_1_0() { return cVerticesVertexParserRuleCall_5_1_0; }
+		public RuleCall getVertex1VertexParserRuleCall_6_0() { return cVertex1VertexParserRuleCall_6_0; }
+		
+		//'vertex'
+		public Keyword getVertexKeyword_7() { return cVertexKeyword_7; }
+		
+		//vertex2=Vertex
+		public Assignment getVertex2Assignment_8() { return cVertex2Assignment_8; }
+		
+		//Vertex
+		public RuleCall getVertex2VertexParserRuleCall_8_0() { return cVertex2VertexParserRuleCall_8_0; }
+		
+		//'vertex'
+		public Keyword getVertexKeyword_9() { return cVertexKeyword_9; }
+		
+		//vertex3=Vertex
+		public Assignment getVertex3Assignment_10() { return cVertex3Assignment_10; }
+		
+		//Vertex
+		public RuleCall getVertex3VertexParserRuleCall_10_0() { return cVertex3VertexParserRuleCall_10_0; }
 		
 		//'endloop'
-		public Keyword getEndloopKeyword_6() { return cEndloopKeyword_6; }
+		public Keyword getEndloopKeyword_11() { return cEndloopKeyword_11; }
 		
 		//'endfacet'
-		public Keyword getEndfacetKeyword_7() { return cEndfacetKeyword_7; }
+		public Keyword getEndfacetKeyword_12() { return cEndfacetKeyword_12; }
 	}
 	public class VertexElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "xtext.STL.Vertex");
@@ -410,7 +432,8 @@ public class STLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Triangle:
-	//	{Triangle} 'facet' ('normal' normal=Vertex) 'outer' 'loop' ('vertex' vertices+=Vertex)* 'endloop' 'endfacet';
+	//	{Triangle} 'facet' ('normal' normal=Vertex) 'outer' 'loop' 'vertex' vertex1=Vertex 'vertex' vertex2=Vertex 'vertex'
+	//	vertex3=Vertex 'endloop' 'endfacet';
 	public TriangleElements getTriangleAccess() {
 		return pTriangle;
 	}

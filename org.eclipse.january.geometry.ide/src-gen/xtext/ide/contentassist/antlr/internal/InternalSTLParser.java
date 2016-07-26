@@ -33,7 +33,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalSTLParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_WS", "RULE_STRING", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_ANY_OTHER", "'-'", "'+'", "'E'", "'e'", "'solid'", "'endsolid'", "'facet'", "'outer'", "'loop'", "'endloop'", "'endfacet'", "'normal'", "'vertex'", "'.'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_WS", "RULE_STRING", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_ANY_OTHER", "'-'", "'+'", "'E'", "'e'", "'solid'", "'endsolid'", "'facet'", "'outer'", "'loop'", "'vertex'", "'endloop'", "'endfacet'", "'normal'", "'.'"
     };
     public static final int RULE_STRING=6;
     public static final int RULE_SL_COMMENT=9;
@@ -2463,7 +2463,7 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
             // InternalSTL.g:796:1: ( rule__Triangle__Group__5__Impl rule__Triangle__Group__6 )
             // InternalSTL.g:797:2: rule__Triangle__Group__5__Impl rule__Triangle__Group__6
             {
-            pushFollow(FOLLOW_14);
+            pushFollow(FOLLOW_15);
             rule__Triangle__Group__5__Impl();
 
             state._fsp--;
@@ -2492,49 +2492,21 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Triangle__Group__5__Impl"
-    // InternalSTL.g:804:1: rule__Triangle__Group__5__Impl : ( ( rule__Triangle__Group_5__0 )* ) ;
+    // InternalSTL.g:804:1: rule__Triangle__Group__5__Impl : ( 'vertex' ) ;
     public final void rule__Triangle__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:808:1: ( ( ( rule__Triangle__Group_5__0 )* ) )
-            // InternalSTL.g:809:1: ( ( rule__Triangle__Group_5__0 )* )
+            // InternalSTL.g:808:1: ( ( 'vertex' ) )
+            // InternalSTL.g:809:1: ( 'vertex' )
             {
-            // InternalSTL.g:809:1: ( ( rule__Triangle__Group_5__0 )* )
-            // InternalSTL.g:810:2: ( rule__Triangle__Group_5__0 )*
+            // InternalSTL.g:809:1: ( 'vertex' )
+            // InternalSTL.g:810:2: 'vertex'
             {
-             before(grammarAccess.getTriangleAccess().getGroup_5()); 
-            // InternalSTL.g:811:2: ( rule__Triangle__Group_5__0 )*
-            loop14:
-            do {
-                int alt14=2;
-                int LA14_0 = input.LA(1);
-
-                if ( (LA14_0==23) ) {
-                    alt14=1;
-                }
-
-
-                switch (alt14) {
-            	case 1 :
-            	    // InternalSTL.g:811:3: rule__Triangle__Group_5__0
-            	    {
-            	    pushFollow(FOLLOW_15);
-            	    rule__Triangle__Group_5__0();
-
-            	    state._fsp--;
-
-
-            	    }
-            	    break;
-
-            	default :
-            	    break loop14;
-                }
-            } while (true);
-
-             after(grammarAccess.getTriangleAccess().getGroup_5()); 
+             before(grammarAccess.getTriangleAccess().getVertexKeyword_5()); 
+            match(input,20,FOLLOW_2); 
+             after(grammarAccess.getTriangleAccess().getVertexKeyword_5()); 
 
             }
 
@@ -2566,7 +2538,7 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
             // InternalSTL.g:823:1: ( rule__Triangle__Group__6__Impl rule__Triangle__Group__7 )
             // InternalSTL.g:824:2: rule__Triangle__Group__6__Impl rule__Triangle__Group__7
             {
-            pushFollow(FOLLOW_16);
+            pushFollow(FOLLOW_14);
             rule__Triangle__Group__6__Impl();
 
             state._fsp--;
@@ -2595,21 +2567,31 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Triangle__Group__6__Impl"
-    // InternalSTL.g:831:1: rule__Triangle__Group__6__Impl : ( 'endloop' ) ;
+    // InternalSTL.g:831:1: rule__Triangle__Group__6__Impl : ( ( rule__Triangle__Vertex1Assignment_6 ) ) ;
     public final void rule__Triangle__Group__6__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:835:1: ( ( 'endloop' ) )
-            // InternalSTL.g:836:1: ( 'endloop' )
+            // InternalSTL.g:835:1: ( ( ( rule__Triangle__Vertex1Assignment_6 ) ) )
+            // InternalSTL.g:836:1: ( ( rule__Triangle__Vertex1Assignment_6 ) )
             {
-            // InternalSTL.g:836:1: ( 'endloop' )
-            // InternalSTL.g:837:2: 'endloop'
+            // InternalSTL.g:836:1: ( ( rule__Triangle__Vertex1Assignment_6 ) )
+            // InternalSTL.g:837:2: ( rule__Triangle__Vertex1Assignment_6 )
             {
-             before(grammarAccess.getTriangleAccess().getEndloopKeyword_6()); 
-            match(input,20,FOLLOW_2); 
-             after(grammarAccess.getTriangleAccess().getEndloopKeyword_6()); 
+             before(grammarAccess.getTriangleAccess().getVertex1Assignment_6()); 
+            // InternalSTL.g:838:2: ( rule__Triangle__Vertex1Assignment_6 )
+            // InternalSTL.g:838:3: rule__Triangle__Vertex1Assignment_6
+            {
+            pushFollow(FOLLOW_2);
+            rule__Triangle__Vertex1Assignment_6();
+
+            state._fsp--;
+
+
+            }
+
+             after(grammarAccess.getTriangleAccess().getVertex1Assignment_6()); 
 
             }
 
@@ -2632,17 +2614,22 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Triangle__Group__7"
-    // InternalSTL.g:846:1: rule__Triangle__Group__7 : rule__Triangle__Group__7__Impl ;
+    // InternalSTL.g:846:1: rule__Triangle__Group__7 : rule__Triangle__Group__7__Impl rule__Triangle__Group__8 ;
     public final void rule__Triangle__Group__7() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:850:1: ( rule__Triangle__Group__7__Impl )
-            // InternalSTL.g:851:2: rule__Triangle__Group__7__Impl
+            // InternalSTL.g:850:1: ( rule__Triangle__Group__7__Impl rule__Triangle__Group__8 )
+            // InternalSTL.g:851:2: rule__Triangle__Group__7__Impl rule__Triangle__Group__8
             {
-            pushFollow(FOLLOW_2);
+            pushFollow(FOLLOW_15);
             rule__Triangle__Group__7__Impl();
+
+            state._fsp--;
+
+            pushFollow(FOLLOW_2);
+            rule__Triangle__Group__8();
 
             state._fsp--;
 
@@ -2665,21 +2652,21 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Triangle__Group__7__Impl"
-    // InternalSTL.g:857:1: rule__Triangle__Group__7__Impl : ( 'endfacet' ) ;
+    // InternalSTL.g:858:1: rule__Triangle__Group__7__Impl : ( 'vertex' ) ;
     public final void rule__Triangle__Group__7__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:861:1: ( ( 'endfacet' ) )
-            // InternalSTL.g:862:1: ( 'endfacet' )
+            // InternalSTL.g:862:1: ( ( 'vertex' ) )
+            // InternalSTL.g:863:1: ( 'vertex' )
             {
-            // InternalSTL.g:862:1: ( 'endfacet' )
-            // InternalSTL.g:863:2: 'endfacet'
+            // InternalSTL.g:863:1: ( 'vertex' )
+            // InternalSTL.g:864:2: 'vertex'
             {
-             before(grammarAccess.getTriangleAccess().getEndfacetKeyword_7()); 
-            match(input,21,FOLLOW_2); 
-             after(grammarAccess.getTriangleAccess().getEndfacetKeyword_7()); 
+             before(grammarAccess.getTriangleAccess().getVertexKeyword_7()); 
+            match(input,20,FOLLOW_2); 
+             after(grammarAccess.getTriangleAccess().getVertexKeyword_7()); 
 
             }
 
@@ -2701,17 +2688,407 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__Triangle__Group__7__Impl"
 
 
+    // $ANTLR start "rule__Triangle__Group__8"
+    // InternalSTL.g:873:1: rule__Triangle__Group__8 : rule__Triangle__Group__8__Impl rule__Triangle__Group__9 ;
+    public final void rule__Triangle__Group__8() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalSTL.g:877:1: ( rule__Triangle__Group__8__Impl rule__Triangle__Group__9 )
+            // InternalSTL.g:878:2: rule__Triangle__Group__8__Impl rule__Triangle__Group__9
+            {
+            pushFollow(FOLLOW_14);
+            rule__Triangle__Group__8__Impl();
+
+            state._fsp--;
+
+            pushFollow(FOLLOW_2);
+            rule__Triangle__Group__9();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Triangle__Group__8"
+
+
+    // $ANTLR start "rule__Triangle__Group__8__Impl"
+    // InternalSTL.g:885:1: rule__Triangle__Group__8__Impl : ( ( rule__Triangle__Vertex2Assignment_8 ) ) ;
+    public final void rule__Triangle__Group__8__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalSTL.g:889:1: ( ( ( rule__Triangle__Vertex2Assignment_8 ) ) )
+            // InternalSTL.g:890:1: ( ( rule__Triangle__Vertex2Assignment_8 ) )
+            {
+            // InternalSTL.g:890:1: ( ( rule__Triangle__Vertex2Assignment_8 ) )
+            // InternalSTL.g:891:2: ( rule__Triangle__Vertex2Assignment_8 )
+            {
+             before(grammarAccess.getTriangleAccess().getVertex2Assignment_8()); 
+            // InternalSTL.g:892:2: ( rule__Triangle__Vertex2Assignment_8 )
+            // InternalSTL.g:892:3: rule__Triangle__Vertex2Assignment_8
+            {
+            pushFollow(FOLLOW_2);
+            rule__Triangle__Vertex2Assignment_8();
+
+            state._fsp--;
+
+
+            }
+
+             after(grammarAccess.getTriangleAccess().getVertex2Assignment_8()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Triangle__Group__8__Impl"
+
+
+    // $ANTLR start "rule__Triangle__Group__9"
+    // InternalSTL.g:900:1: rule__Triangle__Group__9 : rule__Triangle__Group__9__Impl rule__Triangle__Group__10 ;
+    public final void rule__Triangle__Group__9() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalSTL.g:904:1: ( rule__Triangle__Group__9__Impl rule__Triangle__Group__10 )
+            // InternalSTL.g:905:2: rule__Triangle__Group__9__Impl rule__Triangle__Group__10
+            {
+            pushFollow(FOLLOW_15);
+            rule__Triangle__Group__9__Impl();
+
+            state._fsp--;
+
+            pushFollow(FOLLOW_2);
+            rule__Triangle__Group__10();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Triangle__Group__9"
+
+
+    // $ANTLR start "rule__Triangle__Group__9__Impl"
+    // InternalSTL.g:912:1: rule__Triangle__Group__9__Impl : ( 'vertex' ) ;
+    public final void rule__Triangle__Group__9__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalSTL.g:916:1: ( ( 'vertex' ) )
+            // InternalSTL.g:917:1: ( 'vertex' )
+            {
+            // InternalSTL.g:917:1: ( 'vertex' )
+            // InternalSTL.g:918:2: 'vertex'
+            {
+             before(grammarAccess.getTriangleAccess().getVertexKeyword_9()); 
+            match(input,20,FOLLOW_2); 
+             after(grammarAccess.getTriangleAccess().getVertexKeyword_9()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Triangle__Group__9__Impl"
+
+
+    // $ANTLR start "rule__Triangle__Group__10"
+    // InternalSTL.g:927:1: rule__Triangle__Group__10 : rule__Triangle__Group__10__Impl rule__Triangle__Group__11 ;
+    public final void rule__Triangle__Group__10() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalSTL.g:931:1: ( rule__Triangle__Group__10__Impl rule__Triangle__Group__11 )
+            // InternalSTL.g:932:2: rule__Triangle__Group__10__Impl rule__Triangle__Group__11
+            {
+            pushFollow(FOLLOW_16);
+            rule__Triangle__Group__10__Impl();
+
+            state._fsp--;
+
+            pushFollow(FOLLOW_2);
+            rule__Triangle__Group__11();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Triangle__Group__10"
+
+
+    // $ANTLR start "rule__Triangle__Group__10__Impl"
+    // InternalSTL.g:939:1: rule__Triangle__Group__10__Impl : ( ( rule__Triangle__Vertex3Assignment_10 ) ) ;
+    public final void rule__Triangle__Group__10__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalSTL.g:943:1: ( ( ( rule__Triangle__Vertex3Assignment_10 ) ) )
+            // InternalSTL.g:944:1: ( ( rule__Triangle__Vertex3Assignment_10 ) )
+            {
+            // InternalSTL.g:944:1: ( ( rule__Triangle__Vertex3Assignment_10 ) )
+            // InternalSTL.g:945:2: ( rule__Triangle__Vertex3Assignment_10 )
+            {
+             before(grammarAccess.getTriangleAccess().getVertex3Assignment_10()); 
+            // InternalSTL.g:946:2: ( rule__Triangle__Vertex3Assignment_10 )
+            // InternalSTL.g:946:3: rule__Triangle__Vertex3Assignment_10
+            {
+            pushFollow(FOLLOW_2);
+            rule__Triangle__Vertex3Assignment_10();
+
+            state._fsp--;
+
+
+            }
+
+             after(grammarAccess.getTriangleAccess().getVertex3Assignment_10()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Triangle__Group__10__Impl"
+
+
+    // $ANTLR start "rule__Triangle__Group__11"
+    // InternalSTL.g:954:1: rule__Triangle__Group__11 : rule__Triangle__Group__11__Impl rule__Triangle__Group__12 ;
+    public final void rule__Triangle__Group__11() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalSTL.g:958:1: ( rule__Triangle__Group__11__Impl rule__Triangle__Group__12 )
+            // InternalSTL.g:959:2: rule__Triangle__Group__11__Impl rule__Triangle__Group__12
+            {
+            pushFollow(FOLLOW_17);
+            rule__Triangle__Group__11__Impl();
+
+            state._fsp--;
+
+            pushFollow(FOLLOW_2);
+            rule__Triangle__Group__12();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Triangle__Group__11"
+
+
+    // $ANTLR start "rule__Triangle__Group__11__Impl"
+    // InternalSTL.g:966:1: rule__Triangle__Group__11__Impl : ( 'endloop' ) ;
+    public final void rule__Triangle__Group__11__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalSTL.g:970:1: ( ( 'endloop' ) )
+            // InternalSTL.g:971:1: ( 'endloop' )
+            {
+            // InternalSTL.g:971:1: ( 'endloop' )
+            // InternalSTL.g:972:2: 'endloop'
+            {
+             before(grammarAccess.getTriangleAccess().getEndloopKeyword_11()); 
+            match(input,21,FOLLOW_2); 
+             after(grammarAccess.getTriangleAccess().getEndloopKeyword_11()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Triangle__Group__11__Impl"
+
+
+    // $ANTLR start "rule__Triangle__Group__12"
+    // InternalSTL.g:981:1: rule__Triangle__Group__12 : rule__Triangle__Group__12__Impl ;
+    public final void rule__Triangle__Group__12() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalSTL.g:985:1: ( rule__Triangle__Group__12__Impl )
+            // InternalSTL.g:986:2: rule__Triangle__Group__12__Impl
+            {
+            pushFollow(FOLLOW_2);
+            rule__Triangle__Group__12__Impl();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Triangle__Group__12"
+
+
+    // $ANTLR start "rule__Triangle__Group__12__Impl"
+    // InternalSTL.g:992:1: rule__Triangle__Group__12__Impl : ( 'endfacet' ) ;
+    public final void rule__Triangle__Group__12__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalSTL.g:996:1: ( ( 'endfacet' ) )
+            // InternalSTL.g:997:1: ( 'endfacet' )
+            {
+            // InternalSTL.g:997:1: ( 'endfacet' )
+            // InternalSTL.g:998:2: 'endfacet'
+            {
+             before(grammarAccess.getTriangleAccess().getEndfacetKeyword_12()); 
+            match(input,22,FOLLOW_2); 
+             after(grammarAccess.getTriangleAccess().getEndfacetKeyword_12()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Triangle__Group__12__Impl"
+
+
     // $ANTLR start "rule__Triangle__Group_2__0"
-    // InternalSTL.g:873:1: rule__Triangle__Group_2__0 : rule__Triangle__Group_2__0__Impl rule__Triangle__Group_2__1 ;
+    // InternalSTL.g:1008:1: rule__Triangle__Group_2__0 : rule__Triangle__Group_2__0__Impl rule__Triangle__Group_2__1 ;
     public final void rule__Triangle__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:877:1: ( rule__Triangle__Group_2__0__Impl rule__Triangle__Group_2__1 )
-            // InternalSTL.g:878:2: rule__Triangle__Group_2__0__Impl rule__Triangle__Group_2__1
+            // InternalSTL.g:1012:1: ( rule__Triangle__Group_2__0__Impl rule__Triangle__Group_2__1 )
+            // InternalSTL.g:1013:2: rule__Triangle__Group_2__0__Impl rule__Triangle__Group_2__1
             {
-            pushFollow(FOLLOW_17);
+            pushFollow(FOLLOW_15);
             rule__Triangle__Group_2__0__Impl();
 
             state._fsp--;
@@ -2740,20 +3117,20 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Triangle__Group_2__0__Impl"
-    // InternalSTL.g:885:1: rule__Triangle__Group_2__0__Impl : ( 'normal' ) ;
+    // InternalSTL.g:1020:1: rule__Triangle__Group_2__0__Impl : ( 'normal' ) ;
     public final void rule__Triangle__Group_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:889:1: ( ( 'normal' ) )
-            // InternalSTL.g:890:1: ( 'normal' )
+            // InternalSTL.g:1024:1: ( ( 'normal' ) )
+            // InternalSTL.g:1025:1: ( 'normal' )
             {
-            // InternalSTL.g:890:1: ( 'normal' )
-            // InternalSTL.g:891:2: 'normal'
+            // InternalSTL.g:1025:1: ( 'normal' )
+            // InternalSTL.g:1026:2: 'normal'
             {
              before(grammarAccess.getTriangleAccess().getNormalKeyword_2_0()); 
-            match(input,22,FOLLOW_2); 
+            match(input,23,FOLLOW_2); 
              after(grammarAccess.getTriangleAccess().getNormalKeyword_2_0()); 
 
             }
@@ -2777,14 +3154,14 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Triangle__Group_2__1"
-    // InternalSTL.g:900:1: rule__Triangle__Group_2__1 : rule__Triangle__Group_2__1__Impl ;
+    // InternalSTL.g:1035:1: rule__Triangle__Group_2__1 : rule__Triangle__Group_2__1__Impl ;
     public final void rule__Triangle__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:904:1: ( rule__Triangle__Group_2__1__Impl )
-            // InternalSTL.g:905:2: rule__Triangle__Group_2__1__Impl
+            // InternalSTL.g:1039:1: ( rule__Triangle__Group_2__1__Impl )
+            // InternalSTL.g:1040:2: rule__Triangle__Group_2__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__Triangle__Group_2__1__Impl();
@@ -2810,21 +3187,21 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Triangle__Group_2__1__Impl"
-    // InternalSTL.g:911:1: rule__Triangle__Group_2__1__Impl : ( ( rule__Triangle__NormalAssignment_2_1 ) ) ;
+    // InternalSTL.g:1046:1: rule__Triangle__Group_2__1__Impl : ( ( rule__Triangle__NormalAssignment_2_1 ) ) ;
     public final void rule__Triangle__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:915:1: ( ( ( rule__Triangle__NormalAssignment_2_1 ) ) )
-            // InternalSTL.g:916:1: ( ( rule__Triangle__NormalAssignment_2_1 ) )
+            // InternalSTL.g:1050:1: ( ( ( rule__Triangle__NormalAssignment_2_1 ) ) )
+            // InternalSTL.g:1051:1: ( ( rule__Triangle__NormalAssignment_2_1 ) )
             {
-            // InternalSTL.g:916:1: ( ( rule__Triangle__NormalAssignment_2_1 ) )
-            // InternalSTL.g:917:2: ( rule__Triangle__NormalAssignment_2_1 )
+            // InternalSTL.g:1051:1: ( ( rule__Triangle__NormalAssignment_2_1 ) )
+            // InternalSTL.g:1052:2: ( rule__Triangle__NormalAssignment_2_1 )
             {
              before(grammarAccess.getTriangleAccess().getNormalAssignment_2_1()); 
-            // InternalSTL.g:918:2: ( rule__Triangle__NormalAssignment_2_1 )
-            // InternalSTL.g:918:3: rule__Triangle__NormalAssignment_2_1
+            // InternalSTL.g:1053:2: ( rule__Triangle__NormalAssignment_2_1 )
+            // InternalSTL.g:1053:3: rule__Triangle__NormalAssignment_2_1
             {
             pushFollow(FOLLOW_2);
             rule__Triangle__NormalAssignment_2_1();
@@ -2856,172 +3233,17 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__Triangle__Group_2__1__Impl"
 
 
-    // $ANTLR start "rule__Triangle__Group_5__0"
-    // InternalSTL.g:927:1: rule__Triangle__Group_5__0 : rule__Triangle__Group_5__0__Impl rule__Triangle__Group_5__1 ;
-    public final void rule__Triangle__Group_5__0() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalSTL.g:931:1: ( rule__Triangle__Group_5__0__Impl rule__Triangle__Group_5__1 )
-            // InternalSTL.g:932:2: rule__Triangle__Group_5__0__Impl rule__Triangle__Group_5__1
-            {
-            pushFollow(FOLLOW_17);
-            rule__Triangle__Group_5__0__Impl();
-
-            state._fsp--;
-
-            pushFollow(FOLLOW_2);
-            rule__Triangle__Group_5__1();
-
-            state._fsp--;
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__Triangle__Group_5__0"
-
-
-    // $ANTLR start "rule__Triangle__Group_5__0__Impl"
-    // InternalSTL.g:939:1: rule__Triangle__Group_5__0__Impl : ( 'vertex' ) ;
-    public final void rule__Triangle__Group_5__0__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalSTL.g:943:1: ( ( 'vertex' ) )
-            // InternalSTL.g:944:1: ( 'vertex' )
-            {
-            // InternalSTL.g:944:1: ( 'vertex' )
-            // InternalSTL.g:945:2: 'vertex'
-            {
-             before(grammarAccess.getTriangleAccess().getVertexKeyword_5_0()); 
-            match(input,23,FOLLOW_2); 
-             after(grammarAccess.getTriangleAccess().getVertexKeyword_5_0()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__Triangle__Group_5__0__Impl"
-
-
-    // $ANTLR start "rule__Triangle__Group_5__1"
-    // InternalSTL.g:954:1: rule__Triangle__Group_5__1 : rule__Triangle__Group_5__1__Impl ;
-    public final void rule__Triangle__Group_5__1() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalSTL.g:958:1: ( rule__Triangle__Group_5__1__Impl )
-            // InternalSTL.g:959:2: rule__Triangle__Group_5__1__Impl
-            {
-            pushFollow(FOLLOW_2);
-            rule__Triangle__Group_5__1__Impl();
-
-            state._fsp--;
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__Triangle__Group_5__1"
-
-
-    // $ANTLR start "rule__Triangle__Group_5__1__Impl"
-    // InternalSTL.g:965:1: rule__Triangle__Group_5__1__Impl : ( ( rule__Triangle__VerticesAssignment_5_1 ) ) ;
-    public final void rule__Triangle__Group_5__1__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalSTL.g:969:1: ( ( ( rule__Triangle__VerticesAssignment_5_1 ) ) )
-            // InternalSTL.g:970:1: ( ( rule__Triangle__VerticesAssignment_5_1 ) )
-            {
-            // InternalSTL.g:970:1: ( ( rule__Triangle__VerticesAssignment_5_1 ) )
-            // InternalSTL.g:971:2: ( rule__Triangle__VerticesAssignment_5_1 )
-            {
-             before(grammarAccess.getTriangleAccess().getVerticesAssignment_5_1()); 
-            // InternalSTL.g:972:2: ( rule__Triangle__VerticesAssignment_5_1 )
-            // InternalSTL.g:972:3: rule__Triangle__VerticesAssignment_5_1
-            {
-            pushFollow(FOLLOW_2);
-            rule__Triangle__VerticesAssignment_5_1();
-
-            state._fsp--;
-
-
-            }
-
-             after(grammarAccess.getTriangleAccess().getVerticesAssignment_5_1()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__Triangle__Group_5__1__Impl"
-
-
     // $ANTLR start "rule__Vertex__Group__0"
-    // InternalSTL.g:981:1: rule__Vertex__Group__0 : rule__Vertex__Group__0__Impl rule__Vertex__Group__1 ;
+    // InternalSTL.g:1062:1: rule__Vertex__Group__0 : rule__Vertex__Group__0__Impl rule__Vertex__Group__1 ;
     public final void rule__Vertex__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:985:1: ( rule__Vertex__Group__0__Impl rule__Vertex__Group__1 )
-            // InternalSTL.g:986:2: rule__Vertex__Group__0__Impl rule__Vertex__Group__1
+            // InternalSTL.g:1066:1: ( rule__Vertex__Group__0__Impl rule__Vertex__Group__1 )
+            // InternalSTL.g:1067:2: rule__Vertex__Group__0__Impl rule__Vertex__Group__1
             {
-            pushFollow(FOLLOW_17);
+            pushFollow(FOLLOW_15);
             rule__Vertex__Group__0__Impl();
 
             state._fsp--;
@@ -3050,21 +3272,21 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Vertex__Group__0__Impl"
-    // InternalSTL.g:993:1: rule__Vertex__Group__0__Impl : ( () ) ;
+    // InternalSTL.g:1074:1: rule__Vertex__Group__0__Impl : ( () ) ;
     public final void rule__Vertex__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:997:1: ( ( () ) )
-            // InternalSTL.g:998:1: ( () )
+            // InternalSTL.g:1078:1: ( ( () ) )
+            // InternalSTL.g:1079:1: ( () )
             {
-            // InternalSTL.g:998:1: ( () )
-            // InternalSTL.g:999:2: ()
+            // InternalSTL.g:1079:1: ( () )
+            // InternalSTL.g:1080:2: ()
             {
              before(grammarAccess.getVertexAccess().getVertexAction_0()); 
-            // InternalSTL.g:1000:2: ()
-            // InternalSTL.g:1000:3: 
+            // InternalSTL.g:1081:2: ()
+            // InternalSTL.g:1081:3: 
             {
             }
 
@@ -3087,16 +3309,16 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Vertex__Group__1"
-    // InternalSTL.g:1008:1: rule__Vertex__Group__1 : rule__Vertex__Group__1__Impl rule__Vertex__Group__2 ;
+    // InternalSTL.g:1089:1: rule__Vertex__Group__1 : rule__Vertex__Group__1__Impl rule__Vertex__Group__2 ;
     public final void rule__Vertex__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:1012:1: ( rule__Vertex__Group__1__Impl rule__Vertex__Group__2 )
-            // InternalSTL.g:1013:2: rule__Vertex__Group__1__Impl rule__Vertex__Group__2
+            // InternalSTL.g:1093:1: ( rule__Vertex__Group__1__Impl rule__Vertex__Group__2 )
+            // InternalSTL.g:1094:2: rule__Vertex__Group__1__Impl rule__Vertex__Group__2
             {
-            pushFollow(FOLLOW_17);
+            pushFollow(FOLLOW_15);
             rule__Vertex__Group__1__Impl();
 
             state._fsp--;
@@ -3125,21 +3347,21 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Vertex__Group__1__Impl"
-    // InternalSTL.g:1020:1: rule__Vertex__Group__1__Impl : ( ( rule__Vertex__XAssignment_1 ) ) ;
+    // InternalSTL.g:1101:1: rule__Vertex__Group__1__Impl : ( ( rule__Vertex__XAssignment_1 ) ) ;
     public final void rule__Vertex__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:1024:1: ( ( ( rule__Vertex__XAssignment_1 ) ) )
-            // InternalSTL.g:1025:1: ( ( rule__Vertex__XAssignment_1 ) )
+            // InternalSTL.g:1105:1: ( ( ( rule__Vertex__XAssignment_1 ) ) )
+            // InternalSTL.g:1106:1: ( ( rule__Vertex__XAssignment_1 ) )
             {
-            // InternalSTL.g:1025:1: ( ( rule__Vertex__XAssignment_1 ) )
-            // InternalSTL.g:1026:2: ( rule__Vertex__XAssignment_1 )
+            // InternalSTL.g:1106:1: ( ( rule__Vertex__XAssignment_1 ) )
+            // InternalSTL.g:1107:2: ( rule__Vertex__XAssignment_1 )
             {
              before(grammarAccess.getVertexAccess().getXAssignment_1()); 
-            // InternalSTL.g:1027:2: ( rule__Vertex__XAssignment_1 )
-            // InternalSTL.g:1027:3: rule__Vertex__XAssignment_1
+            // InternalSTL.g:1108:2: ( rule__Vertex__XAssignment_1 )
+            // InternalSTL.g:1108:3: rule__Vertex__XAssignment_1
             {
             pushFollow(FOLLOW_2);
             rule__Vertex__XAssignment_1();
@@ -3172,16 +3394,16 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Vertex__Group__2"
-    // InternalSTL.g:1035:1: rule__Vertex__Group__2 : rule__Vertex__Group__2__Impl rule__Vertex__Group__3 ;
+    // InternalSTL.g:1116:1: rule__Vertex__Group__2 : rule__Vertex__Group__2__Impl rule__Vertex__Group__3 ;
     public final void rule__Vertex__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:1039:1: ( rule__Vertex__Group__2__Impl rule__Vertex__Group__3 )
-            // InternalSTL.g:1040:2: rule__Vertex__Group__2__Impl rule__Vertex__Group__3
+            // InternalSTL.g:1120:1: ( rule__Vertex__Group__2__Impl rule__Vertex__Group__3 )
+            // InternalSTL.g:1121:2: rule__Vertex__Group__2__Impl rule__Vertex__Group__3
             {
-            pushFollow(FOLLOW_17);
+            pushFollow(FOLLOW_15);
             rule__Vertex__Group__2__Impl();
 
             state._fsp--;
@@ -3210,21 +3432,21 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Vertex__Group__2__Impl"
-    // InternalSTL.g:1047:1: rule__Vertex__Group__2__Impl : ( ( rule__Vertex__YAssignment_2 ) ) ;
+    // InternalSTL.g:1128:1: rule__Vertex__Group__2__Impl : ( ( rule__Vertex__YAssignment_2 ) ) ;
     public final void rule__Vertex__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:1051:1: ( ( ( rule__Vertex__YAssignment_2 ) ) )
-            // InternalSTL.g:1052:1: ( ( rule__Vertex__YAssignment_2 ) )
+            // InternalSTL.g:1132:1: ( ( ( rule__Vertex__YAssignment_2 ) ) )
+            // InternalSTL.g:1133:1: ( ( rule__Vertex__YAssignment_2 ) )
             {
-            // InternalSTL.g:1052:1: ( ( rule__Vertex__YAssignment_2 ) )
-            // InternalSTL.g:1053:2: ( rule__Vertex__YAssignment_2 )
+            // InternalSTL.g:1133:1: ( ( rule__Vertex__YAssignment_2 ) )
+            // InternalSTL.g:1134:2: ( rule__Vertex__YAssignment_2 )
             {
              before(grammarAccess.getVertexAccess().getYAssignment_2()); 
-            // InternalSTL.g:1054:2: ( rule__Vertex__YAssignment_2 )
-            // InternalSTL.g:1054:3: rule__Vertex__YAssignment_2
+            // InternalSTL.g:1135:2: ( rule__Vertex__YAssignment_2 )
+            // InternalSTL.g:1135:3: rule__Vertex__YAssignment_2
             {
             pushFollow(FOLLOW_2);
             rule__Vertex__YAssignment_2();
@@ -3257,14 +3479,14 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Vertex__Group__3"
-    // InternalSTL.g:1062:1: rule__Vertex__Group__3 : rule__Vertex__Group__3__Impl ;
+    // InternalSTL.g:1143:1: rule__Vertex__Group__3 : rule__Vertex__Group__3__Impl ;
     public final void rule__Vertex__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:1066:1: ( rule__Vertex__Group__3__Impl )
-            // InternalSTL.g:1067:2: rule__Vertex__Group__3__Impl
+            // InternalSTL.g:1147:1: ( rule__Vertex__Group__3__Impl )
+            // InternalSTL.g:1148:2: rule__Vertex__Group__3__Impl
             {
             pushFollow(FOLLOW_2);
             rule__Vertex__Group__3__Impl();
@@ -3290,21 +3512,21 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Vertex__Group__3__Impl"
-    // InternalSTL.g:1073:1: rule__Vertex__Group__3__Impl : ( ( rule__Vertex__ZAssignment_3 ) ) ;
+    // InternalSTL.g:1154:1: rule__Vertex__Group__3__Impl : ( ( rule__Vertex__ZAssignment_3 ) ) ;
     public final void rule__Vertex__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:1077:1: ( ( ( rule__Vertex__ZAssignment_3 ) ) )
-            // InternalSTL.g:1078:1: ( ( rule__Vertex__ZAssignment_3 ) )
+            // InternalSTL.g:1158:1: ( ( ( rule__Vertex__ZAssignment_3 ) ) )
+            // InternalSTL.g:1159:1: ( ( rule__Vertex__ZAssignment_3 ) )
             {
-            // InternalSTL.g:1078:1: ( ( rule__Vertex__ZAssignment_3 ) )
-            // InternalSTL.g:1079:2: ( rule__Vertex__ZAssignment_3 )
+            // InternalSTL.g:1159:1: ( ( rule__Vertex__ZAssignment_3 ) )
+            // InternalSTL.g:1160:2: ( rule__Vertex__ZAssignment_3 )
             {
              before(grammarAccess.getVertexAccess().getZAssignment_3()); 
-            // InternalSTL.g:1080:2: ( rule__Vertex__ZAssignment_3 )
-            // InternalSTL.g:1080:3: rule__Vertex__ZAssignment_3
+            // InternalSTL.g:1161:2: ( rule__Vertex__ZAssignment_3 )
+            // InternalSTL.g:1161:3: rule__Vertex__ZAssignment_3
             {
             pushFollow(FOLLOW_2);
             rule__Vertex__ZAssignment_3();
@@ -3337,16 +3559,16 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EDouble__Group__0"
-    // InternalSTL.g:1089:1: rule__EDouble__Group__0 : rule__EDouble__Group__0__Impl rule__EDouble__Group__1 ;
+    // InternalSTL.g:1170:1: rule__EDouble__Group__0 : rule__EDouble__Group__0__Impl rule__EDouble__Group__1 ;
     public final void rule__EDouble__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:1093:1: ( rule__EDouble__Group__0__Impl rule__EDouble__Group__1 )
-            // InternalSTL.g:1094:2: rule__EDouble__Group__0__Impl rule__EDouble__Group__1
+            // InternalSTL.g:1174:1: ( rule__EDouble__Group__0__Impl rule__EDouble__Group__1 )
+            // InternalSTL.g:1175:2: rule__EDouble__Group__0__Impl rule__EDouble__Group__1
             {
-            pushFollow(FOLLOW_17);
+            pushFollow(FOLLOW_15);
             rule__EDouble__Group__0__Impl();
 
             state._fsp--;
@@ -3375,29 +3597,29 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EDouble__Group__0__Impl"
-    // InternalSTL.g:1101:1: rule__EDouble__Group__0__Impl : ( ( rule__EDouble__Alternatives_0 )? ) ;
+    // InternalSTL.g:1182:1: rule__EDouble__Group__0__Impl : ( ( rule__EDouble__Alternatives_0 )? ) ;
     public final void rule__EDouble__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:1105:1: ( ( ( rule__EDouble__Alternatives_0 )? ) )
-            // InternalSTL.g:1106:1: ( ( rule__EDouble__Alternatives_0 )? )
+            // InternalSTL.g:1186:1: ( ( ( rule__EDouble__Alternatives_0 )? ) )
+            // InternalSTL.g:1187:1: ( ( rule__EDouble__Alternatives_0 )? )
             {
-            // InternalSTL.g:1106:1: ( ( rule__EDouble__Alternatives_0 )? )
-            // InternalSTL.g:1107:2: ( rule__EDouble__Alternatives_0 )?
+            // InternalSTL.g:1187:1: ( ( rule__EDouble__Alternatives_0 )? )
+            // InternalSTL.g:1188:2: ( rule__EDouble__Alternatives_0 )?
             {
              before(grammarAccess.getEDoubleAccess().getAlternatives_0()); 
-            // InternalSTL.g:1108:2: ( rule__EDouble__Alternatives_0 )?
-            int alt15=2;
-            int LA15_0 = input.LA(1);
+            // InternalSTL.g:1189:2: ( rule__EDouble__Alternatives_0 )?
+            int alt14=2;
+            int LA14_0 = input.LA(1);
 
-            if ( ((LA15_0>=11 && LA15_0<=12)) ) {
-                alt15=1;
+            if ( ((LA14_0>=11 && LA14_0<=12)) ) {
+                alt14=1;
             }
-            switch (alt15) {
+            switch (alt14) {
                 case 1 :
-                    // InternalSTL.g:1108:3: rule__EDouble__Alternatives_0
+                    // InternalSTL.g:1189:3: rule__EDouble__Alternatives_0
                     {
                     pushFollow(FOLLOW_2);
                     rule__EDouble__Alternatives_0();
@@ -3433,16 +3655,16 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EDouble__Group__1"
-    // InternalSTL.g:1116:1: rule__EDouble__Group__1 : rule__EDouble__Group__1__Impl rule__EDouble__Group__2 ;
+    // InternalSTL.g:1197:1: rule__EDouble__Group__1 : rule__EDouble__Group__1__Impl rule__EDouble__Group__2 ;
     public final void rule__EDouble__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:1120:1: ( rule__EDouble__Group__1__Impl rule__EDouble__Group__2 )
-            // InternalSTL.g:1121:2: rule__EDouble__Group__1__Impl rule__EDouble__Group__2
+            // InternalSTL.g:1201:1: ( rule__EDouble__Group__1__Impl rule__EDouble__Group__2 )
+            // InternalSTL.g:1202:2: rule__EDouble__Group__1__Impl rule__EDouble__Group__2
             {
-            pushFollow(FOLLOW_17);
+            pushFollow(FOLLOW_15);
             rule__EDouble__Group__1__Impl();
 
             state._fsp--;
@@ -3471,29 +3693,29 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EDouble__Group__1__Impl"
-    // InternalSTL.g:1128:1: rule__EDouble__Group__1__Impl : ( ( RULE_INT )? ) ;
+    // InternalSTL.g:1209:1: rule__EDouble__Group__1__Impl : ( ( RULE_INT )? ) ;
     public final void rule__EDouble__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:1132:1: ( ( ( RULE_INT )? ) )
-            // InternalSTL.g:1133:1: ( ( RULE_INT )? )
+            // InternalSTL.g:1213:1: ( ( ( RULE_INT )? ) )
+            // InternalSTL.g:1214:1: ( ( RULE_INT )? )
             {
-            // InternalSTL.g:1133:1: ( ( RULE_INT )? )
-            // InternalSTL.g:1134:2: ( RULE_INT )?
+            // InternalSTL.g:1214:1: ( ( RULE_INT )? )
+            // InternalSTL.g:1215:2: ( RULE_INT )?
             {
              before(grammarAccess.getEDoubleAccess().getINTTerminalRuleCall_1()); 
-            // InternalSTL.g:1135:2: ( RULE_INT )?
-            int alt16=2;
-            int LA16_0 = input.LA(1);
+            // InternalSTL.g:1216:2: ( RULE_INT )?
+            int alt15=2;
+            int LA15_0 = input.LA(1);
 
-            if ( (LA16_0==RULE_INT) ) {
-                alt16=1;
+            if ( (LA15_0==RULE_INT) ) {
+                alt15=1;
             }
-            switch (alt16) {
+            switch (alt15) {
                 case 1 :
-                    // InternalSTL.g:1135:3: RULE_INT
+                    // InternalSTL.g:1216:3: RULE_INT
                     {
                     match(input,RULE_INT,FOLLOW_2); 
 
@@ -3525,14 +3747,14 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EDouble__Group__2"
-    // InternalSTL.g:1143:1: rule__EDouble__Group__2 : rule__EDouble__Group__2__Impl rule__EDouble__Group__3 ;
+    // InternalSTL.g:1224:1: rule__EDouble__Group__2 : rule__EDouble__Group__2__Impl rule__EDouble__Group__3 ;
     public final void rule__EDouble__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:1147:1: ( rule__EDouble__Group__2__Impl rule__EDouble__Group__3 )
-            // InternalSTL.g:1148:2: rule__EDouble__Group__2__Impl rule__EDouble__Group__3
+            // InternalSTL.g:1228:1: ( rule__EDouble__Group__2__Impl rule__EDouble__Group__3 )
+            // InternalSTL.g:1229:2: rule__EDouble__Group__2__Impl rule__EDouble__Group__3
             {
             pushFollow(FOLLOW_18);
             rule__EDouble__Group__2__Impl();
@@ -3563,17 +3785,17 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EDouble__Group__2__Impl"
-    // InternalSTL.g:1155:1: rule__EDouble__Group__2__Impl : ( '.' ) ;
+    // InternalSTL.g:1236:1: rule__EDouble__Group__2__Impl : ( '.' ) ;
     public final void rule__EDouble__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:1159:1: ( ( '.' ) )
-            // InternalSTL.g:1160:1: ( '.' )
+            // InternalSTL.g:1240:1: ( ( '.' ) )
+            // InternalSTL.g:1241:1: ( '.' )
             {
-            // InternalSTL.g:1160:1: ( '.' )
-            // InternalSTL.g:1161:2: '.'
+            // InternalSTL.g:1241:1: ( '.' )
+            // InternalSTL.g:1242:2: '.'
             {
              before(grammarAccess.getEDoubleAccess().getFullStopKeyword_2()); 
             match(input,24,FOLLOW_2); 
@@ -3600,14 +3822,14 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EDouble__Group__3"
-    // InternalSTL.g:1170:1: rule__EDouble__Group__3 : rule__EDouble__Group__3__Impl rule__EDouble__Group__4 ;
+    // InternalSTL.g:1251:1: rule__EDouble__Group__3 : rule__EDouble__Group__3__Impl rule__EDouble__Group__4 ;
     public final void rule__EDouble__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:1174:1: ( rule__EDouble__Group__3__Impl rule__EDouble__Group__4 )
-            // InternalSTL.g:1175:2: rule__EDouble__Group__3__Impl rule__EDouble__Group__4
+            // InternalSTL.g:1255:1: ( rule__EDouble__Group__3__Impl rule__EDouble__Group__4 )
+            // InternalSTL.g:1256:2: rule__EDouble__Group__3__Impl rule__EDouble__Group__4
             {
             pushFollow(FOLLOW_19);
             rule__EDouble__Group__3__Impl();
@@ -3638,17 +3860,17 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EDouble__Group__3__Impl"
-    // InternalSTL.g:1182:1: rule__EDouble__Group__3__Impl : ( RULE_INT ) ;
+    // InternalSTL.g:1263:1: rule__EDouble__Group__3__Impl : ( RULE_INT ) ;
     public final void rule__EDouble__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:1186:1: ( ( RULE_INT ) )
-            // InternalSTL.g:1187:1: ( RULE_INT )
+            // InternalSTL.g:1267:1: ( ( RULE_INT ) )
+            // InternalSTL.g:1268:1: ( RULE_INT )
             {
-            // InternalSTL.g:1187:1: ( RULE_INT )
-            // InternalSTL.g:1188:2: RULE_INT
+            // InternalSTL.g:1268:1: ( RULE_INT )
+            // InternalSTL.g:1269:2: RULE_INT
             {
              before(grammarAccess.getEDoubleAccess().getINTTerminalRuleCall_3()); 
             match(input,RULE_INT,FOLLOW_2); 
@@ -3675,14 +3897,14 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EDouble__Group__4"
-    // InternalSTL.g:1197:1: rule__EDouble__Group__4 : rule__EDouble__Group__4__Impl ;
+    // InternalSTL.g:1278:1: rule__EDouble__Group__4 : rule__EDouble__Group__4__Impl ;
     public final void rule__EDouble__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:1201:1: ( rule__EDouble__Group__4__Impl )
-            // InternalSTL.g:1202:2: rule__EDouble__Group__4__Impl
+            // InternalSTL.g:1282:1: ( rule__EDouble__Group__4__Impl )
+            // InternalSTL.g:1283:2: rule__EDouble__Group__4__Impl
             {
             pushFollow(FOLLOW_2);
             rule__EDouble__Group__4__Impl();
@@ -3708,29 +3930,29 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EDouble__Group__4__Impl"
-    // InternalSTL.g:1208:1: rule__EDouble__Group__4__Impl : ( ( rule__EDouble__Group_4__0 )? ) ;
+    // InternalSTL.g:1289:1: rule__EDouble__Group__4__Impl : ( ( rule__EDouble__Group_4__0 )? ) ;
     public final void rule__EDouble__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:1212:1: ( ( ( rule__EDouble__Group_4__0 )? ) )
-            // InternalSTL.g:1213:1: ( ( rule__EDouble__Group_4__0 )? )
+            // InternalSTL.g:1293:1: ( ( ( rule__EDouble__Group_4__0 )? ) )
+            // InternalSTL.g:1294:1: ( ( rule__EDouble__Group_4__0 )? )
             {
-            // InternalSTL.g:1213:1: ( ( rule__EDouble__Group_4__0 )? )
-            // InternalSTL.g:1214:2: ( rule__EDouble__Group_4__0 )?
+            // InternalSTL.g:1294:1: ( ( rule__EDouble__Group_4__0 )? )
+            // InternalSTL.g:1295:2: ( rule__EDouble__Group_4__0 )?
             {
              before(grammarAccess.getEDoubleAccess().getGroup_4()); 
-            // InternalSTL.g:1215:2: ( rule__EDouble__Group_4__0 )?
-            int alt17=2;
-            int LA17_0 = input.LA(1);
+            // InternalSTL.g:1296:2: ( rule__EDouble__Group_4__0 )?
+            int alt16=2;
+            int LA16_0 = input.LA(1);
 
-            if ( ((LA17_0>=13 && LA17_0<=14)) ) {
-                alt17=1;
+            if ( ((LA16_0>=13 && LA16_0<=14)) ) {
+                alt16=1;
             }
-            switch (alt17) {
+            switch (alt16) {
                 case 1 :
-                    // InternalSTL.g:1215:3: rule__EDouble__Group_4__0
+                    // InternalSTL.g:1296:3: rule__EDouble__Group_4__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__EDouble__Group_4__0();
@@ -3766,14 +3988,14 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EDouble__Group_4__0"
-    // InternalSTL.g:1224:1: rule__EDouble__Group_4__0 : rule__EDouble__Group_4__0__Impl rule__EDouble__Group_4__1 ;
+    // InternalSTL.g:1305:1: rule__EDouble__Group_4__0 : rule__EDouble__Group_4__0__Impl rule__EDouble__Group_4__1 ;
     public final void rule__EDouble__Group_4__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:1228:1: ( rule__EDouble__Group_4__0__Impl rule__EDouble__Group_4__1 )
-            // InternalSTL.g:1229:2: rule__EDouble__Group_4__0__Impl rule__EDouble__Group_4__1
+            // InternalSTL.g:1309:1: ( rule__EDouble__Group_4__0__Impl rule__EDouble__Group_4__1 )
+            // InternalSTL.g:1310:2: rule__EDouble__Group_4__0__Impl rule__EDouble__Group_4__1
             {
             pushFollow(FOLLOW_20);
             rule__EDouble__Group_4__0__Impl();
@@ -3804,21 +4026,21 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EDouble__Group_4__0__Impl"
-    // InternalSTL.g:1236:1: rule__EDouble__Group_4__0__Impl : ( ( rule__EDouble__Alternatives_4_0 ) ) ;
+    // InternalSTL.g:1317:1: rule__EDouble__Group_4__0__Impl : ( ( rule__EDouble__Alternatives_4_0 ) ) ;
     public final void rule__EDouble__Group_4__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:1240:1: ( ( ( rule__EDouble__Alternatives_4_0 ) ) )
-            // InternalSTL.g:1241:1: ( ( rule__EDouble__Alternatives_4_0 ) )
+            // InternalSTL.g:1321:1: ( ( ( rule__EDouble__Alternatives_4_0 ) ) )
+            // InternalSTL.g:1322:1: ( ( rule__EDouble__Alternatives_4_0 ) )
             {
-            // InternalSTL.g:1241:1: ( ( rule__EDouble__Alternatives_4_0 ) )
-            // InternalSTL.g:1242:2: ( rule__EDouble__Alternatives_4_0 )
+            // InternalSTL.g:1322:1: ( ( rule__EDouble__Alternatives_4_0 ) )
+            // InternalSTL.g:1323:2: ( rule__EDouble__Alternatives_4_0 )
             {
              before(grammarAccess.getEDoubleAccess().getAlternatives_4_0()); 
-            // InternalSTL.g:1243:2: ( rule__EDouble__Alternatives_4_0 )
-            // InternalSTL.g:1243:3: rule__EDouble__Alternatives_4_0
+            // InternalSTL.g:1324:2: ( rule__EDouble__Alternatives_4_0 )
+            // InternalSTL.g:1324:3: rule__EDouble__Alternatives_4_0
             {
             pushFollow(FOLLOW_2);
             rule__EDouble__Alternatives_4_0();
@@ -3851,14 +4073,14 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EDouble__Group_4__1"
-    // InternalSTL.g:1251:1: rule__EDouble__Group_4__1 : rule__EDouble__Group_4__1__Impl rule__EDouble__Group_4__2 ;
+    // InternalSTL.g:1332:1: rule__EDouble__Group_4__1 : rule__EDouble__Group_4__1__Impl rule__EDouble__Group_4__2 ;
     public final void rule__EDouble__Group_4__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:1255:1: ( rule__EDouble__Group_4__1__Impl rule__EDouble__Group_4__2 )
-            // InternalSTL.g:1256:2: rule__EDouble__Group_4__1__Impl rule__EDouble__Group_4__2
+            // InternalSTL.g:1336:1: ( rule__EDouble__Group_4__1__Impl rule__EDouble__Group_4__2 )
+            // InternalSTL.g:1337:2: rule__EDouble__Group_4__1__Impl rule__EDouble__Group_4__2
             {
             pushFollow(FOLLOW_20);
             rule__EDouble__Group_4__1__Impl();
@@ -3889,29 +4111,29 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EDouble__Group_4__1__Impl"
-    // InternalSTL.g:1263:1: rule__EDouble__Group_4__1__Impl : ( ( rule__EDouble__Alternatives_4_1 )? ) ;
+    // InternalSTL.g:1344:1: rule__EDouble__Group_4__1__Impl : ( ( rule__EDouble__Alternatives_4_1 )? ) ;
     public final void rule__EDouble__Group_4__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:1267:1: ( ( ( rule__EDouble__Alternatives_4_1 )? ) )
-            // InternalSTL.g:1268:1: ( ( rule__EDouble__Alternatives_4_1 )? )
+            // InternalSTL.g:1348:1: ( ( ( rule__EDouble__Alternatives_4_1 )? ) )
+            // InternalSTL.g:1349:1: ( ( rule__EDouble__Alternatives_4_1 )? )
             {
-            // InternalSTL.g:1268:1: ( ( rule__EDouble__Alternatives_4_1 )? )
-            // InternalSTL.g:1269:2: ( rule__EDouble__Alternatives_4_1 )?
+            // InternalSTL.g:1349:1: ( ( rule__EDouble__Alternatives_4_1 )? )
+            // InternalSTL.g:1350:2: ( rule__EDouble__Alternatives_4_1 )?
             {
              before(grammarAccess.getEDoubleAccess().getAlternatives_4_1()); 
-            // InternalSTL.g:1270:2: ( rule__EDouble__Alternatives_4_1 )?
-            int alt18=2;
-            int LA18_0 = input.LA(1);
+            // InternalSTL.g:1351:2: ( rule__EDouble__Alternatives_4_1 )?
+            int alt17=2;
+            int LA17_0 = input.LA(1);
 
-            if ( ((LA18_0>=11 && LA18_0<=12)) ) {
-                alt18=1;
+            if ( ((LA17_0>=11 && LA17_0<=12)) ) {
+                alt17=1;
             }
-            switch (alt18) {
+            switch (alt17) {
                 case 1 :
-                    // InternalSTL.g:1270:3: rule__EDouble__Alternatives_4_1
+                    // InternalSTL.g:1351:3: rule__EDouble__Alternatives_4_1
                     {
                     pushFollow(FOLLOW_2);
                     rule__EDouble__Alternatives_4_1();
@@ -3947,14 +4169,14 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EDouble__Group_4__2"
-    // InternalSTL.g:1278:1: rule__EDouble__Group_4__2 : rule__EDouble__Group_4__2__Impl ;
+    // InternalSTL.g:1359:1: rule__EDouble__Group_4__2 : rule__EDouble__Group_4__2__Impl ;
     public final void rule__EDouble__Group_4__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:1282:1: ( rule__EDouble__Group_4__2__Impl )
-            // InternalSTL.g:1283:2: rule__EDouble__Group_4__2__Impl
+            // InternalSTL.g:1363:1: ( rule__EDouble__Group_4__2__Impl )
+            // InternalSTL.g:1364:2: rule__EDouble__Group_4__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__EDouble__Group_4__2__Impl();
@@ -3980,17 +4202,17 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EDouble__Group_4__2__Impl"
-    // InternalSTL.g:1289:1: rule__EDouble__Group_4__2__Impl : ( RULE_INT ) ;
+    // InternalSTL.g:1370:1: rule__EDouble__Group_4__2__Impl : ( RULE_INT ) ;
     public final void rule__EDouble__Group_4__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:1293:1: ( ( RULE_INT ) )
-            // InternalSTL.g:1294:1: ( RULE_INT )
+            // InternalSTL.g:1374:1: ( ( RULE_INT ) )
+            // InternalSTL.g:1375:1: ( RULE_INT )
             {
-            // InternalSTL.g:1294:1: ( RULE_INT )
-            // InternalSTL.g:1295:2: RULE_INT
+            // InternalSTL.g:1375:1: ( RULE_INT )
+            // InternalSTL.g:1376:2: RULE_INT
             {
              before(grammarAccess.getEDoubleAccess().getINTTerminalRuleCall_4_2()); 
             match(input,RULE_INT,FOLLOW_2); 
@@ -4017,17 +4239,17 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Geometry__NodesAssignment_1"
-    // InternalSTL.g:1305:1: rule__Geometry__NodesAssignment_1 : ( ruleShape_Impl ) ;
+    // InternalSTL.g:1386:1: rule__Geometry__NodesAssignment_1 : ( ruleShape_Impl ) ;
     public final void rule__Geometry__NodesAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:1309:1: ( ( ruleShape_Impl ) )
-            // InternalSTL.g:1310:2: ( ruleShape_Impl )
+            // InternalSTL.g:1390:1: ( ( ruleShape_Impl ) )
+            // InternalSTL.g:1391:2: ( ruleShape_Impl )
             {
-            // InternalSTL.g:1310:2: ( ruleShape_Impl )
-            // InternalSTL.g:1311:3: ruleShape_Impl
+            // InternalSTL.g:1391:2: ( ruleShape_Impl )
+            // InternalSTL.g:1392:3: ruleShape_Impl
             {
              before(grammarAccess.getGeometryAccess().getNodesShape_ImplParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -4058,17 +4280,17 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Shape_Impl__NameAssignment_2"
-    // InternalSTL.g:1320:1: rule__Shape_Impl__NameAssignment_2 : ( ruleEString ) ;
+    // InternalSTL.g:1401:1: rule__Shape_Impl__NameAssignment_2 : ( ruleEString ) ;
     public final void rule__Shape_Impl__NameAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:1324:1: ( ( ruleEString ) )
-            // InternalSTL.g:1325:2: ( ruleEString )
+            // InternalSTL.g:1405:1: ( ( ruleEString ) )
+            // InternalSTL.g:1406:2: ( ruleEString )
             {
-            // InternalSTL.g:1325:2: ( ruleEString )
-            // InternalSTL.g:1326:3: ruleEString
+            // InternalSTL.g:1406:2: ( ruleEString )
+            // InternalSTL.g:1407:3: ruleEString
             {
              before(grammarAccess.getShape_ImplAccess().getNameEStringParserRuleCall_2_0()); 
             pushFollow(FOLLOW_2);
@@ -4099,17 +4321,17 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Shape_Impl__TrianglesAssignment_4"
-    // InternalSTL.g:1335:1: rule__Shape_Impl__TrianglesAssignment_4 : ( ruleTriangle ) ;
+    // InternalSTL.g:1416:1: rule__Shape_Impl__TrianglesAssignment_4 : ( ruleTriangle ) ;
     public final void rule__Shape_Impl__TrianglesAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:1339:1: ( ( ruleTriangle ) )
-            // InternalSTL.g:1340:2: ( ruleTriangle )
+            // InternalSTL.g:1420:1: ( ( ruleTriangle ) )
+            // InternalSTL.g:1421:2: ( ruleTriangle )
             {
-            // InternalSTL.g:1340:2: ( ruleTriangle )
-            // InternalSTL.g:1341:3: ruleTriangle
+            // InternalSTL.g:1421:2: ( ruleTriangle )
+            // InternalSTL.g:1422:3: ruleTriangle
             {
              before(grammarAccess.getShape_ImplAccess().getTrianglesTriangleParserRuleCall_4_0()); 
             pushFollow(FOLLOW_2);
@@ -4140,17 +4362,17 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Triangle__NormalAssignment_2_1"
-    // InternalSTL.g:1350:1: rule__Triangle__NormalAssignment_2_1 : ( ruleVertex ) ;
+    // InternalSTL.g:1431:1: rule__Triangle__NormalAssignment_2_1 : ( ruleVertex ) ;
     public final void rule__Triangle__NormalAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:1354:1: ( ( ruleVertex ) )
-            // InternalSTL.g:1355:2: ( ruleVertex )
+            // InternalSTL.g:1435:1: ( ( ruleVertex ) )
+            // InternalSTL.g:1436:2: ( ruleVertex )
             {
-            // InternalSTL.g:1355:2: ( ruleVertex )
-            // InternalSTL.g:1356:3: ruleVertex
+            // InternalSTL.g:1436:2: ( ruleVertex )
+            // InternalSTL.g:1437:3: ruleVertex
             {
              before(grammarAccess.getTriangleAccess().getNormalVertexParserRuleCall_2_1_0()); 
             pushFollow(FOLLOW_2);
@@ -4180,26 +4402,26 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__Triangle__NormalAssignment_2_1"
 
 
-    // $ANTLR start "rule__Triangle__VerticesAssignment_5_1"
-    // InternalSTL.g:1365:1: rule__Triangle__VerticesAssignment_5_1 : ( ruleVertex ) ;
-    public final void rule__Triangle__VerticesAssignment_5_1() throws RecognitionException {
+    // $ANTLR start "rule__Triangle__Vertex1Assignment_6"
+    // InternalSTL.g:1446:1: rule__Triangle__Vertex1Assignment_6 : ( ruleVertex ) ;
+    public final void rule__Triangle__Vertex1Assignment_6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:1369:1: ( ( ruleVertex ) )
-            // InternalSTL.g:1370:2: ( ruleVertex )
+            // InternalSTL.g:1450:1: ( ( ruleVertex ) )
+            // InternalSTL.g:1451:2: ( ruleVertex )
             {
-            // InternalSTL.g:1370:2: ( ruleVertex )
-            // InternalSTL.g:1371:3: ruleVertex
+            // InternalSTL.g:1451:2: ( ruleVertex )
+            // InternalSTL.g:1452:3: ruleVertex
             {
-             before(grammarAccess.getTriangleAccess().getVerticesVertexParserRuleCall_5_1_0()); 
+             before(grammarAccess.getTriangleAccess().getVertex1VertexParserRuleCall_6_0()); 
             pushFollow(FOLLOW_2);
             ruleVertex();
 
             state._fsp--;
 
-             after(grammarAccess.getTriangleAccess().getVerticesVertexParserRuleCall_5_1_0()); 
+             after(grammarAccess.getTriangleAccess().getVertex1VertexParserRuleCall_6_0()); 
 
             }
 
@@ -4218,21 +4440,103 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Triangle__VerticesAssignment_5_1"
+    // $ANTLR end "rule__Triangle__Vertex1Assignment_6"
+
+
+    // $ANTLR start "rule__Triangle__Vertex2Assignment_8"
+    // InternalSTL.g:1461:1: rule__Triangle__Vertex2Assignment_8 : ( ruleVertex ) ;
+    public final void rule__Triangle__Vertex2Assignment_8() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalSTL.g:1465:1: ( ( ruleVertex ) )
+            // InternalSTL.g:1466:2: ( ruleVertex )
+            {
+            // InternalSTL.g:1466:2: ( ruleVertex )
+            // InternalSTL.g:1467:3: ruleVertex
+            {
+             before(grammarAccess.getTriangleAccess().getVertex2VertexParserRuleCall_8_0()); 
+            pushFollow(FOLLOW_2);
+            ruleVertex();
+
+            state._fsp--;
+
+             after(grammarAccess.getTriangleAccess().getVertex2VertexParserRuleCall_8_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Triangle__Vertex2Assignment_8"
+
+
+    // $ANTLR start "rule__Triangle__Vertex3Assignment_10"
+    // InternalSTL.g:1476:1: rule__Triangle__Vertex3Assignment_10 : ( ruleVertex ) ;
+    public final void rule__Triangle__Vertex3Assignment_10() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalSTL.g:1480:1: ( ( ruleVertex ) )
+            // InternalSTL.g:1481:2: ( ruleVertex )
+            {
+            // InternalSTL.g:1481:2: ( ruleVertex )
+            // InternalSTL.g:1482:3: ruleVertex
+            {
+             before(grammarAccess.getTriangleAccess().getVertex3VertexParserRuleCall_10_0()); 
+            pushFollow(FOLLOW_2);
+            ruleVertex();
+
+            state._fsp--;
+
+             after(grammarAccess.getTriangleAccess().getVertex3VertexParserRuleCall_10_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Triangle__Vertex3Assignment_10"
 
 
     // $ANTLR start "rule__Vertex__XAssignment_1"
-    // InternalSTL.g:1380:1: rule__Vertex__XAssignment_1 : ( ruleEDouble ) ;
+    // InternalSTL.g:1491:1: rule__Vertex__XAssignment_1 : ( ruleEDouble ) ;
     public final void rule__Vertex__XAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:1384:1: ( ( ruleEDouble ) )
-            // InternalSTL.g:1385:2: ( ruleEDouble )
+            // InternalSTL.g:1495:1: ( ( ruleEDouble ) )
+            // InternalSTL.g:1496:2: ( ruleEDouble )
             {
-            // InternalSTL.g:1385:2: ( ruleEDouble )
-            // InternalSTL.g:1386:3: ruleEDouble
+            // InternalSTL.g:1496:2: ( ruleEDouble )
+            // InternalSTL.g:1497:3: ruleEDouble
             {
              before(grammarAccess.getVertexAccess().getXEDoubleParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -4263,17 +4567,17 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Vertex__YAssignment_2"
-    // InternalSTL.g:1395:1: rule__Vertex__YAssignment_2 : ( ruleEDouble ) ;
+    // InternalSTL.g:1506:1: rule__Vertex__YAssignment_2 : ( ruleEDouble ) ;
     public final void rule__Vertex__YAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:1399:1: ( ( ruleEDouble ) )
-            // InternalSTL.g:1400:2: ( ruleEDouble )
+            // InternalSTL.g:1510:1: ( ( ruleEDouble ) )
+            // InternalSTL.g:1511:2: ( ruleEDouble )
             {
-            // InternalSTL.g:1400:2: ( ruleEDouble )
-            // InternalSTL.g:1401:3: ruleEDouble
+            // InternalSTL.g:1511:2: ( ruleEDouble )
+            // InternalSTL.g:1512:3: ruleEDouble
             {
              before(grammarAccess.getVertexAccess().getYEDoubleParserRuleCall_2_0()); 
             pushFollow(FOLLOW_2);
@@ -4304,17 +4608,17 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Vertex__ZAssignment_3"
-    // InternalSTL.g:1410:1: rule__Vertex__ZAssignment_3 : ( ruleEDouble ) ;
+    // InternalSTL.g:1521:1: rule__Vertex__ZAssignment_3 : ( ruleEDouble ) ;
     public final void rule__Vertex__ZAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSTL.g:1414:1: ( ( ruleEDouble ) )
-            // InternalSTL.g:1415:2: ( ruleEDouble )
+            // InternalSTL.g:1525:1: ( ( ruleEDouble ) )
+            // InternalSTL.g:1526:2: ( ruleEDouble )
             {
-            // InternalSTL.g:1415:2: ( ruleEDouble )
-            // InternalSTL.g:1416:3: ruleEDouble
+            // InternalSTL.g:1526:2: ( ruleEDouble )
+            // InternalSTL.g:1527:3: ruleEDouble
             {
              before(grammarAccess.getVertexAccess().getZEDoubleParserRuleCall_3_0()); 
             pushFollow(FOLLOW_2);
@@ -4358,13 +4662,13 @@ public class InternalSTLParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0000000000000022L});
     public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x00000000000000F0L});
     public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0000000000400000L});
+    public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0000000000800000L});
     public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0000000000040000L});
     public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x0000000000080000L});
-    public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0000000000900000L});
-    public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x0000000000800002L});
+    public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0000000000100000L});
+    public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x0000000001001880L});
     public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x0000000000200000L});
-    public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0000000001001880L});
+    public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0000000000400000L});
     public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0000000000000080L});
     public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0000000000006000L});
     public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0000000000001880L});

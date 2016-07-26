@@ -20,7 +20,9 @@ Triangle returns Triangle:
 	{Triangle}
 	'facet' ('normal' normal=Vertex)
 		'outer' 'loop'
-			('vertex' vertices+=Vertex)*
+			'vertex' vertex1 = Vertex
+			'vertex' vertex2 = Vertex
+			'vertex' vertex3 = Vertex
 		'endloop'
 	'endfacet'
 ;

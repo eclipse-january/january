@@ -807,9 +807,9 @@ rule__Triangle__Group__5__Impl
 	}
 :
 (
-	{ before(grammarAccess.getTriangleAccess().getGroup_5()); }
-	(rule__Triangle__Group_5__0)*
-	{ after(grammarAccess.getTriangleAccess().getGroup_5()); }
+	{ before(grammarAccess.getTriangleAccess().getVertexKeyword_5()); }
+	'vertex'
+	{ after(grammarAccess.getTriangleAccess().getVertexKeyword_5()); }
 )
 ;
 finally {
@@ -834,9 +834,9 @@ rule__Triangle__Group__6__Impl
 	}
 :
 (
-	{ before(grammarAccess.getTriangleAccess().getEndloopKeyword_6()); }
-	'endloop'
-	{ after(grammarAccess.getTriangleAccess().getEndloopKeyword_6()); }
+	{ before(grammarAccess.getTriangleAccess().getVertex1Assignment_6()); }
+	(rule__Triangle__Vertex1Assignment_6)
+	{ after(grammarAccess.getTriangleAccess().getVertex1Assignment_6()); }
 )
 ;
 finally {
@@ -849,6 +849,7 @@ rule__Triangle__Group__7
 	}
 :
 	rule__Triangle__Group__7__Impl
+	rule__Triangle__Group__8
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -860,9 +861,143 @@ rule__Triangle__Group__7__Impl
 	}
 :
 (
-	{ before(grammarAccess.getTriangleAccess().getEndfacetKeyword_7()); }
+	{ before(grammarAccess.getTriangleAccess().getVertexKeyword_7()); }
+	'vertex'
+	{ after(grammarAccess.getTriangleAccess().getVertexKeyword_7()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Triangle__Group__8
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__Triangle__Group__8__Impl
+	rule__Triangle__Group__9
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Triangle__Group__8__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getTriangleAccess().getVertex2Assignment_8()); }
+	(rule__Triangle__Vertex2Assignment_8)
+	{ after(grammarAccess.getTriangleAccess().getVertex2Assignment_8()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Triangle__Group__9
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__Triangle__Group__9__Impl
+	rule__Triangle__Group__10
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Triangle__Group__9__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getTriangleAccess().getVertexKeyword_9()); }
+	'vertex'
+	{ after(grammarAccess.getTriangleAccess().getVertexKeyword_9()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Triangle__Group__10
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__Triangle__Group__10__Impl
+	rule__Triangle__Group__11
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Triangle__Group__10__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getTriangleAccess().getVertex3Assignment_10()); }
+	(rule__Triangle__Vertex3Assignment_10)
+	{ after(grammarAccess.getTriangleAccess().getVertex3Assignment_10()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Triangle__Group__11
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__Triangle__Group__11__Impl
+	rule__Triangle__Group__12
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Triangle__Group__11__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getTriangleAccess().getEndloopKeyword_11()); }
+	'endloop'
+	{ after(grammarAccess.getTriangleAccess().getEndloopKeyword_11()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Triangle__Group__12
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__Triangle__Group__12__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Triangle__Group__12__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getTriangleAccess().getEndfacetKeyword_12()); }
 	'endfacet'
-	{ after(grammarAccess.getTriangleAccess().getEndfacetKeyword_7()); }
+	{ after(grammarAccess.getTriangleAccess().getEndfacetKeyword_12()); }
 )
 ;
 finally {
@@ -917,60 +1052,6 @@ rule__Triangle__Group_2__1__Impl
 	{ before(grammarAccess.getTriangleAccess().getNormalAssignment_2_1()); }
 	(rule__Triangle__NormalAssignment_2_1)
 	{ after(grammarAccess.getTriangleAccess().getNormalAssignment_2_1()); }
-)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-rule__Triangle__Group_5__0
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	rule__Triangle__Group_5__0__Impl
-	rule__Triangle__Group_5__1
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__Triangle__Group_5__0__Impl
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-(
-	{ before(grammarAccess.getTriangleAccess().getVertexKeyword_5_0()); }
-	'vertex'
-	{ after(grammarAccess.getTriangleAccess().getVertexKeyword_5_0()); }
-)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__Triangle__Group_5__1
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	rule__Triangle__Group_5__1__Impl
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__Triangle__Group_5__1__Impl
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-(
-	{ before(grammarAccess.getTriangleAccess().getVerticesAssignment_5_1()); }
-	(rule__Triangle__VerticesAssignment_5_1)
-	{ after(grammarAccess.getTriangleAccess().getVerticesAssignment_5_1()); }
 )
 ;
 finally {
@@ -1362,15 +1443,45 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Triangle__VerticesAssignment_5_1
+rule__Triangle__Vertex1Assignment_6
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getTriangleAccess().getVerticesVertexParserRuleCall_5_1_0()); }
+		{ before(grammarAccess.getTriangleAccess().getVertex1VertexParserRuleCall_6_0()); }
 		ruleVertex
-		{ after(grammarAccess.getTriangleAccess().getVerticesVertexParserRuleCall_5_1_0()); }
+		{ after(grammarAccess.getTriangleAccess().getVertex1VertexParserRuleCall_6_0()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Triangle__Vertex2Assignment_8
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getTriangleAccess().getVertex2VertexParserRuleCall_8_0()); }
+		ruleVertex
+		{ after(grammarAccess.getTriangleAccess().getVertex2VertexParserRuleCall_8_0()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Triangle__Vertex3Assignment_10
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getTriangleAccess().getVertex3VertexParserRuleCall_10_0()); }
+		ruleVertex
+		{ after(grammarAccess.getTriangleAccess().getVertex3VertexParserRuleCall_10_0()); }
 	)
 ;
 finally {

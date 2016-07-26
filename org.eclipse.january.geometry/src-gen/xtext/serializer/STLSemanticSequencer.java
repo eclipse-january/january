@@ -12,14 +12,14 @@
 package xtext.serializer;
 
 import com.google.inject.Inject;
-import java.util.Set;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.january.geometry.Geometry;
 import org.eclipse.january.geometry.GeometryPackage;
 import org.eclipse.january.geometry.Shape;
 import org.eclipse.january.geometry.Triangle;
 import org.eclipse.january.geometry.Vertex;
+import java.util.Set;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Parameter;
 import org.eclipse.xtext.ParserRule;
@@ -89,10 +89,25 @@ public class STLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Triangle returns Triangle
 	 *
 	 * Constraint:
-	 *     (normal=Vertex vertices+=Vertex*)
+	 *     (normal=Vertex vertex1=Vertex vertex2=Vertex vertex3=Vertex)
 	 */
 	protected void sequence_Triangle(ISerializationContext context, Triangle semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, GeometryPackage.Literals.TRIANGLE__NORMAL) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, GeometryPackage.Literals.TRIANGLE__NORMAL));
+			if (transientValues.isValueTransient(semanticObject, GeometryPackage.Literals.TRIANGLE__VERTEX1) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, GeometryPackage.Literals.TRIANGLE__VERTEX1));
+			if (transientValues.isValueTransient(semanticObject, GeometryPackage.Literals.TRIANGLE__VERTEX2) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, GeometryPackage.Literals.TRIANGLE__VERTEX2));
+			if (transientValues.isValueTransient(semanticObject, GeometryPackage.Literals.TRIANGLE__VERTEX3) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, GeometryPackage.Literals.TRIANGLE__VERTEX3));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getTriangleAccess().getNormalVertexParserRuleCall_2_1_0(), semanticObject.getNormal());
+		feeder.accept(grammarAccess.getTriangleAccess().getVertex1VertexParserRuleCall_6_0(), semanticObject.getVertex1());
+		feeder.accept(grammarAccess.getTriangleAccess().getVertex2VertexParserRuleCall_8_0(), semanticObject.getVertex2());
+		feeder.accept(grammarAccess.getTriangleAccess().getVertex3VertexParserRuleCall_10_0(), semanticObject.getVertex3());
+		feeder.finish();
 	}
 	
 	

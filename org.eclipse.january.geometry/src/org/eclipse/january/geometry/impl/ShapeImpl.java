@@ -302,6 +302,8 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, GeometryPackage.SHAPE__CENTER, oldCenter, center));
 			}
+		} else if (center == null){
+			center = GeometryFactory.eINSTANCE.createVertex();
 		}
 		return center;
 	}

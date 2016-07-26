@@ -78,7 +78,10 @@ public class TriangleItemProvider
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(GeometryPackage.Literals.TRIANGLE__NORMAL);
-			childrenFeatures.add(GeometryPackage.Literals.TRIANGLE__VERTICES);
+			childrenFeatures.add(GeometryPackage.Literals.TRIANGLE__VERTEX1);
+			childrenFeatures.add(GeometryPackage.Literals.TRIANGLE__VERTEX2);
+			childrenFeatures.add(GeometryPackage.Literals.TRIANGLE__VERTEX3);
+
 		}
 		return childrenFeatures;
 	}
@@ -132,7 +135,9 @@ public class TriangleItemProvider
 
 		switch (notification.getFeatureID(Triangle.class)) {
 			case GeometryPackage.TRIANGLE__NORMAL:
-			case GeometryPackage.TRIANGLE__VERTICES:
+			case GeometryPackage.TRIANGLE__VERTEX1:
+			case GeometryPackage.TRIANGLE__VERTEX2:
+			case GeometryPackage.TRIANGLE__VERTEX3:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -157,8 +162,18 @@ public class TriangleItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(GeometryPackage.Literals.TRIANGLE__VERTICES,
+				(GeometryPackage.Literals.TRIANGLE__VERTEX1,
 				 GeometryFactory.eINSTANCE.createVertex()));
+		
+		newChildDescriptors.add
+		(createChildParameter
+			(GeometryPackage.Literals.TRIANGLE__VERTEX2,
+			 GeometryFactory.eINSTANCE.createVertex()));
+		
+		newChildDescriptors.add
+		(createChildParameter
+			(GeometryPackage.Literals.TRIANGLE__VERTEX3,
+			 GeometryFactory.eINSTANCE.createVertex()));
 	}
 
 	/**
@@ -174,7 +189,10 @@ public class TriangleItemProvider
 
 		boolean qualify =
 			childFeature == GeometryPackage.Literals.TRIANGLE__NORMAL ||
-			childFeature == GeometryPackage.Literals.TRIANGLE__VERTICES;
+			childFeature == GeometryPackage.Literals.TRIANGLE__VERTEX1 ||
+			childFeature == GeometryPackage.Literals.TRIANGLE__VERTEX2 ||
+			childFeature == GeometryPackage.Literals.TRIANGLE__VERTEX3;
+
 
 		if (qualify) {
 			return getString
