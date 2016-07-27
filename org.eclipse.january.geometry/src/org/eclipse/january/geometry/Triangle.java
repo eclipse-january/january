@@ -17,11 +17,11 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
- * </p>
  * <ul>
  *   <li>{@link org.eclipse.january.geometry.Triangle#getNormal <em>Normal</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.Triangle#getVertices <em>Vertices</em>}</li>
  * </ul>
+ * </p>
  *
  * @see org.eclipse.january.geometry.GeometryPackage#getTriangle()
  * @model

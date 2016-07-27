@@ -18,12 +18,12 @@ import org.eclipse.january.geometry.Vertex;
  * <em><b>Vertex</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * </p>
  * <ul>
  *   <li>{@link org.eclipse.january.geometry.impl.VertexImpl#getX <em>X</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.impl.VertexImpl#getY <em>Y</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.impl.VertexImpl#getZ <em>Z</em>}</li>
  * </ul>
+ * </p>
  *
  * @generated
  */

@@ -14,4 +14,6 @@ package org.eclipse.january.geometry.validation;
 public interface MaterialValidator {
 	boolean validate();
 
+	boolean validateName(String value);
+
 }

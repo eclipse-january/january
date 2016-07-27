@@ -79,7 +79,6 @@ public class TriangleItemProvider
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(GeometryPackage.Literals.TRIANGLE__NORMAL);
 			childrenFeatures.add(GeometryPackage.Literals.TRIANGLE__VERTICES);
-
 		}
 		return childrenFeatures;
 	}
@@ -160,7 +159,6 @@ public class TriangleItemProvider
 			(createChildParameter
 				(GeometryPackage.Literals.TRIANGLE__VERTICES,
 				 GeometryFactory.eINSTANCE.createVertex()));
-		
 	}
 
 	/**
@@ -178,7 +176,6 @@ public class TriangleItemProvider
 			childFeature == GeometryPackage.Literals.TRIANGLE__NORMAL ||
 			childFeature == GeometryPackage.Literals.TRIANGLE__VERTICES;
 
-
 		if (qualify) {
 			return getString
 				("_UI_CreateChild_text2",
@@ -195,7 +192,7 @@ public class TriangleItemProvider
 	 */
 	@Override
 	public ResourceLocator getResourceLocator() {
-		return GeometryEditPlugin.INSTANCE;
+		return OrgeclipsejanuaryEditPlugin.INSTANCE;
 	}
 
 }

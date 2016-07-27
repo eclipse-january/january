@@ -23,13 +23,13 @@ import org.eclipse.january.geometry.GeometryPackage;
 import org.eclipse.january.geometry.INode;
 import org.eclipse.january.geometry.Triangle;
 import org.eclipse.january.geometry.Vertex;
+import org.eclipse.january.geometry.VertexSource;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '
  * <em><b>Geometry</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * </p>
  * <ul>
  *   <li>{@link org.eclipse.january.geometry.impl.GeometryImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.impl.GeometryImpl#getId <em>Id</em>}</li>
@@ -38,7 +38,9 @@ import org.eclipse.january.geometry.Vertex;
  *   <li>{@link org.eclipse.january.geometry.impl.GeometryImpl#getTriangles <em>Triangles</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.impl.GeometryImpl#getCenter <em>Center</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.impl.GeometryImpl#getParent <em>Parent</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.impl.GeometryImpl#getVertexSource <em>Vertex Source</em>}</li>
  * </ul>
+ * </p>
  *
  * @generated
  */
@@ -137,6 +139,16 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 	protected INode parent;
 
 	/**
+	 * The cached value of the '{@link #getVertexSource() <em>Vertex Source</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getVertexSource()
+	 * @generated
+	 * @ordered
+	 */
+	protected VertexSource vertexSource;
+
+	/**
 	 * The map of the shape's physical properties. Property names are mapped to
 	 * their values.
 	 * 
@@ -216,7 +228,6 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 	public EList<INode> getNodes() {
 		if (nodes == null) {
 			nodes = new EObjectContainmentEList<INode>(INode.class, this, GeometryPackage.GEOMETRY__NODES);
-			//nodes = new BasicEList<INode>();
 		}
 		return nodes;
 	}
@@ -267,8 +278,6 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, GeometryPackage.GEOMETRY__CENTER, oldCenter, center));
 			}
-		} else {
-			center = GeometryFactory.eINSTANCE.createVertex();
 		}
 		return center;
 	}
@@ -278,9 +287,6 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 	 * @generated
 	 */
 	public Vertex basicGetCenter() {
-		if (center == null) {
-			center = GeometryFactory.eINSTANCE.createVertex();
-		}
 		return center;
 	}
 
@@ -334,6 +340,49 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public VertexSource getVertexSource() {
+		return vertexSource;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetVertexSource(VertexSource newVertexSource, NotificationChain msgs) {
+		VertexSource oldVertexSource = vertexSource;
+		vertexSource = newVertexSource;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, GeometryPackage.GEOMETRY__VERTEX_SOURCE, oldVertexSource, newVertexSource);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setVertexSource(VertexSource newVertexSource) {
+		if (newVertexSource != vertexSource) {
+			NotificationChain msgs = null;
+			if (vertexSource != null)
+				msgs = ((InternalEObject)vertexSource).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - GeometryPackage.GEOMETRY__VERTEX_SOURCE, null, msgs);
+			if (newVertexSource != null)
+				msgs = ((InternalEObject)newVertexSource).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - GeometryPackage.GEOMETRY__VERTEX_SOURCE, null, msgs);
+			msgs = basicSetVertexSource(newVertexSource, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, GeometryPackage.GEOMETRY__VERTEX_SOURCE, newVertexSource, newVertexSource));
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -379,7 +428,7 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 	 */
 	@Override
 	public void addNode(INode child) {
-
+		System.out.println("adding node: "+ child.getName());
 		// If the node is already in the list, fail silently
 		if (!getNodes().contains(child)) {
 
@@ -479,6 +528,8 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 				return ((InternalEList<?>)getNodes()).basicRemove(otherEnd, msgs);
 			case GeometryPackage.GEOMETRY__TRIANGLES:
 				return ((InternalEList<?>)getTriangles()).basicRemove(otherEnd, msgs);
+			case GeometryPackage.GEOMETRY__VERTEX_SOURCE:
+				return basicSetVertexSource(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -506,6 +557,8 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 			case GeometryPackage.GEOMETRY__PARENT:
 				if (resolve) return getParent();
 				return basicGetParent();
+			case GeometryPackage.GEOMETRY__VERTEX_SOURCE:
+				return getVertexSource();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -541,6 +594,9 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 			case GeometryPackage.GEOMETRY__PARENT:
 				setParent((INode)newValue);
 				return;
+			case GeometryPackage.GEOMETRY__VERTEX_SOURCE:
+				setVertexSource((VertexSource)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -573,6 +629,9 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 			case GeometryPackage.GEOMETRY__PARENT:
 				setParent((INode)null);
 				return;
+			case GeometryPackage.GEOMETRY__VERTEX_SOURCE:
+				setVertexSource((VertexSource)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -598,6 +657,8 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 				return center != null;
 			case GeometryPackage.GEOMETRY__PARENT:
 				return parent != null;
+			case GeometryPackage.GEOMETRY__VERTEX_SOURCE:
+				return vertexSource != null;
 		}
 		return super.eIsSet(featureID);
 	}

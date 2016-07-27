@@ -530,7 +530,7 @@ public class GeometryEditor
 					}
 				}
 				catch (CoreException exception) {
-					GeometryEditorPlugin.INSTANCE.log(exception);
+					OrgeclipsejanuaryEditorPlugin.INSTANCE.log(exception);
 				}
 			}
 		};
@@ -646,7 +646,7 @@ public class GeometryEditor
 					showTabs();
 				}
 				catch (PartInitException exception) {
-					GeometryEditorPlugin.INSTANCE.log(exception);
+					OrgeclipsejanuaryEditorPlugin.INSTANCE.log(exception);
 				}
 			}
 
@@ -657,7 +657,7 @@ public class GeometryEditor
 						markerHelper.createMarkers(diagnostic);
 					}
 					catch (CoreException exception) {
-						GeometryEditorPlugin.INSTANCE.log(exception);
+						OrgeclipsejanuaryEditorPlugin.INSTANCE.log(exception);
 					}
 				}
 			}
@@ -949,7 +949,7 @@ public class GeometryEditor
 	 * @generated
 	 */
 	public void createModel() {
-		URI resourceURI = EditUIUtil.getURI(getEditorInput(), editingDomain.getResourceSet().getURIConverter());
+		URI resourceURI = EditUIUtil.getURI(getEditorInput());
 		Exception exception = null;
 		Resource resource = null;
 		try {
@@ -977,11 +977,10 @@ public class GeometryEditor
 	 * @generated
 	 */
 	public Diagnostic analyzeResourceProblems(Resource resource, Exception exception) {
-		boolean hasErrors = !resource.getErrors().isEmpty();
-		if (hasErrors || !resource.getWarnings().isEmpty()) {
+		if (!resource.getErrors().isEmpty() || !resource.getWarnings().isEmpty()) {
 			BasicDiagnostic basicDiagnostic =
 				new BasicDiagnostic
-					(hasErrors ? Diagnostic.ERROR : Diagnostic.WARNING,
+					(Diagnostic.ERROR,
 					 "org.eclipse.january.geometry.model.editor",
 					 0,
 					 getString("_UI_CreateModelError_message", resource.getURI()),
@@ -1523,7 +1522,7 @@ public class GeometryEditor
 		catch (Exception exception) {
 			// Something went wrong that shouldn't.
 			//
-			GeometryEditorPlugin.INSTANCE.log(exception);
+			OrgeclipsejanuaryEditorPlugin.INSTANCE.log(exception);
 		}
 		updateProblemIndication = true;
 		updateProblemIndication();
@@ -1727,7 +1726,7 @@ public class GeometryEditor
 	 * @generated
 	 */
 	private static String getString(String key) {
-		return GeometryEditorPlugin.INSTANCE.getString(key);
+		return OrgeclipsejanuaryEditorPlugin.INSTANCE.getString(key);
 	}
 
 	/**
@@ -1737,7 +1736,7 @@ public class GeometryEditor
 	 * @generated
 	 */
 	private static String getString(String key, Object s1) {
-		return GeometryEditorPlugin.INSTANCE.getString(key, new Object [] { s1 });
+		return OrgeclipsejanuaryEditorPlugin.INSTANCE.getString(key, new Object [] { s1 });
 	}
 
 	/**

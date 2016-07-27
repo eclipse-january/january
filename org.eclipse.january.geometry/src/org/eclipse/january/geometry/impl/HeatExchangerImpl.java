@@ -22,12 +22,12 @@ import org.eclipse.january.geometry.util.MeshUtils;
  * <em><b>Heat Exchanger</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * </p>
  * <ul>
  *   <li>{@link org.eclipse.january.geometry.impl.HeatExchangerImpl#getPipe <em>Pipe</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.impl.HeatExchangerImpl#getInput <em>Input</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.impl.HeatExchangerImpl#getOutput <em>Output</em>}</li>
  * </ul>
+ * </p>
  *
  * @generated
  */

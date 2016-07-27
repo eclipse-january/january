@@ -327,6 +327,31 @@ public class OperatorItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
+				(GeometryPackage.Literals.INODE__NODES,
+				 GeometryFactory.eINSTANCE.createPipe()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(GeometryPackage.Literals.INODE__NODES,
+				 GeometryFactory.eINSTANCE.createJunction()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(GeometryPackage.Literals.INODE__NODES,
+				 GeometryFactory.eINSTANCE.createHeatExchanger()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(GeometryPackage.Literals.INODE__NODES,
+				 GeometryFactory.eINSTANCE.createReactor()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(GeometryPackage.Literals.INODE__NODES,
+				 GeometryFactory.eINSTANCE.createPolyShape()));
+
+		newChildDescriptors.add
+			(createChildParameter
 				(GeometryPackage.Literals.INODE__TRIANGLES,
 				 GeometryFactory.eINSTANCE.createTriangle()));
 	}
@@ -339,7 +364,7 @@ public class OperatorItemProvider
 	 */
 	@Override
 	public ResourceLocator getResourceLocator() {
-		return GeometryEditPlugin.INSTANCE;
+		return OrgeclipsejanuaryEditPlugin.INSTANCE;
 	}
 
 }

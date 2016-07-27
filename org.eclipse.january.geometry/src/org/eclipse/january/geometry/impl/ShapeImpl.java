@@ -29,7 +29,6 @@ import org.eclipse.january.geometry.Vertex;
  * <em><b>Shape</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * </p>
  * <ul>
  * <li>{@link org.eclipse.january.geometry.impl.ShapeImpl#getName
  * <em>Name</em>}</li>
@@ -48,6 +47,7 @@ import org.eclipse.january.geometry.Vertex;
  * <li>{@link org.eclipse.january.geometry.impl.ShapeImpl#getMaterial
  * <em>Material</em>}</li>
  * </ul>
+ * </p>
  *
  * @generated
  */
@@ -318,7 +318,7 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
 							GeometryPackage.SHAPE__CENTER, oldCenter, center));
 			}
-		} else if (center == null) {
+		} else {
 			center = GeometryFactory.eINSTANCE.createVertex();
 		}
 		return center;
@@ -330,9 +330,6 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 	 * @generated
 	 */
 	public Vertex basicGetCenter() {
-		if (center == null) {
-			center = GeometryFactory.eINSTANCE.createVertex();
-		}
 		return center;
 	}
 

@@ -111,14 +111,14 @@ public class STLGeometryImporterItemProvider
 	}
 
 	/**
-	 * This returns ASCIISTLGeometryImporter.gif.
+	 * This returns STLGeometryImporter.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/ASCIISTLGeometryImporter"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/STLGeometryImporter"));
 	}
 
 	/**
@@ -131,8 +131,8 @@ public class STLGeometryImporterItemProvider
 	public String getText(Object object) {
 		String label = ((STLGeometryImporter)object).getDescription();
 		return label == null || label.length() == 0 ?
-			getString("_UI_ASCIISTLGeometryImporter_type") :
-			getString("_UI_ASCIISTLGeometryImporter_type") + " " + label;
+			getString("_UI_STLGeometryImporter_type") :
+			getString("_UI_STLGeometryImporter_type") + " " + label;
 	}
 	
 
@@ -176,7 +176,7 @@ public class STLGeometryImporterItemProvider
 	 */
 	@Override
 	public ResourceLocator getResourceLocator() {
-		return GeometryEditPlugin.INSTANCE;
+		return OrgeclipsejanuaryEditPlugin.INSTANCE;
 	}
 
 }

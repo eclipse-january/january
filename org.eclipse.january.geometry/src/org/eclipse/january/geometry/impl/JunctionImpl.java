@@ -25,7 +25,6 @@ import org.eclipse.january.geometry.util.MeshUtils;
  * <em><b>Junction</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * </p>
  * <ul>
  *   <li>{@link org.eclipse.january.geometry.impl.JunctionImpl#getHeight <em>Height</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.impl.JunctionImpl#getZIn <em>ZIn</em>}</li>
@@ -33,6 +32,7 @@ import org.eclipse.january.geometry.util.MeshUtils;
  *   <li>{@link org.eclipse.january.geometry.impl.JunctionImpl#getInput <em>Input</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.impl.JunctionImpl#getOutput <em>Output</em>}</li>
  * </ul>
+ * </p>
  *
  * @generated
  */

@@ -11,16 +11,12 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.january.geometry.BoundingBox;
 import org.eclipse.january.geometry.GeometryPackage;
-import org.eclipse.january.geometry.Shape;
-import org.eclipse.january.geometry.Triangle;
-import org.eclipse.january.geometry.Vertex;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '
  * <em><b>Bounding Box</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * </p>
  * <ul>
  *   <li>{@link org.eclipse.january.geometry.impl.BoundingBoxImpl#getMaxX <em>Max X</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.impl.BoundingBoxImpl#getMaxY <em>Max Y</em>}</li>
@@ -29,6 +25,7 @@ import org.eclipse.january.geometry.Vertex;
  *   <li>{@link org.eclipse.january.geometry.impl.BoundingBoxImpl#getMinY <em>Min Y</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.impl.BoundingBoxImpl#getMinZ <em>Min Z</em>}</li>
  * </ul>
+ * </p>
  *
  * @generated
  */

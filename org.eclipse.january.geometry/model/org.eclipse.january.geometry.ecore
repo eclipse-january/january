@@ -97,6 +97,8 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A Geometry is a collection of shapes that form a complex, three dimensional object."/>
     </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="vertexSource" eType="#//VertexSource"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Tube" eSuperTypes="#//Shape">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -231,6 +233,7 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value=""/>
     </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IGeometryImporter" abstract="true" interface="true">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -410,5 +413,27 @@
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="pipes" upperBound="-1"
         eType="#//Pipe" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PolyShape" eSuperTypes="#//Shape">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="faces" upperBound="-1"
+        eType="#//Face" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="matFiles" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="vertexSource" eType="#//VertexSource"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Face">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="vertexIndices" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="textureIndices" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VertexSource">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="vertices" upperBound="-1"
+        eType="#//Vertex" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="textureCoordinates" upperBound="-1"
+        eType="#//Vertex" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="materialFiles" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>
