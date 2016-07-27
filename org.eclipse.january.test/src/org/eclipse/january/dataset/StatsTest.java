@@ -43,14 +43,14 @@ public class StatsTest {
 		DoubleDataset ta = Random.rand(100000);
 
 		assertEquals(msg, 0.5, ((Number) ta.mean()).doubleValue(), 4e-2);
-		assertEquals(msg, 0.5/Math.sqrt(3), ta.stdDeviation().doubleValue(), 4e-2);
+		assertEquals(msg, 0.5/Math.sqrt(3), ta.stdDeviation(), 4e-2);
 		assertEquals(msg, 0.0, ((Number) Stats.skewness(ta)).doubleValue(), 1.5e-2);
 		assertEquals(msg, -1.2, ((Number) Stats.kurtosis(ta)).doubleValue(), 1e-3);
 		assertEquals(msg, 0.5, ((Number) Stats.median(ta)).doubleValue(), 4e-3);
 
 		DoubleDataset tb = Random.rand(100000);
 		assertEquals(msg, 0.5, ((Number) tb.mean()).doubleValue(), 4e-2);
-		assertEquals(msg, 0.5/Math.sqrt(3), tb.stdDeviation().doubleValue(), 4e-2);
+		assertEquals(msg, 0.5/Math.sqrt(3), tb.stdDeviation(), 4e-2);
 
 		double res = 0;
 		long start;
@@ -89,7 +89,7 @@ public class StatsTest {
 		DoubleDataset ta = Random.randn(100000);
 
 		assertEquals(msg, 0, ((Number) ta.mean()).doubleValue(), 4e-2);
-		assertEquals(msg, 1.0, ta.stdDeviation().doubleValue(), 4e-2);
+		assertEquals(msg, 1.0, ta.stdDeviation(), 4e-2);
 		assertEquals(msg, 0.0, ((Number) Stats.skewness(ta)).doubleValue(), 1.5e-2);
 		assertEquals(msg, 0.0, ((Number) Stats.kurtosis(ta)).doubleValue(), 6e-2);
 		assertEquals(msg, 0.0, ((Number) Stats.median(ta)).doubleValue(), 4e-2);
@@ -107,7 +107,7 @@ public class StatsTest {
 		DoubleDataset ta = Random.exponential(beta, 100000);
 
 		assertEquals(msg, beta, ((Number) ta.mean()).doubleValue(), 4e-2);
-		assertEquals(msg, beta, ta.stdDeviation().doubleValue(), 4e-2);
+		assertEquals(msg, beta, ta.stdDeviation(), 4e-2);
 		assertEquals(msg, 2.0, ((Number) Stats.skewness(ta)).doubleValue(), 4e-2);
 		assertEquals(msg, 6.0, ((Number) Stats.kurtosis(ta)).doubleValue(), 3e-1);
 		assertEquals(msg, Math.log(2.)*beta, ((Number) Stats.median(ta)).doubleValue(), 4e-3);
@@ -125,7 +125,7 @@ public class StatsTest {
 		IntegerDataset ta = Random.poisson(lam, 100000);
 
 		assertEquals(msg, lam, ((Number) ta.mean()).doubleValue(), 4e-2);
-		assertEquals(msg, Math.sqrt(lam), ta.stdDeviation().doubleValue(), 4e-2);
+		assertEquals(msg, Math.sqrt(lam), ta.stdDeviation(), 4e-2);
 		assertEquals(msg, 1./Math.sqrt(lam), ((Number) Stats.skewness(ta)).doubleValue(), 5e-2);
 		assertEquals(msg, 1./lam, ((Number) Stats.kurtosis(ta)).doubleValue(), 3.5e-1);
 		assertEquals(msg, Math.floor(lam + 1./3 - 0.02/lam), ((Number) Stats.median(ta)).doubleValue(), 4e-3);
@@ -145,6 +145,9 @@ public class StatsTest {
 		assertEquals("Sum", 20, ((Number) a.sum(true)).doubleValue(), 1e-6);
 		assertEquals("Product", 720, (Double) Stats.product(a, true), 1e-6);
 	}
+
+	// TODO expand tests
+	// especially typedProducts
 
 	@Ignore
 	@Test

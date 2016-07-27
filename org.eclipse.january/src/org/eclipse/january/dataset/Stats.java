@@ -12,14 +12,18 @@
 
 package org.eclipse.january.dataset;
 
+import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.stat.descriptive.moment.Kurtosis;
 import org.apache.commons.math3.stat.descriptive.moment.Skewness;
+import org.eclipse.january.metadata.MetadataType;
 
 
 /**
@@ -30,97 +34,175 @@ import org.apache.commons.math3.stat.descriptive.moment.Skewness;
  */
 public class Stats {
 
-	private static final String STORE_KURTOSIS = "kurtosis";
-	private static final String STORE_SKEWNESS = "skewness";
-	private static final String STORE_MEDIAN = "median";
-	private static final String STORE_QUARTILE1 = "quartile1";
-	private static final String STORE_QUARTILE3 = "quartile3";
+	private static class ReferencedDataset extends SoftReference<Dataset> {
+		public ReferencedDataset(Dataset d) {
+			super(d);
+		}
+	}
+
+	private static class QStatisticsImpl<T> implements MetadataType {
+		private static final long serialVersionUID = -3296671666463190388L;
+		final static Double Q1 = 0.25;
+		final static Double Q2 = 0.5;
+		final static Double Q3 = 0.75;
+		Map<Double, T> qmap = new HashMap<Double, T>();
+		transient Map<Integer, Map<Double, ReferencedDataset>> aqmap = new HashMap<Integer, Map<Double, ReferencedDataset>>();
+		transient ReferencedDataset s; // store 0th element
+		transient Map<Integer, ReferencedDataset> smap = new HashMap<>();
+
+		@Override
+		public QStatisticsImpl<T> clone() {
+			return new QStatisticsImpl<T>(this);
+		}
+
+		public QStatisticsImpl() {
+		}
+
+		private QStatisticsImpl(QStatisticsImpl<T> qstats) {
+			if (qstats.s != null && qstats.s.get() != null) {
+				s = new ReferencedDataset(qstats.s.get().getView(false));
+			}
+			qmap.putAll(qstats.qmap);
+			for (Integer i : qstats.aqmap.keySet()) {
+				aqmap.put(i, new HashMap<>(qstats.aqmap.get(i)));
+			}
+			smap.putAll(qstats.smap);
+		}
+
+		public void setQuantile(double q, T v) {
+			qmap.put(q, v);
+		}
+
+		public T getQuantile(double q) {
+			return qmap.get(q);
+		}
+
+		private Map<Double, ReferencedDataset> getMap(int axis) {
+			Map<Double, ReferencedDataset> qm = aqmap.get(axis);
+			if (qm == null) {
+				qm = new HashMap<>();
+				aqmap.put(axis, qm);
+			}
+			return qm;
+		}
+
+		public void setQuantile(int axis, double q, Dataset v) {
+			Map<Double, ReferencedDataset> qm = getMap(axis);
+			qm.put(q, new ReferencedDataset(v));
+		}
+
+		public Dataset getQuantile(int axis, double q) {
+			Map<Double, ReferencedDataset> qm = getMap(axis);
+			return qm.get(q).get();
+		}
+
+		Dataset getSortedDataset(int axis) {
+			return smap.containsKey(axis) ? smap.get(axis).get() : null;
+		}
+
+		void setSortedDataset(int axis, Dataset v) {
+			smap.put(axis, new ReferencedDataset(v));
+		}
+	}
 
 	// calculates statistics and returns sorted dataset (0th element if compound)
-	private static Dataset calcQuartileStats(final AbstractDataset a) {
+	private static QStatisticsImpl<?> calcQuartileStats(final Dataset a) {
 		Dataset s = null;
 		final int is = a.getElementsPerItem();
 
 		if (is == 1) {
 			s = DatasetUtils.sort(a);
-		
-			a.setStoredValue(STORE_MEDIAN, Double.valueOf(pQuantile(s, 0.5)));
-			a.setStoredValue(STORE_QUARTILE1, Double.valueOf(pQuantile(s, 0.25)));
-			a.setStoredValue(STORE_QUARTILE3, Double.valueOf(pQuantile(s, 0.75)));
-		} else {
-			Dataset w = DatasetFactory.zeros(a.getShapeRef(), a.getDType());
-			a.setStoredValue(STORE_MEDIAN, new double[is]);
-			a.setStoredValue(STORE_QUARTILE1, new double[is]);
-			a.setStoredValue(STORE_QUARTILE3, new double[is]);
-			for (int j = 0; j < is; j++) {
-				((CompoundDataset) a).copyElements(w, j);
-				w.sort(null);
 
-				double[] store;
-				store = (double[]) a.getStoredValue(STORE_MEDIAN);
-				store[j] = pQuantile(w, 0.5);
-				store = (double[]) a.getStoredValue(STORE_QUARTILE1);
-				store[j] = pQuantile(w, 0.25);
-				store = (double[]) a.getStoredValue(STORE_QUARTILE3);
-				store[j] = pQuantile(w, 0.75);
-				if (j == 0)
-					s = w.clone();
-			}
+			QStatisticsImpl<Double> qstats = new QStatisticsImpl<Double>();
+
+			qstats.setQuantile(QStatisticsImpl.Q1, pQuantile(s, QStatisticsImpl.Q1));
+			qstats.setQuantile(QStatisticsImpl.Q2, pQuantile(s, QStatisticsImpl.Q2));
+			qstats.setQuantile(QStatisticsImpl.Q3, pQuantile(s, QStatisticsImpl.Q3));
+			qstats.s = new ReferencedDataset(s);
+			return qstats;
 		}
-		return s;
+
+		QStatisticsImpl<double[]> qstats = new QStatisticsImpl<double[]>();
+
+		Dataset w = DatasetFactory.zeros(a.getShapeRef(), a.getDType());
+		double[] q1 = new double[is];
+		double[] q2 = new double[is];
+		double[] q3 = new double[is];
+		qstats.setQuantile(QStatisticsImpl.Q1, q1);
+		qstats.setQuantile(QStatisticsImpl.Q2, q2);
+		qstats.setQuantile(QStatisticsImpl.Q3, q3);
+		for (int j = 0; j < is; j++) {
+			((CompoundDataset) a).copyElements(w, j);
+			w.sort(null);
+
+			q1[j] = pQuantile(w, QStatisticsImpl.Q1);
+			q2[j] = pQuantile(w, QStatisticsImpl.Q2);
+			q3[j] = pQuantile(w, QStatisticsImpl.Q3);
+			if (j == 0)
+				s = w.clone();
+		}
+		qstats.s = new ReferencedDataset(s);
+
+		return qstats;
 	}
 
-	static private Object getQStatistics(final AbstractDataset a, final String stat) {
-		Object m = a.getStoredValue(stat);
+	static private QStatisticsImpl<?> getQStatistics(final Dataset a) {
+		QStatisticsImpl<?> m = a.getFirstMetadata(QStatisticsImpl.class);
 		if (m == null) {
-			calcQuartileStats(a);
-			m = a.getStoredValue(stat);
+			m = calcQuartileStats(a);
+			a.addMetadata(m);
 		}
 		return m;
 	}
 
-	static private Dataset getQStatistics(final AbstractDataset a, int axis, final String stat) {
+	static private QStatisticsImpl<?> getQStatistics(final Dataset a, int axis) {
 		axis = a.checkAxis(axis);
-		Object obj = a.getStoredValue(stat);
 		final int is = a.getElementsPerItem();
+		QStatisticsImpl<?> qstats = a.getFirstMetadata(QStatisticsImpl.class);
 
-		if (obj == null) {
+		if (qstats == null) {
+			if (is == 1) {
+				qstats = new QStatisticsImpl<Double>();
+			} else {
+				qstats = new QStatisticsImpl<double[]>();
+			}
+			a.addMetadata(qstats);
+		}
+
+		if (qstats.getQuantile(axis, QStatisticsImpl.Q2) == null) {
 			if (is == 1) {
 				Dataset s = DatasetUtils.sort(a, axis);
-
-				a.setStoredValue(STORE_MEDIAN + "-" + axis, pQuantile(s, axis, 0.5));
-				a.setStoredValue(STORE_QUARTILE1 + "-" + axis, pQuantile(s, axis, 0.25));
-				a.setStoredValue(STORE_QUARTILE3 + "-" + axis, pQuantile(s, axis, 0.75));
+	
+				qstats.setQuantile(axis, QStatisticsImpl.Q1, pQuantile(s, axis, QStatisticsImpl.Q1));
+				qstats.setQuantile(axis, QStatisticsImpl.Q2, pQuantile(s, axis, QStatisticsImpl.Q2));
+				qstats.setQuantile(axis, QStatisticsImpl.Q3, pQuantile(s, axis, QStatisticsImpl.Q3));
+				qstats.setSortedDataset(axis, s);
 			} else {
 				Dataset w = DatasetFactory.zeros(a.getShapeRef(), a.getDType());
+				CompoundDoubleDataset q1 = null, q2 = null, q3 = null;
 				for (int j = 0; j < is; j++) {
 					((CompoundDataset) a).copyElements(w, j);
 					w.sort(axis);
-
-					CompoundDoubleDataset s;
-					final Dataset c = pQuantile(w, axis, 0.5);
+	
+					final Dataset c = pQuantile(w, axis, QStatisticsImpl.Q1);
 					if (j == 0) {
-						s = (CompoundDoubleDataset) DatasetFactory.zeros(is, c.getShapeRef(), c.getDType());
-						a.setStoredValue(STORE_MEDIAN + "-" + axis, s);
-						s = (CompoundDoubleDataset) DatasetFactory.zeros(is, c.getShapeRef(), c.getDType());
-						a.setStoredValue(STORE_QUARTILE1 + "-" + axis, s);
-						s = (CompoundDoubleDataset) DatasetFactory.zeros(is, c.getShapeRef(), c.getDType());
-						a.setStoredValue(STORE_QUARTILE3 + "-" + axis, s);
+						q1 = DatasetFactory.zeros(is, CompoundDoubleDataset.class, c.getShapeRef());
+						q2 = DatasetFactory.zeros(is, CompoundDoubleDataset.class, c.getShapeRef());
+						q3 = DatasetFactory.zeros(is, CompoundDoubleDataset.class, c.getShapeRef());
 					}
-					s = (CompoundDoubleDataset) a.getStoredValue(STORE_MEDIAN + "-" + axis);
-					s.setElements(c, j);
-
-					s = (CompoundDoubleDataset) a.getStoredValue(STORE_QUARTILE1 + "-" + axis);
-					s.setElements(pQuantile(w, axis, 0.25), j);
-
-					s = (CompoundDoubleDataset) a.getStoredValue(STORE_QUARTILE3 + "-" + axis);
-					s.setElements(pQuantile(w, axis, 0.75), j);
+					q1.setElements(c, j);
+	
+					q2.setElements(pQuantile(w, axis, QStatisticsImpl.Q2), j);
+	
+					q3.setElements(pQuantile(w, axis, QStatisticsImpl.Q3), j);
 				}
+				qstats.setQuantile(axis, QStatisticsImpl.Q1, q1);
+				qstats.setQuantile(axis, QStatisticsImpl.Q2, q2);
+				qstats.setQuantile(axis, QStatisticsImpl.Q3, q3);
 			}
-			obj = a.getStoredValue(stat);
 		}
 
-		return (Dataset) obj;
+		return qstats;
 	}
 
 	// process a sorted dataset
@@ -204,12 +286,18 @@ public class Stats {
 	 * @param q
 	 * @return point at which CDF has value q
 	 */
+	@SuppressWarnings("unchecked")
 	public static double quantile(final Dataset a, final double q) {
 		if (q < 0 || q > 1) {
 			throw new IllegalArgumentException("Quantile requested is outside [0,1]");
 		}
-		final Dataset s = calcQuartileStats(DatasetUtils.convertToAbstractDataset(a));
-		return pQuantile(s, q);
+		QStatisticsImpl<Double> qs = (QStatisticsImpl<Double>) getQStatistics(a);
+		Double qv = qs.getQuantile(q);
+		if (qv == null) {
+			qv = pQuantile(qs.s.get(), q);
+			qs.setQuantile(q, qv);
+		}
+		return qv;
 	}
 
 	/**
@@ -218,16 +306,23 @@ public class Stats {
 	 * @param values
 	 * @return points at which CDF has given values
 	 */
+	@SuppressWarnings("unchecked")
 	public static double[] quantile(final Dataset a, final double... values) {
 		final double[] points  = new double[values.length];
-		final Dataset s = calcQuartileStats(DatasetUtils.convertToAbstractDataset(a));
+		QStatisticsImpl<Double> qs = (QStatisticsImpl<Double>) getQStatistics(a);
 		for (int i = 0; i < points.length; i++) {
 			final double q = values[i];
 			if (q < 0 || q > 1) {
 				throw new IllegalArgumentException("Quantile requested is outside [0,1]");
 			}
-			points[i] = pQuantile(s, q);
+			Double qv = qs.getQuantile(q);
+			if (qv == null) {
+				qv = pQuantile(qs.s.get(), q);
+				qs.setQuantile(q, qv);
+			}
+			points[i] = qv;
 		}
+
 		return points;
 	}
 
@@ -238,35 +333,50 @@ public class Stats {
 	 * @param values
 	 * @return points at which CDF has given values
 	 */
+	@SuppressWarnings("unchecked")
 	public static Dataset[] quantile(final Dataset a, final int axis, final double... values) {
 		final Dataset[] points  = new Dataset[values.length];
 		final int is = a.getElementsPerItem();
 
 		if (is == 1) {
-			Dataset s = DatasetUtils.sort(a, axis);
+			QStatisticsImpl<Double> qs = (QStatisticsImpl<Double>) getQStatistics(a, axis);
 			for (int i = 0; i < points.length; i++) {
 				final double q = values[i];
 				if (q < 0 || q > 1) {
 					throw new IllegalArgumentException("Quantile requested is outside [0,1]");
 				}
-				points[i] = pQuantile(s, axis, q);
+				Dataset qv = qs.getQuantile(axis, q);
+				if (qv == null) {
+					qv = pQuantile(qs.getSortedDataset(axis), axis, q);
+					qs.setQuantile(axis, q, qv);
+				}
+				points[i] = qv;
 			}
 		} else {
+			QStatisticsImpl<double[]> qs = (QStatisticsImpl<double[]>) getQStatistics(a);
 			Dataset w = DatasetFactory.zeros(a.getShapeRef(), a.getDType());
 			for (int j = 0; j < is; j++) {
-				((CompoundDataset) a).copyElements(w, j);
-				w.sort(axis);
+				boolean copied = false;
 
 				for (int i = 0; i < points.length; i++) {
 					final double q = values[i];
 					if (q < 0 || q > 1) {
 						throw new IllegalArgumentException("Quantile requested is outside [0,1]");
 					}
-					final Dataset c = pQuantile(w, axis, q);
-					if (j == 0) {
-						points[i] = DatasetFactory.zeros(is, c.getShapeRef(), c.getDType());
+					Dataset qv = qs.getQuantile(axis, q);
+					if (qv == null) {
+						if (!copied) {
+							copied = true;
+							((CompoundDataset) a).copyElements(w, j);
+							w.sort(axis);
+						}
+						qv = pQuantile(w, axis, q);
+						qs.setQuantile(axis, q, qv);
+						if (j == 0) {
+							points[i] = DatasetFactory.zeros(is, qv.getShapeRef(), qv.getDType());
+						}
+						((CompoundDoubleDataset) points[i]).setElements(qv, j);
 					}
-					((CompoundDoubleDataset) points[i]).setElements(c, j);
 				}
 			}
 		}
@@ -280,7 +390,7 @@ public class Stats {
 	 * @return median
 	 */
 	public static Dataset median(final Dataset a, final int axis) {
-		return getQStatistics(DatasetUtils.convertToAbstractDataset(a), axis, STORE_MEDIAN + "-" + axis);
+		return getQStatistics(a, axis).getQuantile(axis, QStatisticsImpl.Q2);
 	}
 
 	/**
@@ -288,7 +398,7 @@ public class Stats {
 	 * @return median
 	 */
 	public static Object median(final Dataset a) {
-		return getQStatistics(DatasetUtils.convertToAbstractDataset(a), STORE_MEDIAN);
+		return getQStatistics(a).getQuantile(QStatisticsImpl.Q2);
 	}
 
 	/**
@@ -296,16 +406,17 @@ public class Stats {
 	 * @param a
 	 * @return range
 	 */
+	@SuppressWarnings("unchecked")
 	public static Object iqr(final Dataset a) {
-		AbstractDataset aa = DatasetUtils.convertToAbstractDataset(a);
-		final int is = aa.getElementsPerItem();
+		final int is = a.getElementsPerItem();
 		if (is == 1) {
-			double q3 = ((Double) getQStatistics(aa, STORE_QUARTILE3));
-			return Double.valueOf(q3 - ((Double) aa.getStoredValue(STORE_QUARTILE1)).doubleValue());
+			QStatisticsImpl<Double> qs = (QStatisticsImpl<Double>) getQStatistics(a);
+			return qs.getQuantile(QStatisticsImpl.Q3) - qs.getQuantile(QStatisticsImpl.Q1);
 		}
 
-		double[] q1 = (double[]) getQStatistics(aa, STORE_QUARTILE1);
-		double[] q3 = (double[]) getQStatistics(aa, STORE_QUARTILE3);
+		QStatisticsImpl<double[]> qs = (QStatisticsImpl<double[]>) getQStatistics(a);
+		double[] q1 = (double[]) qs.getQuantile(QStatisticsImpl.Q1);
+		double[] q3 = ((double[]) qs.getQuantile(QStatisticsImpl.Q3)).clone();
 		for (int j = 0; j < is; j++) {
 			q3[j] -= q1[j];
 		}
@@ -319,35 +430,104 @@ public class Stats {
 	 * @return range
 	 */
 	public static Dataset iqr(final Dataset a, final int axis) {
-		AbstractDataset aa = DatasetUtils.convertToAbstractDataset(a);
-		Dataset q3 = getQStatistics(aa, axis, STORE_QUARTILE3 + "-" + axis);
+		QStatisticsImpl<?> qs = getQStatistics(a, axis);
+		Dataset q3 = qs.getQuantile(axis, QStatisticsImpl.Q3);
 
-		return Maths.subtract(q3, aa.getStoredValue(STORE_QUARTILE1 + "-" + axis));
+		return Maths.subtract(q3, qs.getQuantile(QStatisticsImpl.Q1));
 	}
 
-	static private Object getHigherStatistic(final AbstractDataset a, final boolean ignoreNaNs, String stat) {
-		Object obj = a.getStoredValue(stat);
-		if (obj == null) {
-			calculateHigherMoments(a, ignoreNaNs);
-			obj = a.getStoredValue(stat);
+	static private HigherStatisticsImpl<?> getHigherStatistic(final Dataset a, boolean[] ignoreInvalids) {
+		boolean ignoreNaNs = false;
+		boolean ignoreInfs = false;
+		if (a.hasFloatingPointElements()) {
+			ignoreNaNs = ignoreInvalids != null && ignoreInvalids.length > 0 ? ignoreInvalids[0] : false;
+			ignoreInfs = ignoreInvalids != null && ignoreInvalids.length > 1 ? ignoreInvalids[1] : ignoreNaNs;
+		}
+
+		HigherStatisticsImpl<?> stats = a.getFirstMetadata(HigherStatisticsImpl.class);
+		if (stats == null) {
+			stats = calculateHigherMoments(a, ignoreNaNs, ignoreInfs);
+			a.addMetadata(stats);
 		}
 	
-		return obj;
+		return stats;
 	}
 
-	static private DoubleDataset getHigherStatistic(final AbstractDataset a, final boolean ignoreNaNs, int axis, String stat) {
+	static private HigherStatisticsImpl<?> getHigherStatistic(final Dataset a, final boolean[] ignoreInvalids, int axis) {
+		boolean ignoreNaNs = false;
+		boolean ignoreInfs = false;
+		if (a.hasFloatingPointElements()) {
+			ignoreNaNs = ignoreInvalids != null && ignoreInvalids.length > 0 ? ignoreInvalids[0] : false;
+			ignoreInfs = ignoreInvalids != null && ignoreInvalids.length > 1 ? ignoreInvalids[1] : ignoreNaNs;
+		}
+
 		axis = a.checkAxis(axis);
 	
-		DoubleDataset obj = (DoubleDataset) a.getStoredValue(stat);
-		if (obj == null) {
-			calculateHigherMoments(a, ignoreNaNs, axis);
-			obj = (DoubleDataset) a.getStoredValue(stat);
+		HigherStatisticsImpl<?> stats = a.getFirstMetadata(HigherStatisticsImpl.class);
+		if (stats == null || stats.getSkewness(axis) == null) {
+			stats = calculateHigherMoments(a, ignoreNaNs, ignoreInfs, axis);
+			a.addMetadata(stats);
 		}
 	
-		return obj;
+		return stats;
 	}
 
-	static private void calculateHigherMoments(final AbstractDataset a, final boolean ignoreNaNs) {
+	private static class HigherStatisticsImpl<T> implements MetadataType {
+		private static final long serialVersionUID = -6587974784104116792L;
+		T skewness;
+		T kurtosis;
+		transient Map<Integer, ReferencedDataset> smap = new HashMap<>();
+		transient Map<Integer, ReferencedDataset> kmap = new HashMap<>();
+
+		@Override
+		public HigherStatisticsImpl<T> clone() {
+			return new HigherStatisticsImpl<>(this);
+		}
+
+		public HigherStatisticsImpl() {
+		}
+
+		private HigherStatisticsImpl(HigherStatisticsImpl<T> hstats) {
+			skewness = hstats.skewness;
+			kurtosis = hstats.kurtosis;
+			smap.putAll(hstats.smap);
+			kmap.putAll(hstats.kmap);
+		}
+
+//		public void setSkewness(T skewness) {
+//			this.skewness = skewness;
+//		}
+//
+//		public void setKurtosis(T kurtosis) {
+//			this.kurtosis = kurtosis;
+//		}
+//
+//		public T getSkewness() {
+//			return skewness;
+//		}
+//
+//		public T getKurtosis() {
+//			return kurtosis;
+//		}
+
+		public Dataset getSkewness(int axis) {
+			return smap.get(axis).get();
+		}
+
+		public Dataset getKurtosis(int axis) {
+			return kmap.get(axis).get();
+		}
+
+		public void setSkewness(int axis, Dataset s) {
+			smap.put(axis, new ReferencedDataset(s));
+		}
+
+		public void setKurtosis(int axis, Dataset k) {
+			kmap.put(axis, new ReferencedDataset(k));
+		}
+	}
+
+	static private HigherStatisticsImpl<?> calculateHigherMoments(final Dataset a, final boolean ignoreNaNs, final boolean ignoreInfs) {
 		final int is = a.getElementsPerItem();
 		final IndexIterator iter = a.getIterator();
 
@@ -369,53 +549,58 @@ public class Stats {
 					k.increment(x);
 				}
 			}
-			a.setStoredValue(AbstractDataset.storeName(ignoreNaNs, STORE_SKEWNESS), s.getResult());
-			a.setStoredValue(AbstractDataset.storeName(ignoreNaNs, STORE_KURTOSIS), k.getResult());
-		} else {
-			final Skewness[] s = new Skewness[is];
-			final Kurtosis[] k = new Kurtosis[is];
 
-			for (int j = 0; j < is; j++) {
-				s[j] = new Skewness();
-				k[j] = new Kurtosis();
-			}
-			if (ignoreNaNs) {
-				while (iter.hasNext()) {
-					boolean skip = false;
-					for (int j = 0; j < is; j++) {
-						if (Double.isNaN(a.getElementDoubleAbs(iter.index + j))) {
-							skip = true;
-							break;
-						}
+			HigherStatisticsImpl<Double> stats = new HigherStatisticsImpl<Double>();
+			stats.skewness = s.getResult();
+			stats.kurtosis = k.getResult();
+			return stats;
+		}
+		final Skewness[] s = new Skewness[is];
+		final Kurtosis[] k = new Kurtosis[is];
+
+		for (int j = 0; j < is; j++) {
+			s[j] = new Skewness();
+			k[j] = new Kurtosis();
+		}
+		if (ignoreNaNs) {
+			while (iter.hasNext()) {
+				boolean skip = false;
+				for (int j = 0; j < is; j++) {
+					if (Double.isNaN(a.getElementDoubleAbs(iter.index + j))) {
+						skip = true;
+						break;
 					}
-					if (!skip)
-						for (int j = 0; j < is; j++) {
-							final double val = a.getElementDoubleAbs(iter.index + j);
-							s[j].increment(val);
-							k[j].increment(val);
-						}
 				}
-			} else {
-				while (iter.hasNext()) {
+				if (!skip)
 					for (int j = 0; j < is; j++) {
 						final double val = a.getElementDoubleAbs(iter.index + j);
 						s[j].increment(val);
 						k[j].increment(val);
 					}
+			}
+		} else {
+			while (iter.hasNext()) {
+				for (int j = 0; j < is; j++) {
+					final double val = a.getElementDoubleAbs(iter.index + j);
+					s[j].increment(val);
+					k[j].increment(val);
 				}
 			}
-			final double[] ts = new double[is];
-			final double[] tk = new double[is];
-			for (int j = 0; j < is; j++) {
-				ts[j] = s[j].getResult();
-				tk[j] = k[j].getResult();
-			}
-			a.setStoredValue(AbstractDataset.storeName(ignoreNaNs, STORE_SKEWNESS), ts);
-			a.setStoredValue(AbstractDataset.storeName(ignoreNaNs, STORE_KURTOSIS), tk);
 		}
+		final double[] ts = new double[is];
+		final double[] tk = new double[is];
+		for (int j = 0; j < is; j++) {
+			ts[j] = s[j].getResult();
+			tk[j] = k[j].getResult();
+		}
+
+		HigherStatisticsImpl<double[]> stats = new HigherStatisticsImpl<double[]>();
+		stats.skewness = ts;
+		stats.kurtosis = tk;
+		return stats;
 	}
 
-	static private void calculateHigherMoments(final AbstractDataset a, final boolean ignoreNaNs, final int axis) {
+	static private HigherStatisticsImpl<?> calculateHigherMoments(final Dataset a, final boolean ignoreNaNs, final boolean ignoreInfs, final int axis) {
 		final int rank = a.getRank();
 		final int is = a.getElementsPerItem();
 		final int[] oshape = a.getShape();
@@ -425,9 +610,13 @@ public class Stats {
 		final int[] nshape = ShapeUtils.squeezeShape(oshape, false);
 		final Dataset sk;
 		final Dataset ku;
-	
+		HigherStatisticsImpl<?> stats = null;
 	
 		if (is == 1) {
+			if (stats == null) {
+				stats = new HigherStatisticsImpl<Double>();
+				a.setMetadata(stats);
+			}
 			sk = DatasetFactory.zeros(DoubleDataset.class, nshape);
 			ku = DatasetFactory.zeros(DoubleDataset.class, nshape);
 			final IndexIterator qiter = sk.getIterator(true);
@@ -468,6 +657,10 @@ public class Stats {
 				ku.set(k.getResult(), spos);
 			}
 		} else {
+			if (stats == null) {
+				stats = new HigherStatisticsImpl<double[]>();
+				a.setMetadata(stats);
+			}
 			sk = DatasetFactory.createFromObject(is, CompoundDoubleDataset.class, nshape);
 			ku = DatasetFactory.createFromObject(is, CompoundDoubleDataset.class, nshape);
 			final IndexIterator qiter = sk.getIterator(true);
@@ -526,144 +719,140 @@ public class Stats {
 				ku.set(tk, spos);
 			}
 		}
-	
-		a.setStoredValue(AbstractDataset.storeName(ignoreNaNs, STORE_SKEWNESS + "-" + axis), sk);
-		a.setStoredValue(AbstractDataset.storeName(ignoreNaNs, STORE_KURTOSIS + "-" + axis), ku);
+
+		stats.setSkewness(axis, sk);
+		stats.setKurtosis(axis, ku);
+		return stats;
 	}
 
 	/**
-	 * See {@link #skewness(Dataset a, boolean ignoreNaNs)} with ignoreNaNs = false
 	 * @param a dataset
+	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
 	 * @return skewness
 	 */
-	public static Object skewness(final Dataset a) {
-		return skewness(a, false);
+	public static Object skewness(final Dataset a, final boolean... ignoreInvalids) {
+		return getHigherStatistic(a, ignoreInvalids).skewness;
 	}
 
 	/**
 	 * @param a dataset
-	 * @param ignoreNaNs if true, skip NaNs
-	 * @return skewness
-	 */
-	public static Object skewness(final Dataset a, final boolean ignoreNaNs) {
-		return getHigherStatistic(DatasetUtils.convertToAbstractDataset(a), ignoreNaNs, AbstractDataset.storeName(ignoreNaNs, STORE_SKEWNESS));
-	}
-
-	/**
-	 * See {@link #kurtosis(Dataset a, boolean ignoreNaNs)} with ignoreNaNs = false
-	 * @param a dataset
+	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
 	 * @return kurtosis
 	 */
-	public static Object kurtosis(final Dataset a) {
-		return kurtosis(a, false);
+	public static Object kurtosis(final Dataset a, final boolean... ignoreInvalids) {
+		return getHigherStatistic(a, ignoreInvalids).kurtosis;
 	}
 
 	/**
-	 * @param a dataset
-	 * @param ignoreNaNs if true, skip NaNs
-	 * @return kurtosis
-	 */
-	public static Object kurtosis(final Dataset a, final boolean ignoreNaNs) {
-		return getHigherStatistic(DatasetUtils.convertToAbstractDataset(a), ignoreNaNs, AbstractDataset.storeName(ignoreNaNs, STORE_KURTOSIS));
-	}
-
-	/**
-	 * See {@link #skewness(Dataset a, boolean ignoreNaNs, int axis)} with ignoreNaNs = false
 	 * @param a dataset
 	 * @param axis
-	 * @return skewness
+	 * @param ignoreInvalids see {@link Dataset#max(int, boolean...)}
+	 * @return skewness along axis in dataset
 	 */
-	public static Dataset skewness(final Dataset a, final int axis) {
-		return skewness(a, false, axis);
+	public static Dataset skewness(final Dataset a, final int axis, final boolean... ignoreInvalids) {
+		return getHigherStatistic(a, ignoreInvalids, axis).getSkewness(axis);
 	}
 
 	/**
 	 * @param a dataset
-	 * @param ignoreNaNs if true, skip NaNs
 	 * @param axis
-	 * @return skewness
+	 * @param ignoreInvalids see {@link Dataset#max(int, boolean...)}
+	 * @return kurtosis along axis in dataset
 	 */
-	public static Dataset skewness(final Dataset a, final boolean ignoreNaNs, final int axis) {
-		return getHigherStatistic(DatasetUtils.convertToAbstractDataset(a), ignoreNaNs, axis, AbstractDataset.storeName(ignoreNaNs, STORE_SKEWNESS + "-" + axis));
-	}
-
-	/**
-	 * See {@link #kurtosis(Dataset a, boolean ignoreNaNs, int axis)} with ignoreNaNs = false
-	 * @param a dataset
-	 * @param axis
-	 * @return kurtosis
-	 */
-	public static Dataset kurtosis(final Dataset a, final int axis) {
-		return kurtosis(a, false, axis);
+	public static Dataset kurtosis(final Dataset a, final int axis, final boolean... ignoreInvalids) {
+		return getHigherStatistic(a, ignoreInvalids, axis).getKurtosis(axis);
 	}
 
 	/**
 	 * @param a dataset
-	 * @param ignoreNaNs if true, skip NaNs
-	 * @param axis
-	 * @return kurtosis
+	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
+	 * @return sum of dataset
 	 */
-	public static Dataset kurtosis(final Dataset a, final boolean ignoreNaNs, final int axis) {
-		return getHigherStatistic(DatasetUtils.convertToAbstractDataset(a), ignoreNaNs, axis, AbstractDataset.storeName(ignoreNaNs, STORE_KURTOSIS + "-" + axis));
+	public static Object sum(final Dataset a, final boolean... ignoreInvalids) {
+		return a.sum(ignoreInvalids);
 	}
 
 	/**
-	 * See {@link #product(Dataset a, boolean ignoreNaNs)} with ignoreNaNs = false
-	 * @param a
-	 * @return product of all items in dataset
-	 */
-	public static Object product(final Dataset a) {
-		return product(a, false);
-	}
-
-	/**
-	 * @param a
-	 * @param ignoreNaNs if true, skip NaNs
-	 * @return product of all items in dataset
-	 */
-	public static Object product(final Dataset a, final boolean ignoreNaNs) {
-		return typedProduct(a, a.getDType(), ignoreNaNs);
-	}
-
-	/**
-	 * See {@link #typedProduct(Dataset a, int dtype, boolean ignoreNaNs)} with ignoreNaNs = false
-	 * @param a
+	 * @param a dataset
 	 * @param dtype
-	 * @return product of all items in dataset
+	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
+	 * @return typed sum of dataset
 	 */
-	public static Object typedProduct(final Dataset a, final int dtype) {
-		return typedProduct(a, dtype, false);
+	public static Object typedSum(final Dataset a, int dtype, final boolean... ignoreInvalids) {
+		if (a.isComplex()) {
+			Complex m = (Complex) a.sum(ignoreInvalids);
+			return m;
+		} else if (a instanceof CompoundDataset) {
+			return  DTypeUtils.fromDoublesToBiggestPrimitives((double[]) a.sum(ignoreInvalids), dtype);
+		}
+		return DTypeUtils.fromDoubleToBiggestNumber(DTypeUtils.toReal(a.sum(ignoreInvalids)), dtype);
 	}
 
 	/**
-	 * @param a
+	 * @param a dataset
 	 * @param dtype
-	 * @param ignoreNaNs if true, skip NaNs
+	 * @param axis
+	 * @param ignoreInvalids see {@link Dataset#max(int, boolean...)}
+	 * @return typed sum of items along axis in dataset
+	 */
+	public static Dataset typedSum(final Dataset a, int dtype, int axis, final boolean... ignoreInvalids) {
+		return DatasetUtils.cast(a.sum(axis, ignoreInvalids), dtype);
+	}
+
+	/**
+	 * @param a dataset
+	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
 	 * @return product of all items in dataset
 	 */
-	public static Object typedProduct(final Dataset a, final int dtype, final boolean ignoreNaNs) {
+	public static Object product(final Dataset a, final boolean... ignoreInvalids) {
+		return typedProduct(a, a.getDType(), ignoreInvalids);
+	}
+
+	/**
+	 * @param a dataset
+	 * @param axis
+	 * @param ignoreInvalids see {@link Dataset#max(int, boolean...)}
+	 * @return product of items along axis in dataset
+	 */
+	public static Dataset product(final Dataset a, final int axis, final boolean... ignoreInvalids) {
+		return typedProduct(a, a.getDType(), axis, ignoreInvalids);
+	}
+
+	/**
+	 * @param a dataset
+	 * @param dtype
+	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
+	 * @return typed product of all items in dataset
+	 */
+	public static Object typedProduct(final Dataset a, final int dtype, final boolean... ignoreInvalids) {
+		final boolean ignoreNaNs;
+		final boolean ignoreInfs;
+		if (a.hasFloatingPointElements()) {
+			ignoreNaNs = ignoreInvalids != null && ignoreInvalids.length > 0 ? ignoreInvalids[0] : false;
+			ignoreInfs = ignoreInvalids != null && ignoreInvalids.length > 1 ? ignoreInvalids[1] : ignoreNaNs;
+		} else {
+			ignoreNaNs = false;
+			ignoreInfs = false;
+		}
 
 		if (a.isComplex()) {
 			IndexIterator it = a.getIterator();
 			double rv = 1, iv = 0;
 
-			if (ignoreNaNs) {
-				while (it.hasNext()) {
-					final double r1 = a.getElementDoubleAbs(it.index);
-					final double i1 = a.getElementDoubleAbs(it.index + 1);
-					if (Double.isNaN(r1) || Double.isNaN(i1))
-						continue;
-					final double tv = r1*rv - i1*iv;
-					iv = r1*iv + i1*rv;
-					rv = tv;
+			while (it.hasNext()) {
+				final double r1 = a.getElementDoubleAbs(it.index);
+				final double i1 = a.getElementDoubleAbs(it.index + 1);
+				if (ignoreNaNs && (Double.isNaN(r1) || Double.isNaN(i1))) {
+					continue;
 				}
-			} else {
-				while (it.hasNext()) {
-					final double r1 = a.getElementDoubleAbs(it.index);
-					final double i1 = a.getElementDoubleAbs(it.index + 1);
-					final double tv = r1*rv - i1*iv;
-					iv = r1*iv + i1*rv;
-					rv = tv;
+				if (ignoreInfs  && (Double.isInfinite(r1) || Double.isInfinite(i1))) {
+					continue;
+				}
+				final double tv = r1*rv - i1*iv;
+				iv = r1*iv + i1*rv;
+				rv = tv;
+				if (Double.isNaN(rv) && Double.isNaN(iv)) {
+					break;
 				}
 			}
 
@@ -699,44 +888,47 @@ public class Stats {
 			return lresults;
 		case Dataset.FLOAT32: case Dataset.FLOAT64:
 			double dresult = 1.;
-			if (ignoreNaNs) {
-				while (it.hasNext()) {
-					final double x = a.getElementDoubleAbs(it.index);
-					if (Double.isNaN(x))
-						continue;
-					dresult *= x;
+			while (it.hasNext()) {
+				final double x = a.getElementDoubleAbs(it.index);
+				if (ignoreNaNs && Double.isNaN(x)) {
+					continue;
 				}
-			} else {
-				while (it.hasNext()) {
-					dresult *= a.getElementDoubleAbs(it.index);
+				if (ignoreInfs && Double.isInfinite(x)) {
+					continue;
+				}
+				dresult *= x;
+				if (Double.isNaN(dresult)) {
+					break;
 				}
 			}
 			return Double.valueOf(dresult);
 		case Dataset.ARRAYFLOAT32:
 		case Dataset.ARRAYFLOAT64:
 			is = a.getElementsPerItem();
+			double[] vals = new double[is];
 			dresults = new double[is];
 			for (int j = 0; j < is; j++) {
 				dresults[j] = 1.;
 			}
-			if (ignoreNaNs) {
-				while (it.hasNext()) {
-					boolean skip = false;
-					for (int j = 0; j < is; j++) {
-						if (Double.isNaN(a.getElementDoubleAbs(it.index + j))) {
-							skip = true;
-							break;
-						}
+			while (it.hasNext()) {
+				boolean okay = true;
+				for (int j = 0; j < is; j++) {
+					final double val = a.getElementDoubleAbs(it.index + j);
+					if (ignoreNaNs && Double.isNaN(val)) {
+						okay = false;
+						break;
 					}
-					if (!skip)
-						for (int j = 0; j < is; j++) {
-							dresults[j] *= a.getElementDoubleAbs(it.index + j);
-						}
+					if (ignoreInfs && Double.isInfinite(val)) {
+						okay = false;
+						break;
+					}
+					vals[j] = val;
 				}
-			} else {
-				while (it.hasNext()) {
-					for (int j = 0; j < is; j++)
-						dresults[j] *= a.getElementDoubleAbs(it.index + j);
+				if (okay) {
+					for (int j = 0; j < is; j++) {
+						double val = vals[j];
+						dresults[j] *= val;
+					}
 				}
 			}
 			return dresults;
@@ -746,56 +938,35 @@ public class Stats {
 	}
 
 	/**
-	 * See {@link #product(Dataset a, boolean ignoreNaNs, int axis)} with ignoreNaNs = false
-	 * @param a
-	 * @param axis
-	 * @return product of items along axis in dataset
-	 */
-	public static Dataset product(final Dataset a, final int axis) {
-		return product(a, false, axis);
-	}
-
-	/**
-	 * @param a
-	 * @param ignoreNaNs if true, skip NaNs
-	 * @param axis
-	 * @return product of items along axis in dataset
-	 */
-	public static Dataset product(final Dataset a, final boolean ignoreNaNs, final int axis) {
-		return typedProduct(a, a.getDType(), ignoreNaNs, axis);
-	}
-
-	/**
-	 * See {@link #typedProduct(Dataset a, int dtype, boolean ignoreNaNs, int axis)} with ignoreNaNs = false
-	 * @param a
+	 * @param a dataset
 	 * @param dtype
 	 * @param axis
-	 * @return product of items along axis in dataset
+	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
+	 * @return typed product of items along axis in dataset
 	 */
-	public static Dataset typedProduct(final Dataset a, final int dtype, final int axis) {
-		return typedProduct(a, dtype, false, axis);
-	}
-
-	/**
-	 * @param a
-	 * @param dtype
-	 * @param ignoreNaNs if true, skip NaNs
-	 * @param axis
-	 * @return product of items along axis in dataset
-	 */
-	public static Dataset typedProduct(final Dataset a, final int dtype, final boolean ignoreNaNs, int axis) {
+	public static Dataset typedProduct(final Dataset a, final int dtype, int axis, final boolean... ignoreInvalids) {
 		axis = a.checkAxis(axis);
 		final int[] oshape = a.getShape();
 		final int is = a.getElementsPerItem();
 		final int alen = oshape[axis];
 		oshape[axis] = 1;
 
+		final boolean ignoreNaNs;
+		final boolean ignoreInfs;
+		if (a.hasFloatingPointElements()) {
+			ignoreNaNs = ignoreInvalids != null && ignoreInvalids.length > 0 ? ignoreInvalids[0] : false;
+			ignoreInfs = ignoreInvalids != null && ignoreInvalids.length > 1 ? ignoreInvalids[1] : ignoreNaNs;
+		} else {
+			ignoreNaNs = false;
+			ignoreInfs = false;
+		}
 		Dataset result = DatasetFactory.zeros(is, oshape, dtype);
 
 		IndexIterator qiter = result.getIterator(true);
 		int[] qpos = qiter.getPos();
 		int[] spos;
 
+		// TODO add getLongArray(long[], int...) to CompoundDataset
 		while (qiter.hasNext()) {
 			spos = qpos.clone();
 
@@ -804,49 +975,41 @@ public class Stats {
 				switch (dtype) {
 				case Dataset.COMPLEX64:
 					ComplexFloatDataset af = (ComplexFloatDataset) a;
-					if (ignoreNaNs) {
-						for (int j = 0; j < alen; j++) {
-							spos[axis] = j;
-							final float r1 = af.getReal(spos);
-							final float i1 = af.getImag(spos);
-							if (Float.isNaN(r1) || Float.isNaN(i1))
-								continue;
-							final double tv = r1*rv - i1*iv;
-							iv = r1*iv + i1*rv;
-							rv = tv;
+					for (int j = 0; j < alen; j++) {
+						spos[axis] = j;
+						final float r1 = af.getReal(spos);
+						final float i1 = af.getImag(spos);
+						if (ignoreNaNs && (Float.isNaN(r1) || Float.isNaN(i1))) {
+							continue;
 						}
-					} else {
-						for (int j = 0; j < alen; j++) {
-							spos[axis] = j;
-							final float r1 = af.getReal(spos);
-							final float i1 = af.getImag(spos);
-							final double tv = r1*rv - i1*iv;
-							iv = r1*iv + i1*rv;
-							rv = tv;
+						if (ignoreInfs  && (Float.isInfinite(r1) || Float.isInfinite(i1))) {
+							continue;
+						}
+						final double tv = r1*rv - i1*iv;
+						iv = r1*iv + i1*rv;
+						rv = tv;
+						if (Double.isNaN(rv) && Double.isNaN(iv)) {
+							break;
 						}
 					}
 					break;
 				case Dataset.COMPLEX128:
 					ComplexDoubleDataset ad = (ComplexDoubleDataset) a;
-					if (ignoreNaNs) {
-						for (int j = 0; j < alen; j++) {
-							spos[axis] = j;
-							final double r1 = ad.getReal(spos);
-							final double i1 = ad.getImag(spos);
-							if (Double.isNaN(r1) || Double.isNaN(i1))
-								continue;
-							final double tv = r1*rv - i1*iv;
-							iv = r1*iv + i1*rv;
-							rv = tv;
+					for (int j = 0; j < alen; j++) {
+						spos[axis] = j;
+						final double r1 = ad.getReal(spos);
+						final double i1 = ad.getImag(spos);
+						if (ignoreNaNs && (Double.isNaN(r1) || Double.isNaN(i1))) {
+							continue;
 						}
-					} else {
-						for (int j = 0; j < alen; j++) {
-							spos[axis] = j;
-							final double r1 = ad.getReal(spos);
-							final double i1 = ad.getImag(spos);
-							final double tv = r1*rv - i1*iv;
-							iv = r1*iv + i1*rv;
-							rv = tv;
+						if (ignoreInfs  && (Double.isInfinite(r1) || Double.isInfinite(i1))) {
+							continue;
+						}
+						final double tv = r1*rv - i1*iv;
+						iv = r1*iv + i1*rv;
+						rv = tv;
+						if (Double.isNaN(rv) && Double.isNaN(iv)) {
+							break;
 						}
 					}
 					break;
@@ -926,81 +1089,47 @@ public class Stats {
 					break;
 				case Dataset.FLOAT32: case Dataset.FLOAT64:
 					double dresult = 1.;
-					if (ignoreNaNs) {
-						for (int j = 0; j < alen; j++) {
-							spos[axis] = j;
-							final double x = a.getDouble(spos); 
-							if (Double.isNaN(x))
-								continue;
-							dresult *= x;
+					for (int j = 0; j < alen; j++) {
+						spos[axis] = j;
+						final double x = a.getDouble(spos); 
+						if (ignoreNaNs && Double.isNaN(x)) {
+							continue;
 						}
-					} else {
-						for (int j = 0; j < alen; j++) {
-							spos[axis] = j;
-							dresult *= a.getDouble(spos);
+						if (ignoreInfs && Double.isInfinite(x)) {
+							continue;
+						}
+						dresult *= x;
+						if (Double.isNaN(dresult)) {
+							break;
 						}
 					}
 					result.set(dresult, qpos);
 					break;
-				case Dataset.ARRAYFLOAT32:
+				case Dataset.ARRAYFLOAT32: case Dataset.ARRAYFLOAT64:
+					CompoundDataset da = (CompoundDataset) a;
+					double[] dvalues = new double[is];
 					dresults = new double[is];
 					for (int k = 0; k < is; k++) {
 						dresults[k] = 1.;
 					}
-					if (ignoreNaNs) {
-						for (int j = 0; j < alen; j++) {
-							spos[axis] = j;
-							final float[] va = (float[]) a.getObject(spos);
-							boolean skip = false;
-							for (int k = 0; k < is; k++) {
-								if (Float.isNaN(va[k])) {
-									skip = true;
-									break;
-								}
+					for (int j = 0; j < alen; j++) {
+						spos[axis] = j;
+						da.getDoubleArray(dvalues, spos);
+						boolean okay = true;
+						for (int k = 0; k < is; k++) {
+							final double val = dvalues[k];
+							if (ignoreNaNs && Double.isNaN(val)) {
+								okay = false;
+								break;
 							}
-							if (!skip)
-								for (int k = 0; k < is; k++) {
-									dresults[k] *= va[k];
-								}
-						}
-					} else {
-						for (int j = 0; j < alen; j++) {
-							spos[axis] = j;
-							final float[] va = (float[]) a.getObject(spos);
-							for (int k = 0; k < is; k++) {
-								dresults[k] *= va[k];
+							if (ignoreInfs && Double.isInfinite(val)) {
+								okay = false;
+								break;
 							}
 						}
-					}
-					result.set(dresults, qpos);
-					break;
-				case Dataset.ARRAYFLOAT64:
-					dresults = new double[is];
-					for (int k = 0; k < is; k++) {
-						dresults[k] = 1.;
-					}
-					if (ignoreNaNs) {
-						for (int j = 0; j < alen; j++) {
-							spos[axis] = j;
-							final double[] va = (double[]) a.getObject(spos);
-							boolean skip = false;
+						if (okay) {
 							for (int k = 0; k < is; k++) {
-								if (Double.isNaN(va[k])) {
-									skip = true;
-									break;
-								}
-							}
-							if (!skip)
-								for (int k = 0; k < is; k++) {
-									dresults[k] *= va[k];
-								}
-						}
-					} else {
-						for (int j = 0; j < alen; j++) {
-							spos[axis] = j;
-							final double[] va = (double[]) a.getObject(spos);
-							for (int k = 0; k < is; k++) {
-								dresults[k] *= va[k];
+								dresults[k] *= dvalues[k];
 							}
 						}
 					}
@@ -1015,46 +1144,36 @@ public class Stats {
 	}
 
 	/**
-	 * See {@link #cumulativeProduct(Dataset a, boolean ignoreNaNs)} with ignoreNaNs = false
-	 * @param a
+	 * @param a dataset
+	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
 	 * @return cumulative product of items in flattened dataset
 	 */
-	public static Dataset cumulativeProduct(final Dataset a) {
-		return cumulativeProduct(a, false);
+	public static Dataset cumulativeProduct(final Dataset a, final boolean... ignoreInvalids) {
+		return cumulativeProduct(a.flatten(), 0, ignoreInvalids);
 	}
 
 	/**
-	 * @param a
-	 * @param ignoreNaNs if true, skip NaNs
-	 * @return cumulative product of items along axis in dataset
-	 */
-	public static Dataset cumulativeProduct(final Dataset a, boolean ignoreNaNs) {
-		return cumulativeProduct(a.flatten(), ignoreNaNs, 0);
-	}
-
-	/**
-	 * See {@link #cumulativeProduct(Dataset a, boolean ignoreNaNs, int axis)} with ignoreNaNs = false
-	 * @param a
+	 * @param a dataset
 	 * @param axis
+	 * @param ignoreInvalids see {@link Dataset#max(int, boolean...)}
 	 * @return cumulative product of items along axis in dataset
 	 */
-	public static Dataset cumulativeProduct(final Dataset a, int axis) {
-		return cumulativeProduct(a, false, axis);
-	}
-
-	/**
-	 * @param a
-	 * @param ignoreNaNs if true, skip NaNs
-	 * @param axis
-	 * @return cumulative product of items along axis in dataset
-	 */
-	public static Dataset cumulativeProduct(final Dataset a, boolean ignoreNaNs, int axis) {
+	public static Dataset cumulativeProduct(final Dataset a, int axis, final boolean... ignoreInvalids) {
 		axis = a.checkAxis(axis);
 		int dtype = a.getDType();
 		int[] oshape = a.getShape();
 		int alen = oshape[axis];
 		oshape[axis] = 1;
 
+		final boolean ignoreNaNs;
+		final boolean ignoreInfs;
+		if (a.hasFloatingPointElements()) {
+			ignoreNaNs = ignoreInvalids != null && ignoreInvalids.length > 0 ? ignoreInvalids[0] : false;
+			ignoreInfs = ignoreInvalids != null && ignoreInvalids.length > 1 ? ignoreInvalids[1] : ignoreNaNs;
+		} else {
+			ignoreNaNs = false;
+			ignoreInfs = false;
+		}
 		Dataset result = DatasetFactory.zeros(a);
 		PositionIterator pi = result.getPositionIterator(axis);
 
@@ -1067,59 +1186,47 @@ public class Stats {
 				switch (dtype) {
 				case Dataset.COMPLEX64:
 					ComplexFloatDataset af = (ComplexFloatDataset) a;
-					if (ignoreNaNs) {
-						for (int j = 0; j < alen; j++) {
+					ComplexFloatDataset rf = (ComplexFloatDataset) result;
+					for (int j = 0; j < alen; j++) {
+						if (!Double.isNaN(rv) || !Double.isNaN(iv)) {
 							pos[axis] = j;
 							final float r1 = af.getReal(pos);
 							final float i1 = af.getImag(pos);
-							if (Float.isNaN(r1) || Float.isNaN(i1))
+							if (ignoreNaNs && (Float.isNaN(r1) || Float.isNaN(i1))) {
 								continue;
+							}
+							if (ignoreInfs  && (Float.isInfinite(r1) || Float.isInfinite(i1))) {
+								continue;
+							}
 							final double tv = r1*rv - i1*iv;
 							iv = r1*iv + i1*rv;
 							rv = tv;
-							af.set((float) rv, (float) iv, pos);
 						}
-					} else {
-						for (int j = 0; j < alen; j++) {
-							pos[axis] = j;
-							final float r1 = af.getReal(pos);
-							final float i1 = af.getImag(pos);
-							final double tv = r1*rv - i1*iv;
-							iv = r1*iv + i1*rv;
-							rv = tv;
-							af.set((float) rv, (float) iv, pos);
-						}
+						rf.set((float) rv, (float) iv, pos);
 					}
 					break;
 				case Dataset.COMPLEX128:
 					ComplexDoubleDataset ad = (ComplexDoubleDataset) a;
-					if (ignoreNaNs) {
-						for (int j = 0; j < alen; j++) {
+					ComplexDoubleDataset rd = (ComplexDoubleDataset) result;
+					for (int j = 0; j < alen; j++) {
+						if (!Double.isNaN(rv) || !Double.isNaN(iv)) {
 							pos[axis] = j;
 							final double r1 = ad.getReal(pos);
 							final double i1 = ad.getImag(pos);
-							if (Double.isNaN(r1) || Double.isNaN(i1))
+							if (ignoreNaNs && (Double.isNaN(r1) || Double.isNaN(i1))) {
 								continue;
+							}
+							if (ignoreInfs  && (Double.isInfinite(r1) || Double.isInfinite(i1))) {
+								continue;
+							}
 							final double tv = r1*rv - i1*iv;
 							iv = r1*iv + i1*rv;
 							rv = tv;
-							ad.set(rv, iv, pos);
 						}
-					} else {
-						for (int j = 0; j < alen; j++) {
-							pos[axis] = j;
-							final double r1 = ad.getReal(pos);
-							final double i1 = ad.getImag(pos);
-							final double tv = r1*rv - i1*iv;
-							iv = r1*iv + i1*rv;
-							rv = tv;
-							ad.set(rv, iv, pos);
-						}
+						rd.set(rv, iv, pos);
 					}
 					break;
 				}
-
-				result.set(new Complex(rv, iv), pos);
 			} else {
 				final int is;
 				final long[] lresults;
@@ -1198,89 +1305,50 @@ public class Stats {
 					break;
 				case Dataset.FLOAT32: case Dataset.FLOAT64:
 					double dresult = 1.;
-					if (ignoreNaNs) {
-						for (int j = 0; j < alen; j++) {
+					for (int j = 0; j < alen; j++) {
+						if (!Double.isNaN(dresult)) {
 							pos[axis] = j;
 							final double x = a.getDouble(pos);
-							if (Double.isNaN(x))
+							if (ignoreNaNs && Double.isNaN(x)) {
 								continue;
+							}
+							if (ignoreInfs && Double.isInfinite(x)) {
+								continue;
+							}
 							dresult *= x;
-							result.set(dresult, pos);
 						}
-					} else {
-						for (int j = 0; j < alen; j++) {
-							pos[axis] = j;
-							dresult *= a.getDouble(pos);
-							result.set(dresult, pos);
-						}
+						result.set(dresult, pos);
 					}
 					break;
-				case Dataset.ARRAYFLOAT32:
+				case Dataset.ARRAYFLOAT32: case Dataset.ARRAYFLOAT64:
 					is = a.getElementsPerItem();
+					CompoundDataset da = (CompoundDataset) a;
+					double[] dvalues = new double[is];
 					dresults = new double[is];
 					for (int k = 0; k < is; k++) {
 						dresults[k] = 1.;
 					}
-					if (ignoreNaNs) {
-						for (int j = 0; j < alen; j++) {
-							pos[axis] = j;
-							final float[] va = (float[]) a.getObject(pos);
-							boolean skip = false;
-							for (int k = 0; k < is; k++) {
-								if (Float.isNaN(va[k])) {
-									skip = true;
-									break;
-								}
+					for (int j = 0; j < alen; j++) {
+						pos[axis] = j;
+						da.getDoubleArray(dvalues, pos);
+						boolean okay = true;
+						for (int k = 0; k < is; k++) {
+							final double val = dvalues[k];
+							if (ignoreNaNs && Double.isNaN(val)) {
+								okay = false;
+								break;
 							}
-							if (!skip)
-								for (int k = 0; k < is; k++) {
-									dresults[k] *= va[k];
-								}
-							result.set(dresults, pos);
-						}
-					} else {
-						for (int j = 0; j < alen; j++) {
-							pos[axis] = j;
-							final float[] va = (float[]) a.getObject(pos);
-							for (int k = 0; k < is; k++) {
-								dresults[k] *= va[k];
+							if (ignoreInfs && Double.isInfinite(val)) {
+								okay = false;
+								break;
 							}
-							result.set(dresults, pos);
 						}
-					}
-					break;
-				case Dataset.ARRAYFLOAT64:
-					is = a.getElementsPerItem();
-					dresults = new double[is];
-					for (int k = 0; k < is; k++) {
-						dresults[k] = 1.;
-					}
-					if (ignoreNaNs) {
-						for (int j = 0; j < alen; j++) {
-							pos[axis] = j;
-							final double[] va = (double[]) a.getObject(pos);
-							boolean skip = false;
+						if (okay) {
 							for (int k = 0; k < is; k++) {
-								if (Double.isNaN(va[k])) {
-									skip = true;
-									break;
-								}
+								dresults[k] *= dvalues[k];
 							}
-							if (!skip)
-								for (int k = 0; k < is; k++) {
-									dresults[k] *= va[k];
-								}
-							result.set(dresults, pos);
 						}
-					} else {
-						for (int j = 0; j < alen; j++) {
-							pos[axis] = j;
-							final double[] va = (double[]) a.getObject(pos);
-							for (int k = 0; k < is; k++) {
-								dresults[k] *= va[k];
-							}
-							result.set(dresults, pos);
-						}
+						result.set(dresults, pos);
 					}
 					break;
 				}
@@ -1291,46 +1359,36 @@ public class Stats {
 	}
 
 	/**
-	 * See {@link #cumulativeSum(Dataset a, boolean ignoreNaNs)} with ignoreNaNs = false
-	 * @param a
+	 * @param a dataset
+	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
 	 * @return cumulative sum of items in flattened dataset
 	 */
-	public static Dataset cumulativeSum(final Dataset a) {
-		return cumulativeSum(a, false);
+	public static Dataset cumulativeSum(final Dataset a, final boolean... ignoreInvalids) {
+		return cumulativeSum(a.flatten(), 0, ignoreInvalids);
 	}
 
 	/**
-	 * @param a
-	 * @param ignoreNaNs if true, skip NaNs
-	 * @return cumulative sum of items in flattened dataset
-	 */
-	public static Dataset cumulativeSum(final Dataset a, boolean ignoreNaNs) {
-		return cumulativeSum(a.flatten(), ignoreNaNs, 0);
-	}
-
-	/**
-	 * See {@link #cumulativeSum(Dataset a, boolean ignoreNaNs, int axis)} with ignoreNaNs = false
-	 * @param a
+	 * @param a dataset
 	 * @param axis
+	 * @param ignoreInvalids see {@link Dataset#max(int, boolean...)}
 	 * @return cumulative sum of items along axis in dataset
 	 */
-	public static Dataset cumulativeSum(final Dataset a, int axis) {
-		return cumulativeSum(a, false, axis);
-	}
-
-	/**
-	 * @param a
-	 * @param ignoreNaNs if true, skip NaNs
-	 * @param axis
-	 * @return cumulative sum of items along axis in dataset
-	 */
-	public static Dataset cumulativeSum(final Dataset a, boolean ignoreNaNs, int axis) {
+	public static Dataset cumulativeSum(final Dataset a, int axis, final boolean... ignoreInvalids) {
 		axis = a.checkAxis(axis);
 		int dtype = a.getDType();
 		int[] oshape = a.getShape();
 		int alen = oshape[axis];
 		oshape[axis] = 1;
 
+		final boolean ignoreNaNs;
+		final boolean ignoreInfs;
+		if (a.hasFloatingPointElements()) {
+			ignoreNaNs = ignoreInvalids != null && ignoreInvalids.length > 0 ? ignoreInvalids[0] : false;
+			ignoreInfs = ignoreInvalids != null && ignoreInvalids.length > 1 ? ignoreInvalids[1] : ignoreNaNs;
+		} else {
+			ignoreNaNs = false;
+			ignoreInfs = false;
+		}
 		Dataset result = DatasetFactory.zeros(a);
 		PositionIterator pi = result.getPositionIterator(axis);
 
@@ -1343,51 +1401,45 @@ public class Stats {
 				switch (dtype) {
 				case Dataset.COMPLEX64:
 					ComplexFloatDataset af = (ComplexFloatDataset) a;
-					if (ignoreNaNs) {
-						for (int j = 0; j < alen; j++) {
+					ComplexFloatDataset rf = (ComplexFloatDataset) result;
+					for (int j = 0; j < alen; j++) {
+						if (!Double.isNaN(rv) || !Double.isNaN(iv)) {
 							pos[axis] = j;
-							final float x = af.getReal(pos);
-							final float y = af.getImag(pos);
-							if (Float.isNaN(x) || Float.isNaN(y))
+							final float r1 = af.getReal(pos);
+							final float i1 = af.getImag(pos);
+							if (ignoreNaNs && (Float.isNaN(r1) || Float.isNaN(i1))) {
 								continue;
-							rv += x;
-							iv += y;
-							af.set((float) rv, (float) iv, pos);
+							}
+							if (ignoreInfs  && (Float.isInfinite(r1) || Float.isInfinite(i1))) {
+								continue;
+							}
+							rv += r1;
+							iv += i1;
 						}
-					} else {
-						for (int j = 0; j < alen; j++) {
-							pos[axis] = j;
-							rv += af.getReal(pos);
-							iv += af.getImag(pos);
-							af.set((float) rv, (float) iv, pos);
-						}
+						rf.set((float) rv, (float) iv, pos);
 					}
 					break;
 				case Dataset.COMPLEX128:
 					ComplexDoubleDataset ad = (ComplexDoubleDataset) a;
-					if (ignoreNaNs) {
-						for (int j = 0; j < alen; j++) {
+					ComplexDoubleDataset rd = (ComplexDoubleDataset) result;
+					for (int j = 0; j < alen; j++) {
+						if (!Double.isNaN(rv) || !Double.isNaN(iv)) {
 							pos[axis] = j;
-							final double x = ad.getReal(pos);
-							final double y = ad.getImag(pos);
-							if (Double.isNaN(x) || Double.isNaN(y))
+							final double r1 = ad.getReal(pos);
+							final double i1 = ad.getImag(pos);
+							if (ignoreNaNs && (Double.isNaN(r1) || Double.isNaN(i1))) {
 								continue;
-							rv += x;
-							iv += y;
-							ad.set(rv, iv, pos);
+							}
+							if (ignoreInfs  && (Double.isInfinite(r1) || Double.isInfinite(i1))) {
+								continue;
+							}
+							rv += r1;
+							iv += i1;
 						}
-					} else {
-						for (int j = 0; j < alen; j++) {
-							pos[axis] = j;
-							rv += ad.getReal(pos);
-							iv += ad.getImag(pos);
-							ad.set(rv, iv, pos);
-						}
+						rd.set(rv, iv, pos);
 					}
 					break;
 				}
-
-				result.set(new Complex(rv, iv), pos);
 			} else {
 				final int is;
 				final long[] lresults;
@@ -1454,83 +1506,47 @@ public class Stats {
 					break;
 				case Dataset.FLOAT32: case Dataset.FLOAT64:
 					double dresult = 0.;
-					if (ignoreNaNs) {
-						for (int j = 0; j < alen; j++) {
+					for (int j = 0; j < alen; j++) {
+						if (!Double.isNaN(dresult)) {
 							pos[axis] = j;
 							final double x = a.getDouble(pos);
-							if (Double.isNaN(x))
+							if (ignoreNaNs && Double.isNaN(x)) {
 								continue;
+							}
+							if (ignoreInfs && Double.isInfinite(x)) {
+								continue;
+							}
 							dresult += x;
-							result.set(dresult, pos);
 						}
-					} else {
-						for (int j = 0; j < alen; j++) {
-							pos[axis] = j;
-							dresult += a.getDouble(pos);
-							result.set(dresult, pos);
-						}
+						result.set(dresult, pos);
 					}
 					break;
-				case Dataset.ARRAYFLOAT32:
+				case Dataset.ARRAYFLOAT32: case Dataset.ARRAYFLOAT64:
 					is = a.getElementsPerItem();
+					CompoundDataset da = (CompoundDataset) a;
+					double[] dvalues = new double[is];
 					dresults = new double[is];
-					if (ignoreNaNs) {
-						for (int j = 0; j < alen; j++) {
-							pos[axis] = j;
-							final float[] va = (float[]) a.getObject(pos);
-							boolean skip = false;
-							for (int k = 0; k < is; k++) {
-								if (Float.isNaN(va[k])) {
-									skip = true;
-									break;
-								}
+					for (int j = 0; j < alen; j++) {
+						pos[axis] = j;
+						da.getDoubleArray(dvalues, pos);
+						boolean okay = true;
+						for (int k = 0; k < is; k++) {
+							final double val = dvalues[k];
+							if (ignoreNaNs && Double.isNaN(val)) {
+								okay = false;
+								break;
 							}
-							if (!skip)
-								for (int k = 0; k < is; k++) {
-									dresults[k] += va[k];
-								}
-							result.set(dresults, pos);
-						}
-					} else {
-						for (int j = 0; j < alen; j++) {
-							pos[axis] = j;
-							final float[] va = (float[]) a.getObject(pos);
-							for (int k = 0; k < is; k++) {
-								dresults[k] += va[k];
+							if (ignoreInfs && Double.isInfinite(val)) {
+								okay = false;
+								break;
 							}
-							result.set(dresults, pos);
 						}
-					}
-					break;
-				case Dataset.ARRAYFLOAT64:
-					is = a.getElementsPerItem();
-					dresults = new double[is];
-					if (ignoreNaNs) {
-						for (int j = 0; j < alen; j++) {
-							pos[axis] = j;
-							final double[] va = (double[]) a.getObject(pos);
-							boolean skip = false;
+						if (okay) {
 							for (int k = 0; k < is; k++) {
-								if (Double.isNaN(va[k])) {
-									skip = true;
-									break;
-								}
+								dresults[k] += dvalues[k];
 							}
-							if (!skip)
-								for (int k = 0; k < is; k++) {
-									dresults[k] += va[k];
-								}
-							result.set(dresults, pos);
 						}
-					} else {
-						for (int j = 0; j < alen; j++) {
-							pos[axis] = j;
-							final double[] va = (double[]) a.getObject(pos);
-							for (int k = 0; k < is; k++) {
-								dresults[k] += va[k];
-							}
-							result.set(dresults, pos);
-						}
+						result.set(dresults, pos);
 					}
 					break;
 				}
@@ -1777,34 +1793,35 @@ public class Stats {
 		}
 		return new double[] {lx, hx, nl, nh};
 	}
-	
-	
-	
+
 	/**
-	 * See {@link #covariance(Dataset a, Dataset b, Boolean rowvar, Boolean bias, Integer ddof)} with b = null, rowvar = true, bias = false and ddof = null.
+	 * See {@link #covariance(Dataset a, Dataset b, boolean rowvar, boolean bias, Integer ddof)} with b = null, rowvar = true, bias = false and ddof = null.
 	 * @param a
 	 * @return covariance array of a
 	 */
 	public static Dataset covariance(final Dataset a) {
 		return covariance(a, true, false, null); 
 	}
+
 	/**
-	 * See {@link #covariance(Dataset a, Dataset b, Boolean rowvar, Boolean bias, Integer ddof)} with b = null.
+	 * See {@link #covariance(Dataset a, Dataset b, boolean rowvar, boolean bias, Integer ddof)} with b = null.
 	 * @param a
 	 * @return covariance array of a
 	 */
 	public static Dataset covariance(final Dataset a, 
-			Boolean rowvar, Boolean bias, Integer ddof) {
+			boolean rowvar, boolean bias, Integer ddof) {
 		return covariance(a, null, rowvar, bias, ddof);
 	}
+
 	/**
-	 * See {@link #covariance(Dataset a, Dataset b, Boolean rowvar, Boolean bias, Integer ddof)} with b = null, rowvar = true, bias = false and ddof = null.
+	 * See {@link #covariance(Dataset a, Dataset b, boolean rowvar, boolean bias, Integer ddof)} with b = null, rowvar = true, bias = false and ddof = null.
 	 * @param a
 	 * @return covariance array of a concatenated with b
 	 */
 	public static Dataset covariance(final Dataset a, final Dataset b) {
 		return covariance(a, b, true, false, null);
 	}
+
 	/**
 	 * Calculate the covariance matrix (array) of a concatenated with b. This 
 	 * method is directly based on the implementation in numpy (cov). 
@@ -1816,7 +1833,7 @@ public class Stats {
 	 * @return covariance array of a concatenated with b
 	 */
 	public static Dataset covariance (final Dataset a, final Dataset b, 
-			Boolean rowvar, Boolean bias, Integer ddof) {
+			boolean rowvar, boolean bias, Integer ddof) {
 		
 		//Create a working copy of the dataset & check its rank.
 		Dataset vars = a.clone();
@@ -1864,7 +1881,7 @@ public class Stats {
 		}
 		
 		//Calculate deviations & covariance matrix
-		Dataset varsMean = vars.mean(false, 1-axis);
+		Dataset varsMean = vars.mean(1-axis, false);
 		//-vars & varsMean need same shape (this is a hack!)
 		int[] meanShape = vars.getShape();
 		meanShape[1-axis] = 1;

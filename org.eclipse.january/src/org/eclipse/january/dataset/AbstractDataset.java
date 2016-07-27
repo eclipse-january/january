@@ -23,14 +23,15 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
 import org.eclipse.january.DatasetException;
 import org.eclipse.january.IMonitor;
 import org.eclipse.january.MetadataException;
 import org.eclipse.january.metadata.ErrorMetadata;
 import org.eclipse.january.metadata.MetadataFactory;
 import org.eclipse.january.metadata.MetadataType;
+import org.eclipse.january.metadata.StatisticsMetadata;
 import org.eclipse.january.metadata.internal.ErrorMetadataImpl;
+import org.eclipse.january.metadata.internal.StatisticsMetadataImpl;
 
 /**
  * Generic container class for data 
@@ -60,11 +61,6 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	 * Set aliased data as base data
 	 */
 	abstract protected void setData();
-
-	/**
-	 * These members hold cached values. If their values are null, then recalculate, otherwise just use the values
-	 */
-	transient protected HashMap<String, Object> storedValues = null;
 
 	/**
 	 * Constructor required for serialisation.
@@ -105,7 +101,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public int hashCode() {
-		return getHash();
+		return getStats().getHash(shape);
 	}
 
 	@Override
@@ -171,7 +167,6 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 		if (clone) {
 			view.shape = orig.getShape();
-			copyStoredValues(orig, view, false);
 			view.stride = orig instanceof AbstractDataset && ((AbstractDataset) orig).stride != null ?
 					((AbstractDataset) orig).stride.clone() : null;
 		} else {
@@ -182,12 +177,8 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		view.metadata = getMetadataMap(orig, cloneMetadata);
 		int odtype = orig.getDType();
 		int vdtype = view.getDType();
-		if (DTypeUtils.getBestDType(odtype, vdtype) != vdtype) {
-			view.storedValues = null; // as copy is a demotion
-		}
-		if (odtype != vdtype && view.storedValues != null) {
-			view.storedValues.remove(STORE_SHAPELESS_HASH);
-			view.storedValues.remove(STORE_HASH);
+		if (odtype != vdtype) {
+			view.clearMetadata(StatisticsMetadata.class);
 		}
 	}
 
@@ -253,7 +244,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		t.stride = nstride;
 		t.offset = toffset[0];
 		t.base = this;
-		copyStoredValues(this, t, true);
+		t.clearMetadata(StatisticsMetadata.class);
 		t.transposeMetadata(axes);
 		return t;
 	}
@@ -688,13 +679,11 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			stride = nstride;
 		}
 
+		clearMetadata(StatisticsMetadata.class);
 		if (this.shape != null) {
 			reshapeMetadata(this.shape, nshape);
 			this.shape = nshape;
 		}
-
-		if (storedValues != null)
-			filterStoredValues(storedValues); // as it is dependent on shape
 	}
 
 	@Override
@@ -876,6 +865,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		s.base = this;
 
 		s.metadata = copyMetadata();
+		s.clearMetadata(StatisticsMetadata.class);
 		s.sliceMetadata(true, slice);
 
 		s.setDirty();
@@ -1328,8 +1318,10 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public void setDirty() {
-		if (storedValues != null)
-			storedValues.clear();
+		StatisticsMetadata<?> stats = getFirstMetadata(StatisticsMetadata.class);
+		if (stats != null) {
+			stats.setDirty();
+		}
 	}
 
 	@Override
@@ -1375,6 +1367,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			}
 		}
 
+		clearMetadata(StatisticsMetadata.class);
 		reshapeMetadata(oshape, shape);
 		return this;
 	}
@@ -1391,7 +1384,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public Dataset reshape(final int... shape) {
-		Dataset a = getView(true);
+		Dataset a = getView(false);
 		try {
 			a.setShape(shape);
 		} catch (IllegalArgumentException e) {
@@ -1462,6 +1455,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		SliceIterator it = (SliceIterator) getSliceIterator(slice);
 		AbstractDataset s = getSlice(it);
 		s.metadata = copyMetadata();
+		s.clearMetadata(StatisticsMetadata.class);
 		s.sliceMetadata(true, slice);
 		return s;
 	}
@@ -1548,659 +1542,173 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		return residual(o, null, ignoreNaNs);
 	}
 
-	public static final String STORE_HASH = "hash";
-	protected static final String STORE_SHAPELESS_HASH = "shapelessHash";
-	public static final String STORE_MAX = "max";
-	public static final String STORE_MIN = "min";
-	protected static final String STORE_MAX_POS = "maxPos";
-	protected static final String STORE_MIN_POS = "minPos";
-	protected static final String STORE_STATS = "stats";
-	protected static final String STORE_SUM = "sum";
-	protected static final String STORE_MEAN = "mean";
-	protected static final String STORE_VAR = "var";
-	protected static final String STORE_COUNT = "count";
-	private static final String STORE_INDEX = "Index";
-
-	/**
-	 * Get value from store
-	 * 
-	 * @param key
-	 * @return value
-	 */
-	public Object getStoredValue(String key) {
-		if (storedValues == null) {
-			return null;
+	@SuppressWarnings("unchecked")
+	protected StatisticsMetadata<Number> getStats() {
+		StatisticsMetadata<Number> md = getFirstMetadata(StatisticsMetadata.class);
+		if (md == null) {
+			md = new StatisticsMetadataImpl<Number>();
+			md.initialize(this);
+			setMetadata(md);
 		}
-
-		return storedValues.get(key);
+		return md;
 	}
 
-	/**
-	 * Set value in store
-	 * <p>
-	 * This is a <b>private method</b>: do not use!
-	 * 
-	 * @param key
-	 * @param obj
-	 */
-	public void setStoredValue(String key, Object obj) {
-		if (storedValues == null) {
-			storedValues = new HashMap<String, Object>();
+	@SuppressWarnings("unchecked")
+	protected StatisticsMetadata<String> getStringStats() {
+		StatisticsMetadata<String> md = getFirstMetadata(StatisticsMetadata.class);
+		if (md == null) {
+			md = new StatisticsMetadataImpl<String>();
+			md.initialize(this);
+			setMetadata(md);
 		}
-
-		storedValues.put(key, obj);
-	}
-
-	protected static String storeName(boolean ignoreNaNs, String name) {
-		return storeName(ignoreNaNs, false, name);
-	}
-
-	protected static String storeName(boolean ignoreNaNs, boolean ignoreInfs, String name) {
-		return (ignoreInfs ? "inf" : "") + (ignoreNaNs ? "nan" : "") +  name;
-	}
-
-	/**
-	 * Copy stored values from original to derived dataset
-	 * @param orig
-	 * @param derived
-	 * @param shapeChanged
-	 */
-	protected static void copyStoredValues(IDataset orig, AbstractDataset derived, boolean shapeChanged) {
-		if (orig instanceof AbstractDataset && ((AbstractDataset) orig).storedValues != null) {
-			derived.storedValues = new HashMap<String, Object>(((AbstractDataset) orig).storedValues);
-			if (shapeChanged) {
-				filterStoredValues(derived.storedValues);
-			}
-		}
-	}
-
-	private static void filterStoredValues(Map<String, Object> map) {
-		map.remove(STORE_HASH);
-		List<String> keys = new ArrayList<String>();
-		for (String n : map.keySet()) {
-			if (n.contains("-")) { // remove anything which is axis-specific
-				keys.add(n);
-			}
-		}
-		for (String n : keys) {
-			map.remove(n);
-		}
-	}
-
-	/**
-	 * Calculate minimum and maximum for a dataset
-	 * @param ignoreNaNs if true, ignore NaNs
-	 * @param ignoreInfs if true, ignore infinities
-	 */
-	protected void calculateMaxMin(final boolean ignoreNaNs, final boolean ignoreInfs) {
-		IndexIterator iter = getIterator();
-		double amax = Double.NEGATIVE_INFINITY;
-		double amin = Double.POSITIVE_INFINITY;
-		double hash = 0;
-		boolean hasNaNs = false;
-
-		while (iter.hasNext()) {
-			final double val = getElementDoubleAbs(iter.index);
-			if (Double.isNaN(val)) {
-				hash = (hash * 19) % Integer.MAX_VALUE;
-				if (ignoreNaNs)
-					continue;
-				hasNaNs = true;
-			} else if (Double.isInfinite(val)) {
-				hash = (hash * 19) % Integer.MAX_VALUE;
-				if (ignoreInfs)
-					continue;
-			} else {
-				hash = (hash * 19 + val) % Integer.MAX_VALUE;
-			}
-
-			if (val > amax) {
-				amax = val;
-			}
-			if (val < amin) {
-				amin = val;
-			}
-		}
-
-		int ihash = ((int) hash) * 19 + getDType() * 17 + getElementsPerItem();
-		setStoredValue(storeName(ignoreNaNs, ignoreInfs, STORE_SHAPELESS_HASH), ihash);
-		storedValues.put(storeName(ignoreNaNs, ignoreInfs, STORE_MAX), hasNaNs ? Double.NaN : fromDoubleToNumber(amax));
-		storedValues.put(storeName(ignoreNaNs, ignoreInfs, STORE_MIN), hasNaNs ? Double.NaN : fromDoubleToNumber(amin));
-	}
-
-	/**
-	 * Calculate summary statistics for a dataset
-	 * @param ignoreNaNs if true, ignore NaNs
-	 * @param ignoreInfs if true, ignore infinities
-	 * @param name
-	 */
-	protected void calculateSummaryStats(final boolean ignoreNaNs, final boolean ignoreInfs, final String name) {
-		final IndexIterator iter = getIterator();
-		final SummaryStatistics stats = new SummaryStatistics();
-		//sum of logs is slow and we dont use it, so blocking its calculation here
-		stats.setSumLogImpl(new NullStorelessUnivariateStatistic());
-
-		if (storedValues == null || !storedValues.containsKey(STORE_HASH)) {
-			boolean hasNaNs = false;
-			double hash = 0;
-
-			while (iter.hasNext()) {
-				final double val = getElementDoubleAbs(iter.index);
-				if (Double.isNaN(val)) {
-					hash = (hash * 19) % Integer.MAX_VALUE;
-					if (ignoreNaNs)
-						continue;
-					hasNaNs = true;
-				} else if (Double.isInfinite(val)) {
-					hash = (hash * 19) % Integer.MAX_VALUE;
-					if (ignoreInfs)
-						continue;
-				} else {
-					hash = (hash * 19 + val) % Integer.MAX_VALUE;
-				}
-				stats.addValue(val);
-			}
-
-			int ihash = ((int) hash) * 19 + getDType() * 17 + getElementsPerItem();
-			setStoredValue(storeName(ignoreNaNs, ignoreInfs, STORE_SHAPELESS_HASH), ihash);
-			storedValues.put(storeName(ignoreNaNs, ignoreInfs, STORE_MAX), hasNaNs ? Double.NaN : fromDoubleToNumber(stats.getMax()));
-			storedValues.put(storeName(ignoreNaNs, ignoreInfs, STORE_MIN), hasNaNs ? Double.NaN : fromDoubleToNumber(stats.getMin()));
-			storedValues.put(name, stats);
-		} else {
-			while (iter.hasNext()) {
-				final double val = getElementDoubleAbs(iter.index);
-				if (ignoreNaNs && Double.isNaN(val)) {
-					continue;
-				}
-				if (ignoreInfs && Double.isInfinite(val)) {
-					continue;
-				}
-
-				stats.addValue(val);
-			}
-
-			storedValues.put(name, stats);
-		}
-	}
-
-	/**
-	 * Calculate summary statistics for a dataset along an axis
-	 * @param ignoreNaNs if true, ignore NaNs
-	 * @param ignoreInfs if true, ignore infinities
-	 * @param axis
-	 */
-	protected void calculateSummaryStats(final boolean ignoreNaNs, final boolean ignoreInfs, final int axis) {
-		int rank = getRank();
-
-		int[] oshape = getShape();
-		int alen = oshape[axis];
-		oshape[axis] = 1;
-
-		int[] nshape = new int[rank - 1];
-		for (int i = 0; i < axis; i++) {
-			nshape[i] = oshape[i];
-		}
-		for (int i = axis + 1; i < rank; i++) {
-			nshape[i - 1] = oshape[i];
-		}
-
-		final int dtype = getDType();
-		IntegerDataset count = new IntegerDataset(nshape);
-		Dataset max = DatasetFactory.zeros(nshape, dtype);
-		Dataset min = DatasetFactory.zeros(nshape, dtype);
-		IntegerDataset maxIndex = new IntegerDataset(nshape);
-		IntegerDataset minIndex = new IntegerDataset(nshape);
-		Dataset sum = DatasetFactory.zeros(nshape, DTypeUtils.getLargestDType(dtype));
-		DoubleDataset mean = new DoubleDataset(nshape);
-		DoubleDataset var = new DoubleDataset(nshape);
-
-		IndexIterator qiter = max.getIterator(true);
-		int[] qpos = qiter.getPos();
-		int[] spos = oshape.clone();
-
-		while (qiter.hasNext()) {
-			int i = 0;
-			for (; i < axis; i++) {
-				spos[i] = qpos[i];
-			}
-			spos[i++] = 0;
-			for (; i < rank; i++) {
-				spos[i] = qpos[i - 1];
-			}
-
-			final SummaryStatistics stats = new SummaryStatistics();
-			//sum of logs is slow and we dont use it, so blocking its calculation here
-			stats.setSumLogImpl(new NullStorelessUnivariateStatistic());
-			
-			double amax = Double.NEGATIVE_INFINITY;
-			double amin = Double.POSITIVE_INFINITY;
-			boolean hasNaNs = false;
-			if (ignoreNaNs) {
-				for (int j = 0; j < alen; j++) {
-					spos[axis] = j;
-					final double val = getDouble(spos);
-
-					if (Double.isNaN(val)) {
-						hasNaNs = true;
-						continue;
-					} else if (ignoreInfs && Double.isInfinite(val)) {
-						continue;
-					}
-
-					if (val > amax) {
-						amax = val;
-					}
-					if (val < amin) {
-						amin = val;
-					}
-
-					stats.addValue(val);
-				}
-			} else {
-				for (int j = 0; j < alen; j++) {
-					spos[axis] = j;
-					final double val = getDouble(spos);
-
-					if (hasNaNs) {
-						if (!Double.isNaN(val))
-							stats.addValue(0);
-						continue;
-					}
-
-					if (Double.isNaN(val)) {
-						amax = Double.NaN;
-						amin = Double.NaN;
-						hasNaNs = true;
-					} else if (ignoreInfs && Double.isInfinite(val)) {
-						continue;
-					} else {
-						if (val > amax) {
-							amax = val;
-						}
-						if (val < amin) {
-							amin = val;
-						}
-					}
-					stats.addValue(val);
-				}
-			}
-
-			count.setAbs(qiter.index, (int) stats.getN());
-
-			max.setObjectAbs(qiter.index, amax);
-			min.setObjectAbs(qiter.index, amin);
-			boolean fmax = false;
-			boolean fmin = false;
-			if (hasNaNs) {
-				if (ignoreNaNs) {
-					for (int j = 0; j < alen; j++) {
-						spos[axis] = j;
-						final double val = getDouble(spos);
-						if (Double.isNaN(val))
-							continue;
-
-						if (!fmax && val == amax) {
-							maxIndex.setAbs(qiter.index, j);
-							fmax = true;
-							if (fmin)
-								break;
-						}
-						if (!fmin && val == amin) {
-							minIndex.setAbs(qiter.index, j);
-							fmin = true;
-							if (fmax)
-								break;
-						}
-					}
-				} else {
-					for (int j = 0; j < alen; j++) {
-						spos[axis] = j;
-						final double val = getDouble(spos);
-						if (Double.isNaN(val)) {
-							maxIndex.setAbs(qiter.index, j);
-							minIndex.setAbs(qiter.index, j);
-							break;
-						}
-					}
-				}
-			} else {
-				for (int j = 0; j < alen; j++) {
-					spos[axis] = j;
-					final double val = getDouble(spos);
-					if (!fmax && val == amax) {
-						maxIndex.setAbs(qiter.index, j);
-						fmax = true;
-						if (fmin)
-							break;
-					}
-					if (!fmin && val == amin) {
-						minIndex.setAbs(qiter.index, j);
-						fmin = true;
-						if (fmax)
-							break;
-					}
-				}
-			}
-			sum.setObjectAbs(qiter.index, stats.getSum());
-			mean.setAbs(qiter.index, stats.getMean());
-			var.setAbs(qiter.index, stats.getVariance());
-		}
-		setStoredValue(storeName(ignoreNaNs, ignoreInfs, STORE_COUNT + "-" + axis), count);
-		storedValues.put(storeName(ignoreNaNs, ignoreInfs, STORE_MAX + "-" + axis), max);
-		storedValues.put(storeName(ignoreNaNs, ignoreInfs, STORE_MIN + "-" + axis), min);
-		storedValues.put(storeName(ignoreNaNs, ignoreInfs, STORE_SUM + "-" + axis), sum);
-		storedValues.put(storeName(ignoreNaNs, ignoreInfs, STORE_MEAN + "-" + axis), mean);
-		storedValues.put(storeName(ignoreNaNs, ignoreInfs, STORE_VAR + "-" + axis), var);
-		storedValues.put(storeName(ignoreNaNs, ignoreInfs, STORE_MAX + STORE_INDEX + "-" + axis), maxIndex);
-		storedValues.put(storeName(ignoreNaNs, ignoreInfs, STORE_MIN + STORE_INDEX + "-" + axis), minIndex);
-	}
-
-	/**
-	 * @param x
-	 * @return number from given double
-	 */
-	abstract protected Number fromDoubleToNumber(double x);
-
-	private SummaryStatistics getStatistics(boolean ignoreNaNs) {
-		boolean ignoreInfs = false; // TODO
-		if (!hasFloatingPointElements()) {
-			ignoreNaNs = false;
-		}
-
-		String n = storeName(ignoreNaNs, ignoreInfs, STORE_STATS);
-		SummaryStatistics stats = (SummaryStatistics) getStoredValue(n);
-		if (stats == null) {
-			calculateSummaryStats(ignoreNaNs, ignoreInfs, n);
-			stats = (SummaryStatistics) getStoredValue(n);
-		}
-
-		return stats;
-	}
-
-	@Override
-	public int[] maxPos() {
-		return maxPos(false);
-	}
-
-	@Override
-	public int[] minPos() {
-		return minPos(false);
-	}
-
-	private int getHash() {
-		Object value = getStoredValue(STORE_HASH);
-		if (value == null) {
-			value = getStoredValue(STORE_SHAPELESS_HASH);
-			if (value == null) {
-				calculateMaxMin(false, false);
-				value = getStoredValue(STORE_SHAPELESS_HASH);
-			}
-
-			int ihash = (Integer) value;
-			int rank = shape.length;
-			for (int i = 0; i < rank; i++) {
-				ihash = ihash * 17 + shape[i];
-			}
-			storedValues.put(STORE_HASH, ihash);
-			return ihash;
-		}
-
-		return (Integer) value;
-	}
-
-	protected Object getMaxMin(boolean ignoreNaNs, boolean ignoreInfs, String key) {
-		if (!hasFloatingPointElements()) {
-			ignoreNaNs = false;
-			ignoreInfs = false;
-		}
-
-		key = storeName(ignoreNaNs, ignoreInfs , key);
-		Object value = getStoredValue(key);
-		if (value == null) {
-			calculateMaxMin(ignoreNaNs, ignoreInfs);
-			value = getStoredValue(key);
-		}
-
-		return value;
-	}
-
-	private Object getStatistics(boolean ignoreNaNs, int axis, String stat) {
-		if (!hasFloatingPointElements())
-			ignoreNaNs = false;
-
-		boolean ignoreInfs = false; // TODO
-		stat = storeName(ignoreNaNs, ignoreInfs , stat);
-		axis = checkAxis(axis);
-		Object obj = getStoredValue(stat);
-
-		if (obj == null) {
-			calculateSummaryStats(ignoreNaNs, ignoreInfs, axis);
-			obj = getStoredValue(stat);
-		}
-
-		return obj;
+		return md;
 	}
 
 	@Override
 	public Number max(boolean... ignoreInvalids) {
-		boolean igNan = ignoreInvalids!=null && ignoreInvalids.length>0 ? ignoreInvalids[0] : false;
-		boolean igInf = ignoreInvalids!=null && ignoreInvalids.length>1 ? ignoreInvalids[1] : igNan;
-		return (Number) getMaxMin(igNan, igInf, STORE_MAX);
+		return getStats().getMaximum(ignoreInvalids);
 	}
 
 	@Override
-	public Dataset max(int axis) {
-		return max(false, axis);
-	}
-
-	@Override
-	public Dataset max(boolean ignoreNaNs, int axis) {
-		return (Dataset) getStatistics(ignoreNaNs, axis, STORE_MAX + "-" + axis);
+	public Dataset max(int axis, boolean... ignoreInvalids) {
+		return getStats().getMaximum(axis, ignoreInvalids);
 	}
 
 	@Override
 	public Number min(boolean... ignoreInvalids) {
-		boolean igNan = ignoreInvalids!=null && ignoreInvalids.length>0 ? ignoreInvalids[0] : false;
-		boolean igInf = ignoreInvalids!=null && ignoreInvalids.length>1 ? ignoreInvalids[1] : igNan;
-		return (Number) getMaxMin(igNan, igInf, STORE_MIN);
+		return getStats().getMinimum(ignoreInvalids);
 	}
 
 	@Override
-	public Dataset min(int axis) {
-		return min(false, axis);
+	public Dataset min(int axis, boolean... ignoreInvalids) {
+		return getStats().getMinimum(axis, ignoreInvalids);
 	}
 
 	@Override
-	public Dataset min(boolean ignoreNaNs, int axis) {
-		return (Dataset) getStatistics(ignoreNaNs, axis, STORE_MIN + "-" + axis);
-	}
-
-	@Override
-	public int argMax() {
-		return argMax(false);
-	}
-
-	@Override
-	public int argMax(boolean ignoreInvalids) {
+	public int argMax(boolean... ignoreInvalids) {
 		return getFlat1DIndex(maxPos(ignoreInvalids));
 	}
 
 	@Override
-	public IntegerDataset argMax(int axis) {
-		return argMax(false, axis);
+	public IntegerDataset argMax(int axis, boolean... ignoreInvalids) {
+		return (IntegerDataset) getStats().getArgMaximum(axis, ignoreInvalids);
 	}
 
 	@Override
-	public IntegerDataset argMax(boolean ignoreNaNs, int axis) {
-		return (IntegerDataset) getStatistics(ignoreNaNs, axis, STORE_MAX + STORE_INDEX + "-" + axis);
-	}
-
-	@Override
-	public int argMin() {
-		return argMin(false);
-	}
-
-	@Override
-	public int argMin(boolean ignoreInvalids) {
+	public int argMin(boolean... ignoreInvalids) {
 		return getFlat1DIndex(minPos(ignoreInvalids));
 	}
 
 	@Override
-	public IntegerDataset argMin(int axis) {
-		return argMin(false, axis);
+	public IntegerDataset argMin(int axis, boolean... ignoreInvalids) {
+		return (IntegerDataset) getStats().getArgMinimum(axis, ignoreInvalids);
 	}
 
 	@Override
-	public IntegerDataset argMin(boolean ignoreNaNs, int axis) {
-		return (IntegerDataset) getStatistics(ignoreNaNs, axis, STORE_MIN + STORE_INDEX + "-" + axis);
+	public Number peakToPeak(boolean... ignoreInvalids) {
+		return DTypeUtils.fromDoubleToBiggestNumber(max(ignoreInvalids).doubleValue() - min(ignoreInvalids).doubleValue(), getDType());
 	}
 
 	@Override
-	public Number peakToPeak() {
-		return fromDoubleToNumber(max().doubleValue() - min().doubleValue());
+	public Dataset peakToPeak(int axis,  boolean... ignoreInvalids) {
+		return Maths.subtract(max(axis, ignoreInvalids), min(axis, ignoreInvalids));
+	}
+
+
+	@Override
+	public long count(boolean... ignoreInvalids) {
+		return getStats().getCount(ignoreInvalids);
 	}
 
 	@Override
-	public Dataset peakToPeak(int axis) {
-		return Maths.subtract(max(axis), min(axis));
+	public Dataset count(int axis, boolean... ignoreInvalids) {
+		return getStats().getCount(axis, ignoreInvalids);
 	}
 
 	@Override
-	public long count() {
-		return count(false);
+	public Object sum(boolean... ignoreInvalids) {
+		return getStats().getSum(ignoreInvalids);
 	}
 
 	@Override
-	public long count(boolean ignoreNaNs) {
-		return getStatistics(ignoreNaNs).getN();
+	public Dataset sum(int axis, boolean... ignoreInvalids) {
+		return getStats().getSum(axis, ignoreInvalids);
 	}
 
 	@Override
-	public Dataset count(int axis) {
-		return count(false, axis);
+	public Object product(boolean... ignoreInvalids) {
+		return Stats.product(this, ignoreInvalids);
 	}
 
 	@Override
-	public Dataset count(boolean ignoreNaNs, int axis) {
-		return (Dataset) getStatistics(ignoreNaNs, axis, STORE_COUNT + "-" + axis);
+	public Dataset product(int axis, boolean... ignoreInvalids) {
+		return Stats.product(this, axis, ignoreInvalids);
 	}
 
 	@Override
-	public Object sum() {
-		return sum(false);
+	public Object mean(boolean... ignoreInvalids) {
+		return getStats().getMean(ignoreInvalids);
 	}
 
 	@Override
-	public Object sum(boolean ignoreNaNs) {
-		return getStatistics(ignoreNaNs).getSum();
+	public Dataset mean(int axis, boolean... ignoreInvalids) {
+		return getStats().getMean(axis, ignoreInvalids);
 	}
 
 	@Override
-	public Dataset sum(int axis) {
-		return sum(false, axis);
-	}
-
-	@Override
-	public Dataset sum(boolean ignoreNaNs, int axis) {
-		return (Dataset) getStatistics(ignoreNaNs, axis, STORE_SUM + "-" + axis);
-	}
-
-	@Override
-	public Object typedSum() {
-		return typedSum(getDType());
-	}
-
-	@Override
-	public Object typedSum(int dtype) {
-		return DTypeUtils.fromDoubleToBiggestNumber(getStatistics(false).getSum(), dtype);
-	}
-
-	@Override
-	public Dataset typedSum(int dtype, int axis) {
-		return DatasetUtils.cast(sum(axis), dtype);
-	}
-
-	@Override
-	public Object product() {
-		return Stats.product(this);
-	}
-
-	@Override
-	public Dataset product(int axis) {
-		return Stats.product(this, axis);
-	}
-
-	@Override
-	public Object typedProduct(int dtype) {
-		return Stats.typedProduct(this, dtype);
-	}
-
-	@Override
-	public Dataset typedProduct(int dtype, int axis) {
-		return Stats.typedProduct(this, dtype, axis);
-	}
-
-	@Override
-	public Object mean(boolean... ignoreNaNs) {
-		boolean ig = ignoreNaNs!=null && ignoreNaNs.length>0 ? ignoreNaNs[0] : false;
-		return getStatistics(ig).getMean();
-	}
-
-	@Override
-	public Dataset mean(int axis) {
-		return mean(false, axis);
-	}
-
-	@Override
-	public Dataset mean(boolean ignoreNaNs, int axis) {
-		return (Dataset) getStatistics(ignoreNaNs, axis, STORE_MEAN + "-" + axis);
-	}
-
-	@Override
-	public Number variance() {
+	public double variance() {
 		return variance(false);
 	}
 
 	@Override
-	public Number variance(boolean isDatasetWholePopulation) {
-		SummaryStatistics stats = getStatistics(false);
-
-		return isDatasetWholePopulation ? stats.getPopulationVariance() : stats.getVariance();
+	public double variance(boolean isWholePopulation, boolean... ignoreInvalids) {
+		return getStats().getVariance(isWholePopulation, ignoreInvalids);
 	}
 
 	@Override
 	public Dataset variance(int axis) {
-		return (Dataset) getStatistics(false, axis, STORE_VAR + "-" + axis);
+		return getStats().getVariance(axis, false);
 	}
 
 	@Override
-	public Number stdDeviation() {
-		return Math.sqrt(variance().doubleValue());
+	public Dataset variance(int axis, boolean isWholePopulation, boolean... ignoreInvalids) {
+		return getStats().getVariance(axis, isWholePopulation, ignoreInvalids);
 	}
 
 	@Override
-	public Number stdDeviation(boolean isDatasetWholePopulation) {
-		return Math.sqrt(variance(isDatasetWholePopulation).doubleValue());
+	public double stdDeviation() {
+		return Math.sqrt(variance());
+	}
+
+	@Override
+	public double stdDeviation(boolean isWholePopulation, boolean... ignoreInvalids) {
+		return Math.sqrt(variance(isWholePopulation, ignoreInvalids));
 	}
 
 	@Override
 	public Dataset stdDeviation(int axis) {
-		final Dataset v = (Dataset) getStatistics(false, axis, STORE_VAR + "-" + axis);
-		return Maths.sqrt(v);
+		return Maths.sqrt(variance(axis, false));
 	}
 
 	@Override
-	public Number rootMeanSquare() {
-		final SummaryStatistics stats = getStatistics(false);
-		final double mean = stats.getMean();
-		return Math.sqrt(stats.getVariance() + mean * mean);
+	public Dataset stdDeviation(int axis, boolean isWholePopulation, boolean... ignoreInvalids) {
+		return Maths.sqrt(variance(axis, isWholePopulation, ignoreInvalids));
 	}
 
 	@Override
-	public Dataset rootMeanSquare(int axis) {
-		Dataset v = (Dataset) getStatistics(false, axis, STORE_VAR + "-" + axis);
-		Dataset m = (Dataset) getStatistics(false, axis, STORE_MEAN + "-" + axis);
-		Dataset result = Maths.power(m, 2);
+	public double rootMeanSquare(boolean... ignoreInvalids) {
+		StatisticsMetadata<Number> stats = getStats();
+		final double mean = stats.getMean(ignoreInvalids).doubleValue();
+		final double var = stats.getVariance(true, ignoreInvalids);
+		return Math.sqrt(var + mean * mean);
+	}
+
+	@Override
+	public Dataset rootMeanSquare(int axis, boolean... ignoreInvalids) {
+		StatisticsMetadata<Number> stats = getStats();
+		Dataset v = stats.getVariance(axis, true, ignoreInvalids);
+		Dataset m = stats.getMean(axis, ignoreInvalids);
+		Dataset result = Maths.multiply(m, m);
 		return Maths.sqrt(result.iadd(v));
 	}
 
@@ -2234,6 +1742,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		if (led != ed) {
 			setErrors(ed); // set back
 		}
+
 		return ed.getBroadcastView(shape);
 	}
 

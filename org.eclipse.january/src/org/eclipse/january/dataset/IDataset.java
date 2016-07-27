@@ -117,45 +117,38 @@ public interface IDataset extends ILazyDataset {
 	public IDataset squeeze(boolean onlyFromEnds);
 
 	/**
-	 * @param switches - Should be null, or one boolean. By default it is false, if the boolean is
-	 * true, will ignore NaNs and ignore infinities.
-	 * @return mean of all items in dataset as a double, array of doubles or a complex number
-	 */
-	public Object mean(boolean... switches);
-
-	/**
-	 * NOTE this does not return the minimum value if there are NaNs in the
-	 * dataset.
-	 * 
-	 * @param switches - Can be null, one boolean, or two booleans. By default, both are false. If
-	 * the first boolean is true, will ignore NaNs and ignore infinities. Use the second boolean to
-	 * ignore infinities separately.
-	 * @return Minimum value
-	 * @throws UnsupportedOperationException if comparisons are not valid
-	 */
-	public Number min(boolean... switches);
-
-	/**
-	 * NOTE this does not return the maximum value if there are NaNs in the
-	 * dataset.
-	 * 
-	 * @param switches - Can be null, one boolean, or two booleans. By default, both are false. If
-	 * the first boolean is true, will ignore NaNs and ignore infinities. Use the second boolean to
-	 * ignore infinities separately.
+	 * @param ignoreInvalids - Can be null, empty, or one or more booleans. By default, all booleans
+	 * are false. If the first boolean is true, will ignore NaNs and ignore infinities. Use the second
+	 * boolean to ignore infinities separately.
 	 * @return Maximum value
 	 * @throws UnsupportedOperationException if comparisons are not valid
 	 */
-	public Number max(boolean... switches);
+	public Number max(boolean... ignoreInvalids);
 
 	/**
+	 * @param ignoreInvalids - see {@link #max(boolean...)}
+	 * @return mean of all items in dataset as a double, array of doubles or a complex number
+	 */
+	public Object mean(boolean... ignoreInvalids);
+
+	/**
+	 * @param ignoreInvalids - see {@link #max(boolean...)}
+	 * @return Minimum value
+	 * @throws UnsupportedOperationException if comparisons are not valid
+	 */
+	public Number min(boolean... ignoreInvalids);
+
+	/**
+	 * @param ignoreInvalids - see {@link #max(boolean...)}
 	 * @return Position of minimum value (or first position if there are more than one)
 	 */
-	public int[] minPos();
+	public int[] minPos(boolean... ignoreInvalids);
 
 	/**
+	 * @param ignoreInvalids - see {@link #max(boolean...)}
 	 * @return Position of maximum value (or first position if there are more than one)
 	 */
-	public int[] maxPos();
+	public int[] maxPos(boolean... ignoreInvalids);
 
 	/**
 	 * Clone dataset, making new copy of data

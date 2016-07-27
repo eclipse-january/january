@@ -13,11 +13,11 @@
 package org.eclipse.january.dataset;
 
 import java.util.Arrays;
-import java.util.HashMap;
 
-import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
 import org.eclipse.january.DatasetException;
 import org.eclipse.january.IMonitor;
+import org.eclipse.january.metadata.StatisticsMetadata;
+import org.eclipse.january.metadata.internal.StatisticsMetadataImpl;
 
 /**
  * Generic container class for data that is compound in nature
@@ -119,7 +119,7 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 
 	@Override
 	public int hashCode() {
-		return getHash();
+		return getCompoundStats().getHash(shape);
 	}
 
 	@Override
@@ -222,33 +222,8 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 	}
 
 	@Override
-	public CompoundDataset mean(boolean ignoreNaNs, int axis) {
-		return (CompoundDataset) super.mean(ignoreNaNs, axis);
-	}
-
-	@Override
-	public CompoundDataset mean(int axis) {
-		return (CompoundDataset) super.mean(axis);
-	}
-
-	@Override
-	public CompoundDataset peakToPeak(int axis) {
-		return (CompoundDataset) super.peakToPeak(axis);
-	}
-
-	@Override
-	public CompoundDataset product(int axis) {
-		return (CompoundDataset) super.product(axis);
-	}
-
-	@Override
 	public CompoundDataset reshape(int... shape) {
 		return (CompoundDataset) super.reshape(shape);
-	}
-
-	@Override
-	public CompoundDataset rootMeanSquare(int axis) {
-		return (CompoundDataset) super.rootMeanSquare(axis);
 	}
 
 	@Override
@@ -282,21 +257,6 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 	}
 
 	@Override
-	public CompoundDataset stdDeviation(int axis) {
-		return (CompoundDataset) super.stdDeviation(axis);
-	}
-
-	@Override
-	public CompoundDataset sum(boolean ignoreNaNs, int axis) {
-		return (CompoundDataset) super.sum(ignoreNaNs, axis);
-	}
-
-	@Override
-	public CompoundDataset sum(int axis) {
-		return (CompoundDataset) super.sum(axis);
-	}
-
-	@Override
 	public CompoundDataset swapAxes(int axis1, int axis2) {
 		return (CompoundDataset) super.swapAxes(axis1, axis2);
 	}
@@ -309,21 +269,6 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 	@Override
 	public CompoundDataset transpose(int... axes) {
 		return (CompoundDataset) super.transpose(axes);
-	}
-
-	@Override
-	public CompoundDataset typedProduct(int dtype, int axis) {
-		return (CompoundDataset) super.typedProduct(dtype, axis);
-	}
-
-	@Override
-	public CompoundDataset typedSum(int dtype, int axis) {
-		return (CompoundDataset) super.typedSum(dtype, axis);
-	}
-
-	@Override
-	public CompoundDataset variance(int axis) {
-		return (CompoundDataset) super.variance(axis);
 	}
 
 	/**
@@ -497,317 +442,148 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 		getDoubleArrayAbs(get1DIndex(pos), darray);
 	}
 
-	@Override
-	protected Number fromDoubleToNumber(double x) {
-		return null;
-	}
-
-	/**
-	 * Calculate minimum and maximum for a dataset
-	 */
-	protected void calculateHash() {
-		IndexIterator iter = getIterator();
-		double hash = 0;
-		while (iter.hasNext()) {
-			for (int j = 0; j < isize; j++) {
-				final double val = getElementDoubleAbs(iter.index + j);
-				if (Double.isInfinite(val) || Double.isNaN(val)) {
-					hash = (hash * 19) % Integer.MAX_VALUE;
-				} else {
-					hash = (hash * 19 + val) % Integer.MAX_VALUE;
-				}
-			}
+	@SuppressWarnings("unchecked")
+	protected StatisticsMetadata<double[]> getCompoundStats() {
+		StatisticsMetadata<double[]> md = getFirstMetadata(StatisticsMetadata.class);
+		if (md == null) {
+			md = new StatisticsMetadataImpl<double[]>();
+			md.initialize(this);
+			setMetadata(md);
 		}
-
-		int ihash = ((int) hash) * 19 + getDType() * 17 + getElementsPerItem();
-		setStoredValue(STORE_SHAPELESS_HASH, ihash);
-	}
-
-	private int getHash() {
-		Object value = getStoredValue(STORE_HASH);
-		if (value == null) {
-			value = getStoredValue(STORE_SHAPELESS_HASH);
-			if (value == null) {
-				calculateHash();
-				value = getStoredValue(STORE_SHAPELESS_HASH);
-			}
-
-			int ihash = (Integer) value;
-			int rank = shape.length;
-			for (int i = 0; i < rank; i++) {
-				ihash = ihash * 17 + shape[i];
-			}
-			storedValues.put(STORE_HASH, ihash);
-			return ihash;
-		}
-
-		return (Integer) value;
+		return md;
 	}
 
 	@Override
-	protected void calculateSummaryStats(boolean ignoreNaNs, final boolean ignoreInfs, String name) {
-		IndexIterator iter = getIterator();
-		SummaryStatistics[] stats = new SummaryStatistics[isize];
-		for (int i = 0; i < isize; i++)
-			stats[i] = new SummaryStatistics();
-
-		double[] vals = new double[isize];
-		while (iter.hasNext()) {
-			boolean okay = true;
-			for (int i = 0; i < isize; i++) {
-				final double val = getElementDoubleAbs(iter.index + i);
-				if (ignoreNaNs && Double.isNaN(val)) {
-					okay = false;
-					break;
-				}
-				if (ignoreInfs && Double.isInfinite(val)) {
-					okay = false;
-					break;
-				}
-				vals[i] = val;
-			}
-			if (!okay)
-				continue;
-			for (int i = 0; i < isize; i++)
-				stats[i].addValue(vals[i]);
-		}
-
-		// now all the calculations are done, add the values into store
-		if (storedValues == null)
-			storedValues = new HashMap<String, Object>();
-		else
-			storedValues.clear();
-
-		for (int i = 0; i < isize; i++)
-			storedValues.put(name+i, stats[i]);
-	}
-
-	@Override
-	protected void calculateSummaryStats(final boolean ignoreNaNs, final boolean ignoreInfs, final int axis) {
-		int rank = getRank();
-
-		int[] oshape = getShape();
-		int alen = oshape[axis];
-		oshape[axis] = 1;
-
-		int[] nshape = ShapeUtils.squeezeShape(oshape, false);
-
-		IntegerDataset count = new IntegerDataset(nshape);
-		CompoundDoubleDataset sum = new CompoundDoubleDataset(isize, nshape);
-		CompoundDoubleDataset mean = new CompoundDoubleDataset(isize, nshape);
-		CompoundDoubleDataset var = new CompoundDoubleDataset(isize, nshape);
-
-		IndexIterator qiter = count.getIterator(true);
-		int[] qpos = qiter.getPos();
-		int[] spos = oshape;
-		double[] darray = new double[isize];
-
-		while (qiter.hasNext()) {
-			int i = 0;
-			for (; i < axis; i++) {
-				spos[i] = qpos[i];
-			}
-			spos[i++] = 0;
-			for (; i < rank; i++) {
-				spos[i] = qpos[i-1];
-			}
-
-			final SummaryStatistics[] stats = new SummaryStatistics[isize];
-			for (int k = 0; k < isize; k++) {
-				stats[k] = new SummaryStatistics();
-			}
-			for (int j = 0; j < alen; j++) {
-				spos[axis] = j;
-				getDoubleArray(darray, spos);
-				boolean skip = false;
-				for (int k = 0; k < isize; k++) {
-					double v = darray[k];
-					if (ignoreNaNs && Double.isNaN(v)) {
-						skip = true;
-						break;
-					}
-					if (ignoreInfs && Double.isInfinite(v)) {
-						skip = true;
-						break;
-					}
-				}
-				if (!skip)
-					for (int k = 0; k < isize; k++) {
-						stats[k].addValue(darray[k]);
-					}
-			}
-
-			count.setAbs(qiter.index, (int) stats[0].getN());
-
-			for (int k = 0; k < isize; k++) {
-				darray[k] = stats[k].getSum();
-			}
-			sum.set(darray, qpos);
-			for (int k = 0; k < isize; k++) {
-				darray[k] = stats[k].getMean();
-			}
-			mean.set(darray, qpos);
-			for (int k = 0; k < isize; k++) {
-				darray[k] = stats[k].getVariance();
-			}
-			var.set(darray, qpos);
-		}
-		setStoredValue(storeName(ignoreNaNs, ignoreInfs, STORE_COUNT + "-" + axis), count);
-		storedValues.put(storeName(ignoreNaNs, ignoreInfs, STORE_SUM + "-" + axis), sum);
-		storedValues.put(storeName(ignoreNaNs, ignoreInfs, STORE_MEAN + "-" +axis), mean);
-		storedValues.put(storeName(ignoreNaNs, ignoreInfs, STORE_VAR + "-" +axis), var);
-	}
-
-	@Override
-	public Number max(boolean... switches) {
+	public IntegerDataset argMax(int axis, boolean... ignoreInvalids) {
 		logger.error("Cannot compare compound numbers");
 		throw new UnsupportedOperationException("Cannot compare compound numbers");
 	}
 
 	@Override
-	public CompoundDataset max(boolean ignoreNaNs, int axis) {
+	public IntegerDataset argMin(int axis, boolean... ignoreInvalids) {
 		logger.error("Cannot compare compound numbers");
 		throw new UnsupportedOperationException("Cannot compare compound numbers");
 	}
 
 	@Override
-	public CompoundDataset max(int axis) {
+	public Number max(boolean... ignoreInvalids) {
 		logger.error("Cannot compare compound numbers");
 		throw new UnsupportedOperationException("Cannot compare compound numbers");
 	}
 
 	@Override
-	public Number min(boolean... switches) {
+	public CompoundDataset max(int axis, boolean... ignoreInvalids) {
 		logger.error("Cannot compare compound numbers");
 		throw new UnsupportedOperationException("Cannot compare compound numbers");
 	}
 
 	@Override
-	public CompoundDataset min(boolean ignoreNaNs, int axis) {
+	public Number min(boolean... ignoreInvalids) {
 		logger.error("Cannot compare compound numbers");
 		throw new UnsupportedOperationException("Cannot compare compound numbers");
 	}
 
 	@Override
-	public CompoundDataset min(int axis) {
+	public CompoundDataset min(int axis, boolean... ignoreInvalids) {
+		logger.error("Cannot compare compound numbers");
+		throw new UnsupportedOperationException("Cannot compare compound numbers");
+	}
+
+
+	@Override
+	public int[] maxPos(boolean... ignoreNaNs) {
 		logger.error("Cannot compare compound numbers");
 		throw new UnsupportedOperationException("Cannot compare compound numbers");
 	}
 
 	@Override
-	public int[] maxPos(boolean ignoreNaNs) {
+	public int[] minPos(boolean... ignoreNaNs) {
 		logger.error("Cannot compare compound numbers");
 		throw new UnsupportedOperationException("Cannot compare compound numbers");
 	}
 
 	@Override
-	public int[] minPos(boolean ignoreNaNs) {
+	public CompoundDataset peakToPeak(int axis, boolean... ignoreInvalids) {
 		logger.error("Cannot compare compound numbers");
 		throw new UnsupportedOperationException("Cannot compare compound numbers");
 	}
-
-	protected final static String STORE_STATS_ITEM_NAME = STORE_STATS + "=";
 
 	@Override
 	public double[] maxItem() {
-		final String n = storeName(false, STORE_STATS_ITEM_NAME);
-		if (isize < 1)
-			return new double[0];
-		if (getStoredValue(n+0) == null) {
-			calculateSummaryStats(false, false, n);
-		}
-
-		double[] results = new double[isize];
-		for (int i = 0; i < isize; i++) {
-			results[i] = ((SummaryStatistics) storedValues.get(n + i)).getMax();
-		}
-		return results;
+		return getCompoundStats().getMaximum();
 	}
 
 	@Override
 	public double[] minItem() {
-		final String n = storeName(false, STORE_STATS_ITEM_NAME);
-		if (isize < 1)
-			return new double[0];
-		if (getStoredValue(n+0) == null) {
-			calculateSummaryStats(false, false, n);
-		}
-
-		double[] results = new double[isize];
-		for (int i = 0; i < isize; i++) {
-			results[i] = ((SummaryStatistics) storedValues.get(n + i)).getMin();
-		}
-		return results;
+		return getCompoundStats().getMinimum();
 	}
 
 	@Override
-	public Object sum() {
-		final String n = storeName(false, STORE_STATS_ITEM_NAME);
-		if (isize < 1)
-			return new double[0];
-		if (getStoredValue(n+0) == null) {
-			calculateSummaryStats(false, false, n);
-		}
-
-		double[] results = new double[isize];
-		for (int i = 0; i < isize; i++) {
-			results[i] = ((SummaryStatistics) storedValues.get(n + i)).getSum();
-		}
-		return results;
+	public Object mean(boolean... ignoreInvalids) {
+		return getCompoundStats().getMean();
 	}
 
 	@Override
-	public Object typedSum(int dtype) {
-		return DTypeUtils.fromDoublesToBiggestPrimitives((double[]) sum(), dtype);
+	public CompoundDataset mean(int axis, boolean... ignoreInvalids) {
+		return (CompoundDataset) super.mean(axis, ignoreInvalids);
 	}
 
 	@Override
-	public Object mean(boolean... switches) {
-		final String n = storeName(false, STORE_STATS_ITEM_NAME);
-		if (isize < 1)
-			return new double[0];
-		if (getStoredValue(n+0) == null) {
-			calculateSummaryStats(false, false, n);
-		}
-
-		double[] results = new double[isize];
-		for (int i = 0; i < isize; i++) {
-			results[i] = ((SummaryStatistics) storedValues.get(n + i)).getMean();
-		}
-		return results;
+	public CompoundDataset product(int axis, boolean... ignoreInvalids) {
+		return (CompoundDataset) super.product(axis, ignoreInvalids);
 	}
 
 	@Override
-	public Number variance() {
-		final String n = storeName(false, STORE_STATS_ITEM_NAME);
-		if (isize < 1)
-			return Double.NaN;
-		if (getStoredValue(n+0) == null) {
-			calculateSummaryStats(false, false, n);
-		}
-
-		double result = 0;
-		for (int i = 0; i < isize; i++)
-			result += ((SummaryStatistics) storedValues.get(n + i)).getVariance();
-		return result;
+	public CompoundDataset rootMeanSquare(int axis, boolean... ignoreInvalids) {
+		return (CompoundDataset) super.rootMeanSquare(axis, ignoreInvalids);
 	}
 
 	@Override
-	public Number rootMeanSquare() {
-		final String n = storeName(false, STORE_STATS_ITEM_NAME);
-		if (isize < 1)
-			return Double.NaN;
-		if (getStoredValue(n+0) == null) {
-			calculateSummaryStats(false, false, n);
-		}
+	public CompoundDataset stdDeviation(int axis) {
+		return (CompoundDataset) super.stdDeviation(axis, false);
+	}
 
+	@Override
+	public CompoundDataset stdDeviation(int axis, boolean isWholePopulation, boolean... ignoreInvalids) {
+		return (CompoundDataset) super.stdDeviation(axis, isWholePopulation, ignoreInvalids);
+	}
+
+	@Override
+	public Object sum(boolean... ignoreInvalids) {
+		return getCompoundStats().getSum();
+	}
+
+	@Override
+	public CompoundDataset sum(int axis, boolean... ignoreInvalids) {
+		return (CompoundDataset) super.sum(axis, ignoreInvalids);
+	}
+
+	@Override
+	public double variance(boolean isWholePopulation, boolean... ignoreInvalids) {
+		return getCompoundStats().getVariance(isWholePopulation, ignoreInvalids);
+	}
+
+	@Override
+	public CompoundDataset variance(int axis) {
+		return (CompoundDataset) super.variance(axis, false);
+	}
+
+	@Override
+	public CompoundDataset variance(int axis, boolean isWholePopulation, boolean... ignoreInvalids) {
+		return (CompoundDataset) super.variance(axis, isWholePopulation, ignoreInvalids);
+	}
+
+	@Override
+	public double rootMeanSquare(boolean... ignoreInvalids) {
+		StatisticsMetadata<double[]> stats = getCompoundStats();
+
+		double[] mean = stats.getMean(ignoreInvalids);
 		double result = 0;
 		for (int i = 0; i < isize; i++) {
-			final SummaryStatistics stats = (SummaryStatistics) storedValues.get(n + i);
-			final double mean = stats.getMean();
-			result += stats.getVariance() + mean*mean;
+			double m = mean[i];
+			result += m * m;
 		}
-		return Math.sqrt(result);
+		return Math.sqrt(result + stats.getVariance(true));
 	}
 
 	/**

@@ -103,8 +103,8 @@ public class ComplexDoubleDatasetTest {
 		Dataset a = DatasetFactory.createRange(12, Dataset.COMPLEX128);
 		assertEquals(5.5, ((Complex) a.mean()).getReal(), 1e-6);
 		assertEquals(0., ((Complex) a.mean()).getImaginary(), 1e-6);
-		assertEquals(13., a.variance().doubleValue(), 1e-6);
-		assertEquals(3.6055512754639891, a.stdDeviation().doubleValue(), 1e-6);
+		assertEquals(13., a.variance(), 1e-6);
+		assertEquals(3.6055512754639891, a.stdDeviation(), 1e-6);
 
 		a.iadd(new Complex(0,0.5));
 		assertEquals(5.5, ((Complex) a.mean()).getReal(), 1e-6);

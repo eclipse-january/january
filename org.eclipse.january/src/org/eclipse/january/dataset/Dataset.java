@@ -1075,114 +1075,6 @@ public interface Dataset extends IDataset {
 	public double residual(Object o, Dataset weight, boolean ignoreNaNs);
 
 	/**
-	 * @param ignoreInvalids if true, ignore NaNs and Infs
-	 * @return position of maximum value
-	 */
-	public int[] maxPos(boolean ignoreInvalids);
-
-	/**
-	 * @param ignoreInvalids if true, ignore NaNs and Infs
-	 * @return position of minimum value
-	 */
-	public int[] minPos(boolean ignoreInvalids);
-
-	/**
-	 * See {@link #max(boolean ignoreNaNs, int axis)} with ignoreNaNs = false
-	 * @param axis
-	 * @return maxima along axis in dataset
-	 */
-	public Dataset max(int axis);
-
-	/**
-	 * @param ignoreNaNs if true, ignore NaNs
-	 * @param axis
-	 * @return maxima along axis in dataset
-	 */
-	public Dataset max(boolean ignoreNaNs, int axis);
-
-	/**
-	 * See {@link #min(boolean ignoreNaNs, int axis)} with ignoreNaNs = false
-	 * @param axis
-	 * @return minima along axis in dataset
-	 */
-	public Dataset min(int axis);
-
-	/**
-	 * @param ignoreNaNs if true, ignore NaNs
-	 * @param axis
-	 * @return minima along axis in dataset
-	 */
-	public Dataset min(boolean ignoreNaNs, int axis);
-
-	/**
-	 * Find absolute index of maximum value (in a flattened view)
-	 * See {@link #argMax(boolean ignoreNaNs)} with ignoreNaNs = false
-	 * 
-	 * @return absolute index
-	 */
-	public int argMax();
-
-	/**
-	 * Find absolute index of maximum value (in a flattened view)
-	 * 
-	 * @param ignoreInvalids if true, ignore NaNs and infinities
-	 * @return absolute index
-	 */
-	public int argMax(boolean ignoreInvalids);
-
-	/**
-	 * Find indices of maximum values along given axis.
-	 * See {@link #argMax(boolean ignoreNaNs, int axis)} with ignoreNaNs = false
-	 * 
-	 * @param axis
-	 * @return index dataset
-	 */
-	public Dataset argMax(int axis);
-
-	/**
-	 * Find indices of maximum values along given axis
-	 * 
-	 * @param ignoreNaNs if true, ignore NaNs
-	 * @param axis
-	 * @return index dataset
-	 */
-	public Dataset argMax(boolean ignoreNaNs, int axis);
-
-	/**
-	 * Find absolute index of minimum value (in a flattened view)
-	 * See {@link #argMin(boolean ignoreNaNs)} with ignoreNaNs = false
-	 * 
-	 * @return absolute index
-	 */
-	public int argMin();
-
-	/**
-	 * Find absolute index of minimum value (in a flattened view)
-	 * 
-	 * @param ignoreInvalids if true, ignore NaNs and infinities
-	 * @return absolute index
-	 */
-	public int argMin(boolean ignoreInvalids);
-
-	/**
-	 * Find indices of minimum values along given axis.
-	 * See {@link #argMin(boolean ignoreNaNs, int axis)} with ignoreNaNs = false
-	 * 
-	 * @param axis
-	 * @return index dataset
-	 */
-	public Dataset argMin(int axis);
-
-	/**
-	 * Find indices of minimum values along given axis
-	 * 
-	 * @param ignoreNaNs if true, ignore NaNs
-	 * @param axis
-	 * @return index dataset
-	 */
-	public Dataset argMin(boolean ignoreNaNs, int axis);
-
-	/**
 	 * @return true if dataset contains any infinities
 	 */
 	public boolean containsInfs();
@@ -1198,157 +1090,120 @@ public interface Dataset extends IDataset {
 	public boolean containsInvalidNumbers();
 
 	/**
+	 * @param axis
+	 * @param ignoreInvalids - Can be null, empty, or one or more booleans. By default, all booleans
+	 * are false. If the first boolean is true, will ignore NaNs and ignore infinities. Use the second
+	 * boolean to ignore infinities separately.
+	 * @return maxima along axis in dataset
+	 */
+	public Dataset max(int axis, boolean... ignoreInvalids);
+
+	/**
+	 * @param axis
+	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
+	 * @return minima along axis in dataset
+	 */
+	public Dataset min(int axis, boolean... ignoreInvalids);
+
+	/**
+	 * Find absolute index of maximum value (in a flattened view)
+	 * @param ignoreInvalids - see {@link #max(boolean...)}
+	 * @return absolute index
+	 */
+	public int argMax(boolean... ignoreInvalids);
+
+	/**
+	 * Find indices of maximum values along given axis
+	 * @param axis
+	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
+	 * @return index dataset
+	 * @since 2.0
+	 */
+	public Dataset argMax(int axis, boolean... ignoreInvalids);
+
+	/**
+	 * Find absolute index of minimum value (in a flattened view)
+	 * @param ignoreInvalids - see {@link #max(boolean...)}
+	 * @return absolute index
+	 */
+	public int argMin(boolean... ignoreInvalids);
+
+	/**
+	 * Find indices of minimum values along given axis
+	 * @param axis
+	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
+	 * @return index dataset
+	 * @since 2.0
+	 */
+	public Dataset argMin(int axis, boolean... ignoreInvalids);
+
+	/**
+	 * @param ignoreInvalids - see {@link #max(boolean...)}
 	 * @return peak-to-peak value, the difference of maximum and minimum of dataset
 	 */
-	public Number peakToPeak();
+	public Number peakToPeak(boolean... ignoreInvalids);
 
 	/**
 	 * @param axis
+	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return peak-to-peak dataset, the difference of maxima and minima of dataset along axis
 	 */
-	public Dataset peakToPeak(int axis);
+	public Dataset peakToPeak(int axis, boolean... ignoreInvalids);
 
 	/**
-	 * See {@link #count(boolean ignoreNaNs)} with ignoreNaNs = false
+	 * @param ignoreInvalids - see {@link #max(boolean...)}
 	 * @return number of items in dataset
 	 */
-	public long count();
+	public long count(boolean... ignoreInvalids);
 
 	/**
-	 * @param ignoreNaNs if true, ignore NaNs (treat as zeros)
-	 * @return number of items in dataset
-	 */
-	public long count(boolean ignoreNaNs);
-
-	/**
-	 * See {@link #count(boolean ignoreNaNs, int axis)} with ignoreNaNs = false
 	 * @param axis
+	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return number of items along axis in dataset
+	 * @since 2.0
 	 */
-	public Dataset count(int axis);
+	public Dataset count(int axis, boolean... ignoreInvalids);
 
 	/**
-	 * @param ignoreNaNs if true, ignore NaNs (treat as zeros)
-	 * @param axis
-	 * @return number of items along axis in dataset
-	 */
-	public Dataset count(boolean ignoreNaNs, int axis);
-
-	/**
-	 * See {@link #sum(boolean ignoreNaNs)} with ignoreNaNs = false
+	 * @param ignoreInvalids - see {@link #max(boolean...)}
 	 * @return sum over all items in dataset as a Double, array of doubles or a complex number
 	 */
-	public Object sum();
+	public Object sum(boolean... ignoreInvalids);
 
 	/**
-	 * @param ignoreNaNs if true, ignore NaNs (treat as zeros)
-	 * @return sum over all items in dataset as a Double, array of doubles or a complex number
-	 */
-	public Object sum(boolean ignoreNaNs);
-
-	/**
-	 * See {@link #sum(boolean ignoreNaNs, int axis)} with ignoreNaNs = false
 	 * @param axis
+	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return sum along axis in dataset
+	 * @since 2.0
 	 */
-	public Dataset sum(int axis);
+	public Dataset sum(int axis, boolean... ignoreInvalids);
 
 	/**
-	 * @param ignoreNaNs if true, ignore NaNs (treat as zeros)
-	 * @param axis
-	 * @return sum along axis in dataset
-	 */
-	public Dataset sum(boolean ignoreNaNs, int axis);
-
-//	/**
-//	 * See {@link #sum(boolean ignoreNaNs)} with ignoreNaNs = false
-//	 * @return sum over all items in dataset as a Double, array of doubles or a complex number
-//	 */
-//	public Object sum(Dataset o);
-//
-//	/**
-//	 * @param ignoreNaNs if true, ignore NaNs (treat as zeros)
-//	 * @return sum over all items in dataset as a Double, array of doubles or a complex number
-//	 */
-//	public Object sum(boolean ignoreNaNs, Dataset o);
-//
-//	/**
-//	 * See {@link #sum(boolean ignoreNaNs, int axis)} with ignoreNaNs = false
-//	 * @param axis
-//	 * @return sum along axis in dataset
-//	 */
-//	public Dataset sum(int axis, Dataset o);
-//
-//	/**
-//	 * @param ignoreNaNs if true, ignore NaNs (treat as zeros)
-//	 * @param axis
-//	 * @return sum along axis in dataset
-//	 */
-//	public Dataset sum(boolean ignoreNaNs, int axis, Dataset o);
-//
-	/**
-	 * @return sum over all items in dataset as appropriate to dataset type
-	 * (integers for boolean, byte, short and integer; longs for long; floats for float; doubles
-	 * for double)
-	 */
-	public Object typedSum();
-
-	/**
-	 * @param dtype
-	 * @return sum over all items in dataset as appropriate to given dataset type
-	 */
-	public Object typedSum(int dtype);
-
-	/**
-	 * @param dtype
-	 * @param axis
-	 * @return sum along axis in dataset
-	 */
-	public Dataset typedSum(int dtype, int axis);
-
-	/**
+	 * @param ignoreInvalids - see {@link #max(boolean...)}
 	 * @return product over all items in dataset
 	 */
-	public Object product();
+	public Object product(boolean... ignoreInvalids);
 
 	/**
 	 * @param axis
+	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return product along axis in dataset
 	 */
-	public Dataset product(int axis);
+	public Dataset product(int axis, boolean... ignoreInvalids);
 
 	/**
-	 * @param dtype
-	 * @return product over all items in dataset
-	 */
-	public Object typedProduct(int dtype);
-
-	/**
-	 * @param dtype
 	 * @param axis
-	 * @return product along axis in dataset
-	 */
-	public Dataset typedProduct(int dtype, int axis);
-
-	/**
-	 * See {@link #mean(boolean ignoreNaNs, int axis)} with ignoreNaNs = false
-	 * @param axis
+	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return mean along axis in dataset
+	 * @since 2.0
 	 */
-	public Dataset mean(int axis);
-
-	/**
-	 * @param ignoreNaNs if true, skip NaNs
-	 * @param axis
-	 * @return mean along axis in dataset
-	 */
-	public Dataset mean(boolean ignoreNaNs, int axis);
+	public Dataset mean(int axis, boolean... ignoreInvalids);
 
 	/**
 	 * @return sample variance of whole dataset
-	 * @see #variance(boolean)
+	 * @see #variance(boolean, boolean...) with isWholePopulation = false
 	 */
-	public Number variance();
+	public double variance();
 
 	/**
 	 * The sample variance can be calculated in two ways: if the dataset is considered as the
@@ -1370,49 +1225,78 @@ public interface Dataset extends IDataset {
 	 * 
 	 * Note that the second definition is also the unbiased estimator of population variance.
 	 * 
-	 * @param isDatasetWholePopulation
+	 * @param isWholePopulation
+	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return sample variance
 	 */
-	public Number variance(boolean isDatasetWholePopulation);
+	public double variance(boolean isWholePopulation, boolean... ignoreInvalids);
 
 	/**
 	 * @param axis
 	 * @return sample variance along axis in dataset
-	 * @see #variance(boolean)
+	 * @see #variance(int, boolean, boolean...) with isWholePopulation = false
 	 */
 	public Dataset variance(int axis);
 
 	/**
-	 * Standard deviation is square root of the variance
-	 * 
-	 * @return sample standard deviation of all items in dataset
-	 * @see #variance()
+	 * @param axis
+	 * @param isWholePopulation
+	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
+	 * @return sample variance along axis in dataset
+	 * @see #variance(boolean, boolean...) with isWholePopulation = false
+	 * @since 2.0
 	 */
-	public Number stdDeviation();
+	public Dataset variance(int axis, boolean isWholePopulation, boolean... ignoreInvalids);
 
 	/**
 	 * Standard deviation is square root of the variance
 	 * 
-	 * @param isDatasetWholePopulation
 	 * @return sample standard deviation of all items in dataset
-	 * @see #variance(boolean)
+	 * @see #stdDeviation(boolean, boolean...) with isWholePopulation = false
 	 */
-	public Number stdDeviation(boolean isDatasetWholePopulation);
+	public double stdDeviation();
 
 	/**
+	 * Standard deviation is square root of the variance
+	 * 
+	 * @param isWholePopulation
+	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
+	 * @return sample standard deviation of all items in dataset
+	 * @see #variance(boolean, boolean...)
+	 */
+	public double stdDeviation(boolean isWholePopulation, boolean... ignoreInvalids);
+
+	/**
+	 * Standard deviation is square root of the variance
+	 * 
 	 * @param axis
 	 * @return standard deviation along axis in dataset
+	 * @see #stdDeviation(int, boolean, boolean...) with isWholePopulation = false
 	 */
 	public Dataset stdDeviation(int axis);
 
 	/**
+	 * Standard deviation is square root of the variance
+	 * 
+	 * @param axis
+	 * @param isWholePopulation
+	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
+	 * @return standard deviation along axis in dataset
+	 * @see #variance(boolean, boolean...) with isWholePopulation = false
+	 * @since 2.0
+	 */
+	public Dataset stdDeviation(int axis, boolean isWholePopulation, boolean... ignoreInvalids);
+
+	/**
+	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return root mean square
 	 */
-	public Number rootMeanSquare();
+	public double rootMeanSquare(boolean... ignoreInvalids);
 
 	/**
 	 * @param axis
+	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return root mean square along axis in dataset
 	 */
-	public Dataset rootMeanSquare(int axis);
+	public Dataset rootMeanSquare(int axis, boolean... ignoreInvalids);
 }

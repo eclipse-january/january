@@ -38,7 +38,6 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 
 	/**
 	 * The size of the dataset is the number of items in the array
-	 * (not including reserved space)
 	 * 
 	 * @return number of data items
 	 */

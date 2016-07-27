@@ -21,6 +21,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.commons.math3.complex.Complex;
+import org.eclipse.january.metadata.StatisticsMetadata;
 
 
 /**
@@ -246,13 +247,13 @@ public class FloatDataset extends AbstractDataset {
 
 	@Override
 	public FloatDataset fill(final Object obj) {
+		setDirty();
 		float dv = (float) DTypeUtils.toReal(obj); // PRIM_TYPE // FROM_OBJECT
 		IndexIterator iter = getIterator();
 		while (iter.hasNext()) {
 			data[iter.index] = dv;
 		}
 
-		setDirty();
 		return this;
 	}
 
@@ -327,12 +328,13 @@ public class FloatDataset extends AbstractDataset {
 	 *            new value
 	 */
 	public void setAbs(final int index, final float val) { // PRIM_TYPE
-		data[index] = val;
 		setDirty();
+		data[index] = val;
 	}
 
 	@Override
 	protected void setItemDirect(final int dindex, final int sindex, final Object src) {
+		setDirty();
 		float[] dsrc = (float[]) src; // PRIM_TYPE
 		data[dindex] = dsrc[sindex];
 	}
@@ -627,6 +629,7 @@ public class FloatDataset extends AbstractDataset {
 
 	@Override
 	public void resize(int... newShape) {
+		setDirty();
 		final IndexIterator iter = getIterator();
 		final int nsize = ShapeUtils.calcSize(newShape);
 		final float[] ndata; // PRIM_TYPE
@@ -650,6 +653,7 @@ public class FloatDataset extends AbstractDataset {
 
 	@Override
 	public FloatDataset sort(Integer axis) {
+		setDirty();
 		if (axis == null) {
 			if (stride == null) {
 				Arrays.sort(data);
@@ -670,8 +674,6 @@ public class FloatDataset extends AbstractDataset {
 				setItemsOnAxes(pos, hit, ads.data);
 			}
 		}
-		
-		setDirty();
 		return this;
 		// throw new UnsupportedOperationException("Cannot sort dataset"); // BOOLEAN_USE
 	}
@@ -707,16 +709,19 @@ public class FloatDataset extends AbstractDataset {
 
 	@Override
 	public void fillDataset(Dataset result, IndexIterator iter) {
+		setDirty();
 		IndexIterator riter = result.getIterator();
 
 		float[] rdata = ((FloatDataset) result).data; // PRIM_TYPE
 
-		while (riter.hasNext() && iter.hasNext())
+		while (riter.hasNext() && iter.hasNext()) {
 			rdata[riter.index] = data[iter.index];
+		}
 	}
 
 	@Override
 	public FloatDataset setByBoolean(final Object obj, Dataset selection) {
+		setDirty();
 		if (obj instanceof Dataset) {
 			final Dataset ds = (Dataset) obj;
 			final int length = ((Number) selection.sum()).intValue();
@@ -739,12 +744,12 @@ public class FloatDataset extends AbstractDataset {
 				data[biter.index] = dv;
 			}
 		}
-		setDirty();
 		return this;
 	}
 
 	@Override
 	public FloatDataset setBy1DIndex(final Object obj, final Dataset index) {
+		setDirty();
 		if (obj instanceof Dataset) {
 			final Dataset ds = (Dataset) obj;
 			if (index.getSize() != ds.getSize()) {
@@ -766,12 +771,12 @@ public class FloatDataset extends AbstractDataset {
 				data[iter.index] = dv;
 			}
 		}
-		setDirty();
 		return this;
 	}
 
 	@Override
 	public FloatDataset setByIndexes(final Object obj, final Object... indexes) {
+		setDirty();
 		final IntegersIterator iter = new IntegersIterator(shape, indexes);
 		final int[] pos = iter.getPos();
 
@@ -794,12 +799,12 @@ public class FloatDataset extends AbstractDataset {
 				setItem(dv, pos);
 			}
 		}
-		setDirty();
 		return this;
 	}
 
 	@Override
 	FloatDataset setSlicedView(Dataset view, Dataset d) {
+		setDirty();
 		final BroadcastSelfIterator it = BroadcastSelfIterator.createIterator(view, d);
 
 		while (it.hasNext()) {
@@ -810,6 +815,7 @@ public class FloatDataset extends AbstractDataset {
 
 	@Override
 	public FloatDataset setSlice(final Object obj, final IndexIterator siter) {
+		setDirty();
 
 		if (obj instanceof IDataset) {
 			final IDataset ds = (IDataset) obj;
@@ -844,7 +850,6 @@ public class FloatDataset extends AbstractDataset {
 				throw new IllegalArgumentException("Object for setting slice is not a dataset or number");
 			}
 		}
-		setDirty();
 		return this;
 	}
 
@@ -861,12 +866,15 @@ public class FloatDataset extends AbstractDataset {
 			throw new IllegalArgumentException("destination array is not large enough");
 		}
 
-		while (siter.hasNext() && diter.hasNext())
+		dest.setDirty();
+		while (siter.hasNext() && diter.hasNext()) {
 			ddata[diter.index] = data[siter.index];
+		}
 	}
 
 	@Override
 	public void setItemsOnAxes(final int[] pos, final boolean[] axes, final Object src) {
+		setDirty();
 		float[] sdata = (float[]) src; // PRIM_TYPE
 
 		SliceIterator siter = getSliceIteratorFromAxes(pos, axes);
@@ -878,15 +886,6 @@ public class FloatDataset extends AbstractDataset {
 		for (int i = 0; siter.hasNext(); i++) {
 			data[siter.index] = sdata[i];
 		}
-		setDirty();
-	}
-
-	@Override
-	protected Number fromDoubleToNumber(double x) {
-		float r = (float) x; // ADD_CAST // PRIM_TYPE_LONG
-		return Float.valueOf(r); // CLASS_TYPE
-		// return Integer.valueOf((int) (long) x); // BOOLEAN_USE
-		// return null; // OBJECT_USE
 	}
 
 	private List<int[]> findPositions(final float value) { // PRIM_TYPE
@@ -911,48 +910,37 @@ public class FloatDataset extends AbstractDataset {
 		return posns;
 	}
 
-	@SuppressWarnings({ "unchecked" })
 	@Override
-	public int[] maxPos(boolean ignoreInvalids) {
-		if (storedValues == null || storedValues.isEmpty()) {
-			calculateMaxMin(ignoreInvalids, ignoreInvalids);
-		}
-		String n = storeName(ignoreInvalids, ignoreInvalids, STORE_MAX_POS);
-		Object o = storedValues.get(n);
+	public int[] maxPos(boolean... ignoreInvalids) {
+		StatisticsMetadata<Number> md = getStats(); // PRIM_TYPE
+		// StatisticsMetadata<Number> md = getStats(); // BOOLEAN_USE
+		// StatisticsMetadata<String> md = getStringStats(); // OBJECT_USE
+		List<int[]> max = md.getMaximumPositions(ignoreInvalids);
 
-		List<int[]> max = null;
-		if (o == null) {
-			max = findPositions(max(ignoreInvalids).floatValue()); // PRIM_TYPE
-			// max = findPositions(max(false).intValue() != 0); // BOOLEAN_USE
-			// max = findPositions(null); // OBJECT_USE
-			storedValues.put(n, max);
-		} else if (o instanceof List<?>) {
-			max = (List<int[]>) o;
-		} else {
-			throw new InternalError("Inconsistent internal state of stored values for statistics calculation");
+		if (max == null) {
+			max = findPositions(md.getMaximum(ignoreInvalids).floatValue()); // PRIM_TYPE
+			// max = findPositions(md.getMaximum(ignoreInvalids).intValue() != 0); // BOOLEAN_USE
+			// max = findPositions(md.getMaximum(ignoreInvalids).toString()); // OBJECT_USE
+
+			md.setMaximumPositions(max);
 		}
 
 		return max.get(0); // first maximum
 	}
 
-	@SuppressWarnings({ "unchecked" })
 	@Override
-	public int[] minPos(boolean ignoreInvalids) {
-		if (storedValues == null || storedValues.isEmpty()) {
-			calculateMaxMin(ignoreInvalids, ignoreInvalids);
-		}
-		String n = storeName(ignoreInvalids, ignoreInvalids, STORE_MIN_POS);
-		Object o = storedValues.get(n);
-		List<int[]> min = null;
-		if (o == null) {
-			min = findPositions(min(ignoreInvalids).floatValue()); // PRIM_TYPE
-			// min = findPositions(min(false).intValue() != 0); // BOOLEAN_USE
-			// min = findPositions(null); // OBJECT_USE
-			storedValues.put(n, min);
-		} else if (o instanceof List<?>) {
-			min = (List<int[]>) o;
-		} else {
-			throw new InternalError("Inconsistent internal state of stored values for statistics calculation");
+	public int[] minPos(boolean... ignoreInvalids) {
+		StatisticsMetadata<Number> md = getStats(); // PRIM_TYPE
+		// StatisticsMetadata<Number> md = getStats(); // BOOLEAN_USE
+		// StatisticsMetadata<String> md = getStringStats(); // OBJECT_USE
+		List<int[]> min = md.getMinimumPositions(ignoreInvalids);
+
+		if (min == null) {
+			min = findPositions(md.getMinimum(ignoreInvalids).floatValue()); // PRIM_TYPE
+			// min = findPositions(md.getMinimum(ignoreInvalids).intValue() != 0); // BOOLEAN_USE
+			// min = findPositions(md.getMinimum(ignoreInvalids).toString()); // OBJECT_USE
+
+			md.setMinimumPositions(min);
 		}
 
 		return min.get(0); // first minimum
@@ -991,6 +979,7 @@ public class FloatDataset extends AbstractDataset {
 
 	@Override
 	public FloatDataset iadd(final Object b) {
+		setDirty();
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 		boolean useLong = bds.getElementClass().equals(Long.class);
 		if (bds.getSize() == 1) {
@@ -1019,12 +1008,12 @@ public class FloatDataset extends AbstractDataset {
 				}
 			}
 		}
-		setDirty();
 		return this;
 	}
 
 	@Override
 	public FloatDataset isubtract(final Object b) {
+		setDirty();
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 		boolean useLong = bds.getElementClass().equals(Long.class);
 		if (bds.getSize() == 1) {
@@ -1054,12 +1043,12 @@ public class FloatDataset extends AbstractDataset {
 				}
 			}
 		}
-		setDirty();
 		return this;
 	}
 
 	@Override
 	public FloatDataset imultiply(final Object b) {
+		setDirty();
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 		boolean useLong = bds.getElementClass().equals(Long.class);
 		if (bds.getSize() == 1) {
@@ -1088,12 +1077,12 @@ public class FloatDataset extends AbstractDataset {
 				}
 			}
 		}
-		setDirty();
 		return this;
 	}
 
 	@Override
 	public FloatDataset idivide(final Object b) {
+		setDirty();
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 		boolean useLong = bds.getElementClass().equals(Long.class);
 		if (bds.getSize() == 1) {
@@ -1139,22 +1128,22 @@ public class FloatDataset extends AbstractDataset {
 				}
 			}
 		}
-		setDirty();
 		return this;
 	}
 
 	@Override
 	public FloatDataset ifloor() {
+		setDirty(); // REAL_ONLY
 		IndexIterator it = getIterator(); // REAL_ONLY
 		while (it.hasNext()) { // REAL_ONLY
 			data[it.index] = (float) Math.floor(data[it.index]); // PRIM_TYPE // REAL_ONLY // ADD_CAST
 		} // REAL_ONLY
-		setDirty(); // REAL_ONLY
 		return this;
 	}
 
 	@Override
 	public FloatDataset iremainder(final Object b) {
+		setDirty();
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 		boolean useLong = bds.getElementClass().equals(Long.class);
 		if (bds.getSize() == 1) {
@@ -1192,12 +1181,12 @@ public class FloatDataset extends AbstractDataset {
 				}
 			}
 		}
-		setDirty();
 		return this;
 	}
 
 	@Override
 	public FloatDataset ipower(final Object b) {
+		setDirty();
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 		if (bds.getSize() == 1) {
 			final double vr = bds.getElementDoubleAbs(0);
@@ -1259,7 +1248,6 @@ public class FloatDataset extends AbstractDataset {
 				}
 			}
 		}
-		setDirty();
 		return this;
 	}
 

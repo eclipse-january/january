@@ -64,7 +64,7 @@ public class AbstractDatasetTest {
 		assertTrue(ShapeUtils.areShapesCompatible(new int[] {2}, new int[] {3}, 0));
 		assertFalse(ShapeUtils.areShapesCompatible(new int[] {2,4}, new int[] {3,4}, 1));
 		assertTrue(ShapeUtils.areShapesCompatible(new int[] {2,4}, new int[] {3,4}, 0));
-//		assertTrue(AbstractDataset.areShapesCompatible(new int[] {}, new int[] {}));
+//		assertTrue(ShapeUtils.areShapesCompatible(new int[] {}, new int[] {}));
 	}
 
 	@Test
@@ -118,11 +118,11 @@ public class AbstractDatasetTest {
 		assertEquals("Max arg 0 ", DatasetFactory.createFromObject(new int[] {1,2,2,2}), a.argMax(0));
 		assertEquals("Max arg 1 ", DatasetFactory.createFromObject(new int[] {3,0,3}), a.argMax(1));
 		assertEquals("Max", 11, a.max(true).doubleValue(), 1e-6);
-		assertEquals("Max 0", DatasetFactory.createFromObject(new double[] {8,9,10,11}), a.max(true,0));
-		assertEquals("Max 1", DatasetFactory.createFromObject(new double[] {3,7,11}), a.max(true,1));
+		assertEquals("Max 0", DatasetFactory.createFromObject(new double[] {8,9,10,11}), a.max(0,true));
+		assertEquals("Max 1", DatasetFactory.createFromObject(new double[] {3,7,11}), a.max(1,true));
 		assertEquals("Max arg", 11, a.argMax(true));
-		assertEquals("Max arg 0 ", DatasetFactory.createFromObject(new int[] {2,2,2,2}), a.argMax(true, 0));
-		assertEquals("Max arg 1 ", DatasetFactory.createFromObject(new int[] {3,3,3}), a.argMax(true, 1));
+		assertEquals("Max arg 0 ", DatasetFactory.createFromObject(new int[] {2,2,2,2}), a.argMax(0, true));
+		assertEquals("Max arg 1 ", DatasetFactory.createFromObject(new int[] {3,3,3}), a.argMax(1, true));
 
 		a.set(Double.NEGATIVE_INFINITY, 1, 1);
 		System.out.println(a.toString(true));
@@ -917,16 +917,16 @@ public class AbstractDatasetTest {
 		assertFalse(a.equals(d));
 		assertFalse(a.equals(e));
 		HashSet<Dataset> set = new HashSet<Dataset>();
-		set.add(a);
+		assertTrue(set.add(a));
 		assertTrue(set.contains(a));
 		assertTrue(set.contains(b));
 		assertTrue(set.contains(c));
 		assertFalse(set.contains(d));
 		assertFalse(set.contains(e));
-		set.add(b);
+		assertFalse(set.add(b)); // b is same as a so do nothing
 		assertEquals(1, set.size());
-		set.add(d);
-		set.add(e);
+		assertTrue(set.add(d));
+		assertTrue(set.add(e));
 		assertEquals(3, set.size());
 		assertTrue(set.contains(d));
 		assertTrue(set.contains(e));
@@ -1517,7 +1517,7 @@ public class AbstractDatasetTest {
 	public void testSum() {
 		Dataset a = DatasetFactory.createRange(1024*1024, Dataset.INT32);
 
-		assertEquals("Typed sum", -524288, a.typedSum(Dataset.INT32));
+//		assertEquals("Typed sum", -524288, a.typedSum(Dataset.INT32));
 
 		a = DatasetFactory.createRange(12, Dataset.FLOAT64);
 		a.setShape(3,4);
@@ -1950,7 +1950,7 @@ public class AbstractDatasetTest {
 		Dataset square = Maths.square(Maths.subtract(image, mean));
 		double var = ((Number) square.mean()).doubleValue();
 
-		Assert.assertEquals(var, image.variance(true).doubleValue(), var * 1.e-15);
+		Assert.assertEquals(var, image.variance(true), var * 1.e-15);
 	}
 
 	@Test
