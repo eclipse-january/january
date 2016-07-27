@@ -16,7 +16,7 @@ public class OBJParser extends AbstractAntlrParser {
 
 	@Override
 	protected void setInitialHiddenTokens(XtextTokenStream tokenStream) {
-		tokenStream.setInitialHiddenTokens("RULE_COMMENT");
+		tokenStream.setInitialHiddenTokens("RULE_COMMENT", "RULE_WS");
 	}
 	
 

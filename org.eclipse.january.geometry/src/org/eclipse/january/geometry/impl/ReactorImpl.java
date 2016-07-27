@@ -26,10 +26,10 @@ import org.eclipse.january.geometry.util.MeshUtils;
  * <em><b>Reactor</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * </p>
  * <ul>
  *   <li>{@link org.eclipse.january.geometry.impl.ReactorImpl#getPipes <em>Pipes</em>}</li>
  * </ul>
+ * </p>
  *
  * @generated
  */

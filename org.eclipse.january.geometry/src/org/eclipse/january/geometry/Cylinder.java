@@ -14,11 +14,11 @@ package org.eclipse.january.geometry;
  *
  * <p>
  * The following features are supported:
- * </p>
  * <ul>
  *   <li>{@link org.eclipse.january.geometry.Cylinder#getRadius <em>Radius</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.Cylinder#getHeight <em>Height</em>}</li>
  * </ul>
+ * </p>
  *
  * @see org.eclipse.january.geometry.GeometryPackage#getCylinder()
  * @model

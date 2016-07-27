@@ -8,31 +8,21 @@ import org.eclipse.emf.ecore.EObject;
  * <!-- begin-user-doc --> A representation of the model object '
  * <em><b>Bounding Box</b></em>'. <!-- end-user-doc -->
  *
- * <!-- begin-model-doc --> A bounding box describes the minimally sized
- * rectangular prism box to contain some region. The box is defined by two
- * points on opposite sides of the prism, one formed from (minX, minY, minZ) and
- * the other from (maxX, maxY, maxZ). These points are chosen such that minX is
- * the smallest the x coordinate can be in any point within the prism, maxX is
- * the maximal x coordinate value, minY is the minal y coordinate value, etc.
+ * <!-- begin-model-doc -->
+ * A bounding box describes the minimally sized rectangular prism box to contain some region. The box is defined by two points on opposite sides of the prism, one formed from (minX, minY, minZ) and the other from (maxX, maxY, maxZ).  These points are chosen such that minX is the smallest the x coordinate can be in any point within the prism, maxX is the maximal x coordinate value, minY is the minal y coordinate value, etc. 
  * <!-- end-model-doc -->
  *
  * <p>
  * The following features are supported:
- * </p>
  * <ul>
- * <li>{@link org.eclipse.january.geometry.BoundingBox#getMaxX <em>Max X</em>}
- * </li>
- * <li>{@link org.eclipse.january.geometry.BoundingBox#getMaxY <em>Max Y</em>}
- * </li>
- * <li>{@link org.eclipse.january.geometry.BoundingBox#getMaxZ <em>Max Z</em>}
- * </li>
- * <li>{@link org.eclipse.january.geometry.BoundingBox#getMinX <em>Min X</em>}
- * </li>
- * <li>{@link org.eclipse.january.geometry.BoundingBox#getMinY <em>Min Y</em>}
- * </li>
- * <li>{@link org.eclipse.january.geometry.BoundingBox#getMinZ <em>Min Z</em>}
- * </li>
+ *   <li>{@link org.eclipse.january.geometry.BoundingBox#getMaxX <em>Max X</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.BoundingBox#getMaxY <em>Max Y</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.BoundingBox#getMaxZ <em>Max Z</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.BoundingBox#getMinX <em>Min X</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.BoundingBox#getMinY <em>Min Y</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.BoundingBox#getMinZ <em>Min Z</em>}</li>
  * </ul>
+ * </p>
  *
  * @see org.eclipse.january.geometry.GeometryPackage#getBoundingBox()
  * @model
@@ -53,12 +43,9 @@ public interface BoundingBox extends EObject {
 	double getMaxX();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.january.geometry.BoundingBox#getMaxX <em>Max X</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @param value
-	 *            the new value of the '<em>Max X</em>' attribute.
+	 * Sets the value of the '{@link org.eclipse.january.geometry.BoundingBox#getMaxX <em>Max X</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Max X</em>' attribute.
 	 * @see #getMaxX()
 	 * @generated
 	 */
@@ -79,12 +66,9 @@ public interface BoundingBox extends EObject {
 	double getMaxY();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.january.geometry.BoundingBox#getMaxY <em>Max Y</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @param value
-	 *            the new value of the '<em>Max Y</em>' attribute.
+	 * Sets the value of the '{@link org.eclipse.january.geometry.BoundingBox#getMaxY <em>Max Y</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Max Y</em>' attribute.
 	 * @see #getMaxY()
 	 * @generated
 	 */
@@ -105,12 +89,9 @@ public interface BoundingBox extends EObject {
 	double getMaxZ();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.january.geometry.BoundingBox#getMaxZ <em>Max Z</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @param value
-	 *            the new value of the '<em>Max Z</em>' attribute.
+	 * Sets the value of the '{@link org.eclipse.january.geometry.BoundingBox#getMaxZ <em>Max Z</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Max Z</em>' attribute.
 	 * @see #getMaxZ()
 	 * @generated
 	 */
@@ -131,12 +112,9 @@ public interface BoundingBox extends EObject {
 	double getMinX();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.january.geometry.BoundingBox#getMinX <em>Min X</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @param value
-	 *            the new value of the '<em>Min X</em>' attribute.
+	 * Sets the value of the '{@link org.eclipse.january.geometry.BoundingBox#getMinX <em>Min X</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Min X</em>' attribute.
 	 * @see #getMinX()
 	 * @generated
 	 */
@@ -157,12 +135,9 @@ public interface BoundingBox extends EObject {
 	double getMinY();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.january.geometry.BoundingBox#getMinY <em>Min Y</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @param value
-	 *            the new value of the '<em>Min Y</em>' attribute.
+	 * Sets the value of the '{@link org.eclipse.january.geometry.BoundingBox#getMinY <em>Min Y</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Min Y</em>' attribute.
 	 * @see #getMinY()
 	 * @generated
 	 */
@@ -183,12 +158,9 @@ public interface BoundingBox extends EObject {
 	double getMinZ();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.january.geometry.BoundingBox#getMinZ <em>Min Z</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @param value
-	 *            the new value of the '<em>Min Z</em>' attribute.
+	 * Sets the value of the '{@link org.eclipse.january.geometry.BoundingBox#getMinZ <em>Min Z</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Min Z</em>' attribute.
 	 * @see #getMinZ()
 	 * @generated
 	 */

@@ -193,6 +193,33 @@ public interface GeometryFactory extends EFactory {
 	Reactor createReactor();
 
 	/**
+	 * Returns a new object of class '<em>Poly Shape</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Poly Shape</em>'.
+	 * @generated
+	 */
+	PolyShape createPolyShape();
+
+	/**
+	 * Returns a new object of class '<em>Face</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Face</em>'.
+	 * @generated
+	 */
+	Face createFace();
+
+	/**
+	 * Returns a new object of class '<em>Vertex Source</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Vertex Source</em>'.
+	 * @generated
+	 */
+	VertexSource createVertexSource();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -20,7 +20,6 @@ import org.eclipse.january.geometry.util.MeshUtils;
  * <em><b>Pipe</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * </p>
  * <ul>
  *   <li>{@link org.eclipse.january.geometry.impl.PipeImpl#getNumRods <em>Num Rods</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.impl.PipeImpl#getPitch <em>Pitch</em>}</li>
@@ -29,6 +28,7 @@ import org.eclipse.january.geometry.util.MeshUtils;
  *   <li>{@link org.eclipse.january.geometry.impl.PipeImpl#getRotationY <em>Rotation Y</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.impl.PipeImpl#getRotationZ <em>Rotation Z</em>}</li>
  * </ul>
+ * </p>
  *
  * @generated
  */

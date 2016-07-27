@@ -96,10 +96,16 @@ public class OBJSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Material returns Material
 	 *
 	 * Constraint:
-	 *     {Material}
+	 *     name=EString
 	 */
 	protected void sequence_Material(ISerializationContext context, Material semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, GeometryPackage.Literals.MATERIAL__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, GeometryPackage.Literals.MATERIAL__NAME));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getMaterialAccess().getNameEStringParserRuleCall_1_0(), semanticObject.getName());
+		feeder.finish();
 	}
 	
 	
@@ -108,7 +114,7 @@ public class OBJSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     PolyShape returns PolyShape
 	 *
 	 * Constraint:
-	 *     (name=EString faces+=Face*)
+	 *     (name=EString? material=Material? faces+=Face*)
 	 */
 	protected void sequence_PolyShape(ISerializationContext context, PolyShape semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

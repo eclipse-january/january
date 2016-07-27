@@ -10,6 +10,8 @@ import org.eclipse.january.geometry.Intersection;
 /**
  * <!-- begin-user-doc --> An implementation of the model object '
  * <em><b>Intersection</b></em>'. <!-- end-user-doc -->
+ * <p>
+ * </p>
  *
  * @generated
  */

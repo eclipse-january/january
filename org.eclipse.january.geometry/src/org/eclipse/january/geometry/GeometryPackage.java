@@ -1165,13 +1165,22 @@ public interface GeometryPackage extends EPackage {
 	int GEOMETRY__PARENT = INODE__PARENT;
 
 	/**
+	 * The feature id for the '<em><b>Vertex Source</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GEOMETRY__VERTEX_SOURCE = INODE_FEATURE_COUNT + 0;
+
+	/**
 	 * The number of structural features of the '<em>Geometry</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int GEOMETRY_FEATURE_COUNT = INODE_FEATURE_COUNT + 0;
+	int GEOMETRY_FEATURE_COUNT = INODE_FEATURE_COUNT + 1;
 
 	/**
 	 * The operation id for the '<em>Change Decorator Property</em>' operation.
@@ -2116,13 +2125,22 @@ public interface GeometryPackage extends EPackage {
 	int MATERIAL = 13;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MATERIAL__NAME = 0;
+
+	/**
 	 * The number of structural features of the '<em>Material</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MATERIAL_FEATURE_COUNT = 0;
+	int MATERIAL_FEATURE_COUNT = 1;
 
 	/**
 	 * The number of operations of the '<em>Material</em>' class.
@@ -3203,6 +3221,306 @@ public interface GeometryPackage extends EPackage {
 	int REACTOR_OPERATION_COUNT = SHAPE_OPERATION_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.january.geometry.impl.PolyShapeImpl <em>Poly Shape</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.january.geometry.impl.PolyShapeImpl
+	 * @see org.eclipse.january.geometry.impl.GeometryPackageImpl#getPolyShape()
+	 * @generated
+	 */
+	int POLY_SHAPE = 21;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLY_SHAPE__NAME = SHAPE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLY_SHAPE__ID = SHAPE__ID;
+
+	/**
+	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLY_SHAPE__NODES = SHAPE__NODES;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLY_SHAPE__TYPE = SHAPE__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Triangles</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLY_SHAPE__TRIANGLES = SHAPE__TRIANGLES;
+
+	/**
+	 * The feature id for the '<em><b>Center</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLY_SHAPE__CENTER = SHAPE__CENTER;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLY_SHAPE__PARENT = SHAPE__PARENT;
+
+	/**
+	 * The feature id for the '<em><b>Material</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLY_SHAPE__MATERIAL = SHAPE__MATERIAL;
+
+	/**
+	 * The feature id for the '<em><b>Faces</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLY_SHAPE__FACES = SHAPE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Mat Files</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLY_SHAPE__MAT_FILES = SHAPE_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Vertex Source</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLY_SHAPE__VERTEX_SOURCE = SHAPE_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>Poly Shape</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLY_SHAPE_FEATURE_COUNT = SHAPE_FEATURE_COUNT + 3;
+
+	/**
+	 * The operation id for the '<em>Change Decorator Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLY_SHAPE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT = SHAPE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT;
+
+	/**
+	 * The operation id for the '<em>Get Property Names</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLY_SHAPE___GET_PROPERTY_NAMES = SHAPE___GET_PROPERTY_NAMES;
+
+	/**
+	 * The operation id for the '<em>Get Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLY_SHAPE___GET_PROPERTY__STRING = SHAPE___GET_PROPERTY__STRING;
+
+	/**
+	 * The operation id for the '<em>Set Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLY_SHAPE___SET_PROPERTY__STRING_DOUBLE = SHAPE___SET_PROPERTY__STRING_DOUBLE;
+
+	/**
+	 * The operation id for the '<em>Add Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLY_SHAPE___ADD_NODE__INODE = SHAPE___ADD_NODE__INODE;
+
+	/**
+	 * The operation id for the '<em>Remove Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLY_SHAPE___REMOVE_NODE__INODE = SHAPE___REMOVE_NODE__INODE;
+
+	/**
+	 * The operation id for the '<em>Copy</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLY_SHAPE___COPY__OBJECT = SHAPE___COPY__OBJECT;
+
+	/**
+	 * The operation id for the '<em>Clone</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLY_SHAPE___CLONE = SHAPE___CLONE;
+
+	/**
+	 * The number of operations of the '<em>Poly Shape</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLY_SHAPE_OPERATION_COUNT = SHAPE_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.january.geometry.impl.FaceImpl <em>Face</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.january.geometry.impl.FaceImpl
+	 * @see org.eclipse.january.geometry.impl.GeometryPackageImpl#getFace()
+	 * @generated
+	 */
+	int FACE = 22;
+
+	/**
+	 * The feature id for the '<em><b>Vertex Indices</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FACE__VERTEX_INDICES = 0;
+
+	/**
+	 * The feature id for the '<em><b>Texture Indices</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FACE__TEXTURE_INDICES = 1;
+
+	/**
+	 * The number of structural features of the '<em>Face</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FACE_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Face</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FACE_OPERATION_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.january.geometry.impl.VertexSourceImpl <em>Vertex Source</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.january.geometry.impl.VertexSourceImpl
+	 * @see org.eclipse.january.geometry.impl.GeometryPackageImpl#getVertexSource()
+	 * @generated
+	 */
+	int VERTEX_SOURCE = 23;
+
+	/**
+	 * The feature id for the '<em><b>Vertices</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERTEX_SOURCE__VERTICES = 0;
+
+	/**
+	 * The feature id for the '<em><b>Texture Coordinates</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERTEX_SOURCE__TEXTURE_COORDINATES = 1;
+
+	/**
+	 * The feature id for the '<em><b>Material Files</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERTEX_SOURCE__MATERIAL_FILES = 2;
+
+	/**
+	 * The number of structural features of the '<em>Vertex Source</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERTEX_SOURCE_FEATURE_COUNT = 3;
+
+	/**
+	 * The number of operations of the '<em>Vertex Source</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERTEX_SOURCE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '<em>Path</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3210,7 +3528,7 @@ public interface GeometryPackage extends EPackage {
 	 * @see org.eclipse.january.geometry.impl.GeometryPackageImpl#getPath()
 	 * @generated
 	 */
-	int PATH = 21;
+	int PATH = 24;
 
 	/**
 	 * The meta object id for the '<em>Object</em>' data type.
@@ -3220,7 +3538,7 @@ public interface GeometryPackage extends EPackage {
 	 * @see org.eclipse.january.geometry.impl.GeometryPackageImpl#getObject()
 	 * @generated
 	 */
-	int OBJECT = 22;
+	int OBJECT = 25;
 
 
 	/**
@@ -3452,6 +3770,17 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getGeometry();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.january.geometry.Geometry#getVertexSource <em>Vertex Source</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Vertex Source</em>'.
+	 * @see org.eclipse.january.geometry.Geometry#getVertexSource()
+	 * @see #getGeometry()
+	 * @generated
+	 */
+	EReference getGeometry_VertexSource();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.january.geometry.Tube <em>Tube</em>}'.
@@ -3712,6 +4041,17 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getMaterial();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.january.geometry.Material#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.eclipse.january.geometry.Material#getName()
+	 * @see #getMaterial()
+	 * @generated
+	 */
+	EAttribute getMaterial_Name();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.january.geometry.IGeometryImporter <em>IGeometry Importer</em>}'.
@@ -4077,6 +4417,124 @@ public interface GeometryPackage extends EPackage {
 	EReference getReactor_Pipes();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.january.geometry.PolyShape <em>Poly Shape</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Poly Shape</em>'.
+	 * @see org.eclipse.january.geometry.PolyShape
+	 * @generated
+	 */
+	EClass getPolyShape();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.january.geometry.PolyShape#getFaces <em>Faces</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Faces</em>'.
+	 * @see org.eclipse.january.geometry.PolyShape#getFaces()
+	 * @see #getPolyShape()
+	 * @generated
+	 */
+	EReference getPolyShape_Faces();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipse.january.geometry.PolyShape#getMatFiles <em>Mat Files</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Mat Files</em>'.
+	 * @see org.eclipse.january.geometry.PolyShape#getMatFiles()
+	 * @see #getPolyShape()
+	 * @generated
+	 */
+	EAttribute getPolyShape_MatFiles();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.january.geometry.PolyShape#getVertexSource <em>Vertex Source</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Vertex Source</em>'.
+	 * @see org.eclipse.january.geometry.PolyShape#getVertexSource()
+	 * @see #getPolyShape()
+	 * @generated
+	 */
+	EReference getPolyShape_VertexSource();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.january.geometry.Face <em>Face</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Face</em>'.
+	 * @see org.eclipse.january.geometry.Face
+	 * @generated
+	 */
+	EClass getFace();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipse.january.geometry.Face#getVertexIndices <em>Vertex Indices</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Vertex Indices</em>'.
+	 * @see org.eclipse.january.geometry.Face#getVertexIndices()
+	 * @see #getFace()
+	 * @generated
+	 */
+	EAttribute getFace_VertexIndices();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipse.january.geometry.Face#getTextureIndices <em>Texture Indices</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Texture Indices</em>'.
+	 * @see org.eclipse.january.geometry.Face#getTextureIndices()
+	 * @see #getFace()
+	 * @generated
+	 */
+	EAttribute getFace_TextureIndices();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.january.geometry.VertexSource <em>Vertex Source</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Vertex Source</em>'.
+	 * @see org.eclipse.january.geometry.VertexSource
+	 * @generated
+	 */
+	EClass getVertexSource();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.january.geometry.VertexSource#getVertices <em>Vertices</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Vertices</em>'.
+	 * @see org.eclipse.january.geometry.VertexSource#getVertices()
+	 * @see #getVertexSource()
+	 * @generated
+	 */
+	EReference getVertexSource_Vertices();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.january.geometry.VertexSource#getTextureCoordinates <em>Texture Coordinates</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Texture Coordinates</em>'.
+	 * @see org.eclipse.january.geometry.VertexSource#getTextureCoordinates()
+	 * @see #getVertexSource()
+	 * @generated
+	 */
+	EReference getVertexSource_TextureCoordinates();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipse.january.geometry.VertexSource#getMaterialFiles <em>Material Files</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Material Files</em>'.
+	 * @see org.eclipse.january.geometry.VertexSource#getMaterialFiles()
+	 * @see #getVertexSource()
+	 * @generated
+	 */
+	EAttribute getVertexSource_MaterialFiles();
+
+	/**
 	 * Returns the meta object for data type '{@link java.nio.file.Path <em>Path</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4312,6 +4770,14 @@ public interface GeometryPackage extends EPackage {
 		EClass GEOMETRY = eINSTANCE.getGeometry();
 
 		/**
+		 * The meta object literal for the '<em><b>Vertex Source</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference GEOMETRY__VERTEX_SOURCE = eINSTANCE.getGeometry_VertexSource();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.january.geometry.impl.TubeImpl <em>Tube</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -4524,6 +4990,14 @@ public interface GeometryPackage extends EPackage {
 		 * @generated
 		 */
 		EClass MATERIAL = eINSTANCE.getMaterial();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MATERIAL__NAME = eINSTANCE.getMaterial_Name();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.january.geometry.IGeometryImporter <em>IGeometry Importer</em>}' class.
@@ -4810,6 +5284,100 @@ public interface GeometryPackage extends EPackage {
 		 * @generated
 		 */
 		EReference REACTOR__PIPES = eINSTANCE.getReactor_Pipes();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.january.geometry.impl.PolyShapeImpl <em>Poly Shape</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.january.geometry.impl.PolyShapeImpl
+		 * @see org.eclipse.january.geometry.impl.GeometryPackageImpl#getPolyShape()
+		 * @generated
+		 */
+		EClass POLY_SHAPE = eINSTANCE.getPolyShape();
+
+		/**
+		 * The meta object literal for the '<em><b>Faces</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference POLY_SHAPE__FACES = eINSTANCE.getPolyShape_Faces();
+
+		/**
+		 * The meta object literal for the '<em><b>Mat Files</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute POLY_SHAPE__MAT_FILES = eINSTANCE.getPolyShape_MatFiles();
+
+		/**
+		 * The meta object literal for the '<em><b>Vertex Source</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference POLY_SHAPE__VERTEX_SOURCE = eINSTANCE.getPolyShape_VertexSource();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.january.geometry.impl.FaceImpl <em>Face</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.january.geometry.impl.FaceImpl
+		 * @see org.eclipse.january.geometry.impl.GeometryPackageImpl#getFace()
+		 * @generated
+		 */
+		EClass FACE = eINSTANCE.getFace();
+
+		/**
+		 * The meta object literal for the '<em><b>Vertex Indices</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FACE__VERTEX_INDICES = eINSTANCE.getFace_VertexIndices();
+
+		/**
+		 * The meta object literal for the '<em><b>Texture Indices</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FACE__TEXTURE_INDICES = eINSTANCE.getFace_TextureIndices();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.january.geometry.impl.VertexSourceImpl <em>Vertex Source</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.january.geometry.impl.VertexSourceImpl
+		 * @see org.eclipse.january.geometry.impl.GeometryPackageImpl#getVertexSource()
+		 * @generated
+		 */
+		EClass VERTEX_SOURCE = eINSTANCE.getVertexSource();
+
+		/**
+		 * The meta object literal for the '<em><b>Vertices</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference VERTEX_SOURCE__VERTICES = eINSTANCE.getVertexSource_Vertices();
+
+		/**
+		 * The meta object literal for the '<em><b>Texture Coordinates</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference VERTEX_SOURCE__TEXTURE_COORDINATES = eINSTANCE.getVertexSource_TextureCoordinates();
+
+		/**
+		 * The meta object literal for the '<em><b>Material Files</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute VERTEX_SOURCE__MATERIAL_FILES = eINSTANCE.getVertexSource_MaterialFiles();
 
 		/**
 		 * The meta object literal for the '<em>Path</em>' data type.

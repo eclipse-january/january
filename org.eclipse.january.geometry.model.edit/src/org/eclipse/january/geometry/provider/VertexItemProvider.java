@@ -198,7 +198,7 @@ public class VertexItemProvider
 	 */
 	@Override
 	public ResourceLocator getResourceLocator() {
-		return GeometryEditPlugin.INSTANCE;
+		return OrgeclipsejanuaryEditPlugin.INSTANCE;
 	}
 
 }

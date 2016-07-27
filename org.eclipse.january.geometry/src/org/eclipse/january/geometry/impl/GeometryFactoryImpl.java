@@ -78,6 +78,9 @@ public class GeometryFactoryImpl extends EFactoryImpl implements GeometryFactory
 			case GeometryPackage.JUNCTION: return createJunction();
 			case GeometryPackage.HEAT_EXCHANGER: return createHeatExchanger();
 			case GeometryPackage.REACTOR: return createReactor();
+			case GeometryPackage.POLY_SHAPE: return createPolyShape();
+			case GeometryPackage.FACE: return createFace();
+			case GeometryPackage.VERTEX_SOURCE: return createVertexSource();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -305,6 +308,36 @@ public class GeometryFactoryImpl extends EFactoryImpl implements GeometryFactory
 	public Reactor createReactor() {
 		ReactorImpl reactor = new ReactorImpl();
 		return reactor;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public PolyShape createPolyShape() {
+		PolyShapeImpl polyShape = new PolyShapeImpl();
+		return polyShape;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Face createFace() {
+		FaceImpl face = new FaceImpl();
+		return face;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public VertexSource createVertexSource() {
+		VertexSourceImpl vertexSource = new VertexSourceImpl();
+		return vertexSource;
 	}
 
 	/**

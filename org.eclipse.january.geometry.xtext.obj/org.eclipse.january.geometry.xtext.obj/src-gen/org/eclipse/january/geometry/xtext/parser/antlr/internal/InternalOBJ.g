@@ -141,49 +141,57 @@ ruleVertexSource returns [EObject current=null]
 			}
 		)
 		(
+			otherlv_1='mtllib'
+			{
+				newLeafNode(otherlv_1, grammarAccess.getVertexSourceAccess().getMtllibKeyword_1_0());
+			}
 			(
-				{
-					newCompositeNode(grammarAccess.getVertexSourceAccess().getMaterialFilesEStringParserRuleCall_1_0());
-				}
-				lv_materialFiles_1_0=ruleEString
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getVertexSourceRule());
+				(
+					{
+						newCompositeNode(grammarAccess.getVertexSourceAccess().getMaterialFilesEStringParserRuleCall_1_1_0());
 					}
-					add(
-						$current,
-						"materialFiles",
-						lv_materialFiles_1_0,
-						"org.eclipse.january.geometry.xtext.OBJ.EString");
-					afterParserOrEnumRuleCall();
-				}
+					lv_materialFiles_2_0=ruleEString
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getVertexSourceRule());
+						}
+						add(
+							$current,
+							"materialFiles",
+							lv_materialFiles_2_0,
+							"org.eclipse.january.geometry.xtext.OBJ.EString");
+						afterParserOrEnumRuleCall();
+					}
+				)
 			)
 		)*
-		otherlv_2='g'
-		{
-			newLeafNode(otherlv_2, grammarAccess.getVertexSourceAccess().getGKeyword_2());
-		}
 		(
+			otherlv_3='g'
 			{
-				newCompositeNode(grammarAccess.getVertexSourceAccess().getEStringParserRuleCall_3());
+				newLeafNode(otherlv_3, grammarAccess.getVertexSourceAccess().getGKeyword_2_0());
 			}
-			ruleEString
-			{
-				afterParserOrEnumRuleCall();
-			}
+			(
+				{
+					newCompositeNode(grammarAccess.getVertexSourceAccess().getEStringParserRuleCall_2_1());
+				}
+				ruleEString
+				{
+					afterParserOrEnumRuleCall();
+				}
+			)?
 		)?
 		(
 			(
-				otherlv_4='v'
+				otherlv_5='v'
 				{
-					newLeafNode(otherlv_4, grammarAccess.getVertexSourceAccess().getVKeyword_4_0_0());
+					newLeafNode(otherlv_5, grammarAccess.getVertexSourceAccess().getVKeyword_3_0_0());
 				}
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getVertexSourceAccess().getVerticesVertexParserRuleCall_4_0_1_0());
+							newCompositeNode(grammarAccess.getVertexSourceAccess().getVerticesVertexParserRuleCall_3_0_1_0());
 						}
-						lv_vertices_5_0=ruleVertex
+						lv_vertices_6_0=ruleVertex
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getVertexSourceRule());
@@ -191,7 +199,7 @@ ruleVertexSource returns [EObject current=null]
 							add(
 								$current,
 								"vertices",
-								lv_vertices_5_0,
+								lv_vertices_6_0,
 								"org.eclipse.january.geometry.xtext.OBJ.Vertex");
 							afterParserOrEnumRuleCall();
 						}
@@ -200,16 +208,16 @@ ruleVertexSource returns [EObject current=null]
 			)
 			    |
 			(
-				otherlv_6='vt'
+				otherlv_7='vt'
 				{
-					newLeafNode(otherlv_6, grammarAccess.getVertexSourceAccess().getVtKeyword_4_1_0());
+					newLeafNode(otherlv_7, grammarAccess.getVertexSourceAccess().getVtKeyword_3_1_0());
 				}
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getVertexSourceAccess().getTextureCoordinatesTextureVertexParserRuleCall_4_1_1_0());
+							newCompositeNode(grammarAccess.getVertexSourceAccess().getTextureCoordinatesTextureVertexParserRuleCall_3_1_1_0());
 						}
-						lv_textureCoordinates_7_0=ruleTextureVertex
+						lv_textureCoordinates_8_0=ruleTextureVertex
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getVertexSourceRule());
@@ -217,7 +225,7 @@ ruleVertexSource returns [EObject current=null]
 							add(
 								$current,
 								"textureCoordinates",
-								lv_textureCoordinates_7_0,
+								lv_textureCoordinates_8_0,
 								"org.eclipse.january.geometry.xtext.OBJ.TextureVertex");
 							afterParserOrEnumRuleCall();
 						}
@@ -225,11 +233,11 @@ ruleVertexSource returns [EObject current=null]
 				)
 			)
 			    |
-			this_NORMAL_8=RULE_NORMAL
+			this_NORMAL_9=RULE_NORMAL
 			{
-				newLeafNode(this_NORMAL_8, grammarAccess.getVertexSourceAccess().getNORMALTerminalRuleCall_4_2());
+				newLeafNode(this_NORMAL_9, grammarAccess.getVertexSourceAccess().getNORMALTerminalRuleCall_3_2());
 			}
-		)*
+		)+
 	)
 ;
 
@@ -249,54 +257,104 @@ rulePolyShape returns [EObject current=null]
 	leaveRule();
 }:
 	(
-		otherlv_0='g'
-		{
-			newLeafNode(otherlv_0, grammarAccess.getPolyShapeAccess().getGKeyword_0());
-		}
 		(
-			(
-				{
-					newCompositeNode(grammarAccess.getPolyShapeAccess().getNameEStringParserRuleCall_1_0());
-				}
-				lv_name_1_0=ruleEString
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getPolyShapeRule());
-					}
-					set(
-						$current,
-						"name",
-						lv_name_1_0,
-						"org.eclipse.january.geometry.xtext.OBJ.EString");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)
-		(
-			otherlv_2='f'
+			otherlv_0='g'
 			{
-				newLeafNode(otherlv_2, grammarAccess.getPolyShapeAccess().getFKeyword_2_0());
+				newLeafNode(otherlv_0, grammarAccess.getPolyShapeAccess().getGKeyword_0_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getPolyShapeAccess().getFacesFaceParserRuleCall_2_1_0());
+						newCompositeNode(grammarAccess.getPolyShapeAccess().getNameEStringParserRuleCall_0_1_0());
 					}
-					lv_faces_3_0=ruleFace
+					lv_name_1_0=ruleEString
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getPolyShapeRule());
 						}
-						add(
+						set(
 							$current,
-							"faces",
-							lv_faces_3_0,
-							"org.eclipse.january.geometry.xtext.OBJ.Face");
+							"name",
+							lv_name_1_0,
+							"org.eclipse.january.geometry.xtext.OBJ.EString");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)
-		)*
+		)?
+		(
+			otherlv_2='usemtl'
+			{
+				newLeafNode(otherlv_2, grammarAccess.getPolyShapeAccess().getUsemtlKeyword_1_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getPolyShapeAccess().getMaterialMaterialParserRuleCall_1_1_0());
+					}
+					lv_material_3_0=ruleMaterial
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getPolyShapeRule());
+						}
+						set(
+							$current,
+							"material",
+							lv_material_3_0,
+							"org.eclipse.january.geometry.xtext.OBJ.Material");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)?
+		(
+			(
+				otherlv_4='f'
+				{
+					newLeafNode(otherlv_4, grammarAccess.getPolyShapeAccess().getFKeyword_2_0_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getPolyShapeAccess().getFacesFaceParserRuleCall_2_0_1_0());
+						}
+						lv_faces_5_0=ruleFace
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getPolyShapeRule());
+							}
+							add(
+								$current,
+								"faces",
+								lv_faces_5_0,
+								"org.eclipse.january.geometry.xtext.OBJ.Face");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)
+			    |
+			(
+				otherlv_6='s'
+				{
+					newLeafNode(otherlv_6, grammarAccess.getPolyShapeAccess().getSKeyword_2_1_0());
+				}
+				(
+					{
+						newCompositeNode(grammarAccess.getPolyShapeAccess().getEIntParserRuleCall_2_1_1_0());
+					}
+					ruleEInt
+					{
+						afterParserOrEnumRuleCall();
+					}
+					    |
+					otherlv_8='off'
+					{
+						newLeafNode(otherlv_8, grammarAccess.getPolyShapeAccess().getOffKeyword_2_1_1_1());
+					}
+				)
+			)
+		)+
 	)
 ;
 
@@ -580,6 +638,51 @@ ruleTextureVertex returns [EObject current=null]
 	)
 ;
 
+// Entry rule entryRuleMaterial
+entryRuleMaterial returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getMaterialRule()); }
+	iv_ruleMaterial=ruleMaterial
+	{ $current=$iv_ruleMaterial.current; }
+	EOF;
+
+// Rule Material
+ruleMaterial returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			{
+				$current = forceCreateModelElement(
+					grammarAccess.getMaterialAccess().getMaterialAction_0(),
+					$current);
+			}
+		)
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getMaterialAccess().getNameEStringParserRuleCall_1_0());
+				}
+				lv_name_1_0=ruleEString
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getMaterialRule());
+					}
+					set(
+						$current,
+						"name",
+						lv_name_1_0,
+						"org.eclipse.january.geometry.xtext.OBJ.EString");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+	)
+;
+
 // Entry rule entryRuleEInt
 entryRuleEInt returns [String current=null]:
 	{ newCompositeNode(grammarAccess.getEIntRule()); }
@@ -644,7 +747,31 @@ ruleEString returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()
 		{
 			newLeafNode(this_ID_1, grammarAccess.getEStringAccess().getIDTerminalRuleCall_1());
 		}
-	)
+		    |
+		kw='.'
+		{
+			$current.merge(kw);
+			newLeafNode(kw, grammarAccess.getEStringAccess().getFullStopKeyword_2());
+		}
+		    |
+		kw='/'
+		{
+			$current.merge(kw);
+			newLeafNode(kw, grammarAccess.getEStringAccess().getSolidusKeyword_3());
+		}
+		    |
+		kw='\\'
+		{
+			$current.merge(kw);
+			newLeafNode(kw, grammarAccess.getEStringAccess().getReverseSolidusKeyword_4());
+		}
+		    |
+		kw=':'
+		{
+			$current.merge(kw);
+			newLeafNode(kw, grammarAccess.getEStringAccess().getColonKeyword_5());
+		}
+	)+
 ;
 
 // Entry rule entryRuleEDouble
@@ -690,6 +817,8 @@ RULE_NORMAL : 'vn' RULE_DOUBLE RULE_DOUBLE RULE_DOUBLE;
 
 RULE_DOUBLE : ('-'|'+')? RULE_INT? '.' RULE_INT (('E'|'e') ('-'|'+')? RULE_INT)?;
 
+RULE_WS : (' '|'\t'|'\r'|'\n')+;
+
 RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 
 RULE_INT : ('0'..'9')+;
@@ -699,7 +828,5 @@ RULE_STRING : ('"' ('\\' .|~(('\\'|'"')))* '"'|'\'' ('\\' .|~(('\\'|'\'')))* '\'
 RULE_ML_COMMENT : '/*' ( options {greedy=false;} : . )*'*/';
 
 RULE_SL_COMMENT : '//' ~(('\n'|'\r'))* ('\r'? '\n')?;
-
-RULE_WS : (' '|'\t'|'\r'|'\n')+;
 
 RULE_ANY_OTHER : .;

@@ -14,13 +14,14 @@ Require-Bundle: org.eclipse.january.geometry.model,
  org.eclipse.xtext.util,
  org.eclipse.xtend.lib
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: org.eclipse.january.geometry.xtext.validation,
- org.eclipse.january.geometry.xtext.services,
- org.eclipse.january.geometry.xtext.parser.antlr.internal,
- org.eclipse.january.geometry.xtext,
- org.eclipse.january.geometry.xtext.parser.antlr,
+Export-Package: org.eclipse.january.geometry.xtext,
  org.eclipse.january.geometry.xtext.formatting,
- org.eclipse.january.geometry.xtext.serializer,
  org.eclipse.january.geometry.xtext.generator,
- org.eclipse.january.geometry.xtext.scoping
+ org.eclipse.january.geometry.xtext.obj.importer,
+ org.eclipse.january.geometry.xtext.parser.antlr,
+ org.eclipse.january.geometry.xtext.parser.antlr.internal,
+ org.eclipse.january.geometry.xtext.scoping,
+ org.eclipse.january.geometry.xtext.serializer,
+ org.eclipse.january.geometry.xtext.services,
+ org.eclipse.january.geometry.xtext.validation
 Import-Package: org.apache.log4j

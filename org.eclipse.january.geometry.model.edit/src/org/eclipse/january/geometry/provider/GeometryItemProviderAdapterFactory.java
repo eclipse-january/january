@@ -394,6 +394,190 @@ public class GeometryItemProviderAdapterFactory extends GeometryAdapterFactory i
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.january.geometry.Pipe} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected PipeItemProvider pipeItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.january.geometry.Pipe}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createPipeAdapter() {
+		if (pipeItemProvider == null) {
+			pipeItemProvider = new PipeItemProvider(this);
+		}
+
+		return pipeItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.january.geometry.BoundingBox} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected BoundingBoxItemProvider boundingBoxItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.january.geometry.BoundingBox}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createBoundingBoxAdapter() {
+		if (boundingBoxItemProvider == null) {
+			boundingBoxItemProvider = new BoundingBoxItemProvider(this);
+		}
+
+		return boundingBoxItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.january.geometry.Junction} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected JunctionItemProvider junctionItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.january.geometry.Junction}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createJunctionAdapter() {
+		if (junctionItemProvider == null) {
+			junctionItemProvider = new JunctionItemProvider(this);
+		}
+
+		return junctionItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.january.geometry.HeatExchanger} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected HeatExchangerItemProvider heatExchangerItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.january.geometry.HeatExchanger}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createHeatExchangerAdapter() {
+		if (heatExchangerItemProvider == null) {
+			heatExchangerItemProvider = new HeatExchangerItemProvider(this);
+		}
+
+		return heatExchangerItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.january.geometry.Reactor} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ReactorItemProvider reactorItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.january.geometry.Reactor}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createReactorAdapter() {
+		if (reactorItemProvider == null) {
+			reactorItemProvider = new ReactorItemProvider(this);
+		}
+
+		return reactorItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.january.geometry.PolyShape} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected PolyShapeItemProvider polyShapeItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.january.geometry.PolyShape}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createPolyShapeAdapter() {
+		if (polyShapeItemProvider == null) {
+			polyShapeItemProvider = new PolyShapeItemProvider(this);
+		}
+
+		return polyShapeItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.january.geometry.Face} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected FaceItemProvider faceItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.january.geometry.Face}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createFaceAdapter() {
+		if (faceItemProvider == null) {
+			faceItemProvider = new FaceItemProvider(this);
+		}
+
+		return faceItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.january.geometry.VertexSource} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected VertexSourceItemProvider vertexSourceItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.january.geometry.VertexSource}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createVertexSourceAdapter() {
+		if (vertexSourceItemProvider == null) {
+			vertexSourceItemProvider = new VertexSourceItemProvider(this);
+		}
+
+		return vertexSourceItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -506,6 +690,14 @@ public class GeometryItemProviderAdapterFactory extends GeometryAdapterFactory i
 		if (complementItemProvider != null) complementItemProvider.dispose();
 		if (materialItemProvider != null) materialItemProvider.dispose();
 		if (stlGeometryImporterItemProvider != null) stlGeometryImporterItemProvider.dispose();
+		if (pipeItemProvider != null) pipeItemProvider.dispose();
+		if (boundingBoxItemProvider != null) boundingBoxItemProvider.dispose();
+		if (junctionItemProvider != null) junctionItemProvider.dispose();
+		if (heatExchangerItemProvider != null) heatExchangerItemProvider.dispose();
+		if (reactorItemProvider != null) reactorItemProvider.dispose();
+		if (polyShapeItemProvider != null) polyShapeItemProvider.dispose();
+		if (faceItemProvider != null) faceItemProvider.dispose();
+		if (vertexSourceItemProvider != null) vertexSourceItemProvider.dispose();
 	}
 
 }

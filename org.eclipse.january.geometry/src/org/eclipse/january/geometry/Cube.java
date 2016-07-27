@@ -14,10 +14,10 @@ package org.eclipse.january.geometry;
  *
  * <p>
  * The following features are supported:
- * </p>
  * <ul>
  *   <li>{@link org.eclipse.january.geometry.Cube#getSideLength <em>Side Length</em>}</li>
  * </ul>
+ * </p>
  *
  * @see org.eclipse.january.geometry.GeometryPackage#getCube()
  * @model

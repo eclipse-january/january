@@ -47,7 +47,7 @@ public class GeometrySwitch<T> extends Switch<T> {
 	 * Checks whether this is a switch for the given package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param ePackage the package in question.
+	 * @parameter ePackage the package in question.
 	 * @return whether this is a switch for the given package.
 	 * @generated
 	 */
@@ -216,6 +216,26 @@ public class GeometrySwitch<T> extends Switch<T> {
 				T result = caseReactor(reactor);
 				if (result == null) result = caseShape(reactor);
 				if (result == null) result = caseINode(reactor);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GeometryPackage.POLY_SHAPE: {
+				PolyShape polyShape = (PolyShape)theEObject;
+				T result = casePolyShape(polyShape);
+				if (result == null) result = caseShape(polyShape);
+				if (result == null) result = caseINode(polyShape);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GeometryPackage.FACE: {
+				Face face = (Face)theEObject;
+				T result = caseFace(face);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GeometryPackage.VERTEX_SOURCE: {
+				VertexSource vertexSource = (VertexSource)theEObject;
+				T result = caseVertexSource(vertexSource);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -535,6 +555,51 @@ public class GeometrySwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseReactor(Reactor object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Poly Shape</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Poly Shape</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T casePolyShape(PolyShape object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Face</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Face</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseFace(Face object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Vertex Source</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Vertex Source</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseVertexSource(VertexSource object) {
 		return null;
 	}
 

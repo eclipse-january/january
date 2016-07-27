@@ -35,16 +35,23 @@ public class OBJParser extends AbstractContentAssistParser {
 			nameMappings = new HashMap<AbstractElement, String>() {
 				private static final long serialVersionUID = 1L;
 				{
-					put(grammarAccess.getVertexSourceAccess().getAlternatives_4(), "rule__VertexSource__Alternatives_4");
+					put(grammarAccess.getVertexSourceAccess().getAlternatives_3(), "rule__VertexSource__Alternatives_3");
+					put(grammarAccess.getPolyShapeAccess().getAlternatives_2(), "rule__PolyShape__Alternatives_2");
+					put(grammarAccess.getPolyShapeAccess().getAlternatives_2_1_1(), "rule__PolyShape__Alternatives_2_1_1");
 					put(grammarAccess.getFaceAccess().getAlternatives_1_1_1(), "rule__Face__Alternatives_1_1_1");
 					put(grammarAccess.getEStringAccess().getAlternatives(), "rule__EString__Alternatives");
 					put(grammarAccess.getEDoubleAccess().getAlternatives(), "rule__EDouble__Alternatives");
 					put(grammarAccess.getGeometryAccess().getGroup(), "rule__Geometry__Group__0");
 					put(grammarAccess.getVertexSourceAccess().getGroup(), "rule__VertexSource__Group__0");
-					put(grammarAccess.getVertexSourceAccess().getGroup_4_0(), "rule__VertexSource__Group_4_0__0");
-					put(grammarAccess.getVertexSourceAccess().getGroup_4_1(), "rule__VertexSource__Group_4_1__0");
+					put(grammarAccess.getVertexSourceAccess().getGroup_1(), "rule__VertexSource__Group_1__0");
+					put(grammarAccess.getVertexSourceAccess().getGroup_2(), "rule__VertexSource__Group_2__0");
+					put(grammarAccess.getVertexSourceAccess().getGroup_3_0(), "rule__VertexSource__Group_3_0__0");
+					put(grammarAccess.getVertexSourceAccess().getGroup_3_1(), "rule__VertexSource__Group_3_1__0");
 					put(grammarAccess.getPolyShapeAccess().getGroup(), "rule__PolyShape__Group__0");
-					put(grammarAccess.getPolyShapeAccess().getGroup_2(), "rule__PolyShape__Group_2__0");
+					put(grammarAccess.getPolyShapeAccess().getGroup_0(), "rule__PolyShape__Group_0__0");
+					put(grammarAccess.getPolyShapeAccess().getGroup_1(), "rule__PolyShape__Group_1__0");
+					put(grammarAccess.getPolyShapeAccess().getGroup_2_0(), "rule__PolyShape__Group_2_0__0");
+					put(grammarAccess.getPolyShapeAccess().getGroup_2_1(), "rule__PolyShape__Group_2_1__0");
 					put(grammarAccess.getFaceAccess().getGroup(), "rule__Face__Group__0");
 					put(grammarAccess.getFaceAccess().getGroup_1(), "rule__Face__Group_1__0");
 					put(grammarAccess.getFaceAccess().getGroup_1_1(), "rule__Face__Group_1_1__0");
@@ -56,11 +63,12 @@ public class OBJParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEIntAccess().getGroup(), "rule__EInt__Group__0");
 					put(grammarAccess.getGeometryAccess().getVertexSourceAssignment_0(), "rule__Geometry__VertexSourceAssignment_0");
 					put(grammarAccess.getGeometryAccess().getNodesAssignment_1(), "rule__Geometry__NodesAssignment_1");
-					put(grammarAccess.getVertexSourceAccess().getMaterialFilesAssignment_1(), "rule__VertexSource__MaterialFilesAssignment_1");
-					put(grammarAccess.getVertexSourceAccess().getVerticesAssignment_4_0_1(), "rule__VertexSource__VerticesAssignment_4_0_1");
-					put(grammarAccess.getVertexSourceAccess().getTextureCoordinatesAssignment_4_1_1(), "rule__VertexSource__TextureCoordinatesAssignment_4_1_1");
-					put(grammarAccess.getPolyShapeAccess().getNameAssignment_1(), "rule__PolyShape__NameAssignment_1");
-					put(grammarAccess.getPolyShapeAccess().getFacesAssignment_2_1(), "rule__PolyShape__FacesAssignment_2_1");
+					put(grammarAccess.getVertexSourceAccess().getMaterialFilesAssignment_1_1(), "rule__VertexSource__MaterialFilesAssignment_1_1");
+					put(grammarAccess.getVertexSourceAccess().getVerticesAssignment_3_0_1(), "rule__VertexSource__VerticesAssignment_3_0_1");
+					put(grammarAccess.getVertexSourceAccess().getTextureCoordinatesAssignment_3_1_1(), "rule__VertexSource__TextureCoordinatesAssignment_3_1_1");
+					put(grammarAccess.getPolyShapeAccess().getNameAssignment_0_1(), "rule__PolyShape__NameAssignment_0_1");
+					put(grammarAccess.getPolyShapeAccess().getMaterialAssignment_1_1(), "rule__PolyShape__MaterialAssignment_1_1");
+					put(grammarAccess.getPolyShapeAccess().getFacesAssignment_2_0_1(), "rule__PolyShape__FacesAssignment_2_0_1");
 					put(grammarAccess.getFaceAccess().getVertexIndicesAssignment_1_0(), "rule__Face__VertexIndicesAssignment_1_0");
 					put(grammarAccess.getFaceAccess().getTextureIndicesAssignment_1_1_1_0(), "rule__Face__TextureIndicesAssignment_1_1_1_0");
 					put(grammarAccess.getFaceAccess().getTextureIndicesAssignment_1_1_1_1_0(), "rule__Face__TextureIndicesAssignment_1_1_1_1_0");
@@ -70,6 +78,7 @@ public class OBJParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTextureVertexAccess().getXAssignment_0(), "rule__TextureVertex__XAssignment_0");
 					put(grammarAccess.getTextureVertexAccess().getYAssignment_1(), "rule__TextureVertex__YAssignment_1");
 					put(grammarAccess.getTextureVertexAccess().getZAssignment_2(), "rule__TextureVertex__ZAssignment_2");
+					put(grammarAccess.getMaterialAccess().getNameAssignment_1(), "rule__Material__NameAssignment_1");
 				}
 			};
 		}
@@ -89,7 +98,7 @@ public class OBJParser extends AbstractContentAssistParser {
 
 	@Override
 	protected String[] getInitialHiddenTokens() {
-		return new String[] { "RULE_COMMENT" };
+		return new String[] { "RULE_COMMENT", "RULE_WS" };
 	}
 
 	public OBJGrammarAccess getGrammarAccess() {

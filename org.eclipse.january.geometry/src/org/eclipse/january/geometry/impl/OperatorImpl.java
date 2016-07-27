@@ -28,7 +28,6 @@ import org.eclipse.january.geometry.Vertex;
  * <em><b>Operator</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * </p>
  * <ul>
  *   <li>{@link org.eclipse.january.geometry.impl.OperatorImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.impl.OperatorImpl#getId <em>Id</em>}</li>
@@ -38,6 +37,7 @@ import org.eclipse.january.geometry.Vertex;
  *   <li>{@link org.eclipse.january.geometry.impl.OperatorImpl#getCenter <em>Center</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.impl.OperatorImpl#getParent <em>Parent</em>}</li>
  * </ul>
+ * </p>
  *
  * @generated
  */

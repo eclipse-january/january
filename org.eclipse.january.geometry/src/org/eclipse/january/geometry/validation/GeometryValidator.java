@@ -4,6 +4,8 @@
  */
 package org.eclipse.january.geometry.validation;
 
+import org.eclipse.january.geometry.VertexSource;
+
 
 /**
  * A sample validator interface for {@link org.eclipse.january.geometry.Geometry}.
@@ -13,5 +15,7 @@ package org.eclipse.january.geometry.validation;
  */
 public interface GeometryValidator {
 	boolean validate();
+
+	boolean validateVertexSource(VertexSource value);
 
 }

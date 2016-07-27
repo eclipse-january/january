@@ -68,6 +68,7 @@ public class GeometryItemProvider
 			addTypePropertyDescriptor(object);
 			addCenterPropertyDescriptor(object);
 			addParentPropertyDescriptor(object);
+			addVertexSourcePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -174,6 +175,28 @@ public class GeometryItemProvider
 				 getString("_UI_INode_parent_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_INode_parent_feature", "_UI_INode_type"),
 				 GeometryPackage.Literals.INODE__PARENT,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Vertex Source feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addVertexSourcePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Geometry_vertexSource_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Geometry_vertexSource_feature", "_UI_Geometry_type"),
+				 GeometryPackage.Literals.GEOMETRY__VERTEX_SOURCE,
 				 true,
 				 false,
 				 true,
@@ -327,6 +350,31 @@ public class GeometryItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
+				(GeometryPackage.Literals.INODE__NODES,
+				 GeometryFactory.eINSTANCE.createPipe()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(GeometryPackage.Literals.INODE__NODES,
+				 GeometryFactory.eINSTANCE.createJunction()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(GeometryPackage.Literals.INODE__NODES,
+				 GeometryFactory.eINSTANCE.createHeatExchanger()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(GeometryPackage.Literals.INODE__NODES,
+				 GeometryFactory.eINSTANCE.createReactor()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(GeometryPackage.Literals.INODE__NODES,
+				 GeometryFactory.eINSTANCE.createPolyShape()));
+
+		newChildDescriptors.add
+			(createChildParameter
 				(GeometryPackage.Literals.INODE__TRIANGLES,
 				 GeometryFactory.eINSTANCE.createTriangle()));
 	}
@@ -339,7 +387,7 @@ public class GeometryItemProvider
 	 */
 	@Override
 	public ResourceLocator getResourceLocator() {
-		return GeometryEditPlugin.INSTANCE;
+		return OrgeclipsejanuaryEditPlugin.INSTANCE;
 	}
 
 }

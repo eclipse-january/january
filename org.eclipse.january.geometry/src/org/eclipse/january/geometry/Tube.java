@@ -18,12 +18,12 @@ package org.eclipse.january.geometry;
  *
  * <p>
  * The following features are supported:
- * </p>
  * <ul>
  *   <li>{@link org.eclipse.january.geometry.Tube#getHeight <em>Height</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.Tube#getInnerRadius <em>Inner Radius</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.Tube#getRadius <em>Radius</em>}</li>
  * </ul>
+ * </p>
  *
  * @see org.eclipse.january.geometry.GeometryPackage#getTube()
  * @model

@@ -55,113 +55,169 @@ public class OBJGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.january.geometry.xtext.OBJ.VertexSource");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cVertexSourceAction_0 = (Action)cGroup.eContents().get(0);
-		private final Assignment cMaterialFilesAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cMaterialFilesEStringParserRuleCall_1_0 = (RuleCall)cMaterialFilesAssignment_1.eContents().get(0);
-		private final Keyword cGKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final RuleCall cEStringParserRuleCall_3 = (RuleCall)cGroup.eContents().get(3);
-		private final Alternatives cAlternatives_4 = (Alternatives)cGroup.eContents().get(4);
-		private final Group cGroup_4_0 = (Group)cAlternatives_4.eContents().get(0);
-		private final Keyword cVKeyword_4_0_0 = (Keyword)cGroup_4_0.eContents().get(0);
-		private final Assignment cVerticesAssignment_4_0_1 = (Assignment)cGroup_4_0.eContents().get(1);
-		private final RuleCall cVerticesVertexParserRuleCall_4_0_1_0 = (RuleCall)cVerticesAssignment_4_0_1.eContents().get(0);
-		private final Group cGroup_4_1 = (Group)cAlternatives_4.eContents().get(1);
-		private final Keyword cVtKeyword_4_1_0 = (Keyword)cGroup_4_1.eContents().get(0);
-		private final Assignment cTextureCoordinatesAssignment_4_1_1 = (Assignment)cGroup_4_1.eContents().get(1);
-		private final RuleCall cTextureCoordinatesTextureVertexParserRuleCall_4_1_1_0 = (RuleCall)cTextureCoordinatesAssignment_4_1_1.eContents().get(0);
-		private final RuleCall cNORMALTerminalRuleCall_4_2 = (RuleCall)cAlternatives_4.eContents().get(2);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cMtllibKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cMaterialFilesAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cMaterialFilesEStringParserRuleCall_1_1_0 = (RuleCall)cMaterialFilesAssignment_1_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cGKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final RuleCall cEStringParserRuleCall_2_1 = (RuleCall)cGroup_2.eContents().get(1);
+		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
+		private final Group cGroup_3_0 = (Group)cAlternatives_3.eContents().get(0);
+		private final Keyword cVKeyword_3_0_0 = (Keyword)cGroup_3_0.eContents().get(0);
+		private final Assignment cVerticesAssignment_3_0_1 = (Assignment)cGroup_3_0.eContents().get(1);
+		private final RuleCall cVerticesVertexParserRuleCall_3_0_1_0 = (RuleCall)cVerticesAssignment_3_0_1.eContents().get(0);
+		private final Group cGroup_3_1 = (Group)cAlternatives_3.eContents().get(1);
+		private final Keyword cVtKeyword_3_1_0 = (Keyword)cGroup_3_1.eContents().get(0);
+		private final Assignment cTextureCoordinatesAssignment_3_1_1 = (Assignment)cGroup_3_1.eContents().get(1);
+		private final RuleCall cTextureCoordinatesTextureVertexParserRuleCall_3_1_1_0 = (RuleCall)cTextureCoordinatesAssignment_3_1_1.eContents().get(0);
+		private final RuleCall cNORMALTerminalRuleCall_3_2 = (RuleCall)cAlternatives_3.eContents().get(2);
 		
 		//VertexSource:
-		//	{VertexSource} materialFiles+=EString*
-		//	'g' EString? ('v' vertices+=Vertex | 'vt' textureCoordinates+=TextureVertex | NORMAL)*;
+		//	{VertexSource} ('mtllib' materialFiles+=EString)* ('g' EString?)? ('v' vertices+=Vertex | 'vt'
+		//	textureCoordinates+=TextureVertex | NORMAL)+;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{VertexSource} materialFiles+=EString* 'g' EString? ('v' vertices+=Vertex | 'vt' textureCoordinates+=TextureVertex |
-		//NORMAL)*
+		//{VertexSource} ('mtllib' materialFiles+=EString)* ('g' EString?)? ('v' vertices+=Vertex | 'vt'
+		//textureCoordinates+=TextureVertex | NORMAL)+
 		public Group getGroup() { return cGroup; }
 		
 		//{VertexSource}
 		public Action getVertexSourceAction_0() { return cVertexSourceAction_0; }
 		
-		//materialFiles+=EString*
-		public Assignment getMaterialFilesAssignment_1() { return cMaterialFilesAssignment_1; }
+		//('mtllib' materialFiles+=EString)*
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//'mtllib'
+		public Keyword getMtllibKeyword_1_0() { return cMtllibKeyword_1_0; }
+		
+		//materialFiles+=EString
+		public Assignment getMaterialFilesAssignment_1_1() { return cMaterialFilesAssignment_1_1; }
 		
 		//EString
-		public RuleCall getMaterialFilesEStringParserRuleCall_1_0() { return cMaterialFilesEStringParserRuleCall_1_0; }
+		public RuleCall getMaterialFilesEStringParserRuleCall_1_1_0() { return cMaterialFilesEStringParserRuleCall_1_1_0; }
+		
+		//('g' EString?)?
+		public Group getGroup_2() { return cGroup_2; }
 		
 		//'g'
-		public Keyword getGKeyword_2() { return cGKeyword_2; }
+		public Keyword getGKeyword_2_0() { return cGKeyword_2_0; }
 		
 		//EString?
-		public RuleCall getEStringParserRuleCall_3() { return cEStringParserRuleCall_3; }
+		public RuleCall getEStringParserRuleCall_2_1() { return cEStringParserRuleCall_2_1; }
 		
-		//('v' vertices+=Vertex | 'vt' textureCoordinates+=TextureVertex | NORMAL)*
-		public Alternatives getAlternatives_4() { return cAlternatives_4; }
+		//('v' vertices+=Vertex | 'vt' textureCoordinates+=TextureVertex | NORMAL)+
+		public Alternatives getAlternatives_3() { return cAlternatives_3; }
 		
 		//'v' vertices+=Vertex
-		public Group getGroup_4_0() { return cGroup_4_0; }
+		public Group getGroup_3_0() { return cGroup_3_0; }
 		
 		//'v'
-		public Keyword getVKeyword_4_0_0() { return cVKeyword_4_0_0; }
+		public Keyword getVKeyword_3_0_0() { return cVKeyword_3_0_0; }
 		
 		//vertices+=Vertex
-		public Assignment getVerticesAssignment_4_0_1() { return cVerticesAssignment_4_0_1; }
+		public Assignment getVerticesAssignment_3_0_1() { return cVerticesAssignment_3_0_1; }
 		
 		//Vertex
-		public RuleCall getVerticesVertexParserRuleCall_4_0_1_0() { return cVerticesVertexParserRuleCall_4_0_1_0; }
+		public RuleCall getVerticesVertexParserRuleCall_3_0_1_0() { return cVerticesVertexParserRuleCall_3_0_1_0; }
 		
 		//'vt' textureCoordinates+=TextureVertex
-		public Group getGroup_4_1() { return cGroup_4_1; }
+		public Group getGroup_3_1() { return cGroup_3_1; }
 		
 		//'vt'
-		public Keyword getVtKeyword_4_1_0() { return cVtKeyword_4_1_0; }
+		public Keyword getVtKeyword_3_1_0() { return cVtKeyword_3_1_0; }
 		
 		//textureCoordinates+=TextureVertex
-		public Assignment getTextureCoordinatesAssignment_4_1_1() { return cTextureCoordinatesAssignment_4_1_1; }
+		public Assignment getTextureCoordinatesAssignment_3_1_1() { return cTextureCoordinatesAssignment_3_1_1; }
 		
 		//TextureVertex
-		public RuleCall getTextureCoordinatesTextureVertexParserRuleCall_4_1_1_0() { return cTextureCoordinatesTextureVertexParserRuleCall_4_1_1_0; }
+		public RuleCall getTextureCoordinatesTextureVertexParserRuleCall_3_1_1_0() { return cTextureCoordinatesTextureVertexParserRuleCall_3_1_1_0; }
 		
 		//NORMAL
-		public RuleCall getNORMALTerminalRuleCall_4_2() { return cNORMALTerminalRuleCall_4_2; }
+		public RuleCall getNORMALTerminalRuleCall_3_2() { return cNORMALTerminalRuleCall_3_2; }
 	}
 	public class PolyShapeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.january.geometry.xtext.OBJ.PolyShape");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cGKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cNameEStringParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cFKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cFacesAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cFacesFaceParserRuleCall_2_1_0 = (RuleCall)cFacesAssignment_2_1.eContents().get(0);
+		private final Group cGroup_0 = (Group)cGroup.eContents().get(0);
+		private final Keyword cGKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
+		private final Assignment cNameAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final RuleCall cNameEStringParserRuleCall_0_1_0 = (RuleCall)cNameAssignment_0_1.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cUsemtlKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cMaterialAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cMaterialMaterialParserRuleCall_1_1_0 = (RuleCall)cMaterialAssignment_1_1.eContents().get(0);
+		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
+		private final Group cGroup_2_0 = (Group)cAlternatives_2.eContents().get(0);
+		private final Keyword cFKeyword_2_0_0 = (Keyword)cGroup_2_0.eContents().get(0);
+		private final Assignment cFacesAssignment_2_0_1 = (Assignment)cGroup_2_0.eContents().get(1);
+		private final RuleCall cFacesFaceParserRuleCall_2_0_1_0 = (RuleCall)cFacesAssignment_2_0_1.eContents().get(0);
+		private final Group cGroup_2_1 = (Group)cAlternatives_2.eContents().get(1);
+		private final Keyword cSKeyword_2_1_0 = (Keyword)cGroup_2_1.eContents().get(0);
+		private final Alternatives cAlternatives_2_1_1 = (Alternatives)cGroup_2_1.eContents().get(1);
+		private final RuleCall cEIntParserRuleCall_2_1_1_0 = (RuleCall)cAlternatives_2_1_1.eContents().get(0);
+		private final Keyword cOffKeyword_2_1_1_1 = (Keyword)cAlternatives_2_1_1.eContents().get(1);
 		
 		//PolyShape:
-		//	'g' name=EString ('f' faces+=Face)*;
+		//	('g' name=EString)? ('usemtl' material=Material)? ('f' faces+=Face | 's' (EInt | 'off'))+;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'g' name=EString ('f' faces+=Face)*
+		//('g' name=EString)? ('usemtl' material=Material)? ('f' faces+=Face | 's' (EInt | 'off'))+
 		public Group getGroup() { return cGroup; }
 		
+		//('g' name=EString)?
+		public Group getGroup_0() { return cGroup_0; }
+		
 		//'g'
-		public Keyword getGKeyword_0() { return cGKeyword_0; }
+		public Keyword getGKeyword_0_0() { return cGKeyword_0_0; }
 		
 		//name=EString
-		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		public Assignment getNameAssignment_0_1() { return cNameAssignment_0_1; }
 		
 		//EString
-		public RuleCall getNameEStringParserRuleCall_1_0() { return cNameEStringParserRuleCall_1_0; }
+		public RuleCall getNameEStringParserRuleCall_0_1_0() { return cNameEStringParserRuleCall_0_1_0; }
 		
-		//('f' faces+=Face)*
-		public Group getGroup_2() { return cGroup_2; }
+		//('usemtl' material=Material)?
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//'usemtl'
+		public Keyword getUsemtlKeyword_1_0() { return cUsemtlKeyword_1_0; }
+		
+		//material=Material
+		public Assignment getMaterialAssignment_1_1() { return cMaterialAssignment_1_1; }
+		
+		//Material
+		public RuleCall getMaterialMaterialParserRuleCall_1_1_0() { return cMaterialMaterialParserRuleCall_1_1_0; }
+		
+		//('f' faces+=Face | 's' (EInt | 'off'))+
+		public Alternatives getAlternatives_2() { return cAlternatives_2; }
+		
+		//'f' faces+=Face
+		public Group getGroup_2_0() { return cGroup_2_0; }
 		
 		//'f'
-		public Keyword getFKeyword_2_0() { return cFKeyword_2_0; }
+		public Keyword getFKeyword_2_0_0() { return cFKeyword_2_0_0; }
 		
 		//faces+=Face
-		public Assignment getFacesAssignment_2_1() { return cFacesAssignment_2_1; }
+		public Assignment getFacesAssignment_2_0_1() { return cFacesAssignment_2_0_1; }
 		
 		//Face
-		public RuleCall getFacesFaceParserRuleCall_2_1_0() { return cFacesFaceParserRuleCall_2_1_0; }
+		public RuleCall getFacesFaceParserRuleCall_2_0_1_0() { return cFacesFaceParserRuleCall_2_0_1_0; }
+		
+		//'s' (EInt | 'off')
+		public Group getGroup_2_1() { return cGroup_2_1; }
+		
+		//'s'
+		public Keyword getSKeyword_2_1_0() { return cSKeyword_2_1_0; }
+		
+		//(EInt | 'off')
+		public Alternatives getAlternatives_2_1_1() { return cAlternatives_2_1_1; }
+		
+		//EInt
+		public RuleCall getEIntParserRuleCall_2_1_1_0() { return cEIntParserRuleCall_2_1_1_0; }
+		
+		//'off'
+		public Keyword getOffKeyword_2_1_1_1() { return cOffKeyword_2_1_1_1; }
 	}
 	public class FaceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.january.geometry.xtext.OBJ.Face");
@@ -320,21 +376,24 @@ public class OBJGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.january.geometry.xtext.OBJ.Material");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cMaterialAction_0 = (Action)cGroup.eContents().get(0);
-		private final Keyword cMaterialKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameEStringParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		
 		//Material:
-		//	{Material}
-		//	'Material';
+		//	{Material} name=EString;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{Material} 'Material'
+		//{Material} name=EString
 		public Group getGroup() { return cGroup; }
 		
 		//{Material}
 		public Action getMaterialAction_0() { return cMaterialAction_0; }
 		
-		//'Material'
-		public Keyword getMaterialKeyword_1() { return cMaterialKeyword_1; }
+		//name=EString
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		
+		//EString
+		public RuleCall getNameEStringParserRuleCall_1_0() { return cNameEStringParserRuleCall_1_0; }
 	}
 	public class EIntElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.january.geometry.xtext.OBJ.EInt");
@@ -360,12 +419,16 @@ public class OBJGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cSTRINGTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cIDTerminalRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final Keyword cFullStopKeyword_2 = (Keyword)cAlternatives.eContents().get(2);
+		private final Keyword cSolidusKeyword_3 = (Keyword)cAlternatives.eContents().get(3);
+		private final Keyword cReverseSolidusKeyword_4 = (Keyword)cAlternatives.eContents().get(4);
+		private final Keyword cColonKeyword_5 = (Keyword)cAlternatives.eContents().get(5);
 		
 		//EString:
-		//	STRING | ID;
+		//	(STRING | ID | '.' | '/' | '\\' | ':')+;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//STRING | ID
+		//(STRING | ID | '.' | '/' | '\\' | ':')+
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//STRING
@@ -373,6 +436,18 @@ public class OBJGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ID
 		public RuleCall getIDTerminalRuleCall_1() { return cIDTerminalRuleCall_1; }
+		
+		//'.'
+		public Keyword getFullStopKeyword_2() { return cFullStopKeyword_2; }
+		
+		//'/'
+		public Keyword getSolidusKeyword_3() { return cSolidusKeyword_3; }
+		
+		//'\\'
+		public Keyword getReverseSolidusKeyword_4() { return cReverseSolidusKeyword_4; }
+		
+		//':'
+		public Keyword getColonKeyword_5() { return cColonKeyword_5; }
 	}
 	public class EDoubleElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.january.geometry.xtext.OBJ.EDouble");
@@ -408,6 +483,7 @@ public class OBJGrammarAccess extends AbstractGrammarElementFinder {
 	private final TerminalRule tCOMMENT;
 	private final TerminalRule tNORMAL;
 	private final TerminalRule tDOUBLE;
+	private final TerminalRule tWS;
 	
 	private final Grammar grammar;
 	
@@ -431,6 +507,7 @@ public class OBJGrammarAccess extends AbstractGrammarElementFinder {
 		this.tCOMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.january.geometry.xtext.OBJ.COMMENT");
 		this.tNORMAL = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.january.geometry.xtext.OBJ.NORMAL");
 		this.tDOUBLE = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.january.geometry.xtext.OBJ.DOUBLE");
+		this.tWS = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.january.geometry.xtext.OBJ.WS");
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -472,8 +549,8 @@ public class OBJGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//VertexSource:
-	//	{VertexSource} materialFiles+=EString*
-	//	'g' EString? ('v' vertices+=Vertex | 'vt' textureCoordinates+=TextureVertex | NORMAL)*;
+	//	{VertexSource} ('mtllib' materialFiles+=EString)* ('g' EString?)? ('v' vertices+=Vertex | 'vt'
+	//	textureCoordinates+=TextureVertex | NORMAL)+;
 	public VertexSourceElements getVertexSourceAccess() {
 		return pVertexSource;
 	}
@@ -483,7 +560,7 @@ public class OBJGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//PolyShape:
-	//	'g' name=EString ('f' faces+=Face)*;
+	//	('g' name=EString)? ('usemtl' material=Material)? ('f' faces+=Face | 's' (EInt | 'off'))+;
 	public PolyShapeElements getPolyShapeAccess() {
 		return pPolyShape;
 	}
@@ -523,8 +600,7 @@ public class OBJGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Material:
-	//	{Material}
-	//	'Material';
+	//	{Material} name=EString;
 	public MaterialElements getMaterialAccess() {
 		return pMaterial;
 	}
@@ -544,7 +620,7 @@ public class OBJGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//EString:
-	//	STRING | ID;
+	//	(STRING | ID | '.' | '/' | '\\' | ':')+;
 	public EStringElements getEStringAccess() {
 		return pEString;
 	}
@@ -581,6 +657,12 @@ public class OBJGrammarAccess extends AbstractGrammarElementFinder {
 		return tDOUBLE;
 	}
 	
+	//terminal WS:
+	//	' ' | '\t' | '\r' | '\n'+;
+	public TerminalRule getWSRule() {
+		return tWS;
+	}
+	
 	//terminal ID:
 	//	'^'? ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
 	public TerminalRule getIDRule() {
@@ -609,12 +691,6 @@ public class OBJGrammarAccess extends AbstractGrammarElementFinder {
 	//	'//' !('\n' | '\r')* ('\r'? '\n')?;
 	public TerminalRule getSL_COMMENTRule() {
 		return gaTerminals.getSL_COMMENTRule();
-	}
-	
-	//terminal WS:
-	//	' ' | '\t' | '\r' | '\n'+;
-	public TerminalRule getWSRule() {
-		return gaTerminals.getWSRule();
 	}
 	
 	//terminal ANY_OTHER:

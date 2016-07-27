@@ -41,11 +41,11 @@ import org.eclipse.january.geometry.GeometryPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * </p>
  * <ul>
  *   <li>{@link org.eclipse.january.geometry.impl.STLGeometryImporterImpl#getFileTypes <em>File Types</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.impl.STLGeometryImporterImpl#getDescription <em>Description</em>}</li>
  * </ul>
+ * </p>
  *
  * @generated
  */

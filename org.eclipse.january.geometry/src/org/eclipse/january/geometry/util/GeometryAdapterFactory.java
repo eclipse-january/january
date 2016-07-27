@@ -152,6 +152,18 @@ public class GeometryAdapterFactory extends AdapterFactoryImpl {
 				return createReactorAdapter();
 			}
 			@Override
+			public Adapter casePolyShape(PolyShape object) {
+				return createPolyShapeAdapter();
+			}
+			@Override
+			public Adapter caseFace(Face object) {
+				return createFaceAdapter();
+			}
+			@Override
+			public Adapter caseVertexSource(VertexSource object) {
+				return createVertexSourceAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -462,6 +474,48 @@ public class GeometryAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createReactorAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.january.geometry.PolyShape <em>Poly Shape</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.january.geometry.PolyShape
+	 * @generated
+	 */
+	public Adapter createPolyShapeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.january.geometry.Face <em>Face</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.january.geometry.Face
+	 * @generated
+	 */
+	public Adapter createFaceAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.january.geometry.VertexSource <em>Vertex Source</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.january.geometry.VertexSource
+	 * @generated
+	 */
+	public Adapter createVertexSourceAdapter() {
 		return null;
 	}
 
