@@ -15,6 +15,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.eclipse.january.geometry.PolyShape#getFaces <em>Faces</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.PolyShape#getMatFiles <em>Mat Files</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.PolyShape#getVertexSource <em>Vertex Source</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.PolyShape#getMaterialFiles <em>Material Files</em>}</li>
  * </ul>
  * </p>
  *
@@ -80,6 +81,22 @@ public interface PolyShape extends Shape {
 	 * @generated
 	 */
 	void setVertexSource(VertexSource value);
+
+	/**
+	 * Returns the value of the '<em><b>Material Files</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Material Files</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Material Files</em>' attribute list.
+	 * @see org.eclipse.january.geometry.GeometryPackage#getPolyShape_MaterialFiles()
+	 * @model
+	 * @generated
+	 */
+	EList<String> getMaterialFiles();
 
 	/**
 	 * Calcualates the triangles from the faces given to this polyshape

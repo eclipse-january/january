@@ -2,6 +2,8 @@
  */
 package org.eclipse.january.geometry;
 
+import org.eclipse.emf.common.util.EList;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -15,7 +17,7 @@ package org.eclipse.january.geometry;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.january.geometry.Geometry#getVertexSource <em>Vertex Source</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.Geometry#getVertexSources <em>Vertex Sources</em>}</li>
  * </ul>
  * </p>
  *
@@ -26,28 +28,24 @@ package org.eclipse.january.geometry;
 public interface Geometry extends INode {
 
 	/**
-	 * Returns the value of the '<em><b>Vertex Source</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Vertex Sources</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.january.geometry.VertexSource}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Vertex Source</em>' reference isn't clear,
+	 * If the meaning of the '<em>Vertex Sources</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Vertex Source</em>' containment reference.
-	 * @see #setVertexSource(VertexSource)
-	 * @see org.eclipse.january.geometry.GeometryPackage#getGeometry_VertexSource()
+	 * @return the value of the '<em>Vertex Sources</em>' containment reference list.
+	 * @see org.eclipse.january.geometry.GeometryPackage#getGeometry_VertexSources()
 	 * @model containment="true"
 	 * @generated
 	 */
-	VertexSource getVertexSource();
-
+	EList<VertexSource> getVertexSources();
+	
 	/**
-	 * Sets the value of the '{@link org.eclipse.january.geometry.Geometry#getVertexSource <em>Vertex Source</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Vertex Source</em>' containment reference.
-	 * @see #getVertexSource()
-	 * @generated
+	 * Gets a vertex source which has all of the vertex sources appended to it
+	 * @return VertexSource The Union of the vertex sources list
 	 */
-	void setVertexSource(VertexSource value);
+	VertexSource getVertexSource();
 } // Geometry

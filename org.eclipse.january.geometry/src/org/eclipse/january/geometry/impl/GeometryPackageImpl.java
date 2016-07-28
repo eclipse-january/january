@@ -493,7 +493,7 @@ public class GeometryPackageImpl extends EPackageImpl implements GeometryPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getGeometry_VertexSource() {
+	public EReference getGeometry_VertexSources() {
 		return (EReference)geometryEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -1078,6 +1078,15 @@ public class GeometryPackageImpl extends EPackageImpl implements GeometryPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getPolyShape_MaterialFiles() {
+		return (EAttribute)polyShapeEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getFace() {
 		return faceEClass;
 	}
@@ -1210,7 +1219,7 @@ public class GeometryPackageImpl extends EPackageImpl implements GeometryPackage
 		createEAttribute(cylinderEClass, CYLINDER__HEIGHT);
 
 		geometryEClass = createEClass(GEOMETRY);
-		createEReference(geometryEClass, GEOMETRY__VERTEX_SOURCE);
+		createEReference(geometryEClass, GEOMETRY__VERTEX_SOURCES);
 
 		tubeEClass = createEClass(TUBE);
 		createEAttribute(tubeEClass, TUBE__HEIGHT);
@@ -1290,6 +1299,7 @@ public class GeometryPackageImpl extends EPackageImpl implements GeometryPackage
 		createEReference(polyShapeEClass, POLY_SHAPE__FACES);
 		createEAttribute(polyShapeEClass, POLY_SHAPE__MAT_FILES);
 		createEReference(polyShapeEClass, POLY_SHAPE__VERTEX_SOURCE);
+		createEAttribute(polyShapeEClass, POLY_SHAPE__MATERIAL_FILES);
 
 		faceEClass = createEClass(FACE);
 		createEAttribute(faceEClass, FACE__VERTEX_INDICES);
@@ -1386,7 +1396,7 @@ public class GeometryPackageImpl extends EPackageImpl implements GeometryPackage
 		initEAttribute(getCylinder_Height(), ecorePackage.getEDouble(), "height", null, 0, 1, Cylinder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(geometryEClass, Geometry.class, "Geometry", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getGeometry_VertexSource(), this.getVertexSource(), null, "vertexSource", null, 0, 1, Geometry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getGeometry_VertexSources(), this.getVertexSource(), null, "vertexSources", null, 0, -1, Geometry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(tubeEClass, Tube.class, "Tube", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTube_Height(), ecorePackage.getEDouble(), "height", "0.0", 0, 1, Tube.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1488,6 +1498,7 @@ public class GeometryPackageImpl extends EPackageImpl implements GeometryPackage
 		initEReference(getPolyShape_Faces(), this.getFace(), null, "faces", null, 0, -1, PolyShape.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getPolyShape_MatFiles(), ecorePackage.getEString(), "matFiles", null, 0, -1, PolyShape.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPolyShape_VertexSource(), this.getVertexSource(), null, "vertexSource", null, 0, 1, PolyShape.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPolyShape_MaterialFiles(), ecorePackage.getEString(), "materialFiles", null, 0, -1, PolyShape.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(faceEClass, Face.class, "Face", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getFace_VertexIndices(), ecorePackage.getEInt(), "vertexIndices", null, 0, -1, Face.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

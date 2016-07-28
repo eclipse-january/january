@@ -68,7 +68,6 @@ public class GeometryItemProvider
 			addTypePropertyDescriptor(object);
 			addCenterPropertyDescriptor(object);
 			addParentPropertyDescriptor(object);
-			addVertexSourcePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -184,28 +183,6 @@ public class GeometryItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Vertex Source feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addVertexSourcePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Geometry_vertexSource_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Geometry_vertexSource_feature", "_UI_Geometry_type"),
-				 GeometryPackage.Literals.GEOMETRY__VERTEX_SOURCE,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
-	}
-
-	/**
 	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
 	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
@@ -219,6 +196,7 @@ public class GeometryItemProvider
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(GeometryPackage.Literals.INODE__NODES);
 			childrenFeatures.add(GeometryPackage.Literals.INODE__TRIANGLES);
+			childrenFeatures.add(GeometryPackage.Literals.GEOMETRY__VERTEX_SOURCES);
 		}
 		return childrenFeatures;
 	}
@@ -281,6 +259,7 @@ public class GeometryItemProvider
 				return;
 			case GeometryPackage.GEOMETRY__NODES:
 			case GeometryPackage.GEOMETRY__TRIANGLES:
+			case GeometryPackage.GEOMETRY__VERTEX_SOURCES:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -377,6 +356,11 @@ public class GeometryItemProvider
 			(createChildParameter
 				(GeometryPackage.Literals.INODE__TRIANGLES,
 				 GeometryFactory.eINSTANCE.createTriangle()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(GeometryPackage.Literals.GEOMETRY__VERTEX_SOURCES,
+				 GeometryFactory.eINSTANCE.createVertexSource()));
 	}
 
 	/**

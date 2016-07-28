@@ -4,6 +4,7 @@
  */
 package org.eclipse.january.geometry.validation;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.january.geometry.VertexSource;
 
 
@@ -15,6 +16,8 @@ import org.eclipse.january.geometry.VertexSource;
  */
 public interface GeometryValidator {
 	boolean validate();
+
+	boolean validateVertexSources(EList<VertexSource> value);
 
 	boolean validateVertexSource(VertexSource value);
 

@@ -84,7 +84,7 @@ public class OBJSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Geometry returns Geometry
 	 *
 	 * Constraint:
-	 *     ((vertexSource=VertexSource nodes+=PolyShape+) | nodes+=PolyShape+)?
+	 *     (vertexSources+=VertexSource | nodes+=PolyShape)+
 	 */
 	protected void sequence_Geometry(ISerializationContext context, Geometry semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -114,7 +114,7 @@ public class OBJSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     PolyShape returns PolyShape
 	 *
 	 * Constraint:
-	 *     (name=EString? material=Material? faces+=Face*)
+	 *     (materialFiles+=EString* name=EString? material=Material? faces+=Face*)
 	 */
 	protected void sequence_PolyShape(ISerializationContext context, PolyShape semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

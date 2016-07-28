@@ -23,32 +23,43 @@ public class OBJSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected OBJGrammarAccess grammarAccess;
 	protected AbstractElementAlias match_Face___SolidusKeyword_1_1_0_SolidusKeyword_1_1_1_2_0_EIntParserRuleCall_1_1_1_2_1__q;
-	protected AbstractElementAlias match_PolyShape___SKeyword_2_1_0___EIntParserRuleCall_2_1_1_0_or_OffKeyword_2_1_1_1____a;
-	protected AbstractElementAlias match_PolyShape___SKeyword_2_1_0___EIntParserRuleCall_2_1_1_0_or_OffKeyword_2_1_1_1____p;
-	protected AbstractElementAlias match_VertexSource_NORMALTerminalRuleCall_3_2_a;
-	protected AbstractElementAlias match_VertexSource_NORMALTerminalRuleCall_3_2_p;
+	protected AbstractElementAlias match_PolyShape_GKeyword_2_0_q;
+	protected AbstractElementAlias match_PolyShape___SKeyword_4_1_0___EIntParserRuleCall_4_1_1_0_or_OffKeyword_4_1_1_1____a;
+	protected AbstractElementAlias match_PolyShape___SKeyword_4_1_0___EIntParserRuleCall_4_1_1_0_or_OffKeyword_4_1_1_1____p;
 	protected AbstractElementAlias match_VertexSource___GKeyword_2_0_EStringParserRuleCall_2_1_q__q;
+	protected AbstractElementAlias match_VertexSource___VnKeyword_3_2_0_DOUBLETerminalRuleCall_3_2_1_DOUBLETerminalRuleCall_3_2_2_DOUBLETerminalRuleCall_3_2_3__a;
+	protected AbstractElementAlias match_VertexSource___VnKeyword_3_2_0_DOUBLETerminalRuleCall_3_2_1_DOUBLETerminalRuleCall_3_2_2_DOUBLETerminalRuleCall_3_2_3__p;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (OBJGrammarAccess) access;
 		match_Face___SolidusKeyword_1_1_0_SolidusKeyword_1_1_1_2_0_EIntParserRuleCall_1_1_1_2_1__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getFaceAccess().getSolidusKeyword_1_1_0()), new TokenAlias(false, false, grammarAccess.getFaceAccess().getSolidusKeyword_1_1_1_2_0()), new TokenAlias(false, false, grammarAccess.getFaceAccess().getEIntParserRuleCall_1_1_1_2_1()));
-		match_PolyShape___SKeyword_2_1_0___EIntParserRuleCall_2_1_1_0_or_OffKeyword_2_1_1_1____a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getPolyShapeAccess().getSKeyword_2_1_0()), new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getPolyShapeAccess().getEIntParserRuleCall_2_1_1_0()), new TokenAlias(false, false, grammarAccess.getPolyShapeAccess().getOffKeyword_2_1_1_1())));
-		match_PolyShape___SKeyword_2_1_0___EIntParserRuleCall_2_1_1_0_or_OffKeyword_2_1_1_1____p = new GroupAlias(true, false, new TokenAlias(false, false, grammarAccess.getPolyShapeAccess().getSKeyword_2_1_0()), new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getPolyShapeAccess().getEIntParserRuleCall_2_1_1_0()), new TokenAlias(false, false, grammarAccess.getPolyShapeAccess().getOffKeyword_2_1_1_1())));
-		match_VertexSource_NORMALTerminalRuleCall_3_2_a = new TokenAlias(true, true, grammarAccess.getVertexSourceAccess().getNORMALTerminalRuleCall_3_2());
-		match_VertexSource_NORMALTerminalRuleCall_3_2_p = new TokenAlias(true, false, grammarAccess.getVertexSourceAccess().getNORMALTerminalRuleCall_3_2());
+		match_PolyShape_GKeyword_2_0_q = new TokenAlias(false, true, grammarAccess.getPolyShapeAccess().getGKeyword_2_0());
+		match_PolyShape___SKeyword_4_1_0___EIntParserRuleCall_4_1_1_0_or_OffKeyword_4_1_1_1____a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getPolyShapeAccess().getSKeyword_4_1_0()), new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getPolyShapeAccess().getEIntParserRuleCall_4_1_1_0()), new TokenAlias(false, false, grammarAccess.getPolyShapeAccess().getOffKeyword_4_1_1_1())));
+		match_PolyShape___SKeyword_4_1_0___EIntParserRuleCall_4_1_1_0_or_OffKeyword_4_1_1_1____p = new GroupAlias(true, false, new TokenAlias(false, false, grammarAccess.getPolyShapeAccess().getSKeyword_4_1_0()), new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getPolyShapeAccess().getEIntParserRuleCall_4_1_1_0()), new TokenAlias(false, false, grammarAccess.getPolyShapeAccess().getOffKeyword_4_1_1_1())));
 		match_VertexSource___GKeyword_2_0_EStringParserRuleCall_2_1_q__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getVertexSourceAccess().getGKeyword_2_0()), new TokenAlias(false, true, grammarAccess.getVertexSourceAccess().getEStringParserRuleCall_2_1()));
+		match_VertexSource___VnKeyword_3_2_0_DOUBLETerminalRuleCall_3_2_1_DOUBLETerminalRuleCall_3_2_2_DOUBLETerminalRuleCall_3_2_3__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getVertexSourceAccess().getVnKeyword_3_2_0()), new TokenAlias(false, false, grammarAccess.getVertexSourceAccess().getDOUBLETerminalRuleCall_3_2_1()), new TokenAlias(false, false, grammarAccess.getVertexSourceAccess().getDOUBLETerminalRuleCall_3_2_2()), new TokenAlias(false, false, grammarAccess.getVertexSourceAccess().getDOUBLETerminalRuleCall_3_2_3()));
+		match_VertexSource___VnKeyword_3_2_0_DOUBLETerminalRuleCall_3_2_1_DOUBLETerminalRuleCall_3_2_2_DOUBLETerminalRuleCall_3_2_3__p = new GroupAlias(true, false, new TokenAlias(false, false, grammarAccess.getVertexSourceAccess().getVnKeyword_3_2_0()), new TokenAlias(false, false, grammarAccess.getVertexSourceAccess().getDOUBLETerminalRuleCall_3_2_1()), new TokenAlias(false, false, grammarAccess.getVertexSourceAccess().getDOUBLETerminalRuleCall_3_2_2()), new TokenAlias(false, false, grammarAccess.getVertexSourceAccess().getDOUBLETerminalRuleCall_3_2_3()));
 	}
 	
 	@Override
 	protected String getUnassignedRuleCallToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (ruleCall.getRule() == grammarAccess.getEIntRule())
+		if (ruleCall.getRule() == grammarAccess.getDOUBLERule())
+			return getDOUBLEToken(semanticObject, ruleCall, node);
+		else if (ruleCall.getRule() == grammarAccess.getEIntRule())
 			return getEIntToken(semanticObject, ruleCall, node);
 		else if (ruleCall.getRule() == grammarAccess.getEStringRule())
 			return getEStringToken(semanticObject, ruleCall, node);
-		else if (ruleCall.getRule() == grammarAccess.getNORMALRule())
-			return getNORMALToken(semanticObject, ruleCall, node);
 		return "";
+	}
+	
+	/**
+	 * terminal DOUBLE returns ecore::EDouble: ('-'|'+')? INT? '.' INT (('E'|'e') ('-'|'+')? INT)?;
+	 */
+	protected String getDOUBLEToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (node != null)
+			return getTokenText(node);
+		return ".";
 	}
 	
 	/**
@@ -64,22 +75,13 @@ public class OBJSyntacticSequencer extends AbstractSyntacticSequencer {
 	
 	/**
 	 * EString returns ecore::EString:
-	 * 	(STRING | ID | '.' | '/' | '\\' | ':')+
+	 * 	(STRING | ID | INT | '.' | '/' | '\\' | ':' | '_' | '-' )+
 	 * ;
 	 */
 	protected String getEStringToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
 		return "\"\"";
-	}
-	
-	/**
-	 * terminal NORMAL: 'vn' DOUBLE DOUBLE DOUBLE;
-	 */
-	protected String getNORMALToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (node != null)
-			return getTokenText(node);
-		return "vn.";
 	}
 	
 	@Override
@@ -90,16 +92,18 @@ public class OBJSyntacticSequencer extends AbstractSyntacticSequencer {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
 			if (match_Face___SolidusKeyword_1_1_0_SolidusKeyword_1_1_1_2_0_EIntParserRuleCall_1_1_1_2_1__q.equals(syntax))
 				emit_Face___SolidusKeyword_1_1_0_SolidusKeyword_1_1_1_2_0_EIntParserRuleCall_1_1_1_2_1__q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_PolyShape___SKeyword_2_1_0___EIntParserRuleCall_2_1_1_0_or_OffKeyword_2_1_1_1____a.equals(syntax))
-				emit_PolyShape___SKeyword_2_1_0___EIntParserRuleCall_2_1_1_0_or_OffKeyword_2_1_1_1____a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_PolyShape___SKeyword_2_1_0___EIntParserRuleCall_2_1_1_0_or_OffKeyword_2_1_1_1____p.equals(syntax))
-				emit_PolyShape___SKeyword_2_1_0___EIntParserRuleCall_2_1_1_0_or_OffKeyword_2_1_1_1____p(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_VertexSource_NORMALTerminalRuleCall_3_2_a.equals(syntax))
-				emit_VertexSource_NORMALTerminalRuleCall_3_2_a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_VertexSource_NORMALTerminalRuleCall_3_2_p.equals(syntax))
-				emit_VertexSource_NORMALTerminalRuleCall_3_2_p(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_PolyShape_GKeyword_2_0_q.equals(syntax))
+				emit_PolyShape_GKeyword_2_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_PolyShape___SKeyword_4_1_0___EIntParserRuleCall_4_1_1_0_or_OffKeyword_4_1_1_1____a.equals(syntax))
+				emit_PolyShape___SKeyword_4_1_0___EIntParserRuleCall_4_1_1_0_or_OffKeyword_4_1_1_1____a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_PolyShape___SKeyword_4_1_0___EIntParserRuleCall_4_1_1_0_or_OffKeyword_4_1_1_1____p.equals(syntax))
+				emit_PolyShape___SKeyword_4_1_0___EIntParserRuleCall_4_1_1_0_or_OffKeyword_4_1_1_1____p(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_VertexSource___GKeyword_2_0_EStringParserRuleCall_2_1_q__q.equals(syntax))
 				emit_VertexSource___GKeyword_2_0_EStringParserRuleCall_2_1_q__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_VertexSource___VnKeyword_3_2_0_DOUBLETerminalRuleCall_3_2_1_DOUBLETerminalRuleCall_3_2_2_DOUBLETerminalRuleCall_3_2_3__a.equals(syntax))
+				emit_VertexSource___VnKeyword_3_2_0_DOUBLETerminalRuleCall_3_2_1_DOUBLETerminalRuleCall_3_2_2_DOUBLETerminalRuleCall_3_2_3__a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_VertexSource___VnKeyword_3_2_0_DOUBLETerminalRuleCall_3_2_1_DOUBLETerminalRuleCall_3_2_2_DOUBLETerminalRuleCall_3_2_3__p.equals(syntax))
+				emit_VertexSource___VnKeyword_3_2_0_DOUBLETerminalRuleCall_3_2_1_DOUBLETerminalRuleCall_3_2_2_DOUBLETerminalRuleCall_3_2_3__p(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
@@ -118,16 +122,33 @@ public class OBJSyntacticSequencer extends AbstractSyntacticSequencer {
 	
 	/**
 	 * Ambiguous syntax:
+	 *     'g'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) 'usemtl' material=Material
+	 *     (rule start) (ambiguity) ('s' (EInt | 'off'))* 'f' faces+=Face
+	 *     (rule start) (ambiguity) ('s' (EInt | 'off'))+ (rule start)
+	 *     materialFiles+=EString (ambiguity) 'usemtl' material=Material
+	 *     materialFiles+=EString (ambiguity) ('s' (EInt | 'off'))* 'f' faces+=Face
+	 *     materialFiles+=EString (ambiguity) ('s' (EInt | 'off'))+ (rule end)
+	 */
+	protected void emit_PolyShape_GKeyword_2_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
 	 *     ('s' (EInt | 'off'))*
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) 'f' faces+=Face
+	 *     (rule start) 'g'? (ambiguity) 'f' faces+=Face
 	 *     faces+=Face (ambiguity) 'f' faces+=Face
 	 *     faces+=Face (ambiguity) (rule end)
 	 *     material=Material (ambiguity) 'f' faces+=Face
+	 *     materialFiles+=EString 'g'? (ambiguity) 'f' faces+=Face
 	 *     name=EString (ambiguity) 'f' faces+=Face
 	 */
-	protected void emit_PolyShape___SKeyword_2_1_0___EIntParserRuleCall_2_1_1_0_or_OffKeyword_2_1_1_1____a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_PolyShape___SKeyword_4_1_0___EIntParserRuleCall_4_1_1_0_or_OffKeyword_4_1_1_1____a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -136,17 +157,34 @@ public class OBJSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     ('s' (EInt | 'off'))+
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) (rule start)
+	 *     (rule start) 'g'? (ambiguity) (rule start)
 	 *     material=Material (ambiguity) (rule end)
+	 *     materialFiles+=EString 'g'? (ambiguity) (rule end)
 	 *     name=EString (ambiguity) (rule end)
 	 */
-	protected void emit_PolyShape___SKeyword_2_1_0___EIntParserRuleCall_2_1_1_0_or_OffKeyword_2_1_1_1____p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_PolyShape___SKeyword_4_1_0___EIntParserRuleCall_4_1_1_0_or_OffKeyword_4_1_1_1____p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
 	 * Ambiguous syntax:
-	 *     NORMAL*
+	 *     ('g' EString?)?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) ('vn' DOUBLE DOUBLE DOUBLE)* 'v' vertices+=Vertex
+	 *     (rule start) (ambiguity) ('vn' DOUBLE DOUBLE DOUBLE)* 'vt' textureCoordinates+=TextureVertex
+	 *     (rule start) (ambiguity) ('vn' DOUBLE DOUBLE DOUBLE)+ (rule start)
+	 *     materialFiles+=EString (ambiguity) ('vn' DOUBLE DOUBLE DOUBLE)* 'v' vertices+=Vertex
+	 *     materialFiles+=EString (ambiguity) ('vn' DOUBLE DOUBLE DOUBLE)* 'vt' textureCoordinates+=TextureVertex
+	 *     materialFiles+=EString (ambiguity) ('vn' DOUBLE DOUBLE DOUBLE)+ (rule end)
+	 */
+	protected void emit_VertexSource___GKeyword_2_0_EStringParserRuleCall_2_1_q__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ('vn' DOUBLE DOUBLE DOUBLE)*
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) ('g' EString?)? (ambiguity) 'v' vertices+=Vertex
@@ -160,35 +198,19 @@ public class OBJSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     vertices+=Vertex (ambiguity) 'vt' textureCoordinates+=TextureVertex
 	 *     vertices+=Vertex (ambiguity) (rule end)
 	 */
-	protected void emit_VertexSource_NORMALTerminalRuleCall_3_2_a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_VertexSource___VnKeyword_3_2_0_DOUBLETerminalRuleCall_3_2_1_DOUBLETerminalRuleCall_3_2_2_DOUBLETerminalRuleCall_3_2_3__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
 	 * Ambiguous syntax:
-	 *     NORMAL+
+	 *     ('vn' DOUBLE DOUBLE DOUBLE)+
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) ('g' EString?)? (ambiguity) (rule start)
 	 *     materialFiles+=EString ('g' EString?)? (ambiguity) (rule end)
 	 */
-	protected void emit_VertexSource_NORMALTerminalRuleCall_3_2_p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Ambiguous syntax:
-	 *     ('g' EString?)?
-	 *
-	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) NORMAL* 'v' vertices+=Vertex
-	 *     (rule start) (ambiguity) NORMAL* 'vt' textureCoordinates+=TextureVertex
-	 *     (rule start) (ambiguity) NORMAL+ (rule start)
-	 *     materialFiles+=EString (ambiguity) NORMAL* 'v' vertices+=Vertex
-	 *     materialFiles+=EString (ambiguity) NORMAL* 'vt' textureCoordinates+=TextureVertex
-	 *     materialFiles+=EString (ambiguity) NORMAL+ (rule end)
-	 */
-	protected void emit_VertexSource___GKeyword_2_0_EStringParserRuleCall_2_1_q__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_VertexSource___VnKeyword_3_2_0_DOUBLETerminalRuleCall_3_2_1_DOUBLETerminalRuleCall_3_2_2_DOUBLETerminalRuleCall_3_2_3__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

@@ -24,4 +24,6 @@ public interface PolyShapeValidator {
 	boolean validateMatFiles(EList<String> value);
 
 	boolean validateVertexSource(VertexSource value);
+
+	boolean validateMaterialFiles(EList<String> value);
 }

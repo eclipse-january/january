@@ -79,22 +79,23 @@ ruleGeometry returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getGeometryAccess().getVertexSourceVertexSourceParserRuleCall_0_0());
+					newCompositeNode(grammarAccess.getGeometryAccess().getVertexSourcesVertexSourceParserRuleCall_0_0());
 				}
-				lv_vertexSource_0_0=ruleVertexSource
+				lv_vertexSources_0_0=ruleVertexSource
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getGeometryRule());
 					}
-					set(
+					add(
 						$current,
-						"vertexSource",
-						lv_vertexSource_0_0,
+						"vertexSources",
+						lv_vertexSources_0_0,
 						"org.eclipse.january.geometry.xtext.OBJ.VertexSource");
 					afterParserOrEnumRuleCall();
 				}
 			)
-		)?
+		)
+		    |
 		(
 			(
 				{
@@ -113,8 +114,8 @@ ruleGeometry returns [EObject current=null]
 					afterParserOrEnumRuleCall();
 				}
 			)
-		)*
-	)
+		)
+	)*
 ;
 
 // Entry rule entryRuleVertexSource
@@ -233,10 +234,24 @@ ruleVertexSource returns [EObject current=null]
 				)
 			)
 			    |
-			this_NORMAL_9=RULE_NORMAL
-			{
-				newLeafNode(this_NORMAL_9, grammarAccess.getVertexSourceAccess().getNORMALTerminalRuleCall_3_2());
-			}
+			(
+				otherlv_9='vn'
+				{
+					newLeafNode(otherlv_9, grammarAccess.getVertexSourceAccess().getVnKeyword_3_2_0());
+				}
+				this_DOUBLE_10=RULE_DOUBLE
+				{
+					newLeafNode(this_DOUBLE_10, grammarAccess.getVertexSourceAccess().getDOUBLETerminalRuleCall_3_2_1());
+				}
+				this_DOUBLE_11=RULE_DOUBLE
+				{
+					newLeafNode(this_DOUBLE_11, grammarAccess.getVertexSourceAccess().getDOUBLETerminalRuleCall_3_2_2());
+				}
+				this_DOUBLE_12=RULE_DOUBLE
+				{
+					newLeafNode(this_DOUBLE_12, grammarAccess.getVertexSourceAccess().getDOUBLETerminalRuleCall_3_2_3());
+				}
+			)
 		)+
 	)
 ;
@@ -258,16 +273,48 @@ rulePolyShape returns [EObject current=null]
 }:
 	(
 		(
-			otherlv_0='g'
 			{
-				newLeafNode(otherlv_0, grammarAccess.getPolyShapeAccess().getGKeyword_0_0());
+				$current = forceCreateModelElement(
+					grammarAccess.getPolyShapeAccess().getPolyShapeAction_0(),
+					$current);
+			}
+		)
+		(
+			otherlv_1='mtllib'
+			{
+				newLeafNode(otherlv_1, grammarAccess.getPolyShapeAccess().getMtllibKeyword_1_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getPolyShapeAccess().getNameEStringParserRuleCall_0_1_0());
+						newCompositeNode(grammarAccess.getPolyShapeAccess().getMaterialFilesEStringParserRuleCall_1_1_0());
 					}
-					lv_name_1_0=ruleEString
+					lv_materialFiles_2_0=ruleEString
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getPolyShapeRule());
+						}
+						add(
+							$current,
+							"materialFiles",
+							lv_materialFiles_2_0,
+							"org.eclipse.january.geometry.xtext.OBJ.EString");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)*
+		(
+			otherlv_3='g'
+			{
+				newLeafNode(otherlv_3, grammarAccess.getPolyShapeAccess().getGKeyword_2_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getPolyShapeAccess().getNameEStringParserRuleCall_2_1_0());
+					}
+					lv_name_4_0=ruleEString
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getPolyShapeRule());
@@ -275,24 +322,24 @@ rulePolyShape returns [EObject current=null]
 						set(
 							$current,
 							"name",
-							lv_name_1_0,
+							lv_name_4_0,
 							"org.eclipse.january.geometry.xtext.OBJ.EString");
 						afterParserOrEnumRuleCall();
 					}
 				)
-			)
+			)?
 		)?
 		(
-			otherlv_2='usemtl'
+			otherlv_5='usemtl'
 			{
-				newLeafNode(otherlv_2, grammarAccess.getPolyShapeAccess().getUsemtlKeyword_1_0());
+				newLeafNode(otherlv_5, grammarAccess.getPolyShapeAccess().getUsemtlKeyword_3_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getPolyShapeAccess().getMaterialMaterialParserRuleCall_1_1_0());
+						newCompositeNode(grammarAccess.getPolyShapeAccess().getMaterialMaterialParserRuleCall_3_1_0());
 					}
-					lv_material_3_0=ruleMaterial
+					lv_material_6_0=ruleMaterial
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getPolyShapeRule());
@@ -300,7 +347,7 @@ rulePolyShape returns [EObject current=null]
 						set(
 							$current,
 							"material",
-							lv_material_3_0,
+							lv_material_6_0,
 							"org.eclipse.january.geometry.xtext.OBJ.Material");
 						afterParserOrEnumRuleCall();
 					}
@@ -309,16 +356,16 @@ rulePolyShape returns [EObject current=null]
 		)?
 		(
 			(
-				otherlv_4='f'
+				otherlv_7='f'
 				{
-					newLeafNode(otherlv_4, grammarAccess.getPolyShapeAccess().getFKeyword_2_0_0());
+					newLeafNode(otherlv_7, grammarAccess.getPolyShapeAccess().getFKeyword_4_0_0());
 				}
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getPolyShapeAccess().getFacesFaceParserRuleCall_2_0_1_0());
+							newCompositeNode(grammarAccess.getPolyShapeAccess().getFacesFaceParserRuleCall_4_0_1_0());
 						}
-						lv_faces_5_0=ruleFace
+						lv_faces_8_0=ruleFace
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getPolyShapeRule());
@@ -326,7 +373,7 @@ rulePolyShape returns [EObject current=null]
 							add(
 								$current,
 								"faces",
-								lv_faces_5_0,
+								lv_faces_8_0,
 								"org.eclipse.january.geometry.xtext.OBJ.Face");
 							afterParserOrEnumRuleCall();
 						}
@@ -335,22 +382,22 @@ rulePolyShape returns [EObject current=null]
 			)
 			    |
 			(
-				otherlv_6='s'
+				otherlv_9='s'
 				{
-					newLeafNode(otherlv_6, grammarAccess.getPolyShapeAccess().getSKeyword_2_1_0());
+					newLeafNode(otherlv_9, grammarAccess.getPolyShapeAccess().getSKeyword_4_1_0());
 				}
 				(
 					{
-						newCompositeNode(grammarAccess.getPolyShapeAccess().getEIntParserRuleCall_2_1_1_0());
+						newCompositeNode(grammarAccess.getPolyShapeAccess().getEIntParserRuleCall_4_1_1_0());
 					}
 					ruleEInt
 					{
 						afterParserOrEnumRuleCall();
 					}
 					    |
-					otherlv_8='off'
+					otherlv_11='off'
 					{
-						newLeafNode(otherlv_8, grammarAccess.getPolyShapeAccess().getOffKeyword_2_1_1_1());
+						newLeafNode(otherlv_11, grammarAccess.getPolyShapeAccess().getOffKeyword_4_1_1_1());
 					}
 				)
 			)
@@ -748,28 +795,48 @@ ruleEString returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()
 			newLeafNode(this_ID_1, grammarAccess.getEStringAccess().getIDTerminalRuleCall_1());
 		}
 		    |
+		this_INT_2=RULE_INT
+		{
+			$current.merge(this_INT_2);
+		}
+		{
+			newLeafNode(this_INT_2, grammarAccess.getEStringAccess().getINTTerminalRuleCall_2());
+		}
+		    |
 		kw='.'
 		{
 			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getEStringAccess().getFullStopKeyword_2());
+			newLeafNode(kw, grammarAccess.getEStringAccess().getFullStopKeyword_3());
 		}
 		    |
 		kw='/'
 		{
 			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getEStringAccess().getSolidusKeyword_3());
+			newLeafNode(kw, grammarAccess.getEStringAccess().getSolidusKeyword_4());
 		}
 		    |
 		kw='\\'
 		{
 			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getEStringAccess().getReverseSolidusKeyword_4());
+			newLeafNode(kw, grammarAccess.getEStringAccess().getReverseSolidusKeyword_5());
 		}
 		    |
 		kw=':'
 		{
 			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getEStringAccess().getColonKeyword_5());
+			newLeafNode(kw, grammarAccess.getEStringAccess().getColonKeyword_6());
+		}
+		    |
+		kw='_'
+		{
+			$current.merge(kw);
+			newLeafNode(kw, grammarAccess.getEStringAccess().get_Keyword_7());
+		}
+		    |
+		kw='-'
+		{
+			$current.merge(kw);
+			newLeafNode(kw, grammarAccess.getEStringAccess().getHyphenMinusKeyword_8());
 		}
 	)+
 ;
@@ -811,9 +878,7 @@ ruleEDouble returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()
 	)
 ;
 
-RULE_COMMENT : '#' ~(('\n'|'\r'))* ('\r'? '\n')?;
-
-RULE_NORMAL : 'vn' RULE_DOUBLE RULE_DOUBLE RULE_DOUBLE;
+RULE_SL_COMMENT : '#' ~(('\n'|'\r'))* ('\r'? '\n')?;
 
 RULE_DOUBLE : ('-'|'+')? RULE_INT? '.' RULE_INT (('E'|'e') ('-'|'+')? RULE_INT)?;
 
@@ -826,7 +891,5 @@ RULE_INT : ('0'..'9')+;
 RULE_STRING : ('"' ('\\' .|~(('\\'|'"')))* '"'|'\'' ('\\' .|~(('\\'|'\'')))* '\'');
 
 RULE_ML_COMMENT : '/*' ( options {greedy=false;} : . )*'*/';
-
-RULE_SL_COMMENT : '//' ~(('\n'|'\r'))* ('\r'? '\n')?;
 
 RULE_ANY_OTHER : .;

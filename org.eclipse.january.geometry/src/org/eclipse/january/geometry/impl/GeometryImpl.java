@@ -38,7 +38,7 @@ import org.eclipse.january.geometry.VertexSource;
  *   <li>{@link org.eclipse.january.geometry.impl.GeometryImpl#getTriangles <em>Triangles</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.impl.GeometryImpl#getCenter <em>Center</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.impl.GeometryImpl#getParent <em>Parent</em>}</li>
- *   <li>{@link org.eclipse.january.geometry.impl.GeometryImpl#getVertexSource <em>Vertex Source</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.impl.GeometryImpl#getVertexSources <em>Vertex Sources</em>}</li>
  * </ul>
  * </p>
  *
@@ -139,14 +139,14 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 	protected INode parent;
 
 	/**
-	 * The cached value of the '{@link #getVertexSource() <em>Vertex Source</em>}' containment reference.
+	 * The cached value of the '{@link #getVertexSources() <em>Vertex Sources</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getVertexSource()
+	 * @see #getVertexSources()
 	 * @generated
 	 * @ordered
 	 */
-	protected VertexSource vertexSource;
+	protected EList<VertexSource> vertexSources;
 
 	/**
 	 * The map of the shape's physical properties. Property names are mapped to
@@ -344,42 +344,49 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<VertexSource> getVertexSources() {
+		if (vertexSources == null) {
+			vertexSources = new EObjectContainmentEList<VertexSource>(VertexSource.class, this, GeometryPackage.GEOMETRY__VERTEX_SOURCES);
+		}
+		return vertexSources;
+	}
+	
+	/**
+	 * Gets the vertex source that results from combining all of the vertex sources. 
+	 * Note that this call will replace those other sources with this one large source, even in
+	 * the vertex sources list. If there is no vertex source set, returns an empty one
+	 * @return VertexSource The large vertex source
+	 */
 	public VertexSource getVertexSource() {
-		return vertexSource;
-	}
+		// If no sources, return null
+		if (vertexSources.size() < 1) {
+			return null;
+		// If there is only one, return that
+		} else if (vertexSources.size() == 1) {
+			return vertexSources.get(0);
+		// Return the combination of all the vertex sources in the list
+		} else {
+			// Create a new source
+			VertexSource source = GeometryFactory.eINSTANCE.createVertexSource();
+			EList<Vertex> sourceVert = source.getVertices();
+			// Go through each vertex source's vertices
+			for(int i=0; i<vertexSources.size(); i++) {
+				// Add that vertex
+				for (Vertex v : vertexSources.get(i).getVertices()) {
+					sourceVert.add((Vertex)v.clone());
+				}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetVertexSource(VertexSource newVertexSource, NotificationChain msgs) {
-		VertexSource oldVertexSource = vertexSource;
-		vertexSource = newVertexSource;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, GeometryPackage.GEOMETRY__VERTEX_SOURCE, oldVertexSource, newVertexSource);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
+				source.getMaterialFiles().addAll(vertexSources.get(i).getMaterialFiles());
+				// Clear the now unused vertices
+				vertexSources.get(i).getVertices().clear();
+			}
+			// Add the resulting vertex source to the list, and clear the rest
+			vertexSources.clear();
+			vertexSources.add(source);
+			// Finally, return the new vertex source
+			return source;
 		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setVertexSource(VertexSource newVertexSource) {
-		if (newVertexSource != vertexSource) {
-			NotificationChain msgs = null;
-			if (vertexSource != null)
-				msgs = ((InternalEObject)vertexSource).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - GeometryPackage.GEOMETRY__VERTEX_SOURCE, null, msgs);
-			if (newVertexSource != null)
-				msgs = ((InternalEObject)newVertexSource).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - GeometryPackage.GEOMETRY__VERTEX_SOURCE, null, msgs);
-			msgs = basicSetVertexSource(newVertexSource, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, GeometryPackage.GEOMETRY__VERTEX_SOURCE, newVertexSource, newVertexSource));
+		
 	}
 
 	/**
@@ -528,8 +535,8 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 				return ((InternalEList<?>)getNodes()).basicRemove(otherEnd, msgs);
 			case GeometryPackage.GEOMETRY__TRIANGLES:
 				return ((InternalEList<?>)getTriangles()).basicRemove(otherEnd, msgs);
-			case GeometryPackage.GEOMETRY__VERTEX_SOURCE:
-				return basicSetVertexSource(null, msgs);
+			case GeometryPackage.GEOMETRY__VERTEX_SOURCES:
+				return ((InternalEList<?>)getVertexSources()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -557,8 +564,8 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 			case GeometryPackage.GEOMETRY__PARENT:
 				if (resolve) return getParent();
 				return basicGetParent();
-			case GeometryPackage.GEOMETRY__VERTEX_SOURCE:
-				return getVertexSource();
+			case GeometryPackage.GEOMETRY__VERTEX_SOURCES:
+				return getVertexSources();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -594,8 +601,9 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 			case GeometryPackage.GEOMETRY__PARENT:
 				setParent((INode)newValue);
 				return;
-			case GeometryPackage.GEOMETRY__VERTEX_SOURCE:
-				setVertexSource((VertexSource)newValue);
+			case GeometryPackage.GEOMETRY__VERTEX_SOURCES:
+				getVertexSources().clear();
+				getVertexSources().addAll((Collection<? extends VertexSource>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -629,8 +637,8 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 			case GeometryPackage.GEOMETRY__PARENT:
 				setParent((INode)null);
 				return;
-			case GeometryPackage.GEOMETRY__VERTEX_SOURCE:
-				setVertexSource((VertexSource)null);
+			case GeometryPackage.GEOMETRY__VERTEX_SOURCES:
+				getVertexSources().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -657,8 +665,8 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 				return center != null;
 			case GeometryPackage.GEOMETRY__PARENT:
 				return parent != null;
-			case GeometryPackage.GEOMETRY__VERTEX_SOURCE:
-				return vertexSource != null;
+			case GeometryPackage.GEOMETRY__VERTEX_SOURCES:
+				return vertexSources != null && !vertexSources.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

@@ -35,7 +35,7 @@ Package geometry <http://www.eclipse.org/january/geometry>
     Attribute height : EDouble
 
   Class Geometry -> INode
-    Reference vertexSource : VertexSource
+    Reference vertexSources : VertexSource<<0..*>>
 
   Class Tube -> Shape
     Attribute height : EDouble
@@ -115,6 +115,7 @@ Package geometry <http://www.eclipse.org/january/geometry>
     Reference faces : Face<<0..*>>
     Attribute matFiles : EString<<0..*>>
     Reference vertexSource : VertexSource
+    Attribute materialFiles : EString<<0..*>>
 
   Class Face
     Attribute vertexIndices : EInt<<0..*>>
