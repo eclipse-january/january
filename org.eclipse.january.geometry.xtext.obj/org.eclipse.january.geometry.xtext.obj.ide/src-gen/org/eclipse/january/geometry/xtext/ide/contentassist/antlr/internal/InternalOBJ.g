@@ -883,9 +883,9 @@ rule__VertexSource__Group_3_2__1__Impl
 	}
 :
 (
-	{ before(grammarAccess.getVertexSourceAccess().getDOUBLETerminalRuleCall_3_2_1()); }
-	RULE_DOUBLE
-	{ after(grammarAccess.getVertexSourceAccess().getDOUBLETerminalRuleCall_3_2_1()); }
+	{ before(grammarAccess.getVertexSourceAccess().getEDoubleParserRuleCall_3_2_1()); }
+	ruleEDouble
+	{ after(grammarAccess.getVertexSourceAccess().getEDoubleParserRuleCall_3_2_1()); }
 )
 ;
 finally {
@@ -910,9 +910,9 @@ rule__VertexSource__Group_3_2__2__Impl
 	}
 :
 (
-	{ before(grammarAccess.getVertexSourceAccess().getDOUBLETerminalRuleCall_3_2_2()); }
-	RULE_DOUBLE
-	{ after(grammarAccess.getVertexSourceAccess().getDOUBLETerminalRuleCall_3_2_2()); }
+	{ before(grammarAccess.getVertexSourceAccess().getEDoubleParserRuleCall_3_2_2()); }
+	ruleEDouble
+	{ after(grammarAccess.getVertexSourceAccess().getEDoubleParserRuleCall_3_2_2()); }
 )
 ;
 finally {
@@ -936,9 +936,9 @@ rule__VertexSource__Group_3_2__3__Impl
 	}
 :
 (
-	{ before(grammarAccess.getVertexSourceAccess().getDOUBLETerminalRuleCall_3_2_3()); }
-	RULE_DOUBLE
-	{ after(grammarAccess.getVertexSourceAccess().getDOUBLETerminalRuleCall_3_2_3()); }
+	{ before(grammarAccess.getVertexSourceAccess().getEDoubleParserRuleCall_3_2_3()); }
+	ruleEDouble
+	{ after(grammarAccess.getVertexSourceAccess().getEDoubleParserRuleCall_3_2_3()); }
 )
 ;
 finally {

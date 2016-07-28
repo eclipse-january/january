@@ -239,17 +239,26 @@ ruleVertexSource returns [EObject current=null]
 				{
 					newLeafNode(otherlv_9, grammarAccess.getVertexSourceAccess().getVnKeyword_3_2_0());
 				}
-				this_DOUBLE_10=RULE_DOUBLE
 				{
-					newLeafNode(this_DOUBLE_10, grammarAccess.getVertexSourceAccess().getDOUBLETerminalRuleCall_3_2_1());
+					newCompositeNode(grammarAccess.getVertexSourceAccess().getEDoubleParserRuleCall_3_2_1());
 				}
-				this_DOUBLE_11=RULE_DOUBLE
+				ruleEDouble
 				{
-					newLeafNode(this_DOUBLE_11, grammarAccess.getVertexSourceAccess().getDOUBLETerminalRuleCall_3_2_2());
+					afterParserOrEnumRuleCall();
 				}
-				this_DOUBLE_12=RULE_DOUBLE
 				{
-					newLeafNode(this_DOUBLE_12, grammarAccess.getVertexSourceAccess().getDOUBLETerminalRuleCall_3_2_3());
+					newCompositeNode(grammarAccess.getVertexSourceAccess().getEDoubleParserRuleCall_3_2_2());
+				}
+				ruleEDouble
+				{
+					afterParserOrEnumRuleCall();
+				}
+				{
+					newCompositeNode(grammarAccess.getVertexSourceAccess().getEDoubleParserRuleCall_3_2_3());
+				}
+				ruleEDouble
+				{
+					afterParserOrEnumRuleCall();
 				}
 			)
 		)+

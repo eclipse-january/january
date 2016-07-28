@@ -21,13 +21,13 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalOBJParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_DOUBLE", "RULE_INT", "RULE_STRING", "RULE_ID", "RULE_SL_COMMENT", "RULE_WS", "RULE_ML_COMMENT", "RULE_ANY_OTHER", "'mtllib'", "'g'", "'v'", "'vt'", "'vn'", "'usemtl'", "'f'", "'s'", "'off'", "'/'", "'-'", "'.'", "'\\\\'", "':'", "'_'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_INT", "RULE_STRING", "RULE_ID", "RULE_DOUBLE", "RULE_SL_COMMENT", "RULE_WS", "RULE_ML_COMMENT", "RULE_ANY_OTHER", "'mtllib'", "'g'", "'v'", "'vt'", "'vn'", "'usemtl'", "'f'", "'s'", "'off'", "'/'", "'-'", "'.'", "'\\\\'", "':'", "'_'"
     };
-    public static final int RULE_STRING=6;
+    public static final int RULE_STRING=5;
     public static final int RULE_SL_COMMENT=8;
     public static final int T__19=19;
     public static final int T__15=15;
-    public static final int RULE_DOUBLE=4;
+    public static final int RULE_DOUBLE=7;
     public static final int T__16=16;
     public static final int T__17=17;
     public static final int T__18=18;
@@ -35,11 +35,11 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
     public static final int T__13=13;
     public static final int T__14=14;
     public static final int EOF=-1;
-    public static final int RULE_ID=7;
+    public static final int RULE_ID=6;
     public static final int RULE_WS=9;
     public static final int RULE_ANY_OTHER=11;
     public static final int T__26=26;
-    public static final int RULE_INT=5;
+    public static final int RULE_INT=4;
     public static final int T__22=22;
     public static final int RULE_ML_COMMENT=10;
     public static final int T__23=23;
@@ -282,7 +282,7 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleVertexSource"
-    // InternalOBJ.g:129:1: ruleVertexSource returns [EObject current=null] : ( () (otherlv_1= 'mtllib' ( (lv_materialFiles_2_0= ruleEString ) ) )* (otherlv_3= 'g' ( ruleEString )? )? ( (otherlv_5= 'v' ( (lv_vertices_6_0= ruleVertex ) ) ) | (otherlv_7= 'vt' ( (lv_textureCoordinates_8_0= ruleTextureVertex ) ) ) | (otherlv_9= 'vn' this_DOUBLE_10= RULE_DOUBLE this_DOUBLE_11= RULE_DOUBLE this_DOUBLE_12= RULE_DOUBLE ) )+ ) ;
+    // InternalOBJ.g:129:1: ruleVertexSource returns [EObject current=null] : ( () (otherlv_1= 'mtllib' ( (lv_materialFiles_2_0= ruleEString ) ) )* (otherlv_3= 'g' ( ruleEString )? )? ( (otherlv_5= 'v' ( (lv_vertices_6_0= ruleVertex ) ) ) | (otherlv_7= 'vt' ( (lv_textureCoordinates_8_0= ruleTextureVertex ) ) ) | (otherlv_9= 'vn' ruleEDouble ruleEDouble ruleEDouble ) )+ ) ;
     public final EObject ruleVertexSource() throws RecognitionException {
         EObject current = null;
 
@@ -291,9 +291,6 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
         Token otherlv_5=null;
         Token otherlv_7=null;
         Token otherlv_9=null;
-        Token this_DOUBLE_10=null;
-        Token this_DOUBLE_11=null;
-        Token this_DOUBLE_12=null;
         AntlrDatatypeRuleToken lv_materialFiles_2_0 = null;
 
         EObject lv_vertices_6_0 = null;
@@ -305,11 +302,11 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalOBJ.g:135:2: ( ( () (otherlv_1= 'mtllib' ( (lv_materialFiles_2_0= ruleEString ) ) )* (otherlv_3= 'g' ( ruleEString )? )? ( (otherlv_5= 'v' ( (lv_vertices_6_0= ruleVertex ) ) ) | (otherlv_7= 'vt' ( (lv_textureCoordinates_8_0= ruleTextureVertex ) ) ) | (otherlv_9= 'vn' this_DOUBLE_10= RULE_DOUBLE this_DOUBLE_11= RULE_DOUBLE this_DOUBLE_12= RULE_DOUBLE ) )+ ) )
-            // InternalOBJ.g:136:2: ( () (otherlv_1= 'mtllib' ( (lv_materialFiles_2_0= ruleEString ) ) )* (otherlv_3= 'g' ( ruleEString )? )? ( (otherlv_5= 'v' ( (lv_vertices_6_0= ruleVertex ) ) ) | (otherlv_7= 'vt' ( (lv_textureCoordinates_8_0= ruleTextureVertex ) ) ) | (otherlv_9= 'vn' this_DOUBLE_10= RULE_DOUBLE this_DOUBLE_11= RULE_DOUBLE this_DOUBLE_12= RULE_DOUBLE ) )+ )
+            // InternalOBJ.g:135:2: ( ( () (otherlv_1= 'mtllib' ( (lv_materialFiles_2_0= ruleEString ) ) )* (otherlv_3= 'g' ( ruleEString )? )? ( (otherlv_5= 'v' ( (lv_vertices_6_0= ruleVertex ) ) ) | (otherlv_7= 'vt' ( (lv_textureCoordinates_8_0= ruleTextureVertex ) ) ) | (otherlv_9= 'vn' ruleEDouble ruleEDouble ruleEDouble ) )+ ) )
+            // InternalOBJ.g:136:2: ( () (otherlv_1= 'mtllib' ( (lv_materialFiles_2_0= ruleEString ) ) )* (otherlv_3= 'g' ( ruleEString )? )? ( (otherlv_5= 'v' ( (lv_vertices_6_0= ruleVertex ) ) ) | (otherlv_7= 'vt' ( (lv_textureCoordinates_8_0= ruleTextureVertex ) ) ) | (otherlv_9= 'vn' ruleEDouble ruleEDouble ruleEDouble ) )+ )
             {
-            // InternalOBJ.g:136:2: ( () (otherlv_1= 'mtllib' ( (lv_materialFiles_2_0= ruleEString ) ) )* (otherlv_3= 'g' ( ruleEString )? )? ( (otherlv_5= 'v' ( (lv_vertices_6_0= ruleVertex ) ) ) | (otherlv_7= 'vt' ( (lv_textureCoordinates_8_0= ruleTextureVertex ) ) ) | (otherlv_9= 'vn' this_DOUBLE_10= RULE_DOUBLE this_DOUBLE_11= RULE_DOUBLE this_DOUBLE_12= RULE_DOUBLE ) )+ )
-            // InternalOBJ.g:137:3: () (otherlv_1= 'mtllib' ( (lv_materialFiles_2_0= ruleEString ) ) )* (otherlv_3= 'g' ( ruleEString )? )? ( (otherlv_5= 'v' ( (lv_vertices_6_0= ruleVertex ) ) ) | (otherlv_7= 'vt' ( (lv_textureCoordinates_8_0= ruleTextureVertex ) ) ) | (otherlv_9= 'vn' this_DOUBLE_10= RULE_DOUBLE this_DOUBLE_11= RULE_DOUBLE this_DOUBLE_12= RULE_DOUBLE ) )+
+            // InternalOBJ.g:136:2: ( () (otherlv_1= 'mtllib' ( (lv_materialFiles_2_0= ruleEString ) ) )* (otherlv_3= 'g' ( ruleEString )? )? ( (otherlv_5= 'v' ( (lv_vertices_6_0= ruleVertex ) ) ) | (otherlv_7= 'vt' ( (lv_textureCoordinates_8_0= ruleTextureVertex ) ) ) | (otherlv_9= 'vn' ruleEDouble ruleEDouble ruleEDouble ) )+ )
+            // InternalOBJ.g:137:3: () (otherlv_1= 'mtllib' ( (lv_materialFiles_2_0= ruleEString ) ) )* (otherlv_3= 'g' ( ruleEString )? )? ( (otherlv_5= 'v' ( (lv_vertices_6_0= ruleVertex ) ) ) | (otherlv_7= 'vt' ( (lv_textureCoordinates_8_0= ruleTextureVertex ) ) ) | (otherlv_9= 'vn' ruleEDouble ruleEDouble ruleEDouble ) )+
             {
             // InternalOBJ.g:137:3: ()
             // InternalOBJ.g:138:4: 
@@ -430,7 +427,7 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalOBJ.g:184:3: ( (otherlv_5= 'v' ( (lv_vertices_6_0= ruleVertex ) ) ) | (otherlv_7= 'vt' ( (lv_textureCoordinates_8_0= ruleTextureVertex ) ) ) | (otherlv_9= 'vn' this_DOUBLE_10= RULE_DOUBLE this_DOUBLE_11= RULE_DOUBLE this_DOUBLE_12= RULE_DOUBLE ) )+
+            // InternalOBJ.g:184:3: ( (otherlv_5= 'v' ( (lv_vertices_6_0= ruleVertex ) ) ) | (otherlv_7= 'vt' ( (lv_textureCoordinates_8_0= ruleTextureVertex ) ) ) | (otherlv_9= 'vn' ruleEDouble ruleEDouble ruleEDouble ) )+
             int cnt5=0;
             loop5:
             do {
@@ -550,26 +547,47 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
             	    }
             	    break;
             	case 3 :
-            	    // InternalOBJ.g:237:4: (otherlv_9= 'vn' this_DOUBLE_10= RULE_DOUBLE this_DOUBLE_11= RULE_DOUBLE this_DOUBLE_12= RULE_DOUBLE )
+            	    // InternalOBJ.g:237:4: (otherlv_9= 'vn' ruleEDouble ruleEDouble ruleEDouble )
             	    {
-            	    // InternalOBJ.g:237:4: (otherlv_9= 'vn' this_DOUBLE_10= RULE_DOUBLE this_DOUBLE_11= RULE_DOUBLE this_DOUBLE_12= RULE_DOUBLE )
-            	    // InternalOBJ.g:238:5: otherlv_9= 'vn' this_DOUBLE_10= RULE_DOUBLE this_DOUBLE_11= RULE_DOUBLE this_DOUBLE_12= RULE_DOUBLE
+            	    // InternalOBJ.g:237:4: (otherlv_9= 'vn' ruleEDouble ruleEDouble ruleEDouble )
+            	    // InternalOBJ.g:238:5: otherlv_9= 'vn' ruleEDouble ruleEDouble ruleEDouble
             	    {
-            	    otherlv_9=(Token)match(input,16,FOLLOW_10); 
+            	    otherlv_9=(Token)match(input,16,FOLLOW_8); 
 
             	    					newLeafNode(otherlv_9, grammarAccess.getVertexSourceAccess().getVnKeyword_3_2_0());
             	    				
-            	    this_DOUBLE_10=(Token)match(input,RULE_DOUBLE,FOLLOW_10); 
 
-            	    					newLeafNode(this_DOUBLE_10, grammarAccess.getVertexSourceAccess().getDOUBLETerminalRuleCall_3_2_1());
+            	    					newCompositeNode(grammarAccess.getVertexSourceAccess().getEDoubleParserRuleCall_3_2_1());
             	    				
-            	    this_DOUBLE_11=(Token)match(input,RULE_DOUBLE,FOLLOW_10); 
+            	    pushFollow(FOLLOW_8);
+            	    ruleEDouble();
 
-            	    					newLeafNode(this_DOUBLE_11, grammarAccess.getVertexSourceAccess().getDOUBLETerminalRuleCall_3_2_2());
+            	    state._fsp--;
+
+
+            	    					afterParserOrEnumRuleCall();
             	    				
-            	    this_DOUBLE_12=(Token)match(input,RULE_DOUBLE,FOLLOW_9); 
 
-            	    					newLeafNode(this_DOUBLE_12, grammarAccess.getVertexSourceAccess().getDOUBLETerminalRuleCall_3_2_3());
+            	    					newCompositeNode(grammarAccess.getVertexSourceAccess().getEDoubleParserRuleCall_3_2_2());
+            	    				
+            	    pushFollow(FOLLOW_8);
+            	    ruleEDouble();
+
+            	    state._fsp--;
+
+
+            	    					afterParserOrEnumRuleCall();
+            	    				
+
+            	    					newCompositeNode(grammarAccess.getVertexSourceAccess().getEDoubleParserRuleCall_3_2_3());
+            	    				
+            	    pushFollow(FOLLOW_9);
+            	    ruleEDouble();
+
+            	    state._fsp--;
+
+
+            	    					afterParserOrEnumRuleCall();
             	    				
 
             	    }
@@ -610,7 +628,7 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulePolyShape"
-    // InternalOBJ.g:260:1: entryRulePolyShape returns [EObject current=null] : iv_rulePolyShape= rulePolyShape EOF ;
+    // InternalOBJ.g:269:1: entryRulePolyShape returns [EObject current=null] : iv_rulePolyShape= rulePolyShape EOF ;
     public final EObject entryRulePolyShape() throws RecognitionException {
         EObject current = null;
 
@@ -618,8 +636,8 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalOBJ.g:260:50: (iv_rulePolyShape= rulePolyShape EOF )
-            // InternalOBJ.g:261:2: iv_rulePolyShape= rulePolyShape EOF
+            // InternalOBJ.g:269:50: (iv_rulePolyShape= rulePolyShape EOF )
+            // InternalOBJ.g:270:2: iv_rulePolyShape= rulePolyShape EOF
             {
              newCompositeNode(grammarAccess.getPolyShapeRule()); 
             pushFollow(FOLLOW_1);
@@ -646,7 +664,7 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePolyShape"
-    // InternalOBJ.g:267:1: rulePolyShape returns [EObject current=null] : ( () (otherlv_1= 'mtllib' ( (lv_materialFiles_2_0= ruleEString ) ) )* (otherlv_3= 'g' ( (lv_name_4_0= ruleEString ) )? )? (otherlv_5= 'usemtl' ( (lv_material_6_0= ruleMaterial ) ) )? ( (otherlv_7= 'f' ( (lv_faces_8_0= ruleFace ) ) ) | (otherlv_9= 's' ( ruleEInt | otherlv_11= 'off' ) ) )+ ) ;
+    // InternalOBJ.g:276:1: rulePolyShape returns [EObject current=null] : ( () (otherlv_1= 'mtllib' ( (lv_materialFiles_2_0= ruleEString ) ) )* (otherlv_3= 'g' ( (lv_name_4_0= ruleEString ) )? )? (otherlv_5= 'usemtl' ( (lv_material_6_0= ruleMaterial ) ) )? ( (otherlv_7= 'f' ( (lv_faces_8_0= ruleFace ) ) ) | (otherlv_9= 's' ( ruleEInt | otherlv_11= 'off' ) ) )+ ) ;
     public final EObject rulePolyShape() throws RecognitionException {
         EObject current = null;
 
@@ -669,14 +687,14 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalOBJ.g:273:2: ( ( () (otherlv_1= 'mtllib' ( (lv_materialFiles_2_0= ruleEString ) ) )* (otherlv_3= 'g' ( (lv_name_4_0= ruleEString ) )? )? (otherlv_5= 'usemtl' ( (lv_material_6_0= ruleMaterial ) ) )? ( (otherlv_7= 'f' ( (lv_faces_8_0= ruleFace ) ) ) | (otherlv_9= 's' ( ruleEInt | otherlv_11= 'off' ) ) )+ ) )
-            // InternalOBJ.g:274:2: ( () (otherlv_1= 'mtllib' ( (lv_materialFiles_2_0= ruleEString ) ) )* (otherlv_3= 'g' ( (lv_name_4_0= ruleEString ) )? )? (otherlv_5= 'usemtl' ( (lv_material_6_0= ruleMaterial ) ) )? ( (otherlv_7= 'f' ( (lv_faces_8_0= ruleFace ) ) ) | (otherlv_9= 's' ( ruleEInt | otherlv_11= 'off' ) ) )+ )
+            // InternalOBJ.g:282:2: ( ( () (otherlv_1= 'mtllib' ( (lv_materialFiles_2_0= ruleEString ) ) )* (otherlv_3= 'g' ( (lv_name_4_0= ruleEString ) )? )? (otherlv_5= 'usemtl' ( (lv_material_6_0= ruleMaterial ) ) )? ( (otherlv_7= 'f' ( (lv_faces_8_0= ruleFace ) ) ) | (otherlv_9= 's' ( ruleEInt | otherlv_11= 'off' ) ) )+ ) )
+            // InternalOBJ.g:283:2: ( () (otherlv_1= 'mtllib' ( (lv_materialFiles_2_0= ruleEString ) ) )* (otherlv_3= 'g' ( (lv_name_4_0= ruleEString ) )? )? (otherlv_5= 'usemtl' ( (lv_material_6_0= ruleMaterial ) ) )? ( (otherlv_7= 'f' ( (lv_faces_8_0= ruleFace ) ) ) | (otherlv_9= 's' ( ruleEInt | otherlv_11= 'off' ) ) )+ )
             {
-            // InternalOBJ.g:274:2: ( () (otherlv_1= 'mtllib' ( (lv_materialFiles_2_0= ruleEString ) ) )* (otherlv_3= 'g' ( (lv_name_4_0= ruleEString ) )? )? (otherlv_5= 'usemtl' ( (lv_material_6_0= ruleMaterial ) ) )? ( (otherlv_7= 'f' ( (lv_faces_8_0= ruleFace ) ) ) | (otherlv_9= 's' ( ruleEInt | otherlv_11= 'off' ) ) )+ )
-            // InternalOBJ.g:275:3: () (otherlv_1= 'mtllib' ( (lv_materialFiles_2_0= ruleEString ) ) )* (otherlv_3= 'g' ( (lv_name_4_0= ruleEString ) )? )? (otherlv_5= 'usemtl' ( (lv_material_6_0= ruleMaterial ) ) )? ( (otherlv_7= 'f' ( (lv_faces_8_0= ruleFace ) ) ) | (otherlv_9= 's' ( ruleEInt | otherlv_11= 'off' ) ) )+
+            // InternalOBJ.g:283:2: ( () (otherlv_1= 'mtllib' ( (lv_materialFiles_2_0= ruleEString ) ) )* (otherlv_3= 'g' ( (lv_name_4_0= ruleEString ) )? )? (otherlv_5= 'usemtl' ( (lv_material_6_0= ruleMaterial ) ) )? ( (otherlv_7= 'f' ( (lv_faces_8_0= ruleFace ) ) ) | (otherlv_9= 's' ( ruleEInt | otherlv_11= 'off' ) ) )+ )
+            // InternalOBJ.g:284:3: () (otherlv_1= 'mtllib' ( (lv_materialFiles_2_0= ruleEString ) ) )* (otherlv_3= 'g' ( (lv_name_4_0= ruleEString ) )? )? (otherlv_5= 'usemtl' ( (lv_material_6_0= ruleMaterial ) ) )? ( (otherlv_7= 'f' ( (lv_faces_8_0= ruleFace ) ) ) | (otherlv_9= 's' ( ruleEInt | otherlv_11= 'off' ) ) )+
             {
-            // InternalOBJ.g:275:3: ()
-            // InternalOBJ.g:276:4: 
+            // InternalOBJ.g:284:3: ()
+            // InternalOBJ.g:285:4: 
             {
 
             				current = forceCreateModelElement(
@@ -686,7 +704,7 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalOBJ.g:282:3: (otherlv_1= 'mtllib' ( (lv_materialFiles_2_0= ruleEString ) ) )*
+            // InternalOBJ.g:291:3: (otherlv_1= 'mtllib' ( (lv_materialFiles_2_0= ruleEString ) ) )*
             loop6:
             do {
                 int alt6=2;
@@ -699,22 +717,22 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
                 switch (alt6) {
             	case 1 :
-            	    // InternalOBJ.g:283:4: otherlv_1= 'mtllib' ( (lv_materialFiles_2_0= ruleEString ) )
+            	    // InternalOBJ.g:292:4: otherlv_1= 'mtllib' ( (lv_materialFiles_2_0= ruleEString ) )
             	    {
             	    otherlv_1=(Token)match(input,12,FOLLOW_4); 
 
             	    				newLeafNode(otherlv_1, grammarAccess.getPolyShapeAccess().getMtllibKeyword_1_0());
             	    			
-            	    // InternalOBJ.g:287:4: ( (lv_materialFiles_2_0= ruleEString ) )
-            	    // InternalOBJ.g:288:5: (lv_materialFiles_2_0= ruleEString )
+            	    // InternalOBJ.g:296:4: ( (lv_materialFiles_2_0= ruleEString ) )
+            	    // InternalOBJ.g:297:5: (lv_materialFiles_2_0= ruleEString )
             	    {
-            	    // InternalOBJ.g:288:5: (lv_materialFiles_2_0= ruleEString )
-            	    // InternalOBJ.g:289:6: lv_materialFiles_2_0= ruleEString
+            	    // InternalOBJ.g:297:5: (lv_materialFiles_2_0= ruleEString )
+            	    // InternalOBJ.g:298:6: lv_materialFiles_2_0= ruleEString
             	    {
 
             	    						newCompositeNode(grammarAccess.getPolyShapeAccess().getMaterialFilesEStringParserRuleCall_1_1_0());
             	    					
-            	    pushFollow(FOLLOW_11);
+            	    pushFollow(FOLLOW_10);
             	    lv_materialFiles_2_0=ruleEString();
 
             	    state._fsp--;
@@ -745,7 +763,7 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalOBJ.g:307:3: (otherlv_3= 'g' ( (lv_name_4_0= ruleEString ) )? )?
+            // InternalOBJ.g:316:3: (otherlv_3= 'g' ( (lv_name_4_0= ruleEString ) )? )?
             int alt8=2;
             int LA8_0 = input.LA(1);
 
@@ -754,13 +772,13 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
             }
             switch (alt8) {
                 case 1 :
-                    // InternalOBJ.g:308:4: otherlv_3= 'g' ( (lv_name_4_0= ruleEString ) )?
+                    // InternalOBJ.g:317:4: otherlv_3= 'g' ( (lv_name_4_0= ruleEString ) )?
                     {
-                    otherlv_3=(Token)match(input,13,FOLLOW_12); 
+                    otherlv_3=(Token)match(input,13,FOLLOW_11); 
 
                     				newLeafNode(otherlv_3, grammarAccess.getPolyShapeAccess().getGKeyword_2_0());
                     			
-                    // InternalOBJ.g:312:4: ( (lv_name_4_0= ruleEString ) )?
+                    // InternalOBJ.g:321:4: ( (lv_name_4_0= ruleEString ) )?
                     int alt7=2;
                     int LA7_0 = input.LA(1);
 
@@ -769,15 +787,15 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt7) {
                         case 1 :
-                            // InternalOBJ.g:313:5: (lv_name_4_0= ruleEString )
+                            // InternalOBJ.g:322:5: (lv_name_4_0= ruleEString )
                             {
-                            // InternalOBJ.g:313:5: (lv_name_4_0= ruleEString )
-                            // InternalOBJ.g:314:6: lv_name_4_0= ruleEString
+                            // InternalOBJ.g:322:5: (lv_name_4_0= ruleEString )
+                            // InternalOBJ.g:323:6: lv_name_4_0= ruleEString
                             {
 
                             						newCompositeNode(grammarAccess.getPolyShapeAccess().getNameEStringParserRuleCall_2_1_0());
                             					
-                            pushFollow(FOLLOW_13);
+                            pushFollow(FOLLOW_12);
                             lv_name_4_0=ruleEString();
 
                             state._fsp--;
@@ -808,7 +826,7 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalOBJ.g:332:3: (otherlv_5= 'usemtl' ( (lv_material_6_0= ruleMaterial ) ) )?
+            // InternalOBJ.g:341:3: (otherlv_5= 'usemtl' ( (lv_material_6_0= ruleMaterial ) ) )?
             int alt9=2;
             int LA9_0 = input.LA(1);
 
@@ -817,22 +835,22 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
             }
             switch (alt9) {
                 case 1 :
-                    // InternalOBJ.g:333:4: otherlv_5= 'usemtl' ( (lv_material_6_0= ruleMaterial ) )
+                    // InternalOBJ.g:342:4: otherlv_5= 'usemtl' ( (lv_material_6_0= ruleMaterial ) )
                     {
                     otherlv_5=(Token)match(input,17,FOLLOW_4); 
 
                     				newLeafNode(otherlv_5, grammarAccess.getPolyShapeAccess().getUsemtlKeyword_3_0());
                     			
-                    // InternalOBJ.g:337:4: ( (lv_material_6_0= ruleMaterial ) )
-                    // InternalOBJ.g:338:5: (lv_material_6_0= ruleMaterial )
+                    // InternalOBJ.g:346:4: ( (lv_material_6_0= ruleMaterial ) )
+                    // InternalOBJ.g:347:5: (lv_material_6_0= ruleMaterial )
                     {
-                    // InternalOBJ.g:338:5: (lv_material_6_0= ruleMaterial )
-                    // InternalOBJ.g:339:6: lv_material_6_0= ruleMaterial
+                    // InternalOBJ.g:347:5: (lv_material_6_0= ruleMaterial )
+                    // InternalOBJ.g:348:6: lv_material_6_0= ruleMaterial
                     {
 
                     						newCompositeNode(grammarAccess.getPolyShapeAccess().getMaterialMaterialParserRuleCall_3_1_0());
                     					
-                    pushFollow(FOLLOW_14);
+                    pushFollow(FOLLOW_13);
                     lv_material_6_0=ruleMaterial();
 
                     state._fsp--;
@@ -860,7 +878,7 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalOBJ.g:357:3: ( (otherlv_7= 'f' ( (lv_faces_8_0= ruleFace ) ) ) | (otherlv_9= 's' ( ruleEInt | otherlv_11= 'off' ) ) )+
+            // InternalOBJ.g:366:3: ( (otherlv_7= 'f' ( (lv_faces_8_0= ruleFace ) ) ) | (otherlv_9= 's' ( ruleEInt | otherlv_11= 'off' ) ) )+
             int cnt11=0;
             loop11:
             do {
@@ -877,25 +895,25 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
                 switch (alt11) {
             	case 1 :
-            	    // InternalOBJ.g:358:4: (otherlv_7= 'f' ( (lv_faces_8_0= ruleFace ) ) )
+            	    // InternalOBJ.g:367:4: (otherlv_7= 'f' ( (lv_faces_8_0= ruleFace ) ) )
             	    {
-            	    // InternalOBJ.g:358:4: (otherlv_7= 'f' ( (lv_faces_8_0= ruleFace ) ) )
-            	    // InternalOBJ.g:359:5: otherlv_7= 'f' ( (lv_faces_8_0= ruleFace ) )
+            	    // InternalOBJ.g:367:4: (otherlv_7= 'f' ( (lv_faces_8_0= ruleFace ) ) )
+            	    // InternalOBJ.g:368:5: otherlv_7= 'f' ( (lv_faces_8_0= ruleFace ) )
             	    {
-            	    otherlv_7=(Token)match(input,18,FOLLOW_15); 
+            	    otherlv_7=(Token)match(input,18,FOLLOW_14); 
 
             	    					newLeafNode(otherlv_7, grammarAccess.getPolyShapeAccess().getFKeyword_4_0_0());
             	    				
-            	    // InternalOBJ.g:363:5: ( (lv_faces_8_0= ruleFace ) )
-            	    // InternalOBJ.g:364:6: (lv_faces_8_0= ruleFace )
+            	    // InternalOBJ.g:372:5: ( (lv_faces_8_0= ruleFace ) )
+            	    // InternalOBJ.g:373:6: (lv_faces_8_0= ruleFace )
             	    {
-            	    // InternalOBJ.g:364:6: (lv_faces_8_0= ruleFace )
-            	    // InternalOBJ.g:365:7: lv_faces_8_0= ruleFace
+            	    // InternalOBJ.g:373:6: (lv_faces_8_0= ruleFace )
+            	    // InternalOBJ.g:374:7: lv_faces_8_0= ruleFace
             	    {
 
             	    							newCompositeNode(grammarAccess.getPolyShapeAccess().getFacesFaceParserRuleCall_4_0_1_0());
             	    						
-            	    pushFollow(FOLLOW_16);
+            	    pushFollow(FOLLOW_15);
             	    lv_faces_8_0=ruleFace();
 
             	    state._fsp--;
@@ -924,16 +942,16 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
             	    }
             	    break;
             	case 2 :
-            	    // InternalOBJ.g:384:4: (otherlv_9= 's' ( ruleEInt | otherlv_11= 'off' ) )
+            	    // InternalOBJ.g:393:4: (otherlv_9= 's' ( ruleEInt | otherlv_11= 'off' ) )
             	    {
-            	    // InternalOBJ.g:384:4: (otherlv_9= 's' ( ruleEInt | otherlv_11= 'off' ) )
-            	    // InternalOBJ.g:385:5: otherlv_9= 's' ( ruleEInt | otherlv_11= 'off' )
+            	    // InternalOBJ.g:393:4: (otherlv_9= 's' ( ruleEInt | otherlv_11= 'off' ) )
+            	    // InternalOBJ.g:394:5: otherlv_9= 's' ( ruleEInt | otherlv_11= 'off' )
             	    {
-            	    otherlv_9=(Token)match(input,19,FOLLOW_17); 
+            	    otherlv_9=(Token)match(input,19,FOLLOW_16); 
 
             	    					newLeafNode(otherlv_9, grammarAccess.getPolyShapeAccess().getSKeyword_4_1_0());
             	    				
-            	    // InternalOBJ.g:389:5: ( ruleEInt | otherlv_11= 'off' )
+            	    // InternalOBJ.g:398:5: ( ruleEInt | otherlv_11= 'off' )
             	    int alt10=2;
             	    int LA10_0 = input.LA(1);
 
@@ -951,12 +969,12 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
             	    }
             	    switch (alt10) {
             	        case 1 :
-            	            // InternalOBJ.g:390:6: ruleEInt
+            	            // InternalOBJ.g:399:6: ruleEInt
             	            {
 
             	            						newCompositeNode(grammarAccess.getPolyShapeAccess().getEIntParserRuleCall_4_1_1_0());
             	            					
-            	            pushFollow(FOLLOW_16);
+            	            pushFollow(FOLLOW_15);
             	            ruleEInt();
 
             	            state._fsp--;
@@ -968,9 +986,9 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
             	            }
             	            break;
             	        case 2 :
-            	            // InternalOBJ.g:398:6: otherlv_11= 'off'
+            	            // InternalOBJ.g:407:6: otherlv_11= 'off'
             	            {
-            	            otherlv_11=(Token)match(input,20,FOLLOW_16); 
+            	            otherlv_11=(Token)match(input,20,FOLLOW_15); 
 
             	            						newLeafNode(otherlv_11, grammarAccess.getPolyShapeAccess().getOffKeyword_4_1_1_1());
             	            					
@@ -1019,7 +1037,7 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleFace"
-    // InternalOBJ.g:409:1: entryRuleFace returns [EObject current=null] : iv_ruleFace= ruleFace EOF ;
+    // InternalOBJ.g:418:1: entryRuleFace returns [EObject current=null] : iv_ruleFace= ruleFace EOF ;
     public final EObject entryRuleFace() throws RecognitionException {
         EObject current = null;
 
@@ -1027,8 +1045,8 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalOBJ.g:409:45: (iv_ruleFace= ruleFace EOF )
-            // InternalOBJ.g:410:2: iv_ruleFace= ruleFace EOF
+            // InternalOBJ.g:418:45: (iv_ruleFace= ruleFace EOF )
+            // InternalOBJ.g:419:2: iv_ruleFace= ruleFace EOF
             {
              newCompositeNode(grammarAccess.getFaceRule()); 
             pushFollow(FOLLOW_1);
@@ -1055,7 +1073,7 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleFace"
-    // InternalOBJ.g:416:1: ruleFace returns [EObject current=null] : ( () ( ( (lv_vertexIndices_1_0= ruleEInt ) ) (otherlv_2= '/' ( ( (lv_textureIndices_3_0= ruleEInt ) ) | ( ( (lv_textureIndices_4_0= ruleEInt ) ) otherlv_5= '/' ruleEInt ) | (otherlv_7= '/' ruleEInt ) ) )? )* ) ;
+    // InternalOBJ.g:425:1: ruleFace returns [EObject current=null] : ( () ( ( (lv_vertexIndices_1_0= ruleEInt ) ) (otherlv_2= '/' ( ( (lv_textureIndices_3_0= ruleEInt ) ) | ( ( (lv_textureIndices_4_0= ruleEInt ) ) otherlv_5= '/' ruleEInt ) | (otherlv_7= '/' ruleEInt ) ) )? )* ) ;
     public final EObject ruleFace() throws RecognitionException {
         EObject current = null;
 
@@ -1073,14 +1091,14 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalOBJ.g:422:2: ( ( () ( ( (lv_vertexIndices_1_0= ruleEInt ) ) (otherlv_2= '/' ( ( (lv_textureIndices_3_0= ruleEInt ) ) | ( ( (lv_textureIndices_4_0= ruleEInt ) ) otherlv_5= '/' ruleEInt ) | (otherlv_7= '/' ruleEInt ) ) )? )* ) )
-            // InternalOBJ.g:423:2: ( () ( ( (lv_vertexIndices_1_0= ruleEInt ) ) (otherlv_2= '/' ( ( (lv_textureIndices_3_0= ruleEInt ) ) | ( ( (lv_textureIndices_4_0= ruleEInt ) ) otherlv_5= '/' ruleEInt ) | (otherlv_7= '/' ruleEInt ) ) )? )* )
+            // InternalOBJ.g:431:2: ( ( () ( ( (lv_vertexIndices_1_0= ruleEInt ) ) (otherlv_2= '/' ( ( (lv_textureIndices_3_0= ruleEInt ) ) | ( ( (lv_textureIndices_4_0= ruleEInt ) ) otherlv_5= '/' ruleEInt ) | (otherlv_7= '/' ruleEInt ) ) )? )* ) )
+            // InternalOBJ.g:432:2: ( () ( ( (lv_vertexIndices_1_0= ruleEInt ) ) (otherlv_2= '/' ( ( (lv_textureIndices_3_0= ruleEInt ) ) | ( ( (lv_textureIndices_4_0= ruleEInt ) ) otherlv_5= '/' ruleEInt ) | (otherlv_7= '/' ruleEInt ) ) )? )* )
             {
-            // InternalOBJ.g:423:2: ( () ( ( (lv_vertexIndices_1_0= ruleEInt ) ) (otherlv_2= '/' ( ( (lv_textureIndices_3_0= ruleEInt ) ) | ( ( (lv_textureIndices_4_0= ruleEInt ) ) otherlv_5= '/' ruleEInt ) | (otherlv_7= '/' ruleEInt ) ) )? )* )
-            // InternalOBJ.g:424:3: () ( ( (lv_vertexIndices_1_0= ruleEInt ) ) (otherlv_2= '/' ( ( (lv_textureIndices_3_0= ruleEInt ) ) | ( ( (lv_textureIndices_4_0= ruleEInt ) ) otherlv_5= '/' ruleEInt ) | (otherlv_7= '/' ruleEInt ) ) )? )*
+            // InternalOBJ.g:432:2: ( () ( ( (lv_vertexIndices_1_0= ruleEInt ) ) (otherlv_2= '/' ( ( (lv_textureIndices_3_0= ruleEInt ) ) | ( ( (lv_textureIndices_4_0= ruleEInt ) ) otherlv_5= '/' ruleEInt ) | (otherlv_7= '/' ruleEInt ) ) )? )* )
+            // InternalOBJ.g:433:3: () ( ( (lv_vertexIndices_1_0= ruleEInt ) ) (otherlv_2= '/' ( ( (lv_textureIndices_3_0= ruleEInt ) ) | ( ( (lv_textureIndices_4_0= ruleEInt ) ) otherlv_5= '/' ruleEInt ) | (otherlv_7= '/' ruleEInt ) ) )? )*
             {
-            // InternalOBJ.g:424:3: ()
-            // InternalOBJ.g:425:4: 
+            // InternalOBJ.g:433:3: ()
+            // InternalOBJ.g:434:4: 
             {
 
             				current = forceCreateModelElement(
@@ -1090,7 +1108,7 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalOBJ.g:431:3: ( ( (lv_vertexIndices_1_0= ruleEInt ) ) (otherlv_2= '/' ( ( (lv_textureIndices_3_0= ruleEInt ) ) | ( ( (lv_textureIndices_4_0= ruleEInt ) ) otherlv_5= '/' ruleEInt ) | (otherlv_7= '/' ruleEInt ) ) )? )*
+            // InternalOBJ.g:440:3: ( ( (lv_vertexIndices_1_0= ruleEInt ) ) (otherlv_2= '/' ( ( (lv_textureIndices_3_0= ruleEInt ) ) | ( ( (lv_textureIndices_4_0= ruleEInt ) ) otherlv_5= '/' ruleEInt ) | (otherlv_7= '/' ruleEInt ) ) )? )*
             loop14:
             do {
                 int alt14=2;
@@ -1103,18 +1121,18 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
                 switch (alt14) {
             	case 1 :
-            	    // InternalOBJ.g:432:4: ( (lv_vertexIndices_1_0= ruleEInt ) ) (otherlv_2= '/' ( ( (lv_textureIndices_3_0= ruleEInt ) ) | ( ( (lv_textureIndices_4_0= ruleEInt ) ) otherlv_5= '/' ruleEInt ) | (otherlv_7= '/' ruleEInt ) ) )?
+            	    // InternalOBJ.g:441:4: ( (lv_vertexIndices_1_0= ruleEInt ) ) (otherlv_2= '/' ( ( (lv_textureIndices_3_0= ruleEInt ) ) | ( ( (lv_textureIndices_4_0= ruleEInt ) ) otherlv_5= '/' ruleEInt ) | (otherlv_7= '/' ruleEInt ) ) )?
             	    {
-            	    // InternalOBJ.g:432:4: ( (lv_vertexIndices_1_0= ruleEInt ) )
-            	    // InternalOBJ.g:433:5: (lv_vertexIndices_1_0= ruleEInt )
+            	    // InternalOBJ.g:441:4: ( (lv_vertexIndices_1_0= ruleEInt ) )
+            	    // InternalOBJ.g:442:5: (lv_vertexIndices_1_0= ruleEInt )
             	    {
-            	    // InternalOBJ.g:433:5: (lv_vertexIndices_1_0= ruleEInt )
-            	    // InternalOBJ.g:434:6: lv_vertexIndices_1_0= ruleEInt
+            	    // InternalOBJ.g:442:5: (lv_vertexIndices_1_0= ruleEInt )
+            	    // InternalOBJ.g:443:6: lv_vertexIndices_1_0= ruleEInt
             	    {
 
             	    						newCompositeNode(grammarAccess.getFaceAccess().getVertexIndicesEIntParserRuleCall_1_0_0());
             	    					
-            	    pushFollow(FOLLOW_18);
+            	    pushFollow(FOLLOW_17);
             	    lv_vertexIndices_1_0=ruleEInt();
 
             	    state._fsp--;
@@ -1136,7 +1154,7 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    // InternalOBJ.g:451:4: (otherlv_2= '/' ( ( (lv_textureIndices_3_0= ruleEInt ) ) | ( ( (lv_textureIndices_4_0= ruleEInt ) ) otherlv_5= '/' ruleEInt ) | (otherlv_7= '/' ruleEInt ) ) )?
+            	    // InternalOBJ.g:460:4: (otherlv_2= '/' ( ( (lv_textureIndices_3_0= ruleEInt ) ) | ( ( (lv_textureIndices_4_0= ruleEInt ) ) otherlv_5= '/' ruleEInt ) | (otherlv_7= '/' ruleEInt ) ) )?
             	    int alt13=2;
             	    int LA13_0 = input.LA(1);
 
@@ -1145,13 +1163,13 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
             	    }
             	    switch (alt13) {
             	        case 1 :
-            	            // InternalOBJ.g:452:5: otherlv_2= '/' ( ( (lv_textureIndices_3_0= ruleEInt ) ) | ( ( (lv_textureIndices_4_0= ruleEInt ) ) otherlv_5= '/' ruleEInt ) | (otherlv_7= '/' ruleEInt ) )
+            	            // InternalOBJ.g:461:5: otherlv_2= '/' ( ( (lv_textureIndices_3_0= ruleEInt ) ) | ( ( (lv_textureIndices_4_0= ruleEInt ) ) otherlv_5= '/' ruleEInt ) | (otherlv_7= '/' ruleEInt ) )
             	            {
-            	            otherlv_2=(Token)match(input,21,FOLLOW_19); 
+            	            otherlv_2=(Token)match(input,21,FOLLOW_18); 
 
             	            					newLeafNode(otherlv_2, grammarAccess.getFaceAccess().getSolidusKeyword_1_1_0());
             	            				
-            	            // InternalOBJ.g:456:5: ( ( (lv_textureIndices_3_0= ruleEInt ) ) | ( ( (lv_textureIndices_4_0= ruleEInt ) ) otherlv_5= '/' ruleEInt ) | (otherlv_7= '/' ruleEInt ) )
+            	            // InternalOBJ.g:465:5: ( ( (lv_textureIndices_3_0= ruleEInt ) ) | ( ( (lv_textureIndices_4_0= ruleEInt ) ) otherlv_5= '/' ruleEInt ) | (otherlv_7= '/' ruleEInt ) )
             	            int alt12=3;
             	            switch ( input.LA(1) ) {
             	            case 22:
@@ -1214,18 +1232,18 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
             	            switch (alt12) {
             	                case 1 :
-            	                    // InternalOBJ.g:457:6: ( (lv_textureIndices_3_0= ruleEInt ) )
+            	                    // InternalOBJ.g:466:6: ( (lv_textureIndices_3_0= ruleEInt ) )
             	                    {
-            	                    // InternalOBJ.g:457:6: ( (lv_textureIndices_3_0= ruleEInt ) )
-            	                    // InternalOBJ.g:458:7: (lv_textureIndices_3_0= ruleEInt )
+            	                    // InternalOBJ.g:466:6: ( (lv_textureIndices_3_0= ruleEInt ) )
+            	                    // InternalOBJ.g:467:7: (lv_textureIndices_3_0= ruleEInt )
             	                    {
-            	                    // InternalOBJ.g:458:7: (lv_textureIndices_3_0= ruleEInt )
-            	                    // InternalOBJ.g:459:8: lv_textureIndices_3_0= ruleEInt
+            	                    // InternalOBJ.g:467:7: (lv_textureIndices_3_0= ruleEInt )
+            	                    // InternalOBJ.g:468:8: lv_textureIndices_3_0= ruleEInt
             	                    {
 
             	                    								newCompositeNode(grammarAccess.getFaceAccess().getTextureIndicesEIntParserRuleCall_1_1_1_0_0());
             	                    							
-            	                    pushFollow(FOLLOW_20);
+            	                    pushFollow(FOLLOW_19);
             	                    lv_textureIndices_3_0=ruleEInt();
 
             	                    state._fsp--;
@@ -1251,21 +1269,21 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
             	                    }
             	                    break;
             	                case 2 :
-            	                    // InternalOBJ.g:477:6: ( ( (lv_textureIndices_4_0= ruleEInt ) ) otherlv_5= '/' ruleEInt )
+            	                    // InternalOBJ.g:486:6: ( ( (lv_textureIndices_4_0= ruleEInt ) ) otherlv_5= '/' ruleEInt )
             	                    {
-            	                    // InternalOBJ.g:477:6: ( ( (lv_textureIndices_4_0= ruleEInt ) ) otherlv_5= '/' ruleEInt )
-            	                    // InternalOBJ.g:478:7: ( (lv_textureIndices_4_0= ruleEInt ) ) otherlv_5= '/' ruleEInt
+            	                    // InternalOBJ.g:486:6: ( ( (lv_textureIndices_4_0= ruleEInt ) ) otherlv_5= '/' ruleEInt )
+            	                    // InternalOBJ.g:487:7: ( (lv_textureIndices_4_0= ruleEInt ) ) otherlv_5= '/' ruleEInt
             	                    {
-            	                    // InternalOBJ.g:478:7: ( (lv_textureIndices_4_0= ruleEInt ) )
-            	                    // InternalOBJ.g:479:8: (lv_textureIndices_4_0= ruleEInt )
+            	                    // InternalOBJ.g:487:7: ( (lv_textureIndices_4_0= ruleEInt ) )
+            	                    // InternalOBJ.g:488:8: (lv_textureIndices_4_0= ruleEInt )
             	                    {
-            	                    // InternalOBJ.g:479:8: (lv_textureIndices_4_0= ruleEInt )
-            	                    // InternalOBJ.g:480:9: lv_textureIndices_4_0= ruleEInt
+            	                    // InternalOBJ.g:488:8: (lv_textureIndices_4_0= ruleEInt )
+            	                    // InternalOBJ.g:489:9: lv_textureIndices_4_0= ruleEInt
             	                    {
 
             	                    									newCompositeNode(grammarAccess.getFaceAccess().getTextureIndicesEIntParserRuleCall_1_1_1_1_0_0());
             	                    								
-            	                    pushFollow(FOLLOW_21);
+            	                    pushFollow(FOLLOW_20);
             	                    lv_textureIndices_4_0=ruleEInt();
 
             	                    state._fsp--;
@@ -1294,7 +1312,7 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
             	                    							newCompositeNode(grammarAccess.getFaceAccess().getEIntParserRuleCall_1_1_1_1_2());
             	                    						
-            	                    pushFollow(FOLLOW_20);
+            	                    pushFollow(FOLLOW_19);
             	                    ruleEInt();
 
             	                    state._fsp--;
@@ -1309,10 +1327,10 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
             	                    }
             	                    break;
             	                case 3 :
-            	                    // InternalOBJ.g:510:6: (otherlv_7= '/' ruleEInt )
+            	                    // InternalOBJ.g:519:6: (otherlv_7= '/' ruleEInt )
             	                    {
-            	                    // InternalOBJ.g:510:6: (otherlv_7= '/' ruleEInt )
-            	                    // InternalOBJ.g:511:7: otherlv_7= '/' ruleEInt
+            	                    // InternalOBJ.g:519:6: (otherlv_7= '/' ruleEInt )
+            	                    // InternalOBJ.g:520:7: otherlv_7= '/' ruleEInt
             	                    {
             	                    otherlv_7=(Token)match(input,21,FOLLOW_8); 
 
@@ -1321,7 +1339,7 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
             	                    							newCompositeNode(grammarAccess.getFaceAccess().getEIntParserRuleCall_1_1_1_2_1());
             	                    						
-            	                    pushFollow(FOLLOW_20);
+            	                    pushFollow(FOLLOW_19);
             	                    ruleEInt();
 
             	                    state._fsp--;
@@ -1376,7 +1394,7 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleVertex"
-    // InternalOBJ.g:530:1: entryRuleVertex returns [EObject current=null] : iv_ruleVertex= ruleVertex EOF ;
+    // InternalOBJ.g:539:1: entryRuleVertex returns [EObject current=null] : iv_ruleVertex= ruleVertex EOF ;
     public final EObject entryRuleVertex() throws RecognitionException {
         EObject current = null;
 
@@ -1384,8 +1402,8 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalOBJ.g:530:47: (iv_ruleVertex= ruleVertex EOF )
-            // InternalOBJ.g:531:2: iv_ruleVertex= ruleVertex EOF
+            // InternalOBJ.g:539:47: (iv_ruleVertex= ruleVertex EOF )
+            // InternalOBJ.g:540:2: iv_ruleVertex= ruleVertex EOF
             {
              newCompositeNode(grammarAccess.getVertexRule()); 
             pushFollow(FOLLOW_1);
@@ -1412,7 +1430,7 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleVertex"
-    // InternalOBJ.g:537:1: ruleVertex returns [EObject current=null] : ( () ( (lv_x_1_0= ruleEDouble ) ) ( (lv_y_2_0= ruleEDouble ) ) ( (lv_z_3_0= ruleEDouble ) ) ) ;
+    // InternalOBJ.g:546:1: ruleVertex returns [EObject current=null] : ( () ( (lv_x_1_0= ruleEDouble ) ) ( (lv_y_2_0= ruleEDouble ) ) ( (lv_z_3_0= ruleEDouble ) ) ) ;
     public final EObject ruleVertex() throws RecognitionException {
         EObject current = null;
 
@@ -1427,14 +1445,14 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalOBJ.g:543:2: ( ( () ( (lv_x_1_0= ruleEDouble ) ) ( (lv_y_2_0= ruleEDouble ) ) ( (lv_z_3_0= ruleEDouble ) ) ) )
-            // InternalOBJ.g:544:2: ( () ( (lv_x_1_0= ruleEDouble ) ) ( (lv_y_2_0= ruleEDouble ) ) ( (lv_z_3_0= ruleEDouble ) ) )
+            // InternalOBJ.g:552:2: ( ( () ( (lv_x_1_0= ruleEDouble ) ) ( (lv_y_2_0= ruleEDouble ) ) ( (lv_z_3_0= ruleEDouble ) ) ) )
+            // InternalOBJ.g:553:2: ( () ( (lv_x_1_0= ruleEDouble ) ) ( (lv_y_2_0= ruleEDouble ) ) ( (lv_z_3_0= ruleEDouble ) ) )
             {
-            // InternalOBJ.g:544:2: ( () ( (lv_x_1_0= ruleEDouble ) ) ( (lv_y_2_0= ruleEDouble ) ) ( (lv_z_3_0= ruleEDouble ) ) )
-            // InternalOBJ.g:545:3: () ( (lv_x_1_0= ruleEDouble ) ) ( (lv_y_2_0= ruleEDouble ) ) ( (lv_z_3_0= ruleEDouble ) )
+            // InternalOBJ.g:553:2: ( () ( (lv_x_1_0= ruleEDouble ) ) ( (lv_y_2_0= ruleEDouble ) ) ( (lv_z_3_0= ruleEDouble ) ) )
+            // InternalOBJ.g:554:3: () ( (lv_x_1_0= ruleEDouble ) ) ( (lv_y_2_0= ruleEDouble ) ) ( (lv_z_3_0= ruleEDouble ) )
             {
-            // InternalOBJ.g:545:3: ()
-            // InternalOBJ.g:546:4: 
+            // InternalOBJ.g:554:3: ()
+            // InternalOBJ.g:555:4: 
             {
 
             				current = forceCreateModelElement(
@@ -1444,11 +1462,11 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalOBJ.g:552:3: ( (lv_x_1_0= ruleEDouble ) )
-            // InternalOBJ.g:553:4: (lv_x_1_0= ruleEDouble )
+            // InternalOBJ.g:561:3: ( (lv_x_1_0= ruleEDouble ) )
+            // InternalOBJ.g:562:4: (lv_x_1_0= ruleEDouble )
             {
-            // InternalOBJ.g:553:4: (lv_x_1_0= ruleEDouble )
-            // InternalOBJ.g:554:5: lv_x_1_0= ruleEDouble
+            // InternalOBJ.g:562:4: (lv_x_1_0= ruleEDouble )
+            // InternalOBJ.g:563:5: lv_x_1_0= ruleEDouble
             {
 
             					newCompositeNode(grammarAccess.getVertexAccess().getXEDoubleParserRuleCall_1_0());
@@ -1475,11 +1493,11 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalOBJ.g:571:3: ( (lv_y_2_0= ruleEDouble ) )
-            // InternalOBJ.g:572:4: (lv_y_2_0= ruleEDouble )
+            // InternalOBJ.g:580:3: ( (lv_y_2_0= ruleEDouble ) )
+            // InternalOBJ.g:581:4: (lv_y_2_0= ruleEDouble )
             {
-            // InternalOBJ.g:572:4: (lv_y_2_0= ruleEDouble )
-            // InternalOBJ.g:573:5: lv_y_2_0= ruleEDouble
+            // InternalOBJ.g:581:4: (lv_y_2_0= ruleEDouble )
+            // InternalOBJ.g:582:5: lv_y_2_0= ruleEDouble
             {
 
             					newCompositeNode(grammarAccess.getVertexAccess().getYEDoubleParserRuleCall_2_0());
@@ -1506,11 +1524,11 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalOBJ.g:590:3: ( (lv_z_3_0= ruleEDouble ) )
-            // InternalOBJ.g:591:4: (lv_z_3_0= ruleEDouble )
+            // InternalOBJ.g:599:3: ( (lv_z_3_0= ruleEDouble ) )
+            // InternalOBJ.g:600:4: (lv_z_3_0= ruleEDouble )
             {
-            // InternalOBJ.g:591:4: (lv_z_3_0= ruleEDouble )
-            // InternalOBJ.g:592:5: lv_z_3_0= ruleEDouble
+            // InternalOBJ.g:600:4: (lv_z_3_0= ruleEDouble )
+            // InternalOBJ.g:601:5: lv_z_3_0= ruleEDouble
             {
 
             					newCompositeNode(grammarAccess.getVertexAccess().getZEDoubleParserRuleCall_3_0());
@@ -1560,7 +1578,7 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTextureVertex"
-    // InternalOBJ.g:613:1: entryRuleTextureVertex returns [EObject current=null] : iv_ruleTextureVertex= ruleTextureVertex EOF ;
+    // InternalOBJ.g:622:1: entryRuleTextureVertex returns [EObject current=null] : iv_ruleTextureVertex= ruleTextureVertex EOF ;
     public final EObject entryRuleTextureVertex() throws RecognitionException {
         EObject current = null;
 
@@ -1568,8 +1586,8 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalOBJ.g:613:54: (iv_ruleTextureVertex= ruleTextureVertex EOF )
-            // InternalOBJ.g:614:2: iv_ruleTextureVertex= ruleTextureVertex EOF
+            // InternalOBJ.g:622:54: (iv_ruleTextureVertex= ruleTextureVertex EOF )
+            // InternalOBJ.g:623:2: iv_ruleTextureVertex= ruleTextureVertex EOF
             {
              newCompositeNode(grammarAccess.getTextureVertexRule()); 
             pushFollow(FOLLOW_1);
@@ -1596,7 +1614,7 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTextureVertex"
-    // InternalOBJ.g:620:1: ruleTextureVertex returns [EObject current=null] : ( ( (lv_x_0_0= ruleEDouble ) ) ( (lv_y_1_0= ruleEDouble ) ) ( (lv_z_2_0= ruleEDouble ) )? ) ;
+    // InternalOBJ.g:629:1: ruleTextureVertex returns [EObject current=null] : ( ( (lv_x_0_0= ruleEDouble ) ) ( (lv_y_1_0= ruleEDouble ) ) ( (lv_z_2_0= ruleEDouble ) )? ) ;
     public final EObject ruleTextureVertex() throws RecognitionException {
         EObject current = null;
 
@@ -1611,17 +1629,17 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalOBJ.g:626:2: ( ( ( (lv_x_0_0= ruleEDouble ) ) ( (lv_y_1_0= ruleEDouble ) ) ( (lv_z_2_0= ruleEDouble ) )? ) )
-            // InternalOBJ.g:627:2: ( ( (lv_x_0_0= ruleEDouble ) ) ( (lv_y_1_0= ruleEDouble ) ) ( (lv_z_2_0= ruleEDouble ) )? )
+            // InternalOBJ.g:635:2: ( ( ( (lv_x_0_0= ruleEDouble ) ) ( (lv_y_1_0= ruleEDouble ) ) ( (lv_z_2_0= ruleEDouble ) )? ) )
+            // InternalOBJ.g:636:2: ( ( (lv_x_0_0= ruleEDouble ) ) ( (lv_y_1_0= ruleEDouble ) ) ( (lv_z_2_0= ruleEDouble ) )? )
             {
-            // InternalOBJ.g:627:2: ( ( (lv_x_0_0= ruleEDouble ) ) ( (lv_y_1_0= ruleEDouble ) ) ( (lv_z_2_0= ruleEDouble ) )? )
-            // InternalOBJ.g:628:3: ( (lv_x_0_0= ruleEDouble ) ) ( (lv_y_1_0= ruleEDouble ) ) ( (lv_z_2_0= ruleEDouble ) )?
+            // InternalOBJ.g:636:2: ( ( (lv_x_0_0= ruleEDouble ) ) ( (lv_y_1_0= ruleEDouble ) ) ( (lv_z_2_0= ruleEDouble ) )? )
+            // InternalOBJ.g:637:3: ( (lv_x_0_0= ruleEDouble ) ) ( (lv_y_1_0= ruleEDouble ) ) ( (lv_z_2_0= ruleEDouble ) )?
             {
-            // InternalOBJ.g:628:3: ( (lv_x_0_0= ruleEDouble ) )
-            // InternalOBJ.g:629:4: (lv_x_0_0= ruleEDouble )
+            // InternalOBJ.g:637:3: ( (lv_x_0_0= ruleEDouble ) )
+            // InternalOBJ.g:638:4: (lv_x_0_0= ruleEDouble )
             {
-            // InternalOBJ.g:629:4: (lv_x_0_0= ruleEDouble )
-            // InternalOBJ.g:630:5: lv_x_0_0= ruleEDouble
+            // InternalOBJ.g:638:4: (lv_x_0_0= ruleEDouble )
+            // InternalOBJ.g:639:5: lv_x_0_0= ruleEDouble
             {
 
             					newCompositeNode(grammarAccess.getTextureVertexAccess().getXEDoubleParserRuleCall_0_0());
@@ -1648,16 +1666,16 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalOBJ.g:647:3: ( (lv_y_1_0= ruleEDouble ) )
-            // InternalOBJ.g:648:4: (lv_y_1_0= ruleEDouble )
+            // InternalOBJ.g:656:3: ( (lv_y_1_0= ruleEDouble ) )
+            // InternalOBJ.g:657:4: (lv_y_1_0= ruleEDouble )
             {
-            // InternalOBJ.g:648:4: (lv_y_1_0= ruleEDouble )
-            // InternalOBJ.g:649:5: lv_y_1_0= ruleEDouble
+            // InternalOBJ.g:657:4: (lv_y_1_0= ruleEDouble )
+            // InternalOBJ.g:658:5: lv_y_1_0= ruleEDouble
             {
 
             					newCompositeNode(grammarAccess.getTextureVertexAccess().getYEDoubleParserRuleCall_1_0());
             				
-            pushFollow(FOLLOW_20);
+            pushFollow(FOLLOW_19);
             lv_y_1_0=ruleEDouble();
 
             state._fsp--;
@@ -1679,19 +1697,19 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalOBJ.g:666:3: ( (lv_z_2_0= ruleEDouble ) )?
+            // InternalOBJ.g:675:3: ( (lv_z_2_0= ruleEDouble ) )?
             int alt15=2;
             int LA15_0 = input.LA(1);
 
-            if ( ((LA15_0>=RULE_DOUBLE && LA15_0<=RULE_INT)||LA15_0==22) ) {
+            if ( (LA15_0==RULE_INT||LA15_0==RULE_DOUBLE||LA15_0==22) ) {
                 alt15=1;
             }
             switch (alt15) {
                 case 1 :
-                    // InternalOBJ.g:667:4: (lv_z_2_0= ruleEDouble )
+                    // InternalOBJ.g:676:4: (lv_z_2_0= ruleEDouble )
                     {
-                    // InternalOBJ.g:667:4: (lv_z_2_0= ruleEDouble )
-                    // InternalOBJ.g:668:5: lv_z_2_0= ruleEDouble
+                    // InternalOBJ.g:676:4: (lv_z_2_0= ruleEDouble )
+                    // InternalOBJ.g:677:5: lv_z_2_0= ruleEDouble
                     {
 
                     					newCompositeNode(grammarAccess.getTextureVertexAccess().getZEDoubleParserRuleCall_2_0());
@@ -1744,7 +1762,7 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleMaterial"
-    // InternalOBJ.g:689:1: entryRuleMaterial returns [EObject current=null] : iv_ruleMaterial= ruleMaterial EOF ;
+    // InternalOBJ.g:698:1: entryRuleMaterial returns [EObject current=null] : iv_ruleMaterial= ruleMaterial EOF ;
     public final EObject entryRuleMaterial() throws RecognitionException {
         EObject current = null;
 
@@ -1752,8 +1770,8 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalOBJ.g:689:49: (iv_ruleMaterial= ruleMaterial EOF )
-            // InternalOBJ.g:690:2: iv_ruleMaterial= ruleMaterial EOF
+            // InternalOBJ.g:698:49: (iv_ruleMaterial= ruleMaterial EOF )
+            // InternalOBJ.g:699:2: iv_ruleMaterial= ruleMaterial EOF
             {
              newCompositeNode(grammarAccess.getMaterialRule()); 
             pushFollow(FOLLOW_1);
@@ -1780,7 +1798,7 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMaterial"
-    // InternalOBJ.g:696:1: ruleMaterial returns [EObject current=null] : ( () ( (lv_phongMatName_1_0= ruleEString ) ) ) ;
+    // InternalOBJ.g:705:1: ruleMaterial returns [EObject current=null] : ( () ( (lv_phongMatName_1_0= ruleEString ) ) ) ;
     public final EObject ruleMaterial() throws RecognitionException {
         EObject current = null;
 
@@ -1791,14 +1809,14 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalOBJ.g:702:2: ( ( () ( (lv_phongMatName_1_0= ruleEString ) ) ) )
-            // InternalOBJ.g:703:2: ( () ( (lv_phongMatName_1_0= ruleEString ) ) )
+            // InternalOBJ.g:711:2: ( ( () ( (lv_phongMatName_1_0= ruleEString ) ) ) )
+            // InternalOBJ.g:712:2: ( () ( (lv_phongMatName_1_0= ruleEString ) ) )
             {
-            // InternalOBJ.g:703:2: ( () ( (lv_phongMatName_1_0= ruleEString ) ) )
-            // InternalOBJ.g:704:3: () ( (lv_phongMatName_1_0= ruleEString ) )
+            // InternalOBJ.g:712:2: ( () ( (lv_phongMatName_1_0= ruleEString ) ) )
+            // InternalOBJ.g:713:3: () ( (lv_phongMatName_1_0= ruleEString ) )
             {
-            // InternalOBJ.g:704:3: ()
-            // InternalOBJ.g:705:4: 
+            // InternalOBJ.g:713:3: ()
+            // InternalOBJ.g:714:4: 
             {
 
             				current = forceCreateModelElement(
@@ -1808,11 +1826,11 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalOBJ.g:711:3: ( (lv_phongMatName_1_0= ruleEString ) )
-            // InternalOBJ.g:712:4: (lv_phongMatName_1_0= ruleEString )
+            // InternalOBJ.g:720:3: ( (lv_phongMatName_1_0= ruleEString ) )
+            // InternalOBJ.g:721:4: (lv_phongMatName_1_0= ruleEString )
             {
-            // InternalOBJ.g:712:4: (lv_phongMatName_1_0= ruleEString )
-            // InternalOBJ.g:713:5: lv_phongMatName_1_0= ruleEString
+            // InternalOBJ.g:721:4: (lv_phongMatName_1_0= ruleEString )
+            // InternalOBJ.g:722:5: lv_phongMatName_1_0= ruleEString
             {
 
             					newCompositeNode(grammarAccess.getMaterialAccess().getPhongMatNameEStringParserRuleCall_1_0());
@@ -1862,7 +1880,7 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleEInt"
-    // InternalOBJ.g:734:1: entryRuleEInt returns [String current=null] : iv_ruleEInt= ruleEInt EOF ;
+    // InternalOBJ.g:743:1: entryRuleEInt returns [String current=null] : iv_ruleEInt= ruleEInt EOF ;
     public final String entryRuleEInt() throws RecognitionException {
         String current = null;
 
@@ -1870,8 +1888,8 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalOBJ.g:734:44: (iv_ruleEInt= ruleEInt EOF )
-            // InternalOBJ.g:735:2: iv_ruleEInt= ruleEInt EOF
+            // InternalOBJ.g:743:44: (iv_ruleEInt= ruleEInt EOF )
+            // InternalOBJ.g:744:2: iv_ruleEInt= ruleEInt EOF
             {
              newCompositeNode(grammarAccess.getEIntRule()); 
             pushFollow(FOLLOW_1);
@@ -1898,7 +1916,7 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEInt"
-    // InternalOBJ.g:741:1: ruleEInt returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' )? this_INT_1= RULE_INT ) ;
+    // InternalOBJ.g:750:1: ruleEInt returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' )? this_INT_1= RULE_INT ) ;
     public final AntlrDatatypeRuleToken ruleEInt() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -1909,13 +1927,13 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalOBJ.g:747:2: ( ( (kw= '-' )? this_INT_1= RULE_INT ) )
-            // InternalOBJ.g:748:2: ( (kw= '-' )? this_INT_1= RULE_INT )
+            // InternalOBJ.g:756:2: ( ( (kw= '-' )? this_INT_1= RULE_INT ) )
+            // InternalOBJ.g:757:2: ( (kw= '-' )? this_INT_1= RULE_INT )
             {
-            // InternalOBJ.g:748:2: ( (kw= '-' )? this_INT_1= RULE_INT )
-            // InternalOBJ.g:749:3: (kw= '-' )? this_INT_1= RULE_INT
+            // InternalOBJ.g:757:2: ( (kw= '-' )? this_INT_1= RULE_INT )
+            // InternalOBJ.g:758:3: (kw= '-' )? this_INT_1= RULE_INT
             {
-            // InternalOBJ.g:749:3: (kw= '-' )?
+            // InternalOBJ.g:758:3: (kw= '-' )?
             int alt16=2;
             int LA16_0 = input.LA(1);
 
@@ -1924,9 +1942,9 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
             }
             switch (alt16) {
                 case 1 :
-                    // InternalOBJ.g:750:4: kw= '-'
+                    // InternalOBJ.g:759:4: kw= '-'
                     {
-                    kw=(Token)match(input,22,FOLLOW_22); 
+                    kw=(Token)match(input,22,FOLLOW_21); 
 
                     				current.merge(kw);
                     				newLeafNode(kw, grammarAccess.getEIntAccess().getHyphenMinusKeyword_0());
@@ -1967,7 +1985,7 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleEString"
-    // InternalOBJ.g:767:1: entryRuleEString returns [String current=null] : iv_ruleEString= ruleEString EOF ;
+    // InternalOBJ.g:776:1: entryRuleEString returns [String current=null] : iv_ruleEString= ruleEString EOF ;
     public final String entryRuleEString() throws RecognitionException {
         String current = null;
 
@@ -1975,8 +1993,8 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalOBJ.g:767:47: (iv_ruleEString= ruleEString EOF )
-            // InternalOBJ.g:768:2: iv_ruleEString= ruleEString EOF
+            // InternalOBJ.g:776:47: (iv_ruleEString= ruleEString EOF )
+            // InternalOBJ.g:777:2: iv_ruleEString= ruleEString EOF
             {
              newCompositeNode(grammarAccess.getEStringRule()); 
             pushFollow(FOLLOW_1);
@@ -2003,7 +2021,7 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEString"
-    // InternalOBJ.g:774:1: ruleEString returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_STRING_0= RULE_STRING | this_ID_1= RULE_ID | this_INT_2= RULE_INT | kw= '.' | kw= '/' | kw= '\\\\' | kw= ':' | kw= '_' | kw= '-' )+ ;
+    // InternalOBJ.g:783:1: ruleEString returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_STRING_0= RULE_STRING | this_ID_1= RULE_ID | this_INT_2= RULE_INT | kw= '.' | kw= '/' | kw= '\\\\' | kw= ':' | kw= '_' | kw= '-' )+ ;
     public final AntlrDatatypeRuleToken ruleEString() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -2016,10 +2034,10 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalOBJ.g:780:2: ( (this_STRING_0= RULE_STRING | this_ID_1= RULE_ID | this_INT_2= RULE_INT | kw= '.' | kw= '/' | kw= '\\\\' | kw= ':' | kw= '_' | kw= '-' )+ )
-            // InternalOBJ.g:781:2: (this_STRING_0= RULE_STRING | this_ID_1= RULE_ID | this_INT_2= RULE_INT | kw= '.' | kw= '/' | kw= '\\\\' | kw= ':' | kw= '_' | kw= '-' )+
+            // InternalOBJ.g:789:2: ( (this_STRING_0= RULE_STRING | this_ID_1= RULE_ID | this_INT_2= RULE_INT | kw= '.' | kw= '/' | kw= '\\\\' | kw= ':' | kw= '_' | kw= '-' )+ )
+            // InternalOBJ.g:790:2: (this_STRING_0= RULE_STRING | this_ID_1= RULE_ID | this_INT_2= RULE_INT | kw= '.' | kw= '/' | kw= '\\\\' | kw= ':' | kw= '_' | kw= '-' )+
             {
-            // InternalOBJ.g:781:2: (this_STRING_0= RULE_STRING | this_ID_1= RULE_ID | this_INT_2= RULE_INT | kw= '.' | kw= '/' | kw= '\\\\' | kw= ':' | kw= '_' | kw= '-' )+
+            // InternalOBJ.g:790:2: (this_STRING_0= RULE_STRING | this_ID_1= RULE_ID | this_INT_2= RULE_INT | kw= '.' | kw= '/' | kw= '\\\\' | kw= ':' | kw= '_' | kw= '-' )+
             int cnt17=0;
             loop17:
             do {
@@ -2075,9 +2093,9 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
                 switch (alt17) {
             	case 1 :
-            	    // InternalOBJ.g:782:3: this_STRING_0= RULE_STRING
+            	    // InternalOBJ.g:791:3: this_STRING_0= RULE_STRING
             	    {
-            	    this_STRING_0=(Token)match(input,RULE_STRING,FOLLOW_23); 
+            	    this_STRING_0=(Token)match(input,RULE_STRING,FOLLOW_22); 
 
             	    			current.merge(this_STRING_0);
             	    		
@@ -2088,9 +2106,9 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
             	    }
             	    break;
             	case 2 :
-            	    // InternalOBJ.g:790:3: this_ID_1= RULE_ID
+            	    // InternalOBJ.g:799:3: this_ID_1= RULE_ID
             	    {
-            	    this_ID_1=(Token)match(input,RULE_ID,FOLLOW_23); 
+            	    this_ID_1=(Token)match(input,RULE_ID,FOLLOW_22); 
 
             	    			current.merge(this_ID_1);
             	    		
@@ -2101,9 +2119,9 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
             	    }
             	    break;
             	case 3 :
-            	    // InternalOBJ.g:798:3: this_INT_2= RULE_INT
+            	    // InternalOBJ.g:807:3: this_INT_2= RULE_INT
             	    {
-            	    this_INT_2=(Token)match(input,RULE_INT,FOLLOW_23); 
+            	    this_INT_2=(Token)match(input,RULE_INT,FOLLOW_22); 
 
             	    			current.merge(this_INT_2);
             	    		
@@ -2114,9 +2132,9 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
             	    }
             	    break;
             	case 4 :
-            	    // InternalOBJ.g:806:3: kw= '.'
+            	    // InternalOBJ.g:815:3: kw= '.'
             	    {
-            	    kw=(Token)match(input,23,FOLLOW_23); 
+            	    kw=(Token)match(input,23,FOLLOW_22); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getEStringAccess().getFullStopKeyword_3());
@@ -2125,9 +2143,9 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
             	    }
             	    break;
             	case 5 :
-            	    // InternalOBJ.g:812:3: kw= '/'
+            	    // InternalOBJ.g:821:3: kw= '/'
             	    {
-            	    kw=(Token)match(input,21,FOLLOW_23); 
+            	    kw=(Token)match(input,21,FOLLOW_22); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getEStringAccess().getSolidusKeyword_4());
@@ -2136,9 +2154,9 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
             	    }
             	    break;
             	case 6 :
-            	    // InternalOBJ.g:818:3: kw= '\\\\'
+            	    // InternalOBJ.g:827:3: kw= '\\\\'
             	    {
-            	    kw=(Token)match(input,24,FOLLOW_23); 
+            	    kw=(Token)match(input,24,FOLLOW_22); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getEStringAccess().getReverseSolidusKeyword_5());
@@ -2147,9 +2165,9 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
             	    }
             	    break;
             	case 7 :
-            	    // InternalOBJ.g:824:3: kw= ':'
+            	    // InternalOBJ.g:833:3: kw= ':'
             	    {
-            	    kw=(Token)match(input,25,FOLLOW_23); 
+            	    kw=(Token)match(input,25,FOLLOW_22); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getEStringAccess().getColonKeyword_6());
@@ -2158,9 +2176,9 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
             	    }
             	    break;
             	case 8 :
-            	    // InternalOBJ.g:830:3: kw= '_'
+            	    // InternalOBJ.g:839:3: kw= '_'
             	    {
-            	    kw=(Token)match(input,26,FOLLOW_23); 
+            	    kw=(Token)match(input,26,FOLLOW_22); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getEStringAccess().get_Keyword_7());
@@ -2169,9 +2187,9 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
             	    }
             	    break;
             	case 9 :
-            	    // InternalOBJ.g:836:3: kw= '-'
+            	    // InternalOBJ.g:845:3: kw= '-'
             	    {
-            	    kw=(Token)match(input,22,FOLLOW_23); 
+            	    kw=(Token)match(input,22,FOLLOW_22); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getEStringAccess().getHyphenMinusKeyword_8());
@@ -2209,7 +2227,7 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleEDouble"
-    // InternalOBJ.g:845:1: entryRuleEDouble returns [String current=null] : iv_ruleEDouble= ruleEDouble EOF ;
+    // InternalOBJ.g:854:1: entryRuleEDouble returns [String current=null] : iv_ruleEDouble= ruleEDouble EOF ;
     public final String entryRuleEDouble() throws RecognitionException {
         String current = null;
 
@@ -2217,8 +2235,8 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalOBJ.g:845:47: (iv_ruleEDouble= ruleEDouble EOF )
-            // InternalOBJ.g:846:2: iv_ruleEDouble= ruleEDouble EOF
+            // InternalOBJ.g:854:47: (iv_ruleEDouble= ruleEDouble EOF )
+            // InternalOBJ.g:855:2: iv_ruleEDouble= ruleEDouble EOF
             {
              newCompositeNode(grammarAccess.getEDoubleRule()); 
             pushFollow(FOLLOW_1);
@@ -2245,7 +2263,7 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEDouble"
-    // InternalOBJ.g:852:1: ruleEDouble returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_DOUBLE_0= RULE_DOUBLE | this_EInt_1= ruleEInt ) ;
+    // InternalOBJ.g:861:1: ruleEDouble returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_DOUBLE_0= RULE_DOUBLE | this_EInt_1= ruleEInt ) ;
     public final AntlrDatatypeRuleToken ruleEDouble() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -2257,10 +2275,10 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalOBJ.g:858:2: ( (this_DOUBLE_0= RULE_DOUBLE | this_EInt_1= ruleEInt ) )
-            // InternalOBJ.g:859:2: (this_DOUBLE_0= RULE_DOUBLE | this_EInt_1= ruleEInt )
+            // InternalOBJ.g:867:2: ( (this_DOUBLE_0= RULE_DOUBLE | this_EInt_1= ruleEInt ) )
+            // InternalOBJ.g:868:2: (this_DOUBLE_0= RULE_DOUBLE | this_EInt_1= ruleEInt )
             {
-            // InternalOBJ.g:859:2: (this_DOUBLE_0= RULE_DOUBLE | this_EInt_1= ruleEInt )
+            // InternalOBJ.g:868:2: (this_DOUBLE_0= RULE_DOUBLE | this_EInt_1= ruleEInt )
             int alt18=2;
             int LA18_0 = input.LA(1);
 
@@ -2278,7 +2296,7 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
             }
             switch (alt18) {
                 case 1 :
-                    // InternalOBJ.g:860:3: this_DOUBLE_0= RULE_DOUBLE
+                    // InternalOBJ.g:869:3: this_DOUBLE_0= RULE_DOUBLE
                     {
                     this_DOUBLE_0=(Token)match(input,RULE_DOUBLE,FOLLOW_2); 
 
@@ -2291,7 +2309,7 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalOBJ.g:868:3: this_EInt_1= ruleEInt
+                    // InternalOBJ.g:877:3: this_EInt_1= ruleEInt
                     {
 
                     			newCompositeNode(grammarAccess.getEDoubleAccess().getEIntParserRuleCall_1());
@@ -2337,35 +2355,35 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
     protected DFA1 dfa1 = new DFA1(this);
     static final String dfa_1s = "\30\uffff";
     static final String dfa_2s = "\1\1\27\uffff";
-    static final String dfa_3s = "\1\14\1\uffff\2\5\2\uffff\22\5";
+    static final String dfa_3s = "\1\14\1\uffff\2\4\2\uffff\22\4";
     static final String dfa_4s = "\1\23\1\uffff\2\32\2\uffff\22\32";
     static final String dfa_5s = "\1\uffff\1\3\2\uffff\1\1\1\2\22\uffff";
     static final String dfa_6s = "\30\uffff}>";
     static final String[] dfa_7s = {
             "\1\2\1\3\3\4\3\5",
             "",
-            "\1\10\1\6\1\7\15\uffff\1\12\1\16\1\11\1\13\1\14\1\15",
-            "\1\21\1\17\1\20\6\uffff\3\4\3\5\1\uffff\1\23\1\27\1\22\1\24\1\25\1\26",
+            "\1\10\1\6\1\7\16\uffff\1\12\1\16\1\11\1\13\1\14\1\15",
+            "\1\21\1\17\1\20\7\uffff\3\4\3\5\1\uffff\1\23\1\27\1\22\1\24\1\25\1\26",
             "",
             "",
-            "\1\10\1\6\1\7\4\uffff\1\2\1\3\3\4\3\5\1\uffff\1\12\1\16\1\11\1\13\1\14\1\15",
-            "\1\10\1\6\1\7\4\uffff\1\2\1\3\3\4\3\5\1\uffff\1\12\1\16\1\11\1\13\1\14\1\15",
-            "\1\10\1\6\1\7\4\uffff\1\2\1\3\3\4\3\5\1\uffff\1\12\1\16\1\11\1\13\1\14\1\15",
-            "\1\10\1\6\1\7\4\uffff\1\2\1\3\3\4\3\5\1\uffff\1\12\1\16\1\11\1\13\1\14\1\15",
-            "\1\10\1\6\1\7\4\uffff\1\2\1\3\3\4\3\5\1\uffff\1\12\1\16\1\11\1\13\1\14\1\15",
-            "\1\10\1\6\1\7\4\uffff\1\2\1\3\3\4\3\5\1\uffff\1\12\1\16\1\11\1\13\1\14\1\15",
-            "\1\10\1\6\1\7\4\uffff\1\2\1\3\3\4\3\5\1\uffff\1\12\1\16\1\11\1\13\1\14\1\15",
-            "\1\10\1\6\1\7\4\uffff\1\2\1\3\3\4\3\5\1\uffff\1\12\1\16\1\11\1\13\1\14\1\15",
-            "\1\10\1\6\1\7\4\uffff\1\2\1\3\3\4\3\5\1\uffff\1\12\1\16\1\11\1\13\1\14\1\15",
-            "\1\21\1\17\1\20\6\uffff\3\4\3\5\1\uffff\1\23\1\27\1\22\1\24\1\25\1\26",
-            "\1\21\1\17\1\20\6\uffff\3\4\3\5\1\uffff\1\23\1\27\1\22\1\24\1\25\1\26",
-            "\1\21\1\17\1\20\6\uffff\3\4\3\5\1\uffff\1\23\1\27\1\22\1\24\1\25\1\26",
-            "\1\21\1\17\1\20\6\uffff\3\4\3\5\1\uffff\1\23\1\27\1\22\1\24\1\25\1\26",
-            "\1\21\1\17\1\20\6\uffff\3\4\3\5\1\uffff\1\23\1\27\1\22\1\24\1\25\1\26",
-            "\1\21\1\17\1\20\6\uffff\3\4\3\5\1\uffff\1\23\1\27\1\22\1\24\1\25\1\26",
-            "\1\21\1\17\1\20\6\uffff\3\4\3\5\1\uffff\1\23\1\27\1\22\1\24\1\25\1\26",
-            "\1\21\1\17\1\20\6\uffff\3\4\3\5\1\uffff\1\23\1\27\1\22\1\24\1\25\1\26",
-            "\1\21\1\17\1\20\6\uffff\3\4\3\5\1\uffff\1\23\1\27\1\22\1\24\1\25\1\26"
+            "\1\10\1\6\1\7\5\uffff\1\2\1\3\3\4\3\5\1\uffff\1\12\1\16\1\11\1\13\1\14\1\15",
+            "\1\10\1\6\1\7\5\uffff\1\2\1\3\3\4\3\5\1\uffff\1\12\1\16\1\11\1\13\1\14\1\15",
+            "\1\10\1\6\1\7\5\uffff\1\2\1\3\3\4\3\5\1\uffff\1\12\1\16\1\11\1\13\1\14\1\15",
+            "\1\10\1\6\1\7\5\uffff\1\2\1\3\3\4\3\5\1\uffff\1\12\1\16\1\11\1\13\1\14\1\15",
+            "\1\10\1\6\1\7\5\uffff\1\2\1\3\3\4\3\5\1\uffff\1\12\1\16\1\11\1\13\1\14\1\15",
+            "\1\10\1\6\1\7\5\uffff\1\2\1\3\3\4\3\5\1\uffff\1\12\1\16\1\11\1\13\1\14\1\15",
+            "\1\10\1\6\1\7\5\uffff\1\2\1\3\3\4\3\5\1\uffff\1\12\1\16\1\11\1\13\1\14\1\15",
+            "\1\10\1\6\1\7\5\uffff\1\2\1\3\3\4\3\5\1\uffff\1\12\1\16\1\11\1\13\1\14\1\15",
+            "\1\10\1\6\1\7\5\uffff\1\2\1\3\3\4\3\5\1\uffff\1\12\1\16\1\11\1\13\1\14\1\15",
+            "\1\21\1\17\1\20\7\uffff\3\4\3\5\1\uffff\1\23\1\27\1\22\1\24\1\25\1\26",
+            "\1\21\1\17\1\20\7\uffff\3\4\3\5\1\uffff\1\23\1\27\1\22\1\24\1\25\1\26",
+            "\1\21\1\17\1\20\7\uffff\3\4\3\5\1\uffff\1\23\1\27\1\22\1\24\1\25\1\26",
+            "\1\21\1\17\1\20\7\uffff\3\4\3\5\1\uffff\1\23\1\27\1\22\1\24\1\25\1\26",
+            "\1\21\1\17\1\20\7\uffff\3\4\3\5\1\uffff\1\23\1\27\1\22\1\24\1\25\1\26",
+            "\1\21\1\17\1\20\7\uffff\3\4\3\5\1\uffff\1\23\1\27\1\22\1\24\1\25\1\26",
+            "\1\21\1\17\1\20\7\uffff\3\4\3\5\1\uffff\1\23\1\27\1\22\1\24\1\25\1\26",
+            "\1\21\1\17\1\20\7\uffff\3\4\3\5\1\uffff\1\23\1\27\1\22\1\24\1\25\1\26",
+            "\1\21\1\17\1\20\7\uffff\3\4\3\5\1\uffff\1\23\1\27\1\22\1\24\1\25\1\26"
     };
 
     static final short[] dfa_1 = DFA.unpackEncodedString(dfa_1s);
@@ -2398,25 +2416,24 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_1 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_2 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_3 = new BitSet(new long[]{0x00000000000FF002L});
-    public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x0000000007E000E0L});
+    public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x0000000007E00070L});
     public static final BitSet FOLLOW_5 = new BitSet(new long[]{0x000000000001F000L});
-    public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x0000000007E1C0E0L});
+    public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x0000000007E1C070L});
     public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x000000000001C000L});
-    public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0000000000400030L});
+    public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0000000000400090L});
     public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x000000000001C002L});
-    public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x00000000000E3000L});
-    public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0000000007EE00E0L});
-    public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x00000000000E0000L});
-    public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x00000000000C0000L});
-    public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x00000000004C0030L});
-    public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x00000000000C0002L});
-    public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0000000000500030L});
-    public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0000000000600032L});
-    public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0000000000600030L});
-    public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0000000000400032L});
-    public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x0000000000200000L});
-    public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x0000000007E000E2L});
+    public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x00000000000E3000L});
+    public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0000000007EE0070L});
+    public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x00000000000E0000L});
+    public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x00000000000C0000L});
+    public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x00000000004C0090L});
+    public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x00000000000C0002L});
+    public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x0000000000500090L});
+    public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0000000000600092L});
+    public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0000000000600090L});
+    public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0000000000400092L});
+    public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0000000000200000L});
+    public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x0000000007E00072L});
 
 }

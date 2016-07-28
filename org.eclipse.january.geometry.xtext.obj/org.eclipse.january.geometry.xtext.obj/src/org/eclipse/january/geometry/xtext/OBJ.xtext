@@ -13,7 +13,7 @@ VertexSource returns VertexSource:
 	{VertexSource}
 	('mtllib' materialFiles += EString)*
 	('g' EString?)?
-	('v' vertices += Vertex | 'vt' textureCoordinates += TextureVertex | 'vn' DOUBLE DOUBLE DOUBLE)+
+	('v' vertices += Vertex | 'vt' textureCoordinates += TextureVertex | 'vn' EDouble EDouble EDouble)+
 ;
 
 PolyShape returns PolyShape:
@@ -54,7 +54,7 @@ EString returns ecore::EString:
 ;
 	
 EDouble returns ecore::EDouble:
-	DOUBLE | EInt
+	DOUBLE |  EInt
 ;
 
 	

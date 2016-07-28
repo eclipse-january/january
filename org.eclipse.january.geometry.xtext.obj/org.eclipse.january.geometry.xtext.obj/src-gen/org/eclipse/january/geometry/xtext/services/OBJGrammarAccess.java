@@ -72,17 +72,17 @@ public class OBJGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTextureCoordinatesTextureVertexParserRuleCall_3_1_1_0 = (RuleCall)cTextureCoordinatesAssignment_3_1_1.eContents().get(0);
 		private final Group cGroup_3_2 = (Group)cAlternatives_3.eContents().get(2);
 		private final Keyword cVnKeyword_3_2_0 = (Keyword)cGroup_3_2.eContents().get(0);
-		private final RuleCall cDOUBLETerminalRuleCall_3_2_1 = (RuleCall)cGroup_3_2.eContents().get(1);
-		private final RuleCall cDOUBLETerminalRuleCall_3_2_2 = (RuleCall)cGroup_3_2.eContents().get(2);
-		private final RuleCall cDOUBLETerminalRuleCall_3_2_3 = (RuleCall)cGroup_3_2.eContents().get(3);
+		private final RuleCall cEDoubleParserRuleCall_3_2_1 = (RuleCall)cGroup_3_2.eContents().get(1);
+		private final RuleCall cEDoubleParserRuleCall_3_2_2 = (RuleCall)cGroup_3_2.eContents().get(2);
+		private final RuleCall cEDoubleParserRuleCall_3_2_3 = (RuleCall)cGroup_3_2.eContents().get(3);
 		
 		//VertexSource:
 		//	{VertexSource} ('mtllib' materialFiles+=EString)* ('g' EString?)? ('v' vertices+=Vertex | 'vt'
-		//	textureCoordinates+=TextureVertex | 'vn' DOUBLE DOUBLE DOUBLE)+;
+		//	textureCoordinates+=TextureVertex | 'vn' EDouble EDouble EDouble)+;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//{VertexSource} ('mtllib' materialFiles+=EString)* ('g' EString?)? ('v' vertices+=Vertex | 'vt'
-		//textureCoordinates+=TextureVertex | 'vn' DOUBLE DOUBLE DOUBLE)+
+		//textureCoordinates+=TextureVertex | 'vn' EDouble EDouble EDouble)+
 		public Group getGroup() { return cGroup; }
 		
 		//{VertexSource}
@@ -109,7 +109,7 @@ public class OBJGrammarAccess extends AbstractGrammarElementFinder {
 		//EString?
 		public RuleCall getEStringParserRuleCall_2_1() { return cEStringParserRuleCall_2_1; }
 		
-		//('v' vertices+=Vertex | 'vt' textureCoordinates+=TextureVertex | 'vn' DOUBLE DOUBLE DOUBLE)+
+		//('v' vertices+=Vertex | 'vt' textureCoordinates+=TextureVertex | 'vn' EDouble EDouble EDouble)+
 		public Alternatives getAlternatives_3() { return cAlternatives_3; }
 		
 		//'v' vertices+=Vertex
@@ -136,20 +136,20 @@ public class OBJGrammarAccess extends AbstractGrammarElementFinder {
 		//TextureVertex
 		public RuleCall getTextureCoordinatesTextureVertexParserRuleCall_3_1_1_0() { return cTextureCoordinatesTextureVertexParserRuleCall_3_1_1_0; }
 		
-		//'vn' DOUBLE DOUBLE DOUBLE
+		//'vn' EDouble EDouble EDouble
 		public Group getGroup_3_2() { return cGroup_3_2; }
 		
 		//'vn'
 		public Keyword getVnKeyword_3_2_0() { return cVnKeyword_3_2_0; }
 		
-		//DOUBLE
-		public RuleCall getDOUBLETerminalRuleCall_3_2_1() { return cDOUBLETerminalRuleCall_3_2_1; }
+		//EDouble
+		public RuleCall getEDoubleParserRuleCall_3_2_1() { return cEDoubleParserRuleCall_3_2_1; }
 		
-		//DOUBLE
-		public RuleCall getDOUBLETerminalRuleCall_3_2_2() { return cDOUBLETerminalRuleCall_3_2_2; }
+		//EDouble
+		public RuleCall getEDoubleParserRuleCall_3_2_2() { return cEDoubleParserRuleCall_3_2_2; }
 		
-		//DOUBLE
-		public RuleCall getDOUBLETerminalRuleCall_3_2_3() { return cDOUBLETerminalRuleCall_3_2_3; }
+		//EDouble
+		public RuleCall getEDoubleParserRuleCall_3_2_3() { return cEDoubleParserRuleCall_3_2_3; }
 	}
 	public class PolyShapeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.january.geometry.xtext.OBJ.PolyShape");
@@ -596,7 +596,7 @@ public class OBJGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//VertexSource:
 	//	{VertexSource} ('mtllib' materialFiles+=EString)* ('g' EString?)? ('v' vertices+=Vertex | 'vt'
-	//	textureCoordinates+=TextureVertex | 'vn' DOUBLE DOUBLE DOUBLE)+;
+	//	textureCoordinates+=TextureVertex | 'vn' EDouble EDouble EDouble)+;
 	public VertexSourceElements getVertexSourceAccess() {
 		return pVertexSource;
 	}

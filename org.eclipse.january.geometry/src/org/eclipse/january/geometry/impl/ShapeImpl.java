@@ -291,7 +291,7 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public Vertex getCenter() {
@@ -302,15 +302,22 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, GeometryPackage.SHAPE__CENTER, oldCenter, center));
 			}
+		} else {
+			if (center == null) {
+				center = GeometryFactory.eINSTANCE.createVertex();
+			}
 		}
 		return center;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	public Vertex basicGetCenter() {
+		if (center == null) {
+			center = GeometryFactory.eINSTANCE.createVertex();
+		}
 		return center;
 	}
 

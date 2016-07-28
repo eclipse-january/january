@@ -1301,11 +1301,11 @@ public class InternalOBJParser extends AbstractInternalContentAssistParser {
                 if ( (LA7_1==RULE_INT) ) {
                     int LA7_2 = input.LA(3);
 
-                    if ( (LA7_2==14) ) {
-                        alt7=2;
-                    }
-                    else if ( (LA7_2==EOF||LA7_2==RULE_INT||(LA7_2>=18 && LA7_2<=26)) ) {
+                    if ( (LA7_2==EOF||LA7_2==RULE_INT||(LA7_2>=18 && LA7_2<=26)) ) {
                         alt7=1;
+                    }
+                    else if ( (LA7_2==14) ) {
+                        alt7=2;
                     }
                     else {
                         NoViableAltException nvae =
@@ -1326,11 +1326,11 @@ public class InternalOBJParser extends AbstractInternalContentAssistParser {
                 {
                 int LA7_2 = input.LA(2);
 
-                if ( (LA7_2==14) ) {
-                    alt7=2;
-                }
-                else if ( (LA7_2==EOF||LA7_2==RULE_INT||(LA7_2>=18 && LA7_2<=26)) ) {
+                if ( (LA7_2==EOF||LA7_2==RULE_INT||(LA7_2>=18 && LA7_2<=26)) ) {
                     alt7=1;
+                }
+                else if ( (LA7_2==14) ) {
+                    alt7=2;
                 }
                 else {
                     NoViableAltException nvae =
@@ -2767,7 +2767,7 @@ public class InternalOBJParser extends AbstractInternalContentAssistParser {
             // InternalOBJ.g:845:1: ( rule__VertexSource__Group_3_2__0__Impl rule__VertexSource__Group_3_2__1 )
             // InternalOBJ.g:846:2: rule__VertexSource__Group_3_2__0__Impl rule__VertexSource__Group_3_2__1
             {
-            pushFollow(FOLLOW_10);
+            pushFollow(FOLLOW_9);
             rule__VertexSource__Group_3_2__0__Impl();
 
             state._fsp--;
@@ -2842,7 +2842,7 @@ public class InternalOBJParser extends AbstractInternalContentAssistParser {
             // InternalOBJ.g:872:1: ( rule__VertexSource__Group_3_2__1__Impl rule__VertexSource__Group_3_2__2 )
             // InternalOBJ.g:873:2: rule__VertexSource__Group_3_2__1__Impl rule__VertexSource__Group_3_2__2
             {
-            pushFollow(FOLLOW_10);
+            pushFollow(FOLLOW_9);
             rule__VertexSource__Group_3_2__1__Impl();
 
             state._fsp--;
@@ -2871,21 +2871,25 @@ public class InternalOBJParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VertexSource__Group_3_2__1__Impl"
-    // InternalOBJ.g:880:1: rule__VertexSource__Group_3_2__1__Impl : ( RULE_DOUBLE ) ;
+    // InternalOBJ.g:880:1: rule__VertexSource__Group_3_2__1__Impl : ( ruleEDouble ) ;
     public final void rule__VertexSource__Group_3_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalOBJ.g:884:1: ( ( RULE_DOUBLE ) )
-            // InternalOBJ.g:885:1: ( RULE_DOUBLE )
+            // InternalOBJ.g:884:1: ( ( ruleEDouble ) )
+            // InternalOBJ.g:885:1: ( ruleEDouble )
             {
-            // InternalOBJ.g:885:1: ( RULE_DOUBLE )
-            // InternalOBJ.g:886:2: RULE_DOUBLE
+            // InternalOBJ.g:885:1: ( ruleEDouble )
+            // InternalOBJ.g:886:2: ruleEDouble
             {
-             before(grammarAccess.getVertexSourceAccess().getDOUBLETerminalRuleCall_3_2_1()); 
-            match(input,RULE_DOUBLE,FOLLOW_2); 
-             after(grammarAccess.getVertexSourceAccess().getDOUBLETerminalRuleCall_3_2_1()); 
+             before(grammarAccess.getVertexSourceAccess().getEDoubleParserRuleCall_3_2_1()); 
+            pushFollow(FOLLOW_2);
+            ruleEDouble();
+
+            state._fsp--;
+
+             after(grammarAccess.getVertexSourceAccess().getEDoubleParserRuleCall_3_2_1()); 
 
             }
 
@@ -2917,7 +2921,7 @@ public class InternalOBJParser extends AbstractInternalContentAssistParser {
             // InternalOBJ.g:899:1: ( rule__VertexSource__Group_3_2__2__Impl rule__VertexSource__Group_3_2__3 )
             // InternalOBJ.g:900:2: rule__VertexSource__Group_3_2__2__Impl rule__VertexSource__Group_3_2__3
             {
-            pushFollow(FOLLOW_10);
+            pushFollow(FOLLOW_9);
             rule__VertexSource__Group_3_2__2__Impl();
 
             state._fsp--;
@@ -2946,21 +2950,25 @@ public class InternalOBJParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VertexSource__Group_3_2__2__Impl"
-    // InternalOBJ.g:907:1: rule__VertexSource__Group_3_2__2__Impl : ( RULE_DOUBLE ) ;
+    // InternalOBJ.g:907:1: rule__VertexSource__Group_3_2__2__Impl : ( ruleEDouble ) ;
     public final void rule__VertexSource__Group_3_2__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalOBJ.g:911:1: ( ( RULE_DOUBLE ) )
-            // InternalOBJ.g:912:1: ( RULE_DOUBLE )
+            // InternalOBJ.g:911:1: ( ( ruleEDouble ) )
+            // InternalOBJ.g:912:1: ( ruleEDouble )
             {
-            // InternalOBJ.g:912:1: ( RULE_DOUBLE )
-            // InternalOBJ.g:913:2: RULE_DOUBLE
+            // InternalOBJ.g:912:1: ( ruleEDouble )
+            // InternalOBJ.g:913:2: ruleEDouble
             {
-             before(grammarAccess.getVertexSourceAccess().getDOUBLETerminalRuleCall_3_2_2()); 
-            match(input,RULE_DOUBLE,FOLLOW_2); 
-             after(grammarAccess.getVertexSourceAccess().getDOUBLETerminalRuleCall_3_2_2()); 
+             before(grammarAccess.getVertexSourceAccess().getEDoubleParserRuleCall_3_2_2()); 
+            pushFollow(FOLLOW_2);
+            ruleEDouble();
+
+            state._fsp--;
+
+             after(grammarAccess.getVertexSourceAccess().getEDoubleParserRuleCall_3_2_2()); 
 
             }
 
@@ -3016,21 +3024,25 @@ public class InternalOBJParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VertexSource__Group_3_2__3__Impl"
-    // InternalOBJ.g:933:1: rule__VertexSource__Group_3_2__3__Impl : ( RULE_DOUBLE ) ;
+    // InternalOBJ.g:933:1: rule__VertexSource__Group_3_2__3__Impl : ( ruleEDouble ) ;
     public final void rule__VertexSource__Group_3_2__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalOBJ.g:937:1: ( ( RULE_DOUBLE ) )
-            // InternalOBJ.g:938:1: ( RULE_DOUBLE )
+            // InternalOBJ.g:937:1: ( ( ruleEDouble ) )
+            // InternalOBJ.g:938:1: ( ruleEDouble )
             {
-            // InternalOBJ.g:938:1: ( RULE_DOUBLE )
-            // InternalOBJ.g:939:2: RULE_DOUBLE
+            // InternalOBJ.g:938:1: ( ruleEDouble )
+            // InternalOBJ.g:939:2: ruleEDouble
             {
-             before(grammarAccess.getVertexSourceAccess().getDOUBLETerminalRuleCall_3_2_3()); 
-            match(input,RULE_DOUBLE,FOLLOW_2); 
-             after(grammarAccess.getVertexSourceAccess().getDOUBLETerminalRuleCall_3_2_3()); 
+             before(grammarAccess.getVertexSourceAccess().getEDoubleParserRuleCall_3_2_3()); 
+            pushFollow(FOLLOW_2);
+            ruleEDouble();
+
+            state._fsp--;
+
+             after(grammarAccess.getVertexSourceAccess().getEDoubleParserRuleCall_3_2_3()); 
 
             }
 
@@ -3062,7 +3074,7 @@ public class InternalOBJParser extends AbstractInternalContentAssistParser {
             // InternalOBJ.g:953:1: ( rule__PolyShape__Group__0__Impl rule__PolyShape__Group__1 )
             // InternalOBJ.g:954:2: rule__PolyShape__Group__0__Impl rule__PolyShape__Group__1
             {
-            pushFollow(FOLLOW_11);
+            pushFollow(FOLLOW_10);
             rule__PolyShape__Group__0__Impl();
 
             state._fsp--;
@@ -3137,7 +3149,7 @@ public class InternalOBJParser extends AbstractInternalContentAssistParser {
             // InternalOBJ.g:980:1: ( rule__PolyShape__Group__1__Impl rule__PolyShape__Group__2 )
             // InternalOBJ.g:981:2: rule__PolyShape__Group__1__Impl rule__PolyShape__Group__2
             {
-            pushFollow(FOLLOW_11);
+            pushFollow(FOLLOW_10);
             rule__PolyShape__Group__1__Impl();
 
             state._fsp--;
@@ -3240,7 +3252,7 @@ public class InternalOBJParser extends AbstractInternalContentAssistParser {
             // InternalOBJ.g:1007:1: ( rule__PolyShape__Group__2__Impl rule__PolyShape__Group__3 )
             // InternalOBJ.g:1008:2: rule__PolyShape__Group__2__Impl rule__PolyShape__Group__3
             {
-            pushFollow(FOLLOW_11);
+            pushFollow(FOLLOW_10);
             rule__PolyShape__Group__2__Impl();
 
             state._fsp--;
@@ -3336,7 +3348,7 @@ public class InternalOBJParser extends AbstractInternalContentAssistParser {
             // InternalOBJ.g:1034:1: ( rule__PolyShape__Group__3__Impl rule__PolyShape__Group__4 )
             // InternalOBJ.g:1035:2: rule__PolyShape__Group__3__Impl rule__PolyShape__Group__4
             {
-            pushFollow(FOLLOW_11);
+            pushFollow(FOLLOW_10);
             rule__PolyShape__Group__3__Impl();
 
             state._fsp--;
@@ -3475,7 +3487,7 @@ public class InternalOBJParser extends AbstractInternalContentAssistParser {
             // InternalOBJ.g:1076:3: ( rule__PolyShape__Alternatives_4 )
             // InternalOBJ.g:1076:4: rule__PolyShape__Alternatives_4
             {
-            pushFollow(FOLLOW_11);
+            pushFollow(FOLLOW_10);
             rule__PolyShape__Alternatives_4();
 
             state._fsp--;
@@ -4213,7 +4225,7 @@ public class InternalOBJParser extends AbstractInternalContentAssistParser {
             // InternalOBJ.g:1311:1: ( rule__PolyShape__Group_4_1__0__Impl rule__PolyShape__Group_4_1__1 )
             // InternalOBJ.g:1312:2: rule__PolyShape__Group_4_1__0__Impl rule__PolyShape__Group_4_1__1
             {
-            pushFollow(FOLLOW_12);
+            pushFollow(FOLLOW_11);
             rule__PolyShape__Group_4_1__0__Impl();
 
             state._fsp--;
@@ -4495,7 +4507,7 @@ public class InternalOBJParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalOBJ.g:1406:3: rule__Face__Group_1__0
             	    {
-            	    pushFollow(FOLLOW_13);
+            	    pushFollow(FOLLOW_12);
             	    rule__Face__Group_1__0();
 
             	    state._fsp--;
@@ -4541,7 +4553,7 @@ public class InternalOBJParser extends AbstractInternalContentAssistParser {
             // InternalOBJ.g:1419:1: ( rule__Face__Group_1__0__Impl rule__Face__Group_1__1 )
             // InternalOBJ.g:1420:2: rule__Face__Group_1__0__Impl rule__Face__Group_1__1
             {
-            pushFollow(FOLLOW_14);
+            pushFollow(FOLLOW_13);
             rule__Face__Group_1__0__Impl();
 
             state._fsp--;
@@ -4717,7 +4729,7 @@ public class InternalOBJParser extends AbstractInternalContentAssistParser {
             // InternalOBJ.g:1473:1: ( rule__Face__Group_1_1__0__Impl rule__Face__Group_1_1__1 )
             // InternalOBJ.g:1474:2: rule__Face__Group_1_1__0__Impl rule__Face__Group_1_1__1
             {
-            pushFollow(FOLLOW_15);
+            pushFollow(FOLLOW_14);
             rule__Face__Group_1_1__0__Impl();
 
             state._fsp--;
@@ -4872,7 +4884,7 @@ public class InternalOBJParser extends AbstractInternalContentAssistParser {
             // InternalOBJ.g:1527:1: ( rule__Face__Group_1_1_1_1__0__Impl rule__Face__Group_1_1_1_1__1 )
             // InternalOBJ.g:1528:2: rule__Face__Group_1_1_1_1__0__Impl rule__Face__Group_1_1_1_1__1
             {
-            pushFollow(FOLLOW_14);
+            pushFollow(FOLLOW_13);
             rule__Face__Group_1_1_1_1__0__Impl();
 
             state._fsp--;
@@ -7004,35 +7016,41 @@ public class InternalOBJParser extends AbstractInternalContentAssistParser {
             return "309:1: rule__Geometry__Alternatives : ( ( ( rule__Geometry__VertexSourcesAssignment_0 ) ) | ( ( rule__Geometry__NodesAssignment_1 ) ) );";
         }
     }
-    static final String dfa_7s = "\27\uffff";
-    static final String dfa_8s = "\1\1\26\uffff";
-    static final String dfa_9s = "\1\23\1\uffff\2\6\1\7\6\6\1\7\3\6\1\uffff\1\6\1\uffff\1\7\1\uffff\1\6\2\uffff";
-    static final String dfa_10s = "\1\32\1\uffff\2\22\1\7\1\22\1\6\2\22\1\6\1\22\1\7\1\22\1\6\1\22\1\uffff\1\6\1\uffff\1\7\1\uffff\1\6\2\uffff";
-    static final String dfa_11s = "\1\uffff\1\2\15\uffff\1\1\1\uffff\1\1\1\uffff\1\1\1\uffff\2\1";
-    static final String dfa_12s = "\27\uffff}>";
+    static final String dfa_7s = "\35\uffff";
+    static final String dfa_8s = "\1\1\34\uffff";
+    static final String dfa_9s = "\1\23\1\uffff\17\6\1\uffff\1\6\1\uffff\3\6\1\uffff\1\6\2\uffff\1\6\1\uffff";
+    static final String dfa_10s = "\1\32\1\uffff\4\22\1\6\2\22\1\6\2\22\1\6\2\22\1\6\1\22\1\uffff\1\6\1\uffff\1\22\1\6\1\22\1\uffff\1\6\2\uffff\1\6\1\uffff";
+    static final String dfa_11s = "\1\uffff\1\2\17\uffff\1\1\1\uffff\1\1\3\uffff\1\1\1\uffff\2\1\1\uffff\1\1";
+    static final String dfa_12s = "\35\uffff}>";
     static final String[] dfa_13s = {
             "\2\1\1\2\1\3\1\4\3\1",
             "",
             "\1\7\1\5\12\uffff\1\6",
             "\1\12\1\10\12\uffff\1\11",
-            "\1\13",
-            "\1\16\1\14\12\uffff\1\15",
+            "\1\15\1\13\12\uffff\1\14",
+            "\1\20\1\16\12\uffff\1\17",
             "\1\7",
-            "\1\16\1\14\12\uffff\1\15",
-            "\1\21\1\17\12\uffff\1\20",
+            "\1\20\1\16\12\uffff\1\17",
+            "\1\23\1\21\12\uffff\1\22",
             "\1\12",
-            "\1\21\1\17\12\uffff\1\20",
-            "\1\22",
-            "\1\25\1\23\12\uffff\1\24",
-            "\1\16",
-            "\1\25\1\23\12\uffff\1\24",
+            "\1\23\1\21\12\uffff\1\22",
+            "\1\26\1\24\12\uffff\1\25",
+            "\1\15",
+            "\1\26\1\24\12\uffff\1\25",
+            "\1\31\1\27\12\uffff\1\30",
+            "\1\20",
+            "\1\31\1\27\12\uffff\1\30",
             "",
-            "\1\21",
+            "\1\23",
             "",
+            "\1\34\1\32\12\uffff\1\33",
             "\1\26",
+            "\1\34\1\32\12\uffff\1\33",
             "",
-            "\1\25",
+            "\1\31",
             "",
+            "",
+            "\1\34",
             ""
     };
 
@@ -7072,11 +7090,10 @@ public class InternalOBJParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x0000000000F80002L});
     public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x000000000007E070L});
     public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x00000000000400C0L});
-    public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0000000000000080L});
-    public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0000000007F80000L});
-    public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x00000000000410C0L});
-    public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x00000000000400C2L});
-    public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x00000000000440C0L});
+    public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0000000007F80000L});
+    public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x00000000000410C0L});
+    public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x00000000000400C2L});
+    public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x0000000000004000L});
+    public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x00000000000440C0L});
 
 }
