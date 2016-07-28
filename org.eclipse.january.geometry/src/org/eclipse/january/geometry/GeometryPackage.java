@@ -2125,13 +2125,31 @@ public interface GeometryPackage extends EPackage {
 	int MATERIAL = 13;
 
 	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * The feature id for the '<em><b>Phong Mat Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MATERIAL__NAME = 0;
+	int MATERIAL__PHONG_MAT_NAME = 0;
+
+	/**
+	 * The feature id for the '<em><b>Texture</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MATERIAL__TEXTURE = 1;
+
+	/**
+	 * The feature id for the '<em><b>Material Files</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MATERIAL__MATERIAL_FILES = 2;
 
 	/**
 	 * The number of structural features of the '<em>Material</em>' class.
@@ -2140,7 +2158,7 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MATERIAL_FEATURE_COUNT = 1;
+	int MATERIAL_FEATURE_COUNT = 3;
 
 	/**
 	 * The number of operations of the '<em>Material</em>' class.
@@ -3312,22 +3330,13 @@ public interface GeometryPackage extends EPackage {
 	int POLY_SHAPE__FACES = SHAPE_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Mat Files</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POLY_SHAPE__MAT_FILES = SHAPE_FEATURE_COUNT + 1;
-
-	/**
 	 * The feature id for the '<em><b>Vertex Source</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int POLY_SHAPE__VERTEX_SOURCE = SHAPE_FEATURE_COUNT + 2;
+	int POLY_SHAPE__VERTEX_SOURCE = SHAPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Material Files</b></em>' attribute list.
@@ -3336,7 +3345,7 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int POLY_SHAPE__MATERIAL_FILES = SHAPE_FEATURE_COUNT + 3;
+	int POLY_SHAPE__MATERIAL_FILES = SHAPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Poly Shape</em>' class.
@@ -3345,7 +3354,7 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int POLY_SHAPE_FEATURE_COUNT = SHAPE_FEATURE_COUNT + 4;
+	int POLY_SHAPE_FEATURE_COUNT = SHAPE_FEATURE_COUNT + 3;
 
 	/**
 	 * The operation id for the '<em>Change Decorator Property</em>' operation.
@@ -4052,15 +4061,37 @@ public interface GeometryPackage extends EPackage {
 	EClass getMaterial();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.january.geometry.Material#getName <em>Name</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.january.geometry.Material#getPhongMatName <em>Phong Mat Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.eclipse.january.geometry.Material#getName()
+	 * @return the meta object for the attribute '<em>Phong Mat Name</em>'.
+	 * @see org.eclipse.january.geometry.Material#getPhongMatName()
 	 * @see #getMaterial()
 	 * @generated
 	 */
-	EAttribute getMaterial_Name();
+	EAttribute getMaterial_PhongMatName();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.january.geometry.Material#getTexture <em>Texture</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Texture</em>'.
+	 * @see org.eclipse.january.geometry.Material#getTexture()
+	 * @see #getMaterial()
+	 * @generated
+	 */
+	EAttribute getMaterial_Texture();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipse.january.geometry.Material#getMaterialFiles <em>Material Files</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Material Files</em>'.
+	 * @see org.eclipse.january.geometry.Material#getMaterialFiles()
+	 * @see #getMaterial()
+	 * @generated
+	 */
+	EAttribute getMaterial_MaterialFiles();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.january.geometry.IGeometryImporter <em>IGeometry Importer</em>}'.
@@ -4445,17 +4476,6 @@ public interface GeometryPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getPolyShape_Faces();
-
-	/**
-	 * Returns the meta object for the attribute list '{@link org.eclipse.january.geometry.PolyShape#getMatFiles <em>Mat Files</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Mat Files</em>'.
-	 * @see org.eclipse.january.geometry.PolyShape#getMatFiles()
-	 * @see #getPolyShape()
-	 * @generated
-	 */
-	EAttribute getPolyShape_MatFiles();
 
 	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.january.geometry.PolyShape#getVertexSource <em>Vertex Source</em>}'.
@@ -5012,12 +5032,28 @@ public interface GeometryPackage extends EPackage {
 		EClass MATERIAL = eINSTANCE.getMaterial();
 
 		/**
-		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Phong Mat Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute MATERIAL__NAME = eINSTANCE.getMaterial_Name();
+		EAttribute MATERIAL__PHONG_MAT_NAME = eINSTANCE.getMaterial_PhongMatName();
+
+		/**
+		 * The meta object literal for the '<em><b>Texture</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MATERIAL__TEXTURE = eINSTANCE.getMaterial_Texture();
+
+		/**
+		 * The meta object literal for the '<em><b>Material Files</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MATERIAL__MATERIAL_FILES = eINSTANCE.getMaterial_MaterialFiles();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.january.geometry.IGeometryImporter <em>IGeometry Importer</em>}' class.
@@ -5322,14 +5358,6 @@ public interface GeometryPackage extends EPackage {
 		 * @generated
 		 */
 		EReference POLY_SHAPE__FACES = eINSTANCE.getPolyShape_Faces();
-
-		/**
-		 * The meta object literal for the '<em><b>Mat Files</b></em>' attribute list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute POLY_SHAPE__MAT_FILES = eINSTANCE.getPolyShape_MatFiles();
 
 		/**
 		 * The meta object literal for the '<em><b>Vertex Source</b></em>' containment reference feature.

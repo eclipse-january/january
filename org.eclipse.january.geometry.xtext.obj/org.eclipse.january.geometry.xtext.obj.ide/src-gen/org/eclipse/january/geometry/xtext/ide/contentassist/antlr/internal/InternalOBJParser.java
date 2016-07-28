@@ -5940,31 +5940,31 @@ public class InternalOBJParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Material__Group__1__Impl"
-    // InternalOBJ.g:1885:1: rule__Material__Group__1__Impl : ( ( rule__Material__NameAssignment_1 ) ) ;
+    // InternalOBJ.g:1885:1: rule__Material__Group__1__Impl : ( ( rule__Material__PhongMatNameAssignment_1 ) ) ;
     public final void rule__Material__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalOBJ.g:1889:1: ( ( ( rule__Material__NameAssignment_1 ) ) )
-            // InternalOBJ.g:1890:1: ( ( rule__Material__NameAssignment_1 ) )
+            // InternalOBJ.g:1889:1: ( ( ( rule__Material__PhongMatNameAssignment_1 ) ) )
+            // InternalOBJ.g:1890:1: ( ( rule__Material__PhongMatNameAssignment_1 ) )
             {
-            // InternalOBJ.g:1890:1: ( ( rule__Material__NameAssignment_1 ) )
-            // InternalOBJ.g:1891:2: ( rule__Material__NameAssignment_1 )
+            // InternalOBJ.g:1890:1: ( ( rule__Material__PhongMatNameAssignment_1 ) )
+            // InternalOBJ.g:1891:2: ( rule__Material__PhongMatNameAssignment_1 )
             {
-             before(grammarAccess.getMaterialAccess().getNameAssignment_1()); 
-            // InternalOBJ.g:1892:2: ( rule__Material__NameAssignment_1 )
-            // InternalOBJ.g:1892:3: rule__Material__NameAssignment_1
+             before(grammarAccess.getMaterialAccess().getPhongMatNameAssignment_1()); 
+            // InternalOBJ.g:1892:2: ( rule__Material__PhongMatNameAssignment_1 )
+            // InternalOBJ.g:1892:3: rule__Material__PhongMatNameAssignment_1
             {
             pushFollow(FOLLOW_2);
-            rule__Material__NameAssignment_1();
+            rule__Material__PhongMatNameAssignment_1();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getMaterialAccess().getNameAssignment_1()); 
+             after(grammarAccess.getMaterialAccess().getPhongMatNameAssignment_1()); 
 
             }
 
@@ -6886,9 +6886,9 @@ public class InternalOBJParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__TextureVertex__ZAssignment_2"
 
 
-    // $ANTLR start "rule__Material__NameAssignment_1"
-    // InternalOBJ.g:2225:1: rule__Material__NameAssignment_1 : ( ruleEString ) ;
-    public final void rule__Material__NameAssignment_1() throws RecognitionException {
+    // $ANTLR start "rule__Material__PhongMatNameAssignment_1"
+    // InternalOBJ.g:2225:1: rule__Material__PhongMatNameAssignment_1 : ( ruleEString ) ;
+    public final void rule__Material__PhongMatNameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -6899,13 +6899,13 @@ public class InternalOBJParser extends AbstractInternalContentAssistParser {
             // InternalOBJ.g:2230:2: ( ruleEString )
             // InternalOBJ.g:2231:3: ruleEString
             {
-             before(grammarAccess.getMaterialAccess().getNameEStringParserRuleCall_1_0()); 
+             before(grammarAccess.getMaterialAccess().getPhongMatNameEStringParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
             ruleEString();
 
             state._fsp--;
 
-             after(grammarAccess.getMaterialAccess().getNameEStringParserRuleCall_1_0()); 
+             after(grammarAccess.getMaterialAccess().getPhongMatNameEStringParserRuleCall_1_0()); 
 
             }
 
@@ -6924,7 +6924,7 @@ public class InternalOBJParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Material__NameAssignment_1"
+    // $ANTLR end "rule__Material__PhongMatNameAssignment_1"
 
     // Delegated rules
 

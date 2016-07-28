@@ -32,7 +32,6 @@ import org.eclipse.january.geometry.VertexSource;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.january.geometry.impl.PolyShapeImpl#getFaces <em>Faces</em>}</li>
- *   <li>{@link org.eclipse.january.geometry.impl.PolyShapeImpl#getMatFiles <em>Mat Files</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.impl.PolyShapeImpl#getVertexSource <em>Vertex Source</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.impl.PolyShapeImpl#getMaterialFiles <em>Material Files</em>}</li>
  * </ul>
@@ -50,16 +49,6 @@ public class PolyShapeImpl extends ShapeImpl implements PolyShape {
 	 * @ordered
 	 */
 	protected EList<Face> faces;
-
-	/**
-	 * The cached value of the '{@link #getMatFiles() <em>Mat Files</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getMatFiles()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<String> matFiles;
 
 	/**
 	 * The cached value of the '{@link #getVertexSource() <em>Vertex Source</em>}' containment reference.
@@ -111,24 +100,16 @@ public class PolyShapeImpl extends ShapeImpl implements PolyShape {
 		}
 		return faces;
 	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<String> getMatFiles() {
-		if (matFiles == null) {
-			matFiles = new EDataTypeUniqueEList<String>(String.class, this, GeometryPackage.POLY_SHAPE__MAT_FILES);
-		}
-		return matFiles;
-	}
 	
 	/**
 	 * Calculates the triangles from the faces given
+	 * @generated NOT
 	 */
 	@Override
 	public void calculatePolyTriangles() {
+		if (getMaterial() != null) {
+			getMaterial().getMaterialFiles().addAll(getVertexSource().getMaterialFiles());
+		}
 		for(Face face : faces) {
 			EList<Integer> indices = face.getVertexIndices();
 			if (indices.size() > 2) {
@@ -151,7 +132,7 @@ public class PolyShapeImpl extends ShapeImpl implements PolyShape {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	public VertexSource getVertexSource() {
 		if (parent != null && parent instanceof Geometry) {
@@ -204,7 +185,11 @@ public class PolyShapeImpl extends ShapeImpl implements PolyShape {
 		if (materialFiles == null) {
 			materialFiles = new EDataTypeUniqueEList<String>(String.class, this, GeometryPackage.POLY_SHAPE__MATERIAL_FILES);
 		}
-		return materialFiles;
+		if ( getMaterial() == null || getMaterial().getMaterialFiles().isEmpty()) {
+			return materialFiles;
+		} else {
+			return getMaterial().getMaterialFiles();
+		}
 	}
 
 	/**
@@ -233,8 +218,6 @@ public class PolyShapeImpl extends ShapeImpl implements PolyShape {
 		switch (featureID) {
 			case GeometryPackage.POLY_SHAPE__FACES:
 				return getFaces();
-			case GeometryPackage.POLY_SHAPE__MAT_FILES:
-				return getMatFiles();
 			case GeometryPackage.POLY_SHAPE__VERTEX_SOURCE:
 				return getVertexSource();
 			case GeometryPackage.POLY_SHAPE__MATERIAL_FILES:
@@ -255,10 +238,6 @@ public class PolyShapeImpl extends ShapeImpl implements PolyShape {
 			case GeometryPackage.POLY_SHAPE__FACES:
 				getFaces().clear();
 				getFaces().addAll((Collection<? extends Face>)newValue);
-				return;
-			case GeometryPackage.POLY_SHAPE__MAT_FILES:
-				getMatFiles().clear();
-				getMatFiles().addAll((Collection<? extends String>)newValue);
 				return;
 			case GeometryPackage.POLY_SHAPE__VERTEX_SOURCE:
 				setVertexSource((VertexSource)newValue);
@@ -282,9 +261,6 @@ public class PolyShapeImpl extends ShapeImpl implements PolyShape {
 			case GeometryPackage.POLY_SHAPE__FACES:
 				getFaces().clear();
 				return;
-			case GeometryPackage.POLY_SHAPE__MAT_FILES:
-				getMatFiles().clear();
-				return;
 			case GeometryPackage.POLY_SHAPE__VERTEX_SOURCE:
 				setVertexSource((VertexSource)null);
 				return;
@@ -305,8 +281,6 @@ public class PolyShapeImpl extends ShapeImpl implements PolyShape {
 		switch (featureID) {
 			case GeometryPackage.POLY_SHAPE__FACES:
 				return faces != null && !faces.isEmpty();
-			case GeometryPackage.POLY_SHAPE__MAT_FILES:
-				return matFiles != null && !matFiles.isEmpty();
 			case GeometryPackage.POLY_SHAPE__VERTEX_SOURCE:
 				return vertexSource != null;
 			case GeometryPackage.POLY_SHAPE__MATERIAL_FILES:
@@ -325,9 +299,7 @@ public class PolyShapeImpl extends ShapeImpl implements PolyShape {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (matFiles: ");
-		result.append(matFiles);
-		result.append(", materialFiles: ");
+		result.append(" (materialFiles: ");
 		result.append(materialFiles);
 		result.append(')');
 		return result.toString();

@@ -81,7 +81,7 @@ public class OBJParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTextureVertexAccess().getXAssignment_0(), "rule__TextureVertex__XAssignment_0");
 					put(grammarAccess.getTextureVertexAccess().getYAssignment_1(), "rule__TextureVertex__YAssignment_1");
 					put(grammarAccess.getTextureVertexAccess().getZAssignment_2(), "rule__TextureVertex__ZAssignment_2");
-					put(grammarAccess.getMaterialAccess().getNameAssignment_1(), "rule__Material__NameAssignment_1");
+					put(grammarAccess.getMaterialAccess().getPhongMatNameAssignment_1(), "rule__Material__PhongMatNameAssignment_1");
 				}
 			};
 		}

@@ -1780,22 +1780,22 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMaterial"
-    // InternalOBJ.g:696:1: ruleMaterial returns [EObject current=null] : ( () ( (lv_name_1_0= ruleEString ) ) ) ;
+    // InternalOBJ.g:696:1: ruleMaterial returns [EObject current=null] : ( () ( (lv_phongMatName_1_0= ruleEString ) ) ) ;
     public final EObject ruleMaterial() throws RecognitionException {
         EObject current = null;
 
-        AntlrDatatypeRuleToken lv_name_1_0 = null;
+        AntlrDatatypeRuleToken lv_phongMatName_1_0 = null;
 
 
 
         	enterRule();
 
         try {
-            // InternalOBJ.g:702:2: ( ( () ( (lv_name_1_0= ruleEString ) ) ) )
-            // InternalOBJ.g:703:2: ( () ( (lv_name_1_0= ruleEString ) ) )
+            // InternalOBJ.g:702:2: ( ( () ( (lv_phongMatName_1_0= ruleEString ) ) ) )
+            // InternalOBJ.g:703:2: ( () ( (lv_phongMatName_1_0= ruleEString ) ) )
             {
-            // InternalOBJ.g:703:2: ( () ( (lv_name_1_0= ruleEString ) ) )
-            // InternalOBJ.g:704:3: () ( (lv_name_1_0= ruleEString ) )
+            // InternalOBJ.g:703:2: ( () ( (lv_phongMatName_1_0= ruleEString ) ) )
+            // InternalOBJ.g:704:3: () ( (lv_phongMatName_1_0= ruleEString ) )
             {
             // InternalOBJ.g:704:3: ()
             // InternalOBJ.g:705:4: 
@@ -1808,17 +1808,17 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalOBJ.g:711:3: ( (lv_name_1_0= ruleEString ) )
-            // InternalOBJ.g:712:4: (lv_name_1_0= ruleEString )
+            // InternalOBJ.g:711:3: ( (lv_phongMatName_1_0= ruleEString ) )
+            // InternalOBJ.g:712:4: (lv_phongMatName_1_0= ruleEString )
             {
-            // InternalOBJ.g:712:4: (lv_name_1_0= ruleEString )
-            // InternalOBJ.g:713:5: lv_name_1_0= ruleEString
+            // InternalOBJ.g:712:4: (lv_phongMatName_1_0= ruleEString )
+            // InternalOBJ.g:713:5: lv_phongMatName_1_0= ruleEString
             {
 
-            					newCompositeNode(grammarAccess.getMaterialAccess().getNameEStringParserRuleCall_1_0());
+            					newCompositeNode(grammarAccess.getMaterialAccess().getPhongMatNameEStringParserRuleCall_1_0());
             				
             pushFollow(FOLLOW_2);
-            lv_name_1_0=ruleEString();
+            lv_phongMatName_1_0=ruleEString();
 
             state._fsp--;
 
@@ -1828,8 +1828,8 @@ public class InternalOBJParser extends AbstractInternalAntlrParser {
             					}
             					set(
             						current,
-            						"name",
-            						lv_name_1_0,
+            						"phongMatName",
+            						lv_phongMatName_1_0,
             						"org.eclipse.january.geometry.xtext.OBJ.EString");
             					afterParserOrEnumRuleCall();
             				

@@ -1888,9 +1888,9 @@ rule__Material__Group__1__Impl
 	}
 :
 (
-	{ before(grammarAccess.getMaterialAccess().getNameAssignment_1()); }
-	(rule__Material__NameAssignment_1)
-	{ after(grammarAccess.getMaterialAccess().getNameAssignment_1()); }
+	{ before(grammarAccess.getMaterialAccess().getPhongMatNameAssignment_1()); }
+	(rule__Material__PhongMatNameAssignment_1)
+	{ after(grammarAccess.getMaterialAccess().getPhongMatNameAssignment_1()); }
 )
 ;
 finally {
@@ -2222,15 +2222,15 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Material__NameAssignment_1
+rule__Material__PhongMatNameAssignment_1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getMaterialAccess().getNameEStringParserRuleCall_1_0()); }
+		{ before(grammarAccess.getMaterialAccess().getPhongMatNameEStringParserRuleCall_1_0()); }
 		ruleEString
-		{ after(grammarAccess.getMaterialAccess().getNameEStringParserRuleCall_1_0()); }
+		{ after(grammarAccess.getMaterialAccess().getPhongMatNameEStringParserRuleCall_1_0()); }
 	)
 ;
 finally {

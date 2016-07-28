@@ -42,7 +42,7 @@ TextureVertex returns Vertex:
 
 Material returns Material:
 	{Material}
-	name = EString
+	phongMatName = EString
 	;
 
 EInt returns ecore::EInt:

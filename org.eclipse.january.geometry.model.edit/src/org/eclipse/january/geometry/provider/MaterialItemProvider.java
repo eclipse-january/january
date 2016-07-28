@@ -59,25 +59,71 @@ public class MaterialItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addNamePropertyDescriptor(object);
+			addPhongMatNamePropertyDescriptor(object);
+			addTexturePropertyDescriptor(object);
+			addMaterialFilesPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Name feature.
+	 * This adds a property descriptor for the Phong Mat Name feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addNamePropertyDescriptor(Object object) {
+	protected void addPhongMatNamePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Material_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Material_name_feature", "_UI_Material_type"),
-				 GeometryPackage.Literals.MATERIAL__NAME,
+				 getString("_UI_Material_phongMatName_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Material_phongMatName_feature", "_UI_Material_type"),
+				 GeometryPackage.Literals.MATERIAL__PHONG_MAT_NAME,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Texture feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addTexturePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Material_texture_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Material_texture_feature", "_UI_Material_type"),
+				 GeometryPackage.Literals.MATERIAL__TEXTURE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Material Files feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addMaterialFilesPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Material_materialFiles_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Material_materialFiles_feature", "_UI_Material_type"),
+				 GeometryPackage.Literals.MATERIAL__MATERIAL_FILES,
 				 true,
 				 false,
 				 false,
@@ -105,7 +151,7 @@ public class MaterialItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Material)object).getName();
+		String label = ((Material)object).getPhongMatName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_Material_type") :
 			getString("_UI_Material_type") + " " + label;
@@ -124,7 +170,9 @@ public class MaterialItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(Material.class)) {
-			case GeometryPackage.MATERIAL__NAME:
+			case GeometryPackage.MATERIAL__PHONG_MAT_NAME:
+			case GeometryPackage.MATERIAL__TEXTURE:
+			case GeometryPackage.MATERIAL__MATERIAL_FILES:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

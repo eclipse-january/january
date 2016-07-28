@@ -66,6 +66,8 @@ public class OBJGeometryImporterTester {
 		assertNotNull(geom.getNodes());
 		assertFalse(geom.getNodes().isEmpty());
 		
+		assertEquals(geom.getNodes().size(), 16);
+		
 		// Check the vertex source
 		VertexSource vs = geom.getVertexSource();
 		assertNotNull(vs);
@@ -133,8 +135,14 @@ public class OBJGeometryImporterTester {
 		testFace(faces.get(11), new int[] {5187, 5189, 5186});
 		testFace(faces.get(12), new int[] {5209, 5211, 5208});
 		testFace(faces.get(13), new int[] {5772, 5593, 5592, 5773});
+		
+		assertNull(shape1.getMaterial());
 
-
+		PolyShape shape2 = (PolyShape) geom.getNodes().get(1);
+		assertNotNull(shape2);
+		assertEquals(shape2.getMaterial().getPhongMatName(), "bluteal");
+		assertEquals(((PolyShape)geom.getNodes().get(4)).getMaterial().getMaterialFiles().get(0), 
+				"./vp.mtl");
 	}
 	
 	

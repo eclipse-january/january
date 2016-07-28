@@ -413,24 +413,24 @@ public class OBJGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.january.geometry.xtext.OBJ.Material");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cMaterialAction_0 = (Action)cGroup.eContents().get(0);
-		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cNameEStringParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Assignment cPhongMatNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cPhongMatNameEStringParserRuleCall_1_0 = (RuleCall)cPhongMatNameAssignment_1.eContents().get(0);
 		
 		//Material:
-		//	{Material} name=EString;
+		//	{Material} phongMatName=EString;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{Material} name=EString
+		//{Material} phongMatName=EString
 		public Group getGroup() { return cGroup; }
 		
 		//{Material}
 		public Action getMaterialAction_0() { return cMaterialAction_0; }
 		
-		//name=EString
-		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		//phongMatName=EString
+		public Assignment getPhongMatNameAssignment_1() { return cPhongMatNameAssignment_1; }
 		
 		//EString
-		public RuleCall getNameEStringParserRuleCall_1_0() { return cNameEStringParserRuleCall_1_0; }
+		public RuleCall getPhongMatNameEStringParserRuleCall_1_0() { return cPhongMatNameEStringParserRuleCall_1_0; }
 	}
 	public class EIntElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.january.geometry.xtext.OBJ.EInt");
@@ -647,7 +647,7 @@ public class OBJGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Material:
-	//	{Material} name=EString;
+	//	{Material} phongMatName=EString;
 	public MaterialElements getMaterialAccess() {
 		return pMaterial;
 	}

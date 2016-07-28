@@ -48,7 +48,6 @@ public class PolyShapeItemProvider extends ShapeItemProvider {
 			super.getPropertyDescriptors(object);
 
 			addFacesPropertyDescriptor(object);
-			addMatFilesPropertyDescriptor(object);
 			addMaterialFilesPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
@@ -72,28 +71,6 @@ public class PolyShapeItemProvider extends ShapeItemProvider {
 				 false,
 				 true,
 				 null,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Mat Files feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addMatFilesPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_PolyShape_matFiles_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_PolyShape_matFiles_feature", "_UI_PolyShape_type"),
-				 GeometryPackage.Literals.POLY_SHAPE__MAT_FILES,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
 				 null,
 				 null));
 	}
@@ -188,7 +165,6 @@ public class PolyShapeItemProvider extends ShapeItemProvider {
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(PolyShape.class)) {
-			case GeometryPackage.POLY_SHAPE__MAT_FILES:
 			case GeometryPackage.POLY_SHAPE__MATERIAL_FILES:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;

@@ -82,6 +82,7 @@ public class OBJGeometryImporter implements IGeometryImporter {
 			for (INode node : geometry.getNodes()) {
 				node.setParent(geometry);
 				if (node instanceof PolyShape) {
+					geometry.getVertexSource().getMaterialFiles().addAll(((PolyShape)node).getMaterialFiles());
 					((PolyShape) node).calculatePolyTriangles();
 				}
 			}

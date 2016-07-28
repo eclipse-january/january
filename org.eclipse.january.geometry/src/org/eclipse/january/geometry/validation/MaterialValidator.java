@@ -4,6 +4,8 @@
  */
 package org.eclipse.january.geometry.validation;
 
+import org.eclipse.emf.common.util.EList;
+
 
 /**
  * A sample validator interface for {@link org.eclipse.january.geometry.Material}.
@@ -13,6 +15,12 @@ package org.eclipse.january.geometry.validation;
  */
 public interface MaterialValidator {
 	boolean validate();
+
+	boolean validatePhongMatName(String value);
+
+	boolean validateTexture(String value);
+
+	boolean validateMaterialFiles(EList<String> value);
 
 	boolean validateName(String value);
 

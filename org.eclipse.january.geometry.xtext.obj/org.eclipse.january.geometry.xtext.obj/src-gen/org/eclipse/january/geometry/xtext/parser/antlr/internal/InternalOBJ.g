@@ -711,17 +711,17 @@ ruleMaterial returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getMaterialAccess().getNameEStringParserRuleCall_1_0());
+					newCompositeNode(grammarAccess.getMaterialAccess().getPhongMatNameEStringParserRuleCall_1_0());
 				}
-				lv_name_1_0=ruleEString
+				lv_phongMatName_1_0=ruleEString
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getMaterialRule());
 					}
 					set(
 						$current,
-						"name",
-						lv_name_1_0,
+						"phongMatName",
+						lv_phongMatName_1_0,
 						"org.eclipse.january.geometry.xtext.OBJ.EString");
 					afterParserOrEnumRuleCall();
 				}

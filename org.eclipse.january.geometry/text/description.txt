@@ -68,7 +68,9 @@ Package geometry <http://www.eclipse.org/january/geometry>
   Class Complement -> Operator
 
   Class Material
-    Attribute name : EString
+    Attribute phongMatName : EString
+    Attribute texture : EString
+    Attribute materialFiles : EString<<0..*>>
 
   Class IGeometryImporter
     Attribute fileTypes : EString<<1..*>>
@@ -113,7 +115,6 @@ Package geometry <http://www.eclipse.org/january/geometry>
 
   Class PolyShape -> Shape
     Reference faces : Face<<0..*>>
-    Attribute matFiles : EString<<0..*>>
     Reference vertexSource : VertexSource
     Attribute materialFiles : EString<<0..*>>
 
