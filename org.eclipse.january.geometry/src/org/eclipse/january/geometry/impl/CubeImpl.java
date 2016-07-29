@@ -1,13 +1,5 @@
-/*******************************************************************************
- * Copyright (c) 2016 UT-Battelle, LLC. and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     UT-Battelle, LLC. - initial API and implementation
- *******************************************************************************/
+/**
+ */
 package org.eclipse.january.geometry.impl;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -28,7 +20,8 @@ import org.eclipse.january.geometry.util.MeshUtils;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.january.geometry.impl.CubeImpl#getSideLength <em>Side Length</em>}</li>
+ * <li>{@link org.eclipse.january.geometry.impl.CubeImpl#getSideLength <em>Side
+ * Length</em>}</li>
  * </ul>
  * </p>
  *
@@ -36,8 +29,9 @@ import org.eclipse.january.geometry.util.MeshUtils;
  */
 public class CubeImpl extends ShapeImpl implements Cube {
 	/**
-	 * The default value of the '{@link #getSideLength() <em>Side Length</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The default value of the '{@link #getSideLength() <em>Side Length</em>}'
+	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getSideLength()
 	 * @generated
 	 * @ordered
@@ -45,8 +39,9 @@ public class CubeImpl extends ShapeImpl implements Cube {
 	protected static final double SIDE_LENGTH_EDEFAULT = 0.0;
 
 	/**
-	 * The cached value of the '{@link #getSideLength() <em>Side Length</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The cached value of the '{@link #getSideLength() <em>Side Length</em>}'
+	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getSideLength()
 	 * @generated
 	 * @ordered
@@ -74,6 +69,7 @@ public class CubeImpl extends ShapeImpl implements Cube {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -83,6 +79,7 @@ public class CubeImpl extends ShapeImpl implements Cube {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -97,81 +94,93 @@ public class CubeImpl extends ShapeImpl implements Cube {
 	 */
 	@Override
 	public void setSideLength(double newSideLength) {
-		double oldSideLength = sideLength;
-		sideLength = newSideLength;
 
-		// Update the properties map as well
-		if (properties.get("sideLength") == null
-				|| properties.get("sideLength") != sideLength) {
-			properties.put("sideLength", sideLength);
+		// Fail silently if the new value is already set
+		if (newSideLength != sideLength) {
+
+			double oldSideLength = sideLength;
+			sideLength = newSideLength;
+
+			// Update the properties map as well
+			if (properties.get("sideLength") == null
+					|| properties.get("sideLength") != sideLength) {
+				properties.put("sideLength", sideLength);
+			}
+			if (eNotificationRequired())
+				eNotify(new ENotificationImpl(this, Notification.SET,
+						GeometryPackage.CUBE__SIDE_LENGTH, oldSideLength,
+						sideLength));
+
 		}
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					GeometryPackage.CUBE__SIDE_LENGTH, oldSideLength,
-					sideLength));
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case GeometryPackage.CUBE__SIDE_LENGTH:
-				return getSideLength();
+		case GeometryPackage.CUBE__SIDE_LENGTH:
+			return getSideLength();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case GeometryPackage.CUBE__SIDE_LENGTH:
-				setSideLength((Double)newValue);
-				return;
+		case GeometryPackage.CUBE__SIDE_LENGTH:
+			setSideLength((Double) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case GeometryPackage.CUBE__SIDE_LENGTH:
-				setSideLength(SIDE_LENGTH_EDEFAULT);
-				return;
+		case GeometryPackage.CUBE__SIDE_LENGTH:
+			setSideLength(SIDE_LENGTH_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case GeometryPackage.CUBE__SIDE_LENGTH:
-				return sideLength != SIDE_LENGTH_EDEFAULT;
+		case GeometryPackage.CUBE__SIDE_LENGTH:
+			return sideLength != SIDE_LENGTH_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
+		if (eIsProxy())
+			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (sideLength: ");
@@ -221,7 +230,7 @@ public class CubeImpl extends ShapeImpl implements Cube {
 		// Replace the previous list
 
 		triangles.addAll(MeshUtils.createRectangularPrismMesh(points));
-		
+
 		return triangles;
 	}
 

@@ -1,17 +1,10 @@
-/*******************************************************************************
- * Copyright (c) 2016 UT-Battelle, LLC. and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     UT-Battelle, LLC. - initial API and implementation
- *******************************************************************************/
+/**
+ */
 package org.eclipse.january.geometry.impl;
 
 import java.lang.reflect.InvocationTargetException;
 
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -20,6 +13,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.january.geometry.GeometryFactory;
 import org.eclipse.january.geometry.GeometryPackage;
 import org.eclipse.january.geometry.Vertex;
+import org.eclipse.swt.widgets.Display;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '
@@ -27,9 +21,9 @@ import org.eclipse.january.geometry.Vertex;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.january.geometry.impl.VertexImpl#getX <em>X</em>}</li>
- *   <li>{@link org.eclipse.january.geometry.impl.VertexImpl#getY <em>Y</em>}</li>
- *   <li>{@link org.eclipse.january.geometry.impl.VertexImpl#getZ <em>Z</em>}</li>
+ * <li>{@link org.eclipse.january.geometry.impl.VertexImpl#getX <em>X</em>}</li>
+ * <li>{@link org.eclipse.january.geometry.impl.VertexImpl#getY <em>Y</em>}</li>
+ * <li>{@link org.eclipse.january.geometry.impl.VertexImpl#getZ <em>Z</em>}</li>
  * </ul>
  * </p>
  *
@@ -98,6 +92,7 @@ public class VertexImpl extends MinimalEObjectImpl.Container implements Vertex {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected VertexImpl() {
@@ -106,6 +101,7 @@ public class VertexImpl extends MinimalEObjectImpl.Container implements Vertex {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -115,6 +111,7 @@ public class VertexImpl extends MinimalEObjectImpl.Container implements Vertex {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -124,18 +121,26 @@ public class VertexImpl extends MinimalEObjectImpl.Container implements Vertex {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
+	 * 
+	 * @generated NOT
 	 */
 	@Override
 	public void setX(double newX) {
-		double oldX = x;
-		x = newX;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, GeometryPackage.VERTEX__X, oldX, x));
+
+		// Fail silently if the new value is already set
+		if (newX != x) {
+
+			double oldX = x;
+			x = newX;
+			if (eNotificationRequired())
+				eNotify(new ENotificationImpl(this, Notification.SET,
+						GeometryPackage.VERTEX__X, oldX, x));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -145,18 +150,26 @@ public class VertexImpl extends MinimalEObjectImpl.Container implements Vertex {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
+	 * 
+	 * @generated NOT
 	 */
 	@Override
 	public void setY(double newY) {
-		double oldY = y;
-		y = newY;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, GeometryPackage.VERTEX__Y, oldY, y));
+
+		// Fail silently if the new value is already set
+		if (newY != y) {
+
+			double oldY = y;
+			y = newY;
+			if (eNotificationRequired())
+				eNotify(new ENotificationImpl(this, Notification.SET,
+						GeometryPackage.VERTEX__Y, oldY, y));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -166,14 +179,21 @@ public class VertexImpl extends MinimalEObjectImpl.Container implements Vertex {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
+	 * 
+	 * @generated NOT
 	 */
 	@Override
 	public void setZ(double newZ) {
-		double oldZ = z;
-		z = newZ;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, GeometryPackage.VERTEX__Z, oldZ, z));
+
+		// Fail silently if the new value is already set
+		if (newZ != z) {
+
+			double oldZ = z;
+			z = newZ;
+			if (eNotificationRequired())
+				eNotify(new ENotificationImpl(this, Notification.SET,
+						GeometryPackage.VERTEX__Z, oldZ, z));
+		}
 	}
 
 	/**
@@ -237,103 +257,110 @@ public class VertexImpl extends MinimalEObjectImpl.Container implements Vertex {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case GeometryPackage.VERTEX__X:
-				return getX();
-			case GeometryPackage.VERTEX__Y:
-				return getY();
-			case GeometryPackage.VERTEX__Z:
-				return getZ();
+		case GeometryPackage.VERTEX__X:
+			return getX();
+		case GeometryPackage.VERTEX__Y:
+			return getY();
+		case GeometryPackage.VERTEX__Z:
+			return getZ();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case GeometryPackage.VERTEX__X:
-				setX((Double)newValue);
-				return;
-			case GeometryPackage.VERTEX__Y:
-				setY((Double)newValue);
-				return;
-			case GeometryPackage.VERTEX__Z:
-				setZ((Double)newValue);
-				return;
+		case GeometryPackage.VERTEX__X:
+			setX((Double) newValue);
+			return;
+		case GeometryPackage.VERTEX__Y:
+			setY((Double) newValue);
+			return;
+		case GeometryPackage.VERTEX__Z:
+			setZ((Double) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case GeometryPackage.VERTEX__X:
-				setX(X_EDEFAULT);
-				return;
-			case GeometryPackage.VERTEX__Y:
-				setY(Y_EDEFAULT);
-				return;
-			case GeometryPackage.VERTEX__Z:
-				setZ(Z_EDEFAULT);
-				return;
+		case GeometryPackage.VERTEX__X:
+			setX(X_EDEFAULT);
+			return;
+		case GeometryPackage.VERTEX__Y:
+			setY(Y_EDEFAULT);
+			return;
+		case GeometryPackage.VERTEX__Z:
+			setZ(Z_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case GeometryPackage.VERTEX__X:
-				return x != X_EDEFAULT;
-			case GeometryPackage.VERTEX__Y:
-				return y != Y_EDEFAULT;
-			case GeometryPackage.VERTEX__Z:
-				return z != Z_EDEFAULT;
+		case GeometryPackage.VERTEX__X:
+			return x != X_EDEFAULT;
+		case GeometryPackage.VERTEX__Y:
+			return y != Y_EDEFAULT;
+		case GeometryPackage.VERTEX__Z:
+			return z != Z_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eInvoke(int operationID, EList<?> arguments)
 			throws InvocationTargetException {
 		switch (operationID) {
-			case GeometryPackage.VERTEX___CLONE:
-				return clone();
-			case GeometryPackage.VERTEX___EQUALS__OBJECT:
-				return equals(arguments.get(0));
-			case GeometryPackage.VERTEX___HASH_CODE:
-				return hashCode();
+		case GeometryPackage.VERTEX___CLONE:
+			return clone();
+		case GeometryPackage.VERTEX___EQUALS__OBJECT:
+			return equals(arguments.get(0));
+		case GeometryPackage.VERTEX___HASH_CODE:
+			return hashCode();
 		}
 		return super.eInvoke(operationID, arguments);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
+		if (eIsProxy())
+			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (x: ");
@@ -344,6 +371,48 @@ public class VertexImpl extends MinimalEObjectImpl.Container implements Vertex {
 		result.append(z);
 		result.append(')');
 		return result.toString();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.emf.common.notify.impl.BasicNotifierImpl#eNotify(org.eclipse.
+	 * emf.common.notify.Notification)
+	 */
+	@Override
+	public void eNotify(Notification notification) {
+		// Check if a notification is required
+		Adapter[] eAdapters = eBasicAdapterArray();
+		if (eAdapters != null && eDeliver()) {
+
+			// If this notification is on the UI thread, launch a new thread to
+			// handle it
+			if (Thread.currentThread() == Display.getCurrent().getThread()) {
+
+				Thread updateThread = new Thread() {
+
+					@Override
+					public void run() {
+						for (int i = 0, size = eAdapters.length; i < size; ++i) {
+							eAdapters[i].notifyChanged(notification);
+						}
+					}
+				};
+
+				updateThread.run();
+
+			}
+
+			// If we are already off the UI thread, such as being called by a
+			// thread created by some other object's eNotify(), then just notify
+			// the adapters.
+			else {
+				for (int i = 0, size = eAdapters.length; i < size; ++i) {
+					eAdapters[i].notifyChanged(notification);
+				}
+			}
+		}
 	}
 
 } // VertexImpl

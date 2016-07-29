@@ -1,13 +1,5 @@
-/*******************************************************************************
- * Copyright (c) 2016 UT-Battelle, LLC. and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     UT-Battelle, LLC. - initial API and implementation
- *******************************************************************************/
+/**
+ */
 package org.eclipse.january.geometry.impl;
 
 import java.util.ArrayList;
@@ -30,8 +22,10 @@ import org.eclipse.january.geometry.util.MeshUtils;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.january.geometry.impl.CylinderImpl#getRadius <em>Radius</em>}</li>
- *   <li>{@link org.eclipse.january.geometry.impl.CylinderImpl#getHeight <em>Height</em>}</li>
+ * <li>{@link org.eclipse.january.geometry.impl.CylinderImpl#getRadius
+ * <em>Radius</em>}</li>
+ * <li>{@link org.eclipse.january.geometry.impl.CylinderImpl#getHeight
+ * <em>Height</em>}</li>
  * </ul>
  * </p>
  *
@@ -39,8 +33,9 @@ import org.eclipse.january.geometry.util.MeshUtils;
  */
 public class CylinderImpl extends ShapeImpl implements Cylinder {
 	/**
-	 * The default value of the '{@link #getRadius() <em>Radius</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The default value of the '{@link #getRadius() <em>Radius</em>}'
+	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getRadius()
 	 * @generated
 	 * @ordered
@@ -50,6 +45,7 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 	/**
 	 * The cached value of the '{@link #getRadius() <em>Radius</em>}' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getRadius()
 	 * @generated
 	 * @ordered
@@ -57,8 +53,9 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 	protected double radius = RADIUS_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getHeight() <em>Height</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The default value of the '{@link #getHeight() <em>Height</em>}'
+	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getHeight()
 	 * @generated
 	 * @ordered
@@ -68,6 +65,7 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 	/**
 	 * The cached value of the '{@link #getHeight() <em>Height</em>}' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getHeight()
 	 * @generated
 	 * @ordered
@@ -105,6 +103,7 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected CylinderImpl() {
@@ -113,6 +112,7 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -122,6 +122,7 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -136,21 +137,28 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 	 */
 	@Override
 	public void setRadius(double newRadius) {
-		double oldRadius = radius;
-		radius = newRadius;
 
-		// Update the properties map as well
-		if (properties.get("radius") == null
-				|| properties.get("radius") != radius) {
-			properties.put("radius", radius);
+		// Fail silently if the new value is already set
+		if (newRadius != radius) {
+
+			double oldRadius = radius;
+			radius = newRadius;
+
+			// Update the properties map as well
+			if (properties.get("radius") == null
+					|| properties.get("radius") != radius) {
+				properties.put("radius", radius);
+			}
+			if (eNotificationRequired())
+				eNotify(new ENotificationImpl(this, Notification.SET,
+						GeometryPackage.CYLINDER__RADIUS, oldRadius, radius));
+
 		}
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					GeometryPackage.CYLINDER__RADIUS, oldRadius, radius));
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -165,90 +173,101 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 	 */
 	@Override
 	public void setHeight(double newHeight) {
-		double oldHeight = height;
-		height = newHeight;
 
-		// Update the properties map as well
-		if (properties.get("height") == null
-				|| properties.get("height") != height) {
-			properties.put("height", height);
+		// Fail silently if the new value is already set
+		if (newHeight != height) {
+
+			double oldHeight = height;
+			height = newHeight;
+
+			// Update the properties map as well
+			if (properties.get("height") == null
+					|| properties.get("height") != height) {
+				properties.put("height", height);
+			}
+			if (eNotificationRequired())
+				eNotify(new ENotificationImpl(this, Notification.SET,
+						GeometryPackage.CYLINDER__HEIGHT, oldHeight, height));
 		}
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					GeometryPackage.CYLINDER__HEIGHT, oldHeight, height));
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case GeometryPackage.CYLINDER__RADIUS:
-				return getRadius();
-			case GeometryPackage.CYLINDER__HEIGHT:
-				return getHeight();
+		case GeometryPackage.CYLINDER__RADIUS:
+			return getRadius();
+		case GeometryPackage.CYLINDER__HEIGHT:
+			return getHeight();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case GeometryPackage.CYLINDER__RADIUS:
-				setRadius((Double)newValue);
-				return;
-			case GeometryPackage.CYLINDER__HEIGHT:
-				setHeight((Double)newValue);
-				return;
+		case GeometryPackage.CYLINDER__RADIUS:
+			setRadius((Double) newValue);
+			return;
+		case GeometryPackage.CYLINDER__HEIGHT:
+			setHeight((Double) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case GeometryPackage.CYLINDER__RADIUS:
-				setRadius(RADIUS_EDEFAULT);
-				return;
-			case GeometryPackage.CYLINDER__HEIGHT:
-				setHeight(HEIGHT_EDEFAULT);
-				return;
+		case GeometryPackage.CYLINDER__RADIUS:
+			setRadius(RADIUS_EDEFAULT);
+			return;
+		case GeometryPackage.CYLINDER__HEIGHT:
+			setHeight(HEIGHT_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case GeometryPackage.CYLINDER__RADIUS:
-				return radius != RADIUS_EDEFAULT;
-			case GeometryPackage.CYLINDER__HEIGHT:
-				return height != HEIGHT_EDEFAULT;
+		case GeometryPackage.CYLINDER__RADIUS:
+			return radius != RADIUS_EDEFAULT;
+		case GeometryPackage.CYLINDER__HEIGHT:
+			return height != HEIGHT_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
+		if (eIsProxy())
+			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (radius: ");

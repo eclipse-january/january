@@ -1,13 +1,5 @@
-/*******************************************************************************
- * Copyright (c) 2016 UT-Battelle, LLC. and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     UT-Battelle, LLC. - initial API and implementation
- *******************************************************************************/
+/**
+ */
 package org.eclipse.january.geometry.impl;
 
 import java.util.ArrayList;
@@ -35,7 +27,8 @@ import org.eclipse.january.geometry.util.MeshUtils;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.january.geometry.impl.ReactorImpl#getPipes <em>Pipes</em>}</li>
+ * <li>{@link org.eclipse.january.geometry.impl.ReactorImpl#getPipes
+ * <em>Pipes</em>}</li>
  * </ul>
  * </p>
  *
@@ -43,8 +36,9 @@ import org.eclipse.january.geometry.util.MeshUtils;
  */
 public class ReactorImpl extends ShapeImpl implements Reactor {
 	/**
-	 * The cached value of the '{@link #getPipes() <em>Pipes</em>}' containment reference list.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The cached value of the '{@link #getPipes() <em>Pipes</em>}' containment
+	 * reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getPipes()
 	 * @generated
 	 * @ordered
@@ -53,6 +47,7 @@ public class ReactorImpl extends ShapeImpl implements Reactor {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected ReactorImpl() {
@@ -61,6 +56,7 @@ public class ReactorImpl extends ShapeImpl implements Reactor {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -70,18 +66,21 @@ public class ReactorImpl extends ShapeImpl implements Reactor {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public EList<Pipe> getPipes() {
 		if (pipes == null) {
-			pipes = new EObjectContainmentEList<Pipe>(Pipe.class, this, GeometryPackage.REACTOR__PIPES);
+			pipes = new EObjectContainmentEList<Pipe>(Pipe.class, this,
+					GeometryPackage.REACTOR__PIPES);
 		}
 		return pipes;
 	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.january.geometry.impl.ShapeImpl#getTriangles()
 	 * 
 	 * @generated NOT
@@ -151,7 +150,8 @@ public class ReactorImpl extends ShapeImpl implements Reactor {
 				sideCenter1);
 		Vertex sideCenter2 = GeometryFactory.eINSTANCE.createVertex();
 		sideCenter2.setX(width / -2);
-		double[] sideVerticesRight = MeshUtils.centerPoints(sideVertices, sideCenter2);
+		double[] sideVerticesRight = MeshUtils.centerPoints(sideVertices,
+				sideCenter2);
 
 		// Get the vertices of the semicircular edges
 		double[] innerVertices = MeshUtils
@@ -162,9 +162,9 @@ public class ReactorImpl extends ShapeImpl implements Reactor {
 		// The number of coordinates on one side of the circular mesh
 		int blockSize = samples * 2 * 3;
 
-		//The number of vertices in one of the reactor's two arch sides
+		// The number of vertices in one of the reactor's two arch sides
 		int archSize = blockSize * 2 / 3;
-		
+
 		// A list of all coordinates in the mesh in the format of the first
 		// vertex's x, y, and z coordinates, the second vertex's x, y, and z
 		// coordinates, etc
@@ -186,22 +186,24 @@ public class ReactorImpl extends ShapeImpl implements Reactor {
 
 			// The bottom outer vertex
 			coordinates[blockSize + i * 6] = outerVertices[i * 2];
-			coordinates[blockSize + i * 6 + 1] = outerVertices[i * 2 + 1] + height / 2;
+			coordinates[blockSize + i * 6 + 1] = outerVertices[i * 2 + 1]
+					+ height / 2;
 			coordinates[blockSize + i * 6 + 2] = (float) (depth / -2);
 
 			// The top outer vertex
 			coordinates[blockSize + i * 6 + 3] = outerVertices[i * 2];
-			coordinates[blockSize + i * 6 + 4] = outerVertices[i * 2 + 1] + height / 2;
+			coordinates[blockSize + i * 6 + 4] = outerVertices[i * 2 + 1]
+					+ height / 2;
 			coordinates[blockSize + i * 6 + 5] = (float) (depth / 2);
 		}
-		
-		//Create the bottom arch by reflecting each vertex in the top arch
-		for(int i = 0; i < coordinates.length / 2; i++){
-			
-			if(i % 3 != 1){
+
+		// Create the bottom arch by reflecting each vertex in the top arch
+		for (int i = 0; i < coordinates.length / 2; i++) {
+
+			if (i % 3 != 1) {
 				coordinates[archSize * 3 + i] = coordinates[i];
-			} else{
-			coordinates[archSize * 3 + i] = -coordinates[i];
+			} else {
+				coordinates[archSize * 3 + i] = -coordinates[i];
 			}
 		}
 
@@ -231,16 +233,18 @@ public class ReactorImpl extends ShapeImpl implements Reactor {
 		}
 
 		// Apply the rotations to the coordinates
-		sideVerticesLeft = MeshUtils.rotatePoints(sideVerticesLeft, xRotation, yRotation,
-				zRotation);
-		sideVerticesRight = MeshUtils.rotatePoints(sideVerticesRight, xRotation, yRotation,
-				zRotation);
+		sideVerticesLeft = MeshUtils.rotatePoints(sideVerticesLeft, xRotation,
+				yRotation, zRotation);
+		sideVerticesRight = MeshUtils.rotatePoints(sideVerticesRight, xRotation,
+				yRotation, zRotation);
 		coordinates = MeshUtils.rotatePoints(coordinates, xRotation, yRotation,
 				zRotation);
-		
-		//Add the straight sides' triangles to the mesh
-		triangles.addAll(MeshUtils.createRectangularPrismMesh(sideVerticesLeft));
-		triangles.addAll(MeshUtils.createRectangularPrismMesh(sideVerticesRight));
+
+		// Add the straight sides' triangles to the mesh
+		triangles
+				.addAll(MeshUtils.createRectangularPrismMesh(sideVerticesLeft));
+		triangles.addAll(
+				MeshUtils.createRectangularPrismMesh(sideVerticesRight));
 
 		// A list of the vertices in the shape
 		ArrayList<Vertex> vertices = new ArrayList<Vertex>();
@@ -251,14 +255,15 @@ public class ReactorImpl extends ShapeImpl implements Reactor {
 			// Create a new vertex
 			Vertex vertex = GeometryFactory.eINSTANCE.createVertex();
 
-			// Set the vertex's coordinates, increasing Y they will be at the correct height for the top arch
+			// Set the vertex's coordinates, increasing Y they will be at the
+			// correct height for the top arch
 			vertex.setX(coordinates[i * 3]);
 			vertex.setY(coordinates[i * 3 + 1]);
 			vertex.setZ(coordinates[i * 3 + 2]);
 
 			vertices.add(vertex);
 		}
-		
+
 		// The number of faces on one side of the mesh
 		int faceBlockSize = samples * 2;
 
@@ -268,9 +273,9 @@ public class ReactorImpl extends ShapeImpl implements Reactor {
 		// At each vertex, construct two faces
 		for (int i = 0; i < halfFaces - 2; i++) {
 
-			//The indices into the vertex array for each triangle
-			int[] indices = new int[3]; 
-			
+			// The indices into the vertex array for each triangle
+			int[] indices = new int[3];
+
 			// Ignore the last two vertices on the first edge of the mesh, there
 			// are no more faces to make past them
 			if (i < faceBlockSize - 2 || i >= faceBlockSize) {
@@ -279,9 +284,9 @@ public class ReactorImpl extends ShapeImpl implements Reactor {
 				// inward according to the right hand rule.
 				if (i < faceBlockSize - 2) {
 					// Create a face along the side of the mesh
-					Triangle top = GeometryFactory.eINSTANCE
+					Triangle top = GeometryFactory.eINSTANCE.createTriangle();
+					Triangle bottom = GeometryFactory.eINSTANCE
 							.createTriangle();
-					Triangle bottom = GeometryFactory.eINSTANCE.createTriangle();
 
 					if (i % 2 != 0) {
 						indices[0] = i + 2;
@@ -296,14 +301,16 @@ public class ReactorImpl extends ShapeImpl implements Reactor {
 					} else {
 						indices[2] = i;
 					}
-					
-					//Add the vertices from the first half to the top triangle and the vertices from the second half to the bottom
-					for(int j : indices){
+
+					// Add the vertices from the first half to the top triangle
+					// and the vertices from the second half to the bottom
+					for (int j : indices) {
 						top.getVertices().add((Vertex) vertices.get(j).clone());
-						bottom.getVertices().add((Vertex) vertices.get(archSize + j).clone()); 
+						bottom.getVertices().add(
+								(Vertex) vertices.get(archSize + j).clone());
 					}
-					
-					//Add both triangles to the list
+
+					// Add both triangles to the list
 					triangles.add(top);
 					triangles.add(bottom);
 				}
@@ -311,11 +318,11 @@ public class ReactorImpl extends ShapeImpl implements Reactor {
 				// For faces in the second half of the list, have them facing
 				// outward according to the right hand rule
 				else {
-					
+
 					// Create a face along the side of the mesh
-					Triangle top = GeometryFactory.eINSTANCE
+					Triangle top = GeometryFactory.eINSTANCE.createTriangle();
+					Triangle bottom = GeometryFactory.eINSTANCE
 							.createTriangle();
-					Triangle bottom = GeometryFactory.eINSTANCE.createTriangle();
 
 					if (i % 2 == 0) {
 						indices[0] = i;
@@ -330,14 +337,16 @@ public class ReactorImpl extends ShapeImpl implements Reactor {
 					} else {
 						indices[2] = i + 2;
 					}
-					
-					//Add the vertices from the first half to the top triangle and the vertices from the second half to the bottom
-					for(int j : indices){
+
+					// Add the vertices from the first half to the top triangle
+					// and the vertices from the second half to the bottom
+					for (int j : indices) {
 						top.getVertices().add((Vertex) vertices.get(j).clone());
-						bottom.getVertices().add((Vertex) vertices.get(archSize + j).clone()); 
+						bottom.getVertices().add(
+								(Vertex) vertices.get(archSize + j).clone());
 					}
-					
-					//Add both triangles to the list
+
+					// Add both triangles to the list
 					triangles.add(top);
 					triangles.add(bottom);
 				}
@@ -345,11 +354,11 @@ public class ReactorImpl extends ShapeImpl implements Reactor {
 				// Create a face along the top/bottom of the mesh, with two
 				// vertices on this vertex's side and one on the opposite side
 				if (i < faceBlockSize) {
-					
+
 					// Create a face along the side of the mesh
-					Triangle top = GeometryFactory.eINSTANCE
+					Triangle top = GeometryFactory.eINSTANCE.createTriangle();
+					Triangle bottom = GeometryFactory.eINSTANCE
 							.createTriangle();
-					Triangle bottom = GeometryFactory.eINSTANCE.createTriangle();
 
 					if (i % 2 == 0) {
 						indices[0] = i;
@@ -364,24 +373,26 @@ public class ReactorImpl extends ShapeImpl implements Reactor {
 					} else {
 						indices[2] = i + faceBlockSize + 2;
 					}
-					
-					//Add the vertices from the first half to the top triangle and the vertices from the second half to the bottom
-					for(int j : indices){
+
+					// Add the vertices from the first half to the top triangle
+					// and the vertices from the second half to the bottom
+					for (int j : indices) {
 						top.getVertices().add((Vertex) vertices.get(j).clone());
-						bottom.getVertices().add((Vertex) vertices.get(archSize + j).clone()); 
+						bottom.getVertices().add(
+								(Vertex) vertices.get(archSize + j).clone());
 					}
-					
-					//Add both triangles to the list
+
+					// Add both triangles to the list
 					triangles.add(top);
 					triangles.add(bottom);
 				}
 
 				else {
-					
+
 					// Create a face along the side of the mesh
-					Triangle top = GeometryFactory.eINSTANCE
+					Triangle top = GeometryFactory.eINSTANCE.createTriangle();
+					Triangle bottom = GeometryFactory.eINSTANCE
 							.createTriangle();
-					Triangle bottom = GeometryFactory.eINSTANCE.createTriangle();
 
 					if (i % 2 != 0) {
 						indices[0] = i;
@@ -396,20 +407,21 @@ public class ReactorImpl extends ShapeImpl implements Reactor {
 					} else {
 						indices[2] = i - faceBlockSize;
 					}
-					
-					//Add the vertices from the first half to the top triangle and the vertices from the second half to the bottom
-					for(int j : indices){
+
+					// Add the vertices from the first half to the top triangle
+					// and the vertices from the second half to the bottom
+					for (int j : indices) {
 						top.getVertices().add((Vertex) vertices.get(j).clone());
-						bottom.getVertices().add((Vertex) vertices.get(archSize + j).clone()); 
+						bottom.getVertices().add(
+								(Vertex) vertices.get(archSize + j).clone());
 					}
-					
-					//Add both triangles to the list
+
+					// Add both triangles to the list
 					triangles.add(top);
 					triangles.add(bottom);
 				}
 			}
 		}
-		
 
 		// Move the reactor to surround the region
 		center.setX(
@@ -424,70 +436,75 @@ public class ReactorImpl extends ShapeImpl implements Reactor {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case GeometryPackage.REACTOR__PIPES:
-				return ((InternalEList<?>)getPipes()).basicRemove(otherEnd, msgs);
+		case GeometryPackage.REACTOR__PIPES:
+			return ((InternalEList<?>) getPipes()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case GeometryPackage.REACTOR__PIPES:
-				return getPipes();
+		case GeometryPackage.REACTOR__PIPES:
+			return getPipes();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case GeometryPackage.REACTOR__PIPES:
-				getPipes().clear();
-				getPipes().addAll((Collection<? extends Pipe>)newValue);
-				return;
+		case GeometryPackage.REACTOR__PIPES:
+			getPipes().clear();
+			getPipes().addAll((Collection<? extends Pipe>) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case GeometryPackage.REACTOR__PIPES:
-				getPipes().clear();
-				return;
+		case GeometryPackage.REACTOR__PIPES:
+			getPipes().clear();
+			return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case GeometryPackage.REACTOR__PIPES:
-				return pipes != null && !pipes.isEmpty();
+		case GeometryPackage.REACTOR__PIPES:
+			return pipes != null && !pipes.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

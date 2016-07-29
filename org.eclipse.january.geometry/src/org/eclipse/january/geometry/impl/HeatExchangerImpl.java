@@ -1,13 +1,5 @@
-/*******************************************************************************
- * Copyright (c) 2016 UT-Battelle, LLC. and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     UT-Battelle, LLC. - initial API and implementation
- *******************************************************************************/
+/**
+ */
 package org.eclipse.january.geometry.impl;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -26,14 +18,17 @@ import org.eclipse.january.geometry.Vertex;
 import org.eclipse.january.geometry.util.MeshUtils;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '
- * <em><b>Heat Exchanger</b></em>'. <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object ' <em><b>Heat
+ * Exchanger</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.january.geometry.impl.HeatExchangerImpl#getPipe <em>Pipe</em>}</li>
- *   <li>{@link org.eclipse.january.geometry.impl.HeatExchangerImpl#getInput <em>Input</em>}</li>
- *   <li>{@link org.eclipse.january.geometry.impl.HeatExchangerImpl#getOutput <em>Output</em>}</li>
+ * <li>{@link org.eclipse.january.geometry.impl.HeatExchangerImpl#getPipe
+ * <em>Pipe</em>}</li>
+ * <li>{@link org.eclipse.january.geometry.impl.HeatExchangerImpl#getInput
+ * <em>Input</em>}</li>
+ * <li>{@link org.eclipse.january.geometry.impl.HeatExchangerImpl#getOutput
+ * <em>Output</em>}</li>
  * </ul>
  * </p>
  *
@@ -43,6 +38,7 @@ public class HeatExchangerImpl extends ShapeImpl implements HeatExchanger {
 	/**
 	 * The cached value of the '{@link #getPipe() <em>Pipe</em>}' reference.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getPipe()
 	 * @generated
 	 * @ordered
@@ -52,6 +48,7 @@ public class HeatExchangerImpl extends ShapeImpl implements HeatExchanger {
 	/**
 	 * The cached value of the '{@link #getInput() <em>Input</em>}' reference.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getInput()
 	 * @generated
 	 * @ordered
@@ -61,6 +58,7 @@ public class HeatExchangerImpl extends ShapeImpl implements HeatExchanger {
 	/**
 	 * The cached value of the '{@link #getOutput() <em>Output</em>}' reference.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getOutput()
 	 * @generated
 	 * @ordered
@@ -92,6 +90,7 @@ public class HeatExchangerImpl extends ShapeImpl implements HeatExchanger {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected HeatExchangerImpl() {
@@ -238,14 +237,16 @@ public class HeatExchangerImpl extends ShapeImpl implements HeatExchanger {
 		// vector a distance equal to half the pipe's length. Since tubes'
 		// translations are based on their central point, this will shift the
 		// tube so that one end is at the intersection point and the other is at
-		// the target. Also subtract the center point from this translation, so that they will be attached to the heat exchanger centered around the origin. 
+		// the target. Also subtract the center point from this translation, so
+		// that they will be attached to the heat exchanger centered around the
+		// origin.
 		Vertex intersectionPoint = GeometryFactory.eINSTANCE.createVertex();
-		intersectionPoint
-				.setX(intersection[0] + (normalizedDirect[0] * length / 2) - center.getX());
-		intersectionPoint
-				.setY(intersection[1] + (normalizedDirect[1] * length / 2) - center.getY());
-		intersectionPoint
-				.setZ(intersection[2] + (normalizedDirect[2] * length / 2) - center.getZ());
+		intersectionPoint.setX(intersection[0]
+				+ (normalizedDirect[0] * length / 2) - center.getX());
+		intersectionPoint.setY(intersection[1]
+				+ (normalizedDirect[1] * length / 2) - center.getY());
+		intersectionPoint.setZ(intersection[2]
+				+ (normalizedDirect[2] * length / 2) - center.getZ());
 		vertices = MeshUtils.centerPoints(vertices, intersectionPoint);
 
 		// Get the triangles that define the tube
@@ -254,6 +255,7 @@ public class HeatExchangerImpl extends ShapeImpl implements HeatExchanger {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -263,16 +265,19 @@ public class HeatExchangerImpl extends ShapeImpl implements HeatExchanger {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Pipe getPipe() {
 		if (pipe != null && pipe.eIsProxy()) {
-			InternalEObject oldPipe = (InternalEObject)pipe;
-			pipe = (Pipe)eResolveProxy(oldPipe);
+			InternalEObject oldPipe = (InternalEObject) pipe;
+			pipe = (Pipe) eResolveProxy(oldPipe);
 			if (pipe != oldPipe) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, GeometryPackage.HEAT_EXCHANGER__PIPE, oldPipe, pipe));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
+							GeometryPackage.HEAT_EXCHANGER__PIPE, oldPipe,
+							pipe));
 			}
 		}
 		return pipe;
@@ -280,6 +285,7 @@ public class HeatExchangerImpl extends ShapeImpl implements HeatExchanger {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public Pipe basicGetPipe() {
@@ -293,31 +299,39 @@ public class HeatExchangerImpl extends ShapeImpl implements HeatExchanger {
 	 */
 	@Override
 	public void setPipe(Pipe newPipe) {
-		Pipe oldPipe = pipe;
-		pipe = newPipe;
 
-		// If the pipe was changed, the mesh needs to be regenerated.
-		if (newPipe != oldPipe) {
-			meshChanged = true;
+		// Fail silently if the new value is already set
+		if (newPipe != pipe) {
+
+			Pipe oldPipe = pipe;
+			pipe = newPipe;
+
+			// If the pipe was changed, the mesh needs to be regenerated.
+			if (newPipe != oldPipe) {
+				meshChanged = true;
+			}
+
+			if (eNotificationRequired())
+				eNotify(new ENotificationImpl(this, Notification.SET,
+						GeometryPackage.HEAT_EXCHANGER__PIPE, oldPipe, pipe));
 		}
-
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					GeometryPackage.HEAT_EXCHANGER__PIPE, oldPipe, pipe));
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Junction getInput() {
 		if (input != null && input.eIsProxy()) {
-			InternalEObject oldInput = (InternalEObject)input;
-			input = (Junction)eResolveProxy(oldInput);
+			InternalEObject oldInput = (InternalEObject) input;
+			input = (Junction) eResolveProxy(oldInput);
 			if (input != oldInput) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, GeometryPackage.HEAT_EXCHANGER__INPUT, oldInput, input));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
+							GeometryPackage.HEAT_EXCHANGER__INPUT, oldInput,
+							input));
 			}
 		}
 		return input;
@@ -325,6 +339,7 @@ public class HeatExchangerImpl extends ShapeImpl implements HeatExchanger {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public Junction basicGetInput() {
@@ -338,30 +353,39 @@ public class HeatExchangerImpl extends ShapeImpl implements HeatExchanger {
 	 */
 	@Override
 	public void setInput(Junction newInput) {
-		Junction oldInput = input;
-		input = newInput;
 
-		// If the junction was changed, the mesh needs to be regenerated.
-		if (newInput != oldInput) {
-			meshChanged = true;
+		// Fail silently if the new value is already set
+		if (newInput != input) {
+
+			Junction oldInput = input;
+			input = newInput;
+
+			// If the junction was changed, the mesh needs to be regenerated.
+			if (newInput != oldInput) {
+				meshChanged = true;
+			}
+			if (eNotificationRequired())
+				eNotify(new ENotificationImpl(this, Notification.SET,
+						GeometryPackage.HEAT_EXCHANGER__INPUT, oldInput,
+						input));
 		}
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					GeometryPackage.HEAT_EXCHANGER__INPUT, oldInput, input));
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Junction getOutput() {
 		if (output != null && output.eIsProxy()) {
-			InternalEObject oldOutput = (InternalEObject)output;
-			output = (Junction)eResolveProxy(oldOutput);
+			InternalEObject oldOutput = (InternalEObject) output;
+			output = (Junction) eResolveProxy(oldOutput);
 			if (output != oldOutput) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, GeometryPackage.HEAT_EXCHANGER__OUTPUT, oldOutput, output));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
+							GeometryPackage.HEAT_EXCHANGER__OUTPUT, oldOutput,
+							output));
 			}
 		}
 		return output;
@@ -369,6 +393,7 @@ public class HeatExchangerImpl extends ShapeImpl implements HeatExchanger {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public Junction basicGetOutput() {
@@ -382,17 +407,23 @@ public class HeatExchangerImpl extends ShapeImpl implements HeatExchanger {
 	 */
 	@Override
 	public void setOutput(Junction newOutput) {
-		Junction oldOutput = output;
-		output = newOutput;
 
-		// If the junction was changed, the mesh needs to be regenerated.
-		if (newOutput != oldOutput) {
-			meshChanged = true;
+		// Fail silently if the new value is already set
+		if (newOutput != output) {
+
+			Junction oldOutput = output;
+			output = newOutput;
+
+			// If the junction was changed, the mesh needs to be regenerated.
+			if (newOutput != oldOutput) {
+				meshChanged = true;
+			}
+
+			if (eNotificationRequired())
+				eNotify(new ENotificationImpl(this, Notification.SET,
+						GeometryPackage.HEAT_EXCHANGER__OUTPUT, oldOutput,
+						output));
 		}
-
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					GeometryPackage.HEAT_EXCHANGER__OUTPUT, oldOutput, output));
 	}
 
 	/*
@@ -449,17 +480,21 @@ public class HeatExchangerImpl extends ShapeImpl implements HeatExchanger {
 		return triangles;
 
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.january.geometry.impl.ShapeImpl#setCenter(org.eclipse.january.geometry.Vertex)
+	 * 
+	 * @see
+	 * org.eclipse.january.geometry.impl.ShapeImpl#setCenter(org.eclipse.january
+	 * .geometry.Vertex)
 	 * 
 	 * @generated NOT
 	 */
-	public void setCenter(Vertex newCenter){
-		
-		//If the exchanger has a pipe, move its center too
-		if(pipe != null){
+	@Override
+	public void setCenter(Vertex newCenter) {
+
+		// If the exchanger has a pipe, move its center too
+		if (pipe != null) {
 			pipe.setCenter(newCenter);
 		}
 		super.setCenter(newCenter);
@@ -467,77 +502,84 @@ public class HeatExchangerImpl extends ShapeImpl implements HeatExchanger {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case GeometryPackage.HEAT_EXCHANGER__PIPE:
-				if (resolve) return getPipe();
-				return basicGetPipe();
-			case GeometryPackage.HEAT_EXCHANGER__INPUT:
-				if (resolve) return getInput();
-				return basicGetInput();
-			case GeometryPackage.HEAT_EXCHANGER__OUTPUT:
-				if (resolve) return getOutput();
-				return basicGetOutput();
+		case GeometryPackage.HEAT_EXCHANGER__PIPE:
+			if (resolve)
+				return getPipe();
+			return basicGetPipe();
+		case GeometryPackage.HEAT_EXCHANGER__INPUT:
+			if (resolve)
+				return getInput();
+			return basicGetInput();
+		case GeometryPackage.HEAT_EXCHANGER__OUTPUT:
+			if (resolve)
+				return getOutput();
+			return basicGetOutput();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case GeometryPackage.HEAT_EXCHANGER__PIPE:
-				setPipe((Pipe)newValue);
-				return;
-			case GeometryPackage.HEAT_EXCHANGER__INPUT:
-				setInput((Junction)newValue);
-				return;
-			case GeometryPackage.HEAT_EXCHANGER__OUTPUT:
-				setOutput((Junction)newValue);
-				return;
+		case GeometryPackage.HEAT_EXCHANGER__PIPE:
+			setPipe((Pipe) newValue);
+			return;
+		case GeometryPackage.HEAT_EXCHANGER__INPUT:
+			setInput((Junction) newValue);
+			return;
+		case GeometryPackage.HEAT_EXCHANGER__OUTPUT:
+			setOutput((Junction) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case GeometryPackage.HEAT_EXCHANGER__PIPE:
-				setPipe((Pipe)null);
-				return;
-			case GeometryPackage.HEAT_EXCHANGER__INPUT:
-				setInput((Junction)null);
-				return;
-			case GeometryPackage.HEAT_EXCHANGER__OUTPUT:
-				setOutput((Junction)null);
-				return;
+		case GeometryPackage.HEAT_EXCHANGER__PIPE:
+			setPipe((Pipe) null);
+			return;
+		case GeometryPackage.HEAT_EXCHANGER__INPUT:
+			setInput((Junction) null);
+			return;
+		case GeometryPackage.HEAT_EXCHANGER__OUTPUT:
+			setOutput((Junction) null);
+			return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case GeometryPackage.HEAT_EXCHANGER__PIPE:
-				return pipe != null;
-			case GeometryPackage.HEAT_EXCHANGER__INPUT:
-				return input != null;
-			case GeometryPackage.HEAT_EXCHANGER__OUTPUT:
-				return output != null;
+		case GeometryPackage.HEAT_EXCHANGER__PIPE:
+			return pipe != null;
+		case GeometryPackage.HEAT_EXCHANGER__INPUT:
+			return input != null;
+		case GeometryPackage.HEAT_EXCHANGER__OUTPUT:
+			return output != null;
 		}
 		return super.eIsSet(featureID);
 	}
