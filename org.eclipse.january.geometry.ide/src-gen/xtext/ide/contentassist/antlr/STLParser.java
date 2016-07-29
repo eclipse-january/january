@@ -45,9 +45,6 @@ public class STLParser extends AbstractContentAssistParser {
 				{
 					put(grammarAccess.getShape_ImplAccess().getAlternatives_3(), "rule__Shape_Impl__Alternatives_3");
 					put(grammarAccess.getShape_ImplAccess().getAlternatives_8(), "rule__Shape_Impl__Alternatives_8");
-					put(grammarAccess.getEDoubleAccess().getAlternatives_0(), "rule__EDouble__Alternatives_0");
-					put(grammarAccess.getEDoubleAccess().getAlternatives_4_0(), "rule__EDouble__Alternatives_4_0");
-					put(grammarAccess.getEDoubleAccess().getAlternatives_4_1(), "rule__EDouble__Alternatives_4_1");
 					put(grammarAccess.getEStringAccess().getAlternatives(), "rule__EString__Alternatives");
 					put(grammarAccess.getGeometryAccess().getGroup(), "rule__Geometry__Group__0");
 					put(grammarAccess.getShape_ImplAccess().getGroup(), "rule__Shape_Impl__Group__0");
@@ -55,8 +52,6 @@ public class STLParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTriangleAccess().getGroup_2(), "rule__Triangle__Group_2__0");
 					put(grammarAccess.getTriangleAccess().getGroup_5(), "rule__Triangle__Group_5__0");
 					put(grammarAccess.getVertexAccess().getGroup(), "rule__Vertex__Group__0");
-					put(grammarAccess.getEDoubleAccess().getGroup(), "rule__EDouble__Group__0");
-					put(grammarAccess.getEDoubleAccess().getGroup_4(), "rule__EDouble__Group_4__0");
 					put(grammarAccess.getGeometryAccess().getNodesAssignment_1(), "rule__Geometry__NodesAssignment_1");
 					put(grammarAccess.getShape_ImplAccess().getNameAssignment_2(), "rule__Shape_Impl__NameAssignment_2");
 					put(grammarAccess.getShape_ImplAccess().getTrianglesAssignment_4(), "rule__Shape_Impl__TrianglesAssignment_4");

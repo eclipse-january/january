@@ -32,7 +32,7 @@ Face returns Face:
 
 Vertex returns Vertex:
 	{Vertex}
-	x = EDouble y = EDouble z = EDouble
+	x = EDouble y = EDouble z = EDouble EInt?
 ;
 
 TextureVertex returns Vertex:

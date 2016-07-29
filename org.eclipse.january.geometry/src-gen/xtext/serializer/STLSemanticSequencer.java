@@ -101,7 +101,7 @@ public class STLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Vertex returns Vertex
 	 *
 	 * Constraint:
-	 *     (x=EDouble y=EDouble z=EDouble)
+	 *     (x=DOUBLE y=DOUBLE z=DOUBLE)
 	 */
 	protected void sequence_Vertex(ISerializationContext context, Vertex semanticObject) {
 		if (errorAcceptor != null) {
@@ -113,9 +113,9 @@ public class STLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, GeometryPackage.Literals.VERTEX__Z));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getVertexAccess().getXEDoubleParserRuleCall_1_0(), semanticObject.getX());
-		feeder.accept(grammarAccess.getVertexAccess().getYEDoubleParserRuleCall_2_0(), semanticObject.getY());
-		feeder.accept(grammarAccess.getVertexAccess().getZEDoubleParserRuleCall_3_0(), semanticObject.getZ());
+		feeder.accept(grammarAccess.getVertexAccess().getXDOUBLETerminalRuleCall_1_0(), semanticObject.getX());
+		feeder.accept(grammarAccess.getVertexAccess().getYDOUBLETerminalRuleCall_2_0(), semanticObject.getY());
+		feeder.accept(grammarAccess.getVertexAccess().getZDOUBLETerminalRuleCall_3_0(), semanticObject.getZ());
 		feeder.finish();
 	}
 	

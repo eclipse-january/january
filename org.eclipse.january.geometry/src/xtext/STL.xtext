@@ -11,9 +11,9 @@ Geometry returns Geometry:
 Shape_Impl returns Shape:
 	{Shape}
 	'solid'
-	(name=EString)? (ID | WS | STRING | INT)*
+	(name=EString)? (ID | WS | STRING | DOUBLE | ANY_OTHER)*
 	(triangles+=Triangle)* WS*
-	'endsolid' EString? (ID | WS | STRING | INT)*
+	'endsolid' EString? (ID | WS | STRING | DOUBLE | ANY_OTHER)*
 ;
 
 Triangle returns Triangle:
@@ -27,12 +27,12 @@ Triangle returns Triangle:
 
 Vertex returns Vertex:
 	{Vertex}
-	x=EDouble
-	y=EDouble
-	z=EDouble
+	x=DOUBLE
+	y=DOUBLE
+	z=DOUBLE
 ;
 
-EDouble returns ecore::EDouble:
+terminal DOUBLE returns ecore::EDouble:
 	(('-'|'+')? INT? '.' INT (('E'|'e') ('-'|'+')? INT)?) | INT;
 	
 EString returns ecore::EString:

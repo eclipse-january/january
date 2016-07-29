@@ -175,9 +175,14 @@ ruleShape_Impl returns [EObject current=null]
 				newLeafNode(this_STRING_5, grammarAccess.getShape_ImplAccess().getSTRINGTerminalRuleCall_3_2());
 			}
 			    |
-			this_INT_6=RULE_INT
+			this_DOUBLE_6=RULE_DOUBLE
 			{
-				newLeafNode(this_INT_6, grammarAccess.getShape_ImplAccess().getINTTerminalRuleCall_3_3());
+				newLeafNode(this_DOUBLE_6, grammarAccess.getShape_ImplAccess().getDOUBLETerminalRuleCall_3_3());
+			}
+			    |
+			this_ANY_OTHER_7=RULE_ANY_OTHER
+			{
+				newLeafNode(this_ANY_OTHER_7, grammarAccess.getShape_ImplAccess().getANY_OTHERTerminalRuleCall_3_4());
 			}
 		)*
 		(
@@ -185,7 +190,7 @@ ruleShape_Impl returns [EObject current=null]
 				{
 					newCompositeNode(grammarAccess.getShape_ImplAccess().getTrianglesTriangleParserRuleCall_4_0());
 				}
-				lv_triangles_7_0=ruleTriangle
+				lv_triangles_8_0=ruleTriangle
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getShape_ImplRule());
@@ -193,21 +198,21 @@ ruleShape_Impl returns [EObject current=null]
 					add(
 						$current,
 						"triangles",
-						lv_triangles_7_0,
+						lv_triangles_8_0,
 						"xtext.STL.Triangle");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)*
 		(
-			this_WS_8=RULE_WS
+			this_WS_9=RULE_WS
 			{
-				newLeafNode(this_WS_8, grammarAccess.getShape_ImplAccess().getWSTerminalRuleCall_5());
+				newLeafNode(this_WS_9, grammarAccess.getShape_ImplAccess().getWSTerminalRuleCall_5());
 			}
 		)*
-		otherlv_9='endsolid'
+		otherlv_10='endsolid'
 		{
-			newLeafNode(otherlv_9, grammarAccess.getShape_ImplAccess().getEndsolidKeyword_6());
+			newLeafNode(otherlv_10, grammarAccess.getShape_ImplAccess().getEndsolidKeyword_6());
 		}
 		(
 			{
@@ -219,24 +224,29 @@ ruleShape_Impl returns [EObject current=null]
 			}
 		)?
 		(
-			this_ID_11=RULE_ID
+			this_ID_12=RULE_ID
 			{
-				newLeafNode(this_ID_11, grammarAccess.getShape_ImplAccess().getIDTerminalRuleCall_8_0());
+				newLeafNode(this_ID_12, grammarAccess.getShape_ImplAccess().getIDTerminalRuleCall_8_0());
 			}
 			    |
-			this_WS_12=RULE_WS
+			this_WS_13=RULE_WS
 			{
-				newLeafNode(this_WS_12, grammarAccess.getShape_ImplAccess().getWSTerminalRuleCall_8_1());
+				newLeafNode(this_WS_13, grammarAccess.getShape_ImplAccess().getWSTerminalRuleCall_8_1());
 			}
 			    |
-			this_STRING_13=RULE_STRING
+			this_STRING_14=RULE_STRING
 			{
-				newLeafNode(this_STRING_13, grammarAccess.getShape_ImplAccess().getSTRINGTerminalRuleCall_8_2());
+				newLeafNode(this_STRING_14, grammarAccess.getShape_ImplAccess().getSTRINGTerminalRuleCall_8_2());
 			}
 			    |
-			this_INT_14=RULE_INT
+			this_DOUBLE_15=RULE_DOUBLE
 			{
-				newLeafNode(this_INT_14, grammarAccess.getShape_ImplAccess().getINTTerminalRuleCall_8_3());
+				newLeafNode(this_DOUBLE_15, grammarAccess.getShape_ImplAccess().getDOUBLETerminalRuleCall_8_3());
+			}
+			    |
+			this_ANY_OTHER_16=RULE_ANY_OTHER
+			{
+				newLeafNode(this_ANY_OTHER_16, grammarAccess.getShape_ImplAccess().getANY_OTHERTerminalRuleCall_8_4());
 			}
 		)*
 	)
@@ -363,149 +373,58 @@ ruleVertex returns [EObject current=null]
 		)
 		(
 			(
+				lv_x_1_0=RULE_DOUBLE
 				{
-					newCompositeNode(grammarAccess.getVertexAccess().getXEDoubleParserRuleCall_1_0());
+					newLeafNode(lv_x_1_0, grammarAccess.getVertexAccess().getXDOUBLETerminalRuleCall_1_0());
 				}
-				lv_x_1_0=ruleEDouble
 				{
 					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getVertexRule());
+						$current = createModelElement(grammarAccess.getVertexRule());
 					}
-					set(
+					setWithLastConsumed(
 						$current,
 						"x",
 						lv_x_1_0,
-						"xtext.STL.EDouble");
-					afterParserOrEnumRuleCall();
+						"xtext.STL.DOUBLE");
 				}
 			)
 		)
 		(
 			(
+				lv_y_2_0=RULE_DOUBLE
 				{
-					newCompositeNode(grammarAccess.getVertexAccess().getYEDoubleParserRuleCall_2_0());
+					newLeafNode(lv_y_2_0, grammarAccess.getVertexAccess().getYDOUBLETerminalRuleCall_2_0());
 				}
-				lv_y_2_0=ruleEDouble
 				{
 					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getVertexRule());
+						$current = createModelElement(grammarAccess.getVertexRule());
 					}
-					set(
+					setWithLastConsumed(
 						$current,
 						"y",
 						lv_y_2_0,
-						"xtext.STL.EDouble");
-					afterParserOrEnumRuleCall();
+						"xtext.STL.DOUBLE");
 				}
 			)
 		)
 		(
 			(
+				lv_z_3_0=RULE_DOUBLE
 				{
-					newCompositeNode(grammarAccess.getVertexAccess().getZEDoubleParserRuleCall_3_0());
+					newLeafNode(lv_z_3_0, grammarAccess.getVertexAccess().getZDOUBLETerminalRuleCall_3_0());
 				}
-				lv_z_3_0=ruleEDouble
 				{
 					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getVertexRule());
+						$current = createModelElement(grammarAccess.getVertexRule());
 					}
-					set(
+					setWithLastConsumed(
 						$current,
 						"z",
 						lv_z_3_0,
-						"xtext.STL.EDouble");
-					afterParserOrEnumRuleCall();
+						"xtext.STL.DOUBLE");
 				}
 			)
 		)
-	)
-;
-
-// Entry rule entryRuleEDouble
-entryRuleEDouble returns [String current=null]:
-	{ newCompositeNode(grammarAccess.getEDoubleRule()); }
-	iv_ruleEDouble=ruleEDouble
-	{ $current=$iv_ruleEDouble.current.getText(); }
-	EOF;
-
-// Rule EDouble
-ruleEDouble returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		(
-			kw='-'
-			{
-				$current.merge(kw);
-				newLeafNode(kw, grammarAccess.getEDoubleAccess().getHyphenMinusKeyword_0_0());
-			}
-			    |
-			kw='+'
-			{
-				$current.merge(kw);
-				newLeafNode(kw, grammarAccess.getEDoubleAccess().getPlusSignKeyword_0_1());
-			}
-		)?
-		(
-			this_INT_2=RULE_INT
-			{
-				$current.merge(this_INT_2);
-			}
-			{
-				newLeafNode(this_INT_2, grammarAccess.getEDoubleAccess().getINTTerminalRuleCall_1());
-			}
-		)?
-		kw='.'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getEDoubleAccess().getFullStopKeyword_2());
-		}
-		this_INT_4=RULE_INT
-		{
-			$current.merge(this_INT_4);
-		}
-		{
-			newLeafNode(this_INT_4, grammarAccess.getEDoubleAccess().getINTTerminalRuleCall_3());
-		}
-		(
-			(
-				kw='E'
-				{
-					$current.merge(kw);
-					newLeafNode(kw, grammarAccess.getEDoubleAccess().getEKeyword_4_0_0());
-				}
-				    |
-				kw='e'
-				{
-					$current.merge(kw);
-					newLeafNode(kw, grammarAccess.getEDoubleAccess().getEKeyword_4_0_1());
-				}
-			)
-			(
-				kw='-'
-				{
-					$current.merge(kw);
-					newLeafNode(kw, grammarAccess.getEDoubleAccess().getHyphenMinusKeyword_4_1_0());
-				}
-				    |
-				kw='+'
-				{
-					$current.merge(kw);
-					newLeafNode(kw, grammarAccess.getEDoubleAccess().getPlusSignKeyword_4_1_1());
-				}
-			)?
-			this_INT_9=RULE_INT
-			{
-				$current.merge(this_INT_9);
-			}
-			{
-				newLeafNode(this_INT_9, grammarAccess.getEDoubleAccess().getINTTerminalRuleCall_4_2());
-			}
-		)?
 	)
 ;
 
@@ -543,9 +462,11 @@ ruleEString returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()
 	)
 ;
 
+RULE_DOUBLE : (('-'|'+')? RULE_INT? '.' RULE_INT (('E'|'e') ('-'|'+')? RULE_INT)?|RULE_INT);
+
 RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 
-RULE_INT : ('0'..'9')+;
+fragment RULE_INT : ('0'..'9')+;
 
 RULE_STRING : ('"' ('\\' .|~(('\\'|'"')))* '"'|'\'' ('\\' .|~(('\\'|'\'')))* '\'');
 

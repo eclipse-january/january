@@ -31,31 +31,52 @@ public class STLSyntacticSequencer extends AbstractSyntacticSequencer {
 	protected STLGrammarAccess grammarAccess;
 	protected AbstractElementAlias match_Shape_Impl_EStringParserRuleCall_7_q;
 	protected AbstractElementAlias match_Shape_Impl_WSTerminalRuleCall_5_a;
-	protected AbstractElementAlias match_Shape_Impl___IDTerminalRuleCall_3_0_or_INTTerminalRuleCall_3_3_or_STRINGTerminalRuleCall_3_2_or_WSTerminalRuleCall_3_1__a;
-	protected AbstractElementAlias match_Shape_Impl___IDTerminalRuleCall_8_0_or_INTTerminalRuleCall_8_3_or_STRINGTerminalRuleCall_8_2_or_WSTerminalRuleCall_8_1__a;
+	protected AbstractElementAlias match_Shape_Impl___ANY_OTHERTerminalRuleCall_3_4_or_DOUBLETerminalRuleCall_3_3_or_IDTerminalRuleCall_3_0_or_STRINGTerminalRuleCall_3_2_or_WSTerminalRuleCall_3_1__a;
+	protected AbstractElementAlias match_Shape_Impl___ANY_OTHERTerminalRuleCall_8_4_or_DOUBLETerminalRuleCall_8_3_or_IDTerminalRuleCall_8_0_or_STRINGTerminalRuleCall_8_2_or_WSTerminalRuleCall_8_1__a;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (STLGrammarAccess) access;
 		match_Shape_Impl_EStringParserRuleCall_7_q = new TokenAlias(false, true, grammarAccess.getShape_ImplAccess().getEStringParserRuleCall_7());
 		match_Shape_Impl_WSTerminalRuleCall_5_a = new TokenAlias(true, true, grammarAccess.getShape_ImplAccess().getWSTerminalRuleCall_5());
-		match_Shape_Impl___IDTerminalRuleCall_3_0_or_INTTerminalRuleCall_3_3_or_STRINGTerminalRuleCall_3_2_or_WSTerminalRuleCall_3_1__a = new AlternativeAlias(true, true, new TokenAlias(false, false, grammarAccess.getShape_ImplAccess().getIDTerminalRuleCall_3_0()), new TokenAlias(false, false, grammarAccess.getShape_ImplAccess().getINTTerminalRuleCall_3_3()), new TokenAlias(false, false, grammarAccess.getShape_ImplAccess().getSTRINGTerminalRuleCall_3_2()), new TokenAlias(false, false, grammarAccess.getShape_ImplAccess().getWSTerminalRuleCall_3_1()));
-		match_Shape_Impl___IDTerminalRuleCall_8_0_or_INTTerminalRuleCall_8_3_or_STRINGTerminalRuleCall_8_2_or_WSTerminalRuleCall_8_1__a = new AlternativeAlias(true, true, new TokenAlias(false, false, grammarAccess.getShape_ImplAccess().getIDTerminalRuleCall_8_0()), new TokenAlias(false, false, grammarAccess.getShape_ImplAccess().getINTTerminalRuleCall_8_3()), new TokenAlias(false, false, grammarAccess.getShape_ImplAccess().getSTRINGTerminalRuleCall_8_2()), new TokenAlias(false, false, grammarAccess.getShape_ImplAccess().getWSTerminalRuleCall_8_1()));
+		match_Shape_Impl___ANY_OTHERTerminalRuleCall_3_4_or_DOUBLETerminalRuleCall_3_3_or_IDTerminalRuleCall_3_0_or_STRINGTerminalRuleCall_3_2_or_WSTerminalRuleCall_3_1__a = new AlternativeAlias(true, true, new TokenAlias(false, false, grammarAccess.getShape_ImplAccess().getANY_OTHERTerminalRuleCall_3_4()), new TokenAlias(false, false, grammarAccess.getShape_ImplAccess().getDOUBLETerminalRuleCall_3_3()), new TokenAlias(false, false, grammarAccess.getShape_ImplAccess().getIDTerminalRuleCall_3_0()), new TokenAlias(false, false, grammarAccess.getShape_ImplAccess().getSTRINGTerminalRuleCall_3_2()), new TokenAlias(false, false, grammarAccess.getShape_ImplAccess().getWSTerminalRuleCall_3_1()));
+		match_Shape_Impl___ANY_OTHERTerminalRuleCall_8_4_or_DOUBLETerminalRuleCall_8_3_or_IDTerminalRuleCall_8_0_or_STRINGTerminalRuleCall_8_2_or_WSTerminalRuleCall_8_1__a = new AlternativeAlias(true, true, new TokenAlias(false, false, grammarAccess.getShape_ImplAccess().getANY_OTHERTerminalRuleCall_8_4()), new TokenAlias(false, false, grammarAccess.getShape_ImplAccess().getDOUBLETerminalRuleCall_8_3()), new TokenAlias(false, false, grammarAccess.getShape_ImplAccess().getIDTerminalRuleCall_8_0()), new TokenAlias(false, false, grammarAccess.getShape_ImplAccess().getSTRINGTerminalRuleCall_8_2()), new TokenAlias(false, false, grammarAccess.getShape_ImplAccess().getWSTerminalRuleCall_8_1()));
 	}
 	
 	@Override
 	protected String getUnassignedRuleCallToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (ruleCall.getRule() == grammarAccess.getEStringRule())
+		if (ruleCall.getRule() == grammarAccess.getANY_OTHERRule())
+			return getANY_OTHERToken(semanticObject, ruleCall, node);
+		else if (ruleCall.getRule() == grammarAccess.getDOUBLERule())
+			return getDOUBLEToken(semanticObject, ruleCall, node);
+		else if (ruleCall.getRule() == grammarAccess.getEStringRule())
 			return getEStringToken(semanticObject, ruleCall, node);
 		else if (ruleCall.getRule() == grammarAccess.getIDRule())
 			return getIDToken(semanticObject, ruleCall, node);
-		else if (ruleCall.getRule() == grammarAccess.getINTRule())
-			return getINTToken(semanticObject, ruleCall, node);
 		else if (ruleCall.getRule() == grammarAccess.getSTRINGRule())
 			return getSTRINGToken(semanticObject, ruleCall, node);
 		else if (ruleCall.getRule() == grammarAccess.getWSRule())
 			return getWSToken(semanticObject, ruleCall, node);
 		return "";
+	}
+	
+	/**
+	 * terminal ANY_OTHER: .;
+	 */
+	protected String getANY_OTHERToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (node != null)
+			return getTokenText(node);
+		return "";
+	}
+	
+	/**
+	 * terminal DOUBLE returns ecore::EDouble:
+	 * 	(('-'|'+')? INT? '.' INT (('E'|'e') ('-'|'+')? INT)?) | INT;
+	 */
+	protected String getDOUBLEToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (node != null)
+			return getTokenText(node);
+		return ".";
 	}
 	
 	/**
@@ -72,15 +93,6 @@ public class STLSyntacticSequencer extends AbstractSyntacticSequencer {
 	 * terminal ID  		: '^'?('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 	 */
 	protected String getIDToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (node != null)
-			return getTokenText(node);
-		return "";
-	}
-	
-	/**
-	 * terminal INT returns ecore::EInt: ('0'..'9')+;
-	 */
-	protected String getINTToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
 		return "";
@@ -117,10 +129,10 @@ public class STLSyntacticSequencer extends AbstractSyntacticSequencer {
 				emit_Shape_Impl_EStringParserRuleCall_7_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Shape_Impl_WSTerminalRuleCall_5_a.equals(syntax))
 				emit_Shape_Impl_WSTerminalRuleCall_5_a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_Shape_Impl___IDTerminalRuleCall_3_0_or_INTTerminalRuleCall_3_3_or_STRINGTerminalRuleCall_3_2_or_WSTerminalRuleCall_3_1__a.equals(syntax))
-				emit_Shape_Impl___IDTerminalRuleCall_3_0_or_INTTerminalRuleCall_3_3_or_STRINGTerminalRuleCall_3_2_or_WSTerminalRuleCall_3_1__a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_Shape_Impl___IDTerminalRuleCall_8_0_or_INTTerminalRuleCall_8_3_or_STRINGTerminalRuleCall_8_2_or_WSTerminalRuleCall_8_1__a.equals(syntax))
-				emit_Shape_Impl___IDTerminalRuleCall_8_0_or_INTTerminalRuleCall_8_3_or_STRINGTerminalRuleCall_8_2_or_WSTerminalRuleCall_8_1__a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Shape_Impl___ANY_OTHERTerminalRuleCall_3_4_or_DOUBLETerminalRuleCall_3_3_or_IDTerminalRuleCall_3_0_or_STRINGTerminalRuleCall_3_2_or_WSTerminalRuleCall_3_1__a.equals(syntax))
+				emit_Shape_Impl___ANY_OTHERTerminalRuleCall_3_4_or_DOUBLETerminalRuleCall_3_3_or_IDTerminalRuleCall_3_0_or_STRINGTerminalRuleCall_3_2_or_WSTerminalRuleCall_3_1__a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Shape_Impl___ANY_OTHERTerminalRuleCall_8_4_or_DOUBLETerminalRuleCall_8_3_or_IDTerminalRuleCall_8_0_or_STRINGTerminalRuleCall_8_2_or_WSTerminalRuleCall_8_1__a.equals(syntax))
+				emit_Shape_Impl___ANY_OTHERTerminalRuleCall_8_4_or_DOUBLETerminalRuleCall_8_3_or_IDTerminalRuleCall_8_0_or_STRINGTerminalRuleCall_8_2_or_WSTerminalRuleCall_8_1__a(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
@@ -130,9 +142,9 @@ public class STLSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     EString?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) 'solid' (ID | WS | STRING | INT)* WS* 'endsolid' (ambiguity) (ID | WS | STRING | INT)* (rule start)
-	 *     name=EString (ID | WS | STRING | INT)* WS* 'endsolid' (ambiguity) (ID | WS | STRING | INT)* (rule end)
-	 *     triangles+=Triangle WS* 'endsolid' (ambiguity) (ID | WS | STRING | INT)* (rule end)
+	 *     (rule start) 'solid' (ID | WS | STRING | DOUBLE | ANY_OTHER)* WS* 'endsolid' (ambiguity) (ID | WS | STRING | DOUBLE | ANY_OTHER)* (rule start)
+	 *     name=EString (ID | WS | STRING | DOUBLE | ANY_OTHER)* WS* 'endsolid' (ambiguity) (ID | WS | STRING | DOUBLE | ANY_OTHER)* (rule end)
+	 *     triangles+=Triangle WS* 'endsolid' (ambiguity) (ID | WS | STRING | DOUBLE | ANY_OTHER)* (rule end)
 	 */
 	protected void emit_Shape_Impl_EStringParserRuleCall_7_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -143,9 +155,9 @@ public class STLSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     WS*
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) 'solid' (ID | WS | STRING | INT)* (ambiguity) 'endsolid' EString? (ID | WS | STRING | INT)* (rule start)
-	 *     name=EString (ID | WS | STRING | INT)* (ambiguity) 'endsolid' EString? (ID | WS | STRING | INT)* (rule end)
-	 *     triangles+=Triangle (ambiguity) 'endsolid' EString? (ID | WS | STRING | INT)* (rule end)
+	 *     (rule start) 'solid' (ID | WS | STRING | DOUBLE | ANY_OTHER)* (ambiguity) 'endsolid' EString? (ID | WS | STRING | DOUBLE | ANY_OTHER)* (rule start)
+	 *     name=EString (ID | WS | STRING | DOUBLE | ANY_OTHER)* (ambiguity) 'endsolid' EString? (ID | WS | STRING | DOUBLE | ANY_OTHER)* (rule end)
+	 *     triangles+=Triangle (ambiguity) 'endsolid' EString? (ID | WS | STRING | DOUBLE | ANY_OTHER)* (rule end)
 	 */
 	protected void emit_Shape_Impl_WSTerminalRuleCall_5_a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -153,28 +165,28 @@ public class STLSyntacticSequencer extends AbstractSyntacticSequencer {
 	
 	/**
 	 * Ambiguous syntax:
-	 *     (ID | WS | STRING | INT)*
+	 *     (ID | WS | STRING | DOUBLE | ANY_OTHER)*
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) 'solid' (ambiguity) WS* 'endsolid' EString? (ID | WS | STRING | INT)* (rule start)
+	 *     (rule start) 'solid' (ambiguity) WS* 'endsolid' EString? (ID | WS | STRING | DOUBLE | ANY_OTHER)* (rule start)
 	 *     (rule start) 'solid' (ambiguity) triangles+=Triangle
-	 *     name=EString (ambiguity) WS* 'endsolid' EString? (ID | WS | STRING | INT)* (rule end)
+	 *     name=EString (ambiguity) WS* 'endsolid' EString? (ID | WS | STRING | DOUBLE | ANY_OTHER)* (rule end)
 	 *     name=EString (ambiguity) triangles+=Triangle
 	 */
-	protected void emit_Shape_Impl___IDTerminalRuleCall_3_0_or_INTTerminalRuleCall_3_3_or_STRINGTerminalRuleCall_3_2_or_WSTerminalRuleCall_3_1__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Shape_Impl___ANY_OTHERTerminalRuleCall_3_4_or_DOUBLETerminalRuleCall_3_3_or_IDTerminalRuleCall_3_0_or_STRINGTerminalRuleCall_3_2_or_WSTerminalRuleCall_3_1__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
 	 * Ambiguous syntax:
-	 *     (ID | WS | STRING | INT)*
+	 *     (ID | WS | STRING | DOUBLE | ANY_OTHER)*
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) 'solid' (ID | WS | STRING | INT)* WS* 'endsolid' EString? (ambiguity) (rule start)
-	 *     name=EString (ID | WS | STRING | INT)* WS* 'endsolid' EString? (ambiguity) (rule end)
+	 *     (rule start) 'solid' (ID | WS | STRING | DOUBLE | ANY_OTHER)* WS* 'endsolid' EString? (ambiguity) (rule start)
+	 *     name=EString (ID | WS | STRING | DOUBLE | ANY_OTHER)* WS* 'endsolid' EString? (ambiguity) (rule end)
 	 *     triangles+=Triangle WS* 'endsolid' EString? (ambiguity) (rule end)
 	 */
-	protected void emit_Shape_Impl___IDTerminalRuleCall_8_0_or_INTTerminalRuleCall_8_3_or_STRINGTerminalRuleCall_8_2_or_WSTerminalRuleCall_8_1__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Shape_Impl___ANY_OTHERTerminalRuleCall_8_4_or_DOUBLETerminalRuleCall_8_3_or_IDTerminalRuleCall_8_0_or_STRINGTerminalRuleCall_8_2_or_WSTerminalRuleCall_8_1__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

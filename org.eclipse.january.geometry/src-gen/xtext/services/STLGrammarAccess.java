@@ -65,7 +65,8 @@ public class STLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cIDTerminalRuleCall_3_0 = (RuleCall)cAlternatives_3.eContents().get(0);
 		private final RuleCall cWSTerminalRuleCall_3_1 = (RuleCall)cAlternatives_3.eContents().get(1);
 		private final RuleCall cSTRINGTerminalRuleCall_3_2 = (RuleCall)cAlternatives_3.eContents().get(2);
-		private final RuleCall cINTTerminalRuleCall_3_3 = (RuleCall)cAlternatives_3.eContents().get(3);
+		private final RuleCall cDOUBLETerminalRuleCall_3_3 = (RuleCall)cAlternatives_3.eContents().get(3);
+		private final RuleCall cANY_OTHERTerminalRuleCall_3_4 = (RuleCall)cAlternatives_3.eContents().get(4);
 		private final Assignment cTrianglesAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cTrianglesTriangleParserRuleCall_4_0 = (RuleCall)cTrianglesAssignment_4.eContents().get(0);
 		private final RuleCall cWSTerminalRuleCall_5 = (RuleCall)cGroup.eContents().get(5);
@@ -75,15 +76,16 @@ public class STLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cIDTerminalRuleCall_8_0 = (RuleCall)cAlternatives_8.eContents().get(0);
 		private final RuleCall cWSTerminalRuleCall_8_1 = (RuleCall)cAlternatives_8.eContents().get(1);
 		private final RuleCall cSTRINGTerminalRuleCall_8_2 = (RuleCall)cAlternatives_8.eContents().get(2);
-		private final RuleCall cINTTerminalRuleCall_8_3 = (RuleCall)cAlternatives_8.eContents().get(3);
+		private final RuleCall cDOUBLETerminalRuleCall_8_3 = (RuleCall)cAlternatives_8.eContents().get(3);
+		private final RuleCall cANY_OTHERTerminalRuleCall_8_4 = (RuleCall)cAlternatives_8.eContents().get(4);
 		
 		//Shape_Impl Shape:
-		//	{Shape} 'solid' name=EString? (ID | WS | STRING | INT)* triangles+=Triangle* WS* 'endsolid' EString? (ID | WS |
-		//	STRING | INT)*
+		//	{Shape} 'solid' name=EString? (ID | WS | STRING | DOUBLE | ANY_OTHER)* triangles+=Triangle* WS* 'endsolid' EString?
+		//	(ID | WS | STRING | DOUBLE | ANY_OTHER)*
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{Shape} 'solid' name=EString? (ID | WS | STRING | INT)* triangles+=Triangle* WS* 'endsolid' EString? (ID | WS | STRING |
-		//INT)*
+		//{Shape} 'solid' name=EString? (ID | WS | STRING | DOUBLE | ANY_OTHER)* triangles+=Triangle* WS* 'endsolid' EString? (ID
+		//| WS | STRING | DOUBLE | ANY_OTHER)*
 		public Group getGroup() { return cGroup; }
 		
 		//{Shape}
@@ -98,7 +100,7 @@ public class STLGrammarAccess extends AbstractGrammarElementFinder {
 		//EString
 		public RuleCall getNameEStringParserRuleCall_2_0() { return cNameEStringParserRuleCall_2_0; }
 		
-		//(ID | WS | STRING | INT)*
+		//(ID | WS | STRING | DOUBLE | ANY_OTHER)*
 		public Alternatives getAlternatives_3() { return cAlternatives_3; }
 		
 		//ID
@@ -110,8 +112,11 @@ public class STLGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getSTRINGTerminalRuleCall_3_2() { return cSTRINGTerminalRuleCall_3_2; }
 		
-		//INT
-		public RuleCall getINTTerminalRuleCall_3_3() { return cINTTerminalRuleCall_3_3; }
+		//DOUBLE
+		public RuleCall getDOUBLETerminalRuleCall_3_3() { return cDOUBLETerminalRuleCall_3_3; }
+		
+		//ANY_OTHER
+		public RuleCall getANY_OTHERTerminalRuleCall_3_4() { return cANY_OTHERTerminalRuleCall_3_4; }
 		
 		//triangles+=Triangle*
 		public Assignment getTrianglesAssignment_4() { return cTrianglesAssignment_4; }
@@ -128,7 +133,7 @@ public class STLGrammarAccess extends AbstractGrammarElementFinder {
 		//EString?
 		public RuleCall getEStringParserRuleCall_7() { return cEStringParserRuleCall_7; }
 		
-		//(ID | WS | STRING | INT)*
+		//(ID | WS | STRING | DOUBLE | ANY_OTHER)*
 		public Alternatives getAlternatives_8() { return cAlternatives_8; }
 		
 		//ID
@@ -140,8 +145,11 @@ public class STLGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getSTRINGTerminalRuleCall_8_2() { return cSTRINGTerminalRuleCall_8_2; }
 		
-		//INT
-		public RuleCall getINTTerminalRuleCall_8_3() { return cINTTerminalRuleCall_8_3; }
+		//DOUBLE
+		public RuleCall getDOUBLETerminalRuleCall_8_3() { return cDOUBLETerminalRuleCall_8_3; }
+		
+		//ANY_OTHER
+		public RuleCall getANY_OTHERTerminalRuleCall_8_4() { return cANY_OTHERTerminalRuleCall_8_4; }
 	}
 	public class TriangleElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "xtext.STL.Triangle");
@@ -215,106 +223,39 @@ public class STLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cVertexAction_0 = (Action)cGroup.eContents().get(0);
 		private final Assignment cXAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cXEDoubleParserRuleCall_1_0 = (RuleCall)cXAssignment_1.eContents().get(0);
+		private final RuleCall cXDOUBLETerminalRuleCall_1_0 = (RuleCall)cXAssignment_1.eContents().get(0);
 		private final Assignment cYAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cYEDoubleParserRuleCall_2_0 = (RuleCall)cYAssignment_2.eContents().get(0);
+		private final RuleCall cYDOUBLETerminalRuleCall_2_0 = (RuleCall)cYAssignment_2.eContents().get(0);
 		private final Assignment cZAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cZEDoubleParserRuleCall_3_0 = (RuleCall)cZAssignment_3.eContents().get(0);
+		private final RuleCall cZDOUBLETerminalRuleCall_3_0 = (RuleCall)cZAssignment_3.eContents().get(0);
 		
 		//Vertex:
-		//	{Vertex} x=EDouble y=EDouble z=EDouble;
+		//	{Vertex} x=DOUBLE y=DOUBLE z=DOUBLE;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{Vertex} x=EDouble y=EDouble z=EDouble
+		//{Vertex} x=DOUBLE y=DOUBLE z=DOUBLE
 		public Group getGroup() { return cGroup; }
 		
 		//{Vertex}
 		public Action getVertexAction_0() { return cVertexAction_0; }
 		
-		//x=EDouble
+		//x=DOUBLE
 		public Assignment getXAssignment_1() { return cXAssignment_1; }
 		
-		//EDouble
-		public RuleCall getXEDoubleParserRuleCall_1_0() { return cXEDoubleParserRuleCall_1_0; }
+		//DOUBLE
+		public RuleCall getXDOUBLETerminalRuleCall_1_0() { return cXDOUBLETerminalRuleCall_1_0; }
 		
-		//y=EDouble
+		//y=DOUBLE
 		public Assignment getYAssignment_2() { return cYAssignment_2; }
 		
-		//EDouble
-		public RuleCall getYEDoubleParserRuleCall_2_0() { return cYEDoubleParserRuleCall_2_0; }
+		//DOUBLE
+		public RuleCall getYDOUBLETerminalRuleCall_2_0() { return cYDOUBLETerminalRuleCall_2_0; }
 		
-		//z=EDouble
+		//z=DOUBLE
 		public Assignment getZAssignment_3() { return cZAssignment_3; }
 		
-		//EDouble
-		public RuleCall getZEDoubleParserRuleCall_3_0() { return cZEDoubleParserRuleCall_3_0; }
-	}
-	public class EDoubleElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "xtext.STL.EDouble");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
-		private final Keyword cHyphenMinusKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
-		private final Keyword cPlusSignKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
-		private final RuleCall cINTTerminalRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
-		private final Keyword cFullStopKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final RuleCall cINTTerminalRuleCall_3 = (RuleCall)cGroup.eContents().get(3);
-		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
-		private final Alternatives cAlternatives_4_0 = (Alternatives)cGroup_4.eContents().get(0);
-		private final Keyword cEKeyword_4_0_0 = (Keyword)cAlternatives_4_0.eContents().get(0);
-		private final Keyword cEKeyword_4_0_1 = (Keyword)cAlternatives_4_0.eContents().get(1);
-		private final Alternatives cAlternatives_4_1 = (Alternatives)cGroup_4.eContents().get(1);
-		private final Keyword cHyphenMinusKeyword_4_1_0 = (Keyword)cAlternatives_4_1.eContents().get(0);
-		private final Keyword cPlusSignKeyword_4_1_1 = (Keyword)cAlternatives_4_1.eContents().get(1);
-		private final RuleCall cINTTerminalRuleCall_4_2 = (RuleCall)cGroup_4.eContents().get(2);
-		
-		//EDouble ecore::EDouble:
-		//	('-' | '+')? INT? '.' INT (('E' | 'e') ('-' | '+')? INT)?
-		@Override public ParserRule getRule() { return rule; }
-		
-		//('-' | '+')? INT? '.' INT (('E' | 'e') ('-' | '+')? INT)?
-		public Group getGroup() { return cGroup; }
-		
-		//('-' | '+')?
-		public Alternatives getAlternatives_0() { return cAlternatives_0; }
-		
-		//'-'
-		public Keyword getHyphenMinusKeyword_0_0() { return cHyphenMinusKeyword_0_0; }
-		
-		//'+'
-		public Keyword getPlusSignKeyword_0_1() { return cPlusSignKeyword_0_1; }
-		
-		//INT?
-		public RuleCall getINTTerminalRuleCall_1() { return cINTTerminalRuleCall_1; }
-		
-		//'.'
-		public Keyword getFullStopKeyword_2() { return cFullStopKeyword_2; }
-		
-		//INT
-		public RuleCall getINTTerminalRuleCall_3() { return cINTTerminalRuleCall_3; }
-		
-		//(('E' | 'e') ('-' | '+')? INT)?
-		public Group getGroup_4() { return cGroup_4; }
-		
-		//('E' | 'e')
-		public Alternatives getAlternatives_4_0() { return cAlternatives_4_0; }
-		
-		//'E'
-		public Keyword getEKeyword_4_0_0() { return cEKeyword_4_0_0; }
-		
-		//'e'
-		public Keyword getEKeyword_4_0_1() { return cEKeyword_4_0_1; }
-		
-		//('-' | '+')?
-		public Alternatives getAlternatives_4_1() { return cAlternatives_4_1; }
-		
-		//'-'
-		public Keyword getHyphenMinusKeyword_4_1_0() { return cHyphenMinusKeyword_4_1_0; }
-		
-		//'+'
-		public Keyword getPlusSignKeyword_4_1_1() { return cPlusSignKeyword_4_1_1; }
-		
-		//INT
-		public RuleCall getINTTerminalRuleCall_4_2() { return cINTTerminalRuleCall_4_2; }
+		//DOUBLE
+		public RuleCall getZDOUBLETerminalRuleCall_3_0() { return cZDOUBLETerminalRuleCall_3_0; }
 	}
 	public class EStringElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "xtext.STL.EString");
@@ -341,7 +282,7 @@ public class STLGrammarAccess extends AbstractGrammarElementFinder {
 	private final Shape_ImplElements pShape_Impl;
 	private final TriangleElements pTriangle;
 	private final VertexElements pVertex;
-	private final EDoubleElements pEDouble;
+	private final TerminalRule tDOUBLE;
 	private final EStringElements pEString;
 	
 	private final Grammar grammar;
@@ -357,7 +298,7 @@ public class STLGrammarAccess extends AbstractGrammarElementFinder {
 		this.pShape_Impl = new Shape_ImplElements();
 		this.pTriangle = new TriangleElements();
 		this.pVertex = new VertexElements();
-		this.pEDouble = new EDoubleElements();
+		this.tDOUBLE = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "xtext.STL.DOUBLE");
 		this.pEString = new EStringElements();
 	}
 	
@@ -399,8 +340,8 @@ public class STLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Shape_Impl Shape:
-	//	{Shape} 'solid' name=EString? (ID | WS | STRING | INT)* triangles+=Triangle* WS* 'endsolid' EString? (ID | WS |
-	//	STRING | INT)*
+	//	{Shape} 'solid' name=EString? (ID | WS | STRING | DOUBLE | ANY_OTHER)* triangles+=Triangle* WS* 'endsolid' EString?
+	//	(ID | WS | STRING | DOUBLE | ANY_OTHER)*
 	public Shape_ImplElements getShape_ImplAccess() {
 		return pShape_Impl;
 	}
@@ -420,7 +361,7 @@ public class STLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Vertex:
-	//	{Vertex} x=EDouble y=EDouble z=EDouble;
+	//	{Vertex} x=DOUBLE y=DOUBLE z=DOUBLE;
 	public VertexElements getVertexAccess() {
 		return pVertex;
 	}
@@ -429,14 +370,10 @@ public class STLGrammarAccess extends AbstractGrammarElementFinder {
 		return getVertexAccess().getRule();
 	}
 	
-	//EDouble ecore::EDouble:
-	//	('-' | '+')? INT? '.' INT (('E' | 'e') ('-' | '+')? INT)?
-	public EDoubleElements getEDoubleAccess() {
-		return pEDouble;
-	}
-	
-	public ParserRule getEDoubleRule() {
-		return getEDoubleAccess().getRule();
+	//terminal DOUBLE returns ecore::EDouble:
+	//	('-' | '+')? INT? '.' INT (('E' | 'e') ('-' | '+')? INT)? | INT;
+	public TerminalRule getDOUBLERule() {
+		return tDOUBLE;
 	}
 	
 	//EString:
