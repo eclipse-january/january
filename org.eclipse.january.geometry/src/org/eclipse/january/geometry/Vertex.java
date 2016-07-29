@@ -1,5 +1,3 @@
-/**
- */
 package org.eclipse.january.geometry;
 
 import org.eclipse.emf.ecore.EObject;
