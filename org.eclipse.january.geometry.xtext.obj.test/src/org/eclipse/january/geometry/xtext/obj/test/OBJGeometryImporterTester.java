@@ -136,8 +136,6 @@ public class OBJGeometryImporterTester {
 		testFace(faces.get(12), new int[] {5209, 5211, 5208});
 		testFace(faces.get(13), new int[] {5772, 5593, 5592, 5773});
 		
-		assertNull(shape1.getMaterial());
-
 		PolyShape shape2 = (PolyShape) geom.getNodes().get(1);
 		assertNotNull(shape2);
 		assertEquals(shape2.getMaterial().getPhongMatName(), "bluteal");

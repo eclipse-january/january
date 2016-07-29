@@ -4,10 +4,27 @@
 package org.eclipse.january.geometry.xtext.ui
 
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
+import org.eclipse.xtext.ui.editor.syntaxcoloring.AbstractAntlrTokenToAttributeIdMapper
+import com.google.inject.Binder
+import com.google.inject.name.Names
+import org.eclipse.xtext.ide.LexerIdeBindings
 
 /**
  * Use this class to register components to be used within the Eclipse IDE.
  */
 @FinalFieldsConstructor
 class IGESUiModule extends AbstractIGESUiModule {
+	
+	def public Class<? extends AbstractAntlrTokenToAttributeIdMapper>
+		bindAbstractAntlrTokenToAttributeIdMapper() {
+	return IGESAntlrTokenToAttributeIdMapper;
+	}
+	
+	override public void configureHighlightingLexer(Binder binder) {
+		binder.bind(org.eclipse.xtext.parser.antlr.Lexer)
+			.annotatedWith(Names.named(LexerIdeBindings.HIGHLIGHTING))
+			.to(org.eclipse.january.geometry.xtext.CustomIGESLexer);
+	
+	}
+	
 }

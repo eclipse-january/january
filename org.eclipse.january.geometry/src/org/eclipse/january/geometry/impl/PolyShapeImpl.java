@@ -179,7 +179,7 @@ public class PolyShapeImpl extends ShapeImpl implements PolyShape {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	public EList<String> getMaterialFiles() {
 		if (materialFiles == null) {
