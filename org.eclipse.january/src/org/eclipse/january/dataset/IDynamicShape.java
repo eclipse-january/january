@@ -46,7 +46,7 @@ public interface IDynamicShape {
 	/**
 	 * Starts a periodic checker to see if dataset has changed in some manner. If any potential changes
 	 * are detected after the period has finished then registered listeners are alerted.
-	 * A period of 0 or less with stop any existing checker.
+	 * A period of 0 or less will stop any existing checker.
 	 * 
 	 * @param milliseconds period between checks in milliseconds
 	 * @param checker can be null for default implementation of alerting listeners unconditionally
