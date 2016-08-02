@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Test
 Bundle-SymbolicName: org.eclipse.january.geometry.xtext.obj.test
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 2.1.8.qualifier
 Require-Bundle: org.eclipse.january.geometry.xtext.obj;bundle-version="1.0.0",
  org.junit
 Import-Package: org.eclipse.emf.common.util,
