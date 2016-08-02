@@ -102,7 +102,7 @@ public class IntegerDataset extends AbstractDataset {
 			throw new IllegalArgumentException(String.format("Shape %s is not compatible with size of data array, %d",
 					Arrays.toString(shape), data.length));
 		}
-		this.shape = shape.clone();
+		this.shape = size == 0 ? null : shape.clone();
 
 		odata = this.data = data;
 	}

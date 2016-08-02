@@ -157,7 +157,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 				throw new IllegalArgumentException(String.format("Shape %s is not compatible with size of data array, %d",
 						Arrays.toString(shape), data.length / isize));
 			}
-			this.shape = shape.clone();
+			this.shape = size == 0 ? null : shape.clone();
 
 			odata = this.data = data;
 		}
