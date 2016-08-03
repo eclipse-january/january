@@ -7,7 +7,7 @@ Bundle-SymbolicName: org.eclipse.january.geometry.ide;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext.ide,
  org.eclipse.xtext.xbase.ide,
- org.eclipse.january.geometry.model;bundle-version="1.0.0"
+ org.eclipse.january.geometry.model
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: xtext.ide.contentassist.antlr.internal,
  xtext.ide.contentassist.antlr
