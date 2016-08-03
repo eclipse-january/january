@@ -1,0 +1,83 @@
+grammar org.eclipse.january.geometry.xtext.IGES
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+generate iGES "http://www.eclipse.org/january/geometry/xtext/IGES"
+
+IGES:
+	start=Start
+	global=Global
+	data=Data
+	parameters=Parameters
+	end=End;
+
+Start:
+	(lines+=startLine)+;
+
+Global:
+	
+	DELIMITER? HString? DELIMITER?
+	((values+=Value)+  WS? 'G' WS? INT ENDLINE)+
+	(values+=Value)* SEPARATOR WS? 'G' WS? INT ENDLINE;
+
+Data:
+	(entries+=Entry)+;
+
+Entry:
+	WS type=INT WS? paramData=INT WS? structure=INT WS? lineFont=INT WS? level=INT WS? view=INT WS? TransformMatrix=INT
+	WS? INT? WS? status=INT 'D' WS? index=INT ENDLINE
+	WS? INT WS? lineWeight=INT WS? color=INT WS? paramLines=INT WS? form=INT WS? (INT WS?)? (INT WS?)? ((entityLabel=STRING) | INT)? WS? (subNum=INT)? 'D'
+	WS? INT ENDLINE;
+
+Parameters:
+	(entries+=(PMultiEntry | PEntry))+;
+
+PEntry:
+	type=INT DELIMITER?
+	(values+=Value)* SEPARATOR WS? dIndex=INT 'P' WS? indicies+=INT ENDLINE;
+
+PMultiEntry returns PEntry:
+	type=INT DELIMITER?
+	((values+=Value)* WS? dIndex=INT 'P' WS? indicies+=INT ENDLINE)+
+	(values+=Value)* SEPARATOR WS? INT 'P' WS? INT ENDLINE;
+
+Value:
+	Param | Pointer | HString;
+
+HString:
+	val=HOLLERITH DELIMITER?;
+
+Param:
+	val=DOUBLE DELIMITER?;
+
+Pointer:
+    val=INT DELIMITER?;
+
+End:
+	'S' WS? sval=INT 'G' WS? gval=INT 'D' WS? dval=INT 'P' WS? pval=INT WS 'T' WS? tval=INT;
+
+startLine returns ecore::EString:
+	(STRING | WS)* 'S' WS? INT ENDLINE;
+
+terminal INT returns ecore::EInt:
+	('0'..'9')+;
+
+terminal DOUBLE returns ecore::EDouble:
+	('+' | '-')? INT '.' INT? (('e' | 'E') ('+' | '-')? INT)?;
+
+terminal HOLLERITH:
+	INT 'H' .;
+
+terminal STRING:
+	('A..Z' | 'a'..'z' | '0'..'9' | '"')+;
+
+terminal WS:
+	(' ' | '\t' | '\r')+;
+
+terminal ENDLINE:
+	'\r'? '\n';
+	
+terminal DELIMITER:
+	.	;
+
+terminal SEPARATOR:
+. ;
