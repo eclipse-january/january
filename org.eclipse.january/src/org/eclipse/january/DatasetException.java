@@ -13,11 +13,7 @@ package org.eclipse.january;
  * Exception class associated with datasets 
  */
 public class DatasetException extends Exception {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4789908999411239514L;
+	private static final long serialVersionUID = 8936607081910736618L;
 
 	/**
 	 * @see Exception#Exception()
@@ -50,16 +46,4 @@ public class DatasetException extends Exception {
 	public DatasetException(String message, Throwable cause) {
 		super(message, cause);
 	}
-
-	/**
-	 * @param message
-	 * @param cause
-	 * @param enableSuppression
-	 * @param writableStackTrace
-	 * @see Exception#Exception(String, Throwable, boolean, boolean)
-	 */
-	public DatasetException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
-	}
-
 }
