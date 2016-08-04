@@ -371,6 +371,51 @@ public class SliceTest {
 	}
 
 	@Test
+	public void testFlip() {
+		Slice sl;
+
+		sl = new Slice().flip();
+		assertEquals("::-1", sl.toString());
+		assertEquals(":", sl.flip().toString());
+
+		sl = new Slice(12).flip();
+		assertEquals("11::-1", sl.toString());
+		assertEquals(":12", sl.flip().toString());
+		sl = new Slice(1, 12).flip();
+		assertEquals("11:0:-1", sl.toString());
+		assertEquals("1:12", sl.flip().toString());
+		sl = new Slice(0, 12).flip();
+		assertEquals("11::-1", sl.toString());
+		assertEquals(":12", sl.flip().toString());
+		sl = new Slice(null, 12).flip();
+		assertEquals("11::-1", sl.toString());
+		assertEquals(":12", sl.flip().toString());
+		sl = new Slice(11, 12).flip();
+		assertEquals("11", sl.toString());
+		assertEquals("11", sl.flip().toString());
+		sl = new Slice(1, 12, 3).flip();
+		assertEquals("10:-2:-3", sl.toString());
+		assertEquals("1:13:3", sl.flip().toString());
+		sl = new Slice(11, 12, 3).flip();
+		assertEquals("11", sl.toString());
+		assertEquals("11", sl.flip().toString());
+		
+		sl = new Slice().setLength(12);
+		sl.flip();
+		assertEquals(null, sl.getStart());
+		assertEquals(null, sl.getStop());
+		assertEquals(-1, sl.getStep());
+		assertEquals(12, sl.getLength());
+
+		sl = new Slice(10).setLength(12);
+		sl.flip();
+		assertEquals(9, (int) sl.getStart());
+		assertEquals(null, sl.getStop());
+		assertEquals(-1, sl.getStep());
+		assertEquals(12, sl.getLength());
+	}
+
+	@Test
 	public void testConverters() {
 		int[] start = new int[1];
 		int[] stop  = new int[1];
