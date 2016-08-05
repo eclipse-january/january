@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -88,10 +89,11 @@ public class ReactorImpl extends ShapeImpl implements Reactor {
 	@Override
 	public EList<Triangle> getTriangles() {
 
-		triangles.clear();
+		// Clear the current list of triangles
+		triangles = new BasicEList<Triangle>();
 
 		// If there are no pipes, there is no reactor to draw
-		if (pipes.isEmpty()) {
+		if (getPipes().isEmpty()) {
 			return triangles;
 		}
 
@@ -507,6 +509,22 @@ public class ReactorImpl extends ShapeImpl implements Reactor {
 			return pipes != null && !pipes.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	@Override
+	public Object clone() {
+
+		// Create a new reactor
+		Reactor clone = GeometryFactory.eINSTANCE.createReactor();
+
+		// Make it a copy of this
+		clone.copy(this);
+		return clone;
 	}
 
 } // ReactorImpl

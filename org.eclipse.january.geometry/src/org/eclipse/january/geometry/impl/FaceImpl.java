@@ -205,7 +205,9 @@ public class FaceImpl extends MinimalEObjectImpl.Container implements Face {
 
 			// If this notification is on the UI thread, launch a new thread to
 			// handle it
-			if (Thread.currentThread() == Display.getCurrent().getThread()) {
+			Display currDisplay = Display.getCurrent();
+			if (currDisplay != null
+					&& Thread.currentThread() == currDisplay.getThread()) {
 
 				Thread updateThread = new Thread() {
 

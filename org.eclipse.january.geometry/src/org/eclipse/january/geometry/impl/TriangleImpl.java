@@ -180,7 +180,21 @@ public class TriangleImpl extends MinimalEObjectImpl.Container
 						// If any vertex is in one list but not the other, the
 						// triangles are not equal
 						for (Vertex vertex : vertices) {
-							if (!otherVertices.contains(vertex)) {
+
+							// If a match was found
+							boolean match = false;
+
+							// Search for a matching vertex
+							for (Vertex otherVertex : otherVertices) {
+								if (vertex.equals(otherVertex)) {
+									match = true;
+									break;
+								}
+							}
+
+							// If one vertex was not in the other triangle, then
+							// they are not equal
+							if (!match) {
 								return false;
 							}
 						}
@@ -354,7 +368,9 @@ public class TriangleImpl extends MinimalEObjectImpl.Container
 
 			// If this notification is on the UI thread, launch a new thread to
 			// handle it
-			if (Thread.currentThread() == Display.getCurrent().getThread()) {
+			Display currDisplay = Display.getCurrent();
+			if (currDisplay != null
+					&& Thread.currentThread() == currDisplay.getThread()) {
 
 				Thread updateThread = new Thread() {
 

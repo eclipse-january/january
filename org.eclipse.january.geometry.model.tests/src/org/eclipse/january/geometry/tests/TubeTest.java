@@ -14,18 +14,22 @@ package org.eclipse.january.geometry.tests;
 
 import org.eclipse.january.geometry.GeometryFactory;
 import org.eclipse.january.geometry.Tube;
+import org.eclipse.january.geometry.impl.TubeImpl;
+import org.junit.Test;
 
 import junit.textui.TestRunner;
 
 /**
  * <!-- begin-user-doc --> A test case for the model object '
  * <em><b>Tube</b></em>'. <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class TubeTest extends ShapeTest {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public static void main(String[] args) {
@@ -33,9 +37,9 @@ public class TubeTest extends ShapeTest {
 	}
 
 	/**
-	 * Constructs a new Tube test case with the given name.
-	 * <!-- begin-user-doc
+	 * Constructs a new Tube test case with the given name. <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public TubeTest(String name) {
@@ -43,18 +47,19 @@ public class TubeTest extends ShapeTest {
 	}
 
 	/**
-	 * Returns the fixture for this Tube test case.
-	 * <!-- begin-user-doc --> <!--
+	 * Returns the fixture for this Tube test case. <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	protected Tube getFixture() {
-		return (Tube)fixture;
+		return (Tube) fixture;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see junit.framework.TestCase#setUp()
 	 * @generated
 	 */
@@ -65,6 +70,7 @@ public class TubeTest extends ShapeTest {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see junit.framework.TestCase#tearDown()
 	 * @generated
 	 */
@@ -78,6 +84,7 @@ public class TubeTest extends ShapeTest {
 	 * 
 	 * @generated NOT
 	 */
+	@Test
 	public void checkProperties() {
 
 		// The tube for testing
@@ -120,6 +127,20 @@ public class TubeTest extends ShapeTest {
 		tube.setProperty("innerRadius", 2d);
 		assertEquals(2d, tube.getInnerRadius());
 
+	}
+
+	/**
+	 * Tests the '{@link org.eclipse.january.geometry.INode#clone()
+	 * <em>Clone</em>}' operation. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.january.geometry.INode#clone()
+	 * @generated NOT
+	 */
+	@Override
+	public void testClone() {
+
+		// Check that the clone is of the correct type.
+		assertTrue(fixture.clone() instanceof TubeImpl);
 	}
 
 } // TubeTest

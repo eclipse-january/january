@@ -531,6 +531,22 @@ public class PipeImpl extends TubeImpl implements Pipe {
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
+	 * @generated NOT
+	 */
+	@Override
+	public Object clone() {
+
+		// Create a new pipe
+		Pipe clone = GeometryFactory.eINSTANCE.createPipe();
+
+		// Make it a copy of this
+		clone.copy(this);
+		return clone;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override

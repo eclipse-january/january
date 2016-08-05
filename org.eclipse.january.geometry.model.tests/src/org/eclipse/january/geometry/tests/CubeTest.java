@@ -14,6 +14,7 @@ package org.eclipse.january.geometry.tests;
 
 import org.eclipse.january.geometry.Cube;
 import org.eclipse.january.geometry.GeometryFactory;
+import org.junit.Test;
 
 import junit.textui.TestRunner;
 
@@ -78,6 +79,7 @@ public class CubeTest extends ShapeTest {
 	 * 
 	 * @generated NOT
 	 */
+	@Test
 	public void checkProperties() {
 
 		// The cube for testing

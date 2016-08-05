@@ -10,7 +10,7 @@
 		<version>2.1.8-SNAPSHOT</version>
 	</parent>
 	<groupId>org.eclipse.eavp</groupId>
-	<artifactId>org.eclipse.january.geometry.model.test</artifactId>
+	<artifactId>org.eclipse.january.geometry.model.tests</artifactId>
 	<packaging>eclipse-test-plugin</packaging>
 
 	<build>

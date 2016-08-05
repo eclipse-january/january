@@ -436,8 +436,8 @@ public class OperatorImpl extends MinimalEObjectImpl.Container
 	@Override
 	public void addNode(INode child) {
 
-		// If the node is already in the list, fail silently
-		if (!getNodes().contains(child)) {
+		// If the node is already in the list or is null, fail silently
+		if (child != null && !getNodes().contains(child)) {
 
 			// Set the child's parent to this
 			child.setParent(this);
@@ -776,7 +776,9 @@ public class OperatorImpl extends MinimalEObjectImpl.Container
 
 			// If this notification is on the UI thread, launch a new thread to
 			// handle it
-			if (Thread.currentThread() == Display.getCurrent().getThread()) {
+			Display currDisplay = Display.getCurrent();
+			if (currDisplay != null
+					&& Thread.currentThread() == currDisplay.getThread()) {
 
 				Thread updateThread = new Thread() {
 

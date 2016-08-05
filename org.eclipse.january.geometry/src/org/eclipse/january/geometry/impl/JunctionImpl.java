@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.january.geometry.BoundingBox;
+import org.eclipse.january.geometry.GeometryFactory;
 import org.eclipse.january.geometry.GeometryPackage;
 import org.eclipse.january.geometry.Junction;
 import org.eclipse.january.geometry.Pipe;
@@ -271,7 +272,7 @@ public class JunctionImpl extends ShapeImpl implements Junction {
 	public EList<Triangle> getTriangles() {
 
 		// Clear the current list of triangles
-		triangles.clear();
+		triangles = new BasicEList<Triangle>();
 
 		// The box defining the area of the junction's display
 		BoundingBox box;
@@ -316,6 +317,22 @@ public class JunctionImpl extends ShapeImpl implements Junction {
 		center.setZ((box.getMaxZ() - box.getMinZ()) / 2 + box.getMinZ());
 
 		return triangles;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	@Override
+	public Object clone() {
+
+		// Create a new junction
+		Junction clone = GeometryFactory.eINSTANCE.createJunction();
+
+		// Make it a copy of this
+		clone.copy(this);
+		return clone;
 	}
 
 	/**

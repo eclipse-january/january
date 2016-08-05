@@ -22,6 +22,8 @@ import org.eclipse.january.geometry.GeometryPackage;
 import org.eclipse.january.geometry.Operator;
 import org.eclipse.january.geometry.Shape;
 import org.eclipse.january.geometry.Vertex;
+import org.eclipse.january.geometry.impl.ShapeImpl;
+import org.junit.Test;
 
 import junit.framework.TestCase;
 import junit.textui.TestRunner;
@@ -32,30 +34,39 @@ import junit.textui.TestRunner;
  * <p>
  * The following operations are tested:
  * <ul>
- *   <li>{@link org.eclipse.january.geometry.INode#changeDecoratorProperty(java.lang.String, java.lang.Object) <em>Change Decorator Property</em>}</li>
- *   <li>{@link org.eclipse.january.geometry.INode#getPropertyNames() <em>Get Property Names</em>}</li>
- *   <li>{@link org.eclipse.january.geometry.INode#getProperty(java.lang.String) <em>Get Property</em>}</li>
- *   <li>{@link org.eclipse.january.geometry.INode#setProperty(java.lang.String, double) <em>Set Property</em>}</li>
- *   <li>{@link org.eclipse.january.geometry.INode#addNode(org.eclipse.january.geometry.INode) <em>Add Node</em>}</li>
- *   <li>{@link org.eclipse.january.geometry.INode#removeNode(org.eclipse.january.geometry.INode) <em>Remove Node</em>}</li>
- *   <li>{@link org.eclipse.january.geometry.INode#copy(java.lang.Object) <em>Copy</em>}</li>
- *   <li>{@link org.eclipse.january.geometry.INode#clone() <em>Clone</em>}</li>
+ * <li>{@link org.eclipse.january.geometry.INode#changeDecoratorProperty(java.lang.String, java.lang.Object)
+ * <em>Change Decorator Property</em>}</li>
+ * <li>{@link org.eclipse.january.geometry.INode#getPropertyNames() <em>Get
+ * Property Names</em>}</li>
+ * <li>{@link org.eclipse.january.geometry.INode#getProperty(java.lang.String)
+ * <em>Get Property</em>}</li>
+ * <li>{@link org.eclipse.january.geometry.INode#setProperty(java.lang.String, double)
+ * <em>Set Property</em>}</li>
+ * <li>{@link org.eclipse.january.geometry.INode#addNode(org.eclipse.january.geometry.INode)
+ * <em>Add Node</em>}</li>
+ * <li>{@link org.eclipse.january.geometry.INode#removeNode(org.eclipse.january.geometry.INode)
+ * <em>Remove Node</em>}</li>
+ * <li>{@link org.eclipse.january.geometry.INode#copy(java.lang.Object)
+ * <em>Copy</em>}</li>
+ * <li>{@link org.eclipse.january.geometry.INode#clone() <em>Clone</em>}</li>
  * </ul>
  * </p>
+ * 
  * @generated
  */
 public class ShapeTest extends TestCase {
 
 	/**
-	 * The fixture for this Shape test case.
-	 * <!-- begin-user-doc --> <!--
+	 * The fixture for this Shape test case. <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected Shape fixture = null;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public static void main(String[] args) {
@@ -63,9 +74,9 @@ public class ShapeTest extends TestCase {
 	}
 
 	/**
-	 * Constructs a new Shape test case with the given name.
-	 * <!-- begin-user-doc
+	 * Constructs a new Shape test case with the given name. <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public ShapeTest(String name) {
@@ -73,9 +84,9 @@ public class ShapeTest extends TestCase {
 	}
 
 	/**
-	 * Sets the fixture for this Shape test case.
-	 * <!-- begin-user-doc --> <!--
+	 * Sets the fixture for this Shape test case. <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected void setFixture(Shape fixture) {
@@ -83,9 +94,9 @@ public class ShapeTest extends TestCase {
 	}
 
 	/**
-	 * Returns the fixture for this Shape test case.
-	 * <!-- begin-user-doc -->
+	 * Returns the fixture for this Shape test case. <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected Shape getFixture() {
@@ -94,6 +105,7 @@ public class ShapeTest extends TestCase {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see junit.framework.TestCase#setUp()
 	 * @generated
 	 */
@@ -104,6 +116,7 @@ public class ShapeTest extends TestCase {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see junit.framework.TestCase#tearDown()
 	 * @generated
 	 */
@@ -120,6 +133,7 @@ public class ShapeTest extends TestCase {
 	 * @see org.eclipse.january.geometry.Shape#getPropertyNames()
 	 * @generated NOT
 	 */
+	@Test
 	public void testGetPropertyNames() {
 
 		// The shape for testing
@@ -150,6 +164,7 @@ public class ShapeTest extends TestCase {
 	 * @see org.eclipse.january.geometry.Shape#getProperty(java.lang.String)
 	 * @generated NOT
 	 */
+	@Test
 	public void testGetProperty__String() {
 
 		// The shape for testing
@@ -160,8 +175,8 @@ public class ShapeTest extends TestCase {
 		shape.setProperty("test2", 2);
 
 		// Get the properties and check that they are equal
-		assertEquals(1, shape.getProperty("test"));
-		assertEquals(2, shape.getProperty("test2"));
+		assertEquals(1d, shape.getProperty("test"));
+		assertEquals(2d, shape.getProperty("test2"));
 	}
 
 	/**
@@ -174,6 +189,7 @@ public class ShapeTest extends TestCase {
 	 *      double)
 	 * @generated NOT
 	 */
+	@Test
 	public void testSetProperty__String_double() {
 		// Nothing to do here. See testGetProperty__String() instead.
 	}
@@ -188,6 +204,7 @@ public class ShapeTest extends TestCase {
 	 *      java.lang.Object)
 	 * @generated NOT
 	 */
+	@Test
 	public void testChangeDecoratorProperty__String_Object() {
 
 		// Whether or not a notification was received
@@ -227,6 +244,7 @@ public class ShapeTest extends TestCase {
 	 * @see org.eclipse.january.geometry.INode#addNode(org.eclipse.january.geometry.INode)
 	 * @generated NOT
 	 */
+	@Test
 	public void testAddNode__INode() {
 
 		// Create two child nodes
@@ -284,6 +302,7 @@ public class ShapeTest extends TestCase {
 	 * @see org.eclipse.january.geometry.INode#removeNode(org.eclipse.january.geometry.INode)
 	 * @generated NOT
 	 */
+	@Test
 	public void testRemoveNode__INode() {
 		// Nothing to do. See testAddNode_INode() instead.
 	}
@@ -296,6 +315,7 @@ public class ShapeTest extends TestCase {
 	 * @see org.eclipse.january.geometry.INode#copy(java.lang.Object)
 	 * @generated NOT
 	 */
+	@Test
 	public void testCopy__Object() {
 
 		// Create two shapes
@@ -338,10 +358,10 @@ public class ShapeTest extends TestCase {
 		assertTrue(1 == clone.getId());
 		assertTrue("test".equals(clone.getName()));
 		assertTrue("testType".equals(clone.getType()));
-		assertTrue("testProperty".equals(clone.getProperty("testProperty")));
+		assertTrue(4.0 == clone.getProperty("testProperty"));
 
 		// The clone should not kept a reference to the original's parent
-		assertNull(fixture.getParent());
+		assertNull(clone.getParent());
 
 		// Try to copy something that isn't an operator
 		fixture.copy("invalid object");
@@ -357,19 +377,21 @@ public class ShapeTest extends TestCase {
 		assertTrue(1 == clone.getId());
 		assertTrue("test".equals(clone.getName()));
 		assertTrue("testType".equals(clone.getType()));
-		assertTrue("testProperty".equals(clone.getProperty("testProperty")));
+		assertTrue(4 == clone.getProperty("testProperty"));
 	}
 
 	/**
-	 * Tests the '{@link org.eclipse.january.geometry.INode#clone() <em>Clone</em>}' operation.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * Tests the '{@link org.eclipse.january.geometry.INode#clone()
+	 * <em>Clone</em>}' operation. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see org.eclipse.january.geometry.INode#clone()
-	 * @generated
+	 * @generated NOT
 	 */
+	@Test
 	public void testClone() {
-		// TODO: implement this operation test method
-		// Ensure that you remove @generated or mark it @generated NOT
-		fail();
+
+		// Check that the clone is of the correct type.
+		assertTrue(fixture.clone() instanceof ShapeImpl);
 	}
 
 } // ShapeTest

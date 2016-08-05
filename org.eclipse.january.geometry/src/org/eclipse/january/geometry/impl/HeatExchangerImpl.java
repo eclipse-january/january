@@ -503,6 +503,22 @@ public class HeatExchangerImpl extends ShapeImpl implements HeatExchanger {
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
+	 * @generated NOT
+	 */
+	@Override
+	public Object clone() {
+
+		// Create a new heatExchanger
+		HeatExchanger clone = GeometryFactory.eINSTANCE.createHeatExchanger();
+
+		// Make it a copy of this
+		clone.copy(this);
+		return clone;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override

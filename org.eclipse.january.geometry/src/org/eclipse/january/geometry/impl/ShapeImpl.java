@@ -551,8 +551,8 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 	@Override
 	public void addNode(INode child) {
 
-		// If the node is already in the list, fail silently
-		if (!getNodes().contains(child)) {
+		// If the node is already in the list or is null, fail silently
+		if (!getNodes().contains(child) && child != null) {
 
 			// Set the child's parent to this
 			child.setParent(this);
@@ -570,8 +570,8 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 	@Override
 	public void removeNode(INode child) {
 
-		// If the node isn't in the list, fail silently
-		if (!getNodes().contains(child)) {
+		// If the node is null, fail silently
+		if (child != null) {
 
 			// Remove this as the child's parent
 			child.setParent(null);
@@ -621,32 +621,38 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 				setProperty(property, castSource.getProperty(property));
 			}
 
-			// Copy the triangles from the source
-			getTriangles().clear();
-			for (Triangle triangle : castSource.getTriangles()) {
+			// Clear the current list of triangles
+			triangles = new BasicEList<Triangle>();
 
-				// Create a new triangle
-				Triangle cloneTriangle = GeometryFactory.eINSTANCE
-						.createTriangle();
+			// Copy the triangles form the source
+			EList<Triangle> otherTriangles = castSource.getTriangles();
+			if (otherTriangles != null) {
+				for (Triangle triangle : castSource.getTriangles()) {
 
-				// Create a copy of each vertex from the current triangle and
-				// add it to the clone under construction
-				for (Vertex vertex : triangle.getVertices()) {
+					// Create a new triangle
+					Triangle cloneTriangle = GeometryFactory.eINSTANCE
+							.createTriangle();
 
-					Vertex cloneVertex = GeometryFactory.eINSTANCE
-							.createVertex();
-					cloneVertex.setX(vertex.getX());
-					cloneVertex.setY(vertex.getY());
-					cloneVertex.setZ(vertex.getZ());
+					// Create a copy of each vertex from the current triangle
+					// and
+					// add it to the clone under construction
+					for (Vertex vertex : triangle.getVertices()) {
 
-					cloneTriangle.getVertices().add(cloneVertex);
+						Vertex cloneVertex = GeometryFactory.eINSTANCE
+								.createVertex();
+						cloneVertex.setX(vertex.getX());
+						cloneVertex.setY(vertex.getY());
+						cloneVertex.setZ(vertex.getZ());
+
+						cloneTriangle.getVertices().add(cloneVertex);
+					}
+
+					// Make the normal vector a copy of the source triangle's
+					cloneTriangle.getNormal().setX(triangle.getNormal().getX());
+					cloneTriangle.getNormal().setY(triangle.getNormal().getY());
+					cloneTriangle.getNormal().setZ(triangle.getNormal().getZ());
+					getTriangles().add(cloneTriangle);
 				}
-
-				// Make the normal vector a copy of the source triangle's
-				cloneTriangle.getNormal().setX(triangle.getNormal().getX());
-				cloneTriangle.getNormal().setY(triangle.getNormal().getY());
-				cloneTriangle.getNormal().setZ(triangle.getNormal().getZ());
-				getTriangles().add(cloneTriangle);
 			}
 		}
 	}
@@ -895,7 +901,9 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 
 			// If this notification is on the UI thread, launch a new thread to
 			// handle it
-			if (Thread.currentThread() == Display.getCurrent().getThread()) {
+			Display currDisplay = Display.getCurrent();
+			if (currDisplay != null
+					&& Thread.currentThread() == currDisplay.getThread()) {
 
 				Thread updateThread = new Thread() {
 

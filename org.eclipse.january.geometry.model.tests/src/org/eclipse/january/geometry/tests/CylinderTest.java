@@ -14,6 +14,8 @@ package org.eclipse.january.geometry.tests;
 
 import org.eclipse.january.geometry.Cylinder;
 import org.eclipse.january.geometry.GeometryFactory;
+import org.eclipse.january.geometry.impl.CylinderImpl;
+import org.junit.Test;
 
 import junit.textui.TestRunner;
 
@@ -78,6 +80,7 @@ public class CylinderTest extends ShapeTest {
 	 * 
 	 * @generated NOT
 	 */
+	@Test
 	public void checkProperties() {
 
 		// The cylinder to be tested
@@ -106,6 +109,20 @@ public class CylinderTest extends ShapeTest {
 		assertEquals(1d, cylinder.getProperty("radius"));
 		cylinder.setProperty("radiust", 2d);
 		assertEquals(2d, cylinder.getRadius());
+	}
+
+	/**
+	 * Tests the '{@link org.eclipse.january.geometry.INode#clone()
+	 * <em>Clone</em>}' operation. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.january.geometry.INode#clone()
+	 * @generated NOT
+	 */
+	@Override
+	public void testClone() {
+
+		// Check that the clone is of the correct type.
+		assertTrue(fixture.clone() instanceof CylinderImpl);
 	}
 
 } // CylinderTest

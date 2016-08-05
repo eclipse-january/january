@@ -22,6 +22,7 @@ import org.eclipse.january.geometry.GeometryPackage;
 import org.eclipse.january.geometry.Operator;
 import org.eclipse.january.geometry.Shape;
 import org.eclipse.january.geometry.Vertex;
+import org.junit.Test;
 
 import junit.framework.TestCase;
 import junit.textui.TestRunner;
@@ -331,10 +332,10 @@ public class OperatorTest extends TestCase {
 		assertTrue(1 == clone.getId());
 		assertTrue("test".equals(clone.getName()));
 		assertTrue("testType".equals(clone.getType()));
-		assertTrue("testProperty".equals(clone.getProperty("testProperty")));
+		assertTrue(4 == clone.getProperty("testProperty"));
 
 		// The clone should not kept a reference to the original's parent
-		assertNull(fixture.getParent());
+		assertNull(clone.getParent());
 
 		// Try to copy something that isn't an operator
 		fixture.copy("invalid object");
@@ -350,7 +351,7 @@ public class OperatorTest extends TestCase {
 		assertTrue(1 == clone.getId());
 		assertTrue("test".equals(clone.getName()));
 		assertTrue("testType".equals(clone.getType()));
-		assertTrue("testProperty".equals(clone.getProperty("testProperty")));
+		assertTrue(4 == clone.getProperty("testProperty"));
 	}
 
 	/**
@@ -360,6 +361,7 @@ public class OperatorTest extends TestCase {
 	 * @see org.eclipse.january.geometry.INode#clone()
 	 * @generated NOT
 	 */
+	@Test
 	public void testClone() {
 
 		// Check that clones are of the proper type
