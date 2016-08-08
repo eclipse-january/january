@@ -7,7 +7,8 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.eclipse.january,
  org.eclipse.january.dataset,
  org.eclipse.january.io,
- org.eclipse.january.metadata
+ org.eclipse.january.metadata,
+ org.eclipse.january.metadata.internal
 Require-Bundle: org.apache.commons.lang;bundle-version="[2.6.0,3.0.0)",
  javax.vecmath;bundle-version="1.5.2",
  org.apache.commons.math3;bundle-version="[3.2.0,4.0.0)";visibility:=reexport
