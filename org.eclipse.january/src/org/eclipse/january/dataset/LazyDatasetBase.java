@@ -27,6 +27,7 @@ import org.eclipse.january.DatasetException;
 import org.eclipse.january.MetadataException;
 import org.eclipse.january.metadata.ErrorMetadata;
 import org.eclipse.january.metadata.IMetadata;
+import org.eclipse.january.metadata.MetadataFactory;
 import org.eclipse.january.metadata.MetadataType;
 import org.eclipse.january.metadata.Reshapeable;
 import org.eclipse.january.metadata.Sliceable;
@@ -901,8 +902,12 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 
 		ErrorMetadata emd = getErrorMetadata();
 		if (emd == null || !(emd instanceof ErrorMetadataImpl)) {
-			emd = new ErrorMetadataImpl();
-			setMetadata(emd);
+			try {
+				emd = MetadataFactory.createMetadata(ErrorMetadata.class);
+				setMetadata(emd);
+			} catch (MetadataException me) {
+				logger.error("Could not create metadata", me);
+			}
 		}
 		((ErrorMetadataImpl) emd).setError(errorData);
 	}

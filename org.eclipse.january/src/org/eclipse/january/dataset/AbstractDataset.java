@@ -24,7 +24,9 @@ import java.util.Map;
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
 import org.eclipse.january.DatasetException;
 import org.eclipse.january.IMonitor;
+import org.eclipse.january.MetadataException;
 import org.eclipse.january.metadata.ErrorMetadata;
+import org.eclipse.january.metadata.MetadataFactory;
 import org.eclipse.january.metadata.MetadataType;
 import org.eclipse.january.metadata.internal.ErrorMetadataImpl;
 
@@ -2349,9 +2351,11 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			Dataset ed;
 			try {
 				ed = DatasetUtils.sliceAndConvertLazyDataset(led);
-				emd  = new ErrorMetadataImpl();
+				emd  = MetadataFactory.createMetadata(ErrorMetadata.class);
 				setMetadata(emd);
 				((ErrorMetadataImpl) emd).setError(ed);
+			} catch (MetadataException me) {
+				logger.error("Could not create metadata", me);
 			} catch (DatasetException e) {
 				logger.error("Could not get data from lazy dataset", e);
 			}
@@ -2388,8 +2392,12 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		IDataset d = (IDataset) createFromSerializable(buffer, false);
 		ErrorMetadata emd = getErrorMetadata();
 		if (!(emd instanceof ErrorMetadataImpl)) {
-			emd = new ErrorMetadataImpl();
-			setMetadata(emd);
+			try {
+				emd = MetadataFactory.createMetadata(ErrorMetadata.class);
+				setMetadata(emd);
+			} catch (MetadataException me) {
+				logger.error("Could not create metadata", me);
+			}
 		}
 		((ErrorMetadataImpl) emd).setSquaredError(d);
 	}
