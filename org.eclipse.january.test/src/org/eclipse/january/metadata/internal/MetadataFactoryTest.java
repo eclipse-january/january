@@ -8,10 +8,14 @@
  * Contributors:
  *     Diamond Light Source Ltd - initial API and implementation
  *******************************************************************************/
-package org.eclipse.january.metadata;
+package org.eclipse.january.metadata.internal;
 
 import org.eclipse.january.MetadataException;
 import org.eclipse.january.dataset.LazyDatasetBase;
+import org.eclipse.january.metadata.ErrorMetadata;
+import org.eclipse.january.metadata.IExtendedMetadata;
+import org.eclipse.january.metadata.MetadataFactory;
+import org.eclipse.january.metadata.MetadataType;
 import org.eclipse.january.metadata.internal.ErrorMetadataImpl;
 import org.junit.Assert;
 import org.junit.Test;
@@ -29,5 +33,4 @@ public class MetadataFactoryTest {
 		ErrorMetadata emd = MetadataFactory.createMetadata(ErrorMetadata.class);
 		Assert.assertEquals(new ErrorMetadataImpl().getError(), emd.getError());
 	}
-
 }
