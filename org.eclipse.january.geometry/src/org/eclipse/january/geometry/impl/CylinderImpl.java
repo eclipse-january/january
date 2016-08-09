@@ -306,11 +306,7 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 		prevHeight = height;
 
 		// Clear the previous list
-		if (triangles == null) {
-			triangles = new BasicInternalEList<Triangle>(Triangle.class);
-		} else {
-			triangles.clear();
-		}
+		triangles = new BasicInternalEList<Triangle>(Triangle.class);
 
 		// Make an array of vertices to form the triangles
 		ArrayList<Vertex> vertices = new ArrayList<Vertex>();
@@ -326,7 +322,7 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 		// RESOLUTION points per circle.
 		int blockSize = (SEGMENTS + 1) * RESOLUTION * 3;
 
-		// Iterate through the points, one circle along the clyinder at a time,
+		// Iterate through the points, one circle along the cylinder at a time,
 		// adding them to the vertex array
 		for (int i = 0; i <= SEGMENTS; i++) {
 			for (int j = 0; j < RESOLUTION; j++) {

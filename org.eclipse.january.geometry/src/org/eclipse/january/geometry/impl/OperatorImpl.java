@@ -560,6 +560,155 @@ public class OperatorImpl extends MinimalEObjectImpl.Container
 		return clone;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 * 
+	 * @generated NOT
+	 */
+	@Override
+	public boolean equals(Object otherObject) {
+
+		// The other object must be a geometry
+		if (otherObject instanceof Operator) {
+			Operator otherOperator = (Operator) otherObject;
+
+			// If any of the data members are different, they are unequal
+			if (name == otherOperator.getName() && id == otherOperator.getId()
+					&& type == otherOperator.getType()) {
+
+				// The triangles from the other geometry
+				EList<Triangle> otherTriangles = otherOperator.getTriangles();
+
+				// Check that the triangles lists are equal.
+				if (getTriangles().size() == otherTriangles.size()) {
+
+					// Check that the other list contains every triangle in this
+					// one. Since they are the same length, this will mean the
+					// triangles are identical
+					for (Triangle triangle : triangles) {
+
+						// Whether a matching triangle has been found
+						boolean found = false;
+
+						// Search for an identical triangle
+						for (Triangle otherTriangle : otherTriangles) {
+							if (triangle.equals(otherTriangle)) {
+								found = true;
+								break;
+							}
+						}
+
+						// If the triangle is not in the other object, they are
+						// not equal
+						if (!found) {
+							return false;
+						}
+					}
+
+					// Check that the centers are equal
+					if (getCenter().equals(otherOperator.getCenter())) {
+
+						// The properties for both geometries
+						EList<String> props = getPropertyNames();
+						EList<String> otherProps = otherOperator
+								.getPropertyNames();
+
+						// Check that there are identical numbers of properties
+						// and that each property in one object equals the value
+						// for the other
+						if (props.size() == otherProps.size()) {
+							for (String property : props) {
+								if (!otherProps.contains(property)
+										|| getProperty(
+												property) != otherOperator
+														.getProperty(
+																property)) {
+									return false;
+								}
+							}
+
+							// The lists of child nodes
+							EList<INode> ownNodes = getNodes();
+							EList<INode> otherNodes = otherOperator.getNodes();
+
+							// Check that the lists of children contain the same
+							// values
+							if (ownNodes.size() == otherNodes.size()) {
+								for (INode node : ownNodes) {
+
+									// Whether a match has been found
+									boolean found = false;
+
+									// Check to see if the node equals any other
+									// the other object's
+									for (INode otherNode : otherNodes) {
+										if (node.equals(otherNode)) {
+											found = true;
+											break;
+										}
+									}
+
+									// If the node was not in the other list,
+									// the objects are not equal
+									if (!found) {
+										return false;
+									}
+								}
+
+								// All tests passed, so the objects must be
+								// equal
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		// One of the tests failed, so they are not equal
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 * 
+	 * @generated NOT
+	 */
+	@Override
+	public int hashCode() {
+
+		int hashCode = 31;
+
+		// Add the hashes for each data member
+		hashCode = 31 * hashCode + getName().hashCode();
+		hashCode = 31 * hashCode;
+		hashCode += getId();
+		hashCode = 31 * hashCode + getType().hashCode();
+		hashCode = 31 * hashCode + getCenter().hashCode();
+		hashCode = 31 * hashCode + properties.hashCode();
+
+		// Add the hash for each node
+		int nodesHash = 0;
+		for (INode node : getNodes()) {
+			nodesHash += node.hashCode();
+		}
+		hashCode = 31 * hashCode + nodesHash;
+
+		// Add the hash for each triangle
+		int trianglesHash = 0;
+		for (Triangle triangle : getTriangles()) {
+			trianglesHash += triangle.hashCode();
+		}
+		hashCode = 31 * hashCode + trianglesHash;
+
+		return hashCode;
+
+	}
+
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 

@@ -12,6 +12,8 @@
  */
 package org.eclipse.january.geometry.tests;
 
+import static org.junit.Assert.assertNotEquals;
+
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -33,30 +35,39 @@ import junit.textui.TestRunner;
  * <p>
  * The following operations are tested:
  * <ul>
- *   <li>{@link org.eclipse.january.geometry.INode#changeDecoratorProperty(java.lang.String, java.lang.Object) <em>Change Decorator Property</em>}</li>
- *   <li>{@link org.eclipse.january.geometry.INode#getPropertyNames() <em>Get Property Names</em>}</li>
- *   <li>{@link org.eclipse.january.geometry.INode#getProperty(java.lang.String) <em>Get Property</em>}</li>
- *   <li>{@link org.eclipse.january.geometry.INode#setProperty(java.lang.String, double) <em>Set Property</em>}</li>
- *   <li>{@link org.eclipse.january.geometry.INode#addNode(org.eclipse.january.geometry.INode) <em>Add Node</em>}</li>
- *   <li>{@link org.eclipse.january.geometry.INode#removeNode(org.eclipse.january.geometry.INode) <em>Remove Node</em>}</li>
- *   <li>{@link org.eclipse.january.geometry.INode#copy(java.lang.Object) <em>Copy</em>}</li>
- *   <li>{@link org.eclipse.january.geometry.INode#clone() <em>Clone</em>}</li>
+ * <li>{@link org.eclipse.january.geometry.INode#changeDecoratorProperty(java.lang.String, java.lang.Object)
+ * <em>Change Decorator Property</em>}</li>
+ * <li>{@link org.eclipse.january.geometry.INode#getPropertyNames() <em>Get
+ * Property Names</em>}</li>
+ * <li>{@link org.eclipse.january.geometry.INode#getProperty(java.lang.String)
+ * <em>Get Property</em>}</li>
+ * <li>{@link org.eclipse.january.geometry.INode#setProperty(java.lang.String, double)
+ * <em>Set Property</em>}</li>
+ * <li>{@link org.eclipse.january.geometry.INode#addNode(org.eclipse.january.geometry.INode)
+ * <em>Add Node</em>}</li>
+ * <li>{@link org.eclipse.january.geometry.INode#removeNode(org.eclipse.january.geometry.INode)
+ * <em>Remove Node</em>}</li>
+ * <li>{@link org.eclipse.january.geometry.INode#copy(java.lang.Object)
+ * <em>Copy</em>}</li>
+ * <li>{@link org.eclipse.january.geometry.INode#clone() <em>Clone</em>}</li>
  * </ul>
  * </p>
+ * 
  * @generated
  */
 public class OperatorTest extends TestCase {
 
 	/**
-	 * The fixture for this Operator test case.
-	 * <!-- begin-user-doc --> <!--
+	 * The fixture for this Operator test case. <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected Operator fixture = null;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public static void main(String[] args) {
@@ -74,9 +85,9 @@ public class OperatorTest extends TestCase {
 	}
 
 	/**
-	 * Sets the fixture for this Operator test case.
-	 * <!-- begin-user-doc -->
+	 * Sets the fixture for this Operator test case. <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected void setFixture(Operator fixture) {
@@ -84,9 +95,9 @@ public class OperatorTest extends TestCase {
 	}
 
 	/**
-	 * Returns the fixture for this Operator test case.
-	 * <!-- begin-user-doc -->
+	 * Returns the fixture for this Operator test case. <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected Operator getFixture() {
@@ -95,6 +106,7 @@ public class OperatorTest extends TestCase {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see junit.framework.TestCase#setUp()
 	 * @generated
 	 */
@@ -105,6 +117,7 @@ public class OperatorTest extends TestCase {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see junit.framework.TestCase#tearDown()
 	 * @generated
 	 */
@@ -366,6 +379,84 @@ public class OperatorTest extends TestCase {
 
 		// Check that clones are of the proper type
 		assertTrue(fixture.clone() instanceof Operator);
+	}
+
+	/**
+	 * Check that geometries can be tested for equality correctly.
+	 * 
+	 * @generated NOT
+	 */
+	public void testEquals() {
+
+		// An operator which will be identical to the feature
+		Operator equalOperator = GeometryFactory.eINSTANCE.createOperator();
+
+		// Set some values on the fixture
+		fixture.setId(8);
+		fixture.setName("equal name");
+		fixture.setProperty("testProperty", 0);
+		fixture.setType("equal type");
+
+		// Set identical values on the geometry
+		equalOperator.setId(8);
+		equalOperator.setName("equal name");
+		equalOperator.setProperty("testProperty", 0);
+		equalOperator.setType("equal type");
+
+		// Create a child shape
+		Shape equalChild = GeometryFactory.eINSTANCE.createShape();
+		equalChild.setName("equal child");
+
+		// Add the child as a node to the geometries
+		fixture.addNode(equalChild);
+		equalOperator.addNode((Shape) equalChild.clone());
+
+		// An object should equal itself, and hash codes should be equal if and
+		// only if the objects are themselves equal
+		assertTrue(fixture.equals(fixture));
+		assertEquals(fixture.hashCode(), fixture.hashCode());
+
+		// Check that the two objects are equal, regardless of order
+		assertTrue(fixture.equals(equalOperator));
+		assertEquals(fixture.hashCode(), equalOperator.hashCode());
+		assertTrue(equalOperator.equals(fixture));
+
+		// Check that changing a variable makes the objects unequal
+		Operator unequalOperator = (Operator) equalOperator.clone();
+		unequalOperator.setId(1);
+		assertFalse(fixture.equals(unequalOperator));
+		assertFalse(fixture.equals(unequalOperator));
+		assertNotEquals(fixture.hashCode(), unequalOperator.hashCode());
+
+		// Check that having different properties makes the objects unequal
+		unequalOperator = (Operator) equalOperator.clone();
+		unequalOperator.setProperty("testProperty", 1);
+		assertFalse(fixture.equals(unequalOperator));
+		assertFalse(fixture.equals(unequalOperator));
+		assertNotEquals(fixture.hashCode(), unequalOperator.hashCode());
+
+		// Check that having a different set of properties makes the objects
+		// unequal
+		unequalOperator = (Operator) equalOperator.clone();
+		unequalOperator.setProperty("extraProperty", 1);
+		assertFalse(fixture.equals(unequalOperator));
+		assertFalse(fixture.equals(unequalOperator));
+		assertNotEquals(fixture.hashCode(), unequalOperator.hashCode());
+
+		// Check that having different children makes the objects unequal
+		unequalOperator = (Operator) equalOperator.clone();
+		unequalOperator.removeNode(unequalOperator.getNodes().get(0));
+		assertFalse(fixture.equals(unequalOperator));
+		assertFalse(fixture.equals(unequalOperator));
+		assertNotEquals(fixture.hashCode(), unequalOperator.hashCode());
+
+		// Check that adding a node also makes them unequal
+		unequalOperator = (Operator) equalOperator.clone();
+		Shape unequalChild = GeometryFactory.eINSTANCE.createShape();
+		unequalOperator.addNode(unequalChild);
+		assertFalse(fixture.equals(unequalOperator));
+		assertFalse(fixture.equals(unequalOperator));
+		assertNotEquals(fixture.hashCode(), unequalOperator.hashCode());
 	}
 
 } // OperatorTest

@@ -5,6 +5,7 @@ package org.eclipse.january.geometry.impl;
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -503,6 +504,11 @@ public class PipeImpl extends TubeImpl implements Pipe {
 	 */
 	@Override
 	public EList<Triangle> getTriangles() {
+
+		// Initialize the triangles list if it is not already
+		if (triangles == null) {
+			triangles = new BasicEList<Triangle>();
+		}
 
 		// If the attributes have not changed since the last time the mesh was
 		// recalculated, return the current mesh

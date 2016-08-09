@@ -3,6 +3,7 @@
 package org.eclipse.january.geometry.impl;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -435,6 +436,11 @@ public class HeatExchangerImpl extends ShapeImpl implements HeatExchanger {
 	 */
 	@Override
 	public EList<Triangle> getTriangles() {
+
+		// Initialize the triangles list if it is not already
+		if (triangles == null) {
+			triangles = new BasicEList<Triangle>();
+		}
 
 		// If nothing has changed return the current list of triangles.
 		if (!meshChanged) {
