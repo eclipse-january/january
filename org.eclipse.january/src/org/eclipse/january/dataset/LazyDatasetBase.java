@@ -183,7 +183,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	}
 
 	/**
-	 * Dig down to first interface (or class that directly extends or implements) MetadataType
+	 * Find first sub-interface of (or class that directly extends or implements) MetadataType
 	 * @param clazz
 	 * @return sub-interface
 	 */
@@ -193,15 +193,9 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 			return clazz;
 		}
 
-		Class<?> sclazz = clazz.getSuperclass();
-		if (sclazz != null && !sclazz.equals(Object.class)) // recurse up class hierarchy
-			return findMetadataTypeSubInterfaces((Class<? extends MetadataType>) sclazz);
-
-		for (Class<?> c : clazz.getInterfaces()) {
-			if (c.equals(MetadataType.class))
-				return clazz;
+		for (Class<?> c : clazz.getInterfaces()) { // recurse up interface hierarchy
 			if (MetadataType.class.isAssignableFrom(c)) {
-				return findMetadataTypeSubInterfaces((Class<? extends MetadataType>) c);
+				return (Class<? extends MetadataType>) c;
 			}
 		}
 		assert false; // should not be able to get here!!!

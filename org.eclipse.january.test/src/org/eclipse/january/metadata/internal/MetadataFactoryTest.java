@@ -12,10 +12,12 @@ package org.eclipse.january.metadata.internal;
 
 import org.eclipse.january.MetadataException;
 import org.eclipse.january.dataset.LazyDatasetBase;
+import org.eclipse.january.metadata.DynamicConnectionInfo;
 import org.eclipse.january.metadata.ErrorMetadata;
 import org.eclipse.january.metadata.IExtendedMetadata;
 import org.eclipse.january.metadata.MetadataFactory;
 import org.eclipse.january.metadata.MetadataType;
+import org.eclipse.january.metadata.OriginMetadata;
 import org.eclipse.january.metadata.internal.ErrorMetadataImpl;
 import org.junit.Assert;
 import org.junit.Test;
@@ -23,9 +25,16 @@ import org.junit.Test;
 public class MetadataFactoryTest {
 
 	@Test
-	public void testFinder() {
+	public void testFinder() throws MetadataException {
 		Class<? extends MetadataType> clazz = LazyDatasetBase.findMetadataTypeSubInterfaces(IExtendedMetadata.class);
 		Assert.assertEquals(IExtendedMetadata.class, clazz);
+
+		clazz = LazyDatasetBase.findMetadataTypeSubInterfaces(DynamicConnectionInfo.class);
+		Assert.assertEquals(MetadataType.class, clazz);
+
+		// this interface is a sub-interface of DimensionMetadata
+		clazz = LazyDatasetBase.findMetadataTypeSubInterfaces(OriginMetadataImpl.class);
+		Assert.assertEquals(OriginMetadata.class, clazz);
 	}
 
 	@Test
