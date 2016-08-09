@@ -25,7 +25,7 @@ public class MaskMetadataImpl implements MaskMetadata {
 	@Sliceable
 	IDataset mask;
 
-	MaskMetadataImpl() {
+	public MaskMetadataImpl() {
 	}
 
 	@Override

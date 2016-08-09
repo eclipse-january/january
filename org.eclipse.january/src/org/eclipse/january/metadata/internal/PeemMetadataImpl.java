@@ -18,7 +18,7 @@ public class PeemMetadataImpl implements PeemMetadata {
 	private double scaling = 512 / 50;
 	private double fieldOfView = 50;
 
-	PeemMetadataImpl() {
+	public PeemMetadataImpl() {
 	}
 
 	@Override
