@@ -24,7 +24,8 @@ public class OriginMetadataImpl extends DimensionMetadataImpl implements OriginM
 	private String datasetName;
 	private String filePath;
 
-	public OriginMetadataImpl() {
+	OriginMetadataImpl() {
+		super();
 	}
 
 	@Override

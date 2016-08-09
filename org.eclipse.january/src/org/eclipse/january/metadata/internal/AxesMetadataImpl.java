@@ -32,7 +32,7 @@ public class AxesMetadataImpl implements AxesMetadata {
 	
 	Map<Integer,int[]> dimensionMap;
 
-	public AxesMetadataImpl() {
+	AxesMetadataImpl() {
 	}
 
 	@Override

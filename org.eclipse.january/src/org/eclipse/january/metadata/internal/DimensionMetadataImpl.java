@@ -20,7 +20,7 @@ public class DimensionMetadataImpl implements DimensionMetadata {
 	private int[] maxShape;
 	private int[] chunkShape;
 
-	public DimensionMetadataImpl() {
+	DimensionMetadataImpl() {
 	}
 
 	@Override
