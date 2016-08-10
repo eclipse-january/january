@@ -30,11 +30,19 @@ public class MetadataFactoryTest {
 		Assert.assertEquals(IExtendedMetadata.class, clazz);
 
 		clazz = LazyDatasetBase.findMetadataTypeSubInterfaces(DynamicConnectionInfo.class);
-		Assert.assertEquals(MetadataType.class, clazz);
+		Assert.assertEquals(DynamicConnectionInfo.class, clazz);
 
 		// this interface is a sub-interface of DimensionMetadata
 		clazz = LazyDatasetBase.findMetadataTypeSubInterfaces(OriginMetadataImpl.class);
 		Assert.assertEquals(OriginMetadata.class, clazz);
+
+		// test for anonymous class
+		clazz = LazyDatasetBase.findMetadataTypeSubInterfaces(new DynamicConnectionInfo() {
+			private static final long serialVersionUID = 3467617639382611191L;
+			
+		}.getClass());
+		Assert.assertEquals(DynamicConnectionInfo.class, clazz);
+
 	}
 
 	@Test
