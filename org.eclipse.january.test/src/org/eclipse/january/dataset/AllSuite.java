@@ -30,7 +30,7 @@ import org.junit.runners.Suite.SuiteClasses;
 		SliceTest.class, StatsTest.class, StrideIteratorTest.class, StringDatasetTest.class,
 		UnsignedArithmetics.class,
 		OutlierCorrectnessTest.class, OutlierStatsTest.class,
-		org.eclipse.january.metadata.internal.AllSuite.class,
+		org.eclipse.january.metadata.AllSuite.class,
 		})
 public class AllSuite {
 

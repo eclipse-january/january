@@ -43,6 +43,37 @@ public class MetadataFactoryTest {
 		}.getClass());
 		Assert.assertEquals(DynamicConnectionInfo.class, clazz);
 
+		// test for inner class
+		clazz = LazyDatasetBase.findMetadataTypeSubInterfaces(new InnerMetadata().getClass());
+		Assert.assertEquals(InnerMetadata.class, clazz);
+
+		// test for inner class
+		clazz = LazyDatasetBase.findMetadataTypeSubInterfaces(new InnerMetadata2().getClass());
+		Assert.assertEquals(InnerMetadata2.class, clazz);
+	}
+
+	class InnerMetadata implements MetadataType {
+		private static final long serialVersionUID = 93680612340323601L;
+
+		public InnerMetadata() {
+		}
+
+		@Override
+		public InnerMetadata clone() {
+			return new InnerMetadata();
+		}
+	}
+
+	static class InnerMetadata2 implements MetadataType {
+		private static final long serialVersionUID = 93680612340323601L;
+
+		public InnerMetadata2() {
+		}
+
+		@Override
+		public InnerMetadata2 clone() {
+			return new InnerMetadata2();
+		}
 	}
 
 	@Test

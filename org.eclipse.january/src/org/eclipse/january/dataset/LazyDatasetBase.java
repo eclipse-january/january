@@ -156,14 +156,32 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 
 	@Override
 	public IMetadata getMetadata() {
-		List<IMetadata> ml = null;
-		try {
-			ml = getMetadata(IMetadata.class);
-		} catch (Exception e) {
-			logger.error("Problem retrieving metadata of class {}: {}", IMetadata.class.getCanonicalName(), e);
+		List<? extends IMetadata> ml = getAllMetadata(IMetadata.class);
+
+		return ml == null || ml.isEmpty() ? null : ml.get(0);
+	}
+
+	/**
+	 * Get a list of metadata where each item is an instance of the specified sub-class or interface
+	 * @param clazz
+	 * @return list
+	 */
+	@SuppressWarnings("unchecked")
+	private <S extends MetadataType, T extends S> List<S> getAllMetadata(Class<T> clazz) {
+		if (clazz == null) {
+			throw new IllegalArgumentException("Given class must not be null");
 		}
 
-		return ml == null ? null : ml.get(0);
+		List<S> all = new ArrayList<S>();
+		if (metadata != null) {
+			for (Class<? extends MetadataType> t : metadata.keySet()) {
+				if (clazz.isAssignableFrom(t)) {
+					all.addAll((Collection<? extends S>) metadata.get(t));
+				}
+			}
+		}
+
+		return all;
 	}
 
 	@Override
@@ -205,8 +223,8 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 			}
 		}
 
-		assert false; // should not be able to get here!!!
 		logger.error("Somehow the search for metadata type interface ended in a bad place");
+		assert false; // should not be able to get here!!!
 		return null;
 	}
 
