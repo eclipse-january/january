@@ -230,27 +230,27 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends MetadataType> List<T> getMetadata(Class<T> clazz) throws MetadataException {
+	public <S extends MetadataType, T extends S> List<S> getMetadata(Class<T> clazz) throws MetadataException {
 		if (metadata == null)
 			return null;
 
 		if (clazz == null) {
-			List<T> all = new ArrayList<T>();
+			List<S> all = new ArrayList<S>();
 			for (Class<? extends MetadataType> c : metadata.keySet()) {
-				all.addAll((Collection<? extends T>) metadata.get(c));
+				all.addAll((Collection<S>) metadata.get(c));
 			}
 			return all;
 		}
 
-		return (List<T>) metadata.get(findMetadataTypeSubInterfaces(clazz));
+		return (List<S>) metadata.get(findMetadataTypeSubInterfaces(clazz));
 	}
 
 	@Override
-	public <T extends MetadataType> T getFirstMetadata(Class<T> clazz) {
+	public <S extends MetadataType, T extends S> S getFirstMetadata(Class<T> clazz) {
 		try {
-			List<T> ml = getMetadata(clazz);
+			List<S> ml = getMetadata(clazz);
 			if (ml == null) return null;
-			for (T t : ml) {
+			for (S t : ml) {
 				if (clazz.isInstance(t)) return t;
 			}
 		} catch (Exception e) {

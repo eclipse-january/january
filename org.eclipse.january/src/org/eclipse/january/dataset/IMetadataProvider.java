@@ -31,14 +31,14 @@ public interface IMetadataProvider {
 
 	/**
 	 * @param clazz if null return everything
-	 * @return list of metadata with given class
+	 * @return list of metadata with given class (or its super interface)
 	 * @throws MetadataException
 	 */
-	public <T extends MetadataType> List<T> getMetadata(Class<T> clazz) throws MetadataException;
+	public <S extends MetadataType, T extends S> List<S> getMetadata(Class<T> clazz) throws MetadataException;
 
 	/**
 	 * @param clazz if null return first from everything
-	 * @return first element from list of metadata with given class
+	 * @return first element from list of metadata with given class (or its super interface)
 	 */
-	public <T extends MetadataType> T getFirstMetadata(Class<T> clazz);
+	public <S extends MetadataType, T extends S> S getFirstMetadata(Class<T> clazz);
 }
