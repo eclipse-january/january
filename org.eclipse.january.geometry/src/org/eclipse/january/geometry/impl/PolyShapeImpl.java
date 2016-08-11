@@ -116,7 +116,7 @@ public class PolyShapeImpl extends ShapeImpl implements PolyShape {
 			getMaterial().getMaterialFiles()
 					.addAll(getVertexSource().getMaterialFiles());
 		}
-		for (Face face : faces) {
+		for (Face face : getFaces()) {
 			EList<Integer> indices = face.getVertexIndices();
 			if (indices.size() > 2) {
 				for (int i = 1; i < indices.size() - 1; i++) {
