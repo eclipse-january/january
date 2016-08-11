@@ -27,4 +27,6 @@ Export-Package: org.eclipse.january.geometry.xtext,
  org.eclipse.january.geometry.xtext.serializer,
  org.eclipse.january.geometry.xtext.services,
  org.eclipse.january.geometry.xtext.validation
-Import-Package: org.apache.log4j
+Import-Package: org.apache.log4j,
+ org.eclipse.jface.dialogs,
+ org.eclipse.swt.widgets
