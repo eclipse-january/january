@@ -587,7 +587,12 @@ public class LongDataset extends AbstractDataset {
 	@Override
 	public LongDataset sort(Integer axis) {
 		if (axis == null) {
-			Arrays.sort(data);
+			if (stride == null) {
+				Arrays.sort(data);
+			} else {
+				LongDataset ads = clone().sort(null);
+				setSlicedView(getView(false), ads);
+			}
 		} else {
 			axis = checkAxis(axis);
 			

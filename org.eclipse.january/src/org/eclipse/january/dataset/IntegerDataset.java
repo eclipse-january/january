@@ -587,7 +587,12 @@ public class IntegerDataset extends AbstractDataset {
 	@Override
 	public IntegerDataset sort(Integer axis) {
 		if (axis == null) {
-			Arrays.sort(data);
+			if (stride == null) {
+				Arrays.sort(data);
+			} else {
+				IntegerDataset ads = clone().sort(null);
+				setSlicedView(getView(false), ads);
+			}
 		} else {
 			axis = checkAxis(axis);
 			

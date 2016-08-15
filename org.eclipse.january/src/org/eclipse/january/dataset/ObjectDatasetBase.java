@@ -561,7 +561,12 @@ public class ObjectDatasetBase extends AbstractDataset {
 	@Override
 	public ObjectDatasetBase sort(Integer axis) {
 		if (axis == null) {
-			Arrays.sort(data);
+			if (stride == null) {
+				Arrays.sort(data);
+			} else {
+				ObjectDatasetBase ads = clone().sort(null);
+				setSlicedView(getView(false), ads);
+			}
 		} else {
 			axis = checkAxis(axis);
 			

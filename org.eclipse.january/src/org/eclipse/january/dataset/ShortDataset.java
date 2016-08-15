@@ -587,7 +587,12 @@ public class ShortDataset extends AbstractDataset {
 	@Override
 	public ShortDataset sort(Integer axis) {
 		if (axis == null) {
-			Arrays.sort(data);
+			if (stride == null) {
+				Arrays.sort(data);
+			} else {
+				ShortDataset ads = clone().sort(null);
+				setSlicedView(getView(false), ads);
+			}
 		} else {
 			axis = checkAxis(axis);
 			

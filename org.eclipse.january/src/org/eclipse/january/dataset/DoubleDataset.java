@@ -587,7 +587,12 @@ public class DoubleDataset extends AbstractDataset {
 	@Override
 	public DoubleDataset sort(Integer axis) {
 		if (axis == null) { // BOOLEAN_OMIT
-			Arrays.sort(data); // BOOLEAN_OMIT
+			if (stride == null) { // BOOLEAN_OMIT
+				Arrays.sort(data); // BOOLEAN_OMIT
+			} else { // BOOLEAN_OMIT
+				DoubleDataset ads = clone().sort(null); // BOOLEAN_OMIT
+				setSlicedView(getView(false), ads); // BOOLEAN_OMIT
+			} // BOOLEAN_OMIT
 		} else { // BOOLEAN_OMIT
 			axis = checkAxis(axis); // BOOLEAN_OMIT
 			 // BOOLEAN_OMIT 

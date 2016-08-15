@@ -348,6 +348,17 @@ public class AbstractDatasetTest {
 		assertEquals("First element", 2, a.getDouble(0), 1e-6);
 		assertEquals("2,2 element", 12, a.getDouble(2,2), 1e-6);
 		assertTrue("Final element", Double.isNaN(a.getDouble(2,3)));
+
+		// sort a view
+		a = DatasetFactory.createRange(12, Dataset.FLOAT64);
+		Dataset b = a.getSliceView(new Slice(null, null, -2));
+		b.sort(null);
+		assertEquals("First element", 1, b.getDouble(0), 1e-6);
+		assertEquals("Final element", 11, b.getDouble(5), 1e-6);
+		// side effect on base dataset
+		assertEquals("First element", 0, a.getDouble(0), 1e-6);
+		assertEquals("Second element", 11, a.getDouble(1), 1e-6);
+		assertEquals("Final element", 1, a.getDouble(11), 1e-6);
 	}
 
 	@Test
