@@ -799,7 +799,7 @@ public interface Dataset extends IDataset {
 	 * In-place sort of dataset
 	 * 
 	 * @param axis
-	 *            to sort along
+	 *            to sort along. If null, then the flattened view is sorted
 	 * @return sorted dataset
 	 */
 	public Dataset sort(Integer axis);

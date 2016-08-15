@@ -359,6 +359,15 @@ public class AbstractDatasetTest {
 		assertEquals("First element", 0, a.getDouble(0), 1e-6);
 		assertEquals("Second element", 11, a.getDouble(1), 1e-6);
 		assertEquals("Final element", 1, a.getDouble(11), 1e-6);
+
+		// sort ancillary datasets
+		b = DatasetFactory.createRange(12, Dataset.INT32);
+		a = b.getSlice(new Slice(null, null, -1)).cast(Dataset.INT16);
+		DatasetUtils.sort(a, b);
+		assertEquals("First element", 0, a.getInt(0));
+		assertEquals("Second element", 1, a.getInt(1));
+		assertEquals("First element", 11, b.getInt(0));
+		assertEquals("Second element", 10, b.getInt(1));
 	}
 
 	@Test

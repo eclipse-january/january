@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.math3.util.MathArrays;
 import org.eclipse.january.DatasetException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -316,12 +317,63 @@ public class DatasetUtils {
 
 	/**
 	 * @param a
+	 * @return sorted flattened copy of dataset 
+	 */
+	public static <T extends Dataset> T sort(final T a) {
+		Dataset s = a.clone().flatten();
+		return (T) s.sort(null);
+	}
+
+	/**
+	 * @param a
 	 * @param axis to sort along
 	 * @return dataset sorted along axis
 	 */
 	public static <T extends Dataset> T sort(final T a, final Integer axis) {
 		Dataset s = a.clone();
 		return (T) s.sort(axis);
+	}
+
+	/**
+	 * Sort in place given dataset and reorder ancillary datasets too
+	 * @param a dataset to be sorted
+	 * @param b ancillary datasets
+	 */
+	public static void sort(Dataset a, Dataset... b) {
+		if (!DTypeUtils.isDTypeNumerical(a.getDType())) {
+			throw new UnsupportedOperationException("Sorting non-numerical datasets not supported yet");
+		}
+
+		// gather all datasets as double dataset copies
+		DoubleDataset s = copy(DoubleDataset.class, a);
+		int l = b == null ? 0 : b.length;
+		DoubleDataset[] t = new DoubleDataset[l];
+		int n = 0;
+		for (int i = 0; i < l; i++) {
+			if (b[i] != null) {
+				if (!DTypeUtils.isDTypeNumerical(b[i].getDType())) {
+					throw new UnsupportedOperationException("Sorting non-numerical datasets not supported yet");
+				}
+				t[i] = copy(DoubleDataset.class, b[i]);
+				n++;
+			}
+		}
+
+		double[][] y = new double[n][];
+		for (int i = 0, j = 0; i < l; i++) {
+			if (t[i] != null) {
+				y[j++] = t[i].getData();
+			}
+		}
+
+		MathArrays.sortInPlace(s.getData(), y);
+
+		a.setSlice(s);
+		for (int i = 0; i < l; i++) {
+			if (b[i] != null) {
+				b[i].setSlice(t[i]);
+			}
+		}
 	}
 
 	/**
