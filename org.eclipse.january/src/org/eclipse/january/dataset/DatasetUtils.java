@@ -320,8 +320,7 @@ public class DatasetUtils {
 	 * @return sorted flattened copy of dataset 
 	 */
 	public static <T extends Dataset> T sort(final T a) {
-		Dataset s = a.clone().flatten();
-		return (T) s.sort(null);
+		return sort(a, (Integer) null);
 	}
 
 	/**
