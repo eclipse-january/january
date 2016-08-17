@@ -10,7 +10,7 @@ Require-Bundle: org.eclipse.january.geometry.xtext.iges.ui,
  org.eclipse.xtext.junit4,
  org.eclipse.xtext.xbase.junit,
  org.eclipse.core.runtime,
- org.eclipse.ui.workbench;resolution:=optional
+ org.eclipse.ui.workbench
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.january.geometry.xtext.ui.tests
 Import-Package: org.hamcrest.core,

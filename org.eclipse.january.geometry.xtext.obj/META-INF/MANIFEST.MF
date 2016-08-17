@@ -16,5 +16,10 @@ Export-Package: org.eclipse.january.geometry.xtext,
  org.eclipse.january.geometry.xtext.serializer,
  org.eclipse.january.geometry.xtext.services,
  org.eclipse.january.geometry.xtext.validation
-Import-Package: org.apache.log4j,
- org.eclipse.january.geometry
+Import-Package: com.google.inject;version="1.3.0",
+ org.apache.log4j,
+ org.eclipse.emf.common.util,
+ org.eclipse.emf.ecore,
+ org.eclipse.january.geometry,
+ org.eclipse.xtext
+Require-Bundle: org.eclipse.xtext;bundle-version="2.10.0"
