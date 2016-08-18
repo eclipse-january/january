@@ -436,8 +436,15 @@ public class OperatorImpl extends MinimalEObjectImpl.Container
 	@Override
 	public void addNode(INode child) {
 
-		// If the node is already in the list or is null, fail silently
-		if (child != null && !getNodes().contains(child)) {
+		// If the node is null, fail silently
+		if (child != null) {
+
+			// Fail silently if the node is already in the list
+			for (INode node : getNodes()) {
+				if (node == child) {
+					return;
+				}
+			}
 
 			// Set the child's parent to this
 			child.setParent(this);
