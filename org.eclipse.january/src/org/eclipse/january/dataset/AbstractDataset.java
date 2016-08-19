@@ -580,7 +580,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	public void setShape(final int... shape) {
 		int[] nshape = shape.clone();
 		checkShape(nshape, size);
-		if (Arrays.equals(this.shape, nshape) || size == 0) {
+		if (Arrays.equals(this.shape, nshape)) {
 			return;
 		}
 
@@ -682,8 +682,10 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			stride = nstride;
 		}
 
-		reshapeMetadata(this.shape, nshape);
-		this.shape = nshape;
+		if (this.shape != null) {
+			reshapeMetadata(this.shape, nshape);
+			this.shape = nshape;
+		}
 
 		if (storedValues != null)
 			filterStoredValues(storedValues); // as it is dependent on shape
