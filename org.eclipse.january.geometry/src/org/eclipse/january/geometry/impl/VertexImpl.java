@@ -227,9 +227,9 @@ public class VertexImpl extends MinimalEObjectImpl.Container implements Vertex {
 			Vertex otherVertex = (Vertex) otherObject;
 
 			// If each of the coordinates are equal, the vertices are equal
-			if (Math.abs(x - otherVertex.getX()) <= 0.01
-					&& Math.abs(y - otherVertex.getY()) <= 0.01
-					&& Math.abs(z - otherVertex.getZ()) <= 0.01) {
+			if (Math.abs(getX() - otherVertex.getX()) <= 0.01
+					&& Math.abs(getY() - otherVertex.getY()) <= 0.01
+					&& Math.abs(getZ() - otherVertex.getZ()) <= 0.01) {
 				return true;
 			}
 		}
