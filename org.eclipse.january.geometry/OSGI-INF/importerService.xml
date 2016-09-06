@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.january.geometry.model">
+   <implementation class="org.eclipse.january.geometry.service.STLGeometryImporterService"/>
+   <service>
+      <provide interface="org.eclipse.january.geometry.model.importer.IGeometryImporterService"/>
+   </service>
+</scr:component>
