@@ -220,7 +220,7 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 	public void setName(String newName) {
 
 		// Fail silently if the new value is already set
-		if (newName != name) {
+		if (newName == null || !newName.equals(name)) {
 
 			String oldName = name;
 			name = newName;
@@ -307,7 +307,7 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 	public void setType(String newType) {
 
 		// Fail silently if the new value is already set
-		if (newType != type) {
+		if (newType == null || !newType.equals(type)) {
 
 			String oldType = type;
 			type = newType;
@@ -700,6 +700,11 @@ public class ShapeImpl extends MinimalEObjectImpl.Container implements Shape {
 	 */
 	@Override
 	public boolean equals(Object otherObject) {
+
+		// Objects are always equal to themselves
+		if (otherObject == this) {
+			return true;
+		}
 
 		// The other object must be a geometry
 		if (otherObject instanceof Shape) {

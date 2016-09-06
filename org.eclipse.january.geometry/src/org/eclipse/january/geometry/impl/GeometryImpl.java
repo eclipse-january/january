@@ -300,11 +300,13 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public Vertex getCenter() {
-		if (center != null && center.eIsProxy()) {
+		if (center == null) {
+			center = GeometryFactory.eINSTANCE.createVertex();
+		} else if (center != null && center.eIsProxy()) {
 			InternalEObject oldCenter = (InternalEObject) center;
 			center = (Vertex) eResolveProxy(oldCenter);
 			if (center != oldCenter) {
