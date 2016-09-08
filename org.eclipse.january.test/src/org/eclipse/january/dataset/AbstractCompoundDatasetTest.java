@@ -341,6 +341,43 @@ public class AbstractCompoundDatasetTest {
 	}
 
 	@Test
+	public void testCompoundIntegerCreators() {
+		int iz = 3;
+		CompoundIntegerDataset z = CompoundIntegerDataset.createFromObject(iz);
+		assertEquals(0, z.getRank());
+		assertEquals(1, z.getSize());
+		assertEquals(1, z.getElementsPerItem());
+		assertEquals(iz, z.getElementLongAbs(0));
+
+		int[] ia = { 0, 1, 2, 3, 4, 5 };
+		CompoundIntegerDataset a = CompoundIntegerDataset.createFromObject(ia);
+
+		int is = a.getElementsPerItem();
+		assertEquals(6, is);
+		assertEquals(1, a.getRank());
+		assertEquals(1, a.getSize());
+		assertEquals(1, a.getShape()[0]);
+		IndexIterator it = a.getIterator();
+		for (int i = 0; it.hasNext();) {
+			for (int j = 0; j < is; j++, i++)
+				assertEquals(i, a.getElementLongAbs(it.index + j));
+		}
+
+		a = CompoundIntegerDataset.createFromObject(ia.length, ia);
+		is = a.getElementsPerItem();
+		assertEquals(6, is);
+		assertEquals(1, a.getRank());
+		assertEquals(1, a.getSize());
+		assertEquals(1, a.getShape()[0]);
+		it = a.getIterator();
+		for (int i = 0; it.hasNext();) {
+			for (int j = 0; j < is; j++, i++)
+				assertEquals(i, a.getElementLongAbs(it.index + j));
+		}
+
+	}
+
+	@Test
 	public void testCompoundCreators() {
 		double dz = 0.5;
 		CompoundDoubleDataset z = CompoundDoubleDataset.createFromObject(dz);

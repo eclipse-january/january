@@ -294,8 +294,8 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 	 * @return dataset with contents given by input
 	 */
 	public static CompoundDoubleDataset createFromObject(final int itemSize, final Object obj) {
-		DoubleDataset result = DoubleDataset.createFromObject(obj);// CLASS_TYPE
-		return new CompoundDoubleDataset(itemSize, result.getData());
+		DoubleDataset result = DoubleDataset.createFromObject(obj); // CLASS_TYPE
+		return new CompoundDoubleDataset(itemSize, result.getData(), null);
 	}
 
 	/**

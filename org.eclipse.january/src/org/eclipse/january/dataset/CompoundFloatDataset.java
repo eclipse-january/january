@@ -294,8 +294,8 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 	 * @return dataset with contents given by input
 	 */
 	public static CompoundFloatDataset createFromObject(final int itemSize, final Object obj) {
-		FloatDataset result = FloatDataset.createFromObject(obj);// CLASS_TYPE
-		return new CompoundFloatDataset(itemSize, result.getData());
+		FloatDataset result = FloatDataset.createFromObject(obj); // CLASS_TYPE
+		return new CompoundFloatDataset(itemSize, result.getData(), null);
 	}
 
 	/**

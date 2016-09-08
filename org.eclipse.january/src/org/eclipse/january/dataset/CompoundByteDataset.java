@@ -294,8 +294,8 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	 * @return dataset with contents given by input
 	 */
 	public static CompoundByteDataset createFromObject(final int itemSize, final Object obj) {
-		ByteDataset result = ByteDataset.createFromObject(obj);// CLASS_TYPE
-		return new CompoundByteDataset(itemSize, result.getData());
+		ByteDataset result = ByteDataset.createFromObject(obj); // CLASS_TYPE
+		return new CompoundByteDataset(itemSize, result.getData(), null);
 	}
 
 	/**

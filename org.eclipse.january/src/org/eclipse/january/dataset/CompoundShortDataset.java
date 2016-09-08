@@ -294,8 +294,8 @@ public class CompoundShortDataset extends AbstractCompoundDataset {
 	 * @return dataset with contents given by input
 	 */
 	public static CompoundShortDataset createFromObject(final int itemSize, final Object obj) {
-		ShortDataset result = ShortDataset.createFromObject(obj);// CLASS_TYPE
-		return new CompoundShortDataset(itemSize, result.getData());
+		ShortDataset result = ShortDataset.createFromObject(obj); // CLASS_TYPE
+		return new CompoundShortDataset(itemSize, result.getData(), null);
 	}
 
 	/**

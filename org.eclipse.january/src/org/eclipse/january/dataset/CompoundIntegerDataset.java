@@ -294,8 +294,8 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 	 * @return dataset with contents given by input
 	 */
 	public static CompoundIntegerDataset createFromObject(final int itemSize, final Object obj) {
-		IntegerDataset result = IntegerDataset.createFromObject(obj);// CLASS_TYPE
-		return new CompoundIntegerDataset(itemSize, result.getData());
+		IntegerDataset result = IntegerDataset.createFromObject(obj); // CLASS_TYPE
+		return new CompoundIntegerDataset(itemSize, result.getData(), null);
 	}
 
 	/**

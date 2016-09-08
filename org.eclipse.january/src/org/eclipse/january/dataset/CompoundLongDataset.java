@@ -294,8 +294,8 @@ public class CompoundLongDataset extends AbstractCompoundDataset {
 	 * @return dataset with contents given by input
 	 */
 	public static CompoundLongDataset createFromObject(final int itemSize, final Object obj) {
-		LongDataset result = LongDataset.createFromObject(obj);// CLASS_TYPE
-		return new CompoundLongDataset(itemSize, result.getData());
+		LongDataset result = LongDataset.createFromObject(obj); // CLASS_TYPE
+		return new CompoundLongDataset(itemSize, result.getData(), null);
 	}
 
 	/**
