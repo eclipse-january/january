@@ -1541,7 +1541,6 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	protected static final String STORE_VAR = "var";
 	protected static final String STORE_COUNT = "count";
 	private static final String STORE_INDEX = "Index";
-	protected static final String STORE_BROADCAST = "Broadcast";
 
 	/**
 	 * Get value from store
@@ -2196,7 +2195,10 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	 */
 	protected abstract void setItemDirect(final int dindex, final int sindex, final Object src);
 
-	protected Dataset getInternalError() {
+	/**
+	 * @return error broadcasted to current shape
+	 */
+	private Dataset getBroadcastedInternalError() {
 		ILazyDataset led = super.getError();
 		if (led == null)
 			return null;
@@ -2207,109 +2209,51 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		} catch (DatasetException e) {
 			logger.error("Could not get data from lazy dataset", e);
 		}
-		if (!(led instanceof Dataset)) {
+		if (led != ed) {
 			setError(ed); // set back
 		}
-
-		// check for broadcast strides
-		Object bs = getStoredValue(STORE_BROADCAST);
-		if (bs == null) {
-			bs = new BroadcastStride(ed, shape);
-			setStoredValue(STORE_BROADCAST, bs);
-		}
-		return ed;
-	}
-
-	class BroadcastStride {
-		private int[] bStride;
-		private int[] nShape;
-		private int bOffset;
-
-		public BroadcastStride(Dataset d, final int[] newShape) {
-			d.setShape(BroadcastUtils.padShape(d.getShapeRef(), newShape.length - d.getRank())); // set to padded shape
-			bStride = BroadcastUtils.createBroadcastStrides(d, newShape);
-			nShape = newShape.clone();
-			bOffset = d.getOffset();
-		}
-
-		public int get1DIndex(int i) {
-			if (i < 0) {
-				i += nShape[0];
-			}
-			if (i < 0 || i >= nShape[0]) {
-				throwAIOOBException(i, nShape[0], 0);
-			}
-			return i*bStride[0] + bOffset;
-		}
-
-		protected int get1DIndex(int i, int j) {
-			if (i < 0) {
-				i += nShape[0];
-			}
-			if (i < 0 || i >= nShape[0]) {
-				throwAIOOBException(i, nShape[0], 0);
-			}
-			if (j < 0) {
-				j += nShape[1];
-			}
-			if (j < 0 || j >= nShape[1]) {
-				throwAIOOBException(i, nShape[1], 1);
-			}
-			return i*bStride[0] + j*bStride[1] + bOffset;
-		}
-
-		protected int get1DIndex(int... n) {
-			return get1DIndexFromStrides(nShape, bStride, bOffset, n);
-		}
+		return ed.getBroadcastView(shape);
 	}
 
 	@Override
 	public Dataset getError() {
-		Dataset ed = getInternalError();
+		Dataset ed = getBroadcastedInternalError();
 		if (ed == null)
 			return null;
 
-		if (ed.getSize() != getSize()) {
-			DoubleDataset errors = new DoubleDataset(shape);
-			errors.setSlice(ed);
-			return errors;
-		}
 		return ed;
 	}
 
 	@Override
 	public double getError(final int i) {
-		Dataset ed = getInternalError();
+		Dataset ed = getBroadcastedInternalError();
 		if (ed == null)
 			return 0;
 
-		BroadcastStride bs = (BroadcastStride) getStoredValue(STORE_BROADCAST);
-		return ed.getElementDoubleAbs(bs.get1DIndex(i));
+		return ed.getDouble(i);
 	}
 
 	@Override
 	public double getError(final int i, final int j) {
-		Dataset ed = getInternalError();
+		Dataset ed = getBroadcastedInternalError();
 		if (ed == null)
 			return 0;
 
-		BroadcastStride bs = (BroadcastStride) getStoredValue(STORE_BROADCAST);
-		return ed.getElementDoubleAbs(bs.get1DIndex(i, j));
+		return ed.getDouble(i, j);
 	}
 
 	@Override
 	public double getError(int... pos) {
-		Dataset ed = getInternalError();
+		Dataset ed = getBroadcastedInternalError();
 		if (ed == null)
 			return 0;
 
-		BroadcastStride bs = (BroadcastStride) getStoredValue(STORE_BROADCAST);
-		return ed.getElementDoubleAbs(bs.get1DIndex(pos));
+		return ed.getDouble(pos);
 	}
 
 	@Override
 	public double[] getErrorArray(final int i) {
-		Dataset ed = getInternalError();
+		Dataset ed = getBroadcastedInternalError();
 		if (ed == null)
 			return null;
 
@@ -2318,7 +2262,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public double[] getErrorArray(final int i, final int j) {
-		Dataset ed = getInternalError();
+		Dataset ed = getBroadcastedInternalError();
 		if (ed == null)
 			return null;
 
@@ -2327,7 +2271,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public double[] getErrorArray(int... pos) {
-		Dataset ed = getInternalError();
+		Dataset ed = getBroadcastedInternalError();
 		if (ed == null)
 			return null;
 
@@ -2335,13 +2279,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	protected Dataset getInternalSquaredError() {
-		Dataset sed = getErrorBuffer();
-		// check for broadcast strides
-		Object bs = getStoredValue(STORE_BROADCAST);
-		if (bs == null) {
-			bs = new BroadcastStride(sed, shape);
-			setStoredValue(STORE_BROADCAST, bs);
-		}
+		Dataset sed = getErrorBuffer().getBroadcastView(shape);
 		return sed;
 	}
 
@@ -2356,9 +2294,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			Dataset ed;
 			try {
 				ed = DatasetUtils.sliceAndConvertLazyDataset(led);
-				emd  = MetadataFactory.createMetadata(ErrorMetadata.class);
+				emd = MetadataFactory.createMetadata(ErrorMetadata.class);
 				setMetadata(emd);
-				((ErrorMetadataImpl) emd).setError(ed);
+				emd.setError(ed);
 			} catch (MetadataException me) {
 				logger.error("Could not create metadata", me);
 			} catch (DatasetException e) {
@@ -2369,26 +2307,12 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		return ((ErrorMetadataImpl) emd).getSquaredError();
 	}
 
-	@Override
-	public void setError(Serializable errors) {
-		super.setError(errors);
-		Object bs = getStoredValue(STORE_BROADCAST);
-		if (bs != null) {
-			setStoredValue(STORE_BROADCAST, null);
-		}
-	}
-
 	/**
 	 * Set a copy of the buffer that backs the (squared) error data
 	 * @param buffer can be null, anything that can be used to create a DoubleDataset or CompoundDoubleDataset
 	 */
 	@Override
 	public void setErrorBuffer(Serializable buffer) {
-		Object bs = getStoredValue(STORE_BROADCAST);
-		if (bs != null) {
-			setStoredValue(STORE_BROADCAST, null);
-		}
-
 		if (buffer == null) {
 			clearMetadata(ErrorMetadata.class);
 			return;

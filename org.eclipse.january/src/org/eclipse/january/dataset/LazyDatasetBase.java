@@ -32,7 +32,6 @@ import org.eclipse.january.metadata.MetadataType;
 import org.eclipse.january.metadata.Reshapeable;
 import org.eclipse.january.metadata.Sliceable;
 import org.eclipse.january.metadata.Transposable;
-import org.eclipse.january.metadata.internal.ErrorMetadataImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -920,7 +919,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		ILazyDataset errorData = createFromSerializable(errors, true);
 
 		ErrorMetadata emd = getErrorMetadata();
-		if (emd == null || !(emd instanceof ErrorMetadataImpl)) {
+		if (emd == null) {
 			try {
 				emd = MetadataFactory.createMetadata(ErrorMetadata.class);
 				setMetadata(emd);
@@ -928,7 +927,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 				logger.error("Could not create metadata", me);
 			}
 		}
-		((ErrorMetadataImpl) emd).setError(errorData);
+		emd.setError(errorData);
 	}
 
 	protected ErrorMetadata getErrorMetadata() {
