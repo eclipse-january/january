@@ -368,8 +368,10 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public IndexIterator getIterator(final boolean withPosition) {
-		if (stride != null)
-			return new StrideIterator(shape, stride, offset);
+		if (stride != null) {
+			return base.getSize() == 1  ? (withPosition ? new PositionIterator(shape) :
+				new SingleItemIterator(size)): new StrideIterator(shape, stride, offset);
+		}
 		return withPosition ? new ContiguousIteratorWithPosition(shape, size) : new ContiguousIterator(size);
 	}
 
@@ -819,6 +821,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			List<int[]> nShapes = BroadcastUtils.broadcastShapesToMax(broadcastShape, shape);
 			view.setShape(nShapes.get(0));
 			view.stride = BroadcastUtils.createBroadcastStrides(view, broadcastShape);
+			view.base = base == null ? this : base;
 			view.shape = broadcastShape.clone();
 			view.size = ShapeUtils.calcSize(broadcastShape);
 			if (view.name == null || view.name.isEmpty()) {

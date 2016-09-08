@@ -74,6 +74,9 @@ public interface CompoundDataset extends Dataset {
 	public CompoundDataset getView(boolean deepCopyMetadata);
 
 	@Override
+	public CompoundDataset getBroadcastView(int... shape);
+
+	@Override
 	public CompoundDataset iadd(Object o);
 
 	@Override

@@ -82,25 +82,31 @@ public class StrideIteratorTest {
 		IndexIterator iter = new StrideIterator(ta.getElementsPerItem(), ta.getShape());
 		double[] data = (double[]) ta.getBuffer();
 
-		for (int i = 0; iter.hasNext(); i++) {
+		int size = ta.getSize();
+		int i;
+		for (i = 0; iter.hasNext(); i++) {
 			assertEquals(i, data[iter.index], 1e-5*i);
 		}
+		assertEquals(size, i);
 
 		iter.reset();
-		for (int i = 0; iter.hasNext(); i++) {
+		for (i = 0; iter.hasNext(); i++) {
 			assertEquals(i, data[iter.index], 1e-5*i);
 		}
+		assertEquals(size, i);
 
 		iter = ta.getIterator(true);
 		int[] pos = iter.getPos();
-		for (int i = 0; iter.hasNext(); i++) {
+		for (i = 0; iter.hasNext(); i++) {
 			assertEquals(i, ta.getDouble(pos), 1e-5*i);
 		}
+		assertEquals(size, i);
 
 		iter.reset();
-		for (int i = 0; iter.hasNext(); i++) {
+		for (i = 0; iter.hasNext(); i++) {
 			assertEquals(i, ta.getDouble(pos), 1e-5*i);
 		}
+		assertEquals(size, i);
 	}
 
 	private Dataset oldSlice(Dataset t, SliceIterator siter) {
@@ -274,9 +280,14 @@ public class StrideIteratorTest {
 		double[] ndata = (double[]) nsliced.getBuffer();
 		IndexIterator iter = nsliced.getIterator();
 		double[] sdata = (double[]) sliced.getBuffer();
-		for (int i = 0; i < sdata.length && iter.hasNext(); i++) {
-			assertEquals(sdata[i], ndata[iter.index], 1e-5*sdata[i]);
+		int n = 0;
+		int isize = sliced.getElementsPerItem();
+		for (int i = 0; i < sdata.length && iter.hasNext();) {
+			for (int j = 0; j < isize; i++, j++, n++) {
+				assertEquals(sdata[i], ndata[iter.index + j], 1e-5*sdata[i]);
+			}
 		}
+		assertEquals("Size of dataset slice is incorrect", sdata.length, n);
 	}
 
 	@Test
@@ -436,4 +447,38 @@ public class StrideIteratorTest {
 		testSlicedDataset(ta, 2, 2, -3, 2);
 	}
 
+	@Test
+	public void testBroadcastStrideIteration() {
+		Dataset b, r;
+
+		// 0D to 1D
+		b = DatasetFactory.createFromObject(2., 1).getBroadcastView(4);
+		r = DatasetFactory.zeros(b.getShape(), b.getDType()).fill(b.getObjectAbs(0));
+		checkSliced(r, b);
+
+		// 1D to 2D
+		b = DatasetFactory.createRange(2.).getBroadcastView(4, 2);
+		r = DatasetFactory.createRange(2.).reshape(1, 2);
+		r = DatasetUtils.concatenate(new Dataset[] {r, r, r, r}, 0);
+		checkSliced(r, b);
+		
+		r = DatasetFactory.createRange(2.);
+		checkSliced(r, b.getSlice(new Slice(0, 1)));
+		checkSliced(r, b.getSlice(new Slice(3, 4)));
+		checkSliced(r, b.getSliceView(new Slice(0, 1)));
+		checkSliced(r, b.getSliceView(new Slice(3, 4)));
+
+		// compound datasets
+		// 0D to 1D
+		b = DatasetFactory.createCompoundDataset(1., 2., 3.).getBroadcastView(4);
+		r = DatasetFactory.zeros(b.getElementsPerItem(), b.getShape(), b.getDType()).fill(b.getObjectAbs(0));
+		checkSliced(r, b);
+
+		// 1D to 2D
+		CompoundDataset a = DatasetFactory.createCompoundDataset(new double[] {1., 2.}, new double[] {3., 4.});
+		b = a.getBroadcastView(4, 2);
+		a.reshape(1,2);
+		r = DatasetUtils.concatenate(new Dataset[] {a, a, a, a}, 0);
+		checkSliced(r, b);
+	}
 }

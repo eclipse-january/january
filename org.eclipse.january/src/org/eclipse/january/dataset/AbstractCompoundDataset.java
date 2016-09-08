@@ -61,8 +61,10 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 
 	@Override
 	public IndexIterator getIterator(final boolean withPosition) {
-		if (stride != null)
-			return new StrideIterator(isize, shape, stride, offset);
+		if (stride != null) {
+			return base.getSize() == 1 ? 
+					(withPosition ? new PositionIterator(shape) :  new SingleItemIterator(size)) : new StrideIterator(isize, shape, stride, offset);
+		}
 		return withPosition ? getSliceIterator(null, null, null) :
 			new ContiguousIterator(size, isize);
 	}
@@ -79,9 +81,14 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 			logger.error("Invalid choice of element: {}/{}", element, isize);
 			throw new IllegalArgumentException("Invalid choice of element: " + element + "/" + isize);
 		}
-		final IndexIterator it = stride != null ?  new StrideIterator(isize, shape, stride, offset) : new ContiguousIterator(size, isize);
 
-		it.index += element;
+		final IndexIterator it;
+		if (stride != null) {
+			it = base.getSize() == 1 ? new SingleItemIterator(size, element) : new StrideIterator(isize, shape, stride, offset, element);
+		} else {
+			it = new ContiguousIterator(size, isize, element);
+		}
+
 		return it;
 	}
 
@@ -202,6 +209,11 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 
 	@Override
 	abstract public AbstractCompoundDataset getView(boolean deepCopyMetadata);
+
+	@Override
+	public CompoundDataset getBroadcastView(int... broadcastShape) {
+		return (CompoundDataset) super.getBroadcastView(broadcastShape);
+	}
 
 	@Override
 	public CompoundDataset ifloorDivide(Object o) {

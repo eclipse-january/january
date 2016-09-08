@@ -1,6 +1,6 @@
 /*-
  *******************************************************************************
- * Copyright (c) 2011, 2016 Diamond Light Source Ltd.
+ * Copyright (c) 2016 Diamond Light Source Ltd.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -13,12 +13,12 @@
 package org.eclipse.january.dataset;
 
 /**
- * Class to run over contiguous datasets
+ * Class to run over a broadcasted single-item dataset
  */
-public class ContiguousIterator extends IndexIterator {
-	final private int imax; // maximum index in array
-	final private int istep; // step over items
+public class SingleItemIterator extends IndexIterator {
+	final private int size;
 	final private int element;
+	private int i;
 
 	/**
 	 * Constructor for an iterator over the items of a contiguous dataset that are
@@ -26,8 +26,8 @@ public class ContiguousIterator extends IndexIterator {
 	 *
 	 * @param length of entire data array
 	 */
-	public ContiguousIterator(final int length) {
-		this(length, 1);
+	public SingleItemIterator(final int length) {
+		this(length, 0);
 	}
 
 	/**
@@ -35,31 +35,17 @@ public class ContiguousIterator extends IndexIterator {
 	 * within the dimensions
 	 *
 	 * @param length of entire data array
-	 * @param isize number of elements in an item
-	 */
-	public ContiguousIterator(final int length, final int isize) {
-		this(length, isize, 0);
-	}
-
-	/**
-	 * Constructor for an iterator over the items of a contiguous dataset that are
-	 * within the dimensions
-	 *
-	 * @param length of entire data array
-	 * @param isize number of elements in an item
 	 * @param element element to start with (for compound datasets)
 	 */
-	public ContiguousIterator(final int length, final int isize, final int element) {
-		istep = isize;
-		index = -istep + element;
-		imax = length*isize;
+	public SingleItemIterator(final int length, final int element) {
+		size = length;
 		this.element = element;
+		reset();
 	}
 
 	@Override
 	public boolean hasNext() {
-		index += istep;
-		return index < imax;
+		return i++ < size;
 	}
 
 	@Override
@@ -69,6 +55,7 @@ public class ContiguousIterator extends IndexIterator {
 
 	@Override
 	public void reset() {
-		index = -istep + element;
+		index = element;
+		i = 0;
 	}
 }
