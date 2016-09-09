@@ -11,8 +11,11 @@ package org.eclipse.january.asserts;
 
 import java.util.Arrays;
 
+import org.eclipse.january.dataset.DTypeUtils;
 import org.eclipse.january.dataset.Dataset;
 import org.eclipse.january.dataset.IndexIterator;
+import org.eclipse.january.dataset.ObjectDataset;
+import org.eclipse.january.dataset.StringDataset;
 import org.junit.Assert;
 import org.junit.runner.Description;
 import org.junit.runner.notification.RunListener;
@@ -67,41 +70,106 @@ public class TestUtils {
 	}
 
 	/**
-	 * Assert equality of datasets where each element is true if abs(a - b) <= absTol + relTol*abs(b)
+	 * Assert equality of datasets where each item is true if they are equal or
+	 * for floating point datasets, abs(a - b) <= 1e-12 + 1e-12*abs(b)
+	 * <p>
+	 * The dataset types have to match and so does the number of elements in each item. 
+	 * <p>
+	 * Same as <pre>TestUtils.assertDatasetEquals(expected, actual, true, 1e-12, 1e-12)</pre>
 	 * @param expected
-	 * @param calc
-	 * @param relTolerance
-	 * @param absTolerance
+	 * @param actual
 	 */
-	public static void assertDatasetEquals(Dataset expected, Dataset calc, double relTolerance, double absTolerance) {
-		assertDatasetEquals(expected, calc, false, relTolerance, absTolerance);
+	public static void assertDatasetEquals(Dataset expected, Dataset actual) {
+		assertDatasetEquals(expected, actual, true, 1e-12, 1e-12);
 	}
 
 	/**
-	 * Assert equality of datasets where each element is true if abs(a - b) <= absTol + relTol*abs(b)
+	 * Assert equality of datasets where each element is true if they are equal or
+	 * for floating point datasets, if abs(a - b) <= absTolerance + relTolerance*abs(b).
+	 * <p>
+	 * The dataset types does not have to match nor does the number of elements in each item. 
 	 * @param expected
-	 * @param calc
-	 * @param testDtype
+	 * @param actual
 	 * @param relTolerance
 	 * @param absTolerance
 	 */
-	public static void assertDatasetEquals(Dataset expected, Dataset calc, boolean testDtype, double relTolerance, double absTolerance) {
-		Assert.assertEquals("Rank", expected.getRank(), calc.getRank());
-		Assert.assertEquals("Size", expected.getSize(), calc.getSize());
-		Assert.assertArrayEquals("Shape", expected.getShape(), calc.getShape());
-		Assert.assertEquals("Itemsize", expected.getElementsPerItem(), calc.getElementsPerItem());
-		if (testDtype) {
-			Assert.assertEquals("Dataset type", expected.getDType(), calc.getDType());
-		}
-		IndexIterator at = calc.getIterator(true);
-		IndexIterator bt = expected.getIterator();
-		final int is = calc.getElementsPerItem();
+	public static void assertDatasetEquals(Dataset expected, Dataset actual, double relTolerance, double absTolerance) {
+		assertDatasetEquals(expected, actual, false, relTolerance, absTolerance);
+	}
 
-		while (at.hasNext() && bt.hasNext()) {
-			for (int j = 0; j < is; j++) {
-				assertEquals("Value does not match at " + Arrays.toString(at.getPos()) + "; " + j +
-						": ", expected.getElementDoubleAbs(bt.index + j), calc.getElementDoubleAbs(at.index + j),
-						relTolerance, absTolerance);
+	/**
+	 * Assert equality of datasets where each element is true if they are equal or
+	 * for floating point datasets, if abs(a - b) <= absTolerance + relTolerance*abs(b)
+	 * @param expected
+	 * @param actual
+	 * @param testDTypeAndItemSize
+	 * @param relTolerance 
+	 * @param absTolerance 
+	 */
+	public static void assertDatasetEquals(Dataset expected, Dataset actual, boolean testDTypeAndItemSize, double relTolerance, double absTolerance) {
+		final int dtype = expected.getDType();
+		final int eis = expected.getElementsPerItem();
+		final int ais = actual.getElementsPerItem();
+		if (testDTypeAndItemSize) {
+			Assert.assertEquals("Type", dtype, actual.getDType());
+			Assert.assertEquals("Itemsize", eis, ais);
+		}
+		Assert.assertEquals("Size", expected.getSize(), actual.getSize());
+		try {
+			Assert.assertArrayEquals("Shape", expected.getShape(), actual.getShape());
+		} catch (AssertionError e) {
+			if (actual.getSize() == 1) {
+				Assert.assertArrayEquals("Shape", new int[0], actual.getShape());
+			} else {
+				throw e;
+			}
+		}
+		IndexIterator et = expected.getIterator(true);
+		IndexIterator at = actual.getIterator();
+		final int is = Math.max(eis, ais);
+	
+		if (dtype == Dataset.BOOL) {
+			while (et.hasNext() && at.hasNext()) {
+				for (int j = 0; j < is; j++) {
+					boolean e = j >= eis ? false : expected.getElementBooleanAbs(et.index + j);
+					boolean a = j >= ais ? false : actual.getElementBooleanAbs(at.index + j);
+					Assert.assertEquals("Value does not match at " + Arrays.toString(et.getPos()) + "; " + j +
+							": ", e, a);
+				}
+			}
+		} else if (dtype == Dataset.STRING) {
+			StringDataset es = (StringDataset) expected;
+			StringDataset as = (StringDataset) actual;
+	
+			while (et.hasNext() && at.hasNext()) {
+				Assert.assertEquals("Value does not match at " + Arrays.toString(et.getPos()) + ": ",
+						es.getAbs(et.index), as.getAbs(at.index));
+			}
+		} else if (dtype == Dataset.OBJECT) {
+			ObjectDataset eo = (ObjectDataset) expected;
+			ObjectDataset ao = (ObjectDataset) actual;
+	
+			while (et.hasNext() && at.hasNext()) {
+				Assert.assertEquals("Value does not match at " + Arrays.toString(et.getPos()) + ": ",
+						eo.getAbs(et.index), ao.getAbs(at.index));
+			}
+		} else if (DTypeUtils.isDTypeFloating(dtype)) {
+			while (et.hasNext() && at.hasNext()) {
+				for (int j = 0; j < is; j++) {
+					double e = j >= eis ? 0 : expected.getElementDoubleAbs(et.index + j);
+					double a = j >= ais ? 0 : actual.getElementDoubleAbs(at.index + j);
+					assertEquals("Value does not match at " + Arrays.toString(et.getPos()) + "; " + j +
+							": ", e, a, relTolerance, absTolerance);
+				}
+			}
+		} else {
+			while (et.hasNext() && at.hasNext()) {
+				for (int j = 0; j < is; j++) {
+					long e = j >= eis ? 0 : expected.getElementLongAbs(et.index + j);
+					long a = j >= ais ? 0 : actual.getElementLongAbs(at.index + j);
+					Assert.assertEquals("Value does not match at " + Arrays.toString(et.getPos()) + "; " + j +
+							": ", e, a);
+				}
 			}
 		}
 	}

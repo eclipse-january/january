@@ -11,6 +11,7 @@ package org.eclipse.january.dataset;
 
 import java.util.List;
 
+import org.eclipse.january.asserts.TestUtils;
 import org.eclipse.january.dataset.BooleanDataset;
 import org.eclipse.january.dataset.Comparisons;
 import org.eclipse.january.dataset.ComplexDoubleDataset;
@@ -37,9 +38,9 @@ public class ComparisonsTest {
 	public void testEqualTo() {
 		BooleanDataset c = Comparisons.equalTo(a, b);
 		BooleanDataset d = DatasetFactory.createFromObject(BooleanDataset.class, new boolean[] {false, false, false, true, false, true});
-		AbstractDatasetTest.checkDatasets(c, d);
+		TestUtils.assertDatasetEquals(c, d);
 
-		AbstractDatasetTest.checkDatasets(Comparisons.equalTo(3, a), DatasetFactory.createFromObject(
+		TestUtils.assertDatasetEquals(Comparisons.equalTo(3, a), DatasetFactory.createFromObject(
 				new boolean[] {false, false, true, false, false, false}));
 
 		DoubleDataset ta = DatasetFactory.zeros(DoubleDataset.class, 20, 10);
@@ -49,40 +50,39 @@ public class ComparisonsTest {
 		
 		BooleanDataset bd = DatasetFactory.zeros(BooleanDataset.class, ta.getShape());
 		bd.fill(Boolean.FALSE);
-		AbstractDatasetTest.checkDatasets(Comparisons.equalTo(ta, tb), bd);
+		TestUtils.assertDatasetEquals(Comparisons.equalTo(ta, tb), bd);
 		ta.fill(Double.POSITIVE_INFINITY);
 		tb.fill(Double.POSITIVE_INFINITY);
 		bd.fill(Boolean.TRUE);
-		AbstractDatasetTest.checkDatasets(Comparisons.equalTo(ta, tb), bd);
+		TestUtils.assertDatasetEquals(Comparisons.equalTo(ta, tb), bd);
 
 		c = Comparisons.equalTo(DatasetFactory.zeros(DoubleDataset.class).fill(1), 1);
-		AbstractDatasetTest.checkDatasets(c, DatasetFactory.createFromObject(new boolean[] {true}));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {true}), c);
 
 		c = Comparisons.equalTo(a, 3);
-		AbstractDatasetTest.checkDatasets(c, DatasetFactory.createFromObject(new boolean[] {false, false, true, false, false, false}));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {false, false, true, false, false, false}), c);
 		c = Comparisons.equalTo(3, a);
-		AbstractDatasetTest.checkDatasets(c, DatasetFactory.createFromObject(new boolean[] {false, false, true, false, false, false}));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {false, false, true, false, false, false}), c);
 
 		c = Comparisons.equalTo(z, 2.5);
-		AbstractDatasetTest.checkDatasets(c, DatasetFactory.createFromObject(new boolean[] {false, false, false, true}));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {false, false, false, true}), c);
 		c = Comparisons.equalTo(2.5, z);
-		AbstractDatasetTest.checkDatasets(c, DatasetFactory.createFromObject(new boolean[] {false, false, false, true}));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {false, false, false, true}), c);
 	}
 
 	@Test
 	public void testAlmostEqualTo() {
 		BooleanDataset c = Comparisons.almostEqualTo(a, b, 0.1, 1e-3);
 		BooleanDataset d = DatasetFactory.createFromObject(BooleanDataset.class, new boolean[] {false, false, true, true, true, true});
-		AbstractDatasetTest.checkDatasets(c, d);
+		TestUtils.assertDatasetEquals(d, c);
 
-		AbstractDatasetTest.checkDatasets(Comparisons.almostEqualTo(a, 3, 0.1, 1e-3), DatasetFactory.createFromObject(
-				new boolean[] {false, false, true, false, false, false}));
-		AbstractDatasetTest.checkDatasets(Comparisons.almostEqualTo(3, a, 0.1, 1e-3), DatasetFactory.createFromObject(
-				new boolean[] {false, false, true, false, false, false}));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {false, false, true, false, false, false}),
+				Comparisons.almostEqualTo(a, 3, 0.1, 1e-3));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {false, false, true, false, false, false}),
+				Comparisons.almostEqualTo(3, a, 0.1, 1e-3));
 
 		c = Comparisons.almostEqualTo(z, 2.5, 0.1, 1e-3);
-		AbstractDatasetTest.checkDatasets(c, DatasetFactory.createFromObject(new boolean[] {false, false, false, true}));
-		c = Comparisons.almostEqualTo(2.5, z, 0.1, 1e-3);
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {false, false, false, true}), c);
 	}
 
 	@Test
@@ -99,55 +99,55 @@ public class ComparisonsTest {
 	public void testGreaterThan() {
 		BooleanDataset c = Comparisons.greaterThan(a, b);
 		BooleanDataset d = DatasetFactory.createFromObject(BooleanDataset.class, new boolean[] {false, false, true, false, true, false});
-		AbstractDatasetTest.checkDatasets(c, d);
+		TestUtils.assertDatasetEquals(d, c);
 
-		AbstractDatasetTest.checkDatasets(Comparisons.greaterThan(3, a), DatasetFactory.createFromObject(
-				new boolean[] {true, true, false, false, true, true}));
-		AbstractDatasetTest.checkDatasets(Comparisons.greaterThan(a, 3), DatasetFactory.createFromObject(
-				new boolean[] {false, false, false, true, false, false}));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {true, true, false, false, true, true}),
+				Comparisons.greaterThan(3, a));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {false, false, false, true, false, false}),
+				Comparisons.greaterThan(a, 3));
 	}
 
 	@Test
 	public void testGreaterThanOrEqualTo() {
 		BooleanDataset c = Comparisons.greaterThanOrEqualTo(a, b);
 		BooleanDataset d = DatasetFactory.createFromObject(BooleanDataset.class, new boolean[] {false, false, true, true, true, true});
-		AbstractDatasetTest.checkDatasets(c, d);
+		TestUtils.assertDatasetEquals(d, c);
 
-		AbstractDatasetTest.checkDatasets(Comparisons.greaterThanOrEqualTo(3, a), DatasetFactory.createFromObject(
-				new boolean[] {true, true, true, false, true, true}));
-		AbstractDatasetTest.checkDatasets(Comparisons.greaterThanOrEqualTo(a, 3), DatasetFactory.createFromObject(
-				new boolean[] {false, false, true, true, false, false}));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {true, true, true, false, true, true}),
+				Comparisons.greaterThanOrEqualTo(3, a));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {false, false, true, true, false, false}),
+				Comparisons.greaterThanOrEqualTo(a, 3));
 	}
 
 	@Test
 	public void testLessThan() {
 		BooleanDataset c = Comparisons.lessThan(a, b);
 		BooleanDataset d = DatasetFactory.createFromObject(BooleanDataset.class, new boolean[] {true, true, false, false, false, false});
-		AbstractDatasetTest.checkDatasets(c, d);
+		TestUtils.assertDatasetEquals(d, c);
 
-		AbstractDatasetTest.checkDatasets(Comparisons.lessThan(3, a), DatasetFactory.createFromObject(
-				new boolean[] {false, false, false, true, false, false}));
-		AbstractDatasetTest.checkDatasets(Comparisons.lessThan(a, 3), DatasetFactory.createFromObject(
-				new boolean[] {true, true, false, false, true, true}));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {false, false, false, true, false, false}),
+				Comparisons.lessThan(3, a));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {true, true, false, false, true, true}),
+				Comparisons.lessThan(a, 3));
 	}
 
 	@Test
 	public void testLessThanOrEqualTo() {
 		BooleanDataset c = Comparisons.lessThanOrEqualTo(a, b);
 		BooleanDataset d = DatasetFactory.createFromObject(BooleanDataset.class, new boolean[] {true, true, false, true, false, true});
-		AbstractDatasetTest.checkDatasets(c, d);
+		TestUtils.assertDatasetEquals(d, c);
 
-		AbstractDatasetTest.checkDatasets(Comparisons.lessThanOrEqualTo(3, a), DatasetFactory.createFromObject(
-				new boolean[] {false, false, true, true, false, false}));
-		AbstractDatasetTest.checkDatasets(Comparisons.lessThanOrEqualTo(a, 3), DatasetFactory.createFromObject(
-				new boolean[] {true, true, true, false, true, true}));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {false, false, true, true, false, false}),
+				Comparisons.lessThanOrEqualTo(3, a));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {true, true, true, false, true, true}),
+				Comparisons.lessThanOrEqualTo(a, 3));
 	}
 
 	@Test
 	public void testWithinRange() {
 		BooleanDataset c = Comparisons.withinRange(b, -8, 2);
 		BooleanDataset d = DatasetFactory.createFromObject(BooleanDataset.class, new boolean[] {true, true, false, false, true, false});
-		AbstractDatasetTest.checkDatasets(c, d);
+		TestUtils.assertDatasetEquals(d, c);
 	}
 
 	@Test
@@ -155,9 +155,9 @@ public class ComparisonsTest {
 		Assert.assertFalse(Comparisons.allTrue(a));
 		Assert.assertTrue(Comparisons.allTrue(b));
 		Dataset c = a.clone().reshape(2, 3);
-		AbstractDatasetTest.checkDatasets(Comparisons.allTrue(c, 0), DatasetFactory.createFromObject(new boolean[] {false, true, true}));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {false, true, true}), Comparisons.allTrue(c, 0));
 		Dataset d = b.clone().reshape(2, 3);
-		AbstractDatasetTest.checkDatasets(Comparisons.allTrue(d, 1), DatasetFactory.createFromObject(new boolean[] {true, true}));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {true, true}), Comparisons.allTrue(d, 1));
 	}
 
 	@Test
@@ -166,48 +166,48 @@ public class ComparisonsTest {
 		Assert.assertTrue(Comparisons.anyTrue(b));
 		Assert.assertFalse(Comparisons.anyTrue(DatasetFactory.createFromObject(new double[] {0, 0})));
 		Dataset c = a.clone().reshape(2, 3);
-		AbstractDatasetTest.checkDatasets(Comparisons.anyTrue(c, 0), DatasetFactory.createFromObject(new boolean[] {true, true, true}));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {true, true, true}), Comparisons.anyTrue(c, 0));
 		Dataset d = b.clone().reshape(2, 3);
-		AbstractDatasetTest.checkDatasets(Comparisons.anyTrue(d, 1), DatasetFactory.createFromObject(new boolean[] {true, true}));
-		AbstractDatasetTest.checkDatasets(Comparisons.anyTrue(DatasetFactory.createFromObject(new double[] {0, 0, 0, 1}).reshape(2,2), 1),
-				DatasetFactory.createFromObject(new boolean[] {false, true}));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {true, true}), Comparisons.anyTrue(d, 1));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {false, true}),
+				Comparisons.anyTrue(DatasetFactory.createFromObject(new double[] {0, 0, 0, 1}).reshape(2,2), 1));
 	}
 
 	@Test
 	public void testNot() {
-		AbstractDatasetTest.checkDatasets(Comparisons.logicalNot(a), DatasetFactory.createFromObject(
-				new boolean[] {true, false, false, false, false, false}));
-		AbstractDatasetTest.checkDatasets(Comparisons.logicalNot(b), DatasetFactory.createFromObject(
-				new boolean[] {false, false, false, false, false, false}));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {true, false, false, false, false, false}),
+				Comparisons.logicalNot(a));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {false, false, false, false, false, false}),
+				Comparisons.logicalNot(b));
 	}
 
 	@Test
 	public void testAnd() {
 		BooleanDataset c = Comparisons.logicalAnd(a, b);
 		BooleanDataset d = DatasetFactory.createFromObject(BooleanDataset.class, new boolean[] {false, true, true, true, true, true});
-		AbstractDatasetTest.checkDatasets(c, d);
+		TestUtils.assertDatasetEquals(d, c);
 	}
 
 	@Test
 	public void testOr() {
 		BooleanDataset c = Comparisons.logicalOr(a, b);
 		BooleanDataset d = DatasetFactory.createFromObject(BooleanDataset.class, new boolean[] {true, true, true, true, true, true});
-		AbstractDatasetTest.checkDatasets(c, d);
+		TestUtils.assertDatasetEquals(d, c);
 	}
 
 	@Test
 	public void testXor() {
 		BooleanDataset c = Comparisons.logicalXor(a, b);
 		BooleanDataset d = DatasetFactory.createFromObject(BooleanDataset.class, new boolean[] {true, false, false, false, false, false});
-		AbstractDatasetTest.checkDatasets(c, d);
+		TestUtils.assertDatasetEquals(d, c);
 	}
 
 	@Test
 	public void testNonZero() {
 		Dataset c = a.clone().reshape(2, 3);
 		List<IntegerDataset> e = Comparisons.nonZero(c);
-		AbstractDatasetTest.checkDatasets(e.get(0), DatasetFactory.createFromObject(new int[] {0, 0, 1, 1, 1}));
-		AbstractDatasetTest.checkDatasets(e.get(1), DatasetFactory.createFromObject(new int[] {1, 2, 0, 1, 2}));
+		TestUtils.assertDatasetEquals(e.get(0), DatasetFactory.createFromObject(new int[] {0, 0, 1, 1, 1}));
+		TestUtils.assertDatasetEquals(e.get(1), DatasetFactory.createFromObject(new int[] {1, 2, 0, 1, 2}));
 	}
 
 	@Test
@@ -215,32 +215,32 @@ public class ComparisonsTest {
 		Dataset c;
 
 		c = DatasetFactory.createFromObject(new int[] {0, -1, 1});
-		AbstractDatasetTest.checkDatasets(Comparisons.isFinite(c), DatasetFactory.createFromObject(new boolean[] {true, true, true}));
-		AbstractDatasetTest.checkDatasets(Comparisons.isInfinite(c), DatasetFactory.createFromObject(new boolean[] {false, false, false}));
-		AbstractDatasetTest.checkDatasets(Comparisons.isPositiveInfinite(c), DatasetFactory.createFromObject(new boolean[] {false, false, false}));
-		AbstractDatasetTest.checkDatasets(Comparisons.isNegativeInfinite(c), DatasetFactory.createFromObject(new boolean[] {false, false, false}));
-		AbstractDatasetTest.checkDatasets(Comparisons.isNaN(c), DatasetFactory.createFromObject(new boolean[] {false, false, false}));
+		TestUtils.assertDatasetEquals(Comparisons.isFinite(c), DatasetFactory.createFromObject(new boolean[] {true, true, true}));
+		TestUtils.assertDatasetEquals(Comparisons.isInfinite(c), DatasetFactory.createFromObject(new boolean[] {false, false, false}));
+		TestUtils.assertDatasetEquals(Comparisons.isPositiveInfinite(c), DatasetFactory.createFromObject(new boolean[] {false, false, false}));
+		TestUtils.assertDatasetEquals(Comparisons.isNegativeInfinite(c), DatasetFactory.createFromObject(new boolean[] {false, false, false}));
+		TestUtils.assertDatasetEquals(Comparisons.isNaN(c), DatasetFactory.createFromObject(new boolean[] {false, false, false}));
 
 		c = DatasetFactory.createFromObject(new double[] {0, -1, 1});
-		AbstractDatasetTest.checkDatasets(Comparisons.isFinite(c), DatasetFactory.createFromObject(new boolean[] {true, true, true}));
-		AbstractDatasetTest.checkDatasets(Comparisons.isInfinite(c), DatasetFactory.createFromObject(new boolean[] {false, false, false}));
-		AbstractDatasetTest.checkDatasets(Comparisons.isPositiveInfinite(c), DatasetFactory.createFromObject(new boolean[] {false, false, false}));
-		AbstractDatasetTest.checkDatasets(Comparisons.isNegativeInfinite(c), DatasetFactory.createFromObject(new boolean[] {false, false, false}));
-		AbstractDatasetTest.checkDatasets(Comparisons.isNaN(c), DatasetFactory.createFromObject(new boolean[] {false, false, false}));
+		TestUtils.assertDatasetEquals(Comparisons.isFinite(c), DatasetFactory.createFromObject(new boolean[] {true, true, true}));
+		TestUtils.assertDatasetEquals(Comparisons.isInfinite(c), DatasetFactory.createFromObject(new boolean[] {false, false, false}));
+		TestUtils.assertDatasetEquals(Comparisons.isPositiveInfinite(c), DatasetFactory.createFromObject(new boolean[] {false, false, false}));
+		TestUtils.assertDatasetEquals(Comparisons.isNegativeInfinite(c), DatasetFactory.createFromObject(new boolean[] {false, false, false}));
+		TestUtils.assertDatasetEquals(Comparisons.isNaN(c), DatasetFactory.createFromObject(new boolean[] {false, false, false}));
 
 		c = DatasetFactory.createFromObject(new double[] {Double.NaN, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY});
-		AbstractDatasetTest.checkDatasets(Comparisons.isFinite(c), DatasetFactory.createFromObject(new boolean[] {false, false, false}));
-		AbstractDatasetTest.checkDatasets(Comparisons.isInfinite(c), DatasetFactory.createFromObject(new boolean[] {false, true, true}));
-		AbstractDatasetTest.checkDatasets(Comparisons.isPositiveInfinite(c), DatasetFactory.createFromObject(new boolean[] {false, false, true}));
-		AbstractDatasetTest.checkDatasets(Comparisons.isNegativeInfinite(c), DatasetFactory.createFromObject(new boolean[] {false, true, false}));
-		AbstractDatasetTest.checkDatasets(Comparisons.isNaN(c), DatasetFactory.createFromObject(new boolean[] {true, false, false}));
+		TestUtils.assertDatasetEquals(Comparisons.isFinite(c), DatasetFactory.createFromObject(new boolean[] {false, false, false}));
+		TestUtils.assertDatasetEquals(Comparisons.isInfinite(c), DatasetFactory.createFromObject(new boolean[] {false, true, true}));
+		TestUtils.assertDatasetEquals(Comparisons.isPositiveInfinite(c), DatasetFactory.createFromObject(new boolean[] {false, false, true}));
+		TestUtils.assertDatasetEquals(Comparisons.isNegativeInfinite(c), DatasetFactory.createFromObject(new boolean[] {false, true, false}));
+		TestUtils.assertDatasetEquals(Comparisons.isNaN(c), DatasetFactory.createFromObject(new boolean[] {true, false, false}));
 
 		c = DatasetFactory.createFromObject(new double[] {Double.NaN, -Double.POSITIVE_INFINITY, -Double.NEGATIVE_INFINITY});
-		AbstractDatasetTest.checkDatasets(Comparisons.isFinite(c), DatasetFactory.createFromObject(new boolean[] {false, false, false}));
-		AbstractDatasetTest.checkDatasets(Comparisons.isInfinite(c), DatasetFactory.createFromObject(new boolean[] {false, true, true}));
-		AbstractDatasetTest.checkDatasets(Comparisons.isPositiveInfinite(c), DatasetFactory.createFromObject(new boolean[] {false, false, true}));
-		AbstractDatasetTest.checkDatasets(Comparisons.isNegativeInfinite(c), DatasetFactory.createFromObject(new boolean[] {false, true, false}));
-		AbstractDatasetTest.checkDatasets(Comparisons.isNaN(c), DatasetFactory.createFromObject(new boolean[] {true, false, false}));
+		TestUtils.assertDatasetEquals(Comparisons.isFinite(c), DatasetFactory.createFromObject(new boolean[] {false, false, false}));
+		TestUtils.assertDatasetEquals(Comparisons.isInfinite(c), DatasetFactory.createFromObject(new boolean[] {false, true, true}));
+		TestUtils.assertDatasetEquals(Comparisons.isPositiveInfinite(c), DatasetFactory.createFromObject(new boolean[] {false, false, true}));
+		TestUtils.assertDatasetEquals(Comparisons.isNegativeInfinite(c), DatasetFactory.createFromObject(new boolean[] {false, true, false}));
+		TestUtils.assertDatasetEquals(Comparisons.isNaN(c), DatasetFactory.createFromObject(new boolean[] {true, false, false}));
 	}
 
 	@Test
