@@ -127,31 +127,17 @@ public class TestUtils {
 		IndexIterator et = expected.getIterator(true);
 		IndexIterator at = actual.getIterator();
 		final int is = Math.max(eis, ais);
-	
-		if (dtype == Dataset.BOOL) {
+
+		int n = 0;
+		if (DTypeUtils.isDTypeInteger(dtype)) {
 			while (et.hasNext() && at.hasNext()) {
 				for (int j = 0; j < is; j++) {
-					boolean e = j >= eis ? false : expected.getElementBooleanAbs(et.index + j);
-					boolean a = j >= ais ? false : actual.getElementBooleanAbs(at.index + j);
+					long e = j >= eis ? 0 : expected.getElementLongAbs(et.index + j);
+					long a = j >= ais ? 0 : actual.getElementLongAbs(at.index + j);
 					Assert.assertEquals("Value does not match at " + Arrays.toString(et.getPos()) + "; " + j +
 							": ", e, a);
 				}
-			}
-		} else if (dtype == Dataset.STRING) {
-			StringDataset es = (StringDataset) expected;
-			StringDataset as = (StringDataset) actual;
-	
-			while (et.hasNext() && at.hasNext()) {
-				Assert.assertEquals("Value does not match at " + Arrays.toString(et.getPos()) + ": ",
-						es.getAbs(et.index), as.getAbs(at.index));
-			}
-		} else if (dtype == Dataset.OBJECT) {
-			ObjectDataset eo = (ObjectDataset) expected;
-			ObjectDataset ao = (ObjectDataset) actual;
-	
-			while (et.hasNext() && at.hasNext()) {
-				Assert.assertEquals("Value does not match at " + Arrays.toString(et.getPos()) + ": ",
-						eo.getAbs(et.index), ao.getAbs(at.index));
+				n++;
 			}
 		} else if (DTypeUtils.isDTypeFloating(dtype)) {
 			while (et.hasNext() && at.hasNext()) {
@@ -161,17 +147,41 @@ public class TestUtils {
 					assertEquals("Value does not match at " + Arrays.toString(et.getPos()) + "; " + j +
 							": ", e, a, relTolerance, absTolerance);
 				}
+				n++;
 			}
-		} else {
+		} else if (dtype == Dataset.BOOL) {
 			while (et.hasNext() && at.hasNext()) {
 				for (int j = 0; j < is; j++) {
-					long e = j >= eis ? 0 : expected.getElementLongAbs(et.index + j);
-					long a = j >= ais ? 0 : actual.getElementLongAbs(at.index + j);
+					boolean e = j >= eis ? false : expected.getElementBooleanAbs(et.index + j);
+					boolean a = j >= ais ? false : actual.getElementBooleanAbs(at.index + j);
 					Assert.assertEquals("Value does not match at " + Arrays.toString(et.getPos()) + "; " + j +
 							": ", e, a);
 				}
+				n++;
 			}
+		} else if (dtype == Dataset.STRING) {
+			StringDataset es = (StringDataset) expected;
+			StringDataset as = (StringDataset) actual;
+	
+			while (et.hasNext() && at.hasNext()) {
+				Assert.assertEquals("Value does not match at " + Arrays.toString(et.getPos()) + ": ",
+						es.getAbs(et.index), as.getAbs(at.index));
+				n++;
+			}
+		} else if (dtype == Dataset.OBJECT) {
+			ObjectDataset eo = (ObjectDataset) expected;
+			ObjectDataset ao = (ObjectDataset) actual;
+	
+			while (et.hasNext() && at.hasNext()) {
+				Assert.assertEquals("Value does not match at " + Arrays.toString(et.getPos()) + ": ",
+						eo.getAbs(et.index), ao.getAbs(at.index));
+				n++;
+			}
+		} else {
+			throw new IllegalArgumentException("Unknown or unsupported dataset type");
 		}
+
+		Assert.assertEquals("Total items checked", expected.getSize(), n);
 	}
 
 	/**
