@@ -1973,4 +1973,18 @@ public class AbstractDatasetTest {
 
 		return b;
 	}
+
+	@Test
+	public void testBroadcastSliceView() {
+		Dataset a = DatasetFactory.createRange(12, Dataset.INT32);
+		Dataset b = a.getSliceView(new Slice(5, 8)).getBroadcastView(2, 3);
+
+		Dataset r = DatasetFactory.createRange(5, 8, 1, Dataset.INT32).reshape(1, 3);
+		Dataset c = DatasetUtils.concatenate(new Dataset[] {r, r}, 0);
+		TestUtils.assertDatasetEquals(c, b);
+
+		b = a.getSliceView(new Slice(5, 6)).getBroadcastView(3, 3);
+		c = DatasetFactory.zeros(new int[] {3, 3}, Dataset.INT32).fill(5);
+		TestUtils.assertDatasetEquals(c, b);
+	}
 }

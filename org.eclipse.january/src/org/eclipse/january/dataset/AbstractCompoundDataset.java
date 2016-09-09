@@ -64,7 +64,7 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 	public IndexIterator getIterator(final boolean withPosition) {
 		if (stride != null) {
 			return base.getSize() == 1 ? 
-					(withPosition ? new PositionIterator(shape) :  new SingleItemIterator(size)) : new StrideIterator(isize, shape, stride, offset);
+					(withPosition ? new PositionIterator(offset, shape) :  new SingleItemIterator(offset, size)) : new StrideIterator(isize, shape, stride, offset);
 		}
 		return withPosition ? getSliceIterator(null, null, null) :
 			new ContiguousIterator(size, isize);
@@ -85,7 +85,7 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 
 		final IndexIterator it;
 		if (stride != null) {
-			it = base.getSize() == 1 ? new SingleItemIterator(size, element) : new StrideIterator(isize, shape, stride, offset, element);
+			it = base.getSize() == 1 ? new SingleItemIterator(offset + element, size) : new StrideIterator(isize, shape, stride, offset, element);
 		} else {
 			it = new ContiguousIterator(size, isize, element);
 		}

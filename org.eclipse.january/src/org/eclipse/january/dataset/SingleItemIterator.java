@@ -17,29 +17,18 @@ package org.eclipse.january.dataset;
  */
 public class SingleItemIterator extends IndexIterator {
 	final private int size;
-	final private int element;
+	final private int offset;
 	private int i;
 
 	/**
-	 * Constructor for an iterator over the items of a contiguous dataset that are
-	 * within the dimensions
-	 *
-	 * @param length of entire data array
+	 * Constructor for an iterator over single item that will be broadcast over
+	 * given size of broadcast shape
+	 * @param offset offset to single item
+	 * @param size
 	 */
-	public SingleItemIterator(final int length) {
-		this(length, 0);
-	}
-
-	/**
-	 * Constructor for an iterator over the items of a contiguous dataset that are
-	 * within the dimensions
-	 *
-	 * @param length of entire data array
-	 * @param element element to start with (for compound datasets)
-	 */
-	public SingleItemIterator(final int length, final int element) {
-		size = length;
-		this.element = element;
+	public SingleItemIterator(final int offset, final int size) {
+		this.size = size;
+		this.offset = offset;
 		reset();
 	}
 
@@ -55,7 +44,7 @@ public class SingleItemIterator extends IndexIterator {
 
 	@Override
 	public void reset() {
-		index = element;
+		index = offset;
 		i = 0;
 	}
 }

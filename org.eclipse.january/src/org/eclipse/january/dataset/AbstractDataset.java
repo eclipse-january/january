@@ -248,7 +248,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		t.shape = nshape;
 		t.stride = nstride;
 		t.offset = toffset[0];
-		t.base = base == null ? this : base;
+		t.base = this;
 		copyStoredValues(this, t, true);
 		t.transposeMetadata(axes);
 		return t;
@@ -369,8 +369,8 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	@Override
 	public IndexIterator getIterator(final boolean withPosition) {
 		if (stride != null) {
-			return base.getSize() == 1  ? (withPosition ? new PositionIterator(shape) :
-				new SingleItemIterator(size)): new StrideIterator(shape, stride, offset);
+			return base.getSize() == 1  ? (withPosition ? new PositionIterator(offset, shape) :
+				new SingleItemIterator(offset, size)) : new StrideIterator(shape, stride, offset);
 		}
 		return withPosition ? new ContiguousIteratorWithPosition(shape, size) : new ContiguousIterator(size);
 	}
@@ -821,7 +821,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			List<int[]> nShapes = BroadcastUtils.broadcastShapesToMax(broadcastShape, shape);
 			view.setShape(nShapes.get(0));
 			view.stride = BroadcastUtils.createBroadcastStrides(view, broadcastShape);
-			view.base = base == null ? this : base;
+			view.base = this;
 			view.shape = broadcastShape.clone();
 			view.size = ShapeUtils.calcSize(broadcastShape);
 			if (view.name == null || view.name.isEmpty()) {
@@ -869,7 +869,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		s.size = ShapeUtils.calcSize(sShape);
 		s.stride = sStride;
 		s.offset = sOffset[0];
-		s.base = base == null ? this : base;
+		s.base = this;
 
 		s.metadata = copyMetadata();
 		s.sliceMetadata(true, slice);

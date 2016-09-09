@@ -27,7 +27,7 @@ package org.eclipse.january.dataset;
  *
  */
 public class PositionIterator extends IndexIterator {
-	private int element;
+	private int offset;
 	final private int[] shape;
 	final private int[] start;
 	final private int[] stop;
@@ -53,13 +53,13 @@ public class PositionIterator extends IndexIterator {
 	}
 
 	/**
-	 * Constructor for an iterator over elements of a dataset that are within
-	 * the shape
+	 * Constructor for an iterator over a single item broadcasted to given shape
 	 *
+	 * @param offset offset to single item
 	 * @param shape
 	 */
-	public PositionIterator(int element, int[] shape) {
-		this(element, new SliceND(shape), null);
+	public PositionIterator(int offset, int[] shape) {
+		this(offset, new SliceND(shape), null);
 	}
 
 	/**
@@ -105,12 +105,12 @@ public class PositionIterator extends IndexIterator {
 	/**
 	 * Constructor for an iterator that misses out several axes
 	 * 
-	 * @param element element to start with (for compound datasets)
+	 * @param offset offset to start with
 	 * @param slice
 	 * @param axes missing axes
 	 */
-	public PositionIterator(int element, SliceND slice, int... axes) {
-		this.element = element;
+	public PositionIterator(int offset, SliceND slice, int... axes) {
+		this.offset = offset;
 		int[] oshape = slice.getShape();
 		start = slice.getStart();
 		stop  = slice.getStop();
@@ -205,7 +205,7 @@ public class PositionIterator extends IndexIterator {
 			pos[endrank] -= step[endrank];
 		}
 
-		index = element;
+		index = offset;
 	}
 
 	@Override
