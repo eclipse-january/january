@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2016 Kichwa Coders and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+
+    Contributors:
+        Jonah Graham (Kichwa Coders) - initial API and implementation
+ -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.eclipse.january</groupId>
+	<artifactId>org.eclipse.january.releng</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+
+	<properties>
+		<tycho-version>0.26.0</tycho-version>
+		<tycho-extras-version>${tycho-version}</tycho-extras-version>
+		<xtext-version>2.9.0</xtext-version>
+
+
+		<eclipse-jarsigner-version>1.1.3</eclipse-jarsigner-version>
+		<os-jvm-flags /> <!-- for the default case - see https://wiki.eclipse.org/Tycho/FAQ#How_do_I_add_OS-specific_flags.3F -->
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>cbi</id>
+			<url>https://repo.eclipse.org/content/repositories/cbi-releases/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+
+
+	<build>
+		<plugins>
+			<!-- enable tycho build extension -->
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<extensions>true</extensions>
+			</plugin>
+
+			<!-- set target platform for build -->
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<target>
+						<artifact>
+							<groupId>org.eclipse.january</groupId>
+							<artifactId>org.eclipse.january.releng.target</artifactId>
+							<version>1.0.0-SNAPSHOT</version>
+						</artifact>
+					</target>
+					<environments>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86_64</arch>
+						</environment>
+					</environments>
+				</configuration>
+			</plugin>
+
+			<!-- timestamps based on the latest git commit -->
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-packaging-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.eclipse.tycho.extras</groupId>
+						<artifactId>tycho-buildtimestamp-jgit</artifactId>
+						<version>${tycho-extras-version}</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<timestampProvider>jgit</timestampProvider>
+					<format>${build-prefix}yyyyMMddHHmm</format>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-source-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<executions>
+					<execution>
+						<id>plugin-source</id>
+						<goals>
+							<goal>plugin-source</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho.extras</groupId>
+				<artifactId>tycho-source-feature-plugin</artifactId>
+				<version>${tycho-extras-version}</version>
+				<executions>
+					<execution>
+						<id>source-feature</id>
+						<phase>package</phase>
+						<goals>
+							<goal>source-feature</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-p2-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<executions>
+					<execution>
+						<id>attach-p2-metadata</id>
+						<phase>package</phase>
+						<goals>
+							<goal>p2-metadata</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- see https://wiki.eclipse.org/Tycho/FAQ#How_do_I_add_OS-specific_flags.3F -->
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-surefire-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<testFailureIgnore>true</testFailureIgnore>
+					<argLine>-Xms40m -Xmx1G -ea ${os-jvm-flags}</argLine>
+				</configuration>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!-- xtend-maven-plugin is in pluginManagement instead of in plugins
+					so that it doesn't run before the exec-maven-plugin's *.mwe2 gen; this way
+					we can list it after. -->
+
+				<plugin>
+					<groupId>org.eclipse.xtend</groupId>
+					<artifactId>xtend-maven-plugin</artifactId>
+					<version>${xtext-version}</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>compile</goal>
+								<goal>xtend-install-debug-info</goal>
+								<goal>testCompile</goal>
+								<goal>xtend-test-install-debug-info</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<outputDirectory>xtend-gen</outputDirectory>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+
+	<modules>
+
+		<module>../../org.eclipse.january</module>
+		<module>../../org.eclipse.january.asserts</module>
+		<module>../../org.eclipse.january.form</module>
+		<module>../../org.eclipse.january.form.feature</module>
+		<module>../../org.eclipse.january.form.test</module>
+		<module>../../org.eclipse.january.geometry</module>
+		<module>../../org.eclipse.january.geometry.model.edit</module>
+		<module>../../org.eclipse.january.geometry.model.editor</module>
+		<module>../../org.eclipse.january.geometry.model.tests</module>
+		<module>../../org.eclipse.january.test</module>
+
+		<!-- xtext Geometry plug-ins not enabled yet -->
+
+		<!-- releng -->
+		<module>../org.eclipse.january.releng.target</module>
+		<module>../org.eclipse.january.releng.p2</module>
+	</modules>
+
+
+	<profiles>
+		<profile>
+			<id>local</id>
+		</profile>
+
+		<profile>
+			<!-- by default set build qualifier to "I" -->
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>!build-prefix</name>
+				</property>
+			</activation>
+
+			<properties>
+				<build-prefix>'I'</build-prefix>
+			</properties>
+		</profile>
+		<profile>
+			<id>sign</id>
+
+			<build>
+				<plugins>
+					<!-- enable jar signing -->
+					<plugin>
+						<groupId>org.eclipse.cbi.maven.plugins</groupId>
+						<artifactId>eclipse-jarsigner-plugin</artifactId>
+						<version>${eclipse-jarsigner-version}</version>
+						<executions>
+							<execution>
+								<id>sign</id>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+								<phase>verify</phase>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<!-- see https://wiki.eclipse.org/Tycho/FAQ#How_do_I_add_OS-specific_flags.3F -->
+			<id>macosx-jvm-flags</id>
+			<activation>
+				<os>
+					<family>mac</family>
+				</os>
+			</activation>
+			<properties>
+				<os-jvm-flags>-XstartOnFirstThread</os-jvm-flags>
+			</properties>
+		</profile>
+	</profiles>
+</project>

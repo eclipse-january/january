@@ -42,3 +42,4 @@ passwords
 Thumbs.db
 $RECYCLE.BIN/
 .Trash-*
+/target/

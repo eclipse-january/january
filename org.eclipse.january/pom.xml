@@ -10,22 +10,16 @@
         Diamond Light Source Ltd - initial API and implementation
  -->
 
-<project
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<artifactId>org.eclipse.dawnsci</artifactId>
-		<groupId>org.eclipse</groupId>
-		<version>1.0.0-SNAPSHOT</version>
-	</parent>
-	<groupId>org.eclipse</groupId>
 	<artifactId>org.eclipse.january</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
+	<parent>
+		<relativePath>../releng/org.eclipse.january.releng/pom.xml</relativePath>
+		<groupId>org.eclipse.january</groupId>
+		<artifactId>org.eclipse.january.releng</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
 	<packaging>eclipse-plugin</packaging>
-	
-	<build>
-        <outputDirectory>bin</outputDirectory>
-    </build>
-	
 </project>

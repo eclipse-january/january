@@ -10,19 +10,16 @@
         UT-Battelle, LLC. - initial API and implementation
  -->
 
-<project
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<name>ICE Feature</name>
 	<artifactId>org.eclipse.january.form.feature</artifactId>
-	<packaging>eclipse-feature</packaging>
-	<parent>
-		<groupId>org.eclipse.ice</groupId>
-		<artifactId>org.eclipse.ice.build</artifactId>
-		<version>2.1.8-SNAPSHOT</version>
-		<relativePath>../org.eclipse.ice.parent/pom.xml</relativePath>
-	</parent>
-	<groupId>org.eclipse.january</groupId>
 	<version>1.0.0-SNAPSHOT</version>
+	<parent>
+		<relativePath>../releng/org.eclipse.january.releng/pom.xml</relativePath>
+		<groupId>org.eclipse.january</groupId>
+		<artifactId>org.eclipse.january.releng</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	<packaging>eclipse-feature</packaging>
 </project>

@@ -5,28 +5,23 @@
     are made available under the terms of the Eclipse Public License v1.0
     which accompanies this distribution, and is available at
     http://www.eclipse.org/legal/epl-v10.html
-   
+
     Contributors:
         UT-Battelle, LLC. - initial API and implementation
  -->
 
-<project
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.eclipse.ice</groupId>
-		<artifactId>org.eclipse.ice.build</artifactId>
-		<version>2.1.8-SNAPSHOT</version>
-		<relativePath>../org.eclipse.ice.parent/pom.xml</relativePath>
-	</parent>
-	<groupId>org.eclipse.january</groupId>
 	<artifactId>org.eclipse.january.form.test</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<parent>
+		<relativePath>../releng/org.eclipse.january.releng/pom.xml</relativePath>
+		<groupId>org.eclipse.january</groupId>
+		<artifactId>org.eclipse.january.releng</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
 	<packaging>eclipse-test-plugin</packaging>
-	<properties>
-		<sonar.skip>true</sonar.skip>
-	</properties>
-	<!-- Fix the extension registry -->
 	<build>
 		<plugins>
 			<plugin>
@@ -45,8 +40,19 @@
 					</dependency-resolution>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-surefire-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<includes>
+						<!-- This plug-in has test names that don't follow standard convention,
+							therefore we need to explicitly add support for *Tester -->
+						<include>**/*Tester.class</include>
+						<include>*/*Test.class</include>
+					</includes>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
-
-	<version>1.0.0-SNAPSHOT</version>
 </project>

@@ -1,0 +1,48 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<inceptionYear>2014</inceptionYear>
+	<url>https://www.eclipse.org/january/</url>
+	<ciManagement>
+		<system>hudson</system>
+		<url>https://hudson.eclipse.org/january</url>
+	</ciManagement>
+	<licenses>
+		<license>
+			<name>Eclipse Public License</name>
+			<url>http://www.eclipse.org/legal/epl-v10.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<organization>
+		<name>Eclipse Foundation</name>
+		<url>http://www.eclipse.org/</url>
+	</organization>
+	<issueManagement>
+		<system>GitHub</system>
+		<url>https://github.com/eclipse/january/issues</url>
+	</issueManagement>
+	<scm>
+		<connection>scm:git:https://github.com/eclipse/january.git</connection>
+		<developerConnection>scm:git:git@github.com:eclipse/january.git</developerConnection>
+		<url>https://github.com/eclipse/january.git</url>
+	</scm>
+	<prerequisites>
+		<maven>3.0</maven>
+	</prerequisites>
+
+	<name>The Eclipse January Project</name>
+	<description>Common data structures for Science</description>
+
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.eclipse.january</groupId>
+	<artifactId>org.eclipse.january.root</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>releng/org.eclipse.january.releng</module>
+	</modules>
+</project>
