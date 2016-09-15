@@ -81,16 +81,6 @@ public class StrideIterator extends SliceIterator {
 			for (int j = endrank; j >= 0; j--) {
 				delta[j] = stride[j] * shape[j];
 			}
-			if (endrank < 0) {
-				imax = istep;
-			} else {
-				imax = Integer.MIN_VALUE; // use max delta
-				for (int j = endrank; j >= 0; j--) {
-					if (delta[j] > imax) {
-						imax = delta[j];
-					}
-				}
-			}
 		} else {
 			stride = new int[rank];
 			int s = isize;
@@ -102,7 +92,6 @@ public class StrideIterator extends SliceIterator {
 			imax = s;
 		}
 		nstart = offset;
-		imax += nstart;
 	}
 
 	@Override
@@ -119,6 +108,10 @@ public class StrideIterator extends SliceIterator {
 	public boolean hasNext() {
 		// now move on one position
 		int j = endrank;
+		if (j < 0) {
+			index += istep;
+			return index < istep;
+		}
 		for (; j >= 0; j--) {
 			index += stride[j];
 			final int p = pos[j] + 1;
@@ -129,15 +122,7 @@ public class StrideIterator extends SliceIterator {
 			pos[j] = 0;
 			index -= delta[j]; // reset this dimension
 		}
-		if (j == -1) {
-			if (endrank >= 0) {
-				index = imax;
-				return false;
-			}
-			index += istep;
-		}
-
-		return index != imax;
+		return j >= 0;
 	}
 
 	@Override

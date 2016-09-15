@@ -303,6 +303,10 @@ public class StrideIteratorTest {
 		sliced = oldSlice(t, (SliceIterator) t.getSliceIterator(new int[] {1, 3}, null, new int[] {2, -2}));
 		nsliced = newSlice(t, new int[] {1, 3}, null, new int[] {2, -2});
 		checkSliced(sliced, nsliced);
+
+		sliced = oldSlice(t, (SliceIterator) t.getSliceIterator(new int[] {7, 4}, null, new int[] {-1, -1}));
+		nsliced = newSlice(t, new int[] {7, 4}, null, new int[] {-1, -1});
+		checkSliced(sliced, nsliced);
 	}
 
 	/**

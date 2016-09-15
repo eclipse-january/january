@@ -883,9 +883,19 @@ public class AbstractDatasetTest {
 	
 	@Test
 	public void testView() {
-		Dataset a = DatasetFactory.createRange(20, Dataset.FLOAT64);
+		Dataset a = DatasetFactory.createRange(60, Dataset.FLOAT64);
 		Dataset b = a.getView(true);
 		assertEquals(true, a.equals(b));
+
+		a.setShape(5, 3, 4);
+		b = a.getTransposedView();
+		for (int i = 0; i < 5; i++) {
+			for (int j = 0; j < 3; j++) {
+				for (int k = 0; k < 4; k++) {
+					assertEquals(a.getDouble(i, j, k), b.getDouble(k, j, i), 1e-12);
+				}
+			}
+		}
 	}
 
 	/**
