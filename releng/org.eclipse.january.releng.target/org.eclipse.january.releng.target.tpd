@@ -11,10 +11,11 @@
  *******************************************************************************/
 target "January" with source requirements
 
-// XXX: Using Orbit nightly at the moment, that will change as Orbit becomes more stable in the new build
-// process
+// XXX: Using Orbit Integration at the moment, that will change as Orbit becomes
+// more stable in their new build process, eventually moving to a long term
+// persisted repo, when available.
 
-location "http://download.eclipse.org/tools/orbit/N-builds/N20160815160609/repository/" eclipse-orbit-neon {
+location "http://download.eclipse.org/tools/orbit/downloads/drops/I20160829153302/repository" eclipse-orbit-neon {
 
 // The versions we point to in Orbit are the versions we have CQs approved for, please
 // raise CQ for items not in this list or version changes
