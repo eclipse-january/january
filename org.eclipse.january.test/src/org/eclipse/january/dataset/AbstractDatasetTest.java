@@ -1997,4 +1997,21 @@ public class AbstractDatasetTest {
 		c = DatasetFactory.zeros(new int[] {3, 3}, Dataset.INT32).fill(5);
 		TestUtils.assertDatasetEquals(c, b);
 	}
+
+	@Test
+	public void testFlips() {
+		Dataset a = Random.rand(new int[] {3, 5});
+		TestUtils.assertDatasetEquals(a.getSlice(new Slice(null, null, -1)), DatasetUtils.flipUpDown(a));
+
+		TestUtils.assertDatasetEquals(a.getSlice((Slice) null, new Slice(null, null, -1)), DatasetUtils.flipLeftRight(a));
+
+		Dataset b = DatasetUtils.rotate90(a, 1);
+		TestUtils.assertDatasetEquals(a, DatasetUtils.rotate90(a, 0));
+		TestUtils.assertDatasetEquals(b, DatasetUtils.rotate90(a, 1));
+		TestUtils.assertDatasetEquals(DatasetUtils.rotate90(b, 1), DatasetUtils.rotate90(a, 2));
+		TestUtils.assertDatasetEquals(DatasetUtils.rotate90(b, 2), DatasetUtils.rotate90(a, 3));
+		TestUtils.assertDatasetEquals(DatasetUtils.rotate90(a, -1), DatasetUtils.rotate90(a, 3));
+		TestUtils.assertDatasetEquals(a, DatasetUtils.rotate90(a, 4));
+	}
+	
 }

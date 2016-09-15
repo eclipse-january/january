@@ -961,11 +961,11 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		return stride == null ? i*shape[1] + j : i*stride[0] + j*stride[1] + offset;
 	}
 
-	protected int get1DIndexFromShape(final int... n) {
+	protected int get1DIndexFromShape(final int[] n) {
 		return get1DIndexFromShape(shape, n);
 	}
 
-	protected static int get1DIndexFromShape(final int[] shape, final int... n) {
+	protected static int get1DIndexFromShape(final int[] shape, final int[] n) {
 		final int imax = n.length;
 		final int rank = shape.length;
 //		if (rank != imax) {
@@ -991,11 +991,11 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		return index;
 	}
 
-	private int get1DIndexFromStrides(final int... n) {
+	private int get1DIndexFromStrides(final int[] n) {
 		return get1DIndexFromStrides(shape, stride, offset, n);
 	}
 
-	private static int get1DIndexFromStrides(final int[] shape, final int[] stride, final int offset, final int... n) {
+	private static int get1DIndexFromStrides(final int[] shape, final int[] stride, final int offset, final int[] n) {
 		final int rank = shape.length;
 		if (rank != n.length) {
 			throw new IllegalArgumentException("Number of position indexes must be equal to rank");
