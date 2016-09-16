@@ -101,9 +101,14 @@ public class ResourceHandler {
 		// by any viz service
 		if (vizFileExtensions.size() == 0) {
 			IVizServiceFactory factory = VizServiceFactoryHolder.getFactory();
-			for (String service : factory.getServiceNames()) {
-				vizFileExtensions
-						.addAll(factory.get(service).getSupportedExtensions());
+
+			// If there was no factory, then we cannot handle visualizations for
+			// any file types
+			if (factory != null) {
+				for (String service : factory.getServiceNames()) {
+					vizFileExtensions.addAll(
+							factory.get(service).getSupportedExtensions());
+				}
 			}
 		}
 

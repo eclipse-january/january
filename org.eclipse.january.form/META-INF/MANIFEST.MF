@@ -7,7 +7,8 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Service-Component: OSGI-INF/*.xml
 Meta-Persistence: META-INF/persistence.xml
 Export-Package: org.eclipse.january.form,
- org.eclipse.january.form.emf
+ org.eclipse.january.form.emf,
+ org.eclipse.january.form.internal
 Import-Package: ca.odell.glazedlists,
  ca.odell.glazedlists.event,
  org.eclipse.core.resources,
