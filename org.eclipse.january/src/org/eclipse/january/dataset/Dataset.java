@@ -186,6 +186,14 @@ public interface Dataset extends IDataset {
 	public Serializable getBuffer();
 
 	/**
+	 * Set the buffer that backs the dataset and its shape
+	 * <p>This is very, very <b>dangerous</b>. Please use carefully
+	 * @param buffer (can be null to leave unchanged)
+	 * @param shape (can be null to leave unchanged)
+	 */
+	public void overrideInternal(Serializable buffer, int... shape);
+
+	/**
 	 * This is a <b>synchronized</b> version of the clone method
 	 * 
 	 * @return a copy of dataset

@@ -15,14 +15,12 @@ import org.eclipse.january.io.ILazyDynamicLoader;
 import org.eclipse.january.io.ILazyLoader;
 
 public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -6296506563932840938L;
 
 	protected int[] maxShape;
 
 	protected transient DataListenerDelegate eventDelegate; // this does not need to be serialised!
+
 	protected IDatasetChangeChecker checker;
 	private boolean stop;
 
@@ -73,6 +71,24 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 		}
 		this.eventDelegate = new DataListenerDelegate();
 	}
+
+	@Override
+	public void addDataListener(IDataListener l) {
+		eventDelegate.addDataListener(l);
+	}
+
+	@Override
+	public void removeDataListener(IDataListener l) {
+		eventDelegate.removeDataListener(l);
+	}
+
+	@Override
+	public void fireDataListeners() {
+		synchronized (eventDelegate) {
+			eventDelegate.fire(new DataEvent(name, shape));
+		}
+	}
+
 
 	@Override
 	public void refreshShape() {
@@ -162,16 +178,6 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 	}
 
 	@Override
-	public void addDataListener(IDataListener l) {
-		eventDelegate.addDataListener(l);
-	}
-
-	@Override
-	public void removeDataListener(IDataListener l) {
-		eventDelegate.removeDataListener(l);
-	}
-
-	@Override
 	public synchronized void startUpdateChecker(int milliseconds, IDatasetChangeChecker checker) {
 		// stop any current checking threads
 		if (checkingThread != null) {
@@ -193,12 +199,5 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 		checkingThread.setDaemon(true);
 		checkingThread.setName("Checking thread with period " + milliseconds + "ms");
 		checkingThread.start();
-	}
-
-	@Override
-	public void fireDataListeners() {
-		synchronized (eventDelegate) {
-			eventDelegate.fire(new DataEvent(name, shape));
-		}
 	}
 }

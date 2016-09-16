@@ -706,6 +706,20 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		return odata;
 	}
 
+	@Override
+	public void overrideInternal(Serializable buffer, int... shape) {
+		if (buffer != null) {
+			odata = buffer;
+			setData();
+			setDirty();
+		}
+	
+		if (shape != null) {
+			this.shape = shape.clone();
+			size = ShapeUtils.calcSize(this.shape);
+		}
+	}
+
 	/**
 	 * Create a stride array from dataset
 	 * @param a dataset
