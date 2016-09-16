@@ -17,6 +17,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.eclipse.eavp.viz.service.IVizServiceFactory;
+import org.eclipse.january.form.internal.VizServiceFactoryHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * displaying the contents of a mesh file, or in Launcher Items for tasks such
  * as plotting the contents of a post-processed CSV file.
  * </p>
- * 
+ *
  * <p>
  * Some resources contain visualization data and can be rendered via the
  * visualization service. A private list of all file extensions that have a
@@ -36,12 +38,12 @@ import org.slf4j.LoggerFactory;
  * recourse will be a {@link VizResource}, otherwise it will be just a regular
  * {@link ICEResource}.
  * </p>
- * 
+ *
  * <p>
  * This class' methods are intended to be called by Items directly, using the
  * {@code Item.getProcess(...)} methods. method.
  * </p>
- * 
+ *
  * @author Anna Wojtowicz
  */
 
@@ -69,12 +71,6 @@ public class ResourceHandler {
 		// already
 		if (vizFileExtensions == null) {
 			vizFileExtensions = new ArrayList<String>(3);
-
-			// Add entries to the list; make sure they are lowercase!
-			vizFileExtensions.add("csv");
-			vizFileExtensions.add("e");
-			vizFileExtensions.add("silo");
-			vizFileExtensions.add("h5m");
 		}
 
 		return;
@@ -85,14 +81,14 @@ public class ResourceHandler {
 	 * This method is the star of the {@link ResourceHandler} class and does the
 	 * majority of the heavy-lifting.
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * Based on the filepath passed in, it will create and return a
 	 * {@link VizResource} if it has a file extension found in the
 	 * {@link #vizFileExtensions} list. If the file extension is not found in
 	 * the list, then it will create and return a regular {@link ICEResource}.
 	 * If no valid file extension was found, it will return null.
-	 * 
+	 *
 	 * @param filePath
 	 *            The file path to the resource file.
 	 * @return Returns a {@link VizResource} or {@link ICEResource} depending on
@@ -100,6 +96,16 @@ public class ResourceHandler {
 	 * @throws IOException
 	 */
 	public ICEResource getResource(String filePath) throws IOException {
+
+		// Populate the list with all the file extensions which can be handled
+		// by any viz service
+		if (vizFileExtensions.size() == 0) {
+			IVizServiceFactory factory = VizServiceFactoryHolder.getFactory();
+			for (String service : factory.getServiceNames()) {
+				vizFileExtensions
+						.addAll(factory.get(service).getSupportedExtensions());
+			}
+		}
 
 		// Local declarations
 		ICEResource resource = null;
@@ -110,8 +116,8 @@ public class ResourceHandler {
 			file = new File(filePath);
 		} else {
 			// If the file path is empty, complain and exit
-			logger.info("ResourceHandler Message: The file path was "
-					+ "empty!");
+			logger.info(
+					"ResourceHandler Message: The file path was " + "empty!");
 
 			return resource;
 		}
@@ -158,7 +164,7 @@ public class ResourceHandler {
 	/**
 	 * This method calls {@link #getResource(String)} and then sets the
 	 * resource's name.
-	 * 
+	 *
 	 * @param filePath
 	 *            The file path to the resource file.
 	 * @param name
@@ -183,7 +189,7 @@ public class ResourceHandler {
 	/**
 	 * This method calls {@link #getResource(String, String)} and then sets the
 	 * resource's ID.
-	 * 
+	 *
 	 * @param filePath
 	 *            The file path to the resource file.
 	 * @param name
@@ -210,7 +216,7 @@ public class ResourceHandler {
 	/**
 	 * This method calls {@link #getResource(String, String, int)} and then sets
 	 * the resource's description.
-	 * 
+	 *
 	 * @param filePath
 	 *            The file path to the resource file.
 	 * @param name
