@@ -18,8 +18,9 @@ Import-Package: ca.odell.glazedlists,
  org.eclipse.eavp.viz.modeling.base,
  org.eclipse.eavp.viz.modeling.properties,
  org.eclipse.eavp.viz.service,
- org.eclipse.eavp.viz.service.geometry.persistence,
  org.eclipse.eavp.viz.service.mesh.datastructures,
+ org.eclipse.emf.common.notify,
+ org.eclipse.emf.common.notify.impl,
  org.eclipse.emf.common.util,
  org.eclipse.emf.ecore,
  org.eclipse.emf.ecore.resource,
@@ -28,6 +29,7 @@ Import-Package: ca.odell.glazedlists,
  org.eclipse.emf.ecore.xmi.impl,
  org.eclipse.emf.ecore.xmi.util,
  org.eclipse.xsd,
+ org.eclipse.january.geometry,
  org.slf4j;version="1.7.2"
 Bundle-ActivationPolicy: lazy
 JPA-PersistenceUnits: org.eclipse.ice.datastructures

@@ -21,6 +21,7 @@ Import-Package: ca.odell.glazedlists,
  org.eclipse.emf.ecore.xmi.impl,
  org.eclipse.emf.ecore.xmi.util,
  org.eclipse.january.form.emf,
+ org.eclipse.january.geometry,
  org.osgi.framework;version="1.6.0",
  org.osgi.util.tracker;version="1.5.0",
  org.slf4j;version="1.7.2"

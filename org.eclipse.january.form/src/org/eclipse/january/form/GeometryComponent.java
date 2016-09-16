@@ -16,25 +16,24 @@ import java.util.ArrayList;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.eclipse.eavp.viz.datastructures.VizObject.IManagedUpdateable;
 import org.eclipse.eavp.viz.datastructures.VizObject.IManagedUpdateableListener;
 import org.eclipse.eavp.viz.datastructures.VizObject.SubscriptionType;
-import org.eclipse.eavp.viz.modeling.ShapeController;
-import org.eclipse.eavp.viz.modeling.Shape;
-import org.eclipse.eavp.viz.modeling.properties.MeshProperty;
 import org.eclipse.eavp.viz.service.IVizService;
-import org.eclipse.eavp.viz.service.geometry.persistence.PersistableShape;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.january.geometry.Geometry;
+import org.eclipse.january.geometry.GeometryFactory;
 
 /**
  * <p>
  * Composite container for a Geometry along with any additional information
  * required to interpret the geometry data
  * </p>
- * 
+ *
  * @author Jay Jay Billings
  */
 @XmlRootElement(name = "GeometryComponent")
@@ -43,16 +42,10 @@ public class GeometryComponent extends ICEObject
 		implements Component, IUpdateableListener, IManagedUpdateableListener {
 
 	/**
-	 * The component's geometry in a temporary compresed form.
-	 */
-	@XmlTransient
-	private PersistableShape compressedGeometry;
-
-	/**
 	 * <p>
 	 * The set of ComponentListeners observing the GeometryComponent
 	 * </p>
-	 * 
+	 *
 	 */
 	@XmlTransient
 	private ArrayList<IUpdateableListener> listeners;
@@ -61,7 +54,7 @@ public class GeometryComponent extends ICEObject
 	 * The Geometry managed by the GeometryComponent
 	 */
 	@XmlTransient
-	private ShapeController geometry;
+	private Geometry geometry;
 
 	/**
 	 * The service being used to render this component.
@@ -74,7 +67,7 @@ public class GeometryComponent extends ICEObject
 	 * This operation overrides the ICEObject.setName() operation and provides
 	 * an update notification in addition to setting the name.
 	 * </p>
-	 * 
+	 *
 	 * @param name
 	 *            <p>
 	 *            The new ICEObject ID
@@ -96,7 +89,7 @@ public class GeometryComponent extends ICEObject
 	 * This operation overrides the ICEObject.setId() operation and provides an
 	 * update notification in addition to setting the id.
 	 * </p>
-	 * 
+	 *
 	 * @param id
 	 *            <p>
 	 *            The new ICEObject ID
@@ -117,7 +110,7 @@ public class GeometryComponent extends ICEObject
 	 * <p>
 	 * Creates an empty Geometry and list of IShapes and ComponentListeners
 	 * </p>
-	 * 
+	 *
 	 */
 	public GeometryComponent() {
 
@@ -131,91 +124,56 @@ public class GeometryComponent extends ICEObject
 		// Create a new listeners list
 		listeners = new ArrayList<IUpdateableListener>();
 
+		// Initialize the geometry
+		geometry = GeometryFactory.eINSTANCE.createGeometry();
 	}
 
 	/**
 	 * Accessor method for the held Geometry.
-	 * 
+	 *
 	 * @return The held Geometry
 	 */
-	public ShapeController getGeometry() {
+	public Geometry getGeometry() {
 		return geometry;
 	}
 
 	/**
-	 * Get the component's geometry in a persistable format. It is intended that
-	 * this function will only be called by JAXB.
-	 * 
-	 * @return A PersistableShape representing the component's CSG tree
-	 */
-	@XmlElement(name = "Geometry")
-	private PersistableShape getPersistableGeometry() {
-		return PersistableShape.compress((Shape) geometry.getModel());
-	}
-
-	/**
 	 * Mutator method for the held geometry
-	 * 
+	 *
 	 * @param newGeometry
 	 *            the new Geometry to hold
 	 */
-	public void setGeometry(ShapeController newGeometry) {
+	public void setGeometry(Geometry newGeometry) {
 		geometry = newGeometry;
 
-		// Set the shape as being the root node for the scene
-		geometry.setProperty(MeshProperty.ROOT, "True");
-
 		// Register self as a listener for the geometry
-		geometry.register(this);
+		geometry.eAdapters().add(new AdapterImpl() {
+
+			@Override
+			public void notifyChanged(Notification notification) {
+				notifyListeners();
+			}
+		});
 
 		// Notify listeners
 		notifyListeners();
 	}
 
 	/**
-	 * Set the compressed form of the component's geometry. It is intended that
-	 * this function will only be called by JAXB.
-	 * 
-	 * @param root
-	 *            The compressed root of the CSG tree to be displayed by this
-	 *            component.
-	 */
-	private void setPersistableGeometry(PersistableShape root) {
-		compressedGeometry = root;
-	}
-
-	/**
 	 * Set the IVizService that will be used to visualize this component.
-	 * 
+	 *
 	 * @param service
 	 *            The service that will be used to visualize this component.
 	 */
 	public void setService(IVizService service) {
 		this.service = service;
-
-		// If a geometry was read from the xml, expand it
-		if (compressedGeometry != null) {
-
-			// Unregister from the old geometry
-			if (geometry != null) {
-				geometry.unregister(this);
-			}
-
-			// Set the component's contents to a full version of the geometry
-			geometry = compressedGeometry.unpack(service.getControllerProviderFactory());
-			geometry.register(this);
-
-			// The full geometry is now in memory, so delete the compressed
-			// version
-			compressedGeometry = null;
-		}
 	}
 
 	/**
 	 * <p>
 	 * This operation returns the hashcode value of the GeometryComponent.
 	 * </p>
-	 * 
+	 *
 	 * @return
 	 *         <p>
 	 *         The hashcode of the ICEObject.
@@ -237,7 +195,7 @@ public class GeometryComponent extends ICEObject
 	 * and another GeometryComponent. It returns true if the GeometryComponents
 	 * are equal and false if they are not.
 	 * </p>
-	 * 
+	 *
 	 * @param otherObject
 	 *            <p>
 	 *            The other ICEObject that should be compared with this one.
@@ -282,7 +240,7 @@ public class GeometryComponent extends ICEObject
 	 * This operation copies the contents of a GeometryComponent into the
 	 * current object using a deep copy.
 	 * </p>
-	 * 
+	 *
 	 * @param iceObject
 	 *            <p>
 	 *            The ICEObject from which the values should be copied
@@ -298,9 +256,9 @@ public class GeometryComponent extends ICEObject
 		super.copy(iceObject);
 
 		// Copy shapes list
-		ShapeController otherGeometry = iceObject.getGeometry();
+		Geometry otherGeometry = iceObject.getGeometry();
 		if (otherGeometry != null) {
-			this.setGeometry((ShapeController) otherGeometry.clone());
+			this.setGeometry((Geometry) otherGeometry.clone());
 		} else {
 			geometry = null;
 		}
@@ -313,7 +271,7 @@ public class GeometryComponent extends ICEObject
 	 * This operation returns a clone of the GeometryComponent using a deep
 	 * copy.
 	 * </p>
-	 * 
+	 *
 	 * @return
 	 *         <p>
 	 *         The new clone
@@ -336,7 +294,7 @@ public class GeometryComponent extends ICEObject
 	 * Notifies all IUpdateableListeners in the listener list that an event has
 	 * occurred which has changed the state of this GeometryComponent
 	 * </p>
-	 * 
+	 *
 	 */
 	@Override
 	protected void notifyListeners() {
@@ -367,7 +325,7 @@ public class GeometryComponent extends ICEObject
 
 	/**
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see IUpdateable#update(String updatedKey, String newValue)
 	 */
 	@Override
@@ -377,7 +335,7 @@ public class GeometryComponent extends ICEObject
 
 	/**
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see Component#register(IUpdateableListener listener)
 	 */
 	@Override
@@ -395,7 +353,7 @@ public class GeometryComponent extends ICEObject
 
 	/**
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see Component#accept(IComponentVisitor visitor)
 	 */
 	@Override
@@ -408,7 +366,7 @@ public class GeometryComponent extends ICEObject
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.eclipse.ice.datastructures.ICEObject.IUpdateableListener#update(org.
 	 * eclipse.ice.datastructures.ICEObject.IUpdateable)
@@ -423,7 +381,7 @@ public class GeometryComponent extends ICEObject
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.eclipse.eavp.viz.service.datastructures.VizObject.
 	 * IVizUpdateableListener#update(org.eclipse.eavp.viz.service.
 	 * datastructures. VizObject.IVizUpdateable)
@@ -435,7 +393,7 @@ public class GeometryComponent extends ICEObject
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.eclipse.eavp.viz.service.datastructures.VizObject.
 	 * IManagedVizUpdateableListener#getSubscriptions(org.eclipse.eavp.viz.
 	 * service.datastructures.VizObject.IVizUpdateable)
