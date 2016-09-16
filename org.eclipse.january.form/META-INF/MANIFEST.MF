@@ -27,6 +27,7 @@ Import-Package: ca.odell.glazedlists,
  org.eclipse.emf.ecore.xmi,
  org.eclipse.emf.ecore.xmi.impl,
  org.eclipse.emf.ecore.xmi.util,
+ org.eclipse.xsd,
  org.slf4j;version="1.7.2"
 Bundle-ActivationPolicy: lazy
 JPA-PersistenceUnits: org.eclipse.ice.datastructures

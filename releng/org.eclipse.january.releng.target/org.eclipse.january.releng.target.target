@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform -->
-<target name="January" sequenceNumber="1473872876">
+<target name="January" sequenceNumber="1474035742">
   <locations>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.slf4j.api" version="1.7.2.v20121108-1250"/>
@@ -23,6 +23,7 @@
       <unit id="org.eclipse.sdk.ide" version="0.0.0"/>
       <unit id="org.eclipse.equinox.launcher" version="0.0.0"/>
       <unit id="org.eclipse.xtext.sdk.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.xsd" version="0.0.0"/>
       <repository location="http://download.eclipse.org/releases/neon/"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">

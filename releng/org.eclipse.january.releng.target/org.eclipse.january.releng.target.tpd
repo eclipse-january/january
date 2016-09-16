@@ -40,6 +40,7 @@ location "http://download.eclipse.org/releases/neon/" {
 	org.eclipse.sdk.ide lazy
 	org.eclipse.equinox.launcher lazy
 	org.eclipse.xtext.sdk.feature.group lazy
+	org.eclipse.xsd lazy
 }
 
 // XXX: Circular dependency as EAVP depends on January
