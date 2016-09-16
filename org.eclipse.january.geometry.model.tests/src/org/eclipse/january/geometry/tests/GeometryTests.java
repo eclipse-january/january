@@ -14,20 +14,19 @@ package org.eclipse.january.geometry.tests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import junit.textui.TestRunner;
 
 /**
- * <!-- begin-user-doc -->
- * A test suite for the '<em><b>geometry</b></em>' package.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A test suite for the '<em><b>geometry</b></em>'
+ * package. <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class GeometryTests extends TestSuite {
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public static void main(String[] args) {
@@ -35,8 +34,8 @@ public class GeometryTests extends TestSuite {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public static Test suite() {
@@ -54,16 +53,22 @@ public class GeometryTests extends TestSuite {
 		suite.addTestSuite(IntersectionTest.class);
 		suite.addTestSuite(ComplementTest.class);
 		suite.addTestSuite(STLGeometryImporterTest.class);
+		suite.addTestSuite(PipeTest.class);
+		suite.addTestSuite(BoundingBoxTest.class);
+		suite.addTestSuite(JunctionTest.class);
+		suite.addTestSuite(HeatExchangerTest.class);
+		suite.addTestSuite(ReactorTest.class);
+		suite.addTestSuite(PolyShapeTest.class);
 		return suite;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public GeometryTests(String name) {
 		super(name);
 	}
 
-} //GeometryTests
+} // GeometryTests

@@ -1,0 +1,50 @@
+grammar org.eclipse.january.geometry.xtext.MTL with org.eclipse.xtext.common.Terminals hidden(SL_COMMENT, WS)
+
+generate mTL "http://www.eclipse.org/january/gometry/xtext/MTL"
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+
+MaterialSource:
+	(materials += Material)*
+;
+
+Material:
+	(PhongMaterial | TexturedMaterial)
+;
+
+PhongMaterial:
+	'newmtl' name = EString
+	('Ka' ambient = Color) & ('Kd' diffuse = Color) & ('Ks' specular = Color ('Ns' specularExponent = EDouble)?) &
+	('d' opaque = EDouble | 'Tr' transparent = EDouble)? & ('illum' illumination = EInt)?
+;
+
+TexturedMaterial:
+	'newmtl' name = EString
+	('Ka' ambient = Color) & ('Kd' diffuse = Color) & ('Ks' specular = Color ('Ns' specularExponent = EDouble)?) &
+	('d' opaque = EDouble | 'Tr' transparent = EDouble)? & ('illum' illumination = EInt)? &
+	('map_Ka' ambientMap = EString) & ('map_Kd' diffuseMap = EString) & ('map_Ks' specularMap = EString) &
+	('map_Ns' specularHighlightMap = EString) & ('map_d' alphaMap = EString)? & ('map_bump' bumpMap = EString)?
+;
+
+Color:
+	red = EDouble green = EDouble blue = EDouble
+;
+
+EInt returns ecore::EInt:
+	'-'? INT
+;
+	
+EString returns ecore::EString:
+	(STRING | ID | INT | '.' | '/' | '\\' | ':' | '_' | '-' )+
+;
+	
+EDouble returns ecore::EDouble:
+	DOUBLE |  EInt
+;
+
+	
+terminal SL_COMMENT: '#' !('\n'|'\r')* ('\r'? '\n')?;
+
+terminal DOUBLE returns ecore::EDouble: ('-'|'+')? INT? '.' INT (('E'|'e') ('-'|'+')? INT)?;
+
+terminal WS: (' '|'\t'|'\r'|'\n')+;

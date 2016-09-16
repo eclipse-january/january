@@ -25,28 +25,24 @@ import junit.textui.TestRunner;
  * <p>
  * The following operations are tested:
  * <ul>
- * <li>{@link org.eclipse.january.geometry.Triangle#equals(java.lang.Object)
- * <em>Equals</em>}</li>
- * <li>{@link org.eclipse.january.geometry.Triangle#hashCode()
- * <em>Hash Code</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.Triangle#equals(java.lang.Object) <em>Equals</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.Triangle#hashCode() <em>Hash Code</em>}</li>
  * </ul>
  * </p>
- * 
  * @generated
  */
 public class TriangleTest extends TestCase {
 
 	/**
-	 * The fixture for this Triangle test case. <!-- begin-user-doc --> <!--
+	 * The fixture for this Triangle test case.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected Triangle fixture = null;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public static void main(String[] args) {
@@ -64,9 +60,9 @@ public class TriangleTest extends TestCase {
 	}
 
 	/**
-	 * Sets the fixture for this Triangle test case. <!-- begin-user-doc -->
+	 * Sets the fixture for this Triangle test case.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected void setFixture(Triangle fixture) {
@@ -74,9 +70,9 @@ public class TriangleTest extends TestCase {
 	}
 
 	/**
-	 * Returns the fixture for this Triangle test case. <!-- begin-user-doc -->
+	 * Returns the fixture for this Triangle test case.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected Triangle getFixture() {
@@ -85,7 +81,6 @@ public class TriangleTest extends TestCase {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @see junit.framework.TestCase#setUp()
 	 * @generated
 	 */
@@ -96,7 +91,6 @@ public class TriangleTest extends TestCase {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @see junit.framework.TestCase#tearDown()
 	 * @generated
 	 */
@@ -156,10 +150,10 @@ public class TriangleTest extends TestCase {
 
 		// Create a triangle with the same values as the fixture
 		Triangle equalTri = GeometryFactory.eINSTANCE.createTriangle();
-		equalTri.setNormal(equalNormal);
-		equalTri.getVertices().add(equalV1);
-		equalTri.getVertices().add(equalV2);
-		equalTri.getVertices().add(equalV3);
+		equalTri.setNormal((Vertex) equalNormal.clone());
+		equalTri.getVertices().add((Vertex) equalV1.clone());
+		equalTri.getVertices().add((Vertex) equalV2.clone());
+		equalTri.getVertices().add((Vertex) equalV3.clone());
 
 		// Two equivalent triangles should be equal
 		assertTrue(fixture.equals(equalTri));
@@ -171,10 +165,10 @@ public class TriangleTest extends TestCase {
 		// Create a triangle with the same values as the fixture, but with the
 		// vertices specified in a different order
 		Triangle rotatedTri = GeometryFactory.eINSTANCE.createTriangle();
-		rotatedTri.setNormal(equalNormal);
-		rotatedTri.getVertices().add(equalV2);
-		rotatedTri.getVertices().add(equalV3);
-		rotatedTri.getVertices().add(equalV1);
+		rotatedTri.setNormal((Vertex) equalNormal.clone());
+		rotatedTri.getVertices().add((Vertex) equalV2.clone());
+		rotatedTri.getVertices().add((Vertex) equalV3.clone());
+		rotatedTri.getVertices().add((Vertex) equalV1.clone());
 
 		// The triangles should be equal despite their vertices being in a
 		// different order
@@ -189,10 +183,10 @@ public class TriangleTest extends TestCase {
 
 		// Create a triangle with different values from the fixture
 		Triangle unequalTri = GeometryFactory.eINSTANCE.createTriangle();
-		unequalTri.setNormal(equalNormal);
-		unequalTri.getVertices().add(equalV1);
-		unequalTri.getVertices().add(equalV2);
-		unequalTri.getVertices().add(unequalV);
+		unequalTri.setNormal((Vertex) equalNormal.clone());
+		unequalTri.getVertices().add((Vertex) equalV1.clone());
+		unequalTri.getVertices().add((Vertex) equalV2.clone());
+		unequalTri.getVertices().add((Vertex) unequalV.clone());
 
 		// Triangels with different vertices should not be equal
 		assertFalse(fixture.equals(unequalTri));

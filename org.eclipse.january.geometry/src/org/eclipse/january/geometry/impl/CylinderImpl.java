@@ -1,13 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2016 UT-Battelle, LLC. and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     UT-Battelle, LLC. - initial API and implementation
- *******************************************************************************/
 /**
  */
 package org.eclipse.january.geometry.impl;
@@ -15,10 +5,10 @@ package org.eclipse.january.geometry.impl;
 import java.util.ArrayList;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.BasicInternalEList;
 import org.eclipse.january.geometry.Cylinder;
 import org.eclipse.january.geometry.GeometryFactory;
 import org.eclipse.january.geometry.GeometryPackage;
@@ -31,13 +21,13 @@ import org.eclipse.january.geometry.util.MeshUtils;
  * <em><b>Cylinder</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * </p>
  * <ul>
  * <li>{@link org.eclipse.january.geometry.impl.CylinderImpl#getRadius
  * <em>Radius</em>}</li>
  * <li>{@link org.eclipse.january.geometry.impl.CylinderImpl#getHeight
  * <em>Height</em>}</li>
  * </ul>
+ * </p>
  *
  * @generated
  */
@@ -147,17 +137,23 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 	 */
 	@Override
 	public void setRadius(double newRadius) {
-		double oldRadius = radius;
-		radius = newRadius;
 
-		// Update the properties map as well
-		if (properties.get("radius") == null
-				|| properties.get("radius") != radius) {
-			properties.put("radius", radius);
+		// Fail silently if the new value is already set
+		if (newRadius != radius) {
+
+			double oldRadius = radius;
+			radius = newRadius;
+
+			// Update the properties map as well
+			if (properties.get("radius") == null
+					|| properties.get("radius") != radius) {
+				properties.put("radius", radius);
+			}
+			if (eNotificationRequired())
+				eNotify(new ENotificationImpl(this, Notification.SET,
+						GeometryPackage.CYLINDER__RADIUS, oldRadius, radius));
+
 		}
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					GeometryPackage.CYLINDER__RADIUS, oldRadius, radius));
 	}
 
 	/**
@@ -177,17 +173,22 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 	 */
 	@Override
 	public void setHeight(double newHeight) {
-		double oldHeight = height;
-		height = newHeight;
 
-		// Update the properties map as well
-		if (properties.get("height") == null
-				|| properties.get("height") != height) {
-			properties.put("height", height);
+		// Fail silently if the new value is already set
+		if (newHeight != height) {
+
+			double oldHeight = height;
+			height = newHeight;
+
+			// Update the properties map as well
+			if (properties.get("height") == null
+					|| properties.get("height") != height) {
+				properties.put("height", height);
+			}
+			if (eNotificationRequired())
+				eNotify(new ENotificationImpl(this, Notification.SET,
+						GeometryPackage.CYLINDER__HEIGHT, oldHeight, height));
 		}
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					GeometryPackage.CYLINDER__HEIGHT, oldHeight, height));
 	}
 
 	/**
@@ -295,7 +296,7 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 			if (triangles != null) {
 				return triangles;
 			} else {
-				triangles = new BasicEList<Triangle>();
+				triangles = new BasicInternalEList<Triangle>(Triangle.class);
 				return triangles;
 			}
 		}
@@ -305,7 +306,7 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 		prevHeight = height;
 
 		// Clear the previous list
-		triangles = new BasicEList<Triangle>();
+		triangles = new BasicInternalEList<Triangle>(Triangle.class);
 
 		// Make an array of vertices to form the triangles
 		ArrayList<Vertex> vertices = new ArrayList<Vertex>();
@@ -321,7 +322,7 @@ public class CylinderImpl extends ShapeImpl implements Cylinder {
 		// RESOLUTION points per circle.
 		int blockSize = (SEGMENTS + 1) * RESOLUTION * 3;
 
-		// Iterate through the points, one circle along the clyinder at a time,
+		// Iterate through the points, one circle along the cylinder at a time,
 		// adding them to the vertex array
 		for (int i = 0; i <= SEGMENTS; i++) {
 			for (int j = 0; j < RESOLUTION; j++) {

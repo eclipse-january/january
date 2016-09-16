@@ -1,15 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2016 UT-Battelle, LLC. and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     UT-Battelle, LLC. - initial API and implementation
- *******************************************************************************/
-/**
- */
 package org.eclipse.january.geometry;
 
 
@@ -28,12 +16,12 @@ package org.eclipse.january.geometry;
  *
  * <p>
  * The following features are supported:
- * </p>
  * <ul>
  *   <li>{@link org.eclipse.january.geometry.Tube#getHeight <em>Height</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.Tube#getInnerRadius <em>Inner Radius</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.Tube#getRadius <em>Radius</em>}</li>
  * </ul>
+ * </p>
  *
  * @see org.eclipse.january.geometry.GeometryPackage#getTube()
  * @model

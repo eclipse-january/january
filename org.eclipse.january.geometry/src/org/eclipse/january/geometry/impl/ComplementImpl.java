@@ -8,8 +8,6 @@
  * Contributors:
  *     UT-Battelle, LLC. - initial API and implementation
  *******************************************************************************/
-/**
- */
 package org.eclipse.january.geometry.impl;
 
 import org.eclipse.emf.ecore.EClass;
@@ -20,6 +18,8 @@ import org.eclipse.january.geometry.GeometryPackage;
 /**
  * <!-- begin-user-doc --> An implementation of the model object '
  * <em><b>Complement</b></em>'. <!-- end-user-doc -->
+ * <p>
+ * </p>
  *
  * @generated
  */

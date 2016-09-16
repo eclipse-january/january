@@ -35,6 +35,7 @@ Package geometry <http://www.eclipse.org/january/geometry>
     Attribute height : EDouble
 
   Class Geometry -> INode
+    Reference vertexSources : VertexSource<<0..*>>
 
   Class Tube -> Shape
     Attribute height : EDouble
@@ -67,6 +68,9 @@ Package geometry <http://www.eclipse.org/january/geometry>
   Class Complement -> Operator
 
   Class Material
+    Attribute phongMatName : EString
+    Attribute texture : EString
+    Attribute materialFiles : EString<<0..*>>
 
   Class IGeometryImporter
     Attribute fileTypes : EString<<1..*>>
@@ -108,6 +112,20 @@ Package geometry <http://www.eclipse.org/january/geometry>
 
   Class Reactor -> Shape
     Reference pipes : Pipe<<0..*>>
+
+  Class PolyShape -> Shape
+    Reference faces : Face<<0..*>>
+    Reference vertexSource : VertexSource
+    Attribute materialFiles : EString<<0..*>>
+
+  Class Face
+    Attribute vertexIndices : EInt<<0..*>>
+    Attribute textureIndices : EInt<<0..*>>
+
+  Class VertexSource
+    Reference vertices : Vertex<<0..*>>
+    Reference textureCoordinates : Vertex<<0..*>>
+    Attribute materialFiles : EString<<0..*>>
 
   DataType Path <java.nio.file.Path>
 

@@ -8,8 +8,6 @@
  * Contributors:
  *     UT-Battelle, LLC. - initial API and implementation
  *******************************************************************************/
-/**
- */
 package org.eclipse.january.geometry;
 
 import org.eclipse.emf.common.util.EList;
@@ -27,7 +25,6 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
- * </p>
  * <ul>
  *   <li>{@link org.eclipse.january.geometry.INode#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.INode#getId <em>Id</em>}</li>
@@ -37,6 +34,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.january.geometry.INode#getCenter <em>Center</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.INode#getParent <em>Parent</em>}</li>
  * </ul>
+ * </p>
  *
  * @see org.eclipse.january.geometry.GeometryPackage#getINode()
  * @model interface="true" abstract="true"
@@ -263,6 +261,13 @@ public interface INode extends EObject {
 	 * @generated
 	 */
 	void addNode(INode child);
+	
+	/**
+	 * Allows for multiple nodes to be added simultaneously, maintaining the parent reference for each new node.
+	 * @param children List of nodes to add as children under this node
+	 * @generated NOT
+	 */
+	void addNodes(EList<INode> children);
 
 	/**
 	 * <!-- begin-user-doc -->

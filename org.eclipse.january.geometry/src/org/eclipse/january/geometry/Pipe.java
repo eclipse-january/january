@@ -8,8 +8,6 @@
  * Contributors:
  *     UT-Battelle, LLC. - initial API and implementation
  *******************************************************************************/
-/**
- */
 package org.eclipse.january.geometry;
 
 
@@ -26,7 +24,6 @@ package org.eclipse.january.geometry;
  *
  * <p>
  * The following features are supported:
- * </p>
  * <ul>
  *   <li>{@link org.eclipse.january.geometry.Pipe#getNumRods <em>Num Rods</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.Pipe#getPitch <em>Pitch</em>}</li>
@@ -35,6 +32,7 @@ package org.eclipse.january.geometry;
  *   <li>{@link org.eclipse.january.geometry.Pipe#getRotationY <em>Rotation Y</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.Pipe#getRotationZ <em>Rotation Z</em>}</li>
  * </ul>
+ * </p>
  *
  * @see org.eclipse.january.geometry.GeometryPackage#getPipe()
  * @model

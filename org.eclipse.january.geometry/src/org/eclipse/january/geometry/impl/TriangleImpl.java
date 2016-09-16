@@ -1,13 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2016 UT-Battelle, LLC. and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     UT-Battelle, LLC. - initial API and implementation
- *******************************************************************************/
 /**
  */
 package org.eclipse.january.geometry.impl;
@@ -17,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -30,19 +21,20 @@ import org.eclipse.january.geometry.GeometryFactory;
 import org.eclipse.january.geometry.GeometryPackage;
 import org.eclipse.january.geometry.Triangle;
 import org.eclipse.january.geometry.Vertex;
+import org.eclipse.swt.widgets.Display;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '
  * <em><b>Triangle</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * </p>
  * <ul>
  * <li>{@link org.eclipse.january.geometry.impl.TriangleImpl#getNormal
  * <em>Normal</em>}</li>
  * <li>{@link org.eclipse.january.geometry.impl.TriangleImpl#getVertices
  * <em>Vertices</em>}</li>
  * </ul>
+ * </p>
  *
  * @generated
  */
@@ -75,6 +67,7 @@ public class TriangleImpl extends MinimalEObjectImpl.Container
 	 */
 	protected TriangleImpl() {
 		super();
+		normal = GeometryFactory.eINSTANCE.createVertex();
 	}
 
 	/**
@@ -94,12 +87,7 @@ public class TriangleImpl extends MinimalEObjectImpl.Container
 	 */
 	@Override
 	public Vertex getNormal() {
-		if (normal != null) {
-			return normal;
-		} else {
-			normal = GeometryFactory.eINSTANCE.createVertex();
-			return normal;
-		}
+		return normal;
 	}
 
 	/**
@@ -192,7 +180,21 @@ public class TriangleImpl extends MinimalEObjectImpl.Container
 						// If any vertex is in one list but not the other, the
 						// triangles are not equal
 						for (Vertex vertex : vertices) {
-							if (!otherVertices.contains(vertex)) {
+
+							// If a match was found
+							boolean match = false;
+
+							// Search for a matching vertex
+							for (Vertex otherVertex : otherVertices) {
+								if (vertex.equals(otherVertex)) {
+									match = true;
+									break;
+								}
+							}
+
+							// If one vertex was not in the other triangle, then
+							// they are not equal
+							if (!match) {
 								return false;
 							}
 						}
@@ -232,11 +234,6 @@ public class TriangleImpl extends MinimalEObjectImpl.Container
 
 		// The list of hash codes from the vertices
 		ArrayList<Integer> vertexHashes = new ArrayList<Integer>();
-
-		// Get each vertex's hash code
-		for (Vertex vertex : getVertices()) {
-			vertexHashes.add(vertex.hashCode());
-		}
 
 		// We must reorder the hashes so that two triangles will have the same
 		// hash code if they have the same vertices, regardless of order in the
@@ -354,6 +351,50 @@ public class TriangleImpl extends MinimalEObjectImpl.Container
 			return hashCode();
 		}
 		return super.eInvoke(operationID, arguments);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.emf.common.notify.impl.BasicNotifierImpl#eNotify(org.eclipse.
+	 * emf.common.notify.Notification)
+	 */
+	@Override
+	public void eNotify(Notification notification) {
+		// Check if a notification is required
+		Adapter[] eAdapters = eBasicAdapterArray();
+		if (eAdapters != null && eDeliver()) {
+
+			// If this notification is on the UI thread, launch a new thread to
+			// handle it
+			Display currDisplay = Display.getCurrent();
+			if (currDisplay != null
+					&& Thread.currentThread() == currDisplay.getThread()) {
+
+				Thread updateThread = new Thread() {
+
+					@Override
+					public void run() {
+						for (int i = 0, size = eAdapters.length; i < size; ++i) {
+							eAdapters[i].notifyChanged(notification);
+						}
+					}
+				};
+
+				updateThread.run();
+
+			}
+
+			// If we are already off the UI thread, such as being called by a
+			// thread created by some other object's eNotify(), then just notify
+			// the adapters.
+			else {
+				for (int i = 0, size = eAdapters.length; i < size; ++i) {
+					eAdapters[i].notifyChanged(notification);
+				}
+			}
+		}
 	}
 
 } // TriangleImpl

@@ -11,10 +11,26 @@
  *******************************************************************************/
 package xtext
 
+import org.eclipse.emf.ecore.EValidator
+import org.eclipse.emf.ecore.EPackage
+
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
 class STLRuntimeModule extends xtext.AbstractSTLRuntimeModule {
 	
-
+	override public EValidator.Registry bindEValidatorRegistry() {
+		return new org.eclipse.emf.ecore.impl.EValidatorRegistryImpl() {
+			
+			override Object get(Object key) {
+				return null;
+			}
+			
+			override public EValidator getEValidator(EPackage ePackage) {
+			  	return null;
+			}
+				
+		}
+	}
+	
 }

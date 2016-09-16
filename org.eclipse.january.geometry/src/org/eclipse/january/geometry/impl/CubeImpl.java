@@ -1,13 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2016 UT-Battelle, LLC. and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     UT-Battelle, LLC. - initial API and implementation
- *******************************************************************************/
 /**
  */
 package org.eclipse.january.geometry.impl;
@@ -17,6 +7,7 @@ import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.BasicInternalEList;
 import org.eclipse.january.geometry.Cube;
 import org.eclipse.january.geometry.GeometryFactory;
 import org.eclipse.january.geometry.GeometryPackage;
@@ -28,11 +19,11 @@ import org.eclipse.january.geometry.util.MeshUtils;
  * <em><b>Cube</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * </p>
  * <ul>
  * <li>{@link org.eclipse.january.geometry.impl.CubeImpl#getSideLength <em>Side
  * Length</em>}</li>
  * </ul>
+ * </p>
  *
  * @generated
  */
@@ -103,18 +94,24 @@ public class CubeImpl extends ShapeImpl implements Cube {
 	 */
 	@Override
 	public void setSideLength(double newSideLength) {
-		double oldSideLength = sideLength;
-		sideLength = newSideLength;
 
-		// Update the properties map as well
-		if (properties.get("sideLength") == null
-				|| properties.get("sideLength") != sideLength) {
-			properties.put("sideLength", sideLength);
+		// Fail silently if the new value is already set
+		if (newSideLength != sideLength) {
+
+			double oldSideLength = sideLength;
+			sideLength = newSideLength;
+
+			// Update the properties map as well
+			if (properties.get("sideLength") == null
+					|| properties.get("sideLength") != sideLength) {
+				properties.put("sideLength", sideLength);
+			}
+			if (eNotificationRequired())
+				eNotify(new ENotificationImpl(this, Notification.SET,
+						GeometryPackage.CUBE__SIDE_LENGTH, oldSideLength,
+						sideLength));
+
 		}
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					GeometryPackage.CUBE__SIDE_LENGTH, oldSideLength,
-					sideLength));
 	}
 
 	/**
@@ -219,18 +216,21 @@ public class CubeImpl extends ShapeImpl implements Cube {
 		prevSideLength = sideLength;
 
 		// Get the coordinates for the vertices
+
 		double[] points = MeshUtils.createRectangularPrism(sideLength,
 				sideLength, sideLength);
 
 		// Initialize the list if it does not exist
 		if (triangles == null) {
-			triangles = new BasicEList<Triangle>();
+			triangles = new BasicInternalEList<Triangle>(Triangle.class);
 		} else {
 			triangles.clear();
 		}
 
 		// Replace the previous list
-		triangles = MeshUtils.createRectangularPrismMesh(points);
+
+		triangles.addAll(MeshUtils.createRectangularPrismMesh(points));
+
 		return triangles;
 	}
 

@@ -8,8 +8,6 @@
  * Contributors:
  *     UT-Battelle, LLC. - initial API and implementation
  *******************************************************************************/
-/**
- */
 package org.eclipse.january.geometry;
 
 import org.eclipse.emf.ecore.EFactory;
@@ -201,6 +199,33 @@ public interface GeometryFactory extends EFactory {
 	 * @generated
 	 */
 	Reactor createReactor();
+
+	/**
+	 * Returns a new object of class '<em>Poly Shape</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Poly Shape</em>'.
+	 * @generated
+	 */
+	PolyShape createPolyShape();
+
+	/**
+	 * Returns a new object of class '<em>Face</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Face</em>'.
+	 * @generated
+	 */
+	Face createFace();
+
+	/**
+	 * Returns a new object of class '<em>Vertex Source</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Vertex Source</em>'.
+	 * @generated
+	 */
+	VertexSource createVertexSource();
 
 	/**
 	 * Returns the package supported by this factory.
