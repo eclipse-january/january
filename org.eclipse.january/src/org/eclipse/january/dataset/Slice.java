@@ -335,6 +335,27 @@ public class Slice implements Cloneable, Serializable {
 	}
 
 	/**
+	 * Flip slice direction so slice begins at previous end point, steps
+	 * in the opposite direction, and finishes at the previous start point  .
+	 * <p>
+	 * Note the stop value may not be preserved across two flips
+	 */
+	public Slice flip() {
+		if (length < 0) {
+			Integer tmp = start == null ? null : start - step;
+			start = stop == null ? null : getEnd();
+			stop = tmp;
+		} else {
+			Integer tstart = start;
+			start = stop == null ? null : getEnd();
+			stop = tstart == null ? null : tstart - step;
+		}
+		step = -step;
+
+		return this;
+	}
+
+	/**
 	 * Populate given start, stop, step arrays from given slice array 
 	 * @param shape
 	 * @param start

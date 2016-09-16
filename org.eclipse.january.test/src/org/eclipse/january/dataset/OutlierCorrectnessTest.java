@@ -76,8 +76,8 @@ public class OutlierCorrectnessTest {
 		fastArrayMedian(int12);
 		fastArrayMedian(int12Mix);
 
-		java.util.Random rando = new java.util.Random(56478329);
-		double[] circleOData = rando.doubles(360).toArray();
+		DoubleDataset random = Random.rand(360);
+		double[] circleOData = random.getData();
 		
 		fastArrayMedian(circleOData);
 		

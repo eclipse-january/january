@@ -856,6 +856,85 @@ public class SliceNDTest {
 		Assert.assertFalse(slice.isAll());
 	}
 
+	@Test
+	public void testFlip() {
+		int[] step;
+		int[] lstart;
+		SliceND slice;
+
+		step = new int[] {};
+		lstart = new int[] {};
+		slice = new SliceND(new int[] {}, null, null, step);
+		try {
+			slice.flip(0);
+			fail();
+		} catch (IllegalArgumentException e) {
+			System.out.println("As expected: " + e);
+		}
+
+		step = new int[] {2};
+
+		lstart = new int[1];
+		slice = new SliceND(new int[] {7}, null, null, step).flip();
+		Assert.assertArrayEquals(new int[] {4}, slice.getShape());
+		Assert.assertArrayEquals(new int[] {6}, slice.getStart());
+		Assert.assertArrayEquals(new int[] {-1}, slice.getStop());
+		Assert.assertArrayEquals(new int[] {-2}, slice.getStep());
+		slice.flip();
+		Assert.assertArrayEquals(new int[] {4}, slice.getShape());
+		Assert.assertArrayEquals(new int[] {0}, slice.getStart());
+		Assert.assertArrayEquals(new int[] {8}, slice.getStop());
+		Assert.assertArrayEquals(new int[] {2}, slice.getStep());
+
+		lstart = new int[] {1};
+		slice = new SliceND(new int[] {7}, lstart, null, step).flip();
+		Assert.assertArrayEquals(new int[] {3}, slice.getShape());
+		Assert.assertArrayEquals(new int[] {5}, slice.getStart());
+		Assert.assertArrayEquals(new int[] {-1}, slice.getStop());
+		Assert.assertArrayEquals(new int[] {-2}, slice.getStep());
+		slice.flip();
+		Assert.assertArrayEquals(new int[] {3}, slice.getShape());
+		Assert.assertArrayEquals(new int[] {1}, slice.getStart());
+		Assert.assertArrayEquals(new int[] {7}, slice.getStop());
+		Assert.assertArrayEquals(new int[] {2}, slice.getStep());
+
+		lstart = new int[] {6};
+		slice = new SliceND(new int[] {7}, lstart, null, step).flip();
+		Assert.assertArrayEquals(new int[] {1}, slice.getShape());
+		Assert.assertArrayEquals(new int[] {6}, slice.getStart());
+		Assert.assertArrayEquals(new int[] {4}, slice.getStop());
+		Assert.assertArrayEquals(new int[] {-2}, slice.getStep());
+		slice.flip();
+		Assert.assertArrayEquals(new int[] {1}, slice.getShape());
+		Assert.assertArrayEquals(new int[] {6}, slice.getStart());
+		Assert.assertArrayEquals(new int[] {8}, slice.getStop());
+		Assert.assertArrayEquals(new int[] {2}, slice.getStep());
+
+		step = new int[] {2, -3};
+		lstart = new int[] {3, 4};
+		slice = new SliceND(new int[] {7, 9}, lstart, null, step).flip(0);
+		Assert.assertArrayEquals(new int[] {2, 2}, slice.getShape());
+		Assert.assertArrayEquals(new int[] {5, 4}, slice.getStart());
+		Assert.assertArrayEquals(new int[] {1, -1}, slice.getStop());
+		Assert.assertArrayEquals(new int[] {-2, -3}, slice.getStep());
+		slice.flip(0);
+		Assert.assertArrayEquals(new int[] {2, 2}, slice.getShape());
+		Assert.assertArrayEquals(new int[] {3, 4}, slice.getStart());
+		Assert.assertArrayEquals(new int[] {7, -1}, slice.getStop());
+		Assert.assertArrayEquals(new int[] {2, -3}, slice.getStep());
+
+		slice.flip();
+		Assert.assertArrayEquals(new int[] {2, 2}, slice.getShape());
+		Assert.assertArrayEquals(new int[] {5, 1}, slice.getStart());
+		Assert.assertArrayEquals(new int[] {1, 7}, slice.getStop());
+		Assert.assertArrayEquals(new int[] {-2, 3}, slice.getStep());
+		slice.flip();
+		Assert.assertArrayEquals(new int[] {2, 2}, slice.getShape());
+		Assert.assertArrayEquals(new int[] {3, 4}, slice.getStart());
+		Assert.assertArrayEquals(new int[] {7, -1}, slice.getStop());
+		Assert.assertArrayEquals(new int[] {2, -3}, slice.getStep());
+	}
+
 	/**
 	 * Test that demonstrates Python slicing behaviour.
 	 * <p>

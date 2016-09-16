@@ -22,6 +22,7 @@ public class StrideIterator extends SliceIterator {
 	private int[] stride;
 	private int[] delta;  // reset values
 	private int nstart;
+	private int element;
 
 	public StrideIterator(final int[] shape) {
 		this(shape, null, 0);
@@ -40,7 +41,11 @@ public class StrideIterator extends SliceIterator {
 	}
 
 	public StrideIterator(final int isize, final int[] shape, final int[] strides, final int offset) {
-		init(isize, shape, strides, offset);
+		this(isize, shape, strides, offset, 0);
+	}
+
+	public StrideIterator(final int isize, final int[] shape, final int[] strides, final int offset, final int element) {
+		init(isize, shape, strides, offset, element);
 		reset();
 	}
 
@@ -58,11 +63,11 @@ public class StrideIterator extends SliceIterator {
 		int[] offset = new int[1];
 		int[] newShape = AbstractDataset.createStrides(slice, isize, shape, oStrides, oOffset, strides, offset);
 
-		init(isize, newShape, strides, offset[0]);
+		init(isize, newShape, strides, offset[0], 0);
 		reset();
 	}
 
-	private void init(final int isize, final int[] shape, final int[] strides, final int offset) {
+	private void init(final int isize, final int[] shape, final int[] strides, final int offset, final int element) {
 		this.isize = isize;
 		istep = isize;
 		this.shape = shape;
@@ -70,20 +75,11 @@ public class StrideIterator extends SliceIterator {
 		endrank = rank - 1;
 		pos = new int[rank];
 		delta = new int[rank];
+		this.element = element;
 		if (strides != null) {
 			stride = strides;
 			for (int j = endrank; j >= 0; j--) {
 				delta[j] = stride[j] * shape[j];
-			}
-			if (endrank < 0) {
-				imax = istep;
-			} else {
-				imax = Integer.MIN_VALUE; // use max delta
-				for (int j = endrank; j >= 0; j--) {
-					if (delta[j] > imax) {
-						imax = delta[j];
-					}
-				}
 			}
 		} else {
 			stride = new int[rank];
@@ -96,7 +92,6 @@ public class StrideIterator extends SliceIterator {
 			imax = s;
 		}
 		nstart = offset;
-		imax += nstart;
 	}
 
 	@Override
@@ -113,6 +108,10 @@ public class StrideIterator extends SliceIterator {
 	public boolean hasNext() {
 		// now move on one position
 		int j = endrank;
+		if (j < 0) {
+			index += istep;
+			return index < istep;
+		}
 		for (; j >= 0; j--) {
 			index += stride[j];
 			final int p = pos[j] + 1;
@@ -123,15 +122,7 @@ public class StrideIterator extends SliceIterator {
 			pos[j] = 0;
 			index -= delta[j]; // reset this dimension
 		}
-		if (j == -1) {
-			if (endrank >= 0) {
-				index = imax;
-				return false;
-			}
-			index += istep;
-		}
-
-		return index != imax;
+		return j >= 0;
 	}
 
 	@Override
@@ -148,5 +139,6 @@ public class StrideIterator extends SliceIterator {
 		} else {
 			index = -istep;
 		}
+		index += element;
 	}
 }

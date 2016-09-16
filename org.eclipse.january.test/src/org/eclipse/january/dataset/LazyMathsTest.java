@@ -9,6 +9,7 @@
 
 package org.eclipse.january.dataset;
 
+import org.eclipse.january.asserts.TestUtils;
 import org.eclipse.january.dataset.Dataset;
 import org.eclipse.january.dataset.DatasetFactory;
 import org.eclipse.january.dataset.LazyMaths;
@@ -21,22 +22,22 @@ public class LazyMathsTest {
 	public void testSum() throws Exception {
 		Dataset a = DatasetFactory.createRange(100, Dataset.FLOAT64);
 
-		AbstractDatasetTest.checkDatasets(a.sum(0), LazyMaths.sum(a, 0), 1e-9, 1e-15);
+		TestUtils.assertDatasetEquals(a.sum(0), LazyMaths.sum(a, 0), 1e-9, 1e-15);
 
 		a.setShape(10, 10);
-		AbstractDatasetTest.checkDatasets(a.sum(0), LazyMaths.sum(a, 0), 1e-9, 1e-15);
-		AbstractDatasetTest.checkDatasets(a.sum(1), LazyMaths.sum(a, 1), 1e-9, 1e-15);
+		TestUtils.assertDatasetEquals(a.sum(0), LazyMaths.sum(a, 0), 1e-9, 1e-15);
+		TestUtils.assertDatasetEquals(a.sum(1), LazyMaths.sum(a, 1), 1e-9, 1e-15);
 
 		a.setShape(4, 5, 5);
-		AbstractDatasetTest.checkDatasets(a.sum(0), LazyMaths.sum(a, 0), 1e-9, 1e-15);
-		AbstractDatasetTest.checkDatasets(a.sum(1), LazyMaths.sum(a, 1), 1e-9, 1e-15);
-		AbstractDatasetTest.checkDatasets(a.sum(2), LazyMaths.sum(a, 2), 1e-9, 1e-15);
+		TestUtils.assertDatasetEquals(a.sum(0), LazyMaths.sum(a, 0), 1e-9, 1e-15);
+		TestUtils.assertDatasetEquals(a.sum(1), LazyMaths.sum(a, 1), 1e-9, 1e-15);
+		TestUtils.assertDatasetEquals(a.sum(2), LazyMaths.sum(a, 2), 1e-9, 1e-15);
 
 		a.setShape(4, 5, 1, 5);
-		AbstractDatasetTest.checkDatasets(a.sum(0), LazyMaths.sum(a, 0), 1e-9, 1e-15);
-		AbstractDatasetTest.checkDatasets(a.sum(1), LazyMaths.sum(a, 1), 1e-9, 1e-15);
-		AbstractDatasetTest.checkDatasets(a.sum(2), LazyMaths.sum(a, 2), 1e-9, 1e-15);
-		AbstractDatasetTest.checkDatasets(a.sum(3), LazyMaths.sum(a, 3), 1e-9, 1e-15);
+		TestUtils.assertDatasetEquals(a.sum(0), LazyMaths.sum(a, 0), 1e-9, 1e-15);
+		TestUtils.assertDatasetEquals(a.sum(1), LazyMaths.sum(a, 1), 1e-9, 1e-15);
+		TestUtils.assertDatasetEquals(a.sum(2), LazyMaths.sum(a, 2), 1e-9, 1e-15);
+		TestUtils.assertDatasetEquals(a.sum(3), LazyMaths.sum(a, 3), 1e-9, 1e-15);
 	}
 
 	@Test
@@ -45,22 +46,22 @@ public class LazyMathsTest {
 		a.iadd(1.);
 		a.idivide(100.);
 
-		AbstractDatasetTest.checkDatasets(a.product(0), LazyMaths.product(a, 0), 1e-9, 1e-15);
+		TestUtils.assertDatasetEquals(a.product(0), LazyMaths.product(a, 0), 1e-9, 1e-15);
 
 		a.setShape(10, 10);
-		AbstractDatasetTest.checkDatasets(a.product(0), LazyMaths.product(a, 0), 1e-9, 1e-15);
-		AbstractDatasetTest.checkDatasets(a.product(1), LazyMaths.product(a, 1), 1e-9, 1e-15);
+		TestUtils.assertDatasetEquals(a.product(0), LazyMaths.product(a, 0), 1e-9, 1e-15);
+		TestUtils.assertDatasetEquals(a.product(1), LazyMaths.product(a, 1), 1e-9, 1e-15);
 
 		a.setShape(4, 5, 5);
-		AbstractDatasetTest.checkDatasets(a.product(0), LazyMaths.product(a, 0), 1e-9, 1e-15);
-		AbstractDatasetTest.checkDatasets(a.product(1), LazyMaths.product(a, 1), 1e-9, 1e-15);
-		AbstractDatasetTest.checkDatasets(a.product(2), LazyMaths.product(a, 2), 1e-9, 1e-15);
+		TestUtils.assertDatasetEquals(a.product(0), LazyMaths.product(a, 0), 1e-9, 1e-15);
+		TestUtils.assertDatasetEquals(a.product(1), LazyMaths.product(a, 1), 1e-9, 1e-15);
+		TestUtils.assertDatasetEquals(a.product(2), LazyMaths.product(a, 2), 1e-9, 1e-15);
 
 		a.setShape(4, 5, 1, 5);
-		AbstractDatasetTest.checkDatasets(a.product(0), LazyMaths.product(a, 0), 1e-9, 1e-15);
-		AbstractDatasetTest.checkDatasets(a.product(1), LazyMaths.product(a, 1), 1e-9, 1e-15);
-		AbstractDatasetTest.checkDatasets(a.product(2), LazyMaths.product(a, 2), 1e-9, 1e-15);
-		AbstractDatasetTest.checkDatasets(a.product(3), LazyMaths.product(a, 3), 1e-9, 1e-15);
+		TestUtils.assertDatasetEquals(a.product(0), LazyMaths.product(a, 0), 1e-9, 1e-15);
+		TestUtils.assertDatasetEquals(a.product(1), LazyMaths.product(a, 1), 1e-9, 1e-15);
+		TestUtils.assertDatasetEquals(a.product(2), LazyMaths.product(a, 2), 1e-9, 1e-15);
+		TestUtils.assertDatasetEquals(a.product(3), LazyMaths.product(a, 3), 1e-9, 1e-15);
 	}
 	
 	@Test
@@ -68,19 +69,19 @@ public class LazyMathsTest {
 
 		Dataset a = DatasetFactory.createRange(100, Dataset.FLOAT64);
 		a.setShape(10, 10);
-		AbstractDatasetTest.checkDatasets(a.mean(1), LazyMaths.mean(a, 0), 1e-9, 1e-15);
-		AbstractDatasetTest.checkDatasets(a.mean(0), LazyMaths.mean(a, 1), 1e-9, 1e-15);
+		TestUtils.assertDatasetEquals(a.mean(1), LazyMaths.mean(a, 0), 1e-9, 1e-15);
+		TestUtils.assertDatasetEquals(a.mean(0), LazyMaths.mean(a, 1), 1e-9, 1e-15);
 
 		a.setShape(4, 5, 5);
-		AbstractDatasetTest.checkDatasets(a.mean(2).mean(1),LazyMaths.mean(a, 0), 1e-9, 1e-15);
-		AbstractDatasetTest.checkDatasets(a.mean(2),LazyMaths.mean(a, 0,1), 1e-9, 1e-15);
-		AbstractDatasetTest.checkDatasets(a.mean(0),LazyMaths.mean(a, 1,2), 1e-9, 1e-15);
+		TestUtils.assertDatasetEquals(a.mean(2).mean(1),LazyMaths.mean(a, 0), 1e-9, 1e-15);
+		TestUtils.assertDatasetEquals(a.mean(2),LazyMaths.mean(a, 0,1), 1e-9, 1e-15);
+		TestUtils.assertDatasetEquals(a.mean(0),LazyMaths.mean(a, 1,2), 1e-9, 1e-15);
 
 		a.setShape(4, 5, 1, 5);
-		AbstractDatasetTest.checkDatasets(a.mean(3).mean(2),LazyMaths.mean(a, 0,1), 1e-9, 1e-15);
-		AbstractDatasetTest.checkDatasets(a.mean(3).mean(2).mean(1),LazyMaths.mean(a, 0), 1e-9, 1e-15);
-		AbstractDatasetTest.checkDatasets(a.mean(3).squeeze(),LazyMaths.mean(a, 0,1,2), 1e-9, 1e-15);
-		AbstractDatasetTest.checkDatasets(a.mean(0).mean(0).squeeze(),LazyMaths.mean(a, 2,3), 1e-9, 1e-15);
+		TestUtils.assertDatasetEquals(a.mean(3).mean(2),LazyMaths.mean(a, 0,1), 1e-9, 1e-15);
+		TestUtils.assertDatasetEquals(a.mean(3).mean(2).mean(1),LazyMaths.mean(a, 0), 1e-9, 1e-15);
+		TestUtils.assertDatasetEquals(a.mean(3).squeeze(),LazyMaths.mean(a, 0,1,2), 1e-9, 1e-15);
+		TestUtils.assertDatasetEquals(a.mean(0).mean(0).squeeze(),LazyMaths.mean(a, 2,3), 1e-9, 1e-15);
 		
 		Dataset er = DatasetFactory.createRange(100, Dataset.FLOAT64);
 		a.setShape(10, 10);
@@ -89,7 +90,7 @@ public class LazyMathsTest {
 
 		Dataset e = Maths.sqrt(er.sum(1)).idivide(10);
 
-		AbstractDatasetTest.checkDatasets(e, LazyMaths.mean(a, 0).getError(), 1e-9, 1e-15);
+		TestUtils.assertDatasetEquals(e, LazyMaths.mean(a, 0).getError(), 1e-9, 1e-15);
 
 	}
 }

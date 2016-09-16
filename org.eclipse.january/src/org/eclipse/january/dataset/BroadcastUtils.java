@@ -148,7 +148,7 @@ public final class BroadcastUtils {
 			int m = maxShape[i];
 			for (int[] s : newShapes) {
 				int l = s[i];
-				if (l > m) {
+				if (l != 1 && l != m) {
 					throw new IllegalArgumentException("A shape's dimension was not one or equal to maximum");
 				}
 			}

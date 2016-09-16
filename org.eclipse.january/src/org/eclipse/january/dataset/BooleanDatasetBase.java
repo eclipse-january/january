@@ -21,6 +21,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 
+
 /**
  * Extend dataset for boolean values // PRIM_TYPE
  */
@@ -54,14 +55,14 @@ public class BooleanDatasetBase extends AbstractDataset {
 		return BOOL; // DATA_TYPE
 	}
 
-	public BooleanDatasetBase() {
+	BooleanDatasetBase() {
 	}
 
 	/**
 	 * Create a zero-filled dataset of given shape
 	 * @param shape
 	 */
-	public BooleanDatasetBase(final int... shape) {
+	BooleanDatasetBase(final int... shape) {
 		if (shape != null) {
 			if (shape.length == 1) {
 				size = shape[0];
@@ -88,7 +89,7 @@ public class BooleanDatasetBase extends AbstractDataset {
 	 * @param shape
 	 *            (can be null to create 1D dataset)
 	 */
-	public BooleanDatasetBase(final boolean[] data, int... shape) { // PRIM_TYPE
+	BooleanDatasetBase(final boolean[] data, int... shape) { // PRIM_TYPE
 		if (data == null) {
 			throw new IllegalArgumentException("Data must not be null");
 		}
@@ -100,7 +101,7 @@ public class BooleanDatasetBase extends AbstractDataset {
 			throw new IllegalArgumentException(String.format("Shape %s is not compatible with size of data array, %d",
 					Arrays.toString(shape), data.length));
 		}
-		this.shape = shape.clone();
+		this.shape = size == 0 ? null : shape.clone();
 
 		odata = this.data = data;
 	}
@@ -109,7 +110,7 @@ public class BooleanDatasetBase extends AbstractDataset {
 	 * Copy a dataset
 	 * @param dataset
 	 */
-	public BooleanDatasetBase(final BooleanDatasetBase dataset) {
+	BooleanDatasetBase(final BooleanDatasetBase dataset) {
 		copyToView(dataset, this, true, true);
 
 		try {
@@ -136,7 +137,7 @@ public class BooleanDatasetBase extends AbstractDataset {
 	 * Copy and cast a dataset to this class type
 	 * @param dataset
 	 */
-	public BooleanDatasetBase(final Dataset dataset) {
+	BooleanDatasetBase(final Dataset dataset) {
 		copyToView(dataset, this, true, false);
 		offset = 0;
 		stride = null;
@@ -192,7 +193,7 @@ public class BooleanDatasetBase extends AbstractDataset {
 	 * @param obj
 	 * @return dataset with contents given by input
 	 */
-	public static BooleanDatasetBase createFromObject(final Object obj) {
+	static BooleanDatasetBase createFromObject(final Object obj) {
 		BooleanDatasetBase result = new BooleanDatasetBase();
 
 		if (obj != null) {
@@ -217,7 +218,7 @@ public class BooleanDatasetBase extends AbstractDataset {
 	 * @param shape
 	 * @return a dataset filled with ones
 	 */
-	public static BooleanDatasetBase ones(final int... shape) {
+	static BooleanDatasetBase ones(final int... shape) {
 		return new BooleanDatasetBase(shape).fill(1);
 	}
 
@@ -249,9 +250,9 @@ public class BooleanDatasetBase extends AbstractDataset {
 	}
 
 	@Override
-	public BooleanDatasetBase getView() {
+	public BooleanDatasetBase getView(boolean deepCopyMetadata) {
 		BooleanDatasetBase view = new BooleanDatasetBase();
-		copyToView(this, view, true, true);
+		copyToView(this, view, true, deepCopyMetadata);
 		view.setData();
 		return view;
 	}

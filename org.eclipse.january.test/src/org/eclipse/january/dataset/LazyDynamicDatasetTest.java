@@ -46,7 +46,7 @@ public class LazyDynamicDatasetTest {
 
 		int period = 200;
 		int repeat = 5;
-		long total = (repeat + 1) * period; // include end period
+		long total = (long) ((repeat + 0.1) * period); // include partial end period
 		lazy.startUpdateChecker(period, null);
 		try {
 			Thread.sleep(total);

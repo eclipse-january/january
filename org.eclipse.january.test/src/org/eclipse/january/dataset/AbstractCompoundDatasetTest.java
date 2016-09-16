@@ -16,6 +16,7 @@ import static org.junit.Assert.fail;
 
 import java.util.Arrays;
 
+import org.eclipse.january.asserts.TestUtils;
 import org.eclipse.january.dataset.CompoundDataset;
 import org.eclipse.january.dataset.CompoundDoubleDataset;
 import org.eclipse.january.dataset.CompoundIntegerDataset;
@@ -341,6 +342,43 @@ public class AbstractCompoundDatasetTest {
 	}
 
 	@Test
+	public void testCompoundIntegerCreators() {
+		int iz = 3;
+		CompoundIntegerDataset z = CompoundIntegerDataset.createFromObject(iz);
+		assertEquals(0, z.getRank());
+		assertEquals(1, z.getSize());
+		assertEquals(1, z.getElementsPerItem());
+		assertEquals(iz, z.getElementLongAbs(0));
+
+		int[] ia = { 0, 1, 2, 3, 4, 5 };
+		CompoundIntegerDataset a = CompoundIntegerDataset.createFromObject(ia);
+
+		int is = a.getElementsPerItem();
+		assertEquals(6, is);
+		assertEquals(1, a.getRank());
+		assertEquals(1, a.getSize());
+		assertEquals(1, a.getShape()[0]);
+		IndexIterator it = a.getIterator();
+		for (int i = 0; it.hasNext();) {
+			for (int j = 0; j < is; j++, i++)
+				assertEquals(i, a.getElementLongAbs(it.index + j));
+		}
+
+		a = CompoundIntegerDataset.createFromObject(ia.length, ia);
+		is = a.getElementsPerItem();
+		assertEquals(6, is);
+		assertEquals(1, a.getRank());
+		assertEquals(1, a.getSize());
+		assertEquals(1, a.getShape()[0]);
+		it = a.getIterator();
+		for (int i = 0; it.hasNext();) {
+			for (int j = 0; j < is; j++, i++)
+				assertEquals(i, a.getElementLongAbs(it.index + j));
+		}
+
+	}
+
+	@Test
 	public void testCompoundCreators() {
 		double dz = 0.5;
 		CompoundDoubleDataset z = CompoundDoubleDataset.createFromObject(dz);
@@ -570,7 +608,7 @@ public class AbstractCompoundDatasetTest {
 		
 		// check compatibility
 		try {
-			ShapeUtils.checkCompatibility(a, error2);
+			ShapeUtils.checkCompatibility(a, error3);
 		} catch (Exception e) {
 			fail("Error shape is not the same as input datasets");
 		}
@@ -596,7 +634,7 @@ public class AbstractCompoundDatasetTest {
 		}
 		CompoundDataset a = new CompoundIntegerDataset(aa);
 		
-		a.setError(new Double[] { 1.0, 2.0, 3.0, 4.0, 5.0});
+		a.setError(new double[] { 1.0, 2.0, 3.0, 4.0, 5.0});
 		
 		// should be squared
 		CompoundDataset e = (CompoundDataset) a.getErrorBuffer();
@@ -637,5 +675,55 @@ public class AbstractCompoundDatasetTest {
 		assertArrayEquals(new int[] {0, 0, 0}, a.getIntArray(0, 0));
 		assertArrayEquals(new int[] {8, 0, 0}, a.getIntArray(2, 0));
 		assertArrayEquals(new int[] {-1, -2, -3}, a.getIntArray(2, 3));
+	}
+
+	@Test
+	public void testBroadcastElements() {
+		CompoundDataset a;
+		Dataset b;
+
+		a = DatasetFactory.createCompoundDataset((Object) 1, 2, 3).getBroadcastView(2);
+		b = a.getElements(0);
+		assertEquals(1, b.getInt(0));
+		assertEquals(1, b.getInt(1));
+		b = a.getElements(2);
+		assertEquals(3, b.getInt(0));
+		assertEquals(3, b.getInt(1));
+
+
+		a = DatasetFactory.createRange(3, 4, Dataset.INT32).getBroadcastView(5, 4);
+		b = a.getElements(0);
+		assertEquals(0, b.getInt(0, 0));
+		assertEquals(1, b.getInt(0, 1));
+		assertEquals(2, b.getInt(0, 2));
+		assertEquals(3, b.getInt(0, 3));
+		assertEquals(0, b.getInt(1, 0));
+		assertEquals(1, b.getInt(2, 1));
+		assertEquals(2, b.getInt(3, 2));
+		assertEquals(3, b.getInt(4, 3));
+
+		b = a.getElements(1);
+		assertEquals(0, b.getInt(0, 0));
+		assertEquals(0, b.getInt(0, 1));
+		assertEquals(0, b.getInt(0, 2));
+		assertEquals(0, b.getInt(0, 3));
+		assertEquals(0, b.getInt(1, 0));
+		assertEquals(0, b.getInt(2, 1));
+		assertEquals(0, b.getInt(3, 2));
+		assertEquals(0, b.getInt(4, 3));
+	}
+
+	@Test
+	public void testBroadcastSliceView() {
+		Dataset a = DatasetFactory.createRange(3, 12, Dataset.INT32);
+		Dataset b = a.getSliceView(new Slice(5, 8)).getBroadcastView(2, 3);
+
+		Dataset r = DatasetFactory.createRange(3, 5, 8, 1, Dataset.INT32).reshape(1, 3);
+		Dataset c = DatasetUtils.concatenate(new Dataset[] {r, r}, 0);
+		TestUtils.assertDatasetEquals(c, b);
+
+		b = a.getSliceView(new Slice(5, 6)).getBroadcastView(3, 3);
+		c = DatasetFactory.zeros(3, new int[] {3, 3}, Dataset.INT32).fill(new int[] {5, 0, 0});
+		TestUtils.assertDatasetEquals(c, b);
 	}
 }

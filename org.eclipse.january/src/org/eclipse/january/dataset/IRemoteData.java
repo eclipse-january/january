@@ -38,5 +38,5 @@ public interface IRemoteData extends IFileConnection {
 	 * @return IRemoteDataset
 	 * @throws Exception
 	 */
-	public IRemoteDataset createRemoteDataset(String datasetPath) throws Exception;
+	public IDatasetConnector createRemoteDataset(String datasetPath) throws Exception;
 }
