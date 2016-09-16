@@ -329,18 +329,31 @@ public class SliceND {
 		return lshape;
 	}
 
+	/**
+	 * @return start values
+	 */
 	public int[] getStart() {
 		return lstart;
 	}
 
+	/**
+	 * Note stop values are clamped to -1 for <b>negative</b> steps
+	 * @return stop values
+	 */
 	public int[] getStop() {
 		return lstop;
 	}
 
+	/**
+	 * @return step values
+	 */
 	public int[] getStep() {
 		return lstep;
 	}
 
+	/**
+	 * @return true if all of original shape is covered by this slice with positive steps
+	 */
 	public boolean isAll() {
 		if (expanded) {
 			return false;
@@ -356,6 +369,42 @@ public class SliceND {
 			}
 		}
 		return allData;
+	}
+
+	/**
+	 * Flip slice direction in given dimension so slice begins at previous end point,
+	 * steps in the opposite direction, and finishes at the previous start point  
+	 * @param i dimension to flip
+	 */
+	public SliceND flip(int i) {
+		if (i < 0 || i >= lshape.length) {
+			throw new IllegalArgumentException("Given dimension is less than zero or greater than last dimension");
+		}
+
+		int beg = lstart[i];
+		int end = lstop[i];
+		int step = lstep[i];
+		int del = lstep[i] > 0 ? 1 : -1;
+
+		int num = (end - beg - del) / step + 1; // number of steps
+		lstart[i] = beg + (num - 1) * step;
+		lstop[i] = Math.max(beg - step, -1);
+		lstep[i] = -step;
+
+		return this;
+	}
+
+	/**
+	 * Flip slice direction in all dimensions so slice begins at previous end point,
+	 * steps in the opposite direction, and finishes at the previous start point  
+	 */
+	public SliceND flip() {
+		int orank = lshape.length;
+		for (int i = 0; i < orank; i++) {
+			flip(i);
+		}
+
+		return this;
 	}
 
 	/**

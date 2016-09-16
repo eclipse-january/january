@@ -18,6 +18,7 @@ package org.eclipse.january.dataset;
 public class ContiguousIterator extends IndexIterator {
 	final private int imax; // maximum index in array
 	final private int istep; // step over items
+	final private int element;
 
 	/**
 	 * Constructor for an iterator over the items of a contiguous dataset that are
@@ -37,9 +38,22 @@ public class ContiguousIterator extends IndexIterator {
 	 * @param isize number of elements in an item
 	 */
 	public ContiguousIterator(final int length, final int isize) {
+		this(length, isize, 0);
+	}
+
+	/**
+	 * Constructor for an iterator over the items of a contiguous dataset that are
+	 * within the dimensions
+	 *
+	 * @param length of entire data array
+	 * @param isize number of elements in an item
+	 * @param element element to start with (for compound datasets)
+	 */
+	public ContiguousIterator(final int length, final int isize, final int element) {
 		istep = isize;
-		index = -istep;
+		index = -istep + element;
 		imax = length*isize;
+		this.element = element;
 	}
 
 	@Override
@@ -55,6 +69,6 @@ public class ContiguousIterator extends IndexIterator {
 
 	@Override
 	public void reset() {
-		index = -istep;
+		index = -istep + element;
 	}
 }

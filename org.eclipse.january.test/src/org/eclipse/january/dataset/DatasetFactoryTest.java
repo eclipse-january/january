@@ -29,7 +29,7 @@ public class DatasetFactoryTest {
 		act = DatasetFactory.zeros(DoubleDataset.class, null);
 		assertEquals(exp, act);
 
-		// zero-ranked
+		// zero-ranked (unit size)
 		exp = new DoubleDataset(new int[0]);
 		act = DatasetFactory.zeros(DoubleDataset.class);
 		assertEquals(exp, act);
@@ -59,7 +59,7 @@ public class DatasetFactoryTest {
 		act = DatasetFactory.zeros(1, DoubleDataset.class, null);
 		assertEquals(exp, act);
 
-		// zero-ranked
+		// zero-ranked (unit size)
 		exp = new DoubleDataset(new int[0]);
 		act = DatasetFactory.zeros(1, DoubleDataset.class);
 		assertEquals(exp, act);
@@ -88,7 +88,7 @@ public class DatasetFactoryTest {
 		act = DatasetFactory.zeros(2, CompoundDoubleDataset.class, null);
 		assertEquals(exp, act);
 
-		// zero-ranked
+		// zero-ranked (unit size)
 		exp = new CompoundDoubleDataset(2, new int[0]);
 		act = DatasetFactory.zeros(2, CompoundDoubleDataset.class);
 		assertEquals(exp, act);
@@ -113,7 +113,13 @@ public class DatasetFactoryTest {
 		act = DatasetFactory.createFromObject(DoubleDataset.class, null, null);
 		assertEquals(exp, act);
 
-		// zero-ranked
+		act = DatasetFactory.createFromObject(DoubleDataset.class, new double[0], null);
+		assertEquals(exp, act);
+
+		act = DatasetFactory.createFromObject(DoubleDataset.class, new double[0]);
+		assertEquals(exp, act);
+
+		// zero-ranked (unit size)
 		exp = new DoubleDataset(new double[] {3});
 		exp.setShape();
 		act = DatasetFactory.createFromObject(DoubleDataset.class, (Object) 3);
@@ -142,7 +148,10 @@ public class DatasetFactoryTest {
 		act = DatasetFactory.createFromObject(IntegerDataset.class, null, null);
 		assertEquals(exp, act);
 
-		// zero-ranked
+		act = DatasetFactory.createFromObject(IntegerDataset.class, new int[0], null);
+		assertEquals(exp, act);
+
+		// zero-ranked (unit size)
 		exp = new IntegerDataset(new int[] {3}, null);
 		exp.setShape();
 		act = DatasetFactory.createFromObject(IntegerDataset.class, (Object) 3);
@@ -171,7 +180,7 @@ public class DatasetFactoryTest {
 		act = DatasetFactory.createFromObject(1, DoubleDataset.class, null, null);
 		assertEquals(exp, act);
 
-		// zero-ranked
+		// zero-ranked (unit size)
 		exp = new DoubleDataset(new double[] {3});
 		exp.setShape();
 		act = DatasetFactory.createFromObject(1, DoubleDataset.class, (Object) 3);
@@ -201,7 +210,7 @@ public class DatasetFactoryTest {
 		act = DatasetFactory.createFromObject(2, CompoundDoubleDataset.class, null, null);
 		assertEquals(exp, act);
 
-		// zero-ranked
+		// zero-ranked (unit size)
 		exp = new CompoundDoubleDataset(2, new double[] {3, 4}, new int[0]);
 		act = DatasetFactory.createFromObject(2, CompoundDoubleDataset.class, new double[] {3, 4});
 		assertEquals(exp, act);
@@ -226,7 +235,7 @@ public class DatasetFactoryTest {
 		act = DatasetFactory.createFromObject(0, RGBDataset.class, null, null);
 		assertEquals(exp, act);
 
-		// zero-ranked
+		// zero-ranked (unit size)
 		exp = new RGBDataset(new short[] {3, 4, 5}, new int[0]);
 		act = DatasetFactory.createFromObject(2, RGBDataset.class, new short[] {3, 4, 5});
 		assertEquals(exp, act);

@@ -21,6 +21,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 
+
 /**
  * Extend dataset for String values // PRIM_TYPE
  */
@@ -54,14 +55,14 @@ public class StringDatasetBase extends AbstractDataset {
 		return STRING; // DATA_TYPE
 	}
 
-	public StringDatasetBase() {
+	StringDatasetBase() {
 	}
 
 	/**
 	 * Create a zero-filled dataset of given shape
 	 * @param shape
 	 */
-	public StringDatasetBase(final int... shape) {
+	StringDatasetBase(final int... shape) {
 		if (shape != null) {
 			if (shape.length == 1) {
 				size = shape[0];
@@ -88,7 +89,7 @@ public class StringDatasetBase extends AbstractDataset {
 	 * @param shape
 	 *            (can be null to create 1D dataset)
 	 */
-	public StringDatasetBase(final String[] data, int... shape) { // PRIM_TYPE
+	StringDatasetBase(final String[] data, int... shape) { // PRIM_TYPE
 		if (data == null) {
 			throw new IllegalArgumentException("Data must not be null");
 		}
@@ -100,7 +101,7 @@ public class StringDatasetBase extends AbstractDataset {
 			throw new IllegalArgumentException(String.format("Shape %s is not compatible with size of data array, %d",
 					Arrays.toString(shape), data.length));
 		}
-		this.shape = shape.clone();
+		this.shape = size == 0 ? null : shape.clone();
 
 		odata = this.data = data;
 	}
@@ -109,7 +110,7 @@ public class StringDatasetBase extends AbstractDataset {
 	 * Copy a dataset
 	 * @param dataset
 	 */
-	public StringDatasetBase(final StringDatasetBase dataset) {
+	StringDatasetBase(final StringDatasetBase dataset) {
 		copyToView(dataset, this, true, true);
 
 		try {
@@ -136,7 +137,7 @@ public class StringDatasetBase extends AbstractDataset {
 	 * Copy and cast a dataset to this class type
 	 * @param dataset
 	 */
-	public StringDatasetBase(final Dataset dataset) {
+	StringDatasetBase(final Dataset dataset) {
 		copyToView(dataset, this, true, false);
 		offset = 0;
 		stride = null;
@@ -192,7 +193,7 @@ public class StringDatasetBase extends AbstractDataset {
 	 * @param obj
 	 * @return dataset with contents given by input
 	 */
-	public static StringDatasetBase createFromObject(final Object obj) {
+	static StringDatasetBase createFromObject(final Object obj) {
 		StringDatasetBase result = new StringDatasetBase();
 
 		if (obj != null) {
@@ -217,7 +218,7 @@ public class StringDatasetBase extends AbstractDataset {
 	 * @param shape
 	 * @return a dataset filled with ones
 	 */
-	public static StringDatasetBase ones(final int... shape) {
+	static StringDatasetBase ones(final int... shape) {
 		return new StringDatasetBase(shape).fill(1);
 	}
 
@@ -249,9 +250,9 @@ public class StringDatasetBase extends AbstractDataset {
 	}
 
 	@Override
-	public StringDatasetBase getView() {
+	public StringDatasetBase getView(boolean deepCopyMetadata) {
 		StringDatasetBase view = new StringDatasetBase();
-		copyToView(this, view, true, true);
+		copyToView(this, view, true, deepCopyMetadata);
 		view.setData();
 		return view;
 	}
@@ -560,7 +561,12 @@ public class StringDatasetBase extends AbstractDataset {
 	@Override
 	public StringDatasetBase sort(Integer axis) {
 		if (axis == null) {
-			Arrays.sort(data);
+			if (stride == null) {
+				Arrays.sort(data);
+			} else {
+				StringDatasetBase ads = clone().sort(null);
+				setSlicedView(getView(false), ads);
+			}
 		} else {
 			axis = checkAxis(axis);
 			

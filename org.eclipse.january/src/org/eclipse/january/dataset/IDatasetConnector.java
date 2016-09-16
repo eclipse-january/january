@@ -14,25 +14,25 @@ import java.util.concurrent.TimeUnit;
 import org.eclipse.january.DatasetException;
 
 /**
- * A Remote dataset is a lazy dataset which exists in a remote
+ * A dataset connector contains a lazy dataset which exists in a remote
  * location. It uses a connection to the DataServer to provide the
  * implementation of the slicing required remotely.
  * 
  * You may also listen to data changing in the dataset
  */
-public interface IRemoteDataset extends IFileConnection, ILazyDataset, IDynamicDataset {
+public interface IDatasetConnector extends IFileConnection, IDynamicShape {
 
 	/**
-	 * The data set location/name in the file
-	 * @return Data set 
+	 * The dataset location/name in the file
+	 * @return Dataset name
 	 */
-	public String getDataset();
+	public String getDatasetName();
 
 	/**
-	 * The data set location/name in the file
-	 * @param dataset
+	 * The dataset location/name in the file
+	 * @param datasetName
 	 */
-	public void setDataset(String dataset);
+	public void setDatasetName(String datasetName);
 
 	/**
 	 * If set to true the DataServer will not cache the dataset. 
@@ -93,4 +93,14 @@ public interface IRemoteDataset extends IFileConnection, ILazyDataset, IDynamicD
 	 * A remote dataset may be connected and disconnected multiple times.
 	 */
 	public void disconnect() throws DatasetException;
+
+	/**
+	 * @return held dataset
+	 */
+	public IDynamicDataset getDataset();
+
+	/**
+	 * @return slice of dataset
+	 */
+	public IDataset getSlice();
 }

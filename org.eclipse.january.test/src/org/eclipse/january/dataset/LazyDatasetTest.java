@@ -89,28 +89,28 @@ public class LazyDatasetTest {
 
 		Dataset nd;
 		ld.setShape(1, 1, 1, 2, 3, 4);
-		nd = d.getView();
+		nd = d.getView(true);
 		nd.setShape(1, 1, 1, 2, 3, 4);
 		Assert.assertEquals("Full slice", nd, ld.getSlice());
 		slice = new Slice[]{null, null, null, new Slice(1), null, new Slice(1, 3)};
 		Assert.assertEquals("Part slice", nd.getSlice(slice), ld.getSlice(slice));
 
 		ld.setShape(2, 3, 4);
-		nd = d.getView();
+		nd = d.getView(true);
 		nd.setShape(2, 3, 4);
 		Assert.assertEquals("Full slice", nd, ld.getSlice());
 		slice = new Slice[]{new Slice(1), null, new Slice(1, 3)};
 		Assert.assertEquals("Part slice", nd.getSlice(slice), ld.getSlice(slice));
 
 		ld.setShape(2, 3, 4, 1, 1, 1);
-		nd = d.getView();
+		nd = d.getView(true);
 		nd.setShape(2, 3, 4, 1, 1, 1);
 		Assert.assertEquals("Full slice", nd, ld.getSlice());
 		slice = new Slice[]{new Slice(1), null, new Slice(1, 3), null, null, null};
 		Assert.assertEquals("Part slice", nd.getSlice(slice), ld.getSlice(slice));
 
 		ld.setShape(1, 2, 3, 4, 1, 1, 1);
-		nd = d.getView();
+		nd = d.getView(true);
 		nd.setShape(1, 2, 3, 4, 1, 1, 1);
 		Assert.assertEquals("Full slice", nd, ld.getSlice());
 		slice = new Slice[]{null, new Slice(1), null, new Slice(1, 3), null, null, null};

@@ -42,7 +42,7 @@ public class Stats {
 		final int is = a.getElementsPerItem();
 
 		if (is == 1) {
-			s = DatasetUtils.sort(a, null);
+			s = DatasetUtils.sort(a);
 		
 			a.setStoredValue(STORE_MEDIAN, Double.valueOf(pQuantile(s, 0.5)));
 			a.setStoredValue(STORE_QUARTILE1, Double.valueOf(pQuantile(s, 0.25)));

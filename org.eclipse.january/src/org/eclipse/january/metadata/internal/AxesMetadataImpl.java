@@ -139,10 +139,17 @@ public class AxesMetadataImpl implements AxesMetadata {
 				view.setShape(newShape);
 			}
 			return view;
-		} else if (allAxes.length == axisData.getRank()) return axisData;
-		
-		return null;
-		
+		} else if (allAxes.length == axisData.getRank()){
+			return axisData;
+		} else {
+			ILazyDataset view = axisData.getSliceView();
+			view.clearMetadata(AxesMetadata.class);
+			int[] newShape = new int[allAxes.length];
+			Arrays.fill(newShape, 1);
+			for (int i = 0 ; i < axisDim.length; i++) newShape[axisDim[i]] = axisData.getShape()[i];
+			view.setShape(newShape);
+			return view;
+		}
 	}
 
 	@Override

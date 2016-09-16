@@ -51,10 +51,10 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 		return Dataset.ARRAYFLOAT64; // DATA_TYPE
 	}
 
-	public CompoundDoubleDataset() {
+	CompoundDoubleDataset() {
 	}
 
-	public CompoundDoubleDataset(final int itemSize) {
+	CompoundDoubleDataset(final int itemSize) {
 		isize = itemSize;
 	}
 
@@ -63,7 +63,7 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 	 * @param itemSize
 	 * @param shape
 	 */
-	public CompoundDoubleDataset(final int itemSize, final int[] shape) {
+	CompoundDoubleDataset(final int itemSize, final int[] shape) {
 		isize = itemSize;
 		if (shape != null) {
 			if (shape.length == 1) {
@@ -89,7 +89,7 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 	 * Copy a dataset
 	 * @param dataset
 	 */
-	public CompoundDoubleDataset(final CompoundDoubleDataset dataset) {
+	CompoundDoubleDataset(final CompoundDoubleDataset dataset) {
 		isize = dataset.isize;
 
 		copyToView(dataset, this, true, true);
@@ -118,7 +118,7 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 	 * Create a dataset using given dataset
 	 * @param dataset
 	 */
-	public CompoundDoubleDataset(final CompoundDataset dataset) {
+	CompoundDoubleDataset(final CompoundDataset dataset) {
 		copyToView(dataset, this, true, false);
 		offset = 0;
 		stride = null;
@@ -146,7 +146,7 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 	 * @param shape
 	 *            (can be null to create 1D dataset)
 	 */
-	public CompoundDoubleDataset(final int itemSize, final double[] data, int... shape) { // PRIM_TYPE
+	CompoundDoubleDataset(final int itemSize, final double[] data, int... shape) { // PRIM_TYPE
 		isize = itemSize;
 		if (data != null) {
 			if (shape == null || (shape.length == 0 && data.length > isize)) {
@@ -157,7 +157,7 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 				throw new IllegalArgumentException(String.format("Shape %s is not compatible with size of data array, %d",
 						Arrays.toString(shape), data.length / isize));
 			}
-			this.shape = shape.clone();
+			this.shape = size == 0 ? null : shape.clone();
 	
 			odata = this.data = data;
 		}
@@ -167,7 +167,7 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 	 * Create a dataset using given datasets
 	 * @param datasets
 	 */
-	public CompoundDoubleDataset(final Dataset... datasets) {
+	CompoundDoubleDataset(final Dataset... datasets) {
 		if (datasets.length < 1) {
 			throw new IllegalArgumentException("Array of datasets must have length greater than zero");
 		}
@@ -208,7 +208,7 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 	 *            repeat first element
 	 * @param dataset
 	 */
-	public CompoundDoubleDataset(final int itemSize, final boolean repeat, final Dataset dataset) {
+	CompoundDoubleDataset(final int itemSize, final boolean repeat, final Dataset dataset) {
 		isize = itemSize;
 		size = dataset.getSize();
 		shape = dataset.getShape();
@@ -280,7 +280,7 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 	 * @param obj
 	 * @return dataset with contents given by input
 	 */
-	public static CompoundDoubleDataset createFromObject(final Object obj) {
+	static CompoundDoubleDataset createFromObject(final Object obj) {
 		DoubleDataset result = DoubleDataset.createFromObject(obj); // CLASS_TYPE
 		return (CompoundDoubleDataset) DatasetUtils.createCompoundDatasetFromLastAxis(result, true);
 	}
@@ -294,15 +294,15 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 	 * @return dataset with contents given by input
 	 */
 	public static CompoundDoubleDataset createFromObject(final int itemSize, final Object obj) {
-		DoubleDataset result = DoubleDataset.createFromObject(obj);// CLASS_TYPE
-		return new CompoundDoubleDataset(itemSize, result.getData());
+		DoubleDataset result = DoubleDataset.createFromObject(obj); // CLASS_TYPE
+		return new CompoundDoubleDataset(itemSize, result.getData(), null);
 	}
 
 	/**
 	 * @param stop
 	 * @return a new 1D dataset, filled with values determined by parameters
 	 */
-	public static CompoundDoubleDataset createRange(final int itemSize, final double stop) {
+	static CompoundDoubleDataset createRange(final int itemSize, final double stop) {
 		return createRange(itemSize, 0., stop, 1.);
 	}
 
@@ -312,7 +312,7 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 	 * @param step
 	 * @return a new 1D dataset, filled with values determined by parameters
 	 */
-	public static CompoundDoubleDataset createRange(final int itemSize, final double start, final double stop,
+	static CompoundDoubleDataset createRange(final int itemSize, final double start, final double stop,
 			final double step) {
 		int size = calcSteps(start, stop, step);
 		CompoundDoubleDataset result = new CompoundDoubleDataset(itemSize, new int[] { size });
@@ -326,7 +326,7 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 	 * @param shape
 	 * @return a dataset filled with ones
 	 */
-	public static CompoundDoubleDataset ones(final int itemSize, final int... shape) {
+	static CompoundDoubleDataset ones(final int itemSize, final int... shape) {
 		return new CompoundDoubleDataset(itemSize, shape).fill(1);
 	}
 
@@ -411,9 +411,9 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 	}
 
 	@Override
-	public CompoundDoubleDataset getView() {
+	public CompoundDoubleDataset getView(boolean deepCopyMetadata) {
 		CompoundDoubleDataset view = new CompoundDoubleDataset(isize);
-		copyToView(this, view, true, true);
+		copyToView(this, view, true, deepCopyMetadata);
 		view.setData();
 		return view;
 	}
