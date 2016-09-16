@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.eclipse.january.geometry.ide
+Bundle-Vendor: My Company
+Bundle-Version: 2.1.8.qualifier
+Bundle-SymbolicName: org.eclipse.january.geometry.ide;singleton:=true
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: xtext.ide.contentassist.antlr.internal,
+ xtext.ide.contentassist.antlr
+Import-Package: com.google.common.base;version="15.0.0",
+ com.google.inject,
+ org.antlr.runtime;version="3.2.0",
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.ecore.util,
+ org.eclipse.xtext,
+ org.eclipse.xtext.ide.editor.contentassist.antlr,
+ org.eclipse.xtext.ide.editor.contentassist.antlr.internal,
+ org.eclipse.xtext.ide.editor.partialEditing,
+ org.eclipse.xtext.parser.antlr,
+ org.eclipse.xtext.util,
+ xtext.services
+

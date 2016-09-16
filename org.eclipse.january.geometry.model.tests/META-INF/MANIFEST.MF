@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.eclipse.january.geometry.model.tests;singleton:=true
+Bundle-Version: 2.1.8.qualifier
+Bundle-ClassPath: .
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: org.eclipse.january.geometry.tests
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.january.geometry.model;visibility:=reexport,
+ org.eclipse.emf.ecore.xmi;visibility:=reexport,
+ org.junit;visibility:=reexport
+Bundle-ActivationPolicy: lazy
