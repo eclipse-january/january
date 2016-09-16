@@ -63,13 +63,13 @@ public class GeometryComponentTester {
 		Sphere sphere = GeometryFactory.eINSTANCE.createSphere();
 		geometry.getGeometry().addNode(sphere);
 		assertEquals(1, geometry.getGeometry().getNodes().size());
-		assertEquals(sphere, geometry.getGeometry().getNodes().get(0));
+		assertTrue(sphere == geometry.getGeometry().getNodes().get(0));
 
 		// Add a ComplexShape
 		Operator complex = GeometryFactory.eINSTANCE.createOperator();
 		geometry.getGeometry().addNode(complex);
 		assertEquals(2, geometry.getGeometry().getNodes().size());
-		assertEquals(complex, geometry.getGeometry().getNodes().get(1));
+		assertTrue(complex == geometry.getGeometry().getNodes().get(1));
 
 		// Try adding null
 		geometry.getGeometry().addNode(null);
@@ -79,7 +79,7 @@ public class GeometryComponentTester {
 		Shape unknownShape = GeometryFactory.eINSTANCE.createShape();
 		geometry.getGeometry().addNode(unknownShape);
 		assertEquals(3, geometry.getGeometry().getNodes().size());
-		assertEquals(unknownShape, geometry.getGeometry().getNodes().get(2));
+		assertTrue(unknownShape == geometry.getGeometry().getNodes().get(2));
 
 		// Remove the second shape
 		geometry.getGeometry().removeNode(complex);
@@ -263,8 +263,8 @@ public class GeometryComponentTester {
 		Intersection weirdShape = GeometryFactory.eINSTANCE.createIntersection();
 
 		component.getGeometry().addNode(shape);
-		equalComponent.getGeometry().addNode(shape);
-		transitiveComponent.getGeometry().addNode(shape);
+		equalComponent.getGeometry().addNode((Cylinder) shape.clone());
+		transitiveComponent.getGeometry().addNode((Cylinder) shape.clone());
 
 		unEqualComponent.getGeometry().addNode(weirdShape);
 
