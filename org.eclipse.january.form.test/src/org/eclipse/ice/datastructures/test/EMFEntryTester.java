@@ -63,7 +63,7 @@ public class EMFEntryTester {
 		// Local Declarations
 		String separator = System.getProperty("file.separator");
 		String userDir = System.getProperty("user.home") + separator
-				+ "ICETests" + separator + "datastructuresData";
+				+ "JanuaryTests" + separator + "datastructuresData";
 		String filePath = userDir + separator + "shiporder.xsd";
 		processor = null;
 

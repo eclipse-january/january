@@ -58,7 +58,7 @@ public class EMFComponentTester {
 		// Local Declarations
 		String separator = System.getProperty("file.separator");
 		String userDir = System.getProperty("user.home") + separator
-				+ "ICETests" + separator + "datastructuresData";
+				+ "JanuaryTests" + separator + "datastructuresData";
 		String filePath = userDir + separator + "shiporder.xsd";
 
 		// Create the DataComponent
@@ -195,7 +195,7 @@ public class EMFComponentTester {
 		// Local Declarations
 		String separator = System.getProperty("file.separator");
 		String userDir = System.getProperty("user.home") + separator
-				+ "ICETests" + separator + "datastructuresData";
+				+ "JanuaryTests" + separator + "datastructuresData";
 
 		String filePath1 = userDir + separator + "electrical.xsd";
 		String filePath2 = userDir + separator + "electrical.xml";
@@ -261,7 +261,7 @@ public class EMFComponentTester {
 		// Local Declarations
 		String separator = System.getProperty("file.separator");
 		String userDir = System.getProperty("user.home") + separator
-				+ "ICETests" + separator + "datastructuresData";
+				+ "JanuaryTests" + separator + "datastructuresData";
 		String filePath = userDir + separator + "shipOrderSave.xml";
 		String expectedFilePath = userDir + separator
 				+ "expectedShipOrderSave.xml";
@@ -299,7 +299,7 @@ public class EMFComponentTester {
 	public void checkLoad() {
 		String separator = System.getProperty("file.separator");
 		String userDir = System.getProperty("user.home") + separator
-				+ "ICETests" + separator + "datastructuresData";
+				+ "JanuaryTests" + separator + "datastructuresData";
 		String expectedFilePath = userDir + separator
 				+ "expectedShipOrderSave.xml";
 		File loadFile = new File(expectedFilePath);
@@ -375,7 +375,7 @@ public class EMFComponentTester {
 	public void checkEquality() {
 		String separator = System.getProperty("file.separator");
 		String userDir = System.getProperty("user.home") + separator
-				+ "ICETests" + separator + "datastructuresData";
+				+ "JanuaryTests" + separator + "datastructuresData";
 		String filePath1 = userDir + separator + "shiporder.xsd";
 
 		// Create DataComponents to test

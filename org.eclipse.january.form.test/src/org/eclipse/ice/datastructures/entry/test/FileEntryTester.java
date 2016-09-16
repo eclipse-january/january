@@ -73,7 +73,7 @@ public class FileEntryTester {
 			if (!project.exists()) {
 				// Set the location as ${workspace_loc}/ItemTesterWorkspace
 				defaultProjectLocation = new File(
-						System.getProperty("user.home") + separator + "ICETests"
+						System.getProperty("user.home") + separator + "JanuaryTests"
 								+ separator + "itemData").toURI();
 				// Create the project description
 				IProjectDescription desc = ResourcesPlugin.getWorkspace()
@@ -142,7 +142,7 @@ public class FileEntryTester {
 		// We are gonna test that we can get the file path, 
 		// so set the expected path.
 		String separator = System.getProperty("file.separator");
-		String actualPath = System.getProperty("user.home") + separator + "ICETests"
+		String actualPath = System.getProperty("user.home") + separator + "JanuaryTests"
 				+ separator + "itemData" + separator + "moose_test.yaml";
 		
 		// Create a FileEntry over yaml files. 

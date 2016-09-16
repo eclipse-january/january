@@ -38,7 +38,7 @@ public class ResourceHandlerTester {
 		// Local Declarations
 		String separator = System.getProperty("file.separator");
 		String userDir = System.getProperty("user.home") + separator
-				+ "ICETests" + separator + "datastructuresData";
+				+ "JanuaryTests" + separator + "datastructuresData";
 		String txtFilePath = userDir + separator + "txtResource.txt";
 		String csvFilePath = userDir + separator + "csvResource.csv";
 		
