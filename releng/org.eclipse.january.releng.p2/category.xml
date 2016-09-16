@@ -12,25 +12,6 @@
    <bundle id="org.eclipse.january.form.source" version="1.0.0.qualifier">
       <category name="january_form"/>
    </bundle>
-   <bundle id="org.eclipse.january.geometry.model" version="1.0.0.qualifier">
-      <category name="january_geometry_model"/>
-   </bundle>
-   <bundle id="org.eclipse.january.geometry.model.source" version="1.0.0.qualifier">
-      <category name="january_geometry_model"/>
-   </bundle>
-   <bundle id="org.eclipse.january.geometry.model.edit" version="1.0.0.qualifier">
-      <category name="january_geometry_model"/>
-   </bundle>
-   <bundle id="org.eclipse.january.geometry.model.edit.source" version="1.0.0.qualifier">
-      <category name="january_geometry_model"/>
-   </bundle>
-   <bundle id="org.eclipse.january.geometry.model.editor" version="1.0.0.qualifier">
-      <category name="january_geometry_model"/>
-   </bundle>
-   <bundle id="org.eclipse.january.geometry.model.editor.source" version="1.0.0.qualifier">
-      <category name="january_geometry_model"/>
-   </bundle>
    <category-def name="january_datasets" label="January Datasets"/>
    <category-def name="january_form" label="January Form-like Data Structures"/>
-   <category-def name="january_geometry_model" label="January Gemotry Model"/>
 </site>

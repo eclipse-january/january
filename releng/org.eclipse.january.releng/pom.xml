@@ -206,13 +206,9 @@
 		<module>../../org.eclipse.january.form</module>
 		<module>../../org.eclipse.january.form.feature</module>
 		<module>../../org.eclipse.january.form.test</module>
-		<module>../../org.eclipse.january.geometry</module>
-		<module>../../org.eclipse.january.geometry.model.edit</module>
-		<module>../../org.eclipse.january.geometry.model.editor</module>
-		<module>../../org.eclipse.january.geometry.model.tests</module>
 		<module>../../org.eclipse.january.test</module>
 
-		<!-- xtext Geometry plug-ins not enabled yet -->
+		<!-- Geometry plug-ins not enabled yet -->
 
 		<!-- releng -->
 		<module>../org.eclipse.january.releng.target</module>
