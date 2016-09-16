@@ -45,7 +45,7 @@ location "http://download.eclipse.org/releases/neon/" {
 
 // XXX: Circular dependency as EAVP depends on January
 
-location "http://download.eclipse.org/eavp/builds/master" eavp {
+location "http://download.eclipse.org/eavp/builds/next" eavp {
 	org.eclipse.eavp.viz.datastructures lazy
 	org.eclipse.eavp.viz.modeling lazy
 	org.eclipse.eavp.viz.service lazy
