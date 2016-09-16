@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform -->
-<target name="January" sequenceNumber="1474035742">
+<target name="January" sequenceNumber="1474035744">
   <locations>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.slf4j.api" version="1.7.2.v20121108-1250"/>
@@ -32,7 +32,7 @@
       <unit id="org.eclipse.eavp.viz.service" version="0.0.0"/>
       <unit id="org.eclipse.eavp.viz.service.mesh" version="0.0.0"/>
       <unit id="org.eclipse.eavp.viz.service.geometry" version="0.0.0"/>
-      <repository id="eavp" location="http://download.eclipse.org/eavp/builds/master"/>
+      <repository id="eavp" location="http://download.eclipse.org/eavp/builds/next"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <repository location="http://download.eclipse.org/nattable/releases/1.3.0/repository"/>
