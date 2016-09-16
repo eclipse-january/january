@@ -129,8 +129,17 @@ public class ResourceHandlerTester {
 		assertEquals(descTwo, vizResource.getDescription());
 	}
 
+	/**
+	 * A simple implementation of an IVizServiceFactory that simply holds a single VizService.
+	 *
+	 * @author Robert Smith
+	 *
+	 */
 	private class TestVizServiceFactory extends BasicVizServiceFactory {
 
+		/**
+		 * The single VizService that the factory will contain
+		 */
 		IVizService service;
 
 		@Override
