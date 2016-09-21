@@ -73,6 +73,11 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 	}
 
 	@Override
+	public ILazyDataset getDataset() {
+		return this;
+	}
+
+	@Override
 	public void addDataListener(IDataListener l) {
 		eventDelegate.addDataListener(l);
 	}

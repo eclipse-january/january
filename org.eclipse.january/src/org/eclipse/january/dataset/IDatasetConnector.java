@@ -95,11 +95,6 @@ public interface IDatasetConnector extends IFileConnection, IDynamicShape {
 	public void disconnect() throws DatasetException;
 
 	/**
-	 * @return held dataset
-	 */
-	public IDynamicDataset getDataset();
-
-	/**
 	 * @return slice of dataset
 	 */
 	public IDataset getSlice();

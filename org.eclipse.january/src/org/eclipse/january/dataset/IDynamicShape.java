@@ -9,7 +9,6 @@
 
 package org.eclipse.january.dataset;
 
-
 /**
  * This interface is intended for data sources that change shape dynamically.
  * Examples:
@@ -23,6 +22,12 @@ public interface IDynamicShape {
 	 * Denotes an unlimited dimension in maximum shape
 	 */
 	public static final int UNLIMITED = -1;
+
+
+	/**
+	 * @return dataset associated with shape
+	 */
+	public ILazyDataset getDataset();
 
 	/**
 	 * Change shape
