@@ -222,6 +222,11 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 			}
 		}
 
+		Class<?> c = clazz.getSuperclass(); // Naughty: someone has sub-classed a metadata class
+		if (c != null) {
+			return findMetadataTypeSubInterfaces((Class<? extends MetadataType>) c);
+		}
+
 		logger.error("Somehow the search for metadata type interface ended in a bad place");
 		assert false; // should not be able to get here!!!
 		return null;
