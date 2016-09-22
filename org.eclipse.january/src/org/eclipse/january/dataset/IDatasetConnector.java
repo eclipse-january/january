@@ -93,9 +93,4 @@ public interface IDatasetConnector extends IFileConnection, IDynamicShape {
 	 * A remote dataset may be connected and disconnected multiple times.
 	 */
 	public void disconnect() throws DatasetException;
-
-	/**
-	 * @return slice of dataset
-	 */
-	public IDataset getSlice();
 }
