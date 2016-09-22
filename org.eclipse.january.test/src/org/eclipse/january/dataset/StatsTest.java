@@ -224,7 +224,7 @@ public class StatsTest {
 		assertEquals(0, o[2], 1e-4);
 		assertEquals(100, o[3], 1e-4);
 	}
-	
+
 	@Test
 	public void testCovarianceRanks() {
 		Dataset a = DatasetFactory.createFromObject(new double[]{-3.5, 6., 8., 14., -2.2, 1.6, 4.0, 7});
