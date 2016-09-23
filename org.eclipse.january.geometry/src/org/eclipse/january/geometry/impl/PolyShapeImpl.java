@@ -6,6 +6,8 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -17,6 +19,7 @@ import org.eclipse.january.geometry.Face;
 import org.eclipse.january.geometry.Geometry;
 import org.eclipse.january.geometry.GeometryFactory;
 import org.eclipse.january.geometry.GeometryPackage;
+import org.eclipse.january.geometry.INode;
 import org.eclipse.january.geometry.PolyShape;
 import org.eclipse.january.geometry.Triangle;
 import org.eclipse.january.geometry.Vertex;
@@ -120,16 +123,23 @@ public class PolyShapeImpl extends ShapeImpl implements PolyShape {
 			EList<Integer> indices = face.getVertexIndices();
 			if (indices.size() > 2) {
 				for (int i = 1; i < indices.size() - 1; i++) {
-					Vertex v1 = (Vertex) getVertexSource().getVertices()
-							.get(indices.get(0) - 1).clone();
-					Vertex v2 = (Vertex) getVertexSource().getVertices()
-							.get(indices.get(i) - 1).clone();
-					Vertex v3 = (Vertex) getVertexSource().getVertices()
-							.get(indices.get(i + 1) - 1).clone();
-					Triangle tri = GeometryFactory.eINSTANCE.createTriangle();
-					tri.getVertices().add(v1);
-					tri.getVertices().add(v2);
-					tri.getVertices().add(v3);
+					Vertex v1 = getVertexSource().getVertices()
+							.get(indices.get(0) - 1);
+					Vertex v2 = getVertexSource().getVertices()
+							.get(indices.get(i) - 1);
+					Vertex v3 = getVertexSource().getVertices()
+							.get(indices.get(i + 1) - 1);
+					ComplexTriangle tri = new ComplexTriangle(v1, v2, v3);
+
+					// Listen to the triangle, passing along any notifications.
+					tri.eAdapters().add(new AdapterImpl() {
+
+						@Override
+						public void notifyChanged(Notification notification) {
+							eNotify(notification);
+						}
+
+					});
 					getTriangles().add(tri);
 				}
 			} else {
@@ -199,6 +209,86 @@ public class PolyShapeImpl extends ShapeImpl implements PolyShape {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					GeometryPackage.POLY_SHAPE__VERTEX_SOURCE, newVertexSource,
 					newVertexSource));
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	@Override
+	public Object clone() {
+
+		// Create a new shape
+		PolyShape clone = GeometryFactory.eINSTANCE.createPolyShape();
+
+		// Make it a copy of this
+		clone.copy(this);
+		return clone;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	@Override
+	public void copy(Object source) {
+
+		// If the source object is not aa shape, fail silently
+		if (source instanceof PolyShape) {
+
+			// Cast the object as an operator
+			PolyShape castSource = (PolyShape) source;
+
+			// Copy the object's center
+			getCenter().setX(castSource.getCenter().getX());
+			center.setY(castSource.getCenter().getY());
+			center.setZ(castSource.getCenter().getZ());
+
+			// Copy the object's data members
+			id = castSource.getId();
+			name = castSource.getName();
+			type = castSource.getType();
+
+			// Clear the list of child nodes
+			for (INode node : getNodes()) {
+				removeNode(node);
+			}
+
+			// Add clones of each of the source's nodes
+			for (INode node : castSource.getNodes()) {
+				addNode((INode) node.clone());
+			}
+
+			// Make the properties map a copy of the source's
+			properties.clear();
+			for (String property : castSource.getPropertyNames()) {
+				setProperty(property, castSource.getProperty(property));
+			}
+
+			// Clear the current list of triangles
+			triangles = new BasicEList<Triangle>();
+
+			// Copy the faces
+			faces = new BasicEList<Face>();
+			for (Face face : castSource.getFaces()) {
+
+				// Construct a new face with all the same coordinates and add it
+				// to the list
+				Face newFace = GeometryFactory.eINSTANCE.createFace();
+				newFace.getTextureIndices().addAll(face.getTextureIndices());
+				newFace.getVertexIndices().addAll(face.getVertexIndices());
+
+				faces.add(newFace);
+			}
+
+			// Copy the vertex source
+			vertexSource = castSource.getVertexSource();
+
+			// calculate the new polygons now that evertrhing is set up.
+			calculatePolyTriangles();
+		}
 	}
 
 	/**

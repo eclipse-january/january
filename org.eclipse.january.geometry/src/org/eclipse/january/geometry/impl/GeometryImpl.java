@@ -424,10 +424,8 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 			EList<Vertex> sourceVert = source.getVertices();
 			// Go through each vertex source's vertices
 			for (int i = 0; i < vertexSources.size(); i++) {
-				// Add that vertex
-				for (Vertex v : vertexSources.get(i).getVertices()) {
-					sourceVert.add((Vertex) v.clone());
-				}
+				// Add the current source's vertices
+				sourceVert.addAll(vertexSources.get(i).getVertices());
 
 				source.getMaterialFiles()
 						.addAll(vertexSources.get(i).getMaterialFiles());
@@ -455,7 +453,7 @@ public class GeometryImpl extends MinimalEObjectImpl.Container
 		// property name placed instead of the previous value. By convention,
 		// decorator classes will be set to interpret this non-standard
 		// notification message correctly and other listeners will ignore it.
-		eNotify(new ENotificationImpl(this, Notification.SET,
+		eNotify(new ENotificationImpl(this, Notification.NO_FEATURE_ID,
 				GeometryPackage.INODE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT,
 				property, value));
 	}

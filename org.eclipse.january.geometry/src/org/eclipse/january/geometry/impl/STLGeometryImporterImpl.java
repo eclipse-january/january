@@ -16,9 +16,11 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
@@ -30,6 +32,7 @@ import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.january.geometry.Geometry;
 import org.eclipse.january.geometry.GeometryFactory;
 import org.eclipse.january.geometry.GeometryPackage;
+import org.eclipse.january.geometry.INode;
 import org.eclipse.january.geometry.STLGeometryImporter;
 import org.eclipse.january.geometry.Shape;
 import org.eclipse.january.geometry.Triangle;
@@ -185,6 +188,75 @@ public class STLGeometryImporterImpl extends MinimalEObjectImpl.Container
 			} else {
 				// Otherwise, return this geometry
 				geometry = g;
+			}
+		}
+
+		// Iterate through the returned nodes, replacing triangles with complex
+		// triangles
+		for (INode node : geometry.getNodes()) {
+
+			// Get the nodes current triangles
+			EList<Triangle> triangles = node.getTriangles();
+
+			// The list of the new, complex triangles to assign to the node
+			ArrayList<Triangle> newTriangles = new ArrayList<Triangle>();
+
+			// The list of vertices in the mesh
+			ArrayList<Vertex> vertices = new ArrayList<Vertex>();
+
+			// COnvert each triangle into a complex triangle
+			for (Triangle tri : triangles) {
+
+				// The vertices for the current triangle
+				ArrayList<Vertex> currVertices = new ArrayList<Vertex>();
+
+				// Add each vertex to the list
+				for (Vertex v : tri.getVertices()) {
+
+					// If the vertex is unrecognized, clone it and add it to the
+					// list
+					if (!vertices.contains(v)) {
+						Vertex clone = (Vertex) v.clone();
+						vertices.add(clone);
+						currVertices.add(clone);
+					}
+
+					// If it is already in the list, just get the reference to
+					// it
+					else {
+						currVertices.add(vertices.get(vertices.indexOf(v)));
+					}
+				}
+
+				// Create a new triangle and set its normal
+				ComplexTriangle cTri = new ComplexTriangle(currVertices.get(0),
+						currVertices.get(1), currVertices.get(2));
+				cTri.getNormal().setX(tri.getNormal().getX());
+				cTri.getNormal().setY(tri.getNormal().getY());
+				cTri.getNormal().setZ(tri.getNormal().getZ());
+
+				// Register to listen for changes in the triangle
+				cTri.eAdapters().add(new AdapterImpl() {
+
+					@Override
+					public void notifyChanged(Notification notification) {
+
+						// Simply pass the notification along to the node's
+						// listeners
+						node.eNotify(notification);
+					}
+
+				});
+
+				newTriangles.add(cTri);
+			}
+
+			// Empty the list of old triangles
+			node.getTriangles().clear();
+
+			// Add the new triangles to the list
+			for (Triangle tri : newTriangles) {
+				node.getTriangles().add(tri);
 			}
 		}
 
