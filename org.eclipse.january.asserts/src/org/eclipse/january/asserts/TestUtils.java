@@ -233,4 +233,10 @@ public class TestUtils {
 			System.out.printf(fmt, args);
 		}
 	}
+
+	public static void verbosePrintln(String arg) {
+		if (verbosity == Verbosity.VERBOSE) {
+			System.out.println(arg);
+		}
+	}
 }
