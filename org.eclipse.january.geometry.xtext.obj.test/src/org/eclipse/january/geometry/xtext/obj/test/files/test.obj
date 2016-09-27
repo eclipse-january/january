@@ -1,0 +1,23 @@
+#  test comment
+
+
+mtllib ./vp.mtl
+
+g
+v 0 1 2
+v 1 2 3
+v 2 3 4
+v 3 4 5
+# 4 vertices
+
+# 0 vertex parms
+
+# 0 texture vertices
+
+# 0 normals
+
+g shroud
+f 1 2 3
+f 2 3 4
+# 2 elements
+
