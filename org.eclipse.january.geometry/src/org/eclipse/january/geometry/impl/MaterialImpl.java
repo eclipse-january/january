@@ -28,12 +28,12 @@ import org.eclipse.january.geometry.Material;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.january.geometry.impl.MaterialImpl#getPhongMatName <em>Phong Mat Name</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.impl.MaterialImpl#getTexture <em>Texture</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.impl.MaterialImpl#getMaterialFiles <em>Material Files</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

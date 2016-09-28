@@ -22,10 +22,10 @@ package org.eclipse.january.geometry;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.january.geometry.Shape#getMaterial <em>Material</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.january.geometry.GeometryPackage#getShape()
  * @model

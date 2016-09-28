@@ -13,11 +13,11 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.january.geometry.Face#getVertexIndices <em>Vertex Indices</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.Face#getTextureIndices <em>Texture Indices</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.january.geometry.GeometryPackage#getFace()
  * @model

@@ -26,27 +26,21 @@ import org.eclipse.january.geometry.util.MeshUtils;
  * <em><b>Junction</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.january.geometry.impl.JunctionImpl#getHeight
- * <em>Height</em>}</li>
- * <li>{@link org.eclipse.january.geometry.impl.JunctionImpl#getZIn
- * <em>ZIn</em>}</li>
- * <li>{@link org.eclipse.january.geometry.impl.JunctionImpl#getZOut
- * <em>ZOut</em>}</li>
- * <li>{@link org.eclipse.january.geometry.impl.JunctionImpl#getInput
- * <em>Input</em>}</li>
- * <li>{@link org.eclipse.january.geometry.impl.JunctionImpl#getOutput
- * <em>Output</em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ *   <li>{@link org.eclipse.january.geometry.impl.JunctionImpl#getHeight <em>Height</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.impl.JunctionImpl#getZIn <em>ZIn</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.impl.JunctionImpl#getZOut <em>ZOut</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.impl.JunctionImpl#getInput <em>Input</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.impl.JunctionImpl#getOutput <em>Output</em>}</li>
+ * </ul>
  *
  * @generated
  */
 public class JunctionImpl extends ShapeImpl implements Junction {
 	/**
-	 * The default value of the '{@link #getHeight() <em>Height</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The default value of the '{@link #getHeight() <em>Height</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getHeight()
 	 * @generated
 	 * @ordered
@@ -56,7 +50,6 @@ public class JunctionImpl extends ShapeImpl implements Junction {
 	/**
 	 * The cached value of the '{@link #getHeight() <em>Height</em>}' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @see #getHeight()
 	 * @generated
 	 * @ordered
@@ -86,7 +79,6 @@ public class JunctionImpl extends ShapeImpl implements Junction {
 	/**
 	 * The default value of the '{@link #getZOut() <em>ZOut</em>}' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @see #getZOut()
 	 * @generated
 	 * @ordered
@@ -96,7 +88,6 @@ public class JunctionImpl extends ShapeImpl implements Junction {
 	/**
 	 * The cached value of the '{@link #getZOut() <em>ZOut</em>}' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @see #getZOut()
 	 * @generated
 	 * @ordered
@@ -104,9 +95,8 @@ public class JunctionImpl extends ShapeImpl implements Junction {
 	protected double zOut = ZOUT_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getInput() <em>Input</em>}' containment
-	 * reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The cached value of the '{@link #getInput() <em>Input</em>}' containment reference list.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getInput()
 	 * @generated
 	 * @ordered
@@ -114,9 +104,8 @@ public class JunctionImpl extends ShapeImpl implements Junction {
 	protected EList<Pipe> input;
 
 	/**
-	 * The cached value of the '{@link #getOutput() <em>Output</em>}'
-	 * containment reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The cached value of the '{@link #getOutput() <em>Output</em>}' containment reference list.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getOutput()
 	 * @generated
 	 * @ordered
@@ -138,7 +127,6 @@ public class JunctionImpl extends ShapeImpl implements Junction {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -148,7 +136,6 @@ public class JunctionImpl extends ShapeImpl implements Junction {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -177,7 +164,6 @@ public class JunctionImpl extends ShapeImpl implements Junction {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -206,7 +192,6 @@ public class JunctionImpl extends ShapeImpl implements Junction {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -235,28 +220,24 @@ public class JunctionImpl extends ShapeImpl implements Junction {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public EList<Pipe> getInput() {
 		if (input == null) {
-			input = new EObjectContainmentEList<Pipe>(Pipe.class, this,
-					GeometryPackage.JUNCTION__INPUT);
+			input = new EObjectContainmentEList<Pipe>(Pipe.class, this, GeometryPackage.JUNCTION__INPUT);
 		}
 		return input;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public EList<Pipe> getOutput() {
 		if (output == null) {
-			output = new EObjectContainmentEList<Pipe>(Pipe.class, this,
-					GeometryPackage.JUNCTION__OUTPUT);
+			output = new EObjectContainmentEList<Pipe>(Pipe.class, this, GeometryPackage.JUNCTION__OUTPUT);
 		}
 		return output;
 	}
@@ -337,131 +318,124 @@ public class JunctionImpl extends ShapeImpl implements Junction {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-		case GeometryPackage.JUNCTION__INPUT:
-			return ((InternalEList<?>) getInput()).basicRemove(otherEnd, msgs);
-		case GeometryPackage.JUNCTION__OUTPUT:
-			return ((InternalEList<?>) getOutput()).basicRemove(otherEnd, msgs);
+			case GeometryPackage.JUNCTION__INPUT:
+				return ((InternalEList<?>)getInput()).basicRemove(otherEnd, msgs);
+			case GeometryPackage.JUNCTION__OUTPUT:
+				return ((InternalEList<?>)getOutput()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case GeometryPackage.JUNCTION__HEIGHT:
-			return getHeight();
-		case GeometryPackage.JUNCTION__ZIN:
-			return getZIn();
-		case GeometryPackage.JUNCTION__ZOUT:
-			return getZOut();
-		case GeometryPackage.JUNCTION__INPUT:
-			return getInput();
-		case GeometryPackage.JUNCTION__OUTPUT:
-			return getOutput();
+			case GeometryPackage.JUNCTION__HEIGHT:
+				return getHeight();
+			case GeometryPackage.JUNCTION__ZIN:
+				return getZIn();
+			case GeometryPackage.JUNCTION__ZOUT:
+				return getZOut();
+			case GeometryPackage.JUNCTION__INPUT:
+				return getInput();
+			case GeometryPackage.JUNCTION__OUTPUT:
+				return getOutput();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case GeometryPackage.JUNCTION__HEIGHT:
-			setHeight((Double) newValue);
-			return;
-		case GeometryPackage.JUNCTION__ZIN:
-			setZIn((Double) newValue);
-			return;
-		case GeometryPackage.JUNCTION__ZOUT:
-			setZOut((Double) newValue);
-			return;
-		case GeometryPackage.JUNCTION__INPUT:
-			getInput().clear();
-			getInput().addAll((Collection<? extends Pipe>) newValue);
-			return;
-		case GeometryPackage.JUNCTION__OUTPUT:
-			getOutput().clear();
-			getOutput().addAll((Collection<? extends Pipe>) newValue);
-			return;
+			case GeometryPackage.JUNCTION__HEIGHT:
+				setHeight((Double)newValue);
+				return;
+			case GeometryPackage.JUNCTION__ZIN:
+				setZIn((Double)newValue);
+				return;
+			case GeometryPackage.JUNCTION__ZOUT:
+				setZOut((Double)newValue);
+				return;
+			case GeometryPackage.JUNCTION__INPUT:
+				getInput().clear();
+				getInput().addAll((Collection<? extends Pipe>)newValue);
+				return;
+			case GeometryPackage.JUNCTION__OUTPUT:
+				getOutput().clear();
+				getOutput().addAll((Collection<? extends Pipe>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case GeometryPackage.JUNCTION__HEIGHT:
-			setHeight(HEIGHT_EDEFAULT);
-			return;
-		case GeometryPackage.JUNCTION__ZIN:
-			setZIn(ZIN_EDEFAULT);
-			return;
-		case GeometryPackage.JUNCTION__ZOUT:
-			setZOut(ZOUT_EDEFAULT);
-			return;
-		case GeometryPackage.JUNCTION__INPUT:
-			getInput().clear();
-			return;
-		case GeometryPackage.JUNCTION__OUTPUT:
-			getOutput().clear();
-			return;
+			case GeometryPackage.JUNCTION__HEIGHT:
+				setHeight(HEIGHT_EDEFAULT);
+				return;
+			case GeometryPackage.JUNCTION__ZIN:
+				setZIn(ZIN_EDEFAULT);
+				return;
+			case GeometryPackage.JUNCTION__ZOUT:
+				setZOut(ZOUT_EDEFAULT);
+				return;
+			case GeometryPackage.JUNCTION__INPUT:
+				getInput().clear();
+				return;
+			case GeometryPackage.JUNCTION__OUTPUT:
+				getOutput().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case GeometryPackage.JUNCTION__HEIGHT:
-			return height != HEIGHT_EDEFAULT;
-		case GeometryPackage.JUNCTION__ZIN:
-			return zIn != ZIN_EDEFAULT;
-		case GeometryPackage.JUNCTION__ZOUT:
-			return zOut != ZOUT_EDEFAULT;
-		case GeometryPackage.JUNCTION__INPUT:
-			return input != null && !input.isEmpty();
-		case GeometryPackage.JUNCTION__OUTPUT:
-			return output != null && !output.isEmpty();
+			case GeometryPackage.JUNCTION__HEIGHT:
+				return height != HEIGHT_EDEFAULT;
+			case GeometryPackage.JUNCTION__ZIN:
+				return zIn != ZIN_EDEFAULT;
+			case GeometryPackage.JUNCTION__ZOUT:
+				return zOut != ZOUT_EDEFAULT;
+			case GeometryPackage.JUNCTION__INPUT:
+				return input != null && !input.isEmpty();
+			case GeometryPackage.JUNCTION__OUTPUT:
+				return output != null && !output.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
-			return super.toString();
+		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (height: ");

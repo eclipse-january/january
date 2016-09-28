@@ -19,13 +19,11 @@ import org.eclipse.swt.widgets.Display;
  * '<em><b>Face</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.january.geometry.impl.FaceImpl#getVertexIndices
- * <em>Vertex Indices</em>}</li>
- * <li>{@link org.eclipse.january.geometry.impl.FaceImpl#getTextureIndices
- * <em>Texture Indices</em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ *   <li>{@link org.eclipse.january.geometry.impl.FaceImpl#getVertexIndices <em>Vertex Indices</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.impl.FaceImpl#getTextureIndices <em>Texture Indices</em>}</li>
+ * </ul>
  *
  * @generated
  */
@@ -54,7 +52,6 @@ public class FaceImpl extends MinimalEObjectImpl.Container implements Face {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected FaceImpl() {
@@ -63,7 +60,6 @@ public class FaceImpl extends MinimalEObjectImpl.Container implements Face {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -73,113 +69,102 @@ public class FaceImpl extends MinimalEObjectImpl.Container implements Face {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public EList<Integer> getVertexIndices() {
 		if (vertexIndices == null) {
-			vertexIndices = new EDataTypeUniqueEList<Integer>(Integer.class,
-					this, GeometryPackage.FACE__VERTEX_INDICES);
+			vertexIndices = new EDataTypeUniqueEList<Integer>(Integer.class, this, GeometryPackage.FACE__VERTEX_INDICES);
 		}
 		return vertexIndices;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public EList<Integer> getTextureIndices() {
 		if (textureIndices == null) {
-			textureIndices = new EDataTypeUniqueEList<Integer>(Integer.class,
-					this, GeometryPackage.FACE__TEXTURE_INDICES);
+			textureIndices = new EDataTypeUniqueEList<Integer>(Integer.class, this, GeometryPackage.FACE__TEXTURE_INDICES);
 		}
 		return textureIndices;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case GeometryPackage.FACE__VERTEX_INDICES:
-			return getVertexIndices();
-		case GeometryPackage.FACE__TEXTURE_INDICES:
-			return getTextureIndices();
+			case GeometryPackage.FACE__VERTEX_INDICES:
+				return getVertexIndices();
+			case GeometryPackage.FACE__TEXTURE_INDICES:
+				return getTextureIndices();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case GeometryPackage.FACE__VERTEX_INDICES:
-			getVertexIndices().clear();
-			getVertexIndices().addAll((Collection<? extends Integer>) newValue);
-			return;
-		case GeometryPackage.FACE__TEXTURE_INDICES:
-			getTextureIndices().clear();
-			getTextureIndices()
-					.addAll((Collection<? extends Integer>) newValue);
-			return;
+			case GeometryPackage.FACE__VERTEX_INDICES:
+				getVertexIndices().clear();
+				getVertexIndices().addAll((Collection<? extends Integer>)newValue);
+				return;
+			case GeometryPackage.FACE__TEXTURE_INDICES:
+				getTextureIndices().clear();
+				getTextureIndices().addAll((Collection<? extends Integer>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case GeometryPackage.FACE__VERTEX_INDICES:
-			getVertexIndices().clear();
-			return;
-		case GeometryPackage.FACE__TEXTURE_INDICES:
-			getTextureIndices().clear();
-			return;
+			case GeometryPackage.FACE__VERTEX_INDICES:
+				getVertexIndices().clear();
+				return;
+			case GeometryPackage.FACE__TEXTURE_INDICES:
+				getTextureIndices().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case GeometryPackage.FACE__VERTEX_INDICES:
-			return vertexIndices != null && !vertexIndices.isEmpty();
-		case GeometryPackage.FACE__TEXTURE_INDICES:
-			return textureIndices != null && !textureIndices.isEmpty();
+			case GeometryPackage.FACE__VERTEX_INDICES:
+				return vertexIndices != null && !vertexIndices.isEmpty();
+			case GeometryPackage.FACE__TEXTURE_INDICES:
+				return textureIndices != null && !textureIndices.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
-			return super.toString();
+		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (vertexIndices: ");

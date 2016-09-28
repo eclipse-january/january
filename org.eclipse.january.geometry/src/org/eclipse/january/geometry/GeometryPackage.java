@@ -3547,6 +3547,205 @@ public interface GeometryPackage extends EPackage {
 	int VERTEX_SOURCE_OPERATION_COUNT = 0;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.january.geometry.impl.TriangleStripPolyShapeImpl <em>Triangle Strip Poly Shape</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.january.geometry.impl.TriangleStripPolyShapeImpl
+	 * @see org.eclipse.january.geometry.impl.GeometryPackageImpl#getTriangleStripPolyShape()
+	 * @generated
+	 */
+	int TRIANGLE_STRIP_POLY_SHAPE = 24;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIANGLE_STRIP_POLY_SHAPE__NAME = POLY_SHAPE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIANGLE_STRIP_POLY_SHAPE__ID = POLY_SHAPE__ID;
+
+	/**
+	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIANGLE_STRIP_POLY_SHAPE__NODES = POLY_SHAPE__NODES;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIANGLE_STRIP_POLY_SHAPE__TYPE = POLY_SHAPE__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Triangles</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIANGLE_STRIP_POLY_SHAPE__TRIANGLES = POLY_SHAPE__TRIANGLES;
+
+	/**
+	 * The feature id for the '<em><b>Center</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIANGLE_STRIP_POLY_SHAPE__CENTER = POLY_SHAPE__CENTER;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIANGLE_STRIP_POLY_SHAPE__PARENT = POLY_SHAPE__PARENT;
+
+	/**
+	 * The feature id for the '<em><b>Material</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIANGLE_STRIP_POLY_SHAPE__MATERIAL = POLY_SHAPE__MATERIAL;
+
+	/**
+	 * The feature id for the '<em><b>Faces</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIANGLE_STRIP_POLY_SHAPE__FACES = POLY_SHAPE__FACES;
+
+	/**
+	 * The feature id for the '<em><b>Vertex Source</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIANGLE_STRIP_POLY_SHAPE__VERTEX_SOURCE = POLY_SHAPE__VERTEX_SOURCE;
+
+	/**
+	 * The feature id for the '<em><b>Material Files</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIANGLE_STRIP_POLY_SHAPE__MATERIAL_FILES = POLY_SHAPE__MATERIAL_FILES;
+
+	/**
+	 * The number of structural features of the '<em>Triangle Strip Poly Shape</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIANGLE_STRIP_POLY_SHAPE_FEATURE_COUNT = POLY_SHAPE_FEATURE_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Change Decorator Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIANGLE_STRIP_POLY_SHAPE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT = POLY_SHAPE___CHANGE_DECORATOR_PROPERTY__STRING_OBJECT;
+
+	/**
+	 * The operation id for the '<em>Get Property Names</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIANGLE_STRIP_POLY_SHAPE___GET_PROPERTY_NAMES = POLY_SHAPE___GET_PROPERTY_NAMES;
+
+	/**
+	 * The operation id for the '<em>Get Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIANGLE_STRIP_POLY_SHAPE___GET_PROPERTY__STRING = POLY_SHAPE___GET_PROPERTY__STRING;
+
+	/**
+	 * The operation id for the '<em>Set Property</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIANGLE_STRIP_POLY_SHAPE___SET_PROPERTY__STRING_DOUBLE = POLY_SHAPE___SET_PROPERTY__STRING_DOUBLE;
+
+	/**
+	 * The operation id for the '<em>Add Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIANGLE_STRIP_POLY_SHAPE___ADD_NODE__INODE = POLY_SHAPE___ADD_NODE__INODE;
+
+	/**
+	 * The operation id for the '<em>Remove Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIANGLE_STRIP_POLY_SHAPE___REMOVE_NODE__INODE = POLY_SHAPE___REMOVE_NODE__INODE;
+
+	/**
+	 * The operation id for the '<em>Copy</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIANGLE_STRIP_POLY_SHAPE___COPY__OBJECT = POLY_SHAPE___COPY__OBJECT;
+
+	/**
+	 * The operation id for the '<em>Clone</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIANGLE_STRIP_POLY_SHAPE___CLONE = POLY_SHAPE___CLONE;
+
+	/**
+	 * The number of operations of the '<em>Triangle Strip Poly Shape</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIANGLE_STRIP_POLY_SHAPE_OPERATION_COUNT = POLY_SHAPE_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '<em>Path</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3554,7 +3753,7 @@ public interface GeometryPackage extends EPackage {
 	 * @see org.eclipse.january.geometry.impl.GeometryPackageImpl#getPath()
 	 * @generated
 	 */
-	int PATH = 24;
+	int PATH = 25;
 
 	/**
 	 * The meta object id for the '<em>Object</em>' data type.
@@ -3564,7 +3763,7 @@ public interface GeometryPackage extends EPackage {
 	 * @see org.eclipse.january.geometry.impl.GeometryPackageImpl#getObject()
 	 * @generated
 	 */
-	int OBJECT = 25;
+	int OBJECT = 26;
 
 
 	/**
@@ -4583,6 +4782,16 @@ public interface GeometryPackage extends EPackage {
 	EAttribute getVertexSource_MaterialFiles();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.january.geometry.TriangleStripPolyShape <em>Triangle Strip Poly Shape</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Triangle Strip Poly Shape</em>'.
+	 * @see org.eclipse.january.geometry.TriangleStripPolyShape
+	 * @generated
+	 */
+	EClass getTriangleStripPolyShape();
+
+	/**
 	 * Returns the meta object for data type '{@link java.nio.file.Path <em>Path</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5442,6 +5651,16 @@ public interface GeometryPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute VERTEX_SOURCE__MATERIAL_FILES = eINSTANCE.getVertexSource_MaterialFiles();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.january.geometry.impl.TriangleStripPolyShapeImpl <em>Triangle Strip Poly Shape</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.january.geometry.impl.TriangleStripPolyShapeImpl
+		 * @see org.eclipse.january.geometry.impl.GeometryPackageImpl#getTriangleStripPolyShape()
+		 * @generated
+		 */
+		EClass TRIANGLE_STRIP_POLY_SHAPE = eINSTANCE.getTriangleStripPolyShape();
 
 		/**
 		 * The meta object literal for the '<em>Path</em>' data type.

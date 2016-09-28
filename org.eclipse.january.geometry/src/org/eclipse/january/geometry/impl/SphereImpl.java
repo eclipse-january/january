@@ -21,19 +21,17 @@ import org.eclipse.january.geometry.util.MeshUtils;
  * <em><b>Sphere</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.january.geometry.impl.SphereImpl#getRadius
- * <em>Radius</em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ *   <li>{@link org.eclipse.january.geometry.impl.SphereImpl#getRadius <em>Radius</em>}</li>
+ * </ul>
  *
  * @generated
  */
 public class SphereImpl extends ShapeImpl implements Sphere {
 	/**
-	 * The default value of the '{@link #getRadius() <em>Radius</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The default value of the '{@link #getRadius() <em>Radius</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getRadius()
 	 * @generated
 	 * @ordered
@@ -43,7 +41,6 @@ public class SphereImpl extends ShapeImpl implements Sphere {
 	/**
 	 * The cached value of the '{@link #getRadius() <em>Radius</em>}' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @see #getRadius()
 	 * @generated
 	 * @ordered
@@ -67,7 +64,6 @@ public class SphereImpl extends ShapeImpl implements Sphere {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected SphereImpl() {
@@ -76,7 +72,6 @@ public class SphereImpl extends ShapeImpl implements Sphere {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -86,7 +81,6 @@ public class SphereImpl extends ShapeImpl implements Sphere {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -121,71 +115,65 @@ public class SphereImpl extends ShapeImpl implements Sphere {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case GeometryPackage.SPHERE__RADIUS:
-			return getRadius();
+			case GeometryPackage.SPHERE__RADIUS:
+				return getRadius();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case GeometryPackage.SPHERE__RADIUS:
-			setRadius((Double) newValue);
-			return;
+			case GeometryPackage.SPHERE__RADIUS:
+				setRadius((Double)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case GeometryPackage.SPHERE__RADIUS:
-			setRadius(RADIUS_EDEFAULT);
-			return;
+			case GeometryPackage.SPHERE__RADIUS:
+				setRadius(RADIUS_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case GeometryPackage.SPHERE__RADIUS:
-			return radius != RADIUS_EDEFAULT;
+			case GeometryPackage.SPHERE__RADIUS:
+				return radius != RADIUS_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
-			return super.toString();
+		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (radius: ");

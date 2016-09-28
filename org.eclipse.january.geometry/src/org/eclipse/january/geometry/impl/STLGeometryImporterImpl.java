@@ -49,22 +49,19 @@ import xtext.STLStandaloneSetup;
  * '<em><b>ASCIISTL Geometry Importer</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.january.geometry.impl.STLGeometryImporterImpl#getFileTypes
- * <em>File Types</em>}</li>
- * <li>{@link org.eclipse.january.geometry.impl.STLGeometryImporterImpl#getDescription
- * <em>Description</em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ *   <li>{@link org.eclipse.january.geometry.impl.STLGeometryImporterImpl#getFileTypes <em>File Types</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.impl.STLGeometryImporterImpl#getDescription <em>Description</em>}</li>
+ * </ul>
  *
  * @generated
  */
 public class STLGeometryImporterImpl extends MinimalEObjectImpl.Container
 		implements STLGeometryImporter {
 	/**
-	 * The cached value of the '{@link #getFileTypes() <em>File Types</em>}'
-	 * attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The cached value of the '{@link #getFileTypes() <em>File Types</em>}' attribute list.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getFileTypes()
 	 * @generated
 	 * @ordered
@@ -72,9 +69,8 @@ public class STLGeometryImporterImpl extends MinimalEObjectImpl.Container
 	protected EList<String> fileTypes;
 
 	/**
-	 * The default value of the '{@link #getDescription() <em>Description</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getDescription()
 	 * @generated
 	 * @ordered
@@ -82,9 +78,8 @@ public class STLGeometryImporterImpl extends MinimalEObjectImpl.Container
 	protected static final String DESCRIPTION_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getDescription() <em>Description</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The cached value of the '{@link #getDescription() <em>Description</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getDescription()
 	 * @generated
 	 * @ordered
@@ -93,7 +88,6 @@ public class STLGeometryImporterImpl extends MinimalEObjectImpl.Container
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected STLGeometryImporterImpl() {
@@ -102,7 +96,6 @@ public class STLGeometryImporterImpl extends MinimalEObjectImpl.Container
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -112,21 +105,18 @@ public class STLGeometryImporterImpl extends MinimalEObjectImpl.Container
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public EList<String> getFileTypes() {
 		if (fileTypes == null) {
-			fileTypes = new EDataTypeUniqueEList<String>(String.class, this,
-					GeometryPackage.STL_GEOMETRY_IMPORTER__FILE_TYPES);
+			fileTypes = new EDataTypeUniqueEList<String>(String.class, this, GeometryPackage.STL_GEOMETRY_IMPORTER__FILE_TYPES);
 		}
 		return fileTypes;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -136,7 +126,6 @@ public class STLGeometryImporterImpl extends MinimalEObjectImpl.Container
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -144,9 +133,7 @@ public class STLGeometryImporterImpl extends MinimalEObjectImpl.Container
 		String oldDescription = description;
 		description = newDescription;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					GeometryPackage.STL_GEOMETRY_IMPORTER__DESCRIPTION,
-					oldDescription, description));
+			eNotify(new ENotificationImpl(this, Notification.SET, GeometryPackage.STL_GEOMETRY_IMPORTER__DESCRIPTION, oldDescription, description));
 	}
 
 	/**
@@ -332,99 +319,91 @@ public class STLGeometryImporterImpl extends MinimalEObjectImpl.Container
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case GeometryPackage.STL_GEOMETRY_IMPORTER__FILE_TYPES:
-			return getFileTypes();
-		case GeometryPackage.STL_GEOMETRY_IMPORTER__DESCRIPTION:
-			return getDescription();
+			case GeometryPackage.STL_GEOMETRY_IMPORTER__FILE_TYPES:
+				return getFileTypes();
+			case GeometryPackage.STL_GEOMETRY_IMPORTER__DESCRIPTION:
+				return getDescription();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case GeometryPackage.STL_GEOMETRY_IMPORTER__FILE_TYPES:
-			getFileTypes().clear();
-			getFileTypes().addAll((Collection<? extends String>) newValue);
-			return;
-		case GeometryPackage.STL_GEOMETRY_IMPORTER__DESCRIPTION:
-			setDescription((String) newValue);
-			return;
+			case GeometryPackage.STL_GEOMETRY_IMPORTER__FILE_TYPES:
+				getFileTypes().clear();
+				getFileTypes().addAll((Collection<? extends String>)newValue);
+				return;
+			case GeometryPackage.STL_GEOMETRY_IMPORTER__DESCRIPTION:
+				setDescription((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case GeometryPackage.STL_GEOMETRY_IMPORTER__FILE_TYPES:
-			getFileTypes().clear();
-			return;
-		case GeometryPackage.STL_GEOMETRY_IMPORTER__DESCRIPTION:
-			setDescription(DESCRIPTION_EDEFAULT);
-			return;
+			case GeometryPackage.STL_GEOMETRY_IMPORTER__FILE_TYPES:
+				getFileTypes().clear();
+				return;
+			case GeometryPackage.STL_GEOMETRY_IMPORTER__DESCRIPTION:
+				setDescription(DESCRIPTION_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case GeometryPackage.STL_GEOMETRY_IMPORTER__FILE_TYPES:
-			return fileTypes != null && !fileTypes.isEmpty();
-		case GeometryPackage.STL_GEOMETRY_IMPORTER__DESCRIPTION:
-			return DESCRIPTION_EDEFAULT == null ? description != null
-					: !DESCRIPTION_EDEFAULT.equals(description);
+			case GeometryPackage.STL_GEOMETRY_IMPORTER__FILE_TYPES:
+				return fileTypes != null && !fileTypes.isEmpty();
+			case GeometryPackage.STL_GEOMETRY_IMPORTER__DESCRIPTION:
+				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
 		}
 		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eInvoke(int operationID, EList<?> arguments)
 			throws InvocationTargetException {
 		switch (operationID) {
-		case GeometryPackage.STL_GEOMETRY_IMPORTER___LOAD__PATH:
-			return load((Path) arguments.get(0));
+			case GeometryPackage.STL_GEOMETRY_IMPORTER___LOAD__PATH:
+				return load((Path)arguments.get(0));
 		}
 		return super.eInvoke(operationID, arguments);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
-			return super.toString();
+		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (fileTypes: ");

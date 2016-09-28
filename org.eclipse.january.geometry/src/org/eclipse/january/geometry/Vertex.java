@@ -13,12 +13,12 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.january.geometry.Vertex#getX <em>X</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.Vertex#getY <em>Y</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.Vertex#getZ <em>Z</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.january.geometry.GeometryPackage#getVertex()
  * @model

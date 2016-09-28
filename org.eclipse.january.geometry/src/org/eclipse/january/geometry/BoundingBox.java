@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.january.geometry.BoundingBox#getMaxX <em>Max X</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.BoundingBox#getMaxY <em>Max Y</em>}</li>
@@ -22,7 +23,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.january.geometry.BoundingBox#getMinY <em>Min Y</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.BoundingBox#getMinZ <em>Min Z</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.january.geometry.GeometryPackage#getBoundingBox()
  * @model

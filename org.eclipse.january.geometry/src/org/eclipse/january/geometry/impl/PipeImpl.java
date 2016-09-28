@@ -21,29 +21,22 @@ import org.eclipse.january.geometry.util.MeshUtils;
  * <em><b>Pipe</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.january.geometry.impl.PipeImpl#getNumRods <em>Num
- * Rods</em>}</li>
- * <li>{@link org.eclipse.january.geometry.impl.PipeImpl#getPitch
- * <em>Pitch</em>}</li>
- * <li>{@link org.eclipse.january.geometry.impl.PipeImpl#getRodDiameter <em>Rod
- * Diameter</em>}</li>
- * <li>{@link org.eclipse.january.geometry.impl.PipeImpl#getRotationX
- * <em>Rotation X</em>}</li>
- * <li>{@link org.eclipse.january.geometry.impl.PipeImpl#getRotationY
- * <em>Rotation Y</em>}</li>
- * <li>{@link org.eclipse.january.geometry.impl.PipeImpl#getRotationZ
- * <em>Rotation Z</em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ *   <li>{@link org.eclipse.january.geometry.impl.PipeImpl#getNumRods <em>Num Rods</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.impl.PipeImpl#getPitch <em>Pitch</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.impl.PipeImpl#getRodDiameter <em>Rod Diameter</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.impl.PipeImpl#getRotationX <em>Rotation X</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.impl.PipeImpl#getRotationY <em>Rotation Y</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.impl.PipeImpl#getRotationZ <em>Rotation Z</em>}</li>
+ * </ul>
  *
  * @generated
  */
 public class PipeImpl extends TubeImpl implements Pipe {
 	/**
-	 * The default value of the '{@link #getNumRods() <em>Num Rods</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The default value of the '{@link #getNumRods() <em>Num Rods</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getNumRods()
 	 * @generated
 	 * @ordered
@@ -51,9 +44,8 @@ public class PipeImpl extends TubeImpl implements Pipe {
 	protected static final int NUM_RODS_EDEFAULT = 0;
 
 	/**
-	 * The cached value of the '{@link #getNumRods() <em>Num Rods</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The cached value of the '{@link #getNumRods() <em>Num Rods</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getNumRods()
 	 * @generated
 	 * @ordered
@@ -63,7 +55,6 @@ public class PipeImpl extends TubeImpl implements Pipe {
 	/**
 	 * The default value of the '{@link #getPitch() <em>Pitch</em>}' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @see #getPitch()
 	 * @generated
 	 * @ordered
@@ -73,7 +64,6 @@ public class PipeImpl extends TubeImpl implements Pipe {
 	/**
 	 * The cached value of the '{@link #getPitch() <em>Pitch</em>}' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @see #getPitch()
 	 * @generated
 	 * @ordered
@@ -81,9 +71,8 @@ public class PipeImpl extends TubeImpl implements Pipe {
 	protected int pitch = PITCH_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getRodDiameter() <em>Rod
-	 * Diameter</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The default value of the '{@link #getRodDiameter() <em>Rod Diameter</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getRodDiameter()
 	 * @generated
 	 * @ordered
@@ -91,9 +80,8 @@ public class PipeImpl extends TubeImpl implements Pipe {
 	protected static final int ROD_DIAMETER_EDEFAULT = 0;
 
 	/**
-	 * The cached value of the '{@link #getRodDiameter() <em>Rod Diameter</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The cached value of the '{@link #getRodDiameter() <em>Rod Diameter</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getRodDiameter()
 	 * @generated
 	 * @ordered
@@ -101,9 +89,8 @@ public class PipeImpl extends TubeImpl implements Pipe {
 	protected int rodDiameter = ROD_DIAMETER_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getRotationX() <em>Rotation X</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The default value of the '{@link #getRotationX() <em>Rotation X</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getRotationX()
 	 * @generated
 	 * @ordered
@@ -111,9 +98,8 @@ public class PipeImpl extends TubeImpl implements Pipe {
 	protected static final double ROTATION_X_EDEFAULT = 0.0;
 
 	/**
-	 * The cached value of the '{@link #getRotationX() <em>Rotation X</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The cached value of the '{@link #getRotationX() <em>Rotation X</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getRotationX()
 	 * @generated
 	 * @ordered
@@ -121,9 +107,8 @@ public class PipeImpl extends TubeImpl implements Pipe {
 	protected double rotationX = ROTATION_X_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getRotationY() <em>Rotation Y</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The default value of the '{@link #getRotationY() <em>Rotation Y</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getRotationY()
 	 * @generated
 	 * @ordered
@@ -131,9 +116,8 @@ public class PipeImpl extends TubeImpl implements Pipe {
 	protected static final double ROTATION_Y_EDEFAULT = 0.0;
 
 	/**
-	 * The cached value of the '{@link #getRotationY() <em>Rotation Y</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The cached value of the '{@link #getRotationY() <em>Rotation Y</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getRotationY()
 	 * @generated
 	 * @ordered
@@ -141,9 +125,8 @@ public class PipeImpl extends TubeImpl implements Pipe {
 	protected double rotationY = ROTATION_Y_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getRotationZ() <em>Rotation Z</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The default value of the '{@link #getRotationZ() <em>Rotation Z</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getRotationZ()
 	 * @generated
 	 * @ordered
@@ -151,9 +134,8 @@ public class PipeImpl extends TubeImpl implements Pipe {
 	protected static final double ROTATION_Z_EDEFAULT = 0.0;
 
 	/**
-	 * The cached value of the '{@link #getRotationZ() <em>Rotation Z</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The cached value of the '{@link #getRotationZ() <em>Rotation Z</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getRotationZ()
 	 * @generated
 	 * @ordered
@@ -162,7 +144,6 @@ public class PipeImpl extends TubeImpl implements Pipe {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected PipeImpl() {
@@ -171,7 +152,6 @@ public class PipeImpl extends TubeImpl implements Pipe {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -181,7 +161,6 @@ public class PipeImpl extends TubeImpl implements Pipe {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -210,7 +189,6 @@ public class PipeImpl extends TubeImpl implements Pipe {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -239,7 +217,6 @@ public class PipeImpl extends TubeImpl implements Pipe {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -269,7 +246,6 @@ public class PipeImpl extends TubeImpl implements Pipe {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -299,7 +275,6 @@ public class PipeImpl extends TubeImpl implements Pipe {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -330,7 +305,6 @@ public class PipeImpl extends TubeImpl implements Pipe {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -552,138 +526,131 @@ public class PipeImpl extends TubeImpl implements Pipe {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case GeometryPackage.PIPE__NUM_RODS:
-			return getNumRods();
-		case GeometryPackage.PIPE__PITCH:
-			return getPitch();
-		case GeometryPackage.PIPE__ROD_DIAMETER:
-			return getRodDiameter();
-		case GeometryPackage.PIPE__ROTATION_X:
-			return getRotationX();
-		case GeometryPackage.PIPE__ROTATION_Y:
-			return getRotationY();
-		case GeometryPackage.PIPE__ROTATION_Z:
-			return getRotationZ();
+			case GeometryPackage.PIPE__NUM_RODS:
+				return getNumRods();
+			case GeometryPackage.PIPE__PITCH:
+				return getPitch();
+			case GeometryPackage.PIPE__ROD_DIAMETER:
+				return getRodDiameter();
+			case GeometryPackage.PIPE__ROTATION_X:
+				return getRotationX();
+			case GeometryPackage.PIPE__ROTATION_Y:
+				return getRotationY();
+			case GeometryPackage.PIPE__ROTATION_Z:
+				return getRotationZ();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case GeometryPackage.PIPE__NUM_RODS:
-			setNumRods((Integer) newValue);
-			return;
-		case GeometryPackage.PIPE__PITCH:
-			setPitch((Integer) newValue);
-			return;
-		case GeometryPackage.PIPE__ROD_DIAMETER:
-			setRodDiameter((Integer) newValue);
-			return;
-		case GeometryPackage.PIPE__ROTATION_X:
-			setRotationX((Double) newValue);
-			return;
-		case GeometryPackage.PIPE__ROTATION_Y:
-			setRotationY((Double) newValue);
-			return;
-		case GeometryPackage.PIPE__ROTATION_Z:
-			setRotationZ((Double) newValue);
-			return;
+			case GeometryPackage.PIPE__NUM_RODS:
+				setNumRods((Integer)newValue);
+				return;
+			case GeometryPackage.PIPE__PITCH:
+				setPitch((Integer)newValue);
+				return;
+			case GeometryPackage.PIPE__ROD_DIAMETER:
+				setRodDiameter((Integer)newValue);
+				return;
+			case GeometryPackage.PIPE__ROTATION_X:
+				setRotationX((Double)newValue);
+				return;
+			case GeometryPackage.PIPE__ROTATION_Y:
+				setRotationY((Double)newValue);
+				return;
+			case GeometryPackage.PIPE__ROTATION_Z:
+				setRotationZ((Double)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case GeometryPackage.PIPE__NUM_RODS:
-			setNumRods(NUM_RODS_EDEFAULT);
-			return;
-		case GeometryPackage.PIPE__PITCH:
-			setPitch(PITCH_EDEFAULT);
-			return;
-		case GeometryPackage.PIPE__ROD_DIAMETER:
-			setRodDiameter(ROD_DIAMETER_EDEFAULT);
-			return;
-		case GeometryPackage.PIPE__ROTATION_X:
-			setRotationX(ROTATION_X_EDEFAULT);
-			return;
-		case GeometryPackage.PIPE__ROTATION_Y:
-			setRotationY(ROTATION_Y_EDEFAULT);
-			return;
-		case GeometryPackage.PIPE__ROTATION_Z:
-			setRotationZ(ROTATION_Z_EDEFAULT);
-			return;
+			case GeometryPackage.PIPE__NUM_RODS:
+				setNumRods(NUM_RODS_EDEFAULT);
+				return;
+			case GeometryPackage.PIPE__PITCH:
+				setPitch(PITCH_EDEFAULT);
+				return;
+			case GeometryPackage.PIPE__ROD_DIAMETER:
+				setRodDiameter(ROD_DIAMETER_EDEFAULT);
+				return;
+			case GeometryPackage.PIPE__ROTATION_X:
+				setRotationX(ROTATION_X_EDEFAULT);
+				return;
+			case GeometryPackage.PIPE__ROTATION_Y:
+				setRotationY(ROTATION_Y_EDEFAULT);
+				return;
+			case GeometryPackage.PIPE__ROTATION_Z:
+				setRotationZ(ROTATION_Z_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case GeometryPackage.PIPE__NUM_RODS:
-			return numRods != NUM_RODS_EDEFAULT;
-		case GeometryPackage.PIPE__PITCH:
-			return pitch != PITCH_EDEFAULT;
-		case GeometryPackage.PIPE__ROD_DIAMETER:
-			return rodDiameter != ROD_DIAMETER_EDEFAULT;
-		case GeometryPackage.PIPE__ROTATION_X:
-			return rotationX != ROTATION_X_EDEFAULT;
-		case GeometryPackage.PIPE__ROTATION_Y:
-			return rotationY != ROTATION_Y_EDEFAULT;
-		case GeometryPackage.PIPE__ROTATION_Z:
-			return rotationZ != ROTATION_Z_EDEFAULT;
+			case GeometryPackage.PIPE__NUM_RODS:
+				return numRods != NUM_RODS_EDEFAULT;
+			case GeometryPackage.PIPE__PITCH:
+				return pitch != PITCH_EDEFAULT;
+			case GeometryPackage.PIPE__ROD_DIAMETER:
+				return rodDiameter != ROD_DIAMETER_EDEFAULT;
+			case GeometryPackage.PIPE__ROTATION_X:
+				return rotationX != ROTATION_X_EDEFAULT;
+			case GeometryPackage.PIPE__ROTATION_Y:
+				return rotationY != ROTATION_Y_EDEFAULT;
+			case GeometryPackage.PIPE__ROTATION_Z:
+				return rotationZ != ROTATION_Z_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eInvoke(int operationID, EList<?> arguments)
 			throws InvocationTargetException {
 		switch (operationID) {
-		case GeometryPackage.PIPE___GET_LOWER_EDGE:
-			return getLowerEdge();
-		case GeometryPackage.PIPE___GET_UPPER_EDGE:
-			return getUpperEdge();
+			case GeometryPackage.PIPE___GET_LOWER_EDGE:
+				return getLowerEdge();
+			case GeometryPackage.PIPE___GET_UPPER_EDGE:
+				return getUpperEdge();
 		}
 		return super.eInvoke(operationID, arguments);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
-			return super.toString();
+		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (numRods: ");

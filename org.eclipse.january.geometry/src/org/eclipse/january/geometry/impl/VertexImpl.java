@@ -20,12 +20,12 @@ import org.eclipse.swt.widgets.Display;
  * <em><b>Vertex</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.january.geometry.impl.VertexImpl#getX <em>X</em>}</li>
- * <li>{@link org.eclipse.january.geometry.impl.VertexImpl#getY <em>Y</em>}</li>
- * <li>{@link org.eclipse.january.geometry.impl.VertexImpl#getZ <em>Z</em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ *   <li>{@link org.eclipse.january.geometry.impl.VertexImpl#getX <em>X</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.impl.VertexImpl#getY <em>Y</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.impl.VertexImpl#getZ <em>Z</em>}</li>
+ * </ul>
  *
  * @generated
  */
@@ -92,7 +92,6 @@ public class VertexImpl extends MinimalEObjectImpl.Container implements Vertex {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected VertexImpl() {
@@ -101,7 +100,6 @@ public class VertexImpl extends MinimalEObjectImpl.Container implements Vertex {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -111,7 +109,6 @@ public class VertexImpl extends MinimalEObjectImpl.Container implements Vertex {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -140,7 +137,6 @@ public class VertexImpl extends MinimalEObjectImpl.Container implements Vertex {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -169,7 +165,6 @@ public class VertexImpl extends MinimalEObjectImpl.Container implements Vertex {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -257,110 +252,103 @@ public class VertexImpl extends MinimalEObjectImpl.Container implements Vertex {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case GeometryPackage.VERTEX__X:
-			return getX();
-		case GeometryPackage.VERTEX__Y:
-			return getY();
-		case GeometryPackage.VERTEX__Z:
-			return getZ();
+			case GeometryPackage.VERTEX__X:
+				return getX();
+			case GeometryPackage.VERTEX__Y:
+				return getY();
+			case GeometryPackage.VERTEX__Z:
+				return getZ();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case GeometryPackage.VERTEX__X:
-			setX((Double) newValue);
-			return;
-		case GeometryPackage.VERTEX__Y:
-			setY((Double) newValue);
-			return;
-		case GeometryPackage.VERTEX__Z:
-			setZ((Double) newValue);
-			return;
+			case GeometryPackage.VERTEX__X:
+				setX((Double)newValue);
+				return;
+			case GeometryPackage.VERTEX__Y:
+				setY((Double)newValue);
+				return;
+			case GeometryPackage.VERTEX__Z:
+				setZ((Double)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case GeometryPackage.VERTEX__X:
-			setX(X_EDEFAULT);
-			return;
-		case GeometryPackage.VERTEX__Y:
-			setY(Y_EDEFAULT);
-			return;
-		case GeometryPackage.VERTEX__Z:
-			setZ(Z_EDEFAULT);
-			return;
+			case GeometryPackage.VERTEX__X:
+				setX(X_EDEFAULT);
+				return;
+			case GeometryPackage.VERTEX__Y:
+				setY(Y_EDEFAULT);
+				return;
+			case GeometryPackage.VERTEX__Z:
+				setZ(Z_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case GeometryPackage.VERTEX__X:
-			return x != X_EDEFAULT;
-		case GeometryPackage.VERTEX__Y:
-			return y != Y_EDEFAULT;
-		case GeometryPackage.VERTEX__Z:
-			return z != Z_EDEFAULT;
+			case GeometryPackage.VERTEX__X:
+				return x != X_EDEFAULT;
+			case GeometryPackage.VERTEX__Y:
+				return y != Y_EDEFAULT;
+			case GeometryPackage.VERTEX__Z:
+				return z != Z_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eInvoke(int operationID, EList<?> arguments)
 			throws InvocationTargetException {
 		switch (operationID) {
-		case GeometryPackage.VERTEX___CLONE:
-			return clone();
-		case GeometryPackage.VERTEX___EQUALS__OBJECT:
-			return equals(arguments.get(0));
-		case GeometryPackage.VERTEX___HASH_CODE:
-			return hashCode();
+			case GeometryPackage.VERTEX___CLONE:
+				return clone();
+			case GeometryPackage.VERTEX___EQUALS__OBJECT:
+				return equals(arguments.get(0));
+			case GeometryPackage.VERTEX___HASH_CODE:
+				return hashCode();
 		}
 		return super.eInvoke(operationID, arguments);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
-			return super.toString();
+		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (x: ");

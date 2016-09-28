@@ -24,12 +24,12 @@ package org.eclipse.january.geometry;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.january.geometry.HeatExchanger#getPipe <em>Pipe</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.HeatExchanger#getInput <em>Input</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.HeatExchanger#getOutput <em>Output</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.january.geometry.GeometryPackage#getHeatExchanger()
  * @model

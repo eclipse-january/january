@@ -55,7 +55,7 @@ public class GeometrySwitch<T> extends Switch<T> {
 	 * Checks whether this is a switch for the given package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @parameter ePackage the package in question.
+	 * @param ePackage the package in question.
 	 * @return whether this is a switch for the given package.
 	 * @generated
 	 */
@@ -244,6 +244,15 @@ public class GeometrySwitch<T> extends Switch<T> {
 			case GeometryPackage.VERTEX_SOURCE: {
 				VertexSource vertexSource = (VertexSource)theEObject;
 				T result = caseVertexSource(vertexSource);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GeometryPackage.TRIANGLE_STRIP_POLY_SHAPE: {
+				TriangleStripPolyShape triangleStripPolyShape = (TriangleStripPolyShape)theEObject;
+				T result = caseTriangleStripPolyShape(triangleStripPolyShape);
+				if (result == null) result = casePolyShape(triangleStripPolyShape);
+				if (result == null) result = caseShape(triangleStripPolyShape);
+				if (result == null) result = caseINode(triangleStripPolyShape);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -608,6 +617,21 @@ public class GeometrySwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseVertexSource(VertexSource object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Triangle Strip Poly Shape</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Triangle Strip Poly Shape</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseTriangleStripPolyShape(TriangleStripPolyShape object) {
 		return null;
 	}
 

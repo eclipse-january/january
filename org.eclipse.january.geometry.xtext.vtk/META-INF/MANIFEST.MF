@@ -1,0 +1,28 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.eclipse.january.geometry.xtext.vtk
+Bundle-Vendor: My Company
+Bundle-Version: 2.1.8.qualifier
+Bundle-SymbolicName: org.eclipse.january.geometry.xtext.vtk; singleton:=true
+Bundle-ActivationPolicy: lazy
+Service-Component: OSGI-INF/importerFactory.xml
+Require-Bundle: org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.xtext.xbase.lib,
+ org.antlr.runtime,
+ org.eclipse.xtext.util,
+ org.eclipse.xtend.lib
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Import-Package: org.apache.log4j,
+ org.eclipse.january.geometry,
+ org.eclipse.january.geometry.model.importer
+Export-Package: org.eclipse.january.geometry.xtext.vtk.importer,
+ org.xtext.example.mydsl,
+ org.xtext.example.mydsl.generator,
+ org.xtext.example.mydsl.parser.antlr,
+ org.xtext.example.mydsl.parser.antlr.internal,
+ org.xtext.example.mydsl.scoping,
+ org.xtext.example.mydsl.serializer,
+ org.xtext.example.mydsl.services,
+ org.xtext.example.mydsl.validation

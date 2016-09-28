@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.january.geometry.INode#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.INode#getId <em>Id</em>}</li>
@@ -34,7 +35,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.january.geometry.INode#getCenter <em>Center</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.INode#getParent <em>Parent</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.january.geometry.GeometryPackage#getINode()
  * @model interface="true" abstract="true"

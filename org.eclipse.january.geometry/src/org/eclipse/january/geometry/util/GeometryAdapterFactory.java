@@ -172,6 +172,10 @@ public class GeometryAdapterFactory extends AdapterFactoryImpl {
 				return createVertexSourceAdapter();
 			}
 			@Override
+			public Adapter caseTriangleStripPolyShape(TriangleStripPolyShape object) {
+				return createTriangleStripPolyShapeAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -524,6 +528,20 @@ public class GeometryAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createVertexSourceAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.january.geometry.TriangleStripPolyShape <em>Triangle Strip Poly Shape</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.january.geometry.TriangleStripPolyShape
+	 * @generated
+	 */
+	public Adapter createTriangleStripPolyShapeAdapter() {
 		return null;
 	}
 

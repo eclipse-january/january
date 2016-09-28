@@ -24,12 +24,12 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.january.geometry.Material#getPhongMatName <em>Phong Mat Name</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.Material#getTexture <em>Texture</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.Material#getMaterialFiles <em>Material Files</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.january.geometry.GeometryPackage#getMaterial()
  * @model
