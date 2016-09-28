@@ -39,6 +39,8 @@ import org.eclipse.january.metadata.internal.ErrorMetadataImpl;
  * Data items can be boolean, integer, float, complex float, vector float, etc
  */
 public abstract class AbstractDataset extends LazyDatasetBase implements Dataset {
+	// pin UID to base class
+	private static final long serialVersionUID = Dataset.serialVersionUID;
 
 	protected int size; // number of items
 

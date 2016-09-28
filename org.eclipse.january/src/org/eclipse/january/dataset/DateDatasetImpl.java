@@ -14,7 +14,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DateDatasetImpl extends StringDataset implements DateDataset {
-	
+	// pin UID to base class
+	private static final long serialVersionUID = Dataset.serialVersionUID;
+
 	private static final SimpleDateFormat ISO8601_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 	
 

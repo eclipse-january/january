@@ -20,6 +20,7 @@ import org.eclipse.january.io.ILazySaver;
  * Subclass of lazy dataset that allows setting slices
  */
 public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWriteableDataset {
+	private static final long serialVersionUID = -679846418938412535L;
 	private int[] chunks;
 	private ILazySaver saver;
 	private Object fillValue;
@@ -98,6 +99,8 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 		return new LazyWriteableDataset(dataset.getName(), dataset.getDType(), dataset.getElementsPerItem(), dataset.getShape(),
 				maxShape, null,
 		new ILazySaver() {
+			private static final long serialVersionUID = ILazySaver.serialVersionUID;
+
 			Dataset d = dataset;
 			@Override
 			public boolean isFileReadable() {

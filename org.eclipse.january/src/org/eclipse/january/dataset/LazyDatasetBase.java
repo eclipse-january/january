@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 
-	protected static final long serialVersionUID = 767926846438976050L;
+	private static final long serialVersionUID = 767926846438976050L;
 
 	protected static final Logger logger = LoggerFactory.getLogger(LazyDatasetBase.class);
 
