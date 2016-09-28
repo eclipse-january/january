@@ -51,7 +51,7 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 	}
 
 	@Override
-	protected int get1DIndexFromShape(final int... n) {
+	protected int get1DIndexFromShape(final int[] n) {
 		return isize * super.get1DIndexFromShape(n);
 	}
 
