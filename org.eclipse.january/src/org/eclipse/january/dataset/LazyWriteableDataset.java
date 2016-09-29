@@ -219,8 +219,9 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 			} catch (IOException e) {
 				throw new DatasetException("Could not saving dataset", e);
 			}
-			refreshShape();
-			eventDelegate.fire(new DataEvent(name, shape));
+			if (!refreshShape()) { // send event as data has changed
+				eventDelegate.fire(new DataEvent(name, shape));
+			}
 		}
 	}
 

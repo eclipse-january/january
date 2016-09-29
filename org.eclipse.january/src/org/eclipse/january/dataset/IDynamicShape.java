@@ -34,8 +34,9 @@ public interface IDynamicShape {
 	 * @param newShape
 	 * @throws IllegalArgumentException if new shape exceeds maximum shape or is of different rank
 	 * @throws UnsupportedOperationException if used on a view
+	 * @return true if shape has changed
 	 */
-	public void resize(int... newShape);
+	public boolean resize(int... newShape);
 
 	/**
 	 * @return maximum shape (can be null)
@@ -60,8 +61,9 @@ public interface IDynamicShape {
 
 	/**
 	 * Force the shape to be re-read from file, if possible
+	 * @return true if shape has changed
 	 */
-	public void refreshShape();
+	public boolean refreshShape();
 
 	/**
 	 * Add a listener which will be fired when aspects of the data change for
