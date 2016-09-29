@@ -14,6 +14,7 @@ import java.util.Arrays;
 
 import org.eclipse.january.DatasetException;
 import org.eclipse.january.IMonitor;
+import org.eclipse.january.io.ILazyAsyncSaver;
 import org.eclipse.january.io.ILazySaver;
 
 /**
@@ -24,6 +25,7 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 	private int[] chunks;
 	private ILazySaver saver;
 	private Object fillValue;
+	private boolean writeAsync;
 
 	/**
 	 * Create a lazy dataset
@@ -181,6 +183,11 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 		return (LazyWriteableDataset) super.getTransposedView(axes);
 	}
 
+	@Override
+	public void setWritingAsync(boolean async) {
+		writeAsync = async;
+	}
+
 	/**
 	 * Set a slice of the dataset
 	 * 
@@ -193,7 +200,21 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 	}
 
 	@Override
+	public void setSlice(IMonitor monitor, IDataset data, int[] start, int[] stop, int[] step) throws DatasetException {
+		internalSetSlice(monitor, writeAsync, data, new SliceND(shape, maxShape, start, stop, step));
+	}
+
+	@Override
 	public void setSlice(IMonitor monitor, IDataset data, SliceND slice) throws DatasetException {
+		internalSetSlice(monitor, writeAsync, data, slice);
+	}
+
+	@Override
+	public void setSliceSync(IMonitor monitor, IDataset data, SliceND slice) throws DatasetException {
+		internalSetSlice(monitor, false, data, slice);
+	}
+
+	private void internalSetSlice(IMonitor monitor, final boolean async, IDataset data, SliceND slice) throws DatasetException {
 		int[] dshape = data instanceof Dataset ? ((Dataset) data).getShapeRef() : data.getShape();
 		if (dshape.length == 0) { // fix zero-rank case
 			dshape = new int[] {1};
@@ -215,19 +236,18 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 			}
 
 			try {
-				saver.setSlice(monitor, data, nslice);
+				if (async && saver instanceof ILazyAsyncSaver) {
+					((ILazyAsyncSaver)saver).setSliceAsync(monitor, data, nslice);
+				} else {
+					saver.setSlice(monitor, data, nslice);
+				}
 			} catch (IOException e) {
-				throw new DatasetException("Could not saving dataset", e);
+				throw new DatasetException("Could not save dataset", e);
 			}
 			if (!refreshShape()) { // send event as data has changed
 				eventDelegate.fire(new DataEvent(name, shape));
 			}
 		}
-	}
-
-	@Override
-	public void setSlice(IMonitor monitor, IDataset data, int[] start, int[] stop, int[] step) throws DatasetException {
-		setSlice(monitor, data, new SliceND(shape, maxShape, start, stop, step));
 	}
 
 	/**
