@@ -11,11 +11,10 @@
  *******************************************************************************/
 target "January" with source requirements
 
-// XXX: Using Orbit Integration at the moment, that will change as Orbit becomes
-// more stable in their new build process, eventually moving to a long term
-// persisted repo, when available.
+// Using Orbit Oxygen S build at the moment. The Orbit S build contains some items
+// that the most recent R build does not (e.g. org.apache.commons.math3).
 
-location "http://download.eclipse.org/tools/orbit/downloads/drops/I20160829153302/repository" eclipse-orbit-neon {
+location "http://download.eclipse.org/tools/orbit/downloads/drops/S20160916162009/repository" eclipse-orbit-oxygen-m2 {
 
 // The versions we point to in Orbit are the versions we have CQs approved for, please
 // raise CQ for items not in this list or version changes
