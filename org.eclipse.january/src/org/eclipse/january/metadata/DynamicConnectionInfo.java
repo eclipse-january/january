@@ -16,7 +16,7 @@ package org.eclipse.january.metadata;
  * It provides information about dropped data and
  * received data while the dataset is connected.
  * 
- * Not all remote datasets are foced to provide this information.
+ * Not all remote datasets are forced to provide this information.
  * 
  * This class is set in bundle org.eclipse.dawnsci.remotedataset.client 
  * as metadata on RemoteDatasets returned from the Data Server

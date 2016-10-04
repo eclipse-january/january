@@ -8,15 +8,13 @@
  * Contributors:
  *     UT-Battelle, LLC. - initial API and implementation
  *******************************************************************************/
-/**
- */
 package org.eclipse.january.geometry.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.BasicInternalEList;
 import org.eclipse.january.geometry.GeometryFactory;
 import org.eclipse.january.geometry.GeometryPackage;
 import org.eclipse.january.geometry.Triangle;
@@ -30,7 +28,6 @@ import org.slf4j.LoggerFactory;
  * <em><b>Tube</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * </p>
  * <ul>
  * <li>{@link org.eclipse.january.geometry.impl.TubeImpl#getHeight
  * <em>Height</em>}</li>
@@ -39,6 +36,7 @@ import org.slf4j.LoggerFactory;
  * <li>{@link org.eclipse.january.geometry.impl.TubeImpl#getRadius
  * <em>Radius</em>}</li>
  * </ul>
+ * </p>
  *
  * @generated
  */
@@ -181,17 +179,21 @@ public class TubeImpl extends ShapeImpl implements Tube {
 	 */
 	@Override
 	public void setHeight(double newHeight) {
-		double oldHeight = height;
-		height = newHeight;
 
-		// Update the properties map as well
-		if (properties.get("height") == null
-				|| properties.get("height") != height) {
-			properties.put("height", height);
+		if (newHeight != height) {
+
+			double oldHeight = height;
+			height = newHeight;
+
+			// Update the properties map as well
+			if (properties.get("height") == null
+					|| properties.get("height") != height) {
+				properties.put("height", height);
+			}
+			if (eNotificationRequired())
+				eNotify(new ENotificationImpl(this, Notification.SET,
+						GeometryPackage.TUBE__HEIGHT, oldHeight, height));
 		}
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					GeometryPackage.TUBE__HEIGHT, oldHeight, height));
 	}
 
 	/**
@@ -213,8 +215,9 @@ public class TubeImpl extends ShapeImpl implements Tube {
 	public void setInnerRadius(double newInnerRadius) {
 
 		// After initialization, the inner radius must be no smaller than the
-		// normal radius
-		if (newInnerRadius <= radius || properties.get("innerRadius") == null) {
+		// normal radius and must be different from the current value
+		if (newInnerRadius != innerRadius && (newInnerRadius <= radius
+				|| properties.get("innerRadius") == null)) {
 
 			double oldInnerRadius = innerRadius;
 			innerRadius = newInnerRadius;
@@ -257,8 +260,9 @@ public class TubeImpl extends ShapeImpl implements Tube {
 	@Override
 	public void setRadius(double newRadius) {
 
-		// The radius must be no smaller than the inner radius
-		if (newRadius >= innerRadius) {
+		// The radius must be no smaller than the inner radius and different
+		// from the old value
+		if (newRadius != radius && newRadius >= innerRadius) {
 
 			double oldRadius = radius;
 			radius = newRadius;
@@ -398,7 +402,7 @@ public class TubeImpl extends ShapeImpl implements Tube {
 			if (triangles != null) {
 				return triangles;
 			} else {
-				triangles = new BasicEList<Triangle>();
+				triangles = new BasicInternalEList<Triangle>(Triangle.class);
 				return triangles;
 			}
 		}
@@ -406,10 +410,18 @@ public class TubeImpl extends ShapeImpl implements Tube {
 		// Update to the current radius
 		prevRadius = radius;
 
+		if (triangles == null) {
+			triangles = new BasicInternalEList<Triangle>(Triangle.class);
+		} else {
+			triangles.clear();
+		}
+
 		// Replace the previous list with a a new tube's triangles.
 		double[] vertices = MeshUtils.createTube(height, innerRadius, radius,
 				RESOLUTION, SEGMENTS);
-		triangles = MeshUtils.createTubeMesh(vertices, RESOLUTION, SEGMENTS);
+
+		triangles.addAll(
+				MeshUtils.createTubeMesh(vertices, RESOLUTION, SEGMENTS));
 
 		return triangles;
 	}

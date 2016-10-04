@@ -8,8 +8,6 @@
  * Contributors:
  *     UT-Battelle, LLC. - initial API and implementation
  *******************************************************************************/
-/**
- */
 package org.eclipse.january.geometry;
 
 import org.eclipse.emf.common.util.EList;
@@ -27,10 +25,10 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
- * </p>
  * <ul>
  *   <li>{@link org.eclipse.january.geometry.Reactor#getPipes <em>Pipes</em>}</li>
  * </ul>
+ * </p>
  *
  * @see org.eclipse.january.geometry.GeometryPackage#getReactor()
  * @model

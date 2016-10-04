@@ -1,13 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2016 UT-Battelle, LLC. and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     UT-Battelle, LLC. - initial API and implementation
- *******************************************************************************/
 /**
  */
 package org.eclipse.january.geometry.impl;
@@ -15,10 +5,10 @@ package org.eclipse.january.geometry.impl;
 import java.util.ArrayList;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.BasicInternalEList;
 import org.eclipse.january.geometry.GeometryFactory;
 import org.eclipse.january.geometry.GeometryPackage;
 import org.eclipse.january.geometry.Sphere;
@@ -31,11 +21,11 @@ import org.eclipse.january.geometry.util.MeshUtils;
  * <em><b>Sphere</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * </p>
  * <ul>
  * <li>{@link org.eclipse.january.geometry.impl.SphereImpl#getRadius
  * <em>Radius</em>}</li>
  * </ul>
+ * </p>
  *
  * @generated
  */
@@ -111,17 +101,22 @@ public class SphereImpl extends ShapeImpl implements Sphere {
 	 */
 	@Override
 	public void setRadius(double newRadius) {
-		double oldRadius = radius;
-		radius = newRadius;
 
-		// Update the properties map as well
-		if (properties.get("radius") == null
-				|| properties.get("radius") != radius) {
-			properties.put("radius", radius);
+		// Fail silently if the new value is already set
+		if (newRadius != radius) {
+
+			double oldRadius = radius;
+			radius = newRadius;
+
+			// Update the properties map as well
+			if (properties.get("radius") == null
+					|| properties.get("radius") != radius) {
+				properties.put("radius", radius);
+			}
+			if (eNotificationRequired())
+				eNotify(new ENotificationImpl(this, Notification.SET,
+						GeometryPackage.SPHERE__RADIUS, oldRadius, radius));
 		}
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					GeometryPackage.SPHERE__RADIUS, oldRadius, radius));
 	}
 
 	/**
@@ -219,7 +214,11 @@ public class SphereImpl extends ShapeImpl implements Sphere {
 		prevRadius = radius;
 
 		// Clear the previous list
-		triangles = new BasicEList<Triangle>();
+		if (triangles == null) {
+			triangles = new BasicInternalEList<Triangle>(Triangle.class);
+		} else {
+			triangles.clear();
+		}
 
 		// Make an array of the vertices along each circle
 		ArrayList<Vertex> vertices = new ArrayList<Vertex>();

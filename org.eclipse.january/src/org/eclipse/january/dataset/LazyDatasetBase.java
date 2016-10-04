@@ -27,11 +27,11 @@ import org.eclipse.january.DatasetException;
 import org.eclipse.january.MetadataException;
 import org.eclipse.january.metadata.ErrorMetadata;
 import org.eclipse.january.metadata.IMetadata;
+import org.eclipse.january.metadata.MetadataFactory;
 import org.eclipse.january.metadata.MetadataType;
 import org.eclipse.january.metadata.Reshapeable;
 import org.eclipse.january.metadata.Sliceable;
 import org.eclipse.january.metadata.Transposable;
-import org.eclipse.january.metadata.internal.ErrorMetadataImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -155,14 +155,32 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 
 	@Override
 	public IMetadata getMetadata() {
-		List<IMetadata> ml = null;
-		try {
-			ml = getMetadata(IMetadata.class);
-		} catch (Exception e) {
-			logger.error("Problem retrieving metadata of class {}: {}", IMetadata.class.getCanonicalName(), e);
+		List<? extends IMetadata> ml = getAllMetadata(IMetadata.class);
+
+		return ml == null || ml.isEmpty() ? null : ml.get(0);
+	}
+
+	/**
+	 * Get a list of metadata where each item is an instance of the specified sub-class or interface
+	 * @param clazz
+	 * @return list
+	 */
+	@SuppressWarnings("unchecked")
+	private <S extends MetadataType, T extends S> List<S> getAllMetadata(Class<T> clazz) {
+		if (clazz == null) {
+			throw new IllegalArgumentException("Given class must not be null");
 		}
 
-		return ml == null ? null : ml.get(0);
+		List<S> all = new ArrayList<S>();
+		if (metadata != null) {
+			for (Class<? extends MetadataType> t : metadata.keySet()) {
+				if (clazz.isAssignableFrom(t)) {
+					all.addAll((Collection<? extends S>) metadata.get(t));
+				}
+			}
+		}
+
+		return all;
 	}
 
 	@Override
@@ -182,7 +200,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	}
 
 	/**
-	 * Dig down to first interface (or class that directly extends or implements) MetadataType
+	 * Find first sub-interface of (or class that directly extends or implements) MetadataType
 	 * @param clazz
 	 * @return sub-interface
 	 */
@@ -192,45 +210,46 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 			return clazz;
 		}
 
-		Class<?> sclazz = clazz.getSuperclass();
-		if (sclazz != null && !sclazz.equals(Object.class)) // recurse up class hierarchy
-			return findMetadataTypeSubInterfaces((Class<? extends MetadataType>) sclazz);
+		if (clazz.isAnonymousClass()) { // special case
+			clazz = (Class<? extends MetadataType>) clazz.getSuperclass();
+		}
 
-		for (Class<?> c : clazz.getInterfaces()) {
+		for (Class<?> c : clazz.getInterfaces()) { // recurse up interface hierarchy
 			if (c.equals(MetadataType.class))
 				return clazz;
 			if (MetadataType.class.isAssignableFrom(c)) {
-				return findMetadataTypeSubInterfaces((Class<? extends MetadataType>) c);
+				return (Class<? extends MetadataType>) c;
 			}
 		}
-		assert false; // should not be able to get here!!!
+
 		logger.error("Somehow the search for metadata type interface ended in a bad place");
+		assert false; // should not be able to get here!!!
 		return null;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends MetadataType> List<T> getMetadata(Class<T> clazz) throws MetadataException {
+	public <S extends MetadataType, T extends S> List<S> getMetadata(Class<T> clazz) throws MetadataException {
 		if (metadata == null)
 			return null;
 
 		if (clazz == null) {
-			List<T> all = new ArrayList<T>();
+			List<S> all = new ArrayList<S>();
 			for (Class<? extends MetadataType> c : metadata.keySet()) {
-				all.addAll((Collection<? extends T>) metadata.get(c));
+				all.addAll((Collection<S>) metadata.get(c));
 			}
 			return all;
 		}
 
-		return (List<T>) metadata.get(findMetadataTypeSubInterfaces(clazz));
+		return (List<S>) metadata.get(findMetadataTypeSubInterfaces(clazz));
 	}
 
 	@Override
-	public <T extends MetadataType> T getFirstMetadata(Class<T> clazz) {
+	public <S extends MetadataType, T extends S> S getFirstMetadata(Class<T> clazz) {
 		try {
-			List<T> ml = getMetadata(clazz);
+			List<S> ml = getMetadata(clazz);
 			if (ml == null) return null;
-			for (T t : ml) {
+			for (S t : ml) {
 				if (clazz.isInstance(t)) return t;
 			}
 		} catch (Exception e) {
@@ -900,11 +919,15 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		ILazyDataset errorData = createFromSerializable(errors, true);
 
 		ErrorMetadata emd = getErrorMetadata();
-		if (emd == null || !(emd instanceof ErrorMetadataImpl)) {
-			emd = new ErrorMetadataImpl();
-			setMetadata(emd);
+		if (emd == null) {
+			try {
+				emd = MetadataFactory.createMetadata(ErrorMetadata.class);
+				setMetadata(emd);
+			} catch (MetadataException me) {
+				logger.error("Could not create metadata", me);
+			}
 		}
-		((ErrorMetadataImpl) emd).setError(errorData);
+		emd.setError(errorData);
 	}
 
 	protected ErrorMetadata getErrorMetadata() {

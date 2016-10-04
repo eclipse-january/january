@@ -13,11 +13,7 @@ package org.eclipse.january;
  * Exception associated with metadata
  */
 public class MetadataException extends DatasetException {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3691099503920456766L;
+	private static final long serialVersionUID = 8699903515753503664L;
 
 	/**
 	 * @see Exception#Exception()
@@ -49,16 +45,5 @@ public class MetadataException extends DatasetException {
 	 */
 	public MetadataException(String message, Throwable cause) {
 		super(message, cause);
-	}
-
-	/**
-	 * @param message
-	 * @param cause
-	 * @param enableSuppression
-	 * @param writableStackTrace
-	 * @see Exception#Exception(String, Throwable, boolean, boolean)
-	 */
-	public MetadataException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
 	}
 }

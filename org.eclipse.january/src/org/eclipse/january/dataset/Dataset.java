@@ -186,6 +186,14 @@ public interface Dataset extends IDataset {
 	public Serializable getBuffer();
 
 	/**
+	 * Set the buffer that backs the dataset and its shape
+	 * <p>This is very, very <b>dangerous</b>. Please use carefully
+	 * @param buffer (can be null to leave unchanged)
+	 * @param shape (can be null to leave unchanged)
+	 */
+	public void overrideInternal(Serializable buffer, int... shape);
+
+	/**
 	 * This is a <b>synchronized</b> version of the clone method
 	 * 
 	 * @return a copy of dataset
@@ -193,9 +201,10 @@ public interface Dataset extends IDataset {
 	public Dataset synchronizedCopy();
 
 	/**
+	 * @param deepCopyMetadata if true then deep-copy metadata
 	 * @return whole view of dataset (i.e. data buffer is shared)
 	 */
-	public Dataset getView();
+	public Dataset getView(boolean deepCopyMetadata);
 
 	/**
 	 * @return view of dataset that is broadcasted to given shape
@@ -790,7 +799,7 @@ public interface Dataset extends IDataset {
 	 * In-place sort of dataset
 	 * 
 	 * @param axis
-	 *            to sort along
+	 *            to sort along. If null, then the flattened view is sorted
 	 * @return sorted dataset
 	 */
 	public Dataset sort(Integer axis);

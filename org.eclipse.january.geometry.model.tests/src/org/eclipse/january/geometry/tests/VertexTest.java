@@ -26,29 +26,25 @@ import junit.textui.TestRunner;
  * <p>
  * The following operations are tested:
  * <ul>
- * <li>{@link org.eclipse.january.geometry.Vertex#clone() <em>Clone</em>}</li>
- * <li>{@link org.eclipse.january.geometry.Vertex#equals(java.lang.Object)
- * <em>Equals</em>}</li>
- * <li>{@link org.eclipse.january.geometry.Vertex#hashCode() <em>Hash Code</em>}
- * </li>
+ *   <li>{@link org.eclipse.january.geometry.Vertex#clone() <em>Clone</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.Vertex#equals(java.lang.Object) <em>Equals</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.Vertex#hashCode() <em>Hash Code</em>}</li>
  * </ul>
  * </p>
- * 
  * @generated
  */
 public class VertexTest extends TestCase {
 
 	/**
-	 * The fixture for this Vertex test case. <!-- begin-user-doc --> <!--
+	 * The fixture for this Vertex test case.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected Vertex fixture = null;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public static void main(String[] args) {
@@ -66,9 +62,9 @@ public class VertexTest extends TestCase {
 	}
 
 	/**
-	 * Sets the fixture for this Vertex test case. <!-- begin-user-doc --> <!--
+	 * Sets the fixture for this Vertex test case.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected void setFixture(Vertex fixture) {
@@ -76,9 +72,9 @@ public class VertexTest extends TestCase {
 	}
 
 	/**
-	 * Returns the fixture for this Vertex test case. <!-- begin-user-doc -->
+	 * Returns the fixture for this Vertex test case.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected Vertex getFixture() {
@@ -87,7 +83,6 @@ public class VertexTest extends TestCase {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @see junit.framework.TestCase#setUp()
 	 * @generated
 	 */
@@ -98,7 +93,6 @@ public class VertexTest extends TestCase {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @see junit.framework.TestCase#tearDown()
 	 * @generated
 	 */

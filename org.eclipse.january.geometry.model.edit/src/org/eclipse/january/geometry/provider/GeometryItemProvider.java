@@ -8,8 +8,6 @@
  * Contributors:
  *     UT-Battelle, LLC. - initial API and implementation
  *******************************************************************************/
-/**
- */
 package org.eclipse.january.geometry.provider;
 
 
@@ -206,6 +204,7 @@ public class GeometryItemProvider
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(GeometryPackage.Literals.INODE__NODES);
 			childrenFeatures.add(GeometryPackage.Literals.INODE__TRIANGLES);
+			childrenFeatures.add(GeometryPackage.Literals.GEOMETRY__VERTEX_SOURCES);
 		}
 		return childrenFeatures;
 	}
@@ -268,6 +267,7 @@ public class GeometryItemProvider
 				return;
 			case GeometryPackage.GEOMETRY__NODES:
 			case GeometryPackage.GEOMETRY__TRIANGLES:
+			case GeometryPackage.GEOMETRY__VERTEX_SOURCES:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -337,8 +337,38 @@ public class GeometryItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
+				(GeometryPackage.Literals.INODE__NODES,
+				 GeometryFactory.eINSTANCE.createPipe()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(GeometryPackage.Literals.INODE__NODES,
+				 GeometryFactory.eINSTANCE.createJunction()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(GeometryPackage.Literals.INODE__NODES,
+				 GeometryFactory.eINSTANCE.createHeatExchanger()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(GeometryPackage.Literals.INODE__NODES,
+				 GeometryFactory.eINSTANCE.createReactor()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(GeometryPackage.Literals.INODE__NODES,
+				 GeometryFactory.eINSTANCE.createPolyShape()));
+
+		newChildDescriptors.add
+			(createChildParameter
 				(GeometryPackage.Literals.INODE__TRIANGLES,
 				 GeometryFactory.eINSTANCE.createTriangle()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(GeometryPackage.Literals.GEOMETRY__VERTEX_SOURCES,
+				 GeometryFactory.eINSTANCE.createVertexSource()));
 	}
 
 	/**
@@ -349,7 +379,7 @@ public class GeometryItemProvider
 	 */
 	@Override
 	public ResourceLocator getResourceLocator() {
-		return GeometryEditPlugin.INSTANCE;
+		return OrgeclipsejanuaryEditPlugin.INSTANCE;
 	}
 
 }

@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.math3.util.MathArrays;
 import org.eclipse.january.DatasetException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -316,12 +317,62 @@ public class DatasetUtils {
 
 	/**
 	 * @param a
+	 * @return sorted flattened copy of dataset 
+	 */
+	public static <T extends Dataset> T sort(final T a) {
+		return sort(a, (Integer) null);
+	}
+
+	/**
+	 * @param a
 	 * @param axis to sort along
 	 * @return dataset sorted along axis
 	 */
 	public static <T extends Dataset> T sort(final T a, final Integer axis) {
 		Dataset s = a.clone();
 		return (T) s.sort(axis);
+	}
+
+	/**
+	 * Sort in place given dataset and reorder ancillary datasets too
+	 * @param a dataset to be sorted
+	 * @param b ancillary datasets
+	 */
+	public static void sort(Dataset a, Dataset... b) {
+		if (!DTypeUtils.isDTypeNumerical(a.getDType())) {
+			throw new UnsupportedOperationException("Sorting non-numerical datasets not supported yet");
+		}
+
+		// gather all datasets as double dataset copies
+		DoubleDataset s = copy(DoubleDataset.class, a);
+		int l = b == null ? 0 : b.length;
+		DoubleDataset[] t = new DoubleDataset[l];
+		int n = 0;
+		for (int i = 0; i < l; i++) {
+			if (b[i] != null) {
+				if (!DTypeUtils.isDTypeNumerical(b[i].getDType())) {
+					throw new UnsupportedOperationException("Sorting non-numerical datasets not supported yet");
+				}
+				t[i] = copy(DoubleDataset.class, b[i]);
+				n++;
+			}
+		}
+
+		double[][] y = new double[n][];
+		for (int i = 0, j = 0; i < l; i++) {
+			if (t[i] != null) {
+				y[j++] = t[i].getData();
+			}
+		}
+
+		MathArrays.sortInPlace(s.getData(), y);
+
+		a.setSlice(s);
+		for (int i = 0; i < l; i++) {
+			if (b[i] != null) {
+				b[i].setSlice(t[i]);
+			}
+		}
 	}
 
 	/**
@@ -2228,6 +2279,78 @@ public class DatasetUtils {
 			aa[i] = axes.get(i);
 		}
 		return (T) a.getTransposedView(aa);
+	}
+
+	private static SliceND createFlippedSlice(final Dataset a, int axis) {
+		int[] shape = a.getShapeRef();
+		SliceND slice = new SliceND(shape);
+		slice.flip(axis);
+		return slice;
+	}
+
+	/**
+	 * Flip items in left/right direction, column-wise, or along second axis 
+	 * @param a dataset must be at least 2D
+	 * @return view of flipped dataset
+	 */
+	public static <T extends Dataset> T flipLeftRight(final T a) {
+		if (a.getRank() < 2) {
+			throw new IllegalArgumentException("Dataset must be at least 2D");
+		}
+		return (T) a.getSliceView(createFlippedSlice(a, 1));
+	}
+
+	/**
+	 * Flip items in up/down direction, row-wise, or along first axis 
+	 * @param a dataset
+	 * @return view of flipped dataset
+	 */
+	public static <T extends Dataset> T flipUpDown(final T a) {
+		return (T) a.getSliceView(createFlippedSlice(a, 0));
+	}
+
+	/**
+	 * Rotate items in first two dimension by 90 degrees anti-clockwise
+	 * @param a dataset must be at least 2D
+	 * @return view of flipped dataset
+	 */
+	public static <T extends Dataset> T rotate90(final T a) {
+		return rotate90(a, 1);
+	}
+
+	/**
+	 * Rotate items in first two dimension by 90 degrees anti-clockwise
+	 * @param a dataset must be at least 2D
+	 * @param k number of 90-degree rotations
+	 * @return view of flipped dataset
+	 */
+	public static <T extends Dataset> T rotate90(final T a, int k) {
+		k = k % 4;
+		while (k < 0) {
+			k += 4;
+		}
+		int r = a.getRank();
+		if (r < 2) {
+			throw new IllegalArgumentException("Dataset must be at least 2D");
+		}
+		switch (k) {
+		case 1: case 3:
+			int[] axes = new int[r];
+			axes[0] = 1;
+			axes[1] = 0;
+			for (int i = 2; i < r; i++) {
+				axes[i] = i;
+			}
+			Dataset t = a.getTransposedView(axes);
+			return (T) t.getSliceView(createFlippedSlice(t, k == 1 ? 0 : 1));
+		case 2:
+			SliceND s = createFlippedSlice(a, 0);
+			s.flip(1);
+			return (T) a.getSliceView(s);
+		default:
+		case 0:
+			return a;
+		}
 	}
 
 	/**

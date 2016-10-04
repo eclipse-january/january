@@ -8,11 +8,9 @@
  * Contributors:
  *     UT-Battelle, LLC. - initial API and implementation
  *******************************************************************************/
-/**
- *
- * $Id$
- */
 package org.eclipse.january.geometry.validation;
+
+import org.eclipse.emf.common.util.EList;
 
 
 /**
@@ -23,5 +21,13 @@ package org.eclipse.january.geometry.validation;
  */
 public interface MaterialValidator {
 	boolean validate();
+
+	boolean validatePhongMatName(String value);
+
+	boolean validateTexture(String value);
+
+	boolean validateMaterialFiles(EList<String> value);
+
+	boolean validateName(String value);
 
 }

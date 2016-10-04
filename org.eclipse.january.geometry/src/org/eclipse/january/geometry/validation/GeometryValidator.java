@@ -8,11 +8,10 @@
  * Contributors:
  *     UT-Battelle, LLC. - initial API and implementation
  *******************************************************************************/
-/**
- *
- * $Id$
- */
 package org.eclipse.january.geometry.validation;
+
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.january.geometry.VertexSource;
 
 
 /**
@@ -23,5 +22,9 @@ package org.eclipse.january.geometry.validation;
  */
 public interface GeometryValidator {
 	boolean validate();
+
+	boolean validateVertexSources(EList<VertexSource> value);
+
+	boolean validateVertexSource(VertexSource value);
 
 }

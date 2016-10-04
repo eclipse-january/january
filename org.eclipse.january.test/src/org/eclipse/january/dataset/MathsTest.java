@@ -2054,7 +2054,7 @@ public class MathsTest {
 			checkInterpolate3(xb, x);
 		}
 
-		AbstractDatasetTest.checkDatasets(Maths.interpolate(DatasetFactory.createFromObject(new double[] {1, 2, 3}), DatasetFactory.createFromObject(new double[] {3, 2, 0}), DatasetFactory.createFromObject(new double[] {0, 1, 1.5, 2.72, 3.14}), 3, 0), DatasetFactory.createFromObject(new double[] {3. ,  3. ,  2.5 ,  0.56,  0.}));
+		TestUtils.assertDatasetEquals(Maths.interpolate(DatasetFactory.createFromObject(new double[] {1, 2, 3}), DatasetFactory.createFromObject(new double[] {3, 2, 0}), DatasetFactory.createFromObject(new double[] {0, 1, 1.5, 2.72, 3.14}), 3, 0), DatasetFactory.createFromObject(new double[] {3. ,  3. ,  2.5 ,  0.56,  0.}));
 
 		CompoundDataset cxb = (CompoundDataset) xb;
 		for (double x : xc) {

@@ -9,42 +9,48 @@
 
 package org.eclipse.january.dataset;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
 /**
- * Class used by DynamicDatasets to delegate
+ * Class used by DynamicDataset to delegate
  */
 public class DataListenerDelegate {
 
-	private EventListenerList eventListenerlist;
+	private List<IDataListener> listeners;
 
 	public DataListenerDelegate() {
-		eventListenerlist = new EventListenerList();
+		listeners = Collections.synchronizedList(new ArrayList<IDataListener>());
 	}
 	
 	public void addDataListener(IDataListener l) {
-		eventListenerlist.addListener(IDataListener.class, l);
+		synchronized (listeners) {
+			if (!listeners.contains(l)) {
+				listeners.add(l);
+			}
+		}
 	}
 
 	public void removeDataListener(IDataListener l) {
-		eventListenerlist.removeListener(IDataListener.class, l);
+		listeners.remove(l);
 	}
 
 	public void fire(DataEvent evt) {
-		for (Iterator<Object> iterator = eventListenerlist.getListeners(IDataListener.class); iterator.hasNext();) {
-			IDataListener l = (IDataListener) iterator.next();
-			l.dataChangePerformed(evt);
+		synchronized (listeners) {
+			for (Iterator<IDataListener> iterator = listeners.iterator(); iterator.hasNext();) {
+				iterator.next().dataChangePerformed(evt);
+			}
 		}
 	}
 
 	public boolean hasDataListeners() {
-		return eventListenerlist.length()>0;
+		return listeners.size() > 0;
 	}
 
 	public void clear() {
-		for (Iterator<Object> iterator = eventListenerlist.getListeners(IDataListener.class); iterator.hasNext();) {
-			eventListenerlist.removeListener(IDataListener.class, iterator.next());
-		}
-	}
+		listeners.clear();
+ 	}
 
 }

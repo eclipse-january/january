@@ -8,8 +8,6 @@
  * Contributors:
  *     UT-Battelle, LLC. - initial API and implementation
  *******************************************************************************/
-/**
- */
 package org.eclipse.january.geometry.provider;
 
 
@@ -208,7 +206,7 @@ public class VertexItemProvider
 	 */
 	@Override
 	public ResourceLocator getResourceLocator() {
-		return GeometryEditPlugin.INSTANCE;
+		return OrgeclipsejanuaryEditPlugin.INSTANCE;
 	}
 
 }

@@ -1,15 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2016 UT-Battelle, LLC. and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     UT-Battelle, LLC. - initial API and implementation
- *******************************************************************************/
-/**
- */
 package org.eclipse.january.geometry;
 
 import org.eclipse.emf.ecore.EObject;
@@ -25,12 +13,12 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
- * </p>
  * <ul>
  *   <li>{@link org.eclipse.january.geometry.Vertex#getX <em>X</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.Vertex#getY <em>Y</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.Vertex#getZ <em>Z</em>}</li>
  * </ul>
+ * </p>
  *
  * @see org.eclipse.january.geometry.GeometryPackage#getVertex()
  * @model
