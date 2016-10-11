@@ -23,15 +23,17 @@ import org.eclipse.january.geometry.util.MeshUtils;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.january.geometry.impl.SphereImpl#getRadius <em>Radius</em>}</li>
+ * <li>{@link org.eclipse.january.geometry.impl.SphereImpl#getRadius
+ * <em>Radius</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class SphereImpl extends ShapeImpl implements Sphere {
 	/**
-	 * The default value of the '{@link #getRadius() <em>Radius</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The default value of the '{@link #getRadius() <em>Radius</em>}'
+	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getRadius()
 	 * @generated
 	 * @ordered
@@ -41,6 +43,7 @@ public class SphereImpl extends ShapeImpl implements Sphere {
 	/**
 	 * The cached value of the '{@link #getRadius() <em>Radius</em>}' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getRadius()
 	 * @generated
 	 * @ordered
@@ -64,6 +67,7 @@ public class SphereImpl extends ShapeImpl implements Sphere {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected SphereImpl() {
@@ -72,6 +76,7 @@ public class SphereImpl extends ShapeImpl implements Sphere {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -81,6 +86,7 @@ public class SphereImpl extends ShapeImpl implements Sphere {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -115,65 +121,71 @@ public class SphereImpl extends ShapeImpl implements Sphere {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case GeometryPackage.SPHERE__RADIUS:
-				return getRadius();
+		case GeometryPackage.SPHERE__RADIUS:
+			return getRadius();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case GeometryPackage.SPHERE__RADIUS:
-				setRadius((Double)newValue);
-				return;
+		case GeometryPackage.SPHERE__RADIUS:
+			setRadius((Double) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case GeometryPackage.SPHERE__RADIUS:
-				setRadius(RADIUS_EDEFAULT);
-				return;
+		case GeometryPackage.SPHERE__RADIUS:
+			setRadius(RADIUS_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case GeometryPackage.SPHERE__RADIUS:
-				return radius != RADIUS_EDEFAULT;
+		case GeometryPackage.SPHERE__RADIUS:
+			return radius != RADIUS_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
+		if (eIsProxy())
+			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (radius: ");
@@ -377,6 +389,22 @@ public class SphereImpl extends ShapeImpl implements Sphere {
 
 			// Add the top triangle to the list
 			triangles.add(tri1);
+		}
+
+		// Calculate the normals for each triangle
+		for (Triangle tri : triangles) {
+
+			// Get the normal and vertices
+			Vertex normal = tri.getNormal();
+			EList<Vertex> currVertices = tri.getVertices();
+			Vertex v0 = currVertices.get(0);
+			Vertex v1 = currVertices.get(1);
+			Vertex v2 = currVertices.get(2);
+
+			// Set the normal to the average of the three vertices
+			normal.setX((v0.getX() + v1.getX() + v2.getX()) / 3);
+			normal.setY((v0.getY() + v1.getY() + v2.getY()) / 3);
+			normal.setZ((v0.getZ() + v1.getZ() + v2.getZ()) / 3);
 		}
 
 		return triangles;
