@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: January Forms
+Bundle-Name: Eclipse January Form
 Bundle-SymbolicName: org.eclipse.january.form;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
@@ -36,4 +36,4 @@ Bundle-ActivationPolicy: lazy
 JPA-PersistenceUnits: org.eclipse.ice.datastructures
 Require-Bundle: ca.odell.glazedlists;visibility:=reexport,
  org.eclipse.core.runtime
-Bundle-Vendor: Oak Ridge National Laboratory
+Bundle-Vendor: Eclipse January

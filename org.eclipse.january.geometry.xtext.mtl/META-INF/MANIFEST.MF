@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: org.eclipse.january.geometry.xtext.mtl
-Bundle-Vendor: My Company
+Bundle-Name: Eclipse January Geometry XText MTL
+Bundle-Vendor: Eclipse January
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: org.eclipse.january.geometry.xtext.mtl; singleton:=true
 Bundle-ActivationPolicy: lazy
