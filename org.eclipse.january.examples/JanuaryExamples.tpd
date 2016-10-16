@@ -1,0 +1,22 @@
+// To edit the target platforms use following eclipse plugin:
+//   https://github.com/mbarbero/fr.obeo.releng.targetplatform
+//
+// It converts *.tpd files to *.target files intelligently and has some additional features.
+target "JanuaryExamples" with source requirements
+
+location "http://download.eclipse.org/january/builds/latest/repository" january-latest {
+	org.eclipse.january lazy
+}
+
+location "http://download.eclipse.org/tools/orbit/downloads/drops/S20160916162009/repository" eclipse-orbit-oxygen-m2 {
+// Core requirements
+	org.apache.commons.math3 [3.5.0,3.5.1)
+	org.apache.commons.lang [2.6.0,3.0.0)
+	org.slf4j.api [1.7.2,2.0.0)
+
+	// Testing/examples requirements
+	org.hamcrest.core [1.3.0,2.0.0)
+	org.hamcrest.library [1.3.0,2.0.0)
+	org.junit [4.12.0,5.0.0)
+	org.mockito [1.9.5,2.0.0)
+}

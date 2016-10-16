@@ -3,8 +3,6 @@
 	<name>org.eclipse.january.examples</name>
 	<comment></comment>
 	<projects>
-		<project>org.eclipse.january</project>
-		<project>org.eclipse.january.assert</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
