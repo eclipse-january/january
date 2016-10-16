@@ -23,15 +23,12 @@ import org.eclipse.january.geometry.util.MeshUtils;
  * Exchanger</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.january.geometry.impl.HeatExchangerImpl#getPipe
- * <em>Pipe</em>}</li>
- * <li>{@link org.eclipse.january.geometry.impl.HeatExchangerImpl#getInput
- * <em>Input</em>}</li>
- * <li>{@link org.eclipse.january.geometry.impl.HeatExchangerImpl#getOutput
- * <em>Output</em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ *   <li>{@link org.eclipse.january.geometry.impl.HeatExchangerImpl#getPipe <em>Pipe</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.impl.HeatExchangerImpl#getInput <em>Input</em>}</li>
+ *   <li>{@link org.eclipse.january.geometry.impl.HeatExchangerImpl#getOutput <em>Output</em>}</li>
+ * </ul>
  *
  * @generated
  */
@@ -39,7 +36,6 @@ public class HeatExchangerImpl extends ShapeImpl implements HeatExchanger {
 	/**
 	 * The cached value of the '{@link #getPipe() <em>Pipe</em>}' reference.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @see #getPipe()
 	 * @generated
 	 * @ordered
@@ -49,7 +45,6 @@ public class HeatExchangerImpl extends ShapeImpl implements HeatExchanger {
 	/**
 	 * The cached value of the '{@link #getInput() <em>Input</em>}' reference.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @see #getInput()
 	 * @generated
 	 * @ordered
@@ -59,7 +54,6 @@ public class HeatExchangerImpl extends ShapeImpl implements HeatExchanger {
 	/**
 	 * The cached value of the '{@link #getOutput() <em>Output</em>}' reference.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @see #getOutput()
 	 * @generated
 	 * @ordered
@@ -91,7 +85,6 @@ public class HeatExchangerImpl extends ShapeImpl implements HeatExchanger {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected HeatExchangerImpl() {
@@ -256,7 +249,6 @@ public class HeatExchangerImpl extends ShapeImpl implements HeatExchanger {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -266,19 +258,16 @@ public class HeatExchangerImpl extends ShapeImpl implements HeatExchanger {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Pipe getPipe() {
 		if (pipe != null && pipe.eIsProxy()) {
-			InternalEObject oldPipe = (InternalEObject) pipe;
-			pipe = (Pipe) eResolveProxy(oldPipe);
+			InternalEObject oldPipe = (InternalEObject)pipe;
+			pipe = (Pipe)eResolveProxy(oldPipe);
 			if (pipe != oldPipe) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-							GeometryPackage.HEAT_EXCHANGER__PIPE, oldPipe,
-							pipe));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, GeometryPackage.HEAT_EXCHANGER__PIPE, oldPipe, pipe));
 			}
 		}
 		return pipe;
@@ -286,7 +275,6 @@ public class HeatExchangerImpl extends ShapeImpl implements HeatExchanger {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public Pipe basicGetPipe() {
@@ -320,19 +308,16 @@ public class HeatExchangerImpl extends ShapeImpl implements HeatExchanger {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Junction getInput() {
 		if (input != null && input.eIsProxy()) {
-			InternalEObject oldInput = (InternalEObject) input;
-			input = (Junction) eResolveProxy(oldInput);
+			InternalEObject oldInput = (InternalEObject)input;
+			input = (Junction)eResolveProxy(oldInput);
 			if (input != oldInput) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-							GeometryPackage.HEAT_EXCHANGER__INPUT, oldInput,
-							input));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, GeometryPackage.HEAT_EXCHANGER__INPUT, oldInput, input));
 			}
 		}
 		return input;
@@ -340,7 +325,6 @@ public class HeatExchangerImpl extends ShapeImpl implements HeatExchanger {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public Junction basicGetInput() {
@@ -374,19 +358,16 @@ public class HeatExchangerImpl extends ShapeImpl implements HeatExchanger {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Junction getOutput() {
 		if (output != null && output.eIsProxy()) {
-			InternalEObject oldOutput = (InternalEObject) output;
-			output = (Junction) eResolveProxy(oldOutput);
+			InternalEObject oldOutput = (InternalEObject)output;
+			output = (Junction)eResolveProxy(oldOutput);
 			if (output != oldOutput) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-							GeometryPackage.HEAT_EXCHANGER__OUTPUT, oldOutput,
-							output));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, GeometryPackage.HEAT_EXCHANGER__OUTPUT, oldOutput, output));
 			}
 		}
 		return output;
@@ -394,7 +375,6 @@ public class HeatExchangerImpl extends ShapeImpl implements HeatExchanger {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public Junction basicGetOutput() {
@@ -524,84 +504,77 @@ public class HeatExchangerImpl extends ShapeImpl implements HeatExchanger {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case GeometryPackage.HEAT_EXCHANGER__PIPE:
-			if (resolve)
-				return getPipe();
-			return basicGetPipe();
-		case GeometryPackage.HEAT_EXCHANGER__INPUT:
-			if (resolve)
-				return getInput();
-			return basicGetInput();
-		case GeometryPackage.HEAT_EXCHANGER__OUTPUT:
-			if (resolve)
-				return getOutput();
-			return basicGetOutput();
+			case GeometryPackage.HEAT_EXCHANGER__PIPE:
+				if (resolve) return getPipe();
+				return basicGetPipe();
+			case GeometryPackage.HEAT_EXCHANGER__INPUT:
+				if (resolve) return getInput();
+				return basicGetInput();
+			case GeometryPackage.HEAT_EXCHANGER__OUTPUT:
+				if (resolve) return getOutput();
+				return basicGetOutput();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case GeometryPackage.HEAT_EXCHANGER__PIPE:
-			setPipe((Pipe) newValue);
-			return;
-		case GeometryPackage.HEAT_EXCHANGER__INPUT:
-			setInput((Junction) newValue);
-			return;
-		case GeometryPackage.HEAT_EXCHANGER__OUTPUT:
-			setOutput((Junction) newValue);
-			return;
+			case GeometryPackage.HEAT_EXCHANGER__PIPE:
+				setPipe((Pipe)newValue);
+				return;
+			case GeometryPackage.HEAT_EXCHANGER__INPUT:
+				setInput((Junction)newValue);
+				return;
+			case GeometryPackage.HEAT_EXCHANGER__OUTPUT:
+				setOutput((Junction)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case GeometryPackage.HEAT_EXCHANGER__PIPE:
-			setPipe((Pipe) null);
-			return;
-		case GeometryPackage.HEAT_EXCHANGER__INPUT:
-			setInput((Junction) null);
-			return;
-		case GeometryPackage.HEAT_EXCHANGER__OUTPUT:
-			setOutput((Junction) null);
-			return;
+			case GeometryPackage.HEAT_EXCHANGER__PIPE:
+				setPipe((Pipe)null);
+				return;
+			case GeometryPackage.HEAT_EXCHANGER__INPUT:
+				setInput((Junction)null);
+				return;
+			case GeometryPackage.HEAT_EXCHANGER__OUTPUT:
+				setOutput((Junction)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case GeometryPackage.HEAT_EXCHANGER__PIPE:
-			return pipe != null;
-		case GeometryPackage.HEAT_EXCHANGER__INPUT:
-			return input != null;
-		case GeometryPackage.HEAT_EXCHANGER__OUTPUT:
-			return output != null;
+			case GeometryPackage.HEAT_EXCHANGER__PIPE:
+				return pipe != null;
+			case GeometryPackage.HEAT_EXCHANGER__INPUT:
+				return input != null;
+			case GeometryPackage.HEAT_EXCHANGER__OUTPUT:
+				return output != null;
 		}
 		return super.eIsSet(featureID);
 	}

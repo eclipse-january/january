@@ -19,6 +19,7 @@ import org.eclipse.january.geometry.GeometryFactory;
 import org.eclipse.january.geometry.GeometryPackage;
 import org.eclipse.january.geometry.Triangle;
 import org.eclipse.january.geometry.Tube;
+import org.eclipse.january.geometry.Vertex;
 import org.eclipse.january.geometry.util.MeshUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,7 @@ import org.slf4j.LoggerFactory;
  * <em><b>Tube</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.january.geometry.impl.TubeImpl#getHeight
  * <em>Height</em>}</li>
@@ -36,7 +38,6 @@ import org.slf4j.LoggerFactory;
  * <li>{@link org.eclipse.january.geometry.impl.TubeImpl#getRadius
  * <em>Radius</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -422,6 +423,22 @@ public class TubeImpl extends ShapeImpl implements Tube {
 
 		triangles.addAll(
 				MeshUtils.createTubeMesh(vertices, RESOLUTION, SEGMENTS));
+
+		// Calculate the normals for each triangle
+		for (Triangle tri : triangles) {
+
+			// Get the normal and vertices
+			Vertex normal = tri.getNormal();
+			EList<Vertex> currVertices = tri.getVertices();
+			Vertex v0 = currVertices.get(0);
+			Vertex v1 = currVertices.get(1);
+			Vertex v2 = currVertices.get(2);
+
+			// Set the normal to the average of the three vertices
+			normal.setX((v0.getX() + v1.getX() + v2.getX()) / 3);
+			normal.setY((v0.getY() + v1.getY() + v2.getY()) / 3);
+			normal.setZ((v0.getZ() + v1.getZ() + v2.getZ()) / 3);
+		}
 
 		return triangles;
 	}

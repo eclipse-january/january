@@ -89,6 +89,7 @@ public class GeometryFactoryImpl extends EFactoryImpl implements GeometryFactory
 			case GeometryPackage.POLY_SHAPE: return createPolyShape();
 			case GeometryPackage.FACE: return createFace();
 			case GeometryPackage.VERTEX_SOURCE: return createVertexSource();
+			case GeometryPackage.TRIANGLE_STRIP_POLY_SHAPE: return createTriangleStripPolyShape();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -346,6 +347,16 @@ public class GeometryFactoryImpl extends EFactoryImpl implements GeometryFactory
 	public VertexSource createVertexSource() {
 		VertexSourceImpl vertexSource = new VertexSourceImpl();
 		return vertexSource;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TriangleStripPolyShape createTriangleStripPolyShape() {
+		TriangleStripPolyShapeImpl triangleStripPolyShape = new TriangleStripPolyShapeImpl();
+		return triangleStripPolyShape;
 	}
 
 	/**

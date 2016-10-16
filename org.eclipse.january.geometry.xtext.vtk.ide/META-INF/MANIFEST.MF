@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.eclipse.january.geometry.xtext.vtk.ide
+Bundle-Vendor: My Company
+Bundle-Version: 2.1.8.qualifier
+Bundle-SymbolicName: org.eclipse.january.geometry.xtext.vtk.ide; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.january.geometry.xtext.vtk,
+ org.eclipse.xtext.ide,
+ org.eclipse.xtext.xbase.ide
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: org.xtext.example.mydsl.ide.contentassist.antlr.internal,
+ org.xtext.example.mydsl.ide.contentassist.antlr
+

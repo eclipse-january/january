@@ -43,6 +43,7 @@ import org.eclipse.january.geometry.Reactor;
 import org.eclipse.january.geometry.Shape;
 import org.eclipse.january.geometry.Sphere;
 import org.eclipse.january.geometry.Triangle;
+import org.eclipse.january.geometry.TriangleStripPolyShape;
 import org.eclipse.january.geometry.Tube;
 import org.eclipse.january.geometry.Union;
 import org.eclipse.january.geometry.Vertex;
@@ -222,6 +223,13 @@ public class GeometryPackageImpl extends EPackageImpl implements GeometryPackage
 	 * @generated
 	 */
 	private EClass vertexSourceEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass triangleStripPolyShapeEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1167,6 +1175,15 @@ public class GeometryPackageImpl extends EPackageImpl implements GeometryPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getTriangleStripPolyShape() {
+		return triangleStripPolyShapeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EDataType getPath() {
 		return pathEDataType;
 	}
@@ -1328,6 +1345,8 @@ public class GeometryPackageImpl extends EPackageImpl implements GeometryPackage
 		createEReference(vertexSourceEClass, VERTEX_SOURCE__TEXTURE_COORDINATES);
 		createEAttribute(vertexSourceEClass, VERTEX_SOURCE__MATERIAL_FILES);
 
+		triangleStripPolyShapeEClass = createEClass(TRIANGLE_STRIP_POLY_SHAPE);
+
 		// Create data types
 		pathEDataType = createEDataType(PATH);
 		objectEDataType = createEDataType(OBJECT);
@@ -1377,6 +1396,7 @@ public class GeometryPackageImpl extends EPackageImpl implements GeometryPackage
 		heatExchangerEClass.getESuperTypes().add(this.getShape());
 		reactorEClass.getESuperTypes().add(this.getShape());
 		polyShapeEClass.getESuperTypes().add(this.getShape());
+		triangleStripPolyShapeEClass.getESuperTypes().add(this.getPolyShape());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(shapeEClass, Shape.class, "Shape", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1527,6 +1547,8 @@ public class GeometryPackageImpl extends EPackageImpl implements GeometryPackage
 		initEReference(getVertexSource_Vertices(), this.getVertex(), null, "vertices", null, 0, -1, VertexSource.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getVertexSource_TextureCoordinates(), this.getVertex(), null, "textureCoordinates", null, 0, -1, VertexSource.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getVertexSource_MaterialFiles(), ecorePackage.getEString(), "materialFiles", null, 0, -1, VertexSource.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(triangleStripPolyShapeEClass, TriangleStripPolyShape.class, "TriangleStripPolyShape", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		// Initialize data types
 		initEDataType(pathEDataType, Path.class, "Path", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

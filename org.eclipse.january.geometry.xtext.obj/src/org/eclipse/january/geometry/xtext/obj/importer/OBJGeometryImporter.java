@@ -54,15 +54,20 @@ public class OBJGeometryImporter implements IGeometryImporter {
 
 	@Override
 	public String getDescription() {
-		return "Imports geometry files in Wavefront's OBJ " + "file format for use in the ICE Geometry Editor";
+		return "Imports geometry files in Wavefront's OBJ "
+				+ "file format for use in the ICE Geometry Editor";
 	}
 
 	@Override
 	public Geometry load(Path path) {
-		Injector injector = new OBJStandaloneSetup().createInjectorAndDoEMFRegistration();
-		XtextResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
-		resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
-		Resource resource = resourceSet.getResource(URI.createFileURI(path.toFile().getAbsolutePath()), true);
+		Injector injector = new OBJStandaloneSetup()
+				.createInjectorAndDoEMFRegistration();
+		XtextResourceSet resourceSet = injector
+				.getInstance(XtextResourceSet.class);
+		resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL,
+				Boolean.TRUE);
+		Resource resource = resourceSet.getResource(
+				URI.createFileURI(path.toFile().getAbsolutePath()), true);
 
 		// Check to see if returned contents contain a valid geometry. If not,
 		// then the file might be
@@ -77,12 +82,13 @@ public class OBJGeometryImporter implements IGeometryImporter {
 		if (contents != null && !contents.isEmpty()) {
 			geometry = (Geometry) contents.get(0);
 		}
-		
+
 		if (geometry != null) {
 			for (INode node : geometry.getNodes()) {
 				node.setParent(geometry);
 				if (node instanceof PolyShape) {
-					geometry.getVertexSource().getMaterialFiles().addAll(((PolyShape)node).getMaterialFiles());
+					geometry.getVertexSource().getMaterialFiles()
+							.addAll(((PolyShape) node).getMaterialFiles());
 					((PolyShape) node).calculatePolyTriangles();
 				}
 			}
@@ -177,7 +183,8 @@ public class OBJGeometryImporter implements IGeometryImporter {
 	}
 
 	@Override
-	public Object eInvoke(EOperation operation, EList<?> arguments) throws InvocationTargetException {
+	public Object eInvoke(EOperation operation, EList<?> arguments)
+			throws InvocationTargetException {
 		// TODO Auto-generated method stub
 		return null;
 	}

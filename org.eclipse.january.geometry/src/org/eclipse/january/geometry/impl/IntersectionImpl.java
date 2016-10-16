@@ -10,8 +10,6 @@ import org.eclipse.january.geometry.Intersection;
 /**
  * <!-- begin-user-doc --> An implementation of the model object '
  * <em><b>Intersection</b></em>'. <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */
@@ -30,7 +28,6 @@ public class IntersectionImpl extends OperatorImpl implements Intersection {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override

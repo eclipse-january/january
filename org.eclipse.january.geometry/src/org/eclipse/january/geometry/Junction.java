@@ -25,6 +25,7 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.january.geometry.Junction#getHeight <em>Height</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.Junction#getZIn <em>ZIn</em>}</li>
@@ -32,7 +33,6 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.eclipse.january.geometry.Junction#getInput <em>Input</em>}</li>
  *   <li>{@link org.eclipse.january.geometry.Junction#getOutput <em>Output</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.january.geometry.GeometryPackage#getJunction()
  * @model
