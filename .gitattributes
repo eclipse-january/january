@@ -1,0 +1,51 @@
+# Set the default behavior, in case people don't have core.autocrlf set.
+* text=auto
+
+#
+# Explicitly declare files to always be treated as text
+#
+
+#Source code
+*.java text
+*.xml text
+*.properties text
+*.MF text
+*.product text
+*.inf text
+*.ecore text
+
+# General
+*.html text
+*.htm text
+*.css text
+*.txt text
+*.sh text
+*.md text
+*.csv text
+
+#Eclipse
+*.prefs text
+.project text
+.classpath text
+
+#
+# Explicitly declare files to always be treated as binary & not converted
+#
+
+# Images
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+
+# Documents
+*.doc binary
+*.docx binary
+*.pdf binary
+*.zip binary
+
+# Native libraries
+*.dll binary
+*.so binary
+*.dylib binary
