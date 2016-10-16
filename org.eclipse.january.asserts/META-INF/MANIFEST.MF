@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Eclipse January Common Asserts
+Bundle-Name: Eclipse January Common Asserts (Incubation)
 Bundle-SymbolicName: org.eclipse.january.asserts;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

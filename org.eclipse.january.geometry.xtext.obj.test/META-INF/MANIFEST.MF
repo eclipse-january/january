@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Eclipse January Geometry XText OBJ Tests
+Bundle-Name: Eclipse January Geometry XText OBJ Tests (Incubation)
 Bundle-SymbolicName: org.eclipse.january.geometry.xtext.obj.test
 Bundle-Version: 1.0.0.qualifier
 Require-Bundle: org.eclipse.january.geometry.xtext.obj;bundle-version="1.0.0",

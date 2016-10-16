@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Eclipse January Geometry Model Editor
+Bundle-Name: Eclipse January Geometry Model Editor (Incubation)
 Bundle-SymbolicName: org.eclipse.january.geometry.model.editor;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .

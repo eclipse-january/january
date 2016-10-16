@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Eclipse January Geometry XText MTL UI
+Bundle-Name: Eclipse January Geometry XText MTL UI (Incubation)
 Bundle-Vendor: Eclipse January
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: org.eclipse.january.geometry.xtext.mtl.ui; singleton:=true

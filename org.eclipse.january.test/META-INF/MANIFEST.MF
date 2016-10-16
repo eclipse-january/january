@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Eclipse January Dataset Tests
+Bundle-Name: Eclipse January Dataset Tests (Incubation)
 Bundle-SymbolicName: org.eclipse.january.test
 Bundle-Version: 1.0.0.qualifier
 Fragment-Host: org.eclipse.january;bundle-version="1.0.0"
