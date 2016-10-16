@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.eclipse.january.geometry.xtext.vtk
 Bundle-Vendor: My Company
-Bundle-Version: 2.1.8.qualifier
+Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: org.eclipse.january.geometry.xtext.vtk; singleton:=true
 Bundle-ActivationPolicy: lazy
 Service-Component: OSGI-INF/importerFactory.xml

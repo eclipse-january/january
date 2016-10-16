@@ -169,33 +169,28 @@
 					<argLine>-Xms40m -Xmx1G -ea ${os-jvm-flags}</argLine>
 				</configuration>
 			</plugin>
-		</plugins>
-		<pluginManagement>
-			<plugins>
-				<!-- xtend-maven-plugin is in pluginManagement instead of in plugins
-					so that it doesn't run before the exec-maven-plugin's *.mwe2 gen; this way
-					we can list it after. -->
 
-				<plugin>
-					<groupId>org.eclipse.xtend</groupId>
-					<artifactId>xtend-maven-plugin</artifactId>
-					<version>${xtext-version}</version>
-					<executions>
-						<execution>
-							<goals>
-								<goal>compile</goal>
-								<goal>xtend-install-debug-info</goal>
-								<goal>testCompile</goal>
-								<goal>xtend-test-install-debug-info</goal>
-							</goals>
-						</execution>
-					</executions>
-					<configuration>
-						<outputDirectory>xtend-gen</outputDirectory>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
+			<!-- typically xtend would be defined in pluginmanagement, but it is applied
+			     universally for January, rather than each project redeclaring it. -->
+			<plugin>
+				<groupId>org.eclipse.xtend</groupId>
+				<artifactId>xtend-maven-plugin</artifactId>
+				<version>${xtext-version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+							<goal>xtend-install-debug-info</goal>
+							<goal>testCompile</goal>
+							<goal>xtend-test-install-debug-info</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<outputDirectory>xtend-gen</outputDirectory>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 
 
@@ -206,9 +201,28 @@
 		<module>../../org.eclipse.january.form</module>
 		<module>../../org.eclipse.january.form.feature</module>
 		<module>../../org.eclipse.january.form.test</module>
+		<module>../../org.eclipse.january.geometry</module>
+		<module>../../org.eclipse.january.geometry.ide</module>
+		<module>../../org.eclipse.january.geometry.model.tests</module>
+		<module>../../org.eclipse.january.geometry.ui</module>
+		<module>../../org.eclipse.january.geometry.xtext.iges</module>
+		<module>../../org.eclipse.january.geometry.xtext.iges.ide</module>
+		<module>../../org.eclipse.january.geometry.xtext.iges.tests</module>
+		<module>../../org.eclipse.january.geometry.xtext.iges.ui</module>
+		<module>../../org.eclipse.january.geometry.xtext.iges.ui.tests</module>
+		<module>../../org.eclipse.january.geometry.xtext.mtl</module>
+		<module>../../org.eclipse.january.geometry.xtext.mtl.ide</module>
+		<module>../../org.eclipse.january.geometry.xtext.mtl.ui</module>
+		<module>../../org.eclipse.january.geometry.xtext.obj</module>
+		<module>../../org.eclipse.january.geometry.xtext.obj.ide</module>
+		<module>../../org.eclipse.january.geometry.xtext.obj.test</module>
+		<module>../../org.eclipse.january.geometry.xtext.obj.ui</module>
+		<module>../../org.eclipse.january.geometry.xtext.vtk</module>
+		<module>../../org.eclipse.january.geometry.xtext.vtk.ide</module>
+		<module>../../org.eclipse.january.geometry.xtext.vtk.tests</module>
+		<module>../../org.eclipse.january.geometry.xtext.vtk.ui</module>
+		<module>../../org.eclipse.january.geometry.xtext.vtk.ui.tests</module>
 		<module>../../org.eclipse.january.test</module>
-
-		<!-- Geometry plug-ins not enabled yet -->
 
 		<!-- releng -->
 		<module>../org.eclipse.january.releng.target</module>
