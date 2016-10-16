@@ -37,7 +37,10 @@ public class SliceNDIterator extends IndexIterator {
 	
 	private int sRank; // number of dimensions used (i.e. not missing)
 	final private SliceND oSlice; // omitted source slice
-	final private int[] sPos; // shortened position
+
+	final private SliceND sSlice; // shortened slice
+	final private int[] sStart; // shortened position
+	final private int[] sStop; // shortened end
 
 	private SliceND dSlice; // destination slice
 	private int[] dStart;
@@ -87,19 +90,29 @@ public class SliceNDIterator extends IndexIterator {
 		pos = cSlice.getStart();
 		end = cSlice.getStop();
 		if (sRank == rank) {
-			sPos = pos;
+			sStart = pos;
+			sStop = null;
 			oSlice = null;
+			sSlice = cSlice;
 		} else {
-			sPos = new int[sRank];
 			int[] dShape = dSlice.getShape();
+			int[] lShape = new int[sRank];
 			int[] oShape = new int[rank - sRank];
-			for (int i = 0, j = 0; i < rank; i++) {
+			for (int i = 0, j = 0, k = 0; i < rank; i++) {
 				if (omit[i]) {
 					oShape[j++] = sShape[i];
 				} else {
+					lShape[k++] = sShape[i];
 					dShape[i] = 1;
 				}
 			}
+			sSlice = new SliceND(lShape);
+			sStart = sSlice.getStart();
+			sStop = sSlice.getStop();
+//			lShape = sSlice.getShape();
+//			for (int k = 0; k < sRank; k++) {
+//				lShape[k] = 1;
+//			}
 			oSlice = new SliceND(oShape);
 			for (int i = 0, j = 0; i < rank; i++) {
 				if (omit[i]) {
@@ -132,12 +145,16 @@ public class SliceNDIterator extends IndexIterator {
 				end[j] = pos[j] + step[j];
 				dStart[j] = 0;
 				dStop[j] = 1;
-				if (sPos != pos) {
-					sPos[k--] = pos[j];
+				if (sStop != null) {
+					sStart[k] = pos[j];
+					sStop[k] = end[j];
+					k--;
 				}
 			} else {
-				if (sPos != pos) {
-					sPos[k--] = pos[j];
+				if (sStop != null) {
+					sStart[k] = pos[j];
+					sStop[k] = end[j];
+					k--;
 				}
 				return true;
 			}
@@ -179,7 +196,15 @@ public class SliceNDIterator extends IndexIterator {
 	 * @return used position
 	 */
 	public int[] getUsedPos() {
-		return sPos;
+		return sStart;
+	}
+
+	/**
+	 * Shortened slice where axes are omitted
+	 * @return used slice
+	 */
+	public SliceND getUsedSlice() {
+		return sSlice;
 	}
 
 	/**
@@ -191,13 +216,16 @@ public class SliceNDIterator extends IndexIterator {
 
 	@Override
 	public void reset() {
-		for (int i = 0; i <= endrank; i++) {
+		for (int i = 0, k = 0; i <= endrank; i++) {
 			int b = start[i];
 			int d = step[i];
 			if (!omit[i]) {
 				cSlice.setSlice(i, b, b + d, d);
 				dStart[i] = 0;
 				dStop[i] = 1;
+				if (sStop != null) {
+					sSlice.setSlice(k++, b, b + d, d);
+				}
 			} else {
 				cSlice.setSlice(i, b, end[i], d);
 			}
@@ -231,10 +259,10 @@ public class SliceNDIterator extends IndexIterator {
 			dStop[endrank]--;
 		}
 
-		if (sPos != pos) {
+		if (sStart != pos) {
 			for (int i = 0, k = 0; i <= endrank; i++) {
 				if (!omit[i]) {
-					sPos[k++] = pos[i];
+					sStart[k++] = pos[i];
 				}
 			}
 		}

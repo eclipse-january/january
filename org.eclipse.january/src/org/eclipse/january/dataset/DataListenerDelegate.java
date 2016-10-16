@@ -9,28 +9,23 @@
 
 package org.eclipse.january.dataset;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Class used by DynamicDataset to delegate
  */
 public class DataListenerDelegate {
 
-	private List<IDataListener> listeners;
+	private Set<IDataListener> listeners;
 
 	public DataListenerDelegate() {
-		listeners = Collections.synchronizedList(new ArrayList<IDataListener>());
+		listeners = Collections.newSetFromMap(new ConcurrentHashMap<IDataListener, Boolean>());
 	}
-	
+
 	public void addDataListener(IDataListener l) {
-		synchronized (listeners) {
-			if (!listeners.contains(l)) {
-				listeners.add(l);
-			}
-		}
+		listeners.add(l);
 	}
 
 	public void removeDataListener(IDataListener l) {
@@ -38,10 +33,8 @@ public class DataListenerDelegate {
 	}
 
 	public void fire(DataEvent evt) {
-		synchronized (listeners) {
-			for (Iterator<IDataListener> iterator = listeners.iterator(); iterator.hasNext();) {
-				iterator.next().dataChangePerformed(evt);
-			}
+		for (IDataListener listener : listeners) {
+			listener.dataChangePerformed(evt);
 		}
 	}
 
@@ -51,6 +44,6 @@ public class DataListenerDelegate {
 
 	public void clear() {
 		listeners.clear();
- 	}
+	}
 
 }

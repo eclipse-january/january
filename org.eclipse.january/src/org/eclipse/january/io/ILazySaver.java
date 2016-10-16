@@ -19,6 +19,7 @@ import org.eclipse.january.dataset.SliceND;
  * Used by lazy writeable datasets to write slices to a file
  */
 public interface ILazySaver extends ILazyLoader {
+	public static final long serialVersionUID = 1366057382940519510L;
 
 	/**
 	 * Initialize dataset in file

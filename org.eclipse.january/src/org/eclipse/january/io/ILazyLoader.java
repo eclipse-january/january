@@ -23,6 +23,7 @@ import org.eclipse.january.dataset.SliceND;
  * Used by lazy datasets to read slices from a file
  */
 public interface ILazyLoader extends Serializable {
+	public static final long serialVersionUID = -611684979804645511L;
 
 	/**
 	 * 

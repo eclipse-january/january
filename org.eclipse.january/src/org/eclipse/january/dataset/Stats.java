@@ -1630,7 +1630,7 @@ public class Stats {
 		return results;
 	}
 
-	public static double[] outlierValuesMap(final Dataset a, int nl, int nh) {
+	static double[] outlierValuesMap(final Dataset a, int nl, int nh) {
 		final TreeMap<Double, Integer> lMap = new TreeMap<Double, Integer>();
 		final TreeMap<Double, Integer> hMap = new TreeMap<Double, Integer>();
 
@@ -1713,7 +1713,7 @@ public class Stats {
 		return new double[] {lMap.lastKey(), hMap.firstKey(), ml, mh};
 	}
 
-	public static double[] outlierValuesList(final Dataset a, int nl, int nh) {
+	static double[] outlierValuesList(final Dataset a, int nl, int nh) {
 		final List<Double> lList = new ArrayList<Double>(nl);
 		final List<Double> hList = new ArrayList<Double>(nh);
 //		final List<Double> lList = new LinkedList<Double>();

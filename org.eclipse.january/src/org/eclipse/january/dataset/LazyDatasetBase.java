@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 
-	protected static final long serialVersionUID = 767926846438976050L;
+	private static final long serialVersionUID = 767926846438976050L;
 
 	protected static final Logger logger = LoggerFactory.getLogger(LazyDatasetBase.class);
 
@@ -220,6 +220,11 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 			if (MetadataType.class.isAssignableFrom(c)) {
 				return (Class<? extends MetadataType>) c;
 			}
+		}
+
+		Class<?> c = clazz.getSuperclass(); // Naughty: someone has sub-classed a metadata class
+		if (c != null) {
+			return findMetadataTypeSubInterfaces((Class<? extends MetadataType>) c);
 		}
 
 		logger.error("Somehow the search for metadata type interface ended in a bad place");

@@ -73,6 +73,11 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 	}
 
 	@Override
+	public ILazyDataset getDataset() {
+		return this;
+	}
+
+	@Override
 	public void addDataListener(IDataListener l) {
 		eventDelegate.addDataListener(l);
 	}
@@ -89,16 +94,16 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 		}
 	}
 
-
 	@Override
-	public void refreshShape() {
+	public boolean refreshShape() {
 		if (loader instanceof ILazyDynamicLoader) {
-			resize(((ILazyDynamicLoader)loader).refreshShape());
+			return resize(((ILazyDynamicLoader)loader).refreshShape());
 		}
+		return false;
 	}
 	
 	@Override
-	public void resize(int... newShape) {
+	public boolean resize(int... newShape) {
 		if (base != null) {
 			throw new UnsupportedOperationException("Changing the shape of a view is not allowed");
 		}
@@ -107,8 +112,9 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 			throw new IllegalArgumentException("Rank of new shape must match current shape");
 		}
 
-		if (Arrays.equals(shape, newShape))
-			return;
+		if (Arrays.equals(shape, newShape)) {
+			return false;
+		}
 
 		if (maxShape != null) {
 			for (int i = 0; i < rank; i++) {
@@ -127,6 +133,7 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 		}
 
 		eventDelegate.fire(new DataEvent(name, shape));
+		return true;
 	}
 
 	@Override

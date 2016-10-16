@@ -209,6 +209,7 @@ public class Random {
 	public static ILazyDataset lazyRand(int dtype, String name, int... shape) {
 		
 		return new LazyDataset(name, dtype, shape, new ILazyLoader() {
+			private static final long serialVersionUID = ILazyLoader.serialVersionUID;
 
 			@Override
 			public boolean isFileReadable() {

@@ -33,8 +33,7 @@ import org.eclipse.january.metadata.Sliceable;
 import org.eclipse.january.metadata.Transposable;
 
 public class LazyDataset extends LazyDatasetBase implements Serializable, Cloneable {
-
-	protected static final long serialVersionUID = LazyDatasetBase.serialVersionUID;
+	private static final long serialVersionUID = 2467865859867440242L;
 
 	protected int[]     oShape; // original shape
 	protected long      size;   // number of items
