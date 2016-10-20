@@ -4,7 +4,10 @@
 // It converts *.tpd files to *.target files intelligently and has some additional features.
 target "JanuaryExamples" with source requirements
 
-location "http://download.eclipse.org/january/builds/latest/repository" january-latest {
+// This set of examples is for the latest master branch build of January.
+// The examples are available for the released version of January on the
+// respective release branches (e.g. january_1_0 for the 1.0 release)
+location "http://download.eclipse.org/january/builds/january-master/latest/repository" january-latest {
 	org.eclipse.january lazy
 }
 
