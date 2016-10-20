@@ -57,6 +57,51 @@
    <bundle id="org.eclipse.january.geometry.xtext.vtk.ui" version="1.0.0.qualifier">
       <category name="january_geometry"/>
    </bundle>
+   <bundle id="org.eclipse.january.geometry.ide.source" version="1.0.0.qualifier">
+      <category name="january_geometry"/>
+   </bundle>
+   <bundle id="org.eclipse.january.geometry.model.source" version="1.0.0.qualifier">
+      <category name="january_geometry"/>
+   </bundle>
+   <bundle id="org.eclipse.january.geometry.ui.source" version="1.0.0.qualifier">
+      <category name="january_geometry"/>
+   </bundle>
+   <bundle id="org.eclipse.january.geometry.xtext.iges.source" version="1.0.0.qualifier">
+      <category name="january_geometry"/>
+   </bundle>
+   <bundle id="org.eclipse.january.geometry.xtext.iges.ide.source" version="1.0.0.qualifier">
+      <category name="january_geometry"/>
+   </bundle>
+   <bundle id="org.eclipse.january.geometry.xtext.iges.ui.source" version="1.0.0.qualifier">
+      <category name="january_geometry"/>
+   </bundle>
+   <bundle id="org.eclipse.january.geometry.xtext.mtl.source" version="1.0.0.qualifier">
+      <category name="january_geometry"/>
+   </bundle>
+   <bundle id="org.eclipse.january.geometry.xtext.mtl.ide.source" version="1.0.0.qualifier">
+      <category name="january_geometry"/>
+   </bundle>
+   <bundle id="org.eclipse.january.geometry.xtext.mtl.ui.source" version="1.0.0.qualifier">
+      <category name="january_geometry"/>
+   </bundle>
+   <bundle id="org.eclipse.january.geometry.xtext.obj.source" version="1.0.0.qualifier">
+      <category name="january_geometry"/>
+   </bundle>
+   <bundle id="org.eclipse.january.geometry.xtext.obj.ide.source" version="1.0.0.qualifier">
+      <category name="january_geometry"/>
+   </bundle>
+   <bundle id="org.eclipse.january.geometry.xtext.obj.ui.source" version="1.0.0.qualifier">
+      <category name="january_geometry"/>
+   </bundle>
+   <bundle id="org.eclipse.january.geometry.xtext.vtk.source" version="1.0.0.qualifier">
+      <category name="january_geometry"/>
+   </bundle>
+   <bundle id="org.eclipse.january.geometry.xtext.vtk.ide.source" version="1.0.0.qualifier">
+      <category name="january_geometry"/>
+   </bundle>
+   <bundle id="org.eclipse.january.geometry.xtext.vtk.ui.source" version="1.0.0.qualifier">
+      <category name="january_geometry"/>
+   </bundle>
    <category-def name="january_datasets" label="January Datasets"/>
    <category-def name="january_form" label="January Form Data Structures"/>
    <category-def name="january_geometry" label="January Geometry Data Structures"/>
