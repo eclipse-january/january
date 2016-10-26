@@ -836,7 +836,7 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 	}
 
 	@Override
-	public DoubleDataset getReal() { // CLASS_TYPE
+	public DoubleDataset getRealPart() { // CLASS_TYPE
 		DoubleDataset rdataset = new DoubleDataset(shape); // CLASS_TYPE
 		IndexIterator iter = getIterator();
 		IndexIterator riter = rdataset.getIterator();

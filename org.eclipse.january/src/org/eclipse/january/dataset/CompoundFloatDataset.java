@@ -836,7 +836,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 	}
 
 	@Override
-	public FloatDataset getReal() { // CLASS_TYPE
+	public FloatDataset getRealPart() { // CLASS_TYPE
 		FloatDataset rdataset = new FloatDataset(shape); // CLASS_TYPE
 		IndexIterator iter = getIterator();
 		IndexIterator riter = rdataset.getIterator();

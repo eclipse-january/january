@@ -836,7 +836,7 @@ public class CompoundShortDataset extends AbstractCompoundDataset {
 	}
 
 	@Override
-	public ShortDataset getReal() { // CLASS_TYPE
+	public ShortDataset getRealPart() { // CLASS_TYPE
 		ShortDataset rdataset = new ShortDataset(shape); // CLASS_TYPE
 		IndexIterator iter = getIterator();
 		IndexIterator riter = rdataset.getIterator();

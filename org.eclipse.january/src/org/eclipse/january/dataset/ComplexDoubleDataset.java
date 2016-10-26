@@ -473,7 +473,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	/**
 	 * @return imaginary part of dataset as new dataset
 	 */
-	public DoubleDataset getImaginary() { // CLASS_TYPE
+	public DoubleDataset getImaginaryPart() { // CLASS_TYPE
 		DoubleDataset rdataset = new DoubleDataset(shape); // CLASS_TYPE
 		IndexIterator iter = getIterator();
 		IndexIterator riter = rdataset.getIterator();

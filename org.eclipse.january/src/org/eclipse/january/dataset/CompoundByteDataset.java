@@ -836,7 +836,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	}
 
 	@Override
-	public ByteDataset getReal() { // CLASS_TYPE
+	public ByteDataset getRealPart() { // CLASS_TYPE
 		ByteDataset rdataset = new ByteDataset(shape); // CLASS_TYPE
 		IndexIterator iter = getIterator();
 		IndexIterator riter = rdataset.getIterator();

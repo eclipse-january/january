@@ -465,7 +465,7 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 	/**
 	 * @return imaginary part of dataset as new dataset
 	 */
-	public FloatDataset getImaginary() { // CLASS_TYPE
+	public FloatDataset getImaginaryPart() { // CLASS_TYPE
 		FloatDataset rdataset = new FloatDataset(shape); // CLASS_TYPE
 		IndexIterator iter = getIterator();
 		IndexIterator riter = rdataset.getIterator();

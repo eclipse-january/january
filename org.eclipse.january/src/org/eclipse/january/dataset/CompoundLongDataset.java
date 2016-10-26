@@ -836,7 +836,7 @@ public class CompoundLongDataset extends AbstractCompoundDataset {
 	}
 
 	@Override
-	public LongDataset getReal() { // CLASS_TYPE
+	public LongDataset getRealPart() { // CLASS_TYPE
 		LongDataset rdataset = new LongDataset(shape); // CLASS_TYPE
 		IndexIterator iter = getIterator();
 		IndexIterator riter = rdataset.getIterator();

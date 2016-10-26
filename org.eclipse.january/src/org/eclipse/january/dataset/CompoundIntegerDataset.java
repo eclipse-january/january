@@ -836,7 +836,7 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 	}
 
 	@Override
-	public IntegerDataset getReal() { // CLASS_TYPE
+	public IntegerDataset getRealPart() { // CLASS_TYPE
 		IntegerDataset rdataset = new IntegerDataset(shape); // CLASS_TYPE
 		IndexIterator iter = getIterator();
 		IndexIterator riter = rdataset.getIterator();
