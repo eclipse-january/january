@@ -324,10 +324,10 @@ public class AbstractDatasetTest {
 		assertEquals("0,3 element", 7, a.getDouble(0,3), 1e-6);
 		assertTrue("Final element", Double.isNaN(a.getDouble(2,3)));
 
-		a.set(12, 0);
+		a.set(12, 0, 0);
 		a.sort(null);
 		TestUtils.verbosePrintf("%s\n", a.toString());
-		assertEquals("First element", 2, a.getDouble(0), 1e-6);
+		assertEquals("First element", 2, a.getDouble(0, 0), 1e-6);
 		assertEquals("2,2 element", 12, a.getDouble(2,2), 1e-6);
 		assertTrue("Final element", Double.isNaN(a.getDouble(2,3)));
 
