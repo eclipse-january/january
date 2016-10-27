@@ -326,11 +326,18 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 		return (CompoundDataset) super.variance(axis);
 	}
 
+	abstract protected double getFirstValue();
+
 	abstract protected double getFirstValue(final int i);
 
 	abstract protected double getFirstValue(final int i, final int j);
 
 	abstract protected double getFirstValue(final int...pos);
+
+	@Override
+	public boolean getBoolean() {
+		return getFirstValue() != 0;
+	}
 
 	@Override
 	public boolean getBoolean(final int i) {
@@ -345,6 +352,11 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 	@Override
 	public boolean getBoolean(final int... pos) {
 		return getFirstValue(pos) != 0;
+	}
+
+	@Override
+	public byte getByte() {
+		return (byte) getFirstValue();
 	}
 
 	@Override
@@ -363,6 +375,11 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 	}
 
 	@Override
+	public short getShort() {
+		return (short) getFirstValue();
+	}
+
+	@Override
 	public short getShort(final int i) {
 		return (short) getFirstValue(i);
 	}
@@ -375,6 +392,11 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 	@Override
 	public short getShort(final int... pos) {
 		return (short) getFirstValue(pos);
+	}
+
+	@Override
+	public int getInt() {
+		return (int) getFirstValue();
 	}
 
 	@Override
@@ -393,6 +415,11 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 	}
 
 	@Override
+	public long getLong() {
+		return (long) getFirstValue();
+	}
+
+	@Override
 	public long getLong(final int i) {
 		return (long) getFirstValue(i);
 	}
@@ -405,6 +432,11 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 	@Override
 	public long getLong(final int... pos) {
 		return (long) getFirstValue(pos);
+	}
+
+	@Override
+	public float getFloat() {
+		return (float) getFirstValue();
 	}
 
 	@Override
@@ -423,6 +455,11 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 	}
 
 	@Override
+	public double getDouble() {
+		return getFirstValue();
+	}
+
+	@Override
 	public double getDouble(final int i) {
 		return getFirstValue(i);
 	}
@@ -435,6 +472,11 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 	@Override
 	public double getDouble(final int... pos) {
 		return getFirstValue(pos);
+	}
+
+	@Override
+	public void getDoubleArray(final double[] darray) {
+		getDoubleArrayAbs(getFirst1DIndex(), darray);
 	}
 
 	@Override

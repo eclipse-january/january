@@ -21,6 +21,9 @@ public class StringDataset extends StringDatasetBase {
 	// pin UID to base class
 	private static final long serialVersionUID = Dataset.serialVersionUID;
 
+	/**
+	 * Create a null dataset
+	 */
 	StringDataset() {
 		super();
 	}
@@ -136,6 +139,11 @@ public class StringDataset extends StringDatasetBase {
 	}
 
 	@Override
+	public double getDouble() {
+		throw new UnsupportedOperationException("Unsupported method for class");
+	}
+
+	@Override
 	public double getDouble(int i) {
 		throw new UnsupportedOperationException("Unsupported method for class");
 	}
@@ -151,6 +159,11 @@ public class StringDataset extends StringDatasetBase {
 	}
 
 	@Override
+	public float getFloat() {
+		throw new UnsupportedOperationException("Unsupported method for class");
+	}
+
+	@Override
 	public float getFloat(int i) {
 		throw new UnsupportedOperationException("Unsupported method for class");
 	}
@@ -162,6 +175,11 @@ public class StringDataset extends StringDatasetBase {
 
 	@Override
 	public float getFloat(int... pos) {
+		throw new UnsupportedOperationException("Unsupported method for class");
+	}
+
+	@Override
+	public long getLong() {
 		throw new UnsupportedOperationException("Unsupported method for class");
 	}
 
@@ -196,6 +214,11 @@ public class StringDataset extends StringDatasetBase {
 	}
 
 	@Override
+	public short getShort() {
+		throw new UnsupportedOperationException("Unsupported method for class");
+	}
+
+	@Override
 	public short getShort(int i) {
 		throw new UnsupportedOperationException("Unsupported method for class");
 	}
@@ -211,6 +234,11 @@ public class StringDataset extends StringDatasetBase {
 	}
 
 	@Override
+	public byte getByte() {
+		throw new UnsupportedOperationException("Unsupported method for class");
+	}
+
+	@Override
 	public byte getByte(int i) {
 		throw new UnsupportedOperationException("Unsupported method for class");
 	}
@@ -222,6 +250,11 @@ public class StringDataset extends StringDatasetBase {
 
 	@Override
 	public byte getByte(int... pos) {
+		throw new UnsupportedOperationException("Unsupported method for class");
+	}
+
+	@Override
+	public boolean getBoolean() {
 		throw new UnsupportedOperationException("Unsupported method for class");
 	}
 

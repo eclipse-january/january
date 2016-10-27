@@ -149,7 +149,7 @@ public interface Dataset extends IDataset {
 
 	/**
 	 * The shape (or array of lengths for each dimension) of the dataset can be empty for zero-rank
-	 * datasets
+	 * datasets and null for null datasets
 	 * 
 	 * @return reference of shape of dataset
 	 */
@@ -616,14 +616,20 @@ public interface Dataset extends IDataset {
 	public void setObjectAbs(int index, Object obj);
 
 	/**
-	 * Get an item from index i as an object. The dataset must be 1D
+	 * Get first item as an object. The dataset must not be null
+	 * @return item
+	 */
+	public Object getObject();
+
+	/**
+	 * Get an item from given position as an object. The dataset must be 1D
 	 * @param i
 	 * @return item
 	 */
 	public Object getObject(final int i);
 
 	/**
-	 * Get an item from indexes i, j as an object. The dataset must be 2D
+	 * Get an item from given position as an object. The dataset must be 2D
 	 * @param i
 	 * @param j
 	 * @return item
@@ -631,14 +637,20 @@ public interface Dataset extends IDataset {
 	public Object getObject(final int i, final int j);
 
 	/**
-	 * Get an item from index i as a string. The dataset must be 1D
+	 * Get first item as a string. The dataset must not be null
+	 * @return item
+	 */
+	public String getString();
+
+	/**
+	 * Get an item from given position as a string. The dataset must be 1D
 	 * @param i
 	 * @return item
 	 */
 	public String getString(final int i);
 
 	/**
-	 * Get an item from indexes i, j as a string. The dataset must be 2D
+	 * Get an item from given position as a string. The dataset must be 2D
 	 * @param i
 	 * @param j
 	 * @return item
@@ -646,14 +658,20 @@ public interface Dataset extends IDataset {
 	public String getString(final int i, final int j);
 
 	/**
-	 * Get an item from index i as a double. The dataset must be 1D
+	 * Get first item as a double. The dataset must not be null
+	 * @return item
+	 */
+	public double getDouble();
+
+	/**
+	 * Get an item from given position as a double. The dataset must be 1D
 	 * @param i
 	 * @return item
 	 */
 	public double getDouble(final int i);
 
 	/**
-	 * Get an item from indexes i, j as a double. The dataset must be 2D
+	 * Get an item from given position as a double. The dataset must be 2D
 	 * @param i
 	 * @param j
 	 * @return item
@@ -661,14 +679,20 @@ public interface Dataset extends IDataset {
 	public double getDouble(final int i, final int j);
 
 	/**
-	 * Get an item from index i as a float. The dataset must be 1D
+	 * Get first item as a float. The dataset must not be null
+	 * @return item
+	 */
+	public float getFloat();
+
+	/**
+	 * Get an item from given position as a float. The dataset must be 1D
 	 * @param i
 	 * @return item
 	 */
 	public float getFloat(final int i);
 
 	/**
-	 * Get an item from indexes i, j as a float. The dataset must be 2D
+	 * Get an item from given position as a float. The dataset must be 2D
 	 * @param i
 	 * @param j
 	 * @return item
@@ -676,14 +700,20 @@ public interface Dataset extends IDataset {
 	public float getFloat(final int i, final int j);
 
 	/**
-	 * Get an item from index i as a long. The dataset must be 1D
+	 * Get first item as a long. The dataset must not be null
+	 * @return item
+	 */
+	public long getLong();
+
+	/**
+	 * Get an item from given position as a long. The dataset must be 1D
 	 * @param i
 	 * @return item
 	 */
 	public long getLong(final int i);
 
 	/**
-	 * Get an item from indexes i, j as a long. The dataset must be 2D
+	 * Get an item from given position as a long. The dataset must be 2D
 	 * @param i
 	 * @param j
 	 * @return item
@@ -691,14 +721,20 @@ public interface Dataset extends IDataset {
 	public long getLong(final int i, final int j);
 
 	/**
-	 * Get an item from index i as an int. The dataset must be 1D
+	 * Get first item as an int. The dataset must not be null
+	 * @return item
+	 */
+	public int getInt();
+
+	/**
+	 * Get an item from given position as an int. The dataset must be 1D
 	 * @param i
 	 * @return item
 	 */
 	public int getInt(final int i);
 
 	/**
-	 * Get an item from indexes i, j as an int. The dataset must be 2D
+	 * Get an item from given position as an int. The dataset must be 2D
 	 * @param i
 	 * @param j
 	 * @return item
@@ -706,14 +742,20 @@ public interface Dataset extends IDataset {
 	public int getInt(final int i, final int j);
 
 	/**
-	 * Get an item from index i as a short. The dataset must be 1D
+	 * Get first item as a short. The dataset must not be null
+	 * @return item
+	 */
+	public short getShort();
+
+	/**
+	 * Get an item from given position as a short. The dataset must be 1D
 	 * @param i
 	 * @return item
 	 */
 	public short getShort(final int i);
 
 	/**
-	 * Get an item from indexes i, j as a short. The dataset must be 2D
+	 * Get an item from given position as a short. The dataset must be 2D
 	 * @param i
 	 * @param j
 	 * @return item
@@ -721,14 +763,20 @@ public interface Dataset extends IDataset {
 	public short getShort(final int i, final int j);
 
 	/**
-	 * Get an item from index i as a byte. The dataset must be 1D
+	 * Get first item as a byte. The dataset must not be null
+	 * @return item
+	 */
+	public byte getByte();
+
+	/**
+	 * Get an item from given position as a byte. The dataset must be 1D
 	 * @param i
 	 * @return item
 	 */
 	public byte getByte(final int i);
 
 	/**
-	 * Get an item from indexes i, j as a byte. The dataset must be 2D
+	 * Get an item from given positionj as a byte. The dataset must be 2D
 	 * @param i
 	 * @param j
 	 * @return item
@@ -736,14 +784,20 @@ public interface Dataset extends IDataset {
 	public byte getByte(final int i, final int j);
 
 	/**
-	 * Get an item from index i as a boolean. The dataset must be 1D
+	 * Get first item as a boolean. The dataset must not be null
+	 * @return item
+	 */
+	public boolean getBoolean();
+
+	/**
+	 * Get an item from given position as a boolean. The dataset must be 1D
 	 * @param i
 	 * @return item
 	 */
 	public boolean getBoolean(final int i);
 
 	/**
-	 * Get an item from indexes i, j as a boolean. The dataset must be 2D
+	 * Get an item from given position as a boolean. The dataset must be 2D
 	 * @param i
 	 * @param j
 	 * @return item
@@ -751,14 +805,20 @@ public interface Dataset extends IDataset {
 	public boolean getBoolean(final int i, final int j);
 
 	/**
-	 * Get the error for a given position.
+	 * Get the error for the first item. The dataset must not be null
+	 * @return item
+	 */
+	public double getError();
+
+	/**
+	 * Get the error for given position. The dataset must be 1D
 	 * @param i
 	 * @return error value (symmetric)
 	 */
 	public double getError(final int i);
 
 	/**
-	 * Get the error for a given position.
+	 * Get the error for given position. The dataset must be 2D
 	 * @param i
 	 * @param j
 	 * @return error value (symmetric)
@@ -766,19 +826,25 @@ public interface Dataset extends IDataset {
 	public double getError(final int i, final int j);
 
 	/**
-	 * Get the error values for a single point in the dataset
+	 * Get the error values for given position
 	 * @param i
 	 * @return the values of the error at this point (can be null when no error defined)
 	 */
 	public double[] getErrorArray(final int i);
 
 	/**
-	 * Get the error values for a single point in the dataset
+	 * Get the error values for given position
 	 * @param i
 	 * @param j
 	 * @return the values of the error at this point (can be null when no error defined)
 	 */
 	public double[] getErrorArray(final int i, final int j);
+
+	/**
+	 * Set the value given by object at the first position. The dataset must not be null
+	 * @param obj
+	 */
+	public void set(final Object obj);
 
 	/**
 	 * Set the value given by object at given position. The dataset must be 1D

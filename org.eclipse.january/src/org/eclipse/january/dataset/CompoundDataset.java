@@ -188,6 +188,12 @@ public interface CompoundDataset extends Dataset {
 	public CompoundDataset variance(int axis);
 
 	/**
+	 * Get first item as a double array
+	 * @param darray double array must be allocated and have sufficient length
+	 */
+	public void getDoubleArray(double[] darray);
+
+	/**
 	 * Get an item as a double array
 	 * @param darray double array must be allocated and have sufficient length
 	 * @param i
@@ -267,6 +273,11 @@ public interface CompoundDataset extends Dataset {
 	public CompoundDataset getErrors();
 
 	/**
+	 * @return item in first position
+	 */
+	public byte[] getByteArray();
+
+	/**
 	 * @param i
 	 * @return item in given position
 	 */
@@ -284,6 +295,11 @@ public interface CompoundDataset extends Dataset {
 	 * @return item in given position
 	 */
 	public byte[] getByteArray(final int... pos);
+
+	/**
+	 * @return item in first position
+	 */
+	public short[] getShortArray();
 
 	/**
 	 * @param i
@@ -305,6 +321,11 @@ public interface CompoundDataset extends Dataset {
 	public short[] getShortArray(final int... pos);
 
 	/**
+	 * @return item in first position
+	 */
+	public int[] getIntArray();
+
+	/**
 	 * @param i
 	 * @return item in given position
 	 */
@@ -322,6 +343,11 @@ public interface CompoundDataset extends Dataset {
 	 * @return item in given position
 	 */
 	public int[] getIntArray(final int... pos);
+
+	/**
+	 * @return item in first position
+	 */
+	public long[] getLongArray();
 
 	/**
 	 * @param i
@@ -343,6 +369,11 @@ public interface CompoundDataset extends Dataset {
 	public long[] getLongArray(final int... pos);
 
 	/**
+	 * @return item in first position
+	 */
+	public float[] getFloatArray();
+
+	/**
 	 * @param i
 	 * @return item in given position
 	 */
@@ -360,6 +391,11 @@ public interface CompoundDataset extends Dataset {
 	 * @return item in given position
 	 */
 	public float[] getFloatArray(final int... pos);
+
+	/**
+	 * @return item in first position
+	 */
+	public double[] getDoubleArray();
 
 	/**
 	 * @param i

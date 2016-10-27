@@ -74,11 +74,7 @@ public class DoubleDatasetTest {
 			assertEquals(r, sv.getDouble(-(i + 1)), 1e-5 * r);
 		}
 
-		try {
-			a.getDouble();
-			fail("Should have thrown an IAE");
-		} catch (IllegalArgumentException e) {
-		}
+		assertEquals(0, a.getDouble(), 1e-16);
 
 		try {
 			a.getDouble(null);

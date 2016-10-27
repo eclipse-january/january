@@ -28,6 +28,9 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 		return Dataset.RGB;
 	}
 
+	/**
+	 * Create a null dataset
+	 */
 	public RGBDataset() {
 		super(ISIZE);
 	}
@@ -40,7 +43,6 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 		super(ISIZE, data, shape);
 	}
 
-	
 	/**
 	 * Copy a dataset
 	 * @param dataset
@@ -418,6 +420,13 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	}
 
 	/**
+	 * @return red value in the first position
+	 */
+	public short getRed() {
+		return data[getFirst1DIndex()];
+	}
+
+	/**
 	 * @param i
 	 * @return red value in given position
 	 */
@@ -443,6 +452,13 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	}
 
 	/**
+	 * @return green value in the first position
+	 */
+	public short getGreen() {
+		return data[getFirst1DIndex() + 1];
+	}
+
+	/**
 	 * @param i
 	 * @return green value in given position
 	 */
@@ -465,6 +481,13 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 */
 	public short getGreen(final int... pos) {
 		return data[get1DIndex(pos) + 1];
+	}
+
+	/**
+	 * @return blue value in the first position
+	 */
+	public short getBlue() {
+		return data[getFirst1DIndex() + 2];
 	}
 
 	/**

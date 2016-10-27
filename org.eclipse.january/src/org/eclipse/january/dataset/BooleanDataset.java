@@ -22,6 +22,9 @@ public class BooleanDataset extends BooleanDatasetBase {
 	// pin UID to base class
 	private static final long serialVersionUID = Dataset.serialVersionUID;
 
+	/**
+	 * Create a null dataset
+	 */
 	BooleanDataset() {
 		super();
 	}
@@ -109,6 +112,11 @@ public class BooleanDataset extends BooleanDatasetBase {
 	}
 
 	@Override
+	public double getDouble() {
+		return getInt();
+	}
+
+	@Override
 	public double getDouble(final int i) {
 		return getInt(i);
 	}
@@ -121,6 +129,11 @@ public class BooleanDataset extends BooleanDatasetBase {
 	@Override
 	public double getDouble(final int... pos) {
 		return getInt(pos);
+	}
+
+	@Override
+	public float getFloat() {
+		return getInt();
 	}
 
 	@Override
@@ -139,6 +152,11 @@ public class BooleanDataset extends BooleanDatasetBase {
 	}
 
 	@Override
+	public long getLong() {
+		return getInt();
+	}
+
+	@Override
 	public long getLong(final int i) {
 		return getInt(i);
 	}
@@ -151,6 +169,11 @@ public class BooleanDataset extends BooleanDatasetBase {
 	@Override
 	public long getLong(final int... pos) {
 		return getInt(pos);
+	}
+
+	@Override
+	public int getInt() {
+		return get() ? 1 : 0;
 	}
 
 	@Override
@@ -169,6 +192,11 @@ public class BooleanDataset extends BooleanDatasetBase {
 	}
 
 	@Override
+	public short getShort() {
+		return (short) getInt();
+	}
+
+	@Override
 	public short getShort(final int i) {
 		return (short) getInt(i);
 	}
@@ -184,6 +212,11 @@ public class BooleanDataset extends BooleanDatasetBase {
 	}
 
 	@Override
+	public byte getByte() {
+		return (byte) getInt();
+	}
+
+	@Override
 	public byte getByte(final int i) {
 		return (byte) getInt(i);
 	}
@@ -196,6 +229,11 @@ public class BooleanDataset extends BooleanDatasetBase {
 	@Override
 	public byte getByte(final int... pos) {
 		return (byte) getInt(pos);
+	}
+
+	@Override
+	public boolean getBoolean() {
+		return get();
 	}
 
 	@Override

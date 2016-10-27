@@ -55,6 +55,9 @@ public class ObjectDatasetBase extends AbstractDataset {
 		return OBJECT; // DATA_TYPE
 	}
 
+	/**
+	 * Create a null dataset
+	 */
 	ObjectDatasetBase() {
 	}
 
@@ -64,14 +67,7 @@ public class ObjectDatasetBase extends AbstractDataset {
 	 */
 	ObjectDatasetBase(final int... shape) {
 		if (shape != null) {
-			if (shape.length == 1) {
-				size = shape[0];
-				if (size < 0) {
-					throw new IllegalArgumentException("Negative component in shape is not allowed");
-				}
-			} else {
-				size = ShapeUtils.calcSize(shape);
-			}
+			size = ShapeUtils.calcSize(shape);
 			this.shape = shape.clone();
 
 			try {
@@ -325,6 +321,13 @@ public class ObjectDatasetBase extends AbstractDataset {
 	}
 
 	/**
+	 * @return item in first position
+	 */
+	public Object get() { // PRIM_TYPE
+		return data[getFirst1DIndex()];
+	}
+
+	/**
 	 * @param i
 	 * @return item in given position
 	 */
@@ -350,6 +353,11 @@ public class ObjectDatasetBase extends AbstractDataset {
 	}
 
 	@Override
+	public Object getObject() {
+		return get(); // CLASS_TYPE
+	}
+
+	@Override
 	public Object getObject(final int i) {
 		return get(i); // CLASS_TYPE
 	}
@@ -362,6 +370,11 @@ public class ObjectDatasetBase extends AbstractDataset {
 	@Override
 	public Object getObject(final int... pos) {
 		return get(pos); // CLASS_TYPE
+	}
+
+	@Override
+	public String getString() {
+		return getStringAbs(getFirst1DIndex());
 	}
 
 	@Override
@@ -380,6 +393,11 @@ public class ObjectDatasetBase extends AbstractDataset {
 	}
 
 	@Override
+	public double getDouble() {
+		return 0;
+	}
+
+	@Override
 	public double getDouble(final int i) {
 		return 0;
 	}
@@ -391,6 +409,11 @@ public class ObjectDatasetBase extends AbstractDataset {
 
 	@Override
 	public double getDouble(final int... pos) {
+		return 0;
+	}
+
+	@Override
+	public float getFloat() {
 		return 0;
 	}
 
@@ -410,6 +433,11 @@ public class ObjectDatasetBase extends AbstractDataset {
 	}
 
 	@Override
+	public long getLong() {
+		return 0;
+	}
+
+	@Override
 	public long getLong(final int i) {
 		return 0;
 	}
@@ -421,6 +449,11 @@ public class ObjectDatasetBase extends AbstractDataset {
 
 	@Override
 	public long getLong(final int... pos) {
+		return 0;
+	}
+
+	@Override
+	public int getInt() {
 		return 0;
 	}
 
@@ -440,6 +473,11 @@ public class ObjectDatasetBase extends AbstractDataset {
 	}
 
 	@Override
+	public short getShort() {
+		return 0;
+	}
+
+	@Override
 	public short getShort(final int i) {
 		return 0;
 	}
@@ -451,6 +489,11 @@ public class ObjectDatasetBase extends AbstractDataset {
 
 	@Override
 	public short getShort(final int... pos) {
+		return 0;
+	}
+
+	@Override
+	public byte getByte() {
 		return 0;
 	}
 
@@ -470,6 +513,11 @@ public class ObjectDatasetBase extends AbstractDataset {
 	}
 
 	@Override
+	public boolean getBoolean() {
+		return false;
+	}
+
+	@Override
 	public boolean getBoolean(final int i) {
 		return false;
 	}
@@ -482,6 +530,15 @@ public class ObjectDatasetBase extends AbstractDataset {
 	@Override
 	public boolean getBoolean(final int... pos) {
 		return false;
+	}
+
+	/**
+	 * Sets the value at first point to the passed value. The dataset must not be null
+	 *
+	 * @param value
+	 */
+	public void setItem(final Object value) { // PRIM_TYPE
+		setAbs(getFirst1DIndex(), value);
 	}
 
 	/**
@@ -513,6 +570,11 @@ public class ObjectDatasetBase extends AbstractDataset {
 	 */
 	public void setItem(final Object value, final int... pos) { // PRIM_TYPE
 		setAbs(get1DIndex(pos), value);
+	}
+
+	@Override
+	public void set(final Object obj) {
+		setItem(obj); // FROM_OBJECT
 	}
 
 	@Override

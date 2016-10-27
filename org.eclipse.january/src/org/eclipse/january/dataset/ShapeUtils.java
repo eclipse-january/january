@@ -25,18 +25,23 @@ public class ShapeUtils {
 	 * @return size
 	 */
 	public static long calcLongSize(final int[] shape) {
-		double dsize = 1.0;
-	
-		if (shape == null || shape.length == 0)  // special case of zero-rank shape 
+		if (shape == null) { // special case of null-shaped
+			return 0;
+		}
+
+		final int rank = shape.length;
+		if (rank == 0) { // special case of zero-rank shape 
 			return 1;
+		}
 	
-		for (int i = 0; i < shape.length; i++) {
+		double dsize = 1.0;
+		for (int i = 0; i < rank; i++) {
 			// make sure the indexes isn't zero or negative
 			if (shape[i] == 0) {
 				return 0;
 			} else if (shape[i] < 0) {
 				throw new IllegalArgumentException(String.format(
-						"The %d-th is %d which is an illegal argument as it is negative", i, shape[i]));
+						"The %d-th is %d which is not allowed as it is negative", i, shape[i]));
 			}
 	
 			dsize *= shape[i];
@@ -72,7 +77,10 @@ public class ShapeUtils {
 	 * @return true if they are compatible
 	 */
 	public static boolean areShapesBroadcastCompatible(final int[] ashape, final int[] bshape) {
-	
+		if (ashape == null || bshape == null) {
+			return ashape == bshape;
+		}
+
 		if (ashape.length < bshape.length) {
 			return areShapesBroadcastCompatible(bshape, ashape);
 		}
@@ -94,7 +102,10 @@ public class ShapeUtils {
 	 * @return true if they are compatible
 	 */
 	public static boolean areShapesCompatible(final int[] ashape, final int[] bshape) {
-	
+		if (ashape == null || bshape == null) {
+			return ashape == bshape;
+		}
+
 		List<Integer> alist = new ArrayList<Integer>();
 	
 		for (int a : ashape) {
@@ -122,6 +133,10 @@ public class ShapeUtils {
 	 * @return true if they are compatible
 	 */
 	public static boolean areShapesCompatible(final int[] ashape, final int[] bshape, final int axis) {
+		if (ashape == null || bshape == null) {
+			return ashape == bshape;
+		}
+
 		if (ashape.length != bshape.length) {
 			return false;
 		}
@@ -207,10 +222,14 @@ public class ShapeUtils {
 	 * @return newly squeezed shape
 	 */
 	public static int[] squeezeShape(final int[] oshape, int axis) {
-		if (oshape == null || oshape.length == 0) {
+		if (oshape == null) {
+			return null;
+		}
+
+		final int rank = oshape.length;
+		if (rank == 0) {
 			return new int[0];
 		}
-		int rank = oshape.length;
 		if (axis < 0) {
 			axis += rank;
 		}
@@ -230,15 +249,16 @@ public class ShapeUtils {
 	/**
 	 * Get shape from object (array or list supported)
 	 * @param obj
-	 * @return shape
+	 * @return shape can be null if obj is null
 	 */
 	public static int[] getShapeFromObject(final Object obj) {
-		ArrayList<Integer> lshape = new ArrayList<Integer>();
-	
-		getShapeFromObj(lshape, obj, 0);
-		if (obj != null && lshape.size() == 0) {
-			return new int[0]; // cope with a single item
+		if (obj == null) {
+			return null;
 		}
+
+		ArrayList<Integer> lshape = new ArrayList<Integer>();
+		getShapeFromObj(lshape, obj, 0);
+
 		final int rank = lshape.size();
 		final int[] shape = new int[rank];
 		for (int i = 0; i < rank; i++) {
@@ -311,14 +331,19 @@ public class ShapeUtils {
 	 * @return n-D position
 	 */
 	public static int[] getNDPositionFromShape(int n, int[] shape) {
-		if (shape == null || shape.length == 0)
-			return new int[0];
-	
+		if (shape == null) {
+			return null;
+		}
+
 		int rank = shape.length;
+		if (rank == 0) {
+			return new int[0];
+		}
+
 		if (rank == 1) {
 			return new int[] { n };
 		}
-	
+
 		int[] output = new int[rank];
 		for (rank--; rank > 0; rank--) {
 			output[rank] = n % shape[rank];
