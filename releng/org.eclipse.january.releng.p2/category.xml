@@ -6,6 +6,18 @@
    <bundle id="org.eclipse.january.source" version="1.0.0.qualifier">
       <category name="january_datasets"/>
    </bundle>
+   <bundle id="org.eclipse.january.asserts" version="1.0.0.qualifier">
+      <category name="january_datasets_test"/>
+   </bundle>
+   <bundle id="org.eclipse.january.asserts.source" version="1.0.0.qualifier">
+      <category name="january_datasets_test"/>
+   </bundle>
+   <bundle id="org.eclipse.january.test" version="1.0.0.qualifier">
+      <category name="january_datasets_test"/>
+   </bundle>
+   <bundle id="org.eclipse.january.test.source" version="1.0.0.qualifier">
+      <category name="january_datasets_test"/>
+   </bundle>
    <bundle id="org.eclipse.january.form" version="1.0.0.qualifier">
       <category name="january_form"/>
    </bundle>
@@ -103,6 +115,7 @@
       <category name="january_geometry"/>
    </bundle>
    <category-def name="january_datasets" label="January Datasets"/>
+   <category-def name="january_datasets_tests" label="Tests for January Datasets"/>
    <category-def name="january_form" label="January Form Data Structures"/>
    <category-def name="january_geometry" label="January Geometry Data Structures"/>
 </site>
