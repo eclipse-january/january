@@ -32,7 +32,7 @@ import org.eclipse.january.dataset.Slice;
 public class BasicExample {
 	public static void main(String[] args) {
 		Utils.suppressSLF4JError();
-		System.out.println("Welcome to a Basic Example of the org.eclipse.dataset.");
+		System.out.println("Welcome to a Basic Example of the org.eclipse.january.");
 
 		// Create a Dataset:
 		Dataset dataset = DatasetFactory.createFromObject(new double[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 });

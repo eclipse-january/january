@@ -19,6 +19,7 @@ import org.eclipse.january.dataset.ILazyDataset;
 import org.eclipse.january.dataset.LazyMaths;
 import org.eclipse.january.dataset.Random;
 import org.eclipse.january.dataset.Slice;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -37,6 +38,11 @@ import org.junit.Test;
  *
  */
 public class LazyExamples {
+	
+	@Before
+	public void before() {
+		Utils.suppressSLF4JError();
+	}
 
 	/**
 	 * Lazy datasets can exist which are too big to fit in memory

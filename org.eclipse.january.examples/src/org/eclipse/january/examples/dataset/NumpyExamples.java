@@ -49,6 +49,8 @@ public class NumpyExamples {
 
 	@Before
 	public void create() {
+		Utils.suppressSLF4JError();
+
 		a = DatasetFactory.createFromObject(new double[]{1,2,3,6,4,5,8,9,7}, 3, 3);
 		b = DatasetFactory.createFromObject(new double[]{1.1,2.2,3.3,4.4,5.5,6.6}, 2, 3);
 		c = DatasetFactory.createFromObject(new double[]{1.1,2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9}, 3, 3);

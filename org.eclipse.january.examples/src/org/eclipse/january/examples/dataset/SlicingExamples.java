@@ -16,6 +16,7 @@ import org.eclipse.january.dataset.IDataset;
 import org.eclipse.january.dataset.ILazyDataset;
 import org.eclipse.january.dataset.Random;
 import org.eclipse.january.dataset.Slice;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -25,6 +26,11 @@ import org.junit.Test;
  *
  */
 public class SlicingExamples {
+	
+	@Before
+	public void before() {
+		Utils.suppressSLF4JError();
+	}
 
 	/**
 	 * Slice using basic int[]

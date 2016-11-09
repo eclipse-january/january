@@ -20,6 +20,7 @@ import org.eclipse.january.dataset.DatasetFactory;
 import org.eclipse.january.dataset.IndexIterator;
 import org.eclipse.january.dataset.PositionIterator;
 import org.eclipse.january.dataset.StrideIterator;
+import org.junit.Before;
 import org.junit.Test;
 
 
@@ -31,6 +32,11 @@ import org.junit.Test;
  *
  */
 public class IterationExamples {
+	
+	@Before
+	public void before() {
+		Utils.suppressSLF4JError();
+	}
 
 	/**
 	 * Index Iterator

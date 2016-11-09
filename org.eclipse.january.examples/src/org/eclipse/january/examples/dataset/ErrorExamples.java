@@ -13,6 +13,7 @@ package org.eclipse.january.examples.dataset;
 
 import org.eclipse.january.dataset.Dataset;
 import org.eclipse.january.dataset.Random;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -22,13 +23,17 @@ import org.junit.Test;
  *
  */
 public class ErrorExamples {
+	
+	@Before
+	public void before() {
+		Utils.suppressSLF4JError();
+	}
 
 	/**
 	 * Set the error on some data.
 	 */
 	@Test
 	public void setErrorSimple() {
-		
 		Dataset rand  = Random.rand(0, 100, new int[]{1024, 1024});
 		Dataset error = Random.rand(0, 1,   new int[]{1024, 1024});
 		
