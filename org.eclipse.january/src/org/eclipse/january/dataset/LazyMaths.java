@@ -12,7 +12,9 @@
 
 package org.eclipse.january.dataset;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.eclipse.january.DatasetException;
 import org.slf4j.Logger;
@@ -34,6 +36,8 @@ public final class LazyMaths {
 	 * @throws DatasetException 
 	 */
 	public static Dataset sum(final ILazyDataset data, int axis) throws DatasetException {
+		if (data instanceof Dataset)
+			return ((Dataset) data).sum(axis);
 		int[][] sliceInfo = new int[3][];
 		int[] shape = data.getShape();
 		final Dataset result = prepareDataset(axis, shape, sliceInfo);
@@ -53,6 +57,53 @@ public final class LazyMaths {
 		return result;
 	}
 
+	/**
+	 * @param data
+	 * @param ignoreAxes axes to ignore
+	 * @return sum when given axes are ignored in lazy dataset
+	 * @throws DatasetException 
+	 */
+	public static Dataset sum(final ILazyDataset data, int... ignoreAxes) throws DatasetException {
+		return sum(data, true, ignoreAxes);
+	}
+	
+	/**
+	 * @param data
+	 * @param ignore if true, ignore the provided axes, otherwise use only the provided axes 
+	 * @param axes axes to ignore or accept, depending on the preceding flag
+	 * @return sum
+	 * @throws DatasetException 
+	 */
+	public static Dataset sum(final ILazyDataset data, boolean ignore, int... axes) throws DatasetException {
+		Arrays.sort(axes); // ensure they are properly sorted
+	
+		ILazyDataset rv = data;
+		
+		if (ignore) {
+			List<Integer> goodAxes = new ArrayList<Integer>();
+			for (int i = 0 ; i < data.getRank() ; i++) {
+				boolean found = false;
+				for (int j = 0 ; j < axes.length ; j++) {
+					if (i == axes[j]) {
+						found = true;
+						break;
+					}
+				}
+				if (!found)		
+					goodAxes.add(i);
+			}
+
+			for (int i = 0 ; i < goodAxes.size() ; i++) {
+				rv = sum(rv, goodAxes.get(i) - i);
+			}
+		} else {
+			for (int i = 0 ; i < axes.length ; i++) {
+				rv = sum(rv, axes[i] - i);
+			}
+		}
+		return DatasetUtils.sliceAndConvertLazyDataset(rv);
+	}
+	
 	/**
 	 * @param data
 	 * @param axis (can be negative)
