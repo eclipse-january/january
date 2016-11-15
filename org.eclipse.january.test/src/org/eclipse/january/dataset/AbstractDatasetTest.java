@@ -595,8 +595,8 @@ public class AbstractDatasetTest {
 		assertEquals(cols, tiled.getShape()[1]);
 		assertEquals("Datasets not equal", tiled, b);
 
-		assertTrue("Creation of tile took more than 30x as long as array creation of same size! (It took "
-				+ diff2 + ")", diff2 <= (diff1 * 30));
+		assertTrue("Creation of tile took more than 50x as long as array creation of same size! (It took "
+				+ diff2 + "ms)", diff2 <= (diff1 * 50));
 	}
 
 	/**
