@@ -55,7 +55,7 @@ public class C1TheBasics {
 		b = DatasetFactory.createFromObject(new double[][] {{1.5, 2, 3}, {4, 5, 6}});
 		Utils.printDType(b);
 
-		Dataset c = DatasetFactory.createFromObject(new int[][] {{2, 3}, {4, 5}}, Dataset.COMPLEX128);
+		Dataset c = DatasetFactory.createFromObject(Dataset.COMPLEX128, new int[][] {{2, 3}, {4, 5}});
 		Utils.print(c);
 		Utils.printDType(c);
 
