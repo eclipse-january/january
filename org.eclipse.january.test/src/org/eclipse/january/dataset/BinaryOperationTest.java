@@ -11,6 +11,8 @@ package org.eclipse.january.dataset;
 
 import static org.junit.Assert.assertEquals;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -32,28 +34,28 @@ public class BinaryOperationTest {
 	@Parameters
 	public static Collection<Object[]> parameters() {
 		return Arrays.asList(new Object[][] {
-				{BinaryOperation.Addition.class, new Object[][] {
+				{BinaryOperation.Addition.class, null, new Object[][] {
 					{false, 0l, 0l}, {true, 1l, 0l}, {true, 0l, 1l}, {true, 1l, 1l},
 					{0l, 0l, 0l}, {1l, 1l, 0l}, {1l, 0l, 1l}, {2l, 1l, 1l},
 					{0d, 0d, 0d}, {1d, 1d, 0d}, {1d, 0d, 1d}, {2d, 1d, 1d},
 					{new Complex(0), 0d, 0d, 0d, 0d}, {new Complex(1), 1d, 0d, 0d, 0d}, {new Complex(1), 0d, 0d, 1d, 0d}, {new Complex(2), 1d, 0d, 1d, 0d},
 					{new Complex(0, 0), 0d, 0d, 0d, 0d}, {new Complex(1, 1), 1d, 1d, 0d, 0d}, {new Complex(1, 1), 0d, 1d, 1d, 0d}, {new Complex(2, 2), 1d, 1d, 1d, 1d},
 				}},
-				{BinaryOperation.Subtraction.class, new Object[][] {
+				{BinaryOperation.Subtraction.class, null, new Object[][] {
 					{true, 0l, 0l}, {true, 1l, 0l}, {false, 0l, 1l}, {true, 1l, 1l},
 					{0l, 0l, 0l}, {1l, 1l, 0l}, {-1l, 0l, 1l}, {0l, 1l, 1l},
 					{0d, 0d, 0d}, {1d, 1d, 0d}, {-1d, 0d, 1d}, {0d, 1d, 1d},
 					{new Complex(0), 0d, 0d, 0d, 0d}, {new Complex(1), 1d, 0d, 0d, 0d}, {new Complex(-1), 0d, 0d, 1d, 0d}, {new Complex(0), 1d, 0d, 1d, 0d},
 					{new Complex(0, 0), 0d, 0d, 0d, 0d}, {new Complex(1, 1), 1d, 1d, 0d, 0d}, {new Complex(-1, 1), 0d, 1d, 1d, 0d}, {new Complex(0, 0), 1d, 1d, 1d, 1d},
 				}},
-				{BinaryOperation.Multiplication.class, new Object[][] {
+				{BinaryOperation.Multiplication.class, null, new Object[][] {
 					{false, 0l, 0l}, {false, 1l, 0l}, {false, 0l, 1l}, {true, 1l, 1l},
 					{0l, 0l, 0l}, {0l, 1l, 0l}, {0l, 0l, 1l}, {2l, 2l, 1l},
 					{0d, 0d, 0d}, {0d, 1d, 0d}, {0d, 0d, 1d}, {2d, 2d, 1d},
 					{new Complex(0), 0d, 0d, 0d, 0d}, {new Complex(0), 1d, 0d, 0d, 0d}, {new Complex(0), 0d, 0d, 1d, 0d}, {new Complex(1), 1d, 0d, 1d, 0d},
 					{new Complex(0, 0), 0d, 0d, 0d, 0d}, {new Complex(0), 1d, 1d, 0d, 0d}, {new Complex(0, 1), 0d, 1d, 1d, 0d}, {new Complex(0, 2), 1d, 1d, 1d, 1d},
 				}},
-				{BinaryOperation.Division.class, new Object[][] {
+				{BinaryOperation.Division.class, null, new Object[][] {
 					{false, 0l, 0l}, {true, 1l, 0l}, {false, 0l, 1l}, {false, 1l, 1l},
 					{0l, 0l, 0l}, {0l, 1l, 0l}, {0l, 0l, 1l}, {2l, 2l, 1l},
 					{-2l, -5l, 2l}, {-1l, -5l, 3l}, {-2l, 5l, -2l}, {-1l, 5l, -3l}, {2l, -5l, -2l}, {1l, -5l, -3l},
@@ -61,13 +63,13 @@ public class BinaryOperationTest {
 					{new Complex(Double.NaN, Double.NaN), 0d, 0d, 0d, 0d}, {new Complex(Double.POSITIVE_INFINITY, Double.NaN), 1d, 0d, 0d, 0d}, {new Complex(0), 0d, 0d, 1d, 0d}, {new Complex(1), 1d, 0d, 1d, 0d},
 					{new Complex(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY), 1d, 1d, 0d, 0d}, {new Complex(0, 1), 0d, 1d, 1d, 0d}, {new Complex(1, 0), 1d, 1d, 1d, 1d},
 				}},
-				{BinaryOperation.DivisionWithZero.class, new Object[][] {
+				{BinaryOperation.DivisionWithZero.class, null, new Object[][] {
 					{false, 0l, 0l}, {true, 1l, 0l}, {false, 0l, 1l}, {false, 1l, 1l},
 					{0l, 0l, 0l}, {0l, 1l, 0l}, {0l, 0l, 1l}, {2l, 2l, 1l},
 					{new Complex(0d), 0d, 0d, 0d, 0d}, {new Complex(0d), 1d, 0d, 0d, 0d}, {new Complex(0), 0d, 0d, 1d, 0d}, {new Complex(1), 1d, 0d, 1d, 0d},
 					{new Complex(0d), 1d, 1d, 0d, 0d}, {new Complex(0, 1), 0d, 1d, 1d, 0d}, {new Complex(1, 0), 1d, 1d, 1d, 1d},
 				}},
-				{BinaryOperation.DivisionTowardsFloor.class, new Object[][] {
+				{BinaryOperation.DivisionTowardsFloor.class, null, new Object[][] {
 					{false, 0l, 0l}, {true, 1l, 0l}, {false, 0l, 1l}, {false, 1l, 1l},
 					{0l, 0l, 0l}, {0l, 1l, 0l}, {0l, 0l, 1l}, {2l, 2l, 1l},
 					{-3l, -5l, 2l}, {-2l, -5l, 3l}, {-3l, 5l, -2l}, {-2l, 5l, -3l}, {2l, -5l, -2l}, {1l, -5l, -3l},
@@ -75,17 +77,59 @@ public class BinaryOperationTest {
 					{Complex.NaN, 0d, 0d, 0d, 0d}, {new Complex(Double.POSITIVE_INFINITY, Double.NaN), 1d, 0d, 0d, 0d}, {new Complex(0), 0d, 0d, 1d, 0d}, {new Complex(1), 1d, 0d, 1d, 0d},
 					{Complex.INF, 1d, 1d, 0d, 0d}, {new Complex(0, 1), 0d, 1d, 1d, 0d}, {new Complex(1, 0), 1d, 1d, 1d, 1d},
 				}},
-				{BinaryOperation.Remainder.class, new Object[][] {
+				{BinaryOperation.Remainder.class, null, new Object[][] {
 					{0l, 0l, 0l}, {0l, 1l, 0l}, {0l, 0l, 1l}, {0l, 2l, 1l},
 					{-1l, -5l, 2l}, {-2l, -5l, 3l}, {1l, 5l, -2l}, {2l, 5l, -3l}, {-1l, -5l, -2l}, {-2l, -5l, -3l},
 					{Double.NaN, 0d, 0d}, {Double.NaN, 1d, 0d}, {0d, 0d, 1d}, {0d, 2d, 1d},
 				}},
-				{BinaryOperation.Exponentiation.class, new Object[][] {
+				{BinaryOperation.Exponentiation.class, null, new Object[][] {
 					{true, 0l, 0l}, {true, 1l, 0l}, {false, 0l, 1l}, {true, 1l, 1l},
 					{1l, 0l, 0l}, {1l, 1l, 0l}, {0l, 0l, 1l}, {2l, 2l, 1l},
 					{1d, 0d, 0d}, {1d, 1d, 0d}, {0d, 0d, 1d}, {2d, 2d, 1d},
 					{Complex.NaN, 0d, 0d, 0d, 0d}, {new Complex(1), 1d, 0d, 0d, 0d}, {Complex.NaN, 0d, 0d, 1d, 0d}, {new Complex(1), 1d, 0d, 1d, 0d},
 					{Complex.NaN, 0d, 0d, 0d, 0d}, {new Complex(1), 1d, 1d, 0d, 0d}, {new Complex(0, 1), 0d, 1d, 1d, 0d}, {new Complex(C_M*Math.cos(C_A), C_M*Math.sin(C_A)), 1d, 1d, 1d, 1d},
+				}},
+				{BinaryOperation.Maximum.class, null, new Object[][] {
+					{false, 0l, 0l}, {true, 1l, 0l}, {true, 0l, 1l}, {true, 1l, 1l},
+					{0l, 0l, 0l}, {1l, 1l, 0l}, {1l, 0l, 1l}, {2l, 2l, 1l},
+					{2l, -5l, 2l}, {3l, -5l, 3l}, {5l, 5l, -2l}, {5l, 5l, -3l}, {-2l, -5l, -2l}, {-3l, -5l, -3l},
+					{0d, 0d, 0d}, {1d, 1d, 0d}, {1d, 0d, 1d}, {2d, 2d, 1d},
+				}},
+				{BinaryOperation.Minimum.class, null, new Object[][] {
+					{false, 0l, 0l}, {false, 1l, 0l}, {false, 0l, 1l}, {true, 1l, 1l},
+					{0l, 0l, 0l}, {0l, 1l, 0l}, {0l, 0l, 1l}, {1l, 2l, 1l},
+					{-5l, -5l, 2l}, {-5l, -5l, 3l}, {-2l, 5l, -2l}, {-3l, 5l, -3l}, {-5l, -5l, -2l}, {-5l, -5l, -3l},
+					{0d, 0d, 0d}, {10, 1d, 0d}, {0d, 0d, 1d}, {1d, 2d, 1d},
+				}},
+				{BinaryOperation.UseIfGreaterThan.class, -2.5, new Object[][] {
+					{false, 0l, 0l}, {true, 1l, 0l}, {false, 0l, 1l}, {true, 1l, 1l},
+					{0l, 0l, 0l}, {-2l, 1l, 0l}, {0l, 0l, 1l}, {-2l, 2l, 1l},
+					{-5l, -5l, 2l}, {-5l, -5l, 3l}, {-2l, 5l, -2l}, {-2l, 5l, -3l}, {-5l, -5l, -2l}, {-5l, -5l, -3l},
+					{0d, 0d, 0d}, {-2.5d, 1d, 0d}, {0d, 0d, 1d}, {-2.5d, 2d, 1d},
+				}},
+				{BinaryOperation.UseIfGreaterThanOrEqualTo.class, -2.5, new Object[][] {
+					{true, 0l, 0l}, {true, 1l, 0l}, {false, 0l, 1l}, {true, 1l, 1l},
+					{-2l, 0l, 0l}, {-2l, 1l, 0l}, {0l, 0l, 1l}, {-2l, 2l, 1l},
+					{-5l, -5l, 2l}, {-5l, -5l, 3l}, {-2l, 5l, -2l}, {-2l, 5l, -3l}, {-5l, -5l, -2l}, {-5l, -5l, -3l},
+					{-2.5d, 0d, 0d}, {-2.5d, 1d, 0d}, {0d, 0d, 1d}, {-2.5d, 2d, 1d},
+				}},
+				{BinaryOperation.UseIfLessThan.class, -2.5, new Object[][] {
+					{false, 0l, 0l}, {true, 1l, 0l}, {true, 0l, 1l}, {true, 1l, 1l},
+					{0l, 0l, 0l}, {1l, 1l, 0l}, {-2l, 0l, 1l}, {2l, 2l, 1l},
+					{-2l, -5l, 2l}, {-2l, -5l, 3l}, {5l, 5l, -2l}, {5l, 5l, -3l}, {-2l, -5l, -2l}, {-2l, -5l, -3l},
+					{0d, 0d, 0d}, {1d, 1d, 0d}, {-2.5d, 0d, 1d}, {2d, 2d, 1d},
+				}},
+				{BinaryOperation.UseIfLessThanOrEqualTo.class, -2.5, new Object[][] {
+					{true, 0l, 0l}, {true, 1l, 0l}, {true, 0l, 1l}, {true, 1l, 1l},
+					{-2l, 0l, 0l}, {1l, 1l, 0l}, {-2l, 0l, 1l}, {2l, 2l, 1l},
+					{-2l, -5l, 2l}, {-2l, -5l, 3l}, {5l, 5l, -2l}, {5l, 5l, -3l}, {-2l, -5l, -2l}, {-2l, -5l, -3l},
+					{-2.5d, 0d, 0d}, {1d, 1d, 0d}, {-2.5d, 0d, 1d}, {2d, 2d, 1d},
+				}},
+				{BinaryOperation.UseIfEqualTo.class, -2.5, new Object[][] {
+					{true, 0l, 0l}, {true, 1l, 0l}, {false, 0l, 1l}, {true, 1l, 1l},
+					{-2l, 0l, 0l}, {1l, 1l, 0l}, {0l, 0l, 1l}, {2l, 2l, 1l},
+					{-5l, -5l, 2l}, {-5l, -5l, 3l}, {5l, 5l, -2l}, {5l, 5l, -3l}, {-5l, -5l, -2l}, {-5l, -5l, -3l},
+					{-2.5d, 0d, 0d}, {1d, 1d, 0d}, {0d, 0d, 1d}, {2d, 2d, 1d},
 				}},
 		});
 	}
@@ -100,9 +144,21 @@ public class BinaryOperationTest {
 	 * @param values object array containing expected value first then operands
 	 * @throws InstantiationException
 	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException 
+	 * @throws IllegalArgumentException 
+	 * @throws SecurityException 
+	 * @throws NoSuchMethodException 
 	 */
-	public BinaryOperationTest(Class<BinaryOperation> opClass, Object[][] values) throws InstantiationException, IllegalAccessException {
-		operation = opClass.newInstance();
+	public BinaryOperationTest(Class<BinaryOperation> opClass, Object parameter, Object[][] values) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+
+		if (parameter == null) {
+			operation = opClass.newInstance();
+ 		} else if (parameter instanceof Number) {
+ 			Constructor<BinaryOperation> c = opClass.getConstructor(Number.class);
+ 			operation = c.newInstance(parameter);
+		} else {
+			throw new IllegalArgumentException("Parameter type is not supported");
+		}
 		int l = values.length;
 		expected = new Object[l];
 		operands = new Object[l][2];

@@ -343,4 +343,326 @@ public interface BinaryOperation {
 			return "**";
 		}
 	}
+
+	/**
+	 * Select maximum of a and b
+	 */
+	public static class Maximum implements BinaryOperation {
+		@Override
+		public boolean booleanOperate(long a, long b) {
+			return a > b ? a != 0 : b != 0;
+		}
+
+		@Override
+		public long longOperate(long a, long b) {
+			return a > b ? a : b;
+		}
+
+		@Override
+		public double doubleOperate(double a, double b) {
+			return a > b ? a : b;
+		}
+
+		@Override
+		public void complexOperate(double[] out, double ra, double ia, double rb, double ib) {
+			throw new IllegalArgumentException("select greater than does not support complex numbers");
+		}
+	}
+
+	/**
+	 * Select minimum of a and b
+	 */
+	public static class Minimum implements BinaryOperation {
+		@Override
+		public boolean booleanOperate(long a, long b) {
+			return a < b ? a != 0 : b != 0;
+		}
+
+		@Override
+		public long longOperate(long a, long b) {
+			return a < b ? a : b;
+		}
+
+		@Override
+		public double doubleOperate(double a, double b) {
+			return a < b ? a : b;
+		}
+
+		@Override
+		public void complexOperate(double[] out, double ra, double ia, double rb, double ib) {
+			throw new IllegalArgumentException("select less than does not support complex numbers");
+		}
+	}
+
+	/**
+	 * Use given value if a > b else use a
+	 */
+	static class UseBase implements BinaryOperation {
+		protected boolean br;
+		protected long lr;
+		protected double dr;
+
+		/**
+		 * @param br given value as boolean
+		 * @param lr given value as long
+		 * @param dr given value as double
+		 */
+		UseBase(boolean br, long lr, double dr) {
+			this.br = br;
+			this.lr = lr;
+			this.dr = dr;
+		}
+
+		/**
+		 * @param r given value as Number
+		 */
+		UseBase(Number r) {
+			br = r.intValue() != 0;
+			lr = r.longValue();
+			dr = r.doubleValue();
+		}
+
+		@Override
+		public boolean booleanOperate(long a, long b) {
+			return false;
+		}
+
+		@Override
+		public long longOperate(long a, long b) {
+			return 0;
+		}
+
+		@Override
+		public double doubleOperate(double a, double b) {
+			return 0;
+		}
+
+		@Override
+		public void complexOperate(double[] out, double ra, double ia, double rb, double ib) {
+		}
+	}
+
+	/**
+	 * Use given value if a > b else use a
+	 */
+	public static class UseIfGreaterThan extends UseBase {
+		/**
+		 * @param br given value as boolean
+		 * @param lr given value as long
+		 * @param dr given value as double
+		 */
+		public UseIfGreaterThan(boolean br, long lr, double dr) {
+			super(br, lr, dr);
+		}
+
+		/**
+		 * @param r given value as Number
+		 */
+		public UseIfGreaterThan(Number r) {
+			super(r);
+		}
+
+		@Override
+		public boolean booleanOperate(long a, long b) {
+			return a > b ? br : a != 0;
+		}
+
+		@Override
+		public long longOperate(long a, long b) {
+			return a > b ? lr : a;
+		}
+
+		@Override
+		public double doubleOperate(double a, double b) {
+			return a > b ? dr : a;
+		}
+
+		@Override
+		public void complexOperate(double[] out, double ra, double ia, double rb, double ib) {
+			throw new IllegalArgumentException("replace greater than does not support complex numbers");
+		}
+	}
+
+	/**
+	 * Use given value if a >= b else use a
+	 */
+	public static class UseIfGreaterThanOrEqualTo extends UseBase {
+		/**
+		 * @param br given value as boolean
+		 * @param lr given value as long
+		 * @param dr given value as double
+		 */
+		public UseIfGreaterThanOrEqualTo(boolean br, long lr, double dr) {
+			super(br, lr, dr);
+		}
+
+		/**
+		 * @param r given value as Number
+		 */
+		public UseIfGreaterThanOrEqualTo(Number r) {
+			super(r);
+		}
+
+		@Override
+		public boolean booleanOperate(long a, long b) {
+			return a >= b ? br : a != 0;
+		}
+
+		@Override
+		public long longOperate(long a, long b) {
+			return a >= b ? lr : a;
+		}
+
+		@Override
+		public double doubleOperate(double a, double b) {
+			return a >= b ? dr : a;
+		}
+
+		@Override
+		public void complexOperate(double[] out, double ra, double ia, double rb, double ib) {
+			throw new IllegalArgumentException("replace greater than or equal to does not support complex numbers");
+		}
+	}
+
+	/**
+	 * Use given value if a < b else use a
+	 */
+	public static class UseIfLessThan extends UseBase {
+		/**
+		 * @param br given value as boolean
+		 * @param lr given value as long
+		 * @param dr given value as double
+		 */
+		public UseIfLessThan(boolean br, long lr, double dr) {
+			super(br, lr, dr);
+		}
+
+		/**
+		 * @param r given value as Number
+		 */
+		public UseIfLessThan(Number r) {
+			super(r);
+		}
+
+		@Override
+		public boolean booleanOperate(long a, long b) {
+			return a < b ? br : a != 0;
+		}
+
+		@Override
+		public long longOperate(long a, long b) {
+			return a < b ? lr : a;
+		}
+
+		@Override
+		public double doubleOperate(double a, double b) {
+			return a < b ? dr : a;
+		}
+
+		@Override
+		public void complexOperate(double[] out, double ra, double ia, double rb, double ib) {
+			throw new IllegalArgumentException("replace greater than does not support complex numbers");
+		}
+	}
+
+	/**
+	 * Use given value if a <= b else use a
+	 */
+	public static class UseIfLessThanOrEqualTo extends UseBase {
+		/**
+		 * @param br given value as boolean
+		 * @param lr given value as long
+		 * @param dr given value as double
+		 */
+		public UseIfLessThanOrEqualTo(boolean br, long lr, double dr) {
+			super(br, lr, dr);
+		}
+
+		/**
+		 * @param r given value as Number
+		 */
+		public UseIfLessThanOrEqualTo(Number r) {
+			super(r);
+		}
+
+		@Override
+		public boolean booleanOperate(long a, long b) {
+			return a <= b ? br : a != 0;
+		}
+
+		@Override
+		public long longOperate(long a, long b) {
+			return a <= b ? lr : a;
+		}
+
+		@Override
+		public double doubleOperate(double a, double b) {
+			return a <= b ? dr : a;
+		}
+
+		@Override
+		public void complexOperate(double[] out, double ra, double ia, double rb, double ib) {
+			throw new IllegalArgumentException("replace greater than or equal to does not support complex numbers");
+		}
+	}
+
+	/**
+	 * Use given value if a == b else use a
+	 */
+	public static class UseIfEqualTo extends UseBase {
+		private double di;
+
+		/**
+		 * @param br given value as boolean
+		 * @param lr given value as long
+		 * @param dr given value as double
+		 * @param di given value for imaginary part as double
+		 */
+		public UseIfEqualTo(boolean br, long lr, double dr, double di) {
+			super(br, lr, dr);
+			this.di = di;
+		}
+
+		/**
+		 * @param r given value as Number
+		 */
+		public UseIfEqualTo(Number r) {
+			super(r);
+			di = 0;
+		}
+
+		/**
+		 * @param z given value as Complex
+		 */
+		public UseIfEqualTo(Complex z) {
+			super(z.getReal());
+			di = z.getImaginary();
+		}
+
+		@Override
+		public boolean booleanOperate(long a, long b) {
+			return a == b ? br : a != 0;
+		}
+
+		@Override
+		public long longOperate(long a, long b) {
+			return a == b ? lr : a;
+		}
+
+		@Override
+		public double doubleOperate(double a, double b) {
+			return a == b ? dr : a;
+		}
+
+		@Override
+		public void complexOperate(double[] out, double ra, double ia, double rb, double ib) {
+			if (ra == rb && ia == ib) {
+				out[0] = dr;
+				out[1] = di;
+			} else {
+				out[0] = ra;
+				out[1] = ia;
+			}
+		}
+	}
 }
