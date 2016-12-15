@@ -6,6 +6,7 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: Eclipse January
 Bundle-Localization: plugin
+Eclipse-ExtensibleAPI: true
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Service-Component: OSGI-INF/importerFactory.xml,
  OSGI-INF/importerService.xml
@@ -35,5 +36,6 @@ Import-Package: com.google.inject,
  org.eclipse.xtext.services,
  org.eclipse.xtext.util,
  org.slf4j
-Require-Bundle: org.eclipse.emf.ecore;bundle-version="2.12.0",
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.emf.ecore;bundle-version="2.12.0";visibility:=reexport,
  org.eclipse.xtext;bundle-version="2.10.0"

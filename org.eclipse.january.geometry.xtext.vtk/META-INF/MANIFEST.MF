@@ -3,6 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Eclipse January Geometry XText VTK (Incubation)
 Bundle-Vendor: Eclipse January
 Bundle-Version: 1.0.0.qualifier
+Eclipse-ExtensibleAPI: true
 Bundle-SymbolicName: org.eclipse.january.geometry.xtext.vtk; singleton:=true
 Bundle-ActivationPolicy: lazy
 Service-Component: OSGI-INF/importerFactory.xml

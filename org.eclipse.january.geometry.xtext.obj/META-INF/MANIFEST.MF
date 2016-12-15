@@ -5,6 +5,7 @@ Bundle-Vendor: Eclipse January
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: org.eclipse.january.geometry.xtext.obj; singleton:=true
 Bundle-ActivationPolicy: lazy
+Eclipse-ExtensibleAPI: true
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Service-Component: OSGI-INF/importerFactory.xml
 Export-Package: org.eclipse.january.geometry.xtext,

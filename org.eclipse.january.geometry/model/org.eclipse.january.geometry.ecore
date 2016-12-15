@@ -439,4 +439,9 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="materialFiles" upperBound="-1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TriangleStripPolyShape" eSuperTypes="#//PolyShape">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A PolyShape in which the mesh is specified according to a triangle strip format. This means that instead of specifying faces by vertices around the edge, each three consecutive vertices will form a triangle, with each vertex but those at the ends being a vertex for three triangles."/>
+    </eAnnotations>
+  </eClassifiers>
 </ecore:EPackage>

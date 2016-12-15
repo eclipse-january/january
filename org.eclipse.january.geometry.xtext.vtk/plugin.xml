@@ -7,4 +7,10 @@
 			class = "org.eclipse.january.geometry.xtext.iGES.IGESPackage"
 			genModel = "model/generated/IGES.genmodel" />
 	</extension>
+ <extension
+       point="org.eclipse.january.geometry.model.org.eclipse.january.geometry.model.IGeometryImporterService">
+    <client
+          class="org.eclipse.january.geometry.xtext.vtk.service.VTKGeometryImporterService">
+    </client>
+ </extension>
 </plugin>

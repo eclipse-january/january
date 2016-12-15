@@ -16,6 +16,7 @@
 -->
 
 <plugin>
+   <extension-point id="org.eclipse.january.geometry.model.IGeometryImporterService" name="IGeometryImporterService" schema="schema/org.eclipse.january.geometry.model.IGeometryImporterService.exsd"/>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated geometry -->
@@ -23,6 +24,12 @@
             uri="http://www.eclipse.org/january/geometry"
             class="org.eclipse.january.geometry.GeometryPackage"
             genModel="model/org.eclipse.january.geometry.genmodel"/>
+   </extension>
+   <extension
+         point="org.eclipse.january.geometry.model.org.eclipse.january.geometry.model.IGeometryImporterService">
+      <client
+            class="org.eclipse.january.geometry.service.STLGeometryImporterService">
+      </client>
    </extension>
 
 </plugin>
