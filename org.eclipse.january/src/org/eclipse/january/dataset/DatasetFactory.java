@@ -240,12 +240,7 @@ public class DatasetFactory {
 				default:
 					d = createFromPrimitiveArray(DTypeUtils.getDTypeFromClass(ca), obj);
 					if (!DTypeUtils.isDTypeElemental(dtype)) {
-						if (dtype == Dataset.RGB) {
-							d = DatasetUtils.createCompoundDataset(d, 3);
-						} else {
-							d = itemSize == 1 ? DatasetUtils.createCompoundDatasetFromLastAxis(d, true) :
-								DatasetUtils.createCompoundDataset(d, itemSize);
-						}
+						d = DatasetUtils.createCompoundDataset(d, dtype == Dataset.RGB ? 3 : itemSize);
 					}
 					d = DatasetUtils.cast(d, dtype);
 				}
@@ -503,6 +498,16 @@ public class DatasetFactory {
 		if (itemSize == 1) {
 			return zeros(shape, dtype);
 		}
+		return compoundZeros(itemSize, shape, dtype);
+	}
+
+	/**
+	 * @param itemSize
+	 * @param shape
+	 * @param dtype
+	 * @return a new dataset of given item size, shape and type, filled with zeros
+	 */
+	public static CompoundDataset compoundZeros(final int itemSize, final int[] shape, final int dtype) {
 		switch (dtype) {
 		case Dataset.INT8:
 		case Dataset.ARRAYINT8:
@@ -547,7 +552,9 @@ public class DatasetFactory {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Dataset> T zeros(final T dataset) {
-		return (T) zeros(dataset, dataset.getDType());
+		int dtype = dataset.getDType();
+		return (T) (DTypeUtils.isDTypeElemental(dtype) ? zeros(dataset, dtype) :
+			compoundZeros(dataset.getElementsPerItem(),  dataset.getShapeRef(), dtype));
 	}
 
 	/**
@@ -855,6 +862,17 @@ public class DatasetFactory {
 	@SuppressWarnings("unchecked")
 	public static <T extends Dataset> T zeros(Dataset dataset, Class<T> clazz) {
 		return (T) zeros(dataset, DTypeUtils.getDType(clazz));
+	}
+
+	/**
+	 * @param itemSize
+	 * @param clazz compound dataset class
+	 * @param shape
+	 * @return a new compound dataset of given item size, shape and class, filled with zeros
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T extends CompoundDataset> T compoundZeros(int itemSize, Class<T> clazz, int... shape) {
+		return (T) compoundZeros(itemSize, shape, DTypeUtils.getDType(clazz));
 	}
 
 	/**

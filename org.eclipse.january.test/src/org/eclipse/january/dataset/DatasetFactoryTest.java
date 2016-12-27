@@ -84,21 +84,37 @@ public class DatasetFactoryTest {
 		act = DatasetFactory.zeros(0, CompoundDoubleDataset.class, null);
 		assertEquals(exp, act);
 
+		exp = new CompoundDoubleDataset(1);
+		act = DatasetFactory.compoundZeros(1, CompoundDoubleDataset.class, null);
+		assertEquals(exp, act);
+
 		exp = new CompoundDoubleDataset(2);
 		act = DatasetFactory.zeros(2, CompoundDoubleDataset.class, null);
 		assertEquals(exp, act);
 
 		// zero-ranked (unit size)
+		exp = new CompoundDoubleDataset(1, new int[0]);
+		act = DatasetFactory.compoundZeros(1, CompoundDoubleDataset.class);
+		assertEquals(exp, act);
+
 		exp = new CompoundDoubleDataset(2, new int[0]);
 		act = DatasetFactory.zeros(2, CompoundDoubleDataset.class);
 		assertEquals(exp, act);
 
 		// one dimensional
+		exp = new CompoundDoubleDataset(1, new int[] {3});
+		act = DatasetFactory.compoundZeros(1, CompoundDoubleDataset.class, 3);
+		assertEquals(exp, act);
+
 		exp = new CompoundDoubleDataset(2, new int[] {3});
 		act = DatasetFactory.zeros(2, CompoundDoubleDataset.class, 3);
 		assertEquals(exp, act);
 
 		// three dimensional
+		exp = new CompoundDoubleDataset(1, new int[] {3, 4, 5});
+		act = DatasetFactory.compoundZeros(1, CompoundDoubleDataset.class, 3, 4, 5);
+		assertEquals(exp, act);
+
 		exp = new CompoundDoubleDataset(2, new int[] {3, 4, 5});
 		act = DatasetFactory.zeros(2, CompoundDoubleDataset.class, 3, 4, 5);
 		assertEquals(exp, act);
@@ -206,21 +222,37 @@ public class DatasetFactoryTest {
 		act = DatasetFactory.createFromObject(0, CompoundDoubleDataset.class, null, null);
 		assertEquals(exp, act);
 
+		exp = new CompoundDoubleDataset(1);
+		act = DatasetFactory.createFromObject(1, CompoundDoubleDataset.class, null, null);
+		assertEquals(exp, act);
+
 		exp = new CompoundDoubleDataset(2);
 		act = DatasetFactory.createFromObject(2, CompoundDoubleDataset.class, null, null);
 		assertEquals(exp, act);
 
 		// zero-ranked (unit size)
+		exp = new CompoundDoubleDataset(1, new double[] {3}, new int[0]);
+		act = DatasetFactory.createFromObject(1, CompoundDoubleDataset.class, new double[] {3});
+		assertEquals(exp, act);
+
 		exp = new CompoundDoubleDataset(2, new double[] {3, 4}, new int[0]);
 		act = DatasetFactory.createFromObject(2, CompoundDoubleDataset.class, new double[] {3, 4});
 		assertEquals(exp, act);
 
 		// one dimensional
+		exp = new CompoundDoubleDataset(1, new double[] {3, 4, 5, 6});
+		act = DatasetFactory.createFromObject(1, CompoundDoubleDataset.class, new double[] {3, 4, 5, 6});
+		assertEquals(exp, act);
+
 		exp = new CompoundDoubleDataset(2, new double[] {3, 4, 5, 6});
 		act = DatasetFactory.createFromObject(2, CompoundDoubleDataset.class, new double[] {3, 4, 5, 6});
 		assertEquals(exp, act);
 
 		// two dimensional
+		exp = new CompoundDoubleDataset(1, new double[] {3, 5, 7}, new int[] {3, 1});
+		act = DatasetFactory.createFromObject(1, CompoundDoubleDataset.class, new double[] {3, 5, 7}, 3, 1);
+		assertEquals(exp, act);
+
 		exp = new CompoundDoubleDataset(2, new double[] {3, 4, 5, 6, 7, 8}, new int[] {3, 1});
 		act = DatasetFactory.createFromObject(2, CompoundDoubleDataset.class, new double[] {3, 4, 5, 6, 7, 8}, 3, 1);
 		assertEquals(exp, act);
