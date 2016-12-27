@@ -193,9 +193,12 @@ def beginmethod(name, jdoc=None, params=0):
 
     print("\t\tfinal Dataset result = it.getOutput();")
     print("\t\tfinal int is = result.getElementsPerItem();")
+    print("\t\tfinal int as = da.getElementsPerItem();")
+    if is_binaryop:
+        print("\t\tfinal int bs = db.getElementsPerItem();")
     print("\t\tfinal int dt = result.getDType();")
     for p in plist:
-        print("\t\tfinal double %s = AbstractDataset.toReal(%s);" % (p+"x", p))
+        print("\t\tfinal double %s = DTypeUtils.toReal(%s);" % (p+"x", p))
 #        print("\t\tfinal double %s = AbstractDataset.toImag(%s);" % (p+"y", p))
 
     print("")
@@ -362,7 +365,7 @@ def loop(text, jtype, ovar, is_int, override_long):
     print("\t\t\t}")
 
 def loopcomplex(text, jtype, ovar, real, is_int):
-    print("\t\t\tif (da.getElementsPerItem() == 1) {")
+    print("\t\t\tif (as == 1) {")
     if is_binaryop:
         print("\t\t\t\tfinal double iay = 0;")
     else:
@@ -380,7 +383,7 @@ def loopcomplex(text, jtype, ovar, real, is_int):
         print("\t\t\t\t\t%s[it.oIndex + 1] = oy;" % ovar)
     print("\t\t\t\t}")
     if is_binaryop:
-        print("\t\t\t} else if (db.getElementsPerItem() == 1) {")
+        print("\t\t\t} else if (bs == 1) {")
         print("\t\t\t\tfinal double iby = 0;")
         print("\t\t\t\twhile (it.hasNext()) {")
         print("\t\t\t\t\tfinal double iax = it.aDouble;")
@@ -435,8 +438,8 @@ def loopcompound(text, jtype, ovar, is_int, override_long):
     print("\t\t\t\t\t}")
     print("\t\t\t\t}")
 
-    print("\t\t\t} else if (da.getElementsPerItem() == 1) {")
     if is_binaryop:
+        print("\t\t\t} else if (as == 1 || as < bs) {")
         if not allow_ints:
             print("\t\t\t\tif (it.isOutputDouble()) {")
             print("\t\t\t\t\twhile (it.hasNext()) {")
@@ -466,6 +469,7 @@ def loopcompound(text, jtype, ovar, is_int, override_long):
         print("\t\t\t\t\t}")
         print("\t\t\t\t}")
     else:
+        print("\t\t\t} else if (as == 1) {")
         if not allow_ints:
             print("\t\t\t\tif (it.isOutputDouble()) {")
             print("\t\t\t\t\twhile (it.hasNext()) {")
@@ -488,7 +492,7 @@ def loopcompound(text, jtype, ovar, is_int, override_long):
         print("\t\t\t\t}")
 
     if is_binaryop:
-        print("\t\t\t} else if (db.getElementsPerItem() == 1) {")
+        print("\t\t\t} else if (bs == 1 || as > bs) {")
         if not allow_ints:
             print("\t\t\t\tif (it.isOutputDouble()) {")
             print("\t\t\t\t\twhile (it.hasNext()) {")
