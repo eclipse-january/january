@@ -11,7 +11,7 @@ Require-Bundle: org.eclipse.january.geometry.xtext.vtk,
  org.eclipse.xtext.xbase.junit,
  org.eclipse.xtext.xbase.lib
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: org.xtext.example.mydsl.tests
+Export-Package: org.eclipse.january.geometry.xtext.vtk.tests
 Import-Package: org.eclipse.january.geometry,
  org.hamcrest.core,
  org.junit;version="4.5.0",

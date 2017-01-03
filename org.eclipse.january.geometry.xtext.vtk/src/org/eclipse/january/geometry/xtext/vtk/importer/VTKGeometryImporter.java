@@ -22,7 +22,7 @@ import org.eclipse.january.geometry.INode;
 import org.eclipse.january.geometry.PolyShape;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
-import org.xtext.example.mydsl.MyDslStandaloneSetup;
+import org.eclipse.january.geometry.xtext.vtk.VTKStandaloneSetup;
 
 import com.google.inject.Injector;
 
@@ -48,7 +48,7 @@ public class VTKGeometryImporter implements IGeometryImporter {
 
 	@Override
 	public Geometry load(Path path) {
-		Injector injector = new MyDslStandaloneSetup().createInjectorAndDoEMFRegistration();
+		Injector injector = new VTKStandaloneSetup().createInjectorAndDoEMFRegistration();
 		XtextResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
 		resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
 		Resource resource = resourceSet.getResource(URI.createFileURI(path.toFile().getAbsolutePath()), true);
