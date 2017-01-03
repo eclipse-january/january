@@ -12,7 +12,7 @@
  -->
 
 <plugin>
-   <extension-point id="org.eclipse.january.form.jaxbClassProvider" name="JAXB Class Provider" schema="schema/jaxbClassProvider.exsd"/>
+   <extension-point id="jaxbClassProvider" name="JAXB Class Provider" schema="schema/jaxbClassProvider.exsd"/>
    <extension
          id="iceJAXBClassProvider"
          name="ICE JAXB Class Provider"
