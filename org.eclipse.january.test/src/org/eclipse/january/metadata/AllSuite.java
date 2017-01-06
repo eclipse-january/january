@@ -18,6 +18,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(TestUtils.VerboseSuite.class)
 @SuiteClasses({ MetadataProviderTest.class,
+	PlainMetadataTest.class,
 	org.eclipse.january.metadata.internal.AllSuite.class,
 	})
 public class AllSuite {
