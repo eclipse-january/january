@@ -14,7 +14,7 @@ package org.eclipse.january.dataset;
 
 import java.text.Format;
 
-import org.eclipse.january.metadata.IMetadata;
+import org.eclipse.january.metadata.MetadataType;
 
 
 /**
@@ -166,7 +166,7 @@ public interface IDataset extends ILazyDataset {
 	 * @return the metadata, may be null
 	 */
 	@Override
-	public IMetadata getMetadata();
+	public MetadataType getMetadata();
 
 	@Override
 	public IDataset getSlice(int[] start, int[] stop, int[] step);

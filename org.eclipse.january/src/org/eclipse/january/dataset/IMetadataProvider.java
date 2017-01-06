@@ -15,7 +15,6 @@ package org.eclipse.january.dataset;
 import java.util.List;
 
 import org.eclipse.january.MetadataException;
-import org.eclipse.january.metadata.IMetadata;
 import org.eclipse.january.metadata.MetadataType;
 
 /**
@@ -27,7 +26,7 @@ public interface IMetadataProvider {
 	 * @return an instance of IMetadata
 	 * @throws Exception
 	 */
-	public IMetadata getMetadata() throws Exception;
+	public MetadataType getMetadata() throws Exception;
 
 	/**
 	 * @param clazz if null return everything
