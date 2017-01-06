@@ -26,7 +26,6 @@ import java.util.Map;
 import org.eclipse.january.DatasetException;
 import org.eclipse.january.MetadataException;
 import org.eclipse.january.metadata.ErrorMetadata;
-import org.eclipse.january.metadata.IMetadata;
 import org.eclipse.january.metadata.MetadataFactory;
 import org.eclipse.january.metadata.MetadataType;
 import org.eclipse.january.metadata.Reshapeable;
@@ -154,8 +153,8 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	}
 
 	@Override
-	public IMetadata getMetadata() {
-		List<? extends IMetadata> ml = getAllMetadata(IMetadata.class);
+	public MetadataType getMetadata() {
+		List<? extends MetadataType> ml = getAllMetadata(MetadataType.class);
 
 		return ml == null || ml.isEmpty() ? null : ml.get(0);
 	}
