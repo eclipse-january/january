@@ -13,6 +13,10 @@ import org.eclipse.january.dataset.DatasetFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
+/** test class introduced to verify performance of relaxed implementation of IDataset.getMetadata() which 
+ * now matches signature of IDataset.setMetadata()
+ *
+ */
 public class PlainMetadataTest {
 
 	@Test
@@ -34,7 +38,6 @@ public class PlainMetadataTest {
 
 	protected class PlainMetadata implements MetadataType
 	{
-
 		/**
 		 * 
 		 */
