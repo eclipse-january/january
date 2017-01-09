@@ -14,11 +14,18 @@ package org.eclipse.january.metadata;
 
 import java.io.Serializable;
 
+import org.eclipse.january.dataset.IMetadataProvider;
+
 /**
- * This is a marker interface for all metadata items which can be associated with a dataset.
+ * This is a marker interface for all metadata items which can be associated
+ * with a dataset.
  * <p>
- * All sub-interfaces must have an initialize method and all implementations must have a null constructor.
- * 
+ * All sub-interfaces must have an initialize method and all implementations
+ * must have a null constructor.
+ * <p>
+ * Extending sub-interfaces of MetadataType is strongly discouraged. That is,
+ * metadata interfaces (sub-interfaces of MetadataType) should be considered
+ * to be "final". This simplifies the implementation of {@link IMetadataProvider#getMetadata(Class)}, etc.
  */
 public interface MetadataType extends Serializable, Cloneable {
 
