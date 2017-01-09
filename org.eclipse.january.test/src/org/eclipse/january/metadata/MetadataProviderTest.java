@@ -28,14 +28,14 @@ public class MetadataProviderTest {
 
 		// add IMetadata
 		mdp.addMetadata(new Metadata());
-		Assert.assertTrue(mdp.getMetadata() instanceof IMetadata);
+		Assert.assertTrue(mdp.getFirstMetadata(IMetadata.class) instanceof IMetadata);
 		mdp.clearMetadata(null);
 
 		// add sub-class of IMetadata
 		mdp.addMetadata(new InnerMetadata());
-		System.err.println(mdp.getMetadata());
-		Assert.assertTrue(mdp.getMetadata() instanceof IMetadata);
-		Assert.assertTrue(mdp.getMetadata() instanceof IInnerMetadata);
+		System.err.println(mdp.getFirstMetadata(IInnerMetadata.class));
+		Assert.assertTrue(mdp.getFirstMetadata(IInnerMetadata.class) instanceof IMetadata);
+		Assert.assertTrue(mdp.getFirstMetadata(IInnerMetadata.class) instanceof IInnerMetadata);
 		mdp.clearMetadata(null);
 	}
 
