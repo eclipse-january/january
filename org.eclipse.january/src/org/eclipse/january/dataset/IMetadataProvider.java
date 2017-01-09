@@ -26,7 +26,9 @@ public interface IMetadataProvider {
 	/**
 	 * @return an instance of IMetadata
 	 * @throws Exception
+	 * @Deprecated - use getFirstMetadata(IMetadata.class) instead
 	 */
+	@Deprecated
 	public IMetadata getMetadata() throws Exception;
 
 	/**
