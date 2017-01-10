@@ -1096,14 +1096,21 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	public String toString(boolean showData) {
 		final int rank = shape == null ? 0 : shape.length;
 		final StringBuilder out = new StringBuilder();
+		if (DTypeUtils.isDTypeElemental(getDType())) {
+			out.append("Dataset ");
+		} else {
+			out.append("Compound dataset (");
+			out.append(getElementsPerItem());
+			out.append(") ");
+		}
 
 		if (!showData) {
 			if (name != null && name.length() > 0) {
-				out.append("Dataset '");
+				out.append("'");
 				out.append(name);
 				out.append("' has shape ");
 			} else {
-				out.append("Dataset shape is ");
+				out.append("shape is ");
 			}
 
 			out.append(BLOCK_OPEN);
