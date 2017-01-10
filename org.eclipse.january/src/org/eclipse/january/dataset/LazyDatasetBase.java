@@ -133,12 +133,17 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	}
 
 	/**
-	 * Find first sub-interface of (or class that directly extends or implements) MetadataType
+	 * Find first sub-interface of (or class that directly implements) MetadataType
 	 * @param clazz
 	 * @return sub-interface
+	 * @exception IllegalArgumentException when given class is {@link MetadataType} or an anonymous sub-class of it
 	 */
 	@SuppressWarnings("unchecked")
 	public static Class<? extends MetadataType> findMetadataTypeSubInterfaces(Class<? extends MetadataType> clazz) {
+		if (clazz.equals(MetadataType.class)) {
+			throw new IllegalArgumentException("Cannot accept MetadataType");
+		}
+
 		if (clazz.isInterface()) {
 			return clazz;
 		}
@@ -151,9 +156,13 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 			}
 		}
 
-		for (Class<?> c : clazz.getInterfaces()) { // recurse up interface hierarchy
-			if (c.equals(MetadataType.class))
+		for (Class<?> c : clazz.getInterfaces()) {
+			if (c.equals(MetadataType.class)) {
+				if (clazz.isAnonymousClass()) {
+					throw new IllegalArgumentException("Cannot accept anonymous subclasses of MetadataType");
+				}
 				return clazz;
+			}
 			if (MetadataType.class.isAssignableFrom(c)) {
 				return (Class<? extends MetadataType>) c;
 			}
@@ -258,14 +267,6 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		List<MetadataType> list = metadata.get(findMetadataTypeSubInterfaces(clazz));
 		if( list != null) {
 			list.clear();
-		}
-
-		// add for special case of sub-interfaces of IMetadata
-		if (!IMetadata.class.equals(clazz) && IMetadata.class.isAssignableFrom(clazz)) {
-			list = metadata.get(IMetadata.class);
-			if( list != null) {
-				list.clear();
-			}
 		}
 	}
 
