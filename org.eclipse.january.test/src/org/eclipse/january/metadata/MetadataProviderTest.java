@@ -8,11 +8,8 @@
  * Contributors:
  *     Diamond Light Source Ltd - initial API and implementation
  *******************************************************************************/
-package org.eclipse.january.metadata;
 
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.Map;
+package org.eclipse.january.metadata;
 
 import org.eclipse.january.MetadataException;
 import org.eclipse.january.dataset.Dataset;
@@ -28,86 +25,15 @@ public class MetadataProviderTest {
 
 		// add IMetadata
 		mdp.addMetadata(new Metadata());
-		Assert.assertTrue(mdp.getMetadata() instanceof IMetadata);
+		Assert.assertTrue(mdp.getFirstMetadata(IMetadata.class) instanceof IMetadata);
 		mdp.clearMetadata(null);
 
 		// add sub-class of IMetadata
-		mdp.addMetadata(new InnerMetadata());
-		System.err.println(mdp.getMetadata());
-		Assert.assertTrue(mdp.getMetadata() instanceof IMetadata);
-		Assert.assertTrue(mdp.getMetadata() instanceof IInnerMetadata);
+		mdp.addMetadata(new MetadataTest.InnerMetadata());
+		System.err.println(mdp.getFirstMetadata(IMetadata.class));
+		Assert.assertTrue(mdp.getFirstMetadata(IMetadata.class) instanceof IMetadata);
+		Assert.assertTrue(mdp.getFirstMetadata(IMetadata.class) instanceof MetadataTest.IInnerMetadata);
+		Assert.assertTrue(mdp.getFirstMetadata(MetadataTest.IInnerMetadata.class) instanceof MetadataTest.IInnerMetadata);
 		mdp.clearMetadata(null);
-	}
-
-	interface IInnerMetadata extends IMetadata {
-
-	}
-
-	static class InnerMetadata implements IInnerMetadata {
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1450311703714047058L;
-
-		@Override
-		public void initialize(Map<String, ? extends Serializable> metadata) {
-		}
-
-		@Override
-		public String getFilePath() {
-			return null;
-		}
-
-		@Override
-		public Collection<String> getDataNames() {
-			return null;
-		}
-
-		@Override
-		public Map<String, Integer> getDataSizes() {
-			return null;
-		}
-
-		@Override
-		public Map<String, int[]> getDataShapes() {
-			return null;
-		}
-
-		@Override
-		public Serializable getMetaValue(String key) throws MetadataException {
-			return null;
-		}
-
-		@Override
-		public Collection<String> getMetaNames() throws MetadataException {
-			return null;
-		}
-
-		@Override
-		public Collection<Serializable> getUserObjects() {
-			return null;
-		}
-
-		@Override
-		public IMetadata clone() {
-			return null;
-		}
-
-		@Override
-		public void setFilePath(String filename) {
-		}
-
-		@Override
-		public void addDataInfo(String n, int... shape) {
-		}
-
-		@Override
-		public void addNames(Collection<String> names) {
-		}
-
-		@Override
-		public void setMetadata(Map<String, ? extends Serializable> map) {
-		}
 	}
 }

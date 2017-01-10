@@ -11,6 +11,8 @@
 package org.eclipse.january.metadata.internal;
 
 import org.eclipse.january.MetadataException;
+import org.eclipse.january.dataset.Dataset;
+import org.eclipse.january.dataset.DatasetFactory;
 import org.eclipse.january.dataset.LazyDatasetBase;
 import org.eclipse.january.metadata.DynamicConnectionInfo;
 import org.eclipse.january.metadata.ErrorMetadata;
@@ -18,7 +20,6 @@ import org.eclipse.january.metadata.IExtendedMetadata;
 import org.eclipse.january.metadata.MetadataFactory;
 import org.eclipse.january.metadata.MetadataType;
 import org.eclipse.january.metadata.OriginMetadata;
-import org.eclipse.january.metadata.internal.ErrorMetadataImpl;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -73,6 +74,38 @@ public class MetadataFactoryTest {
 		@Override
 		public InnerMetadata2 clone() {
 			return new InnerMetadata2();
+		}
+	}
+
+	@Test
+	public void testFinderWithInproperMetadataType() {
+		try {
+			LazyDatasetBase.findMetadataTypeSubInterfaces(MetadataType.class);
+			Assert.fail("Should not be able to find direct implementation of MetadataType");
+		} catch (IllegalArgumentException e) {
+		}
+
+		MetadataType md = new MetadataType() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public MetadataType clone() {
+				return null;
+			}
+		};
+
+		try {
+			LazyDatasetBase.findMetadataTypeSubInterfaces(md.getClass());
+			Assert.fail("Should not be able to find anonymous direct implementation of MetadataType");
+		} catch (IllegalArgumentException e) {
+		}
+
+		Dataset d = DatasetFactory.zeros(2, 3);
+		try {
+			d.addMetadata(md);
+			Assert.fail("Should not be able to add anonymous direct implementation of MetadataType");
+		} catch (IllegalArgumentException e) {
+			
 		}
 	}
 

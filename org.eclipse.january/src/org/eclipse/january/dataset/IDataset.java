@@ -166,6 +166,7 @@ public interface IDataset extends ILazyDataset {
 	 * @return the metadata, may be null
 	 */
 	@Override
+	@Deprecated
 	public IMetadata getMetadata();
 
 	@Override

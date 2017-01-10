@@ -23,6 +23,7 @@ import java.util.Map.Entry;
 
 import org.apache.commons.lang.SerializationUtils;
 import org.eclipse.january.MetadataException;
+import org.eclipse.january.dataset.ShapeUtils;
 
 
 /**
@@ -87,7 +88,7 @@ public class Metadata implements IMetadata {
 	}
 
 	public void addDataInfo(String name, int... shape) {
-		shapes.put(name, shape == null || shape.length == 0 ? null : shape);
+		shapes.put(name, shape);
 	}
 
 	@Override
@@ -106,7 +107,7 @@ public class Metadata implements IMetadata {
 		for (Entry<String, int[]> e : shapes.entrySet()) {
 			int[] shape = e.getValue();
 			if (shape != null && shape.length > 1)
-				sizes.put(e.getKey(), calcSize(shape));
+				sizes.put(e.getKey(), ShapeUtils.calcSize(shape));
 			else
 				sizes.put(e.getKey(), null);
 		}
@@ -180,51 +181,4 @@ public class Metadata implements IMetadata {
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
 	}
-
-
-	/**
-	 * Calculate total number of items in given shape
-	 * @param shape
-	 * @return size
-	 */
-	public static int calcSize(final int[] shape) {
-		long lsize = calcLongSize(shape);
-
-		// check to see if the size is larger than an integer, i.e. we can't allocate it
-		if (lsize > Integer.MAX_VALUE) {
-			throw new IllegalArgumentException("Size of the dataset is too large to allocate");
-		}
-		return (int) lsize;
-	}
-
-	/**
-	 * Calculate total number of items in given shape
-	 * @param shape
-	 * @return size
-	 */
-	public static long calcLongSize(final int[] shape) {
-		double dsize = 1.0;
-
-		if (shape == null || shape.length == 0)  // special case of zero-rank shape 
-			return 1;
-
-		for (int i = 0; i < shape.length; i++) {
-			// make sure the indexes isn't zero or negative
-			if (shape[i] == 0) {
-				return 0;
-			} else if (shape[i] < 0) {
-				throw new IllegalArgumentException(String.format(
-						"The %d-th is %d which is an illegal argument as it is negative", i, shape[i]));
-			}
-
-			dsize *= shape[i];
-		}
-
-		// check to see if the size is larger than an integer, i.e. we can't allocate it
-		if (dsize > Long.MAX_VALUE) {
-			throw new IllegalArgumentException("Size of the dataset is too large to allocate");
-		}
-		return (long) dsize;
-	}
-
 }

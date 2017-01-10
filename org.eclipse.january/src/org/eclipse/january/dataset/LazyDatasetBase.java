@@ -132,91 +132,37 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		return shape.length;
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public <T extends MetadataType> void setMetadata(T metadata) {
-		if (metadata == null)
-			return;
-
-		List<T> ml = null;
-		try {
-			ml = (List<T>) getMetadata(metadata.getClass());
-		} catch (Exception e) {
-			logger.error("Problem retrieving metadata of class {}: {}", metadata.getClass().getCanonicalName(), e);
-		}
-
-		if (ml == null) {
-			addMetadata(metadata);
-		} else {
-			ml.clear();
-			ml.add(metadata);
-		}
-	}
-
-	@Override
-	public IMetadata getMetadata() {
-		List<? extends IMetadata> ml = getAllMetadata(IMetadata.class);
-
-		return ml == null || ml.isEmpty() ? null : ml.get(0);
-	}
-
 	/**
-	 * Get a list of metadata where each item is an instance of the specified sub-class or interface
-	 * @param clazz
-	 * @return list
-	 */
-	@SuppressWarnings("unchecked")
-	private <S extends MetadataType, T extends S> List<S> getAllMetadata(Class<T> clazz) {
-		if (clazz == null) {
-			throw new IllegalArgumentException("Given class must not be null");
-		}
-
-		List<S> all = new ArrayList<S>();
-		if (metadata != null) {
-			for (Class<? extends MetadataType> t : metadata.keySet()) {
-				if (clazz.isAssignableFrom(t)) {
-					all.addAll((Collection<? extends S>) metadata.get(t));
-				}
-			}
-		}
-
-		return all;
-	}
-
-	@Override
-	public <T extends MetadataType> void addMetadata(T metadata) {
-		if (metadata == null)
-			return;
-
-		if (this.metadata == null) {
-			this.metadata = new HashMap<Class<? extends MetadataType>, List<MetadataType>>();
-		}
-
-		Class<? extends MetadataType> clazz = findMetadataTypeSubInterfaces(metadata.getClass());
-		if (!this.metadata.containsKey(clazz)) {
-			this.metadata.put(clazz, new ArrayList<MetadataType>());
-		}
-		this.metadata.get(clazz).add(metadata);
-	}
-
-	/**
-	 * Find first sub-interface of (or class that directly extends or implements) MetadataType
+	 * Find first sub-interface of (or class that directly implements) MetadataType
 	 * @param clazz
 	 * @return sub-interface
+	 * @exception IllegalArgumentException when given class is {@link MetadataType} or an anonymous sub-class of it
 	 */
 	@SuppressWarnings("unchecked")
 	public static Class<? extends MetadataType> findMetadataTypeSubInterfaces(Class<? extends MetadataType> clazz) {
+		if (clazz.equals(MetadataType.class)) {
+			throw new IllegalArgumentException("Cannot accept MetadataType");
+		}
+
 		if (clazz.isInterface()) {
 			return clazz;
 		}
 
 		if (clazz.isAnonymousClass()) { // special case
-			clazz = (Class<? extends MetadataType>) clazz.getSuperclass();
+			Class<?> s = clazz.getSuperclass();
+			if (!s.equals(Object.class)) {
+				// only use super class if it is not an anonymous class of an interface
+				clazz = (Class<? extends MetadataType>) s;
+			}
 		}
 
-		for (Class<?> c : clazz.getInterfaces()) { // recurse up interface hierarchy
-			if (c.equals(MetadataType.class))
+		for (Class<?> c : clazz.getInterfaces()) {
+			if (c.equals(MetadataType.class)) {
+				if (clazz.isAnonymousClass()) {
+					throw new IllegalArgumentException("Cannot accept anonymous subclasses of MetadataType");
+				}
 				return clazz;
+			}
 			if (MetadataType.class.isAssignableFrom(c)) {
 				return (Class<? extends MetadataType>) c;
 			}
@@ -230,6 +176,50 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		logger.error("Somehow the search for metadata type interface ended in a bad place");
 		assert false; // should not be able to get here!!!
 		return null;
+	}
+
+	@Override
+	public void setMetadata(MetadataType metadata) {
+		addMetadata(metadata, true);
+	}
+
+	@Override
+	public void addMetadata(MetadataType metadata) {
+		addMetadata(metadata, false);
+	}
+
+	private void addMetadata(MetadataType metadata, boolean clear) {
+		if (metadata == null)
+			return;
+
+		if (this.metadata == null) {
+			this.metadata = new HashMap<Class<? extends MetadataType>, List<MetadataType>>();
+		}
+
+		Class<? extends MetadataType> clazz = findMetadataTypeSubInterfaces(metadata.getClass());
+		if (!this.metadata.containsKey(clazz)) {
+			this.metadata.put(clazz, new ArrayList<MetadataType>());
+		} else if (clear) {
+			this.metadata.get(clazz).clear();
+		}
+		this.metadata.get(clazz).add(metadata);
+
+		// add for special case of sub-interfaces of IMetadata
+		if (!IMetadata.class.equals(clazz) && IMetadata.class.isAssignableFrom(clazz)) {
+			clazz = IMetadata.class;
+			if (!this.metadata.containsKey(clazz)) {
+				this.metadata.put(clazz, new ArrayList<MetadataType>());
+			} else if (clear) {
+				this.metadata.get(clazz).clear();
+			}
+			this.metadata.get(clazz).add(metadata);
+		}
+	}
+
+	@Override
+	@Deprecated
+	public IMetadata getMetadata() {
+		return getFirstMetadata(IMetadata.class);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -265,7 +255,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	}
 
 	@Override
-	public <T extends MetadataType> void clearMetadata(Class<T> clazz) {
+	public void clearMetadata(Class<? extends MetadataType> clazz) {
 		if (metadata == null)
 			return;
 
