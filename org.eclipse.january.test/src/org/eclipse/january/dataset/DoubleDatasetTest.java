@@ -11,6 +11,7 @@ package org.eclipse.january.dataset;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.eclipse.january.dataset.Dataset;
 import org.eclipse.january.dataset.DatasetFactory;
@@ -71,6 +72,43 @@ public class DoubleDatasetTest {
 		for (int i = 0; i < l; i++) {
 			double r = sc.getDouble(-(i + 1));
 			assertEquals(r, sv.getDouble(-(i + 1)), 1e-5 * r);
+		}
+
+		try {
+			a.getDouble();
+			fail("Should have thrown an IAE");
+		} catch (IllegalArgumentException e) {
+		}
+
+		try {
+			a.getDouble(null);
+			fail("Should have thrown an NPE");
+		} catch (NullPointerException e) {
+		}
+
+		try {
+			a.getDouble(new int[2]);
+			fail("Should have thrown an IAE");
+		} catch (IllegalArgumentException e) {
+		}
+
+		try {
+			a.getDouble(0, 0);
+			fail("Should have thrown a UOE");
+		} catch (UnsupportedOperationException e) {
+		}
+
+		Dataset b = a.reshape(4, 3);
+		try {
+			b.getDouble(new int[1]);
+			fail("Should have thrown an IAE");
+		} catch (IllegalArgumentException e) {
+		}
+
+		try {
+			b.getDouble(0);
+			fail("Should have thrown a UOE");
+		} catch (UnsupportedOperationException e) {
 		}
 	}
 
@@ -159,9 +197,9 @@ public class DoubleDatasetTest {
 		b = a.sum(2);
 		assertEquals(2, b.getRank());
 		assertArrayEquals(new int[] { 3, 1 }, b.getShape());
-		assertEquals(6., b.getDouble(0), 1e-6);
-		assertEquals(22., b.getDouble(1), 1e-6);
-		assertEquals(38., b.getDouble(2), 1e-6);
+		assertEquals(6., b.getDouble(0, 0), 1e-6);
+		assertEquals(22., b.getDouble(1, 0), 1e-6);
+		assertEquals(38., b.getDouble(2, 0), 1e-6);
 	}
 
 	@Test

@@ -120,7 +120,7 @@ public class BroadcastIteratorTest {
 		for (int j = 0; j < 6; j++) {
 			Assert.assertTrue(it.hasNext());
 			c.set(it.aDouble * it.bDouble, j);
-			Assert.assertEquals(a.getDouble(), it.aDouble, 1e-15);
+			Assert.assertEquals(a.getDouble(0), it.aDouble, 1e-15);
 			Assert.assertEquals(b.getDouble(j), it.bDouble, 1e-15);
 			Assert.assertEquals(c.getDouble(j), (j + 2.0), 1e-15);
 		}

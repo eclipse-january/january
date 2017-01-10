@@ -638,7 +638,7 @@ public class AbstractCompoundDatasetTest {
 		
 		// should be squared
 		CompoundDataset e = (CompoundDataset) a.getErrorBuffer();
-		double[] ea = e.getDoubleArray();
+		double[] ea = e.getDoubleArray(0);
 		assertEquals(1.0, ea[0], 0.001);
 		assertEquals(4.0, ea[1], 0.001);
 		assertEquals(9.0, ea[2], 0.001);
