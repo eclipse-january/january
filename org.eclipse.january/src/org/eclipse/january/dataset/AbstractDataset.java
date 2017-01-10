@@ -1397,7 +1397,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	@Override
-	public Dataset getReal() {
+	public Dataset getRealPart() {
 		return this;
 	}
 

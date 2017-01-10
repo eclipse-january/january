@@ -299,9 +299,9 @@ public interface Dataset extends IDataset {
 	public boolean isComplex();
 
 	/**
-	 * @return real part of dataset as new dataset
+	 * @return real part of dataset (if necessary, as new dataset)
 	 */
-	public Dataset getReal();
+	public Dataset getRealPart();
 
 	/**
 	 * @return real part of dataset as a view

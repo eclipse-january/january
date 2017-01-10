@@ -470,19 +470,21 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 		setItem(new double[] {dr, di}, pos); // PRIM_TYPE
 	}
 
+	@Override
+	public DoubleDataset getRealPart() { // CLASS_TYPE
+		return getElements(0);
+	}
+
+	@Override
+	public DoubleDataset getRealView() { // CLASS_TYPE
+		return getElementsView(0);
+	}
+
 	/**
 	 * @return imaginary part of dataset as new dataset
 	 */
-	public DoubleDataset getImaginary() { // CLASS_TYPE
-		DoubleDataset rdataset = new DoubleDataset(shape); // CLASS_TYPE
-		IndexIterator iter = getIterator();
-		IndexIterator riter = rdataset.getIterator();
-
-		double[] rdata = rdataset.data; // PRIM_TYPE
-		while (iter.hasNext() && riter.hasNext())
-			rdata[riter.index] = data[iter.index + 1];
-
-		return rdataset;
+	public DoubleDataset getImaginaryPart() { // CLASS_TYPE
+		return getElements(1);
 	}
 
 	/**
