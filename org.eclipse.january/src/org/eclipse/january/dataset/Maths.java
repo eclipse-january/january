@@ -123,6 +123,8 @@ public class Maths {
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
+		final int bs = db.getElementsPerItem();
 		final double[] cpx;
 
 		switch (result.getDType()) {
@@ -189,14 +191,14 @@ public class Maths {
 				while (it.hasNext()) {
 					ai8data[it.oIndex] = (byte) op.longOperate(it.aLong, it.bLong);
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				while (it.hasNext()) {
 					ai8data[it.oIndex] = (byte) op.longOperate(it.aLong, it.bLong);
 					for (int j = 1; j < is; j++) {
 						ai8data[it.oIndex + j] = (byte) op.longOperate(it.aLong, db.getElementLongAbs(it.bIndex + j));
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				while (it.hasNext()) {
 					ai8data[it.oIndex] = (byte) op.longOperate(it.aLong, it.bLong);
 					for (int j = 1; j < is; j++) {
@@ -220,14 +222,14 @@ public class Maths {
 				while (it.hasNext()) {
 					ai16data[it.oIndex] = (short) op.longOperate(it.aLong, it.bLong);
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				while (it.hasNext()) {
 					ai16data[it.oIndex] = (short) op.longOperate(it.aLong, it.bLong);
 					for (int j = 1; j < is; j++) {
 						ai16data[it.oIndex + j] = (short) op.longOperate(it.aLong, db.getElementLongAbs(it.bIndex + j));
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				while (it.hasNext()) {
 					ai16data[it.oIndex] = (short) op.longOperate(it.aLong, it.bLong);
 					for (int j = 1; j < is; j++) {
@@ -251,14 +253,14 @@ public class Maths {
 				while (it.hasNext()) {
 					ai32data[it.oIndex] = (int) op.longOperate(it.aLong, it.bLong);
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				while (it.hasNext()) {
 					ai32data[it.oIndex] = (int) op.longOperate(it.aLong, it.bLong);
 					for (int j = 1; j < is; j++) {
 						ai32data[it.oIndex + j] = (int) op.longOperate(it.aLong, db.getElementLongAbs(it.bIndex + j));
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				while (it.hasNext()) {
 					ai32data[it.oIndex] = (int) op.longOperate(it.aLong, it.bLong);
 					for (int j = 1; j < is; j++) {
@@ -282,14 +284,14 @@ public class Maths {
 				while (it.hasNext()) {
 					ai64data[it.oIndex] = op.longOperate(it.aLong, it.bLong);
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				while (it.hasNext()) {
 					ai64data[it.oIndex] = op.longOperate(it.aLong, it.bLong);
 					for (int j = 1; j < is; j++) {
 						ai64data[it.oIndex + j] = op.longOperate(it.aLong, db.getElementLongAbs(it.bIndex + j));
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				while (it.hasNext()) {
 					ai64data[it.oIndex] = op.longOperate(it.aLong, it.bLong);
 					for (int j = 1; j < is; j++) {
@@ -313,14 +315,14 @@ public class Maths {
 				while (it.hasNext()) {
 					a32data[it.oIndex] = (float) op.doubleOperate(it.aDouble, it.bDouble);
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				while (it.hasNext()) {
 					a32data[it.oIndex] = (float) op.doubleOperate(it.aDouble, it.bDouble);
 					for (int j = 1; j < is; j++) {
 						a32data[it.oIndex + j] = (float) op.doubleOperate(it.aDouble, db.getElementDoubleAbs(it.bIndex + j));
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				while (it.hasNext()) {
 					a32data[it.oIndex] = (float) op.doubleOperate(it.aDouble, it.bDouble);
 					for (int j = 1; j < is; j++) {
@@ -344,14 +346,14 @@ public class Maths {
 				while (it.hasNext()) {
 					a64data[it.oIndex] = op.doubleOperate(it.aDouble, it.bDouble);
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				while (it.hasNext()) {
 					a64data[it.oIndex] = op.doubleOperate(it.aDouble, it.bDouble);
 					for (int j = 1; j < is; j++) {
 						a64data[it.oIndex + j] = op.doubleOperate(it.aDouble, db.getElementDoubleAbs(it.bIndex + j));
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				while (it.hasNext()) {
 					a64data[it.oIndex] = op.doubleOperate(it.aDouble, it.bDouble);
 					for (int j = 1; j < is; j++) {
@@ -372,14 +374,14 @@ public class Maths {
 			it.setOutputDouble(true);
 			cpx = new double[2];
 
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				while (it.hasNext()) {
 					final double ib = db.getElementDoubleAbs(it.bIndex + 1);
 					op.complexOperate(cpx, it.aDouble, 0, it.bDouble, ib);
 					c64data[it.oIndex]     = (float) cpx[0];
 					c64data[it.oIndex + 1] = (float) cpx[1];
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				while (it.hasNext()) {
 					final double ia = da.getElementDoubleAbs(it.aIndex + 1);
 					op.complexOperate(cpx, it.aDouble, ia, it.bDouble, 0);
@@ -401,14 +403,14 @@ public class Maths {
 			it.setOutputDouble(true);
 			cpx = new double[2];
 
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				while (it.hasNext()) {
 					final double ib = db.getElementDoubleAbs(it.bIndex + 1);
 					op.complexOperate(cpx, it.aDouble, 0, it.bDouble, ib);
 					c128data[it.oIndex]     = cpx[0];
 					c128data[it.oIndex + 1] = cpx[1];
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				while (it.hasNext()) {
 					final double ia = da.getElementDoubleAbs(it.aIndex + 1);
 					op.complexOperate(cpx, it.aDouble, ia, it.bDouble, 0);
@@ -820,6 +822,8 @@ public class Maths {
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
+		final int bs = db.getElementsPerItem();
 		final int dt = result.getDType();
 		switch (dt) {
 		case Dataset.BOOL:
@@ -878,14 +882,14 @@ public class Maths {
 				while (it.hasNext()) {
 					ai8data[it.oIndex] = (byte) toLong(Math.hypot(it.aDouble, it.bDouble));
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				while (it.hasNext()) {
 					ai8data[it.oIndex] = (byte) toLong(Math.hypot(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
 						ai8data[it.oIndex + j] = (byte) toLong(Math.hypot(it.aDouble, db.getElementDoubleAbs(it.bIndex + j)));
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				while (it.hasNext()) {
 					ai8data[it.oIndex] = (byte) toLong(Math.hypot(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
@@ -908,14 +912,14 @@ public class Maths {
 				while (it.hasNext()) {
 					ai16data[it.oIndex] = (short) toLong(Math.hypot(it.aDouble, it.bDouble));
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				while (it.hasNext()) {
 					ai16data[it.oIndex] = (short) toLong(Math.hypot(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
 						ai16data[it.oIndex + j] = (short) toLong(Math.hypot(it.aDouble, db.getElementDoubleAbs(it.bIndex + j)));
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				while (it.hasNext()) {
 					ai16data[it.oIndex] = (short) toLong(Math.hypot(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
@@ -938,14 +942,14 @@ public class Maths {
 				while (it.hasNext()) {
 					ai32data[it.oIndex] = (int) toLong(Math.hypot(it.aDouble, it.bDouble));
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				while (it.hasNext()) {
 					ai32data[it.oIndex] = (int) toLong(Math.hypot(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
 						ai32data[it.oIndex + j] = (int) toLong(Math.hypot(it.aDouble, db.getElementDoubleAbs(it.bIndex + j)));
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				while (it.hasNext()) {
 					ai32data[it.oIndex] = (int) toLong(Math.hypot(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
@@ -968,14 +972,14 @@ public class Maths {
 				while (it.hasNext()) {
 					ai64data[it.oIndex] = toLong(Math.hypot(it.aDouble, it.bDouble));
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				while (it.hasNext()) {
 					ai64data[it.oIndex] = toLong(Math.hypot(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
 						ai64data[it.oIndex + j] = toLong(Math.hypot(it.aDouble, db.getElementDoubleAbs(it.bIndex + j)));
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				while (it.hasNext()) {
 					ai64data[it.oIndex] = toLong(Math.hypot(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
@@ -998,14 +1002,14 @@ public class Maths {
 				while (it.hasNext()) {
 					a32data[it.oIndex] = (float) Math.hypot(it.aDouble, it.bDouble);
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				while (it.hasNext()) {
 					a32data[it.oIndex] = (float) Math.hypot(it.aDouble, it.bDouble);
 					for (int j = 1; j < is; j++) {
 						a32data[it.oIndex + j] = (float) Math.hypot(it.aDouble, db.getElementDoubleAbs(it.bIndex + j));
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				while (it.hasNext()) {
 					a32data[it.oIndex] = (float) Math.hypot(it.aDouble, it.bDouble);
 					for (int j = 1; j < is; j++) {
@@ -1028,14 +1032,14 @@ public class Maths {
 				while (it.hasNext()) {
 					a64data[it.oIndex] = Math.hypot(it.aDouble, it.bDouble);
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				while (it.hasNext()) {
 					a64data[it.oIndex] = Math.hypot(it.aDouble, it.bDouble);
 					for (int j = 1; j < is; j++) {
 						a64data[it.oIndex + j] = Math.hypot(it.aDouble, db.getElementDoubleAbs(it.bIndex + j));
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				while (it.hasNext()) {
 					a64data[it.oIndex] = Math.hypot(it.aDouble, it.bDouble);
 					for (int j = 1; j < is; j++) {
@@ -1082,6 +1086,8 @@ public class Maths {
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
+		final int bs = db.getElementsPerItem();
 		final int dt = result.getDType();
 		switch (dt) {
 		case Dataset.BOOL:
@@ -1140,14 +1146,14 @@ public class Maths {
 				while (it.hasNext()) {
 					ai8data[it.oIndex] = (byte) toLong(Math.atan2(it.aDouble, it.bDouble));
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				while (it.hasNext()) {
 					ai8data[it.oIndex] = (byte) toLong(Math.atan2(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
 						ai8data[it.oIndex + j] = (byte) toLong(Math.atan2(it.aDouble, db.getElementDoubleAbs(it.bIndex + j)));
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				while (it.hasNext()) {
 					ai8data[it.oIndex] = (byte) toLong(Math.atan2(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
@@ -1170,14 +1176,14 @@ public class Maths {
 				while (it.hasNext()) {
 					ai16data[it.oIndex] = (short) toLong(Math.atan2(it.aDouble, it.bDouble));
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				while (it.hasNext()) {
 					ai16data[it.oIndex] = (short) toLong(Math.atan2(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
 						ai16data[it.oIndex + j] = (short) toLong(Math.atan2(it.aDouble, db.getElementDoubleAbs(it.bIndex + j)));
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				while (it.hasNext()) {
 					ai16data[it.oIndex] = (short) toLong(Math.atan2(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
@@ -1200,14 +1206,14 @@ public class Maths {
 				while (it.hasNext()) {
 					ai32data[it.oIndex] = (int) toLong(Math.atan2(it.aDouble, it.bDouble));
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				while (it.hasNext()) {
 					ai32data[it.oIndex] = (int) toLong(Math.atan2(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
 						ai32data[it.oIndex + j] = (int) toLong(Math.atan2(it.aDouble, db.getElementDoubleAbs(it.bIndex + j)));
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				while (it.hasNext()) {
 					ai32data[it.oIndex] = (int) toLong(Math.atan2(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
@@ -1230,14 +1236,14 @@ public class Maths {
 				while (it.hasNext()) {
 					ai64data[it.oIndex] = toLong(Math.atan2(it.aDouble, it.bDouble));
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				while (it.hasNext()) {
 					ai64data[it.oIndex] = toLong(Math.atan2(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
 						ai64data[it.oIndex + j] = toLong(Math.atan2(it.aDouble, db.getElementDoubleAbs(it.bIndex + j)));
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				while (it.hasNext()) {
 					ai64data[it.oIndex] = toLong(Math.atan2(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
@@ -1260,14 +1266,14 @@ public class Maths {
 				while (it.hasNext()) {
 					a32data[it.oIndex] = (float) Math.atan2(it.aDouble, it.bDouble);
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				while (it.hasNext()) {
 					a32data[it.oIndex] = (float) Math.atan2(it.aDouble, it.bDouble);
 					for (int j = 1; j < is; j++) {
 						a32data[it.oIndex + j] = (float) Math.atan2(it.aDouble, db.getElementDoubleAbs(it.bIndex + j));
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				while (it.hasNext()) {
 					a32data[it.oIndex] = (float) Math.atan2(it.aDouble, it.bDouble);
 					for (int j = 1; j < is; j++) {
@@ -1290,14 +1296,14 @@ public class Maths {
 				while (it.hasNext()) {
 					a64data[it.oIndex] = Math.atan2(it.aDouble, it.bDouble);
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				while (it.hasNext()) {
 					a64data[it.oIndex] = Math.atan2(it.aDouble, it.bDouble);
 					for (int j = 1; j < is; j++) {
 						a64data[it.oIndex + j] = Math.atan2(it.aDouble, db.getElementDoubleAbs(it.bIndex + j));
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				while (it.hasNext()) {
 					a64data[it.oIndex] = Math.atan2(it.aDouble, it.bDouble);
 					for (int j = 1; j < is; j++) {
@@ -3353,6 +3359,8 @@ public class Maths {
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
+		final int bs = db.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -3456,7 +3464,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -3484,7 +3492,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -3564,7 +3572,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -3592,7 +3600,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -3672,7 +3680,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -3700,7 +3708,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -3780,7 +3788,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -3808,7 +3816,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -3928,7 +3936,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -3956,7 +3964,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -4036,7 +4044,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -4064,7 +4072,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -4126,7 +4134,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iay = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -4139,7 +4147,7 @@ public class Maths {
 					oc64data[it.oIndex] = ox;
 					oc64data[it.oIndex + 1] = oy;
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -4169,7 +4177,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iay = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -4182,7 +4190,7 @@ public class Maths {
 					oc128data[it.oIndex] = ox;
 					oc128data[it.oIndex + 1] = oy;
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -4241,6 +4249,8 @@ public class Maths {
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
+		final int bs = db.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -4344,7 +4354,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -4372,7 +4382,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -4452,7 +4462,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -4480,7 +4490,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -4560,7 +4570,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -4588,7 +4598,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -4668,7 +4678,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -4696,7 +4706,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -4816,7 +4826,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -4844,7 +4854,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -4924,7 +4934,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -4952,7 +4962,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -5014,7 +5024,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iay = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -5027,7 +5037,7 @@ public class Maths {
 					oc64data[it.oIndex] = ox;
 					oc64data[it.oIndex + 1] = oy;
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -5057,7 +5067,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iay = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -5070,7 +5080,7 @@ public class Maths {
 					oc128data[it.oIndex] = ox;
 					oc128data[it.oIndex + 1] = oy;
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -5129,6 +5139,8 @@ public class Maths {
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
+		final int bs = db.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -5232,7 +5244,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -5260,7 +5272,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -5340,7 +5352,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -5368,7 +5380,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -5448,7 +5460,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -5476,7 +5488,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -5556,7 +5568,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -5584,7 +5596,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -5704,7 +5716,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -5732,7 +5744,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -5812,7 +5824,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -5840,7 +5852,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -5902,7 +5914,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iay = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -5915,7 +5927,7 @@ public class Maths {
 					oc64data[it.oIndex] = ox;
 					oc64data[it.oIndex + 1] = oy;
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -5945,7 +5957,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iay = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -5958,7 +5970,7 @@ public class Maths {
 					oc128data[it.oIndex] = ox;
 					oc128data[it.oIndex + 1] = oy;
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -6017,6 +6029,8 @@ public class Maths {
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
+		final int bs = db.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -6120,7 +6134,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -6148,7 +6162,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -6228,7 +6242,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -6256,7 +6270,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -6336,7 +6350,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -6364,7 +6378,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -6444,7 +6458,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -6472,7 +6486,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -6592,7 +6606,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -6620,7 +6634,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -6700,7 +6714,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -6728,7 +6742,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -6790,7 +6804,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iay = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -6820,15 +6834,33 @@ public class Maths {
 					oc64data[it.oIndex] = ox;
 					oc64data[it.oIndex + 1] = oy;
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
+				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					final double iay = da.getElementDoubleAbs(it.aIndex + 1);
 					float ox;
 					float oy;
-					ox = (float) (iax / ibx);
-					oy = (float) (iay / ibx);
+					float q;
+					float den;
+					if (iby == 0) {
+						ox = (float) (iax / ibx);
+						oy = (float) (iay / ibx);
+					} else if (ibx == 0) {
+						ox = (float) (iay / iby);
+						oy = (float) (-iax / iby);
+					} else if (Math.abs(ibx) < Math.abs(iby)) {
+						q = (float) (ibx / iby);
+						den = (float) (ibx * q + iby);
+						ox = (float) ((iax * q + iay) / den);
+						oy = (float) ((iay * q - ibx) / den);
+					} else {
+						q = (float) (iby / ibx);
+						den = (float) (iby * q + ibx);
+						ox = (float) ((iay * q + iax) / den);
+						oy = (float) ((iay - iax * q) / den);
+					}
 					oc64data[it.oIndex] = ox;
 					oc64data[it.oIndex + 1] = oy;
 				}
@@ -6866,7 +6898,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iay = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -6896,15 +6928,33 @@ public class Maths {
 					oc128data[it.oIndex] = ox;
 					oc128data[it.oIndex + 1] = oy;
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
+				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					final double iay = da.getElementDoubleAbs(it.aIndex + 1);
 					double ox;
 					double oy;
-					ox = (iax / ibx);
-					oy = (iay / ibx);
+					double q;
+					double den;
+					if (iby == 0) {
+						ox = (iax / ibx);
+						oy = (iay / ibx);
+					} else if (ibx == 0) {
+						ox = (iay / iby);
+						oy = (-iax / iby);
+					} else if (Math.abs(ibx) < Math.abs(iby)) {
+						q = (ibx / iby);
+						den = (ibx * q + iby);
+						ox = ((iax * q + iay) / den);
+						oy = ((iay * q - ibx) / den);
+					} else {
+						q = (iby / ibx);
+						den = (iby * q + ibx);
+						ox = ((iay * q + iax) / den);
+						oy = ((iay - iax * q) / den);
+					}
 					oc128data[it.oIndex] = ox;
 					oc128data[it.oIndex + 1] = oy;
 				}
@@ -6971,6 +7021,8 @@ public class Maths {
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
+		final int bs = db.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -7074,7 +7126,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -7102,7 +7154,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -7182,7 +7234,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -7210,7 +7262,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -7290,7 +7342,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -7318,7 +7370,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -7398,7 +7450,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -7426,7 +7478,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -7546,7 +7598,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -7574,7 +7626,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -7654,7 +7706,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -7682,7 +7734,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -7744,7 +7796,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iay = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -7771,7 +7823,7 @@ public class Maths {
 					oc64data[it.oIndex] = ox;
 					oc64data[it.oIndex + 1] = oy;
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -7781,9 +7833,14 @@ public class Maths {
 					float oy;
 					float q;
 					float den;
-					if (ibx == 0) {
+					if (ibx == 0 && iby == 0) {
 						ox = 0;
 						oy = 0;
+					} else if (Math.abs(ibx) < Math.abs(iby)) {
+						q = (float) (ibx / iby);
+						den = (float) (ibx * q + iby);
+						ox = (float) ((iax * q + iay) / den);
+						oy = (float) ((iay * q - ibx) / den);
 					} else {
 						q = (float) (iby / ibx);
 						den = (float) (iby * q + ibx);
@@ -7824,7 +7881,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iay = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -7851,7 +7908,7 @@ public class Maths {
 					oc128data[it.oIndex] = ox;
 					oc128data[it.oIndex + 1] = oy;
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -7861,9 +7918,14 @@ public class Maths {
 					double oy;
 					double q;
 					double den;
-					if (ibx == 0) {
+					if (ibx == 0 && iby == 0) {
 						ox = 0;
 						oy = 0;
+					} else if (Math.abs(ibx) < Math.abs(iby)) {
+						q = (ibx / iby);
+						den = (ibx * q + iby);
+						ox = ((iax * q + iay) / den);
+						oy = ((iay * q - ibx) / den);
 					} else {
 						q = (iby / ibx);
 						den = (iby * q + ibx);
@@ -7933,6 +7995,8 @@ public class Maths {
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
+		final int bs = db.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -8106,7 +8170,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -8162,7 +8226,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -8312,7 +8376,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -8368,7 +8432,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -8518,7 +8582,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -8574,7 +8638,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -8724,7 +8788,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -8780,7 +8844,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -8956,7 +9020,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -8984,7 +9048,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -9064,7 +9128,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -9092,7 +9156,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -9154,7 +9218,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iay = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -9184,15 +9248,33 @@ public class Maths {
 					oc64data[it.oIndex] = ox;
 					oc64data[it.oIndex + 1] = oy;
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
+				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					final double iay = da.getElementDoubleAbs(it.aIndex + 1);
 					float ox;
 					float oy;
-					ox = (float) (iax / ibx);
-					oy = (float) (iay / ibx);
+					float q;
+					float den;
+					if (iby == 0) {
+						ox = (float) (iax / ibx);
+						oy = (float) (iay / ibx);
+					} else if (ibx == 0) {
+						ox = (float) (iay / iby);
+						oy = (float) (-iax / iby);
+					} else if (Math.abs(ibx) < Math.abs(iby)) {
+						q = (float) (ibx / iby);
+						den = (float) (ibx * q + iby);
+						ox = (float) ((iax * q + iay) / den);
+						oy = (float) ((iay * q - ibx) / den);
+					} else {
+						q = (float) (iby / ibx);
+						den = (float) (iby * q + ibx);
+						ox = (float) ((iay * q + iax) / den);
+						oy = (float) ((iay - iax * q) / den);
+					}
 					oc64data[it.oIndex] = ox;
 					oc64data[it.oIndex + 1] = oy;
 				}
@@ -9230,7 +9312,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iay = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -9260,15 +9342,33 @@ public class Maths {
 					oc128data[it.oIndex] = ox;
 					oc128data[it.oIndex + 1] = oy;
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
+				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					final double iay = da.getElementDoubleAbs(it.aIndex + 1);
 					double ox;
 					double oy;
-					ox = (iax / ibx);
-					oy = (iay / ibx);
+					double q;
+					double den;
+					if (iby == 0) {
+						ox = (iax / ibx);
+						oy = (iay / ibx);
+					} else if (ibx == 0) {
+						ox = (iay / iby);
+						oy = (-iax / iby);
+					} else if (Math.abs(ibx) < Math.abs(iby)) {
+						q = (ibx / iby);
+						den = (ibx * q + iby);
+						ox = ((iax * q + iay) / den);
+						oy = ((iay * q - ibx) / den);
+					} else {
+						q = (iby / ibx);
+						den = (iby * q + ibx);
+						ox = ((iay * q + iax) / den);
+						oy = ((iay - iax * q) / den);
+					}
 					oc128data[it.oIndex] = ox;
 					oc128data[it.oIndex + 1] = oy;
 				}
@@ -9335,6 +9435,8 @@ public class Maths {
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
+		final int bs = db.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -9438,7 +9540,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -9466,7 +9568,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -9546,7 +9648,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -9574,7 +9676,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -9654,7 +9756,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -9682,7 +9784,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -9762,7 +9864,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -9790,7 +9892,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -9910,7 +10012,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -9938,7 +10040,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -10018,7 +10120,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -10046,7 +10148,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -10108,7 +10210,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iay = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -10123,7 +10225,7 @@ public class Maths {
 					oc64data[it.oIndex] = ox;
 					oc64data[it.oIndex + 1] = oy;
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -10157,7 +10259,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iay = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -10172,7 +10274,7 @@ public class Maths {
 					oc128data[it.oIndex] = ox;
 					oc128data[it.oIndex + 1] = oy;
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -10235,6 +10337,8 @@ public class Maths {
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
+		final int bs = db.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -10338,7 +10442,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -10366,7 +10470,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -10446,7 +10550,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -10474,7 +10578,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -10554,7 +10658,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -10582,7 +10686,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -10662,7 +10766,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -10690,7 +10794,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -10810,7 +10914,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -10838,7 +10942,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -10918,7 +11022,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -10946,7 +11050,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -11037,6 +11141,8 @@ public class Maths {
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
+		final int bs = db.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -11140,7 +11246,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -11168,7 +11274,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -11248,7 +11354,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -11276,7 +11382,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -11356,7 +11462,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -11384,7 +11490,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -11464,7 +11570,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -11492,7 +11598,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -11567,7 +11673,7 @@ public class Maths {
 					final long iax = it.aLong;
 					final long ibx = it.bLong;
 					float ox;
-					ox = (Math.max(iax, ibx));
+					ox = (float) (Math.max(iax, ibx));
 					of32data[it.oIndex] = ox;
 				}
 			}
@@ -11599,18 +11705,20 @@ public class Maths {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
 						final double ibx = it.bDouble;
-						float ox = (float) (Math.max(iax, ibx));
+						float ox;
+						ox = (float) (Math.max(iax, ibx));
 						oaf32data[it.oIndex] = ox;
 					}
 				} else {
 					while (it.hasNext()) {
 						final long iax = it.aLong;
 						final long ibx = it.bLong;
-						float ox = (Math.max(iax, ibx));
+						float ox;
+						ox = (float) (Math.max(iax, ibx));
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -11628,16 +11736,17 @@ public class Maths {
 					while (it.hasNext()) {
 						final long iax = it.aLong;
 						long ibx = it.bLong;
-						float ox = (Math.max(iax, ibx));
+						float ox;
+						ox = (float) (Math.max(iax, ibx));
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementLongAbs(it.bIndex + j);
-							ox = (Math.max(iax, ibx));
+							ox = (float) (Math.max(iax, ibx));
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -11656,11 +11765,11 @@ public class Maths {
 						long iax = it.aLong;
 						final long ibx = it.bLong;
 						float ox;
-						ox = (Math.max(iax, ibx));
+						ox = (float) (Math.max(iax, ibx));
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementLongAbs(it.aIndex + j);
-							ox = (Math.max(iax, ibx));
+							ox = (float) (Math.max(iax, ibx));
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -11685,12 +11794,12 @@ public class Maths {
 						long iax = it.aLong;
 						long ibx = it.bLong;
 						float ox;
-						ox = (Math.max(iax, ibx));
+						ox = (float) (Math.max(iax, ibx));
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementLongAbs(it.aIndex + j);
 							ibx = db.getElementLongAbs(it.bIndex + j);
-							ox = (Math.max(iax, ibx));
+							ox = (float) (Math.max(iax, ibx));
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -11717,7 +11826,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -11745,7 +11854,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -11807,7 +11916,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iay = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -11828,7 +11937,7 @@ public class Maths {
 					oc64data[it.oIndex] = ox;
 					oc64data[it.oIndex + 1] = oy;
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -11874,7 +11983,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iay = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -11895,7 +12004,7 @@ public class Maths {
 					oc128data[it.oIndex] = ox;
 					oc128data[it.oIndex + 1] = oy;
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -11970,6 +12079,8 @@ public class Maths {
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
+		final int bs = db.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -12073,7 +12184,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -12101,7 +12212,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -12181,7 +12292,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -12209,7 +12320,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -12289,7 +12400,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -12317,7 +12428,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -12397,7 +12508,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -12425,7 +12536,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -12500,7 +12611,7 @@ public class Maths {
 					final long iax = it.aLong;
 					final long ibx = it.bLong;
 					float ox;
-					ox = (Math.min(iax, ibx));
+					ox = (float) (Math.min(iax, ibx));
 					of32data[it.oIndex] = ox;
 				}
 			}
@@ -12541,11 +12652,11 @@ public class Maths {
 						final long iax = it.aLong;
 						final long ibx = it.bLong;
 						float ox;
-						ox = (Math.min(iax, ibx));
+						ox = (float) (Math.min(iax, ibx));
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -12564,16 +12675,16 @@ public class Maths {
 						final long iax = it.aLong;
 						long ibx = it.bLong;
 						float ox;
-						ox = (Math.min(iax, ibx));
+						ox = (float) (Math.min(iax, ibx));
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							ibx = db.getElementLongAbs(it.bIndex + j);
-							ox = (Math.min(iax, ibx));
+							ox = (float) (Math.min(iax, ibx));
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -12592,11 +12703,11 @@ public class Maths {
 						long iax = it.aLong;
 						final long ibx = it.bLong;
 						float ox;
-						ox = (Math.min(iax, ibx));
+						ox = (float) (Math.min(iax, ibx));
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementLongAbs(it.aIndex + j);
-							ox = (Math.min(iax, ibx));
+							ox = (float) (Math.min(iax, ibx));
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -12621,12 +12732,12 @@ public class Maths {
 						long iax = it.aLong;
 						long ibx = it.bLong;
 						float ox;
-						ox = (Math.min(iax, ibx));
+						ox = (float) (Math.min(iax, ibx));
 						oaf32data[it.oIndex] = ox;
 						for (int j = 1; j < is; j++) {
 							iax = da.getElementLongAbs(it.aIndex + j);
 							ibx = db.getElementLongAbs(it.bIndex + j);
-							ox = (Math.min(iax, ibx));
+							ox = (float) (Math.min(iax, ibx));
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -12653,7 +12764,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double iax = it.aDouble;
@@ -12681,7 +12792,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						double iax = it.aDouble;
@@ -12743,7 +12854,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iay = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -12764,7 +12875,7 @@ public class Maths {
 					oc64data[it.oIndex] = ox;
 					oc64data[it.oIndex + 1] = oy;
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -12810,7 +12921,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iay = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -12831,7 +12942,7 @@ public class Maths {
 					oc128data[it.oIndex] = ox;
 					oc128data[it.oIndex + 1] = oy;
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1) {
 				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -12907,6 +13018,8 @@ public class Maths {
 		it.setOutputDouble(false);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
+		final int bs = db.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -12970,7 +13083,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				{
 					while (it.hasNext()) {
 						final long iax = it.aLong;
@@ -12985,7 +13098,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				{
 					while (it.hasNext()) {
 						long iax = it.aLong;
@@ -13030,7 +13143,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				{
 					while (it.hasNext()) {
 						final long iax = it.aLong;
@@ -13045,7 +13158,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				{
 					while (it.hasNext()) {
 						long iax = it.aLong;
@@ -13090,7 +13203,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				{
 					while (it.hasNext()) {
 						final long iax = it.aLong;
@@ -13105,7 +13218,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				{
 					while (it.hasNext()) {
 						long iax = it.aLong;
@@ -13150,7 +13263,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				{
 					while (it.hasNext()) {
 						final long iax = it.aLong;
@@ -13165,7 +13278,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				{
 					while (it.hasNext()) {
 						long iax = it.aLong;
@@ -13230,6 +13343,8 @@ public class Maths {
 		it.setOutputDouble(false);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
+		final int bs = db.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -13293,7 +13408,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				{
 					while (it.hasNext()) {
 						final long iax = it.aLong;
@@ -13308,7 +13423,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				{
 					while (it.hasNext()) {
 						long iax = it.aLong;
@@ -13353,7 +13468,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				{
 					while (it.hasNext()) {
 						final long iax = it.aLong;
@@ -13368,7 +13483,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				{
 					while (it.hasNext()) {
 						long iax = it.aLong;
@@ -13413,7 +13528,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				{
 					while (it.hasNext()) {
 						final long iax = it.aLong;
@@ -13428,7 +13543,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				{
 					while (it.hasNext()) {
 						long iax = it.aLong;
@@ -13473,7 +13588,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				{
 					while (it.hasNext()) {
 						final long iax = it.aLong;
@@ -13488,7 +13603,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				{
 					while (it.hasNext()) {
 						long iax = it.aLong;
@@ -13553,6 +13668,8 @@ public class Maths {
 		it.setOutputDouble(false);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
+		final int bs = db.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -13616,7 +13733,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				{
 					while (it.hasNext()) {
 						final long iax = it.aLong;
@@ -13631,7 +13748,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				{
 					while (it.hasNext()) {
 						long iax = it.aLong;
@@ -13676,7 +13793,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				{
 					while (it.hasNext()) {
 						final long iax = it.aLong;
@@ -13691,7 +13808,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				{
 					while (it.hasNext()) {
 						long iax = it.aLong;
@@ -13736,7 +13853,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				{
 					while (it.hasNext()) {
 						final long iax = it.aLong;
@@ -13751,7 +13868,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				{
 					while (it.hasNext()) {
 						long iax = it.aLong;
@@ -13796,7 +13913,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				{
 					while (it.hasNext()) {
 						final long iax = it.aLong;
@@ -13811,7 +13928,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				{
 					while (it.hasNext()) {
 						long iax = it.aLong;
@@ -13876,6 +13993,8 @@ public class Maths {
 		it.setOutputDouble(false);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
+		final int bs = db.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -13939,7 +14058,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				{
 					while (it.hasNext()) {
 						final long iax = it.aLong;
@@ -13954,7 +14073,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				{
 					while (it.hasNext()) {
 						long iax = it.aLong;
@@ -13999,7 +14118,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				{
 					while (it.hasNext()) {
 						final long iax = it.aLong;
@@ -14014,7 +14133,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				{
 					while (it.hasNext()) {
 						long iax = it.aLong;
@@ -14059,7 +14178,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				{
 					while (it.hasNext()) {
 						final long iax = it.aLong;
@@ -14074,7 +14193,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				{
 					while (it.hasNext()) {
 						long iax = it.aLong;
@@ -14119,7 +14238,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				{
 					while (it.hasNext()) {
 						final long iax = it.aLong;
@@ -14134,7 +14253,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				{
 					while (it.hasNext()) {
 						long iax = it.aLong;
@@ -14199,6 +14318,8 @@ public class Maths {
 		it.setOutputDouble(false);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
+		final int bs = db.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -14262,7 +14383,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				{
 					while (it.hasNext()) {
 						final long iax = it.aLong;
@@ -14277,7 +14398,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				{
 					while (it.hasNext()) {
 						long iax = it.aLong;
@@ -14322,7 +14443,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				{
 					while (it.hasNext()) {
 						final long iax = it.aLong;
@@ -14337,7 +14458,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				{
 					while (it.hasNext()) {
 						long iax = it.aLong;
@@ -14382,7 +14503,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				{
 					while (it.hasNext()) {
 						final long iax = it.aLong;
@@ -14397,7 +14518,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				{
 					while (it.hasNext()) {
 						long iax = it.aLong;
@@ -14442,7 +14563,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				{
 					while (it.hasNext()) {
 						final long iax = it.aLong;
@@ -14457,7 +14578,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				{
 					while (it.hasNext()) {
 						long iax = it.aLong;
@@ -14523,6 +14644,8 @@ public class Maths {
 		final long unsignedMask;
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
+		final int bs = db.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -14591,7 +14714,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				{
 					while (it.hasNext()) {
 						final long iax = it.aLong;
@@ -14606,7 +14729,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				{
 					while (it.hasNext()) {
 						long iax = it.aLong;
@@ -14652,7 +14775,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				{
 					while (it.hasNext()) {
 						final long iax = it.aLong;
@@ -14667,7 +14790,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				{
 					while (it.hasNext()) {
 						long iax = it.aLong;
@@ -14713,7 +14836,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				{
 					while (it.hasNext()) {
 						final long iax = it.aLong;
@@ -14728,7 +14851,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				{
 					while (it.hasNext()) {
 						long iax = it.aLong;
@@ -14774,7 +14897,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1 || as < bs) {
 				{
 					while (it.hasNext()) {
 						final long iax = it.aLong;
@@ -14789,7 +14912,7 @@ public class Maths {
 						}
 					}
 				}
-			} else if (db.getElementsPerItem() == 1) {
+			} else if (bs == 1 || as > bs) {
 				{
 					while (it.hasNext()) {
 						long iax = it.aLong;
@@ -14850,6 +14973,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true, true, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -14908,7 +15032,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				{
 					while (it.hasNext()) {
 						final long ix = it.aLong;
@@ -14943,7 +15067,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				{
 					while (it.hasNext()) {
 						final long ix = it.aLong;
@@ -14978,7 +15102,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				{
 					while (it.hasNext()) {
 						final long ix = it.aLong;
@@ -15013,7 +15137,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				{
 					while (it.hasNext()) {
 						final long ix = it.aLong;
@@ -15065,6 +15189,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -15158,7 +15283,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -15218,7 +15343,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -15278,7 +15403,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -15338,7 +15463,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -15434,7 +15559,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -15494,7 +15619,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -15538,7 +15663,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -15564,7 +15689,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -15616,6 +15741,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -15709,7 +15835,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -15769,7 +15895,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -15829,7 +15955,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -15889,7 +16015,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -15985,7 +16111,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -16045,7 +16171,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -16089,7 +16215,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -16115,7 +16241,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -16167,6 +16293,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -16260,7 +16387,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -16320,7 +16447,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -16380,7 +16507,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -16440,7 +16567,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -16536,7 +16663,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -16596,7 +16723,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -16640,7 +16767,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -16678,7 +16805,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -16742,6 +16869,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -16835,7 +16963,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -16895,7 +17023,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -16955,7 +17083,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -17015,7 +17143,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -17111,7 +17239,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -17171,7 +17299,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -17215,7 +17343,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -17245,7 +17373,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -17301,6 +17429,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -17394,7 +17523,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -17454,7 +17583,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -17514,7 +17643,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -17574,7 +17703,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -17670,7 +17799,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -17730,7 +17859,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -17774,7 +17903,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -17804,7 +17933,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -17860,6 +17989,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -17953,7 +18083,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -18013,7 +18143,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -18073,7 +18203,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -18133,7 +18263,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -18229,7 +18359,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -18289,7 +18419,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -18333,7 +18463,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -18363,7 +18493,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -18419,6 +18549,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -18512,7 +18643,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -18572,7 +18703,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -18632,7 +18763,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -18692,7 +18823,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -18788,7 +18919,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -18848,7 +18979,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -18892,7 +19023,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -18918,7 +19049,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -18970,6 +19101,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -19063,7 +19195,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -19123,7 +19255,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -19183,7 +19315,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -19243,7 +19375,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -19339,7 +19471,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -19399,7 +19531,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -19443,7 +19575,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -19469,7 +19601,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -19521,6 +19653,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -19614,7 +19747,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -19674,7 +19807,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -19734,7 +19867,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -19794,7 +19927,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -19890,7 +20023,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -19950,7 +20083,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -19994,7 +20127,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -20032,7 +20165,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -20096,6 +20229,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -20189,7 +20323,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -20249,7 +20383,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -20309,7 +20443,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -20369,7 +20503,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -20465,7 +20599,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -20525,7 +20659,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -20569,7 +20703,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -20599,7 +20733,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -20655,6 +20789,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -20748,7 +20883,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -20808,7 +20943,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -20868,7 +21003,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -20928,7 +21063,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -21024,7 +21159,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -21084,7 +21219,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -21128,7 +21263,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -21158,7 +21293,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -21214,6 +21349,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -21307,7 +21443,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -21367,7 +21503,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -21427,7 +21563,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -21487,7 +21623,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -21583,7 +21719,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -21643,7 +21779,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -21687,7 +21823,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -21717,7 +21853,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -21773,6 +21909,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -21866,7 +22003,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -21926,7 +22063,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -21986,7 +22123,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -22046,7 +22183,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -22142,7 +22279,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -22202,7 +22339,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -22246,7 +22383,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -22272,7 +22409,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -22324,6 +22461,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -22417,7 +22555,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -22477,7 +22615,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -22537,7 +22675,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -22597,7 +22735,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -22693,7 +22831,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -22753,7 +22891,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -22797,7 +22935,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -22823,7 +22961,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -22875,6 +23013,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -22968,7 +23107,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -23028,7 +23167,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -23088,7 +23227,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -23148,7 +23287,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -23244,7 +23383,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -23304,7 +23443,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -23348,7 +23487,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -23374,7 +23513,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -23426,6 +23565,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -23519,7 +23659,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -23579,7 +23719,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -23639,7 +23779,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -23699,7 +23839,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -23795,7 +23935,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -23855,7 +23995,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -23899,7 +24039,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -23925,7 +24065,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -23977,6 +24117,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -24070,7 +24211,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -24130,7 +24271,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -24190,7 +24331,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -24250,7 +24391,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -24346,7 +24487,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -24406,7 +24547,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -24450,7 +24591,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -24480,7 +24621,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -24536,6 +24677,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -24629,7 +24771,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -24689,7 +24831,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -24749,7 +24891,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -24809,7 +24951,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -24905,7 +25047,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -24965,7 +25107,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -25009,7 +25151,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -25039,7 +25181,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -25095,6 +25237,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -25188,7 +25331,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -25248,7 +25391,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -25308,7 +25451,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -25368,7 +25511,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -25464,7 +25607,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -25524,7 +25667,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -25568,7 +25711,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -25598,7 +25741,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -25654,6 +25797,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -25747,7 +25891,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -25807,7 +25951,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -25867,7 +26011,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -25927,7 +26071,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -26023,7 +26167,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -26083,7 +26227,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -26127,7 +26271,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -26157,7 +26301,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -26213,6 +26357,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -26306,7 +26451,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -26366,7 +26511,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -26426,7 +26571,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -26486,7 +26631,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -26582,7 +26727,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -26642,7 +26787,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -26686,7 +26831,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -26712,7 +26857,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -26764,6 +26909,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -26857,7 +27003,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -26917,7 +27063,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -26977,7 +27123,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -27037,7 +27183,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -27133,7 +27279,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -27193,7 +27339,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -27237,7 +27383,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -27263,7 +27409,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -27315,6 +27461,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -27408,7 +27555,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -27468,7 +27615,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -27528,7 +27675,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -27588,7 +27735,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -27684,7 +27831,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -27744,7 +27891,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -27788,7 +27935,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -27814,7 +27961,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -27866,6 +28013,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -27959,7 +28107,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -28019,7 +28167,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -28079,7 +28227,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -28139,7 +28287,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -28235,7 +28383,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -28295,7 +28443,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -28339,7 +28487,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -28365,7 +28513,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -28417,6 +28565,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -28510,7 +28659,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -28570,7 +28719,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -28630,7 +28779,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -28690,7 +28839,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -28738,7 +28887,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					float ox;
-					ox = (toLong(ix));
+					ox = (float) (toLong(ix));
 					of32data[it.oIndex] = ox;
 				}
 			} else {
@@ -28775,7 +28924,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						float ox;
-						ox = (toLong(ix));
+						ox = (float) (toLong(ix));
 						oaf32data[it.oIndex] = ox;
 					}
 				} else {
@@ -28786,12 +28935,12 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
 						float ox;
-						ox = (toLong(ix));
+						ox = (float) (toLong(ix));
 						for (int j = 0; j < is; j++) {
 							oaf32data[it.oIndex + j] = ox;
 						}
@@ -28812,7 +28961,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final double ix = da.getElementDoubleAbs(it.aIndex + j);
 							float ox;
-							ox = (toLong(ix));
+							ox = (float) (toLong(ix));
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -28846,7 +28995,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -28890,14 +29039,14 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
 					float ox;
 					float oy;
-					ox = (toLong(ix));
-					oy = (toLong(iy));
+					ox = (float) (toLong(ix));
+					oy = (float) (toLong(iy));
 					oc64data[it.oIndex] = ox;
 					oc64data[it.oIndex + 1] = oy;
 				}
@@ -28907,8 +29056,8 @@ public class Maths {
 					final double iy = da.getElementDoubleAbs(it.aIndex + 1);
 					float ox;
 					float oy;
-					ox = (toLong(ix));
-					oy = (toLong(iy));
+					ox = (float) (toLong(ix));
+					oy = (float) (toLong(iy));
 					oc64data[it.oIndex] = ox;
 					oc64data[it.oIndex + 1] = oy;
 				}
@@ -28916,7 +29065,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -28968,6 +29117,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -29061,7 +29211,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -29121,7 +29271,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -29181,7 +29331,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -29241,7 +29391,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -29337,7 +29487,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -29397,7 +29547,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -29441,7 +29591,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -29467,7 +29617,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -29519,6 +29669,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -29612,7 +29763,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -29672,7 +29823,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -29732,7 +29883,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -29792,7 +29943,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -29888,7 +30039,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -29948,7 +30099,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -29992,7 +30143,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -30018,7 +30169,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -30070,6 +30221,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -30163,7 +30315,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -30223,7 +30375,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -30283,7 +30435,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -30343,7 +30495,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -30398,7 +30550,7 @@ public class Maths {
 				while (it.hasNext()) {
 					final long ix = it.aLong;
 					float ox;
-					ox = (Math.signum(ix));
+					ox = (float) (Math.signum(ix));
 					of32data[it.oIndex] = ox;
 				}
 			}
@@ -30435,11 +30587,11 @@ public class Maths {
 					while (it.hasNext()) {
 						final long ix = it.aLong;
 						float ox;
-						ox = (Math.signum(ix));
+						ox = (float) (Math.signum(ix));
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -30453,7 +30605,7 @@ public class Maths {
 					while (it.hasNext()) {
 						final long ix = it.aLong;
 						float ox;
-						ox = (Math.signum(ix));
+						ox = (float) (Math.signum(ix));
 						for (int j = 0; j < is; j++) {
 							oaf32data[it.oIndex + j] = ox;
 						}
@@ -30474,7 +30626,7 @@ public class Maths {
 						for (int j = 0; j < is; j++) {
 							final long ix = da.getElementLongAbs(it.aIndex + j);
 							float ox;
-							ox = (Math.signum(ix));
+							ox = (float) (Math.signum(ix));
 							oaf32data[it.oIndex + j] = ox;
 						}
 					}
@@ -30499,7 +30651,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -30543,7 +30695,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -30569,7 +30721,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -30621,6 +30773,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
 
 		switch(dt) {
@@ -30714,7 +30867,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -30774,7 +30927,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -30834,7 +30987,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -30894,7 +31047,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -30990,7 +31143,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -31050,7 +31203,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -31094,7 +31247,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -31120,7 +31273,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).data;
-			if (da.getElementsPerItem() == 1) {
+			if (as == 1) {
 				final double iy = 0;
 				while (it.hasNext()) {
 					final double ix = it.aDouble;
@@ -31176,6 +31329,7 @@ public class Maths {
 		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
+		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
 		final double pax = DTypeUtils.toReal(pa);
 		final double pbx = DTypeUtils.toReal(pb);
@@ -31321,7 +31475,7 @@ public class Maths {
 						oai8data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -31411,7 +31565,7 @@ public class Maths {
 						oai16data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -31501,7 +31655,7 @@ public class Maths {
 						oai64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -31591,7 +31745,7 @@ public class Maths {
 						oai32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -31749,7 +31903,7 @@ public class Maths {
 						oaf32data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
@@ -31851,7 +32005,7 @@ public class Maths {
 						oaf64data[it.oIndex] = ox;
 					}
 				}
-			} else if (da.getElementsPerItem() == 1) {
+			} else if (as == 1) {
 				if (it.isOutputDouble()) {
 					while (it.hasNext()) {
 						final double ix = it.aDouble;
