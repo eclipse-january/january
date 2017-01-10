@@ -179,16 +179,16 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	}
 
 	@Override
-	public <T extends MetadataType> void setMetadata(T metadata) {
+	public void setMetadata(MetadataType metadata) {
 		addMetadata(metadata, true);
 	}
 
 	@Override
-	public <T extends MetadataType> void addMetadata(T metadata) {
+	public void addMetadata(MetadataType metadata) {
 		addMetadata(metadata, false);
 	}
 
-	private <T extends MetadataType> void addMetadata(T metadata, boolean clear) {
+	private void addMetadata(MetadataType metadata, boolean clear) {
 		if (metadata == null)
 			return;
 
@@ -255,7 +255,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	}
 
 	@Override
-	public <T extends MetadataType> void clearMetadata(Class<T> clazz) {
+	public void clearMetadata(Class<? extends MetadataType> clazz) {
 		if (metadata == null)
 			return;
 
