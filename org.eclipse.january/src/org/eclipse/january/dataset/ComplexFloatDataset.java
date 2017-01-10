@@ -462,19 +462,21 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 		setItem(new float[] {dr, di}, pos); // PRIM_TYPE
 	}
 
+	@Override
+	public FloatDataset getRealPart() { // CLASS_TYPE
+		return getElements(0);
+	}
+
+	@Override
+	public FloatDataset getRealView() { // CLASS_TYPE
+		return getElementsView(0);
+	}
+
 	/**
 	 * @return imaginary part of dataset as new dataset
 	 */
 	public FloatDataset getImaginaryPart() { // CLASS_TYPE
-		FloatDataset rdataset = new FloatDataset(shape); // CLASS_TYPE
-		IndexIterator iter = getIterator();
-		IndexIterator riter = rdataset.getIterator();
-
-		float[] rdata = rdataset.data; // PRIM_TYPE
-		while (iter.hasNext() && riter.hasNext())
-			rdata[riter.index] = data[iter.index + 1];
-
-		return rdataset;
+		return getElements(1);
 	}
 
 	/**
