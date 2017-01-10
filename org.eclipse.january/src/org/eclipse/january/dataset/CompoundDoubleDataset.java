@@ -836,24 +836,6 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 	}
 
 	@Override
-	public DoubleDataset getRealPart() { // CLASS_TYPE
-		DoubleDataset rdataset = new DoubleDataset(shape); // CLASS_TYPE
-		IndexIterator iter = getIterator();
-		IndexIterator riter = rdataset.getIterator();
-
-		double[] rdata = rdataset.data; // PRIM_TYPE
-		while (iter.hasNext() && riter.hasNext())
-			rdata[riter.index] = data[iter.index];
-
-		return rdataset;
-	}
-
-	@Override
-	public Dataset getRealView() {
-		return getElementsView(0);
-	}
-
-	@Override
 	public CompoundDoubleDataset getSlice(final SliceIterator siter) {
 		CompoundDoubleDataset result = new CompoundDoubleDataset(isize, siter.getShape());
 		double[] rdata = result.data; // PRIM_TYPE

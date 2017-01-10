@@ -836,24 +836,6 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 	}
 
 	@Override
-	public IntegerDataset getRealPart() { // CLASS_TYPE
-		IntegerDataset rdataset = new IntegerDataset(shape); // CLASS_TYPE
-		IndexIterator iter = getIterator();
-		IndexIterator riter = rdataset.getIterator();
-
-		int[] rdata = rdataset.data; // PRIM_TYPE
-		while (iter.hasNext() && riter.hasNext())
-			rdata[riter.index] = data[iter.index];
-
-		return rdataset;
-	}
-
-	@Override
-	public Dataset getRealView() {
-		return getElementsView(0);
-	}
-
-	@Override
 	public CompoundIntegerDataset getSlice(final SliceIterator siter) {
 		CompoundIntegerDataset result = new CompoundIntegerDataset(isize, siter.getShape());
 		int[] rdata = result.data; // PRIM_TYPE

@@ -836,24 +836,6 @@ public class CompoundLongDataset extends AbstractCompoundDataset {
 	}
 
 	@Override
-	public LongDataset getRealPart() { // CLASS_TYPE
-		LongDataset rdataset = new LongDataset(shape); // CLASS_TYPE
-		IndexIterator iter = getIterator();
-		IndexIterator riter = rdataset.getIterator();
-
-		long[] rdata = rdataset.data; // PRIM_TYPE
-		while (iter.hasNext() && riter.hasNext())
-			rdata[riter.index] = data[iter.index];
-
-		return rdataset;
-	}
-
-	@Override
-	public Dataset getRealView() {
-		return getElementsView(0);
-	}
-
-	@Override
 	public CompoundLongDataset getSlice(final SliceIterator siter) {
 		CompoundLongDataset result = new CompoundLongDataset(isize, siter.getShape());
 		long[] rdata = result.data; // PRIM_TYPE

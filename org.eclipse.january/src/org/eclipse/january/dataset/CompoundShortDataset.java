@@ -836,24 +836,6 @@ public class CompoundShortDataset extends AbstractCompoundDataset {
 	}
 
 	@Override
-	public ShortDataset getRealPart() { // CLASS_TYPE
-		ShortDataset rdataset = new ShortDataset(shape); // CLASS_TYPE
-		IndexIterator iter = getIterator();
-		IndexIterator riter = rdataset.getIterator();
-
-		short[] rdata = rdataset.data; // PRIM_TYPE
-		while (iter.hasNext() && riter.hasNext())
-			rdata[riter.index] = data[iter.index];
-
-		return rdataset;
-	}
-
-	@Override
-	public Dataset getRealView() {
-		return getElementsView(0);
-	}
-
-	@Override
 	public CompoundShortDataset getSlice(final SliceIterator siter) {
 		CompoundShortDataset result = new CompoundShortDataset(isize, siter.getShape());
 		short[] rdata = result.data; // PRIM_TYPE

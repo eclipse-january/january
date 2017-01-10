@@ -836,24 +836,6 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 	}
 
 	@Override
-	public FloatDataset getRealPart() { // CLASS_TYPE
-		FloatDataset rdataset = new FloatDataset(shape); // CLASS_TYPE
-		IndexIterator iter = getIterator();
-		IndexIterator riter = rdataset.getIterator();
-
-		float[] rdata = rdataset.data; // PRIM_TYPE
-		while (iter.hasNext() && riter.hasNext())
-			rdata[riter.index] = data[iter.index];
-
-		return rdataset;
-	}
-
-	@Override
-	public Dataset getRealView() {
-		return getElementsView(0);
-	}
-
-	@Override
 	public CompoundFloatDataset getSlice(final SliceIterator siter) {
 		CompoundFloatDataset result = new CompoundFloatDataset(isize, siter.getShape());
 		float[] rdata = result.data; // PRIM_TYPE
