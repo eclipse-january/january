@@ -162,6 +162,5 @@ public class MetadataTest {
 		@Override
 		public void setMetadata(Map<String, ? extends Serializable> map) {
 		}
-		
 	}
 }
