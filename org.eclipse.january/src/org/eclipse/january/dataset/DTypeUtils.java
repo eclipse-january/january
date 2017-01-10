@@ -96,9 +96,9 @@ public class DTypeUtils {
 	 * @return name of dataset type
 	 */
 	public static String getDTypeName(int dtype, int itemSize) {
-		int bytes = DTypeUtils.getItemBytes(dtype, itemSize);
+		int bytes = getItemBytes(dtype, 1);
 		if (isDTypeComplex(dtype)) {
-			return "COMPLEX" + bytes*8;
+			return "COMPLEX" + bytes*16;
 		} else if (dtype == Dataset.RGB) {
 			return "RGB";
 		}
@@ -302,7 +302,7 @@ public class DTypeUtils {
 			}
 		} else if (obj.getClass().isArray()) {
 			Class<?> ca = obj.getClass().getComponentType();
-			if (DTypeUtils.isClassSupportedAsElement(ca)) {
+			if (isClassSupportedAsElement(ca)) {
 				return getDTypeFromClass(ca);
 			}
 			int l = Array.getLength(obj);
