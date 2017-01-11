@@ -35,5 +35,7 @@ public class UnitsOfMeasurementExample
     {1, 2, 3, 4, 5, 6, 7, 8, 9});
 
     dataset.setMetadata(new UomMetadata(SI.NEWTON));
+    
+    System.out.println("res:" + dataset);
   }
 }
