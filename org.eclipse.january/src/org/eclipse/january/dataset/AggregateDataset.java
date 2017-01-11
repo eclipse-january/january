@@ -342,12 +342,12 @@ public class AggregateDataset extends LazyDatasetBase implements ILazyDataset {
 	}
 	
 	@Override
-	public void setError(Serializable errors) {
+	public void setErrors(Serializable errors) {
 		throw new RuntimeException("setLazyErrors is unimplemented for "+getClass().getSimpleName());
 	}
 	
 	@Override
-	public ILazyDataset getError() {
+	public ILazyDataset getErrors() {
 		return null;
 	}
 

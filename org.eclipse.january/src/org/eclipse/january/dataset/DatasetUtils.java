@@ -1264,7 +1264,7 @@ public class DatasetUtils {
 			break;
 		}
 
-		result.setError(data.getError());
+		result.setErrors(data.getErrors());
 		return result;
 	}
 

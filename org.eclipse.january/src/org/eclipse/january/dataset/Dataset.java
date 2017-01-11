@@ -315,7 +315,7 @@ public interface Dataset extends IDataset {
 	 * @return the dataset which contains the error information (can be null)
 	 */
 	@Override
-	public Dataset getError();
+	public Dataset getErrors();
 
 	/**
 	 * Get the (un-broadcasted) dataset that backs the (squared) error data

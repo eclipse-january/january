@@ -2197,7 +2197,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	 * @return error broadcasted to current shape
 	 */
 	private Dataset getBroadcastedInternalError() {
-		ILazyDataset led = super.getError();
+		ILazyDataset led = super.getErrors();
 		if (led == null)
 			return null;
 
@@ -2208,13 +2208,13 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			logger.error("Could not get data from lazy dataset", e);
 		}
 		if (led != ed) {
-			setError(ed); // set back
+			setErrors(ed); // set back
 		}
 		return ed.getBroadcastView(shape);
 	}
 
 	@Override
-	public Dataset getError() {
+	public Dataset getErrors() {
 		Dataset ed = getBroadcastedInternalError();
 		if (ed == null)
 			return null;

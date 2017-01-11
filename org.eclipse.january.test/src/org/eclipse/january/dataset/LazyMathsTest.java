@@ -116,7 +116,7 @@ public class LazyMathsTest {
 
 		Dataset e = Maths.sqrt(er.sum(1)).idivide(10);
 
-		TestUtils.assertDatasetEquals(e, LazyMaths.mean(a, 0).getError(), 1e-9, 1e-15);
+		TestUtils.assertDatasetEquals(e, LazyMaths.mean(a, 0).getErrors(), 1e-9, 1e-15);
 
 	}
 }

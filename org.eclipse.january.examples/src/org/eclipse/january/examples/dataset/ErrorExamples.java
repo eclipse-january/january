@@ -37,11 +37,11 @@ public class ErrorExamples {
 		Dataset rand  = Random.rand(0, 100, new int[]{1024, 1024});
 		Dataset error = Random.rand(0, 1,   new int[]{1024, 1024});
 		
-		rand.setError(error);
+		rand.setErrors(error);
 		// The error now stays with the data and can be retrieved, however:
 		
 		rand.idivide(10);
-		error = rand.getError();
+		error = rand.getErrors();
 		
 		// Error is not carried through calculations, the max is still ~1.0
 		System.out.println(error.max());

@@ -214,18 +214,18 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 	public ILazyDataset clone();
 
 	/**
-	 * Set the error. It may be a single double, a double array or a
+	 * Set the errors. It may be a single double, a double array or a
 	 * whole dataset that can broadcast to the dataset
 	 * 
 	 * @param errors - may be null to remove the error set
 	 * @throws RuntimeException if the rank or shape are incorrect
 	 */
-	public void setError(Serializable errors);
+	public void setErrors(Serializable errors);
 
 	/**
 	 * Get the errors, if any. These will be in a shape that can broadcast to the dataset
 	 */
-	public ILazyDataset getError();
+	public ILazyDataset getErrors();
 
 	/**
 	 * If error information is set, returns true.
