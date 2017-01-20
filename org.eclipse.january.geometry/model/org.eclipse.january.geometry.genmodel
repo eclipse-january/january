@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.january.geometry.model/src" editDirectory="/org.eclipse.january.geometry.model.edit/src"
+    editorDirectory="/org.eclipse.january.geometry.model.editor/src" modelPluginID="org.eclipse.january.geometry.model"
+    modelName="Org.eclipse.january" modelPluginClass="" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
+    editPluginID="org.eclipse.january.geometry.model.edit" editorPluginID="org.eclipse.january.geometry.model.editor"
+    operationReflection="true" importOrganizing="true" pluginKey="org.eclipse.january.geometry.model">
+  <foreignModel>org.eclipse.january.geometry.ecore</foreignModel>
+  <genPackages prefix="Geometry" basePackage="org.eclipse.january" disposableProviderFactory="true"
+      ecorePackage="org.eclipse.january.geometry.ecore#/">
+    <genDataTypes ecoreDataType="org.eclipse.january.geometry.ecore#//Path"/>
+    <genDataTypes ecoreDataType="org.eclipse.january.geometry.ecore#//Object"/>
+    <genClasses ecoreClass="org.eclipse.january.geometry.ecore#//Shape">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.january.geometry.ecore#//Shape/material"/>
+    </genClasses>
+    <genClasses ecoreClass="org.eclipse.january.geometry.ecore#//Triangle">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.january.geometry.ecore#//Triangle/normal"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.january.geometry.ecore#//Triangle/vertices"/>
+      <genOperations ecoreOperation="org.eclipse.january.geometry.ecore#//Triangle/equals">
+        <genParameters ecoreParameter="org.eclipse.january.geometry.ecore#//Triangle/equals/otherObject"/>
+      </genOperations>
+      <genOperations ecoreOperation="org.eclipse.january.geometry.ecore#//Triangle/hashCode"/>
+    </genClasses>
+    <genClasses ecoreClass="org.eclipse.january.geometry.ecore#//Vertex">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.january.geometry.ecore#//Vertex/x"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.january.geometry.ecore#//Vertex/y"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.january.geometry.ecore#//Vertex/z"/>
+      <genOperations ecoreOperation="org.eclipse.january.geometry.ecore#//Vertex/clone"/>
+      <genOperations ecoreOperation="org.eclipse.january.geometry.ecore#//Vertex/equals">
+        <genParameters ecoreParameter="org.eclipse.january.geometry.ecore#//Vertex/equals/otherObject"/>
+      </genOperations>
+      <genOperations ecoreOperation="org.eclipse.january.geometry.ecore#//Vertex/hashCode"/>
+    </genClasses>
+    <genClasses ecoreClass="org.eclipse.january.geometry.ecore#//Sphere">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.january.geometry.ecore#//Sphere/radius"/>
+    </genClasses>
+    <genClasses ecoreClass="org.eclipse.january.geometry.ecore#//Cube">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.january.geometry.ecore#//Cube/sideLength"/>
+    </genClasses>
+    <genClasses ecoreClass="org.eclipse.january.geometry.ecore#//Cylinder">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.january.geometry.ecore#//Cylinder/radius"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.january.geometry.ecore#//Cylinder/height"/>
+    </genClasses>
+    <genClasses ecoreClass="org.eclipse.january.geometry.ecore#//Geometry"/>
+    <genClasses ecoreClass="org.eclipse.january.geometry.ecore#//Tube">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.january.geometry.ecore#//Tube/height"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.january.geometry.ecore#//Tube/innerRadius"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.january.geometry.ecore#//Tube/radius"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="org.eclipse.january.geometry.ecore#//INode">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.january.geometry.ecore#//INode/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.january.geometry.ecore#//INode/id"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.january.geometry.ecore#//INode/nodes"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.january.geometry.ecore#//INode/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.january.geometry.ecore#//INode/triangles"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.january.geometry.ecore#//INode/center"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.january.geometry.ecore#//INode/parent"/>
+      <genOperations ecoreOperation="org.eclipse.january.geometry.ecore#//INode/changeDecoratorProperty">
+        <genParameters ecoreParameter="org.eclipse.january.geometry.ecore#//INode/changeDecoratorProperty/property"/>
+        <genParameters ecoreParameter="org.eclipse.january.geometry.ecore#//INode/changeDecoratorProperty/value"/>
+      </genOperations>
+      <genOperations ecoreOperation="org.eclipse.january.geometry.ecore#//INode/getPropertyNames"/>
+      <genOperations ecoreOperation="org.eclipse.january.geometry.ecore#//INode/getProperty">
+        <genParameters ecoreParameter="org.eclipse.january.geometry.ecore#//INode/getProperty/property"/>
+      </genOperations>
+      <genOperations ecoreOperation="org.eclipse.january.geometry.ecore#//INode/setProperty">
+        <genParameters ecoreParameter="org.eclipse.january.geometry.ecore#//INode/setProperty/property"/>
+        <genParameters ecoreParameter="org.eclipse.january.geometry.ecore#//INode/setProperty/value"/>
+      </genOperations>
+      <genOperations ecoreOperation="org.eclipse.january.geometry.ecore#//INode/addNode">
+        <genParameters ecoreParameter="org.eclipse.january.geometry.ecore#//INode/addNode/child"/>
+      </genOperations>
+      <genOperations ecoreOperation="org.eclipse.january.geometry.ecore#//INode/removeNode">
+        <genParameters ecoreParameter="org.eclipse.january.geometry.ecore#//INode/removeNode/child"/>
+      </genOperations>
+      <genOperations ecoreOperation="org.eclipse.january.geometry.ecore#//INode/copy">
+        <genParameters ecoreParameter="org.eclipse.january.geometry.ecore#//INode/copy/source"/>
+      </genOperations>
+      <genOperations ecoreOperation="org.eclipse.january.geometry.ecore#//INode/clone"/>
+    </genClasses>
+    <genClasses ecoreClass="org.eclipse.january.geometry.ecore#//Operator"/>
+    <genClasses ecoreClass="org.eclipse.january.geometry.ecore#//Union"/>
+    <genClasses ecoreClass="org.eclipse.january.geometry.ecore#//Intersection"/>
+    <genClasses ecoreClass="org.eclipse.january.geometry.ecore#//Complement"/>
+    <genClasses ecoreClass="org.eclipse.january.geometry.ecore#//Material"/>
+    <genClasses image="false" ecoreClass="org.eclipse.january.geometry.ecore#//IGeometryImporter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.january.geometry.ecore#//IGeometryImporter/fileTypes"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.january.geometry.ecore#//IGeometryImporter/description"/>
+      <genOperations ecoreOperation="org.eclipse.january.geometry.ecore#//IGeometryImporter/load">
+        <genParameters ecoreParameter="org.eclipse.january.geometry.ecore#//IGeometryImporter/load/path"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="org.eclipse.january.geometry.ecore#//STLGeometryImporter"/>
+    <genClasses ecoreClass="org.eclipse.january.geometry.ecore#//Pipe">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.january.geometry.ecore#//Pipe/numRods"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.january.geometry.ecore#//Pipe/pitch"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.january.geometry.ecore#//Pipe/rodDiameter"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.january.geometry.ecore#//Pipe/rotationX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.january.geometry.ecore#//Pipe/rotationY"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.january.geometry.ecore#//Pipe/rotationZ"/>
+      <genOperations ecoreOperation="org.eclipse.january.geometry.ecore#//Pipe/getLowerEdge"/>
+      <genOperations ecoreOperation="org.eclipse.january.geometry.ecore#//Pipe/getUpperEdge"/>
+    </genClasses>
+    <genClasses ecoreClass="org.eclipse.january.geometry.ecore#//BoundingBox">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.january.geometry.ecore#//BoundingBox/maxX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.january.geometry.ecore#//BoundingBox/maxY"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.january.geometry.ecore#//BoundingBox/maxZ"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.january.geometry.ecore#//BoundingBox/minX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.january.geometry.ecore#//BoundingBox/minY"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.january.geometry.ecore#//BoundingBox/minZ"/>
+      <genOperations ecoreOperation="org.eclipse.january.geometry.ecore#//BoundingBox/addArea">
+        <genParameters ecoreParameter="org.eclipse.january.geometry.ecore#//BoundingBox/addArea/area"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="org.eclipse.january.geometry.ecore#//Junction">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.january.geometry.ecore#//Junction/height"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.january.geometry.ecore#//Junction/zIn"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.january.geometry.ecore#//Junction/zOut"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.january.geometry.ecore#//Junction/input"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.january.geometry.ecore#//Junction/output"/>
+    </genClasses>
+    <genClasses ecoreClass="org.eclipse.january.geometry.ecore#//HeatExchanger">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.january.geometry.ecore#//HeatExchanger/pipe"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.january.geometry.ecore#//HeatExchanger/input"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.january.geometry.ecore#//HeatExchanger/output"/>
+    </genClasses>
+    <genClasses ecoreClass="org.eclipse.january.geometry.ecore#//Reactor">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.january.geometry.ecore#//Reactor/pipes"/>
+    </genClasses>
+    <genClasses ecoreClass="org.eclipse.january.geometry.ecore#//PolyShape">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.january.geometry.ecore#//PolyShape/faces"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.january.geometry.ecore#//PolyShape/vertexList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.january.geometry.ecore#//PolyShape/matFiles"/>
+    </genClasses>
+    <genClasses ecoreClass="org.eclipse.january.geometry.ecore#//Face">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.january.geometry.ecore#//Face/vertices"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.january.geometry.ecore#//Face/material"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
