@@ -204,13 +204,12 @@
 		<module>../../org.eclipse.january.geometry.ide</module>
 		<module>../../org.eclipse.january.geometry.model</module>
 		<module>../../org.eclipse.january.geometry.model.tests</module>
-		<module>../../org.eclipse.january.geometry.xtext.iges</module>
-		<module>../../org.eclipse.january.geometry.xtext.iges.tests</module>
-		<module>../../org.eclipse.january.geometry.xtext.mtl</module>
-		<module>../../org.eclipse.january.geometry.xtext.obj</module>
-		<module>../../org.eclipse.january.geometry.xtext.obj.test</module>
-		<module>../../org.eclipse.january.geometry.xtext.vtk</module>
-		<module>../../org.eclipse.january.geometry.xtext.vtk.tests</module>
+		<module>../../org.eclipse.january.geometry.dsl.iges</module>
+		<module>../../org.eclipse.january.geometry.dsl.iges.tests</module>
+		<module>../../org.eclipse.january.geometry.dsl.mtl</module>
+		<module>../../org.eclipse.january.geometry.dsl.obj</module>
+		<module>../../org.eclipse.january.geometry.dsl.obj.test</module>
+		<module>../../org.eclipse.january.geometry.dsl.vtk</module>
 		<module>../../org.eclipse.january.test</module>
 
 		<!-- releng -->
