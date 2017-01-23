@@ -10,7 +10,7 @@
  <extension
        point="org.eclipse.january.geometry.model.org.eclipse.january.geometry.model.IGeometryImporterService">
     <client
-          class="org.eclipse.january.geometry.xtext.vtk.service.VTKGeometryImporterService">
+          class="org.eclipse.january.geometry.dsl.vtk.service.VTKGeometryImporterService">
     </client>
  </extension>
 </plugin>

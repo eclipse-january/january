@@ -9,7 +9,7 @@
 		<artifactId>org.eclipse.january.releng</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>org.eclipse.january.geometry.xtext.iges.tests</artifactId>
+	<artifactId>org.eclipse.january.test.geometry.dsl.iges</artifactId>
 	<packaging>eclipse-test-plugin</packaging>
 
 	<properties>

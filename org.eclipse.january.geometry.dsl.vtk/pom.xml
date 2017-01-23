@@ -21,7 +21,7 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 	<groupId>org.eclipse.eavp</groupId>
-	<artifactId>org.eclipse.january.geometry.xtext.vtk</artifactId>
+	<artifactId>org.eclipse.january.geometry.dsl.vtk</artifactId>
 	<packaging>eclipse-plugin</packaging>
 
 	<properties>
