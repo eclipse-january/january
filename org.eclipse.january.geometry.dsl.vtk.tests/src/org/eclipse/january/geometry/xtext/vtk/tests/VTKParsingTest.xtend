@@ -11,6 +11,7 @@ import org.eclipse.xtext.junit4.util.ParseHelper
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.eclipse.january.geometry.dsl.vtk.tests.VTKInjectorProvider
 
 @RunWith(XtextRunner)
 @InjectWith(VTKInjectorProvider)

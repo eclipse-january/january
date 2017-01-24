@@ -114,6 +114,7 @@
 				<configuration>
 					<timestampProvider>jgit</timestampProvider>
 					<format>${build-prefix}yyyyMMddHHmm</format>
+					<jgit.dirtyWorkingTree>warning</jgit.dirtyWorkingTree>
 				</configuration>
 			</plugin>
 
@@ -201,7 +202,6 @@
 		<module>../../org.eclipse.january.form</module>
 		<module>../../org.eclipse.january.form.feature</module>
 		<module>../../org.eclipse.january.form.test</module>
-		<module>../../org.eclipse.january.geometry.ide</module>
 		<module>../../org.eclipse.january.geometry.model</module>
 		<module>../../org.eclipse.january.geometry.model.tests</module>
 		<module>../../org.eclipse.january.geometry.dsl.iges</module>
@@ -209,7 +209,9 @@
 		<module>../../org.eclipse.january.geometry.dsl.mtl</module>
 		<module>../../org.eclipse.january.geometry.dsl.obj</module>
 		<module>../../org.eclipse.january.geometry.dsl.obj.test</module>
+		<module>../../org.eclipse.january.geometry.dsl.stl</module>
 		<module>../../org.eclipse.january.geometry.dsl.vtk</module>
+		<module>../../org.eclipse.january.geometry.dsl.vtk.tests</module>
 		<module>../../org.eclipse.january.test</module>
 
 		<!-- releng -->
