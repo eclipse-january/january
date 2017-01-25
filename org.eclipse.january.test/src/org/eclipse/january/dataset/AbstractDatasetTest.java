@@ -1245,6 +1245,12 @@ public class AbstractDatasetTest {
 		assertEquals(13, a.getDouble(2, 3), 1e-15);
 		assertEquals(2, a.getDouble(2, 4), 1e-15);
 
+		try {
+			a.setSlice(DatasetFactory.createRange(3, Dataset.INT16), new Slice(2, 7, 2), new Slice(2, 3));
+			fail("Should have thrown an IAE");
+		} catch (IllegalArgumentException e) {
+		}
+
 		// compound
 		CompoundDataset c = DatasetFactory.createRange(3, 100, Dataset.ARRAYFLOAT64).reshape(20, 5);
 		c.setSlice(DatasetFactory.createRange(3, Dataset.INT16), new Slice(2, 10), new Slice(null, null, 2));
