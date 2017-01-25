@@ -15,7 +15,6 @@ import java.util.List;
  * Class to run over a pair of datasets in parallel with NumPy broadcasting of second dataset
  */
 public class BroadcastSingleIterator extends BroadcastSelfIterator {
-	private int[] aShape;
 	private int[] bShape;
 	private int[] aStride;
 	private int[] bStride;
@@ -34,19 +33,18 @@ public class BroadcastSingleIterator extends BroadcastSelfIterator {
 	 */
 	public BroadcastSingleIterator(Dataset a, Dataset b) {
 		super(a, b);
-		List<int[]> fullShapes = BroadcastUtils.broadcastShapes(a.getShapeRef(), b.getShapeRef());
 
-		maxShape = fullShapes.remove(0);
-
-		aShape = fullShapes.remove(0);
+		int[] aShape = a.getShapeRef();
+		maxShape = aShape;
+		List<int[]> fullShapes = BroadcastUtils.broadcastShapesToMax(maxShape, b.getShapeRef());
 		bShape = fullShapes.remove(0);
 
 		int rank = maxShape.length;
 		endrank = rank - 1;
 
-		aDataset = a.reshape(aShape);
 		bDataset = b.reshape(bShape);
-		aStride = BroadcastUtils.createBroadcastStrides(aDataset, maxShape);
+		int[] aOffset = new int[1];
+		aStride = AbstractDataset.createStrides(aDataset, aOffset );
 		bStride = BroadcastUtils.createBroadcastStrides(bDataset, maxShape);
 
 		pos = new int[rank];
@@ -73,7 +71,7 @@ public class BroadcastSingleIterator extends BroadcastSelfIterator {
 				}
 			}
 		}
-		aStart = aDataset.getOffset();
+		aStart = aOffset[0];
 		aMax += aStart;
 		bStart = bDataset.getOffset();
 		bMax += bStart;
@@ -126,7 +124,7 @@ public class BroadcastSingleIterator extends BroadcastSelfIterator {
 	 * @return shape of first broadcasted dataset
 	 */
 	public int[] getFirstShape() {
-		return aShape;
+		return maxShape;
 	}
 
 	/**
