@@ -17,6 +17,7 @@ import java.util.Arrays;
 
 import org.eclipse.january.dataset.Dataset;
 import org.eclipse.january.dataset.DatasetFactory;
+import org.eclipse.january.dataset.DoubleDataset;
 import org.eclipse.january.dataset.IndexIterator;
 import org.eclipse.january.dataset.PositionIterator;
 import org.eclipse.january.dataset.StrideIterator;
@@ -44,7 +45,7 @@ public class IterationExamples {
 	@Test
 	public void indexIterator() {
 
-	   Dataset       ta   = DatasetFactory.createRange(0, 1024, 1, Dataset.FLOAT).reshape(16, 8, 1024 / (16 * 8));
+	   Dataset       ta   = DatasetFactory.createRange(DoubleDataset.class, 0, 1024, 1).reshape(16, 8, 1024 / (16 * 8));
 	   IndexIterator iter = ta.getIterator();
 	 
 		for (int i = 0; iter.hasNext(); i++) {
@@ -86,7 +87,7 @@ public class IterationExamples {
 	@Test
 	public void strideIterator() {
 
-	   Dataset       ta   = DatasetFactory.createRange(0, 1024, 1, Dataset.FLOAT).reshape(16, 8, 1024 / (16 * 8));
+	   Dataset       ta   = DatasetFactory.createRange(DoubleDataset.class, 0, 1024, 1).reshape(16, 8, 1024 / (16 * 8));
 	   IndexIterator iter = new StrideIterator(ta.getElementsPerItem(), ta.getShape());
 	 
 		for (int i = 0; iter.hasNext(); i++) {
