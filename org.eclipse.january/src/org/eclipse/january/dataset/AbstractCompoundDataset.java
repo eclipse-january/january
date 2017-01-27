@@ -769,7 +769,7 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 	 * @return error
 	 */
 	private CompoundDataset getInternalError() {
-		ILazyDataset led = super.getError();
+		ILazyDataset led = super.getErrors();
 		if (led == null)
 			return null;
 
@@ -788,13 +788,13 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 		}
 		
 		if (led != ced) {
-			setError(ced); // set back
+			setErrors(ced); // set back
 		}
 		return ced;
 	}
 
 	@Override
-	public CompoundDataset getError() {
+	public CompoundDataset getErrors() {
 		CompoundDataset ed = getInternalError();
 		if (ed == null)
 			return null;

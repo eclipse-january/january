@@ -901,7 +901,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	}
 
 	@Override
-	public void setError(Serializable errors) {
+	public void setErrors(Serializable errors) {
 		if (errors == null) {
 			clearMetadata(ErrorMetadata.class);
 			return;
@@ -937,14 +937,14 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	}
 
 	@Override
-	public ILazyDataset getError() {
+	public ILazyDataset getErrors() {
 		ErrorMetadata emd = getErrorMetadata();
 		return emd == null ? null : emd.getError();
 	}
 
 	@Override
 	public boolean hasErrors() {
-		return getError() != null;
+		return getErrors() != null;
 	}
 
 	/**

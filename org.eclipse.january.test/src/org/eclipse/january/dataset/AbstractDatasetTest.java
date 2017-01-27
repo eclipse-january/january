@@ -1261,7 +1261,7 @@ public class AbstractDatasetTest {
 		
 		// test 1D errors for single value
 		Dataset a = DatasetFactory.createRange(100, Dataset.INT32);
-		a.setError(5);
+		a.setErrors(5);
 		
 		assertEquals(5.0, a.getError(0), 0.001);
 		assertEquals(5.0, a.getError(50), 0.001);
@@ -1270,7 +1270,7 @@ public class AbstractDatasetTest {
 		assertTrue(a.hasErrors());
 
 		// now for pulling out the full error array
-		Dataset error = a.getError();
+		Dataset error = a.getErrors();
 		
 		// check compatibility
 		try {
@@ -1284,14 +1284,14 @@ public class AbstractDatasetTest {
 		assertEquals(5.0, error.getDouble(99), 0.001);
 		
 		// Now set the error as a whole array
-		a.setError(Maths.multiply(error, 2));
+		a.setErrors(Maths.multiply(error, 2));
 		
 		assertEquals(10.0, a.getError(0), 0.001);
 		assertEquals(10.0, a.getError(50), 0.001);
 		assertEquals(10.0, a.getError(99), 0.001);
 		
 		// test pulling the error out again, to make sure its correct
-		Dataset error2 = a.getError();
+		Dataset error2 = a.getErrors();
 		
 		// check compatibility
 		try {
@@ -1311,7 +1311,7 @@ public class AbstractDatasetTest {
 		
 		// test 1D errors for single value
 		Dataset a = DatasetFactory.zeros(new int[] {100,100}, Dataset.INT32);
-		a.setError(5);
+		a.setErrors(5);
 		
 		assertEquals(5.0, a.getError(0,0), 0.001);
 		assertEquals(5.0, a.getError(50,50), 0.001);
@@ -1320,7 +1320,7 @@ public class AbstractDatasetTest {
 		assertTrue(a.hasErrors());
 
 		// now for pulling out the full error array
-		Dataset error = a.getError();
+		Dataset error = a.getErrors();
 		
 		// check compatibility
 		try {
@@ -1334,14 +1334,14 @@ public class AbstractDatasetTest {
 		assertEquals(5.0, error.getDouble(99,99), 0.001);
 		
 		// Now set the error as a whole array
-		a.setError(Maths.multiply(error, 2));
+		a.setErrors(Maths.multiply(error, 2));
 		
 		assertEquals(10.0, a.getError(0,0), 0.001);
 		assertEquals(10.0, a.getError(50,50), 0.001);
 		assertEquals(10.0, a.getError(99,99), 0.001);
 		
 		// test pulling the error out again, to make sure its correct
-		Dataset error2 = a.getError();
+		Dataset error2 = a.getErrors();
 		
 		// check compatibility
 		try {
@@ -1374,7 +1374,7 @@ public class AbstractDatasetTest {
 		assertTrue(a.hasErrors());
 		
 		// now for pulling out the full error array and check compatibility
-		Dataset error = a.getError();
+		Dataset error = a.getErrors();
 		try {
 			ShapeUtils.checkCompatibility(a, error);
 		} catch (Exception e) {
@@ -1390,7 +1390,7 @@ public class AbstractDatasetTest {
 		assertTrue(a.hasErrors());
 		
 		// now for pulling out the full error array and check compatibility
-		error = a.getError();
+		error = a.getErrors();
 		try {
 			ShapeUtils.checkCompatibility(a, error);
 		} catch (Exception e) {
@@ -1406,7 +1406,7 @@ public class AbstractDatasetTest {
 		assertTrue(a.hasErrors());
 		
 		// now for pulling out the full error array and check compatibility
-		error = a.getError();
+		error = a.getErrors();
 		try {
 			ShapeUtils.checkCompatibility(a, error);
 		} catch (Exception e) {
@@ -1419,16 +1419,16 @@ public class AbstractDatasetTest {
 		
 		// test 1D errors for single value
 		Dataset a = DatasetFactory.createRange(100, Dataset.INT32);
-		a.setError(5);
+		a.setErrors(5);
 		
 		// should be squared
 		Number ne = (Number) a.getErrorBuffer().getObjectAbs(0);
 		assertEquals(25.0, ne.doubleValue(), 0.001);
 		
 		// now for pulling out the full error array
-		Dataset error = a.getError();
+		Dataset error = a.getErrors();
 	
-		a.setError(Maths.multiply(error, 2));
+		a.setErrors(Maths.multiply(error, 2));
 		
 		// should also be squared
 		Dataset ae = a.getErrorBuffer();

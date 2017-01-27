@@ -68,7 +68,7 @@ public class RunningAverage {
 					}
 				}
 			} else { // only linear error available
-				ILazyDataset le = dataset.getError();
+				ILazyDataset le = dataset.getErrors();
 				IDataset e = null;
 				if (le instanceof IDataset) {
 					e = (IDataset) le;

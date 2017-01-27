@@ -264,7 +264,7 @@ public interface CompoundDataset extends Dataset {
 	public double[] minItem();
 
 	@Override
-	public CompoundDataset getError();
+	public CompoundDataset getErrors();
 
 	/**
 	 * @param i

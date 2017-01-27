@@ -236,7 +236,7 @@ public interface IDataset extends ILazyDataset {
 	 * @return the error dataset, constructing one if necessary
 	 */
 	@Override
-	public IDataset getError();
+	public IDataset getErrors();
 
 	/**
 	 * Get the error for a given position.

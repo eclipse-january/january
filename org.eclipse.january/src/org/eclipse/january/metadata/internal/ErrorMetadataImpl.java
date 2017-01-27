@@ -45,7 +45,7 @@ public class ErrorMetadataImpl implements ErrorMetadata, Serializable {
 
 	/**
 	 * Do not use this constructor to set errors to datasets as it does not allow any shaping
-	 * checking and broadcasting. Use {@link ILazyDataset#setError(Serializable)} instead.
+	 * checking and broadcasting. Use {@link ILazyDataset#setErrors(Serializable)} instead.
 	 */
 	public ErrorMetadataImpl() {
 	}

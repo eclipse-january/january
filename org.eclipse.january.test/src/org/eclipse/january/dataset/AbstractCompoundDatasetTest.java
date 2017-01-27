@@ -512,7 +512,7 @@ public class AbstractCompoundDatasetTest {
 		}
 		CompoundDataset a = new CompoundIntegerDataset(aa);
 		
-		a.setError(5);
+		a.setErrors(5);
 		assertTrue(a.hasErrors());
 		
 		assertEquals(5.0, a.getErrorArray(0)[0], 0.001);
@@ -528,7 +528,7 @@ public class AbstractCompoundDatasetTest {
 		assertEquals(5.0, a.getErrorArray(99)[4], 0.001);
 		
 		// now for pulling out the full error array
-		CompoundDataset error = a.getError();
+		CompoundDataset error = a.getErrors();
 		
 		// check compatibility
 		try {
@@ -550,7 +550,7 @@ public class AbstractCompoundDatasetTest {
 		assertEquals(5.0, error.getElements(4).getDouble(99), 0.001);
 		
 		// Now set the error as a whole array
-		a.setError(Maths.multiply(error, 2));
+		a.setErrors(Maths.multiply(error, 2));
 		
 		assertEquals(10.0, a.getErrorArray(0)[0], 0.001);
 		assertEquals(10.0, a.getErrorArray(0)[2], 0.001);
@@ -565,7 +565,7 @@ public class AbstractCompoundDatasetTest {
 		assertEquals(10.0, a.getErrorArray(99)[4], 0.001);
 		
 		// test pulling the error out again, to make sure its correct
-		CompoundDataset error2 = a.getError();
+		CompoundDataset error2 = a.getErrors();
 		
 		// check compatibility
 		try {
@@ -589,7 +589,7 @@ public class AbstractCompoundDatasetTest {
 		
 		// finally check the array setting
 		
-		a.setError(new Double[] { 1.0, 2.0, 3.0, 4.0, 5.0});
+		a.setErrors(new Double[] { 1.0, 2.0, 3.0, 4.0, 5.0});
 		
 		assertEquals(1.0, a.getErrorArray(0)[0], 0.001);
 		assertEquals(3.0, a.getErrorArray(0)[2], 0.001);
@@ -604,7 +604,7 @@ public class AbstractCompoundDatasetTest {
 		assertEquals(5.0, a.getErrorArray(99)[4], 0.001);
 		
 		// test pulling the error out again, to make sure its correct
-		CompoundDataset error3 = a.getError();
+		CompoundDataset error3 = a.getErrors();
 		
 		// check compatibility
 		try {
@@ -634,7 +634,7 @@ public class AbstractCompoundDatasetTest {
 		}
 		CompoundDataset a = new CompoundIntegerDataset(aa);
 		
-		a.setError(new double[] { 1.0, 2.0, 3.0, 4.0, 5.0});
+		a.setErrors(new double[] { 1.0, 2.0, 3.0, 4.0, 5.0});
 		
 		// should be squared
 		CompoundDataset e = (CompoundDataset) a.getErrorBuffer();
@@ -646,9 +646,9 @@ public class AbstractCompoundDatasetTest {
 		assertEquals(25.0, ea[4], 0.001);
 		
 		// now for pulling out the full error array
-		CompoundDataset error = a.getError();
+		CompoundDataset error = a.getErrors();
 
-		a.setError(error);
+		a.setErrors(error);
 		
 		// should also be squared
 		CompoundDataset ae = (CompoundDataset) a.getErrorBuffer();
