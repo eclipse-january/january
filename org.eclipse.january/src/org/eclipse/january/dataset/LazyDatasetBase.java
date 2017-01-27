@@ -902,6 +902,9 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 
 	@Override
 	public void setErrors(Serializable errors) {
+		if (shape == null) {
+			throw new IllegalArgumentException("Cannot set errors for null dataset");
+		}
 		if (errors == null) {
 			clearMetadata(ErrorMetadata.class);
 			return;

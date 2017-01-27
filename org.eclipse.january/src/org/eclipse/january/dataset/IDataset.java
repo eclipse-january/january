@@ -18,7 +18,9 @@ import org.eclipse.january.metadata.IMetadata;
 
 
 /**
- * This interface defines the implementation-independent and generic parts of a dataset
+ * This interface defines the implementation-independent and generic parts of a dataset.
+ * <p>
+ * The position array used in the getters
  */
 public interface IDataset extends ILazyDataset {
 	/**

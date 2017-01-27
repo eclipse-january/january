@@ -51,9 +51,16 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 		return Dataset.ARRAYINT32; // DATA_TYPE
 	}
 
+	/**
+	 * Create a null dataset
+	 */
 	CompoundIntegerDataset() {
 	}
 
+	/**
+	 * Create a null dataset
+	 * @param itemSize
+	 */
 	CompoundIntegerDataset(final int itemSize) {
 		isize = itemSize;
 	}
@@ -66,14 +73,7 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 	CompoundIntegerDataset(final int itemSize, final int[] shape) {
 		isize = itemSize;
 		if (shape != null) {
-			if (shape.length == 1) {
-				size = shape[0];
-				if (size < 0) {
-					throw new IllegalArgumentException("Negative component in shape is not allowed");
-				}
-			} else {
-				size = ShapeUtils.calcSize(shape);
-			}
+			size = ShapeUtils.calcSize(shape);
 			this.shape = shape.clone();
 
 			try {
@@ -503,6 +503,11 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 	}
 
 	@Override
+	public Object getObject() {
+		return getIntArray(); // PRIM_TYPE
+	}
+
+	@Override
 	public Object getObject(final int i) {
 		return getIntArray(i); // PRIM_TYPE
 	}
@@ -515,6 +520,15 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 	@Override
 	public Object getObject(final int... pos) {
 		return getIntArray(pos); // PRIM_TYPE
+	}
+
+	@Override
+	public byte[] getByteArray() {
+		byte[] result = new byte[isize];
+		int index = getFirst1DIndex();
+		for (int k = 0; k < isize; k++)
+			result[k] = (byte) data[index + k]; // OMIT_UPCAST
+		return result;
 	}
 
 	@Override
@@ -541,6 +555,15 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 		int index = get1DIndex(pos);
 		for (int k = 0; k < isize; k++)
 			result[k] = (byte) data[index + k]; // OMIT_UPCAST
+		return result;
+	}
+
+	@Override
+	public short[] getShortArray() {
+		short[] result = new short[isize];
+		int index = getFirst1DIndex();
+		for (int k = 0; k < isize; k++)
+			result[k] = (short) data[index + k]; // OMIT_UPCAST
 		return result;
 	}
 
@@ -572,6 +595,15 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 	}
 
 	@Override
+	public int[] getIntArray() {
+		int[] result = new int[isize];
+		int index = getFirst1DIndex();
+		for (int k = 0; k < isize; k++)
+			result[k] = data[index + k]; // OMIT_UPCAST
+		return result;
+	}
+
+	@Override
 	public int[] getIntArray(final int i) {
 		int[] result = new int[isize];
 		int index = get1DIndex(i);
@@ -593,6 +625,15 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 	public int[] getIntArray(final int... pos) {
 		int[] result = new int[isize];
 		int index = get1DIndex(pos);
+		for (int k = 0; k < isize; k++)
+			result[k] = data[index + k]; // OMIT_UPCAST
+		return result;
+	}
+
+	@Override
+	public long[] getLongArray() {
+		long[] result = new long[isize];
+		int index = getFirst1DIndex();
 		for (int k = 0; k < isize; k++)
 			result[k] = data[index + k]; // OMIT_UPCAST
 		return result;
@@ -626,6 +667,15 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 	}
 
 	@Override
+	public float[] getFloatArray() {
+		float[] result = new float[isize];
+		int index = getFirst1DIndex();
+		for (int k = 0; k < isize; k++)
+			result[k] = data[index + k]; // OMIT_REAL_CAST
+		return result;
+	}
+
+	@Override
 	public float[] getFloatArray(final int i) {
 		float[] result = new float[isize];
 		int index = get1DIndex(i);
@@ -647,6 +697,15 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 	public float[] getFloatArray(final int... pos) {
 		float[] result = new float[isize];
 		int index = get1DIndex(pos);
+		for (int k = 0; k < isize; k++)
+			result[k] = data[index + k]; // OMIT_REAL_CAST
+		return result;
+	}
+
+	@Override
+	public double[] getDoubleArray() {
+		double[] result = new double[isize];
+		int index = getFirst1DIndex();
 		for (int k = 0; k < isize; k++)
 			result[k] = data[index + k]; // OMIT_REAL_CAST
 		return result;
@@ -686,6 +745,11 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 	}
 
 	@Override
+	public String getString() {
+		return getStringAbs(getFirst1DIndex());
+	}
+
+	@Override
 	public String getString(final int i) {
 		return getStringAbs(get1DIndex(i));
 	}
@@ -698,6 +762,11 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 	@Override
 	public String getString(final int... pos) {
 		return getStringAbs(get1DIndex(pos));
+	}
+
+	@Override
+	protected double getFirstValue() {
+		return data[getFirst1DIndex()];
 	}
 
 	@Override
@@ -745,6 +814,11 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 	}
 
 	@Override
+	public void set(final Object obj) {
+		setItem(DTypeUtils.toIntegerArray(obj, isize)); // CLASS_TYPE
+	}
+
+	@Override
 	public void set(final Object obj, final int i) {
 		setItem(DTypeUtils.toIntegerArray(obj, isize), i); // CLASS_TYPE
 	}
@@ -761,6 +835,18 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 		}
 
 		setItem(DTypeUtils.toIntegerArray(obj, isize), pos); // CLASS_TYPE
+	}
+
+	/**
+	 * Set values at first position. The dataset must not be null
+	 *
+	 * @param d
+	 */
+	public void setItem(final int[] d) { // PRIM_TYPE
+		if (d.length > isize) {
+			throw new IllegalArgumentException("Array is larger than number of elements in an item");
+		}
+		setAbs(getFirst1DIndex(), d);
 	}
 
 	/**

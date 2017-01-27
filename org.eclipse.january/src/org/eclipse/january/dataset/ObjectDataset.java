@@ -21,6 +21,9 @@ public class ObjectDataset extends ObjectDatasetBase {
 	// pin UID to base class
 	private static final long serialVersionUID = Dataset.serialVersionUID;
 
+	/**
+	 * Create a null dataset
+	 */
 	ObjectDataset() {
 		super();
 	}
@@ -135,6 +138,11 @@ public class ObjectDataset extends ObjectDatasetBase {
 	}
 
 	@Override
+	public double getDouble() {
+		throw new UnsupportedOperationException("Unsupported method for class");
+	}
+
+	@Override
 	public double getDouble(int i) {
 		throw new UnsupportedOperationException("Unsupported method for class");
 	}
@@ -146,6 +154,11 @@ public class ObjectDataset extends ObjectDatasetBase {
 
 	@Override
 	public double getDouble(int... pos) {
+		throw new UnsupportedOperationException("Unsupported method for class");
+	}
+
+	@Override
+	public float getFloat() {
 		throw new UnsupportedOperationException("Unsupported method for class");
 	}
 
@@ -165,6 +178,11 @@ public class ObjectDataset extends ObjectDatasetBase {
 	}
 
 	@Override
+	public long getLong() {
+		throw new UnsupportedOperationException("Unsupported method for class");
+	}
+
+	@Override
 	public long getLong(int i) {
 		throw new UnsupportedOperationException("Unsupported method for class");
 	}
@@ -176,6 +194,11 @@ public class ObjectDataset extends ObjectDatasetBase {
 
 	@Override
 	public long getLong(int... pos) {
+		throw new UnsupportedOperationException("Unsupported method for class");
+	}
+
+	@Override
+	public int getInt() {
 		throw new UnsupportedOperationException("Unsupported method for class");
 	}
 
@@ -195,6 +218,11 @@ public class ObjectDataset extends ObjectDatasetBase {
 	}
 
 	@Override
+	public short getShort() {
+		throw new UnsupportedOperationException("Unsupported method for class");
+	}
+
+	@Override
 	public short getShort(int i) {
 		throw new UnsupportedOperationException("Unsupported method for class");
 	}
@@ -210,6 +238,11 @@ public class ObjectDataset extends ObjectDatasetBase {
 	}
 
 	@Override
+	public byte getByte() {
+		throw new UnsupportedOperationException("Unsupported method for class");
+	}
+
+	@Override
 	public byte getByte(int i) {
 		throw new UnsupportedOperationException("Unsupported method for class");
 	}
@@ -221,6 +254,11 @@ public class ObjectDataset extends ObjectDatasetBase {
 
 	@Override
 	public byte getByte(int... pos) {
+		throw new UnsupportedOperationException("Unsupported method for class");
+	}
+
+	@Override
+	public boolean getBoolean() {
 		throw new UnsupportedOperationException("Unsupported method for class");
 	}
 

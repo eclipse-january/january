@@ -15,7 +15,13 @@ import java.util.Date;
  * Interface for a dataset containing {@link Date}s.
  */
 public interface DateDataset extends Dataset {
+	/**
+	 * Get the first date. The dataset must not be null
+	 * @return date
+	 */
+	public Date getDate();
 	
+
 	/**
 	 * Get the date at index i. The dataset must be 1D
 	 * @param i

@@ -56,6 +56,9 @@ public class ShortDataset extends AbstractDataset {
 		return INT16; // DATA_TYPE
 	}
 
+	/**
+	 * Create a null dataset
+	 */
 	ShortDataset() {
 	}
 
@@ -65,14 +68,7 @@ public class ShortDataset extends AbstractDataset {
 	 */
 	ShortDataset(final int... shape) {
 		if (shape != null) {
-			if (shape.length == 1) {
-				size = shape[0];
-				if (size < 0) {
-					throw new IllegalArgumentException("Negative component in shape is not allowed");
-				}
-			} else {
-				size = ShapeUtils.calcSize(shape);
-			}
+			size = ShapeUtils.calcSize(shape);
 			this.shape = shape.clone();
 
 			try {
@@ -351,6 +347,13 @@ public class ShortDataset extends AbstractDataset {
 	}
 
 	/**
+	 * @return item in first position
+	 */
+	public short get() { // PRIM_TYPE
+		return data[getFirst1DIndex()];
+	}
+
+	/**
 	 * @param i
 	 * @return item in given position
 	 */
@@ -376,6 +379,11 @@ public class ShortDataset extends AbstractDataset {
 	}
 
 	@Override
+	public Object getObject() {
+		return Short.valueOf(get()); // CLASS_TYPE
+	}
+
+	@Override
 	public Object getObject(final int i) {
 		return Short.valueOf(get(i)); // CLASS_TYPE
 	}
@@ -388,6 +396,11 @@ public class ShortDataset extends AbstractDataset {
 	@Override
 	public Object getObject(final int... pos) {
 		return Short.valueOf(get(pos)); // CLASS_TYPE
+	}
+
+	@Override
+	public String getString() {
+		return getStringAbs(getFirst1DIndex());
 	}
 
 	@Override
@@ -406,6 +419,11 @@ public class ShortDataset extends AbstractDataset {
 	}
 
 	@Override
+	public double getDouble() {
+		return get(); // BOOLEAN_ZERO
+	}
+
+	@Override
 	public double getDouble(final int i) {
 		return get(i); // BOOLEAN_ZERO
 	}
@@ -418,6 +436,11 @@ public class ShortDataset extends AbstractDataset {
 	@Override
 	public double getDouble(final int... pos) {
 		return get(pos); // BOOLEAN_ZERO
+	}
+
+	@Override
+	public float getFloat() {
+		return get(); // BOOLEAN_ZERO // OMIT_REAL_CAST
 	}
 
 	@Override
@@ -436,6 +459,11 @@ public class ShortDataset extends AbstractDataset {
 	}
 
 	@Override
+	public long getLong() {
+		return get(); // BOOLEAN_ZERO // OMIT_UPCAST
+	}
+
+	@Override
 	public long getLong(final int i) {
 		return get(i); // BOOLEAN_ZERO // OMIT_UPCAST
 	}
@@ -448,6 +476,11 @@ public class ShortDataset extends AbstractDataset {
 	@Override
 	public long getLong(final int... pos) {
 		return get(pos); // BOOLEAN_ZERO // OMIT_UPCAST
+	}
+
+	@Override
+	public int getInt() {
+		return get(); // BOOLEAN_ZERO // OMIT_UPCAST
 	}
 
 	@Override
@@ -466,6 +499,11 @@ public class ShortDataset extends AbstractDataset {
 	}
 
 	@Override
+	public short getShort() {
+		return get(); // BOOLEAN_ZERO // OMIT_UPCAST
+	}
+
+	@Override
 	public short getShort(final int i) {
 		return get(i); // BOOLEAN_ZERO // OMIT_UPCAST
 	}
@@ -478,6 +516,11 @@ public class ShortDataset extends AbstractDataset {
 	@Override
 	public short getShort(final int... pos) {
 		return get(pos); // BOOLEAN_ZERO // OMIT_UPCAST
+	}
+
+	@Override
+	public byte getByte() {
+		return (byte) get(); // BOOLEAN_ZERO // OMIT_UPCAST
 	}
 
 	@Override
@@ -496,6 +539,11 @@ public class ShortDataset extends AbstractDataset {
 	}
 
 	@Override
+	public boolean getBoolean() {
+		return get() != 0; // BOOLEAN_FALSE
+	}
+
+	@Override
 	public boolean getBoolean(final int i) {
 		return get(i) != 0; // BOOLEAN_FALSE
 	}
@@ -508,6 +556,15 @@ public class ShortDataset extends AbstractDataset {
 	@Override
 	public boolean getBoolean(final int... pos) {
 		return get(pos) != 0; // BOOLEAN_FALSE
+	}
+
+	/**
+	 * Sets the value at first point to the passed value. The dataset must not be null
+	 *
+	 * @param value
+	 */
+	public void setItem(final short value) { // PRIM_TYPE
+		setAbs(getFirst1DIndex(), value);
 	}
 
 	/**
@@ -539,6 +596,11 @@ public class ShortDataset extends AbstractDataset {
 	 */
 	public void setItem(final short value, final int... pos) { // PRIM_TYPE
 		setAbs(get1DIndex(pos), value);
+	}
+
+	@Override
+	public void set(final Object obj) {
+		setItem((short) DTypeUtils.toLong(obj)); // FROM_OBJECT
 	}
 
 	@Override

@@ -19,7 +19,6 @@ public class DateDatasetImpl extends StringDataset implements DateDataset {
 
 	private static final SimpleDateFormat ISO8601_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 	
-
 	static DateDatasetImpl createFromObject(final Object obj) {
 		final DateDatasetImpl result = new DateDatasetImpl();
 		result.shape = ShapeUtils.getShapeFromObject(obj);
@@ -31,7 +30,10 @@ public class DateDatasetImpl extends StringDataset implements DateDataset {
 		
 		return result;
 	}
-	
+
+	/**
+	 * Create a null dataset
+	 */
 	DateDatasetImpl() {
 		super();
 	}
@@ -98,7 +100,12 @@ public class DateDatasetImpl extends StringDataset implements DateDataset {
 		return null;
 	}
 	
-	
+	@Override
+	public Date getDate() {
+		final String dateAsString = super.getString();
+		return stringToDate(dateAsString);
+	}
+
 	@Override
 	public Date getDate(int i) {
 		final String dateAsString = super.getString(i);
@@ -128,7 +135,7 @@ public class DateDatasetImpl extends StringDataset implements DateDataset {
 	}
 	
 	@Override
-	public void setItemDirect(final int dindex, final int sindex, final Object src) { // PRIM TYPE
+	public void setItemDirect(final int dindex, final int sindex, final Object src) {
 		if (src instanceof String[]) {
 			super.setItemDirect(dindex, sindex, src);
 		} else if (src instanceof Date[]) {
@@ -140,31 +147,40 @@ public class DateDatasetImpl extends StringDataset implements DateDataset {
 		}
 	}
 
-	public void setAbs(final int index, final Date date) { // PRIM TYPE
+	public void setAbs(final int index, final Date date) {
 		data[index] = dateToString(date);
 		setDirty();
 	}
 	
-	public void setItem(final Date value, final int i) { // PRIM TYPE
+	public void setItem(final Date value) {
+		setAbs(getFirst1DIndex(), value);
+	}
+	
+	public void setItem(final Date value, final int i) {
 		setAbs(get1DIndex(i), value);
 	}
 	
-	public void setItem(final Date value, final int i, final int j) { // PRIM TYPE
+	public void setItem(final Date value, final int i, final int j) {
 		setAbs(get1DIndex(i, j), value);
 	}
 	
-	public void setItem(final Date value, final int... pos) { // PRIM TYPE
+	public void setItem(final Date value, final int... pos) {
 		setAbs(get1DIndex(pos), value);
 	}
-	
+
+	@Override
+	public void set(final Object obj) {
+		setItem(objectToDateString(obj));
+	}
+
 	@Override
 	public void set(final Object obj, final int i) {
-		setItem(objectToDateString(obj), i); // FROM OBJECT
+		setItem(objectToDateString(obj), i);
 	}
-	
+
 	@Override
 	public void set(final Object obj, final int i, final int j) {
-		setItem(objectToDateString(obj), i, j); // FROM OBJECT
+		setItem(objectToDateString(obj), i, j);
 	}
 	
 	@Override
@@ -173,7 +189,7 @@ public class DateDatasetImpl extends StringDataset implements DateDataset {
 			pos = new int[shape.length];
 		}
 		
-		setItem(objectToDateString(obj), pos); // FROM OBJECT
+		setItem(objectToDateString(obj), pos);
 	}
 	
 	@Override

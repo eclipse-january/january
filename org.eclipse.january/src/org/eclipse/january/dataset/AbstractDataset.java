@@ -897,6 +897,13 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		return get1DIndexFromShape(pos);
 	}
 
+	protected int getFirst1DIndex() {
+		if (shape == null) {
+			throw new IllegalArgumentException("Cannot find an index from a null shape");
+		}
+		return stride == null ? 0 : offset;
+	}
+
 	@Override
 	public int get1DIndex(final int... n) {
 		if (n.length == 0 && shape.length == 0)
@@ -915,6 +922,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	 * @return the index on the data array corresponding to that location
 	 */
 	protected int get1DIndex(int i) {
+		if (shape == null) {
+			throw new IllegalArgumentException("Cannot find an index from a null shape");
+		}
 		if (shape.length > 1) {
 			logger.error("This dataset is not 1D but was addressed as such");
 			throw new UnsupportedOperationException("This dataset is not 1D but was addressed as such");
@@ -934,6 +944,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	 * @return the index on the data array corresponding to that location
 	 */
 	protected int get1DIndex(int i, int j) {
+		if (shape == null) {
+			throw new IllegalArgumentException("Cannot find an index from a null shape");
+		}
 		if (shape.length != 2) {
 			logger.error("This dataset is not 2D but was addressed as such");
 			throw new UnsupportedOperationException("This dataset is not 2D but was addressed as such");
@@ -958,6 +971,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	protected static int get1DIndexFromShape(final int[] shape, final int[] n) {
+		if (shape == null) {
+			throw new IllegalArgumentException("Cannot find an index from a null shape");
+		}
 		final int rank = shape.length;
 		if (rank != n.length) {
 			String errMsg = String.format("Number of position values must be equal to rank of %d", rank);
@@ -985,6 +1001,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	private static int get1DIndexFromStrides(final int[] shape, final int[] stride, final int offset, final int[] n) {
+		if (shape == null) {
+			throw new IllegalArgumentException("Cannot find an index from a null shape");
+		}
 		final int rank = shape.length;
 		if (rank != n.length) {
 			String errMsg = String.format("Number of position values must be equal to rank of %d", rank);
@@ -2197,6 +2216,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	 * @return error broadcasted to current shape
 	 */
 	private Dataset getBroadcastedInternalError() {
+		if (shape == null) {
+			throw new IllegalArgumentException("Cannot get error for null dataset");
+		}
 		ILazyDataset led = super.getErrors();
 		if (led == null)
 			return null;
@@ -2220,6 +2242,15 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			return null;
 
 		return ed;
+	}
+
+	@Override
+	public double getError() {
+		Dataset ed = getBroadcastedInternalError();
+		if (ed == null)
+			return 0;
+
+		return ed.getDouble();
 	}
 
 	@Override
@@ -2311,6 +2342,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	 */
 	@Override
 	public void setErrorBuffer(Serializable buffer) {
+		if (shape == null) {
+			throw new IllegalArgumentException("Cannot set error buffer for null dataset");
+		}
 		if (buffer == null) {
 			clearMetadata(ErrorMetadata.class);
 			return;
