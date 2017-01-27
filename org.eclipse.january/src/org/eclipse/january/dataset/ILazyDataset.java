@@ -192,20 +192,20 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 	 * 
 	 * @param metadata
 	 */
-	public <T extends MetadataType> void addMetadata(final T metadata);
+	public void addMetadata(final MetadataType metadata);
 
 	/**
 	 * Set metadata on the dataset
 	 * 
 	 * @param metadata (null is ignored so use clear(null) instead)
 	 */
-	public <T extends MetadataType> void setMetadata(T metadata);
+	public void setMetadata(MetadataType metadata);
 
 	/**
 	 * Remove metadata of given class
 	 * @param clazz if null remove everything
 	 */
-	public <T extends MetadataType> void clearMetadata(Class<T> clazz);
+	public void clearMetadata(Class<? extends MetadataType> clazz);
 
 	/**
 	 * Clone dataset

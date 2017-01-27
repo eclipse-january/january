@@ -49,8 +49,8 @@ public class LazyDynamicLoaderTest {
 			
 			AxesMetadata axm = s.getFirstMetadata(AxesMetadata.class);
 			
-			Assert.assertEquals(axm.getAxis(0)[0].getSlice().getInt(0),shape[0]-1);
-			Assert.assertEquals(axm.getAxis(1)[0].getSlice().getInt(0),shape[1]-1);
+			Assert.assertEquals(axm.getAxis(0)[0].getSlice().getInt(0, 0, 0, 0), shape[0]-1);
+			Assert.assertEquals(axm.getAxis(1)[0].getSlice().getInt(0, 0, 0, 0), shape[1]-1);
 			
 			dataset.refreshShape();
 		}
@@ -95,10 +95,10 @@ public class LazyDynamicLoaderTest {
 
 			IDataset s0 = axm.getAxis(0)[0].getSlice();
 			Assert.assertArrayEquals(axShape, s0.getShape());
-			Assert.assertEquals(s0.getInt(0),shape[0]-1);
+			Assert.assertEquals(s0.getInt(0, 0, 0, 0), shape[0]-1);
 			s0 = axm.getAxis(1)[0].getSlice();
 			Assert.assertArrayEquals(axShape, s0.getShape());
-			Assert.assertEquals(axm.getAxis(1)[0].getSlice().getInt(0),shape[1]-1);
+			Assert.assertEquals(axm.getAxis(1)[0].getSlice().getInt(0, 0, 0, 0), shape[1]-1);
 
 			dataset.refreshShape();
 		}

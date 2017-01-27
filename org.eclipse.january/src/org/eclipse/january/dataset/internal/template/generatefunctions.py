@@ -17,7 +17,7 @@ Takes a functions definition file and the shell of a Java class,
 generates the methods and prints to standard output the completed class
 
 Runs as follows
-$ python generatefunctions.py functions.txt ../Maths.java > Maths.java
+$ python generatefunctions.py functions.txt ../GeneratedMaths.java > GeneratedMaths.java
 
 The format is
 
@@ -193,10 +193,13 @@ def beginmethod(name, jdoc=None, params=0):
 
     print("\t\tfinal Dataset result = it.getOutput();")
     print("\t\tfinal int is = result.getElementsPerItem();")
+    print("\t\tfinal int as = da.getElementsPerItem();")
+    if is_binaryop:
+        print("\t\tfinal int bs = db.getElementsPerItem();")
     print("\t\tfinal int dt = result.getDType();")
     for p in plist:
-        print("\t\tfinal double %s = AbstractDataset.toReal(%s);" % (p+"x", p))
-#        print("\t\tfinal double %s = AbstractDataset.toImag(%s);" % (p+"y", p))
+        print("\t\tfinal double %s = DTypeUtils.toReal(%s);" % (p+"x", p))
+#        print("\t\tfinal double %s = DTypeUtils.toImag(%s);" % (p+"y", p))
 
     print("")
     print("\t\tswitch(dt) {")
@@ -362,7 +365,7 @@ def loop(text, jtype, ovar, is_int, override_long):
     print("\t\t\t}")
 
 def loopcomplex(text, jtype, ovar, real, is_int):
-    print("\t\t\tif (da.getElementsPerItem() == 1) {")
+    print("\t\t\tif (as == 1) {")
     if is_binaryop:
         print("\t\t\t\tfinal double iay = 0;")
     else:
@@ -380,7 +383,7 @@ def loopcomplex(text, jtype, ovar, real, is_int):
         print("\t\t\t\t\t%s[it.oIndex + 1] = oy;" % ovar)
     print("\t\t\t\t}")
     if is_binaryop:
-        print("\t\t\t} else if (db.getElementsPerItem() == 1) {")
+        print("\t\t\t} else if (bs == 1) {")
         print("\t\t\t\tfinal double iby = 0;")
         print("\t\t\t\twhile (it.hasNext()) {")
         print("\t\t\t\t\tfinal double iax = it.aDouble;")
@@ -435,8 +438,8 @@ def loopcompound(text, jtype, ovar, is_int, override_long):
     print("\t\t\t\t\t}")
     print("\t\t\t\t}")
 
-    print("\t\t\t} else if (da.getElementsPerItem() == 1) {")
     if is_binaryop:
+        print("\t\t\t} else if (as == 1 || as < bs) {")
         if not allow_ints:
             print("\t\t\t\tif (it.isOutputDouble()) {")
             print("\t\t\t\t\twhile (it.hasNext()) {")
@@ -466,6 +469,7 @@ def loopcompound(text, jtype, ovar, is_int, override_long):
         print("\t\t\t\t\t}")
         print("\t\t\t\t}")
     else:
+        print("\t\t\t} else if (as == 1) {")
         if not allow_ints:
             print("\t\t\t\tif (it.isOutputDouble()) {")
             print("\t\t\t\t\twhile (it.hasNext()) {")
@@ -488,7 +492,7 @@ def loopcompound(text, jtype, ovar, is_int, override_long):
         print("\t\t\t\t}")
 
     if is_binaryop:
-        print("\t\t\t} else if (db.getElementsPerItem() == 1) {")
+        print("\t\t\t} else if (bs == 1 || as > bs) {")
         if not allow_ints:
             print("\t\t\t\tif (it.isOutputDouble()) {")
             print("\t\t\t\t\twhile (it.hasNext()) {")
@@ -563,7 +567,7 @@ def loopcompound(text, jtype, ovar, is_int, override_long):
 
 def preloop(dtype, otype, oclass, ovar=None, is_int=True, use_long=False, override_long=False, mask=None):
     print("\t\tcase Dataset.%s:" % dtype)
-    print("\t\t\tfinal %s[] %s = ((%s) result).data;" % (otype, ovar, oclass))
+    print("\t\t\tfinal %s[] %s = ((%s) result).getData();" % (otype, ovar, oclass))
     if is_binaryop or use_long:
         if is_int and not override_long:
             if mask is not None:
@@ -802,7 +806,7 @@ if __name__ == '__main__':
     if len(sys.argv) > 2:
         fname = sys.argv[2]
     else:
-        fname = "../Maths.java"
+        fname = "../GeneratedMaths.java"
     shell_file = open(fname, 'r')
 
     generateclass(funcs_file, shell_file)

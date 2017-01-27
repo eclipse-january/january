@@ -231,14 +231,17 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 		if (base != null) {
 			((ILazyWriteableDataset) base).setSlice(monitor, data, nslice);
 		} else {
-			if (saver == null || !saver.isFileWriteable()) {
-				throw new DatasetException("Cannot write to file!");
+			if (saver == null) {
+				throw new DatasetException("Cannot write to file as saver not defined!");
 			}
 
 			try {
 				if (async && saver instanceof ILazyAsyncSaver) {
 					((ILazyAsyncSaver)saver).setSliceAsync(monitor, data, nslice);
 				} else {
+					if (!saver.isFileWriteable()) {
+						throw new DatasetException("Cannot write to file as it is not writeable!");
+					}
 					saver.setSlice(monitor, data, nslice);
 				}
 			} catch (IOException e) {

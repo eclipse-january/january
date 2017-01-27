@@ -899,16 +899,8 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public int get1DIndex(final int... n) {
-		final int imax = n.length;
-		final int rank = shape.length;
-		if (imax == 0) {
-			if (rank == 0 || (rank == 1 && shape[0] <= 1))
-				return stride == null ? 0 : offset;
-			throw new IllegalArgumentException("One or more index parameters must be supplied");
-		} else if (imax > rank) {
-			throw new IllegalArgumentException("No of index parameters is different to the shape of data: " + imax
-					+ " given " + rank + " required");
-		}
+		if (n.length == 0 && shape.length == 0)
+			return offset;
 
 		return stride == null ? get1DIndexFromShape(n) : get1DIndexFromStrides(n);
 	}
@@ -924,9 +916,8 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	 */
 	protected int get1DIndex(int i) {
 		if (shape.length > 1) {
-			logger.debug("This dataset is not 1D but was addressed as such");
-//			throw new IllegalArgumentException("This dataset is not 1D but was addressed as such");
-			return get1DIndex(new int[] {i});
+			logger.error("This dataset is not 1D but was addressed as such");
+			throw new UnsupportedOperationException("This dataset is not 1D but was addressed as such");
 		}
 		if (i < 0) {
 			i += shape[0];
@@ -944,9 +935,8 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	 */
 	protected int get1DIndex(int i, int j) {
 		if (shape.length != 2) {
-			logger.debug("This dataset is not 2D but was addressed as such");
-//			throw new IllegalArgumentException("This dataset is not 2D but was addressed as such");
-			return get1DIndex(new int[] {i, j});
+			logger.error("This dataset is not 2D but was addressed as such");
+			throw new UnsupportedOperationException("This dataset is not 2D but was addressed as such");
 		}
 		if (i < 0) {
 			i += shape[0];
@@ -968,14 +958,14 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	protected static int get1DIndexFromShape(final int[] shape, final int[] n) {
-		final int imax = n.length;
 		final int rank = shape.length;
-//		if (rank != imax) {
-//			throw new IllegalArgumentException("Number of position indexes must be equal to rank");
-//		}
+		if (rank != n.length) {
+			String errMsg = String.format("Number of position values must be equal to rank of %d", rank);
+			logger.error(errMsg);
+			throw new IllegalArgumentException(errMsg);
+		}
 		int index = 0;
-		int i = 0;
-		for (; i < imax; i++) {
+		for (int i = 0; i < rank; i++) {
 			final int si = shape[i];
 			int ni = n[i];
 			if (ni < 0) {
@@ -985,9 +975,6 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 				throwAIOOBException(ni, si, i);
 			}
 			index = index * si + ni;
-		}
-		for (; i < rank; i++) {
-			index *= shape[i];
 		}
 
 		return index;
@@ -1000,7 +987,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	private static int get1DIndexFromStrides(final int[] shape, final int[] stride, final int offset, final int[] n) {
 		final int rank = shape.length;
 		if (rank != n.length) {
-			throw new IllegalArgumentException("Number of position indexes must be equal to rank");
+			String errMsg = String.format("Number of position values must be equal to rank of %d", rank);
+			logger.error(errMsg);
+			throw new IllegalArgumentException(errMsg);
 		}
 		int index = offset;
 		for (int i = 0; i < rank; i++) {
@@ -1107,14 +1096,21 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	public String toString(boolean showData) {
 		final int rank = shape == null ? 0 : shape.length;
 		final StringBuilder out = new StringBuilder();
+		if (DTypeUtils.isDTypeElemental(getDType())) {
+			out.append("Dataset ");
+		} else {
+			out.append("Compound dataset (");
+			out.append(getElementsPerItem());
+			out.append(") ");
+		}
 
 		if (!showData) {
 			if (name != null && name.length() > 0) {
-				out.append("Dataset '");
+				out.append("'");
 				out.append(name);
 				out.append("' has shape ");
 			} else {
-				out.append("Dataset shape is ");
+				out.append("shape is ");
 			}
 
 			out.append(BLOCK_OPEN);
@@ -1401,7 +1397,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	@Override
-	public Dataset getReal() {
+	public Dataset getRealPart() {
 		return this;
 	}
 

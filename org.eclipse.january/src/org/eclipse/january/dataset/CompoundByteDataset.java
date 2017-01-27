@@ -836,24 +836,6 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	}
 
 	@Override
-	public ByteDataset getReal() { // CLASS_TYPE
-		ByteDataset rdataset = new ByteDataset(shape); // CLASS_TYPE
-		IndexIterator iter = getIterator();
-		IndexIterator riter = rdataset.getIterator();
-
-		byte[] rdata = rdataset.data; // PRIM_TYPE
-		while (iter.hasNext() && riter.hasNext())
-			rdata[riter.index] = data[iter.index];
-
-		return rdataset;
-	}
-
-	@Override
-	public Dataset getRealView() {
-		return getElementsView(0);
-	}
-
-	@Override
 	public CompoundByteDataset getSlice(final SliceIterator siter) {
 		CompoundByteDataset result = new CompoundByteDataset(isize, siter.getShape());
 		byte[] rdata = result.data; // PRIM_TYPE

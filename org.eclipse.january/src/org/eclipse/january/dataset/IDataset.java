@@ -163,9 +163,11 @@ public interface IDataset extends ILazyDataset {
 	public IDataset clone();
 
 	/**
-	 * @return the metadata, may be null
+	 * @deprecated Use {@link #getFirstMetadata(IMetadata.class)} instead
+	 * @return an instance of IMetadata, may be null
 	 */
 	@Override
+	@Deprecated
 	public IMetadata getMetadata();
 
 	@Override

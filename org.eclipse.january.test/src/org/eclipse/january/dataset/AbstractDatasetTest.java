@@ -324,10 +324,10 @@ public class AbstractDatasetTest {
 		assertEquals("0,3 element", 7, a.getDouble(0,3), 1e-6);
 		assertTrue("Final element", Double.isNaN(a.getDouble(2,3)));
 
-		a.set(12, 0);
+		a.set(12, 0, 0);
 		a.sort(null);
 		TestUtils.verbosePrintf("%s\n", a.toString());
-		assertEquals("First element", 2, a.getDouble(0), 1e-6);
+		assertEquals("First element", 2, a.getDouble(0, 0), 1e-6);
 		assertEquals("2,2 element", 12, a.getDouble(2,2), 1e-6);
 		assertTrue("Final element", Double.isNaN(a.getDouble(2,3)));
 
@@ -1244,6 +1244,12 @@ public class AbstractDatasetTest {
 		assertEquals(1, a.getDouble(2, 2), 1e-15);
 		assertEquals(13, a.getDouble(2, 3), 1e-15);
 		assertEquals(2, a.getDouble(2, 4), 1e-15);
+
+		try {
+			a.setSlice(DatasetFactory.createRange(3, Dataset.INT16), new Slice(2, 7, 2), new Slice(2, 3));
+			fail("Should have thrown an IAE");
+		} catch (IllegalArgumentException e) {
+		}
 
 		// compound
 		CompoundDataset c = DatasetFactory.createRange(3, 100, Dataset.ARRAYFLOAT64).reshape(20, 5);

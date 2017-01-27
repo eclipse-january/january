@@ -10,16 +10,11 @@
  *    Peter Chang - initial API and implementation and/or initial documentation
  *******************************************************************************/
 
-package org.eclipse.january.metadata;
+package org.eclipse.january.dataset;
 
-import org.eclipse.january.asserts.TestUtils;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite.SuiteClasses;
-
-@RunWith(TestUtils.VerboseSuite.class)
-@SuiteClasses({ MetadataProviderTest.class, MetadataTest.class,
-	org.eclipse.january.metadata.internal.AllSuite.class,
-	})
-public class AllSuite {
+/**
+ * Marker interface for all operations
+ */
+public interface IOperation {
 
 }

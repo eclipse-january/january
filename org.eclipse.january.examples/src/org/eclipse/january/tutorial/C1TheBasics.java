@@ -9,15 +9,19 @@
 
 package org.eclipse.january.tutorial;
 
+import org.eclipse.january.dataset.ComplexDoubleDataset;
 import org.eclipse.january.dataset.Dataset;
 import org.eclipse.january.dataset.DatasetFactory;
+import org.eclipse.january.dataset.DoubleDataset;
+import org.eclipse.january.dataset.IntegerDataset;
 import org.eclipse.january.dataset.Maths;
+import org.eclipse.january.dataset.ShortDataset;
 import org.eclipse.january.examples.dataset.Utils;
 
 public class C1TheBasics {
 
 	public void doExamples() {
-		Dataset a = DatasetFactory.createRange(15, Dataset.INT32).reshape(3, 5);
+		Dataset a = DatasetFactory.createRange(IntegerDataset.class, 15).reshape(3, 5);
 		Utils.print(a);
 
 		// array of axis lengths
@@ -55,33 +59,33 @@ public class C1TheBasics {
 		b = DatasetFactory.createFromObject(new double[][] {{1.5, 2, 3}, {4, 5, 6}});
 		Utils.printDType(b);
 
-		Dataset c = DatasetFactory.createFromObject(Dataset.COMPLEX128, new int[][] {{2, 3}, {4, 5}});
+		Dataset c = DatasetFactory.createFromObject(ComplexDoubleDataset.class, new int[][] {{2, 3}, {4, 5}});
 		Utils.print(c);
 		Utils.printDType(c);
 
-		Utils.print(DatasetFactory.zeros(new int[] {3, 4}, Dataset.FLOAT64));
+		Utils.print(DatasetFactory.zeros(DoubleDataset.class, 3, 4));
 
-		Utils.print(DatasetFactory.ones(new int[] {2, 3, 4}, Dataset.INT16));
+		Utils.print(DatasetFactory.ones(ShortDataset.class, 2, 3, 4));
 
-		Utils.print(DatasetFactory.createRange(10, 30, 5, Dataset.INT32));
+		Utils.print(DatasetFactory.createRange(IntegerDataset.class, 10, 30, 5));
 
-		Utils.print(DatasetFactory.createRange(0, 2, 0.3, Dataset.FLOAT64));
+		Utils.print(DatasetFactory.createRange(DoubleDataset.class, 0, 2, 0.3));
 
-		Utils.print(DatasetFactory.createRange(0, 2, 0.3, Dataset.FLOAT64));
+		Utils.print(DatasetFactory.createRange(DoubleDataset.class, 0, 2, 0.3));
 
-		Utils.print(DatasetFactory.createLinearSpace(0, 2, 9, Dataset.FLOAT64));
+		Utils.print(DatasetFactory.createLinearSpace(DoubleDataset.class, 0, 2, 9));
 
-		Dataset x = DatasetFactory.createLinearSpace(0, 2*Math.PI, 100, Dataset.FLOAT64);
+		Dataset x = DatasetFactory.createLinearSpace(DoubleDataset.class, 0, 2*Math.PI, 100);
 		Utils.print(x);
 		Dataset f = Maths.sin(x);
 		Utils.print(f);
 	}
 
 	public void doPrintArrays() {
-		Dataset a = DatasetFactory.createRange(6, Dataset.INT32);
+		Dataset a = DatasetFactory.createRange(IntegerDataset.class, 6);
 		Utils.print(a);
 
-		Dataset b = DatasetFactory.createRange(12, Dataset.INT32).reshape(4, 3);
+		Dataset b = DatasetFactory.createRange(IntegerDataset.class, 12).reshape(4, 3);
 		Utils.print(b);
 	}
 

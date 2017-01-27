@@ -44,6 +44,4 @@
    </bundle>
    <category-def name="january_datasets" label="January Datasets"/>
    <category-def name="january_datasets_tests" label="Tests for January Datasets"/>
-   <category-def name="january_form" label="January Form Data Structures"/>
-   <category-def name="january_geometry" label="January Geometry Data Structures"/>
 </site>
