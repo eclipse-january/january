@@ -75,10 +75,7 @@ public class SliceND {
 			for (int i = 0; i < length; i++) {
 				Slice s = slice[i];
 				if (s != null) {
-					int d = s.getStep();
-					int b = s.getStart() == null ? (d > 0 ? 0 : oshape[i] - 1) : s.getStart();
-					int e = s.getStop() == null ? (d > 0 ? oshape[i] : -oshape[i] - 1) : s.getStop();
-					internalSetSlice(i, b, e, d);
+					setSlice(i, s);
 				}
 			}
 		}
@@ -192,7 +189,15 @@ public class SliceND {
 		internalSetSlice(i, start, stop, step);
 	}
 
-	
+	/**
+	 * Set slice for given dimension
+	 * @param i dimension
+	 * @param slice
+	 */
+	public void setSlice(int i, Slice slice) {
+		internalSetSlice(i, slice.getStart(), slice.getStop(), slice.getStep());
+	}
+
 	/**
 	 * Set slice for given dimension
 	 * @param i dimension
@@ -283,6 +288,14 @@ public class SliceND {
 			}
 		}
 
+		stop = lstop[i];
+		if (start == stop) {
+			lshape[i] = 0;
+		} else if (step > 0) {
+			lshape[i] = (stop - start - 1) / step + 1;
+		} else {
+			lshape[i] = (stop - start + 1) / step + 1;
+		}
 		lstart[i] = start;
 		lstep[i] = step;
 	}
@@ -312,20 +325,6 @@ public class SliceND {
 	 * @return resulting shape (this can change if the start, stop, step arrays are changed)
 	 */
 	public int[] getShape() {
-		int r = lshape.length;
-		for (int i = 0; i < r; i++) {
-			int start = lstart[i];
-			int stop = lstop[i];
-			int step = lstep[i];
-			if (start == stop) {
-				lshape[i] = 0;
-			} else if (step > 0) {
-				lshape[i] = (stop - start - 1) / step + 1;
-			} else {
-				lshape[i] = (stop - start + 1) / step + 1;
-			}
-		}
-
 		return lshape;
 	}
 
@@ -430,6 +429,7 @@ public class SliceND {
 			c.lstart[i] = lstart[i];
 			c.lstop[i] = lstop[i];
 			c.lstep[i] = lstep[i];
+			c.lshape[i] = lshape[i];
 		}
 		c.expanded = expanded;
 		return c;
