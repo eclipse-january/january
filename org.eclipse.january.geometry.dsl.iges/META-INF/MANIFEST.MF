@@ -6,17 +6,17 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: org.eclipse.january.geometry.dsl.iges;singleton:=true
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: org.eclipse.january.geometry.xtext.iGES.impl,
- org.eclipse.january.geometry.xtext.validation,
- org.eclipse.january.geometry.xtext.services,
- org.eclipse.january.geometry.xtext.parser.antlr.internal,
- org.eclipse.january.geometry.xtext.iGES,
- org.eclipse.january.geometry.xtext,
- org.eclipse.january.geometry.xtext.parser.antlr,
- org.eclipse.january.geometry.xtext.serializer,
- org.eclipse.january.geometry.xtext.generator,
- org.eclipse.january.geometry.xtext.iGES.util,
- org.eclipse.january.geometry.xtext.scoping
+Export-Package: org.eclipse.january.geometry.dsl,
+ org.eclipse.january.geometry.dsl.iGES,
+ org.eclipse.january.geometry.dsl.iGES.impl,
+ org.eclipse.january.geometry.dsl.iGES.util,
+ org.eclipse.january.geometry.dsl.parser.antlr,
+ org.eclipse.january.geometry.dsl.parser.antlr.internal,
+ org.eclipse.january.geometry.dsl.scoping,
+ org.eclipse.january.geometry.dsl.serializer,
+ org.eclipse.january.geometry.dsl.services,
+ org.eclipse.january.geometry.dsl.validation,
+ org.eclipse.january.geometry.dsl.generator
 Import-Package: com.google.inject,
  org.apache.log4j,
  org.eclipse.emf.common.notify,

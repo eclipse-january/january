@@ -42,7 +42,7 @@ import org.eclipse.xtext.resource.XtextResourceSet;
 
 import com.google.inject.Injector;
 
-import xtext.STLStandaloneSetup;
+import org.eclipse.january.geometry.model.dsl.STLStandaloneSetup;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object

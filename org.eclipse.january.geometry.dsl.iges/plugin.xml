@@ -4,7 +4,7 @@
 	<extension point="org.eclipse.emf.ecore.generated_package">
 		<package 
 			uri = "http://www.eclipse.org/january/geometry/xtext/IGES"
-			class = "org.eclipse.january.geometry.xtext.iGES.IGESPackage"
+			class = "org.eclipse.january.geometry.dsl.iGES.IGESPackage"
 			genModel = "model/generated/IGES.genmodel" />
 	</extension>
 </plugin>

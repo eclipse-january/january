@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.january.geometry.model.org.eclipse.january.geometry.model.IGeometryImporterService">
       <client
-            class="org.eclipse.january.geometry.xtext.obj.service.OBJGeometryImporterService">
+            class="org.eclipse.january.geometry.dsl.obj.service.OBJGeometryImporterService">
       </client>
    </extension>
    
