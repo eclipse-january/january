@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="geometry" nsURI="http://www.eclipse.org/january/geometry" nsPrefix="org.eclipse.january.geometry">
+  <eClassifiers xsi:type="ecore:EClass" name="Shape" eSuperTypes="#//INode">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="This class defines a shape as a collection of triangles and a center, or origin, of the space. This is also a base class for common and complex shapes. Common shapes are commonly known shapes like spheres, cubes, cylinders and others that form the basis of Constructive Solid Geometry packages. Complex shapes are common shapes that have been combined using boolean operations such as unions and intersections."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="material" eType="#//Material"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Triangle">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A triangle is a collection of three vertices that are connected by three edges and together form a discrete plane in three dimensional space."/>
+    </eAnnotations>
+    <eOperations name="equals" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="otherObject" eType="#//Object"/>
+    </eOperations>
+    <eOperations name="hashCode" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="normal" eType="#//Vertex"
+        containment="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The normal, or normal vector, is a vector that is perpendicular to the surface of the triangle. It is computed by taking the cross product of any two vectors formed between the three vertices."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="vertices" upperBound="3"
+        eType="#//Vertex" containment="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Each triangle has exactly three vertices where its edges meet."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Vertex">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The Vertex class represents a simple three dimensional point in space with x, y, and z coordinates where one or more curves, lines or edges converge."/>
+    </eAnnotations>
+    <eOperations name="clone" eType="#//Object">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Create a copy of this vertex."/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="equals" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="otherObject" eType="#//Object"/>
+    </eOperations>
+    <eOperations name="hashCode" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The vertex's coordinate along the x axis."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The vertex's coordinate along the y axis."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="z" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The vertex's coordinate along the z axis."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Sphere" eSuperTypes="#//Shape">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A sphere, or ball, is a three dimensional shape where the distance from the center of the sphere to any point on its surface, called the radius, is constant."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="radius" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The radius is the distance from the center of the sphere to any point on the surface. It is constant across the entire sphere."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Cube" eSuperTypes="#//Shape">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A cube, or perfect box, is a three dimensional shape composed of six faces that are perpendicular to each other. Each face is composed of four vertices that are connected by edges that are perpendicular to each other. The total number of vertices in the box is eight with each vertex being shared by three edges and three sides. The distance from the center of the cube to each vertex is constant. The length of any side of the box is constant."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sideLength" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The length of any side of the box."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Cylinder" eSuperTypes="#//Shape">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A cylinder is a shape formed by a surface whose points are equidistant from a central axis. The shortest distance from a point on the surface to the central axis is the radius of the cylinder. The length of the central axis is defined as as the height of the cylinder. The center of the cylinder lies exactly in the middle of the central axis."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="radius" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The radius is the shortest distance from a point on the surface of the cylinder to the central axis. It is constant across the entire cylinder."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="height" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The length of the central axis of the cylinder."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Geometry" eSuperTypes="#//INode">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A Geometry is a collection of shapes that form a complex, three dimensional object."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="vertexSources" upperBound="-1"
+        eType="#//VertexSource" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Tube" eSuperTypes="#//Shape">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A tube is a cylindrical shape with a circular hole going down its length. There are two cases which a tube may represent:&#xD;&#xA;&#xD;&#xA;In the normal case, a tube consists of four elements. There are two cylinderical surfaces of the same heigh and center, oriented in the same direction, with one containing the other. There are also two flat &quot;O&quot; shaped surfaces which rest on the top and bottom of the two curved surfaces, forming the flat edges of the tube.&#xD;&#xA;&#xD;&#xA;In the special case that the tubes inner radius is equal to its radius, there will be only one surface. This surface will be the outline of a circle extruded to form a cylinder with no top or bottom."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="height" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+        defaultValueLiteral="0.0">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The cylinder's height."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="innerRadius" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+        defaultValueLiteral="0.0">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The radius of the inner hole bored through the outer cylinder to form the pipe. This value must be no greater than radius. "/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="radius" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+        defaultValueLiteral="0.0">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The radius of the circle forming the outer edge of the tube."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="INode" abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="An INode represents a single node in a geometry tree."/>
+    </eAnnotations>
+    <eOperations name="changeDecoratorProperty">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Fire a notification that will alert decorator pattern classes registered to this object that they should change their state.&#xD;&#xA;&#xD;&#xA;This method is intended to cause change in the INode's graphical representation in a non-permanent way, by modifying qualities such as opacity which are purely concerned with rendering and do not belong to the modeling data itself.&#xD;&#xA;&#xD;&#xA;&quot;Property&quot; should offer sufficient description for the client to determine &quot;value&quot;'s type."/>
+      </eAnnotations>
+      <eParameters name="property" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eParameters name="value" eType="#//Object"/>
+    </eOperations>
+    <eOperations name="getPropertyNames" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Get the names of all properties set for this shape."/>
+        <details key="body" value="//Return a list of the properties' keys.&#xD;&#xA;return new BasicEList&lt;String>(properties.keySet());"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="getProperty" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Get the value for one of the shape's properties."/>
+        <details key="body" value="return properties.get(property);"/>
+      </eAnnotations>
+      <eParameters name="property" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="The name of the property whose value is to be returned."/>
+        </eAnnotations>
+      </eParameters>
+    </eOperations>
+    <eOperations name="setProperty">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Set one of the Shape's properties."/>
+        <details key="body" value="properties.put(property, value);"/>
+      </eAnnotations>
+      <eParameters name="property" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="The name of the property whose value is being set."/>
+        </eAnnotations>
+      </eParameters>
+      <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="The property's new value."/>
+        </eAnnotations>
+      </eParameters>
+    </eOperations>
+    <eOperations name="addNode">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Add a child to the list of children nodes contained by this object.&#xD;&#xA;&#xD;&#xA;It is intended that users will use addNode() instead of adding objects directly to the nodes list to properly maintain the child's parent attribute."/>
+      </eAnnotations>
+      <eParameters name="child" eType="#//INode"/>
+    </eOperations>
+    <eOperations name="removeNode">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Remove a child from the list of children nodes contained by this object.&#xD;&#xA;&#xD;&#xA;It is intended that users will use removeNode() instead of adding objects directly to the nodes list to properly maintain the child's parent attribute."/>
+      </eAnnotations>
+      <eParameters name="child" eType="#//INode"/>
+    </eOperations>
+    <eOperations name="copy">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Make this object a copy of the source object, if the source object is of an appropriate type."/>
+      </eAnnotations>
+      <eParameters name="source" eType="#//Object"/>
+    </eOperations>
+    <eOperations name="clone" eType="#//Object">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Create a copy of this object."/>
+      </eAnnotations>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The name of the node."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="An optional node id to identify the node numerically."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"
+        eType="#//INode" containment="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The list of nodes that compose the head node."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A string representing the type of entity this node represents in the tree in a human readable way. Example values might include &quot;cube&quot;, &quot;sphere&quot; or &quot;intersection.&quot;"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="triangles" upperBound="-1"
+        eType="#//Triangle" containment="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A series of triangles which comprise the mesh which will represent this object graphically. If this list is empty, it will be the responsibility of other classes to determine, based on this INode's &quot;type&quot;, what mesh, if any, should be displayed for it."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="center" lowerBound="1"
+        eType="#//Vertex">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Each shape is centered on a special vertex."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//INode"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Operator" eSuperTypes="#//INode"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Union" eSuperTypes="#//Operator"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Intersection" eSuperTypes="#//Operator"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Complement" eSuperTypes="#//Operator"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Material">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value=""/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="phongMatName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="texture" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="materialFiles" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IGeometryImporter" abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="This interface defines the operations by which Geometry instances can be imported from disk. Importers are expected to provide a load operation in addition to a short description and a list of valid file types."/>
+    </eAnnotations>
+    <eOperations name="load" eType="#//Geometry">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="This operation directs the import to load the geometry at the specified Path."/>
+      </eAnnotations>
+      <eParameters name="path" eType="#//Path"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fileTypes" lowerBound="1"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The list of file format types supported by this importer."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A brief description of the format supported by the importer."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="Path" instanceClassName="java.nio.file.Path">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="This class represents a file path on the file system."/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="STLGeometryImporter" eSuperTypes="#//IGeometryImporter">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="This class imports geometries based on the STL format. It supports only the ASCII version of STL."/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="Object" instanceTypeName="newDataType2"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Pipe" eSuperTypes="#//Tube">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A pipe is a directional tube. It has a definite top and a definite bottom, and has been extended to include data about rods important to a nuclear reactor model.&#xD;&#xA;&#xD;&#xA;This class is part of the nuclear reactor example code, and is included here as an example of extending the model."/>
+    </eAnnotations>
+    <eOperations name="getLowerEdge" eType="#//BoundingBox">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Get the bounding box encompassing the lower (output) edge of the pipe."/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="getUpperEdge" eType="#//BoundingBox">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Get the bounding box surrounding the top (inputt) edge of the pipe."/>
+      </eAnnotations>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="numRods" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The number of rods in the pipe."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pitch" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The pipe's pitch."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rodDiameter" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The diameter of the pipe's contained rods."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rotationX" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The amount of rotation about the X axis applied to the pipe, given in radians."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rotationY" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The amount of rotation about the y axis applied to the pipe, given in radians."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rotationZ" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The amount of rotation about the z axis applied to the pipe, given in radians. "/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BoundingBox">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A bounding box describes the minimally sized rectangular prism box to contain some region. The box is defined by two points on opposite sides of the prism, one formed from (minX, minY, minZ) and the other from (maxX, maxY, maxZ).  These points are chosen such that minX is the smallest the x coordinate can be in any point within the prism, maxX is the maximal x coordinate value, minY is the minal y coordinate value, etc. "/>
+    </eAnnotations>
+    <eOperations name="addArea">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Adds the given bounding box's area to the area represented by this one. If the bounding box is contained within this one, there will be no change. If it is partially or wholly outside, this bounding box will be enlargened by the minimal amount required to contain it. "/>
+      </eAnnotations>
+      <eParameters name="area" eType="#//BoundingBox"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxX" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The maximal x value in the bounding box."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxY" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+        defaultValueLiteral="0.0">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The maximal y value in the bounding box."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxZ" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+        defaultValueLiteral="0.0">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The maximal z value in the bounding box."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minX" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+        defaultValueLiteral="0.0">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The minimal x value in the bounding box."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minY" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+        defaultValueLiteral="0.0">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The minimal y value in the bounding box."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minZ" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+        defaultValueLiteral="0.0">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The minimal z value in the bounding box."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Junction" eSuperTypes="#//Shape">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A junction shape between pipes in a reactor. A junction is drawn as a box around the lower ends of its input pipes and the upper ends of its output pipes. &#xD;&#xA;&#xD;&#xA;This class is part of the nuclear reactor example code, and is included here as an example of extending the model."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="height" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The height of the junction. Note that this does not influence how the junction will be drawn."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="zIn" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The junction's zIn property."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="zOut" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The junction's zOut property."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="input" upperBound="-1"
+        eType="#//Pipe" containment="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The pipes which provide input flow for this junction."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="output" upperBound="-1"
+        eType="#//Pipe" containment="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The pipes which will receive output from this junction."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="HeatExchanger" eSuperTypes="#//Shape">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A heat exchanger is a wrapper around a pipe shape. It represents connections between up to four junctions. The HeatExchanger will be drawn as a box around the pipe and two additional cylindrical shells which connect the box to up to two junction. &#xD;&#xA;&#xD;&#xA;This class is part of the nuclear reactor example code, and is included here as an example of extending the model."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pipe" eType="#//Pipe"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="input" eType="#//Junction">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The junction which provides the input to the secondary pipe for the HeatExchanger."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="output" eType="#//Junction">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The junction to which output is provided from the HeatExchanger's secondary pipe."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Reactor" eSuperTypes="#//Shape">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A shape representing the core reactor in a nuclear reactor. It is represented by a cut away of a capsule shape around a series of pipes, consisting of two strainght rectangular sides along its shortest dimension, a curved side along the middle dimension, and the largest dimension left open to show the pipes within.&#xD;&#xA;&#xD;&#xA;This class is part of the nuclear reactor example code, and is included here as an example of extending the model."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pipes" upperBound="-1"
+        eType="#//Pipe" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PolyShape" eSuperTypes="#//Shape">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="faces" upperBound="-1"
+        eType="#//Face" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="vertexSource" eType="#//VertexSource"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="materialFiles" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Face">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="vertexIndices" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="textureIndices" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VertexSource">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="vertices" upperBound="-1"
+        eType="#//Vertex" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="textureCoordinates" upperBound="-1"
+        eType="#//Vertex" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="materialFiles" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TriangleStripPolyShape" eSuperTypes="#//PolyShape">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A PolyShape in which the mesh is specified according to a triangle strip format. This means that instead of specifying faces by vertices around the edge, each three consecutive vertices will form a triangle, with each vertex but those at the ends being a vertex for three triangles."/>
+    </eAnnotations>
+  </eClassifiers>
+</ecore:EPackage>

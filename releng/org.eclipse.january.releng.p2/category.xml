@@ -18,6 +18,30 @@
    <bundle id="org.eclipse.january.test.source" version="1.0.0.qualifier">
       <category name="january_datasets_test"/>
    </bundle>
+   <bundle id="org.eclipse.january.form" version="1.0.0.qualifier">
+      <category name="january_form"/>
+   </bundle>
+   <bundle id="org.eclipse.january.form.source" version="1.0.0.qualifier">
+      <category name="january_form"/>
+   </bundle>
+   <bundle id="org.eclipse.january.geometry.model" version="1.0.0.qualifier">
+      <category name="january_geometry"/>
+   </bundle>
+   <bundle id="org.eclipse.january.geometry.dsl.iges" version="1.0.0.qualifier">
+      <category name="january_geometry"/>
+   </bundle>
+   <bundle id="org.eclipse.january.geometry.dsl.mtl" version="1.0.0.qualifier">
+      <category name="january_geometry"/>
+   </bundle>
+   <bundle id="org.eclipse.january.geometry.dsl.obj" version="1.0.0.qualifier">
+      <category name="january_geometry"/>
+   </bundle>
+   <bundle id="org.eclipse.january.geometry.dsl.vtk" version="1.0.0.qualifier">
+      <category name="january_geometry"/>
+   </bundle>
+   <bundle id="org.eclipse.january.geometry.model.source" version="1.0.0.qualifier">
+      <category name="january_geometry"/>
+   </bundle>
    <category-def name="january_datasets" label="January Datasets"/>
    <category-def name="january_datasets_tests" label="Tests for January Datasets"/>
 </site>

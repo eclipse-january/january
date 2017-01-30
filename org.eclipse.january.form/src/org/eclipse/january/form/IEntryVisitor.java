@@ -70,14 +70,4 @@ public interface IEntryVisitor {
 	 *            operation
 	 */
 	public void visit(ContinuousEntry entry);
-	
-	/**
-	 * This operation directs a visitor to perform its actions on the IEntryVisitor
-	 * as a MultiValueEntry.
-	 * 
-	 * @param entry
-	 *            MultiValueEntry which was originally called by the accept()
-	 *            operation
-	 */
-	public void visit(MultiValueEntry entry);
 }
