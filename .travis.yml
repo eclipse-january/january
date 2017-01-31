@@ -32,7 +32,7 @@ jdk:
   
 # Run maven. This happens automatically and adding it again makes the build longer.
 script: 
- - mvn clean install surefire:test -Dtest.includes=org/eclipse/january/**/AllSuite.java
+ - mvn -q clean install surefire:test -Dtest.includes=org/eclipse/january/**/AllSuite.java
  
 # Added deploy back to github
 # TODO Deploy build back to github? Did this on richbeans.
