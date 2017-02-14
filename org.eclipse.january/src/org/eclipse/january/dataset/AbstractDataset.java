@@ -20,6 +20,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
 import org.eclipse.january.DatasetException;
@@ -189,7 +191,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		}
 	}
 
-	protected static Map<Class<? extends MetadataType>, List<MetadataType>> getMetadataMap(Dataset a, boolean clone) {
+	protected static ConcurrentMap<Class<? extends MetadataType>, List<MetadataType>> getMetadataMap(Dataset a, boolean clone) {
 		if (a == null)
 			return null;
 
@@ -201,7 +203,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		if (all == null)
 			return null;
 
-		HashMap<Class<? extends MetadataType>, List<MetadataType>> map = new HashMap<Class<? extends MetadataType>, List<MetadataType>>();
+		ConcurrentMap<Class<? extends MetadataType>, List<MetadataType>> map = new ConcurrentHashMap<Class<? extends MetadataType>, List<MetadataType>>();
 
 		for (MetadataType m : all) {
 			if (m == null) {
