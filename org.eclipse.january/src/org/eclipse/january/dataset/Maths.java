@@ -19,7 +19,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.january.dataset.Comparisons.Monotonicity;
-import org.eclipse.january.dataset.internal.GeneratedMaths;
 
 /**
  * Mathematics class
