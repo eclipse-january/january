@@ -27,6 +27,7 @@
 		<os-jvm-flags /> <!-- for the default case - see https://wiki.eclipse.org/Tycho/FAQ#How_do_I_add_OS-specific_flags.3F -->
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<tycho.scmUrl>scm:git:https://github.com/eclipse/january.git</tycho.scmUrl>
 	</properties>
 
 
@@ -108,10 +109,19 @@
 						<artifactId>tycho-buildtimestamp-jgit</artifactId>
 						<version>${tycho-extras-version}</version>
 					</dependency>
+					<dependency>
+						<groupId>org.eclipse.tycho.extras</groupId>
+						<artifactId>tycho-sourceref-jgit</artifactId>
+						<version>${tycho-extras-version}</version>
+					</dependency>
+
 				</dependencies>
 				<configuration>
 					<timestampProvider>jgit</timestampProvider>
 					<format>${build-prefix}yyyyMMddHHmm</format>
+					<sourceReferences>
+						<generate>true</generate>
+					</sourceReferences>
 				</configuration>
 			</plugin>
 
