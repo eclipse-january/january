@@ -1,6 +1,6 @@
 /*-
  *******************************************************************************
- * Copyright (c) 2016 Kichwa Coders and others.
+ * Copyright (c) 2016, 2017 Kichwa Coders and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -14,19 +14,14 @@ target "January" with source requirements
 // Using Orbit Oxygen S build at the moment. The Orbit S build contains some items
 // that the most recent R build does not (e.g. org.apache.commons.math3).
 
-location "http://download.eclipse.org/tools/orbit/downloads/drops/S20160916162009/repository" eclipse-orbit-oxygen-m2 {
+location "http://download.eclipse.org/tools/orbit/downloads/drops/S20170120205402/repository" eclipse-orbit-oxygen-m5 {
 
 // The versions we point to in Orbit are the versions we have CQs approved for, please
 // raise CQ for items not in this list or version changes
 	org.slf4j.api [1.7.2,1.7.3) // CQ 11781
 	org.apache.commons.lang3 [3.1.0,3.1.1) // CQ 11782
 	org.apache.commons.lang [2.6.0,2.6.1) // CQ 11783
-	org.apache.commons.math [2.1.0,2.1.1) // CQ 11784
 	org.apache.commons.math3 [3.5.0,3.5.1) // CQ 11785
-	ca.odell.glazedlists [1.9.0,1.9.1) // CQ 11786
-	org.antlr.runtime [4.3.0,4.3.1) // CQ 11787
-	com.google.inject [3.0.0,3.0.1) // CQ 11788
-	org.apache.log4j [1.2.15,1.2.16) // CQ 11789
 
 	// Items below are not depended on by released January bundles, only test ones, so no CQs
 	org.junit [4.12.0,5.0.0)
@@ -34,27 +29,8 @@ location "http://download.eclipse.org/tools/orbit/downloads/drops/S2016091616200
 	org.hamcrest [1.1.0,2.0.0)
 }
 
-location "http://download.eclipse.org/releases/neon/" {
-	org.eclipse.equinox.executable.feature.group lazy
-	org.eclipse.sdk.ide lazy
+// To speed up the build, pull the platform from its own site. version specific and not the EPP site
+location "http://download.eclipse.org/eclipse/updates/4.6/R-4.6.2-201611241400/" {
 	org.eclipse.equinox.launcher lazy
-	org.eclipse.xtext.sdk.feature.group lazy
-	org.eclipse.xsd lazy
-}
-
-// XXX: Circular dependency as EAVP depends on January
-
-location "http://download.eclipse.org/eavp/builds/master" eavp {
-	org.eclipse.eavp.viz.datastructures lazy
-	org.eclipse.eavp.viz.modeling lazy
-	org.eclipse.eavp.viz.service lazy
-	org.eclipse.eavp.viz.service.mesh lazy
-	org.eclipse.eavp.viz.service.geometry lazy
-}
-
-// Locations to resolve deps of EAVP items
-
-location "http://download.eclipse.org/nattable/releases/1.3.0/repository" {
-}
-location "http://download.eclipse.org/nebula/releases/1.0.0" {
+	org.eclipse.core.runtime.feature.feature.group lazy
 }
