@@ -22,4 +22,26 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 	<packaging>eclipse-plugin</packaging>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>exec-maven-plugin</artifactId>
+				<groupId>org.codehaus.mojo</groupId>
+				<version>1.5.0</version>
+				<executions>
+					<execution>
+						<id>Verify generated files are up to date</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<executable>${basedir}/src/org/eclipse/january/dataset/internal/template/verify_all.sh</executable>
+					<workingDirectory>${basedir}/src/org/eclipse/january/dataset/internal/template</workingDirectory>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
