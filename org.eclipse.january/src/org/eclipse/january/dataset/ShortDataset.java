@@ -348,6 +348,7 @@ public class ShortDataset extends AbstractDataset {
 
 	/**
 	 * @return item in first position
+	 * @since 2.0
 	 */
 	public short get() { // PRIM_TYPE
 		return data[getFirst1DIndex()];
@@ -562,6 +563,7 @@ public class ShortDataset extends AbstractDataset {
 	 * Sets the value at first point to the passed value. The dataset must not be null
 	 *
 	 * @param value
+	 * @since 2.0
 	 */
 	public void setItem(final short value) { // PRIM_TYPE
 		setAbs(getFirst1DIndex(), value);

@@ -62,6 +62,7 @@ public final class LazyMaths {
 	 * @param ignoreAxes axes to ignore
 	 * @return sum when given axes are ignored in lazy dataset
 	 * @throws DatasetException 
+	 * @since 2.0
 	 */
 	public static Dataset sum(final ILazyDataset data, int... ignoreAxes) throws DatasetException {
 		return sum(data, true, ignoreAxes);
@@ -73,6 +74,7 @@ public final class LazyMaths {
 	 * @param axes axes to ignore or accept, depending on the preceding flag
 	 * @return sum
 	 * @throws DatasetException 
+	 * @since 2.0
 	 */
 	public static Dataset sum(final ILazyDataset data, boolean ignore, int... axes) throws DatasetException {
 		Arrays.sort(axes); // ensure they are properly sorted

@@ -152,6 +152,9 @@ public class DateDatasetImpl extends StringDataset implements DateDataset {
 		setDirty();
 	}
 	
+	/**
+	 * @since 2.0
+	 */
 	public void setItem(final Date value) {
 		setAbs(getFirst1DIndex(), value);
 	}

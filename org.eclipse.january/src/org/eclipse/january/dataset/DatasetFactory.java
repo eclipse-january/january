@@ -506,6 +506,7 @@ public class DatasetFactory {
 	 * @param shape
 	 * @param dtype
 	 * @return a new dataset of given item size, shape and type, filled with zeros
+	 * @since 2.0
 	 */
 	public static CompoundDataset compoundZeros(final int itemSize, final int[] shape, final int dtype) {
 		switch (dtype) {
@@ -869,6 +870,7 @@ public class DatasetFactory {
 	 * @param clazz compound dataset class
 	 * @param shape
 	 * @return a new compound dataset of given item size, shape and class, filled with zeros
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends CompoundDataset> T compoundZeros(int itemSize, Class<T> clazz, int... shape) {

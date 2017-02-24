@@ -296,6 +296,7 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 
 	/**
 	 * @return item in first position
+	 * @since 2.0
 	 */
 	public Complex get() {
 		int n = getFirst1DIndex();
@@ -356,6 +357,7 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 
 	/**
 	 * @return item in first position
+	 * @since 2.0
 	 */
 	public float getReal() { // PRIM_TYPE
 		return (float) getFirstValue(); // PRIM_TYPE
@@ -388,6 +390,7 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 
 	/**
 	 * @return item in first position
+	 * @since 2.0
 	 */
 	public float getImag() { // PRIM_TYPE
 		return data[getFirst1DIndex() + 1];
@@ -420,6 +423,7 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 
 	/**
 	 * @return item in first position
+	 * @since 2.0
 	 */
 	public Complex getComplex() {
 		return get();
@@ -495,16 +499,23 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 	 * @param dr
 	 * @param di
 	 * @param pos
+	 * @since 2.0
 	 */
 	public void set(final float dr, final float di, final int... pos) { // PRIM_TYPE
 		setItem(new float[] {dr, di}, pos); // PRIM_TYPE
 	}
 
+	/**
+	 * @since 2.0
+	 */
 	@Override
 	public FloatDataset getRealPart() { // CLASS_TYPE
 		return getElements(0);
 	}
 
+	/**
+	 * @since 2.0
+	 */
 	@Override
 	public FloatDataset getRealView() { // CLASS_TYPE
 		return getElementsView(0);
@@ -512,6 +523,7 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 
 	/**
 	 * @return imaginary part of dataset as new dataset
+	 * @since 2.0
 	 */
 	public FloatDataset getImaginaryPart() { // CLASS_TYPE
 		return getElements(1);

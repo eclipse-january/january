@@ -14,6 +14,7 @@ package org.eclipse.january.dataset;
 
 /**
  * Interface to represent a unary operation for implementations over different output domains
+ * @since 2.0
  */
 public interface UnaryOperation extends IOperation {
 

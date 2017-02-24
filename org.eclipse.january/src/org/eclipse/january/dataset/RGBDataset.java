@@ -421,6 +421,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 
 	/**
 	 * @return red value in the first position
+	 * @since 2.0
 	 */
 	public short getRed() {
 		return data[getFirst1DIndex()];
@@ -453,6 +454,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 
 	/**
 	 * @return green value in the first position
+	 * @since 2.0
 	 */
 	public short getGreen() {
 		return data[getFirst1DIndex() + 1];
@@ -485,6 +487,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 
 	/**
 	 * @return blue value in the first position
+	 * @since 2.0
 	 */
 	public short getBlue() {
 		return data[getFirst1DIndex() + 2];

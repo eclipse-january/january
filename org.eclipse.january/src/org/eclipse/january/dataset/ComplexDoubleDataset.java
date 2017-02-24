@@ -298,6 +298,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 
 	/**
 	 * @return item in first position
+	 * @since 2.0
 	 */
 	public Complex get() {
 		int n = getFirst1DIndex();
@@ -358,6 +359,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 
 	/**
 	 * @return item in first position
+	 * @since 2.0
 	 */
 	@SuppressWarnings("cast")
 	public double getReal() { // PRIM_TYPE
@@ -394,6 +396,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 
 	/**
 	 * @return item in first position
+	 * @since 2.0
 	 */
 	public double getImag() { // PRIM_TYPE
 		return data[getFirst1DIndex() + 1];
@@ -426,6 +429,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 
 	/**
 	 * @return item in first position
+	 * @since 2.0
 	 */
 	public Complex getComplex() {
 		return get();
@@ -504,16 +508,23 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	 * @param dr
 	 * @param di
 	 * @param pos
+	 * @since 2.0
 	 */
 	public void set(final double dr, final double di, final int... pos) { // PRIM_TYPE
 		setItem(new double[] {dr, di}, pos); // PRIM_TYPE
 	}
 
+	/**
+	 * @since 2.0
+	 */
 	@Override
 	public DoubleDataset getRealPart() { // CLASS_TYPE
 		return getElements(0);
 	}
 
+	/**
+	 * @since 2.0
+	 */
 	@Override
 	public DoubleDataset getRealView() { // CLASS_TYPE
 		return getElementsView(0);
@@ -521,6 +532,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 
 	/**
 	 * @return imaginary part of dataset as new dataset
+	 * @since 2.0
 	 */
 	public DoubleDataset getImaginaryPart() { // CLASS_TYPE
 		return getElements(1);

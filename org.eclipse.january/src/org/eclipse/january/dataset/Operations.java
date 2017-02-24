@@ -13,6 +13,9 @@ package org.eclipse.january.dataset;
 
 import org.apache.commons.math3.complex.Complex;
 
+/**
+ * @since 2.0
+ */
 public class Operations {
 
 	/**

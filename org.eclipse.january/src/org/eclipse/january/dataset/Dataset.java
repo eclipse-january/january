@@ -300,6 +300,7 @@ public interface Dataset extends IDataset {
 
 	/**
 	 * @return real part of dataset (if necessary, as new dataset)
+	 * @since 2.0
 	 */
 	public Dataset getRealPart();
 
@@ -313,6 +314,7 @@ public interface Dataset extends IDataset {
 	 * if the error set was of lower rank
 	 *
 	 * @return the dataset which contains the error information (can be null)
+	 * @since 2.0
 	 */
 	@Override
 	public Dataset getErrors();
@@ -618,6 +620,7 @@ public interface Dataset extends IDataset {
 	/**
 	 * Get first item as an object. The dataset must not be null
 	 * @return item
+	 * @since 2.0
 	 */
 	public Object getObject();
 
@@ -639,6 +642,7 @@ public interface Dataset extends IDataset {
 	/**
 	 * Get first item as a string. The dataset must not be null
 	 * @return item
+	 * @since 2.0
 	 */
 	public String getString();
 
@@ -660,6 +664,7 @@ public interface Dataset extends IDataset {
 	/**
 	 * Get first item as a double. The dataset must not be null
 	 * @return item
+	 * @since 2.0
 	 */
 	public double getDouble();
 
@@ -681,6 +686,7 @@ public interface Dataset extends IDataset {
 	/**
 	 * Get first item as a float. The dataset must not be null
 	 * @return item
+	 * @since 2.0
 	 */
 	public float getFloat();
 
@@ -702,6 +708,7 @@ public interface Dataset extends IDataset {
 	/**
 	 * Get first item as a long. The dataset must not be null
 	 * @return item
+	 * @since 2.0
 	 */
 	public long getLong();
 
@@ -723,6 +730,7 @@ public interface Dataset extends IDataset {
 	/**
 	 * Get first item as an int. The dataset must not be null
 	 * @return item
+	 * @since 2.0
 	 */
 	public int getInt();
 
@@ -744,6 +752,7 @@ public interface Dataset extends IDataset {
 	/**
 	 * Get first item as a short. The dataset must not be null
 	 * @return item
+	 * @since 2.0
 	 */
 	public short getShort();
 
@@ -765,6 +774,7 @@ public interface Dataset extends IDataset {
 	/**
 	 * Get first item as a byte. The dataset must not be null
 	 * @return item
+	 * @since 2.0
 	 */
 	public byte getByte();
 
@@ -786,6 +796,7 @@ public interface Dataset extends IDataset {
 	/**
 	 * Get first item as a boolean. The dataset must not be null
 	 * @return item
+	 * @since 2.0
 	 */
 	public boolean getBoolean();
 
@@ -807,6 +818,7 @@ public interface Dataset extends IDataset {
 	/**
 	 * Get the error for the first item. The dataset must not be null
 	 * @return item
+	 * @since 2.0
 	 */
 	public double getError();
 
@@ -843,6 +855,7 @@ public interface Dataset extends IDataset {
 	/**
 	 * Set the value given by object at the first position. The dataset must not be null
 	 * @param obj
+	 * @since 2.0
 	 */
 	public void set(final Object obj);
 
