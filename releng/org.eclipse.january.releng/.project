@@ -10,6 +10,21 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>.travis.yml</name>
+			<type>1</type>
+			<locationURI>$%7BPARENT-2-PROJECT_LOC%7D/.travis.yml</locationURI>
+		</link>
+		<link>
+			<name>CONTRIBUTING.md</name>
+			<type>1</type>
+			<locationURI>$%7BPARENT-2-PROJECT_LOC%7D/CONTRIBUTING.md</locationURI>
+		</link>
+		<link>
+			<name>README.md</name>
+			<type>1</type>
+			<locationURI>$%7BPARENT-2-PROJECT_LOC%7D/README.md</locationURI>
+		</link>
+		<link>
 			<name>root-pom.xml</name>
 			<type>1</type>
 			<locationURI>$%7BPARENT-2-PROJECT_LOC%7D/pom.xml</locationURI>
