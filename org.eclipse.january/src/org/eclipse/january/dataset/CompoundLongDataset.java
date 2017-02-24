@@ -841,6 +841,7 @@ public class CompoundLongDataset extends AbstractCompoundDataset {
 	 * Set values at first position. The dataset must not be null
 	 *
 	 * @param d
+	 * @since 2.0
 	 */
 	public void setItem(final long[] d) { // PRIM_TYPE
 		if (d.length > isize) {

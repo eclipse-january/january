@@ -18,6 +18,7 @@ public interface DateDataset extends Dataset {
 	/**
 	 * Get the first date. The dataset must not be null
 	 * @return date
+	 * @since 2.0
 	 */
 	public Date getDate();
 	

@@ -51,6 +51,7 @@ public interface BinaryOperation extends IOperation {
 	 * @param a
 	 * @param b
 	 * @return string to represent output
+	 * @since 2.0
 	 */
 	String toString(String a, String b);
 

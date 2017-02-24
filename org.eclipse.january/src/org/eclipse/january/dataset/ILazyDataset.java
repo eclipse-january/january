@@ -219,11 +219,13 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 	 * 
 	 * @param errors - may be null to remove the error set
 	 * @throws RuntimeException if the rank or shape are incorrect
+	 * @since 2.0
 	 */
 	public void setErrors(Serializable errors);
 
 	/**
 	 * Get the errors, if any. These will be in a shape that can broadcast to the dataset
+	 * @since 2.0
 	 */
 	public ILazyDataset getErrors();
 

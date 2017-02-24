@@ -193,6 +193,7 @@ public class SliceND {
 	 * Set slice for given dimension
 	 * @param i dimension
 	 * @param slice
+	 * @since 2.0
 	 */
 	public void setSlice(int i, Slice slice) {
 		internalSetSlice(i, slice.getStart(), slice.getStop(), slice.getStep());

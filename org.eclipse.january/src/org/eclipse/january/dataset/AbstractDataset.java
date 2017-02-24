@@ -897,6 +897,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		return get1DIndexFromShape(pos);
 	}
 
+	/**
+	 * @since 2.0
+	 */
 	protected int getFirst1DIndex() {
 		if (shape == null) {
 			throw new IllegalArgumentException("Cannot find an index from a null shape");

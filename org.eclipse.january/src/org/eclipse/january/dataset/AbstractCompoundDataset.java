@@ -326,6 +326,9 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 		return (CompoundDataset) super.variance(axis);
 	}
 
+	/**
+	 * @since 2.0
+	 */
 	abstract protected double getFirstValue();
 
 	abstract protected double getFirstValue(final int i);

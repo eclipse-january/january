@@ -1,6 +1,6 @@
 ###
 # *******************************************************************************
-# * Copyright (c) 2011, 2016 Diamond Light Source Ltd.
+# * Copyright (c) 2011, 2017 Diamond Light Source Ltd.
 # * All rights reserved. This program and the accompanying materials
 # * are made available under the terms of the Eclipse Public License v1.0
 # * which accompanies this distribution, and is available at
@@ -15,7 +15,7 @@
 '''
 From compound double dataset generate other classes
 
-$ python fromcpddouble.py ../CompoundDoubleDataset.java
+$ python fromcpddouble.py ../../CompoundDoubleDataset.java
 
 '''
 
@@ -63,7 +63,7 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         fname = sys.argv[1]
     else:
-        fname = "../CompoundDoubleDataset.java"
+        fname = "../../CompoundDoubleDataset.java"
 
     dclass_file = open(fname, 'r')
 

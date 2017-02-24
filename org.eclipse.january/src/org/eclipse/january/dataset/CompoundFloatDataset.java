@@ -841,6 +841,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 	 * Set values at first position. The dataset must not be null
 	 *
 	 * @param d
+	 * @since 2.0
 	 */
 	public void setItem(final float[] d) { // PRIM_TYPE
 		if (d.length > isize) {
