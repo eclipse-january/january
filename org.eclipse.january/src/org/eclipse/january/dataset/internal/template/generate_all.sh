@@ -15,9 +15,22 @@
 # Generate all the template based classes using the Python scripts
 
 python generatefunctions.py functions.txt ../GeneratedMaths.java > GeneratedMaths.java
-mv -f GeneratedMaths.java ../
-
 python fromdouble.py ../../DoubleDataset.java
 python fromcpxdouble.py ../../ComplexDoubleDataset.java
 python fromcpddouble.py ../../CompoundDoubleDataset.java
-mv -f *.java ../../
+
+for i in *.java
+do
+  dest=../../$i
+  if [[ $i == GeneratedMaths.java ]]; then
+    dest=../$i
+  fi
+  if ! cmp $i $dest > /dev/null; then
+    echo "Updating $i"
+    mv -f $i $dest
+  else
+    rm $i
+  fi
+done
+
+echo "All files are now up to date"

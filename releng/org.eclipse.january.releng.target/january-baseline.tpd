@@ -1,0 +1,27 @@
+/*-
+ *******************************************************************************
+ * Copyright (c) 2017 Kichwa Coders and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Jonah Graham (Kichwa Coders) - initial API and implementation
+ *******************************************************************************/
+target "January-baseline" with source requirements
+
+location "http://download.eclipse.org/january/releases/1.0.0/repository/" january-1.0 {
+	org.eclipse.january lazy
+}
+
+location "http://download.eclipse.org/tools/orbit/downloads/drops/S20170120205402/repository" eclipse-orbit-oxygen-m5 {
+
+// The versions we point to in Orbit are the versions we have CQs approved for, please
+// raise CQ for items not in this list or version changes
+	org.slf4j.api [1.7.2,1.7.3) // CQ 11781
+	org.apache.commons.lang3 [3.1.0,3.1.1) // CQ 11782
+	org.apache.commons.lang [2.6.0,2.6.1) // CQ 11783
+	org.apache.commons.math3 [3.5.0,3.5.1) // CQ 11785
+
+}
