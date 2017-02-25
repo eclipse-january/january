@@ -14,7 +14,7 @@
 
 # Verify all the template based classes using the Python scripts
 
-python generatefunctions.py functions.txt ../GeneratedMaths.java > GeneratedMaths.java
+python generatefunctions.py functions.txt ../../GeneratedMaths.java > GeneratedMaths.java
 python fromdouble.py ../../DoubleDataset.java
 python fromcpxdouble.py ../../ComplexDoubleDataset.java
 python fromcpddouble.py ../../CompoundDoubleDataset.java
@@ -23,9 +23,6 @@ differences_found=false
 for i in *.java
 do
   orig=../../$i
-  if [[ $i == GeneratedMaths.java ]]; then
-    orig=../$i
-  fi
   if ! cmp $i $orig; then
     differences_found=true
     echo "Differences found for $i -- it needs to be regenerated"
