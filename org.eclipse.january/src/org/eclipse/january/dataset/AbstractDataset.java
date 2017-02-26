@@ -1406,10 +1406,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	 * @return number of steps to take
 	 */
 	protected static int calcSteps(final double start, final double stop, final double step) {
-		if (step > 0) {
-			return (int) Math.ceil((stop - start) / step);
-		}
-		return (int) Math.ceil((stop - start) / step);
+		return Math.max(0, (int) Math.ceil((stop - start) / step));
 	}
 
 	@Override

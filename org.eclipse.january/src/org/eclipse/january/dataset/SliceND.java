@@ -293,9 +293,9 @@ public class SliceND {
 		if (start == stop) {
 			lshape[i] = 0;
 		} else if (step > 0) {
-			lshape[i] = (stop - start - 1) / step + 1;
+			lshape[i] = Math.max(0, (stop - start - 1) / step + 1);
 		} else {
-			lshape[i] = (stop - start + 1) / step + 1;
+			lshape[i] = Math.max(0, (stop - start + 1) / step + 1);
 		}
 		lstart[i] = start;
 		lstep[i] = step;
