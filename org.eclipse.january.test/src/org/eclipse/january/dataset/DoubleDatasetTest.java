@@ -13,6 +13,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import org.eclipse.january.asserts.TestUtils;
 import org.eclipse.january.dataset.Dataset;
 import org.eclipse.january.dataset.DatasetFactory;
 import org.eclipse.january.dataset.DoubleDataset;
@@ -94,6 +95,9 @@ public class DoubleDatasetTest {
 		} catch (UnsupportedOperationException e) {
 		}
 
+		sc = a.getSlice(new Slice(7, 2));
+		TestUtils.assertDatasetEquals(new DoubleDataset(0), sc);
+
 		Dataset b = a.reshape(4, 3);
 		try {
 			b.getDouble(new int[1]);
@@ -106,6 +110,12 @@ public class DoubleDatasetTest {
 			fail("Should have thrown a UOE");
 		} catch (UnsupportedOperationException e) {
 		}
+
+		sc = b.getSlice(new Slice(7, 2));
+		TestUtils.assertDatasetEquals(new DoubleDataset(0, 3), sc);
+
+		sc = b.getSlice(new Slice(2, 5, -1));
+		TestUtils.assertDatasetEquals(new DoubleDataset(0, 3), sc);
 	}
 
 	@Test
@@ -164,6 +174,24 @@ public class DoubleDatasetTest {
 			else
 				assertEquals(0, d.getElementDoubleAbs(it.index), 1e-15);
 		}
+	}
+
+	@Test
+	public void testRange() {
+		DoubleDataset a = DoubleDataset.createRange(2, 12.4, 4.3);
+		DoubleDataset e = new DoubleDataset(new double[] {2, 6.3, 10.6});
+		TestUtils.assertDatasetEquals(e, a);
+
+		a = DoubleDataset.createRange(12.4, 2, -4.3);
+		e = new DoubleDataset(new double[] {12.4, 8.1, 3.8});
+		TestUtils.assertDatasetEquals(e, a);
+
+		a = DoubleDataset.createRange(2, 12.4, -4.3);
+		e = new DoubleDataset(0);
+		TestUtils.assertDatasetEquals(e, a);
+
+		a = DoubleDataset.createRange(12.4, 2, 4.3);
+		TestUtils.assertDatasetEquals(e, a);
 	}
 
 	@Test

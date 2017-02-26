@@ -11,6 +11,7 @@ package org.eclipse.january.dataset;
 
 import static org.junit.Assert.assertEquals;
 
+import org.eclipse.january.asserts.TestUtils;
 import org.eclipse.january.dataset.CompoundDoubleDataset;
 import org.eclipse.january.dataset.DatasetFactory;
 import org.eclipse.january.dataset.DoubleDataset;
@@ -287,5 +288,26 @@ public class DatasetFactoryTest {
 		act = DatasetFactory.createFromObject(RGBDataset.class, new short[] {3, 4, 5, 6, 7, 8});
 		assertEquals(exp, act);
 	}
-}
 
+	@Test
+	public void testLinearSpace() {
+		DoubleDataset act = DatasetFactory.createLinearSpace(DoubleDataset.class, 2, 12.4, 4);
+		Dataset exp = DatasetFactory.createFromObject(new double[] {2, 5.4666666666666666666, 8.9333333333333333333, 12.4});
+		TestUtils.assertDatasetEquals(exp, act);
+
+		act = DatasetFactory.createLinearSpace(DoubleDataset.class, 12.4, 2, 4);
+		exp = DatasetFactory.createFromObject(new double[] {12.4, 8.9333333333333333333, 5.4666666666666666666, 2});
+		TestUtils.assertDatasetEquals(exp, act);
+	}
+
+	@Test
+	public void testLogSpace() {
+		DoubleDataset act = DatasetFactory.createLogSpace(DoubleDataset.class, 2, 3.6, 4, 3.5);
+		Dataset exp = DatasetFactory.createFromObject(new double[] {12.25, 23.89492724, 46.60959572, 90.91697129});
+		TestUtils.assertDatasetEquals(exp, act, 1e-9, 1e-9);
+
+		act = DatasetFactory.createLogSpace(DoubleDataset.class, 3.6, 2, 4, 3.5);
+		exp = DatasetFactory.createFromObject(new double[] {90.91697129, 46.60959572, 23.89492724, 12.25});
+		TestUtils.assertDatasetEquals(exp, act, 1e-9, 1e-9);
+	}
+}

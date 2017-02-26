@@ -320,7 +320,7 @@ public class Slice implements Cloneable, Serializable {
 
 	private static int getNumSteps(int beg, int end, int step) {
 		int del = step > 0 ? 1 : -1;
-		return (end - beg - del) / step + 1;
+		return Math.max(0, (end - beg - del) / step + 1);
 	}
 
 	/**

@@ -164,6 +164,8 @@ public class SliceTest {
 		assertEquals(5, sl.getNumSteps());
 		sl = new Slice(0, 5, 1).setLength(5);
 		assertEquals(5, sl.getNumSteps());
+		sl = new Slice(0, 5, -1).setLength(5);
+		assertEquals(0, sl.getNumSteps());
 
 		sl = new Slice(null, null, -1).setLength(1);
 		assertEquals(1, sl.getNumSteps());
@@ -176,6 +178,8 @@ public class SliceTest {
 		assertEquals(5, sl.getNumSteps());
 		sl = new Slice(4, -1, -1).setLength(5);
 		assertEquals(5, sl.getNumSteps());
+		sl = new Slice(4, -1, 1).setLength(5);
+		assertEquals(0, sl.getNumSteps());
 	}
 
 	@Test
