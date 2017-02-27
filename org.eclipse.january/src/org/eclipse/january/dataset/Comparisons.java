@@ -1272,12 +1272,8 @@ public class Comparisons {
 			}
 		}
 
-	
-		final int length = indices.get(0).size();
-		if (length > 0 ) {
-			for (int j = 0; j < rank; j++) {
-				indexList.add((IntegerDataset) DatasetFactory.createFromList(indices.get(j)));
-			}
+		for (int j = 0; j < rank; j++) {
+			indexList.add((IntegerDataset) DatasetFactory.createFromList(Dataset.INT32, indices.get(j)));
 		}
 		return indexList;
 	}
