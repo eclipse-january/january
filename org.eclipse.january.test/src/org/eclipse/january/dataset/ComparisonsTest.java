@@ -10,6 +10,7 @@
 package org.eclipse.january.dataset;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import org.eclipse.january.asserts.TestUtils;
 import org.eclipse.january.dataset.BooleanDataset;
@@ -208,6 +209,16 @@ public class ComparisonsTest {
 		List<IntegerDataset> e = Comparisons.nonZero(c);
 		TestUtils.assertDatasetEquals(e.get(0), DatasetFactory.createFromObject(new int[] {0, 0, 1, 1, 1}));
 		TestUtils.assertDatasetEquals(e.get(1), DatasetFactory.createFromObject(new int[] {1, 2, 0, 1, 2}));
+	}
+
+	@Test
+	public void testNoNonZeros() {
+		Dataset c = DatasetFactory.createFromObject(new byte[] { 0, 0, 0, 0, 0, 0 }).reshape(2, 3);
+		List<IntegerDataset> e = Comparisons.nonZero(c);
+		Assert.assertEquals(e.size(), 2);
+		Dataset empty = DatasetFactory.createFromList(Dataset.INT32, new ArrayList<Integer>());
+		TestUtils.assertDatasetEquals(e.get(0), empty);
+		TestUtils.assertDatasetEquals(e.get(1), empty);
 	}
 
 	@Test
