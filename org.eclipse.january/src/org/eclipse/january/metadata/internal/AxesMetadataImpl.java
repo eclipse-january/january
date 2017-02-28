@@ -57,7 +57,8 @@ public class AxesMetadataImpl implements AxesMetadata {
 				list.add(lv);
 				if (lv != null) {
 					int ihc = System.identityHashCode(lv);
-					if (axesMetadataImpl.dimensionMap.containsKey(ihc)) dimensionMap.put(ihc, axesMetadataImpl.dimensionMap.get(lv).clone());
+					int iho = System.identityHashCode(l);
+					if (axesMetadataImpl.dimensionMap.containsKey(iho)) dimensionMap.put(ihc, axesMetadataImpl.dimensionMap.get(iho).clone());
 				}
 				
 			}
@@ -156,7 +157,6 @@ public class AxesMetadataImpl implements AxesMetadata {
 	public int[] refresh(int[] shape) {
 		int[] maxShape = shape.clone();
 
-
 		for (int i = 0 ; i < allAxes.length; i++) {
 			List<ILazyDataset> axis = allAxes[i];
 			if (axis == null) continue;
@@ -173,11 +173,29 @@ public class AxesMetadataImpl implements AxesMetadata {
 					} else {
 						l = l.squeezeEnds();
 					}
-
-					((IDynamicDataset) l).refreshShape();
+					
+					if (dims != null && dims.length != l.getRank()) {
+						int[] tempShape = new int[dims.length];
+						Arrays.fill(tempShape,1);
+						int[] ss = l.getShape();
+						for (int k = 0 ; k < tempShape.length && k < ss.length; k++) tempShape[k] = ss[k];
+						
+						l.setShape(tempShape);
+					}
+					
+					try {
+						((IDynamicDataset) l).refreshShape();
+					} catch (Exception e) {
+						String name = l.getName();
+						if (name == null) name = "unknown_dataset";
+						dimensionMap.remove(iHashCode);
+						axis.set(j,null);
+						continue;
+					}
+					
 				}
 				// need to look at rank of l;
-				if (dims == null) {
+				if (dims == null || dims.length == 1) {
 					int k = l.getShape()[0];
 					if (k < maxShape[i]) maxShape[i] = k;
 					int[] newShape = shape.clone();
@@ -190,7 +208,7 @@ public class AxesMetadataImpl implements AxesMetadata {
 					Arrays.fill(newShape, 1);
 					for (int k = 0 ; k < dims.length; k++) {
 						int[] s = l.getShape();
-						if (s[dims[k]] < maxShape[k]) maxShape[k] = dims[k];
+						if (s[dims[k]] < maxShape[k]) maxShape[k] = s[dims[k]];
 						newShape[k] = s[dims[k]];
 					}
 					l.setShape(newShape);
