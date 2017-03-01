@@ -119,7 +119,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	@Override
 	public Dataset copy(final int dtype) {
 		if (getDType() == dtype) {
-			return this;
+			return clone();
 		}
 		return DatasetUtils.copy(this, dtype);
 	}

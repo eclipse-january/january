@@ -1563,6 +1563,18 @@ public class AbstractDatasetTest {
 	}
 
 	@Test
+	public void testCopy() {
+		int[] idata = new int[] {1, -2, 3};
+		Dataset d = new IntegerDataset(idata, null);
+		Dataset c = d.copy(Dataset.INT32);
+		assertTrue(c != d);
+		TestUtils.assertDatasetEquals(c, d);
+
+		c = d.copy(Dataset.FLOAT32);
+		TestUtils.assertDatasetEquals(c, d, false);
+	}
+
+	@Test
 	public void testRoll() {
 		Dataset a = DatasetFactory.createRange(10, Dataset.INT32);
 
