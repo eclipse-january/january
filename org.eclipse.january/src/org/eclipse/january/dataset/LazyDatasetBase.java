@@ -19,7 +19,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -60,7 +61,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	 */
 	protected int[] shape;
 
-	protected Map<Class<? extends MetadataType>, List<MetadataType>> metadata = null;
+	protected ConcurrentMap<Class<? extends MetadataType>, List<MetadataType>> metadata = null;
 
 	/**
 	 * @return type of dataset item
@@ -188,12 +189,12 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		addMetadata(metadata, false);
 	}
 
-	private void addMetadata(MetadataType metadata, boolean clear) {
+	private synchronized void addMetadata(MetadataType metadata, boolean clear) {
 		if (metadata == null)
 			return;
 
 		if (this.metadata == null) {
-			this.metadata = new HashMap<Class<? extends MetadataType>, List<MetadataType>>();
+			this.metadata = new ConcurrentHashMap<Class<? extends MetadataType>, List<MetadataType>>();
 		}
 
 		Class<? extends MetadataType> clazz = findMetadataTypeSubInterfaces(metadata.getClass());
@@ -218,13 +219,13 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 
 	@Override
 	@Deprecated
-	public IMetadata getMetadata() {
+	public synchronized IMetadata getMetadata() {
 		return getFirstMetadata(IMetadata.class);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <S extends MetadataType, T extends S> List<S> getMetadata(Class<T> clazz) throws MetadataException {
+	public synchronized <S extends MetadataType, T extends S> List<S> getMetadata(Class<T> clazz) throws MetadataException {
 		if (metadata == null)
 			return null;
 
@@ -240,7 +241,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	}
 
 	@Override
-	public <S extends MetadataType, T extends S> S getFirstMetadata(Class<T> clazz) {
+	public synchronized <S extends MetadataType, T extends S> S getFirstMetadata(Class<T> clazz) {
 		try {
 			List<S> ml = getMetadata(clazz);
 			if (ml == null) return null;
@@ -255,7 +256,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	}
 
 	@Override
-	public void clearMetadata(Class<? extends MetadataType> clazz) {
+	public synchronized void clearMetadata(Class<? extends MetadataType> clazz) {
 		if (metadata == null)
 			return;
 
@@ -270,15 +271,15 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		}
 	}
 
-	protected Map<Class<? extends MetadataType>, List<MetadataType>> copyMetadata() {
+	protected synchronized ConcurrentMap<Class<? extends MetadataType>, List<MetadataType>> copyMetadata() {
 		return copyMetadata(metadata);
 	}
 
-	protected static Map<Class<? extends MetadataType>, List<MetadataType>> copyMetadata(Map<Class<? extends MetadataType>, List<MetadataType>> metadata) {
+	protected static ConcurrentMap<Class<? extends MetadataType>, List<MetadataType>> copyMetadata(Map<Class<? extends MetadataType>, List<MetadataType>> metadata) {
 		if (metadata == null)
 			return null;
 
-		HashMap<Class<? extends MetadataType>, List<MetadataType>> map = new HashMap<Class<? extends MetadataType>, List<MetadataType>>();
+		ConcurrentHashMap<Class<? extends MetadataType>, List<MetadataType>> map = new ConcurrentHashMap<Class<? extends MetadataType>, List<MetadataType>>();
 
 		for (Class<? extends MetadataType> c : metadata.keySet()) {
 			List<MetadataType> l = metadata.get(c);
