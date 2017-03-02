@@ -73,7 +73,7 @@ public class TestUtils {
 	 * Assert equality of datasets where each item is true if they are equal or
 	 * for floating point datasets, abs(a - b) <= 1e-12 + 1e-12*abs(b)
 	 * <p>
-	 * The dataset types have to match and so does the number of elements in each item. 
+	 * The dataset types have to match and so does the number of elements in each item.
 	 * <p>
 	 * Same as <pre>TestUtils.assertDatasetEquals(expected, actual, true, 1e-12, 1e-12)</pre>
 	 * @param expected
@@ -81,6 +81,17 @@ public class TestUtils {
 	 */
 	public static void assertDatasetEquals(Dataset expected, Dataset actual) {
 		assertDatasetEquals(expected, actual, true, 1e-12, 1e-12);
+	}
+
+	/**
+	 * Assert equality of datasets where each element is true if they are equal or
+	 * for floating point datasets, abs(a - b) <= 1e-12 + 1e-12*abs(b)
+	 * @param expected
+	 * @param actual
+	 * @param testDTypeAndItemSize if true, check dataset type and number of elements
+	 */
+	public static void assertDatasetEquals(Dataset expected, Dataset actual, boolean testDTypeAndItemSize) {
+		assertDatasetEquals(expected, actual, testDTypeAndItemSize, 1e-12, 1e-12);
 	}
 
 	/**
@@ -102,7 +113,7 @@ public class TestUtils {
 	 * for floating point datasets, if abs(a - b) <= absTolerance + relTolerance*abs(b)
 	 * @param expected
 	 * @param actual
-	 * @param testDTypeAndItemSize
+	 * @param testDTypeAndItemSize if true, check dataset type and number of elements
 	 * @param relTolerance 
 	 * @param absTolerance 
 	 */
