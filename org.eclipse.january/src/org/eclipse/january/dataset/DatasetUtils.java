@@ -1171,15 +1171,6 @@ public class DatasetUtils {
 	}
 
 	/**
-	 * Convert (if necessary) a dataset obeying the interface to our implementation
-	 * @param data can be null
-	 * @return Converted dataset or null
-	 */
-	public static AbstractDataset convertToAbstractDataset(IDataset data) {
-		return (AbstractDataset) convertToDataset(data);
-	}
-
-	/**
 	 * Slice (or fully load), if necessary, a lazy dataset, otherwise take a slice view and
 	 * convert to our dataset implementation. If a slice is necessary, this may cause resource
 	 * problems when used on large datasets and throw runtime exceptions
