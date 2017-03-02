@@ -18,7 +18,6 @@ package org.eclipse.january.dataset;
 import java.util.Arrays;
 
 import org.apache.commons.math3.complex.Complex;
-import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
 
 
 /**
@@ -208,6 +207,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 
 	@Override
 	public ComplexDoubleDataset fill(final Object obj) {
+		setDirty();
 		double vr = DTypeUtils.toReal(obj); // PRIM_TYPE // ADD_CAST
 		double vi = DTypeUtils.toImag(obj); // PRIM_TYPE // ADD_CAST
 		IndexIterator iter = getIterator();
@@ -217,7 +217,6 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 			data[iter.index+1] = vi;
 		}
 
-		setDirty();
 		return this;
 	}
 
@@ -291,9 +290,9 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	 * @param imag
 	 */
 	public void setAbs(final int index, final double real, final double imag) { // PRIM_TYPE
+		setDirty();
 		data[index] = real;
 		data[index+1] = imag;
-		setDirty();
 	}
 
 	/**
@@ -556,36 +555,24 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	}
 
 	@Override
-	public Object sum() {
-		final String n = storeName(false, STORE_STATS_ITEM_NAME);
-		if (storedValues == null || storedValues.isEmpty()) {
-			calculateSummaryStats(false, false, n);
-		}
-
-		final SummaryStatistics rstats = (SummaryStatistics) storedValues.get(n + "0");
-		final SummaryStatistics istats = (SummaryStatistics) storedValues.get(n + "1");
-		return new Complex(rstats.getSum(), istats.getSum());
+	public Object sum(boolean... switches) { // FIXME
+		double[] sum = (double[]) super.sum(switches);
+		return new Complex(sum[0], sum[1]);
 	}
 
 	@Override
 	public Object mean(boolean... switches) {
-		final String n = storeName(false, STORE_STATS_ITEM_NAME);
-		if (storedValues == null || storedValues.isEmpty()) {
-			calculateSummaryStats(false, false, n);
-		}
-
-		final SummaryStatistics rstats = (SummaryStatistics) storedValues.get(n + "0");
-		final SummaryStatistics istats = (SummaryStatistics) storedValues.get(n + "1");
-		return new Complex(rstats.getMean(), istats.getMean());
+		double[] mean = (double[]) super.mean(switches);
+		return new Complex(mean[0], mean[1]);
 	}
 
 	@Override
-	public int[] maxPos(boolean ignoreNaNs) {
+	public int[] maxPos(boolean... switches) {
 		throw new UnsupportedOperationException("Cannot compare complex numbers");
 	}
 
 	@Override
-	public int[] minPos(boolean ignoreNaNs) {
+	public int[] minPos(boolean... switches) {
 		throw new UnsupportedOperationException("Cannot compare complex numbers");
 	}
 
@@ -606,6 +593,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 
 	@Override
 	ComplexDoubleDataset setSlicedView(Dataset view, Dataset d) {
+		setDirty();
 		final BroadcastSelfIterator it = BroadcastSelfIterator.createIterator(view, d);
 
 		if (d instanceof ComplexFloatDataset || d instanceof ComplexDoubleDataset) {
@@ -624,6 +612,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 
 	@Override
 	public ComplexDoubleDataset setSlice(final Object o, final IndexIterator siter) {
+		setDirty();
 		if (o instanceof ComplexFloatDataset) {
 			ComplexFloatDataset zds = (ComplexFloatDataset) o;
 
@@ -671,12 +660,12 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 				throw new IllegalArgumentException("Object for setting slice is not a dataset or number");
 			}
 		}
-		setDirty();
 		return this;
 	}
 
 	@Override
 	public ComplexDoubleDataset iadd(final Object b) {
+		setDirty();
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 		boolean useLong = bds.getElementClass().equals(Long.class);
 		if (bds.getSize() == 1) {
@@ -720,12 +709,12 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 				}
 			}
 		}
-		setDirty();
 		return this;
 	}
 
 	@Override
 	public ComplexDoubleDataset isubtract(final Object b) {
+		setDirty();
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 		boolean useLong = bds.getElementClass().equals(Long.class);
 		if (bds.getSize() == 1) {
@@ -769,12 +758,12 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 				}
 			}
 		}
-		setDirty();
 		return this;
 	}
 
 	@Override
 	public ComplexDoubleDataset imultiply(final Object b) {
+		setDirty();
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 		boolean useLong = bds.getElementClass().equals(Long.class);
 		if (bds.getSize() == 1) {
@@ -828,12 +817,12 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 				}
 			}
 		}
-		setDirty();
 		return this;
 	}
 
 	@Override
 	public ComplexDoubleDataset idivide(final Object b) {
+		setDirty();
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 		boolean useLong = bds.getElementClass().equals(Long.class);
 		if (bds.getSize() == 1) {
@@ -921,7 +910,6 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 				}
 			}
 		}
-		setDirty();
 		return this;
 	}
 
@@ -932,6 +920,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 
 	@Override
 	public ComplexDoubleDataset ipower(final Object b) {
+		setDirty();
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
@@ -968,7 +957,6 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 				}
 			}
 		}
-		setDirty();
 		return this;
 	}
 

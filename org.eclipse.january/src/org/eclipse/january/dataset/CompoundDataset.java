@@ -101,34 +101,7 @@ public interface CompoundDataset extends Dataset {
 	public CompoundDataset isubtract(Object o);
 
 	@Override
-	public CompoundDataset max(boolean ignoreNaNs, int axis);
-
-	@Override
-	public CompoundDataset max(int axis);
-
-	@Override
-	public CompoundDataset mean(boolean ignoreNaNs, int axis);
-
-	@Override
-	public CompoundDataset mean(int axis);
-
-	@Override
-	public CompoundDataset min(boolean ignoreNaNs, int axis);
-
-	@Override
-	public CompoundDataset min(int axis);
-
-	@Override
-	public CompoundDataset peakToPeak(int axis);
-
-	@Override
-	public CompoundDataset product(int axis);
-
-	@Override
 	public CompoundDataset reshape(int... shape);
-
-	@Override
-	public CompoundDataset rootMeanSquare(int axis);
 
 	@Override
 	public CompoundDataset setBy1DIndex(Object obj, Dataset index);
@@ -161,15 +134,6 @@ public interface CompoundDataset extends Dataset {
 	public CompoundDataset squeeze(boolean onlyFromEnd);
 
 	@Override
-	public CompoundDataset stdDeviation(int axis);
-
-	@Override
-	public CompoundDataset sum(boolean ignoreNaNs, int axis);
-
-	@Override
-	public CompoundDataset sum(int axis);
-
-	@Override
 	public CompoundDataset swapAxes(int axis1, int axis2);
 
 	@Override
@@ -179,13 +143,37 @@ public interface CompoundDataset extends Dataset {
 	public CompoundDataset transpose(int... axes);
 
 	@Override
-	public CompoundDataset typedProduct(int dtype, int axis);
+	public CompoundDataset max(int axis, boolean... ignoreInvalids);
 
 	@Override
-	public CompoundDataset typedSum(int dtype, int axis);
+	public CompoundDataset min(int axis, boolean... ignoreInvalids);
+
+	@Override
+	public CompoundDataset peakToPeak(int axis, boolean... ignoreInvalids);
+
+	@Override
+	public CompoundDataset sum(int axis, boolean... ignoreInvalids);
+
+	@Override
+	public CompoundDataset product(int axis, boolean... ignoreInvalids);
+
+	@Override
+	public CompoundDataset mean(int axis, boolean... ignoreInvalids);
+
+	@Override
+	public CompoundDataset rootMeanSquare(int axis, boolean... ignoreInvalids);
+
+	@Override
+	public CompoundDataset stdDeviation(int axis);
+
+	@Override
+	public CompoundDataset stdDeviation(int axis, boolean isWholePopulation, boolean... ignoreInvalids);
 
 	@Override
 	public CompoundDataset variance(int axis);
+
+	@Override
+	public CompoundDataset variance(int axis, boolean isWholePopulation, boolean... ignoreInvalids);
 
 	/**
 	 * Get first item as a double array

@@ -108,21 +108,6 @@ public class ObjectDataset extends ObjectDatasetBase {
 	}
 
 	@Override
-	protected void calculateMaxMin(final boolean ignoreNaNs, final boolean ignoreInfs) {
-		// override to skip max/min calculation for hash only
-		IndexIterator iter = getIterator();
-		double hash = 0;
-
-		while (iter.hasNext()) {
-			final int val = getObjectAbs(iter.index).hashCode();
-			hash = (hash * 19 + val) % Integer.MAX_VALUE;
-		}
-
-		int ihash = ((int) hash) * 19 + getDType() * 17 + getElementsPerItem();
-		setStoredValue(storeName(ignoreNaNs, ignoreInfs, STORE_SHAPELESS_HASH), ihash);
-	}
-
-	@Override
 	public boolean getElementBooleanAbs(int index) {
 		throw new UnsupportedOperationException("Unsupported method for class");
 	}
@@ -284,12 +269,12 @@ public class ObjectDataset extends ObjectDatasetBase {
 	}
 
 	@Override
-	public int[] minPos() {
+	public int[] minPos(boolean... ignoreInvalids) {
 		throw new UnsupportedOperationException("Unsupported method for class");
 	}
 
 	@Override
-	public int[] maxPos() {
+	public int[] maxPos(boolean... ignoreInvalids) {
 		throw new UnsupportedOperationException("Unsupported method for class");
 	}
 

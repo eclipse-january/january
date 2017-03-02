@@ -19,7 +19,8 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(TestUtils.VerboseSuite.class)
 @SuiteClasses({ AbstractCompoundDatasetTest.class, AbstractDatasetTest.class, AggregateDatasetTest.class,
 		BinaryOperationTest.class, BooleanDatasetTest.class, BooleanIteratorTest.class, BroadcastIteratorTest.class,
-		BroadcastUtilsTest.class, ByteDatasetTest.class, ComparisonsTest.class, ComplexDoubleDatasetTest.class,
+		BroadcastUtilsTest.class, ByteDatasetTest.class, ComparisonsTest.class, 
+		CompoundDoubleDatasetTest.class, ComplexDoubleDatasetTest.class,
 		ComplexFloatDatasetTest.class, DatasetFactoryTest.class, DateDatasetTest.class, DoubleDatasetTest.class,
 		FloatDatasetTest.class, IndexIteratorTest.class, IntegerDatasetTest.class,
 		IntegerIteratorTest.class, IntegersIteratorTest.class, InterpolatorUtilsTest.class, LazyDatasetTest.class,

@@ -22,6 +22,7 @@ import org.eclipse.january.metadata.internal.ErrorMetadataImpl;
 import org.eclipse.january.metadata.internal.MaskMetadataImpl;
 import org.eclipse.january.metadata.internal.OriginMetadataImpl;
 import org.eclipse.january.metadata.internal.PeemMetadataImpl;
+import org.eclipse.january.metadata.internal.StatisticsMetadataImpl;
 
 public class MetadataFactory {
 
@@ -38,6 +39,7 @@ public class MetadataFactory {
 		map.put(MaskMetadata.class, MaskMetadataImpl.class);
 		map.put(OriginMetadata.class, OriginMetadataImpl.class);
 		map.put(PeemMetadata.class, PeemMetadataImpl.class);
+		map.put(StatisticsMetadata.class, StatisticsMetadataImpl.class);
 		return map;
 	}
 

@@ -293,18 +293,36 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	}
 
 	interface MetadatasetAnnotationOperation {
+		/**
+		 * Process value of given field
+		 * @param f given field
+		 * @param o value of field
+		 * @return transformed field
+		 */
 		Object processField(Field f, Object o);
+
+		/**
+		 * @return annotated class
+		 */
 		Class<? extends Annotation> getAnnClass();
+
 		/**
 		 * @param axis
 		 * @return number of dimensions to insert or remove
 		 */
 		int change(int axis);
+
 		/**
 		 * 
 		 * @return rank or -1 to match
 		 */
 		int getNewRank();
+
+		/**
+		 * Run on given lazy dataset
+		 * @param lz
+		 * @return 
+		 */
 		ILazyDataset run(ILazyDataset lz);
 	}
 
