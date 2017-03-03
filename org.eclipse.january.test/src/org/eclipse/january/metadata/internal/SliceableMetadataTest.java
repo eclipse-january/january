@@ -38,7 +38,7 @@ public class SliceableMetadataTest {
 
 		final DoubleDataset[] dda = new DoubleDataset[] {Random.randn(shape), Random.randn(shape),};
 
-		List<ShortDataset> sdl = new ArrayList<>();
+		List<ShortDataset> sdl = new ArrayList<ShortDataset>();
 		sdl.add((ShortDataset) Random.randn(shape).cast(Dataset.INT16));
 		sdl.add((ShortDataset) Random.randn(shape).cast(Dataset.INT16));
 
@@ -212,7 +212,7 @@ public class SliceableMetadataTest {
 		final DoubleDataset[] dda = new DoubleDataset[] {Random.randn(partial1), Random.randn(partial1),};
 
 		final int [] partial2 = new int[] {1, 1, 3, 1};
-		List<ShortDataset> sdl = new ArrayList<>();
+		List<ShortDataset> sdl = new ArrayList<ShortDataset>();
 		sdl.add((ShortDataset) Random.randn(partial2).cast(Dataset.INT16));
 		sdl.add((ShortDataset) Random.randn(partial2).cast(Dataset.INT16));
 
@@ -307,7 +307,7 @@ public class SliceableMetadataTest {
 		final DoubleDataset[] dda = new DoubleDataset[] {Random.randn(partial1), Random.randn(partial1),};
 
 		final int [] partial2 = new int[] {1, 1, 3, 4};
-		List<ShortDataset> sdl = new ArrayList<>();
+		List<ShortDataset> sdl = new ArrayList<ShortDataset>();
 		sdl.add((ShortDataset) Random.randn(partial2).cast(Dataset.INT16));
 		sdl.add((ShortDataset) Random.randn(partial2).cast(Dataset.INT16));
 
@@ -374,7 +374,7 @@ public class SliceableMetadataTest {
 		final DoubleDataset[] dda = new DoubleDataset[] {Random.randn(partial1), Random.randn(partial1),};
 
 		final int [] partial2 = new int[] {1, 1, 3, 1};
-		List<ShortDataset> sdl = new ArrayList<>();
+		List<ShortDataset> sdl = new ArrayList<ShortDataset>();
 		sdl.add((ShortDataset) Random.randn(partial2).cast(Dataset.INT16));
 		sdl.add((ShortDataset) Random.randn(partial2).cast(Dataset.INT16));
 
