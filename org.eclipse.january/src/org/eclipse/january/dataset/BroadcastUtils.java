@@ -115,6 +115,8 @@ public final class BroadcastUtils {
 			}
 			maxShape[i] = m;
 		}
+
+		checkShapes(maxShape, newShapes);
 		newShapes.add(0, maxShape);
 		return newShapes;
 	}
@@ -143,8 +145,13 @@ public final class BroadcastUtils {
 				continue;
 			newShapes.add(padShape(s, maxRank - s.length));
 		}
-	
-		for (int i = 0; i < maxRank; i++) {
+
+		checkShapes(maxShape, newShapes);
+		return newShapes;
+	}
+
+	private static void checkShapes(int[] maxShape, List<int[]> newShapes) {
+		for (int i = 0; i < maxShape.length; i++) {
 			int m = maxShape[i];
 			for (int[] s : newShapes) {
 				int l = s[i];
@@ -153,7 +160,6 @@ public final class BroadcastUtils {
 				}
 			}
 		}
-		return newShapes;
 	}
 
 	static Dataset createDataset(final Dataset a, final Dataset b, final int[] shape) {
