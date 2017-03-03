@@ -51,9 +51,10 @@ public class NumpyExamples {
 	public void create() {
 		Utils.suppressSLF4JError();
 
+		Random.seed(12371L); // to ensure tests using Random pass
 		a = DatasetFactory.createFromObject(new double[]{1,2,3,6,4,5,8,9,7}, 3, 3);
-		b = DatasetFactory.createFromObject(new double[]{1.1,2.2,3.3,4.4,5.5,6.6}, 2, 3);
-		c = DatasetFactory.createFromObject(new double[]{1.1,2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9}, 3, 3);
+		b = DatasetFactory.createFromObject(new double[]{1.1,2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9}, 3, 3);
+		c = DatasetFactory.createFromObject(new double[]{1.1,2.2,3.3,4.4,5.5,6.6}, 2, 3);
 		v = DatasetFactory.createFromObject(new double[]{7,1,9});
 	}
 	
@@ -105,7 +106,7 @@ public class NumpyExamples {
 	@Test
 	public void concatenate() {
 		
-		IDataset h1 = DatasetUtils.concatenate(new IDataset[]{a,c},   1);
+		IDataset h1 = DatasetUtils.concatenate(new IDataset[]{a,b},   1);
 
 		IDataset c = DatasetFactory.createFromObject(new double[]{1,2,3,4,5,6}, 2, 3);
 		IDataset d = DatasetFactory.createFromObject(new double[]{1,2,3,4,5,6}, 2, 3);
@@ -265,8 +266,8 @@ public class NumpyExamples {
     @Test
     public void multiply() {
     	
-    	IDataset c = Maths.multiply(a, b);
-       	System.out.println("Multiply element-wise to new array is "+c);
+    	IDataset d = Maths.multiply(a, b);
+       	System.out.println("Multiply element-wise to new array is "+d);
 
         a.imultiply(b);
        	System.out.println("Multiply element-wise on a is "+a);
@@ -279,8 +280,8 @@ public class NumpyExamples {
     @Test
     public void divide() {
     	
-    	IDataset c = Maths.divide(a, b);
-       	System.out.println("Divide element-wise to new array is "+c);
+    	IDataset d = Maths.divide(a, b);
+       	System.out.println("Divide element-wise to new array is "+d);
 
         a.idivide(b);
        	System.out.println("Divide element-wise on a is "+a);
@@ -494,7 +495,7 @@ public class NumpyExamples {
      */
     @Test
     public void concatenateColumns() {
-		IDataset h1 = DatasetUtils.concatenate(new IDataset[]{a,c},   1);
+		IDataset h1 = DatasetUtils.concatenate(new IDataset[]{a,b},   1);
 		System.out.println("Concatenate (already done!) "+h1);
     }
     
@@ -503,7 +504,7 @@ public class NumpyExamples {
      */
     @Test
     public void concatenateRows() {
-		IDataset h1 = DatasetUtils.concatenate(new IDataset[]{a,b},   0);
+		IDataset h1 = DatasetUtils.concatenate(new IDataset[]{a,c},   0);
 		System.out.println("Concatenate (already done!) "+h1);
     }
  
@@ -561,7 +562,7 @@ public class NumpyExamples {
       	System.out.println("Result of a && b "+bs);
   	
     	// Or more useful (?)
-    	final IDataset booleans = DatasetFactory.zeros(BooleanDataset.class, 2, 3);
+    	final IDataset booleans = DatasetFactory.zeros(BooleanDataset.class, 3, 3);
        	booleans.set(true, 0,0);
        	booleans.set(true, 1,1);
        	booleans.set(true, 1,2);
