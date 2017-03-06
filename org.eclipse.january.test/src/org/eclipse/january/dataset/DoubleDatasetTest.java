@@ -211,10 +211,12 @@ public class DoubleDatasetTest {
 		assertEquals(15., b.getDouble(0, 1), 1e-6);
 		assertEquals(18., b.getDouble(0, 2), 1e-6);
 		assertEquals(21., b.getDouble(0, 3), 1e-6);
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new double[] {16, 16, 16, 16}, 1, 4), a.variance(0));
 
 		b = a.sum(1);
 		assertEquals(2, b.getRank());
 		assertArrayEquals(new int[] { 3, 4 }, b.getShape());
+		TestUtils.assertDatasetEquals(DatasetFactory.zeros(new int[] {3, 4}), a.variance(1));
 		assertEquals(a.squeeze(), b);
 
 		a.setShape(3, 1, 4);
@@ -224,6 +226,8 @@ public class DoubleDatasetTest {
 		assertEquals(6., b.getDouble(0, 0), 1e-6);
 		assertEquals(22., b.getDouble(1, 0), 1e-6);
 		assertEquals(38., b.getDouble(2, 0), 1e-6);
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new double[] {1.666666666667, 1.666666666667, 1.666666666667}, 3, 1), a.variance(2));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new double[] {1.25, 1.25, 1.25}, 3, 1), a.variance(2, true));
 	}
 
 	@Test

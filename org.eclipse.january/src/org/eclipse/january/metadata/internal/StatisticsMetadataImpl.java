@@ -797,12 +797,12 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 	}
 
 	@Override
-	public Dataset getVariance(int axis, boolean isDatasetWholePopulation, boolean... ignoreInvalids) {
+	public Dataset getVariance(int axis, boolean isWholePopulation, boolean... ignoreInvalids) {
 		refresh(axis, ignoreInvalids);
 		Dataset v = axisStats[axisOffset][AS_VAR];
-		if (isDatasetWholePopulation) {
+		if (isWholePopulation) {
 			Dataset c = axisStats[axisOffset][AS_CNT];
-			v.imultiply(Maths.subtract(c, 1).idivide(c));
+			v = Maths.multiply(v, Maths.subtract(c, 1.).idivide(c));
 		}
 		return v;
 	}
