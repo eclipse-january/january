@@ -46,10 +46,6 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 	private MaxMin<T>[] mms;
 	private SummaryStatistics[][] summaries;
 
-	private transient MaxMin<T> mm;
-	private transient SummaryStatistics[] summary;
-	private transient int axisOffset = -1;
-
 	private boolean isDirty = true;
 
 	public StatisticsMetadataImpl() {
@@ -75,10 +71,12 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 
 		summaries = new SummaryStatistics[COMBOS][];
 		for (int i = 0; i < summaries.length; i++) {
-			summaries[i] = new SummaryStatistics[COMBOS];
-			if (statsMetadata.summaries[i] != null) {
+			SummaryStatistics[] oSummary = statsMetadata.summaries[i];
+			if (oSummary != null) {
+				SummaryStatistics[] nSummary = new SummaryStatistics[isize];
+				summaries[i] = nSummary;
 				for (int j = 0; j < isize; j++) {
-					summaries[i][j] = statsMetadata.summaries[i][j];
+					nSummary[j] = oSummary[j];
 				}
 			}
 		}
@@ -112,7 +110,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 	 * the first boolean is true, will ignore NaNs and ignore infinities. Use the second boolean to
 	 * ignore infinities separately.
 	 */
-	private void refresh(boolean maxMin, boolean... ignoreInvalids) {
+	private int refresh(boolean maxMin, boolean... ignoreInvalids) {
 		boolean ignoreNaNs = false;
 		boolean ignoreInfs = false;
 		if (dataset.hasFloatingPointElements()) {
@@ -123,31 +121,32 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 		if (isDirty) {
 			clearAll();
 		}
-		int i = (ignoreNaNs ? 1 : 0)*2 + (ignoreInfs ? 1 : 0);
-		if (mms[i] == null) {
-			mms[i] = new MaxMin<T>();
+		int idx = (ignoreNaNs ? 1 : 0)*2 + (ignoreInfs ? 1 : 0);
+		if (mms[idx] == null) {
+			mms[idx] = new MaxMin<T>();
 		}
-		mm = mms[i];
+		// FIXME not thread-safe...
 		if (maxMin) {
-			if (mm.maximum == null) {
-				setMaxMin(ignoreNaNs, ignoreInfs);
+			if (mms[idx].maximum == null) {
+				setMaxMin(mms[idx], ignoreNaNs, ignoreInfs);
 			}
 		} else {
-			if (summaries[i] == null) {
-				summaries[i] = createSummaryStats(ignoreNaNs, ignoreInfs);
+			if (summaries[idx] == null) {
+				summaries[idx] = createSummaryStats(mms[idx],ignoreNaNs, ignoreInfs);
 			}
-			summary = summaries[i];
 		}
 		isDirty = false;
+		return idx;
 	}
 
 	/**
 	 * Calculate summary statistics for a dataset
+	 * @param mm
 	 * @param ignoreNaNs if true, ignore NaNs
 	 * @param ignoreInfs if true, ignore infinities
 	 */
 	@SuppressWarnings("unchecked")
-	private void setMaxMin(final boolean ignoreNaNs, final boolean ignoreInfs) {
+	private void setMaxMin(final MaxMin<T> mm, final boolean ignoreNaNs, final boolean ignoreInfs) {
 		final IndexIterator iter = dataset.getIterator();
 
 		if (!DTypeUtils.isDTypeNumerical(dtype)) { // TODO FIXME for strings
@@ -250,7 +249,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 	 * @param ignoreInfs if true, ignore infinities
 	 */
 	@SuppressWarnings("unchecked")
-	private SummaryStatistics[] createSummaryStats(final boolean ignoreNaNs, final boolean ignoreInfs) {
+	private SummaryStatistics[] createSummaryStats(final MaxMin<T> mm, final boolean ignoreNaNs, final boolean ignoreInfs) {
 		final IndexIterator iter = dataset.getIterator();
 		SummaryStatistics[] istats = new SummaryStatistics[isize];
 		for (int i = 0; i < isize; i++) {
@@ -381,13 +380,14 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 
 	@Override
 	public T getMaximum(boolean... ignoreInvalids) {
-		refresh(isize == 1, ignoreInvalids);
-		return mm.maximum;
+		int idx = refresh(isize == 1, ignoreInvalids);
+		return mms[idx].maximum;
 	}
 
 	@Override
 	public void setMaximumMinimum(T maximum, T minimum, boolean... ignoreInvalids) {
-		refresh(true, ignoreInvalids);
+		int idx = refresh(true, ignoreInvalids);
+		MaxMin<T> mm = mms[idx];
 		mm.maximum = maximum;
 		mm.minimum = minimum;
 		mm.maximumPositions = null;
@@ -396,44 +396,45 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 
 	@Override
 	public void setMaximumPositions(List<int[]> maximumPositions, boolean... ignoreInvalids) {
-		refresh(true, ignoreInvalids);
-		mm.maximumPositions = maximumPositions;
+		int idx = refresh(true, ignoreInvalids);
+		mms[idx].maximumPositions = maximumPositions;
 	}
 
 	@Override
 	public List<int[]> getMaximumPositions(boolean... ignoreInvalids) {
-		refresh(true, ignoreInvalids);
-		return mm.maximumPositions;
+		int idx = refresh(true, ignoreInvalids);
+		return mms[idx].maximumPositions;
 	}
 
 	@Override
 	public T getMinimum(boolean... ignoreInvalids) {
-		refresh(isize == 1, ignoreInvalids);
-		return mm.minimum;
+		int idx = refresh(isize == 1, ignoreInvalids);
+		return mms[idx].minimum;
 	}
 
 	@Override
 	public List<int[]> getMinimumPositions(boolean... ignoreInvalids) {
-		refresh(true, ignoreInvalids);
-		return mm.minimumPositions;
+		int idx = refresh(true, ignoreInvalids);
+		return mms[idx].minimumPositions;
 	}
 
 	@Override
 	public void setMinimumPositions(List<int[]> minimumPositions, boolean... ignoreInvalids) {
-		refresh(true, ignoreInvalids);
-		mm.minimumPositions = minimumPositions;
+		int idx = refresh(true, ignoreInvalids);
+		mms[idx].minimumPositions = minimumPositions;
 	}
 
 	@Override
 	public long getCount(boolean... ignoreInvalids) {
-		refresh(false, ignoreInvalids);
-		return summary[0].getN();
+		int idx = refresh(false, ignoreInvalids);
+		return summaries[idx][0].getN();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T getMean(boolean... ignoreInvalids) { // TODO
-		refresh(false, ignoreInvalids);
+		int idx = refresh(false, ignoreInvalids);
+		SummaryStatistics[] summary = summaries[idx];
 		if (isize == 1) {
 			return (T) (Double) summary[0].getMean();
 		} else {
@@ -448,7 +449,8 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public T getSum(boolean... ignoreInvalids) { // TODO
-		refresh(false, ignoreInvalids);
+		int idx = refresh(false, ignoreInvalids);
+		SummaryStatistics[] summary = summaries[idx];
 		if (isize == 1) {
 			return (T) (Double) summary[0].getSum();
 		} else {
@@ -462,7 +464,8 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 
 	@Override
 	public double getVariance(boolean isWholePopulation, boolean... ignoreInvalids) { // TODO
-		refresh(false, ignoreInvalids);
+		int idx = refresh(false, ignoreInvalids);
+		SummaryStatistics[] summary = summaries[idx];
 		if (isize == 1) {
 			return isWholePopulation ? summary[0].getPopulationVariance() : summary[0].getVariance();
 		} else {
@@ -480,7 +483,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 	 * the first boolean is true, will ignore NaNs and ignore infinities. Use the second boolean to
 	 * ignore infinities separately.
 	 */
-	private void refresh(int axis, boolean... ignoreInvalids) {
+	private int refresh(int axis, boolean... ignoreInvalids) {
 		boolean ignoreNaNs = false;
 		boolean ignoreInfs = false;
 		if (dataset.hasFloatingPointElements()) {
@@ -491,12 +494,13 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 		if (isDirty) {
 			clearAll();
 		}
-		axisOffset = (ignoreNaNs ? 1 : 0)*2 + (ignoreInfs ? 1 : 0) + COMBOS * axis;
+		int axisOffset = (ignoreNaNs ? 1 : 0)*2 + (ignoreInfs ? 1 : 0) + COMBOS * axis;
 		if (axisStats[axisOffset] == null) {
 			axisStats[axisOffset] = createAxisStats(axis, ignoreNaNs, ignoreInfs);
 		}
 
 		isDirty = false;
+		return axisOffset;
 	}
 
 	/**
@@ -756,49 +760,49 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 
 	@Override
 	public Dataset getMaximum(int axis, boolean... ignoreInvalids) {
-		refresh(axis, ignoreInvalids);
+		int axisOffset = refresh(axis, ignoreInvalids);
 		return axisStats[axisOffset][AS_MAX];
 	}
 
 	@Override
 	public Dataset getMinimum(int axis, boolean... ignoreInvalids) {
-		refresh(axis, ignoreInvalids);
+		int axisOffset = refresh(axis, ignoreInvalids);
 		return axisStats[axisOffset][AS_MIN];
 	}
 
 	@Override
 	public Dataset getArgMaximum(int axis, boolean... ignoreInvalids) {
-		refresh(axis, ignoreInvalids);
+		int axisOffset = refresh(axis, ignoreInvalids);
 		return axisStats[axisOffset][AS_MAX_INDEX];
 	}
 
 	@Override
 	public Dataset getArgMinimum(int axis, boolean... ignoreInvalids) {
-		refresh(axis, ignoreInvalids);
+		int axisOffset = refresh(axis, ignoreInvalids);
 		return axisStats[axisOffset][AS_MIN_INDEX];
 	}
 
 	@Override
 	public Dataset getCount(int axis, boolean... ignoreInvalids) {
-		refresh(axis, ignoreInvalids);
+		int axisOffset = refresh(axis, ignoreInvalids);
 		return axisStats[axisOffset][AS_CNT];
 	}
 
 	@Override
 	public Dataset getMean(int axis, boolean... ignoreInvalids) {
-		refresh(axis, ignoreInvalids);
+		int axisOffset = refresh(axis, ignoreInvalids);
 		return axisStats[axisOffset][AS_MEAN];
 	}
 
 	@Override
 	public Dataset getSum(int axis, boolean... ignoreInvalids) {
-		refresh(axis, ignoreInvalids);
+		int axisOffset = refresh(axis, ignoreInvalids);
 		return axisStats[axisOffset][AS_SUM];
 	}
 
 	@Override
 	public Dataset getVariance(int axis, boolean isWholePopulation, boolean... ignoreInvalids) {
-		refresh(axis, ignoreInvalids);
+		int axisOffset = refresh(axis, ignoreInvalids);
 		Dataset v = axisStats[axisOffset][AS_VAR];
 		if (isWholePopulation) {
 			Dataset c = axisStats[axisOffset][AS_CNT];
