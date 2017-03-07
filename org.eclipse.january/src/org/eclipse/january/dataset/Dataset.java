@@ -1107,7 +1107,7 @@ public interface Dataset extends IDataset {
 
 	/**
 	 * Find absolute index of maximum value (in a flattened view)
-	 * @param ignoreInvalids - see {@link #max(boolean...)}
+	 * @param ignoreInvalids - see {@link IDataset#max(boolean...)}
 	 * @return absolute index
 	 */
 	public int argMax(boolean... ignoreInvalids);
@@ -1123,7 +1123,7 @@ public interface Dataset extends IDataset {
 
 	/**
 	 * Find absolute index of minimum value (in a flattened view)
-	 * @param ignoreInvalids - see {@link #max(boolean...)}
+	 * @param ignoreInvalids - see {@link IDataset#max(boolean...)}
 	 * @return absolute index
 	 */
 	public int argMin(boolean... ignoreInvalids);
@@ -1138,7 +1138,7 @@ public interface Dataset extends IDataset {
 	public Dataset argMin(int axis, boolean... ignoreInvalids);
 
 	/**
-	 * @param ignoreInvalids - see {@link #max(boolean...)}
+	 * @param ignoreInvalids - see {@link IDataset#max(boolean...)}
 	 * @return peak-to-peak value, the difference of maximum and minimum of dataset
 	 */
 	public Number peakToPeak(boolean... ignoreInvalids);
@@ -1151,7 +1151,7 @@ public interface Dataset extends IDataset {
 	public Dataset peakToPeak(int axis, boolean... ignoreInvalids);
 
 	/**
-	 * @param ignoreInvalids - see {@link #max(boolean...)}
+	 * @param ignoreInvalids - see {@link IDataset#max(boolean...)}
 	 * @return number of items in dataset
 	 */
 	public long count(boolean... ignoreInvalids);
@@ -1165,7 +1165,7 @@ public interface Dataset extends IDataset {
 	public Dataset count(int axis, boolean... ignoreInvalids);
 
 	/**
-	 * @param ignoreInvalids - see {@link #max(boolean...)}
+	 * @param ignoreInvalids - see {@link IDataset#max(boolean...)}
 	 * @return sum over all items in dataset as a Double, array of doubles or a complex number
 	 */
 	public Object sum(boolean... ignoreInvalids);
@@ -1179,7 +1179,7 @@ public interface Dataset extends IDataset {
 	public Dataset sum(int axis, boolean... ignoreInvalids);
 
 	/**
-	 * @param ignoreInvalids - see {@link #max(boolean...)}
+	 * @param ignoreInvalids - see {@link IDataset#max(boolean...)}
 	 * @return product over all items in dataset
 	 */
 	public Object product(boolean... ignoreInvalids);
@@ -1288,7 +1288,7 @@ public interface Dataset extends IDataset {
 	public Dataset stdDeviation(int axis, boolean isWholePopulation, boolean... ignoreInvalids);
 
 	/**
-	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
+	 * @param ignoreInvalids - see {@link IDataset#max(boolean...)}
 	 * @return root mean square
 	 */
 	public double rootMeanSquare(boolean... ignoreInvalids);

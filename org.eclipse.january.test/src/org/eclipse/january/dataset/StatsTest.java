@@ -142,8 +142,31 @@ public class StatsTest {
 		a.set(Double.NaN, 0);
 		assertTrue("Sum", Double.isNaN(((Number) a.sum()).doubleValue()));
 		assertTrue("Product", Double.isNaN((Double) Stats.product(a)));
+		assertTrue("Sum", Double.isNaN(((Number) a.sum(false, true)).doubleValue()));
+		assertTrue("Product", Double.isNaN((Double) Stats.product(a, false, true)));
 		assertEquals("Sum", 20, ((Number) a.sum(true)).doubleValue(), 1e-6);
 		assertEquals("Product", 720, (Double) Stats.product(a, true), 1e-6);
+		assertEquals("Sum", 20, ((Number) a.sum(true, false)).doubleValue(), 1e-6);
+		assertEquals("Product", 720, (Double) Stats.product(a, true, false), 1e-6);
+	}
+
+	@Test
+	public void testInfs() {
+		Dataset a = DatasetFactory.createRange(1, 7, 1, Dataset.FLOAT64);
+
+		assertEquals("Sum", 21, ((Number) a.sum()).doubleValue(), 1e-6);
+		assertEquals("Product", 720, (Double) Stats.product(a), 1e-6);
+		a.set(Double.POSITIVE_INFINITY, 0);
+		assertTrue("Sum", Double.isInfinite(((Number) a.sum()).doubleValue()));
+		assertTrue("Product", Double.isInfinite((Double) Stats.product(a)));
+		assertTrue("Sum", Double.isInfinite(((Number) a.sum(true, false)).doubleValue()));
+		assertTrue("Product", Double.isInfinite((Double) Stats.product(a, true, false)));
+		assertEquals("Sum", 20, ((Number) a.sum(true)).doubleValue(), 1e-6);
+		assertEquals("Product", 720, (Double) Stats.product(a, true), 1e-6);
+		assertEquals("Sum", 20, ((Number) a.sum(true, true)).doubleValue(), 1e-6);
+		assertEquals("Product", 720, (Double) Stats.product(a, true, true), 1e-6);
+		assertEquals("Sum", 20, ((Number) a.sum(false, true)).doubleValue(), 1e-6);
+		assertEquals("Product", 720, (Double) Stats.product(a, false, true), 1e-6);
 	}
 
 	// TODO expand tests

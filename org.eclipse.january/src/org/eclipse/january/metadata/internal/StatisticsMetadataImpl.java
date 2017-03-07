@@ -26,6 +26,7 @@ import org.eclipse.january.dataset.IntegerDataset;
 import org.eclipse.january.dataset.LongDataset;
 import org.eclipse.january.dataset.Maths;
 import org.eclipse.january.dataset.NullStorelessUnivariateStatistic;
+import org.eclipse.january.metadata.Dirtiable;
 import org.eclipse.january.metadata.StatisticsMetadata;
 
 /**
@@ -46,6 +47,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 	private MaxMin<T>[] mms;
 	private SummaryStatistics[][] summaries;
 
+	@Dirtiable
 	private boolean isDirty = true;
 
 	public StatisticsMetadataImpl() {
@@ -340,6 +342,11 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 	@Override
 	public void setDirty() {
 		isDirty = true;
+	}
+
+	@Override
+	public boolean isDirty() {
+		return isDirty;
 	}
 
 	private void clearAll() {

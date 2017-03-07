@@ -97,4 +97,14 @@ public class ErrorMetadataImpl implements ErrorMetadata, Serializable {
 		view.clearMetadata(AxesMetadata.class);
 		return view;
 	}
+
+	@Override
+	public String toString() {
+		if (error != null) {
+			return error.toString();
+		} else if (sqError != null) {
+			return sqError.toString();
+		}
+		return null;
+	}
 }

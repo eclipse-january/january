@@ -29,9 +29,14 @@ public interface StatisticsMetadata<T> extends MetadataType {
 	public void initialize(Dataset dataset);
 
 	/**
-	 * 
+	 * Call to indicate dataset has been modified so statistics are not up-to-date
 	 */
 	public void setDirty();
+
+	/**
+	 * @return true if dataset has been modified
+	 */
+	public boolean isDirty();
 
 	/**
 	 * @param hash the hash to set

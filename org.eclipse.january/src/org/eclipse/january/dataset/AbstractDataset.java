@@ -17,9 +17,7 @@ import java.lang.reflect.Array;
 import java.text.Format;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -178,7 +176,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		int odtype = orig.getDType();
 		int vdtype = view.getDType();
 		if (odtype != vdtype) {
-			view.clearMetadata(StatisticsMetadata.class);
+			view.setDirty();
 		}
 	}
 
@@ -244,7 +242,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		t.stride = nstride;
 		t.offset = toffset[0];
 		t.base = this;
-		t.clearMetadata(StatisticsMetadata.class);
+		t.setDirty();
 		t.transposeMetadata(axes);
 		return t;
 	}
@@ -679,7 +677,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			stride = nstride;
 		}
 
-		clearMetadata(StatisticsMetadata.class);
+		setDirty();
 		if (this.shape != null) {
 			reshapeMetadata(this.shape, nshape);
 			this.shape = nshape;
@@ -865,7 +863,6 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		s.base = this;
 
 		s.metadata = copyMetadata();
-		s.clearMetadata(StatisticsMetadata.class);
 		s.sliceMetadata(true, slice);
 
 		s.setDirty();
@@ -1318,10 +1315,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public void setDirty() {
-		StatisticsMetadata<?> stats = getFirstMetadata(StatisticsMetadata.class);
-		if (stats != null) {
-			stats.setDirty();
-		}
+		dirtyMetadata();
 	}
 
 	@Override
@@ -1367,7 +1361,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			}
 		}
 
-		clearMetadata(StatisticsMetadata.class);
+		setDirty();
 		reshapeMetadata(oshape, shape);
 		return this;
 	}
@@ -1384,11 +1378,12 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public Dataset reshape(final int... shape) {
-		Dataset a = getView(false);
+		Dataset a;
 		try {
+			a = getView(true);
 			a.setShape(shape);
 		} catch (IllegalArgumentException e) {
-			a = a.clone();
+			a = clone();
 			a.setShape(shape);
 		}
 		return a;
@@ -1455,7 +1450,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		SliceIterator it = (SliceIterator) getSliceIterator(slice);
 		AbstractDataset s = getSlice(it);
 		s.metadata = copyMetadata();
-		s.clearMetadata(StatisticsMetadata.class);
+		s.setDirty();
 		s.sliceMetadata(true, slice);
 		return s;
 	}
@@ -1545,7 +1540,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	@SuppressWarnings("unchecked")
 	protected StatisticsMetadata<Number> getStats() {
 		StatisticsMetadata<Number> md = getFirstMetadata(StatisticsMetadata.class);
-		if (md == null) {
+		if (md == null || md.isDirty()) {
 			md = new StatisticsMetadataImpl<Number>();
 			md.initialize(this);
 			setMetadata(md);
@@ -1556,7 +1551,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	@SuppressWarnings("unchecked")
 	protected StatisticsMetadata<String> getStringStats() {
 		StatisticsMetadata<String> md = getFirstMetadata(StatisticsMetadata.class);
-		if (md == null) {
+		if (md == null || md.isDirty()) {
 			md = new StatisticsMetadataImpl<String>();
 			md.initialize(this);
 			setMetadata(md);

@@ -228,6 +228,14 @@ public class DoubleDatasetTest {
 		assertEquals(38., b.getDouble(2, 0), 1e-6);
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new double[] {1.666666666667, 1.666666666667, 1.666666666667}, 3, 1), a.variance(2));
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new double[] {1.25, 1.25, 1.25}, 3, 1), a.variance(2, true));
+
+		a.setShape(12);
+		a.set(-1, 0);
+		assertEquals(-1, a.min().doubleValue(), 1e-6);
+		assertEquals(11, a.max().doubleValue(), 1e-6);
+		assertEquals(5.41666667, ((Number) a.mean()).doubleValue(), 1e-6);
+		assertEquals(3.75277675, a.stdDeviation(), 1e-6);
+		assertEquals(14.0833333, a.variance(), 1e-6);
 	}
 
 	@Test
