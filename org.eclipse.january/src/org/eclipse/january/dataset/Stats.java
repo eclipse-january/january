@@ -49,7 +49,7 @@ public class Stats {
 		Map<Double, T> qmap = new HashMap<Double, T>();
 		transient Map<Integer, Map<Double, ReferencedDataset>> aqmap = new HashMap<Integer, Map<Double, ReferencedDataset>>();
 		transient ReferencedDataset s; // store 0th element
-		transient Map<Integer, ReferencedDataset> smap = new HashMap<>();
+		transient Map<Integer, ReferencedDataset> smap = new HashMap<Integer, ReferencedDataset>();
 
 		@Dirtiable
 		private boolean isDirty = true;
@@ -68,7 +68,7 @@ public class Stats {
 			}
 			qmap.putAll(qstats.qmap);
 			for (Integer i : qstats.aqmap.keySet()) {
-				aqmap.put(i, new HashMap<>(qstats.aqmap.get(i)));
+				aqmap.put(i, new HashMap<Double, ReferencedDataset>(qstats.aqmap.get(i)));
 			}
 			smap.putAll(qstats.smap);
 			isDirty = qstats.isDirty;
@@ -85,7 +85,7 @@ public class Stats {
 		private Map<Double, ReferencedDataset> getMap(int axis) {
 			Map<Double, ReferencedDataset> qm = aqmap.get(axis);
 			if (qm == null) {
-				qm = new HashMap<>();
+				qm = new HashMap<Double, ReferencedDataset>();
 				aqmap.put(axis, qm);
 			}
 			return qm;
@@ -481,15 +481,15 @@ public class Stats {
 		private static final long serialVersionUID = -6587974784104116792L;
 		T skewness;
 		T kurtosis;
-		transient Map<Integer, ReferencedDataset> smap = new HashMap<>();
-		transient Map<Integer, ReferencedDataset> kmap = new HashMap<>();
+		transient Map<Integer, ReferencedDataset> smap = new HashMap<Integer, ReferencedDataset>();
+		transient Map<Integer, ReferencedDataset> kmap = new HashMap<Integer, ReferencedDataset>();
 
 		@Dirtiable
 		private boolean isDirty = true;
 
 		@Override
 		public HigherStatisticsImpl<T> clone() {
-			return new HigherStatisticsImpl<>(this);
+			return new HigherStatisticsImpl<T>(this);
 		}
 
 		public HigherStatisticsImpl() {
