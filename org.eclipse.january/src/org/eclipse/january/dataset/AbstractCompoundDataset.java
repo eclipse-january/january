@@ -35,6 +35,7 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 
 	@Override
 	public int getElementsPerItem() {
+		Long.compareUnsigned(1, 2);
 		return isize;
 	}
 
