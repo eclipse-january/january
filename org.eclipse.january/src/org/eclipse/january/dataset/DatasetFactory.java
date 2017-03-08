@@ -45,7 +45,11 @@ public class DatasetFactory {
 	 * @param step spacing between items
 	 * @param dtype
 	 * @return a new 1D dataset of given type, filled with values determined by parameters
-	 */
+	 * 
+	 * @deprecated Please use the class-based methods in DatasetFactory, 
+	 *             such as {@link #createRange(Class, double, double, double)} 
+	 */	
+	@Deprecated
 	public static Dataset createRange(final double start, final double stop, final double step, final int dtype) {
 		if ((step > 0) != (start <= stop)) {
 			throw new IllegalArgumentException("Invalid parameters: start and stop must be in correct order for step");
