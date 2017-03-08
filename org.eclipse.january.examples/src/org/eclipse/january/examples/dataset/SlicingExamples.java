@@ -88,7 +88,7 @@ public class SlicingExamples {
 				slice[i] = new Slice(pos[i], pos[i]+1);
 			}
 			IDataset image = lz.getSlice(slice);
-			image.squeeze(); // This changes shape from 1,100,100 to 100,100
+			image.squeeze(); // This changes shape from 1,1,100,100 to 100,100
             assertTrue(Arrays.equals(new int[]{100, 100}, image.getShape()));
 		}
 	}
