@@ -11,9 +11,14 @@
 
 package org.eclipse.january.examples.dataset;
 
+import static org.junit.Assert.assertTrue;
+
+import java.util.Arrays;
+
 import org.eclipse.january.DatasetException;
 import org.eclipse.january.dataset.IDataset;
 import org.eclipse.january.dataset.ILazyDataset;
+import org.eclipse.january.dataset.PositionIterator;
 import org.eclipse.january.dataset.Random;
 import org.eclipse.january.dataset.Slice;
 import org.junit.Before;
@@ -66,5 +71,26 @@ public class SlicingExamples {
 		}
 	}
 
+	/**
+	 * Slice using basic Slice object
+	 * @throws Exception 
+	 */
+	@Test
+	public void iterateImagesND() throws DatasetException {
+		
+		final ILazyDataset lz = Random.lazyRand(64, 64, 100, 100);		
+		final PositionIterator it = new PositionIterator(new int[]{64, 64});
+		
+		while(it.hasNext()) {
+			int[] pos = it.getPos();
+			Slice[] slice = new Slice[lz.getRank()];
+			for (int i = 0; i < pos.length; i++) {
+				slice[i] = new Slice(pos[i], pos[i]+1);
+			}
+			IDataset image = lz.getSlice(slice);
+			image.squeeze(); // This changes shape from 1,100,100 to 100,100
+            assertTrue(Arrays.equals(new int[]{100, 100}, image.getShape()));
+		}
+	}
 
 }
