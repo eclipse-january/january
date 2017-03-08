@@ -26,6 +26,7 @@ import java.util.Map;
 
 import org.eclipse.january.DatasetException;
 import org.eclipse.january.MetadataException;
+import org.eclipse.january.metadata.Dirtiable;
 import org.eclipse.january.metadata.ErrorMetadata;
 import org.eclipse.january.metadata.IMetadata;
 import org.eclipse.january.metadata.MetadataFactory;
@@ -295,6 +296,9 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	interface MetadatasetAnnotationOperation {
 		/**
 		 * Process value of given field
+		 * <p>
+		 * When the field is not a container then the returned value
+		 * may replace the old value
 		 * @param f given field
 		 * @param o value of field
 		 * @return transformed field
@@ -366,8 +370,9 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		@Override
 		public ILazyDataset run(ILazyDataset lz) {
 			int rank = lz.getRank();
-			if (start.length != rank)
+			if (start.length != rank) {
 				throw new IllegalArgumentException("Slice dimensions do not match dataset!");
+			}
 
 			int[] shape = lz.getShape();
 			int[] stt;
@@ -425,8 +430,8 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 
 		@Override
 		public Object processField(Field field, Object o) {
-			Annotation a = field.getAnnotation(getAnnClass());
-			if (a instanceof Reshapeable) {
+			Annotation a = field.getAnnotation(Reshapeable.class);
+			if (a != null) { // cannot be null
 				matchRank = ((Reshapeable) a).matchRank();
 			}
 			return o;
@@ -617,7 +622,12 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 			}
 
 			ILazyDataset nlz = lz.getSliceView();
-			nlz.setShape(nshape);
+			if (lz instanceof Dataset) {
+				nlz = ((Dataset) lz).reshape(nshape);
+			} else {
+				nlz = lz.getSliceView();
+				nlz.setShape(nshape);
+			}
 			return nlz;
 		}
 	}
@@ -632,6 +642,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		@Override
 		public Object processField(Field f, Object o) {
+			// reorder arrays and lists according the axes map
 			if (o.getClass().isArray()) {
 				int l = Array.getLength(o);
 				if (l == map.length) {
@@ -681,6 +692,41 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		}
 	}
 
+	class MdsDirty implements MetadatasetAnnotationOperation {
+
+		@Override
+		public Object processField(Field f, Object o) {
+			// throw exception if not boolean???
+			Class<?> t = f.getType();
+			if (t.equals(boolean.class) || t.equals(Boolean.class)) {
+				if (o.equals(false)) {
+					o = true;
+				}
+			}
+			return o;
+		}
+
+		@Override
+		public Class<? extends Annotation> getAnnClass() {
+			return Dirtiable.class;
+		}
+
+		@Override
+		public int change(int axis) {
+			return 0;
+		}
+
+		@Override
+		public int getNewRank() {
+			return -1;
+		}
+
+		@Override
+		public ILazyDataset run(ILazyDataset lz) {
+			return lz;
+		}
+	}
+
 	/**
 	 * Slice all datasets in metadata that are annotated by @Sliceable. Call this on the new sliced
 	 * dataset after cloning the metadata
@@ -708,6 +754,13 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	 */
 	protected void transposeMetadata(final int[] axesMap) {
 		processAnnotatedMetadata(new MdsTranspose(axesMap), true);
+	}
+
+	/**
+	 * Dirty metadata that are annotated by @Dirtiable. Call this when the dataset has been modified
+	 */
+	protected void dirtyMetadata() {
+		processAnnotatedMetadata(new MdsDirty(), true);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -744,7 +797,11 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 				if (o == null)
 					continue;
 
-				o = op.processField(f, o);
+				Object no = op.processField(f, o);
+				if (no != o) {
+					f.set(m, no);
+					continue;
+				}
 				Object r = null;
 				if (o instanceof ILazyDataset) {
 					try {
@@ -966,7 +1023,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 
 	@Override
 	public boolean hasErrors() {
-		return getErrors() != null;
+		return LazyDatasetBase.this.getErrors() != null;
 	}
 
 	/**

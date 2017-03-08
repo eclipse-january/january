@@ -23,6 +23,7 @@ import java.util.TreeMap;
 import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.stat.descriptive.moment.Kurtosis;
 import org.apache.commons.math3.stat.descriptive.moment.Skewness;
+import org.eclipse.january.metadata.Dirtiable;
 import org.eclipse.january.metadata.MetadataType;
 
 
@@ -50,6 +51,9 @@ public class Stats {
 		transient ReferencedDataset s; // store 0th element
 		transient Map<Integer, ReferencedDataset> smap = new HashMap<>();
 
+		@Dirtiable
+		private boolean isDirty = true;
+
 		@Override
 		public QStatisticsImpl<T> clone() {
 			return new QStatisticsImpl<T>(this);
@@ -67,6 +71,7 @@ public class Stats {
 				aqmap.put(i, new HashMap<>(qstats.aqmap.get(i)));
 			}
 			smap.putAll(qstats.smap);
+			isDirty = qstats.isDirty;
 		}
 
 		public void setQuantile(double q, T v) {
@@ -148,9 +153,9 @@ public class Stats {
 
 	static private QStatisticsImpl<?> getQStatistics(final Dataset a) {
 		QStatisticsImpl<?> m = a.getFirstMetadata(QStatisticsImpl.class);
-		if (m == null) {
+		if (m == null || m.isDirty) {
 			m = calcQuartileStats(a);
-			a.addMetadata(m);
+			a.setMetadata(m);
 		}
 		return m;
 	}
@@ -160,13 +165,13 @@ public class Stats {
 		final int is = a.getElementsPerItem();
 		QStatisticsImpl<?> qstats = a.getFirstMetadata(QStatisticsImpl.class);
 
-		if (qstats == null) {
+		if (qstats == null || qstats.isDirty) {
 			if (is == 1) {
 				qstats = new QStatisticsImpl<Double>();
 			} else {
 				qstats = new QStatisticsImpl<double[]>();
 			}
-			a.addMetadata(qstats);
+			a.setMetadata(qstats);
 		}
 
 		if (qstats.getQuantile(axis, QStatisticsImpl.Q2) == null) {
@@ -445,9 +450,9 @@ public class Stats {
 		}
 
 		HigherStatisticsImpl<?> stats = a.getFirstMetadata(HigherStatisticsImpl.class);
-		if (stats == null) {
+		if (stats == null || stats.isDirty) {
 			stats = calculateHigherMoments(a, ignoreNaNs, ignoreInfs);
-			a.addMetadata(stats);
+			a.setMetadata(stats);
 		}
 	
 		return stats;
@@ -464,9 +469,9 @@ public class Stats {
 		axis = a.checkAxis(axis);
 	
 		HigherStatisticsImpl<?> stats = a.getFirstMetadata(HigherStatisticsImpl.class);
-		if (stats == null || stats.getSkewness(axis) == null) {
+		if (stats == null || stats.getSkewness(axis) == null || stats.isDirty) {
 			stats = calculateHigherMoments(a, ignoreNaNs, ignoreInfs, axis);
-			a.addMetadata(stats);
+			a.setMetadata(stats);
 		}
 	
 		return stats;
@@ -478,6 +483,9 @@ public class Stats {
 		T kurtosis;
 		transient Map<Integer, ReferencedDataset> smap = new HashMap<>();
 		transient Map<Integer, ReferencedDataset> kmap = new HashMap<>();
+
+		@Dirtiable
+		private boolean isDirty = true;
 
 		@Override
 		public HigherStatisticsImpl<T> clone() {
@@ -492,6 +500,7 @@ public class Stats {
 			kurtosis = hstats.kurtosis;
 			smap.putAll(hstats.smap);
 			kmap.putAll(hstats.kmap);
+			isDirty = hstats.isDirty;
 		}
 
 //		public void setSkewness(T skewness) {

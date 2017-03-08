@@ -1354,7 +1354,26 @@ public class AbstractDatasetTest {
 		assertEquals(10.0, error2.getDouble(50,50), 0.001);
 		assertEquals(10.0, error2.getDouble(99,99), 0.001);
 	}
-	
+
+	@Test
+	public void testErrors() {
+		// test errors when reshaped and sliced
+		Dataset a = DatasetFactory.createRange(12, Dataset.INT32).reshape(4, 3);
+		Dataset e = DatasetFactory.createRange(12, Dataset.FLOAT64).reshape(4, 3);
+
+		a.setErrors(e);
+
+		Dataset b = a.reshape(2, 2, 3);
+		Dataset f = b.getErrors();
+		assertArrayEquals(b.getShapeRef(), f.getShapeRef());
+
+		Dataset c = b.getSlice(new Slice(1));
+		assertArrayEquals(c.getShapeRef(), c.getErrors().getShapeRef());
+
+		Dataset d = b.getSliceView(new Slice(1));
+		assertArrayEquals(d.getShapeRef(), d.getErrors().getShapeRef());
+	}
+
 	@Test
 	public void testSetErrorBuffer() {
 		
