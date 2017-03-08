@@ -19,6 +19,7 @@ import java.lang.annotation.Target;
 
 /**
  * This is an annotation for any metadata field that should be set to a dirty state.
+ * @since 2.0
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(value = ElementType.FIELD)

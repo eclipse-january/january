@@ -1095,6 +1095,7 @@ public interface Dataset extends IDataset {
 	 * are false. If the first boolean is true, will ignore NaNs and ignore infinities. Use the second
 	 * boolean to ignore infinities separately.
 	 * @return maxima along axis in dataset
+	 * @since 2.0
 	 */
 	public Dataset max(int axis, boolean... ignoreInvalids);
 
@@ -1102,6 +1103,7 @@ public interface Dataset extends IDataset {
 	 * @param axis
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return minima along axis in dataset
+	 * @since 2.0
 	 */
 	public Dataset min(int axis, boolean... ignoreInvalids);
 
@@ -1109,6 +1111,7 @@ public interface Dataset extends IDataset {
 	 * Find absolute index of maximum value (in a flattened view)
 	 * @param ignoreInvalids - see {@link IDataset#max(boolean...)}
 	 * @return absolute index
+	 * @since 2.0
 	 */
 	public int argMax(boolean... ignoreInvalids);
 
@@ -1125,6 +1128,7 @@ public interface Dataset extends IDataset {
 	 * Find absolute index of minimum value (in a flattened view)
 	 * @param ignoreInvalids - see {@link IDataset#max(boolean...)}
 	 * @return absolute index
+	 * @since 2.0
 	 */
 	public int argMin(boolean... ignoreInvalids);
 
@@ -1140,6 +1144,7 @@ public interface Dataset extends IDataset {
 	/**
 	 * @param ignoreInvalids - see {@link IDataset#max(boolean...)}
 	 * @return peak-to-peak value, the difference of maximum and minimum of dataset
+	 * @since 2.0
 	 */
 	public Number peakToPeak(boolean... ignoreInvalids);
 
@@ -1147,12 +1152,14 @@ public interface Dataset extends IDataset {
 	 * @param axis
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return peak-to-peak dataset, the difference of maxima and minima of dataset along axis
+	 * @since 2.0
 	 */
 	public Dataset peakToPeak(int axis, boolean... ignoreInvalids);
 
 	/**
 	 * @param ignoreInvalids - see {@link IDataset#max(boolean...)}
 	 * @return number of items in dataset
+	 * @since 2.0
 	 */
 	public long count(boolean... ignoreInvalids);
 
@@ -1167,6 +1174,7 @@ public interface Dataset extends IDataset {
 	/**
 	 * @param ignoreInvalids - see {@link IDataset#max(boolean...)}
 	 * @return sum over all items in dataset as a Double, array of doubles or a complex number
+	 * @since 2.0
 	 */
 	public Object sum(boolean... ignoreInvalids);
 
@@ -1181,6 +1189,7 @@ public interface Dataset extends IDataset {
 	/**
 	 * @param ignoreInvalids - see {@link IDataset#max(boolean...)}
 	 * @return product over all items in dataset
+	 * @since 2.0
 	 */
 	public Object product(boolean... ignoreInvalids);
 
@@ -1188,6 +1197,7 @@ public interface Dataset extends IDataset {
 	 * @param axis
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return product along axis in dataset
+	 * @since 2.0
 	 */
 	public Dataset product(int axis, boolean... ignoreInvalids);
 
@@ -1202,6 +1212,7 @@ public interface Dataset extends IDataset {
 	/**
 	 * @return sample variance of whole dataset
 	 * @see #variance(boolean, boolean...) with isWholePopulation = false
+	 * @since 2.0
 	 */
 	public double variance();
 
@@ -1228,6 +1239,7 @@ public interface Dataset extends IDataset {
 	 * @param isWholePopulation
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return sample variance
+	 * @since 2.0
 	 */
 	public double variance(boolean isWholePopulation, boolean... ignoreInvalids);
 
@@ -1253,6 +1265,7 @@ public interface Dataset extends IDataset {
 	 * 
 	 * @return sample standard deviation of all items in dataset
 	 * @see #stdDeviation(boolean, boolean...) with isWholePopulation = false
+	 * @since 2.0
 	 */
 	public double stdDeviation();
 
@@ -1263,6 +1276,7 @@ public interface Dataset extends IDataset {
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return sample standard deviation of all items in dataset
 	 * @see #variance(boolean, boolean...)
+	 * @since 2.0
 	 */
 	public double stdDeviation(boolean isWholePopulation, boolean... ignoreInvalids);
 
@@ -1290,6 +1304,7 @@ public interface Dataset extends IDataset {
 	/**
 	 * @param ignoreInvalids - see {@link IDataset#max(boolean...)}
 	 * @return root mean square
+	 * @since 2.0
 	 */
 	public double rootMeanSquare(boolean... ignoreInvalids);
 
@@ -1297,6 +1312,7 @@ public interface Dataset extends IDataset {
 	 * @param axis
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return root mean square along axis in dataset
+	 * @since 2.0
 	 */
 	public Dataset rootMeanSquare(int axis, boolean... ignoreInvalids);
 }

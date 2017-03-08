@@ -747,6 +747,7 @@ public class Stats {
 	 * @param a dataset
 	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
 	 * @return kurtosis
+	 * @since 2.0
 	 */
 	public static Object kurtosis(final Dataset a, final boolean... ignoreInvalids) {
 		return getHigherStatistic(a, ignoreInvalids).kurtosis;
@@ -767,6 +768,7 @@ public class Stats {
 	 * @param axis
 	 * @param ignoreInvalids see {@link Dataset#max(int, boolean...)}
 	 * @return kurtosis along axis in dataset
+	 * @since 2.0
 	 */
 	public static Dataset kurtosis(final Dataset a, final int axis, final boolean... ignoreInvalids) {
 		return getHigherStatistic(a, ignoreInvalids, axis).getKurtosis(axis);
@@ -1156,6 +1158,7 @@ public class Stats {
 	 * @param a dataset
 	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
 	 * @return cumulative product of items in flattened dataset
+	 * @since 2.0
 	 */
 	public static Dataset cumulativeProduct(final Dataset a, final boolean... ignoreInvalids) {
 		return cumulativeProduct(a.flatten(), 0, ignoreInvalids);
@@ -1166,6 +1169,7 @@ public class Stats {
 	 * @param axis
 	 * @param ignoreInvalids see {@link Dataset#max(int, boolean...)}
 	 * @return cumulative product of items along axis in dataset
+	 * @since 2.0
 	 */
 	public static Dataset cumulativeProduct(final Dataset a, int axis, final boolean... ignoreInvalids) {
 		axis = a.checkAxis(axis);
@@ -1371,6 +1375,7 @@ public class Stats {
 	 * @param a dataset
 	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
 	 * @return cumulative sum of items in flattened dataset
+	 * @since 2.0
 	 */
 	public static Dataset cumulativeSum(final Dataset a, final boolean... ignoreInvalids) {
 		return cumulativeSum(a.flatten(), 0, ignoreInvalids);
@@ -1381,6 +1386,7 @@ public class Stats {
 	 * @param axis
 	 * @param ignoreInvalids see {@link Dataset#max(int, boolean...)}
 	 * @return cumulative sum of items along axis in dataset
+	 * @since 2.0
 	 */
 	public static Dataset cumulativeSum(final Dataset a, int axis, final boolean... ignoreInvalids) {
 		axis = a.checkAxis(axis);
@@ -1816,6 +1822,7 @@ public class Stats {
 	 * See {@link #covariance(Dataset a, Dataset b, boolean rowvar, boolean bias, Integer ddof)} with b = null.
 	 * @param a
 	 * @return covariance array of a
+	 * @since 2.0
 	 */
 	public static Dataset covariance(final Dataset a, 
 			boolean rowvar, boolean bias, Integer ddof) {
@@ -1840,6 +1847,7 @@ public class Stats {
 	 * @param bias Default normalisation is (N - 1) - N is number of observations. If set true, normalisation is (N). 
 	 * @param ddof Default normalisation is (N - 1). If ddof is set, then normalisation is (N - ddof).
 	 * @return covariance array of a concatenated with b
+	 * @since 2.0
 	 */
 	public static Dataset covariance (final Dataset a, final Dataset b, 
 			boolean rowvar, boolean bias, Integer ddof) {

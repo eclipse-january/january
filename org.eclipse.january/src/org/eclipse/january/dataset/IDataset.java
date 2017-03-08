@@ -141,12 +141,14 @@ public interface IDataset extends ILazyDataset {
 	/**
 	 * @param ignoreInvalids - see {@link #max(boolean...)}
 	 * @return Position of minimum value (or first position if there are more than one)
+	 * @since 2.0
 	 */
 	public int[] minPos(boolean... ignoreInvalids);
 
 	/**
 	 * @param ignoreInvalids - see {@link #max(boolean...)}
 	 * @return Position of maximum value (or first position if there are more than one)
+	 * @since 2.0
 	 */
 	public int[] maxPos(boolean... ignoreInvalids);
 
