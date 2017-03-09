@@ -44,6 +44,7 @@ public class StrideIteratorTest {
 		testIterationsND(size, type);
 	}
 
+	@SuppressWarnings("deprecation")
 	private void testIterationsND(int size, int type) {
 		Dataset ta;
 
@@ -114,6 +115,7 @@ public class StrideIteratorTest {
 		int rank = shape.length;
 		int[] lstart = siter.getStart();
 		int[] lstep = siter.getStep();
+		@SuppressWarnings("deprecation")
 		Dataset result = DatasetFactory.zeros(shape, Dataset.FLOAT64);
 
 		// set up the vectors needed to do this
@@ -186,6 +188,7 @@ public class StrideIteratorTest {
 	private Dataset newSlice(Dataset t, int[] start, int[] stop, int[] step) {
 		StrideIterator iter = new StrideIterator(t.getElementsPerItem(), t.getShape(), start, stop, step);
 
+		@SuppressWarnings("deprecation")
 		Dataset result = DatasetFactory.zeros(iter.getShape(), Dataset.FLOAT64);
 		int i = 0;
 		while (iter.hasNext()) {
@@ -292,6 +295,7 @@ public class StrideIteratorTest {
 
 	@Test
 	public void testNegativeStrideIteration() {
+		@SuppressWarnings("deprecation")
 		Dataset t = DatasetFactory.createRange(40, Dataset.FLOAT);
 
 		SliceIterator siter = (SliceIterator) t.getSliceIterator(new int[] {12}, null, new int[] {-2});
@@ -324,6 +328,7 @@ public class StrideIteratorTest {
 		testSliceIterationND(size, type);
 	}
 
+	@SuppressWarnings("deprecation")
 	private void testSliceIterationND(int size, int type) {
 		Dataset ta;
 
@@ -451,6 +456,7 @@ public class StrideIteratorTest {
 		testSlicedDataset(ta, 2, 2, -3, 2);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testBroadcastStrideIteration() {
 		Dataset b, r;

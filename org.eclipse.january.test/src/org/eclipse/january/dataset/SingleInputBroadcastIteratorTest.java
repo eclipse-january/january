@@ -19,6 +19,7 @@ import org.junit.Test;
 
 public class SingleInputBroadcastIteratorTest {
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testBroadcastWithNoOutput() {
 		Dataset a, b, c;
@@ -62,6 +63,7 @@ public class SingleInputBroadcastIteratorTest {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testBroadcastWithOutput() {
 		Dataset a, c;

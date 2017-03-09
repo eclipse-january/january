@@ -43,6 +43,7 @@ public class IndexIteratorTest {
 		testIterationsND(size, type);
 	}
 
+	@SuppressWarnings("deprecation")
 	private void testIterationsND(int size, int type) {
 		Dataset ta;
 
@@ -107,6 +108,7 @@ public class IndexIteratorTest {
 		int rank = shape.length;
 		int[] lstart = siter.getStart();
 		int[] lstep = siter.getStep();
+		@SuppressWarnings("deprecation")
 		Dataset result = DatasetFactory.zeros(shape, Dataset.FLOAT64);
 
 		// set up the vectors needed to do this
@@ -217,6 +219,7 @@ public class IndexIteratorTest {
 		testSliceIterationND(size, type);
 	}
 
+	@SuppressWarnings("deprecation")
 	private void testSliceIterationND(int size, int type) {
 		Dataset ta;
 

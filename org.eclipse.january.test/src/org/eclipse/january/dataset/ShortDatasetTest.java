@@ -43,6 +43,7 @@ public class ShortDatasetTest {
 
 	@Test
 	public void testStats() {
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.createRange(12, Dataset.INT16);
 		assertEquals(11., a.max().doubleValue(), 1e-6);
 		assertEquals(0., a.min().doubleValue(), 1e-6);

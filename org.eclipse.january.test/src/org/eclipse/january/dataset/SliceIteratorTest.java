@@ -38,6 +38,7 @@ public class SliceIteratorTest {
 		testIterationsND(size, type);
 	}
 
+	@SuppressWarnings("deprecation")
 	private void testIterationsND(int size, int type) {
 		Dataset ta;
 

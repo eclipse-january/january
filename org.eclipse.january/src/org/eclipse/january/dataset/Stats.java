@@ -129,6 +129,7 @@ public class Stats {
 
 		QStatisticsImpl<double[]> qstats = new QStatisticsImpl<double[]>();
 
+		@SuppressWarnings("deprecation")
 		Dataset w = DatasetFactory.zeros(a.getShapeRef(), a.getDType());
 		double[] q1 = new double[is];
 		double[] q2 = new double[is];
@@ -183,6 +184,7 @@ public class Stats {
 				qstats.setQuantile(axis, QStatisticsImpl.Q3, pQuantile(s, axis, QStatisticsImpl.Q3));
 				qstats.setSortedDataset(axis, s);
 			} else {
+				@SuppressWarnings("deprecation")
 				Dataset w = DatasetFactory.zeros(a.getShapeRef(), a.getDType());
 				CompoundDoubleDataset q1 = null, q2 = null, q3 = null;
 				for (int j = 0; j < is; j++) {
@@ -238,6 +240,7 @@ public class Stats {
 
 		oshape[axis] = 1;
 		int[] qshape = ShapeUtils.squeezeShape(oshape, false);
+		@SuppressWarnings("deprecation")
 		Dataset qds = DatasetFactory.zeros(is, qshape, Dataset.FLOAT64);
 
 		IndexIterator qiter = qds.getIterator(true);
@@ -262,6 +265,7 @@ public class Stats {
 			qiter = qds.getIterator(true);
 			qpos = qiter.getPos();
 			qpt++;
+			@SuppressWarnings("deprecation")
 			Dataset rds = DatasetFactory.zeros(is, qshape, Dataset.FLOAT64);
 			
 			while (qiter.hasNext()) {
@@ -338,7 +342,7 @@ public class Stats {
 	 * @param values
 	 * @return points at which CDF has given values
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	public static Dataset[] quantile(final Dataset a, final int axis, final double... values) {
 		final Dataset[] points  = new Dataset[values.length];
 		final int is = a.getElementsPerItem();
@@ -609,6 +613,7 @@ public class Stats {
 		return stats;
 	}
 
+	@SuppressWarnings("deprecation")
 	static private HigherStatisticsImpl<?> calculateHigherMoments(final Dataset a, final boolean ignoreNaNs, final boolean ignoreInfs, final int axis) {
 		final int rank = a.getRank();
 		final int is = a.getElementsPerItem();
@@ -971,6 +976,7 @@ public class Stats {
 			ignoreNaNs = false;
 			ignoreInfs = false;
 		}
+		@SuppressWarnings("deprecation")
 		Dataset result = DatasetFactory.zeros(is, oshape, dtype);
 
 		IndexIterator qiter = result.getIterator(true);

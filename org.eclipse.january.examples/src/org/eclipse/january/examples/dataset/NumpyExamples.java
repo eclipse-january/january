@@ -392,7 +392,8 @@ public class NumpyExamples {
      * 1:10                                  arange(1.,11.) 
      * 0:9                                   arange(10.)
      */
-    @Test
+    @SuppressWarnings("deprecation")
+	@Test
     public void arange() {
     	IDataset aran = DatasetFactory.createRange(1, 11, 1, Dataset.FLOAT64);
     	System.out.println("arange type notation in dawnsci(1) "+aran);  	
@@ -407,7 +408,8 @@ public class NumpyExamples {
      */
     @Test
     public void columnVector() {
-    	IDataset aran = DatasetFactory.createRange(1, 11, 1, Dataset.FLOAT64);
+    	@SuppressWarnings("deprecation")
+		IDataset aran = DatasetFactory.createRange(1, 11, 1, Dataset.FLOAT64);
     	aran.resize(aran.getSize(), 1);
     }
     
@@ -436,6 +438,7 @@ public class NumpyExamples {
     4 equally spaced samples between 1 and 3, inclusive
     linspace(1,3,4)                          linspace(1,3,4)     
     */
+	@SuppressWarnings("deprecation")
 	@Test
     public void various() {
     	
@@ -456,7 +459,8 @@ public class NumpyExamples {
      */
     @Test
     public void meshGrid() {
-    	List<Dataset> mg = DatasetUtils.meshGrid(DatasetFactory.createRange(9, Dataset.FLOAT64),
+    	@SuppressWarnings("deprecation")
+		List<Dataset> mg = DatasetUtils.meshGrid(DatasetFactory.createRange(9, Dataset.FLOAT64),
     			                                 DatasetFactory.createRange(6, Dataset.FLOAT64));
     	System.out.println("Created mesh grid of size "+mg.size());
     }
@@ -466,7 +470,8 @@ public class NumpyExamples {
      */
     @Test
     public void oGrid() {
-    	Dataset[] indexes = new Dataset[] {DatasetFactory.createRange(9, Dataset.FLOAT64),
+    	@SuppressWarnings("deprecation")
+		Dataset[] indexes = new Dataset[] {DatasetFactory.createRange(9, Dataset.FLOAT64),
                 DatasetFactory.createRange(6, Dataset.FLOAT64)};
     	List<Dataset> og = new ArrayList<Dataset>();
     	int rank = indexes.length;
@@ -543,7 +548,8 @@ public class NumpyExamples {
     @Test
     public void norm() {
     	
-    	Dataset oneD = DatasetFactory.createRange(100, Dataset.FLOAT);
+    	@SuppressWarnings("deprecation")
+		Dataset oneD = DatasetFactory.createRange(100, Dataset.FLOAT);
     	double vNorm = LinearAlgebra.norm(oneD);
     	System.out.println("Vector norm is "+vNorm);
     	

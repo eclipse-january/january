@@ -216,6 +216,7 @@ public class ComparisonsTest {
 		Dataset c = DatasetFactory.createFromObject(new byte[] { 0, 0, 0, 0, 0, 0 }).reshape(2, 3);
 		List<IntegerDataset> e = Comparisons.nonZero(c);
 		Assert.assertEquals(e.size(), 2);
+		@SuppressWarnings("deprecation")
 		Dataset empty = DatasetFactory.createFromList(Dataset.INT32, new ArrayList<Integer>());
 		TestUtils.assertDatasetEquals(e.get(0), empty);
 		TestUtils.assertDatasetEquals(e.get(1), empty);
@@ -393,6 +394,7 @@ public class ComparisonsTest {
 		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.STRICTLY_DECREASING));
 		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.STRICTLY_INCREASING));
 
+		@SuppressWarnings("deprecation")
 		Dataset d = DatasetFactory.createRange(5, Dataset.INT32);
 		Assert.assertTrue(Comparisons.isMonotonic(d, Monotonicity.NONDECREASING));
 		Assert.assertTrue(Comparisons.isMonotonic(d, Monotonicity.STRICTLY_INCREASING));

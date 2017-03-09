@@ -135,6 +135,7 @@ public class StatsTest {
 
 	@Test
 	public void testNaNs() {
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.createRange(1, 7, 1, Dataset.FLOAT64);
 
 		assertEquals("Sum", 21, ((Number) a.sum()).doubleValue(), 1e-6);
@@ -152,6 +153,7 @@ public class StatsTest {
 
 	@Test
 	public void testInfs() {
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.createRange(1, 7, 1, Dataset.FLOAT64);
 
 		assertEquals("Sum", 21, ((Number) a.sum()).doubleValue(), 1e-6);
@@ -242,6 +244,7 @@ public class StatsTest {
 
 	@Test
 	public void testOutlierValues() {
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.zeros(new int[] {20}, Dataset.FLOAT64);
 
 		double[] o = Stats.outlierValues(a, 0.01, 99.9, 10);
