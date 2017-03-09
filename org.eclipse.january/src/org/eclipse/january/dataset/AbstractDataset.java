@@ -180,6 +180,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		}
 	}
 
+	/**
+	 * @since 2.0
+	 */
 	protected static ConcurrentMap<Class<? extends MetadataType>, List<MetadataType>> getMetadataMap(Dataset a, boolean clone) {
 		if (a == null)
 			return null;
@@ -1537,6 +1540,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		return residual(o, null, ignoreNaNs);
 	}
 
+	/**
+	 * @since 2.0
+	 */
 	@SuppressWarnings("unchecked")
 	protected StatisticsMetadata<Number> getStats() {
 		StatisticsMetadata<Number> md = getFirstMetadata(StatisticsMetadata.class);
@@ -1548,6 +1554,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		return md;
 	}
 
+	/**
+	 * @since 2.0
+	 */
 	@SuppressWarnings("unchecked")
 	protected StatisticsMetadata<String> getStringStats() {
 		StatisticsMetadata<String> md = getFirstMetadata(StatisticsMetadata.class);
@@ -1584,6 +1593,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		return getFlat1DIndex(maxPos(ignoreInvalids));
 	}
 
+	/**
+	 * @since 2.0
+	 */
 	@Override
 	public IntegerDataset argMax(int axis, boolean... ignoreInvalids) {
 		return (IntegerDataset) getStats().getArgMaximum(axis, ignoreInvalids);
@@ -1594,6 +1606,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		return getFlat1DIndex(minPos(ignoreInvalids));
 	}
 
+	/**
+	 * @since 2.0
+	 */
 	@Override
 	public IntegerDataset argMin(int axis, boolean... ignoreInvalids) {
 		return (IntegerDataset) getStats().getArgMinimum(axis, ignoreInvalids);

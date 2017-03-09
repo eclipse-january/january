@@ -272,10 +272,16 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		}
 	}
 
+	/**
+	 * @since 2.0
+	 */
 	protected synchronized ConcurrentMap<Class<? extends MetadataType>, List<MetadataType>> copyMetadata() {
 		return copyMetadata(metadata);
 	}
 
+	/**
+	 * @since 2.0
+	 */
 	protected static ConcurrentMap<Class<? extends MetadataType>, List<MetadataType>> copyMetadata(Map<Class<? extends MetadataType>, List<MetadataType>> metadata) {
 		if (metadata == null)
 			return null;
@@ -758,6 +764,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 
 	/**
 	 * Dirty metadata that are annotated by @Dirtiable. Call this when the dataset has been modified
+	 * @since 2.0
 	 */
 	protected void dirtyMetadata() {
 		processAnnotatedMetadata(new MdsDirty(), true);
