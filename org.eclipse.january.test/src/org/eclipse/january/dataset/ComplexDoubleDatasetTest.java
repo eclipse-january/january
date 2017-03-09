@@ -100,6 +100,7 @@ public class ComplexDoubleDatasetTest {
 
 	@Test
 	public void testStats() {
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.createRange(12, Dataset.COMPLEX128);
 		assertEquals(5.5, ((Complex) a.mean()).getReal(), 1e-6);
 		assertEquals(0., ((Complex) a.mean()).getImaginary(), 1e-6);

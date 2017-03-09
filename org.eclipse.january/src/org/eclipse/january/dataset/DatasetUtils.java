@@ -71,6 +71,7 @@ public class DatasetUtils {
 		nshape[axis] += bshape[axis];
 		final int ot = DTypeUtils.getDType(b);
 		final int dt = DTypeUtils.getDType(a);
+		@SuppressWarnings("deprecation")
 		Dataset ds = DatasetFactory.zeros(a.getElementsPerItem(), nshape, dt > ot ? dt : ot);
 		IndexIterator iter = ds.getIterator(true);
 		int[] pos = iter.getPos();
@@ -144,6 +145,7 @@ public class DatasetUtils {
 	 * @param axis if null, then use flattened view
 	 * @return a sub-array
 	 */
+	@SuppressWarnings("deprecation")
 	public static <T extends Dataset> T take(final T a, final int[] indices, Integer axis) {
 		if (indices == null || indices.length == 0) {
 			utilsLogger.error("No indices given");
@@ -234,6 +236,7 @@ public class DatasetUtils {
 			newShape[i] = shape[i]*reps[i];
 		}
 
+		@SuppressWarnings("deprecation")
 		Dataset tdata = DatasetFactory.zeros(a.getElementsPerItem(), newShape, DTypeUtils.getDType(a));
 
 		// decide which way to put slices
@@ -418,6 +421,7 @@ public class DatasetUtils {
 			ashape[axis] += as[i].getShape()[axis];
 		}
 
+		@SuppressWarnings("deprecation")
 		Dataset result = DatasetFactory.zeros(isize, ashape, at);
 
 		int[] start = new int[ashape.length];
@@ -468,6 +472,7 @@ public class DatasetUtils {
 	 * @param axis
 	 * @return list of split datasets
 	 */
+	@SuppressWarnings("deprecation")
 	public static List<Dataset> split(final Dataset a, int[] indices, final int axis) {
 		final int[] ashape = a.getShapeRef();
 		final int rank = ashape.length;
@@ -580,6 +585,7 @@ public class DatasetUtils {
 			newShape[axis] = nlen;
 		}
 
+		@SuppressWarnings("deprecation")
 		Dataset rdata = DatasetFactory.zeros(is, newShape, a.getDType());
 		Serializable nbuf = rdata.getBuffer();
 
@@ -627,6 +633,7 @@ public class DatasetUtils {
 	 */
 	public static <T extends Dataset> T resize(final T a, final int... shape) {
 		int size = a.getSize();
+		@SuppressWarnings("deprecation")
 		Dataset rdata = DatasetFactory.zeros(a.getElementsPerItem(), shape, a.getDType());
 		IndexIterator it = rdata.getIterator();
 		while (it.hasNext()) {
@@ -1099,6 +1106,7 @@ public class DatasetUtils {
 	 */
 	public static Dataset eye(final int rows, final int cols, final int offset, final int dtype) {
 		int[] shape = new int[] {rows, cols};
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.zeros(shape, dtype);
 
 		int[] pos = new int[] {0, offset};
@@ -1121,6 +1129,7 @@ public class DatasetUtils {
 	 * @param offset
 	 * @return diagonal matrix
 	 */
+	@SuppressWarnings("deprecation")
 	public static <T extends Dataset> T diag(final T a, final int offset) {
 		final int dtype = a.getDType();
 		final int rank = a.getRank();
@@ -1207,6 +1216,7 @@ public class DatasetUtils {
 			throw new IllegalArgumentException("Datasets with " + isize + " elements per item not supported");
 		}
 
+		@SuppressWarnings("deprecation")
 		final Dataset result = DatasetFactory.zeros(isize, data.getShape(), dtype);
 		result.setName(data.getName());
 
@@ -1542,6 +1552,7 @@ public class DatasetUtils {
 
 		for (int i = 0; i < rank; i++) {
 			Dataset axis = axes[i];
+			@SuppressWarnings("deprecation")
 			Dataset coord = DatasetFactory.zeros(nshape, axis.getDType());
 			result.add(coord);
 
@@ -2211,6 +2222,7 @@ public class DatasetUtils {
 		} else {
 			PositionIterator pi = a.getPositionIterator(axis);
 			int s = a.getShapeRef()[axis];
+			@SuppressWarnings("deprecation")
 			Dataset u = DatasetFactory.zeros(is, new int[] {s}, a.getDType());
 			Dataset v = DatasetFactory.zeros(u);
 			int[] pos = pi.getPos();
@@ -2360,6 +2372,7 @@ public class DatasetUtils {
 		int dt = DTypeUtils.getBestDType(dx.getDType(),dy.getDType());
 		int ds = Math.max(dx.getElementsPerItem(), dy.getElementsPerItem());
 
+		@SuppressWarnings("deprecation")
 		Dataset r = DatasetFactory.zeros(ds, condition.getShapeRef(), dt);
 		IndexIterator iter = condition.getIterator(true);
 		final int[] pos = iter.getPos();
@@ -2405,6 +2418,7 @@ public class DatasetUtils {
 			throw new IllegalArgumentException("Dataset types of choices are invalid");
 		}
 
+		@SuppressWarnings("deprecation")
 		Dataset r = DatasetFactory.zeros(ds, conditions[0].getShapeRef(), dt);
 		Dataset d = DatasetFactory.createFromObject(def).getBroadcastView(r.getShapeRef());
 		PositionIterator iter = new PositionIterator(r.getShapeRef());
@@ -2460,6 +2474,7 @@ public class DatasetUtils {
 		index = (IntegerDataset) dChoices[n];
 		dChoices[n] = null;
 
+		@SuppressWarnings("deprecation")
 		Dataset r = DatasetFactory.zeros(ds, index.getShape(), dt);
 		IndexIterator iter = index.getIterator(true);
 		final int[] pos = iter.getPos();
@@ -2597,6 +2612,7 @@ public class DatasetUtils {
 	 * @param condition should be broadcastable to data
 	 * @return 1-D dataset of values
 	 */
+	@SuppressWarnings("deprecation")
 	public static Dataset extract(final IDataset data, final IDataset condition) {
 		Dataset a = convertToDataset(data.getSliceView());
 		Dataset b = cast(condition.getSliceView(), Dataset.BOOL);

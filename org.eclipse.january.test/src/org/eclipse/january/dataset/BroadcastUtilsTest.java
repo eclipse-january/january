@@ -24,6 +24,7 @@ public class BroadcastUtilsTest {
 		int[] mShape = new int[] {2,3};
 
 		int[] shape = new int[] {3};
+		@SuppressWarnings("deprecation")
 		Dataset view = DatasetFactory.zeros(shape, Dataset.INT8);
 		List<int[]> nShapes = BroadcastUtils.broadcastShapesToMax(mShape, shape);
 		view.setShape(nShapes.get(0));

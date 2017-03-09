@@ -573,6 +573,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * @return a grey-scale dataset of given type
 	 */
 	public Dataset createGreyDataset(final double red, final double green, final double blue, final int dtype) {
+		@SuppressWarnings("deprecation")
 		final Dataset grey = DatasetFactory.zeros(shape, dtype);
 		final IndexIterator it = getIterator();
 
@@ -611,6 +612,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	}
 
 	private Dataset createColourChannelDataset(final int channelOffset, final int dtype, final String cName) {
+		@SuppressWarnings("deprecation")
 		final Dataset channel = DatasetFactory.zeros(shape, dtype);
 
 		final StringBuilder cname = name == null ? new StringBuilder() : new StringBuilder(name);

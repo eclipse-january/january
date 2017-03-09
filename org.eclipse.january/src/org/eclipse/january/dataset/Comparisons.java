@@ -1250,6 +1250,7 @@ public class Comparisons {
 	 * @param a
 	 * @return list of positions as integer datasets
 	 */
+	@SuppressWarnings("deprecation")
 	public static List<IntegerDataset> nonZero(Dataset a) {
 		final int rank = a.getRank();
 		final List<List<Integer>> indices = new ArrayList<List<Integer>>();

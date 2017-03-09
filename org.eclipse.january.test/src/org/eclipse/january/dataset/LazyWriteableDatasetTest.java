@@ -27,6 +27,7 @@ public class LazyWriteableDatasetTest {
 		LazyWriteableDataset ld = LazyWriteableDataset.createLazyDataset(d);
 
 		SliceND s = new SliceND(d.getShapeRef(), (Slice) null, null, new Slice(1), new Slice(0, null, 2));
+		@SuppressWarnings("deprecation")
 		Dataset sd = DatasetFactory.ones(s.getShape(), d.getDType());
 		ld.setSlice(sd, s);
 		Assert.assertEquals(d.getSlice(s), sd);
@@ -40,6 +41,7 @@ public class LazyWriteableDatasetTest {
 		LazyWriteableDataset ld = old.getSliceView();
 
 		SliceND s = new SliceND(ld.getShape(), (Slice) null, null, new Slice(1, null), new Slice(0, null, 2));
+		@SuppressWarnings("deprecation")
 		Dataset sd = DatasetFactory.ones(s.getShape(), ld.getDType());
 		ld.setSlice(sd, s);
 		Assert.assertEquals(d.getSlice(s), sd);
@@ -53,6 +55,7 @@ public class LazyWriteableDatasetTest {
 		LazyWriteableDataset ld = old.getSliceView(null, null, null, new Slice(1, null));
 
 		SliceND s = new SliceND(ld.getShape(), (Slice) null, null, new Slice(1, null), new Slice(0, null, 2));
+		@SuppressWarnings("deprecation")
 		Dataset sd = DatasetFactory.ones(s.getShape(), ld.getDType());
 		ld.setSlice(sd, s);
 		Assert.assertEquals(d.getSlice((Slice) null, null, new Slice(1, null), new Slice(1, null, 2)), sd);
@@ -66,6 +69,7 @@ public class LazyWriteableDatasetTest {
 		LazyWriteableDataset ld = old.getTransposedView();
 		
 		SliceND s = new SliceND(ld.getShape(), new Slice(0, null, 2), new Slice(1, null), null, null);
+		@SuppressWarnings("deprecation")
 		Dataset sd = DatasetFactory.ones(s.getShape(), ld.getDType());
 		ld.setSlice(sd, s);
 		Assert.assertEquals(d.transpose().getSlice(s), sd);
@@ -78,6 +82,7 @@ public class LazyWriteableDatasetTest {
 		LazyWriteableDataset ld = LazyWriteableDataset.createLazyDataset(d, new int[] {2, 2, 3, 4});
 
 		SliceND s = new SliceND(d.getShapeRef(), ld.getMaxShape(), new Slice(1,2), null, new Slice(1), new Slice(0, null, 2));
+		@SuppressWarnings("deprecation")
 		Dataset sd = DatasetFactory.ones(s.getShape(), d.getDType());
 		ld.setSlice(sd, s);
 		Assert.assertEquals(ld.getSlice(s), sd);

@@ -196,6 +196,7 @@ public class DoubleDatasetTest {
 
 	@Test
 	public void testStats() {
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.createRange(12, Dataset.FLOAT64);
 		assertEquals(11., a.max().doubleValue(), 1e-6);
 		assertEquals(0., a.min().doubleValue(), 1e-6);
@@ -258,6 +259,7 @@ public class DoubleDatasetTest {
 		assertEquals(6, a.maxPos()[0]);
 		assertEquals(0, a.minPos()[0]);
 
+		@SuppressWarnings("deprecation")
 		Dataset b = DatasetFactory.zeros(new int[] { 100, 200 }, Dataset.FLOAT64);
 
 		b.set(100.00, new int[] { 50, 100 });
@@ -276,6 +278,7 @@ public class DoubleDatasetTest {
 		assertEquals(50, b.maxPos(true)[0]);
 		assertEquals(100, b.maxPos(true)[1]);
 
+		@SuppressWarnings("deprecation")
 		Dataset c = DatasetFactory.zeros(new int[] { 100, 200 }, Dataset.FLOAT64);
 		c.set(100.00, new int[] { 99, 50 });
 		c.set(99.99, new int[] { 50, 50 });

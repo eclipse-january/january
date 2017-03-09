@@ -2460,6 +2460,7 @@ public class Maths extends GeneratedMaths {
 	 * @param axis
 	 * @return difference
 	 */
+	@SuppressWarnings("deprecation")
 	public static Dataset difference(Dataset a, final int n, int axis) {
 		Dataset ds;
 		final int dt = a.getDType();
@@ -2557,6 +2558,7 @@ public class Maths extends GeneratedMaths {
 	 *            smoothing, the higher the value, the more smoothing occurs.
 	 * @return A dataset which contains all the derivative point for point.
 	 */
+	@SuppressWarnings("deprecation")
 	public static Dataset derivative(Dataset x, Dataset y, int n) {
 		if (x.getRank() != 1 || y.getRank() != 1) {
 			throw new IllegalArgumentException("Only one dimensional dataset supported");
@@ -2632,6 +2634,7 @@ public class Maths extends GeneratedMaths {
 	 * @param axis
 	 * @return difference
 	 */
+	@SuppressWarnings("deprecation")
 	public static Dataset centralDifference(Dataset a, int axis) {
 		Dataset ds;
 		final int dt = a.getDType();
@@ -2942,6 +2945,7 @@ public class Maths extends GeneratedMaths {
 				} else {
 					final int dt = dx.getDType();
 					final int is = dx.getElementsPerItem();
+					@SuppressWarnings("deprecation")
 					final Dataset bdx = DatasetFactory.zeros(is, y.getShapeRef(), dt);
 					final PositionIterator pi = y.getPositionIterator(a);
 					final int[] pos = pi.getPos();

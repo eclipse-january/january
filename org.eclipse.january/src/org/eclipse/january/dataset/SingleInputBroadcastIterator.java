@@ -81,6 +81,7 @@ public class SingleInputBroadcastIterator extends IndexIterator {
 	 * @param allowInteger if true, can create integer datasets
 	 * @param allowComplex if true, can create complex datasets
 	 */
+	@SuppressWarnings("deprecation")
 	public SingleInputBroadcastIterator(Dataset a, Dataset o, boolean createIfNull, boolean allowInteger, boolean allowComplex) {
 		List<int[]> fullShapes = BroadcastUtils.broadcastShapes(a.getShapeRef(), o == null ? null : o.getShapeRef());
 

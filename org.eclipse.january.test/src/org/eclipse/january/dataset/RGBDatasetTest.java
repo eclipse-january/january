@@ -26,6 +26,7 @@ import org.junit.Test;
  * Basic tests of RGB dataset
  */
 public class RGBDatasetTest {
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testConstructors() {
 		int n = 250;

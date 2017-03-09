@@ -43,6 +43,7 @@ public class PositionIteratorTest {
 		int size = 3 * 3 * 1024 * 1024;
 		int type = Dataset.FLOAT64;
 		
+		@SuppressWarnings("deprecation")
 		Dataset ta = DatasetFactory.createRange(0, size, 1, type).reshape(3, 3, 1024, 1024);
 		
 		int[] start = new int[] {1,1,0,0};
@@ -52,6 +53,7 @@ public class PositionIteratorTest {
 		testDatasetAxes(ta, axes, start, stop, step);
 	}
 
+	@SuppressWarnings("deprecation")
 	private void testIterationND(int size, int type) {
 		Dataset ta;
 

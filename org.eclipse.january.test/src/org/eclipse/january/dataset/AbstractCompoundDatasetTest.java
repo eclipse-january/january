@@ -55,6 +55,7 @@ public class AbstractCompoundDatasetTest {
 		testSliceND(size, Dataset.INT16);
 	}
 
+	@SuppressWarnings("deprecation")
 	private void testSliceND(int isize, int size, int type) {
 		// 1D
 		CompoundDataset ta;
@@ -80,6 +81,7 @@ public class AbstractCompoundDatasetTest {
 		testSlicedDataset(ta);
 	}
 
+	@SuppressWarnings("deprecation")
 	private void testSliceND(int size, int type) {
 		// 1D
 		CompoundDataset ta;
@@ -470,6 +472,7 @@ public class AbstractCompoundDatasetTest {
 
 	@Test
 	public void testTake() {
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.createRange(12, Dataset.COMPLEX128);
 		Dataset t;
 		System.out.println(a);
@@ -502,6 +505,7 @@ public class AbstractCompoundDatasetTest {
 		System.out.println(t);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void test1DErrors() {
 	
@@ -626,6 +630,7 @@ public class AbstractCompoundDatasetTest {
 		assertEquals(5.0, error3.getElements(4).getDouble(99), 0.001);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testInternalErrors() {
 		Dataset[] aa =  new Dataset[5];
@@ -665,6 +670,7 @@ public class AbstractCompoundDatasetTest {
 		assertEquals(25.0, ae.getElements(4).getDouble(99), 0.001);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testSlicing() {
 		CompoundDataset a;
@@ -677,6 +683,7 @@ public class AbstractCompoundDatasetTest {
 		assertArrayEquals(new int[] {-1, -2, -3}, a.getIntArray(2, 3));
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testBroadcastElements() {
 		CompoundDataset a;
@@ -713,6 +720,7 @@ public class AbstractCompoundDatasetTest {
 		assertEquals(0, b.getInt(4, 3));
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testBroadcastSliceView() {
 		Dataset a = DatasetFactory.createRange(3, 12, Dataset.INT32);

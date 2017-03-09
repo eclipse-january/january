@@ -162,6 +162,7 @@ public final class BroadcastUtils {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	static Dataset createDataset(final Dataset a, final Dataset b, final int[] shape) {
 		final int rt;
 		final int ar = a.getRank();

@@ -88,6 +88,7 @@ public class LinearAlgebra {
 				dshape[d++] = bshape[i];
 		}
 		int dtype = DTypeUtils.getBestDType(a.getDType(), b.getDType());
+		@SuppressWarnings("deprecation")
 		Dataset data = DatasetFactory.zeros(dshape, dtype);
 
 		SliceIterator ita = a.getSliceIteratorFromAxes(null, achoice);
@@ -173,6 +174,7 @@ public class LinearAlgebra {
 				dshape[d++] = bshape[i];
 		}
 		int dtype = DTypeUtils.getBestDType(a.getDType(), b.getDType());
+		@SuppressWarnings("deprecation")
 		Dataset data = DatasetFactory.zeros(dshape, dtype);
 
 		SliceIterator ita = a.getSliceIteratorFromAxes(null, achoice);
@@ -249,6 +251,7 @@ public class LinearAlgebra {
 		if (isa != 1 || isb != 1) {
 			throw new UnsupportedOperationException("Compound datasets not supported");
 		}
+		@SuppressWarnings("deprecation")
 		Dataset o = DatasetFactory.zeros(shape, DTypeUtils.getBestDType(a.getDType(), b.getDType()));
 
 		IndexIterator ita = a.getIterator();
@@ -397,6 +400,7 @@ public class LinearAlgebra {
 		List<int[]> fullShapes = BroadcastUtils.broadcastShapes(shapeA, shapeB);
 
 		int[] maxShape = fullShapes.get(0);
+		@SuppressWarnings("deprecation")
 		Dataset c = DatasetFactory.zeros(maxShape, DTypeUtils.getBestDType(a.getDType(), b.getDType()));
 
 		PositionIterator ita = a.getPositionIterator(axisA);
@@ -437,6 +441,7 @@ public class LinearAlgebra {
 			throw new IllegalArgumentException("Axis C argument exceeds rank");
 		}
 		maxShape = addAxisToShape(maxShape, axisC, 3);
+		@SuppressWarnings("deprecation")
 		Dataset c = DatasetFactory.zeros(maxShape, DTypeUtils.getBestDType(a.getDType(), b.getDType()));
 
 		PositionIterator ita = a.getPositionIterator(axisA);
@@ -612,6 +617,7 @@ public class LinearAlgebra {
 		for (int i = 0; i < r; i++) {
 			nShape[i] = aShape[i] * bShape[i];
 		}
+		@SuppressWarnings("deprecation")
 		Dataset kron = DatasetFactory.zeros(nShape, DTypeUtils.getBestDType(a.getDType(), b.getDType()));
 		IndexIterator ita = a.getIterator(true);
 		IndexIterator itb = b.getIterator(true);
@@ -682,6 +688,7 @@ public class LinearAlgebra {
 		int[] axes = new int[] { a.checkAxis(axis1), a.checkAxis(axis2) };
 		Arrays.sort(axes);
 		int is = a.getElementsPerItem();
+		@SuppressWarnings("deprecation")
 		Dataset trace = DatasetFactory.zeros(is, removeAxesFromShape(shape, axes), a.getDType());
 
 		int am = axes[0];

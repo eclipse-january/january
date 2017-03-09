@@ -23,6 +23,7 @@ import org.junit.Test;
 
 public class LazyDynamicLoaderTest {
 	
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testLoader() throws Exception {
 		
@@ -64,11 +65,14 @@ public class LazyDynamicLoaderTest {
 		
 		int[] maxShape = new int[]{10,13,20,20};
 		
+		@SuppressWarnings("deprecation")
 		Dataset range = DatasetFactory.createRange(10*13*20*20,Dataset.INT64);
 		range.setShape(maxShape);
 		
 		LazyDynamicDataset dataset = getDataset(range,2,"data");
+		@SuppressWarnings("deprecation")
 		LazyDynamicDataset ax1 = getDataset(DatasetFactory.createRange(10, Dataset.INT64),0,"ax0");
+		@SuppressWarnings("deprecation")
 		LazyDynamicDataset ax2 = getDataset(DatasetFactory.createRange(13, Dataset.INT64),0,"ax1");
 		
 		AxesMetadata ax = MetadataFactory.createMetadata(AxesMetadata.class, 4);

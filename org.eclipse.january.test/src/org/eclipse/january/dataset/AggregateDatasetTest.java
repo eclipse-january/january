@@ -27,6 +27,7 @@ import org.junit.Test;
 public class AggregateDatasetTest {
 	ILazyDataset[] datasets;
 
+	@SuppressWarnings("deprecation")
 	@Before
 	public void init() {
 		datasets = new ILazyDataset[] {
@@ -38,6 +39,7 @@ public class AggregateDatasetTest {
 		};
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testConstructorFailures() {
 		@SuppressWarnings("unused")
@@ -121,6 +123,7 @@ public class AggregateDatasetTest {
 
 	@Test
 	public void testRepeatedDataset() throws Exception {
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.createRange(3, Dataset.FLOAT64);
 		Dataset[] as = new Dataset[5];
 		Arrays.fill(as, a);

@@ -516,6 +516,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 	 * @param ignoreInfs if true, ignore infinities
 	 * @param axis
 	 */
+	@SuppressWarnings("deprecation")
 	private Dataset[] createAxisStats(final int axis, final boolean ignoreNaNs, final boolean ignoreInfs) {
 		int rank = dataset.getRank();
 

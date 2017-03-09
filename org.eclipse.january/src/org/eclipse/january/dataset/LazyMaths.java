@@ -174,6 +174,7 @@ public final class LazyMaths {
 		return mean(0, Integer.MAX_VALUE -1 , data, ignoreAxes);
 	}
 
+	@SuppressWarnings("deprecation")
 	private static Dataset prepareDataset(int axis, int[] shape, int[][] sliceInfo) {
 		int rank = shape.length;
 		if (axis < 0)

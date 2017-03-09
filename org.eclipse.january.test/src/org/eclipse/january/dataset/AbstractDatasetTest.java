@@ -98,6 +98,7 @@ public class AbstractDatasetTest {
 		assertFalse("[2,1,4] and [2,4,3]", ShapeUtils.areShapesBroadcastCompatible(new int[] {2,1,4}, new int[] {2,4,3}));
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testMaxMin() {
 		Dataset a = DatasetFactory.createRange(12, Dataset.FLOAT64);
@@ -167,6 +168,7 @@ public class AbstractDatasetTest {
 	@Test
 	public void testGetSpeed() {
 		final int ITERATIONS = 1000;
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.createRange(1000000, Dataset.FLOAT64);
 		long start, startN, startP;
 
@@ -231,8 +233,10 @@ public class AbstractDatasetTest {
 
 	@Test
 	public void testHash() {
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.createRange(12, Dataset.FLOAT64);
 		a.setShape(3,4);
+		@SuppressWarnings("deprecation")
 		Dataset b = DatasetFactory.createRange(12, Dataset.FLOAT64);
 		b.setShape(3,4);
 
@@ -270,6 +274,7 @@ public class AbstractDatasetTest {
 		return true;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testMaxSpeed() {
 		long start;
@@ -307,6 +312,7 @@ public class AbstractDatasetTest {
 		System.out.printf("Max short calculation took %g ms\n", elapsed*1e-6/ITERATIONS);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testSort() {
 		Dataset a = DatasetFactory.createRange(12, Dataset.FLOAT64);
@@ -352,6 +358,7 @@ public class AbstractDatasetTest {
 		assertEquals("Second element", 10, b.getInt(1));
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testPut() {
 		Dataset d1 = DatasetFactory.createRange(6, Dataset.FLOAT64);
@@ -372,6 +379,7 @@ public class AbstractDatasetTest {
 
 	@Test
 	public void testTake() {
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.createRange(12, Dataset.FLOAT64);
 		Dataset t;
 
@@ -411,6 +419,7 @@ public class AbstractDatasetTest {
 	 */
 	@Test
 	public void testSqueeze() {
+		@SuppressWarnings("deprecation")
 		Dataset ds = DatasetFactory.createRange(10, Dataset.FLOAT64);
 		ds.setShape(2,1,5);
 
@@ -474,6 +483,7 @@ public class AbstractDatasetTest {
 	/**
 	 * Tests for tile method
 	 */
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testTile() {
 		// 1D
@@ -555,6 +565,7 @@ public class AbstractDatasetTest {
 	}
 
 	private void runTile(final int srows, final int scols, final int rows, final int cols) {
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.createRange(srows*scols, Dataset.FLOAT64).reshape(srows, scols);
 
 		long start, end;
@@ -602,6 +613,7 @@ public class AbstractDatasetTest {
 	/**
 	 * Tests for transpose method
 	 */
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testTranspose() {
 		// 2D
@@ -704,6 +716,7 @@ public class AbstractDatasetTest {
 	@Test
 	public void testRepeat() {
 		// 2D
+		@SuppressWarnings("deprecation")
 		Dataset ds = DatasetFactory.createRange(6, Dataset.FLOAT64);
 		ds.setShape(2,3);
 
@@ -798,6 +811,7 @@ public class AbstractDatasetTest {
 	@Test
 	public void testResize() {
 		int size = 6;
+		@SuppressWarnings("deprecation")
 		Dataset ds = DatasetFactory.createRange(size, Dataset.FLOAT64);
 		Dataset tf;
 		IndexIterator it;
@@ -883,6 +897,7 @@ public class AbstractDatasetTest {
 	
 	@Test
 	public void testView() {
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.createRange(60, Dataset.FLOAT64);
 		Dataset b = a.getView(true);
 		assertEquals(true, a.equals(b));
@@ -901,6 +916,7 @@ public class AbstractDatasetTest {
 	/**
 	 * Test equals and hashCode
 	 */
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testEquals() {
 		Dataset a, b, c, d, e;
@@ -938,6 +954,7 @@ public class AbstractDatasetTest {
 
 	@Test
 	public void testPrint() {
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.createRange(1000000, Dataset.INT32);
 
 		System.out.println(a);
@@ -948,6 +965,7 @@ public class AbstractDatasetTest {
 
 //		System.out.println(a.reshape(10, 10, 100, 100));
 
+		@SuppressWarnings("deprecation")
 		Dataset b = DatasetFactory.createRange(12, Dataset.INT32);
 
 		System.out.println(b);
@@ -959,6 +977,7 @@ public class AbstractDatasetTest {
 
 	@Test
 	public void testSlicing() {
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.createRange(1000, Dataset.INT32);
 		Dataset s, t;
 		IndexIterator is, it;
@@ -1088,6 +1107,7 @@ public class AbstractDatasetTest {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testSlicingViews() {
 		Dataset a, b, c;
@@ -1212,6 +1232,7 @@ public class AbstractDatasetTest {
 		assertEquals(":,:", s);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testSetSlice() {
 		Dataset a = DatasetFactory.createRange(100, Dataset.FLOAT64).reshape(20, 5);
@@ -1260,6 +1281,7 @@ public class AbstractDatasetTest {
 	public void test1DErrors() {
 		
 		// test 1D errors for single value
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.createRange(100, Dataset.INT32);
 		a.setErrors(5);
 		
@@ -1310,6 +1332,7 @@ public class AbstractDatasetTest {
 	public void test2DErrors() {
 		
 		// test 1D errors for single value
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.zeros(new int[] {100,100}, Dataset.INT32);
 		a.setErrors(5);
 		
@@ -1358,7 +1381,9 @@ public class AbstractDatasetTest {
 	@Test
 	public void testErrors() {
 		// test errors when reshaped and sliced
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.createRange(12, Dataset.INT32).reshape(4, 3);
+		@SuppressWarnings("deprecation")
 		Dataset e = DatasetFactory.createRange(12, Dataset.FLOAT64).reshape(4, 3);
 
 		a.setErrors(e);
@@ -1377,7 +1402,9 @@ public class AbstractDatasetTest {
 	@Test
 	public void testSetErrorBuffer() {
 		
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.zeros(new int[] {100,100}, Dataset.INT32);
+		@SuppressWarnings("deprecation")
 		Dataset err = DatasetFactory.createLinearSpace(0, a.getSize() - 1, a.getSize(), Dataset.FLOAT64);
 		err.setShape(a.getShape());
 		
@@ -1437,6 +1464,7 @@ public class AbstractDatasetTest {
 	public void testInternalErrors() {
 		
 		// test 1D errors for single value
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.createRange(100, Dataset.INT32);
 		a.setErrors(5);
 		
@@ -1456,6 +1484,7 @@ public class AbstractDatasetTest {
 		assertEquals(100.0, ae.getDouble(99), 0.001);	
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testZeroRankDatasets() {
 		Dataset a;
@@ -1498,6 +1527,7 @@ public class AbstractDatasetTest {
 		assertFalse("Differs", a.equals(DatasetFactory.createFromObject(2.f)));
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testConcatenate() {
 		Dataset a, b, c, d;
@@ -1532,6 +1562,7 @@ public class AbstractDatasetTest {
 		assertTrue("Dataset", c.equals(d));
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testSum() {
 		Dataset a = DatasetFactory.createRange(1024*1024, Dataset.INT32);
@@ -1595,6 +1626,7 @@ public class AbstractDatasetTest {
 
 	@Test
 	public void testRoll() {
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.createRange(10, Dataset.INT32);
 
 		Dataset r = DatasetUtils.roll(a, 2, null);
@@ -1617,6 +1649,7 @@ public class AbstractDatasetTest {
 
 	@Test
 	public void testRollAxis() {
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.ones(new int[] {3, 4, 5, 6}, Dataset.INT8);
 		Assert.assertArrayEquals(new int[] {3, 6, 4, 5}, DatasetUtils.rollAxis(a, 3, 1).getShape());
 		Assert.assertArrayEquals(new int[] {5, 3, 4, 6}, DatasetUtils.rollAxis(a, 2, 0).getShape());
@@ -1626,6 +1659,7 @@ public class AbstractDatasetTest {
 	@Test
 	public void testFindOccurrences() {
 		Dataset a = DatasetFactory.createFromObject(new double[] {0, 0, 3, 7, -4, 2, 1});
+		@SuppressWarnings("deprecation")
 		Dataset v = DatasetFactory.createRange(-3, 3, 1, Dataset.FLOAT64);
 
 		Dataset indexes = DatasetUtils.findFirstOccurrences(a, v);
@@ -1635,6 +1669,7 @@ public class AbstractDatasetTest {
 	@Test
 	public void testFindIndexes() {
 		Dataset a = DatasetFactory.createFromObject(new double[] {0, 0, 3, 7, -4, 2, 1});
+		@SuppressWarnings("deprecation")
 		Dataset v = DatasetFactory.createRange(-3, 3, 1, Dataset.FLOAT64);
 
 		IntegerDataset indexes = DatasetUtils.findIndexesForValues(a, v);
@@ -1801,6 +1836,7 @@ public class AbstractDatasetTest {
 
 	@Test
 	public void testFill() {
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.createRange(12, Dataset.FLOAT64);
 
 		Dataset b = DatasetFactory.zeros(a);
@@ -1899,6 +1935,7 @@ public class AbstractDatasetTest {
 
 	@Test
 	public void testSetByBoolean() {
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.createRange(10, Dataset.INT32);
 		a.max();
 		a.setByBoolean(0, Comparisons.greaterThan(a, 5));
@@ -1907,6 +1944,7 @@ public class AbstractDatasetTest {
 
 	@Test
 	public void testExtract() {
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.createRange(20, Dataset.INT32).reshape(4,5);
 		Dataset b = DatasetFactory.createFromObject(new boolean[] {true, false, true, false, false});
 
@@ -1916,12 +1954,14 @@ public class AbstractDatasetTest {
 
 	@Test
 	public void testSetBy1DIndex() {
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.createRange(10, Dataset.INT32);
 		a.max();
 		a.setBy1DIndex(0, Comparisons.nonZero(Comparisons.greaterThan(a, 5)).get(0));
 		Assert.assertEquals(a.max().longValue(), 5);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testSetByPosition() {
 		Dataset a = DatasetFactory.createRange(10, Dataset.INT32);
@@ -1939,6 +1979,7 @@ public class AbstractDatasetTest {
 
 	@Test
 	public void testReshape() {
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.createRange(60, Dataset.INT32);
 		Dataset b = a.getSliceView(new int[] {1}, null, new int[] {2});
 		Dataset c = a.getSlice(new int[] {1}, null, new int[] {2});
@@ -1986,6 +2027,7 @@ public class AbstractDatasetTest {
 
 	@Test
 	public void testBroadcast() {
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.createRange(3, Dataset.INT32);
 		Dataset b = checkBroadcast2D(a, false, 2, 3);
 		Assert.assertEquals(1, b.getInt(0, 1));
@@ -2021,6 +2063,7 @@ public class AbstractDatasetTest {
 		return b;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testBroadcastSliceView() {
 		Dataset a = DatasetFactory.createRange(12, Dataset.INT32);

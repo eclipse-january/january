@@ -76,6 +76,7 @@ public class BroadcastIteratorTest {
 		Assert.assertArrayEquals("Broadcasting " + msg, answer, result);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testBroadcastWithNoOutput() {
 		Dataset a, b, c;
@@ -169,6 +170,7 @@ public class BroadcastIteratorTest {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testBroadcastWithOutput() {
 		Dataset a, b, c;

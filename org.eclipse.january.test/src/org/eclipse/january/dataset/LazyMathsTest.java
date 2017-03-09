@@ -20,6 +20,7 @@ public class LazyMathsTest {
 
 	@Test
 	public void testSum() throws Exception {
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.createRange(100, Dataset.FLOAT64);
 
 		TestUtils.assertDatasetEquals(a.sum(0), LazyMaths.sum(a, 0), 1e-9, 1e-15);
@@ -42,6 +43,7 @@ public class LazyMathsTest {
 
 	@Test
 	public void testSumIgnoreAxes() throws Exception {
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.createRange(100, Dataset.FLOAT64);
 
 		a.setShape(10, 10);
@@ -68,6 +70,7 @@ public class LazyMathsTest {
 
 	@Test
 	public void testProduct() throws Exception {
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.createRange(100, Dataset.FLOAT64);
 		a.iadd(1.);
 		a.idivide(100.);
@@ -93,6 +96,7 @@ public class LazyMathsTest {
 	@Test
 	public void testMeanIgnore() throws Exception {
 
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.createRange(100, Dataset.FLOAT64);
 		a.setShape(10, 10);
 		TestUtils.assertDatasetEquals(a.mean(1), LazyMaths.mean(a, 0), 1e-9, 1e-15);
@@ -109,6 +113,7 @@ public class LazyMathsTest {
 		TestUtils.assertDatasetEquals(a.mean(3).squeeze(),LazyMaths.mean(a, 0,1,2), 1e-9, 1e-15);
 		TestUtils.assertDatasetEquals(a.mean(0).mean(0).squeeze(),LazyMaths.mean(a, 2,3), 1e-9, 1e-15);
 		
+		@SuppressWarnings("deprecation")
 		Dataset er = DatasetFactory.createRange(100, Dataset.FLOAT64);
 		a.setShape(10, 10);
 		er.setShape(10, 10);

@@ -935,6 +935,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	protected ILazyDataset createFromSerializable(Serializable blob, boolean keepLazy) {
 		ILazyDataset d = null;
 		if (blob instanceof ILazyDataset) {
