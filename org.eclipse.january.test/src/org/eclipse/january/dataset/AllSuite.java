@@ -29,7 +29,7 @@ import org.junit.runners.Suite.SuiteClasses;
 		PositionIteratorTest.class, RandomTest.class, RGBDatasetTest.class, ShortDatasetTest.class,
 		SingleInputBroadcastIteratorTest.class, SliceIteratorTest.class, SliceNDIteratorTest.class, SliceNDTest.class,
 		SliceTest.class, StatsTest.class, StrideIteratorTest.class, StringDatasetTest.class,
-		UnsignedArithmetics.class,
+		UnsignedArithmeticsTest.class,
 		OutlierCorrectnessTest.class, OutlierStatsTest.class,
 		org.eclipse.january.metadata.AllSuite.class,
 		})
