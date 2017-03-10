@@ -19,6 +19,7 @@ import org.eclipse.january.dataset.Dataset;
 /**
  * Store standard statistics
  * @param <T> is either a Number or a double array
+ * @since 2.0
  */
 public interface StatisticsMetadata<T> extends MetadataType {
 

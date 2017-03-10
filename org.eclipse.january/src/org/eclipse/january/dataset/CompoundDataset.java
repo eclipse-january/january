@@ -142,36 +142,63 @@ public interface CompoundDataset extends Dataset {
 	@Override
 	public CompoundDataset transpose(int... axes);
 
+	/**
+	 * @since 2.0
+	 */
 	@Override
 	public CompoundDataset max(int axis, boolean... ignoreInvalids);
 
+	/**
+	 * @since 2.0
+	 */
 	@Override
 	public CompoundDataset min(int axis, boolean... ignoreInvalids);
 
+	/**
+	 * @since 2.0
+	 */
 	@Override
 	public CompoundDataset peakToPeak(int axis, boolean... ignoreInvalids);
 
+	/**
+	 * @since 2.0
+	 */
 	@Override
 	public CompoundDataset sum(int axis, boolean... ignoreInvalids);
 
+	/**
+	 * @since 2.0
+	 */
 	@Override
 	public CompoundDataset product(int axis, boolean... ignoreInvalids);
 
+	/**
+	 * @since 2.0
+	 */
 	@Override
 	public CompoundDataset mean(int axis, boolean... ignoreInvalids);
 
+	/**
+	 * @since 2.0
+	 */
 	@Override
 	public CompoundDataset rootMeanSquare(int axis, boolean... ignoreInvalids);
 
 	@Override
 	public CompoundDataset stdDeviation(int axis);
 
+	/**
+	 * @since 2.0
+	 */
 	@Override
 	public CompoundDataset stdDeviation(int axis, boolean isWholePopulation, boolean... ignoreInvalids);
 
 	@Override
 	public CompoundDataset variance(int axis);
 
+	/**
+	 * @since 2.0
+	 */
 	@Override
 	public CompoundDataset variance(int axis, boolean isWholePopulation, boolean... ignoreInvalids);
 
