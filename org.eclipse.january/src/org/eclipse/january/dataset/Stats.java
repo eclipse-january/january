@@ -743,6 +743,7 @@ public class Stats {
 	 * @param a dataset
 	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
 	 * @return skewness
+	 * @since 2.0
 	 */
 	public static Object skewness(final Dataset a, final boolean... ignoreInvalids) {
 		return getHigherStatistic(a, ignoreInvalids).skewness;
@@ -763,6 +764,7 @@ public class Stats {
 	 * @param axis
 	 * @param ignoreInvalids see {@link Dataset#max(int, boolean...)}
 	 * @return skewness along axis in dataset
+	 * @since 2.0
 	 */
 	public static Dataset skewness(final Dataset a, final int axis, final boolean... ignoreInvalids) {
 		return getHigherStatistic(a, ignoreInvalids, axis).getSkewness(axis);
@@ -783,6 +785,7 @@ public class Stats {
 	 * @param a dataset
 	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
 	 * @return sum of dataset
+	 * @since 2.0
 	 */
 	public static Object sum(final Dataset a, final boolean... ignoreInvalids) {
 		return a.sum(ignoreInvalids);
@@ -793,6 +796,7 @@ public class Stats {
 	 * @param dtype
 	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
 	 * @return typed sum of dataset
+	 * @since 2.0
 	 */
 	public static Object typedSum(final Dataset a, int dtype, final boolean... ignoreInvalids) {
 		if (a.isComplex()) {
@@ -810,6 +814,7 @@ public class Stats {
 	 * @param axis
 	 * @param ignoreInvalids see {@link Dataset#max(int, boolean...)}
 	 * @return typed sum of items along axis in dataset
+	 * @since 2.0
 	 */
 	public static Dataset typedSum(final Dataset a, int dtype, int axis, final boolean... ignoreInvalids) {
 		return DatasetUtils.cast(a.sum(axis, ignoreInvalids), dtype);
@@ -819,6 +824,7 @@ public class Stats {
 	 * @param a dataset
 	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
 	 * @return product of all items in dataset
+	 * @since 2.0
 	 */
 	public static Object product(final Dataset a, final boolean... ignoreInvalids) {
 		return typedProduct(a, a.getDType(), ignoreInvalids);
@@ -829,6 +835,7 @@ public class Stats {
 	 * @param axis
 	 * @param ignoreInvalids see {@link Dataset#max(int, boolean...)}
 	 * @return product of items along axis in dataset
+	 * @since 2.0
 	 */
 	public static Dataset product(final Dataset a, final int axis, final boolean... ignoreInvalids) {
 		return typedProduct(a, a.getDType(), axis, ignoreInvalids);
@@ -839,6 +846,7 @@ public class Stats {
 	 * @param dtype
 	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
 	 * @return typed product of all items in dataset
+	 * @since 2.0
 	 */
 	public static Object typedProduct(final Dataset a, final int dtype, final boolean... ignoreInvalids) {
 		final boolean ignoreNaNs;
@@ -959,6 +967,7 @@ public class Stats {
 	 * @param axis
 	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
 	 * @return typed product of items along axis in dataset
+	 * @since 2.0
 	 */
 	public static Dataset typedProduct(final Dataset a, final int dtype, int axis, final boolean... ignoreInvalids) {
 		axis = a.checkAxis(axis);

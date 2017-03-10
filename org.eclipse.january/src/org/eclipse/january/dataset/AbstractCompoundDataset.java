@@ -442,6 +442,9 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 		getDoubleArrayAbs(get1DIndex(pos), darray);
 	}
 
+	/**
+	 * @since 2.0
+	 */
 	@SuppressWarnings("unchecked")
 	protected StatisticsMetadata<double[]> getCompoundStats() {
 		StatisticsMetadata<double[]> md = getFirstMetadata(StatisticsMetadata.class);
