@@ -12,7 +12,7 @@ services:
   - docker
 
 jdk:
- - oraclejdk8
+ - openjdk6
 
 # Check they had a ticket with this change
 # before_install:
