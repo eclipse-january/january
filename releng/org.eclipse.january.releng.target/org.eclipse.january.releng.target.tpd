@@ -11,10 +11,7 @@
  *******************************************************************************/
 target "January" with source requirements
 
-// Using Orbit Oxygen S build at the moment. The Orbit S build contains some items
-// that the most recent R build does not (e.g. org.apache.commons.math3).
-
-location "http://download.eclipse.org/tools/orbit/downloads/drops/S20170120205402/repository" eclipse-orbit-oxygen-m5 {
+location "http://download.eclipse.org/tools/orbit/downloads/drops/R20170307180635/repository" eclipse-orbit-neon-sr3 {
 
 // The versions we point to in Orbit are the versions we have CQs approved for, please
 // raise CQ for items not in this list or version changes
