@@ -14,21 +14,12 @@ services:
 jdk:
  - oraclejdk7
 
-# Check they had a ticket with this change
-# before_install:
-# TODO
-
-# Stat xvfb, this allows SWTBot to execute in tests.
-# Only needed for SWTBot Tests. UI is only part of the january-forms branch.
-# - export DISPLAY=:99.0
-# - sh -e /etc/init.d/xvfb start
-# - sleep 3 # give xvfb some time to start as per the travis docs
-# - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16"
+# don't do anything on install, just let maven install the dependencies in the script
+# Also see https://github.com/eclipse/january/issues/109
+install:
+  - true
   
-# Run maven. This happens automatically and adding it again makes the build longer.
+# package does everything, including tests, but includes the install step
 script: 
- - mvn -q clean verify surefire:test -Dtest.includes=org/eclipse/january/**/AllSuite.java
+ - mvn package
  
-# Added deploy back to github
-# TODO Deploy build back to github? Did this on richbeans.
-    
