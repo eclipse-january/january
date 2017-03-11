@@ -19,7 +19,7 @@ jdk:
 install:
   - true
   
-# package does everything, including tests, but includes the install step
+# verify does everything, including tests, but excludes the install step
 script: 
- - mvn package
- 
+ - mvn verify
+
