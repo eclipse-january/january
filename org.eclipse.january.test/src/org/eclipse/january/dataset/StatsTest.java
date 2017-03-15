@@ -171,6 +171,67 @@ public class StatsTest {
 		assertEquals("Product", 720, (Double) Stats.product(a, false, true), 1e-6);
 	}
 
+	@Test
+	public void testQuantile() {
+		DoubleDataset a = DatasetFactory.createRange(100.);
+		double[] q = Stats.quantile(a, 0., 0.25, 0.5, 0.75, 1.);
+		assertArrayEquals(new double[] {0, 24.75, 49.5, 74.25, 99}, q, 1e-12);
+
+		Dataset b = a.reshape(10, 10); // so now [[0, ..., 9], [10,...], ..., [..., 99]]
+		Dataset[] qds = Stats.quantile(b, 1, 0, 0.25, 0.5, 0.75, 1);
+		for (int i = 0; i < 5; i++) {
+			TestUtils.assertDatasetEquals(DatasetFactory.createRange(DoubleDataset.class, 2.25 * i, 100., 10.), qds[i]);
+		}
+
+		a = DatasetFactory.createRange(81.);
+		q = Stats.quantile(a, 0., 0.25, 0.5, 0.75, 1.);
+		assertArrayEquals(new double[] {0, 20, 40, 60, 80}, q, 1e-12);
+		b = a.reshape(9, 9);
+		qds = Stats.quantile(b, 1, 0, 0.25, 0.5, 0.75, 1);
+		for (int i = 0; i < 5; i++) {
+			TestUtils.assertDatasetEquals(DatasetFactory.createRange(DoubleDataset.class, 2 * i, 81., 9.), qds[i]);
+		}
+	}
+
+	@Test
+	public void testIqr() {
+		DoubleDataset a = DatasetFactory.createRange(100.);
+		assertEquals(49.5, (Double) Stats.iqr(a), 1e-12);
+
+		Dataset b = a.reshape(10, 10); // so now [[0, ..., 9], [10,...], ..., [..., 99]]
+
+		Dataset ids = Stats.iqr(b, 1);
+		TestUtils.assertDatasetEquals(DatasetFactory.zeros(10).fill(4.5), ids);
+		
+		a = DatasetFactory.createRange(81.);
+		assertEquals(40., (Double) Stats.iqr(a), 1e-12);
+		b = a.reshape(9, 9);
+		ids = Stats.iqr(b, 1);
+		TestUtils.assertDatasetEquals(DatasetFactory.zeros(9).fill(4.), ids);
+	}
+
+	@Test
+	public void testSkewness() {
+		Dataset a = Maths.abs(DatasetFactory.createRange(DoubleDataset.class, 60., -40., -1.));
+		assertEquals(0.3002253, (Double) Stats.skewness(a), 1e-6);
+
+		Dataset b = a.reshape(10, 10); // so now [[0, ..., 9], [10,...], ..., [..., 99]]
+
+		Dataset sds = Stats.skewness(b, 1);
+		TestUtils.assertDatasetEquals(DatasetFactory.zeros(10), sds);
+	}
+
+	@Test
+	public void testKurtosis() {
+		DoubleDataset a = DatasetFactory.createRange(100.);
+		assertEquals(-1.19999999, (Double) Stats.kurtosis(a), 1e-6);
+
+		Dataset b = a.reshape(10, 10); // so now [[0, ..., 9], [10,...], ..., [..., 99]]
+
+		Dataset sds = Stats.kurtosis(b, 1);
+		TestUtils.assertDatasetEquals(DatasetFactory.zeros(10).fill(-1.2), sds);
+	}
+
 	// TODO expand tests
 	// especially typedProducts
 

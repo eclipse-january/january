@@ -98,7 +98,8 @@ public class Stats {
 
 		public Dataset getQuantile(int axis, double q) {
 			Map<Double, ReferencedDataset> qm = getMap(axis);
-			return qm.get(q).get();
+			ReferencedDataset rd = qm.get(q);
+			return rd == null ? null : rd.get();
 		}
 
 		Dataset getSortedDataset(int axis) {
@@ -129,8 +130,7 @@ public class Stats {
 
 		QStatisticsImpl<double[]> qstats = new QStatisticsImpl<double[]>();
 
-		@SuppressWarnings("deprecation")
-		Dataset w = DatasetFactory.zeros(a.getShapeRef(), a.getDType());
+		Dataset w = DatasetFactory.zeros(1, a.getClass(), a.getShapeRef());
 		double[] q1 = new double[is];
 		double[] q2 = new double[is];
 		double[] q3 = new double[is];
@@ -178,14 +178,13 @@ public class Stats {
 		if (qstats.getQuantile(axis, QStatisticsImpl.Q2) == null) {
 			if (is == 1) {
 				Dataset s = DatasetUtils.sort(a, axis);
-	
+
 				qstats.setQuantile(axis, QStatisticsImpl.Q1, pQuantile(s, axis, QStatisticsImpl.Q1));
 				qstats.setQuantile(axis, QStatisticsImpl.Q2, pQuantile(s, axis, QStatisticsImpl.Q2));
 				qstats.setQuantile(axis, QStatisticsImpl.Q3, pQuantile(s, axis, QStatisticsImpl.Q3));
 				qstats.setSortedDataset(axis, s);
 			} else {
-				@SuppressWarnings("deprecation")
-				Dataset w = DatasetFactory.zeros(a.getShapeRef(), a.getDType());
+				Dataset w = DatasetFactory.zeros(1, a.getClass(), a.getShapeRef());
 				CompoundDoubleDataset q1 = null, q2 = null, q3 = null;
 				for (int j = 0; j < is; j++) {
 					((CompoundDataset) a).copyElements(w, j);
@@ -240,8 +239,7 @@ public class Stats {
 
 		oshape[axis] = 1;
 		int[] qshape = ShapeUtils.squeezeShape(oshape, false);
-		@SuppressWarnings("deprecation")
-		Dataset qds = DatasetFactory.zeros(is, qshape, Dataset.FLOAT64);
+		Dataset qds = DatasetFactory.zeros(is, CompoundDoubleDataset.class, qshape);
 
 		IndexIterator qiter = qds.getIterator(true);
 		int[] qpos = qiter.getPos();
@@ -265,8 +263,7 @@ public class Stats {
 			qiter = qds.getIterator(true);
 			qpos = qiter.getPos();
 			qpt++;
-			@SuppressWarnings("deprecation")
-			Dataset rds = DatasetFactory.zeros(is, qshape, Dataset.FLOAT64);
+			Dataset rds = DatasetFactory.zeros(is, CompoundDoubleDataset.class, qshape);
 			
 			while (qiter.hasNext()) {
 				int i = 0;
@@ -342,7 +339,7 @@ public class Stats {
 	 * @param values
 	 * @return points at which CDF has given values
 	 */
-	@SuppressWarnings({ "unchecked", "deprecation" })
+	@SuppressWarnings({ "unchecked" })
 	public static Dataset[] quantile(final Dataset a, final int axis, final double... values) {
 		final Dataset[] points  = new Dataset[values.length];
 		final int is = a.getElementsPerItem();
@@ -363,7 +360,7 @@ public class Stats {
 			}
 		} else {
 			QStatisticsImpl<double[]> qs = (QStatisticsImpl<double[]>) getQStatistics(a);
-			Dataset w = DatasetFactory.zeros(a.getShapeRef(), a.getDType());
+			Dataset w = DatasetFactory.zeros(1, a.getClass(), a.getShapeRef());
 			for (int j = 0; j < is; j++) {
 				boolean copied = false;
 
@@ -382,7 +379,7 @@ public class Stats {
 						qv = pQuantile(w, axis, q);
 						qs.setQuantile(axis, q, qv);
 						if (j == 0) {
-							points[i] = DatasetFactory.zeros(is, qv.getShapeRef(), qv.getDType());
+							points[i] = DatasetFactory.zeros(is, qv.getClass(), qv.getShapeRef());
 						}
 						((CompoundDoubleDataset) points[i]).setElements(qv, j);
 					}
@@ -442,7 +439,7 @@ public class Stats {
 		QStatisticsImpl<?> qs = getQStatistics(a, axis);
 		Dataset q3 = qs.getQuantile(axis, QStatisticsImpl.Q3);
 
-		return Maths.subtract(q3, qs.getQuantile(QStatisticsImpl.Q1));
+		return Maths.subtract(q3, qs.getQuantile(axis, QStatisticsImpl.Q1));
 	}
 
 	static private HigherStatisticsImpl<?> getHigherStatistic(final Dataset a, boolean[] ignoreInvalids) {
@@ -524,11 +521,13 @@ public class Stats {
 //		}
 
 		public Dataset getSkewness(int axis) {
-			return smap.get(axis).get();
+			ReferencedDataset rd = smap.get(axis);
+			return rd == null ? null : rd.get();
 		}
 
 		public Dataset getKurtosis(int axis) {
-			return kmap.get(axis).get();
+			ReferencedDataset rd = kmap.get(axis);
+			return rd == null ? null : rd.get();
 		}
 
 		public void setSkewness(int axis, Dataset s) {
@@ -613,7 +612,6 @@ public class Stats {
 		return stats;
 	}
 
-	@SuppressWarnings("deprecation")
 	static private HigherStatisticsImpl<?> calculateHigherMoments(final Dataset a, final boolean ignoreNaNs, final boolean ignoreInfs, final int axis) {
 		final int rank = a.getRank();
 		final int is = a.getElementsPerItem();
@@ -667,16 +665,16 @@ public class Stats {
 						k.increment(val);
 					}
 				}
-				sk.set(s.getResult(), spos);
-				ku.set(k.getResult(), spos);
+				sk.set(s.getResult(), qpos);
+				ku.set(k.getResult(), qpos);
 			}
 		} else {
 			if (stats == null) {
 				stats = new HigherStatisticsImpl<double[]>();
 				a.setMetadata(stats);
 			}
-			sk = DatasetFactory.createFromObject(is, CompoundDoubleDataset.class, nshape);
-			ku = DatasetFactory.createFromObject(is, CompoundDoubleDataset.class, nshape);
+			sk = DatasetFactory.zeros(is, CompoundDoubleDataset.class, nshape);
+			ku = DatasetFactory.zeros(is, CompoundDoubleDataset.class, nshape);
 			final IndexIterator qiter = sk.getIterator(true);
 			final int[] qpos = qiter.getPos();
 			final int[] spos = oshape;
@@ -729,8 +727,8 @@ public class Stats {
 					ts[j] = s[j].getResult(); 
 					tk[j] = k[j].getResult(); 
 				}
-				sk.set(ts, spos);
-				ku.set(tk, spos);
+				sk.set(ts, qpos);
+				ku.set(tk, qpos);
 			}
 		}
 
