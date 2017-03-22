@@ -15,6 +15,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -22,6 +27,7 @@ import java.util.List;
 
 import org.apache.commons.math3.complex.Complex;
 import org.eclipse.january.asserts.TestUtils;
+import org.eclipse.january.metadata.StatisticsMetadata;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -2093,5 +2099,27 @@ public class AbstractDatasetTest {
 		TestUtils.assertDatasetEquals(DatasetUtils.rotate90(a, -1), DatasetUtils.rotate90(a, 3));
 		TestUtils.assertDatasetEquals(a, DatasetUtils.rotate90(a, 4));
 	}
-	
+
+	@Test
+	public void testSerializable() throws IOException, ClassNotFoundException {
+		Dataset a = DatasetFactory.createRange(12);
+		a.setShape(3,4);
+		assertEquals("Max", 11, a.max().doubleValue(), 1e-6);
+
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		
+		ObjectOutputStream ostream = new ObjectOutputStream(out);
+		ostream.writeObject(a);
+		ostream.close();
+		byte[] bytes = out.toByteArray();
+		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+		ObjectInputStream istream = new ObjectInputStream(in);
+		Dataset b = Dataset.class.cast(istream.readObject());
+
+		TestUtils.assertDatasetEquals(a, b);
+		StatisticsMetadata<?> am = a.getFirstMetadata(StatisticsMetadata.class);
+		StatisticsMetadata<?> bm = b.getFirstMetadata(StatisticsMetadata.class);
+		assertEquals(am.getMinimum(), bm.getMinimum());
+		assertEquals(am.getMaximum(), bm.getMaximum());
+	}
 }
