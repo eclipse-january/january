@@ -12,6 +12,7 @@
 
 package org.eclipse.january.metadata.internal;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
@@ -86,7 +87,8 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 		isDirty = statsMetadata.isDirty;
 	}
 
-	private static class MaxMin<T> {
+	private static class MaxMin<T> implements Serializable {
+		private static final long serialVersionUID = -8707875904521260325L;
 		T maximum;
 		T minimum;
 		List<int[]> maximumPositions;
