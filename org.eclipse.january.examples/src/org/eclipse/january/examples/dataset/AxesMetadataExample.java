@@ -321,8 +321,18 @@ public class AxesMetadataExample
 		final DoubleDataset axisDataset;
 		if (axesMetadata != null && axesMetadata.getAxes().length > 0)
 		{
-			axisDataset = DatasetUtils.cast(DoubleDataset.class,
-					(IDataset) axesMetadata.getAxes()[0]);
+			DoubleDataset doubleAxis = null;
+			try
+			{
+				ILazyDataset rawAxis = axesMetadata.getAxes()[0];
+				Dataset axis = DatasetUtils.sliceAndConvertLazyDataset(rawAxis);
+				doubleAxis = DatasetUtils.cast(DoubleDataset.class, axis);
+			}
+			catch (DatasetException e)
+			{
+				e.printStackTrace();
+			}
+			axisDataset = doubleAxis != null ? doubleAxis : null;
 		}
 		else
 		{
