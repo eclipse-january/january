@@ -42,6 +42,51 @@
 					<workingDirectory>${basedir}/src/org/eclipse/january/dataset/internal/template</workingDirectory>
 				</configuration>
 			</plugin>
+			<plugin>
+				<!-- this plug-in splits version so that below the title can exclude the -SNAPSHOT
+			         http://stackoverflow.com/questions/13347796/manipulate-project-version-property-to-remove-snapshot
+			     -->
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<groupId>org.codehaus.mojo</groupId>
+				<version>3.0.0</version>
+				<executions>
+					<execution>
+					<id>parse-version</id>
+					<goals>
+						<goal>parse-version</goal>
+					</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<groupId>org.apache.maven.plugins</groupId>
+				<version>2.10.4</version>
+				<executions>
+					<execution>
+						<id>build-apidocs</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>javadoc</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<windowtitle>The Eclipse January API Documentation</windowtitle>
+					<doctitle>${project.name} ${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion} API.</doctitle>
+					<excludePackageNames>*.internal.*</excludePackageNames>
+					<linksource>true</linksource>
+					<links>
+						<!-- This list should match the bundles/packages depended on, with the versions as specified in the
+						     target platform -->
+						<link>https://docs.oracle.com/javase/7/docs/api/</link>
+						<link>https://commons.apache.org/proper/commons-lang/javadocs/api-2.6/</link>
+						<link>https://commons.apache.org/proper/commons-math/javadocs/api-3.5/</link>
+						<link>https://www.slf4j.org/apidocs/</link>
+					</links>
+					<failOnError>false</failOnError>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>
