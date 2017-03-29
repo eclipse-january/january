@@ -15,6 +15,8 @@ location "http://download.eclipse.org/tools/orbit/downloads/drops/R2017030718063
 
 // The versions we point to in Orbit are the versions we have CQs approved for, please
 // raise CQ for items not in this list or version changes
+// If the versions here are changed, the links in javadoc (see pom.xml for maven-javadoc-plugin) need
+// to be updated so links point to same version
 	org.slf4j.api [1.7.2,1.7.3) // CQ 11781
 	org.apache.commons.lang3 [3.1.0,3.1.1) // CQ 11782
 	org.apache.commons.lang [2.6.0,2.6.1) // CQ 11783
