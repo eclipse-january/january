@@ -104,7 +104,7 @@ public class AxesMetadataExample
 			if (axesA == null || axesB == null)
 			{
 				throw new IllegalArgumentException(
-						"Both dataset must have axes metadata");
+						"Both datasets must have axes metadata");
 			}
 			else
 			{
@@ -285,8 +285,9 @@ public class AxesMetadataExample
 							{bStart}, new int[]
 							{bEnd + 1}, null);
 
-							// see which dataset has more measurements in the intersecting
-							// period
+							// the interpolation strategy we're going to adopt is that we're
+							// going to use the index values from the dataset that has
+							// the most measurements in the intersecting range.
 							if (aIndicesTrimmed.getSize() > bIndicesTrimmed.getSize())
 							{
 								// aTimes has more samples, use it for interpolation
@@ -592,8 +593,12 @@ public class AxesMetadataExample
 
 	}
 
+	/**
+	 * test we interpolate data when one set of axis measurements spans the region covered by the
+	 * other
+	 */
 	@Test
-	public void testNonSyncedAxesOperationInNewMaths()
+	public void testNonSyncedContainedAxesOperation()
 	{
 		// configure Dataset A
 		final Dataset elevationA_m =
@@ -645,7 +650,6 @@ public class AxesMetadataExample
 				.setName("Mean of A and B, taken at B elevations (should be t = e / 10 + 5)");
 
 		printIndexedDataset(meanTemperature);
-		Utils.print(meanTemperature);
 
 		final AxesMetadata elevations =
 				meanTemperature.getFirstMetadata(AxesMetadata.class);
@@ -655,6 +659,75 @@ public class AxesMetadataExample
 		// check results, via sampling
 		assertEquals("correct value", 12.5d, meanTemperature.getDouble(1), 0.001); // mean temp at 75m
 		assertEquals("correct value", 17.5d, meanTemperature.getDouble(3), 0.001); // mean temp at 125m
+
+	}
+
+	/**
+	 * test we interpolate data when the two sets of axis measurements overlap
+	 */
+	@Test
+	public void testNonSyncedOverlappingAxesOperation()
+	{
+		// configure Dataset A
+		final Dataset elevationA_m =
+				DatasetFactory.createFromList(Arrays.asList(50d, 100d, 150d));
+		elevationA_m.setName("A elevation (m)");
+		Dataset temperatureA_C =
+				DatasetFactory.createFromList(Arrays.asList(5d, 10d, 15d));
+		final AxesMetadata axesMetadataA = new AxesMetadataImpl();
+		axesMetadataA.initialize(1);
+		axesMetadataA.setAxis(0, elevationA_m);
+		temperatureA_C.addMetadata(axesMetadataA);
+		temperatureA_C
+				.setName("A temperature (deg C), with elevations (t = e / 10)");
+
+		// configure Dataset B
+		final Dataset elevationB_m =
+				DatasetFactory
+						.createFromList(Arrays.asList(40d, 75d, 100d, 125d, 140d));
+		elevationB_m.setName("B elevation (m)");
+		final Dataset temperatureB_C =
+				DatasetFactory.createFromList(Arrays
+						.asList(14d, 17.5d, 20d, 22.5d, 24d));
+		final AxesMetadata axesMetadataB = new AxesMetadataImpl();
+		axesMetadataB.initialize(1);
+		axesMetadataB.setAxis(0, elevationB_m);
+		temperatureB_C.addMetadata(axesMetadataB);
+		temperatureB_C
+				.setName("B temperature (deg C), with elevations (t = e / 10 + 10)");
+
+		// show initial values
+		printIndexedDataset(temperatureA_C);
+		printIndexedDataset(temperatureB_C);
+
+		// wrap mathematical operation
+		final IOperationPerformer doAdd = new IOperationPerformer()
+		{
+			@Override
+			public Dataset perform(Dataset a, Dataset b, Dataset o)
+			{
+				return Maths.add(a, b, o).idivide(2d);
+			}
+		};
+
+		// apply our operation to the two datasets
+		final Dataset meanTemperature =
+				NewMaths.performWithInterpolation(temperatureA_C, temperatureB_C, null,
+						doAdd);
+		meanTemperature
+				.setName("Mean of A and B, taken at intersecting elevations (should be t = e / 10 + 5)");
+
+		printIndexedDataset(meanTemperature);
+
+		final AxesMetadata elevations =
+				meanTemperature.getFirstMetadata(AxesMetadata.class);
+		assertNotNull("elevations present in results", elevations);
+		assertEquals("correct elevations", 4, elevations.getAxis(0)[0].getSize());
+
+		// check results, via sampling
+		assertEquals("correct value", 12.5, meanTemperature.getDouble(0), 0.001); // mean temp at 75m
+		assertEquals("correct value", 17.5, meanTemperature.getDouble(2), 0.001); // mean temp at 125m
+		assertEquals("correct value", 19.0, meanTemperature.getDouble(3), 0.001); // mean temp at 140m
 
 	}
 
