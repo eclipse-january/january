@@ -30,7 +30,9 @@ import org.eclipse.january.dataset.Maths;
 import org.eclipse.january.metadata.AxesMetadata;
 import org.eclipse.january.metadata.internal.AxesMetadataImpl;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 
 /**
  * example to demonstrate using axes metadata to combine non-synced measurements
@@ -40,6 +42,8 @@ import org.junit.Test;
 public class AxesMetadataExample
 {
 
+	@Rule
+	public TestRule watcher = Utils.testWatcherCreator();
 	/**
 	 * we wish the interpolation function to be ignorant of the specific mathematical operation being
 	 * conducted. This interface wraps the operation in a Command
@@ -48,7 +52,7 @@ public class AxesMetadataExample
 	public static interface IOperationPerformer
 	{
 		/**
-		 * perform some operation on datasets and and b. If an output dataset is provided, store the
+		 * perform some operation on datasets a and b. If an output dataset is provided, store the
 		 * results in there.
 		 * 
 		 * @param a
