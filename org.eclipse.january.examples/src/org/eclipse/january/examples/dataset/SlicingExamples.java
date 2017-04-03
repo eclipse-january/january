@@ -22,7 +22,9 @@ import org.eclipse.january.dataset.PositionIterator;
 import org.eclipse.january.dataset.Random;
 import org.eclipse.january.dataset.Slice;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 
 /**
  * @see the full slicing unit tests in plugin    uk.ac.diamond.scisoft.analysis.test
@@ -31,6 +33,9 @@ import org.junit.Test;
  *
  */
 public class SlicingExamples {
+	
+	@Rule
+	public TestRule watcher = Utils.testWatcherCreator();
 	
 	@Before
 	public void before() {

@@ -27,7 +27,11 @@ import org.eclipse.january.dataset.Maths;
 import org.eclipse.january.dataset.Random;
 import org.eclipse.january.dataset.Slice;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
+import org.junit.rules.TestWatcher;
+import org.junit.runner.Description;
 
 
 /**
@@ -42,6 +46,8 @@ import org.junit.Test;
 @SuppressWarnings("unused")
 public class NumpyExamples {
 	
+	@Rule
+	public TestRule watcher = Utils.testWatcherCreator();
 	/**
 	 * IDataset is like ndarray
 	 */
@@ -179,7 +185,6 @@ public class NumpyExamples {
 	
 	/**rows one to three and columns five to nine of a. This gives read-only access.
 	 * a(1:3,5:9)                 a[0:3][:,4:9]
-
 	 */
 	@Test
 	public void subslice() {
@@ -207,7 +212,7 @@ public class NumpyExamples {
 	
 	/**every other row of a, starting with the first
 	 * a(1:2:end,:)                a[ ::2,:]
-	 * */
+	 */
 	@Test
 	public void everyOther2() {
 		
@@ -220,7 +225,7 @@ public class NumpyExamples {
 
 	/**	a with rows in reverse order
 	 * a(end:-1:1,:) or flipud(a)           a[ ::-1,:]
-	 * **/
+	 **/
 	@Test
 	public void reverseOrder() {
 		// a is 2x3 so we make a bigger one
@@ -565,7 +570,7 @@ public class NumpyExamples {
     	
     	// Equivalent tech
     	BooleanDataset bs = Comparisons.logicalAnd(a, b);
-      	System.out.println("Result of a && b "+bs);
+      	System.out.println("Result of a & b "+bs);
   	
     	// Or more useful (?)
     	final IDataset booleans = DatasetFactory.zeros(BooleanDataset.class, 3, 3);
@@ -583,7 +588,7 @@ public class NumpyExamples {
     @Test
     public void logicalOr() {
     	BooleanDataset bs = Comparisons.logicalOr(a, b);
-      	System.out.println("Result of a || b "+bs);
+      	System.out.println("Result of a | b "+bs);
     }
     
     /**
