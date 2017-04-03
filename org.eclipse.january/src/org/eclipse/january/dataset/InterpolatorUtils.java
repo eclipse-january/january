@@ -367,7 +367,7 @@ public class InterpolatorUtils {
 	
 	
 	
-	
+	@SuppressWarnings("unused")
 	private static Dataset getTrimmedAxis(Dataset axis, int axisIndex, InterpolatedPoint p1, InterpolatedPoint p2) {
 		double startPoint = p1.getRealPoint().getDouble(axisIndex);
 		double endPoint = p2.getRealPoint().getDouble(axisIndex);
