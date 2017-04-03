@@ -1,23 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <bundle id="org.eclipse.january" version="1.0.0.qualifier">
-      <category name="january_datasets"/>
-   </bundle>
-   <bundle id="org.eclipse.january.source" version="1.0.0.qualifier">
-      <category name="january_datasets"/>
-   </bundle>
-   <bundle id="org.eclipse.january.asserts" version="1.0.0.qualifier">
-      <category name="january_datasets_test"/>
-   </bundle>
-   <bundle id="org.eclipse.january.asserts.source" version="1.0.0.qualifier">
-      <category name="january_datasets_test"/>
-   </bundle>
-   <bundle id="org.eclipse.january.test" version="1.0.0.qualifier">
-      <category name="january_datasets_test"/>
-   </bundle>
-   <bundle id="org.eclipse.january.test.source" version="1.0.0.qualifier">
-      <category name="january_datasets_test"/>
-   </bundle>
    <bundle id="org.eclipse.january.form" version="1.0.0.qualifier">
       <category name="january_form"/>
    </bundle>
