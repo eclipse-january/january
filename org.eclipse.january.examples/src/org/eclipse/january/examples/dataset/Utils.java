@@ -15,6 +15,8 @@ import java.util.Arrays;
 
 import org.eclipse.january.dataset.DTypeUtils;
 import org.eclipse.january.dataset.Dataset;
+import org.junit.rules.TestWatcher;
+import org.junit.runner.Description;
 import org.slf4j.LoggerFactory;
 
 public class Utils {
@@ -65,5 +67,18 @@ public class Utils {
 
 	public static void printDType(Dataset a) {
 		System.out.println(DTypeUtils.getDTypeName(a));
+	}
+	
+	/**
+	 * 	This function create a TestWatcher writing on screen the names of called classes and methods.
+	 * @return the TestWatcher created
+	 */
+	public static TestWatcher testWatcherCreator()
+	{
+		return new TestWatcher() {
+			protected void starting(Description description) {
+				System.out.println("\nStarting example : " + description.getMethodName()+ "from : "+description.getClassName()+" class.");
+			}
+		};
 	}
 }
