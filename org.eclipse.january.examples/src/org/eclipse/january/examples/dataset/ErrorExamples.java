@@ -14,7 +14,9 @@ package org.eclipse.january.examples.dataset;
 import org.eclipse.january.dataset.Dataset;
 import org.eclipse.january.dataset.Random;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 
 /**
  * Examples for carrying errors through your calculations.
@@ -23,6 +25,10 @@ import org.junit.Test;
  *
  */
 public class ErrorExamples {
+
+	
+	@Rule
+	public TestRule watcher = Utils.testWatcherCreator();
 	
 	@Before
 	public void before() {

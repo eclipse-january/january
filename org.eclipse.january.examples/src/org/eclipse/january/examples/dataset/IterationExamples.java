@@ -22,7 +22,9 @@ import org.eclipse.january.dataset.IndexIterator;
 import org.eclipse.january.dataset.PositionIterator;
 import org.eclipse.january.dataset.StrideIterator;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 
 
 /**
@@ -33,6 +35,9 @@ import org.junit.Test;
  *
  */
 public class IterationExamples {
+	
+	@Rule
+	public TestRule watcher = Utils.testWatcherCreator();
 	
 	@Before
 	public void before() {

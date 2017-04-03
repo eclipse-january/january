@@ -20,7 +20,9 @@ import org.eclipse.january.dataset.LazyMaths;
 import org.eclipse.january.dataset.Random;
 import org.eclipse.january.dataset.Slice;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 
 /**
  * Lazy datasets allow data to be declared and used without loading it
@@ -38,6 +40,9 @@ import org.junit.Test;
  *
  */
 public class LazyExamples {
+	
+	@Rule
+	public TestRule watcher = Utils.testWatcherCreator();
 	
 	@Before
 	public void before() {
