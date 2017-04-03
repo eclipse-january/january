@@ -27,7 +27,11 @@ import org.eclipse.january.dataset.Maths;
 import org.eclipse.january.dataset.Random;
 import org.eclipse.january.dataset.Slice;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
+import org.junit.rules.TestWatcher;
+import org.junit.runner.Description;
 
 
 /**
@@ -42,6 +46,8 @@ import org.junit.Test;
 @SuppressWarnings("unused")
 public class NumpyExamples {
 	
+	@Rule
+	public TestRule watcher = Utils.testWatcherCreator();
 	/**
 	 * IDataset is like ndarray
 	 */
