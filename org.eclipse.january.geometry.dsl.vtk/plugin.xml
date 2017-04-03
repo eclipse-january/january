@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+	<extension point="org.eclipse.emf.ecore.generated_package">
+		<package 
+			uri = "http://www.eclipse.org/january/geometry/xtext/IGES"
+			class = "org.eclipse.january.geometry.xtext.iGES.IGESPackage"
+			genModel = "model/generated/IGES.genmodel" />
+	</extension>
+ <extension
+       point="org.eclipse.january.geometry.model.org.eclipse.january.geometry.model.IGeometryImporterService">
+    <client
+          class="org.eclipse.january.geometry.dsl.vtk.service.VTKGeometryImporterService">
+    </client>
+ </extension>
+</plugin>

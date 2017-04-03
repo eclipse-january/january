@@ -1,0 +1,6 @@
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.january.geometry.xtext.obj">
+   <implementation class="org.eclipse.january.geometry.dsl.vtk.service.VTKGeometryImporterService"/>
+   <service>
+      <provide interface="org.eclipse.january.geometry.model.importer.IGeometryImporterService"/>
+   </service>
+</scr:component>
