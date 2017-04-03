@@ -226,10 +226,14 @@ public class AxesMetadataExample
 
 							// to find the last matching entry, we have to work through
 							// the dataset in reverse.
-							final Dataset aReverse = aIndices.getSlice(null, null, new int[]
-							{-1});
-							final Dataset bReverse = bIndices.getSlice(null, null, new int[]
-							{-1});
+							final Dataset aReverse =
+									DatasetFactory.createFromObject(aIndices.getSliceView(null,
+											null, new int[]
+											{-1}));
+							final Dataset bReverse =
+									DatasetFactory.createFromObject(bIndices.getSlice(null, null,
+											new int[]
+											{-1}));
 
 							// now get the two slices in this period
 							final int aStart;
@@ -278,10 +282,10 @@ public class AxesMetadataExample
 							}
 
 							// ok, retrieve the index values that are within the intersecting period
-							final Dataset aIndicesTrimmed = aIndices.getSlice(new int[]
+							final Dataset aIndicesTrimmed = aIndices.getSliceView(new int[]
 							{aStart}, new int[]
 							{aEnd + 1}, null);
-							final Dataset bIndicesTrimmed = bIndices.getSlice(new int[]
+							final Dataset bIndicesTrimmed = bIndices.getSliceView(new int[]
 							{bStart}, new int[]
 							{bEnd + 1}, null);
 
@@ -296,7 +300,7 @@ public class AxesMetadataExample
 												.interpolate(bIndices, db, aIndicesTrimmed, null, null);
 
 								// we can just extract the trimmed set of a values
-								final Dataset aValues = da.getSlice(new int[]
+								final Dataset aValues = da.getSliceView(new int[]
 								{aStart}, new int[]
 								{aEnd + 1}, null);
 
@@ -322,7 +326,7 @@ public class AxesMetadataExample
 												.interpolate(aIndices, da, bIndicesTrimmed, null, null);
 
 								// we can just extract the trimmed set of b values
-								final Dataset bValues = db.getSlice(new int[]
+								final Dataset bValues = db.getSliceView(new int[]
 								{bStart}, new int[]
 								{bEnd + 1}, null);
 
