@@ -45,7 +45,7 @@ public class AxesMetadataExample
 	public static interface IOperationPerformer
 	{
 		/**
-		 * perform some operation on datasets and and b. If an output dataset is provided, store the
+		 * perform some operation on datasets a and b. If an output dataset is provided, store the
 		 * results in there.
 		 * 
 		 * @param a
