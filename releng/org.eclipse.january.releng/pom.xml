@@ -185,6 +185,7 @@
 
 		<module>../../org.eclipse.january</module>
 		<module>../../org.eclipse.january.asserts</module>
+		<module>../../org.eclipse.january.examples</module>
 		<module>../../org.eclipse.january.test</module>
 
 		<!-- releng -->
