@@ -22,8 +22,7 @@ import org.eclipse.january.geometry.model.dsl.STLStandaloneSetupGenerated;
 @SuppressWarnings("all")
 public class STLStandaloneSetup extends STLStandaloneSetupGenerated {
   public static void doSetup() {
-    STLStandaloneSetup _sTLStandaloneSetup = new STLStandaloneSetup();
-    _sTLStandaloneSetup.createInjectorAndDoEMFRegistration();
+    new STLStandaloneSetup().createInjectorAndDoEMFRegistration();
   }
   
   @Override

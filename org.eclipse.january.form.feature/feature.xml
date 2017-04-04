@@ -12,7 +12,7 @@
 <feature
       id="org.eclipse.january.form.feature"
       label="January Form Feature"
-      version="1.0.0.qualifier">
+      version="2.1.0.qualifier">
 
    <description url="http://www.eclipse.org/january">
       This feature describes all of the form-like data structures available in Eclipse January.

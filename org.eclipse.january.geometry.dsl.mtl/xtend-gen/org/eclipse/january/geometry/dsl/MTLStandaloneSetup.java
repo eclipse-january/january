@@ -11,7 +11,6 @@ import org.eclipse.january.geometry.dsl.MTLStandaloneSetupGenerated;
 @SuppressWarnings("all")
 public class MTLStandaloneSetup extends MTLStandaloneSetupGenerated {
   public static void doSetup() {
-    MTLStandaloneSetup _mTLStandaloneSetup = new MTLStandaloneSetup();
-    _mTLStandaloneSetup.createInjectorAndDoEMFRegistration();
+    new MTLStandaloneSetup().createInjectorAndDoEMFRegistration();
   }
 }

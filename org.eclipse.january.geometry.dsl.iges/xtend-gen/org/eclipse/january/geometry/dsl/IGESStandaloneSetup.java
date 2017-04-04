@@ -11,7 +11,6 @@ import org.eclipse.january.geometry.dsl.IGESStandaloneSetupGenerated;
 @SuppressWarnings("all")
 public class IGESStandaloneSetup extends IGESStandaloneSetupGenerated {
   public static void doSetup() {
-    IGESStandaloneSetup _iGESStandaloneSetup = new IGESStandaloneSetup();
-    _iGESStandaloneSetup.createInjectorAndDoEMFRegistration();
+    new IGESStandaloneSetup().createInjectorAndDoEMFRegistration();
   }
 }

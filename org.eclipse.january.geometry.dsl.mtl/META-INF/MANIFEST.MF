@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Eclipse January Geometry XText MTL (Incubation)
 Bundle-Vendor: Eclipse January
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 2.1.0.qualifier
 Bundle-SymbolicName: org.eclipse.january.geometry.dsl.mtl;singleton:=true
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

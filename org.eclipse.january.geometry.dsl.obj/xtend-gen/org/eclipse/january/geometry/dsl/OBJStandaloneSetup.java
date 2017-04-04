@@ -14,8 +14,7 @@ import org.eclipse.january.geometry.dsl.OBJStandaloneSetupGenerated;
 @SuppressWarnings("all")
 public class OBJStandaloneSetup extends OBJStandaloneSetupGenerated {
   public static void doSetup() {
-    OBJStandaloneSetup _oBJStandaloneSetup = new OBJStandaloneSetup();
-    _oBJStandaloneSetup.createInjectorAndDoEMFRegistration();
+    new OBJStandaloneSetup().createInjectorAndDoEMFRegistration();
   }
   
   @Override

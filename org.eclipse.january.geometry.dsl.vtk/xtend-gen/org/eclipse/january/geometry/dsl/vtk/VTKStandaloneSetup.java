@@ -11,7 +11,6 @@ import org.eclipse.january.geometry.dsl.vtk.VTKStandaloneSetupGenerated;
 @SuppressWarnings("all")
 public class VTKStandaloneSetup extends VTKStandaloneSetupGenerated {
   public static void doSetup() {
-    VTKStandaloneSetup _vTKStandaloneSetup = new VTKStandaloneSetup();
-    _vTKStandaloneSetup.createInjectorAndDoEMFRegistration();
+    new VTKStandaloneSetup().createInjectorAndDoEMFRegistration();
   }
 }

@@ -4,9 +4,6 @@
 package org.eclipse.january.geometry.dsl;
 
 import com.google.inject.Binder;
-import com.google.inject.binder.AnnotatedBindingBuilder;
-import com.google.inject.binder.LinkedBindingBuilder;
-import com.google.inject.name.Named;
 import com.google.inject.name.Names;
 import org.eclipse.january.geometry.dsl.AbstractIGESRuntimeModule;
 import org.eclipse.january.geometry.dsl.CustomIGESLexer;
@@ -22,10 +19,7 @@ import org.eclipse.xtext.parser.antlr.LexerBindings;
 public class IGESRuntimeModule extends AbstractIGESRuntimeModule {
   @Override
   public void configureRuntimeLexer(final Binder binder) {
-    AnnotatedBindingBuilder<Lexer> _bind = binder.<Lexer>bind(Lexer.class);
-    Named _named = Names.named(LexerBindings.RUNTIME);
-    LinkedBindingBuilder<Lexer> _annotatedWith = _bind.annotatedWith(_named);
-    _annotatedWith.to(CustomIGESLexer.class);
+    binder.<Lexer>bind(Lexer.class).annotatedWith(Names.named(LexerBindings.RUNTIME)).to(CustomIGESLexer.class);
   }
   
   @Override

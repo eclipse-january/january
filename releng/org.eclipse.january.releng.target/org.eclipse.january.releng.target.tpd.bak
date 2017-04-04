@@ -1,6 +1,6 @@
 /*-
  *******************************************************************************
- * Copyright (c) 2017 Kichwa Coders and others.
+ * Copyright (c) 2016, 2017 Kichwa Coders and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -9,19 +9,27 @@
  * Contributors:
  *    Jonah Graham (Kichwa Coders) - initial API and implementation
  *******************************************************************************/
-target "January-baseline" with source requirements
+target "January" with source requirements
 
-location "http://download.eclipse.org/january/releases/2.0.0/repository/" january-2.0 {
-	org.eclipse.january lazy
-}
-
-location "http://download.eclipse.org/tools/orbit/downloads/drops/S20170120205402/repository" eclipse-orbit-oxygen-m5 {
+location "http://download.eclipse.org/tools/orbit/downloads/drops/R20170307180635/repository" eclipse-orbit-neon-sr3 {
 
 // The versions we point to in Orbit are the versions we have CQs approved for, please
 // raise CQ for items not in this list or version changes
+// If the versions here are changed, the links in javadoc (see pom.xml for maven-javadoc-plugin) need
+// to be updated so links point to same version
 	org.slf4j.api [1.7.2,1.7.3) // CQ 11781
 	org.apache.commons.lang3 [3.1.0,3.1.1) // CQ 11782
 	org.apache.commons.lang [2.6.0,2.6.1) // CQ 11783
 	org.apache.commons.math3 [3.5.0,3.5.1) // CQ 11785
 
+	// Items below are not depended on by released January bundles, only test ones, so no CQs
+	org.junit [4.12.0,5.0.0)
+	org.mockito [1.9.5,2.0.0)
+	org.hamcrest [1.1.0,2.0.0)
+}
+
+// To speed up the build, pull the platform from its own site. version specific and not the EPP site
+location "http://download.eclipse.org/eclipse/updates/4.6/R-4.6.2-201611241400/" {
+	org.eclipse.equinox.launcher lazy
+	org.eclipse.core.runtime.feature.feature.group lazy
 }

@@ -18,7 +18,7 @@
 		<relativePath>../releng/org.eclipse.january.releng/pom.xml</relativePath>
 		<groupId>org.eclipse.january</groupId>
 		<artifactId>org.eclipse.january.releng</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>2.1.0-SNAPSHOT</version>
 	</parent>
 	<groupId>org.eclipse.eavp</groupId>
 	<artifactId>org.eclipse.january.geometry.dsl.vtk</artifactId>
