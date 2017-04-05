@@ -74,6 +74,8 @@ public class AxesMetadataExample
 	 */
 	private static class NewMaths extends Maths
 	{
+		private static final String ONLY_1D_DATASETS =
+				"Only 1d datasets are currently covered by this interpolation mechanism";
 		private static final String DUPLICATE_INDEX_VALUES_NOT_ALLOWED =
 				"Duplicate index values not allowed";
 		private static final String AXES_MUST_ASCEND_IN_SAME_DIRECTION =
@@ -109,6 +111,11 @@ public class AxesMetadataExample
 			{
 				throw new IllegalArgumentException(
 						"Both datasets must have axes metadata");
+			}
+			else if (da.getRank() != 1 || db.getRank() != 1)
+			{
+				// this processing code only supports 1-D datasets
+				throw new IllegalArgumentException(ONLY_1D_DATASETS);
 			}
 			else
 			{
@@ -231,67 +238,82 @@ public class AxesMetadataExample
 							// to find the last matching entry, we have to work through
 							// the dataset in reverse.
 							final Dataset aReverse =
-									DatasetFactory.createFromObject(aIndices.getSliceView(null,
-											null, new int[]
-											{-1}));
+									aIndices.getSliceView(null, null, new int[]
+									{-1});
 							final Dataset bReverse =
-									DatasetFactory.createFromObject(bIndices.getSlice(null, null,
-											new int[]
-											{-1}));
+									bIndices.getSliceView(null, null, new int[]
+									{-1});
 
 							// now get the two slices in this period
-							final int aStart;
-							final int aEnd;
-							final int bStart;
-							final int bEnd;
+							final int aStartPosition;
+							final int aEndPosition;
+							final int bStartPosition;
+							final int bEndPosition;
 							if (aMono == Monotonicity.STRICTLY_INCREASING)
 							{
-								// ok - data ascending
-								aStart =
+								// ok - get the index of the first point in the region
+								final int aStartIndex =
 										DatasetUtils.findIndexGreaterThanOrEqualTo(aIndices,
 												startPoint);
+
+								// now retrieve the n-dimensional position that matches this index
+								aStartPosition = aIndices.getNDPosition(aStartIndex)[0];
+
 								// note: we reduce index by one to allow for zero-indexing
-								aEnd =
-										aReverse.getSize()
-												- 1
-												- DatasetUtils.findIndexLessThanOrEqualTo(aReverse,
-														endPoint);
-								bStart =
+								final int aEndIndex =
+										DatasetUtils.findIndexLessThanOrEqualTo(aReverse, endPoint);
+								aEndPosition =
+										aReverse.getSize() - 1
+												- aReverse.getNDPosition(aEndIndex)[0];
+
+								final int bStartIndex =
 										DatasetUtils.findIndexGreaterThanOrEqualTo(bIndices,
 												startPoint);
-								bEnd =
-										bReverse.getSize()
-												- 1
-												- DatasetUtils.findIndexLessThanOrEqualTo(bReverse,
-														endPoint);
+								bStartPosition = bIndices.getNDPosition(bStartIndex)[0];
+
+								final int bEndIndex =
+										DatasetUtils.findIndexLessThanOrEqualTo(bReverse, endPoint);
+								bEndPosition =
+										bReverse.getSize() - 1
+												- bReverse.getNDPosition(bEndIndex)[0];
 							}
 							else
 							{
 								// ok - data descending
-								aStart =
+								// get the index of the first point in the region
+								final int aStartIndex =
 										DatasetUtils.findIndexLessThanOrEqualTo(aIndices, endPoint);
+
+								// now retrieve the n-dimensional position that matches this index
+								aStartPosition = aIndices.getNDPosition(aStartIndex)[0];
+
 								// note: we reduce index by one to allow for zero-indexing
-								aEnd =
-										aReverse.getSize()
-												- 1
-												- DatasetUtils.findIndexGreaterThanOrEqualTo(aReverse,
-														startPoint);
-								bStart =
+								final int aEndIndex =
+										DatasetUtils.findIndexGreaterThanOrEqualTo(aReverse,
+												startPoint);
+								aEndPosition =
+										aReverse.getSize() - 1
+												- aReverse.getNDPosition(aEndIndex)[0];
+
+								final int bStartIndex =
 										DatasetUtils.findIndexLessThanOrEqualTo(bIndices, endPoint);
-								bEnd =
-										bReverse.getSize()
-												- 1
-												- DatasetUtils.findIndexGreaterThanOrEqualTo(bReverse,
-														startPoint);
+								bStartPosition = bIndices.getNDPosition(bStartIndex)[0];
+
+								final int bEndIndex =
+										DatasetUtils.findIndexGreaterThanOrEqualTo(bReverse,
+												startPoint);
+								bEndPosition =
+										bReverse.getSize() - 1
+												- bReverse.getNDPosition(bEndIndex)[0];
 							}
 
 							// ok, retrieve the index values that are within the intersecting period
 							final Dataset aIndicesTrimmed = aIndices.getSliceView(new int[]
-							{aStart}, new int[]
-							{aEnd + 1}, null);
+							{aStartPosition}, new int[]
+							{aEndPosition + 1}, null);
 							final Dataset bIndicesTrimmed = bIndices.getSliceView(new int[]
-							{bStart}, new int[]
-							{bEnd + 1}, null);
+							{bStartPosition}, new int[]
+							{bEndPosition + 1}, null);
 
 							// the interpolation strategy we're going to adopt is that we're
 							// going to use the index values from the dataset that has
@@ -305,8 +327,8 @@ public class AxesMetadataExample
 
 								// we can just extract the trimmed set of a values
 								final Dataset aValues = da.getSliceView(new int[]
-								{aStart}, new int[]
-								{aEnd + 1}, null);
+								{aStartPosition}, new int[]
+								{aEndPosition + 1}, null);
 
 								// clear the metadata from this, since we'll change the axis length
 								aValues.clearMetadata(AxesMetadata.class);
@@ -331,8 +353,8 @@ public class AxesMetadataExample
 
 								// we can just extract the trimmed set of b values
 								final Dataset bValues = db.getSliceView(new int[]
-								{bStart}, new int[]
-								{bEnd + 1}, null);
+								{bStartPosition}, new int[]
+								{bEndPosition + 1}, null);
 
 								// clear the metadata from this, since we'll change the axis length
 								bValues.clearMetadata(AxesMetadata.class);
@@ -538,13 +560,12 @@ public class AxesMetadataExample
 					NewMaths.AXES_MUST_ASCEND_IN_SAME_DIRECTION, ee.getMessage());
 		}
 
-		// configure Dataset D
+		// configure Dataset D - to check we're enforcing 1-d only datasets
 		final Dataset elevationD_m =
-				DatasetFactory.createFromList(Arrays.asList(60d, 75d, 75d, 100d, 175d));
+				DatasetFactory.createFromList(Arrays.asList(15d, 17.5d, 20d, 22.5d));
 		elevationD_m.setName("D elevation (m)");
-		final Dataset temperatureD_C =
-				DatasetFactory.createFromList(Arrays
-						.asList(15d, 17.5d, 20d, 22.5d, 25d));
+		final Dataset temperatureD_C = DatasetFactory.createFromObject(new double[]
+		{1, 1, 2, 3, 5, 8, 13, 21}).reshape(4, 2);
 		final AxesMetadata axesMetadataD = new AxesMetadataImpl();
 		axesMetadataD.initialize(1);
 		axesMetadataD.setAxis(0, elevationD_m);
@@ -561,13 +582,13 @@ public class AxesMetadataExample
 		}
 		catch (IllegalArgumentException ee)
 		{
-			assertEquals("correct message",
-					NewMaths.DUPLICATE_INDEX_VALUES_NOT_ALLOWED, ee.getMessage());
+			assertEquals("correct message", NewMaths.ONLY_1D_DATASETS, ee
+					.getMessage());
 		}
 
 		// configure Dataset E
 		final Dataset elevationE_m =
-				DatasetFactory.createFromList(Arrays.asList(60d, 75d, 80d, 100d, 175d));
+				DatasetFactory.createFromList(Arrays.asList(60d, 75d, 75d, 100d, 175d));
 		elevationE_m.setName("E elevation (m)");
 		final Dataset temperatureE_C =
 				DatasetFactory.createFromList(Arrays
@@ -578,8 +599,35 @@ public class AxesMetadataExample
 		temperatureE_C.addMetadata(axesMetadataE);
 		temperatureE_C.setName("E temperature (deg C)");
 
+		try
+		{
+			@SuppressWarnings("unused")
+			final Dataset meanTemperature =
+					NewMaths.performWithInterpolation(temperatureA_C, temperatureE_C,
+							null, doAdd);
+			fail("an exception should have been thrown");
+		}
+		catch (IllegalArgumentException ee)
+		{
+			assertEquals("correct message",
+					NewMaths.DUPLICATE_INDEX_VALUES_NOT_ALLOWED, ee.getMessage());
+		}
+
+		// configure Dataset F
+		final Dataset elevationF_m =
+				DatasetFactory.createFromList(Arrays.asList(60d, 75d, 80d, 100d, 175d));
+		elevationF_m.setName("F elevation (m)");
+		final Dataset temperatureF_C =
+				DatasetFactory.createFromList(Arrays
+						.asList(15d, 17.5d, 20d, 22.5d, 25d));
+		final AxesMetadata axesMetadataF = new AxesMetadataImpl();
+		axesMetadataF.initialize(1);
+		axesMetadataF.setAxis(0, elevationF_m);
+		temperatureF_C.addMetadata(axesMetadataF);
+		temperatureF_C.setName("F temperature (deg C)");
+
 		final Dataset meanTemperature =
-				NewMaths.performWithInterpolation(temperatureA_C, temperatureE_C, null,
+				NewMaths.performWithInterpolation(temperatureA_C, temperatureF_C, null,
 						doAdd);
 		assertNotNull(meanTemperature);
 		meanTemperature.setName("Interpolated sum of dataset A and dataset B");
@@ -587,7 +635,7 @@ public class AxesMetadataExample
 		// check that the resulting dataset has the correctly intersecting times
 		printIndexedDataset((Dataset) temperatureA_C.getFirstMetadata(
 				AxesMetadata.class).getAxes()[0]);
-		printIndexedDataset((Dataset) temperatureE_C.getFirstMetadata(
+		printIndexedDataset((Dataset) temperatureF_C.getFirstMetadata(
 				AxesMetadata.class).getAxes()[0]);
 		Dataset interElevations =
 				(Dataset) meanTemperature.getFirstMetadata(AxesMetadata.class).getAxis(
@@ -672,9 +720,11 @@ public class AxesMetadataExample
 
 	/**
 	 * test we interpolate data when the two sets of axis measurements overlap
+	 * 
+	 * @throws DatasetException
 	 */
 	@Test
-	public void testNonSyncedOverlappingAxesOperation()
+	public void testNonSyncedOverlappingAxesOperation() throws DatasetException
 	{
 		// configure Dataset A
 		final Dataset elevationA_m =
@@ -732,6 +782,11 @@ public class AxesMetadataExample
 		assertNotNull("elevations present in results", elevations);
 		assertEquals("correct elevations", 4, elevations.getAxis(0)[0].getSize());
 
+		Dataset elevationValues =
+				DatasetUtils.sliceAndConvertLazyDataset(elevations.getAxis(0)[0]);
+		assertEquals("correct start elevation", 75, elevationValues.getDouble(0),
+				0.001);
+
 		// check results, via sampling
 		assertEquals("correct value", 12.5, meanTemperature.getDouble(0), 0.001); // mean temp at 75m
 		assertEquals("correct value", 17.5, meanTemperature.getDouble(2), 0.001); // mean temp at 125m
@@ -744,6 +799,7 @@ public class AxesMetadataExample
 		final AxesMetadata axesMetadata =
 				dataset.getFirstMetadata(AxesMetadata.class);
 		final IndexIterator iterator = dataset.getIterator();
+		IndexIterator axisIterator = null;
 
 		final DoubleDataset axisDataset;
 		if (axesMetadata != null && axesMetadata.getAxes().length > 0)
@@ -754,6 +810,7 @@ public class AxesMetadataExample
 				ILazyDataset rawAxis = axesMetadata.getAxes()[0];
 				Dataset axis = DatasetUtils.sliceAndConvertLazyDataset(rawAxis);
 				doubleAxis = DatasetUtils.cast(DoubleDataset.class, axis);
+				axisIterator = doubleAxis.getIterator();
 			}
 			catch (DatasetException e)
 			{
@@ -767,12 +824,13 @@ public class AxesMetadataExample
 		}
 
 		System.out.println(dataset.getName() + ":");
-		while (iterator.hasNext())
+		while (iterator.hasNext() && axisIterator.hasNext())
 		{
 			final String indexVal;
 			if (axisDataset != null)
 			{
-				indexVal = "" + axisDataset.getElementDoubleAbs(iterator.index) + " : ";
+				indexVal =
+						"" + axisDataset.getElementDoubleAbs(axisIterator.index) + " : ";
 			}
 			else
 			{
@@ -784,5 +842,4 @@ public class AxesMetadataExample
 		}
 		System.out.println();
 	}
-
 }
