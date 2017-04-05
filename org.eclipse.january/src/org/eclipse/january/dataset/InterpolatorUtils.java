@@ -362,43 +362,6 @@ public class InterpolatorUtils {
 			throw new IllegalArgumentException("Datasets do not match");
 		}
 	}
-
-	
-	
-	
-	
-	
-	private static Dataset getTrimmedAxis(Dataset axis, int axisIndex, InterpolatedPoint p1, InterpolatedPoint p2) {
-		double startPoint = p1.getRealPoint().getDouble(axisIndex);
-		double endPoint = p2.getRealPoint().getDouble(axisIndex);
-		
-		// swap if needed
-		if (startPoint > endPoint) {
-			startPoint = p2.getRealPoint().getDouble(axisIndex);
-			endPoint = p1.getRealPoint().getDouble(axisIndex);
-		}
-
-		int start = getTrimmedAxisStart(axis, startPoint);
-		int end = getTrimmedAxisEnd(axis, start, endPoint);
-		
-		return axis.getSlice(new int[] {start}, new int[] {end}, null);
-	}
-
-	private static int getTrimmedAxisStart(Dataset axis, double startPoint) {
-		for (int i = 0; i < axis.getShapeRef()[0]; i++) {
-			if (axis.getDouble(i) > startPoint) return i;
-		}
-		// if we get to here then the start point is higher than the whole system
-		return -1;
-	}
-	
-	private static int getTrimmedAxisEnd(Dataset axis, int startPos, double endPoint) {
-		for (int i = startPos; i < axis.getShapeRef()[0]; i++) {
-			if (axis.getDouble(i) > endPoint) return i-1;
-		}
-		// if we get to here then the end point is higher than the whole system
-		return axis.getShapeRef()[0];
-	}
 	
 	public static Dataset remap1D(Dataset dataset, Dataset axis, Dataset outputAxis) {
 		Dataset data = DatasetFactory.zeros(DoubleDataset.class, outputAxis.getShapeRef());

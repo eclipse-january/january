@@ -370,28 +370,6 @@ public class LinearAlgebra {
 		return s;
 	}
 
-	// assume axes is in increasing order
-	private static int[] addAxesToShape(int[] shape, int[] axes, int[] lengths) {
-		int n = axes.length;
-		if (lengths.length != n) {
-			throw new IllegalArgumentException("Axes and lengths arrays must be same size");
-		}
-		int[] s = new int[shape.length + n];
-		int i = 0;
-		int j = 0;
-		for (int k = 0; k < n; k++) {
-			int a = axes[k];
-			while (i < a) {
-				s[j++] = shape[i++];
-			}
-			s[j++] = lengths[k];
-		}
-		while (i < shape.length) {
-			s[j++] = shape[i++];
-		}
-		return s;
-	}
-
 	private static Dataset crossProduct2D(Dataset a, Dataset b, int axisA, int axisB) {
 		// need to broadcast and omit given axes
 		int[] shapeA = removeAxisFromShape(a.getShapeRef(), axisA);
