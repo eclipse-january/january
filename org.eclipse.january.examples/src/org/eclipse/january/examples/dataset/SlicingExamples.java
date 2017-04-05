@@ -11,11 +11,18 @@
 
 package org.eclipse.january.examples.dataset;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.eclipse.january.DatasetException;
+import org.eclipse.january.dataset.Dataset;
+import org.eclipse.january.dataset.DatasetFactory;
 import org.eclipse.january.dataset.IDataset;
 import org.eclipse.january.dataset.ILazyDataset;
 import org.eclipse.january.dataset.PositionIterator;
@@ -96,6 +103,71 @@ public class SlicingExamples {
 			image.squeeze(); // This changes shape from 1,1,100,100 to 100,100
             assertTrue(Arrays.equals(new int[]{100, 100}, image.getShape()));
 		}
+	}
+
+	@Test
+	public void iterateImagesNDStream1() throws DatasetException {
+		
+		final ILazyDataset lz = Random.lazyRand(64, 64, 100, 100);		
+		
+		// That is more like it!
+		lz.positionStream(64, 64).forEach(image -> assertTrue(Arrays.equals(new int[]{1,1,100, 100}, image.getShape())));
+	}
+	@Test
+	public void iterateImagesNDStream2() throws DatasetException {
+		
+		final ILazyDataset lz = Random.lazyRand(64, 64, 100, 100);		
+		
+		// That is more like it!
+		lz.positionStream(0, new int[]{64,64}).forEach(image -> assertTrue(Arrays.equals(new int[]{1,1,100, 100}, image.getShape())));
+	}
+	
+	@Test
+	public void iterateImagesNDStream3() throws DatasetException {
+		
+		final ILazyDataset lz = Random.lazyRand(64, 64, 100, 100);		
+		
+		// That is more like it!
+		lz.positionStream(new int[]{100,100}, 0, 1).forEach(image -> assertTrue(Arrays.equals(new int[]{1,1,100, 100}, image.getShape())));
+	}
+
+	@Test
+	public void iterateImageSum() throws DatasetException {
+		
+		final ILazyDataset lz = Random.lazyRand(64, 64, 100, 100);		
+		final PositionIterator it = new PositionIterator(new int[]{64, 64});
+		final List<Number> maxes = new ArrayList<Number>();
+		while(it.hasNext()) {
+			int[] pos = it.getPos();
+			Slice[] slice = new Slice[lz.getRank()];
+			for (int i = 0; i < pos.length; i++) {
+				slice[i] = new Slice(pos[i], pos[i]+1);
+			}
+			IDataset image = lz.getSlice(slice);
+			maxes.add(image.max());
+		}
+		assertEquals(64*64, maxes.size());
+	}
+
+	@Test
+	public void iterateImageSumStream() throws DatasetException {
+		
+		final ILazyDataset lz = Random.lazyRand(64, 64, 100, 100);		
+		
+		List<Number> maxes = lz.positionStream(64, 64).map(set->set.max()).collect(Collectors.toList());
+		assertEquals(64*64, maxes.size());
+	}
+
+
+	@Test
+	public void iterateImagesStreamMaxImage() throws DatasetException {
+		
+		final ILazyDataset lz = Random.lazyRand(64, 64, 100, 100);		
+		
+		Dataset sum = DatasetFactory.zeros(1,1,100, 100);
+		lz.positionStream(64, 64).forEach(image -> sum.iadd(image));
+		
+		IntStream.range(0, sum.getSize()).forEach(i -> assertTrue("The sum is "+sum.getElementDoubleAbs(i), sum.getElementDoubleAbs(i)>1000));
 	}
 
 }

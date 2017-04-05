@@ -12,6 +12,8 @@
 
 package org.eclipse.january.dataset;
 
+import java.util.function.Supplier;
+
 /**
  * <p>Class to provide iteration through a dataset</p>
  * <p>Instantiate an iterator and use it in a while loop:

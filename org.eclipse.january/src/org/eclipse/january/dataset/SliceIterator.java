@@ -263,4 +263,22 @@ public class SliceIterator extends IndexIterator {
 	public int[] getShape() {
 		return sshape;
 	}
+	
+
+	@Override
+	public int[] get() {
+		return hasNext() ? getPos() : null;
+	}
+	
+	/**
+	 * The number of repetitions which this iterator will make
+	 * @return
+	 */
+	public int size() {
+		int size = 0;
+		while (hasNext()) size++;
+		reset();
+        return size;
+	}
+
 }

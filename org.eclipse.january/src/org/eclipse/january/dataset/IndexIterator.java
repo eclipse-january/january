@@ -12,6 +12,8 @@
 
 package org.eclipse.january.dataset;
 
+import java.util.function.Supplier;
+
 /**
  * <p>Class to provide iteration through whole data array that backs a dataset</p>
  * <p>Instantiate an iterator and use it in a while loop:
@@ -26,7 +28,7 @@ package org.eclipse.january.dataset;
  * </pre>
  * 
  */
-public abstract class IndexIterator {
+public abstract class IndexIterator implements Supplier<int[]> {
 	/**
 	 * Index in array
 	 */
@@ -53,4 +55,21 @@ public abstract class IndexIterator {
 	public int[] getShape() {
 		return null;
 	}
+
+	@Override
+	public int[] get() {
+		return hasNext() ? getPos() : null;
+	}
+	
+	/**
+	 * The number of repetitions which this iterator will make
+	 * @return
+	 */
+	public int size() {
+		int size = 0;
+		while (hasNext()) size++;
+		reset();
+        return size;
+	}
+
 }

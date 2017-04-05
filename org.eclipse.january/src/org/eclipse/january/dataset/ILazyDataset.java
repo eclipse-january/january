@@ -13,6 +13,9 @@
 package org.eclipse.january.dataset;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 import org.eclipse.january.DatasetException;
 import org.eclipse.january.IMonitor;
@@ -236,4 +239,115 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 	 * @return true if there is error data.
 	 */
 	public boolean hasErrors();
+	
+	/**
+	 * Overloads PositionIterator(int[]) for ease of use.
+	 * @param shape
+	 * @return
+	 */
+	default Stream<IDataset> positionStream(int... shape) {
+		return positionStream(new PositionIterator(shape));
+	}
+	
+	/**
+	 * Overloads PositionIterator(int, int[]) for ease of use.
+	 * @param shape
+	 * @return
+	 */
+	default Stream<IDataset> positionStream(int offset, int[] shape) {
+		return positionStream(new PositionIterator(offset, shape));
+	}
+	
+	/**
+	 * Overloads PositionIterator(int[], int...) for ease of use.
+	 * @param shape
+	 * @return
+	 */
+	default Stream<IDataset> positionStream(int[] shape, int... axes) {
+		return positionStream(new PositionIterator(shape, axes));
+	}
+
+	/**
+	 * This default method is designed to move the slice 
+	 * logic to a single place and return a Stream of IDatasets.
+	 * The current implementation slices from left to right in
+	 * the shape of the lazy dataset only. For instance if the 
+	 * position iterator is slicing two dimensions, the first
+	 * two dimensions of this dataset will be used to slice
+	 * whilst the others keep full width. For instance using a 
+	 * 64x64 iterator with a 64,64,100,100 dataset will give
+	 * 4096 100x100 images of shape 1,1,100,100.
+	 * 
+	 * This approach allows the syntax of slicing to be kept 
+	 * inside the API and a Stream<IDataset> of the slices to be
+	 * returned. It allow allows the stream to be evaluated lazily
+	 * because of the way that streams work.
+	 * 
+	 * Streams can be processed in parallel using .parallel, however
+	 * that is not guaranteed to work for the current implementation.
+	 * 
+	 * It allows lambda expressions to be used with IDataset slicing
+	 * which reduces bugs because much less code is created.
+	 * 
+	 * @param sliceShape
+	 * @return
+	 */
+	default Stream<IDataset> positionStream(PositionIterator it) {
+				
+		return Stream.generate(it).map(pos -> {
+			if (pos==null) return null;
+			
+			// TODO Need help.
+			// Not generic because we fill up the slices
+			// from left to right in the amount of PositionIterator
+			Slice[] slice = new Slice[getRank()];
+			for (int i = 0; i < pos.length; i++) {
+				if (pos[i]<0) {
+					slice = null;
+				} else {
+                    slice[i] = new Slice(pos[i], pos[i]+1);
+				}
+			}
+			try {
+				return getSlice(slice);
+			} catch (DatasetException e) {
+				return null;
+			}
+		}).limit(it.size());
+	}
+	
+	default Stream<IDataset> sliceStream(SliceND slice) {
+		
+		int size = ShapeUtils.calcSize(slice.getShape());
+		if (size < 1) {
+			throw new IllegalArgumentException("The size is smaller than 1");
+		}
+	
+		return sliceStream(new SliceIterator(getShape(), size, slice));
+
+	}
+	
+	default Stream<IDataset> sliceStream(SliceIterator it) {
+
+		return Stream.generate(it).map(pos -> {
+			
+			// TODO Need help.
+			// Not generic because we fill up the slices
+			// from left to right in the amount of PositionIterator
+			Slice[] slice = new Slice[getRank()];
+			for (int i = 0; i < pos.length; i++) {
+				if (pos[i]<0) {
+					slice = null;
+				} else {
+                    slice[i] = new Slice(pos[i], pos[i]+1);
+				}
+			}
+			try {
+				return getSlice(slice);
+			} catch (DatasetException e) {
+				return null;
+			}
+		}).limit(it.size());
+
+	}
 }
