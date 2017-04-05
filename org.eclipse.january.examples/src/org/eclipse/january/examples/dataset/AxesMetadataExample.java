@@ -44,6 +44,7 @@ public class AxesMetadataExample
 
 	@Rule
 	public TestRule watcher = Utils.testWatcherCreator();
+
 	/**
 	 * we wish the interpolation function to be ignorant of the specific mathematical operation being
 	 * conducted. This interface wraps the operation in a Command
@@ -824,7 +825,8 @@ public class AxesMetadataExample
 		}
 
 		System.out.println(dataset.getName() + ":");
-		while (iterator.hasNext() && axisIterator.hasNext())
+		while (iterator.hasNext()
+				&& (axisIterator == null || axisIterator.hasNext()))
 		{
 			final String indexVal;
 			if (axisDataset != null)
