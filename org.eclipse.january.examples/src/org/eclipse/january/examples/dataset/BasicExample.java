@@ -16,7 +16,9 @@ import java.util.Arrays;
 
 import org.eclipse.january.dataset.Dataset;
 import org.eclipse.january.dataset.DatasetFactory;
+import org.eclipse.january.dataset.IntegerDataset;
 import org.eclipse.january.dataset.Maths;
+import org.eclipse.january.dataset.Random;
 import org.eclipse.january.dataset.Slice;
 
 
@@ -63,6 +65,15 @@ public class BasicExample {
 		Dataset slice = dataset.getSlice(new Slice(0, 2), new Slice(1, 3));
 		System.out.println("slice of dataset: \n" + slice.toString(true));
 
+		// create a dataset with a range
+		Dataset a = DatasetFactory.createRange(IntegerDataset.class, 15)
+				.reshape(3, 5);
+		System.out.println("Range dataset: \n" + a.toString(true));
+
+		// create a dataset with a random
+		Dataset rand = Random.rand(new int[] { 3, 4 });
+		System.out.println("Random dataset: \n" + rand.toString(true));
+		
 		// for more examples, see the other java files in this project
 	}
 }
