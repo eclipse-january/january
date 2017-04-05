@@ -370,6 +370,7 @@ public class LinearAlgebra {
 		return s;
 	}
 
+	@SuppressWarnings("unused")
 	// assume axes is in increasing order
 	private static int[] addAxesToShape(int[] shape, int[] axes, int[] lengths) {
 		int n = axes.length;
