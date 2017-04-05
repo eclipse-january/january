@@ -243,6 +243,7 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 	/**
 	 * Overloads PositionIterator(int[]) for ease of use.
 	 * @param shape
+	 * @since 2.1
 	 * @return
 	 */
 	default Stream<IDataset> positionStream(int... shape) {
@@ -252,6 +253,7 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 	/**
 	 * Overloads PositionIterator(int, int[]) for ease of use.
 	 * @param shape
+	 * @since 2.1
 	 * @return
 	 */
 	default Stream<IDataset> positionStream(int offset, int[] shape) {
@@ -261,6 +263,7 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 	/**
 	 * Overloads PositionIterator(int[], int...) for ease of use.
 	 * @param shape
+	 * @since 2.1
 	 * @return
 	 */
 	default Stream<IDataset> positionStream(int[] shape, int... axes) {
@@ -290,6 +293,7 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 	 * which reduces bugs because much less code is created.
 	 * 
 	 * @param sliceShape
+	 * @since 2.1
 	 * @return
 	 */
 	default Stream<IDataset> positionStream(PositionIterator it) {
@@ -316,6 +320,13 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 		}).limit(it.size());
 	}
 	
+	/**
+	 * Create a slice stream from a sliceND
+	 * 
+	 * @param slice
+	 * @since 2.1
+	 * @return
+	 */
 	default Stream<IDataset> sliceStream(SliceND slice) {
 		
 		int size = ShapeUtils.calcSize(slice.getShape());
@@ -327,6 +338,13 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 
 	}
 	
+	/**
+	 * Create a slice stream from a slice iterator
+	 * 
+	 * @param slice
+	 * @since 2.1
+	 * @return
+	 */
 	default Stream<IDataset> sliceStream(SliceIterator it) {
 
 		return Stream.generate(it).map(pos -> {

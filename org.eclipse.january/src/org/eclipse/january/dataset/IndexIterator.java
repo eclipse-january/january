@@ -56,6 +56,9 @@ public abstract class IndexIterator implements Supplier<int[]> {
 		return null;
 	}
 
+	/**
+	 * @since 2.1
+	 */
 	@Override
 	public int[] get() {
 		return hasNext() ? getPos() : null;
@@ -63,6 +66,7 @@ public abstract class IndexIterator implements Supplier<int[]> {
 	
 	/**
 	 * The number of repetitions which this iterator will make
+	 * @since 2.1
 	 * @return
 	 */
 	public int size() {
