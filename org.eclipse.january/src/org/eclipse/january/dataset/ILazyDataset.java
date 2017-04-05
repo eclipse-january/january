@@ -298,6 +298,7 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 	 */
 	default Stream<IDataset> positionStream(PositionIterator it) {
 				
+		int size = ShapeUtils.calcSize(it.getShape());
 		return Stream.generate(it).map(pos -> {
 			if (pos==null) return null;
 			
@@ -317,7 +318,7 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 			} catch (DatasetException e) {
 				return null;
 			}
-		}).limit(it.size());
+		}).limit(size);
 	}
 	
 	/**
@@ -347,6 +348,7 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 	 */
 	default Stream<IDataset> sliceStream(SliceIterator it) {
 
+		int size = ShapeUtils.calcSize(it.getShape());
 		return Stream.generate(it).map(pos -> {
 			
 			// TODO Need help.
@@ -365,7 +367,7 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 			} catch (DatasetException e) {
 				return null;
 			}
-		}).limit(it.size());
+		}).limit(size);
 
 	}
 }

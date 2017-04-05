@@ -63,17 +63,5 @@ public abstract class IndexIterator implements Supplier<int[]> {
 	public int[] get() {
 		return hasNext() ? getPos() : null;
 	}
-	
-	/**
-	 * The number of repetitions which this iterator will make
-	 * @since 2.1
-	 * @return
-	 */
-	public int size() {
-		int size = 0;
-		while (hasNext()) size++;
-		reset();
-        return size;
-	}
 
 }
