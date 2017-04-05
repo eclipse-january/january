@@ -4,7 +4,7 @@
 
 This is a library for handling Data in Java. It is inspired in part by [NumPy](http://www.numpy.org/) and aims to provide similar functionality.
 
-The [Eclipse January](https://github.com/eclipse/january) project combines the core data structures projects of the following projects which originated the code.
+The [Eclipse January](https://eclipse.org/january) project combines the core data structures projects of the following projects which originated the code.
 
 * [Eclipse DAWNSci](https://github.com/eclipse/dawnsci)
 * [Eclipse ICE](https://github.com/eclipse/ice)
@@ -25,7 +25,7 @@ Clone the examples repository and have a look. Browse over to the [examples](org
 
 ## Javadocs
 
-The current Javadocs are published here http://jonahkichwacoders.github.io/org.eclipse.dataset/javadoc/
+The current Javadocs are published here: https://eclipse.org/january/apidocs/
 
 ## Contributing
 
