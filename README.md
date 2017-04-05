@@ -25,7 +25,7 @@ Clone the examples repository and have a look. Browse over to the [examples](org
 
 ## Javadocs
 
-The current Javadocs are published here http://jonahkichwacoders.github.io/org.eclipse.dataset/javadoc/
+The current Javadocs are published here: https://eclipse.org/january/apidocs/
 
 ## Contributing
 
