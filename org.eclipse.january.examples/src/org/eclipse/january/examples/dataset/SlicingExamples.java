@@ -43,88 +43,110 @@ public class SlicingExamples {
 	public void before() {
 		Utils.suppressSLF4JError();
 	}
-	
+
 	/**
 	 * Slice using basic 1D int array. The goal is to take the data from index 1
-	 * @throws Exception 
+	 * This should display : [2,3]
 	 */
 	@Test
-	public void sliceFrom1DFromIndex1() throws DatasetException {
-		final Dataset onedData = DatasetFactory.createFromObject(new int[]{1,2,3});
+	public void sliceFrom1DFromIndex1() {
+		Dataset onedData = DatasetFactory.createFromObject(new int[] { 1, 2, 3 });
 		Dataset sliceData = onedData.getSlice(new Slice(1, null, null));
 		System.out.println(sliceData.toString(true));
 	}
-	
+
 	/**
-	 * Slice using basic 1D int array. The goal is to create a Slice with only the stop index
-	 * @throws Exception 
+	 * Slice using basic 1D int array. The goal is to create a Slice with only
+	 * the stop index
+	 * This should display : [1,2]
 	 */
 	@Test
-	public void sliceFrom1DWithStopIndex() throws DatasetException {
-		final Dataset onedData = DatasetFactory.createFromObject(new int[]{1,2,3});
+	public void sliceFrom1DWithStopIndex() {
+		Dataset onedData = DatasetFactory.createFromObject(new int[] { 1, 2, 3 });
 		Dataset sliceData = onedData.getSlice(new Slice(2));
 		System.out.println(sliceData.toString(true));
 	}
-	
-	
-	/**
-	 * Slice using basic 1D int array. The goal is to get the middle of the array
-	 * @throws Exception 
-	 */
-	@Test
-	public void sliceFrom1D() throws DatasetException {
-		final Dataset onedData = DatasetFactory.createFromObject(new int[]{10,9,8,7,6,5,4,3,2,1,0});
-		//we want to get the 3 values middle of the array, that's to say 6,5,4
-		//This mean that you get the value at the 4th position to the value at the 6th position because the second one is exclusive, so you get at the index of end-1
-		//and apply it to the Dataset, this will return the new Dataset :
-		Dataset sliceData = onedData.getSlice(new Slice(4, 7));
-		//and show the informations :
-		System.out.println(sliceData.toString(true));
-	}
-	
 
 	/**
-	 * Slice using basic 1D int array. The goal is to get from the middle of the array to the end
-	 * @throws Exception 
+	 * Slice using basic 1D int array. The goal is to get the middle of the
+	 * array
+	 * This should display : [6, 5, 4]
 	 */
 	@Test
-	public void sliceFrom1DGettingEnd() throws DatasetException {
-		final Dataset onedData = DatasetFactory.createFromObject(new int[]{10,9,8,7,6,5,4,3,2,1,0});
-		//we wanted to get the values from the middle, to the end-1, that's to say from 5 to 1
-		//to do that, we can do a simple slice like that :
-		Slice getter = new Slice(5, -1);
-		//This mean that you get the value from the 5th position to the end, because -1 like in python represent the end here it will not get the 0 because the end is exclusive.
-		//and apply it to the Dataset, this will return the new Dataset :
-		Dataset sliceData = onedData.getSlice(getter);
-		//and show the informations :
+	public void sliceFrom1D() {
+		Dataset onedData = DatasetFactory.createFromObject(new int[] { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 });
+		// we want to get the 3 values middle of the array, that's to say 6,5,4
+		// This mean that you get the value at the 4th index to the value at
+		// the 6th index because the second one is exclusive, so you get at
+		// the index of end-1
+		// and apply it to the Dataset, this will return the new Dataset :
+		Dataset sliceData = onedData.getSlice(new Slice(4, 7));
+		System.out.println(sliceData.toString(true));
+	}
+
+	/**
+	 * Slice using basic 1D int array. The goal is to get from the middle of the
+	 * array to the end
+	 * This should display : [5, 4, 3, 2, 1]
+	 */
+	@Test
+	public void sliceFrom1DGettingEnd() {
+		Dataset onedData = DatasetFactory.createFromObject(new int[] { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 });
+		// we wanted to get the values from the middle, to the end-1, that's to
+		// say from 5 to 1
+		// to do that, we can do a simple slice like that :
+		// This mean that you get the value from the 5th indexf to the end,
+		// because -1 like in python represent the end here it will not get the
+		// 0 because the end is exclusive.
+		// and apply it to the Dataset, this will return the new Dataset :
+		Dataset sliceData = onedData.getSlice(new Slice(5, -1));
 		System.out.println(sliceData.toString(true));
 	}
 	
 	/**
-	 * Slice using basic 2D int array. The goal is to get the middle of the array
-	 * @throws Exception 
+	 * Slice using basic 1D int array. The goal is to get from the middle of the
+	 * array to the end
+	 * This should display : [5, 4, 3, 2, 1, 0]
 	 */
 	@Test
-	public void sliceFrom2D() throws DatasetException {
-		final Dataset twodData = DatasetFactory.createFromObject(new int[][]{	{1,2,3,4},
-																				{4,5,6,7},
-																				{7,8,9,10},
-																				{11,10,11,10}});
-		//we want to get the 4 values middle of the array, that's to say :	5,6
-																		// :	8,9
-		//to do that, we need to do a first slice for the first dimension, that's to say the rows :
-		Slice getterFirstD = new Slice(1,3);
-		//This means that you want to get the element from the position 1 to 2, because the second one is exclusive, so you get at the index of end-1
-		
-		
-		//And you need a second slice to apply to the second dimension, here you want the 2nd and 3rd rows :
-		Slice getterSecondD = new Slice(1, 3);
-		//This means that you want to get the line at the position 1 to 2, because the second one is exclusive, so you get at the index of end-1
-		
-		
-		//and apply them to the Dataset, this will return the new Dataset :
+	public void sliceFrom1DNullStop() {
+		Dataset onedData = DatasetFactory.createFromObject(new int[] { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 });
+		// we wanted to get the values from the middle, to the end, that's to
+		// say from 5 to 0
+		// to do that, we can do a simple slice like that :
+		// This mean that you get the value from the 6th index to the end
+		// and apply it to the Dataset, this will return the new Dataset :
+		Dataset sliceData = onedData.getSlice(new Slice(5, null));
+		System.out.println(sliceData.toString(true));
+	}
+
+	/**
+	 * Slice using basic 2D int array. The goal is to get the middle of the
+	 * array
+	 * This should display : [[6, 7],
+ 	 * 						 [9, 10]]
+	 */
+	@Test
+	public void sliceFrom2D() {
+		Dataset twodData = DatasetFactory
+				.createFromObject(new int[][] { { 1, 2, 3, 4 }, { 4, 5, 6, 7 }, { 7, 8, 9, 10 }, { 11, 10, 11, 10 } });
+		// we want to get the 4 values on the two middle lines and at the end of the line of the array, that's to say :
+		//	6,7
+		// 	9,10
+		// to do that, we need to do a first slice for the first dimension,
+		// that's to say the rows :
+		Slice getterFirstD = new Slice(1, 3);
+		// This means that you want to get the element from the index 1 to 2,
+		// because the second one is exclusive, so you get at the index of end-1
+
+		// And you need a second slice to apply to the second dimension, here
+		// you want the 2nd and 3rd rows :
+		Slice getterSecondD = new Slice(2, 4);
+		// This means that you want to get the line at the index 2 to 3,
+		// because the second one is exclusive, so you get at the index of end-1
+
+		// and apply them to the Dataset, this will return the new Dataset :
 		Dataset sliceData = twodData.getSlice(getterFirstD, getterSecondD);
-		//and show the informations :
 		System.out.println(sliceData.toString(true));
 	}
 
