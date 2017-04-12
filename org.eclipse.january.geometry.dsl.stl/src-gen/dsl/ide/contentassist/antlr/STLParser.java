@@ -14,12 +14,12 @@ package dsl.ide.contentassist.antlr;
 import com.google.inject.Inject;
 
 import dsl.ide.contentassist.antlr.internal.InternalSTLParser;
+import xtext.services.STLGrammarAccess;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import org.antlr.runtime.RecognitionException;
-import org.eclipse.january.geometry.model.dsl.services.STLGrammarAccess;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.ide.editor.contentassist.antlr.AbstractContentAssistParser;
 import org.eclipse.xtext.ide.editor.contentassist.antlr.FollowElement;

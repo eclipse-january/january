@@ -13,6 +13,7 @@ import org.eclipse.january.geometry.dsl.iGES.*;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.inject.Injector;

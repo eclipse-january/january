@@ -13,11 +13,11 @@ Import-Package: com.google.common.base;version="15.0.0",
  org.antlr.runtime;version="3.2.0",
  org.eclipse.emf.ecore,
  org.eclipse.emf.ecore.util,
- org.eclipse.january.geometry.model.dsl.services,
  org.eclipse.xtext,
  org.eclipse.xtext.ide.editor.contentassist.antlr,
  org.eclipse.xtext.ide.editor.contentassist.antlr.internal,
  org.eclipse.xtext.ide.editor.partialEditing,
  org.eclipse.xtext.parser.antlr,
- org.eclipse.xtext.util
+ org.eclipse.xtext.util,
+ xtext.services
 

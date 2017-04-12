@@ -4,8 +4,10 @@ import java.io.InputStream;
 import org.eclipse.xtext.*;
 import org.eclipse.xtext.parser.*;
 import org.eclipse.xtext.parser.impl.*;
+
+import xtext.services.STLGrammarAccess;
+
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.january.geometry.model.dsl.services.STLGrammarAccess;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 import org.eclipse.xtext.parser.antlr.XtextTokenStream.HiddenTokens;
