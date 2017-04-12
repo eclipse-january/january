@@ -22,7 +22,7 @@ import java.io.Serializable;
  * <pre>
 * {@code
 * final Dataset onedData = DatasetFactory.createFromObject(new int[]{1,2,3});
-* Dataset sliceData = onedData.getSlice(new Slice(1, null, null));
+* Dataset sliceData = onedData.getSlice(new Slice(1, {@code null}, {@code null}));
 * }
 * </pre>
 * 
@@ -63,7 +63,7 @@ public class Slice implements Cloneable, Serializable {
 
 	/**
 	 * Constructs a Slice object with, by default the start set to 0 and with a step of 1.
-	 * If the stop point of the Slice is null, it will be set to the end of the Dataset on which you are applying on the Slice.
+	 * If the stop point of the Slice is {@code null}, it will be set to the end of the Dataset on which you are applying on the Slice.
 	 * @param stop the stop point of the Slice
 	 */
 	public Slice(final Integer stop) {
@@ -72,8 +72,8 @@ public class Slice implements Cloneable, Serializable {
 
 	/**
 	 * Constructs a Slice object with, by default a step of 1.
-	 * If the start point of the Slice is null, it will be set automatically to 0.
-	 * If the stop point of the Slice is null, it will be set to the end of the Dataset on which you are applying on the Slice.
+	 * If the start point of the Slice is {@code null}, it will be set automatically to 0.
+	 * If the stop point of the Slice is {@code null}, it will be set to the end of the Dataset on which you are applying on the Slice.
 	 * @param start the start point of the Slice
 	 * @param stop the stop point of the Slice
 	 */
@@ -83,12 +83,12 @@ public class Slice implements Cloneable, Serializable {
 
 	/**
 	 * Constructs a Slice object on which it is possible to chooe the start, the stop and the step.
-	 * If the start point of the Slice is null, it will be set automatically to 0.
-	 * If the stop point of the Slice is null, it will be set to the end of the Dataset on which you are applying on the Slice.
-	 * If the the wanted step is set to null, it will be set by default to 1.
-	 * @param start the start point of the Slice
-	 * @param stop the stop point of the Slice
-	 * @param step the step wanted to browse the Dataset
+	 * If the start point of the Slice is {@code null}, it will be set automatically to 0.
+	 * If the stop point of the Slice is {@code null}, it will be set to the end of the Dataset on which you are applying on the Slice.
+	 * If the the wanted step is set to {@code null}, it will be set by default to 1.
+	 * @param start the start point of the Slice, may be {@code null}
+	 * @param stop the stop point of the Slice, may be {@code null}
+	 * @param step the step wanted to browse the Dataset, may be {@code null}
 	 */
 	public Slice(final Integer start, final Integer stop, final Integer step) {
 		this.start = start;
@@ -106,7 +106,7 @@ public class Slice implements Cloneable, Serializable {
 
 	@Override
 	/**
-	 * Allows to create a deep copy of the Slice.
+	 * Creates a deep copy of the Slice.
 	 * @return 
 	 * 		New Slice with the current Slice properties
 	 */
@@ -115,7 +115,7 @@ public class Slice implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Allows to set the maximal dimensions length of the Slice.
+	 * Sets the maximal dimensions length of the Slice.
 	 * @param length Wanted size of dimensions
 	 * @return 
 	 * 		The Slice which the method is called on
@@ -132,9 +132,9 @@ public class Slice implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Allows to know if the slice has a maximum size equal to the current size.
+	 * Returns {@code true} if the slice has a maximum size equal to the current size, else {@code false}.
 	 * @return 
-	 * 		Return true if slice represents complete dimension, false in the other case.
+	 * 		Return {@code true} if slice represents complete dimension, {@code false} in the other case.
 	 */
 	public boolean isSliceComplete() {
 		if (start == null && stop == null && (step == 1 || step == -1))
@@ -147,7 +147,7 @@ public class Slice implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Allows to get the maximum value of the slice.
+	 * Returnsns the maximum value of the slice.
 	 * @return 
 	 * 		Maximum value of the slice
 	 */
@@ -156,7 +156,7 @@ public class Slice implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Allows to get the starting index of the slice.
+	 * Returns the starting index of the slice.
 	 * @return
 	 * 		Start point of the slice
 	 */
@@ -165,7 +165,7 @@ public class Slice implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Allows to get the stopping index of the slice.
+	 * Returns the stopping index of the slice.
 	 * @return
 	 * 		Stop point of the slice
 	 */
@@ -174,7 +174,7 @@ public class Slice implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Allows to get the step of the slice.
+	 * Returns the step of the slice.
 	 * @return
 	 * 		Step of the slice
 	 */
@@ -183,9 +183,9 @@ public class Slice implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Allows to set the starting index of the slice.
-	 * If the start point of the Slice is null, it will be set automatically to 0.
-	 * @param start Starting index of the Slice
+	 * Set the starting index of the slice.
+	 * If the start point of the Slice is {@code null}, it will be set automatically to 0.
+	 * @param start Starting index of the Slice, may be {@code null}
 	 */
 	public void setStart(Integer start) {
 		if (start != null && length > 0) {
@@ -205,9 +205,9 @@ public class Slice implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Allows to set the stopping index of the slice.
-	 * If the stop point of the Slice is null, it will be set to the end of the Dataset on which you are applying on the Slice.
-	 * @param stop Stopping index of the Slice
+	 * Set the stopping index of the slice.
+	 * If the stop point of the Slice is {@code null}, it will be set to the end of the Dataset on which you are applying on the Slice.
+	 * @param stop Stopping index of the Slice, may be {@code null}
 	 */
 	public void setStop(Integer stop) {
 		if (stop != null && length > 0) {
@@ -229,10 +229,10 @@ public class Slice implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Allows to move the start and end to an other index keeping the same step and the same gap between the two values
+	 * Move the start and end to an other index keeping the same step and the same gap between the two values
 	 * @param beg New starting point
 	 * @return 
-	 * 		Return true if the end was reached, false in the other case.
+	 * 		Return {@code true} if the end was reached, {@code false} in the other case.
 	 */
 	public boolean setPosition(int beg) {
 		boolean end = false;
@@ -248,7 +248,7 @@ public class Slice implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Allows to get the index of the n-th step inside of the slice
+	 * Returns the index of the n-th step inside of the slice
 	 * @param n Wanted step index in the slice
 	 * @return 
 	 * 		Return the index of the step inside of the Slice
@@ -279,9 +279,9 @@ public class Slice implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Allows to set the step size inside of the Slice.
-	 * If the the wanted step is set to null, it will be set by default to 1.
-	 * @param step New wanted step
+	 * Set the step size inside of the Slice.
+	 * If the the wanted step is set to {@code null}, it will be set by default to 1.
+	 * @param step New wanted step, may be {@code null}
 	 */
 	public void setStep(int step) {
 		if (step == 0) {
@@ -291,7 +291,7 @@ public class Slice implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Allows to get a String representation of the Slice comparable to the python representation.
+	 * Returns a String representation of the Slice comparable to the python representation.
 	 * @param s String builder
 	 * @param len Size of the wanted string
 	 * @param beg Start index of the Slice
@@ -345,7 +345,7 @@ public class Slice implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Allows to get the number of steps inside of the Slice
+	 * Returns the number of steps inside of the Slice
 	 * @return 
 	 * 		Number of steps inside of the Slice
 	 */
@@ -366,7 +366,7 @@ public class Slice implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Allows to get the number of steps inside of the Slice from a point to an other point minus 1 because this is an exclusive index
+	 * Returns the number of steps inside of the Slice from a point to an other point minus 1 because this is an exclusive index
 	 * @param beg Starting point
 	 * @param end (exclusive) Stopping point
 	 * @return 
@@ -382,7 +382,7 @@ public class Slice implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Allows to get the last value inside of Slice.
+	 * Returns the last value inside of Slice.
 	 * @return
 	 * 		Last value in the slice, it can be a lower value than the start if the step is going backward
 	 */
@@ -395,7 +395,7 @@ public class Slice implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Allows to flip the Slice direction, after this operation, the slice begins at previous end point, steps
+	 * Flips the Slice direction, after this operation, the slice begins at previous end point, steps
 	 * in the opposite direction, and finishes at the previous start point.
 	 * <p>
 	 * 		Note : the stop value may not be preserved across two flips
@@ -419,7 +419,7 @@ public class Slice implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Allows to populate given start, stop, step arrays from given slice array
+	 * Populates given start, stop, step arrays from given slice array
 	 * @param slice Array of Slices wanted to convert
 	 * @param shape Array of Slices shapes
 	 * @param start Array of Slices starts
@@ -490,7 +490,7 @@ public class Slice implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Allows to convert a set of integer arrays in a slice array
+	 * Converts a set of integer arrays in a slice array
 	 * @param start Array of Slices starts
 	 * @param stop Array of Slices stops
 	 * @param step Array of Slices steps
@@ -514,7 +514,7 @@ public class Slice implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Allows to convert string in a Slice array
+	 * Converts string in a Slice array
 	 * 
 	 * @param sliceString String of the Slice array
 	 * @return 
@@ -570,7 +570,7 @@ public class Slice implements Cloneable, Serializable {
 	}
 
 	/**
-	 * This method create a string representing the slice taken from given shape
+	 * Creates a string representing the slice taken from given shape
 	 * @param shape Array of Slices shapes
 	 * @param start Array of Slices starts
 	 * @param stop Array of Slices stops
@@ -598,7 +598,7 @@ public class Slice implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Allows to create a string representation of slices. 
+	 * Creates a string representation of slices. 
 	 * @param slices Wanted Slices to put inside of the string representation
 	 * @return 
 	 * 		Return the string representation of the Slices entered.
