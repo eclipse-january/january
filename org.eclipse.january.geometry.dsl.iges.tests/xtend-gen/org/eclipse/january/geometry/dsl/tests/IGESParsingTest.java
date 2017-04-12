@@ -12,9 +12,11 @@ import org.eclipse.xtext.junit4.XtextRunner;
 import org.eclipse.xtext.junit4.util.ParseHelper;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+@Ignore
 @RunWith(XtextRunner.class)
 @InjectWith(IGESInjectorProvider.class)
 @SuppressWarnings("all")
