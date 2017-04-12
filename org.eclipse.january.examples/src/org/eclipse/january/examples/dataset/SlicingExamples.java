@@ -45,7 +45,7 @@ public class SlicingExamples {
 	}
 
 	/**
-	 * Slice using basic 1D int array. The goal is to take the data from index 1
+	 * Slice using basic 1D int array. The goal is to create a slice from index 1
 	 * This should display : [2,3]
 	 */
 	@Test
@@ -56,8 +56,7 @@ public class SlicingExamples {
 	}
 
 	/**
-	 * Slice using basic 1D int array. The goal is to create a Slice with only
-	 * the stop index
+	 * Slice using basic 1D int array. The goal is to create a Slice with only the stop index
 	 * This should display : [1,2]
 	 */
 	@Test
@@ -75,30 +74,20 @@ public class SlicingExamples {
 	@Test
 	public void sliceFrom1D() {
 		Dataset onedData = DatasetFactory.createFromObject(new int[] { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 });
-		// we want to get the 3 values middle of the array, that's to say 6,5,4
-		// This mean that you get the value at the 4th index to the value at
-		// the 6th index because the second one is exclusive, so you get at
-		// the index of end-1
-		// and apply it to the Dataset, this will return the new Dataset :
+		// We want to get the 4th to the 6th index. Start argument is inclusive so this will be 4. Stop argument is exclusive so this will be 7.
 		Dataset sliceData = onedData.getSlice(new Slice(4, 7));
 		System.out.println(sliceData.toString(true));
 	}
 
 	/**
-	 * Slice using basic 1D int array. The goal is to get from the middle of the
-	 * array to the end
+	 * Slice using basic 1D int array. The goal is to get from the middle of the array to the end-1
 	 * This should display : [5, 4, 3, 2, 1]
 	 */
 	@Test
 	public void sliceFrom1DGettingEnd() {
 		Dataset onedData = DatasetFactory.createFromObject(new int[] { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 });
-		// we wanted to get the values from the middle, to the end-1, that's to
-		// say from 5 to 1
-		// to do that, we can do a simple slice like that :
-		// This mean that you get the value from the 5th indexf to the end,
-		// because -1 like in python represent the end here it will not get the
-		// 0 because the end is exclusive.
-		// and apply it to the Dataset, this will return the new Dataset :
+		// We want to get the 5th to the last-1 index. Start argument is inclusive so this will be 5. Stop argument is -1 because we want to get to the -1
+		// element. If you want to get to the 2, you just have to put the end to -2.
 		Dataset sliceData = onedData.getSlice(new Slice(5, -1));
 		System.out.println(sliceData.toString(true));
 	}
@@ -111,11 +100,8 @@ public class SlicingExamples {
 	@Test
 	public void sliceFrom1DNullStop() {
 		Dataset onedData = DatasetFactory.createFromObject(new int[] { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 });
-		// we wanted to get the values from the middle, to the end, that's to
-		// say from 5 to 0
-		// to do that, we can do a simple slice like that :
-		// This mean that you get the value from the 6th index to the end
-		// and apply it to the Dataset, this will return the new Dataset :
+		// We want to get the 5th to the last index. Start argument is inclusive so this will be 5. Stop argument will be null because
+		// it's automatically set to the end
 		Dataset sliceData = onedData.getSlice(new Slice(5, null));
 		System.out.println(sliceData.toString(true));
 	}
@@ -130,22 +116,19 @@ public class SlicingExamples {
 	public void sliceFrom2D() {
 		Dataset twodData = DatasetFactory
 				.createFromObject(new int[][] { { 1, 2, 3, 4 }, { 4, 5, 6, 7 }, { 7, 8, 9, 10 }, { 11, 10, 11, 10 } });
-		// we want to get the 4 values on the two middle lines and at the end of the line of the array, that's to say :
+		// We want to get the 4 values on the two middle lines and at the end of the line of the array, that's to say :
 		//	6,7
 		// 	9,10
 		// to do that, we need to do a first slice for the first dimension,
 		// that's to say the rows :
 		Slice getterFirstD = new Slice(1, 3);
 		// This means that you want to get the element from the index 1 to 2,
-		// because the second one is exclusive, so you get at the index of end-1
+		// because the second one is exclusive.
 
 		// And you need a second slice to apply to the second dimension, here
 		// you want the 2nd and 3rd rows :
 		Slice getterSecondD = new Slice(2, 4);
-		// This means that you want to get the line at the index 2 to 3,
-		// because the second one is exclusive, so you get at the index of end-1
-
-		// and apply them to the Dataset, this will return the new Dataset :
+		// This means that you want to get the line at the index 2 to 3.
 		Dataset sliceData = twodData.getSlice(getterFirstD, getterSecondD);
 		System.out.println(sliceData.toString(true));
 	}
