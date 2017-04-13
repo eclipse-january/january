@@ -29,8 +29,8 @@ public class SliceND {
 	private boolean expanded;
 
 	/**
-	 * Constructs a SliceND Object for whole of shape
-	 * @param shape Array of shapes
+	 * Construct a nD Slice for whole of shape.
+	 * @param shape Shape of the dataset, see {@link ILazyDataset#getShape()}
 	 */
 	public SliceND(final int[] shape) {
 		final int rank = shape.length;
@@ -45,19 +45,19 @@ public class SliceND {
 	}
 
 	/**
-	 * Constructs a SliceND Object from an array of 1D slices
-	 * @param shape Array of shapes
-	 * @param slice Slices array to add inside of the SliceND
+	 * Construct a nD Slice from an array of 1D slices.
+	 * @param shape Shape of the dataset, see {@link ILazyDataset#getShape()}
+	 * @param slice Slice for each dimension of ND slice
 	 */
 	public SliceND(final int[] shape, Slice... slice) {
 		this(shape, null, slice);
 	}
 
 	/**
-	 * Constructs a SliceND Object from an array of 1D slices
-	 * @param shape Array of shapes
+	 * Construct a nD Slice from an array of 1D slices, if the maxShape is {@code null}, it will be set to the maximum shape of the nD Slice.
+	 * @param shape Shape of the dataset, see {@link ILazyDataset#getShape()}
 	 * @param maxShape, may be {@code null}
-	 * @param slice Slices array to add inside of the SliceND
+	 * @param slice Slice for each dimension of ND slice
 	 */
 	public SliceND(final int[] shape, final int[] maxShape, Slice... slice) {
 		this(shape);
@@ -96,9 +96,11 @@ public class SliceND {
 	}
 
 	/**
-	 * Constructs a SliceND Object from parameters
+	 * Construct a nD Slice from parameters, if the maxShape is {@code null}, it will be set to the maximum shape of the nD Slice,
+	 * the start will be set to 0, stop is by default equal to the entire size of the set,
+	 * step is defaultly set to 1.
 	 * 
-	 * @param shape Array of shapes
+	 * @param shape Shape of the dataset, see {@link ILazyDataset#getShape()}
 	 * @param start Array of starts points, may be {@code null}
 	 * @param stop Array of stops points, may be {@code null}
 	 * @param step Array of steps, may be {@code null}
@@ -108,9 +110,11 @@ public class SliceND {
 	}
 
 	/**
-	 * Constructs a SliceND Object from parameters
+	 * Construct a nD Slice from parameters, if the maxShape is {@code null}, it will be set to the maximum shape of the nD Slice,
+	 * the start will be set to 0, stop is by default equal to the entire size of the set,
+	 * step is defaultly set to 1.
 	 * 
-	 * @param shape Array of shapes
+	 * @param shape Shape of the dataset, see {@link ILazyDataset#getShape()}
 	 * @param maxShape Array of maximals shapes, may be {@code null}
 	 * @param start Array of starts points, may be {@code null}
 	 * @param stop Array of stops points, may be {@code null}
@@ -162,7 +166,7 @@ public class SliceND {
 	}
 
 	/**
-	 * Set slice for given dimension.
+	 * Set slice for given dimension, if the start is {@code null} it will be set to 0, stop is by default equal to the entire size of the set.
 	 * @param i dimension
 	 * @param start Start point, may be {@code null} to imply start of dimension
 	 * @param stop Stop point, may be {@code null} to imply end of dimension
@@ -173,7 +177,7 @@ public class SliceND {
 	}
 
 	/**
-	 * Set slice for given dimension.
+	 * Set slice for given dimension, if the start is {@code null} it will be set to 0, stop is by default equal to the entire size of the set.
 	 * @param i dimension
 	 * @param start Start point, may be {@code null} to imply start of dimension
 	 * @param stop Stop point, may be {@code null} to imply end of dimension
@@ -194,7 +198,7 @@ public class SliceND {
 	}
 
 	/**
-	 * Set slice for given dimension.
+	 * Set slice for given dimension, if the start is {@code null} it will be set to 0, stop is by default equal to the entire size of the set.
 	 * @param i dimension
 	 * @param start Start point, may be {@code null} to imply start of dimension
 	 * @param stop Stop point, may be {@code null} to imply end of dimension
@@ -418,7 +422,7 @@ public class SliceND {
 	}
 
 	/**
-	 * Converts to a slice array all the Slices of the SliceND
+	 * Converts to a slice array all the Slices of the SliceND.
 	 * @return 
 	 * 		a Slice array
 	 */
