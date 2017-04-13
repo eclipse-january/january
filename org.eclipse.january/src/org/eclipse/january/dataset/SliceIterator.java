@@ -39,100 +39,143 @@ public class SliceIterator extends IndexIterator {
 	}
 
 	/**
-	 * Constructs an SliceIterator Object, which can iterate over sliced Datasets elements, by default the start set to 0 and with a step of 1.
+	 * Constructs an SliceIterator Object, which can iterate over sliced
+	 * Datasets elements, by default the start set to 0 and with a step of 1.
 	 * 
-	 * @param shape Array of shapes of the Dataset
-	 * @param length Length of entire data array
-	 * @param sshape Shape of the new dataset, i.e. slice
+	 * @param shape
+	 *            Array of shapes of the Dataset
+	 * @param length
+	 *            Length of entire data array
+	 * @param sshape
+	 *            Shape of the new dataset, i.e. slice
 	 */
 	public SliceIterator(final int[] shape, final int length, final int[] sshape) {
 		this(shape, length, null, null, sshape, 1);
 	}
 
 	/**
-	 * Constructs an SliceIterator Object, which can iterate over sliced Datasets elements, by default the start set to 0 and with a step of 1.
+	 * Constructs an SliceIterator Object, which can iterate over sliced
+	 * Datasets elements, by default the start set to 0 and with a step of 1.
 	 * 
-	 * @param shape Array of shapes of the Dataset
-	 * @param length Length of entire data array
-	 * @param start Array of starts indexes, may be {@code null}
-	 * @param sshape Shape of the new dataset, i.e. slice
+	 * @param shape
+	 *            Array of shapes of the Dataset
+	 * @param length
+	 *            Length of entire data array
+	 * @param start
+	 *            Array of starts indexes, may be {@code null}
+	 * @param sshape
+	 *            Shape of the new dataset, i.e. slice
 	 */
 	public SliceIterator(final int[] shape, final int length, final int[] start, final int[] sshape) {
 		this(shape, length, start, null, sshape, 1);
 	}
 
 	/**
-	  * Constructs an SliceIterator Object, which can iterate over sliced Datasets elements, by default the start set to 0 and with a step of 1.
+	 * Constructs an SliceIterator Object, which can iterate over sliced
+	 * Datasets elements, by default the start set to 0 and with a step of 1.
 	 * 
-	 * @param shape Array of shapes of the Dataset
-	 * @param length Length of entire data array
-	 * @param sshape Shape of the new dataset, i.e. slice
-	 * @param isize Number of elements in an item
+	 * @param shape
+	 *            Array of shapes of the Dataset
+	 * @param length
+	 *            Length of entire data array
+	 * @param sshape
+	 *            Shape of the new dataset, i.e. slice
+	 * @param isize
+	 *            Number of elements in an item
 	 */
 	public SliceIterator(final int[] shape, final int length, final int[] sshape, final int isize) {
 		this(shape, length, null, null, sshape, isize);
 	}
 
 	/**
-	 * Constructs an SliceIterator Object, which can iterate over sliced Datasets elements, by default the start set to 0 and with a step of 1.
+	 * Constructs an SliceIterator Object, which can iterate over sliced
+	 * Datasets elements, by default the start set to 0 and with a step of 1.
 	 * 
-	 * @param shape Array of shapes of the Dataset
-	 * @param length Length of entire data array
-	 * @param start Array of starts indexes, may be {@code null}
-	 * @param sshape Shape of the new dataset, i.e. slice
-	 * @param isize Number of elements in an item
+	 * @param shape
+	 *            Array of shapes of the Dataset
+	 * @param length
+	 *            Length of entire data array
+	 * @param start
+	 *            Array of starts indexes, may be {@code null}
+	 * @param sshape
+	 *            Shape of the new dataset, i.e. slice
+	 * @param isize
+	 *            Number of elements in an item
 	 */
 	public SliceIterator(final int[] shape, final int length, final int[] start, final int[] sshape, final int isize) {
 		this(shape, length, start, null, sshape, isize);
 	}
 
 	/**
-	 * Constructs an SliceIterator Object, which can iterate over sliced Datasets elements, by default the start set to 0 and with a step of 1.
+	 * Constructs an SliceIterator Object, which can iterate over sliced
+	 * Datasets elements, by default the start set to 0 and with a step of 1.
 	 * 
-	 * @param shape Array of shapes of the Dataset
-	 * @param length Length of entire data array
-	 * @param start Array of starts indexes, may be {@code null}
-	 * @param step Array of steps, may be {@code null}, but can't be 0
-	 * @param sshape shape of new dataset, i.e. slice
+	 * @param shape
+	 *            Array of shapes of the Dataset
+	 * @param length
+	 *            Length of entire data array
+	 * @param start
+	 *            Array of starts indexes, may be {@code null}
+	 * @param step
+	 *            Array of steps, may be {@code null}, but can't be 0
+	 * @param sshape
+	 *            shape of new dataset, i.e. slice
 	 */
 	public SliceIterator(final int[] shape, final int length, final int[] start, final int[] step, final int[] sshape) {
 		this(shape, length, start, step, sshape, 1);
 	}
 
 	/**
-	 * Constructs an SliceIterator Object, which can iterate over sliced Datasets elements, by default the start set to 0 and with a step of 1.
+	 * Constructs an SliceIterator Object, which can iterate over sliced
+	 * Datasets elements, by default the start set to 0 and with a step of 1.
 	 * 
-	 * @param shape Array of shapes of the Dataset
-	 * @param length Length of entire data array
-	 * @param slice SliceND to iterate on
+	 * @param shape
+	 *            Array of shapes of the Dataset
+	 * @param length
+	 *            Length of entire data array
+	 * @param slice
+	 *            SliceND to iterate on
 	 */
 	public SliceIterator(final int[] shape, final int length, final SliceND slice) {
 		this(shape, length, slice.getStart(), slice.getStep(), slice.getShape(), 1);
 	}
 
 	/**
-	 * Constructs an SliceIterator Object, which can iterate over sliced Datasets elements, by default the start set to 0 and with a step of 1.
+	 * Constructs an SliceIterator Object, which can iterate over sliced
+	 * Datasets elements, by default the start set to 0 and with a step of 1.
 	 * 
-	 * @param shape Array of shapes of the Dataset
-	 * @param length Length of entire data array
-	 * @param isize Number of elements in an item
-	 * @param slice SliceND to iterate on
+	 * @param shape
+	 *            Array of shapes of the Dataset
+	 * @param length
+	 *            Length of entire data array
+	 * @param isize
+	 *            Number of elements in an item
+	 * @param slice
+	 *            SliceND to iterate on
 	 */
 	public SliceIterator(final int[] shape, final int length, final int isize, final SliceND slice) {
 		this(shape, length, slice.getStart(), slice.getStep(), slice.getShape(), isize);
 	}
 
 	/**
-	* Constructs an SliceIterator Object, which can iterate over sliced Datasets elements, by default the start set to 0 and with a step of 1.
+	 * Constructs an SliceIterator Object, which can iterate over sliced
+	 * Datasets elements, by default the start set to 0 and with a step of 1.
 	 * 
-	 * @param shape Array of shapes of the Dataset
-	 * @param length Length of entire data array
-	 * @param start Array of starts indexes, may be {@code null}
-	 * @param step Array of steps, may be {@code null}, but can't be 0
-	 * @param sshape Shape of the new dataset, i.e. slice
-	 * @param isize Number of elements in an item
+	 * @param shape
+	 *            Array of shapes of the Dataset
+	 * @param length
+	 *            Length of entire data array
+	 * @param start
+	 *            Array of starts indexes, may be {@code null}
+	 * @param step
+	 *            Array of steps, may be {@code null}, but can't be 0
+	 * @param sshape
+	 *            Shape of the new dataset, i.e. slice
+	 * @param isize
+	 *            Number of elements in an item
 	 */
-	public SliceIterator(final int[] shape, final int length, final int[] start, final int[] step, final int[] sshape, final int isize) {
+	public SliceIterator(final int[] shape, final int length, final int[] start, final int[] step, final int[] sshape,
+			final int isize) {
 		this.isize = isize;
 		int rank = shape.length;
 		endrank = rank - 1;
@@ -148,7 +191,7 @@ public class SliceIterator extends IndexIterator {
 
 		if (rank == 0) {
 			istep = isize;
-			imax = length*isize;
+			imax = length * isize;
 			stop = new int[0];
 			pos = new int[0];
 			gap = null;
@@ -168,10 +211,11 @@ public class SliceIterator extends IndexIterator {
 		int chunk = isize;
 		for (int i = endrank; i >= 0; i--) {
 			stop[i] = start[i] + sshape[i] * step[i];
-	
+
 			if (step[i] < 0)
-				stop[i]++; // adjust for -ve steps so later code has more succinct test
-	
+				stop[i]++; // adjust for -ve steps so later code has more
+							// succinct test
+
 			if (i > 0) {
 				gap[i] = (shape[i] * step[i - 1] - sshape[i] * step[i]) * chunk;
 				chunk *= shape[i];
@@ -180,8 +224,12 @@ public class SliceIterator extends IndexIterator {
 	}
 
 	/**
-	 * Set the starts indexes to new positions, {@code if null} the start index is set by default to 0
-	 * @param newStart Array of new starts indexes (prefix with zeros if necessary), may be {@code null}
+	 * Set the starts indexes to new positions, {@code if null} the start index
+	 * is set by default to 0
+	 * 
+	 * @param newStart
+	 *            Array of new starts indexes (prefix with zeros if necessary),
+	 *            may be {@code null}
 	 */
 	public void setStart(int... newStart) {
 		final int rank = shape.length;
@@ -202,7 +250,7 @@ public class SliceIterator extends IndexIterator {
 				start[i] = 0;
 			}
 			for (int i = 0; i < newStart.length; i++) {
-				start[i+extra] = newStart[i];
+				start[i + extra] = newStart[i];
 			}
 		}
 
@@ -210,6 +258,9 @@ public class SliceIterator extends IndexIterator {
 		calcGap();
 	}
 
+	/**
+	 * Reset the Iterator to the first Slice.
+	 */
 	@Override
 	public void reset() {
 		if (shape.length == 0) {
@@ -219,7 +270,7 @@ public class SliceIterator extends IndexIterator {
 			for (int i = 0; i < shape.length; i++)
 				pos[i] = start[i];
 			pos[endrank] -= step[endrank];
-	
+
 			index = pos[0];
 			for (int j = 1; j <= endrank; j++)
 				index = index * shape[j] + pos[j];
@@ -227,6 +278,13 @@ public class SliceIterator extends IndexIterator {
 		}
 	}
 
+	/**
+	 * Returns {@code true} if there is an other element after the current
+	 * Slice.
+	 * 
+	 * @return Returns {@true} if the iteration has more Slice, {@code false} in
+	 *         the other case
+	 */
 	@Override
 	public boolean hasNext() {
 		// now move on one position in slice
@@ -234,7 +292,9 @@ public class SliceIterator extends IndexIterator {
 		for (; j >= 0; j--) {
 			pos[j] += step[j];
 
-			if ((pos[j] >= stop[j]) == (step[j] > 0)) { // stop index has been adjusted in code for -ve steps
+			if ((pos[j] >= stop[j]) == (step[j] > 0)) { // stop index has been
+														// adjusted in code for
+														// -ve steps
 				pos[j] = start[j];
 				index += gap[j];
 			} else {
@@ -252,27 +312,37 @@ public class SliceIterator extends IndexIterator {
 
 	/**
 	 * Returns an array of starts indexes.
-	 * @return
-	 * 		Array of starts indexes
+	 * 
+	 * @return Array of starts indexes
 	 */
 	public int[] getStart() {
 		return start;
 	}
 
+	/**
+	 * Returns the current position of the iterator.
+	 * 
+	 * @return Iterator current position
+	 */
 	@Override
 	public int[] getPos() {
 		return pos;
 	}
-	
+
 	/**
 	 * Returns an array of steps
-	 * @return
-	 * 		Array of steps
+	 * 
+	 * @return Array of steps
 	 */
 	public int[] getStep() {
 		return step;
 	}
 
+	/**
+	 * Returns an array of the Slices shapes.
+	 * 
+	 * @return Array of shapes.
+	 */
 	@Override
 	public int[] getShape() {
 		return sshape;

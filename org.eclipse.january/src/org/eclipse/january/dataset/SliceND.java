@@ -30,13 +30,15 @@ public class SliceND {
 
 	/**
 	 * Construct a nD Slice for whole of shape.
-	 * @param shape Shape of the dataset, see {@link ILazyDataset#getShape()}
+	 * 
+	 * @param shape
+	 *            Shape of the dataset, see {@link ILazyDataset#getShape()}
 	 */
 	public SliceND(final int[] shape) {
 		final int rank = shape.length;
 		lstart = new int[rank];
-		lstop  = shape.clone();
-		lstep  = new int[rank];
+		lstop = shape.clone();
+		lstep = new int[rank];
 		Arrays.fill(lstep, 1);
 		lshape = shape.clone();
 		oshape = shape.clone();
@@ -46,18 +48,26 @@ public class SliceND {
 
 	/**
 	 * Construct a nD Slice from an array of 1D slices.
-	 * @param shape Shape of the dataset, see {@link ILazyDataset#getShape()}
-	 * @param slice Slice for each dimension of ND slice
+	 * 
+	 * @param shape
+	 *            Shape of the dataset, see {@link ILazyDataset#getShape()}
+	 * @param slice
+	 *            Slice for each dimension of ND slice
 	 */
 	public SliceND(final int[] shape, Slice... slice) {
 		this(shape, null, slice);
 	}
 
 	/**
-	 * Construct a nD Slice from an array of 1D slices, if the maxShape is {@code null}, it will be set to the maximum shape of the nD Slice.
-	 * @param shape Shape of the dataset, see {@link ILazyDataset#getShape()}
-	 * @param maxShape, may be {@code null}
-	 * @param slice Slice for each dimension of ND slice
+	 * Construct a nD Slice from an array of 1D slices, if the maxShape is
+	 * {@code null}, it will be set to the maximum shape of the nD Slice.
+	 * 
+	 * @param shape
+	 *            Shape of the dataset, see {@link ILazyDataset#getShape()}
+	 * @param maxShape,
+	 *            may be {@code null}
+	 * @param slice
+	 *            Slice for each dimension of ND slice
 	 */
 	public SliceND(final int[] shape, final int[] maxShape, Slice... slice) {
 		this(shape);
@@ -96,29 +106,40 @@ public class SliceND {
 	}
 
 	/**
-	 * Construct a nD Slice from parameters, if the maxShape is {@code null}, it will be set to the maximum shape of the nD Slice,
-	 * the start will be set to 0, stop is by default equal to the entire size of the set,
-	 * step is defaultly set to 1.
+	 * Construct a nD Slice from parameters, if the maxShape is {@code null}, it
+	 * will be set to the maximum shape of the nD Slice, the start will be set
+	 * to 0, stop is by default equal to the entire size of the set, step is
+	 * defaultly set to 1.
 	 * 
-	 * @param shape Shape of the dataset, see {@link ILazyDataset#getShape()}
-	 * @param start Array of starts points, may be {@code null}
-	 * @param stop Array of stops points, may be {@code null}
-	 * @param step Array of steps, may be {@code null}
+	 * @param shape
+	 *            Shape of the dataset, see {@link ILazyDataset#getShape()}
+	 * @param start
+	 *            Array of starts points, may be {@code null}
+	 * @param stop
+	 *            Array of stops points, may be {@code null}
+	 * @param step
+	 *            Array of steps, may be {@code null}
 	 */
 	public SliceND(final int[] shape, final int[] start, final int[] stop, final int[] step) {
 		this(shape, null, start, stop, step);
 	}
 
 	/**
-	 * Construct a nD Slice from parameters, if the maxShape is {@code null}, it will be set to the maximum shape of the nD Slice,
-	 * the start will be set to 0, stop is by default equal to the entire size of the set,
-	 * step is defaultly set to 1.
+	 * Construct a nD Slice from parameters, if the maxShape is {@code null}, it
+	 * will be set to the maximum shape of the nD Slice, the start will be set
+	 * to 0, stop is by default equal to the entire size of the set, step is
+	 * defaultly set to 1.
 	 * 
-	 * @param shape Shape of the dataset, see {@link ILazyDataset#getShape()}
-	 * @param maxShape Array of maximals shapes, may be {@code null}
-	 * @param start Array of starts points, may be {@code null}
-	 * @param stop Array of stops points, may be {@code null}
-	 * @param step Array of steps, may be {@code null}
+	 * @param shape
+	 *            Shape of the dataset, see {@link ILazyDataset#getShape()}
+	 * @param maxShape
+	 *            Array of maximals shapes, may be {@code null}
+	 * @param start
+	 *            Array of starts points, may be {@code null}
+	 * @param stop
+	 *            Array of stops points, may be {@code null}
+	 * @param step
+	 *            Array of steps, may be {@code null}
 	 */
 	public SliceND(final int[] shape, final int[] maxShape, final int[] start, final int[] stop, final int[] step) {
 		// number of steps, or new shape, taken in each dimension is
@@ -166,22 +187,34 @@ public class SliceND {
 	}
 
 	/**
-	 * Set slice for given dimension, if the start is {@code null} it will be set to 0, stop is by default equal to the entire size of the set.
-	 * @param i dimension
-	 * @param start Start point, may be {@code null} to imply start of dimension
-	 * @param stop Stop point, may be {@code null} to imply end of dimension
-	 * @param step Slice step
+	 * Set slice for given dimension, if the start is {@code null} it will be
+	 * set to 0, stop is by default equal to the entire size of the set.
+	 * 
+	 * @param i
+	 *            dimension
+	 * @param start
+	 *            Start point, may be {@code null} to imply start of dimension
+	 * @param stop
+	 *            Stop point, may be {@code null} to imply end of dimension
+	 * @param step
+	 *            Slice step
 	 */
 	public void setSlice(int i, Integer start, Integer stop, int step) {
 		internalSetSlice(i, start, stop, step);
 	}
 
 	/**
-	 * Set slice for given dimension, if the start is {@code null} it will be set to 0, stop is by default equal to the entire size of the set.
-	 * @param i dimension
-	 * @param start Start point, may be {@code null} to imply start of dimension
-	 * @param stop Stop point, may be {@code null} to imply end of dimension
-	 * @param step Slice step
+	 * Set slice for given dimension, if the start is {@code null} it will be
+	 * set to 0, stop is by default equal to the entire size of the set.
+	 * 
+	 * @param i
+	 *            dimension
+	 * @param start
+	 *            Start point, may be {@code null} to imply start of dimension
+	 * @param stop
+	 *            Stop point, may be {@code null} to imply end of dimension
+	 * @param step
+	 *            Slice step
 	 */
 	public void setSlice(int i, int start, int stop, int step) {
 		internalSetSlice(i, start, stop, step);
@@ -189,8 +222,11 @@ public class SliceND {
 
 	/**
 	 * Set slice for given dimension.
-	 * @param i Dimension
-	 * @param slice Slice with wanted properties to set
+	 * 
+	 * @param i
+	 *            Dimension
+	 * @param slice
+	 *            Slice with wanted properties to set
 	 * @since 2.0
 	 */
 	public void setSlice(int i, Slice slice) {
@@ -198,11 +234,17 @@ public class SliceND {
 	}
 
 	/**
-	 * Set slice for given dimension, if the start is {@code null} it will be set to 0, stop is by default equal to the entire size of the set.
-	 * @param i dimension
-	 * @param start Start point, may be {@code null} to imply start of dimension
-	 * @param stop Stop point, may be {@code null} to imply end of dimension
-	 * @param step Slice step
+	 * Set slice for given dimension, if the start is {@code null} it will be
+	 * set to 0, stop is by default equal to the entire size of the set.
+	 * 
+	 * @param i
+	 *            dimension
+	 * @param start
+	 *            Start point, may be {@code null} to imply start of dimension
+	 * @param stop
+	 *            Stop point, may be {@code null} to imply end of dimension
+	 * @param step
+	 *            Slice step
 	 */
 	private void internalSetSlice(int i, Integer start, Integer stop, int step) {
 		if (step == 0) {
@@ -229,7 +271,8 @@ public class SliceND {
 
 			if (stop == null) {
 				if (start >= s && m == ILazyWriteableDataset.UNLIMITED) {
-					throw new IllegalArgumentException("To extend past current dimension in unlimited case, a stop value must be specified");
+					throw new IllegalArgumentException(
+							"To extend past current dimension in unlimited case, a stop value must be specified");
 				}
 				stop = s;
 			} else if (stop < 0) {
@@ -300,9 +343,10 @@ public class SliceND {
 	}
 
 	/**
-	 * Returns an array of shapes of the source Dataset (this can change for dynamic Datasets).
-	 * @return
-	 * 	 shape of source Dataset 
+	 * Returns an array of shapes of the source Dataset (this can change for
+	 * dynamic Datasets).
+	 * 
+	 * @return shape of source Dataset
 	 */
 	public int[] getSourceShape() {
 		return oshape;
@@ -310,8 +354,8 @@ public class SliceND {
 
 	/**
 	 * Returns an array of maximals shapes
-	 * @return 
-	 * 		maximum shape
+	 * 
+	 * @return maximum shape
 	 */
 	public int[] getMaxShape() {
 		return mshape;
@@ -319,17 +363,19 @@ public class SliceND {
 
 	/**
 	 * Returns {@code true} if the slice makes shape larger, else {@code false}.
-	 * @return 
-	 * 		{@code true} if slice makes shape larger, {@code false} in the other case
+	 * 
+	 * @return {@code true} if slice makes shape larger, {@code false} in the
+	 *         other case
 	 */
 	public boolean isExpanded() {
 		return expanded;
 	}
 
 	/**
-	 * Returns an array of resulting shapes (this can change if the start, stop, step arrays are changed).
-	 * @return 
-	 * 		resulting shape
+	 * Returns an array of resulting shapes (this can change if the start, stop,
+	 * step arrays are changed).
+	 * 
+	 * @return resulting shape
 	 */
 	public int[] getShape() {
 		return lshape;
@@ -337,8 +383,8 @@ public class SliceND {
 
 	/**
 	 * Returns an array of the starts values.
-	 * @return 
-	 * 		start values
+	 * 
+	 * @return start values
 	 */
 	public int[] getStart() {
 		return lstart;
@@ -346,9 +392,11 @@ public class SliceND {
 
 	/**
 	 * Returns an array of stops values.
-	 * <p>Note : stop values are clamped to -1 for <b>negative</b> steps</p>
-	 * @return 
-	 * 		stop values
+	 * <p>
+	 * Note : stop values are clamped to -1 for <b>negative</b> steps
+	 * </p>
+	 * 
+	 * @return stop values
 	 */
 	public int[] getStop() {
 		return lstop;
@@ -356,17 +404,19 @@ public class SliceND {
 
 	/**
 	 * Returns an array of the steps values.
-	 * @return 
-	 * 		step values
+	 * 
+	 * @return step values
 	 */
 	public int[] getStep() {
 		return lstep;
 	}
 
 	/**
-	 * Returns {@code true} if all of originals shapes are covered by positive steps slices, else {@code false}.
-	 * @return
-	 * 		{@code true} if all of originals shapes is covered by this slice with positive steps, {@code false} in the other case.
+	 * Returns {@code true} if all of originals shapes are covered by positive
+	 * steps slices, else {@code false}.
+	 * 
+	 * @return {@code true} if all of originals shapes is covered by this slice
+	 *         with positive steps, {@code false} in the other case.
 	 */
 	public boolean isAll() {
 		if (expanded) {
@@ -386,9 +436,12 @@ public class SliceND {
 	}
 
 	/**
-	 * Flips the slice direction in given dimension, this means that slice begins at previous end point,
-	 * steps in the opposite direction, and finishes at the previous start point.
-	 * @param i dimension to flip
+	 * Flips the slice direction in given dimension, this means that slice
+	 * begins at previous end point, steps in the opposite direction, and
+	 * finishes at the previous start point.
+	 * 
+	 * @param i
+	 *            dimension to flip
 	 */
 	public SliceND flip(int i) {
 		if (i < 0 || i >= lshape.length) {
@@ -409,8 +462,9 @@ public class SliceND {
 	}
 
 	/**
-	 * Flips slices directions in all dimensions, this means that all slices are beginning at previous end point,
-	 * steps are in the opposite direction, and finishes are at the previous start point. 
+	 * Flips slices directions in all dimensions, this means that all slices are
+	 * beginning at previous end point, steps are in the opposite direction, and
+	 * finishes are at the previous start point.
 	 */
 	public SliceND flip() {
 		int orank = lshape.length;
@@ -423,8 +477,8 @@ public class SliceND {
 
 	/**
 	 * Converts to a slice array all the Slices of the SliceND.
-	 * @return 
-	 * 		a Slice array
+	 * 
+	 * @return a Slice array
 	 */
 	public Slice[] convertToSlice() {
 		int orank = lshape.length;
@@ -438,12 +492,12 @@ public class SliceND {
 		return slice;
 	}
 
-	@Override
 	/**
 	 * Creates a deep copy of the SliceND.
-	 * @return 
-	 * 		New SliceND with the current SliceND properties
+	 * 
+	 * @return New SliceND with the current SliceND properties
 	 */
+	@Override
 	public SliceND clone() {
 		SliceND c = new SliceND(oshape);
 		for (int i = 0; i < lshape.length; i++) {
@@ -456,12 +510,12 @@ public class SliceND {
 		return c;
 	}
 
-	@Override
 	/**
 	 * Returns a string construction of the sliceND with the python form.
-	 * @return 
-	 * 		Constructed String of all Slices
+	 * 
+	 * @return Constructed String of all Slices
 	 */
+	@Override
 	public String toString() {
 		final int rank = lshape.length;
 		if (rank == 0) {
@@ -473,16 +527,19 @@ public class SliceND {
 			s.append(',');
 		}
 
-		return s.substring(0, s.length()-1);
+		return s.substring(0, s.length() - 1);
 	}
 
 	/**
 	 * Creats SliceND from dataset.
-	 * @param data - ILazyDataset to treat
-	 * @param start - array of starts indexes
-	 * @param stop - array of stops indexes
-	 * @return 
-	 * 		Constructed SliceND
+	 * 
+	 * @param data
+	 *            ILazyDataset to treat
+	 * @param start
+	 *            Array of starts indexes
+	 * @param stop
+	 *            Array of stops indexes
+	 * @return Constructed SliceND
 	 */
 	public static SliceND createSlice(ILazyDataset data, int[] start, int[] stop) {
 		return createSlice(data, start, stop, null);
@@ -490,12 +547,16 @@ public class SliceND {
 
 	/**
 	 * Creating SliceND from dataset.
-	 * @param data - ILazyDataset to treat
-	 * @param start - array of starts indexes
-	 * @param stop - array of stops indexes
-	 * @param step - array of steps
-	 * @return
-	 * 		Constructed SliceND
+	 * 
+	 * @param data
+	 *            ILazyDataset to treat
+	 * @param start
+	 *            Array of starts indexes
+	 * @param stop
+	 *            Array of stops indexes
+	 * @param step
+	 *            Array of steps
+	 * @return Constructed SliceND
 	 */
 	public static SliceND createSlice(ILazyDataset data, int[] start, int[] stop, int[] step) {
 		if (data instanceof IDynamicDataset) {

@@ -374,12 +374,12 @@ public class Slice implements Cloneable, Serializable {
 		}
 	}
 
-	@Override
 	/**
 	 * Returns a string construction of the slice with the python form.
 	 * 
 	 * @return Constructed String.
 	 */
+	@Override
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		appendSliceToString(s, length, start != null ? start : (step > 0 ? 0 : length - 1),
@@ -474,11 +474,11 @@ public class Slice implements Cloneable, Serializable {
 	 * @param shape
 	 *            Input array of Slices shapes
 	 * @param start
-	 *            Input and output array of Slices starts
+	 *            Output array of Slices starts
 	 * @param stop
-	 *             Input and output array of Slices stops
+	 *            Output array of Slices stops
 	 * @param step
-	 *             Input and output array of Slices steps
+	 *            Output array of Slices steps
 	 */
 	public static void convertFromSlice(final Slice[] slice, final int[] shape, final int[] start, final int[] stop,
 			final int[] step) {
