@@ -185,7 +185,7 @@ public class SliceND {
 
 	/**
 	 * Set slice for given dimension.
-	 * @param i dimension
+	 * @param i Dimension
 	 * @param slice Slice with wanted properties to set
 	 * @since 2.0
 	 */
