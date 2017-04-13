@@ -37,12 +37,11 @@ import org.eclipse.january.geometry.STLGeometryImporter;
 import org.eclipse.january.geometry.Shape;
 import org.eclipse.january.geometry.Triangle;
 import org.eclipse.january.geometry.Vertex;
+import org.eclipse.january.geometry.model.STLStandaloneSetup;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
 
 import com.google.inject.Injector;
-
-import xtext.STLStandaloneSetup;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object

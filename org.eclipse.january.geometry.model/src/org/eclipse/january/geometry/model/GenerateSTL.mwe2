@@ -1,0 +1,64 @@
+module org.eclipse.january.geometry.model.dsl.GenerateSTL
+
+import org.eclipse.xtext.xtext.generator.*
+import org.eclipse.xtext.xtext.generator.model.project.*
+
+var rootPath = ".."
+
+Workflow {
+	
+	component = XtextGenerator {
+		configuration = {
+			project = StandardProjectConfig {
+				baseName = "org.eclipse.january.geometry.model"
+				rootPath = rootPath
+				runtimeTest = {
+					enabled = false
+				}
+				eclipsePlugin = {
+					enabled = true
+				}
+				//genericIde = {
+				//	enabled = true
+				//}
+				eclipsePluginTest = {
+					enabled = false
+				}
+				createEclipseMetaData = true
+			}
+			code = {
+				encoding = "UTF-8"
+				fileHeader = "/*******************************************************************************
+ * Copyright (c) 2016 UT-Battelle, LLC.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *   Initial API and implementation and/or initial documentation - 
+ *   Kasper Gammeltoft
+ *******************************************************************************/\n"
+			}
+		}
+		language = StandardLanguage {
+			name = "org.eclipse.january.geometry.model.STL"
+			fileExtensions = "stl"
+			referencedResource = "platform:/resource/org.eclipse.january.geometry.model/model/org.eclipse.january.geometry.genmodel"
+			
+			fragment = ecore2xtext.Ecore2XtextValueConverterServiceFragment2 auto-inject {}
+
+			fragment = org.eclipse.xtext.generator.adapter.FragmentAdapter {
+				fragment = org.eclipse.xtext.generator.ecore2xtext.FormatterFragment {}
+			}
+
+			serializer = {
+				generateStub = false
+			}
+			validator = {
+				
+				// composedCheck = "xtext.validation.NamesAreUniqueValidator"
+			}
+		}
+	}
+}
