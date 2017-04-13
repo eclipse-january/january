@@ -16,7 +16,7 @@ import java.io.Serializable;
 
 /**	
  * The {@code Slice} class represents the set of indices (start, stop, step), that are used to extract specifics subsets of {@link org.eclipse.january.dataset.Dataset}.<br><br>
- * The start argument defaults to 0, stop argument defaults to the stop argument defaults to the end of the dimension that the slice is applied to, and the defaults argument for the step is 1.
+ * The start argument default to 0, stop argument default to the stop argument default to the end of the dimension that the slice is applied to, and the default argument for the step is 1.
  * <br><br>
  * The start index is inclusive, for example, if we want to get data from index 1, so sliceData will be <b>[2,3]</b> :
  * <pre>
@@ -62,8 +62,8 @@ public class Slice implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Constructs a Slice object with, by defaults the start set to 0 and with a step of 1.
-	 * If the stop point of the Slice is {@code null}, it will be set to the stop argument defaults to the end of the dimension that the slice is applied to.
+	 * Constructs a Slice object with, by default the start set to 0 and with a step of 1.
+	 * If the stop point of the Slice is {@code null}, it will be set to the stop argument default to the end of the dimension that the slice is applied to.
 	 * @param stop the stop point of the Slice
 	 */
 	public Slice(final Integer stop) {
@@ -71,9 +71,9 @@ public class Slice implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Constructs a Slice object with, by defaults a step of 1.
+	 * Constructs a Slice object with, by default a step of 1.
 	 * If the start point of the Slice is {@code null}, it will be set automatically to 0.
-	 * If the stop point of the Slice is {@code null}, it will be set to the stop argument defaults to the end of the dimension that the slice is applied to.
+	 * If the stop point of the Slice is {@code null}, it will be set to the stop argument default to the end of the dimension that the slice is applied to.
 	 * @param start the start point of the Slice
 	 * @param stop the stop point of the Slice
 	 */
@@ -84,8 +84,8 @@ public class Slice implements Cloneable, Serializable {
 	/**
 	 * Constructs a Slice object on which it is possible to chooe the start, the stop and the step.
 	 * If the start point of the Slice is {@code null}, it will be set automatically to 0.
-	 * If the stop point of the Slice is {@code null}, it will be set to the stop argument defaults to the end of the dimension that the slice is applied to.
-	 * If the the wanted step is set to {@code null}, it will be set by defaults to 1.
+	 * If the stop point of the Slice is {@code null}, it will be set to the stop argument default to the end of the dimension that the slice is applied to.
+	 * If the the wanted step is set to {@code null}, it will be set by default to 1.
 	 * @param start the start point of the Slice, may be {@code null}
 	 * @param stop the stop point of the Slice, may be {@code null}
 	 * @param step the step wanted to browse the Dataset, may be {@code null}
@@ -206,7 +206,7 @@ public class Slice implements Cloneable, Serializable {
 
 	/**
 	 * Set the stopping index of the slice.
-	 * If the stop point of the Slice is {@code null}, it will be set to the stop argument defaults to the end of the dimension that the slice is applied to.
+	 * If the stop point of the Slice is {@code null}, it will be set to the stop argument default to the end of the dimension that the slice is applied to.
 	 * @param stop Stopping index of the Slice, may be {@code null}
 	 */
 	public void setStop(Integer stop) {
@@ -280,7 +280,7 @@ public class Slice implements Cloneable, Serializable {
 
 	/**
 	 * Set the step size inside of the Slice.
-	 * If the the wanted step is set to {@code null}, it will be set by defaults to 1.
+	 * If the the wanted step is set to {@code null}, it will be set by default to 1.
 	 * @param step New wanted step, may be {@code null}
 	 */
 	public void setStep(int step) {
