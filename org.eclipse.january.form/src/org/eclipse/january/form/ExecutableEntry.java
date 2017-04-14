@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2014, 2016 UT-Battelle, LLC.
+ * Copyright (c) 2012, 2014, 2015 UT-Battelle, LLC.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -145,6 +145,46 @@ public class ExecutableEntry extends DiscreteEntry {
 			allowedValues.add("Import Application");
 			setDefaultValue(allowedValues.get(0));
 		}
+	}
+	
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ice.datastructures.entry.DiscreteEntry#clone()
+	 */
+	@Override
+	public Object clone() {
+		ExecutableEntry entry = new ExecutableEntry();
+		entry.copy(this);
+		return entry;
+	}
+	
+
+	/**
+	 * Copy the source entity's data into this object.
+	 * 
+	 * @param entity The Entry of which this object will be come a copy.
+	 */
+	public void copy(ExecutableEntry entity) {
+
+		// Return if null
+		if (entity == null) {
+			return;
+		}
+
+		//Copy all data members
+		super.copy(entity);
+		executableUri = entity.executableUri;
+		
+		//Clear the current map
+		allowedValueToURI.clear();
+		
+		//Copy in each value from the other map.
+		for(String value : entity.allowedValueToURI.keySet()){
+			allowedValueToURI.put(value, allowedValueToURI.get(value));
+		}
+		
+		return;
 	}
 	
 	/*

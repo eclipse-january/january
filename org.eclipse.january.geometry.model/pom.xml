@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2016 UT-Battelle, LLC. and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+
+    Contributors:
+        UT-Battelle, LLC. - initial API and implementation
+ -->
+
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<relativePath>../releng/org.eclipse.january.releng/pom.xml</relativePath>
+		<groupId>org.eclipse.january</groupId>
+		<artifactId>org.eclipse.january.releng</artifactId>
+		<version>2.1.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>org.eclipse.january.geometry.model</artifactId>
+	<packaging>eclipse-plugin</packaging>
+	<build>
+	<pluginManagement>
+  <plugins>
+    <!-- xtend-maven-plugin is in pluginManagement instead of in plugins
+       so that it doesn't run before the exec-maven-plugin's *.mwe2 gen;
+       this way we can list it after.
+      -->
+
+    <plugin>
+      <groupId>org.eclipse.xtend</groupId>
+      <artifactId>xtend-maven-plugin</artifactId>
+      <version>${xtext.version}</version>
+      <executions>
+  <execution>
+    <goals>
+      <goal>compile</goal>
+      <goal>xtend-install-debug-info</goal>
+      <goal>testCompile</goal>
+      <goal>xtend-test-install-debug-info</goal>
+    </goals>
+  </execution>
+      </executions>
+      <configuration>
+  <outputDirectory>xtend-gen</outputDirectory>
+      </configuration>
+    </plugin>
+      <plugin>
+    <groupId>org.eclipse.tycho</groupId>
+    <artifactId>tycho-maven-plugin</artifactId>
+    <version>${tycho-version}</version>
+    <extensions>true</extensions>
+  </plugin>
+  </plugins>
+</pluginManagement>
+	</build>
+</project>

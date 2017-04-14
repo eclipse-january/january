@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Eclipse January Geometry XText OBJ Tests (Incubation)
+Bundle-SymbolicName: org.eclipse.january.test.geometry.dsl.obj
+Bundle-Version: 2.1.0.qualifier
+Require-Bundle: org.eclipse.january.geometry.dsl.obj;bundle-version="1.0.0",
+ org.junit
+Import-Package: org.eclipse.emf.common.util,
+ org.eclipse.january.geometry
+Bundle-Vendor: Eclipse January

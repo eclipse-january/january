@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Eclipse January Form Tests (Incubation)
 Bundle-SymbolicName: org.eclipse.january.form.test;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 2.1.0.qualifier
 Require-Bundle: org.junit;bundle-version="4.8.2",
  org.eclipse.emf.ecore,
  org.eclipse.january.form,

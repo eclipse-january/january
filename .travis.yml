@@ -1,0 +1,25 @@
+sudo: false # use containers
+
+language: java
+
+# Makes build faster to cache maven things.
+cache:
+  directories:
+  - .autoconf
+  - $HOME/.m2
+  
+services:
+  - docker
+
+jdk:
+ - oraclejdk7
+
+# don't do anything on install, just let maven install the dependencies in the script
+# Also see https://github.com/eclipse/january/issues/109
+install:
+  - true
+  
+# verify does everything, including tests, but excludes the install step
+script: 
+ - mvn verify
+

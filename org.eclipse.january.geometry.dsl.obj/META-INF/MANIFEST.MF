@@ -1,0 +1,28 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Eclipse January Geometry XText OBJ (Incubation)
+Bundle-Vendor: Eclipse January
+Bundle-Version: 2.1.0.qualifier
+Bundle-SymbolicName: org.eclipse.january.geometry.dsl.obj;singleton:=true
+Bundle-ActivationPolicy: lazy
+Eclipse-ExtensibleAPI: true
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Service-Component: OSGI-INF/importerFactory.xml
+Export-Package: org.eclipse.january.geometry.dsl,
+ org.eclipse.january.geometry.dsl.formatting,
+ org.eclipse.january.geometry.dsl.obj.importer,
+ org.eclipse.january.geometry.dsl.parser.antlr,
+ org.eclipse.january.geometry.dsl.parser.antlr.internal,
+ org.eclipse.january.geometry.dsl.scoping,
+ org.eclipse.january.geometry.dsl.serializer,
+ org.eclipse.january.geometry.dsl.services,
+ org.eclipse.january.geometry.dsl.validation,
+ org.eclipse.january.geometry.dsl.generator
+Import-Package: com.google.inject;version="1.3.0",
+ org.apache.log4j,
+ org.eclipse.emf.common.util,
+ org.eclipse.emf.ecore,
+ org.eclipse.january.geometry,
+ org.eclipse.january.geometry.model.importer,
+ org.eclipse.xtext
+Require-Bundle: org.eclipse.xtext;bundle-version="2.10.0"
