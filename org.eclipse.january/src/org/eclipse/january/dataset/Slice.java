@@ -55,7 +55,7 @@ public class Slice implements Cloneable, Serializable {
 
 	/**
 	 * Constructs a Slice object with the start and the stop value representing
-	 * the entirity of the sliced dimension of the Dataset.
+	 * the entirety of the sliced dimension of the Dataset.
 	 */
 	public Slice() {
 		this(null, null, 1);
