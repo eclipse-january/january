@@ -15,33 +15,13 @@ package org.eclipse.january.form;
 import java.util.ArrayList;
 
 /**
- * <p>
- * The Component interface is the base for all shared operations in the
- * UpdateableComposite package's classes. These operations must be implemented
- * by all classes that realize either Component or Composite. Components are
- * also observable and realizations of IComponentListener can be registered with
- * Components to receive updates when the state of the Component changes.
- * </p>
+ * "Components" are the basic building blocks of the Form package and bring
+ * together the dynamically updateable, identifiable, observable, and visitable
+ * qualities of the interfaces in this package in one place. Composites -
+ * which aggregate Components - also realize these capabilities.
  * 
  * @author Jay Jay Billings
  */
-public interface Component extends IUpdateable {
-	/**
-	 * 
-	 */
-	ArrayList<IComponentVisitor> iComponentVisitor = null;
+public interface Component extends IUpdateable, Identifiable, IVisitable {
 
-	/**
-	 * <p>
-	 * This operation directs the Component to call back to an IComponentVisitor
-	 * so that the visitor can perform its required actions for the exact type
-	 * of the Component.
-	 * </p>
-	 * 
-	 * @param visitor
-	 *            <p>
-	 *            The visitor
-	 *            </p>
-	 */
-	public void accept(IComponentVisitor visitor);
 }

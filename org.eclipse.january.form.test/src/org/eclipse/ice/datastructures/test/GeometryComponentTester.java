@@ -19,9 +19,11 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.List;
-
+import org.eclipse.january.form.BasicVisitHandler;
 import org.eclipse.january.form.Component;
 import org.eclipse.january.form.GeometryComponent;
+import org.eclipse.january.form.IVisitHandler;
+import org.eclipse.january.form.IVisitor;
 import org.eclipse.january.geometry.Cube;
 import org.eclipse.january.geometry.Cylinder;
 import org.eclipse.january.geometry.Geometry;
@@ -41,6 +43,7 @@ import org.junit.Test;
  * @author Jay Jay Billings
  */
 public class GeometryComponentTester {
+	
 	/**
 	 * <p>
 	 * Checks whether a ComplexShape and a PrimitiveShape
@@ -116,7 +119,7 @@ public class GeometryComponentTester {
 
 		// Check that testVisitor was visited
 		assertTrue(testVisitor.wasVisited());
-
+		
 	}
 
 	/**
@@ -179,62 +182,6 @@ public class GeometryComponentTester {
 		listener.reset();
 
 	}
-
-	// Reimplement test if JAXB persistence is ever supported for the geometry
-	// editor
-	// /**
-	// * <p>
-	// * This operation checks the ability of the GeometryComponent to persist
-	// * itself to XML and to load itself from an XML input stream.
-	// * </p>
-	// *
-	// * @throws IOException
-	// * @throws JAXBException
-	// * @throws NullPointerException
-	// *
-	// */
-	// @Test
-	// public void checkLoadingFromXML()
-	// throws NullPointerException, JAXBException, IOException {
-	//
-	// // Create a shape
-	// ShapeComponent geometryModel = new ShapeComponent();
-	// geometryModel.setProperty("Type", ShapeType.Sphere.toString());
-	// AbstractView geometryView = new AbstractView();
-	// Shape geometryShape = new Shape(geometryModel, geometryView);
-	//
-	// // Local Declarations
-	// ICEJAXBHandler xmlHandler = new ICEJAXBHandler();
-	// ArrayList<Class> classList = new ArrayList<Class>();
-	// classList.add(GeometryComponent.class);
-	//
-	// // Instantiate a GeometryComponent
-	// GeometryComponent geometry = new GeometryComponent();
-	// geometry.setGeometry(geometryShape);
-	// geometry.setId(25);
-	// geometry.setDescription("description");
-	// geometry.setName("name");
-	//
-	// // Load it into XML
-	// ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-	// xmlHandler.write(geometry, classList, outputStream);
-	//
-	// // convert information inside of outputStream to inputStream
-	// ByteArrayInputStream inputStream = new ByteArrayInputStream(
-	// outputStream.toByteArray());
-	//
-	// String xmlFile2 = new String(outputStream.toByteArray());
-	// // System.err.println(xmlFile2);
-	//
-	// // load contents into xml
-	// GeometryComponent loadGeometry = new GeometryComponent();
-	// loadGeometry = (GeometryComponent) xmlHandler.read(classList,
-	// inputStream);
-	//
-	// // Check contents
-	// assertTrue(loadGeometry.equals(geometry));
-	//
-	// }
 
 	/**
 	 * <p>

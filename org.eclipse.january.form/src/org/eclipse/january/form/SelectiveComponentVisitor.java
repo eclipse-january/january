@@ -15,6 +15,9 @@
  *******************************************************************************/
 package org.eclipse.january.form;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.january.form.emf.EMFComponent;
 
 /**

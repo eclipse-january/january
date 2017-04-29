@@ -51,7 +51,6 @@ import org.slf4j.LoggerFactory;
  * @author Jay Jay Billings
  */
 @XmlRootElement(name = "ICEObject")
-@XmlSeeAlso({GeometryComponent.class,MeshComponent.class})
 public class ICEObject implements IUpdateable {
 
 	/**
