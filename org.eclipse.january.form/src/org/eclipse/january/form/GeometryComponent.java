@@ -19,10 +19,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import org.eclipse.eavp.viz.datastructures.VizObject.IManagedUpdateable;
-import org.eclipse.eavp.viz.datastructures.VizObject.IManagedUpdateableListener;
-import org.eclipse.eavp.viz.datastructures.VizObject.SubscriptionType;
-import org.eclipse.eavp.viz.service.IVizService;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.january.geometry.Geometry;
@@ -39,7 +35,7 @@ import org.eclipse.january.geometry.GeometryFactory;
 @XmlRootElement(name = "GeometryComponent")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GeometryComponent extends ICEObject
-		implements Component, IUpdateableListener, IManagedUpdateableListener {
+		implements Component, IUpdateableListener {
 
 	/**
 	 * <p>
@@ -55,12 +51,6 @@ public class GeometryComponent extends ICEObject
 	 */
 	@XmlTransient
 	private Geometry geometry;
-
-	/**
-	 * The service being used to render this component.
-	 */
-	@XmlTransient
-	private IVizService service;
 
 	/**
 	 * <p>
@@ -157,16 +147,6 @@ public class GeometryComponent extends ICEObject
 
 		// Notify listeners
 		notifyListeners();
-	}
-
-	/**
-	 * Set the IVizService that will be used to visualize this component.
-	 *
-	 * @param service
-	 *            The service that will be used to visualize this component.
-	 */
-	public void setService(IVizService service) {
-		this.service = service;
 	}
 
 	/**
@@ -379,32 +359,4 @@ public class GeometryComponent extends ICEObject
 		notifyListeners();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.eclipse.eavp.viz.service.datastructures.VizObject.
-	 * IVizUpdateableListener#update(org.eclipse.eavp.viz.service.
-	 * datastructures. VizObject.IVizUpdateable)
-	 */
-	@Override
-	public void update(IManagedUpdateable component, SubscriptionType[] type) {
-		notifyListeners();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.eclipse.eavp.viz.service.datastructures.VizObject.
-	 * IManagedVizUpdateableListener#getSubscriptions(org.eclipse.eavp.viz.
-	 * service.datastructures.VizObject.IVizUpdateable)
-	 */
-	@Override
-	public ArrayList<SubscriptionType> getSubscriptions(
-			IManagedUpdateable source) {
-
-		// Register for all event types
-		ArrayList<SubscriptionType> types = new ArrayList<SubscriptionType>();
-		types.add(SubscriptionType.ALL);
-		return types;
-	}
 }

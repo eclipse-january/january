@@ -16,12 +16,6 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import org.eclipse.eavp.viz.datastructures.VizObject.IManagedUpdateable;
-import org.eclipse.eavp.viz.datastructures.VizObject.IManagedUpdateableListener;
-import org.eclipse.eavp.viz.datastructures.VizObject.IVizUpdateable;
-import org.eclipse.eavp.viz.datastructures.VizObject.IVizUpdateableListener;
-import org.eclipse.eavp.viz.datastructures.VizObject.SubscriptionType;
 import org.eclipse.january.form.IUpdateable;
 import org.eclipse.january.form.IUpdateableListener;
 
@@ -37,8 +31,7 @@ import org.eclipse.january.form.IUpdateableListener;
  * 
  * @author Jay Jay Billings
  */
-public class TestComponentListener implements IManagedUpdateableListener, IUpdateableListener,
-		IVizUpdateableListener {
+public class TestComponentListener implements IUpdateableListener {
 
 	/**
 	 * The flag that indicates whether or not the listener was updated.
@@ -121,41 +114,4 @@ public class TestComponentListener implements IManagedUpdateableListener, IUpdat
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.eavp.viz.service.datastructures.IVizUpdateableListener#update(org.eclipse.eavp.viz.service.datastructures.IVizUpdateable)
-	 */
-	@Override
-	public void update(IVizUpdateable component) {
-
-		// Update the flag
-		wasNotified.set(true);
-
-		// Dump some debug information
-		System.out.println("TestComponentListener Message: Updated!");
-
-		return;
-		
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.eavp.viz.service.datastructures.VizObject.IManagedVizUpdateableListener#getSubscriptions(org.eclipse.eavp.viz.service.datastructures.VizObject.IManagedVizUpdateable)
-	 */
-	@Override
-	public ArrayList<SubscriptionType> getSubscriptions(IManagedUpdateable source) {
-		ArrayList<SubscriptionType> types = new ArrayList<SubscriptionType>();
-		types.add(SubscriptionType.ALL);
-		return types;
-	}
-
-	@Override
-	public void update(IManagedUpdateable component, SubscriptionType[] type) {
-		// Update the flag
-		wasNotified.set(true);
-
-		// Dump some debug information
-		System.out.println("TestComponentListener Message: Updated!");
-		
-	}
 }

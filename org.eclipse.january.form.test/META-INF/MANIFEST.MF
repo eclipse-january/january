@@ -6,12 +6,7 @@ Bundle-Version: 2.1.0.qualifier
 Require-Bundle: org.junit;bundle-version="4.8.2",
  org.eclipse.emf.ecore,
  org.eclipse.january.form,
- org.eclipse.eavp.viz.service,
- org.eclipse.eavp.viz.service.geometry,
- org.eclipse.eavp.viz.service.mesh,
- org.eclipse.core.resources,
- org.eclipse.eavp.viz.modeling,
- org.eclipse.eavp.viz.datastructures
+ org.eclipse.core.resources
 Import-Package: ca.odell.glazedlists,
  ca.odell.glazedlists.event,
  ca.odell.glazedlists.gui,
