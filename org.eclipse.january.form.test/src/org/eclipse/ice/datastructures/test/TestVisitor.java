@@ -20,7 +20,6 @@ import org.eclipse.january.form.IReactorComponent;
 import org.eclipse.january.form.ListComponent;
 import org.eclipse.january.form.MasterDetailsComponent;
 import org.eclipse.january.form.MatrixComponent;
-import org.eclipse.january.form.MeshComponent;
 import org.eclipse.january.form.ResourceComponent;
 import org.eclipse.january.form.TableComponent;
 import org.eclipse.january.form.TimeDataComponent;
@@ -185,21 +184,6 @@ public class TestVisitor implements IComponentVisitor {
 	@Override
 	public void visit(TimeDataComponent component) {
 		// TODO Auto-generated method stub
-
-	}
-
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see IComponentVisitor#visit(MeshComponent component)
-	 */
-	@Override
-	public void visit(MeshComponent component) {
-
-		// Set the visitation state to true if the component is not null
-		if (component != null) {
-			visited = true;
-		}
 
 	}
 

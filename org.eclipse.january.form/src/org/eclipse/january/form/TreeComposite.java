@@ -1355,17 +1355,6 @@ public class TreeComposite extends ICEObject
 	/**
 	 * (non-Javadoc)
 	 * 
-	 * @see IComponentVisitor#visit(MeshComponent component)
-	 */
-	@Override
-	public void visit(MeshComponent component) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/**
-	 * (non-Javadoc)
-	 * 
 	 * @see IComponentVisitor#visit(AdaptiveTreeComposite component)
 	 */
 	@Override

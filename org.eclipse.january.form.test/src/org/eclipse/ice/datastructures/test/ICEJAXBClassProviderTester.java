@@ -29,7 +29,6 @@ import org.eclipse.january.form.IJAXBClassProvider;
 import org.eclipse.january.form.ListComponent;
 import org.eclipse.january.form.Material;
 import org.eclipse.january.form.MatrixComponent;
-import org.eclipse.january.form.MeshComponent;
 import org.eclipse.january.form.ResourceComponent;
 import org.eclipse.january.form.StringEntry;
 import org.eclipse.january.form.TableComponent;
@@ -71,7 +70,7 @@ public class ICEJAXBClassProviderTester {
 		// not null, and make sure we have 10 of them
 		List<Class> classList = provider.getClasses();
 		assertNotNull(classList);
-		assertEquals(19, classList.size());
+		assertEquals(18, classList.size());
 
 		// Check that all the correct ones are there.
 		assertTrue(classList.contains(ResourceComponent.class));
@@ -81,7 +80,6 @@ public class ICEJAXBClassProviderTester {
 		assertTrue(classList.contains(TimeDataComponent.class));
 		assertTrue(classList.contains(DataComponent.class));
 		assertTrue(classList.contains(TreeComposite.class));
-		assertTrue(classList.contains(MeshComponent.class));
 		assertTrue(classList.contains(ListComponent.class));
 		assertTrue(classList.contains(EMFComponent.class));
 		assertTrue(classList.contains(Material.class));

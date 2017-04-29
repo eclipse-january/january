@@ -176,18 +176,6 @@ public abstract class SelectiveComponentVisitor implements IComponentVisitor {
 	 * 
 	 * @see
 	 * org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor#visit
-	 * (org.eclipse.ice.datastructures.form.mesh.MeshComponent)
-	 */
-	@Override
-	public void visit(MeshComponent component) {
-		// Nothing to do.
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor#visit
 	 * (org.eclipse.ice.datastructures.form.BatteryComponent)
 	 */
 	@Override

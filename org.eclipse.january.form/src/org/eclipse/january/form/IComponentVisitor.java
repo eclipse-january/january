@@ -119,15 +119,6 @@ public interface IComponentVisitor {
 	public void visit(TimeDataComponent component);
 
 	/**
-	 * This operation informs the visitor that it is actually working with a
-	 * MeshComponent and should operate accordingly.
-	 * 
-	 * @param component
-	 *            The MeshComponent.
-	 */
-	public void visit(MeshComponent component);
-
-	/**
 	 * This operation informs the visitor that it is actually working with an
 	 * EMFComponent and should operate accordingly.
 	 * 

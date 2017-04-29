@@ -46,7 +46,6 @@ public class ICEJAXBClassProvider implements IJAXBClassProvider {
 		classList.add(TimeDataComponent.class);
 		classList.add(DataComponent.class);
 		classList.add(TreeComposite.class);
-		classList.add(MeshComponent.class);
 		classList.add(ResourceComponent.class);
 		classList.add(ListComponent.class);
 		classList.add(EMFComponent.class);
