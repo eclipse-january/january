@@ -16,14 +16,14 @@
 	<persistence-unit name="org.eclipse.january"
 		transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-		<class>org.eclipse.january.form.ICEObject.ICEObject</class>
+		<class>org.eclipse.january.form.JanuaryObject.JanuaryObject</class>
 		<class>org.eclipse.january.form.DataComponent</class>
 		<class>org.eclipse.january.form.TimeDataComponent</class>
 		<class>org.eclipse.january.form.Entry</class>
 		<class>org.eclipse.january.form.Form</class>
 		<class>org.eclipse.january.form.ResourceComponent</class>
 		<class>org.eclipse.january.form.TableComponent</class>
-		<class>org.eclipse.january.form.ICEResource</class>
+		<class>org.eclipse.january.form.JanuaryResource</class>
 		<class>org.eclipse.january.form.MatrixComponent</class>
 		<class>org.eclipse.january.form.MasterDetailsPair</class>
 		<class>org.eclipse.january.form.MasterDetailsComponent</class>

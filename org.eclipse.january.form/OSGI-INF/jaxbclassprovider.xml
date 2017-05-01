@@ -10,6 +10,6 @@
         UT-Battelle, LLC. - initial API and implementation
  -->
 
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="ICE JAXB Class Provider">
-   <implementation class="org.eclipse.january.form.ICEJAXBClassProvider"/>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="January JAXB Class Provider">
+   <implementation class="org.eclipse.january.form.JanuaryJAXBClassProvider"/>
 </scr:component>

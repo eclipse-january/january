@@ -19,17 +19,17 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * The ResourceComponent is a specialization of ListComponent that is used to
- * manage a set of ICEResources. It is used, for example, to collect Resources
- * for output data on a Form. ICEResources can be very easily added to
+ * manage a set of JanuaryResources. It is used, for example, to collect Resources
+ * for output data on a Form. JanuaryResources can be very easily added to
  * ResourceComponents by calling the addResource() operation and the whole list
- * of managed ICEResources can be retrieved with getResources().
+ * of managed JanuaryResources can be retrieved with getResources().
  *
  *
  * 
  * @author Jay Jay Billings, Anna Wojtowicz
  */
 @XmlRootElement(name = "ResourceComponent")
-public class ResourceComponent extends ListComponent<ICEResource> {
+public class ResourceComponent extends ListComponent<JanuaryResource> {
 
 	/**
 	 * The set of IUpdateableListeners observing the ResourceComponent.
@@ -49,12 +49,12 @@ public class ResourceComponent extends ListComponent<ICEResource> {
 	}
 
 	/**
-	 * This operation adds an ICEResource to the component.
+	 * This operation adds an JanuaryResource to the component.
 	 * 
 	 * @param resource
 	 *            The new resource to add.
 	 */
-	public void addResource(ICEResource resource) {
+	public void addResource(JanuaryResource resource) {
 
 		// Add the resource if it is good
 		if (resource != null) {
@@ -65,16 +65,16 @@ public class ResourceComponent extends ListComponent<ICEResource> {
 	}
 
 	/**
-	 * This operation gets all of the ICEResources from the component.
+	 * This operation gets all of the JanuaryResources from the component.
 	 * 
-	 * @return The list of ICEResources contained by the ResourceComponent.
+	 * @return The list of JanuaryResources contained by the ResourceComponent.
 	 */
-	public ArrayList<ICEResource> getResources() {
-		return new ArrayList<ICEResource>(this);
+	public ArrayList<JanuaryResource> getResources() {
+		return new ArrayList<JanuaryResource>(this);
 	}
 
 	/**
-	 * An operation that clears all the ICEResources stored on the
+	 * An operation that clears all the JanuaryResources stored on the
 	 * ResourceComponent. If there are no items in the list, this operation does
 	 * nothing.
 	 */
@@ -100,7 +100,7 @@ public class ResourceComponent extends ListComponent<ICEResource> {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ice.datastructures.ICEObject.ListComponent#hashCode()
+	 * @see org.eclipse.ice.datastructures.JanuaryObject.ListComponent#hashCode()
 	 */
 	@Override
 	public int hashCode() {

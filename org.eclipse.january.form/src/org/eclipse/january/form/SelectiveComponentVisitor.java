@@ -188,7 +188,7 @@ public abstract class SelectiveComponentVisitor implements IComponentVisitor {
 	 * 
 	 * @see
 	 * org.eclipse.ice.datastructures.componentVisitor.IComponentVisitor#visit(
-	 * org.eclipse.ice.datastructures.ICEObject.ListComponent)
+	 * org.eclipse.ice.datastructures.JanuaryObject.ListComponent)
 	 */
 	@Override
 	public void visit(ListComponent<?> component) {

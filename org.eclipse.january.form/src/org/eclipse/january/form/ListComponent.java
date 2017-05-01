@@ -32,10 +32,10 @@ import ca.odell.glazedlists.gui.WritableTableFormat;
 /**
  * This is a base class for Components that are based on lists. Its primary
  * purpose is to provide all of the standard list operations expected from Java
- * Collections in a class that realizes ICE's additional requirements for
+ * Collections in a class that realizes January's additional requirements for
  * persistence, unique identification, and notifications.
  * <p>
- * It implements the Component to match up with the ICE requirements and extends
+ * It implements the Component to match up with the January requirements and extends
  * the TransformedList from GlazedLists to provide the generic, observable list
  * capabilities.
  * </p>
@@ -88,13 +88,13 @@ public class ListComponent<T> extends TransformedList<T, T>
 	protected final Logger logger;
 
 	/**
-	 * The ICEJAXBHandler used to marshal the class to and from XML.
+	 * The JanuaryJAXBHandler used to marshal the class to and from XML.
 	 */
 	@XmlTransient
-	protected ICEJAXBHandler jaxbManipulator;
+	protected JanuaryJAXBHandler jaxbManipulator;
 
 	/**
-	 * A listener map to map ICE listeners to ListEventListeners.
+	 * A listener map to map January listeners to ListEventListeners.
 	 * <p>
 	 * The listeners must have the type Object since the listeners are
 	 * registered with both {@link #idList} and the TransformedList's source.
@@ -179,8 +179,8 @@ public class ListComponent<T> extends TransformedList<T, T>
 		// Set up the ids - id, name, description and context
 		idList = new BasicEventList<String>();
 		idList.add("1");
-		idList.add("ICE Object");
-		idList.add("ICE Object");
+		idList.add("January Object");
+		idList.add("January Object");
 		idList.add("");
 		// Setup the listener map
 		listenerMap = new HashMap<IUpdateableListener, ListEventListener<Object>>();
@@ -232,7 +232,7 @@ public class ListComponent<T> extends TransformedList<T, T>
 		ListComponent<?> castedOtherObject = null;
 
 		// Check null and base type first. Note that the instanceof operator
-		// must be used because subclasses of ICEObject can be anonymous.
+		// must be used because subclasses of JanuaryObject can be anonymous.
 		if (otherObject != null && (otherObject instanceof ListComponent<?>)) {
 			// See if they are the same reference on the heap
 			if (this == otherObject) {
@@ -549,7 +549,7 @@ public class ListComponent<T> extends TransformedList<T, T>
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.ice.datastructures.ICEObject.Identifiable#getContext()
+	 * @see org.eclipse.ice.datastructures.JanuaryObject.Identifiable#getContext()
 	 */
 	@Override
 	public String getContext() {
@@ -560,7 +560,7 @@ public class ListComponent<T> extends TransformedList<T, T>
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.eclipse.ice.datastructures.ICEObject.Identifiable#setContext(java.
+	 * org.eclipse.ice.datastructures.JanuaryObject.Identifiable#setContext(java.
 	 * lang.String)
 	 */
 	@Override

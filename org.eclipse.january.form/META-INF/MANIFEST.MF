@@ -26,7 +26,7 @@ Import-Package: ca.odell.glazedlists,
  org.eclipse.january.geometry,
  org.slf4j;version="1.7.2"
 Bundle-ActivationPolicy: lazy
-JPA-PersistenceUnits: org.eclipse.ice.datastructures
+JPA-PersistenceUnits: org.eclipse.january.datastructures
 Require-Bundle: ca.odell.glazedlists;visibility:=reexport,
  org.eclipse.core.runtime
 Bundle-Vendor: Eclipse January

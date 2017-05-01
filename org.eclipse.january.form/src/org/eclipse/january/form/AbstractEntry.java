@@ -48,24 +48,24 @@ public abstract class AbstractEntry implements IEntry {
 	protected final Logger logger;
 
 	/**
-	 * The unique identification number of the ICEObject.
+	 * The unique identification number of the JanuaryObject.
 	 * 
 	 */
 	protected int uniqueId;
 	/**
-	 * The name of the ICEObject.
+	 * The name of the JanuaryObject.
 	 */
 	protected String objectName;
 	/**
-	 * The description of the ICEObject. This description should be different
-	 * than the name of the ICEObject and should contain information that would
+	 * The description of the JanuaryObject. This description should be different
+	 * than the name of the JanuaryObject and should contain information that would
 	 * be useful to a human user.
 	 * 
 	 */
 	protected String objectDescription;
 
 	/**
-	 * The set of IUpdateableListeners observing the ICEObject.
+	 * The set of IUpdateableListeners observing the JanuaryObject.
 	 */
 	@XmlTransient
 	protected ArrayList<IUpdateableListener> listeners;
@@ -154,8 +154,8 @@ public abstract class AbstractEntry implements IEntry {
 
 		// Set it all up
 		uniqueId = 1;
-		objectName = "ICE Entry";
-		objectDescription = "ICE Entry";
+		objectName = "January Entry";
+		objectDescription = "January Entry";
 		contextId = "default";
 		listeners = new ArrayList<IUpdateableListener>();
 		defaultValue = "";
@@ -247,7 +247,7 @@ public abstract class AbstractEntry implements IEntry {
 	}
 
 	/**
-	 * This operation copies the contents of an ICEObject into the current
+	 * This operation copies the contents of an JanuaryObject into the current
 	 * object using a deep copy.
 	 * 
 	 * @param entity
@@ -260,7 +260,7 @@ public abstract class AbstractEntry implements IEntry {
 		if (entity == null) {
 			return;
 		}
-		// Copy contents of entity to this ICEObject.
+		// Copy contents of entity to this JanuaryObject.
 		this.objectDescription = entity.objectDescription;
 		this.objectName = entity.objectName;
 		this.uniqueId = entity.uniqueId;
@@ -277,7 +277,7 @@ public abstract class AbstractEntry implements IEntry {
 
 	/**
 	 * <p>
-	 * This protected operation notifies the listeners of the ICEObject that its
+	 * This protected operation notifies the listeners of the JanuaryObject that its
 	 * state has changed.
 	 * </p>
 	 * 
@@ -307,7 +307,7 @@ public abstract class AbstractEntry implements IEntry {
 
 	/**
 	 * <p>
-	 * This operation returns a clone of the ICEObject using a deep copy.
+	 * This operation returns a clone of the JanuaryObject using a deep copy.
 	 * </p>
 	 * 
 	 * @return
@@ -331,7 +331,7 @@ public abstract class AbstractEntry implements IEntry {
 		AbstractEntry castedOtherObject = null;
 
 		// Check null and base type first. Note that the instanceof operator
-		// must be used because subclasses of ICEObject can be anonymous.
+		// must be used because subclasses of JanuaryObject can be anonymous.
 		if (otherObject != null && (otherObject instanceof AbstractEntry)) {
 			// See if they are the same reference on the heap
 			if (this == otherObject) {
@@ -370,7 +370,7 @@ public abstract class AbstractEntry implements IEntry {
 		// Local Declaration
 		int hash = 11;
 
-		// Compute the hashcode from this ICEObject's data
+		// Compute the hashcode from this JanuaryObject's data
 		hash = 31 * hash + uniqueId;
 		// If objectName is null, add 0, otherwise add String.hashcode()
 		hash = 31 * hash + (null == objectName ? 0 : objectName.hashCode());
@@ -646,8 +646,8 @@ public abstract class AbstractEntry implements IEntry {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.eclipse.ice.datastructures.ICEObject.IUpdateableListener#update(org.
-	 * eclipse.ice.datastructures.ICEObject.IUpdateable)
+	 * org.eclipse.ice.datastructures.JanuaryObject.IUpdateableListener#update(org.
+	 * eclipse.ice.datastructures.JanuaryObject.IUpdateable)
 	 */
 	@Override
 	public abstract void update(IUpdateable component);

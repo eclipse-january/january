@@ -34,7 +34,7 @@ import org.eclipse.january.geometry.GeometryFactory;
  */
 @XmlRootElement(name = "GeometryComponent")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GeometryComponent extends ICEObject
+public class GeometryComponent extends JanuaryObject
 		implements Component, IUpdateableListener {
 
 	/**
@@ -54,19 +54,19 @@ public class GeometryComponent extends ICEObject
 
 	/**
 	 * <p>
-	 * This operation overrides the ICEObject.setName() operation and provides
+	 * This operation overrides the JanuaryObject.setName() operation and provides
 	 * an update notification in addition to setting the name.
 	 * </p>
 	 *
 	 * @param name
 	 *            <p>
-	 *            The new ICEObject ID
+	 *            The new JanuaryObject ID
 	 *            </p>
 	 */
 	@Override
 	public void setName(String name) {
 
-		// Call ICEObject::setName
+		// Call JanuaryObject::setName
 		super.setName(name);
 
 		// Notify listeners
@@ -76,19 +76,19 @@ public class GeometryComponent extends ICEObject
 
 	/**
 	 * <p>
-	 * This operation overrides the ICEObject.setId() operation and provides an
+	 * This operation overrides the JanuaryObject.setId() operation and provides an
 	 * update notification in addition to setting the id.
 	 * </p>
 	 *
 	 * @param id
 	 *            <p>
-	 *            The new ICEObject ID
+	 *            The new JanuaryObject ID
 	 *            </p>
 	 */
 	@Override
 	public void setId(int id) {
 
-		// Call ICEObject::setId
+		// Call JanuaryObject::setId
 		super.setId(id);
 
 		// Notify listeners
@@ -156,13 +156,13 @@ public class GeometryComponent extends ICEObject
 	 *
 	 * @return
 	 *         <p>
-	 *         The hashcode of the ICEObject.
+	 *         The hashcode of the JanuaryObject.
 	 *         </p>
 	 */
 	@Override
 	public int hashCode() {
 
-		// Return the ICEObject's hashcode
+		// Return the JanuaryObject's hashcode
 		int hash = super.hashCode();
 
 		return hash;
@@ -178,11 +178,11 @@ public class GeometryComponent extends ICEObject
 	 *
 	 * @param otherObject
 	 *            <p>
-	 *            The other ICEObject that should be compared with this one.
+	 *            The other JanuaryObject that should be compared with this one.
 	 *            </p>
 	 * @return
 	 *         <p>
-	 *         True if the ICEObjects are equal, false otherwise.
+	 *         True if the JanuaryObjects are equal, false otherwise.
 	 *         </p>
 	 */
 	@Override
@@ -198,7 +198,7 @@ public class GeometryComponent extends ICEObject
 				|| !(otherObject instanceof GeometryComponent)) {
 			return false;
 		}
-		// Check that these objects have the same ICEObject data
+		// Check that these objects have the same JanuaryObject data
 		if (!super.equals(otherObject)) {
 			return false;
 		}
@@ -221,22 +221,22 @@ public class GeometryComponent extends ICEObject
 	 * current object using a deep copy.
 	 * </p>
 	 *
-	 * @param iceObject
+	 * @param JanuaryObject
 	 *            <p>
-	 *            The ICEObject from which the values should be copied
+	 *            The JanuaryObject from which the values should be copied
 	 *            </p>
 	 */
-	public void copy(GeometryComponent iceObject) {
+	public void copy(GeometryComponent JanuaryObject) {
 
 		// Return if object is null
-		if (iceObject == null) {
+		if (JanuaryObject == null) {
 			return;
 		}
-		// Copy the ICEObject data
-		super.copy(iceObject);
+		// Copy the JanuaryObject data
+		super.copy(JanuaryObject);
 
 		// Copy shapes list
-		Geometry otherGeometry = iceObject.getGeometry();
+		Geometry otherGeometry = JanuaryObject.getGeometry();
 		if (otherGeometry != null) {
 			this.setGeometry((Geometry) otherGeometry.clone());
 		} else {
@@ -348,8 +348,8 @@ public class GeometryComponent extends ICEObject
 	 * (non-Javadoc)
 	 *
 	 * @see
-	 * org.eclipse.ice.datastructures.ICEObject.IUpdateableListener#update(org.
-	 * eclipse.ice.datastructures.ICEObject.IUpdateable)
+	 * org.eclipse.ice.datastructures.JanuaryObject.IUpdateableListener#update(org.
+	 * eclipse.ice.datastructures.JanuaryObject.IUpdateable)
 	 */
 	@Override
 	public void update(IUpdateable component) {

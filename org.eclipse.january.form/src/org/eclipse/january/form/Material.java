@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * Materials can also be composed of other materials called "Components." Each
  * Material that comprises the the composite Materials should be set using the
  * addComponent() operation and the whole list of components can get retrieved
- * with the getComponents() operation. ICE makes no attempt to correct
+ * with the getComponents() operation. January makes no attempt to correct
  * mismatched sizes, etc. between components and composites.
  * 
  * @author Jay Jay Billings, Kasper Gammeltoft

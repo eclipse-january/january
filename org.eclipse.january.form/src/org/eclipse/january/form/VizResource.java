@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * 
  */
 @XmlRootElement(name = "VizResource")
-public class VizResource extends ICEResource{
+public class VizResource extends JanuaryResource{
 
 	/**
 	 * The set of files contained associated with this resource
@@ -58,7 +58,7 @@ public class VizResource extends ICEResource{
 	 */
 	public VizResource() {
 
-		// Call ICEResource's constructor
+		// Call JanuaryResource's constructor
 		super();
 
 		// Setup the list
@@ -74,7 +74,7 @@ public class VizResource extends ICEResource{
 	 */
 	public VizResource(File resourceFile) throws IOException {
 
-		// Call ICEResource's constructor
+		// Call JanuaryResource's constructor
 		super(resourceFile);
 
 		// Setup the list
@@ -217,7 +217,7 @@ public class VizResource extends ICEResource{
 		// Local Declaration
 		int hash = 11;
 
-		// Compute hashcode from ICEResource data
+		// Compute hashcode from JanuaryResource data
 		hash = 31 * hash + super.hashCode() + childrenResources.hashCode();
 
 		return hash;

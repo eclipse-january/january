@@ -150,7 +150,7 @@ public class TimeDataComponent extends DataComponent {
 		entry5.setId(entryCount);
 		addEntry(entry5);
 
-		// Setup ICEObject info
+		// Setup JanuaryObject info
 		this.setName("TimeDataComponent 1");
 		this.setId(1);
 		this.setDescription("TimeDataComponent 1's Description");

@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceImpl;
 import org.eclipse.emf.ecore.xmi.util.XMLProcessor;
 import org.eclipse.january.form.Component;
-import org.eclipse.january.form.ICEObject;
+import org.eclipse.january.form.JanuaryObject;
 import org.eclipse.january.form.IComponentVisitor;
 import org.eclipse.january.form.TreeComposite;
 import org.xml.sax.SAXException;
@@ -50,17 +50,17 @@ import org.xml.sax.SAXException;
  * @author Alex McCaskey
  */
 @XmlRootElement(name = "EMFComponent")
-public class EMFComponent extends ICEObject implements Component {
+public class EMFComponent extends JanuaryObject implements Component {
 
 	/**
 	 * Reference to the EMFTreeComposite which provides a representation of the
-	 * Ecore model that the ICE UI expects and can visualization for user
+	 * Ecore model that the January UI expects and can visualization for user
 	 * manipulation. This tree represents DocumentRoot in the EMF tree, so it
 	 * should only have 1 child.
 	 * 
 	 */
 	@XmlElement(name = "EMFTreeComposite")
-	private EMFTreeComposite iceEMFTree;
+	private EMFTreeComposite januaryEMFTree;
 
 	/**
 	 * Reference to the XMLProcessor that is used to read and write the
@@ -83,7 +83,7 @@ public class EMFComponent extends ICEObject implements Component {
 	 */
 	public EMFComponent() {
 		super();
-		iceEMFTree = new EMFTreeComposite();
+		januaryEMFTree = new EMFTreeComposite();
 		xmlResource = new XMLResourceImpl();
 	}
 
@@ -97,7 +97,7 @@ public class EMFComponent extends ICEObject implements Component {
 		super();
 
 		// Initialize class data
-		iceEMFTree = new EMFTreeComposite();
+		januaryEMFTree = new EMFTreeComposite();
 		xmlResource = new XMLResourceImpl();
 
 		// Make sure we have a valid File object.
@@ -133,7 +133,7 @@ public class EMFComponent extends ICEObject implements Component {
 							// constructor
 							// will take care of constructing possible exemplar
 							// children nodes.
-							iceEMFTree = new EMFTreeComposite(eClass);
+							januaryEMFTree = new EMFTreeComposite(eClass);
 							break;
 						}
 					}
@@ -151,7 +151,7 @@ public class EMFComponent extends ICEObject implements Component {
 	 * @return
 	 */
 	public TreeComposite getEMFTreeComposite() {
-		return iceEMFTree;
+		return januaryEMFTree;
 	}
 
 	/**
@@ -181,7 +181,7 @@ public class EMFComponent extends ICEObject implements Component {
 				outputStream = new FileOutputStream(saveFile);
 
 				xmlResource.getContents().clear();
-				xmlResource.getContents().add(iceEMFTree.getEcoreNode());
+				xmlResource.getContents().add(januaryEMFTree.getEcoreNode());
 
 				// Direct the XMLProcessor to save the Resource
 				xmlProcessor.save(outputStream, xmlResource, null);
@@ -255,15 +255,15 @@ public class EMFComponent extends ICEObject implements Component {
 		if (documentRoot != null) {
 			// Create the root node EMFTreeComposite
 			int id = 1;
-			iceEMFTree = new EMFTreeComposite(documentRoot);
-			iceEMFTree.setId(id);
+			januaryEMFTree = new EMFTreeComposite(documentRoot);
+			januaryEMFTree.setId(id);
 			
 			// Create the a map to store EObject keys to their corresponding
 			// EMFTreeComposite value.
 			HashMap<EObject, EMFTreeComposite> map = new HashMap<EObject, EMFTreeComposite>();
 
 			// Put the root node in the tree
-			map.put(documentRoot, iceEMFTree);
+			map.put(documentRoot, januaryEMFTree);
 
 			// Use the EMF tree iterator to walk the Ecore tree.
 			TreeIterator<EObject> tree = documentRoot.eAllContents();
@@ -309,7 +309,7 @@ public class EMFComponent extends ICEObject implements Component {
 		}
 
 		// Check that the object is not null, and that it is a EMFComponent
-		// Check that these objects have the same ICEObject data
+		// Check that these objects have the same JanuaryObject data
 		if (otherEMFComponent == null || !(otherEMFComponent instanceof EMFComponent)
 				|| !super.equals(otherEMFComponent)) {
 			return false;
@@ -320,7 +320,7 @@ public class EMFComponent extends ICEObject implements Component {
 
 		// For now assume that if the TreeComposites are equal,
 		// the two EMFComponents are equal
-		if (!castedComponent.iceEMFTree.equals(iceEMFTree)) {
+		if (!castedComponent.januaryEMFTree.equals(januaryEMFTree)) {
 			logger.info("TREES NOT EQUAL");
 			return false;
 		}
@@ -342,7 +342,7 @@ public class EMFComponent extends ICEObject implements Component {
 
 		// Compute hash code from EMFComponent data
 		hash = 31 * hash + super.hashCode();
-		hash = 31 * hash + iceEMFTree.hashCode();
+		hash = 31 * hash + januaryEMFTree.hashCode();
 
 		return hash;
 	}
@@ -363,7 +363,7 @@ public class EMFComponent extends ICEObject implements Component {
 
 			// TODO Do rest of copy...
 			// FIXME ECOREUTILS
-			iceEMFTree.copy(otherEMFComponent.iceEMFTree);
+			januaryEMFTree.copy(otherEMFComponent.januaryEMFTree);
 			// documentRoot = EcoreUtil.copy(otherEMFComponent.documentRoot);
 
 			notifyListeners();
@@ -380,8 +380,8 @@ public class EMFComponent extends ICEObject implements Component {
 
 		// Create a new instance, copy contents and return it
 		EMFComponent emfComponent = new EMFComponent();
-		if (iceEMFTree.getEcoreMetaData() != null) {
-			emfComponent.iceEMFTree.setECoreNodeMetaData(iceEMFTree.getEcoreMetaData());
+		if (januaryEMFTree.getEcoreMetaData() != null) {
+			emfComponent.januaryEMFTree.setECoreNodeMetaData(januaryEMFTree.getEcoreMetaData());
 		}
 		emfComponent.copy(this);
 
@@ -402,8 +402,8 @@ public class EMFComponent extends ICEObject implements Component {
 
 		// Create a new XMLResource and add the Ecore model to it
 		// xmlResource.getContents().clear();
-		if (iceEMFTree.getEcoreNode() != null) {
-			xmlResource.getContents().add(iceEMFTree.getEcoreNode());
+		if (januaryEMFTree.getEcoreNode() != null) {
+			xmlResource.getContents().add(januaryEMFTree.getEcoreNode());
 
 			// Write to standard out
 			try {

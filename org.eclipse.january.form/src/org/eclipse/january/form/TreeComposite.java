@@ -31,7 +31,7 @@ import org.eclipse.january.form.emf.EMFComponent;
 
 /**
  * The TreeComposite realizes the Composite interface to provide a multi-level
- * hierarchical tree of ICE Components. TreeComposites are n-ary trees, meaning
+ * hierarchical tree of January Components. TreeComposites are n-ary trees, meaning
  * that they can have any number of children and data per node. A "sibling" is a
  * TreeComposite on the same level of the tree as the current TreeComposite and
  * a "child" is a subordinate TreeComposite contained in the set managed by the
@@ -121,7 +121,7 @@ import org.eclipse.january.form.emf.EMFComponent;
  */
 @XmlRootElement(name = "TreeComposite")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class TreeComposite extends ICEObject
+public class TreeComposite extends JanuaryObject
 		implements Composite, IComponentVisitor {
 	/**
 	 * <p>
@@ -705,7 +705,7 @@ public class TreeComposite extends ICEObject
 			} else {
 				tree = (TreeComposite) otherTreeComposite;
 				// Check everything except the parent and sibling references.
-				// Start with ICEObject descriptive data.
+				// Start with JanuaryObject descriptive data.
 				equalVal = this.uniqueId == tree.uniqueId
 						&& this.objectName.equals(tree.objectName)
 						&& this.objectDescription.equals(tree.objectDescription)
@@ -816,7 +816,7 @@ public class TreeComposite extends ICEObject
 		for (IUpdateableListener listener : listenersCopy) {
 			unregister(listener);
 		}
-		// Copy ICEObject contents
+		// Copy JanuaryObject contents
 		super.copy(otherTreeComposite);
 
 		// Copy contents - look at differences between "shallow", "deep", and
@@ -861,7 +861,7 @@ public class TreeComposite extends ICEObject
 		for (int i = 0; i < otherTreeComposite.dataNodes.size(); i++) {
 			// Get the next data node and a clone of it to go in this tree.
 			Component dataNode = otherTreeComposite.dataNodes.get(i);
-			Component clone = (Component) ((ICEObject) dataNode).clone();
+			Component clone = (Component) ((JanuaryObject) dataNode).clone();
 			// Add the clone to this tree's set of data nodes.
 			this.dataNodes.add(clone);
 			// Synchronize the active data node with the other tree's active

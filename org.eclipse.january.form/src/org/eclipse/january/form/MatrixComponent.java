@@ -38,7 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Jay Jay Billings
  */
 @XmlRootElement(name = "MatrixComponent")
-public class MatrixComponent extends ICEObject implements Component {
+public class MatrixComponent extends JanuaryObject implements Component {
 	/**
 	 * <p>
 	 * Boolean attribute that indicates whether this MatrixComponent represents
@@ -380,7 +380,7 @@ public class MatrixComponent extends ICEObject implements Component {
 			return false;
 		}
 
-		// Check that these objects have the same ICEObject data
+		// Check that these objects have the same JanuaryObject data
 		if (!super.equals(otherMatrixComponent)) {
 			return false;
 		}
@@ -417,7 +417,7 @@ public class MatrixComponent extends ICEObject implements Component {
 
 		// Compute hash code from MatrixComponent data
 
-		// Grab ICEObject data
+		// Grab JanuaryObject data
 		hash = 31 * hash + super.hashCode();
 
 		// Grab attributes
@@ -986,7 +986,7 @@ public class MatrixComponent extends ICEObject implements Component {
 
 	/**
 	 * <p>
-	 * Returns the ICE's AllowedValueType. If this is not set, returns null.
+	 * Returns the January's AllowedValueType. If this is not set, returns null.
 	 * </p>
 	 * 
 	 * @return <p>
@@ -1027,7 +1027,7 @@ public class MatrixComponent extends ICEObject implements Component {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ice.datastructures.ICEObject.ICEObject#update(java.lang.String, java.lang.String)
+	 * @see org.eclipse.ice.datastructures.JanuaryObject.JanuaryObject#update(java.lang.String, java.lang.String)
 	 */
 	@Override
 	public void update(String updatedKey, String newValue) {

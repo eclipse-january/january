@@ -40,7 +40,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Jay Jay Billings
  */
 @XmlRootElement(name = "Form")
-public class Form extends ICEObject implements Composite {
+public class Form extends JanuaryObject implements Composite {
 	/**
 	 * <p>
 	 * The unique ID of the Item that is represented by this Form.
@@ -223,7 +223,7 @@ public class Form extends ICEObject implements Composite {
 			return false;
 		}
 
-		// Check that these objects have the same ICEObject data
+		// Check that these objects have the same JanuaryObject data
 		if (!super.equals(otherForm)) {
 			return false;
 		}
@@ -378,7 +378,7 @@ public class Form extends ICEObject implements Composite {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ice.datastructures.ICEObject.ICEObject#update(java.lang.String, java.lang.String)
+	 * @see org.eclipse.ice.datastructures.JanuaryObject.JanuaryObject#update(java.lang.String, java.lang.String)
 	 */
 	@Override
 	public void update(String updatedKey, String newValue) {
@@ -432,7 +432,7 @@ public class Form extends ICEObject implements Composite {
 	public void removeComponent(int childId) {
 
 		// Local Declarations
-		Identifiable comp = null; // FIXME - might not be an ICEObject!
+		Identifiable comp = null; // FIXME - might not be an JanuaryObject!
 
 		for (int i = 0; i < componentList.size(); i++) {
 			comp = componentList.get(i);

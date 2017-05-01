@@ -24,8 +24,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The ICETextContentDescriber interface is an extension of the
- * ITextContentDescriber that provides ICE-specific methods for the file to be
+ * The FormTextContentDescriber interface is an extension of the
+ * ITextContentDescriber that provides form-specific methods for the file to be
  * described.
  * 
  * @author Alex McCaskey
@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 public interface FormTextContentDescriber extends ITextContentDescriber {
 
 	/**
-	 * If this is a valid ICE Item being described, return the discovered Item
+	 * If this is a valid January Item being described, return the discovered Item
 	 * ID.
 	 * 
 	 * @return itemId The id of the Item.
@@ -43,11 +43,11 @@ public interface FormTextContentDescriber extends ITextContentDescriber {
 
 	/**
 	 * Return true if given the provided lines of text as one String this file
-	 * describes a valid ICE Form.
+	 * describes a valid January Form.
 	 * 
 	 * @param lines
 	 *            Lines of text as one String
-	 * @return isValid True if this is a valid ICE Form file description.
+	 * @return isValid True if this is a valid January Form file description.
 	 */
 	public boolean isValidFile(String lines);
 

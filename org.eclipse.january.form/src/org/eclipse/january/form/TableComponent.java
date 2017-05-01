@@ -44,7 +44,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "TableComponent")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class TableComponent extends ICEObject implements Component {
+public class TableComponent extends JanuaryObject implements Component {
 
 	/**
 	 * <p>
@@ -493,7 +493,7 @@ public class TableComponent extends ICEObject implements Component {
 			return false;
 		}
 
-		// Check that these objects have the same ICEObject data
+		// Check that these objects have the same JanuaryObject data
 		if (!super.equals(otherTableComponent)) {
 			return false;
 		}

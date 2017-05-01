@@ -94,7 +94,7 @@ public class StringEntry extends AbstractEntry {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ice.datastructures.entry.AbstractEntry#update(org.eclipse.ice.datastructures.ICEObject.IUpdateable)
+	 * @see org.eclipse.ice.datastructures.entry.AbstractEntry#update(org.eclipse.ice.datastructures.JanuaryObject.IUpdateable)
 	 */
 	@Override
 	public void update(IUpdateable component) {

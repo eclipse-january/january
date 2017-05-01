@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Jay Jay Billings
  */
 @XmlRootElement(name = "DataComponent")
-public class DataComponent extends ICEObject
+public class DataComponent extends JanuaryObject
 		implements Component, IUpdateableListener {
 	/**
 	 * The entries in this data component.
@@ -272,7 +272,7 @@ public class DataComponent extends ICEObject
 		}
 
 		// Check that the object is not null, and that it is a DataComponent
-		// Check that these objects have the same ICEObject data
+		// Check that these objects have the same JanuaryObject data
 		if (otherDataComponent == null
 				|| !(otherDataComponent instanceof DataComponent)
 				|| !super.equals(otherDataComponent)) {

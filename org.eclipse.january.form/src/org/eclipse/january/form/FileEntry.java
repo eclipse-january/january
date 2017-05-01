@@ -267,7 +267,7 @@ public class FileEntry extends DiscreteEntry implements IResourceChangeListener 
 		// Local Declaration
 		int hash = 11;
 
-		// Compute the hashcode from this ICEObject's data
+		// Compute the hashcode from this JanuaryObject's data
 		hash = 31 * hash + super.hashCode();
 		hash = 31 * hash + fileExtension.hashCode();
 

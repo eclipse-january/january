@@ -56,14 +56,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  * three ways: by the name, id or reference to the master itself.
  * </p>
  * <p>
- * The MasterDetailsComponent is an ICEObject and is both uniquely identifiable
+ * The MasterDetailsComponent is an JanuaryObject and is both uniquely identifiable
  * and persistent to either XML or SQL. It implements the Component interface
  * and can be visited and observed.
  * </p>
  * <p>
  * The MasterDetailsComponent can be configured with a "header component." The
  * header is a DataComponent that contains Entries whose values apply to the
- * master-details pairs globally. For example, in the ICE MultiLauncher the
+ * master-details pairs globally. For example, in the January MultiLauncher the
  * header contains an Entry to determine whether or not the jobs should be
  * launched sequentially or in parallel. This header is retrieved and set by
  * calling get/setGlobalsComponent and it is referred to interchangeably as
@@ -87,7 +87,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "MasterDetailsComponent")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class MasterDetailsComponent extends ICEObject implements Component {
+public class MasterDetailsComponent extends JanuaryObject implements Component {
 	/**
 	 * <p>
 	 * The list of Master/Details pairs that have been created in the component.
@@ -579,7 +579,7 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 			return false;
 		}
 
-		// Check that these objects have the same ICEObject data
+		// Check that these objects have the same JanuaryObject data
 		if (!super.equals(otherMasterDetailsComponent)) {
 			return false;
 		}
@@ -623,7 +623,7 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 		// Local Declaration
 		int hash = 1;
 
-		// Compute hash code from ICEObject data
+		// Compute hash code from JanuaryObject data
 		hash = 31 * hash + super.hashCode();
 
 		// Compute attributes
@@ -962,7 +962,7 @@ public class MasterDetailsComponent extends ICEObject implements Component {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ice.datastructures.ICEObject.ICEObject#update(java.lang.String, java.lang.String)
+	 * @see org.eclipse.ice.datastructures.JanuaryObject.JanuaryObject#update(java.lang.String, java.lang.String)
 	 */
 	@Override
 	public void update(String updatedKey, String newValue) {

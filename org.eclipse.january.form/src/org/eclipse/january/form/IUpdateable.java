@@ -18,9 +18,9 @@ import java.util.ArrayList;
  * <p>
  * The IUpdateable interface provides a single update operation that may be used
  * by implementers to receive an update based on a key-value pair. This is used
- * by ICEObjects, Components, Entries and other classes to receive updates from
+ * by JanuaryObjects, Components, Entries and other classes to receive updates from
  * the Registry when values stored therein change. More generally it can be used
- * by any class within ICE for receiving or posting updates.
+ * by any class within January for receiving or posting updates.
  * </p>
  * 
  * @author Jay Jay Billings

@@ -14,7 +14,7 @@ package org.eclipse.january.form;
 
 /**
  * This interface describes operations that would make a class uniquely
- * identifiable to ICE.
+ * identifiable to January.
  * 
  * @author Jay Jay Billings
  */
@@ -70,7 +70,7 @@ public interface Identifiable {
 	public void setDescription(String description);
 
 	/**
-	 * This operation is used to check equality between the ICE and another
+	 * This operation is used to check equality between the January and another
 	 * Identifiable entity. It returns true if the Identifiable entities are
 	 * equal and false if they are not.
 	 * 

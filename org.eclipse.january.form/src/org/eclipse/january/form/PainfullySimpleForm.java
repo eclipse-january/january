@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * contains the serialized contents of a Form in <a href=
  * "https://sourceforge.net/apps/mediawiki/niceproject/index.php?title=ICE_Painfully_Simple_Form#The_Painfully_Simple_Form_File_Format"
  * rel="">the Painfully Simple Form file format (PSF)</a>. A description of the
- * file format may also be found in the internal ICE documentation. The
+ * file format may also be found in the internal January documentation. The
  * Painfully Simple Form does not maintain any memory of the stream from which
  * it created itself.
  * </p>
@@ -293,7 +293,7 @@ public class PainfullySimpleForm extends Form {
 		// A map of the component names to the component ids
 		ArrayList<Integer> emptyLines = new ArrayList<Integer>();
 		HashMap<String, Integer> componentMap = new HashMap<String, Integer>();
-		ICEObject compRef = null;
+		JanuaryObject compRef = null;
 		TableComponent tableRef = null;
 		DataComponent dataRef = null;
 
@@ -308,7 +308,7 @@ public class PainfullySimpleForm extends Form {
 
 		// Setup the component map
 		for (Component i : this.getComponents()) {
-			compRef = (ICEObject) i;
+			compRef = (JanuaryObject) i;
 			componentMap.put(compRef.getName(), compRef.getId());
 		}
 
@@ -356,7 +356,7 @@ public class PainfullySimpleForm extends Form {
 			if (componentMap.containsKey(currentGroup)) {
 
 				// Get the Component and add the Entry
-				compRef = (ICEObject) getComponent(componentMap.get(currentGroup));
+				compRef = (JanuaryObject) getComponent(componentMap.get(currentGroup));
 				// Case handle for DataComponent or TableComponent
 
 				// If TableComponent, add entry to a temp list
@@ -540,14 +540,14 @@ public class PainfullySimpleForm extends Form {
 	 */
 	private void setupRowTemplates() {
 
-		ICEObject compRef = null;
+		JanuaryObject compRef = null;
 		TableComponent tableRef = null;
 		ArrayList<IEntry> tempArray = null;
 
 		// Iterate through the components list and see if the name
 		// is in the rowTemplates list.
 		for (int i = 0; i < this.getComponents().size(); i++) {
-			compRef = (ICEObject) this.getComponents().get(i);
+			compRef = (JanuaryObject) this.getComponents().get(i);
 			// If it exists, add the ArrayList to the TableComponent via
 			// set up row template.
 			if (rowTemplates.containsKey(compRef.getName())) {

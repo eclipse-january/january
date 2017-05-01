@@ -16,7 +16,7 @@ import ca.odell.glazedlists.event.ListEventListener;
 
 /**
  * This class implements the GlazedList ListEventListener interface to forward
- * updates to an ICE IUpdateableListener.
+ * updates to an January IUpdateableListener.
  * 
  * It accomplishes this task by decorating the IUpdateableListener and the
  * Component it is observing. When the event is posted, it simple calls

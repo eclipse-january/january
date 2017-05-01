@@ -14,11 +14,11 @@
 <plugin>
    <extension-point id="jaxbClassProvider" name="JAXB Class Provider" schema="schema/jaxbClassProvider.exsd"/>
    <extension
-         id="iceJAXBClassProvider"
-         name="ICE JAXB Class Provider"
+         id="JanuaryJAXBClassProvider"
+         name="January JAXB Class Provider"
          point="org.eclipse.january.form.jaxbClassProvider">
       <implementation
-            class="org.eclipse.january.form.ICEJAXBClassProvider">
+            class="org.eclipse.january.form.JanuaryJAXBClassProvider">
       </implementation>
    </extension>
 

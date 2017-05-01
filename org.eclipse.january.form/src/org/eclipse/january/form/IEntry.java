@@ -16,7 +16,7 @@ package org.eclipse.january.form;
 import java.util.List;
 
 /**
- * The IEntry interface exposes the operations necessary for ICE to describe 
+ * The IEntry interface exposes the operations necessary for January to describe 
  * the individual values needed by the Item to perform a task. Realizations are 
  * responsible for collecting and managing these values in a way that suits the 
  * class' needs. 

@@ -166,7 +166,7 @@ public class DiscreteEntry extends AbstractEntry {
 	 * 
 	 * @see
 	 * org.eclipse.ice.datastructures.entry.AbstractEntry#update(org.eclipse.ice
-	 * .datastructures.ICEObject.IUpdateable)
+	 * .datastructures.JanuaryObject.IUpdateable)
 	 */
 	@Override
 	public void update(IUpdateable component) {
@@ -236,7 +236,7 @@ public class DiscreteEntry extends AbstractEntry {
 		// Local Declaration
 		int hash = 11;
 
-		// Compute the hashcode from this ICEObject's data
+		// Compute the hashcode from this JanuaryObject's data
 		hash = 31 * hash + super.hashCode();
 		if (allowedValues != null) {
 			hash = 31 * hash + allowedValues.hashCode();

@@ -25,15 +25,15 @@ import javax.xml.bind.annotation.XmlRootElement;
  * templates for the MasterDetailsComponent.
  * </p>
  * <p>
- * A MasterDetailsPair is an ICEObject and is both uniquely identifiable and
- * persistent. However, it only overloads ICEObject.loadFromXML(), not copy(),
+ * A MasterDetailsPair is an JanuaryObject and is both uniquely identifiable and
+ * persistent. However, it only overloads JanuaryObject.loadFromXML(), not copy(),
  * equals(), hashcode() or clone().
  * </p>
  * 
  * @author Jay Jay Billings
  */
 @XmlRootElement(name = "MasterDetailsPair")
-public class MasterDetailsPair extends ICEObject {
+public class MasterDetailsPair extends JanuaryObject {
 	/**
 	 * <p>
 	 * The "master" value in this pair.
@@ -53,7 +53,7 @@ public class MasterDetailsPair extends ICEObject {
 	 * <p>
 	 * This is a unique id for the master details pair. This is originally
 	 * inserted to allow master details component to have ids and to keep
-	 * ICEObject's ids for database manipulation.
+	 * JanuaryObject's ids for database manipulation.
 	 * </p>
 	 * 
 	 */
