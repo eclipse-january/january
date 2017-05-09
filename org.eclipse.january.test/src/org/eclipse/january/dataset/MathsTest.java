@@ -71,7 +71,7 @@ public class MathsTest {
 	public void closeDown() {
 		TestUtils.setVerbosity(Verbosity.QUIET);
 	}
-	
+
 	private Map<String, Integer> classes;
 
 	private void checkDatasets(Object a, Object b, Dataset c, Dataset d) {
@@ -262,7 +262,7 @@ public class MathsTest {
 						break;
 					start += System.nanoTime();
 					double otime = ((double) start) / d.getSize();
-	
+
 					TestUtils.verbosePrintf("Time taken by add for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.
 								* (otime - ntime) / otime);
 					checkDatasets(a, b, c, d);
@@ -329,7 +329,7 @@ public class MathsTest {
 				start += System.nanoTime();
 
 				double otime = ((double) start)/d.getSize();
-	
+
 				TestUtils.verbosePrintf("Time taken by add for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.*(otime - ntime)/otime);
 				checkDatasets(a, dv, c, d);
 
@@ -1691,7 +1691,7 @@ public class MathsTest {
 		ta = Maths.gradient(a.getSlice(slices)).get(0);
 		checkDatasets(null, null, d, ta);
 
-		
+
 		Dataset b = DatasetFactory.createRange(a.getShape()[0], a.getDType());
 		b.imultiply(2);
 		tdata = new double[] {0.5 , 0.75, 1.25, 1.75, 2.25, 2.5};
@@ -1701,7 +1701,7 @@ public class MathsTest {
 		d = Maths.gradient(a.getSliceView(slices), b.getSliceView(slices)).get(0);
 		ta = Maths.gradient(a.getSlice(slices), b.getSlice(slices)).get(0);
 		checkDatasets(null, null, d, ta);
-		
+
 		data = new double[] {1, 2, 6, 3, 4, 5};
 		a = DatasetFactory.createFromObject(data, 2, 3);
 		List<? extends Dataset> l = Maths.gradient(a);
@@ -1834,7 +1834,7 @@ public class MathsTest {
 			checkInterpolate2(xa, a, x, false);
 			Assert.fail("No exception raised");
 		} catch (IllegalArgumentException e) {
-			
+
 		} catch (Exception e) {
 			Assert.fail("Wrong exception raised");
 		}
@@ -2179,5 +2179,39 @@ public class MathsTest {
 
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new float[] {-1.5f, -0.5f, -2, -1, 0, -1.5f, -0.5f, -2}),
 				Maths.floorRemainder(xa, -2.5f), true, ABSERRD, ABSERRD);
+	}
+
+	@Test
+	public void testArctan2Integer() {
+		Dataset a = DatasetFactory.createFromObject(new int[] { 4, 2, 6 });
+		Dataset b = DatasetFactory.createFromObject(new int[] { 1, 2, 3 });
+
+		int size = a.getSize();
+		int[] c = new int[size];
+		for (int i = 0; i < size; i++) {
+			double atan2 = Math.atan2(a.getDouble(i), b.getDouble(i));
+			c[i] = (int) atan2;
+		}
+		Dataset expectedResult = DatasetFactory.createFromObject(c);
+
+		Dataset actualResult = Maths.arctan2(a, b);
+		TestUtils.assertDatasetEquals(expectedResult, actualResult, true, ABSERRD, ABSERRD);
+	}
+
+	@Test
+	public void testHypotenusInteger() {
+		Dataset a = DatasetFactory.createFromObject(new int[] { 4, 2, 6 });
+		Dataset b = DatasetFactory.createFromObject(new int[] { 1, 2, 3 });
+
+		int size = a.getSize();
+		int[] c = new int[size];
+		for (int i = 0; i < size; i++) {
+			double hypot = Math.hypot(a.getDouble(i), b.getDouble(i));
+			c[i] = (int) hypot;
+		}
+		Dataset expectedResult = DatasetFactory.createFromObject(c);
+
+		Dataset actualResult = Maths.hypot(a, b);
+		TestUtils.assertDatasetEquals(expectedResult, actualResult, true, ABSERRD, ABSERRD);
 	}
 }
