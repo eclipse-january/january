@@ -2186,11 +2186,11 @@ public class MathsTest {
 		Dataset a = DatasetFactory.createFromObject(new double[] { 4, 2, 6 });
 		Dataset b = DatasetFactory.createFromObject(new double[] { 1, 2, 3 });
 		TestUtils.assertDatasetEquals(
-				DatasetFactory.createFromObject(
-						new double[] { Math.atan2(a.getDouble(0), b.getDouble(0)),
-								Math.atan2(a.getDouble(1), b.getDouble(1)), Math.atan2(a.getDouble(2), b.getDouble(2)) }),
+				DatasetFactory.createFromObject(new double[] { Math.atan2(a.getDouble(0), b.getDouble(0)),
+						Math.atan2(a.getDouble(1), b.getDouble(1)), Math.atan2(a.getDouble(2), b.getDouble(2)) }),
 				Maths.arctan2(a, b), true, ABSERRD, ABSERRD);
 	}
+
 	@Test
 	public void testArctan2Integer() {
 		Dataset a = DatasetFactory.createFromObject(new int[] { 4, 2, 6 });
@@ -2223,25 +2223,21 @@ public class MathsTest {
 		Dataset actualResult = Maths.hypot(a, b);
 		TestUtils.assertDatasetEquals(expectedResult, actualResult, true, ABSERRD, ABSERRD);
 	}
-	
-	
+
 	@Test
 	public void testArctan2Integer2() {
 		Dataset a = DatasetFactory.createFromObject(new double[] { 4, 2, 6 });
 		Dataset b = DatasetFactory.createFromObject(new double[] { 1, 2, 3 });
-		Dataset o = DatasetFactory.createFromObject(new int[] { 0,0,0 });
+		Dataset o = DatasetFactory.createFromObject(new int[] { 0, 0, 0 });
 		System.out.println(a.toString(true));
 		System.out.println(b.toString(true));
 		double atan2 = Math.atan2(a.getDouble(0), b.getDouble(0));
 		System.out.println(atan2);
-		Dataset expectedResult = DatasetFactory.createFromObject(
-				new int[] { (int)atan2,
-						(int)Math.atan2(a.getDouble(1), b.getDouble(1)), (int) Math.atan2(a.getDouble(2), b.getDouble(2)) });
+		Dataset expectedResult = DatasetFactory.createFromObject(new int[] { (int) atan2,
+				(int) Math.atan2(a.getDouble(1), b.getDouble(1)), (int) Math.atan2(a.getDouble(2), b.getDouble(2)) });
 		Dataset actualResult = Maths.arctan2(a, b, o);
 		System.out.println(actualResult.toString(true));
 		System.out.println(expectedResult.toString(true));
-		TestUtils.assertDatasetEquals(
-				expectedResult,
-				actualResult, true, ABSERRD, ABSERRD);
+		TestUtils.assertDatasetEquals(expectedResult, actualResult, true, ABSERRD, ABSERRD);
 	}
 }
