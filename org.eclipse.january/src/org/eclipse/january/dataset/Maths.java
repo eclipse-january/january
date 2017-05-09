@@ -444,6 +444,7 @@ public class Maths extends GeneratedMaths {
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
+		it.setOutputDouble(true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
@@ -708,6 +709,7 @@ public class Maths extends GeneratedMaths {
 		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 
 		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
+		it.setOutputDouble(true);
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
@@ -2217,7 +2219,6 @@ public class Maths extends GeneratedMaths {
 		return true;
 	}
 
-	
 	/**
 	 * General order discrete difference of dataset along flattened dataset using finite difference
 	 * @param a is 1d dataset

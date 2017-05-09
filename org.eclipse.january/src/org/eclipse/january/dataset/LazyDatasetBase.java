@@ -47,12 +47,17 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	protected static final Logger logger = LoggerFactory.getLogger(LazyDatasetBase.class);
 
 	protected static boolean catchExceptions;
-	
+
 	static {
 		/**
 		 * Boolean to set to true if running jython scripts that utilise ScisoftPy in IDE
 		 */
-		catchExceptions = Boolean.getBoolean("run.in.eclipse");
+		try {
+			catchExceptions = Boolean.getBoolean("run.in.eclipse");
+		} catch (SecurityException e) {
+			// set a default for when the security manager does not allow access to the requested key
+			catchExceptions = false;
+		}
 	}
 
 	protected String name = "";
