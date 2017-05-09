@@ -70,16 +70,14 @@ public class Utils {
 	}
 	
 	/**
-	 * This function create a TestWatcher writing on screen the names of called
-	 * classes and methods.
-	 * 
+	 * 	This function create a TestWatcher writing on screen the names of called classes and methods.
 	 * @return the TestWatcher created
 	 */
-	public static TestWatcher testWatcherCreator() {
+	public static TestWatcher testWatcherCreator()
+	{
 		return new TestWatcher() {
 			protected void starting(Description description) {
-				System.out.println("\nStarting example : " + description.getMethodName() + " from : "
-						+ description.getClassName() + " class.");
+				System.out.println("\nStarting example : " + description.getMethodName()+ "from : "+description.getClassName()+" class.");
 			}
 		};
 	}
