@@ -9,8 +9,7 @@
 
 package org.eclipse.january.dataset;
 
-import static org.junit.Assert.assertEquals;
-
+import org.eclipse.january.asserts.TestUtils;
 import org.junit.Test;
 
 public class DatasetUtilsTest {
@@ -31,7 +30,7 @@ public class DatasetUtilsTest {
 		Dataset expected = DatasetFactory.createFromObject(new Double[][] { { 10.0, 11.0, dvalue },
 				{ dvalue, Double.MAX_VALUE, 69.0 }, { Double.MIN_VALUE, 0.0, dvalue } });
 		DatasetUtils.removeNansAndInfinities(dataset, dvalue);
-		assertEquals(dataset, expected);
+		TestUtils.assertDatasetEquals(dataset, expected);
 	}
 
 	@Test
@@ -43,7 +42,7 @@ public class DatasetUtilsTest {
 		Dataset expected = DatasetFactory.createFromObject(new Float[][] { { 10.0f, 11.0f, dvalue },
 				{ dvalue, Float.MAX_VALUE, 69.0f }, { Float.MIN_VALUE, 0.0f, dvalue } });
 		DatasetUtils.removeNansAndInfinities(dataset, dvalue);
-		assertEquals(dataset, expected);
+		TestUtils.assertDatasetEquals(dataset, expected);
 	}
 
 	@Test
@@ -57,7 +56,7 @@ public class DatasetUtilsTest {
 		CompoundDoubleDataset expected = new CompoundDoubleDataset(2, eda);
 
 		DatasetUtils.removeNansAndInfinities(dataset, dvalue);
-		assertEquals(dataset, expected);
+		TestUtils.assertDatasetEquals(dataset, expected);
 	}
 
 	@Test
@@ -71,7 +70,7 @@ public class DatasetUtilsTest {
 		CompoundFloatDataset expected = new CompoundFloatDataset(2, eda);
 
 		DatasetUtils.removeNansAndInfinities(dataset, dvalue);
-		assertEquals(dataset, expected);
+		TestUtils.assertDatasetEquals(dataset, expected);
 	}
 
 	@Test
@@ -81,7 +80,7 @@ public class DatasetUtilsTest {
 				.createFromObject(new int[][] { { 10, 11, Integer.MAX_VALUE }, { Integer.MIN_VALUE, 5, 13 } });
 		Dataset expected = dataset.clone();
 		DatasetUtils.removeNansAndInfinities(dataset, value);
-		assertEquals(dataset, expected);
+		TestUtils.assertDatasetEquals(dataset, expected);
 	}
 
 }
