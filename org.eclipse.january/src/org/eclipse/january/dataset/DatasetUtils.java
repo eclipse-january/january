@@ -1683,7 +1683,7 @@ public class DatasetUtils {
 		IndexIterator it = d.getIterator();
 		double y1, y2;
 
-		y2 = it.hasNext() ? y2 = d.getElementDoubleAbs(it.index) : 0;
+		y2 = it.hasNext() ? d.getElementDoubleAbs(it.index) : 0;
 		double x = 1;
 		while (it.hasNext()) {
 			y1 = y2;
