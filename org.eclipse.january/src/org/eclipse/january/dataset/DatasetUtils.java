@@ -449,7 +449,7 @@ public class DatasetUtils {
 	public static List<Dataset> split(final Dataset a, int sections, final int axis, final boolean checkEqual) {
 		int[] ashape = a.getShapeRef();
 		int rank = ashape.length;
-		if (axis > rank) {
+		if (axis >= rank) {
 			utilsLogger.error("Axis exceeds rank of dataset");
 			throw new IllegalArgumentException("Axis exceeds rank of dataset");
 		}
@@ -476,7 +476,7 @@ public class DatasetUtils {
 	public static List<Dataset> split(final Dataset a, int[] indices, final int axis) {
 		final int[] ashape = a.getShapeRef();
 		final int rank = ashape.length;
-		if (axis > rank) {
+		if (axis >= rank) {
 			utilsLogger.error("Axis exceeds rank of dataset");
 			throw new IllegalArgumentException("Axis exceeds rank of dataset");
 		}
