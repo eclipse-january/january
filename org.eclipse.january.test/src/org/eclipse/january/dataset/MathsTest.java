@@ -2185,7 +2185,7 @@ public class MathsTest {
 	public void testArctan2() {
 		Dataset a = DatasetFactory.createFromObject(new double[] { 4, 2, 6 });
 		Dataset b = DatasetFactory.createFromObject(new double[] { 1, 2, 3 });
-		
+
 		int size = a.getSize();
 		int[] c = new int[size];
 		for (int i = 0; i < size; i++) {
@@ -2202,7 +2202,7 @@ public class MathsTest {
 	public void testArctan2Integer() {
 		Dataset a = DatasetFactory.createFromObject(new int[] { 4, 2, 6 });
 		Dataset b = DatasetFactory.createFromObject(new int[] { 1, 2, 3 });
-		
+
 		int size = a.getSize();
 		int[] c = new int[size];
 		for (int i = 0; i < size; i++) {
@@ -2237,7 +2237,7 @@ public class MathsTest {
 		Dataset a = DatasetFactory.createFromObject(new double[] { 4, 2, 6 });
 		Dataset b = DatasetFactory.createFromObject(new double[] { 1, 2, 3 });
 		Dataset o = DatasetFactory.createFromObject(new int[] { 0, 0, 0 });
-		
+
 		int size = a.getSize();
 		int[] c = new int[size];
 		for (int i = 0; i < size; i++) {
