@@ -350,10 +350,12 @@ public class Maths extends GeneratedMaths {
 			if (as == 1) {
 				while (it.hasNext()) {
 					oc64data[it.oIndex] = (float) Math.abs(it.aDouble);
+					oc64data[it.oIndex+1] = 0;
 				}
 			} else {
 				while (it.hasNext()) {
 					oc64data[it.oIndex] = (float) Math.hypot(it.aDouble, da.getElementDoubleAbs(it.aIndex + 1));
+					oc64data[it.oIndex+1] = 0;
 				}
 			}
 			break;
@@ -362,10 +364,12 @@ public class Maths extends GeneratedMaths {
 			if (as == 1) {
 				while (it.hasNext()) {
 					oc128data[it.oIndex] = Math.abs(it.aDouble);
+					oc128data[it.oIndex+1] = 0;
 				}
 			} else {
 				while (it.hasNext()) {
 					oc128data[it.oIndex] = Math.hypot(it.aDouble, da.getElementDoubleAbs(it.aIndex + 1));
+					oc128data[it.oIndex+1] = 0;
 				}
 			}
 			break;
