@@ -44,7 +44,6 @@ public class AxesMetadataExample
 
 	@Rule
 	public TestRule watcher = Utils.testWatcherCreator();
-
 	/**
 	 * we wish the interpolation function to be ignorant of the specific mathematical operation being
 	 * conducted. This interface wraps the operation in a Command
