@@ -2180,6 +2180,23 @@ public class MathsTest {
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new float[] {-1.5f, -0.5f, -2, -1, 0, -1.5f, -0.5f, -2}),
 				Maths.floorRemainder(xa, -2.5f), true, ABSERRD, ABSERRD);
 	}
+	
+	@Test
+	public void testArctan2() {
+		Dataset a = DatasetFactory.createFromObject(new double[] { 4, 2, 6 });
+		Dataset b = DatasetFactory.createFromObject(new double[] { 1, 2, 3 });
+
+		int size = a.getSize();
+		double[] c = new double[size];
+		for (int i = 0; i < size; i++) {
+			double atan2 = Math.atan2(a.getDouble(i), b.getDouble(i));
+			c[i] = atan2;
+		}
+		Dataset expectedResult = DatasetFactory.createFromObject(c);
+
+		Dataset actualResult = Maths.arctan2(a, b);
+		TestUtils.assertDatasetEquals(expectedResult, actualResult, true, ABSERRD, ABSERRD);
+	}
 
 	@Test
 	public void testArctan2Integer() {
@@ -2199,6 +2216,24 @@ public class MathsTest {
 	}
 
 	@Test
+	public void testArctan2DoubleInputIntegerOutput() {
+		Dataset a = DatasetFactory.createFromObject(new double[] { 4, 2, 6 });
+		Dataset b = DatasetFactory.createFromObject(new double[] { 1, 2, 3 });
+		Dataset o = DatasetFactory.createFromObject(new int[] { 0, 0, 0 });
+
+		int size = a.getSize();
+		int[] c = new int[size];
+		for (int i = 0; i < size; i++) {
+			double atan2 = Math.atan2(a.getDouble(i), b.getDouble(i));
+			c[i] = (int) atan2;
+		}
+		Dataset expectedResult = DatasetFactory.createFromObject(c);
+
+		Dataset actualResult = Maths.arctan2(a, b, o);
+		TestUtils.assertDatasetEquals(expectedResult, actualResult, true, ABSERRD, ABSERRD);
+	}
+
+	@Test
 	public void testHypotenusInteger() {
 		Dataset a = DatasetFactory.createFromObject(new int[] { 4, 2, 6 });
 		Dataset b = DatasetFactory.createFromObject(new int[] { 1, 2, 3 });
@@ -2212,6 +2247,205 @@ public class MathsTest {
 		Dataset expectedResult = DatasetFactory.createFromObject(c);
 
 		Dataset actualResult = Maths.hypot(a, b);
+		TestUtils.assertDatasetEquals(expectedResult, actualResult, true, ABSERRD, ABSERRD);
+	}
+
+	@Test
+	public void testAbsDoubleInput() {
+		Dataset a = DatasetFactory.createFromObject(new double[] { 4.2, 2.9, 6.1 });
+
+		int size = a.getSize();
+		double[] c = new double[size];
+		for (int i = 0; i < size; i++) {
+			double abs = Math.abs(a.getDouble(i));
+			c[i] = abs;
+		}
+		Dataset expectedResult = DatasetFactory.createFromObject(c);
+
+		Dataset actualResult = Maths.abs(a);
+		TestUtils.assertDatasetEquals(expectedResult, actualResult, true, ABSERRD, ABSERRD);
+	}
+
+	@Test
+	public void testAbsFloatInput() {
+		Dataset a = DatasetFactory.createFromObject(new float[] { 4475.72351f, 4215.325151f, 123.427151f });
+
+		int size = a.getSize();
+		float[] c = new float[size];
+		for (int i = 0; i < size; i++) {
+			float abs = Math.abs(a.getFloat(i));
+			c[i] = abs;
+		}
+		Dataset expectedResult = DatasetFactory.createFromObject(c);
+
+		Dataset actualResult = Maths.abs(a);
+		TestUtils.assertDatasetEquals(expectedResult, actualResult, true, ABSERRD, ABSERRD);
+	}
+	
+	@Test
+	public void testAbsbyteInput() {
+		Dataset a = DatasetFactory.createFromObject(new byte[] { 4, 8, 6 });
+
+		int size = a.getSize();
+		byte[] c = new byte[size];
+		for (int i = 0; i < size; i++) {
+			int abs = Math.abs(a.getByte(i));
+			c[i] = (byte) abs;
+		}
+		Dataset expectedResult = DatasetFactory.createFromObject(c);
+
+		Dataset actualResult = Maths.abs(a);
+		TestUtils.assertDatasetEquals(expectedResult, actualResult, true, ABSERRD, ABSERRD);
+	}
+
+	@Test
+	public void testAbsShortInput() {
+		Dataset a = DatasetFactory.createFromObject(new short[] { 4, 8, 6 });
+
+		int size = a.getSize();
+		short[] c = new short[size];
+		for (int i = 0; i < size; i++) {
+			int abs = Math.abs(a.getShort(i));
+			c[i] = (short) abs;
+		}
+		Dataset expectedResult = DatasetFactory.createFromObject(c);
+
+		Dataset actualResult = Maths.abs(a);
+		TestUtils.assertDatasetEquals(expectedResult, actualResult, true, ABSERRD, ABSERRD);
+	}
+	
+	@Test
+	public void testAbsIntegerInput() {
+		Dataset a = DatasetFactory.createFromObject(new int[] { 4, 8, 6 });
+
+		int size = a.getSize();
+		int[] c = new int[size];
+		for (int i = 0; i < size; i++) {
+			int abs = Math.abs(a.getInt(i));
+			c[i] = (int) abs;
+		}
+		Dataset expectedResult = DatasetFactory.createFromObject(c);
+
+		Dataset actualResult = Maths.abs(a);
+		TestUtils.assertDatasetEquals(expectedResult, actualResult, true, ABSERRD, ABSERRD);
+	}
+
+	@Test
+	public void testAbsLongIntegerInput() {
+		Dataset a = DatasetFactory.createFromObject(new long[] { 447589623141L, 9999999999999L, 1245879633215448882L });
+
+		int size = a.getSize();
+		long[] c = new long[size];
+		for (int i = 0; i < size; i++) {
+			long abs = Math.abs(a.getLong(i));
+			c[i] = (long) abs;
+		}
+		Dataset expectedResult = DatasetFactory.createFromObject(c);
+
+		Dataset actualResult = Maths.abs(a);
+		TestUtils.assertDatasetEquals(expectedResult, actualResult, true, ABSERRD, ABSERRD);
+	}
+	
+	@Test
+	public void testAbsArrayByteInput() {
+		byte[] ba = { 0, 8, 1, 2, 3, 5, 6,
+				41, 7, 95, 8, 74, 9, 41, 11 };
+		CompoundByteDataset a = new CompoundByteDataset(ba.length, ba, 1);
+
+		int size = ba.length;
+		byte[] c = new byte[size];
+		for (int i = 0; i < size; i++) {
+			int abs = Math.abs(ba[i]);
+			c[i] = (byte)abs;
+		}
+		CompoundByteDataset expectedResult = new CompoundByteDataset(ba.length, c, 1);
+		Dataset actualResult = Maths.abs(a);
+		TestUtils.assertDatasetEquals(expectedResult, actualResult, true, ABSERRD, ABSERRD);
+	}
+	
+	@Test
+	public void testAbsArrayShortInput() {
+		short[] sa = { 0, 8, 1, 2, 3, 5, 6,
+				41, 7, 95, 8, 74, 9, 41, 11 };
+		CompoundShortDataset a = new CompoundShortDataset(sa.length, sa, 1);
+
+		int size = sa.length;
+		short[] c = new short[size];
+		for (int i = 0; i < size; i++) {
+			int abs = Math.abs(sa[i]);
+			c[i] = (short)abs;
+		}
+		CompoundShortDataset expectedResult = new CompoundShortDataset(sa.length, c, 1);
+		Dataset actualResult = Maths.abs(a);
+		TestUtils.assertDatasetEquals(expectedResult, actualResult, true, ABSERRD, ABSERRD);
+	}
+
+	@Test
+	public void testAbsArrayIntegerInput() {
+		int[] ia = { 0, 8, 1, 2, 3, 5, 6,
+				41, 7, 95, 8, 74, 9, 41, 11 };
+		CompoundIntegerDataset a = new CompoundIntegerDataset(ia.length, ia, 1);
+
+		int size = ia.length;
+		int[] c = new int[size];
+		for (int i = 0; i < size; i++) {
+			int abs = Math.abs(ia[i]);
+			c[i] = abs;
+		}
+		CompoundIntegerDataset expectedResult = new CompoundIntegerDataset(ia.length, c, 1);
+		Dataset actualResult = Maths.abs(a);
+		TestUtils.assertDatasetEquals(expectedResult, actualResult, true, ABSERRD, ABSERRD);
+	}
+	
+	@Test
+	public void testAbsArrayLongInput() {
+		long[] la = { 8949849848484L, 544145651654654454L, 16516515615L, 2451485L, 387456489651L, 54654856145L, 64561356489465132L,
+				41478514856132L, 7, 9565125412L, 88465236465L, 74, 9, 41, 11486512354712L };
+		CompoundLongDataset a = new CompoundLongDataset(la.length, la, 1);
+
+		int size = la.length;
+		long[] c = new long[size];
+		for (int i = 0; i < size; i++) {
+			long abs = Math.abs(la[i]);
+			c[i] = abs;
+		}
+		CompoundLongDataset expectedResult = new CompoundLongDataset(la.length, c, 1);
+		Dataset actualResult = Maths.abs(a);
+		TestUtils.assertDatasetEquals(expectedResult, actualResult, true, ABSERRD, ABSERRD);
+	}
+	
+	@Test
+	public void testAbsArrayFloatInput() {
+		float[] fa = { 0, 0.5f, 1, Float.MAX_VALUE, 2, 2.5f, 3, 3.5f, Float.NEGATIVE_INFINITY, Float.NaN, 5, 5.5f, 6,
+				6.5f, 7, 7.5f, 8, 8.5f, 9, 9.5f, Float.MIN_VALUE, 10.5f, 11, Float.POSITIVE_INFINITY };
+		int size = fa.length;
+		CompoundFloatDataset a = new CompoundFloatDataset(size, fa, 1);
+		
+		float[] c = new float[size];
+		for (int i = 0; i < size; i++) {
+			float abs = Math.abs(fa[i]);
+			c[i] = abs;
+		}
+		CompoundFloatDataset expectedResult = new CompoundFloatDataset(size, c, 1);
+		Dataset actualResult = Maths.abs(a);
+		TestUtils.assertDatasetEquals(expectedResult, actualResult, true, ABSERRD, ABSERRD);
+	}
+	
+	@Test
+	public void testAbsArrayDoubleInput() {
+		double[] da = { 0, 0.5, 1, Double.MAX_VALUE, 2, 2.5, 3, 3.5, Double.NEGATIVE_INFINITY, Double.NaN, 5, 5.5, 6,
+				6.5, 7, 7.5, 8, 8.5, 9, 9.5, Double.MIN_VALUE, 10.5, 11, Double.POSITIVE_INFINITY };
+		CompoundDoubleDataset a = new CompoundDoubleDataset(2, da);
+
+		int size = da.length;
+		double[] c = new double[size];
+		for (int i = 0; i < size; i++) {
+			double abs = Math.abs(da[i]);
+			c[i] = abs;
+		}
+		CompoundDoubleDataset expectedResult = new CompoundDoubleDataset(2, c);
+
+		Dataset actualResult = Maths.abs(a);
 		TestUtils.assertDatasetEquals(expectedResult, actualResult, true, ABSERRD, ABSERRD);
 	}
 }
