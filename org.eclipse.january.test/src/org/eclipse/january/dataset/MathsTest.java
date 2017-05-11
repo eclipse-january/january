@@ -2214,4 +2214,23 @@ public class MathsTest {
 		Dataset actualResult = Maths.hypot(a, b);
 		TestUtils.assertDatasetEquals(expectedResult, actualResult, true, ABSERRD, ABSERRD);
 	}
+
+	@Test
+	public void testAbsComplexInput() {
+		double[] ds = new double[] { -0, 1, 2, -3, 4, 5 };
+		Dataset a = DatasetFactory.createFromObject(ComplexDoubleDataset.class, ds);
+		Dataset o = DatasetFactory.createFromObject(ComplexDoubleDataset.class, new double[] { 0, 4, 0, 0, 0, 0 });
+
+		int size = ds.length;
+		double[] c = new double[size];
+		for (int i = 0; i < size; i = i + 2) {
+			double val = Math.hypot(ds[i], ds[i + 1]);
+			c[i] = val; // real part
+			c[i + 1] = 0; // imaginary part
+		}
+		Dataset expectedResult = DatasetFactory.createFromObject(ComplexDoubleDataset.class, c);
+
+		Dataset actualResult = Maths.abs(a, o);
+		TestUtils.assertDatasetEquals(expectedResult, actualResult, true, ABSERRD, ABSERRD);
+	}
 }

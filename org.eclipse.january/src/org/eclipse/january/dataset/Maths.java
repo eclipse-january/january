@@ -145,7 +145,8 @@ public class Maths extends GeneratedMaths {
 		final int is = result.getElementsPerItem();
 		final int dt = result.getDType();
 		final int as = da.getElementsPerItem();
-	
+		final boolean reset = result == o && is > 1;
+
 		switch(dt) {
 		case Dataset.INT8:
 			final byte[] oi8data = ((ByteDataset) result).data;
@@ -153,6 +154,11 @@ public class Maths extends GeneratedMaths {
 	
 			while (it.hasNext()) {
 				oi8data[it.oIndex] = (byte) Math.abs(it.aLong);
+				if (reset) {
+					for (int j = 1; j < is; j++) {
+						oi8data[it.oIndex + j] = 0;
+					}
+				}
 			}
 			break;
 		case Dataset.INT16:
@@ -161,6 +167,11 @@ public class Maths extends GeneratedMaths {
 	
 			while (it.hasNext()) {
 				oi16data[it.oIndex] = (short) Math.abs(it.aLong);
+				if (reset) {
+					for (int j = 1; j < is; j++) {
+						oi16data[it.oIndex + j] = 0;
+					}
+				}
 			}
 			break;
 		case Dataset.INT32:
@@ -169,6 +180,11 @@ public class Maths extends GeneratedMaths {
 	
 			while (it.hasNext()) {
 				oi32data[it.oIndex] = (int) Math.abs(it.aLong);
+				if (reset) {
+					for (int j = 1; j < is; j++) {
+						oi32data[it.oIndex + j] = 0;
+					}
+				}
 			}
 			break;
 		case Dataset.INT64:
@@ -177,6 +193,11 @@ public class Maths extends GeneratedMaths {
 	
 			while (it.hasNext()) {
 				oi64data[it.oIndex] = Math.abs(it.aLong);
+				if (reset) {
+					for (int j = 1; j < is; j++) {
+						oi64data[it.oIndex + j] = 0;
+					}
+				}
 			}
 			break;
 		case Dataset.ARRAYINT8:
@@ -280,12 +301,21 @@ public class Maths extends GeneratedMaths {
 			if (as == 1) {
 				while (it.hasNext()) {
 					of32data[it.oIndex] = (float) (Math.abs(it.aDouble));
+					if (reset) {
+						for (int j = 1; j < is; j++) {
+							of32data[it.oIndex + j] = 0;
+						}
+					}
 				}
 			} else {
 				while (it.hasNext()) {
 					of32data[it.oIndex] = (float) (Math.hypot(it.aDouble, da.getElementDoubleAbs(it.aIndex + 1)));
+					if (reset) {
+						for (int j = 1; j < is; j++) {
+							of32data[it.oIndex + j] = 0;
+						}
+					}
 				}
-				
 			}
 			break;
 		case Dataset.FLOAT64:
@@ -293,10 +323,20 @@ public class Maths extends GeneratedMaths {
 			if (as == 1) {
 				while (it.hasNext()) {
 					of64data[it.oIndex] = Math.abs(it.aDouble);
+					if (reset) {
+						for (int j = 1; j < is; j++) {
+							of64data[it.oIndex + j] = 0;
+						}
+					}
 				}
 			} else {
 				while (it.hasNext()) {
 					of64data[it.oIndex] = Math.hypot(it.aDouble, da.getElementDoubleAbs(it.aIndex + 1));
+					if (reset) {
+						for (int j = 1; j < is; j++) {
+							of64data[it.oIndex + j] = 0;
+						}
+					}
 				}
 			}
 			break;
@@ -350,10 +390,16 @@ public class Maths extends GeneratedMaths {
 			if (as == 1) {
 				while (it.hasNext()) {
 					oc64data[it.oIndex] = (float) Math.abs(it.aDouble);
+					if (reset) {
+						oc64data[it.oIndex + 1] = 0;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
 					oc64data[it.oIndex] = (float) Math.hypot(it.aDouble, da.getElementDoubleAbs(it.aIndex + 1));
+					if (reset) {
+						oc64data[it.oIndex + 1] = 0;
+					}
 				}
 			}
 			break;
@@ -362,10 +408,16 @@ public class Maths extends GeneratedMaths {
 			if (as == 1) {
 				while (it.hasNext()) {
 					oc128data[it.oIndex] = Math.abs(it.aDouble);
+					if (reset) {
+						oc128data[it.oIndex + 1] = 0;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
 					oc128data[it.oIndex] = Math.hypot(it.aDouble, da.getElementDoubleAbs(it.aIndex + 1));
+					if (reset) {
+						oc128data[it.oIndex + 1] = 0;
+					}
 				}
 			}
 			break;
