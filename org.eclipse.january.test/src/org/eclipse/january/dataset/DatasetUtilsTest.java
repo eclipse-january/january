@@ -20,4 +20,11 @@ public class DatasetUtilsTest {
 		DatasetUtils.split(dataset, indices, 1);
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testCrossingsException() {
+		Dataset xAxis = DatasetFactory.createFromObject(new Double[] { 0.0, 0.0, 0.0 });
+		Dataset yAxis = DatasetFactory.createFromObject(new Double[] { 0.0, 0.0 });
+		DatasetUtils.crossings(xAxis, yAxis, 0);
+	}
+
 }
