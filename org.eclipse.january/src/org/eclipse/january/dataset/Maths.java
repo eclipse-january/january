@@ -26,6 +26,7 @@ import org.eclipse.january.dataset.Comparisons.Monotonicity;
 public class Maths extends GeneratedMaths {
 	/**
 	 * Unwrap result from mathematical methods if necessary
+	 * 
 	 * @param o
 	 * @param a
 	 * @return a dataset if a is a dataset or an object of the same class as o
@@ -36,9 +37,11 @@ public class Maths extends GeneratedMaths {
 
 	/**
 	 * Unwrap result from mathematical methods if necessary
+	 * 
 	 * @param o
 	 * @param a
-	 * @return a dataset if either a and b are datasets or an object of the same class as o
+	 * @return a dataset if either a and b are datasets or an object of the same
+	 *         class as o
 	 */
 	public static Object unwrap(final Dataset o, final Object a, final Object b) {
 		return (a instanceof Dataset || b instanceof Dataset) ? o : o.getObjectAbs(o.getOffset());
@@ -46,9 +49,11 @@ public class Maths extends GeneratedMaths {
 
 	/**
 	 * Unwrap result from mathematical methods if necessary
+	 * 
 	 * @param o
 	 * @param a
-	 * @return a dataset if any inputs are datasets or an object of the same class as o
+	 * @return a dataset if any inputs are datasets or an object of the same
+	 *         class as o
 	 */
 	public static Object unwrap(final Dataset o, final Object... a) {
 		boolean isAnyDataset = false;
@@ -73,7 +78,8 @@ public class Maths extends GeneratedMaths {
 	/**
 	 * @param a
 	 * @param b
-	 * @param o output can be null - in which case, a new dataset is created
+	 * @param o
+	 *            output can be null - in which case, a new dataset is created
 	 * @return floor divide of a and b
 	 */
 	public static Dataset floorDivide(final Object a, final Object b, final Dataset o) {
@@ -92,7 +98,8 @@ public class Maths extends GeneratedMaths {
 	/**
 	 * @param a
 	 * @param b
-	 * @param o output can be null - in which case, a new dataset is created
+	 * @param o
+	 *            output can be null - in which case, a new dataset is created
 	 * @return floor remainder of a and b
 	 */
 	public static Dataset floorRemainder(final Object a, final Object b, final Dataset o) {
@@ -105,6 +112,7 @@ public class Maths extends GeneratedMaths {
 
 	/**
 	 * Find reciprocal from dataset
+	 * 
 	 * @param a
 	 * @return reciprocal dataset
 	 */
@@ -114,8 +122,10 @@ public class Maths extends GeneratedMaths {
 
 	/**
 	 * Find reciprocal from dataset
+	 * 
 	 * @param a
-	 * @param o output can be null - in which case, a new dataset is created
+	 * @param o
+	 *            output can be null - in which case, a new dataset is created
 	 * @return reciprocal dataset
 	 */
 	public static Dataset reciprocal(final Object a, final Dataset o) {
@@ -125,6 +135,7 @@ public class Maths extends GeneratedMaths {
 
 	/**
 	 * abs - absolute value of each element
+	 * 
 	 * @param a
 	 * @return dataset
 	 */
@@ -134,8 +145,10 @@ public class Maths extends GeneratedMaths {
 
 	/**
 	 * abs - absolute value of each element
+	 * 
 	 * @param a
-	 * @param o output can be null - in which case, a new dataset is created
+	 * @param o
+	 *            output can be null - in which case, a new dataset is created
 	 * @return dataset
 	 */
 	public static Dataset abs(final Object a, final Dataset o) {
@@ -147,63 +160,43 @@ public class Maths extends GeneratedMaths {
 		final int as = da.getElementsPerItem();
 		final boolean reset = result == o && is > 1;
 
-		switch(dt) {
+		switch (dt) {
 		case Dataset.INT8:
 			final byte[] oi8data = ((ByteDataset) result).data;
 			it.setOutputDouble(false);
-	
+
 			while (it.hasNext()) {
 				oi8data[it.oIndex] = (byte) Math.abs(it.aLong);
-				if (reset) {
-					for (int j = 1; j < is; j++) {
-						oi8data[it.oIndex + j] = 0;
-					}
-				}
 			}
 			break;
 		case Dataset.INT16:
 			final short[] oi16data = ((ShortDataset) result).data;
 			it.setOutputDouble(false);
-	
+
 			while (it.hasNext()) {
 				oi16data[it.oIndex] = (short) Math.abs(it.aLong);
-				if (reset) {
-					for (int j = 1; j < is; j++) {
-						oi16data[it.oIndex + j] = 0;
-					}
-				}
 			}
 			break;
 		case Dataset.INT32:
 			final int[] oi32data = ((IntegerDataset) result).data;
 			it.setOutputDouble(false);
-	
+
 			while (it.hasNext()) {
 				oi32data[it.oIndex] = (int) Math.abs(it.aLong);
-				if (reset) {
-					for (int j = 1; j < is; j++) {
-						oi32data[it.oIndex + j] = 0;
-					}
-				}
 			}
 			break;
 		case Dataset.INT64:
 			final long[] oi64data = ((LongDataset) result).data;
 			it.setOutputDouble(false);
-	
+
 			while (it.hasNext()) {
 				oi64data[it.oIndex] = Math.abs(it.aLong);
-				if (reset) {
-					for (int j = 1; j < is; j++) {
-						oi64data[it.oIndex + j] = 0;
-					}
-				}
 			}
 			break;
 		case Dataset.ARRAYINT8:
 			final byte[] oai8data = ((CompoundByteDataset) result).data;
 			it.setOutputDouble(false);
-	
+
 			if (is == 1) {
 				while (it.hasNext()) {
 					oai8data[it.oIndex] = (byte) Math.abs(it.aLong);
@@ -227,7 +220,7 @@ public class Maths extends GeneratedMaths {
 		case Dataset.ARRAYINT16:
 			final short[] oai16data = ((CompoundShortDataset) result).data;
 			it.setOutputDouble(false);
-	
+
 			if (is == 1) {
 				while (it.hasNext()) {
 					oai16data[it.oIndex] = (short) Math.abs(it.aLong);
@@ -251,7 +244,7 @@ public class Maths extends GeneratedMaths {
 		case Dataset.ARRAYINT32:
 			final int[] oai32data = ((CompoundIntegerDataset) result).data;
 			it.setOutputDouble(false);
-	
+
 			if (is == 1) {
 				while (it.hasNext()) {
 					oai32data[it.oIndex] = (int) Math.abs(it.aLong);
@@ -275,7 +268,7 @@ public class Maths extends GeneratedMaths {
 		case Dataset.ARRAYINT64:
 			final long[] oai64data = ((CompoundLongDataset) result).data;
 			it.setOutputDouble(false);
-	
+
 			if (is == 1) {
 				while (it.hasNext()) {
 					oai64data[it.oIndex] = Math.abs(it.aLong);
@@ -301,20 +294,10 @@ public class Maths extends GeneratedMaths {
 			if (as == 1) {
 				while (it.hasNext()) {
 					of32data[it.oIndex] = (float) (Math.abs(it.aDouble));
-					if (reset) {
-						for (int j = 1; j < is; j++) {
-							of32data[it.oIndex + j] = 0;
-						}
-					}
 				}
 			} else {
 				while (it.hasNext()) {
 					of32data[it.oIndex] = (float) (Math.hypot(it.aDouble, da.getElementDoubleAbs(it.aIndex + 1)));
-					if (reset) {
-						for (int j = 1; j < is; j++) {
-							of32data[it.oIndex + j] = 0;
-						}
-					}
 				}
 			}
 			break;
@@ -323,20 +306,10 @@ public class Maths extends GeneratedMaths {
 			if (as == 1) {
 				while (it.hasNext()) {
 					of64data[it.oIndex] = Math.abs(it.aDouble);
-					if (reset) {
-						for (int j = 1; j < is; j++) {
-							of64data[it.oIndex + j] = 0;
-						}
-					}
 				}
 			} else {
 				while (it.hasNext()) {
 					of64data[it.oIndex] = Math.hypot(it.aDouble, da.getElementDoubleAbs(it.aIndex + 1));
-					if (reset) {
-						for (int j = 1; j < is; j++) {
-							of64data[it.oIndex + j] = 0;
-						}
-					}
 				}
 			}
 			break;
@@ -422,9 +395,10 @@ public class Maths extends GeneratedMaths {
 			}
 			break;
 		default:
-			throw new IllegalArgumentException("abs supports integer, compound integer, real, compound real, complex datasets only");
+			throw new IllegalArgumentException(
+					"abs supports integer, compound integer, real, compound real, complex datasets only");
 		}
-	
+
 		addFunctionName(result, "abs");
 		return result;
 	}
@@ -439,7 +413,8 @@ public class Maths extends GeneratedMaths {
 
 	/**
 	 * @param a
-	 * @param o output can be null - in which case, a new dataset is created
+	 * @param o
+	 *            output can be null - in which case, a new dataset is created
 	 * @return a^*, complex conjugate of a
 	 */
 	public static Dataset conjugate(final Object a, final Dataset o) {
@@ -456,7 +431,7 @@ public class Maths extends GeneratedMaths {
 
 			for (int i = 0; it1.hasNext();) {
 				c64data[i++] = (float) da.getElementDoubleAbs(it1.index);
-				c64data[i++] = (float) -da.getElementDoubleAbs(it1.index+1);
+				c64data[i++] = (float) -da.getElementDoubleAbs(it1.index + 1);
 			}
 			result.setName(Operations.bracketIfNecessary(da.getName()).append("^*").toString());
 			break;
@@ -465,7 +440,7 @@ public class Maths extends GeneratedMaths {
 
 			for (int i = 0; it1.hasNext();) {
 				c128data[i++] = da.getElementDoubleAbs(it1.index);
-				c128data[i++] = -da.getElementDoubleAbs(it1.index+1);
+				c128data[i++] = -da.getElementDoubleAbs(it1.index + 1);
 			}
 			result.setName(Operations.bracketIfNecessary(da.getName()).append("^*").toString());
 			break;
@@ -477,8 +452,10 @@ public class Maths extends GeneratedMaths {
 	}
 
 	/**
-	 * @param a side of right-angled triangle
-	 * @param b side of right-angled triangle
+	 * @param a
+	 *            side of right-angled triangle
+	 * @param b
+	 *            side of right-angled triangle
 	 * @return hypotenuse of right-angled triangle: sqrt(a^2 + a^2)
 	 */
 	public static Dataset hypot(final Object a, final Object b) {
@@ -486,9 +463,12 @@ public class Maths extends GeneratedMaths {
 	}
 
 	/**
-	 * @param a side of right-angled triangle
-	 * @param b side of right-angled triangle
-	 * @param o output can be null - in which case, a new dataset is created
+	 * @param a
+	 *            side of right-angled triangle
+	 * @param b
+	 *            side of right-angled triangle
+	 * @param o
+	 *            output can be null - in which case, a new dataset is created
 	 * @return hypotenuse of right-angled triangle: sqrt(a^2 + a^2)
 	 */
 	public static Dataset hypot(final Object a, final Object b, final Dataset o) {
@@ -526,7 +506,7 @@ public class Maths extends GeneratedMaths {
 			break;
 		case Dataset.INT32:
 			int[] i32data = ((IntegerDataset) result).getData();
-			
+
 			while (it.hasNext()) {
 				i32data[it.oIndex] = (int) toLong(Math.hypot(it.aDouble, it.bDouble));
 			}
@@ -563,21 +543,24 @@ public class Maths extends GeneratedMaths {
 				while (it.hasNext()) {
 					ai8data[it.oIndex] = (byte) toLong(Math.hypot(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
-						ai8data[it.oIndex + j] = (byte) toLong(Math.hypot(it.aDouble, db.getElementDoubleAbs(it.bIndex + j)));
+						ai8data[it.oIndex
+								+ j] = (byte) toLong(Math.hypot(it.aDouble, db.getElementDoubleAbs(it.bIndex + j)));
 					}
 				}
 			} else if (bs == 1) {
 				while (it.hasNext()) {
 					ai8data[it.oIndex] = (byte) toLong(Math.hypot(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
-						ai8data[it.oIndex + j] = (byte) toLong(Math.hypot(da.getElementDoubleAbs(it.aIndex + j), it.bDouble));
+						ai8data[it.oIndex
+								+ j] = (byte) toLong(Math.hypot(da.getElementDoubleAbs(it.aIndex + j), it.bDouble));
 					}
 				}
 			} else {
 				while (it.hasNext()) {
 					ai8data[it.oIndex] = (byte) toLong(Math.hypot(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
-						ai8data[it.oIndex + j] = (byte) toLong(Math.hypot(da.getElementDoubleAbs(it.aIndex + j), db.getElementDoubleAbs(it.bIndex + j)));
+						ai8data[it.oIndex + j] = (byte) toLong(Math.hypot(da.getElementDoubleAbs(it.aIndex + j),
+								db.getElementDoubleAbs(it.bIndex + j)));
 					}
 				}
 			}
@@ -593,21 +576,24 @@ public class Maths extends GeneratedMaths {
 				while (it.hasNext()) {
 					ai16data[it.oIndex] = (short) toLong(Math.hypot(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
-						ai16data[it.oIndex + j] = (short) toLong(Math.hypot(it.aDouble, db.getElementDoubleAbs(it.bIndex + j)));
+						ai16data[it.oIndex
+								+ j] = (short) toLong(Math.hypot(it.aDouble, db.getElementDoubleAbs(it.bIndex + j)));
 					}
 				}
 			} else if (bs == 1) {
 				while (it.hasNext()) {
 					ai16data[it.oIndex] = (short) toLong(Math.hypot(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
-						ai16data[it.oIndex + j] = (short) toLong(Math.hypot(da.getElementDoubleAbs(it.aIndex + j), it.bDouble));
+						ai16data[it.oIndex
+								+ j] = (short) toLong(Math.hypot(da.getElementDoubleAbs(it.aIndex + j), it.bDouble));
 					}
 				}
 			} else {
 				while (it.hasNext()) {
 					ai16data[it.oIndex] = (short) toLong(Math.hypot(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
-						ai16data[it.oIndex + j] = (short) toLong(Math.hypot(da.getElementDoubleAbs(it.aIndex + j), db.getElementDoubleAbs(it.bIndex + j)));
+						ai16data[it.oIndex + j] = (short) toLong(Math.hypot(da.getElementDoubleAbs(it.aIndex + j),
+								db.getElementDoubleAbs(it.bIndex + j)));
 					}
 				}
 			}
@@ -623,21 +609,24 @@ public class Maths extends GeneratedMaths {
 				while (it.hasNext()) {
 					ai32data[it.oIndex] = (int) toLong(Math.hypot(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
-						ai32data[it.oIndex + j] = (int) toLong(Math.hypot(it.aDouble, db.getElementDoubleAbs(it.bIndex + j)));
+						ai32data[it.oIndex
+								+ j] = (int) toLong(Math.hypot(it.aDouble, db.getElementDoubleAbs(it.bIndex + j)));
 					}
 				}
 			} else if (bs == 1) {
 				while (it.hasNext()) {
 					ai32data[it.oIndex] = (int) toLong(Math.hypot(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
-						ai32data[it.oIndex + j] = (int) toLong(Math.hypot(da.getElementDoubleAbs(it.aIndex + j), it.bDouble));
+						ai32data[it.oIndex
+								+ j] = (int) toLong(Math.hypot(da.getElementDoubleAbs(it.aIndex + j), it.bDouble));
 					}
 				}
 			} else {
 				while (it.hasNext()) {
 					ai32data[it.oIndex] = (int) toLong(Math.hypot(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
-						ai32data[it.oIndex + j] = (int) toLong(Math.hypot(da.getElementDoubleAbs(it.aIndex + j), db.getElementDoubleAbs(it.bIndex + j)));
+						ai32data[it.oIndex + j] = (int) toLong(Math.hypot(da.getElementDoubleAbs(it.aIndex + j),
+								db.getElementDoubleAbs(it.bIndex + j)));
 					}
 				}
 			}
@@ -667,7 +656,8 @@ public class Maths extends GeneratedMaths {
 				while (it.hasNext()) {
 					ai64data[it.oIndex] = toLong(Math.hypot(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
-						ai64data[it.oIndex + j] = toLong(Math.hypot(da.getElementDoubleAbs(it.aIndex + j), db.getElementDoubleAbs(it.bIndex + j)));
+						ai64data[it.oIndex + j] = toLong(Math.hypot(da.getElementDoubleAbs(it.aIndex + j),
+								db.getElementDoubleAbs(it.bIndex + j)));
 					}
 				}
 			}
@@ -697,7 +687,8 @@ public class Maths extends GeneratedMaths {
 				while (it.hasNext()) {
 					a32data[it.oIndex] = (float) Math.hypot(it.aDouble, it.bDouble);
 					for (int j = 1; j < is; j++) {
-						a32data[it.oIndex + j] = (float) Math.hypot(da.getElementDoubleAbs(it.aIndex + j), db.getElementDoubleAbs(it.bIndex + j));
+						a32data[it.oIndex + j] = (float) Math.hypot(da.getElementDoubleAbs(it.aIndex + j),
+								db.getElementDoubleAbs(it.bIndex + j));
 					}
 				}
 			}
@@ -727,7 +718,8 @@ public class Maths extends GeneratedMaths {
 				while (it.hasNext()) {
 					a64data[it.oIndex] = Math.hypot(it.aDouble, it.bDouble);
 					for (int j = 1; j < is; j++) {
-						a64data[it.oIndex + j] = Math.hypot(da.getElementDoubleAbs(it.aIndex + j), db.getElementDoubleAbs(it.bIndex + j));
+						a64data[it.oIndex + j] = Math.hypot(da.getElementDoubleAbs(it.aIndex + j),
+								db.getElementDoubleAbs(it.bIndex + j));
 					}
 				}
 			}
@@ -742,8 +734,10 @@ public class Maths extends GeneratedMaths {
 	}
 
 	/**
-	 * @param a opposite side of right-angled triangle
-	 * @param b adjacent side of right-angled triangle
+	 * @param a
+	 *            opposite side of right-angled triangle
+	 * @param b
+	 *            adjacent side of right-angled triangle
 	 * @return angle of triangle: atan(b/a)
 	 */
 	public static Dataset arctan2(final Object a, final Object b) {
@@ -751,9 +745,12 @@ public class Maths extends GeneratedMaths {
 	}
 
 	/**
-	 * @param a opposite side of right-angled triangle
-	 * @param b adjacent side of right-angled triangle
-	 * @param o output can be null - in which case, a new dataset is created
+	 * @param a
+	 *            opposite side of right-angled triangle
+	 * @param b
+	 *            adjacent side of right-angled triangle
+	 * @param o
+	 *            output can be null - in which case, a new dataset is created
 	 * @return angle of triangle: atan(b/a)
 	 */
 	public static Dataset arctan2(final Object a, final Object b, final Dataset o) {
@@ -791,7 +788,7 @@ public class Maths extends GeneratedMaths {
 			break;
 		case Dataset.INT32:
 			int[] i32data = ((IntegerDataset) result).getData();
-			
+
 			while (it.hasNext()) {
 				i32data[it.oIndex] = (int) toLong(Math.atan2(it.aDouble, it.bDouble));
 			}
@@ -828,21 +825,24 @@ public class Maths extends GeneratedMaths {
 				while (it.hasNext()) {
 					ai8data[it.oIndex] = (byte) toLong(Math.atan2(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
-						ai8data[it.oIndex + j] = (byte) toLong(Math.atan2(it.aDouble, db.getElementDoubleAbs(it.bIndex + j)));
+						ai8data[it.oIndex
+								+ j] = (byte) toLong(Math.atan2(it.aDouble, db.getElementDoubleAbs(it.bIndex + j)));
 					}
 				}
 			} else if (bs == 1) {
 				while (it.hasNext()) {
 					ai8data[it.oIndex] = (byte) toLong(Math.atan2(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
-						ai8data[it.oIndex + j] = (byte) toLong(Math.atan2(da.getElementDoubleAbs(it.aIndex + j), it.bDouble));
+						ai8data[it.oIndex
+								+ j] = (byte) toLong(Math.atan2(da.getElementDoubleAbs(it.aIndex + j), it.bDouble));
 					}
 				}
 			} else {
 				while (it.hasNext()) {
 					ai8data[it.oIndex] = (byte) toLong(Math.atan2(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
-						ai8data[it.oIndex + j] = (byte) toLong(Math.atan2(da.getElementDoubleAbs(it.aIndex + j), db.getElementDoubleAbs(it.bIndex + j)));
+						ai8data[it.oIndex + j] = (byte) toLong(Math.atan2(da.getElementDoubleAbs(it.aIndex + j),
+								db.getElementDoubleAbs(it.bIndex + j)));
 					}
 				}
 			}
@@ -858,21 +858,24 @@ public class Maths extends GeneratedMaths {
 				while (it.hasNext()) {
 					ai16data[it.oIndex] = (short) toLong(Math.atan2(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
-						ai16data[it.oIndex + j] = (short) toLong(Math.atan2(it.aDouble, db.getElementDoubleAbs(it.bIndex + j)));
+						ai16data[it.oIndex
+								+ j] = (short) toLong(Math.atan2(it.aDouble, db.getElementDoubleAbs(it.bIndex + j)));
 					}
 				}
 			} else if (bs == 1) {
 				while (it.hasNext()) {
 					ai16data[it.oIndex] = (short) toLong(Math.atan2(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
-						ai16data[it.oIndex + j] = (short) toLong(Math.atan2(da.getElementDoubleAbs(it.aIndex + j), it.bDouble));
+						ai16data[it.oIndex
+								+ j] = (short) toLong(Math.atan2(da.getElementDoubleAbs(it.aIndex + j), it.bDouble));
 					}
 				}
 			} else {
 				while (it.hasNext()) {
 					ai16data[it.oIndex] = (short) toLong(Math.atan2(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
-						ai16data[it.oIndex + j] = (short) toLong(Math.atan2(da.getElementDoubleAbs(it.aIndex + j), db.getElementDoubleAbs(it.bIndex + j)));
+						ai16data[it.oIndex + j] = (short) toLong(Math.atan2(da.getElementDoubleAbs(it.aIndex + j),
+								db.getElementDoubleAbs(it.bIndex + j)));
 					}
 				}
 			}
@@ -888,21 +891,24 @@ public class Maths extends GeneratedMaths {
 				while (it.hasNext()) {
 					ai32data[it.oIndex] = (int) toLong(Math.atan2(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
-						ai32data[it.oIndex + j] = (int) toLong(Math.atan2(it.aDouble, db.getElementDoubleAbs(it.bIndex + j)));
+						ai32data[it.oIndex
+								+ j] = (int) toLong(Math.atan2(it.aDouble, db.getElementDoubleAbs(it.bIndex + j)));
 					}
 				}
 			} else if (bs == 1) {
 				while (it.hasNext()) {
 					ai32data[it.oIndex] = (int) toLong(Math.atan2(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
-						ai32data[it.oIndex + j] = (int) toLong(Math.atan2(da.getElementDoubleAbs(it.aIndex + j), it.bDouble));
+						ai32data[it.oIndex
+								+ j] = (int) toLong(Math.atan2(da.getElementDoubleAbs(it.aIndex + j), it.bDouble));
 					}
 				}
 			} else {
 				while (it.hasNext()) {
 					ai32data[it.oIndex] = (int) toLong(Math.atan2(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
-						ai32data[it.oIndex + j] = (int) toLong(Math.atan2(da.getElementDoubleAbs(it.aIndex + j), db.getElementDoubleAbs(it.bIndex + j)));
+						ai32data[it.oIndex + j] = (int) toLong(Math.atan2(da.getElementDoubleAbs(it.aIndex + j),
+								db.getElementDoubleAbs(it.bIndex + j)));
 					}
 				}
 			}
@@ -932,7 +938,8 @@ public class Maths extends GeneratedMaths {
 				while (it.hasNext()) {
 					ai64data[it.oIndex] = toLong(Math.atan2(it.aDouble, it.bDouble));
 					for (int j = 1; j < is; j++) {
-						ai64data[it.oIndex + j] = toLong(Math.atan2(da.getElementDoubleAbs(it.aIndex + j), db.getElementDoubleAbs(it.bIndex + j)));
+						ai64data[it.oIndex + j] = toLong(Math.atan2(da.getElementDoubleAbs(it.aIndex + j),
+								db.getElementDoubleAbs(it.bIndex + j)));
 					}
 				}
 			}
@@ -962,7 +969,8 @@ public class Maths extends GeneratedMaths {
 				while (it.hasNext()) {
 					a32data[it.oIndex] = (float) Math.atan2(it.aDouble, it.bDouble);
 					for (int j = 1; j < is; j++) {
-						a32data[it.oIndex + j] = (float) Math.atan2(da.getElementDoubleAbs(it.aIndex + j), db.getElementDoubleAbs(it.bIndex + j));
+						a32data[it.oIndex + j] = (float) Math.atan2(da.getElementDoubleAbs(it.aIndex + j),
+								db.getElementDoubleAbs(it.bIndex + j));
 					}
 				}
 			}
@@ -992,7 +1000,8 @@ public class Maths extends GeneratedMaths {
 				while (it.hasNext()) {
 					a64data[it.oIndex] = Math.atan2(it.aDouble, it.bDouble);
 					for (int j = 1; j < is; j++) {
-						a64data[it.oIndex + j] = Math.atan2(da.getElementDoubleAbs(it.aIndex + j), db.getElementDoubleAbs(it.bIndex + j));
+						a64data[it.oIndex + j] = Math.atan2(da.getElementDoubleAbs(it.aIndex + j),
+								db.getElementDoubleAbs(it.bIndex + j));
 					}
 				}
 			}
@@ -1008,6 +1017,7 @@ public class Maths extends GeneratedMaths {
 
 	/**
 	 * Create a dataset of the arguments from a complex dataset
+	 * 
 	 * @param a
 	 * @return dataset of angles in radians
 	 */
@@ -1017,8 +1027,10 @@ public class Maths extends GeneratedMaths {
 
 	/**
 	 * Create a dataset of the arguments from a complex dataset
+	 * 
 	 * @param a
-	 * @param inDegrees if true then return angles in degrees else in radians
+	 * @param inDegrees
+	 *            if true then return angles in degrees else in radians
 	 * @return dataset of angles
 	 */
 	public static Dataset angle(final Object a, final boolean inDegrees) {
@@ -1027,8 +1039,10 @@ public class Maths extends GeneratedMaths {
 
 	/**
 	 * Create a dataset of the arguments from a complex dataset
+	 * 
 	 * @param a
-	 * @param o output can be null - in which case, a new dataset is created
+	 * @param o
+	 *            output can be null - in which case, a new dataset is created
 	 * @return dataset of angles in radians
 	 */
 	public static Dataset angle(final Object a, final Dataset o) {
@@ -1037,9 +1051,12 @@ public class Maths extends GeneratedMaths {
 
 	/**
 	 * Create a dataset of the arguments from a complex dataset
+	 * 
 	 * @param a
-	 * @param inDegrees if true then return angles in degrees else in radians
-	 * @param o output can be null - in which case, a new dataset is created
+	 * @param inDegrees
+	 *            if true then return angles in degrees else in radians
+	 * @param o
+	 *            output can be null - in which case, a new dataset is created
 	 * @return dataset of angles
 	 */
 	public static Dataset angle(final Object a, final boolean inDegrees, final Dataset o) {
@@ -1053,15 +1070,16 @@ public class Maths extends GeneratedMaths {
 		final Dataset result = it.getOutput();
 		final int is = result.getElementsPerItem();
 		final int dt = result.getDType();
-	
-		switch(dt) {
+
+		switch (dt) {
 		case Dataset.INT8:
 			final byte[] oi8data = ((ByteDataset) result).data;
 			it.setOutputDouble(false);
 
 			if (inDegrees) {
 				while (it.hasNext()) {
-					oi8data[it.oIndex] = (byte) toLong(Math.toDegrees(Math.atan2(da.getElementDoubleAbs(it.aIndex + 1), it.aDouble)));
+					oi8data[it.oIndex] = (byte) toLong(
+							Math.toDegrees(Math.atan2(da.getElementDoubleAbs(it.aIndex + 1), it.aDouble)));
 				}
 			} else {
 				while (it.hasNext()) {
@@ -1075,7 +1093,8 @@ public class Maths extends GeneratedMaths {
 
 			if (inDegrees) {
 				while (it.hasNext()) {
-					oi16data[it.oIndex] = (short) toLong(Math.toDegrees(Math.atan2(da.getElementDoubleAbs(it.aIndex + 1), it.aDouble)));
+					oi16data[it.oIndex] = (short) toLong(
+							Math.toDegrees(Math.atan2(da.getElementDoubleAbs(it.aIndex + 1), it.aDouble)));
 				}
 			} else {
 				while (it.hasNext()) {
@@ -1089,7 +1108,8 @@ public class Maths extends GeneratedMaths {
 
 			if (inDegrees) {
 				while (it.hasNext()) {
-					oi32data[it.oIndex] = (int) toLong(Math.toDegrees(Math.atan2(da.getElementDoubleAbs(it.aIndex + 1), it.aDouble)));
+					oi32data[it.oIndex] = (int) toLong(
+							Math.toDegrees(Math.atan2(da.getElementDoubleAbs(it.aIndex + 1), it.aDouble)));
 				}
 			} else {
 				while (it.hasNext()) {
@@ -1103,7 +1123,8 @@ public class Maths extends GeneratedMaths {
 
 			if (inDegrees) {
 				while (it.hasNext()) {
-					oi64data[it.oIndex] = toLong(Math.toDegrees(Math.atan2(da.getElementDoubleAbs(it.aIndex + 1), it.aDouble)));
+					oi64data[it.oIndex] = toLong(
+							Math.toDegrees(Math.atan2(da.getElementDoubleAbs(it.aIndex + 1), it.aDouble)));
 				}
 			} else {
 				while (it.hasNext()) {
@@ -1117,7 +1138,8 @@ public class Maths extends GeneratedMaths {
 
 			if (inDegrees) {
 				while (it.hasNext()) {
-					final byte ox = (byte) toLong(Math.toDegrees(Math.atan2(da.getElementDoubleAbs(it.aIndex + 1), it.aDouble)));
+					final byte ox = (byte) toLong(
+							Math.toDegrees(Math.atan2(da.getElementDoubleAbs(it.aIndex + 1), it.aDouble)));
 					for (int j = 0; j < is; j++) {
 						oai8data[it.oIndex + j] = ox;
 					}
@@ -1137,7 +1159,8 @@ public class Maths extends GeneratedMaths {
 
 			if (inDegrees) {
 				while (it.hasNext()) {
-					final short ox = (short) toLong(Math.toDegrees(Math.atan2(da.getElementDoubleAbs(it.aIndex + 1), it.aDouble)));
+					final short ox = (short) toLong(
+							Math.toDegrees(Math.atan2(da.getElementDoubleAbs(it.aIndex + 1), it.aDouble)));
 					for (int j = 0; j < is; j++) {
 						oai16data[it.oIndex + j] = ox;
 					}
@@ -1157,7 +1180,8 @@ public class Maths extends GeneratedMaths {
 
 			if (inDegrees) {
 				while (it.hasNext()) {
-					final int ox = (int) toLong(Math.toDegrees(Math.atan2(da.getElementDoubleAbs(it.aIndex + 1), it.aDouble)));
+					final int ox = (int) toLong(
+							Math.toDegrees(Math.atan2(da.getElementDoubleAbs(it.aIndex + 1), it.aDouble)));
 					for (int j = 0; j < is; j++) {
 						oai32data[it.oIndex + j] = ox;
 					}
@@ -1177,7 +1201,8 @@ public class Maths extends GeneratedMaths {
 
 			if (inDegrees) {
 				while (it.hasNext()) {
-					final long ox = toLong(Math.toDegrees(Math.atan2(da.getElementDoubleAbs(it.aIndex + 1), it.aDouble)));
+					final long ox = toLong(
+							Math.toDegrees(Math.atan2(da.getElementDoubleAbs(it.aIndex + 1), it.aDouble)));
 					for (int j = 0; j < is; j++) {
 						oai64data[it.oIndex + j] = ox;
 					}
@@ -1196,7 +1221,8 @@ public class Maths extends GeneratedMaths {
 
 			if (inDegrees) {
 				while (it.hasNext()) {
-					of32data[it.oIndex] = (float) Math.toDegrees(Math.atan2(da.getElementDoubleAbs(it.aIndex + 1), it.aDouble));
+					of32data[it.oIndex] = (float) Math
+							.toDegrees(Math.atan2(da.getElementDoubleAbs(it.aIndex + 1), it.aDouble));
 				}
 			} else {
 				while (it.hasNext()) {
@@ -1222,7 +1248,8 @@ public class Maths extends GeneratedMaths {
 
 			if (inDegrees) {
 				while (it.hasNext()) {
-					final float ox = (float) Math.toDegrees(Math.atan2(da.getElementDoubleAbs(it.aIndex + 1), it.aDouble));
+					final float ox = (float) Math
+							.toDegrees(Math.atan2(da.getElementDoubleAbs(it.aIndex + 1), it.aDouble));
 					for (int j = 0; j < is; j++) {
 						oaf32data[it.oIndex + j] = ox;
 					}
@@ -1260,13 +1287,14 @@ public class Maths extends GeneratedMaths {
 
 			if (inDegrees) {
 				while (it.hasNext()) {
-					oc64data[it.oIndex]      = (float) Math.toDegrees(Math.atan2(da.getElementDoubleAbs(it.aIndex + 1), it.aDouble));
-					oc64data[it.oIndex + 1]  = 0;
+					oc64data[it.oIndex] = (float) Math
+							.toDegrees(Math.atan2(da.getElementDoubleAbs(it.aIndex + 1), it.aDouble));
+					oc64data[it.oIndex + 1] = 0;
 				}
 			} else {
 				while (it.hasNext()) {
-					oc64data[it.oIndex]      = (float) Math.atan2(da.getElementDoubleAbs(it.aIndex + 1), it.aDouble);
-					oc64data[it.oIndex + 1]  = 0;
+					oc64data[it.oIndex] = (float) Math.atan2(da.getElementDoubleAbs(it.aIndex + 1), it.aDouble);
+					oc64data[it.oIndex + 1] = 0;
 				}
 			}
 			break;
@@ -1275,12 +1303,13 @@ public class Maths extends GeneratedMaths {
 
 			if (inDegrees) {
 				while (it.hasNext()) {
-					oc128data[it.oIndex]     = Math.toDegrees(Math.atan2(da.getElementDoubleAbs(it.aIndex + 1), it.aDouble));
+					oc128data[it.oIndex] = Math
+							.toDegrees(Math.atan2(da.getElementDoubleAbs(it.aIndex + 1), it.aDouble));
 					oc128data[it.oIndex + 1] = 0;
 				}
 			} else {
 				while (it.hasNext()) {
-					oc128data[it.oIndex]     = Math.atan2(da.getElementDoubleAbs(it.aIndex + 1), it.aDouble);
+					oc128data[it.oIndex] = Math.atan2(da.getElementDoubleAbs(it.aIndex + 1), it.aDouble);
 					oc128data[it.oIndex + 1] = 0;
 				}
 			}
@@ -1290,14 +1319,18 @@ public class Maths extends GeneratedMaths {
 		}
 
 		addFunctionName(result, "angle");
-	
+
 		return result;
 	}
 
 	/**
-	 * Create a phase only dataset. NB it will contain NaNs if there are any items with zero amplitude
-	 * @param a dataset
-	 * @param keepZeros if true then zero items are returned as zero rather than NaNs
+	 * Create a phase only dataset. NB it will contain NaNs if there are any
+	 * items with zero amplitude
+	 * 
+	 * @param a
+	 *            dataset
+	 * @param keepZeros
+	 *            if true then zero items are returned as zero rather than NaNs
 	 * @return complex dataset where items have unit amplitude
 	 */
 	public static Dataset phaseAsComplexNumber(final Object a, final boolean keepZeros) {
@@ -1305,10 +1338,15 @@ public class Maths extends GeneratedMaths {
 	}
 
 	/**
-	 * Create a phase only dataset. NB it will contain NaNs if there are any items with zero amplitude
-	 * @param a dataset
-	 * @param o output can be null - in which case, a new dataset is created
-	 * @param keepZeros if true then zero items are returned as zero rather than NaNs
+	 * Create a phase only dataset. NB it will contain NaNs if there are any
+	 * items with zero amplitude
+	 * 
+	 * @param a
+	 *            dataset
+	 * @param o
+	 *            output can be null - in which case, a new dataset is created
+	 * @param keepZeros
+	 *            if true then zero items are returned as zero rather than NaNs
 	 * @return complex dataset where items have unit amplitude
 	 */
 	public static Dataset phaseAsComplexNumber(final Object a, final Dataset o, final boolean keepZeros) {
@@ -1327,18 +1365,18 @@ public class Maths extends GeneratedMaths {
 		switch (dt) {
 		case Dataset.COMPLEX64:
 			float[] z64data = ((ComplexFloatDataset) result).getData();
-	
+
 			if (keepZeros) {
 				while (it.hasNext()) {
 					double rr = it.aDouble;
 					double ri = da.getElementDoubleAbs(it.aIndex + 1);
 					double am = Math.hypot(rr, ri);
 					if (am == 0) {
-						z64data[it.oIndex]     = 0;
+						z64data[it.oIndex] = 0;
 						z64data[it.oIndex + 1] = 0;
 					} else {
-						z64data[it.oIndex]     = (float) (rr/am);
-						z64data[it.oIndex + 1] = (float) (ri/am);
+						z64data[it.oIndex] = (float) (rr / am);
+						z64data[it.oIndex + 1] = (float) (ri / am);
 					}
 				}
 			} else {
@@ -1346,24 +1384,24 @@ public class Maths extends GeneratedMaths {
 					double rr = it.aDouble;
 					double ri = da.getElementDoubleAbs(it.aIndex + 1);
 					double am = Math.hypot(rr, ri);
-					z64data[it.oIndex]     = (float) (rr/am);
-					z64data[it.oIndex + 1] = (float) (ri/am);
+					z64data[it.oIndex] = (float) (rr / am);
+					z64data[it.oIndex + 1] = (float) (ri / am);
 				}
 			}
 			break;
 		case Dataset.COMPLEX128:
 			double[] z128data = ((ComplexDoubleDataset) result).getData();
-	
+
 			if (keepZeros) {
 				while (it.hasNext()) {
 					double rr = it.aDouble;
 					double ri = da.getElementDoubleAbs(it.aIndex + 1);
 					double am = Math.hypot(rr, ri);
 					if (am == 0) {
-						z128data[it.oIndex]     = 0;
+						z128data[it.oIndex] = 0;
 						z128data[it.oIndex + 1] = 0;
 					} else {
-						z128data[it.oIndex]     = rr / am;
+						z128data[it.oIndex] = rr / am;
 						z128data[it.oIndex + 1] = ri / am;
 					}
 				}
@@ -1372,7 +1410,7 @@ public class Maths extends GeneratedMaths {
 					double rr = it.aDouble;
 					double ri = da.getElementDoubleAbs(it.aIndex + 1);
 					double am = Math.hypot(rr, ri);
-					z128data[it.oIndex]     = rr / am;
+					z128data[it.oIndex] = rr / am;
 					z128data[it.oIndex + 1] = ri / am;
 				}
 			}
@@ -1389,10 +1427,9 @@ public class Maths extends GeneratedMaths {
 	 * 
 	 * The first IDataset must cast to Dataset
 	 * 
-	 * For memory efficiency sake if add(...) is called with a
-	 * set of size one, no clone is done, the original object is
-	 * returned directly. Otherwise a new data set is returned,
-	 * the sum of those passed in.
+	 * For memory efficiency sake if add(...) is called with a set of size one,
+	 * no clone is done, the original object is returned directly. Otherwise a
+	 * new data set is returned, the sum of those passed in.
 	 * 
 	 * @param sets
 	 * @param requireClone
@@ -1404,13 +1441,13 @@ public class Maths extends GeneratedMaths {
 		final Iterator<IDataset> it = sets.iterator();
 		if (sets.size() == 1)
 			return DatasetUtils.convertToDataset(it.next());
-	
+
 		Dataset sum = requireClone ? ((Dataset) it.next()).clone() : (Dataset) it.next();
-	
+
 		while (it.hasNext()) {
 			add(sum, it.next(), sum);
 		}
-	
+
 		return sum;
 	}
 
@@ -1430,27 +1467,36 @@ public class Maths extends GeneratedMaths {
 		if (sets.size() == 1)
 			return DatasetUtils.convertToDataset(it.next());
 		Dataset product = requireClone ? ((Dataset) it.next()).clone() : (Dataset) it.next();
-	
+
 		while (it.hasNext()) {
 			multiply(product, it.next(), product);
 		}
-	
+
 		return product;
 	}
 
 	/**
-	 * Linearly interpolate values at points in a 1D dataset corresponding to given coordinates.
-	 * @param x input 1-D coordinate dataset (must be ordered)
-	 * @param d input 1-D dataset
-	 * @param x0 coordinate values
-	 * @param left value to use when x0 lies left of domain. If null, then interpolate to zero by using leftmost interval
-	 * @param right value to use when x0 lies right of domain. If null, then interpolate to zero by using rightmost interval
+	 * Linearly interpolate values at points in a 1D dataset corresponding to
+	 * given coordinates.
+	 * 
+	 * @param x
+	 *            input 1-D coordinate dataset (must be ordered)
+	 * @param d
+	 *            input 1-D dataset
+	 * @param x0
+	 *            coordinate values
+	 * @param left
+	 *            value to use when x0 lies left of domain. If null, then
+	 *            interpolate to zero by using leftmost interval
+	 * @param right
+	 *            value to use when x0 lies right of domain. If null, then
+	 *            interpolate to zero by using rightmost interval
 	 * @return interpolated values
 	 */
 	public static Dataset interpolate(final Dataset x, final Dataset d, final IDataset x0, Number left, Number right) {
 		assert x.getRank() == 1;
 		assert d.getRank() == 1;
-	
+
 		DoubleDataset r = DatasetFactory.zeros(DoubleDataset.class, x0.getShape());
 
 		Monotonicity mono = Comparisons.findMonotonicity(x);
@@ -1505,7 +1551,7 @@ public class Maths extends GeneratedMaths {
 					r.setAbs(k, t * d.getDouble(isReversed ? 0 : s));
 				} else {
 					i = -i - 1;
-					double t = (xa[i] - v)/(xa[i] - xa[i - 1]);
+					double t = (xa[i] - v) / (xa[i] - xa[i - 1]);
 					if (isReversed) {
 						i = s - i;
 						r.setAbs(k, t * d.getDouble(i + 1) + (1 - t) * d.getDouble(i));
@@ -1521,11 +1567,14 @@ public class Maths extends GeneratedMaths {
 	}
 
 	/**
-	 * Linearly interpolate a value at a point in a 1D dataset. The dataset is considered to have
-	 * zero support outside its bounds. Thus points just outside are interpolated from the boundary
-	 * value to zero.
-	 * @param d input dataset
-	 * @param x0 coordinate
+	 * Linearly interpolate a value at a point in a 1D dataset. The dataset is
+	 * considered to have zero support outside its bounds. Thus points just
+	 * outside are interpolated from the boundary value to zero.
+	 * 
+	 * @param d
+	 *            input dataset
+	 * @param x0
+	 *            coordinate
 	 * @return interpolated value
 	 */
 	public static double interpolate(final Dataset d, final double x0) {
@@ -1549,12 +1598,16 @@ public class Maths extends GeneratedMaths {
 	}
 
 	/**
-	 * Linearly interpolate a value at a point in a 1D dataset with a mask. The dataset is considered
-	 * to have zero support outside its bounds. Thus points just outside are interpolated from the
-	 * boundary value to zero.
-	 * @param d input dataset
-	 * @param m mask dataset
-	 * @param x0 coordinate
+	 * Linearly interpolate a value at a point in a 1D dataset with a mask. The
+	 * dataset is considered to have zero support outside its bounds. Thus
+	 * points just outside are interpolated from the boundary value to zero.
+	 * 
+	 * @param d
+	 *            input dataset
+	 * @param m
+	 *            mask dataset
+	 * @param x0
+	 *            coordinate
 	 * @return interpolated value
 	 */
 	public static double interpolate(final Dataset d, final Dataset m, final double x0) {
@@ -1579,12 +1632,17 @@ public class Maths extends GeneratedMaths {
 	}
 
 	/**
-	 * Linearly interpolate an array of values at a point in a compound 1D dataset. The dataset is
-	 * considered to have zero support outside its bounds. Thus points just outside are interpolated
-	 * from the boundary value to zero.
-	 * @param values interpolated array
-	 * @param d input dataset
-	 * @param x0 coordinate
+	 * Linearly interpolate an array of values at a point in a compound 1D
+	 * dataset. The dataset is considered to have zero support outside its
+	 * bounds. Thus points just outside are interpolated from the boundary value
+	 * to zero.
+	 * 
+	 * @param values
+	 *            interpolated array
+	 * @param d
+	 *            input dataset
+	 * @param x0
+	 *            coordinate
 	 */
 	public static void interpolate(final double[] values, final CompoundDataset d, final double x0) {
 		assert d.getRank() == 1;
@@ -1593,7 +1651,7 @@ public class Maths extends GeneratedMaths {
 		if (is != values.length)
 			throw new IllegalArgumentException("Output array length must match elements in item");
 		final double[] f1, f2;
-	
+
 		final int i0 = (int) Math.floor(x0);
 		final int e0 = d.getSize() - 1;
 		if (i0 < -1 || i0 > e0) {
@@ -1601,7 +1659,7 @@ public class Maths extends GeneratedMaths {
 			return;
 		}
 		final double u0 = x0 - i0;
-	
+
 		if (u0 > 0) {
 			f1 = new double[is];
 			if (i0 >= 0)
@@ -1625,18 +1683,22 @@ public class Maths extends GeneratedMaths {
 	}
 
 	/**
-	 * Linearly interpolate a value at a point in a 2D dataset. The dataset is considered to have
-	 * zero support outside its bounds. Thus points just outside are interpolated from the boundary
-	 * value to zero.
-	 * @param d input dataset
-	 * @param x0 coordinate
-	 * @param x1 coordinate
+	 * Linearly interpolate a value at a point in a 2D dataset. The dataset is
+	 * considered to have zero support outside its bounds. Thus points just
+	 * outside are interpolated from the boundary value to zero.
+	 * 
+	 * @param d
+	 *            input dataset
+	 * @param x0
+	 *            coordinate
+	 * @param x1
+	 *            coordinate
 	 * @return bilinear interpolation
 	 */
 	public static double interpolate(final Dataset d, final double x0, final double x1) {
 		final int[] s = d.getShape();
 		assert s.length == 2;
-	
+
 		final int e0 = s[0] - 1;
 		final int e1 = s[1] - 1;
 		final int i0 = (int) Math.floor(x0);
@@ -1683,19 +1745,24 @@ public class Maths extends GeneratedMaths {
 	}
 
 	/**
-	 * Linearly interpolate a value at a point in a 2D dataset with a mask. The dataset is considered
-	 * to have zero support outside its bounds. Thus points just outside are interpolated from the
-	 * boundary value to zero.
-	 * @param d input dataset
-	 * @param m mask dataset
-	 * @param x0 coordinate
-	 * @param x1 coordinate
+	 * Linearly interpolate a value at a point in a 2D dataset with a mask. The
+	 * dataset is considered to have zero support outside its bounds. Thus
+	 * points just outside are interpolated from the boundary value to zero.
+	 * 
+	 * @param d
+	 *            input dataset
+	 * @param m
+	 *            mask dataset
+	 * @param x0
+	 *            coordinate
+	 * @param x1
+	 *            coordinate
 	 * @return bilinear interpolation
 	 */
 	public static double interpolate(final Dataset d, final Dataset m, final double x0, final double x1) {
 		if (m == null)
 			return interpolate(d, x0, x1);
-	
+
 		final int[] s = d.getShape();
 		assert s.length == 2;
 		assert m.getRank() == 2;
@@ -1741,10 +1808,13 @@ public class Maths extends GeneratedMaths {
 	}
 
 	/**
-	 * Linearly interpolate an array of values at a point in a compound 2D dataset. The dataset is
-	 * considered to have zero support outside its bounds. Thus points just outside are interpolated
-	 * from the boundary value to zero.
-	 * @param values bilinear interpolated array
+	 * Linearly interpolate an array of values at a point in a compound 2D
+	 * dataset. The dataset is considered to have zero support outside its
+	 * bounds. Thus points just outside are interpolated from the boundary value
+	 * to zero.
+	 * 
+	 * @param values
+	 *            bilinear interpolated array
 	 * @param d
 	 * @param x0
 	 * @param x1
@@ -1771,7 +1841,7 @@ public class Maths extends GeneratedMaths {
 		double[] f1 = new double[is];
 		if (i0 >= 0 && i1 >= 0)
 			d.getDoubleArray(f1, i0, i1);
-	
+
 		if (u1 > 0) {
 			if (u0 > 0) {
 				double[] f2 = new double[is];
@@ -1819,11 +1889,15 @@ public class Maths extends GeneratedMaths {
 	}
 
 	/**
-	 * Linearly interpolate a value at a point in a n-D dataset. The dataset is considered to have
-	 * zero support outside its bounds. Thus points just outside are interpolated from the boundary
-	 * value to zero. The number of coordinates must match the rank of the dataset.
-	 * @param d input dataset
-	 * @param x coordinates
+	 * Linearly interpolate a value at a point in a n-D dataset. The dataset is
+	 * considered to have zero support outside its bounds. Thus points just
+	 * outside are interpolated from the boundary value to zero. The number of
+	 * coordinates must match the rank of the dataset.
+	 * 
+	 * @param d
+	 *            input dataset
+	 * @param x
+	 *            coordinates
 	 * @return interpolated value
 	 */
 	public static double interpolate(final Dataset d, final double... x) {
@@ -1831,12 +1905,17 @@ public class Maths extends GeneratedMaths {
 	}
 
 	/**
-	 * Linearly interpolate a value at a point in a n-D dataset with a mask. The dataset is considered to have
-	 * zero support outside its bounds. Thus points just outside are interpolated from the boundary
-	 * value to zero. The number of coordinates must match the rank of the dataset.
-	 * @param d input dataset
-	 * @param m mask dataset (can be null)
-	 * @param x coordinates
+	 * Linearly interpolate a value at a point in a n-D dataset with a mask. The
+	 * dataset is considered to have zero support outside its bounds. Thus
+	 * points just outside are interpolated from the boundary value to zero. The
+	 * number of coordinates must match the rank of the dataset.
+	 * 
+	 * @param d
+	 *            input dataset
+	 * @param m
+	 *            mask dataset (can be null)
+	 * @param x
+	 *            coordinates
 	 * @return interpolated value
 	 */
 	public static double interpolate(final Dataset d, final Dataset m, final double... x) {
@@ -1857,7 +1936,7 @@ public class Maths extends GeneratedMaths {
 		}
 
 		// now do it iteratively
-		int[] l = new int[r];       // lower indexes
+		int[] l = new int[r]; // lower indexes
 		double[] f = new double[r]; // fractions
 		for (int i = 0; i < r; i++) {
 			double xi = x[i];
@@ -1866,7 +1945,7 @@ public class Maths extends GeneratedMaths {
 		}
 
 		int[] s = d.getShape();
-		
+
 		int n = 1 << r;
 		double[] results = new double[n];
 
@@ -1925,10 +2004,13 @@ public class Maths extends GeneratedMaths {
 	}
 
 	/**
-	 * Linearly interpolate an array of values at a point in a compound n-D dataset. The dataset is
-	 * considered to have zero support outside its bounds. Thus points just outside are interpolated
-	 * from the boundary value to zero.
-	 * @param values linearly interpolated array
+	 * Linearly interpolate an array of values at a point in a compound n-D
+	 * dataset. The dataset is considered to have zero support outside its
+	 * bounds. Thus points just outside are interpolated from the boundary value
+	 * to zero.
+	 * 
+	 * @param values
+	 *            linearly interpolated array
 	 * @param d
 	 * @param x
 	 */
@@ -1952,7 +2034,7 @@ public class Maths extends GeneratedMaths {
 			throw new IllegalArgumentException("Output array length must match elements in item");
 
 		// now do it iteratively
-		int[] l = new int[r];       // lower indexes
+		int[] l = new int[r]; // lower indexes
 		double[] f = new double[r]; // fractions
 		for (int i = 0; i < r; i++) {
 			double xi = x[i];
@@ -1961,7 +2043,7 @@ public class Maths extends GeneratedMaths {
 		}
 
 		int[] s = d.getShape();
-		
+
 		int n = 1 << r;
 		double[][] results = new double[n][is];
 
@@ -2010,11 +2092,14 @@ public class Maths extends GeneratedMaths {
 	}
 
 	/**
-	 * Linearly interpolate a value at a point in a 1D dataset. The dataset is considered to have
-	 * zero support outside its bounds. Thus points just outside are interpolated from the boundary
-	 * value to zero.
-	 * @param d input dataset
-	 * @param x0 coordinate
+	 * Linearly interpolate a value at a point in a 1D dataset. The dataset is
+	 * considered to have zero support outside its bounds. Thus points just
+	 * outside are interpolated from the boundary value to zero.
+	 * 
+	 * @param d
+	 *            input dataset
+	 * @param x0
+	 *            coordinate
 	 * @return interpolated value
 	 * @deprecated Use {@link #interpolate(Dataset, double)}
 	 */
@@ -2024,12 +2109,16 @@ public class Maths extends GeneratedMaths {
 	}
 
 	/**
-	 * Linearly interpolate a value at a point in a compound 1D dataset. The dataset is considered
-	 * to have zero support outside its bounds. Thus points just outside are interpolated from the
-	 * boundary value to zero.
-	 * @param values interpolated array
-	 * @param d input dataset
-	 * @param x0 coordinate
+	 * Linearly interpolate a value at a point in a compound 1D dataset. The
+	 * dataset is considered to have zero support outside its bounds. Thus
+	 * points just outside are interpolated from the boundary value to zero.
+	 * 
+	 * @param values
+	 *            interpolated array
+	 * @param d
+	 *            input dataset
+	 * @param x0
+	 *            coordinate
 	 * @deprecated Use {@link #interpolate(double[], CompoundDataset, double)}
 	 */
 	@Deprecated
@@ -2039,9 +2128,13 @@ public class Maths extends GeneratedMaths {
 
 	/**
 	 * Interpolated a value from 2D dataset
-	 * @param d input dataset
-	 * @param x0 coordinate
-	 * @param x1 coordinate
+	 * 
+	 * @param d
+	 *            input dataset
+	 * @param x0
+	 *            coordinate
+	 * @param x1
+	 *            coordinate
 	 * @return bilinear interpolation
 	 * @deprecated Use {@link #interpolate(Dataset, double, double)}
 	 */
@@ -2052,10 +2145,15 @@ public class Maths extends GeneratedMaths {
 
 	/**
 	 * Interpolated a value from 2D dataset with mask
-	 * @param d input dataset
-	 * @param m mask dataset
-	 * @param x0 coordinate
-	 * @param x1 coordinate
+	 * 
+	 * @param d
+	 *            input dataset
+	 * @param m
+	 *            mask dataset
+	 * @param x0
+	 *            coordinate
+	 * @param x1
+	 *            coordinate
 	 * @return bilinear interpolation
 	 * @deprecated Use {@link #interpolate(Dataset, Dataset, double, double)}
 	 */
@@ -2066,11 +2164,14 @@ public class Maths extends GeneratedMaths {
 
 	/**
 	 * Interpolated a value from 2D compound dataset
-	 * @param values bilinear interpolated array
+	 * 
+	 * @param values
+	 *            bilinear interpolated array
 	 * @param d
 	 * @param x0
 	 * @param x1
-	 * @deprecated Use {@link #interpolate(double[], CompoundDataset, double, double)}
+	 * @deprecated Use
+	 *             {@link #interpolate(double[], CompoundDataset, double, double)}
 	 */
 	@Deprecated
 	public static void getBilinear(final double[] values, final CompoundDataset d, final double x0, final double x1) {
@@ -2080,38 +2181,44 @@ public class Maths extends GeneratedMaths {
 	/**
 	 * generate binomial coefficients with negative sign:
 	 * <p>
+	 * 
 	 * <pre>
 	 *  (-1)^i n! / ( i! (n-i)! )
 	 * </pre>
+	 * 
 	 * @param n
 	 * @return array of coefficients
 	 */
 	private static int[] bincoeff(final int n) {
-		final int[] b = new int[n+1];
-		final int hn = n/2;
+		final int[] b = new int[n + 1];
+		final int hn = n / 2;
 
 		int bc = 1;
 		b[0] = bc;
 		for (int i = 1; i <= hn; i++) {
-			bc = -(bc*(n-i+1))/i;
+			bc = -(bc * (n - i + 1)) / i;
 			b[i] = bc;
 		}
 		if (n % 2 != 0) {
-			for (int i = hn+1; i <= n; i++) {
-				b[i] = -b[n-i];
+			for (int i = hn + 1; i <= n; i++) {
+				b[i] = -b[n - i];
 			}
 		} else {
-			for (int i = hn+1; i <= n; i++) {
-				b[i] = b[n-i];
+			for (int i = hn + 1; i <= n; i++) {
+				b[i] = b[n - i];
 			}
 		}
 		return b;
 	}
 
 	/**
-	 * 1st order discrete difference of dataset along flattened dataset using finite difference
-	 * @param a is 1d dataset
-	 * @param out is 1d dataset
+	 * 1st order discrete difference of dataset along flattened dataset using
+	 * finite difference
+	 * 
+	 * @param a
+	 *            is 1d dataset
+	 * @param out
+	 *            is 1d dataset
 	 */
 	private static void difference(final Dataset a, final Dataset out) {
 		final int isize = a.getElementsPerItem();
@@ -2255,6 +2362,7 @@ public class Maths extends GeneratedMaths {
 
 	/**
 	 * Get next set of indexes
+	 * 
 	 * @param it
 	 * @param indexes
 	 * @return true if there is more
@@ -2265,17 +2373,22 @@ public class Maths extends GeneratedMaths {
 		int m = indexes.length;
 		int i = 0;
 		for (i = 0; i < m - 1; i++) {
-			indexes[i] = indexes[i+1];
+			indexes[i] = indexes[i + 1];
 		}
 		indexes[i] = it.index;
 		return true;
 	}
 
 	/**
-	 * General order discrete difference of dataset along flattened dataset using finite difference
-	 * @param a is 1d dataset
-	 * @param out is 1d dataset
-	 * @param n order of difference
+	 * General order discrete difference of dataset along flattened dataset
+	 * using finite difference
+	 * 
+	 * @param a
+	 *            is 1d dataset
+	 * @param out
+	 *            is 1d dataset
+	 * @param n
+	 *            order of difference
 	 */
 	private static void difference(final Dataset a, final Dataset out, final int n) {
 		if (n == 1) {
@@ -2508,8 +2621,10 @@ public class Maths extends GeneratedMaths {
 
 	/**
 	 * Discrete difference of dataset along axis using finite difference
+	 * 
 	 * @param a
-	 * @param n order of difference
+	 * @param n
+	 *            order of difference
 	 * @param axis
 	 * @return difference
 	 */
@@ -2526,7 +2641,7 @@ public class Maths extends GeneratedMaths {
 		if (axis < 0 || axis >= rank) {
 			throw new IllegalArgumentException("Axis is out of range");
 		}
-		
+
 		int[] nshape = a.getShape();
 		if (nshape[axis] <= n) {
 			nshape[axis] = 0;
@@ -2557,7 +2672,8 @@ public class Maths extends GeneratedMaths {
 
 		double result = 0.0;
 		for (int i = Min, imax = data.getSize(); i <= Max; i++) {
-			// clip i appropriately, imagine that effectively the two ends continue
+			// clip i appropriately, imagine that effectively the two ends
+			// continue
 			// straight out.
 			int pos = i;
 			if (pos < 0) {
@@ -2579,28 +2695,29 @@ public class Maths extends GeneratedMaths {
 			out[j] = 0.;
 
 		for (int i = Min, imax = data.getSize(); i <= Max; i++) {
-			// clip i appropriately, imagine that effectively the two ends continue
+			// clip i appropriately, imagine that effectively the two ends
+			// continue
 			// straight out.
-			int pos = i*isize;
+			int pos = i * isize;
 			if (pos < 0) {
 				pos = 0;
 			} else if (pos >= imax) {
 				pos = imax - isize;
 			}
 			for (int j = 0; j < isize; j++)
-				out[j] += data.getElementDoubleAbs(pos+j);
+				out[j] += data.getElementDoubleAbs(pos + j);
 		}
 
 		// now the sum is complete, average the values.
-		double norm = 1./ (Max - Min + 1.);
+		double norm = 1. / (Max - Min + 1.);
 		for (int j = 0; j < isize; j++)
 			out[j] *= norm;
 
 	}
 
 	/**
-	 * Calculates the derivative of a line described by two datasets (x,y) given a spread of n either
-	 * side of the point
+	 * Calculates the derivative of a line described by two datasets (x,y) given
+	 * a spread of n either side of the point
 	 * 
 	 * @param x
 	 *            The x values of the function to take the derivative of.
@@ -2655,7 +2772,8 @@ public class Maths extends GeneratedMaths {
 				double LeftPosition = SelectedMean(x, i - n, i - 1);
 				double RightPosition = SelectedMean(x, i + 1, i + n);
 
-				// now the values and positions are calculated, the derivative can be
+				// now the values and positions are calculated, the derivative
+				// can be
 				// calculated.
 				result.set(((RightValue - LeftValue) / (RightPosition - LeftPosition)), i);
 			}
@@ -2666,7 +2784,7 @@ public class Maths extends GeneratedMaths {
 				SelectedMeanArray(leftValues, y, i - n, i - 1);
 				SelectedMeanArray(rightValues, y, i + 1, i + n);
 				double delta = SelectedMean(x, i - n, i - 1);
-				delta = 1./(SelectedMean(x, i + 1, i + n) - delta);
+				delta = 1. / (SelectedMean(x, i + 1, i + n) - delta);
 				for (int j = 0; j < isize; j++) {
 					rightValues[j] -= leftValues[j];
 					rightValues[j] *= delta;
@@ -2683,6 +2801,7 @@ public class Maths extends GeneratedMaths {
 
 	/**
 	 * Discrete difference of dataset along axis using finite central difference
+	 * 
 	 * @param a
 	 * @param axis
 	 * @return difference
@@ -2725,15 +2844,19 @@ public class Maths extends GeneratedMaths {
 	}
 
 	/**
-	 * 1st order discrete difference of dataset along flattened dataset using central difference
-	 * @param a is 1d dataset
-	 * @param out is 1d dataset
+	 * 1st order discrete difference of dataset along flattened dataset using
+	 * central difference
+	 * 
+	 * @param a
+	 *            is 1d dataset
+	 * @param out
+	 *            is 1d dataset
 	 */
 	private static void centralDifference(final Dataset a, final Dataset out) {
 		final int isize = a.getElementsPerItem();
 		final int dt = a.getDType();
 
-		final int nlen = (out.getShapeRef()[0] - 1)*isize;
+		final int nlen = (out.getShapeRef()[0] - 1) * isize;
 		if (nlen < 1) {
 			throw new IllegalArgumentException("Dataset should have a size > 1 along given axis");
 		}
@@ -2751,7 +2874,7 @@ public class Maths extends GeneratedMaths {
 			final byte[] oi8data = ((ByteDataset) out).getData();
 			oi8data[0] = (byte) (i8data[pi] - i8data[oi]);
 			for (int i = 1; it.hasNext(); i++) {
-				oi8data[i] = (byte) ((i8data[it.index] - i8data[oi])/2);
+				oi8data[i] = (byte) ((i8data[it.index] - i8data[oi]) / 2);
 				oi = pi;
 				pi = it.index;
 			}
@@ -2762,7 +2885,7 @@ public class Maths extends GeneratedMaths {
 			final short[] oi16data = ((ShortDataset) out).getData();
 			oi16data[0] = (short) (i16data[pi] - i16data[oi]);
 			for (int i = 1; it.hasNext(); i++) {
-				oi16data[i] = (short) ((i16data[it.index] - i16data[oi])/2);
+				oi16data[i] = (short) ((i16data[it.index] - i16data[oi]) / 2);
 				oi = pi;
 				pi = it.index;
 			}
@@ -2773,7 +2896,7 @@ public class Maths extends GeneratedMaths {
 			final int[] oi32data = ((IntegerDataset) out).getData();
 			oi32data[0] = i32data[pi] - i32data[oi];
 			for (int i = 1; it.hasNext(); i++) {
-				oi32data[i] = (i32data[it.index] - i32data[oi])/2;
+				oi32data[i] = (i32data[it.index] - i32data[oi]) / 2;
 				oi = pi;
 				pi = it.index;
 			}
@@ -2784,7 +2907,7 @@ public class Maths extends GeneratedMaths {
 			final long[] oi64data = ((LongDataset) out).getData();
 			oi64data[0] = i64data[pi] - i64data[oi];
 			for (int i = 1; it.hasNext(); i++) {
-				oi64data[i] = (i64data[it.index] - i64data[oi])/2;
+				oi64data[i] = (i64data[it.index] - i64data[oi]) / 2;
 				oi = pi;
 				pi = it.index;
 			}
@@ -2794,72 +2917,72 @@ public class Maths extends GeneratedMaths {
 			final byte[] ai8data = ((CompoundByteDataset) a).data;
 			final byte[] oai8data = ((CompoundByteDataset) out).getData();
 			for (int k = 0; k < isize; k++) {
-				oai8data[k] = (byte) (ai8data[pi+k] - ai8data[oi+k]);
+				oai8data[k] = (byte) (ai8data[pi + k] - ai8data[oi + k]);
 			}
 			for (int i = isize; it.hasNext();) {
 				int l = it.index;
 				for (int k = 0; k < isize; k++) {
-					oai8data[i++] = (byte) ((ai8data[l++] - ai8data[oi++])/2);
+					oai8data[i++] = (byte) ((ai8data[l++] - ai8data[oi++]) / 2);
 				}
 				oi = pi;
 				pi = it.index;
 			}
 			for (int k = 0; k < isize; k++) {
-				oai8data[nlen+k] = (byte) (ai8data[pi+k] - ai8data[oi+k]);
+				oai8data[nlen + k] = (byte) (ai8data[pi + k] - ai8data[oi + k]);
 			}
 			break;
 		case Dataset.ARRAYINT16:
 			final short[] ai16data = ((CompoundShortDataset) a).data;
 			final short[] oai16data = ((CompoundShortDataset) out).getData();
 			for (int k = 0; k < isize; k++) {
-				oai16data[k] = (short) (ai16data[pi+k] - ai16data[oi+k]);
+				oai16data[k] = (short) (ai16data[pi + k] - ai16data[oi + k]);
 			}
 			for (int i = isize; it.hasNext();) {
 				int l = it.index;
 				for (int k = 0; k < isize; k++) {
-					oai16data[i++] = (short) ((ai16data[l++] - ai16data[oi++])/2);
+					oai16data[i++] = (short) ((ai16data[l++] - ai16data[oi++]) / 2);
 				}
 				oi = pi;
 				pi = it.index;
 			}
 			for (int k = 0; k < isize; k++) {
-				oai16data[nlen+k] = (short) (ai16data[pi+k] - ai16data[oi+k]);
+				oai16data[nlen + k] = (short) (ai16data[pi + k] - ai16data[oi + k]);
 			}
 			break;
 		case Dataset.ARRAYINT32:
 			final int[] ai32data = ((CompoundIntegerDataset) a).data;
 			final int[] oai32data = ((CompoundIntegerDataset) out).getData();
 			for (int k = 0; k < isize; k++) {
-				oai32data[k] = ai32data[pi+k] - ai32data[oi+k];
+				oai32data[k] = ai32data[pi + k] - ai32data[oi + k];
 			}
 			for (int i = isize; it.hasNext();) {
 				int l = it.index;
 				for (int k = 0; k < isize; k++) {
-					oai32data[i++] = (ai32data[l++] - ai32data[oi++])/2;
+					oai32data[i++] = (ai32data[l++] - ai32data[oi++]) / 2;
 				}
 				oi = pi;
 				pi = it.index;
 			}
 			for (int k = 0; k < isize; k++) {
-				oai32data[nlen+k] = ai32data[pi+k] - ai32data[oi+k];
+				oai32data[nlen + k] = ai32data[pi + k] - ai32data[oi + k];
 			}
 			break;
 		case Dataset.ARRAYINT64:
 			final long[] ai64data = ((CompoundLongDataset) a).data;
 			final long[] oai64data = ((CompoundLongDataset) out).getData();
 			for (int k = 0; k < isize; k++) {
-				oai64data[k] = ai64data[pi+k] - ai64data[oi+k];
+				oai64data[k] = ai64data[pi + k] - ai64data[oi + k];
 			}
 			for (int i = isize; it.hasNext();) {
 				int l = it.index;
 				for (int k = 0; k < isize; k++) {
-					oai64data[i++] = (ai64data[l++] - ai64data[oi++])/2;
+					oai64data[i++] = (ai64data[l++] - ai64data[oi++]) / 2;
 				}
 				oi = pi;
 				pi = it.index;
 			}
 			for (int k = 0; k < isize; k++) {
-				oai64data[nlen+k] = ai64data[pi+k] - ai64data[oi+k];
+				oai64data[nlen + k] = ai64data[pi + k] - ai64data[oi + k];
 			}
 			break;
 		case Dataset.FLOAT32:
@@ -2867,7 +2990,7 @@ public class Maths extends GeneratedMaths {
 			final float[] of32data = ((FloatDataset) out).getData();
 			of32data[0] = f32data[pi] - f32data[oi];
 			for (int i = 1; it.hasNext(); i++) {
-				of32data[i] = (f32data[it.index] - f32data[oi])*0.5f;
+				of32data[i] = (f32data[it.index] - f32data[oi]) * 0.5f;
 				oi = pi;
 				pi = it.index;
 			}
@@ -2878,7 +3001,7 @@ public class Maths extends GeneratedMaths {
 			final double[] of64data = ((DoubleDataset) out).getData();
 			of64data[0] = f64data[pi] - f64data[oi];
 			for (int i = 1; it.hasNext(); i++) {
-				of64data[i] = (f64data[it.index] - f64data[oi])*0.5f;
+				of64data[i] = (f64data[it.index] - f64data[oi]) * 0.5f;
 				oi = pi;
 				pi = it.index;
 			}
@@ -2888,64 +3011,64 @@ public class Maths extends GeneratedMaths {
 			final float[] c64data = ((ComplexFloatDataset) a).data;
 			final float[] oc64data = ((ComplexFloatDataset) out).getData();
 			oc64data[0] = c64data[pi] - c64data[oi];
-			oc64data[1] = c64data[pi+1] - c64data[oi+1];
+			oc64data[1] = c64data[pi + 1] - c64data[oi + 1];
 			for (int i = 2; it.hasNext();) {
-				oc64data[i++] = (c64data[it.index] - c64data[oi++])*0.5f;
-				oc64data[i++] = (c64data[it.index + 1] - c64data[oi])*0.5f;
+				oc64data[i++] = (c64data[it.index] - c64data[oi++]) * 0.5f;
+				oc64data[i++] = (c64data[it.index + 1] - c64data[oi]) * 0.5f;
 				oi = pi;
 				pi = it.index;
 			}
 			oc64data[nlen] = c64data[pi] - c64data[oi];
-			oc64data[nlen+1] = c64data[pi+1] - c64data[oi+1];
+			oc64data[nlen + 1] = c64data[pi + 1] - c64data[oi + 1];
 			break;
 		case Dataset.COMPLEX128:
 			final double[] c128data = ((ComplexDoubleDataset) a).data;
 			final double[] oc128data = ((ComplexDoubleDataset) out).getData();
 			oc128data[0] = c128data[pi] - c128data[oi];
-			oc128data[1] = c128data[pi+1] - c128data[oi+1];
+			oc128data[1] = c128data[pi + 1] - c128data[oi + 1];
 			for (int i = 2; it.hasNext();) {
-				oc128data[i++] = (c128data[it.index] - c128data[oi++])*0.5f;
-				oc128data[i++] = (c128data[it.index + 1] - c128data[oi])*0.5f;
+				oc128data[i++] = (c128data[it.index] - c128data[oi++]) * 0.5f;
+				oc128data[i++] = (c128data[it.index + 1] - c128data[oi]) * 0.5f;
 				oi = pi;
 				pi = it.index;
 			}
 			oc128data[nlen] = c128data[pi] - c128data[oi];
-			oc128data[nlen+1] = c128data[pi+1] - c128data[oi+1];
+			oc128data[nlen + 1] = c128data[pi + 1] - c128data[oi + 1];
 			break;
 		case Dataset.ARRAYFLOAT32:
 			final float[] af32data = ((CompoundFloatDataset) a).data;
 			final float[] oaf32data = ((CompoundFloatDataset) out).getData();
 			for (int k = 0; k < isize; k++) {
-				oaf32data[k] = af32data[pi+k] - af32data[oi+k];
+				oaf32data[k] = af32data[pi + k] - af32data[oi + k];
 			}
 			for (int i = isize; it.hasNext();) {
 				int l = it.index;
 				for (int k = 0; k < isize; k++) {
-					oaf32data[i++] = (af32data[l++] - af32data[oi++])*0.5f;
+					oaf32data[i++] = (af32data[l++] - af32data[oi++]) * 0.5f;
 				}
 				oi = pi;
 				pi = it.index;
 			}
 			for (int k = 0; k < isize; k++) {
-				oaf32data[nlen+k] = af32data[pi+k] - af32data[oi+k];
+				oaf32data[nlen + k] = af32data[pi + k] - af32data[oi + k];
 			}
 			break;
 		case Dataset.ARRAYFLOAT64:
 			final double[] af64data = ((CompoundDoubleDataset) a).data;
 			final double[] oaf64data = ((CompoundDoubleDataset) out).getData();
 			for (int k = 0; k < isize; k++) {
-				oaf64data[k] = af64data[pi+k] - af64data[oi+k];
+				oaf64data[k] = af64data[pi + k] - af64data[oi + k];
 			}
 			for (int i = isize; it.hasNext();) {
 				int l = it.index;
 				for (int k = 0; k < isize; k++) {
-					oaf64data[i++] = (af64data[l++] - af64data[oi++])*0.5;
+					oaf64data[i++] = (af64data[l++] - af64data[oi++]) * 0.5;
 				}
 				oi = pi;
 				pi = it.index;
 			}
 			for (int k = 0; k < isize; k++) {
-				oaf64data[nlen+k] = af64data[pi+k] - af64data[oi+k];
+				oaf64data[nlen + k] = af64data[pi + k] - af64data[oi + k];
 			}
 			break;
 		default:
@@ -2955,8 +3078,10 @@ public class Maths extends GeneratedMaths {
 
 	/**
 	 * Calculate gradient (or partial derivatives) by central difference
+	 * 
 	 * @param y
-	 * @param x one or more datasets for dependent variables
+	 * @param x
+	 *            one or more datasets for dependent variables
 	 * @return a list of datasets (one for each dimension in y)
 	 */
 	public static List<Dataset> gradient(Dataset y, Dataset... x) {
@@ -2964,12 +3089,14 @@ public class Maths extends GeneratedMaths {
 
 		if (x.length > 0) {
 			if (x.length != rank) {
-				throw new IllegalArgumentException("Number of dependent datasets must be equal to rank of first argument");
+				throw new IllegalArgumentException(
+						"Number of dependent datasets must be equal to rank of first argument");
 			}
 			for (int a = 0; a < rank; a++) {
 				int rx = x[a].getRank();
 				if (rx != rank && rx != 1) {
-					throw new IllegalArgumentException("Dependent datasets must be 1-D or match rank of first argument");
+					throw new IllegalArgumentException(
+							"Dependent datasets must be 1-D or match rank of first argument");
 				}
 				if (rx == 1) {
 					if (y.getShapeRef()[a] != x[a].getShapeRef()[0]) {
