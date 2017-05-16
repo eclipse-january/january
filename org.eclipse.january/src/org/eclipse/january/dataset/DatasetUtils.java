@@ -1714,6 +1714,11 @@ public class DatasetUtils {
 	 * @return An list of doubles containing all the X coordinates of where the line crosses
 	 */
 	public static List<Double> crossings(Dataset xAxis, Dataset yAxis, double yValue) {
+		if (xAxis.getSize() > yAxis.getSize()) {
+			throw new IllegalArgumentException(
+					"Number of values of yAxis must as least be equal to the number of values of xAxis");
+		}
+		
 		List<Double> results = new ArrayList<Double>();
 
 		List<Double> indices = crossings(yAxis, yValue);
