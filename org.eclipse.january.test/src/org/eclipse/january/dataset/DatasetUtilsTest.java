@@ -9,6 +9,7 @@
 
 package org.eclipse.january.dataset;
 
+import org.eclipse.january.asserts.TestUtils;
 import org.junit.Test;
 
 public class DatasetUtilsTest {
@@ -27,4 +28,14 @@ public class DatasetUtilsTest {
 		DatasetUtils.crossings(xAxis, yAxis, 0);
 	}
 
+	@Test
+	public void testMakeUnsigned() {
+		ByteDataset pos = DatasetFactory.createFromObject(ByteDataset.class, new byte[] {0, 1, 127});
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(ShortDataset.class, new short[] {0, 1, 127}), DatasetUtils.makeUnsigned(pos, false));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(ByteDataset.class, new byte[] {0, 1, 127}), DatasetUtils.makeUnsigned(pos, true));
+
+		ByteDataset neg = DatasetFactory.createFromObject(ByteDataset.class, new byte[] {0, -1, -128});
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(ShortDataset.class, new short[] {0, 255, 128}), DatasetUtils.makeUnsigned(neg, false));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(ShortDataset.class, new short[] {0, 255, 128}), DatasetUtils.makeUnsigned(neg, true));
+	}
 }
