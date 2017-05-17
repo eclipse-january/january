@@ -439,7 +439,7 @@ def loopcompound(text, jtype, ovar, is_int, override_long):
     print("\t\t\t\t}")
 
     if is_binaryop:
-        print("\t\t\t} else if (as == 1 || as < bs) {")
+        print("\t\t\t} else if (as < bs) {")
         if not allow_ints:
             print("\t\t\t\tif (it.isOutputDouble()) {")
             print("\t\t\t\t\twhile (it.hasNext()) {")
@@ -492,7 +492,7 @@ def loopcompound(text, jtype, ovar, is_int, override_long):
         print("\t\t\t\t}")
 
     if is_binaryop:
-        print("\t\t\t} else if (bs == 1 || as > bs) {")
+        print("\t\t\t} else if (as > bs) {")
         if not allow_ints:
             print("\t\t\t\tif (it.isOutputDouble()) {")
             print("\t\t\t\t\twhile (it.hasNext()) {")
@@ -517,6 +517,29 @@ def loopcompound(text, jtype, ovar, is_int, override_long):
         print("\t\t\t\t\t\tfor (int j = 1; j < is; j++) {")
         print("\t\t\t\t\t\t\tiax = da.getElementLongAbs(it.aIndex + j);")
         transtext(text, jtype, lprefix="\t\t\t\t\t\t\t", is_int=is_int, vars=vars, override_long=override_long, use_long=True)
+        print("\t\t\t\t\t\t\t%s[it.oIndex + j] = ox;" % ovar)
+        print("\t\t\t\t\t\t}")
+        print("\t\t\t\t\t}")
+        print("\t\t\t\t}")
+        print("\t\t\t} else if (as == 1) {")
+        if not allow_ints:
+            print("\t\t\t\tif (it.isOutputDouble()) {")
+            print("\t\t\t\t\twhile (it.hasNext()) {")
+            print("\t\t\t\t\t\tfinal double iax = it.aDouble;")
+            print("\t\t\t\t\t\tfinal double ibx = it.bDouble;")
+            vars = transtext(text, jtype, lprefix="\t\t\t\t\t\t", is_int=False, override_long=override_long)
+            print("\t\t\t\t\t\tfor (int j = 0; j < is; j++) {")
+            print("\t\t\t\t\t\t\t%s[it.oIndex + j] = ox;" % ovar)
+            print("\t\t\t\t\t\t}")
+            print("\t\t\t\t\t}")
+            print("\t\t\t\t} else {")
+        else:
+            print("\t\t\t\t{")
+        print("\t\t\t\t\twhile (it.hasNext()) {")
+        print("\t\t\t\t\t\tfinal long iax = it.aLong;")
+        print("\t\t\t\t\t\tfinal long ibx = it.bLong;")
+        vars = transtext(text, jtype, lprefix="\t\t\t\t\t\t", is_int=is_int, override_long=override_long, use_long=True)
+        print("\t\t\t\t\t\tfor (int j = 0; j < is; j++) {")
         print("\t\t\t\t\t\t\t%s[it.oIndex + j] = ox;" % ovar)
         print("\t\t\t\t\t\t}")
         print("\t\t\t\t\t}")
