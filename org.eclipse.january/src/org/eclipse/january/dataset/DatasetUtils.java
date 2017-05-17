@@ -938,12 +938,31 @@ public class DatasetUtils {
 
 	/**
 	 * Make a dataset unsigned by promoting it to a wider dataset type and unwrapping the signs
-	 * of its content
+	 * of its contents
 	 * @param a
 	 * @return unsigned dataset or original if it is not an integer dataset
 	 */
 	public static Dataset makeUnsigned(IDataset a) {
+		return makeUnsigned(a, false);
+	}
+
+	/**
+	 * Make a dataset unsigned by promoting it to a wider dataset type and unwrapping the signs
+	 * of its contents
+	 * @param a
+	 * @param check if true, then check for negative values
+	 * @return unsigned dataset or original if it is not an integer dataset or it has been check for negative numbers
+	 */
+	public static Dataset makeUnsigned(IDataset a, boolean check) {
 		Dataset d = convertToDataset(a);
+
+		if (d.hasFloatingPointElements()) {
+			return d;
+		}
+		if (check && d.min(true).longValue() >= 0) {
+			return d;
+		}
+
 		int dtype = d.getDType();
 		switch (dtype) {
 		case Dataset.INT32:
