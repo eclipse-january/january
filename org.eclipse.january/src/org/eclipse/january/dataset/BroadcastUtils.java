@@ -183,6 +183,51 @@ public final class BroadcastUtils {
 		return DatasetFactory.zeros(ia > ib ? ia : ib, shape, rt);
 	}
 
+	/**
+	 * Check if dataset item sizes are compatible
+	 * <p>
+	 * Dataset a is considered compatible with the output dataset if any of the
+	 * conditions are true:
+	 * <ul>
+	 * <li>o is undefined</li>
+	 * <li>a has item size equal to o's</li>
+	 * <li>a has item size equal to 1</li>
+	 * <li>o has item size equal to 1</li>
+	 * </ul>
+	 * @param a input dataset a
+	 * @param o output dataset (can be null)
+	 */
+	static void checkItemSize(Dataset a, Dataset o) {
+		final int isa = a.getElementsPerItem();
+		if (o != null) {
+			final int iso = o.getElementsPerItem();
+			if (isa != iso && isa != 1 && iso != 1) {
+				throw new IllegalArgumentException("Can not output to dataset whose number of elements per item mismatch inputs'");
+			}
+		}
+	}
+
+	/**
+	 * Check if dataset item sizes are compatible
+	 * <p>
+	 * Dataset a is considered compatible with the output dataset if any of the
+	 * conditions are true:
+	 * <ul>
+	 * <li>a has item size equal to b's</li>
+	 * <li>a has item size equal to 1</li>
+	 * <li>b has item size equal to 1</li>
+	 * <li>a or b are single-valued</li>
+	 * </ul>
+	 * and, o is undefined, or any of the following are true:
+	 * <ul>
+	 * <li>o has item size equal to maximum of a and b's</li>
+	 * <li>o has item size equal to 1</li>
+	 * <li>a and b have item sizes of 1</li>
+	 * </ul>
+	 * @param a input dataset a
+	 * @param b input dataset b
+	 * @param o output dataset
+	 */
 	static void checkItemSize(Dataset a, Dataset b, Dataset o) {
 		final int isa = a.getElementsPerItem();
 		final int isb = b.getElementsPerItem();
@@ -195,7 +240,7 @@ public final class BroadcastUtils {
 		if (o != null && o.getDType() != Dataset.BOOL) {
 			final int ism = Math.max(isa, isb);
 			final int iso = o.getElementsPerItem();
-			if (iso != ism && ism != 1) {
+			if (iso != ism && iso != 1 && ism != 1) {
 				throw new IllegalArgumentException("Can not output to dataset whose number of elements per item mismatch inputs'");
 			}
 		}

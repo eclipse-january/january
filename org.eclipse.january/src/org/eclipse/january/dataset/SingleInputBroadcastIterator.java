@@ -85,7 +85,7 @@ public class SingleInputBroadcastIterator extends IndexIterator {
 	public SingleInputBroadcastIterator(Dataset a, Dataset o, boolean createIfNull, boolean allowInteger, boolean allowComplex) {
 		List<int[]> fullShapes = BroadcastUtils.broadcastShapes(a.getShapeRef(), o == null ? null : o.getShapeRef());
 
-		checkItemSize(a, o);
+		BroadcastUtils.checkItemSize(a, o);
 
 		maxShape = fullShapes.remove(0);
 
@@ -171,16 +171,6 @@ public class SingleInputBroadcastIterator extends IndexIterator {
 		if (this.asDouble != asDouble) {
 			this.asDouble = asDouble;
 			storeCurrentValues();
-		}
-	}
-
-	private static void checkItemSize(Dataset a, Dataset o) {
-		final int isa = a.getElementsPerItem();
-		if (o != null) {
-			final int iso = o.getElementsPerItem();
-			if (isa != 1 && iso != isa) {
-				throw new IllegalArgumentException("Can not output to dataset whose number of elements per item mismatch inputs'");
-			}
 		}
 	}
 
