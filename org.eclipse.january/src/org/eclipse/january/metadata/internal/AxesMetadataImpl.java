@@ -11,7 +11,7 @@ package org.eclipse.january.metadata.internal;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +30,7 @@ public class AxesMetadataImpl implements AxesMetadata {
 	@Reshapeable(matchRank = true)
 	@Sliceable List<ILazyDataset>[] allAxes;
 	
-	Map<Integer,int[]> dimensionMap;
+	Map<ILazyDataset,int[]> dimensionMap;
 
 	public AxesMetadataImpl() {
 	}
@@ -39,14 +39,14 @@ public class AxesMetadataImpl implements AxesMetadata {
 	@SuppressWarnings("unchecked")
 	public void initialize(int rank) {
 		allAxes = new List[rank];
-		dimensionMap = new HashMap<Integer,int[]>();
+		dimensionMap = new IdentityHashMap<>();
 	}
 
 	@SuppressWarnings("unchecked")
 	private AxesMetadataImpl(AxesMetadataImpl axesMetadataImpl) {
 		int r = axesMetadataImpl.allAxes.length;
 		allAxes = new List[r];
-		dimensionMap = new HashMap<Integer,int[]>();
+		dimensionMap = new IdentityHashMap<>();
 		for (int i = 0; i < r; i++) {
 			List<ILazyDataset> ol = axesMetadataImpl.allAxes[i];
 			if (ol == null)
@@ -56,9 +56,7 @@ public class AxesMetadataImpl implements AxesMetadata {
 				ILazyDataset lv = l == null ? null : l.getSliceView();
 				list.add(lv);
 				if (lv != null) {
-					int ihc = System.identityHashCode(lv);
-					int iho = System.identityHashCode(l);
-					if (axesMetadataImpl.dimensionMap.containsKey(iho)) dimensionMap.put(ihc, axesMetadataImpl.dimensionMap.get(iho).clone());
+					if (axesMetadataImpl.dimensionMap.containsKey(l)) dimensionMap.put(lv, axesMetadataImpl.dimensionMap.get(l).clone());
 				}
 				
 			}
@@ -107,26 +105,33 @@ public class AxesMetadataImpl implements AxesMetadata {
 		if (allAxes[axisDim] == null) {
 			allAxes[axisDim] = new ArrayList<ILazyDataset>();
 		}
-		allAxes[axisDim].add(sanitizeAxisData(axisData,axisDim));
-	}
-	
-	public void addAxis(int primary, ILazyDataset axisData, int... axisDim) {
-		if (allAxes[primary] == null) {
-			allAxes[primary] = new ArrayList<ILazyDataset>();
-		}
-		
-		ILazyDataset lz = sanitizeAxisData(axisData,axisDim);
-		allAxes[primary].add(lz);
-		if (lz != null) dimensionMap.put(System.identityHashCode(lz), axisDim);
+		allAxes[axisDim].add(sanitizeAxisData(axisData, axisDim));
 	}
 
-	private ILazyDataset sanitizeAxisData(ILazyDataset axisData, int... axisDim) {
+	/**
+	 * Add axis data to given dimension. This dataset must be one dimensional or match rank
+	 * with the associating dataset
+	 * @param primaryAxisDim dimension (n.b. this is zero-based)
+	 * @param axisData dataset for axis
+	 * @param dimMapping indicates where each axis dimension maps to in the dataset dimensions  
+	 */
+	public void addAxis(int primaryAxisDim, ILazyDataset axisData, int... dimMapping) {
+		if (allAxes[primaryAxisDim] == null) {
+			allAxes[primaryAxisDim] = new ArrayList<ILazyDataset>();
+		}
+		
+		ILazyDataset lz = sanitizeAxisData(axisData, dimMapping);
+		allAxes[primaryAxisDim].add(lz);
+		if (lz != null) dimensionMap.put(lz, dimMapping);
+	}
+
+	private ILazyDataset sanitizeAxisData(ILazyDataset axisData, int... axisDims) {
 		// remove any axes metadata to prevent infinite recursion
 		// and also check rank
 		if (axisData == null) return null;
 		
-		if (axisDim.length == 1) {
-			int ad = axisDim[0];
+		if (axisDims.length == 1) {
+			int ad = axisDims[0];
 			ILazyDataset view = axisData.getSliceView();
 			view.clearMetadata(AxesMetadata.class);
 			int r = axisData.getRank(); 
@@ -140,14 +145,17 @@ public class AxesMetadataImpl implements AxesMetadata {
 				view.setShape(newShape);
 			}
 			return view;
-		} else if (allAxes.length == axisData.getRank()){
+		} else if (allAxes.length == axisData.getRank()) {
 			return axisData;
 		} else {
 			ILazyDataset view = axisData.getSliceView();
 			view.clearMetadata(AxesMetadata.class);
+			int[] axisShape = axisData.getShape();
 			int[] newShape = new int[allAxes.length];
 			Arrays.fill(newShape, 1);
-			for (int i = 0 ; i < axisDim.length; i++) newShape[axisDim[i]] = axisData.getShape()[i];
+			for (int i = 0 ; i < axisDims.length; i++) {
+				newShape[axisDims[i]] = axisShape[i];
+			}
 			view.setShape(newShape);
 			return view;
 		}
@@ -163,8 +171,7 @@ public class AxesMetadataImpl implements AxesMetadata {
 			for (int j = 0; j < axis.size(); j++) {
 				ILazyDataset l = axis.get(j);
 				if (l == null) continue;
-				int iHashCode = System.identityHashCode(l);
-				int[] dims = dimensionMap.get(iHashCode);
+				int[] dims = dimensionMap.get(l);
 
 				if (l instanceof IDynamicDataset) {
 					
@@ -188,7 +195,7 @@ public class AxesMetadataImpl implements AxesMetadata {
 					} catch (Exception e) {
 						String name = l.getName();
 						if (name == null) name = "unknown_dataset";
-						dimensionMap.remove(iHashCode);
+						dimensionMap.remove(l);
 						axis.set(j,null);
 						continue;
 					}
