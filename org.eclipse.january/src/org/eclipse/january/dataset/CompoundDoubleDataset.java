@@ -455,12 +455,7 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 
 	@Override
 	public boolean getElementBooleanAbs(final int index) {
-		for (int i = 0; i < isize; i++) {
-			if (data[index + i] == 0) {
-				return false;
-			}
-		}
-		return true;
+		return data[index] != 0;
 	}
 
 	@Override
