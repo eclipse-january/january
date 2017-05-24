@@ -1570,26 +1570,46 @@ public class AbstractDatasetTest {
 		long[] udata = new long[] {0, 1, 127, 128, 255, 256, 32767, 32768, 65535, 65536, 2147483647L, 2147483648L, 4294967295L, 4294967296L};
 		Dataset d = new LongDataset(udata);
 		Dataset a, c;
-		c = DatasetUtils.cast(d, Dataset.INT32);
+		c = DatasetUtils.cast(IntegerDataset.class, d);
 		Assert.assertTrue(c.max().doubleValue() < d.max().doubleValue()); // check stored values
 		a = DatasetFactory.createFromObject(true, c);
-		assertEquals("", 0, a.getLong(13));
-		for (int i = 0; i < 13; i++)
-			assertEquals("", udata[i], a.getLong(i));
+		assertEquals("Cast", 0, a.getLong(13));
+		for (int i = 0; i < 13; i++) {
+			assertEquals("Cast", udata[i], a.getLong(i));
+		}
 
-		c = DatasetUtils.cast(d, Dataset.INT16);
+		c = DatasetUtils.cast(ShortDataset.class, d);
 		Assert.assertTrue(c.max().doubleValue() < d.max().doubleValue());
 		a = DatasetFactory.createFromObject(true, c);
-		assertEquals("", 0, a.getLong(9));
-		for (int i = 0; i < 9; i++)
-			assertEquals("", udata[i], a.getLong(i));
+		assertEquals("Cast", 0, a.getLong(9));
+		for (int i = 0; i < 9; i++) {
+			assertEquals("Cast", udata[i], a.getLong(i));
+		}
 
-		c = DatasetUtils.cast(d, Dataset.INT8);
+		c = DatasetUtils.cast(ByteDataset.class, d);
 		Assert.assertTrue(c.max().doubleValue() < d.max().doubleValue());
 		a = DatasetFactory.createFromObject(true, c);
-		assertEquals("", 0, a.getLong(5));
-		for (int i = 0; i < 5; i++)
-			assertEquals("", udata[i], a.getLong(i));
+		assertEquals("Cast", 0, a.getLong(5));
+		for (int i = 0; i < 5; i++) {
+			assertEquals("Cast", udata[i], a.getLong(i));
+		}
+
+		// check create does not promote dataset type unnecessarily
+		c = DatasetFactory.createFromObject(new long[] {0, 1L<<62});
+		a = DatasetFactory.createFromObject(true, c);
+		assertTrue(c == a);
+
+		c = DatasetFactory.createFromObject(new int[] {0, 1<<30});
+		a = DatasetFactory.createFromObject(true, c);
+		assertTrue(c == a);
+
+		c = DatasetFactory.createFromObject(new short[] {0, 1<<14});
+		a = DatasetFactory.createFromObject(true, c);
+		assertTrue(c == a);
+
+		c = DatasetFactory.createFromObject(new byte[] {0, 1<<6});
+		a = DatasetFactory.createFromObject(true, c);
+		assertTrue(c == a);
 	}
 
 	@Test
