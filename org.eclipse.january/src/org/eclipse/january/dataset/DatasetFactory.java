@@ -190,7 +190,7 @@ public class DatasetFactory {
 	/**
 	 * Create a dataset from object (automatically detect dataset type)
 	 * @param isUnsigned
-	 *            if true, interpret integer values as unsigned by increasing element bit width
+	 *            if true, interpret integer values as unsigned by increasing element bit width if required
 	 * @param obj
 	 *            can be a Java list, array or Number
 	 * @return dataset
@@ -198,7 +198,7 @@ public class DatasetFactory {
 	public static Dataset createFromObject(boolean isUnsigned, final Object obj) {
 		Dataset a = createFromObject(obj);
 		if (isUnsigned) {
-			a = DatasetUtils.makeUnsigned(a);
+			a = DatasetUtils.makeUnsigned(a, true);
 		}
 		return a;
 	}
