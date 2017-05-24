@@ -60,6 +60,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		}
 	}
 
+	transient private boolean dirty = true; // indicate dirty state of metadata
 	protected String name = "";
 
 	/**
@@ -137,6 +138,14 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	@Override
 	public int getRank() {
 		return shape.length;
+	}
+
+	/**
+	 * This method allows anything that dirties the dataset to clear various metadata values
+	 * so that the other methods can work correctly.
+	 */
+	public void setDirty() {
+		dirty = true;
 	}
 
 	/**
@@ -234,6 +243,11 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	public synchronized <S extends MetadataType, T extends S> List<S> getMetadata(Class<T> clazz) throws MetadataException {
 		if (metadata == null)
 			return null;
+
+		if (dirty) {
+			dirtyMetadata();
+			dirty = false;
+		}
 
 		if (clazz == null) {
 			List<S> all = new ArrayList<S>();
