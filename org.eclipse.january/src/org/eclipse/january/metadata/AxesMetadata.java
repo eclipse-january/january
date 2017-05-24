@@ -57,7 +57,18 @@ public interface AxesMetadata extends MetadataType {
 	 */
 	public void addAxis(int i, ILazyDataset lazyDataset);
 
-	public void addAxis(int primary, ILazyDataset iLazyDataset, int... axisDims);
+	/**
+	 * 
+	 * @param primaryAxisDim primary dimension (n.b. this is zero-based)
+	 * @param iLazyDataset
+	 * @param dimMapping indicates where each axis dimension maps to in the dataset dimensions  
+	 */
+	public void addAxis(int primaryAxisDim, ILazyDataset iLazyDataset, int... dimMapping);
 
+	/**
+	 * Refresh with given shape
+	 * @param shape
+	 * @return new shape
+	 */
 	int[] refresh(int[] shape);
 }
