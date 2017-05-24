@@ -1320,11 +1320,6 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	@Override
-	public void setDirty() {
-		dirtyMetadata();
-	}
-
-	@Override
 	public Dataset squeezeEnds() {
 		return squeeze(true);
 	}
