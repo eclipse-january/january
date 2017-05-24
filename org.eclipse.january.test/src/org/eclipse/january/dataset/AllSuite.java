@@ -32,6 +32,7 @@ import org.junit.runners.Suite.SuiteClasses;
 		UnsignedArithmeticsTest.class,
 		OutlierCorrectnessTest.class, OutlierStatsTest.class,
 		org.eclipse.january.metadata.AllSuite.class,
+		ParameterizeDatasetTests.class
 		})
 public class AllSuite {
 
