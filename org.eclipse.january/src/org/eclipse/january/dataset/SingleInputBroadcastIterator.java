@@ -90,9 +90,13 @@ public class SingleInputBroadcastIterator extends IndexIterator {
 		maxShape = fullShapes.remove(0);
 
 		oStride = null;
-		if (o != null && !Arrays.equals(maxShape, o.getShapeRef())) {
-			throw new IllegalArgumentException("Output does not match broadcasted shape");
+		if (o != null) {
+			if (!Arrays.equals(maxShape, o.getShapeRef())) {
+				throw new IllegalArgumentException("Output does not match broadcasted shape");
+			}
+			o.setDirty();
 		}
+
 		aShape = fullShapes.remove(0);
 
 		int rank = maxShape.length;
