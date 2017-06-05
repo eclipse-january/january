@@ -11,7 +11,7 @@
  *******************************************************************************/
 target "January-baseline" with source requirements
 
-location "http://download.eclipse.org/january/releases/2.0.0/repository/" january-2.0 {
+location "http://download.eclipse.org/january/releases/2.0.2/repository/" january-2.0 {
 	org.eclipse.january lazy
 }
 
