@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform -->
-<target name="January-baseline" sequenceNumber="1490828498">
+<target name="January-baseline" sequenceNumber="1496666000">
   <locations>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.january" version="0.0.0"/>
-      <repository id="january-2.0" location="http://download.eclipse.org/january/releases/2.0.0/repository/"/>
+      <repository id="january-2.0" location="http://download.eclipse.org/january/releases/2.0.2/repository/"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.slf4j.api" version="1.7.2.v20121108-1250"/>
