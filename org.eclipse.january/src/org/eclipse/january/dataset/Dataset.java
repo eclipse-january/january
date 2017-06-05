@@ -230,7 +230,7 @@ public interface Dataset extends IDataset {
 	public Dataset clone();
 
 	/**
-	 * This method allows anything that dirties the dataset to clear stored values
+	 * This method allows anything that dirties the dataset to clear various metadata values
 	 * so that the other methods can work correctly.
 	 */
 	public void setDirty();
