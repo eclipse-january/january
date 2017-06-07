@@ -347,4 +347,5 @@ public class SliceIterator extends IndexIterator {
 	public int[] getShape() {
 		return sshape;
 	}
+	
 }
