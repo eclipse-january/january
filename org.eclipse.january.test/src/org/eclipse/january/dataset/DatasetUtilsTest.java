@@ -10,6 +10,11 @@
 package org.eclipse.january.dataset;
 
 import org.eclipse.january.asserts.TestUtils;
+import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 
 public class DatasetUtilsTest {
@@ -38,4 +43,15 @@ public class DatasetUtilsTest {
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(ShortDataset.class, new short[] {0, 255, 128}), DatasetUtils.makeUnsigned(neg, false));
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(ShortDataset.class, new short[] {0, 255, 128}), DatasetUtils.makeUnsigned(neg, true));
 	}
+
+	@Test
+	public void testCrossings3() {
+		Dataset yAxis = DatasetFactory.createFromObject(new Double[] { 0.5, 1.1, 0.9, 1.5 });
+		Dataset xAxis = DatasetFactory.createFromObject(new Double[] { 1.0, 2.0, 3.0, 4.0 });
+		List<Double> expected = new ArrayList<Double>();
+		expected.add(2.5);
+		List<Double> actual = DatasetUtils.crossings(xAxis, yAxis, 1, 0.5);
+		assertEquals(expected, actual);
+	}
+	
 }

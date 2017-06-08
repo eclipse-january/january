@@ -1772,7 +1772,7 @@ public class DatasetUtils {
 		int i = 0;
 		// now go through and check for groups of three crossings which are all
 		// within the boundaries
-		while (i < vals.size() - 3) {
+		while (i <= vals.size() - 3) {
 			double v1 = Math.abs(vals.get(i) - vals.get(i + 2));
 			if (v1 < error) {
 				// these 3 points should be treated as one
