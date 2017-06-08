@@ -15,20 +15,15 @@ import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.List;
 import org.eclipse.january.asserts.TestUtils;
-import static org.junit.Assert.assertEquals;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Test;
 
 public class DatasetUtilsTest {
 
 	@Test
 	public void testSplit() {
-		Dataset dataset = DatasetFactory.createFromObject(new Integer[] { 1, 2, 3 });
-		Dataset expected1 = DatasetFactory.createFromObject(new Integer[] { 1 });
-		Dataset expected2 = DatasetFactory.createFromObject(new Integer[] { 2, 3 });
+		Dataset dataset = DatasetFactory.createFromObject(new int[] { 1, 2, 3 });
+		Dataset expected1 = DatasetFactory.createFromObject(new int[] { 1 });
+		Dataset expected2 = DatasetFactory.createFromObject(new int[] { 2, 3 });
 		List<Dataset> expected = new ArrayList<Dataset>();
 		expected.add(expected1);
 		expected.add(expected2);
@@ -44,9 +39,9 @@ public class DatasetUtilsTest {
 	@SuppressWarnings("deprecation")
 	@Test
 	public void testSplit2() {
-		Dataset dataset = DatasetFactory.createFromObject(new Integer[] { 1, 2, 3 });
+		Dataset dataset = DatasetFactory.createFromObject(new int[] { 1, 2, 3 });
 		Dataset expected1 = DatasetFactory.zeros(1, new int[] { 0 }, dataset.getDType());
-		Dataset expected2 = DatasetFactory.createFromObject(new Integer[] { 1, 2, 3 });
+		Dataset expected2 = DatasetFactory.createFromObject(new int[] { 1, 2, 3 });
 		List<Dataset> expected = new ArrayList<Dataset>();
 		expected.add(expected1);
 		expected.add(expected2);
@@ -61,7 +56,7 @@ public class DatasetUtilsTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testSplitException() {
-		Dataset dataset = DatasetFactory.createFromObject(new Integer[] { 1, 2, 3 });
+		Dataset dataset = DatasetFactory.createFromObject(new int[] { 1, 2, 3 });
 		int[] indices = { 1 };
 		DatasetUtils.split(dataset, indices, 1);
 	}
@@ -90,9 +85,9 @@ public class DatasetUtilsTest {
 
 	@Test
 	public void testSplitEqual() {
-		Dataset dataset = DatasetFactory.createFromObject(new Integer[] { 1, 2, 3, 4 });
-		Dataset expected1 = DatasetFactory.createFromObject(new Integer[] { 1, 2 });
-		Dataset expected2 = DatasetFactory.createFromObject(new Integer[] { 3, 4 });
+		Dataset dataset = DatasetFactory.createFromObject(new int[] { 1, 2, 3, 4 });
+		Dataset expected1 = DatasetFactory.createFromObject(new int[] { 1, 2 });
+		Dataset expected2 = DatasetFactory.createFromObject(new int[] { 3, 4 });
 		List<Dataset> expected = new ArrayList<Dataset>();
 		expected.add(expected1);
 		expected.add(expected2);
@@ -107,11 +102,11 @@ public class DatasetUtilsTest {
 	@SuppressWarnings("deprecation")
 	@Test
 	public void testSplitEqual2() {
-		Dataset dataset = DatasetFactory.createFromObject(new Integer[] { 1, 2, 3, 4 });
-		Dataset expected1 = DatasetFactory.createFromObject(new Integer[] { 1 });
-		Dataset expected2 = DatasetFactory.createFromObject(new Integer[] { 2 });
-		Dataset expected3 = DatasetFactory.createFromObject(new Integer[] { 3 });
-		Dataset expected4 = DatasetFactory.createFromObject(new Integer[] { 4 });
+		Dataset dataset = DatasetFactory.createFromObject(new int[] { 1, 2, 3, 4 });
+		Dataset expected1 = DatasetFactory.createFromObject(new int[] { 1 });
+		Dataset expected2 = DatasetFactory.createFromObject(new int[] { 2 });
+		Dataset expected3 = DatasetFactory.createFromObject(new int[] { 3 });
+		Dataset expected4 = DatasetFactory.createFromObject(new int[] { 4 });
 		Dataset expected5 = DatasetFactory.zeros(1, new int[] { 0 }, dataset.getDType());
 		List<Dataset> expected = new ArrayList<Dataset>();
 		expected.add(expected1);
@@ -129,9 +124,9 @@ public class DatasetUtilsTest {
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testSplitEqualException() {
-		Dataset dataset = DatasetFactory.createFromObject(new Integer[] { 1, 2, 3, 4 });
-		Dataset expected1 = DatasetFactory.createFromObject(new Integer[] { 1, 2 });
-		Dataset expected2 = DatasetFactory.createFromObject(new Integer[] { 3, 4 });
+		Dataset dataset = DatasetFactory.createFromObject(new int[] { 1, 2, 3, 4 });
+		Dataset expected1 = DatasetFactory.createFromObject(new int[] { 1, 2 });
+		Dataset expected2 = DatasetFactory.createFromObject(new int[] { 3, 4 });
 		List<Dataset> expected = new ArrayList<Dataset>();
 		expected.add(expected1);
 		expected.add(expected2);
