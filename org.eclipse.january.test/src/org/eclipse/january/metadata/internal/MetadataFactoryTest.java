@@ -10,6 +10,10 @@
  *******************************************************************************/
 package org.eclipse.january.metadata.internal;
 
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.january.MetadataException;
 import org.eclipse.january.dataset.Dataset;
 import org.eclipse.january.dataset.DatasetFactory;
@@ -17,6 +21,7 @@ import org.eclipse.january.dataset.LazyDatasetBase;
 import org.eclipse.january.metadata.DynamicConnectionInfo;
 import org.eclipse.january.metadata.ErrorMetadata;
 import org.eclipse.january.metadata.IExtendedMetadata;
+import org.eclipse.january.metadata.IMetadata;
 import org.eclipse.january.metadata.MetadataFactory;
 import org.eclipse.january.metadata.MetadataType;
 import org.eclipse.january.metadata.OriginMetadata;
@@ -113,5 +118,14 @@ public class MetadataFactoryTest {
 	public void testCreator() throws MetadataException {
 		ErrorMetadata emd = MetadataFactory.createMetadata(ErrorMetadata.class);
 		Assert.assertEquals(new ErrorMetadataImpl().getError(), emd.getError());
+	}
+
+	@Test
+	public void testMetadata() throws MetadataException {
+		Map<String, Serializable> meta = new HashMap<>();
+		meta.put("Hello", "World");
+		IMetadata imd = MetadataFactory.createMetadata(IMetadata.class, meta);
+
+		Assert.assertEquals(meta.get("Hello"), imd.clone().getMetaValue("Hello"));
 	}
 }

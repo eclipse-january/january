@@ -12,7 +12,10 @@
 
 package org.eclipse.january.metadata;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
@@ -21,7 +24,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.commons.lang.SerializationUtils;
 import org.eclipse.january.MetadataException;
 import org.eclipse.january.dataset.ShapeUtils;
 
@@ -33,7 +35,7 @@ public class Metadata implements IMetadata {
 	private static final long serialVersionUID = IMetadata.serialVersionUID;
 
 	private Map<String, ? extends Serializable> metadata;
-	// NOTE shapes is LinkedHashMap here because the names collection 
+	// NOTE shapes is LinkedHashMap here because the names collection
 	// maintained order. Now that we do not need this collection but if we
 	// do not keep the shapes in a LinkedHashMap, we lose order.
 	private Map<String,int[]> shapes = new LinkedHashMap<String,int[]>(7);
@@ -145,10 +147,14 @@ public class Metadata implements IMetadata {
 				for (String k : metadata.keySet()) {
 					Serializable v = metadata.get(k);
 					if (v != null) {
-						SerializationUtils.serialize(v, os);
-						Serializable nv = (Serializable) SerializationUtils.deserialize(os.toByteArray());
+						try (ObjectOutputStream oos = new ObjectOutputStream(os)) {
+							oos.writeObject(v);
+							try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(os.toByteArray()))) {
+								Serializable nv = (Serializable) ois.readObject();
+								md.put(k, nv);
+							}
+						}
 						os.reset();
-						md.put(k, nv);
 					} else {
 						md.put(k, null);
 					}
@@ -171,7 +177,7 @@ public class Metadata implements IMetadata {
 		}
 		return c;
 	}
-	
+
 	@Override
 	public String getFilePath() {
 		return filePath;

@@ -20,8 +20,6 @@ location "http://download.eclipse.org/tools/orbit/downloads/drops/S2017012020540
 // The versions we point to in Orbit are the versions we have CQs approved for, please
 // raise CQ for items not in this list or version changes
 	org.slf4j.api [1.7.2,1.7.3) // CQ 11781
-	org.apache.commons.lang3 [3.1.0,3.1.1) // CQ 11782
-	org.apache.commons.lang [2.6.0,2.6.1) // CQ 11783
 	org.apache.commons.math3 [3.5.0,3.5.1) // CQ 11785
 
 }
