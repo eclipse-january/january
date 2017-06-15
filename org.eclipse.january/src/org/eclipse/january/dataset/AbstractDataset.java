@@ -1191,7 +1191,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	 * @param start
 	 * @return line
 	 */
-	private StringBuilder makeLine(final int end, final int... start) {
+	private StringBuilder makeLine(final int end, final int[] start) {
 		StringBuilder line = new StringBuilder();
 		final int[] pos;
 		if (end >= start.length) {
@@ -1207,6 +1207,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 		// trim elements printed if length exceed estimate of maximum elements
 		int excess = length - maxStringLength / 3; // space + number + separator
+		int midIndex = -1;
 		if (excess > 0) {
 			int index = (length - excess) / 2;
 			for (int y = 1; y < index; y++) {
@@ -1214,6 +1215,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 				pos[end] = y;
 				line.append(getString(pos));
 			}
+			midIndex = line.length() + 2;
 			index = (length + excess) / 2;
 			for (int y = index; y < length; y++) {
 				line.append(SEPARATOR + SPACE);
@@ -1230,13 +1232,29 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		line.append(BLOCK_CLOSE);
 
 		// trim string down to limit
-		excess = line.length() - maxStringLength - ELLIPSIS.length() - 1;
+		int lineLength = line.length();
+		excess = lineLength - maxStringLength - ELLIPSIS.length() - 1;
 		if (excess > 0) {
-			int index = line.substring(0, (line.length() - excess) / 2).lastIndexOf(SEPARATOR) + 2;
+			int index = (lineLength - excess) / 2;
+			if (midIndex > 0 && index > midIndex) {
+				index = midIndex;
+			} else {
+				index = line.lastIndexOf(SEPARATOR, index) + 2;
+			}
 			StringBuilder out = new StringBuilder(line.subSequence(0, index));
 			out.append(ELLIPSIS + SEPARATOR);
-			index = line.substring((line.length() + excess) / 2).indexOf(SEPARATOR) + (line.length() + excess) / 2 + 1;
-			out.append(line.subSequence(index, line.length()));
+			index = (lineLength + excess) / 2;
+			if (midIndex > 0 && index <= midIndex) {
+				index = midIndex - 1;
+			} else {
+				index = line.indexOf(SEPARATOR, index) + 1;
+			}
+			out.append(line.subSequence(index, lineLength));
+			return out;
+		} else if (midIndex > 0) { // add ellipsis
+			StringBuilder out = new StringBuilder(line.subSequence(0, midIndex));
+			out.append(ELLIPSIS + SEPARATOR + SPACE);
+			out.append(line.subSequence(midIndex, lineLength));
 			return out;
 		}
 
