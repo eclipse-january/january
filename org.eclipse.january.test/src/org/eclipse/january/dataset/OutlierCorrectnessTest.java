@@ -13,11 +13,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 
-import org.apache.commons.lang.ArrayUtils;
-import org.eclipse.january.dataset.Dataset;
-import org.eclipse.january.dataset.DatasetFactory;
-import org.eclipse.january.dataset.Outliers;
-import org.eclipse.january.dataset.Random;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,7 +27,7 @@ public class OutlierCorrectnessTest {
 		Random.seed(2468);
 		dataNormal = Random.randn(1.0,  1.0, new int[]{6});
 		dataNormal.sort(null);
-		dataOneToFour = DatasetFactory.createFromList(Arrays.asList(ArrayUtils.toObject(new double[]{1, 2, 3, 4})));
+		dataOneToFour = DatasetFactory.createFromObject(new double[] { 1, 2, 3, 4 });
 		System.out.println("Normal data " + dataNormal.toString(true));
 		System.out.println("data 1-4 " + dataOneToFour.toString(true));
 	}

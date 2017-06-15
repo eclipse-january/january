@@ -16,8 +16,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import org.apache.commons.lang.ArrayUtils;
-
 class InterpolatedPoint {
 
 	Dataset realPoint;
@@ -438,9 +436,9 @@ public class InterpolatorUtils {
 			}
 			Dataset axis = Maths.subtract(originalAxisForCorrection,corrections.getDouble(correctionPos));
 			Dataset remapped = remap1D(slice,axis,outputAxis);
-			
-			int[] ref = ArrayUtils.clone(pos);
-			
+
+			int[] ref = pos.clone();
+
 			for (int k = 0; k < result.getShapeRef()[axisIndex]; k++) {
 				ref[axisIndex] = k;
 				result.set(remapped.getDouble(k), ref);
@@ -485,9 +483,9 @@ public class InterpolatorUtils {
 			Dataset axis = originalAxisForCorrection.getSlice(pos, posEnd, null).squeeze();
 			
 			Dataset remapped = remap1D(slice,axis,outputAxis);
-			
-			int[] ref = ArrayUtils.clone(pos);
-			
+
+			int[] ref = pos.clone();
+
 			for (int k = 0; k < result.shape[axisIndex]; k++) {
 				ref[axisIndex] = k;
 				result.set(remapped.getDouble(k), ref);

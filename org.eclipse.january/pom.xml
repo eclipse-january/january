@@ -96,7 +96,6 @@
 						<!-- This list should match the bundles/packages depended on, with the versions as specified in the
 						     target platform -->
 						<link>https://docs.oracle.com/javase/7/docs/api/</link>
-						<link>https://commons.apache.org/proper/commons-lang/javadocs/api-2.6/</link>
 						<link>https://commons.apache.org/proper/commons-math/javadocs/api-3.5/</link>
 						<link>https://www.slf4j.org/apidocs/</link>
 					</links>

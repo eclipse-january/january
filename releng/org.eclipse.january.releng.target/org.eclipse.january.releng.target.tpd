@@ -18,8 +18,6 @@ location "http://download.eclipse.org/tools/orbit/downloads/drops/R2017030718063
 // If the versions here are changed, the links in javadoc (see pom.xml for maven-javadoc-plugin) need
 // to be updated so links point to same version
 	org.slf4j.api [1.7.2,1.7.3) // CQ 11781
-	org.apache.commons.lang3 [3.1.0,3.1.1) // CQ 11782
-	org.apache.commons.lang [2.6.0,2.6.1) // CQ 11783
 	org.apache.commons.math3 [3.5.0,3.5.1) // CQ 11785
 
 	// Items below are not depended on by released January bundles, only test ones, so no CQs
