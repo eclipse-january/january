@@ -952,6 +952,7 @@ public class DatasetUtils {
 	 * @param a
 	 * @param check if true, then check for negative values
 	 * @return unsigned dataset or original if it is not an integer dataset or it has been check for negative numbers
+	 * @since 2.1
 	 */
 	public static Dataset makeUnsigned(IDataset a, boolean check) {
 		Dataset d = convertToDataset(a);

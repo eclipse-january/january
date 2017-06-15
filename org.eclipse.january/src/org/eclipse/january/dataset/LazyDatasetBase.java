@@ -143,6 +143,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	/**
 	 * This method allows anything that dirties the dataset to clear various metadata values
 	 * so that the other methods can work correctly.
+	 * @since 2.1
 	 */
 	public void setDirty() {
 		dirty = true;
@@ -465,7 +466,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		@Override
 		public Class<? extends Annotation> getAnnClass() {
 			return Reshapeable.class;
-		}	
+		}
 
 		@Override
 		public int change(int axis) {
@@ -1089,7 +1090,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		for (int i = 0; i < rank; i++) {
 			if (perm[i] != i) {
 				logger.error("axis permutation is not valid: it does not contain complete set of axes");
-				throw new IllegalArgumentException("axis permutation does not contain complete set of axes");	
+				throw new IllegalArgumentException("axis permutation does not contain complete set of axes");
 			}
 		}
 
