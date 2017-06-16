@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.eclipse.january.tutorial;
+package org.eclipse.january.examples.io;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
@@ -32,8 +32,17 @@ import org.eclipse.january.dataset.Slice;
 import org.eclipse.january.dataset.SliceND;
 import org.eclipse.january.io.ILazyLoader;
 
+/**
+ * Demonstrate how to lazy load files
+ */
 public class LazyLoadingExample {
 
+	/**
+	 * Create a lazy dataset from a given file
+	 * @param file
+	 * @return lazy dataset or null if it is not a file that {@link ImageIO} can handle
+	 * @throws IllegalArgumentException if file does not exist or cannot be read
+	 */
 	public static ILazyDataset createFromFile(final File file) {
 		if (!file.canRead()) {
 			throw new IllegalArgumentException("File '" + file + "' does not exist or is not readable");
@@ -72,6 +81,14 @@ public class LazyLoadingExample {
 		return null;
 	}
 
+	/**
+	 * Create lazy dataset from a set of files in the given directory.
+	 * <p>
+	 * Any file that cannot be read or handled by {@link #createFromFile(File)} will be ignored
+	 * <p>
+	 * @param directory
+	 * @return lazy dataset
+	 */
 	public static ILazyDataset createFromDirectory(String directory) {
 		File d = new File(directory);
 		if (!d.isDirectory()) {
@@ -80,7 +97,14 @@ public class LazyLoadingExample {
 
 		List<ILazyDataset> lazies = new ArrayList<>();
 		for (File f : d.listFiles()) {
-			lazies.add(createFromFile(f));
+			try {
+				ILazyDataset l = createFromFile(f);
+				if (l != null) {
+					lazies.add(l);
+				}
+			} catch (IllegalArgumentException e) {
+				// do nothing
+			}
 		}
 
 		return new AggregateDataset(true, lazies.toArray(new ILazyDataset[0]));
