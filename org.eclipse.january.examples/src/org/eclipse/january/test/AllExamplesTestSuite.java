@@ -11,14 +11,19 @@
 
 package org.eclipse.january.test;
 
+import java.io.IOException;
+
+import org.eclipse.january.DatasetException;
 import org.eclipse.january.examples.dataset.AxesMetadataExample;
 import org.eclipse.january.examples.dataset.BasicExample;
+import org.eclipse.january.examples.dataset.ConwayGameOfLife;
 import org.eclipse.january.examples.dataset.ErrorExamples;
 import org.eclipse.january.examples.dataset.IterationExamples;
 import org.eclipse.january.examples.dataset.LazyExamples;
 import org.eclipse.january.examples.dataset.NumpyExamples;
 import org.eclipse.january.examples.dataset.SlicingExamples;
 import org.eclipse.january.tutorial.C1TheBasics;
+import org.eclipse.january.tutorial.LazyLoadingExample;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -26,11 +31,11 @@ import org.junit.runners.Suite.SuiteClasses;
 
 /**
  * New here? Start with {@link BasicExample}.
- * 
+ *
  * This JUnit suite is used to automate testing of all the examples in January.
  * As the examples are not written as self-checking tests, this suite simply
  * ensures that they are running without exceptions.
- * 
+ *
  */
 @RunWith(Suite.class)
 @SuiteClasses({ AxesMetadataExample.class, ErrorExamples.class, IterationExamples.class, LazyExamples.class,
@@ -53,6 +58,14 @@ public class AllExamplesTestSuite {
 			C1TheBasics.main(new String[0]);
 		}
 
-	}
+		@Test
+		public void testConway() throws Exception {
+			ConwayGameOfLife.main(new String[0]);
+		}
 
+		@Test
+		public void testLazyLoadingExample() throws IOException, DatasetException {
+			LazyLoadingExample.main(new String[0]);
+		}
+	}
 }
