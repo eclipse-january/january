@@ -17,7 +17,12 @@
 	<artifactId>org.eclipse.january.releng</artifactId>
 	<version>2.0.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
-
+	<parent>
+		<relativePath>../..</relativePath>
+		<groupId>org.eclipse.january</groupId>
+		<artifactId>org.eclipse.january.root</artifactId>
+		<version>2.0.2-SNAPSHOT</version>
+	</parent>
 
 	<properties>
 		<tycho-version>0.24.0</tycho-version>
@@ -224,6 +229,30 @@
 						<executions>
 							<execution>
 								<id>sign</id>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+								<phase>verify</phase>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<!-- GPG sign for deploy to maven central -->
+			<id>sign-gpg</id>
+
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.5</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
 								<goals>
 									<goal>sign</goal>
 								</goals>
