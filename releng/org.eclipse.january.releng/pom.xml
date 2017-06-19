@@ -242,30 +242,6 @@
 		</profile>
 
 		<profile>
-			<!-- GPG sign for deploy to maven central -->
-			<id>sign-gpg</id>
-
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-gpg-plugin</artifactId>
-						<version>1.5</version>
-						<executions>
-							<execution>
-								<id>sign-artifacts</id>
-								<goals>
-									<goal>sign</goal>
-								</goals>
-								<phase>verify</phase>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-
-		<profile>
 			<!-- see https://wiki.eclipse.org/Tycho/FAQ#How_do_I_add_OS-specific_flags.3F -->
 			<id>macosx-jvm-flags</id>
 			<activation>
