@@ -104,4 +104,18 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<!-- Dependencies need to be duplicated here to be expressed for Maven environment -->
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-math3</artifactId>
+			<version>3.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.10</version>
+		</dependency>
+	</dependencies>
 </project>

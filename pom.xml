@@ -33,6 +33,11 @@
 
 	<name>The Eclipse January Project</name>
 	<description>Common data structures for Science</description>
+	<developers>
+		<developer>
+			<url>https://projects.eclipse.org/projects/science.january/who</url>
+		</developer>
+	</developers>
 
 
 	<modelVersion>4.0.0</modelVersion>
@@ -45,4 +50,15 @@
 	<modules>
 		<module>releng/org.eclipse.january.releng</module>
 	</modules>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
 </project>
