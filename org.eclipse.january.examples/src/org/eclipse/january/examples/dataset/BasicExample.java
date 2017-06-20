@@ -55,7 +55,11 @@ public class BasicExample {
 		// do some maths on the datasets
 		Dataset add = Maths.add(dataset, another);
 		System.out.println("dataset + another dataset: \n" + add.toString(true));
-
+		
+		//do some more math on datasets
+		Dataset sub = Maths.subtract(dataset, another);
+		System.out.println("dataset - another dataset: \n" + sub.toString(true));
+		
 		// do inplace maths on datasets
 		Dataset inplace = DatasetFactory.createFromObject(new double[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 }).reshape(3, 3);
 		inplace.iadd(100);
@@ -73,11 +77,7 @@ public class BasicExample {
 		// create a dataset with a random
 		Dataset rand = Random.rand(new int[] { 3, 4 });
 		System.out.println("Random dataset: \n" + rand.toString(true));
-		
-		//do some more math on datasets
-		Dataset sub = Maths.subtract(dataset, another);
-		System.out.println("dataset - another dataset: \n" + sub.toString(true));
-		
+			
 		// for more examples, see the other java files in this project
 	}
 }
