@@ -74,6 +74,10 @@ public class BasicExample {
 		Dataset rand = Random.rand(new int[] { 3, 4 });
 		System.out.println("Random dataset: \n" + rand.toString(true));
 		
+		//do some more math on datasets
+		Dataset sub = Maths.subtract(dataset, another);
+		System.out.println("dataset - another dataset: \n" + sub.toString(true));
+		
 		// for more examples, see the other java files in this project
 	}
 }
