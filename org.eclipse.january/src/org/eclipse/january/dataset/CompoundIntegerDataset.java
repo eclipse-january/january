@@ -1380,16 +1380,17 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 		int is = bds.getElementsPerItem();
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
+			final int bOffset = bds.getOffset();
 			if (is == 1) {
 				if (useLong) {
-					final long lb = bds.getElementLongAbs(0);
+					final long lb = bds.getElementLongAbs(bOffset);
 					while (it.hasNext()) {
 						for (int i = 0; i < isize; i++) {
 							data[it.index + i] += lb;
 						}
 					}
 				} else {
-					final double db = bds.getElementDoubleAbs(0);
+					final double db = bds.getElementDoubleAbs(bOffset);
 					while (it.hasNext()) {
 						for (int i = 0; i < isize; i++) {
 							data[it.index + i] += db;
@@ -1465,16 +1466,17 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 		int is = bds.getElementsPerItem();
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
+			final int bOffset = bds.getOffset();
 			if (is == 1) {
 				if (useLong) {
-					final long lb = bds.getElementLongAbs(0);
+					final long lb = bds.getElementLongAbs(bOffset);
 					while (it.hasNext()) {
 						for (int i = 0; i < isize; i++) {
 							data[it.index + i] -= lb;
 						}
 					}
 				} else {
-					final double db = bds.getElementDoubleAbs(0);
+					final double db = bds.getElementDoubleAbs(bOffset);
 					while (it.hasNext()) {
 						for (int i = 0; i < isize; i++) {
 							data[it.index + i] -= db;
@@ -1550,9 +1552,10 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 		int is = bds.getElementsPerItem();
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
+			final int bOffset = bds.getOffset();
 			if (useLong) {
 				if (is == 1) {
-					final long lb = bds.getElementLongAbs(0);
+					final long lb = bds.getElementLongAbs(bOffset);
 					while (it.hasNext()) {
 						for (int i = 0; i < isize; i++) {
 							data[it.index + i] *= lb;
@@ -1569,7 +1572,7 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 				}
 			} else {
 				if (is == 1) {
-					final double db = bds.getElementDoubleAbs(0);
+					final double db = bds.getElementDoubleAbs(bOffset);
 					while (it.hasNext()) {
 						for (int i = 0; i < isize; i++) {
 							data[it.index + i] *= db;
@@ -1637,9 +1640,10 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 		int is = bds.getElementsPerItem();
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
+			final int bOffset = bds.getOffset();
 			if (useLong) {
 				if (is == 1) {
-					final long lb = bds.getElementLongAbs(0);
+					final long lb = bds.getElementLongAbs(bOffset);
 					if (lb == 0) { // INT_USE
 						fill(0); // INT_USE
 					} else { // INT_USE
@@ -1665,7 +1669,7 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 				}
 			} else {
 				if (is == 1) {
-					final double db = bds.getElementDoubleAbs(0);
+					final double db = bds.getElementDoubleAbs(bOffset);
 					if (db == 0) { // INT_USE
 						fill(0); // INT_USE
 					} else { // INT_USE
@@ -1767,9 +1771,10 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 		int is = bds.getElementsPerItem();
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
+			final int bOffset = bds.getOffset();
 			if (useLong) {
 				if (is == 1) {
-					final long lb = bds.getElementLongAbs(0);
+					final long lb = bds.getElementLongAbs(bOffset);
 					if (lb == 0) { // INT_USE
 						fill(0); // INT_USE
 					} else { // INT_USE
@@ -1794,7 +1799,7 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 				}
 			} else {
 				if (is == 1) {
-					final double db = bds.getElementDoubleAbs(0);
+					final double db = bds.getElementDoubleAbs(bOffset);
 					if (db == 0) { // INT_USE
 						fill(0); // INT_USE
 					} else { // INT_USE
@@ -1885,10 +1890,11 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 		final int is = bds.getElementsPerItem();
 		if (bds.getSize() == 1) {
-			final double vr = bds.getElementDoubleAbs(0);
+			final int bOffset = bds.getOffset();
+			final double vr = bds.getElementDoubleAbs(bOffset);
 			final IndexIterator it = getIterator();
 			if (bds.isComplex()) {
-				final double vi = bds.getElementDoubleAbs(1);
+				final double vi = bds.getElementDoubleAbs(bOffset + 1);
 				if (vi == 0) {
 					while (it.hasNext()) {
 						for (int i = 0; i < isize; i++) {

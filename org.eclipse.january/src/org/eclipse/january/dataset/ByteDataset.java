@@ -626,7 +626,6 @@ public class ByteDataset extends AbstractDataset {
 		setItem((byte) DTypeUtils.toLong(obj), pos); // FROM_OBJECT
 	}
 
-
 	@Override
 	public void resize(int... newShape) {
 		setDirty();
@@ -961,13 +960,14 @@ public class ByteDataset extends AbstractDataset {
 		boolean useLong = bds.getElementClass().equals(Long.class);
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
+			final int bOffset = bds.getOffset();
 			if (useLong) {
-				final long lb = bds.getElementLongAbs(0);
+				final long lb = bds.getElementLongAbs(bOffset);
 				while (it.hasNext()) {
 					data[it.index] += lb;
 				}
 			} else {
-				final double db = bds.getElementDoubleAbs(0);
+				final double db = bds.getElementDoubleAbs(bOffset);
 				while (it.hasNext()) {
 					data[it.index] += db;
 				}
@@ -995,13 +995,14 @@ public class ByteDataset extends AbstractDataset {
 		boolean useLong = bds.getElementClass().equals(Long.class);
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
+			final int bOffset = bds.getOffset();
 			if (useLong) {
-				final long lb = bds.getElementLongAbs(0);
+				final long lb = bds.getElementLongAbs(bOffset);
 				while (it.hasNext()) {
 					data[it.index] -= lb;
 				}
 			} else {
-				final double db = bds.getElementDoubleAbs(0);
+				final double db = bds.getElementDoubleAbs(bOffset);
 				while (it.hasNext()) {
 					data[it.index] -= db;
 				}
@@ -1030,13 +1031,14 @@ public class ByteDataset extends AbstractDataset {
 		boolean useLong = bds.getElementClass().equals(Long.class);
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
+			final int bOffset = bds.getOffset();
 			if (useLong) {
-				final long lb = bds.getElementLongAbs(0);
+				final long lb = bds.getElementLongAbs(bOffset);
 				while (it.hasNext()) {
 					data[it.index] *= lb;
 				}
 			} else {
-				final double db = bds.getElementDoubleAbs(0);
+				final double db = bds.getElementDoubleAbs(bOffset);
 				while (it.hasNext()) {
 					data[it.index] *= db;
 				}
@@ -1063,8 +1065,9 @@ public class ByteDataset extends AbstractDataset {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 		boolean useLong = bds.getElementClass().equals(Long.class);
 		if (bds.getSize() == 1) {
+			final int bOffset = bds.getOffset();
 			if (useLong) {
-				final long lb = bds.getElementLongAbs(0);
+				final long lb = bds.getElementLongAbs(bOffset);
 				if (lb == 0) { // INT_USE
 					fill(0); // INT_USE
 				} else { // INT_USE
@@ -1074,7 +1077,7 @@ public class ByteDataset extends AbstractDataset {
 				}
 				} // INT_USE
 			} else {
-				final double db = bds.getElementDoubleAbs(0);
+				final double db = bds.getElementDoubleAbs(bOffset);
 				if (db == 0) { // INT_USE
 					fill(0); // INT_USE
 				} else { // INT_USE
@@ -1119,8 +1122,9 @@ public class ByteDataset extends AbstractDataset {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 		boolean useLong = bds.getElementClass().equals(Long.class);
 		if (bds.getSize() == 1) {
+			final int bOffset = bds.getOffset();
 			if (useLong) {
-				final long lb = bds.getElementLongAbs(0);
+				final long lb = bds.getElementLongAbs(bOffset);
 				if (lb == 0) { // INT_USE
 					fill(0); // INT_USE
 				} else { // INT_USE
@@ -1130,7 +1134,7 @@ public class ByteDataset extends AbstractDataset {
 				}
 				} // INT_USE
 			} else {
-				final long lb = bds.getElementLongAbs(0);
+				final long lb = bds.getElementLongAbs(bOffset);
 				if (lb == 0) { // INT_USE
 					fill(0); // INT_USE
 				} else { // INT_USE
@@ -1169,10 +1173,11 @@ public class ByteDataset extends AbstractDataset {
 		setDirty();
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 		if (bds.getSize() == 1) {
-			final double vr = bds.getElementDoubleAbs(0);
+			final int bOffset = bds.getOffset();
+			final double vr = bds.getElementDoubleAbs(bOffset);
 			final IndexIterator it = getIterator();
 			if (bds.isComplex()) {
-				final double vi = bds.getElementDoubleAbs(1);
+				final double vi = bds.getElementDoubleAbs(bOffset + 1);
 				if (vi == 0) {
 					while (it.hasNext()) {
 						final double v = Math.pow(data[it.index], vr);

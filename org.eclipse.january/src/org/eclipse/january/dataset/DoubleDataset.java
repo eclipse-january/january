@@ -626,7 +626,6 @@ public class DoubleDataset extends AbstractDataset {
 		setItem(DTypeUtils.toReal(obj), pos); // FROM_OBJECT
 	}
 
-
 	@Override
 	public void resize(int... newShape) {
 		setDirty();
@@ -984,13 +983,14 @@ public class DoubleDataset extends AbstractDataset {
 		boolean useLong = bds.getElementClass().equals(Long.class); // NAN_OMIT
 		if (bds.getSize() == 1) { // NAN_OMIT
 			final IndexIterator it = getIterator(); // NAN_OMIT
+			final int bOffset = bds.getOffset(); // NAN_OMIT
 			if (useLong) { // NAN_OMIT
-				final long lb = bds.getElementLongAbs(0); // NAN_OMIT
+				final long lb = bds.getElementLongAbs(bOffset); // NAN_OMIT
 				while (it.hasNext()) { // NAN_OMIT
 					data[it.index] += lb; // NAN_OMIT
 				} // NAN_OMIT
 			} else { // NAN_OMIT
-				final double db = bds.getElementDoubleAbs(0); // NAN_OMIT
+				final double db = bds.getElementDoubleAbs(bOffset); // NAN_OMIT
 				while (it.hasNext()) { // NAN_OMIT
 					data[it.index] += db; // NAN_OMIT
 				} // NAN_OMIT
@@ -1018,13 +1018,14 @@ public class DoubleDataset extends AbstractDataset {
 		boolean useLong = bds.getElementClass().equals(Long.class); // NAN_OMIT
 		if (bds.getSize() == 1) { // NAN_OMIT
 			final IndexIterator it = getIterator(); // NAN_OMIT
+			final int bOffset = bds.getOffset(); // NAN_OMIT
 			if (useLong) { // NAN_OMIT
-				final long lb = bds.getElementLongAbs(0); // NAN_OMIT
+				final long lb = bds.getElementLongAbs(bOffset); // NAN_OMIT
 				while (it.hasNext()) { // NAN_OMIT
 					data[it.index] -= lb; // NAN_OMIT
 				} // NAN_OMIT
 			} else { // NAN_OMIT
-				final double db = bds.getElementDoubleAbs(0); // NAN_OMIT
+				final double db = bds.getElementDoubleAbs(bOffset); // NAN_OMIT
 				while (it.hasNext()) { // NAN_OMIT
 					data[it.index] -= db; // NAN_OMIT
 				} // NAN_OMIT
@@ -1053,13 +1054,14 @@ public class DoubleDataset extends AbstractDataset {
 		boolean useLong = bds.getElementClass().equals(Long.class); // NAN_OMIT
 		if (bds.getSize() == 1) { // NAN_OMIT
 			final IndexIterator it = getIterator(); // NAN_OMIT
+			final int bOffset = bds.getOffset(); // NAN_OMIT
 			if (useLong) { // NAN_OMIT
-				final long lb = bds.getElementLongAbs(0); // NAN_OMIT
+				final long lb = bds.getElementLongAbs(bOffset); // NAN_OMIT
 				while (it.hasNext()) { // NAN_OMIT
 					data[it.index] *= lb; // NAN_OMIT
 				} // NAN_OMIT
 			} else { // NAN_OMIT
-				final double db = bds.getElementDoubleAbs(0); // NAN_OMIT
+				final double db = bds.getElementDoubleAbs(bOffset); // NAN_OMIT
 				while (it.hasNext()) { // NAN_OMIT
 					data[it.index] *= db; // NAN_OMIT
 				} // NAN_OMIT
@@ -1086,8 +1088,9 @@ public class DoubleDataset extends AbstractDataset {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b); // NAN_OMIT
 		boolean useLong = bds.getElementClass().equals(Long.class); // NAN_OMIT
 		if (bds.getSize() == 1) { // NAN_OMIT
+			final int bOffset = bds.getOffset(); // NAN_OMIT
 			if (useLong) { // NAN_OMIT
-				final long lb = bds.getElementLongAbs(0); // NAN_OMIT
+				final long lb = bds.getElementLongAbs(bOffset); // NAN_OMIT
 				// if (lb == 0) { // INT_USE // NAN_OMIT
 				// 	fill(0); // INT_USE // NAN_OMIT
 				// } else { // INT_USE // NAN_OMIT
@@ -1097,7 +1100,7 @@ public class DoubleDataset extends AbstractDataset {
 				} // NAN_OMIT
 				// } // INT_USE // NAN_OMIT
 			} else { // NAN_OMIT
-				final double db = bds.getElementDoubleAbs(0); // NAN_OMIT
+				final double db = bds.getElementDoubleAbs(bOffset); // NAN_OMIT
 				// if (db == 0) { // INT_USE // NAN_OMIT
 				// 	fill(0); // INT_USE // NAN_OMIT
 				// } else { // INT_USE // NAN_OMIT
@@ -1147,8 +1150,9 @@ public class DoubleDataset extends AbstractDataset {
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b); // NAN_OMIT
 		boolean useLong = bds.getElementClass().equals(Long.class); // NAN_OMIT
 		if (bds.getSize() == 1) { // NAN_OMIT
+			final int bOffset = bds.getOffset(); // NAN_OMIT
 			if (useLong) { // NAN_OMIT
-				final long lb = bds.getElementLongAbs(0); // NAN_OMIT
+				final long lb = bds.getElementLongAbs(bOffset); // NAN_OMIT
 				// if (lb == 0) { // INT_USE // NAN_OMIT
 				// 	fill(0); // INT_USE // NAN_OMIT
 				// } else { // INT_USE // NAN_OMIT
@@ -1158,7 +1162,7 @@ public class DoubleDataset extends AbstractDataset {
 				} // NAN_OMIT
 				// } // INT_USE // NAN_OMIT
 			} else { // NAN_OMIT
-				final long lb = bds.getElementLongAbs(0); // NAN_OMIT
+				final long lb = bds.getElementLongAbs(bOffset); // NAN_OMIT
 				// if (lb == 0) { // INT_USE // NAN_OMIT
 				// 	fill(0); // INT_USE // NAN_OMIT
 				// } else { // INT_USE // NAN_OMIT
@@ -1189,10 +1193,11 @@ public class DoubleDataset extends AbstractDataset {
 		setDirty(); // NAN_OMIT
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b); // NAN_OMIT
 		if (bds.getSize() == 1) { // NAN_OMIT
-			final double vr = bds.getElementDoubleAbs(0); // NAN_OMIT
+			final int bOffset = bds.getOffset(); // NAN_OMIT
+			final double vr = bds.getElementDoubleAbs(bOffset); // NAN_OMIT
 			final IndexIterator it = getIterator(); // NAN_OMIT
 			if (bds.isComplex()) { // NAN_OMIT
-				final double vi = bds.getElementDoubleAbs(1); // NAN_OMIT
+				final double vi = bds.getElementDoubleAbs(bOffset + 1); // NAN_OMIT
 				if (vi == 0) { // NAN_OMIT
 					while (it.hasNext()) { // NAN_OMIT
 						final double v = Math.pow(data[it.index], vr); // NAN_OMIT

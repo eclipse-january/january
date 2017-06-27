@@ -11,6 +11,8 @@ package org.eclipse.january.dataset;
 
 import static org.junit.Assert.assertEquals;
 
+import org.apache.commons.math3.complex.Complex;
+import org.eclipse.january.asserts.TestUtils;
 import org.eclipse.january.dataset.Dataset;
 import org.eclipse.january.dataset.DatasetFactory;
 import org.eclipse.january.dataset.DoubleDataset;
@@ -44,8 +46,7 @@ public class IntegerDatasetTest {
 
 	@Test
 	public void testStats() {
-		@SuppressWarnings("deprecation")
-		Dataset a = DatasetFactory.createRange(12, Dataset.INT32);
+		Dataset a = DatasetFactory.createRange(IntegerDataset.class, 12);
 		assertEquals(11., a.max().doubleValue(), 1e-6);
 		assertEquals(0., a.min().doubleValue(), 1e-6);
 		assertEquals(5.5, ((Number) a.mean()).doubleValue(), 1e-6);
@@ -61,8 +62,7 @@ public class IntegerDatasetTest {
 		assertEquals(6,a.maxPos()[0]);
 		assertEquals(0,a.minPos()[0]);
 		
-		@SuppressWarnings("deprecation")
-		Dataset b = DatasetFactory.zeros(new int[]{100,200}, Dataset.INT32 );
+		Dataset b = DatasetFactory.zeros(IntegerDataset.class, 100, 200);
 		
 		b.set(100, new int[]{50,100});
 		b.set(-100, new int[]{51,101});
@@ -74,4 +74,207 @@ public class IntegerDatasetTest {
 		
 	}
 
+	@Test
+	public void testInplaceMethods() {
+		Dataset a = DatasetFactory.createRange(IntegerDataset.class, 6);
+		Dataset b = DatasetFactory.createRange(IntegerDataset.class, 6);
+		Dataset bl = DatasetFactory.createRange(LongDataset.class, 6);
+		Dataset c, t;
+
+		// add
+		c = a.clone();
+		TestUtils.assertDatasetEquals(a, c.iadd(b.getSliceView(new Slice(1))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(a, c.iadd(bl.getSliceView(new Slice(1))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.add(a, 3), c.iadd(b.getSliceView(new Slice(3, 4))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.add(a, 3l), c.iadd(bl.getSliceView(new Slice(3, 4))));
+
+		c = a.clone();
+		c.iadd(b);
+		TestUtils.assertDatasetEquals(Maths.add(a, b), c);
+		TestUtils.assertDatasetEquals(Maths.multiply(a, 2), c);
+
+		c = a.clone();
+		c.iadd(bl);
+		TestUtils.assertDatasetEquals(Maths.add(a, bl).cast(IntegerDataset.class), c);
+		TestUtils.assertDatasetEquals(Maths.multiply(a, 2l).cast(IntegerDataset.class), c);
+
+		// subtract
+		c = a.clone();
+		TestUtils.assertDatasetEquals(a, c.isubtract(b.getSliceView(new Slice(1))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(a, c.isubtract(bl.getSliceView(new Slice(1))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.subtract(a, 3), c.isubtract(b.getSliceView(new Slice(3, 4))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.subtract(a, 3l).cast(IntegerDataset.class), c.isubtract(bl.getSliceView(new Slice(3, 4))));
+
+		c = a.clone();
+		c.isubtract(b);
+		TestUtils.assertDatasetEquals(DatasetFactory.zeros(a), c);
+		TestUtils.assertDatasetEquals(Maths.multiply(a, 0), c);
+
+		c = a.clone();
+		c.isubtract(bl);
+		TestUtils.assertDatasetEquals(DatasetFactory.zeros(a), c);
+		TestUtils.assertDatasetEquals(Maths.multiply(a, 0), c);
+
+		// multiply
+		c = a.clone();
+		TestUtils.assertDatasetEquals(a, c.imultiply(b.getSliceView(new Slice(1, 2))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(a, c.imultiply(bl.getSliceView(new Slice(1, 2))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.multiply(a, 3), c.imultiply(b.getSliceView(new Slice(3, 4))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.multiply(a, 3l).cast(IntegerDataset.class), c.imultiply(bl.getSliceView(new Slice(3, 4))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.multiply(a, b), c.imultiply(b));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.multiply(a, bl).cast(IntegerDataset.class), c.imultiply(bl));
+
+		c = a.clone();
+		c.imultiply(b);
+		TestUtils.assertDatasetEquals(Maths.power(a, 2), c);
+		TestUtils.assertDatasetEquals(Maths.square(a).cast(IntegerDataset.class), c);
+
+		c = a.clone();
+		c.imultiply(bl);
+		TestUtils.assertDatasetEquals(Maths.power(a, 2l), c);
+		TestUtils.assertDatasetEquals(Maths.square(a).cast(IntegerDataset.class), c);
+
+		// divide
+		c = a.clone();
+		TestUtils.assertDatasetEquals(DatasetFactory.zeros(a), c.idivide(b.getSliceView(new Slice(1))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(DatasetFactory.zeros(a), c.idivide(bl.getSliceView(new Slice(1))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(a, c.idivide(b.getSliceView(new Slice(1, 2))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(a, c.idivide(bl.getSliceView(new Slice(1, 2))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.divide(a, 3), c.idivide(b.getSliceView(new Slice(3, 4))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.divide(a, 3l), c.idivide(bl.getSliceView(new Slice(3, 4))));
+
+		c = a.clone();
+		t = DatasetFactory.ones(a);
+		t.set(Double.NaN, 0);
+		TestUtils.assertDatasetEquals(t, c.idivide(b));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(t, c.idivide(bl));
+
+		// remainder
+		c = a.clone();
+		TestUtils.assertDatasetEquals(DatasetFactory.zeros(a), c.iremainder(b.getSliceView(new Slice(1))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(DatasetFactory.zeros(a), c.iremainder(bl.getSliceView(new Slice(1))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(DatasetFactory.zeros(a), c.iremainder(b.getSliceView(new Slice(1, 2))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(DatasetFactory.zeros(a), c.iremainder(bl.getSliceView(new Slice(1, 2))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.remainder(a, 3), c.iremainder(b.getSliceView(new Slice(3, 4))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.remainder(a, 3l), c.iremainder(bl.getSliceView(new Slice(3, 4))));
+
+		c = a.clone();
+		t = DatasetFactory.zeros(a);
+		TestUtils.assertDatasetEquals(t, c.iremainder(b));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(t, c.iremainder(bl));
+
+		// power
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.power(a, 3), c.ipower(3));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(a, c.ipower(b.getSliceView(new Slice(1, 2))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(a, c.ipower(bl.getSliceView(new Slice(1, 2))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.power(a, 3), c.ipower(b.getSliceView(new Slice(3, 4))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.power(a, b), c.ipower(b));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.power(a, bl).cast(IntegerDataset.class), c.ipower(bl));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(a, c.ipower(bl.getSliceView(new Slice(1, 2))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.power(a, 3), c.ipower(b.getSliceView(new Slice(3, 4))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.power(a, 3), c.ipower(bl.getSliceView(new Slice(3, 4))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.power(a, b), c.ipower(b));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.power(a, bl).cast(IntegerDataset.class), c.ipower(bl));
+
+		ComplexDoubleDataset z;
+		z = DatasetFactory.createComplexDataset(ComplexDoubleDataset.class, a, DatasetFactory.zeros(a));
+		c = a.clone();
+		TestUtils.assertDatasetEquals(a, c.ipower(z.getSliceView(new Slice(1, 2))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.power(a, 3), c.ipower(z.getSliceView(new Slice(3, 4))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.power(a, z).getRealView().cast(IntegerDataset.class), c.ipower(z));
+
+		z = DatasetFactory.createComplexDataset(ComplexDoubleDataset.class, Maths.negative(a), DatasetFactory.zeros(a));
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.reciprocal(a), c.ipower(z.getSliceView(new Slice(1, 2))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.power(a, z).getRealView().cast(IntegerDataset.class), c.ipower(z));
+
+		z = DatasetFactory.createComplexDataset(ComplexDoubleDataset.class, a, a);
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.power(a, new Complex(1, 1)).getRealView().cast(IntegerDataset.class), c.ipower(z.getSliceView(new Slice(1, 2))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.power(a, new Complex(3, 3)).getRealView().cast(IntegerDataset.class), c.ipower(z.getSliceView(new Slice(3, 4))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.power(a, z).getRealView().cast(IntegerDataset.class), c.ipower(z));
+
+		// floor
+		a = Maths.multiply(a, 1.5);
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.floor(a), c.ifloor());
+	}
 }
