@@ -19,7 +19,7 @@ import org.apache.commons.math3.complex.Complex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DTypeUtils {
+public final class DTypeUtils {
 	protected static final Logger logger = LoggerFactory.getLogger(DTypeUtils.class);
 
 	private static final Map<Class<? extends Dataset>, Integer> interface2DTypes = createInterfaceMap(); // map interface to dataset type
@@ -401,6 +401,7 @@ public class DTypeUtils {
 			return otype;
 		}
 	}
+
 	/**
 	 * @param comp
 	 * @return true if supported
@@ -501,23 +502,44 @@ public class DTypeUtils {
 				logger.error("Given dataset must have only one item");
 				throw new IllegalArgumentException("Given dataset must have only one item");
 			}
-			return toBoolean(db.getObjectAbs(0));
+			return db.getBoolean();
 		} else if (b instanceof IDataset) {
 			IDataset db = (IDataset) b;
 			if (db.getSize() != 1) {
 				logger.error("Given dataset must have only one item");
 				throw new IllegalArgumentException("Given dataset must have only one item");
 			}
-			return toBoolean(db.getObject(new int[db.getRank()]));
+			return db.getBoolean(new int[db.getRank()]);
 		} else {
 			logger.error("Argument is of unsupported class");
 			throw new IllegalArgumentException("Argument is of unsupported class");
 		}
 	}
 
+	/**
+	 * @param d
+	 * @return returns a long or 0 if d is NaN or infinite
+	 */
+	public static final long toLong(double d) {
+		if (Double.isInfinite(d) || Double.isNaN(d))
+			return 0l;
+		return (long) d;
+	}
+
+	/**
+	 * @param d
+	 * @return returns a long or 0 if d is NaN or infinite
+	 */
+	public static final long toLong(float d) {
+		if (Float.isInfinite(d) || Float.isNaN(d))
+			return 0l;
+		return (long) d;
+	}
+
 	public static long toLong(final Object b) {
 		if (b instanceof Number) {
-			return ((Number) b).longValue();
+			final Number n = (Number) b;
+			return (n instanceof Double || n instanceof Float) ? toLong(n.doubleValue()) : n.longValue();
 		} else if (b instanceof Boolean) {
 			return ((Boolean) b).booleanValue() ? 1 : 0;
 		} else if (b instanceof Complex) {
@@ -528,14 +550,14 @@ public class DTypeUtils {
 				logger.error("Given dataset must have only one item");
 				throw new IllegalArgumentException("Given dataset must have only one item");
 			}
-			return toLong(db.getObjectAbs(0));
+			return db.getLong();
 		} else if (b instanceof IDataset) {
 			IDataset db = (IDataset) b;
 			if (db.getSize() != 1) {
 				logger.error("Given dataset must have only one item");
 				throw new IllegalArgumentException("Given dataset must have only one item");
 			}
-			return toLong(db.getObject(new int[db.getRank()]));
+			return db.getLong(new int[db.getRank()]);
 		} else {
 			logger.error("Argument is of unsupported class");
 			throw new IllegalArgumentException("Argument is of unsupported class");
@@ -559,14 +581,14 @@ public class DTypeUtils {
 				logger.error("Given dataset must have only one item");
 				throw new IllegalArgumentException("Given dataset must have only one item");
 			}
-			return toReal(db.getObjectAbs(0));
+			return db.getDouble();
 		} else if (b instanceof IDataset) {
 			IDataset db = (Dataset) b;
 			if (db.getSize() != 1) {
 				logger.error("Given dataset must have only one item");
 				throw new IllegalArgumentException("Given dataset must have only one item");
 			}
-			return toReal(db.getObject(new int[db.getRank()]));
+			return db.getDouble(new int[db.getRank()]);
 		} else {
 			logger.error("Argument is of unsupported class");
 			throw new IllegalArgumentException("Argument is of unsupported class");
@@ -590,7 +612,7 @@ public class DTypeUtils {
 				logger.error("Given dataset must have only one item");
 				throw new IllegalArgumentException("Given dataset must have only one item");
 			}
-			return toImag(db.getObjectAbs(0));
+			return toImag(db.getObjectAbs(db.getOffset()));
 		} else if (b instanceof IDataset) {
 			IDataset db = (Dataset) b;
 			if (db.getSize() != 1) {
@@ -610,16 +632,19 @@ public class DTypeUtils {
 		// ensure array is of given length
 		if (b instanceof Number) {
 			result = new double[itemSize];
-			double val = ((Number) b).doubleValue();
-			for (int i = 0; i < itemSize; i++)
+			final double val = ((Number) b).doubleValue();
+			for (int i = 0; i < itemSize; i++) {
 				result[i] = val;
+			}
 		} else if (b instanceof double[]) {
-			result = (double[]) b;
-			if (result.length < itemSize) {
+			final double[] old = (double[]) b;
+			result = old;
+			final int ilen = old.length;
+			if (ilen < itemSize) {
 				result = new double[itemSize];
-				int ilen = result.length;
-				for (int i = 0; i < ilen; i++)
-					result[i] = ((double[]) b)[i];
+				for (int i = 0; i < ilen; i++) {
+					result[i] = old[i];
+				}
 			}
 		} else if (b instanceof List<?>) {
 			result = new double[itemSize];
@@ -641,8 +666,9 @@ public class DTypeUtils {
 				throw new IllegalArgumentException("Given array was not of a numerical primitive type");
 			}
 			ilen = Math.min(itemSize, ilen);
-			for (int i = 0; i < ilen; i++)
+			for (int i = 0; i < ilen; i++) {
 				result[i] = ((Number) Array.get(b, i)).doubleValue();
+			}
 		} else if (b instanceof Complex) {
 			if (itemSize > 2) {
 				logger.error("Complex number will not fit in compound dataset");
@@ -666,7 +692,7 @@ public class DTypeUtils {
 				logger.error("Given dataset must have only one item");
 				throw new IllegalArgumentException("Given dataset must have only one item");
 			}
-			return toDoubleArray(db.getObjectAbs(0), itemSize);
+			return toDoubleArray(db.getObjectAbs(db.getOffset()), itemSize);
 		} else if (b instanceof IDataset) {
 			IDataset db = (Dataset) b;
 			if (db.getSize() != 1) {
@@ -684,16 +710,25 @@ public class DTypeUtils {
 	
 		if (b instanceof Number) {
 			result = new float[itemSize];
-			float val = ((Number) b).floatValue();
+			final float val = ((Number) b).floatValue();
 			for (int i = 0; i < itemSize; i++)
 				result[i] = val;
 		} else if (b instanceof float[]) {
-			result = (float[]) b;
-			if (result.length < itemSize) {
+			final float[] old = (float[]) b;
+			result = old;
+			final int ilen = old.length;
+			if (ilen < itemSize) {
 				result = new float[itemSize];
-				int ilen = result.length;
-				for (int i = 0; i < ilen; i++)
-					result[i] = ((float[]) b)[i];
+				for (int i = 0; i < ilen; i++) {
+					result[i] = old[i];
+				}
+			}
+		} else if (b instanceof double[]) {
+			final double[] old = (double[]) b;
+			final int ilen = Math.min(itemSize, old.length);
+			result = new float[itemSize];
+			for (int i = 0; i < ilen; i++) {
+				result[i] = (float) old[i];
 			}
 		} else if (b instanceof List<?>) {
 			result = new float[itemSize];
@@ -715,8 +750,9 @@ public class DTypeUtils {
 				throw new IllegalArgumentException("Given array was not of a numerical primitive type");
 			}
 			ilen = Math.min(itemSize, ilen);
-			for (int i = 0; i < ilen; i++)
+			for (int i = 0; i < ilen; i++) {
 				result[i] = ((Number) Array.get(b, i)).floatValue();
+			}
 		} else if (b instanceof Complex) {
 			if (itemSize > 2) {
 				logger.error("Complex number will not fit in compound dataset");
@@ -740,7 +776,7 @@ public class DTypeUtils {
 				logger.error("Given dataset must have only one item");
 				throw new IllegalArgumentException("Given dataset must have only one item");
 			}
-			return toFloatArray(db.getObjectAbs(0), itemSize);
+			return toFloatArray(db.getObjectAbs(db.getOffset()), itemSize);
 		} else if (b instanceof IDataset) {
 			IDataset db = (Dataset) b;
 			if (db.getSize() != 1) {
@@ -758,16 +794,26 @@ public class DTypeUtils {
 	
 		if (b instanceof Number) {
 			result = new long[itemSize];
-			long val = ((Number) b).longValue();
-			for (int i = 0; i < itemSize; i++)
+			final long val = toLong(b);
+			for (int i = 0; i < itemSize; i++) {
 				result[i] = val;
+			}
 		} else if (b instanceof long[]) {
-			result = (long[]) b;
-			if (result.length < itemSize) {
+			final long[] old = (long[]) b;
+			result = old;
+			final int ilen = result.length;
+			if (ilen < itemSize) {
 				result = new long[itemSize];
-				int ilen = result.length;
-				for (int i = 0; i < ilen; i++)
-					result[i] = ((long[]) b)[i];
+				for (int i = 0; i < ilen; i++) {
+					result[i] = old[i];
+				}
+			}
+		} else if (b instanceof double[]) {
+			final double[] old = (double[]) b;
+			final int ilen = Math.min(itemSize, old.length);
+			result = new long[itemSize];
+			for (int i = 0; i < ilen; i++) {
+				result[i] = toLong(old[i]);
 			}
 		} else if (b instanceof List<?>) {
 			result = new long[itemSize];
@@ -789,8 +835,9 @@ public class DTypeUtils {
 				throw new IllegalArgumentException("Given array was not of a numerical primitive type");
 			}
 			ilen = Math.min(itemSize, ilen);
-			for (int i = 0; i < ilen; i++)
-				result[i] = ((Number) Array.get(b, i)).longValue();
+			for (int i = 0; i < ilen; i++) {
+				result[i] = toLong(Array.get(b, i));
+			}
 		} else if (b instanceof Complex) {
 			if (itemSize > 2) {
 				logger.error("Complex number will not fit in compound dataset");
@@ -814,7 +861,7 @@ public class DTypeUtils {
 				logger.error("Given dataset must have only one item");
 				throw new IllegalArgumentException("Given dataset must have only one item");
 			}
-			return toLongArray(db.getObjectAbs(0), itemSize);
+			return toLongArray(db.getObjectAbs(db.getOffset()), itemSize);
 		} else if (b instanceof IDataset) {
 			IDataset db = (Dataset) b;
 			if (db.getSize() != 1) {
@@ -832,16 +879,26 @@ public class DTypeUtils {
 	
 		if (b instanceof Number) {
 			result = new int[itemSize];
-			int val = ((Number) b).intValue();
-			for (int i = 0; i < itemSize; i++)
+			final int val = (int) toLong(b);
+			for (int i = 0; i < itemSize; i++) {
 				result[i] = val;
+			}
 		} else if (b instanceof int[]) {
-			result = (int[]) b;
-			if (result.length < itemSize) {
+			final int[] old = (int[]) b;
+			result = old;
+			final int ilen = result.length;
+			if (ilen < itemSize) {
 				result = new int[itemSize];
-				int ilen = result.length;
-				for (int i = 0; i < ilen; i++)
-					result[i] = ((int[]) b)[i];
+				for (int i = 0; i < ilen; i++) {
+					result[i] = old[i];
+				}
+			}
+		} else if (b instanceof double[]) {
+			final double[] old = (double[]) b;
+			final int ilen = Math.min(itemSize, old.length);
+			result = new int[itemSize];
+			for (int i = 0; i < ilen; i++) {
+				result[i] = (int) toLong(old[i]);
 			}
 		} else if (b instanceof List<?>) {
 			result = new int[itemSize];
@@ -863,8 +920,9 @@ public class DTypeUtils {
 				throw new IllegalArgumentException("Given array was not of a numerical primitive type");
 			}
 			ilen = Math.min(itemSize, ilen);
-			for (int i = 0; i < ilen; i++)
-				result[i] = (int) ((Number) Array.get(b, i)).longValue();
+			for (int i = 0; i < ilen; i++) {
+				result[i] = (int) toLong(Array.get(b, i));
+			}
 		} else if (b instanceof Complex) {
 			if (itemSize > 2) {
 				logger.error("Complex number will not fit in compound dataset");
@@ -888,7 +946,7 @@ public class DTypeUtils {
 				logger.error("Given dataset must have only one item");
 				throw new IllegalArgumentException("Given dataset must have only one item");
 			}
-			return toIntegerArray(db.getObjectAbs(0), itemSize);
+			return toIntegerArray(db.getObjectAbs(db.getOffset()), itemSize);
 		} else if (b instanceof IDataset) {
 			IDataset db = (Dataset) b;
 			if (db.getSize() != 1) {
@@ -906,16 +964,26 @@ public class DTypeUtils {
 	
 		if (b instanceof Number) {
 			result = new short[itemSize];
-			short val = ((Number) b).shortValue();
-			for (int i = 0; i < itemSize; i++)
+			final short val = (short) toLong(b);
+			for (int i = 0; i < itemSize; i++) {
 				result[i] = val;
+			}
 		} else if (b instanceof short[]) {
-			result = (short[]) b;
-			if (result.length < itemSize) {
+			final short[] old = (short[]) b;
+			result = old;
+			final int ilen = result.length;
+			if (ilen < itemSize) {
 				result = new short[itemSize];
-				int ilen = result.length;
-				for (int i = 0; i < ilen; i++)
-					result[i] = ((short[]) b)[i];
+				for (int i = 0; i < ilen; i++) {
+					result[i] = old[i];
+				}
+			}
+		} else if (b instanceof double[]) {
+			final double[] old = (double[]) b;
+			final int ilen = Math.min(itemSize, old.length);
+			result = new short[itemSize];
+			for (int i = 0; i < ilen; i++) {
+				result[i] = (short) toLong(old[i]);
 			}
 		} else if (b instanceof List<?>) {
 			result = new short[itemSize];
@@ -937,8 +1005,9 @@ public class DTypeUtils {
 				throw new IllegalArgumentException("Given array was not of a numerical primitive type");
 			}
 			ilen = Math.min(itemSize, ilen);
-			for (int i = 0; i < ilen; i++)
-				result[i] = (short) ((Number) Array.get(b, i)).longValue();
+			for (int i = 0; i < ilen; i++) {
+				result[i] = (short) toLong(Array.get(b, i));
+			}
 		} else if (b instanceof Complex) {
 			if (itemSize > 2) {
 				logger.error("Complex number will not fit in compound dataset");
@@ -962,7 +1031,7 @@ public class DTypeUtils {
 				logger.error("Given dataset must have only one item");
 				throw new IllegalArgumentException("Given dataset must have only one item");
 			}
-			return toShortArray(db.getObjectAbs(0), itemSize);
+			return toShortArray(db.getObjectAbs(db.getOffset()), itemSize);
 		} else if (b instanceof IDataset) {
 			IDataset db = (Dataset) b;
 			if (db.getSize() != 1) {
@@ -980,18 +1049,26 @@ public class DTypeUtils {
 	
 		if (b instanceof Number) {
 			result = new byte[itemSize];
-			final byte val = ((Number) b).byteValue();
+			final byte val = (byte) toLong(b);
 			for (int i = 0; i < itemSize; i++) {
 				result[i] = val;
 			}
 		} else if (b instanceof byte[]) {
-			result = (byte[]) b;
-			if (result.length < itemSize) {
+			final byte[] old = (byte[]) b;
+			result = old;
+			final int ilen = result.length;
+			if (ilen < itemSize) {
 				result = new byte[itemSize];
-				int ilen = result.length;
 				for (int i = 0; i < ilen; i++) {
-					result[i] = ((byte[]) b)[i];
+					result[i] = old[i];
 				}
+			}
+		} else if (b instanceof double[]) {
+			final double[] old = (double[]) b;
+			final int ilen = Math.min(itemSize, old.length);
+			result = new byte[itemSize];
+			for (int i = 0; i < ilen; i++) {
+				result[i] = (byte) toLong(old[i]);
 			}
 		} else if (b instanceof List<?>) {
 			result = new byte[itemSize];
@@ -1014,7 +1091,7 @@ public class DTypeUtils {
 			}
 			ilen = Math.min(itemSize, ilen);
 			for (int i = 0; i < ilen; i++) {
-				result[i] = (byte) ((Number) Array.get(b, i)).longValue();
+				result[i] = (byte) toLong(Array.get(b, i));
 			}
 		} else if (b instanceof Complex) {
 			if (itemSize > 2) {
@@ -1039,7 +1116,7 @@ public class DTypeUtils {
 				logger.error("Given dataset must have only one item");
 				throw new IllegalArgumentException("Given dataset must have only one item");
 			}
-			return toByteArray(db.getObjectAbs(0), itemSize);
+			return toByteArray(db.getObjectAbs(db.getOffset()), itemSize);
 		} else if (b instanceof IDataset) {
 			IDataset db = (Dataset) b;
 			if (db.getSize() != 1) {
