@@ -304,7 +304,7 @@ public class ByteDataset extends AbstractDataset {
 
 	@Override
 	public long getElementLongAbs(final int index) {
-		return data[index]; // BOOLEAN_ZERO // OMIT_CAST_INT
+		return data[index]; // BOOLEAN_ZERO // OMIT_TOLONG_INT
 	}
 
 	@Override
@@ -1157,11 +1157,7 @@ public class ByteDataset extends AbstractDataset {
 				}
 			} else {
 				while (it.hasNext()) {
-				try {
-						data[it.aIndex] %= it.bDouble; // INT_EXCEPTION
-				} catch (ArithmeticException e) {
-					data[it.aIndex] = 0;
-				}
+					data[it.aIndex] %= it.bDouble;
 				}
 			}
 		}

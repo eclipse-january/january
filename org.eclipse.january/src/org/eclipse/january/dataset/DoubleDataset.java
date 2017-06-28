@@ -304,7 +304,7 @@ public class DoubleDataset extends AbstractDataset {
 
 	@Override
 	public long getElementLongAbs(final int index) {
-		return (long) data[index]; // BOOLEAN_ZERO // OMIT_CAST_INT
+		return DTypeUtils.toLong(data[index]); // BOOLEAN_ZERO // OMIT_TOLONG_INT
 	}
 
 	@Override
@@ -1181,7 +1181,7 @@ public class DoubleDataset extends AbstractDataset {
 				} // NAN_OMIT
 			} else { // NAN_OMIT
 				while (it.hasNext()) { // NAN_OMIT
-					data[it.aIndex] %= it.bDouble; // NAN_OMIT // INT_EXCEPTION
+					data[it.aIndex] %= it.bDouble; // NAN_OMIT
 				} // NAN_OMIT
 			} // NAN_OMIT
 		} // NAN_OMIT

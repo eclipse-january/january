@@ -214,6 +214,9 @@ public class IntegerDatasetTest {
 		TestUtils.assertDatasetEquals(Maths.power(a, 3), c.ipower(3));
 
 		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.power(a, -3), c.ipower(-3));
+
+		c = a.clone();
 		TestUtils.assertDatasetEquals(a, c.ipower(b.getSliceView(new Slice(1, 2))));
 
 		c = a.clone();
@@ -243,6 +246,10 @@ public class IntegerDatasetTest {
 		c = a.clone();
 		TestUtils.assertDatasetEquals(Maths.power(a, bl).cast(IntegerDataset.class), c.ipower(bl));
 
+		c = a.clone();
+		t = Maths.negative(Maths.add(b, 1));
+		TestUtils.assertDatasetEquals(Maths.power(a, t).cast(IntegerDataset.class), c.ipower(t));
+
 		ComplexDoubleDataset z;
 		z = DatasetFactory.createComplexDataset(ComplexDoubleDataset.class, a, DatasetFactory.zeros(a));
 		c = a.clone();
@@ -257,6 +264,9 @@ public class IntegerDatasetTest {
 		z = DatasetFactory.createComplexDataset(ComplexDoubleDataset.class, Maths.negative(a), DatasetFactory.zeros(a));
 		c = a.clone();
 		TestUtils.assertDatasetEquals(Maths.reciprocal(a), c.ipower(z.getSliceView(new Slice(1, 2))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.power(a, -3), c.ipower(z.getSliceView(new Slice(3, 4))));
 
 		c = a.clone();
 		TestUtils.assertDatasetEquals(Maths.power(a, z).getRealView().cast(IntegerDataset.class), c.ipower(z));

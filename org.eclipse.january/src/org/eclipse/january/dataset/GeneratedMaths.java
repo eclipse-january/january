@@ -30,7 +30,7 @@ class GeneratedMaths {
 		dataset.setName(Operations.createBinaryOperationName(oname, a.getName(), b.getName()));
 	}
 
-	protected static long toLong(double d) {
+	protected static final long toLong(double d) {
 		if (Double.isInfinite(d) || Double.isNaN(d))
 			return 0l;
 		return (long) d;

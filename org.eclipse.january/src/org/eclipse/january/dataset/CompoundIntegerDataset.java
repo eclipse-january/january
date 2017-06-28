@@ -465,7 +465,7 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 
 	@Override
 	public long getElementLongAbs(final int index) {
-		return data[index]; // OMIT_CAST_INT
+		return data[index]; // OMIT_TOLONG_INT
 	}
 
 	@Override
