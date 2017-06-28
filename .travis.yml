@@ -12,7 +12,7 @@ services:
   - docker
 
 jdk:
- - oraclejdk7
+ - openjdk7
 
 # don't do anything on install, just let maven install the dependencies in the script
 # Also see https://github.com/eclipse/january/issues/109
