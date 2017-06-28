@@ -465,7 +465,7 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 
 	@Override
 	public long getElementLongAbs(final int index) {
-		return (long) data[index]; // OMIT_CAST_INT
+		return DTypeUtils.toLong(data[index]); // OMIT_TOLONG_INT
 	}
 
 	@Override

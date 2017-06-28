@@ -73,7 +73,7 @@ public class DateDatasetImpl extends StringDataset implements DateDataset {
 				throw new IllegalArgumentException("Given dataset must have only one item");
 			}
 			
-			return objectToDateString(dataset.getObjectAbs(0));
+			return objectToDateString(dataset.getObjectAbs(dataset.getOffset()));
 		} else if (obj instanceof IDataset) {
 			IDataset dataset = (IDataset) obj;
 			if (dataset.getSize() != 1) {

@@ -304,7 +304,7 @@ public class FloatDataset extends AbstractDataset {
 
 	@Override
 	public long getElementLongAbs(final int index) {
-		return (long) data[index]; // BOOLEAN_ZERO // OMIT_CAST_INT
+		return DTypeUtils.toLong(data[index]); // BOOLEAN_ZERO // OMIT_TOLONG_INT
 	}
 
 	@Override
@@ -1181,7 +1181,7 @@ public class FloatDataset extends AbstractDataset {
 				}
 			} else {
 				while (it.hasNext()) {
-					data[it.aIndex] %= it.bDouble; // INT_EXCEPTION
+					data[it.aIndex] %= it.bDouble;
 				}
 			}
 		}
