@@ -81,7 +81,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		}
 		if (!getClass().equals(obj.getClass())) {
 			if (getRank() == 0) // for zero-rank datasets
-				return obj.equals(getObjectAbs(0));
+				return obj.equals(getObjectAbs(offset));
 			return false;
 		}
 
