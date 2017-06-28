@@ -74,15 +74,9 @@ public interface BinaryOperation extends IOperation {
 			return doubleOperate(a, b) != 0;
 		}
 
-		private static long toLong(double d) {
-			if (Double.isInfinite(d) || Double.isNaN(d))
-				return 0;
-			return (long) d;
-		}
-
 		@Override
 		public long longOperate(long a, long b) {
-			return toLong(doubleOperate(a, b));
+			return DTypeUtils.toLong(doubleOperate(a, b));
 		}
 
 		/**
