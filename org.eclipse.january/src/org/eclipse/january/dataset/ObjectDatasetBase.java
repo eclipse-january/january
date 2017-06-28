@@ -600,7 +600,6 @@ public class ObjectDatasetBase extends AbstractDataset {
 		setItem(obj, pos); // FROM_OBJECT
 	}
 
-
 	@Override
 	public void resize(int... newShape) {
 		setDirty();

@@ -600,7 +600,6 @@ public class BooleanDatasetBase extends AbstractDataset {
 		setItem(DTypeUtils.toBoolean(obj), pos); // FROM_OBJECT
 	}
 
-
 	@Override
 	public void resize(int... newShape) {
 		setDirty();
