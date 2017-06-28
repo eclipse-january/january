@@ -31,6 +31,8 @@ class GeneratedMaths {
 	}
 
 	protected static long toLong(double d) {
+		if (Double.isInfinite(d) || Double.isNaN(d))
+			return 0l;
 		return (long) d;
 	}
 
