@@ -439,7 +439,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public BooleanIterator getBooleanIterator(Dataset choice, boolean value) {
-		return new BooleanIterator(getIterator(), choice, value);
+		return BooleanIterator.createIterator(value, this, choice, this);
 	}
 
 	@Override

@@ -1,74 +1,150 @@
 /*-
- *******************************************************************************
- * Copyright (c) 2011, 2016 Diamond Light Source Ltd.
+ * Copyright 2016 Diamond Light Source Ltd.
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Peter Chang - initial API and implementation and/or initial documentation
- *******************************************************************************/
+ */
 
 package org.eclipse.january.dataset;
 
+import java.util.Arrays;
+
 /**
- * Class to run over an iterator and visits positions where items in selection dataset are true 
+ * Base class for boolean iterators for pairs of dataset where the second dataset could be broadcast to the first and
+ * is used to select where {{@link #hasNext()} returns true. An optional third dataset can specify the output.
+ * For speed, there are public members.
  */
-public class BooleanIterator extends IndexIterator {
-	final private BooleanDataset b;
-	final private IndexIterator iterb;
-	final private IndexIterator iterd;
-	final private boolean v;
-	final private int[] pos; // position in dataset
+public abstract class BooleanIterator extends IndexIterator {
 
 	/**
-	 * Constructor for an iterator over the items of a boolean dataset that are
-	 * true
-	 *
-	 * @param iter dataset iterator
-	 * @param selection boolean dataset
+	 * Create a boolean iterator that stops at every position in the choice dataset with a true value
+	 * @param v boolean value
+	 * @param a primary dataset
+	 * @param c choice dataset
 	 */
-	public BooleanIterator(final IndexIterator iter, final Dataset selection) {
-		this(iter, selection, true);
+	public static BooleanIterator createIterator(Dataset a, Dataset c) {
+		return createIterator(true, a, c, null, false);
 	}
 
 	/**
-	 * Constructor for an iterator over the items of a boolean dataset that match
-	 * given value
-	 *
-	 * @param iter dataset iterator
-	 * @param selection boolean dataset
-	 * @param value
+	 * Create a boolean iterator that stops at every position in the choice dataset with a true value
+	 * @param v boolean value
+	 * @param a primary dataset
+	 * @param c choice dataset
+	 * @param o output dataset, can be null
 	 */
-	public BooleanIterator(final IndexIterator iter, final Dataset selection, boolean value) {
-		b = (BooleanDataset) DatasetUtils.cast(selection, Dataset.BOOL);
-
-		iterb = selection.getIterator();
-		iterd = iter;
-		pos = iterd.getPos();
-		v = value;
+	public static BooleanIterator createIterator(Dataset a, Dataset c, Dataset o) {
+		return createIterator(true, a, c, o, false);
 	}
 
-	@Override
-	public boolean hasNext() {
-		while (iterb.hasNext() && iterd.hasNext()) {
-			if (b.getAbs(iterb.index) == v) {
-				index = iterd.index;
-				return true;
+	/**
+	 * Create a boolean iterator that stops at every position in the choice dataset where its value matches
+	 * the given boolean
+	 * @param v boolean value
+	 * @param a primary dataset
+	 * @param c choice dataset
+	 * @param o output dataset, can be null
+	 */
+	public static BooleanIterator createIterator(boolean value, Dataset a, Dataset c, Dataset o) {
+		return createIterator(value, a, c, o, false);
+	}
+
+	/**
+	 * Create a boolean iterator that stops at every position in the choice dataset where its value matches
+	 * the given boolean
+	 * @param v boolean value
+	 * @param a primary dataset
+	 * @param c choice dataset
+	 * @param o output dataset, can be null
+	 * @param createIfNull if true create the output dataset if that is null
+	 */
+	public static BooleanIterator createIterator(boolean value, Dataset a, Dataset c, Dataset o, boolean createIfNull) {
+		if (c == null) {
+			return new BooleanNullIterator(a, o, createIfNull);
+		}
+		if (Arrays.equals(a.getShapeRef(), c.getShapeRef()) && a.getStrides() == null && c.getStrides() == null) {
+			if (o == null || (o.getStrides() == null && Arrays.equals(a.getShapeRef(), o.getShapeRef()))) {
+				return new BooleanContiguousIterator(value, a, c, o, createIfNull);
 			}
 		}
-		return false;
+		return new BooleanBroadcastIterator(value, a, c, o, createIfNull);
+	}
+
+	protected final boolean value;
+
+	/**
+	 * Index in choice dataset
+	 */
+	public int cIndex;
+
+	/**
+	 * Index in output dataset
+	 */
+	public int oIndex;
+
+	/**
+	 * Output dataset
+	 */
+	protected Dataset oDataset;
+
+	final protected boolean outputA;
+
+	protected int[] maxShape;
+
+	protected final int aStep; // step over items
+	protected int oStep;
+	protected int aMax; // maximum index in array
+	protected int aStart, oStart;
+
+	protected Dataset aDataset;
+	protected Dataset cDataset;
+
+	/**
+	 * @return choice
+	 */
+	public Dataset getChoice() {
+		return cDataset;
 	}
 
 	@Override
-	public int[] getPos() {
-		return pos;
+	public int[] getShape() {
+		return maxShape;
 	}
 
-	@Override
-	public void reset() {
-		iterb.reset();
-		iterd.reset();
+	/**
+	 * Construct a boolean iterator that stops at the given boolean value in choice dataset
+	 * @param v boolean value
+	 * @param a primary dataset
+	 * @param c choice dataset
+	 * @param o output dataset, can be null
+	 */
+	protected BooleanIterator(boolean v, Dataset a, Dataset c, Dataset o) {
+		value = v;
+		aDataset = a;
+		aStep = a.getElementsPerItem();
+		cDataset = c;
+		oDataset = o;
+		outputA = a == o;
+		if (c != null && c == o) {
+			throw new IllegalArgumentException("Output dataset must not be same as mask dataset");
+		}
+
+		if (c != null) {
+			BroadcastUtils.checkItemSize(a, c, o);
+		} else if (o != null) {
+			BroadcastUtils.checkItemSize(a, o);
+		}
+		if (o != null) {
+			o.setDirty();
+		}
+	}
+
+	/**
+	 * @return output dataset (can be null)
+	 */
+	public Dataset getOutput() {
+		return oDataset;
 	}
 }
