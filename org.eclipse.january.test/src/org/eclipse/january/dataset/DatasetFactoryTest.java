@@ -127,6 +127,10 @@ public class DatasetFactoryTest {
 
 		// zero-sized
 		exp = new DoubleDataset();
+
+		act = DatasetFactory.createFromObject(DoubleDataset.class, (Object) null);
+		assertEquals(exp, act);
+
 		act = DatasetFactory.createFromObject(DoubleDataset.class, null, null);
 		assertEquals(exp, act);
 
@@ -135,6 +139,18 @@ public class DatasetFactoryTest {
 
 		act = DatasetFactory.createFromObject(DoubleDataset.class, new double[0]);
 		assertEquals(exp, act);
+
+		act = DatasetFactory.createFromObject(DoubleDataset.class, null, 0);
+		assertEquals(exp.reshape(0), act);
+
+		act = DatasetFactory.createFromObject(DoubleDataset.class, new double[0], 0);
+		assertEquals(exp.reshape(0), act);
+
+		act = DatasetFactory.createFromObject(DoubleDataset.class, new double[0], 0, 0, 0);
+		assertEquals(exp.reshape(0, 0, 0), act);
+
+		act = DatasetFactory.createFromObject(DoubleDataset.class, new double[0], 0, 1, 0);
+		assertEquals(exp.reshape(0, 1, 0), act);
 
 		// zero-ranked (unit size)
 		exp = new DoubleDataset(new double[] {3});

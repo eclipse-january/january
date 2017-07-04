@@ -686,8 +686,8 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		setDirty();
 		if (this.shape != null) {
 			reshapeMetadata(this.shape, nshape);
-			this.shape = nshape;
 		}
+		this.shape = nshape;
 	}
 
 	@Override

@@ -848,6 +848,21 @@ public class DatasetFactory {
 	 * @param clazz dataset class
 	 * @param obj
 	 *            can be a Java list, array or Number
+	 * @return dataset
+	 * @throws IllegalArgumentException if dataset class is not known
+	 * @since 2.0
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T extends Dataset> T createFromObject(Class<T> clazz, Object obj) {
+		return (T) createFromObject(1, DTypeUtils.getDType(clazz), obj, null);
+	}
+
+
+	/**
+	 * Create a dataset from object
+	 * @param clazz dataset class
+	 * @param obj
+	 *            can be a Java list, array or Number
 	 * @param shape can be null
 	 * @return dataset
 	 * @throws IllegalArgumentException if dataset type is not known
