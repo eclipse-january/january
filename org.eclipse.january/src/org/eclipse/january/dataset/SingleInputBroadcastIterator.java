@@ -146,10 +146,12 @@ public class SingleInputBroadcastIterator extends IndexIterator {
 		if (endrank < 0) {
 			aMax = aStep;
 		} else {
-			aMax = Integer.MIN_VALUE; // use max delta
-			for (int j = endrank; j >= 0; j--) {
-				if (aDelta[j] > aMax) {
-					aMax = aDelta[j];
+			aMax = 0; // first non-zero delta (as broadcasting will make some zero)
+			for (int j = 0; j <= endrank; j++) {
+				int d = aDelta[j];
+				if (d != 0) {
+					aMax = d;
+					break;
 				}
 			}
 		}
@@ -215,7 +217,7 @@ public class SingleInputBroadcastIterator extends IndexIterator {
 		}
 
 		if (aIndex == aMax)
-			return false;
+			return false; // used for zero-rank datasets
 
 		if (oldA != aIndex) {
 			if (asDouble) {
