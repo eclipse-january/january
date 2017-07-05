@@ -212,9 +212,9 @@ public class SliceIterator extends IndexIterator {
 		for (int i = endrank; i >= 0; i--) {
 			stop[i] = start[i] + sshape[i] * step[i];
 
-			if (step[i] < 0)
-				stop[i]++; // adjust for -ve steps so later code has more
-							// succinct test
+			if (step[i] < 0) {
+				stop[i]++; // adjust for -ve steps so later code has more succinct test
+			}
 
 			if (i > 0) {
 				gap[i] = (shape[i] * step[i - 1] - sshape[i] * step[i]) * chunk;
@@ -267,8 +267,9 @@ public class SliceIterator extends IndexIterator {
 			index = -istep;
 		} else {
 			// work out index of first position
-			for (int i = 0; i < shape.length; i++)
+			for (int i = 0; i < shape.length; i++) {
 				pos[i] = start[i];
+			}
 			pos[endrank] -= step[endrank];
 
 			index = pos[0];
@@ -292,17 +293,14 @@ public class SliceIterator extends IndexIterator {
 		for (; j >= 0; j--) {
 			pos[j] += step[j];
 
-			if ((pos[j] >= stop[j]) == (step[j] > 0)) { // stop index has been
-														// adjusted in code for
-														// -ve steps
-				pos[j] = start[j];
+			if ((pos[j] >= stop[j]) == (step[j] > 0)) { 
+				pos[j] = start[j]; // stop index has been adjusted in code for -ve steps
 				index += gap[j];
 			} else {
 				break;
 			}
 		}
 		if (j == -1 && endrank >= 0) {
-			index = imax;
 			return false;
 		}
 

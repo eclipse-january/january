@@ -78,7 +78,6 @@ public class DiscontiguousIterator extends IndexIterator {
 			}
 		}
 		if (j == -1) {
-			index = imax;
 			return false;
 		}
 

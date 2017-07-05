@@ -179,13 +179,15 @@ public class PositionIterator extends IndexIterator {
 
 	@Override
 	public void reset() {
-		for (int i = 0; i <= endrank; i++)
+		for (int i = 0; i <= endrank; i++) {
 			pos[i] = start[i];
+		}
 
 		int j = 0;
 		for (; j <= endrank; j++) {
-			if (!omit[j])
+			if (!omit[j]) {
 				break;
+			}
 		}
 		if (j > endrank) {
 			once = true;

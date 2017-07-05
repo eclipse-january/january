@@ -56,25 +56,10 @@ public class BroadcastSingleIterator extends BroadcastSelfIterator {
 			aDelta[j] = aStride[j] * aShape[j];
 			bDelta[j] = bStride[j] * bShape[j];
 		}
-		if (endrank < 0) {
-			aMax = aStep;
-			bMax = bStep;
-		} else {
-			aMax = Integer.MIN_VALUE; // use max delta
-			bMax = Integer.MIN_VALUE;
-			for (int j = endrank; j >= 0; j--) {
-				if (aDelta[j] > aMax) {
-					aMax = aDelta[j];
-				}
-				if (bDelta[j] > bMax) {
-					bMax = bDelta[j];
-				}
-			}
-		}
 		aStart = aOffset[0];
-		aMax += aStart;
 		bStart = bDataset.getOffset();
-		bMax += bStart;
+		aMax = endrank < 0 ? aStep + aStart: Integer.MIN_VALUE;
+		bMax = endrank < 0 ? bStep + bStart: Integer.MIN_VALUE;
 		reset();
 	}
 
@@ -96,16 +81,15 @@ public class BroadcastSingleIterator extends BroadcastSelfIterator {
 		}
 		if (j == -1) {
 			if (endrank >= 0) {
-				aIndex = aMax;
-				bIndex = bMax;
 				return false;
 			}
 			aIndex += aStep;
 			bIndex += bStep;
 		}
 
-		if (aIndex == aMax || bIndex == bMax)
+		if (aIndex == aMax || bIndex == bMax) {
 			return false;
+		}
 
 		if (read) {
 			if (oldB != bIndex) {

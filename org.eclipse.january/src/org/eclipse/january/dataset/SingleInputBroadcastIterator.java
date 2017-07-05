@@ -180,13 +180,15 @@ public class SingleInputBroadcastIterator extends IndexIterator {
 		for (; j >= 0; j--) {
 			pos[j]++;
 			aIndex += aStride[j];
-			if (oDelta != null)
+			if (oDelta != null) {
 				oIndex += oStride[j];
+			}
 			if (pos[j] >= maxShape[j]) {
 				pos[j] = 0;
 				aIndex -= aDelta[j]; // reset these dimensions
-				if (oDelta != null)
+				if (oDelta != null) {
 					oIndex -= oDelta[j];
+				}
 			} else {
 				break;
 			}
@@ -196,15 +198,17 @@ public class SingleInputBroadcastIterator extends IndexIterator {
 				return false;
 			}
 			aIndex += aStep;
-			if (oDelta != null)
+			if (oDelta != null) {
 				oIndex += oStep;
+			}
 		}
 		if (outputA) {
 			oIndex = aIndex;
 		}
 
-		if (aIndex == aMax)
+		if (aIndex == aMax) {
 			return false; // used for zero-rank datasets
+		}
 
 		if (oldA != aIndex) {
 			if (asDouble) {
@@ -231,8 +235,9 @@ public class SingleInputBroadcastIterator extends IndexIterator {
 
 	@Override
 	public void reset() {
-		for (int i = 0; i <= endrank; i++)
+		for (int i = 0; i <= endrank; i++) {
 			pos[i] = 0;
+		}
 
 		if (endrank >= 0) {
 			pos[endrank] = -1;
