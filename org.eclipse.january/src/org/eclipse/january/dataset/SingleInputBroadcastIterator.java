@@ -251,8 +251,6 @@ public class SingleInputBroadcastIterator extends IndexIterator {
 		// for zero-ranked datasets
 		if (aIndex == 0) {
 			storeCurrentValues();
-			if (aMax == aIndex)
-				aMax++;
 		}
 	}
 

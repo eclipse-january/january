@@ -136,10 +136,6 @@ public class BroadcastSingleIterator extends BroadcastSelfIterator {
 			if (read) {
 				storeCurrentValues();
 			}
-			if (aMax == aIndex)
-				aMax++;
-			if (bMax == bIndex)
-				bMax++;
 		}
 	}
 }

@@ -200,12 +200,6 @@ public class BroadcastPairIterator extends BroadcastIterator {
 			if (read) {
 				storeCurrentValues();
 			}
-			if (aMax == aIndex) {
-				aMax++;
-			}
-			if (bMax == bIndex) {
-				bMax++;
-			}
 		}
 	}
 }
