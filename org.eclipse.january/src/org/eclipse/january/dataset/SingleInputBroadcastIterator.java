@@ -143,20 +143,8 @@ public class SingleInputBroadcastIterator extends IndexIterator {
 				oDelta[j] = oStride[j] * maxShape[j];
 			}
 		}
-		if (endrank < 0) {
-			aMax = aStep;
-		} else {
-			aMax = 0; // first non-zero delta (as broadcasting will make some zero)
-			for (int j = 0; j <= endrank; j++) {
-				int d = aDelta[j];
-				if (d != 0) {
-					aMax = d;
-					break;
-				}
-			}
-		}
 		aStart = aDataset.getOffset();
-		aMax += aStart;
+		aMax = endrank < 0 ? aStep + aStart: Integer.MIN_VALUE;
 		oStart = oDelta == null ? 0 : oDataset.getOffset();
 		asDouble = aDataset.hasFloatingPointElements();
 		reset();
@@ -205,7 +193,6 @@ public class SingleInputBroadcastIterator extends IndexIterator {
 		}
 		if (j == -1) {
 			if (endrank >= 0) {
-				aIndex = aMax;
 				return false;
 			}
 			aIndex += aStep;
