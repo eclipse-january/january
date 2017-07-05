@@ -49,8 +49,9 @@ public class IntegerIterator extends IndexIterator {
 	public boolean hasNext() {
 		while (iter.hasNext()) {
 			index = istep*indices.getAbs(iter.index);
-			if (index < 0)
+			if (index < 0) {
 				index += imax;
+			}
 			return true;
 		}
 		return false;

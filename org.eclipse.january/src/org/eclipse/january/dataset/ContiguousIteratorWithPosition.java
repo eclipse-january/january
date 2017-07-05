@@ -71,7 +71,6 @@ public class ContiguousIteratorWithPosition extends IndexIterator {
 			}
 		}
 		if (j == -1 && endrank >= 0) {
-			index = imax;
 			return false;
 		}
 

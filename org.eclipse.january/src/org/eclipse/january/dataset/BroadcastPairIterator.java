@@ -95,25 +95,10 @@ public class BroadcastPairIterator extends BroadcastIterator {
 				oDelta[j] = oStride[j] * maxShape[j];
 			}
 		}
-		if (endrank < 0) {
-			aMax = aStep;
-			bMax = bStep;
-		} else {
-			aMax = Integer.MIN_VALUE; // use max delta
-			bMax = Integer.MIN_VALUE;
-			for (int j = endrank; j >= 0; j--) {
-				if (aDelta[j] > aMax) {
-					aMax = aDelta[j];
-				}
-				if (bDelta[j] > bMax) {
-					bMax = bDelta[j];
-				}
-			}
-		}
 		aStart = aDataset.getOffset();
-		aMax += aStart;
 		bStart = bDataset.getOffset();
-		bMax += bStart;
+		aMax = endrank < 0 ? aStep + aStart: Integer.MIN_VALUE;
+		bMax = endrank < 0 ? bStep + bStart: Integer.MIN_VALUE;
 		oStart = oDelta == null ? 0 : oDataset.getOffset();
 		reset();
 	}
@@ -127,28 +112,29 @@ public class BroadcastPairIterator extends BroadcastIterator {
 			pos[j]++;
 			aIndex += aStride[j];
 			bIndex += bStride[j];
-			if (oDelta != null)
+			if (oDelta != null) {
 				oIndex += oStride[j];
+			}
 			if (pos[j] >= maxShape[j]) {
 				pos[j] = 0;
 				aIndex -= aDelta[j]; // reset these dimensions
 				bIndex -= bDelta[j];
-				if (oDelta != null)
+				if (oDelta != null) {
 					oIndex -= oDelta[j];
+				}
 			} else {
 				break;
 			}
 		}
 		if (j == -1) {
 			if (endrank >= 0) {
-				aIndex = aMax;
-				bIndex = bMax;
 				return false;
 			}
 			aIndex += aStep;
 			bIndex += bStep;
-			if (oDelta != null)
+			if (oDelta != null) {
 				oIndex += oStep;
+			}
 		}
 		if (outputA) {
 			oIndex = aIndex;
@@ -156,8 +142,9 @@ public class BroadcastPairIterator extends BroadcastIterator {
 			oIndex = bIndex;
 		}
 
-		if (aIndex == aMax || bIndex == bMax)
+		if (aIndex == aMax || bIndex == bMax) {
 			return false;
+		}
 
 		if (read) {
 			if (oldA != aIndex) {
@@ -213,10 +200,12 @@ public class BroadcastPairIterator extends BroadcastIterator {
 			if (read) {
 				storeCurrentValues();
 			}
-			if (aMax == aIndex)
+			if (aMax == aIndex) {
 				aMax++;
-			if (bMax == bIndex)
+			}
+			if (bMax == bIndex) {
 				bMax++;
+			}
 		}
 	}
 }
