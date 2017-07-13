@@ -26,7 +26,6 @@ import org.eclipse.january.dataset.IndexIterator;
 import org.eclipse.january.dataset.IntegerDataset;
 import org.eclipse.january.dataset.LongDataset;
 import org.eclipse.january.dataset.Maths;
-import org.eclipse.january.dataset.NullStorelessUnivariateStatistic;
 import org.eclipse.january.metadata.Dirtiable;
 import org.eclipse.january.metadata.StatisticsMetadata;
 
