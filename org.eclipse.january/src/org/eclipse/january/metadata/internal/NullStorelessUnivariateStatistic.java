@@ -9,10 +9,14 @@
 
 package org.eclipse.january.metadata.internal;
 
+import java.io.Serializable;
+
 import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import org.apache.commons.math3.stat.descriptive.StorelessUnivariateStatistic;
 
-public class NullStorelessUnivariateStatistic implements StorelessUnivariateStatistic {
+public class NullStorelessUnivariateStatistic implements StorelessUnivariateStatistic, Serializable {
+
+	private static final long serialVersionUID = -2352603548832179017L;
 
 	@Override
 	public double evaluate(double[] arg0) throws MathIllegalArgumentException {
