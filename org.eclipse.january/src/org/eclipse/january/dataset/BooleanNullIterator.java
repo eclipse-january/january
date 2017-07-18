@@ -15,6 +15,7 @@ import java.util.List;
 /**
  * Class to run over a single dataset with NumPy broadcasting to promote shapes
  * which have lower rank and outputs to a second dataset
+ * @since 2.1
  */
 public class BooleanNullIterator extends BooleanIteratorBase {
 
@@ -98,7 +99,7 @@ public class BooleanNullIterator extends BooleanIteratorBase {
 				oDelta[j] = oStride[j] * maxShape[j];
 			}
 		}
-		
+
 		aStart = aDataset.getOffset();
 		aMax = endrank < 0 ? aStep + aStart : Integer.MIN_VALUE;
 		oStart = oDelta == null ? 0 : oDataset.getOffset();
