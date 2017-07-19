@@ -19,7 +19,7 @@ import org.apache.commons.math3.complex.Complex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public final class DTypeUtils {
+public class DTypeUtils {
 	protected static final Logger logger = LoggerFactory.getLogger(DTypeUtils.class);
 
 	private static final Map<Class<? extends Dataset>, Integer> interface2DTypes = createInterfaceMap(); // map interface to dataset type
@@ -102,7 +102,7 @@ public final class DTypeUtils {
 		} else if (dtype == Dataset.RGB) {
 			return "RGB";
 		}
-	
+
 		String prefix = itemSize > 1 ? ("ARRAY of " + itemSize + " ") : "";
 		if (isDTypeFloating(dtype)) {
 			return prefix + "FLOAT" + bytes*8;
@@ -117,13 +117,13 @@ public final class DTypeUtils {
 		case Dataset.OBJECT:
 			return prefix + "OBJECT";
 		}
-	
+
 		return prefix + "INT" + bytes*8;
 	}
 
 	/**
 	 * @param clazz dataset class
-	 * @return dataset type for dataset class 
+	 * @return dataset type for dataset class
 	 */
 	public static int getDType(Class<? extends Dataset> clazz) {
 		if (!interface2DTypes.containsKey(clazz)) {
@@ -160,7 +160,7 @@ public final class DTypeUtils {
 
 	/**
 	 * Find dataset type that best fits given types The best type takes into account complex and array datasets
-	 * 
+	 *
 	 * @param atype
 	 *            first dataset type
 	 * @param btype
@@ -169,10 +169,10 @@ public final class DTypeUtils {
 	 */
 	public static int getBestDType(final int atype, final int btype) {
 		int besttype;
-	
+
 		int a = atype >= Dataset.ARRAYINT8 ? atype / Dataset.ARRAYMUL : atype;
 		int b = btype >= Dataset.ARRAYINT8 ? btype / Dataset.ARRAYMUL : btype;
-	
+
 		if (isDTypeFloating(a)) {
 			if (!isDTypeFloating(b)) {
 				b = getBestFloatDType(b);
@@ -187,21 +187,21 @@ public final class DTypeUtils {
 			}
 		}
 		besttype = a > b ? a : b;
-	
+
 		if (atype >= Dataset.ARRAYINT8 || btype >= Dataset.ARRAYINT8) {
 			if (besttype >= Dataset.COMPLEX64) {
 				throw new IllegalArgumentException("Complex type cannot be promoted to compound type");
 			}
 			besttype *= Dataset.ARRAYMUL;
 		}
-	
+
 		return besttype;
 	}
 
 	/**
 	 * Find floating point dataset type that best fits given types. The best type takes into account complex and array
 	 * datasets
-	 * 
+	 *
 	 * @param otype
 	 *            old dataset type
 	 * @return best dataset type
@@ -233,14 +233,14 @@ public final class DTypeUtils {
 			btype = otype; // for non-numeric datasets, preserve type
 			break;
 		}
-	
+
 		return btype;
 	}
 
 	/**
 	 * Find floating point dataset type that best fits given class The best type takes into account complex and array
 	 * datasets
-	 * 
+	 *
 	 * @param cls
 	 *            of an item or element
 	 * @return best dataset type
@@ -251,7 +251,7 @@ public final class DTypeUtils {
 
 	/**
 	 * Get dataset type from an element class
-	 * 
+	 *
 	 * @param cls element class
 	 * @return dataset type
 	 */
@@ -261,7 +261,7 @@ public final class DTypeUtils {
 
 	/**
 	 * Get dataset type from an element class
-	 * 
+	 *
 	 * @param cls element class
 	 * @return dataset type
 	 */
@@ -280,17 +280,17 @@ public final class DTypeUtils {
 	/**
 	 * Get dataset type from an object. The following are supported: Java Number objects, Apache common math Complex
 	 * objects, Java arrays and lists
-	 * 
+	 *
 	 * @param obj
 	 * @return dataset type
 	 */
 	public static int getDTypeFromObject(Object obj) {
 		int dtype = -1;
-	
+
 		if (obj == null) {
 			return dtype;
 		}
-	
+
 		if (obj instanceof List<?>) {
 			List<?> jl = (List<?>) obj;
 			int l = jl.size();
@@ -337,7 +337,7 @@ public final class DTypeUtils {
 	/**
 	 * The largest dataset type suitable for a summation of around a few thousand items without changing from the "kind"
 	 * of dataset
-	 * 
+	 *
 	 * @param otype
 	 * @return largest dataset type available for given dataset type
 	 */
@@ -449,7 +449,7 @@ public final class DTypeUtils {
 	 */
 	public static int getItemBytes(final int dtype, final int isize) {
 		int size;
-	
+
 		switch (dtype) {
 		case Dataset.BOOL:
 			size = 1; // How is this defined?
@@ -485,7 +485,7 @@ public final class DTypeUtils {
 			size = 0;
 			break;
 		}
-	
+
 		return size * isize;
 	}
 
@@ -519,6 +519,7 @@ public final class DTypeUtils {
 	/**
 	 * @param d
 	 * @return returns a long or 0 if d is NaN or infinite
+	 * @since 2.1
 	 */
 	public static final long toLong(double d) {
 		if (Double.isInfinite(d) || Double.isNaN(d))
@@ -529,6 +530,7 @@ public final class DTypeUtils {
 	/**
 	 * @param d
 	 * @return returns a long or 0 if d is NaN or infinite
+	 * @since 2.1
 	 */
 	public static final long toLong(float d) {
 		if (Float.isInfinite(d) || Float.isNaN(d))
@@ -628,7 +630,7 @@ public final class DTypeUtils {
 
 	public static double[] toDoubleArray(final Object b, final int itemSize) {
 		double[] result = null;
-	
+
 		// ensure array is of given length
 		if (b instanceof Number) {
 			result = new double[itemSize];
@@ -701,13 +703,13 @@ public final class DTypeUtils {
 			}
 			return toDoubleArray(db.getObject(new int[db.getRank()]), itemSize);
 		}
-	
+
 		return result;
 	}
 
 	public static float[] toFloatArray(final Object b, final int itemSize) {
 		float[] result = null;
-	
+
 		if (b instanceof Number) {
 			result = new float[itemSize];
 			final float val = ((Number) b).floatValue();
@@ -785,13 +787,13 @@ public final class DTypeUtils {
 			}
 			return toFloatArray(db.getObject(new int[db.getRank()]), itemSize);
 		}
-	
+
 		return result;
 	}
 
 	public static long[] toLongArray(final Object b, final int itemSize) {
 		long[] result = null;
-	
+
 		if (b instanceof Number) {
 			result = new long[itemSize];
 			final long val = toLong(b);
@@ -870,13 +872,13 @@ public final class DTypeUtils {
 			}
 			return toLongArray(db.getObject(new int[db.getRank()]), itemSize);
 		}
-	
+
 		return result;
 	}
 
 	public static int[] toIntegerArray(final Object b, final int itemSize) {
 		int[] result = null;
-	
+
 		if (b instanceof Number) {
 			result = new int[itemSize];
 			final int val = (int) toLong(b);
@@ -955,13 +957,13 @@ public final class DTypeUtils {
 			}
 			return toIntegerArray(db.getObject(new int[db.getRank()]), itemSize);
 		}
-	
+
 		return result;
 	}
 
 	public static short[] toShortArray(final Object b, final int itemSize) {
 		short[] result = null;
-	
+
 		if (b instanceof Number) {
 			result = new short[itemSize];
 			final short val = (short) toLong(b);
@@ -1040,13 +1042,13 @@ public final class DTypeUtils {
 			}
 			return toShortArray(db.getObject(new int[db.getRank()]), itemSize);
 		}
-	
+
 		return result;
 	}
 
 	public static byte[] toByteArray(final Object b, final int itemSize) {
 		byte[] result = null;
-	
+
 		if (b instanceof Number) {
 			result = new byte[itemSize];
 			final byte val = (byte) toLong(b);
@@ -1125,7 +1127,7 @@ public final class DTypeUtils {
 			}
 			return toByteArray(db.getObject(new int[db.getRank()]), itemSize);
 		}
-	
+
 		return result;
 	}
 
@@ -1195,7 +1197,7 @@ public final class DTypeUtils {
 			IDataset db = (Dataset) b;
 			return db.getSize();
 		}
-	
+
 		throw new IllegalArgumentException("Cannot find length as object not supported");
 	}
 

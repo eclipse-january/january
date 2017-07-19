@@ -1,6 +1,9 @@
 package org.eclipse.january.dataset;
 
-public abstract class BooleanIteratorBase extends BooleanIterator {
+/**
+ * @since 2.1
+ */
+abstract class BooleanIteratorBase extends BooleanIterator {
 
 	protected int[] aShape;
 	protected int[] aStride;

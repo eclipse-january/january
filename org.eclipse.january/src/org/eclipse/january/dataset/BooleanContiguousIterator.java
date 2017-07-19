@@ -11,6 +11,7 @@ package org.eclipse.january.dataset;
 
 /**
  * Class to run over a pair of contiguous datasets
+ * @since 2.1
  */
 public class BooleanContiguousIterator extends BooleanIterator {
 	private final int cMax; // maximum index in array
@@ -49,13 +50,13 @@ public class BooleanContiguousIterator extends BooleanIterator {
 		do {
 			index += aStep;
 			cIndex += cStep;
-	
+
 			if (outputA) {
 				oIndex = index;
 			} else {
 				oIndex += oStep;
 			}
-	
+
 			if (index >= aMax || cIndex >= cMax) {
 				return false;
 			}
