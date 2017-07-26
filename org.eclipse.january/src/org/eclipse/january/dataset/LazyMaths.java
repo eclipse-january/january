@@ -24,6 +24,13 @@ import org.slf4j.LoggerFactory;
  * Mathematics class for lazy datasets
  */
 public final class LazyMaths {
+
+	private static final String INVALID_AXIS_ERROR = "Axis argument is outside allowed range";
+
+	private LazyMaths() {
+
+	}
+
 	/**
 	 * Setup the logging facilities
 	 */
@@ -82,7 +89,7 @@ public final class LazyMaths {
 		ILazyDataset rv = data;
 		
 		if (ignore) {
-			List<Integer> goodAxes = new ArrayList<Integer>();
+			List<Integer> goodAxes = new ArrayList<>();
 			for (int i = 0 ; i < data.getRank() ; i++) {
 				boolean found = false;
 				for (int j = 0 ; j < axes.length ; j++) {
@@ -174,14 +181,13 @@ public final class LazyMaths {
 		return mean(0, Integer.MAX_VALUE -1 , data, ignoreAxes);
 	}
 
-	@SuppressWarnings("deprecation")
 	private static Dataset prepareDataset(int axis, int[] shape, int[][] sliceInfo) {
 		int rank = shape.length;
 		if (axis < 0)
 			axis += rank;
 		if (axis < 0 || axis >= rank) {
-			logger.error("Axis argument is outside allowed range");
-			throw new IllegalArgumentException("Axis argument is outside allowed range");
+			logger.error(INVALID_AXIS_ERROR);
+			throw new IllegalArgumentException(INVALID_AXIS_ERROR);
 		}
 
 		sliceInfo[0] = new int[rank];
@@ -192,6 +198,6 @@ public final class LazyMaths {
 		final int[] nshape = shape.clone();
 		nshape[axis] = 1;
 
-		return DatasetFactory.zeros(nshape, Dataset.FLOAT64);
+		return DatasetFactory.zeros(DoubleDataset.class, nshape);
 	}
 }
