@@ -36,6 +36,105 @@ public final class LazyMaths {
 	 */
 	protected static final Logger logger = LoggerFactory.getLogger(LazyMaths.class);
 
+	// Uncomment this next line when minimum JDK is set to 1.8
+	// @FunctionalInterface
+	private static interface IMathOperation {
+		double perform(IDataset oneDSlice);
+	}
+
+	private enum MathOperation implements IMathOperation {
+		// use lambdas here when moving to Java 8
+		MAX(new IMathOperation() {
+			@Override
+			public double perform(IDataset oneDSlice) {
+				return oneDSlice.max().doubleValue();
+			}
+		}),
+		MIN(new IMathOperation() {
+			@Override
+			public double perform(IDataset oneDSlice) {
+				return oneDSlice.min().doubleValue();
+			}
+		});
+
+		private final IMathOperation operation;
+
+		private MathOperation(IMathOperation operation) {
+			this.operation = operation;
+		}
+		@Override
+		public double perform(IDataset oneDSlice) {
+			return operation.perform(oneDSlice);
+		}
+
+	}
+
+	private static Dataset maxmin(final ILazyDataset data, int axis, MathOperation operation) throws DatasetException {
+		int rank = data.getRank();
+		if (axis < 0)
+			axis += rank;
+		if (axis < 0 || axis >= rank) {
+			logger.error(INVALID_AXIS_ERROR);
+			throw new IllegalArgumentException(INVALID_AXIS_ERROR);
+		}
+
+		final int[] oldShape = data.getShape();
+		final int[] newShape = new int[rank-1];
+		int counter = 0;
+		int newShapeProduct = 1;
+		for (int i = 0 ; i < rank ; i++) {
+			if (i == axis)
+				continue;
+			newShape[counter++] = oldShape[i];
+			newShapeProduct *= oldShape[i];
+		}
+		DoubleDataset result = DatasetFactory.zeros(DoubleDataset.class, newShape);
+
+		final int[] oldStart = new int[rank];
+		oldStart[axis] = 0;
+		final int[] oldStop = new int[rank];
+		oldStop[axis] = oldShape[axis];
+		final int[] oldStep = new int[rank];
+		Arrays.fill(oldStep, 1);
+		final int[] newPos = new int[rank-1];
+		for (int i = 0 ; i < newShapeProduct ; i++) {
+			// get slice parameters
+			int iCopy = i;
+			for (int j = rank-1 ; j >= 0 ; j--) {
+				if (j == axis)
+					continue;
+				int val = iCopy % oldShape[j];
+				oldStart[j] = val;
+				oldStop[j] = val + 1;
+				newPos[j > axis ? j - 1 : j] = val;
+				iCopy = iCopy / oldShape[j];
+			}
+			IDataset oldSlice = data.getSlice(oldStart, oldStop, oldStep);
+			result.setItem(operation.perform(oldSlice), newPos);
+		}
+		return result;
+	}
+
+	/**
+	 * @param data
+	 * @param axis (can be negative)
+	 * @return maximum along axis in lazy dataset
+	 * @throws DatasetException
+	 */
+	public static Dataset max(final ILazyDataset data, int axis) throws DatasetException {
+		return maxmin(data, axis, MathOperation.MAX);
+	}
+
+	/**
+	 * @param data
+	 * @param axis (can be negative)
+	 * @return minimum along axis in lazy dataset
+	 * @throws DatasetException
+	 */
+	public static Dataset min(final ILazyDataset data, int axis) throws DatasetException {
+		return maxmin(data, axis, MathOperation.MIN);
+	}
+
 	/**
 	 * @param data
 	 * @param axis (can be negative)

@@ -19,6 +19,38 @@ import org.junit.Test;
 public class LazyMathsTest {
 
 	@Test
+	public void testMax() throws Exception {
+		// from https://docs.scipy.org/doc/numpy/reference/generated/numpy.amax.html
+		Dataset a = DatasetFactory.createRange(DoubleDataset.class, 4).reshape(2, 2);
+
+		TestUtils.assertDatasetEquals(a.max(0), LazyMaths.max(a, 0));
+		TestUtils.assertDatasetEquals(a.max(1), LazyMaths.max(a, 1));
+
+		Dataset b = DatasetFactory.createRange(DoubleDataset.class, 256).reshape(4, 4, 4, 4);
+		for (int i = 0 ; i < 4 ; i++) {
+			Dataset expected = b.max(i);
+			Dataset actual = LazyMaths.max(b, i);
+			TestUtils.assertDatasetEquals(expected, actual);
+		}
+	}
+
+	@Test
+	public void testMin() throws Exception {
+		// from https://docs.scipy.org/doc/numpy/reference/generated/numpy.amax.html
+		Dataset a = DatasetFactory.createRange(DoubleDataset.class, 4).reshape(2, 2);
+
+		TestUtils.assertDatasetEquals(a.min(0), LazyMaths.min(a, 0));
+		TestUtils.assertDatasetEquals(a.min(1), LazyMaths.min(a, 1));
+
+		Dataset b = DatasetFactory.createRange(DoubleDataset.class, 256).reshape(4, 4, 4, 4);
+		for (int i = 0 ; i < 4 ; i++) {
+			Dataset expected = b.min(i);
+			Dataset actual = LazyMaths.min(b, i);
+			TestUtils.assertDatasetEquals(expected, actual);
+		}
+	}
+
+	@Test
 	public void testSum() throws Exception {
 		Dataset a = DatasetFactory.createRange(DoubleDataset.class, 100);
 
