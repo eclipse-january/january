@@ -83,37 +83,22 @@ public final class LazyMaths {
 		final int[] oldShape = data.getShape();
 		final int[] newShape = new int[rank-1];
 		int counter = 0;
-		int newShapeProduct = 1;
 		for (int i = 0 ; i < rank ; i++) {
 			if (i == axis)
 				continue;
 			newShape[counter++] = oldShape[i];
-			newShapeProduct *= oldShape[i];
 		}
 		DoubleDataset result = DatasetFactory.zeros(DoubleDataset.class, newShape);
 
-		final int[] oldStart = new int[rank];
-		oldStart[axis] = 0;
-		final int[] oldStop = new int[rank];
-		oldStop[axis] = oldShape[axis];
-		final int[] oldStep = new int[rank];
-		Arrays.fill(oldStep, 1);
-		final int[] newPos = new int[rank-1];
-		for (int i = 0 ; i < newShapeProduct ; i++) {
-			// get slice parameters
-			int iCopy = i;
-			for (int j = rank-1 ; j >= 0 ; j--) {
-				if (j == axis)
-					continue;
-				int val = iCopy % oldShape[j];
-				oldStart[j] = val;
-				oldStop[j] = val + 1;
-				newPos[j > axis ? j - 1 : j] = val;
-				iCopy = iCopy / oldShape[j];
-			}
-			IDataset oldSlice = data.getSlice(oldStart, oldStop, oldStep);
-			result.setItem(operation.perform(oldSlice), newPos);
+		SliceND sa = new SliceND(oldShape);
+		SliceNDIterator it = new SliceNDIterator(sa, axis);
+		
+		while (it.hasNext()) {
+			SliceND currentSlice = it.getCurrentSlice();
+			IDataset slice = data.getSlice(currentSlice);
+			result.setItem(operation.perform(slice), it.getUsedPos());
 		}
+		
 		return result;
 	}
 
