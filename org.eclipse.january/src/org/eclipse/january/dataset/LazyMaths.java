@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 public final class LazyMaths {
 
 	private static final String INVALID_AXIS_ERROR = "Axis argument is outside allowed range";
+	private static boolean allowDatasetMaths = true; // ensure this is set to false before running tests!
 
 	private LazyMaths() {
 
@@ -123,6 +124,8 @@ public final class LazyMaths {
 	 * @throws DatasetException
 	 */
 	public static Dataset max(final ILazyDataset data, int axis) throws DatasetException {
+		if (allowDatasetMaths && data instanceof Dataset)
+			return ((Dataset) data).max(axis);
 		return maxmin(data, axis, MathOperation.MAX);
 	}
 
@@ -133,6 +136,8 @@ public final class LazyMaths {
 	 * @throws DatasetException
 	 */
 	public static Dataset min(final ILazyDataset data, int axis) throws DatasetException {
+		if (allowDatasetMaths && data instanceof Dataset)
+			return ((Dataset) data).min(axis);
 		return maxmin(data, axis, MathOperation.MIN);
 	}
 
@@ -143,7 +148,7 @@ public final class LazyMaths {
 	 * @throws DatasetException 
 	 */
 	public static Dataset sum(final ILazyDataset data, int axis) throws DatasetException {
-		if (data instanceof Dataset)
+		if (allowDatasetMaths && data instanceof Dataset)
 			return ((Dataset) data).sum(axis);
 		int[][] sliceInfo = new int[3][];
 		int[] shape = data.getShape();
@@ -299,5 +304,19 @@ public final class LazyMaths {
 		nshape[axis] = 1;
 
 		return DatasetFactory.zeros(DoubleDataset.class, nshape);
+	}
+
+	/**
+	 * @return the allowDatasetMaths
+	 */
+	public static boolean isAllowDatasetMaths() {
+		return allowDatasetMaths;
+	}
+
+	/**
+	 * @param allowDatasetMaths the allowDatasetMaths to set
+	 */
+	public static void setAllowDatasetMaths(boolean allowDatasetMaths) {
+		LazyMaths.allowDatasetMaths = allowDatasetMaths;
 	}
 }

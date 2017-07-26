@@ -14,9 +14,16 @@ import org.eclipse.january.dataset.Dataset;
 import org.eclipse.january.dataset.DatasetFactory;
 import org.eclipse.january.dataset.LazyMaths;
 import org.eclipse.january.dataset.Maths;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class LazyMathsTest {
+
+	@BeforeClass
+	public static void init() {
+		// ensure we will not be using the faster Dataset methods!
+		LazyMaths.setAllowDatasetMaths(false);
+	}
 
 	@Test
 	public void testMax() throws Exception {
@@ -36,7 +43,6 @@ public class LazyMathsTest {
 
 	@Test
 	public void testMin() throws Exception {
-		// from https://docs.scipy.org/doc/numpy/reference/generated/numpy.amax.html
 		Dataset a = DatasetFactory.createRange(DoubleDataset.class, 4).reshape(2, 2);
 
 		TestUtils.assertDatasetEquals(a.min(0), LazyMaths.min(a, 0));
