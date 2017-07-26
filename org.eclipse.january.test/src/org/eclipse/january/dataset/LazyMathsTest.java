@@ -57,6 +57,21 @@ public class LazyMathsTest {
 	}
 
 	@Test
+	public void testMedian() throws Exception {
+		Dataset a = DatasetFactory.createRange(DoubleDataset.class, 4).reshape(2, 2);
+
+		TestUtils.assertDatasetEquals(Stats.median(a, 0), LazyMaths.median(a, 0));
+		TestUtils.assertDatasetEquals(Stats.median(a, 1), LazyMaths.median(a, 1));
+
+		Dataset b = DatasetFactory.createRange(DoubleDataset.class, 256).reshape(4, 4, 4, 4);
+		for (int i = 0 ; i < 4 ; i++) {
+			Dataset expected = Stats.median(b, i);
+			Dataset actual = LazyMaths.median(b, i);
+			TestUtils.assertDatasetEquals(expected, actual);
+		}
+	}
+
+	@Test
 	public void testSum() throws Exception {
 		Dataset a = DatasetFactory.createRange(DoubleDataset.class, 100);
 
