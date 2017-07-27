@@ -19,8 +19,8 @@ import java.util.List;
 public class DatasetFactory {
 
 	/**
-	 * Create dataset with items ranging from 0 to given stop in steps of 1
-	 * @param stop
+	 * Create dataset with items ranging from 0 up to given stop in steps of 1
+	 * @param stop stop value is <strong>not</strong> included
 	 * @return a new double dataset of given shape and type, filled with values determined by parameters
 	 */
 	public static DoubleDataset createRange(final double stop) {
@@ -29,8 +29,8 @@ public class DatasetFactory {
 
 
 	/**
-	 * Create dataset with items ranging from 0 to given stop in steps of 1
-	 * @param stop
+	 * Create dataset with items ranging from 0 up to given stop in steps of 1
+	 * @param stop stop value is <strong>not</strong> included
 	 * @param dtype
 	 * @return a new dataset of given shape and type, filled with values determined by parameters
 	 * 
@@ -43,9 +43,9 @@ public class DatasetFactory {
 	}
 
 	/**
-	 * Create dataset with items ranging from given start to given stop in given steps
+	 * Create dataset with items ranging from given start up to given stop in given steps
 	 * @param start
-	 * @param stop
+	 * @param stop stop value is <strong>not</strong> included
 	 * @param step spacing between items
 	 * @param dtype
 	 * @return a new 1D dataset of given type, filled with values determined by parameters
@@ -83,9 +83,9 @@ public class DatasetFactory {
 	}
 
 	/**
-	 * Create compound dataset with items of given size ranging from 0 to given stop in steps of 1
+	 * Create compound dataset with items of given size ranging from 0 up to given stop in steps of 1
 	 * @param itemSize
-	 * @param stop
+	 * @param stop stop value is <strong>not</strong> included
 	 * @param dtype
 	 * @return a new dataset of given shape and type, filled with values determined by parameters
 	 * 
@@ -98,10 +98,10 @@ public class DatasetFactory {
 	}
 
 	/**
-	 * Create compound dataset with items of given size ranging from given start to given stop in given steps
+	 * Create compound dataset with items of given size ranging from given start up to given stop in given steps
 	 * @param itemSize
 	 * @param start
-	 * @param stop
+	 * @param stop stop value is <strong>not</strong> included
 	 * @param step spacing between items
 	 * @param dtype
 	 * @return a new 1D dataset of given type, filled with values determined by parameters
@@ -755,7 +755,7 @@ public class DatasetFactory {
 	 * Create a 1D dataset of linearly spaced values in closed interval
 	 * 
 	 * @param start
-	 * @param stop
+	 * @param stop stop value is included
 	 * @param length number of points
 	 * @param dtype
 	 * @return dataset with linearly spaced values
@@ -790,7 +790,7 @@ public class DatasetFactory {
 	 * spaced sequence of points
 	 * 
 	 * @param start
-	 * @param stop
+	 * @param stop stop value is included
 	 * @param length number of points
 	 * @param base
 	 * @param dtype
@@ -820,9 +820,9 @@ public class DatasetFactory {
 	}
 
 	/**
-	 * Create dataset with items ranging from 0 to given stop in steps of 1
+	 * Create dataset with items ranging from 0 up to given stop in steps of 1
 	 * @param clazz
-	 * @param stop
+	 * @param stop stop value is <strong>not</strong> included
 	 * @return a new dataset of given shape and type, filled with values determined by parameters
 	 */
 	@SuppressWarnings("unchecked")
@@ -831,10 +831,10 @@ public class DatasetFactory {
 	}
 
 	/**
-	 * Create dataset with items ranging from given start to given stop in given steps
+	 * Create dataset with items ranging from given start up to given stop in given steps
 	 * @param clazz dataset class
 	 * @param start
-	 * @param stop
+	 * @param stop stop value is <strong>not</strong> included
 	 * @param step spacing between items
 	 * @return a new 1D dataset of given class, filled with values determined by parameters
 	 */
@@ -1005,7 +1005,7 @@ public class DatasetFactory {
 	 * 
 	 * @param clazz dataset class
 	 * @param start
-	 * @param stop
+	 * @param stop stop value is included
 	 * @param length number of points
 	 * @return dataset with linearly spaced values
 	 */
@@ -1020,7 +1020,7 @@ public class DatasetFactory {
 	 * spaced sequence of points
 	 * 
 	 * @param start
-	 * @param stop
+	 * @param stop stop value is included
 	 * @param length number of points
 	 * @param base
 	 * @return dataset with logarithmically spaced values
