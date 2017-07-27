@@ -27,6 +27,8 @@ import org.slf4j.LoggerFactory;
 public final class LazyMaths {
 
 	private static final String INVALID_AXIS_ERROR = "Axis argument is outside allowed range";
+	private static final String DUPLICATE_AXIS_ERROR = "Axis arguments must be unique";
+	private static final String TOO_MANY_AXES_ERROR = "Number of axes cannot be greater than the rank";
 	private static boolean allowDatasetMaths = true; // ensure this is set to false before running tests!
 
 	private LazyMaths() {
@@ -70,6 +72,7 @@ public final class LazyMaths {
 		private MathOperation(IMathOperation operation) {
 			this.operation = operation;
 		}
+		
 		@Override
 		public double perform(IDataset oneDSlice) {
 			return operation.perform(oneDSlice);
@@ -77,27 +80,45 @@ public final class LazyMaths {
 
 	}
 
-	private static Dataset maxmin(final ILazyDataset data, int axis, MathOperation operation) throws DatasetException {
+	private static Dataset maxmin(final ILazyDataset data, MathOperation operation, int...axes) throws DatasetException {
+		Arrays.sort(axes); // ensure they are properly sorted
+		
 		int rank = data.getRank();
-		if (axis < 0)
-			axis += rank;
-		if (axis < 0 || axis >= rank) {
-			logger.error(INVALID_AXIS_ERROR);
-			throw new IllegalArgumentException(INVALID_AXIS_ERROR);
+		if (rank-axes.length < 1) {
+			logger.error(TOO_MANY_AXES_ERROR);
+			throw new IllegalArgumentException(TOO_MANY_AXES_ERROR);
 		}
-
+			
+		for (int axisIndex = 0 ; axisIndex < axes.length ; axisIndex++) {
+			if (axes.length > 1 && axisIndex > 0 && axes[axisIndex] == axes[axisIndex-1]) {
+				logger.error(DUPLICATE_AXIS_ERROR);
+				throw new IllegalArgumentException(DUPLICATE_AXIS_ERROR);
+			}
+			if (axes[axisIndex] < 0)
+				axes[axisIndex] += rank;
+			if (axes[axisIndex] < 0 || axes[axisIndex] >= rank) {
+				logger.error(INVALID_AXIS_ERROR);
+				throw new IllegalArgumentException(INVALID_AXIS_ERROR);
+			}
+		}
 		final int[] oldShape = data.getShape();
-		final int[] newShape = new int[rank-1];
+		final int[] newShape = new int[rank-axes.length];
 		int counter = 0;
 		for (int i = 0 ; i < rank ; i++) {
-			if (i == axis)
-				continue;
-			newShape[counter++] = oldShape[i];
+			boolean axisFound = false;
+			for (int axis : axes) {
+				if (i == axis) {
+					axisFound = true;
+					break;
+				}
+			}
+			if (!axisFound)
+				newShape[counter++] = oldShape[i];
 		}
-		DoubleDataset result = DatasetFactory.zeros(DoubleDataset.class, newShape);
 
 		SliceND sa = new SliceND(oldShape);
-		SliceNDIterator it = new SliceNDIterator(sa, axis);
+		SliceNDIterator it = new SliceNDIterator(sa, axes);
+		DoubleDataset result = DatasetFactory.zeros(DoubleDataset.class, newShape);
 		
 		while (it.hasNext()) {
 			SliceND currentSlice = it.getCurrentSlice();
@@ -110,38 +131,38 @@ public final class LazyMaths {
 
 	/**
 	 * @param data
-	 * @param axis (can be negative)
-	 * @return maximum along axis in lazy dataset
+	 * @param axes (can be negative)
+	 * @return maximum along axes in lazy dataset
 	 * @throws DatasetException
 	 */
-	public static Dataset max(final ILazyDataset data, int axis) throws DatasetException {
-		if (allowDatasetMaths && data instanceof Dataset)
-			return ((Dataset) data).max(axis);
-		return maxmin(data, axis, MathOperation.MAX);
+	public static Dataset max(final ILazyDataset data, int... axes) throws DatasetException {
+		if (axes.length == 1 && allowDatasetMaths && data instanceof Dataset)
+			return ((Dataset) data).max(axes[0]);
+		return maxmin(data, MathOperation.MAX, axes);
 	}
 
 	/**
 	 * @param data
-	 * @param axis (can be negative)
-	 * @return minimum along axis in lazy dataset
+	 * @param axes (can be negative)
+	 * @return minimum along axes in lazy dataset
 	 * @throws DatasetException
 	 */
-	public static Dataset min(final ILazyDataset data, int axis) throws DatasetException {
-		if (allowDatasetMaths && data instanceof Dataset)
-			return ((Dataset) data).min(axis);
-		return maxmin(data, axis, MathOperation.MIN);
+	public static Dataset min(final ILazyDataset data, int... axes) throws DatasetException {
+		if (axes.length == 1 && allowDatasetMaths && data instanceof Dataset)
+			return ((Dataset) data).min(axes[0]);
+		return maxmin(data, MathOperation.MIN, axes);
 	}
 
 	/**
 	 * @param data
-	 * @param axis (can be negative)
-	 * @return median along axis in lazy dataset
+	 * @param axes (can be negative)
+	 * @return median along axes in lazy dataset
 	 * @throws DatasetException
 	 */
-	public static Dataset median(final ILazyDataset data, int axis) throws DatasetException {
-		if (allowDatasetMaths && data instanceof Dataset)
-			return Stats.median((Dataset) data, axis);
-		return maxmin(data, axis, MathOperation.MEDIAN);
+	public static Dataset median(final ILazyDataset data, int... axes) throws DatasetException {
+		if (axes.length == 1 && allowDatasetMaths && data instanceof Dataset)
+			return Stats.median((Dataset) data, axes[0]);
+		return maxmin(data, MathOperation.MEDIAN, axes);
 	}
 
 	/**
