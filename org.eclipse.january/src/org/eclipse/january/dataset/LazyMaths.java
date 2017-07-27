@@ -29,6 +29,7 @@ public final class LazyMaths {
 	private static final String INVALID_AXIS_ERROR = "Axis argument is outside allowed range";
 	private static final String DUPLICATE_AXIS_ERROR = "Axis arguments must be unique";
 	private static final String TOO_MANY_AXES_ERROR = "Number of axes cannot be greater than the rank";
+	private static final String NO_AXES_ERROR = "At least one axis must be provided";
 	private static boolean allowDatasetMaths = true; // ensure this is set to false before running tests!
 
 	private LazyMaths() {
@@ -81,6 +82,11 @@ public final class LazyMaths {
 	}
 
 	private static Dataset maxmin(final ILazyDataset data, MathOperation operation, int...axes) throws DatasetException {
+		if (axes == null || axes.length == 0) {
+			logger.error(NO_AXES_ERROR);
+			throw new IllegalArgumentException(NO_AXES_ERROR);
+		}
+			
 		Arrays.sort(axes); // ensure they are properly sorted
 		
 		int rank = data.getRank();
@@ -136,7 +142,7 @@ public final class LazyMaths {
 	 * @throws DatasetException
 	 */
 	public static Dataset max(final ILazyDataset data, int... axes) throws DatasetException {
-		if (axes.length == 1 && allowDatasetMaths && data instanceof Dataset)
+		if (axes != null && axes.length == 1 && allowDatasetMaths && data instanceof Dataset)
 			return ((Dataset) data).max(axes[0]);
 		return maxmin(data, MathOperation.MAX, axes);
 	}
@@ -148,7 +154,7 @@ public final class LazyMaths {
 	 * @throws DatasetException
 	 */
 	public static Dataset min(final ILazyDataset data, int... axes) throws DatasetException {
-		if (axes.length == 1 && allowDatasetMaths && data instanceof Dataset)
+		if (axes != null && axes.length == 1 && allowDatasetMaths && data instanceof Dataset)
 			return ((Dataset) data).min(axes[0]);
 		return maxmin(data, MathOperation.MIN, axes);
 	}
@@ -160,7 +166,7 @@ public final class LazyMaths {
 	 * @throws DatasetException
 	 */
 	public static Dataset median(final ILazyDataset data, int... axes) throws DatasetException {
-		if (axes.length == 1 && allowDatasetMaths && data instanceof Dataset)
+		if (axes != null && axes.length == 1 && allowDatasetMaths && data instanceof Dataset)
 			return Stats.median((Dataset) data, axes[0]);
 		return maxmin(data, MathOperation.MEDIAN, axes);
 	}
