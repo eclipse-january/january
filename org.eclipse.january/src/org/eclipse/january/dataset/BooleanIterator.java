@@ -20,9 +20,8 @@ public abstract class BooleanIterator extends IndexIterator {
 
 	/**
 	 * Create a boolean iterator that stops at every position in the choice dataset with a true value
-	 * @param v boolean value
 	 * @param a primary dataset
-	 * @param c choice dataset
+	 * @param c choice dataset, can be null to choose all
 	 */
 	public static BooleanIterator createIterator(Dataset a, Dataset c) {
 		return createIterator(true, a, c, null, false);
@@ -30,9 +29,8 @@ public abstract class BooleanIterator extends IndexIterator {
 
 	/**
 	 * Create a boolean iterator that stops at every position in the choice dataset with a true value
-	 * @param v boolean value
 	 * @param a primary dataset
-	 * @param c choice dataset
+	 * @param c choice dataset, can be null to choose all
 	 * @param o output dataset, can be null
 	 */
 	public static BooleanIterator createIterator(Dataset a, Dataset c, Dataset o) {
@@ -44,11 +42,11 @@ public abstract class BooleanIterator extends IndexIterator {
 	 * the given boolean
 	 * @param v boolean value
 	 * @param a primary dataset
-	 * @param c choice dataset
+	 * @param c choice dataset, can be null to choose all
 	 * @param o output dataset, can be null
 	 */
-	public static BooleanIterator createIterator(boolean value, Dataset a, Dataset c, Dataset o) {
-		return createIterator(value, a, c, o, false);
+	public static BooleanIterator createIterator(boolean v, Dataset a, Dataset c, Dataset o) {
+		return createIterator(v, a, c, o, false);
 	}
 
 	/**
@@ -56,20 +54,20 @@ public abstract class BooleanIterator extends IndexIterator {
 	 * the given boolean
 	 * @param v boolean value
 	 * @param a primary dataset
-	 * @param c choice dataset
+	 * @param c choice dataset, can be null to choose all
 	 * @param o output dataset, can be null
 	 * @param createIfNull if true create the output dataset if that is null
 	 */
-	public static BooleanIterator createIterator(boolean value, Dataset a, Dataset c, Dataset o, boolean createIfNull) {
+	public static BooleanIterator createIterator(boolean v, Dataset a, Dataset c, Dataset o, boolean createIfNull) {
 		if (c == null) {
 			return new BooleanNullIterator(a, o, createIfNull);
 		}
 		if (Arrays.equals(a.getShapeRef(), c.getShapeRef()) && a.getStrides() == null && c.getStrides() == null) {
 			if (o == null || (o.getStrides() == null && Arrays.equals(a.getShapeRef(), o.getShapeRef()))) {
-				return new BooleanContiguousIterator(value, a, c, o, createIfNull);
+				return new BooleanContiguousIterator(v, a, c, o, createIfNull);
 			}
 		}
-		return new BooleanBroadcastIterator(value, a, c, o, createIfNull);
+		return new BooleanBroadcastIterator(v, a, c, o, createIfNull);
 	}
 
 	protected final boolean value;

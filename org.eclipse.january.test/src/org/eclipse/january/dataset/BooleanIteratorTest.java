@@ -37,15 +37,17 @@ public class BooleanIteratorTest {
 		List<Integer> inds = new ArrayList<Integer>();
 
 		BooleanIterator iter = c.getBooleanIterator(s);
-		while (iter.hasNext())
+		while (iter.hasNext()) {
 			inds.add((int) c.getElementLongAbs(iter.index));
+		}
 
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromList(IntegerDataset.class, inds), DatasetFactory.createFromObject(IntegerDataset.class, new int[] {1,5,-9}, null));
 
 		iter = c.getBooleanIterator(s, false);
 		inds.clear();
-		while (iter.hasNext())
+		while (iter.hasNext()) {
 			inds.add((int) c.getElementLongAbs(iter.index));
+		}
 
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromList(IntegerDataset.class, inds), DatasetFactory.createFromObject(IntegerDataset.class, new int[] {0, 3,-7}, null));
 	}
@@ -67,9 +69,17 @@ public class BooleanIteratorTest {
 		// null choice, broadcast to output
 		testIterator(choice, count, DatasetFactory.zeros(3, size));
 
-		// choose every 7th
 		choice = DatasetFactory.zeros(size);
+
+		// choose none
 		count = 0;
+		testIterator(choice, count, null);
+
+		testIterator(choice, count, DatasetFactory.zeros(size));
+
+		testIterator(choice, count, DatasetFactory.zeros(3, size));
+
+		// choose every 7th
 		for (int i = 1; i < size; i += 7) {
 			choice.set(1, i);
 			count++;
@@ -96,12 +106,20 @@ public class BooleanIteratorTest {
 
 		// null output
 		choice = DatasetFactory.zeros(size);
+
+		// choose none
 		count = 0;
+		testBroadcastIterator(choice, count, null);
+
+		testBroadcastIterator(choice, count, DatasetFactory.zeros(size));
+
+		testBroadcastIterator(choice, count, DatasetFactory.zeros(3, size));
+
+		// choose every 7th
 		for (int i = 1; i < size; i += 7) {
 			choice.set(1, i);
 			count++;
 		}
-
 		testBroadcastIterator(choice, count, null);
 
 		testBroadcastIterator(choice, count, DatasetFactory.zeros(size));
