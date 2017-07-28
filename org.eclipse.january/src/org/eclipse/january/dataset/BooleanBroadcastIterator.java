@@ -15,6 +15,7 @@ import java.util.List;
 /**
  * Class to run over a pair of datasets in parallel with NumPy broadcasting to promote shapes
  * which have lower rank and outputs to a third dataset
+ * @since 2.1
  */
 public class BooleanBroadcastIterator extends BooleanIteratorBase {
 	private int[] cShape;
