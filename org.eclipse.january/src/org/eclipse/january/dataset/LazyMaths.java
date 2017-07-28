@@ -43,33 +43,42 @@ public final class LazyMaths {
 	// TODO Uncomment this next line when minimum JDK is set to 1.8
 	// @FunctionalInterface
 	private static interface IMathOperation {
-		double perform(IDataset oneDSlice);
+		void execute(IDataset a, IDataset b, Dataset c);
 	}
 
 	private enum MathOperation implements IMathOperation {
 		// TODO use lambdas here when moving to Java 8
 		MAX(new IMathOperation() {
 			@Override
-			public double perform(IDataset oneDSlice) {
-				return oneDSlice.max().doubleValue();
+			public void execute(IDataset a, IDataset b, Dataset c) {
+				Maths.maximum(a, b, c);
 			}
-		}),
+		}, "maximum"),
 		MIN(new IMathOperation() {
 			@Override
-			public double perform(IDataset oneDSlice) {
-				return oneDSlice.min().doubleValue();
+			public void execute(IDataset a, IDataset b, Dataset c) {
+				Maths.minimum(a, b, c);
 			}
-		});
+		}, "minimum");
 
 		private final IMathOperation operation;
+		private final String operationName;
 
-		private MathOperation(IMathOperation operation) {
+		private MathOperation(IMathOperation operation, String operationName) {
 			this.operation = operation;
+			this.operationName = operationName;
 		}
 		
 		@Override
-		public double perform(IDataset oneDSlice) {
-			return operation.perform(oneDSlice);
+		public void execute(IDataset a, IDataset b, Dataset c) {
+			operation.execute(a, b, c);
+		}
+
+		/**
+		 * @return the operationName
+		 */
+		public String getOperationName() {
+			return operationName;
 		}
 
 	}
@@ -106,19 +115,41 @@ public final class LazyMaths {
 
 	private static Dataset maxmin(final ILazyDataset data, MathOperation operation, int...axes) throws DatasetException {
 		axes = requireSortedAxes(data, axes);
+		
+		// we will be working here with the "ignoreAxes" instead to improve performance dramatically
+		int[] ignoreAxes = new int[data.getRank()-axes.length];
+		
+		int k = 0;
+		for (int i = 0 ; i < data.getRank() ; i++) {
+			boolean found = false;
+			for (int j = 0 ; j < axes.length ; j++) {
+				if (i == axes[j]) {
+					found = true;
+					break;
+				}
+			}
+			if (!found)		
+				ignoreAxes[k++] = i;
+		}
+		
 		final int[] oldShape = data.getShape();
 
 		SliceND sa = new SliceND(oldShape);
-		SliceNDIterator it = new SliceNDIterator(sa, axes);
-		int[] usedSourceShape = it.getUsedSlice().getSourceShape();
-		DoubleDataset result = DatasetFactory.zeros(usedSourceShape);
+		SliceNDIterator it = new SliceNDIterator(sa, ignoreAxes);
+		Dataset result = null;
 		
 		while (it.hasNext()) {
 			SliceND currentSlice = it.getCurrentSlice();
 			IDataset slice = data.getSlice(currentSlice);
-			result.setItem(operation.perform(slice), it.getUsedPos());
+			if (result == null)
+				result = DatasetUtils.convertToDataset(slice);
+			else
+				operation.execute(result, slice, result);
 		}
-		
+		if (result != null) {
+			result.setName(operation.getOperationName());
+			result.squeeze();
+		}
 		return result;
 	}
 
