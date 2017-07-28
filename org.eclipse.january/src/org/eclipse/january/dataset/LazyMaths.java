@@ -121,14 +121,7 @@ public final class LazyMaths {
 		
 		int k = 0;
 		for (int i = 0 ; i < data.getRank() ; i++) {
-			boolean found = false;
-			for (int j = 0 ; j < axes.length ; j++) {
-				if (i == axes[j]) {
-					found = true;
-					break;
-				}
-			}
-			if (!found)		
+			if (Arrays.binarySearch(axes, i) < 0)
 				ignoreAxes[k++] = i;
 		}
 		
