@@ -43,15 +43,6 @@ public class LazyMathsTest {
 		Dataset b = DatasetFactory.createRange(256).reshape(4, 4, 4, 4);
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(b.min()), LazyMaths.min(b));
 	}
-
-	@Test
-	public void testMedianNoAxis() throws Exception {
-		Dataset a = DatasetFactory.createRange(4).reshape(2, 2);
-		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(Stats.median(a)), LazyMaths.median(a));
-
-		Dataset b = DatasetFactory.createRange(256).reshape(4, 4, 4, 4);
-		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(Stats.median(b)), LazyMaths.median(b));
-	}
 	
 	@Test
 	public void testMaxSingleAxis() throws Exception {
@@ -84,21 +75,6 @@ public class LazyMathsTest {
 		}
 	}
 
-	@Test
-	public void testMedianSingleAxis() throws Exception {
-		Dataset a = DatasetFactory.createRange(4).reshape(2, 2);
-
-		TestUtils.assertDatasetEquals(Stats.median(a, 0), LazyMaths.median(a, 0));
-		TestUtils.assertDatasetEquals(Stats.median(a, 1), LazyMaths.median(a, 1));
-
-		Dataset b = DatasetFactory.createRange(256).reshape(4, 4, 4, 4);
-		for (int i = 0 ; i < 4 ; i++) {
-			Dataset expected = Stats.median(b, i);
-			Dataset actual = LazyMaths.median(b, i);
-			TestUtils.assertDatasetEquals(expected, actual);
-		}
-	}
-	
 	@Test
 	public void testMaxMultipleAxes() throws Exception {
 		testMaxMultipleAxes(false);
@@ -155,34 +131,6 @@ public class LazyMathsTest {
 			LazyMaths.setAllowDatasetMaths(false);
 	}
 
-	@Test
-	public void testMedianMultipleAxes() throws Exception {
-		testMedianMultipleAxes(false);
-		testMedianMultipleAxes(true);
-	}
-
-	private void testMedianMultipleAxes(boolean allowMaths) throws Exception {
-		if (allowMaths)
-			LazyMaths.setAllowDatasetMaths(true);
-
-		// there is no equivalent method in Dataset that supports multiple axes, so compare against the output from numpy
-		Dataset b = DatasetFactory.createRange(256).reshape(4, 4, 4, 4);
-		Dataset expected = DatasetFactory.createFromObject(new double[] {7.5, 23.5, 39.5, 55.5, 71.5, 87.5, 103.5, 119.5, 135.5, 151.5, 167.5, 183.5, 199.5, 215.5, 231.5, 247.5}, 4, 4);
-		Dataset actual = LazyMaths.median(b, 2, 3);
-		TestUtils.assertDatasetEquals(expected, actual);
-		// switch axes
-		actual = LazyMaths.median(b, 3, 2);
-		TestUtils.assertDatasetEquals(expected, actual);
-
-		Dataset c = DatasetFactory.createRange(4 * 5 * 6 * 7).reshape(4, 5, 6, 7);
-		expected = DatasetFactory.createFromObject(new double[] {20.5, 62.5, 104.5, 146.5, 188.5, 230.5, 272.5, 314.5, 356.5, 398.5, 440.5, 482.5, 524.5, 566.5, 608.5, 650.5, 692.5, 734.5, 776.5, 818.5}, 4, 5);
-		actual = LazyMaths.median(c, 2, 3);
-
-		TestUtils.assertDatasetEquals(expected, actual);
-		if (allowMaths)
-			LazyMaths.setAllowDatasetMaths(false);
-	}
-	
 	@Test
 	public void testSum() throws Exception {
 		Dataset a = DatasetFactory.createRange(100);

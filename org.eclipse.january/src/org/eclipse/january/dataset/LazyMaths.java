@@ -59,12 +59,6 @@ public final class LazyMaths {
 			public double perform(IDataset oneDSlice) {
 				return oneDSlice.min().doubleValue();
 			}
-		}),
-		MEDIAN(new IMathOperation() {
-			@Override
-			public double perform(IDataset oneDSlice) {
-				return (Double) Stats.median(DatasetUtils.convertToDataset(oneDSlice));
-			}
 		});
 
 		private final IMathOperation operation;
@@ -166,27 +160,6 @@ public final class LazyMaths {
 			return tmp;
 		}
 		return maxmin(data, MathOperation.MIN, axes);
-	}
-
-	/**
-	 * @param data
-	 * @param axes (can be negative). If null or empty then use all axes
-	 * @return median along axes in lazy dataset
-	 * @throws DatasetException
-	 * @since 2.1
-	 */
-	public static Dataset median(final ILazyDataset data, int... axes) throws DatasetException {
-		if (allowDatasetMaths && data instanceof Dataset) {
-			Dataset tmp = (Dataset) data;
-			axes = requireSortedAxes(data, axes);
-			for (int i = axes.length - 1; i >= 0; i--) {
-				tmp = Stats.median(tmp, axes[i]);
-			}
-			
-			return tmp;
-		}
-
-		return maxmin(data, MathOperation.MEDIAN, axes);
 	}
 
 	/**
