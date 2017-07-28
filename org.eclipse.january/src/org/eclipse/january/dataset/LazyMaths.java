@@ -108,23 +108,11 @@ public final class LazyMaths {
 			}
 		}
 		final int[] oldShape = data.getShape();
-		final int[] newShape = new int[rank-axes.length];
-		int counter = 0;
-		for (int i = 0 ; i < rank ; i++) {
-			boolean axisFound = false;
-			for (int axis : axes) {
-				if (i == axis) {
-					axisFound = true;
-					break;
-				}
-			}
-			if (!axisFound)
-				newShape[counter++] = oldShape[i];
-		}
 
 		SliceND sa = new SliceND(oldShape);
 		SliceNDIterator it = new SliceNDIterator(sa, axes);
-		DoubleDataset result = DatasetFactory.zeros(DoubleDataset.class, newShape);
+		int[] usedSourceShape = it.getUsedSlice().getSourceShape();
+		DoubleDataset result = DatasetFactory.zeros(DoubleDataset.class, usedSourceShape);
 		
 		while (it.hasNext()) {
 			SliceND currentSlice = it.getCurrentSlice();
