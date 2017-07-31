@@ -14,63 +14,60 @@ import org.eclipse.january.dataset.Dataset;
 import org.eclipse.january.dataset.DatasetFactory;
 import org.eclipse.january.dataset.LazyMaths;
 import org.eclipse.january.dataset.Maths;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 public class LazyMathsTest {
 
-	@BeforeClass
-	public static void init() {
-		// ensure we will not be using the faster Dataset methods!
-		LazyMaths.setAllowDatasetMaths(false);
+	private ILazyDataset a2x2L;
+	private ILazyDataset b4x4x4x4L;
+	private ILazyDataset c4x5x6x7L;
+	private Dataset a2x2D;
+	private Dataset b4x4x4x4D;
+	
+	@Before
+	public void init() throws Exception {
+		a2x2L = LazyDataset.createLazyDataset(DatasetFactory.createRange(4).reshape(2, 2));
+		a2x2D = DatasetUtils.sliceAndConvertLazyDataset(a2x2L);
+		b4x4x4x4L = LazyDataset.createLazyDataset(DatasetFactory.createRange(256).reshape(4, 4, 4, 4));
+		b4x4x4x4D = DatasetUtils.sliceAndConvertLazyDataset(b4x4x4x4L);
+		c4x5x6x7L = LazyDataset.createLazyDataset(DatasetFactory.createRange(4 * 5 * 6 * 7).reshape(4, 5, 6, 7));
 	}
-
+	
 	@Test
 	public void testMaxNoAxis() throws Exception {
 		// from https://docs.scipy.org/doc/numpy/reference/generated/numpy.amax.html
-		Dataset a = DatasetFactory.createRange(4).reshape(2, 2);
-		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(a.max()), LazyMaths.max(a));
-
-		Dataset b = DatasetFactory.createRange(256).reshape(4, 4, 4, 4);
-		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(b.max()), LazyMaths.max(b));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(a2x2D.max()), LazyMaths.max(a2x2L));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(b4x4x4x4D.max()), LazyMaths.max(b4x4x4x4L));
 	}
 
 	@Test
 	public void testMinNoAxis() throws Exception {
-		Dataset a = DatasetFactory.createRange(4).reshape(2, 2);
-		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(a.min()), LazyMaths.min(a));
-
-		Dataset b = DatasetFactory.createRange(256).reshape(4, 4, 4, 4);
-		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(b.min()), LazyMaths.min(b));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(a2x2D.min()), LazyMaths.min(a2x2L));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(b4x4x4x4D.min()), LazyMaths.min(b4x4x4x4L));
 	}
 	
 	@Test
 	public void testMaxSingleAxis() throws Exception {
 		// from https://docs.scipy.org/doc/numpy/reference/generated/numpy.amax.html
-		Dataset a = DatasetFactory.createRange(4).reshape(2, 2);
+		TestUtils.assertDatasetEquals(a2x2D.max(0), LazyMaths.max(a2x2L, 0));
+		TestUtils.assertDatasetEquals(a2x2D.max(1), LazyMaths.max(a2x2L, 1));
 
-		TestUtils.assertDatasetEquals(a.max(0), LazyMaths.max(a, 0));
-		TestUtils.assertDatasetEquals(a.max(1), LazyMaths.max(a, 1));
-
-		Dataset b = DatasetFactory.createRange(256).reshape(4, 4, 4, 4);
 		for (int i = 0 ; i < 4 ; i++) {
-			Dataset expected = b.max(i);
-			Dataset actual = LazyMaths.max(b, i);
+			Dataset expected = b4x4x4x4D.max(i);
+			Dataset actual = LazyMaths.max(b4x4x4x4L, i);
 			TestUtils.assertDatasetEquals(expected, actual);
 		}
 	}
 
 	@Test
 	public void testMinSingleAxis() throws Exception {
-		Dataset a = DatasetFactory.createRange(4).reshape(2, 2);
+		TestUtils.assertDatasetEquals(a2x2D.min(0), LazyMaths.min(a2x2L, 0));
+		TestUtils.assertDatasetEquals(a2x2D.min(1), LazyMaths.min(a2x2L, 1));
 
-		TestUtils.assertDatasetEquals(a.min(0), LazyMaths.min(a, 0));
-		TestUtils.assertDatasetEquals(a.min(1), LazyMaths.min(a, 1));
-
-		Dataset b = DatasetFactory.createRange(256).reshape(4, 4, 4, 4);
 		for (int i = 0 ; i < 4 ; i++) {
-			Dataset expected = b.min(i);
-			Dataset actual = LazyMaths.min(b, i);
+			Dataset expected = b4x4x4x4D.min(i);
+			Dataset actual = LazyMaths.min(b4x4x4x4L, i);
 			TestUtils.assertDatasetEquals(expected, actual);
 		}
 	}
@@ -86,17 +83,15 @@ public class LazyMathsTest {
 			LazyMaths.setAllowDatasetMaths(true);
 
 		// there is no equivalent method in Dataset that supports multiple axes, so compare against the output from numpy
-		Dataset b = DatasetFactory.createRange(256).reshape(4, 4, 4, 4);
 		Dataset expected = DatasetFactory.createFromObject(new double[] {15,  31,  47,  63, 79,  95, 111, 127, 143, 159, 175, 191, 207, 223, 239, 255}, 4, 4);
-		Dataset actual = LazyMaths.max(b, 2, 3);
+		Dataset actual = LazyMaths.max(b4x4x4x4L, 2, 3);
 		TestUtils.assertDatasetEquals(expected, actual);
 		// switch axes
-		actual = LazyMaths.max(b, 3, 2);
+		actual = LazyMaths.max(b4x4x4x4L, 3, 2);
 		TestUtils.assertDatasetEquals(expected, actual);
 
-		Dataset c = DatasetFactory.createRange(4 * 5 * 6 * 7).reshape(4, 5, 6, 7);
 		expected = DatasetFactory.createFromObject(new double[] {41,  83, 125, 167, 209, 251, 293, 335, 377, 419, 461, 503, 545, 587, 629, 671, 713, 755, 797, 839}, 4, 5);
-		actual = LazyMaths.max(c, 2, 3);
+		actual = LazyMaths.max(c4x5x6x7L, 2, 3);
 		TestUtils.assertDatasetEquals(expected, actual);
 
 		if (allowMaths)
@@ -114,17 +109,15 @@ public class LazyMathsTest {
 			LazyMaths.setAllowDatasetMaths(true);
 
 		// there is no equivalent method in Dataset that supports multiple axes, so compare against the output from numpy
-		Dataset b = DatasetFactory.createRange(256).reshape(4, 4, 4, 4);
 		Dataset expected = DatasetFactory.createFromObject(new double[] {15,  31,  47,  63, 79,  95, 111, 127, 143, 159, 175, 191, 207, 223, 239, 255}, 4, 4).isubtract(15);
-		Dataset actual = LazyMaths.min(b, 2, 3);
+		Dataset actual = LazyMaths.min(b4x4x4x4L, 2, 3);
 		TestUtils.assertDatasetEquals(expected, actual);
 		// switch axes
-		actual = LazyMaths.min(b, 3, 2);
+		actual = LazyMaths.min(b4x4x4x4L, 3, 2);
 		TestUtils.assertDatasetEquals(expected, actual);
 
-		Dataset c = DatasetFactory.createRange(4 * 5 * 6 * 7).reshape(4, 5, 6, 7);
 		expected = DatasetFactory.createFromObject(new double[] {41,  83, 125, 167, 209, 251, 293, 335, 377, 419, 461, 503, 545, 587, 629, 671, 713, 755, 797, 839}, 4, 5).isubtract(41);
-		actual = LazyMaths.min(c, 2, 3);
+		actual = LazyMaths.min(c4x5x6x7L, 2, 3);
 		TestUtils.assertDatasetEquals(expected, actual);
 
 		if (allowMaths)
