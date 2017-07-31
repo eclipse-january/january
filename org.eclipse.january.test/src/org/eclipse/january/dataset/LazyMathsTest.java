@@ -27,10 +27,10 @@ public class LazyMathsTest {
 	
 	@Before
 	public void init() throws Exception {
-		a2x2L = LazyDataset.createLazyDataset(DatasetFactory.createRange(4).reshape(2, 2));
-		a2x2D = DatasetUtils.sliceAndConvertLazyDataset(a2x2L);
-		b4x4x4x4L = LazyDataset.createLazyDataset(DatasetFactory.createRange(256).reshape(4, 4, 4, 4));
-		b4x4x4x4D = DatasetUtils.sliceAndConvertLazyDataset(b4x4x4x4L);
+		a2x2D = DatasetFactory.createRange(4).reshape(2, 2);
+		a2x2L = LazyDataset.createLazyDataset(a2x2D);
+		b4x4x4x4D = DatasetFactory.createRange(256).reshape(4, 4, 4, 4);
+		b4x4x4x4L = LazyDataset.createLazyDataset(b4x4x4x4D);
 		c4x5x6x7L = LazyDataset.createLazyDataset(DatasetFactory.createRange(4 * 5 * 6 * 7).reshape(4, 5, 6, 7));
 	}
 	
