@@ -74,14 +74,6 @@ public class LazyMathsTest {
 
 	@Test
 	public void testMaxMultipleAxes() throws Exception {
-		testMaxMultipleAxes(false);
-		testMaxMultipleAxes(true);
-	}
-
-	private void testMaxMultipleAxes(boolean allowMaths) throws Exception {
-		if (allowMaths)
-			LazyMaths.setAllowDatasetMaths(true);
-
 		// there is no equivalent method in Dataset that supports multiple axes, so compare against the output from numpy
 		Dataset expected = DatasetFactory.createFromObject(new double[] {15,  31,  47,  63, 79,  95, 111, 127, 143, 159, 175, 191, 207, 223, 239, 255}, 4, 4);
 		Dataset actual = LazyMaths.max(b4x4x4x4L, 2, 3);
@@ -93,21 +85,10 @@ public class LazyMathsTest {
 		expected = DatasetFactory.createFromObject(new double[] {41,  83, 125, 167, 209, 251, 293, 335, 377, 419, 461, 503, 545, 587, 629, 671, 713, 755, 797, 839}, 4, 5);
 		actual = LazyMaths.max(c4x5x6x7L, 2, 3);
 		TestUtils.assertDatasetEquals(expected, actual);
-
-		if (allowMaths)
-			LazyMaths.setAllowDatasetMaths(false);
 	}
 
 	@Test
 	public void testMinMultipleAxes() throws Exception {
-		testMinMultipleAxes(false);
-		testMinMultipleAxes(true);
-	}
-
-	private void testMinMultipleAxes(boolean allowMaths) throws Exception {
-		if (allowMaths)
-			LazyMaths.setAllowDatasetMaths(true);
-
 		// there is no equivalent method in Dataset that supports multiple axes, so compare against the output from numpy
 		Dataset expected = DatasetFactory.createFromObject(new double[] {15,  31,  47,  63, 79,  95, 111, 127, 143, 159, 175, 191, 207, 223, 239, 255}, 4, 4).isubtract(15);
 		Dataset actual = LazyMaths.min(b4x4x4x4L, 2, 3);
@@ -119,9 +100,6 @@ public class LazyMathsTest {
 		expected = DatasetFactory.createFromObject(new double[] {41,  83, 125, 167, 209, 251, 293, 335, 377, 419, 461, 503, 545, 587, 629, 671, 713, 755, 797, 839}, 4, 5).isubtract(41);
 		actual = LazyMaths.min(c4x5x6x7L, 2, 3);
 		TestUtils.assertDatasetEquals(expected, actual);
-
-		if (allowMaths)
-			LazyMaths.setAllowDatasetMaths(false);
 	}
 
 	@Test

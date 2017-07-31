@@ -29,7 +29,6 @@ public final class LazyMaths {
 	private static final String INVALID_AXIS_ERROR = "Axis argument is outside allowed range";
 	private static final String DUPLICATE_AXIS_ERROR = "Axis arguments must be unique";
 	private static final String TOO_MANY_AXES_ERROR = "Number of axes cannot be greater than the rank";
-	private static boolean allowDatasetMaths = true; // ensure this is set to false before running tests!
 
 	private LazyMaths() {
 
@@ -154,7 +153,7 @@ public final class LazyMaths {
 	 * @since 2.1
 	 */
 	public static Dataset max(final ILazyDataset data, int... axes) throws DatasetException {
-		if (allowDatasetMaths && data instanceof Dataset) {
+		if (data instanceof Dataset) {
 			Dataset tmp = (Dataset) data;
 			axes = requireSortedAxes(data, axes);
 			for (int i = axes.length - 1; i >= 0; i--) {
@@ -174,7 +173,7 @@ public final class LazyMaths {
 	 * @since 2.1
 	 */
 	public static Dataset min(final ILazyDataset data, int... axes) throws DatasetException {
-		if (allowDatasetMaths && data instanceof Dataset) {
+		if (data instanceof Dataset) {
 			Dataset tmp = (Dataset) data;
 			axes = requireSortedAxes(data, axes);
 			for (int i = axes.length - 1; i >= 0; i--) {
@@ -193,7 +192,7 @@ public final class LazyMaths {
 	 * @throws DatasetException 
 	 */
 	public static Dataset sum(final ILazyDataset data, int axis) throws DatasetException {
-		if (allowDatasetMaths && data instanceof Dataset)
+		if (data instanceof Dataset)
 			return ((Dataset) data).sum(axis);
 		int[][] sliceInfo = new int[3][];
 		int[] shape = data.getShape();
@@ -349,19 +348,5 @@ public final class LazyMaths {
 		nshape[axis] = 1;
 
 		return DatasetFactory.zeros(nshape);
-	}
-
-	/**
-	 * @return the allowDatasetMaths
-	 */
-	public static boolean isAllowDatasetMaths() {
-		return allowDatasetMaths;
-	}
-
-	/**
-	 * @param allowDatasetMaths the allowDatasetMaths to set
-	 */
-	public static void setAllowDatasetMaths(boolean allowDatasetMaths) {
-		LazyMaths.allowDatasetMaths = allowDatasetMaths;
 	}
 }
