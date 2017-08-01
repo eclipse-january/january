@@ -29,7 +29,6 @@ public final class LazyMaths {
 	private static final String INVALID_AXIS_ERROR = "Axis argument is outside allowed range";
 	private static final String DUPLICATE_AXIS_ERROR = "Axis arguments must be unique";
 	private static final String TOO_MANY_AXES_ERROR = "Number of axes cannot be greater than the rank";
-	private static boolean allowDatasetMaths = true; // ensure this is set to false before running tests!
 
 	private LazyMaths() {
 
@@ -43,39 +42,42 @@ public final class LazyMaths {
 	// TODO Uncomment this next line when minimum JDK is set to 1.8
 	// @FunctionalInterface
 	private static interface IMathOperation {
-		double perform(IDataset oneDSlice);
+		void execute(IDataset a, IDataset b, Dataset c);
 	}
 
 	private enum MathOperation implements IMathOperation {
 		// TODO use lambdas here when moving to Java 8
 		MAX(new IMathOperation() {
 			@Override
-			public double perform(IDataset oneDSlice) {
-				return oneDSlice.max().doubleValue();
+			public void execute(IDataset a, IDataset b, Dataset c) {
+				Maths.maximum(a, b, c);
 			}
-		}),
+		}, "maximum"),
 		MIN(new IMathOperation() {
 			@Override
-			public double perform(IDataset oneDSlice) {
-				return oneDSlice.min().doubleValue();
+			public void execute(IDataset a, IDataset b, Dataset c) {
+				Maths.minimum(a, b, c);
 			}
-		}),
-		MEDIAN(new IMathOperation() {
-			@Override
-			public double perform(IDataset oneDSlice) {
-				return (Double) Stats.median(DatasetUtils.convertToDataset(oneDSlice));
-			}
-		});
+		}, "minimum");
 
 		private final IMathOperation operation;
+		private final String operationName;
 
-		private MathOperation(IMathOperation operation) {
+		private MathOperation(IMathOperation operation, String operationName) {
 			this.operation = operation;
+			this.operationName = operationName;
 		}
 		
 		@Override
-		public double perform(IDataset oneDSlice) {
-			return operation.perform(oneDSlice);
+		public void execute(IDataset a, IDataset b, Dataset c) {
+			operation.execute(a, b, c);
+		}
+
+		/**
+		 * @return the operationName
+		 */
+		public String getOperationName() {
+			return operationName;
 		}
 
 	}
@@ -112,19 +114,34 @@ public final class LazyMaths {
 
 	private static Dataset maxmin(final ILazyDataset data, MathOperation operation, int...axes) throws DatasetException {
 		axes = requireSortedAxes(data, axes);
+		
+		// we will be working here with the "ignoreAxes" instead to improve performance dramatically
+		int[] ignoreAxes = new int[data.getRank()-axes.length];
+		
+		int k = 0;
+		for (int i = 0 ; i < data.getRank() ; i++) {
+			if (Arrays.binarySearch(axes, i) < 0)
+				ignoreAxes[k++] = i;
+		}
+		
 		final int[] oldShape = data.getShape();
 
 		SliceND sa = new SliceND(oldShape);
-		SliceNDIterator it = new SliceNDIterator(sa, axes);
-		int[] usedSourceShape = it.getUsedSlice().getSourceShape();
-		DoubleDataset result = DatasetFactory.zeros(usedSourceShape);
+		SliceNDIterator it = new SliceNDIterator(sa, ignoreAxes);
+		Dataset result = null;
 		
 		while (it.hasNext()) {
 			SliceND currentSlice = it.getCurrentSlice();
 			IDataset slice = data.getSlice(currentSlice);
-			result.setItem(operation.perform(slice), it.getUsedPos());
+			if (result == null)
+				result = DatasetUtils.convertToDataset(slice);
+			else
+				operation.execute(result, slice, result);
 		}
-		
+		if (result != null) {
+			result.setName(operation.getOperationName());
+			result.squeeze();
+		}
 		return result;
 	}
 
@@ -136,7 +153,7 @@ public final class LazyMaths {
 	 * @since 2.1
 	 */
 	public static Dataset max(final ILazyDataset data, int... axes) throws DatasetException {
-		if (allowDatasetMaths && data instanceof Dataset) {
+		if (data instanceof Dataset) {
 			Dataset tmp = (Dataset) data;
 			axes = requireSortedAxes(data, axes);
 			for (int i = axes.length - 1; i >= 0; i--) {
@@ -156,7 +173,7 @@ public final class LazyMaths {
 	 * @since 2.1
 	 */
 	public static Dataset min(final ILazyDataset data, int... axes) throws DatasetException {
-		if (allowDatasetMaths && data instanceof Dataset) {
+		if (data instanceof Dataset) {
 			Dataset tmp = (Dataset) data;
 			axes = requireSortedAxes(data, axes);
 			for (int i = axes.length - 1; i >= 0; i--) {
@@ -170,33 +187,12 @@ public final class LazyMaths {
 
 	/**
 	 * @param data
-	 * @param axes (can be negative). If null or empty then use all axes
-	 * @return median along axes in lazy dataset
-	 * @throws DatasetException
-	 * @since 2.1
-	 */
-	public static Dataset median(final ILazyDataset data, int... axes) throws DatasetException {
-		if (allowDatasetMaths && data instanceof Dataset) {
-			Dataset tmp = (Dataset) data;
-			axes = requireSortedAxes(data, axes);
-			for (int i = axes.length - 1; i >= 0; i--) {
-				tmp = Stats.median(tmp, axes[i]);
-			}
-			
-			return tmp;
-		}
-
-		return maxmin(data, MathOperation.MEDIAN, axes);
-	}
-
-	/**
-	 * @param data
 	 * @param axis (can be negative)
 	 * @return sum along axis in lazy dataset
 	 * @throws DatasetException 
 	 */
 	public static Dataset sum(final ILazyDataset data, int axis) throws DatasetException {
-		if (allowDatasetMaths && data instanceof Dataset)
+		if (data instanceof Dataset)
 			return ((Dataset) data).sum(axis);
 		int[][] sliceInfo = new int[3][];
 		int[] shape = data.getShape();
@@ -352,19 +348,5 @@ public final class LazyMaths {
 		nshape[axis] = 1;
 
 		return DatasetFactory.zeros(nshape);
-	}
-
-	/**
-	 * @return the allowDatasetMaths
-	 */
-	public static boolean isAllowDatasetMaths() {
-		return allowDatasetMaths;
-	}
-
-	/**
-	 * @param allowDatasetMaths the allowDatasetMaths to set
-	 */
-	public static void setAllowDatasetMaths(boolean allowDatasetMaths) {
-		LazyMaths.allowDatasetMaths = allowDatasetMaths;
 	}
 }
