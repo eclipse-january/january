@@ -175,9 +175,11 @@ public class IntegersIterator extends IndexIterator {
 			Object obj = indexes.get(i);
 			if (obj instanceof IntegerDataset) {
 				IntegerDataset ind = (IntegerDataset) obj;
-				int l = ishape[i];
-				if (ind.min().intValue() < -l || ind.max().intValue() >= l) {
-					throw new IllegalArgumentException("A value in index datasets is outside permitted range");
+				if (ind.getSize() > 0) {
+					int l = ishape[i];
+					if (ind.min().intValue() < -l || ind.max().intValue() >= l) {
+						throw new IllegalArgumentException("A value in index datasets is outside permitted range");
+					}
 				}
 			}
 		}

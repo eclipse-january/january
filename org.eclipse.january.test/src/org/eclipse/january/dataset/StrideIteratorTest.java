@@ -10,6 +10,7 @@
 package org.eclipse.january.dataset;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,11 +18,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.january.asserts.TestUtils;
-import org.eclipse.january.dataset.Dataset;
-import org.eclipse.january.dataset.DatasetFactory;
-import org.eclipse.january.dataset.IndexIterator;
-import org.eclipse.january.dataset.SliceIterator;
-import org.eclipse.january.dataset.StrideIterator;
 import org.junit.Test;
 
 /**
@@ -39,6 +35,17 @@ public class StrideIteratorTest {
 		testIterationsND(size, DoubleDataset.class);
 
 		testIterationsND(size, ComplexDoubleDataset.class);
+	}
+
+	@Test
+	public void testZeroSizedIteration() {
+		Dataset ta = DatasetFactory.zeros(new int[] {4,4,4});
+
+		IndexIterator it = ta.getSliceView(null, new int[] {4, 0, 4}, null).getIterator();
+		assertFalse(it.hasNext());
+
+		it = new StrideIterator(new int[] {4,0,4});
+		assertFalse(it.hasNext());
 	}
 
 	private void testIterationsND(int size, Class<? extends Dataset> clazz) {

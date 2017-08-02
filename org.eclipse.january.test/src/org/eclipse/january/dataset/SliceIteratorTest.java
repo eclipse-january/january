@@ -10,14 +10,11 @@
 package org.eclipse.january.dataset;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import java.util.Arrays;
 
 import org.eclipse.january.asserts.TestUtils;
-import org.eclipse.january.dataset.Dataset;
-import org.eclipse.january.dataset.DatasetFactory;
-import org.eclipse.january.dataset.SliceIterator;
-import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -33,6 +30,14 @@ public class SliceIteratorTest {
 		testIterationsND(size, DoubleDataset.class);
 
 		testIterationsND(size, ComplexDoubleDataset.class);
+	}
+
+	@Test
+	public void testZeroSizedIteration() {
+		Dataset ta = DatasetFactory.createRange(24);
+		IndexIterator it = ta.getSliceIterator(null, new int[] {0}, null);
+
+		assertFalse(it.hasNext());
 	}
 
 	private void testIterationsND(int size, Class<? extends Dataset> clazz) {

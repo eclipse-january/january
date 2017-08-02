@@ -9,6 +9,8 @@
 
 package org.eclipse.january.dataset;
 
+import static org.junit.Assert.assertFalse;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -303,5 +305,21 @@ public class IntegersIteratorTest {
 
 	private void checkDatasets(DoubleDataset expected, DoubleDataset calc) {
 		TestUtils.assertDatasetEquals(expected, calc, 0.1, 1e-5);
+	}
+
+	@Test
+	public void testZeroSizedIteration() {
+		IntegersIterator it = new IntegersIterator(new int[] {4, 0, 4});
+
+		assertFalse(it.hasNext());
+
+		it = new IntegersIterator(new int[] {4, 4, 4}, new Slice(2, 2));
+		assertFalse(it.hasNext());
+
+		it = new IntegersIterator(new int[] {4, 4, 4}, DatasetFactory.zeros(BooleanDataset.class, 0));
+		assertFalse(it.hasNext());
+
+		it = new IntegersIterator(new int[] {4, 4, 4}, DatasetFactory.zeros(IntegerDataset.class, 0));
+		assertFalse(it.hasNext());
 	}
 }

@@ -23,6 +23,7 @@ public class StrideIterator extends SliceIterator {
 	private int[] delta;  // reset values
 	private int nstart;
 	private int element;
+	private boolean zero;
 
 	public StrideIterator(final int[] shape) {
 		this(shape, null, 0);
@@ -79,7 +80,11 @@ public class StrideIterator extends SliceIterator {
 		if (strides != null) {
 			stride = strides;
 			for (int j = endrank; j >= 0; j--) {
-				delta[j] = stride[j] * shape[j];
+				int s = shape[j];
+				if (s == 0) {
+					zero = true;
+				}
+				delta[j] = stride[j] * s;
 			}
 		} else {
 			stride = new int[rank];
@@ -90,6 +95,7 @@ public class StrideIterator extends SliceIterator {
 				delta[j] = s;
 			}
 			imax = s;
+			zero = s == 0;
 		}
 		nstart = offset;
 	}
@@ -106,6 +112,10 @@ public class StrideIterator extends SliceIterator {
 
 	@Override
 	public boolean hasNext() {
+		if (zero) {
+			return false;
+		}
+
 		// now move on one position
 		int j = endrank;
 		if (j < 0) {

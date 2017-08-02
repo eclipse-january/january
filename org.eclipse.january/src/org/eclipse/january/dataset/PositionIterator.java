@@ -41,6 +41,7 @@ public class PositionIterator extends IndexIterator {
 	 */
 	final private int[] pos;
 	private boolean once;
+	final private boolean zero; // no iterations allowed
 
 	/**
 	 * Constructor for an iterator over elements of a dataset that are within
@@ -141,12 +142,17 @@ public class PositionIterator extends IndexIterator {
 
 		pos = new int[rank];
 
+		zero = ShapeUtils.calcSize(shape) == 0;
+
 		reset();
 	}
 
 	@Override
 	public boolean hasNext() {
 		// now move on one position
+		if (zero) {
+			return false;
+		}
 		if (once) {
 			once = false;
 			return true;
@@ -181,6 +187,9 @@ public class PositionIterator extends IndexIterator {
 	public void reset() {
 		for (int i = 0; i <= endrank; i++) {
 			pos[i] = start[i];
+		}
+		if (zero) {
+			return;
 		}
 
 		int j = 0;
