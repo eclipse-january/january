@@ -966,18 +966,20 @@ public class AbstractDatasetTest {
 	public void testToString() {
 		Dataset a = DatasetFactory.createRange(IntegerDataset.class, 100);
 
-		assertEquals("Dataset [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]", a.getSliceView(new Slice(10)).toString(true));
+		assertEquals("[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]", a.getSliceView(new Slice(10)).toString(true));
 
 		AbstractDataset.setMaxLineLength(20);
-		assertEquals("Dataset [0, 1, 2, ..., 97, 98, 99]", a.toString(true));
+		assertEquals("[0, 1, 2, ..., 97, 98, 99]", a.toString(true));
 
 		AbstractDataset.setMaxLineLength(15);
-		assertEquals("Dataset [10, 11, ..., 13, 14]", a.getSliceView(new Slice(10, 15)).toString(true));
+		assertEquals("[10, 11, ..., 13, 14]", a.getSliceView(new Slice(10, 15)).toString(true));
 
 		AbstractDataset.setMaxLineLength(30);
-		assertEquals("Dataset [0, 1, 2, 3, 4, ..., 96, 97, 98, 99]", a.toString(true));
+		assertEquals("[0, 1, 2, 3, 4, ..., 96, 97, 98, 99]", a.toString(true));
 
-		assertEquals("Dataset [99, 98, 97, 96, ..., 4, 3, 2, 1, 0]", a.getSliceView(new Slice(null, null, -1)).toString(true));
+		assertEquals("[99, 98, 97, 96, ..., 4, 3, 2, 1, 0]", a.getSliceView(new Slice(null, null, -1)).toString(true));
+
+		assertEquals("[]", a.getSliceView(new Slice(10, 10)).toString(true));
 	}
 
 	@Test
