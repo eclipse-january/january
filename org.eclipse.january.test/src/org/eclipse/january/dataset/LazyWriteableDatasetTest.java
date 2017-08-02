@@ -27,8 +27,7 @@ public class LazyWriteableDatasetTest {
 		LazyWriteableDataset ld = LazyWriteableDataset.createLazyDataset(d);
 
 		SliceND s = new SliceND(d.getShapeRef(), (Slice) null, null, new Slice(1), new Slice(0, null, 2));
-		@SuppressWarnings("deprecation")
-		Dataset sd = DatasetFactory.ones(s.getShape(), d.getDType());
+		Dataset sd = DatasetFactory.ones(d.getClass(), s.getShape());
 		ld.setSlice(sd, s);
 		Assert.assertEquals(d.getSlice(s), sd);
 	}
@@ -82,8 +81,7 @@ public class LazyWriteableDatasetTest {
 		LazyWriteableDataset ld = LazyWriteableDataset.createLazyDataset(d, new int[] {2, 2, 3, 4});
 
 		SliceND s = new SliceND(d.getShapeRef(), ld.getMaxShape(), new Slice(1,2), null, new Slice(1), new Slice(0, null, 2));
-		@SuppressWarnings("deprecation")
-		Dataset sd = DatasetFactory.ones(s.getShape(), d.getDType());
+		Dataset sd = DatasetFactory.ones(d.getClass(), s.getShape());
 		ld.setSlice(sd, s);
 		Assert.assertEquals(ld.getSlice(s), sd);
 	}	

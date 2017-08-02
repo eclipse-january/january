@@ -1250,7 +1250,6 @@ public class Comparisons {
 	 * @param a
 	 * @return list of positions as integer datasets
 	 */
-	@SuppressWarnings("deprecation")
 	public static List<IntegerDataset> nonZero(Dataset a) {
 		final int rank = a.getRank();
 		final List<List<Integer>> indices = new ArrayList<List<Integer>>();
@@ -1274,7 +1273,7 @@ public class Comparisons {
 		}
 
 		for (int j = 0; j < rank; j++) {
-			indexList.add((IntegerDataset) DatasetFactory.createFromList(Dataset.INT32, indices.get(j)));
+			indexList.add((IntegerDataset) DatasetFactory.createFromList(IntegerDataset.class, indices.get(j)));
 		}
 		return indexList;
 	}

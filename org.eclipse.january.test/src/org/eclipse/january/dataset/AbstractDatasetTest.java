@@ -1111,15 +1111,14 @@ public class AbstractDatasetTest {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	@Test
 	public void testSlicingViews() {
 		Dataset a, b, c;
-		a = DatasetFactory.createRange(32, Dataset.FLOAT64).reshape(4, 8);
+		a = DatasetFactory.createRange(32).reshape(4, 8);
 		checkSliceView(a, new int[] {0, 1}, new int[] {3, 5}, new int[] {1, 2});
 		checkSliceView(a, new int[] {1, -1}, new int[] {-1, 3}, new int[] {1, -2});
 
-		a = DatasetFactory.createRange(60, Dataset.FLOAT64).reshape(6, 10);
+		a = DatasetFactory.createRange(60).reshape(6, 10);
 		b = checkSliceView(a, new int[] {0, 1}, new int[] {6, 8}, new int[] {1, 2}); // 6x4
 		c = b.getSliceView(new int[] {0, 1}, new int[] {1, 4}, null);
 		c.setShape(3);
@@ -1151,7 +1150,7 @@ public class AbstractDatasetTest {
 		b = checkSliceView(a, new int[] {0, 1}, new int[] {6, 2}, new int[] {1, 2}); // 6x1
 
 		// test special case of zero-rank dataset
-		a = DatasetFactory.createFromObject(Dataset.FLOAT64, 1.);
+		a = DatasetFactory.createFromObject(DoubleDataset.class , 1.);
 		b = a.getSliceView();
 		b.setShape(1);
 		assertTrue(b.getIterator().hasNext());
@@ -1236,10 +1235,9 @@ public class AbstractDatasetTest {
 		assertEquals(":,:", s);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Test
 	public void testSetSlice() {
-		Dataset a = DatasetFactory.createRange(100, Dataset.FLOAT64).reshape(20, 5);
+		Dataset a = DatasetFactory.createRange(100).reshape(20, 5);
 		a.setSlice(-2, null, new Slice(null, null, 2));
 
 		assertEquals(-2, a.getDouble(0, 0), 1e-15);
@@ -1249,8 +1247,8 @@ public class AbstractDatasetTest {
 		assertEquals(-2, a.getDouble(0, 4), 1e-15);
 
 		// with broadcasting
-		a = DatasetFactory.createRange(100, Dataset.FLOAT64).reshape(20, 5);
-		a.setSlice(DatasetFactory.createRange(3, Dataset.INT16), new Slice(2, 10), new Slice(null, null, 2));
+		a = DatasetFactory.createRange(100).reshape(20, 5);
+		a.setSlice(DatasetFactory.createRange(ShortDataset.class, 3), new Slice(2, 10), new Slice(null, null, 2));
 
 		assertEquals(0, a.getDouble(0, 0), 1e-15);
 		assertEquals(1, a.getDouble(0, 1), 1e-15);
@@ -1271,14 +1269,14 @@ public class AbstractDatasetTest {
 		assertEquals(2, a.getDouble(2, 4), 1e-15);
 
 		try {
-			a.setSlice(DatasetFactory.createRange(3, Dataset.INT16), new Slice(2, 7, 2), new Slice(2, 3));
+			a.setSlice(DatasetFactory.createRange(ShortDataset.class, 3), new Slice(2, 7, 2), new Slice(2, 3));
 			fail("Should have thrown an IAE");
 		} catch (IllegalArgumentException e) {
 		}
 
 		// compound
-		CompoundDataset c = DatasetFactory.createRange(3, 100, Dataset.ARRAYFLOAT64).reshape(20, 5);
-		c.setSlice(DatasetFactory.createRange(3, Dataset.INT16), new Slice(2, 10), new Slice(null, null, 2));
+		CompoundDataset c = DatasetFactory.createRange(3, CompoundDoubleDataset.class, 100).reshape(20, 5);
+		c.setSlice(DatasetFactory.createRange(ShortDataset.class, 3), new Slice(2, 10), new Slice(null, null, 2));
 	}
 
 	@Test
@@ -1335,8 +1333,7 @@ public class AbstractDatasetTest {
 	public void test2DErrors() {
 		
 		// test 1D errors for single value
-		@SuppressWarnings("deprecation")
-		Dataset a = DatasetFactory.zeros(new int[] {100,100}, Dataset.INT32);
+		Dataset a = DatasetFactory.zeros(IntegerDataset.class, 100, 100);
 		a.setErrors(5);
 		
 		assertEquals(5.0, a.getError(0,0), 0.001);
@@ -1403,10 +1400,8 @@ public class AbstractDatasetTest {
 	@Test
 	public void testSetErrorBuffer() {
 		
-		@SuppressWarnings("deprecation")
-		Dataset a = DatasetFactory.zeros(new int[] {100,100}, Dataset.INT32);
-		@SuppressWarnings("deprecation")
-		Dataset err = DatasetFactory.createLinearSpace(0, a.getSize() - 1, a.getSize(), Dataset.FLOAT64);
+		Dataset a = DatasetFactory.zeros(IntegerDataset.class, 100, 100);
+		Dataset err = DatasetFactory.createLinearSpace(DoubleDataset.class, 0, a.getSize() - 1, a.getSize());
 		err.setShape(a.getShape());
 		
 		a.setErrorBuffer(null);
@@ -1526,37 +1521,36 @@ public class AbstractDatasetTest {
 		assertFalse("Differs", a.equals(DatasetFactory.createFromObject(2.f)));
 	}
 
-	@SuppressWarnings("deprecation")
 	@Test
 	public void testConcatenate() {
 		Dataset a, b, c, d;
-		a = DatasetFactory.createRange(6, Dataset.FLOAT64);
-		b = DatasetFactory.createRange(6, 8, 1, Dataset.FLOAT64);
+		a = DatasetFactory.createRange(6);
+		b = DatasetFactory.createRange(6., 8, 1);
 		c = DatasetUtils.concatenate(new IDataset[] {a, b}, 0);
-		d = DatasetFactory.createRange(8, Dataset.FLOAT64);
+		d = DatasetFactory.createRange(8);
 		assertEquals("Rank", 1, c.getRank());
 		assertTrue("Dataset", c.equals(d));
 
-		a = DatasetFactory.createRange(6, Dataset.FLOAT64).reshape(3,2);
-		b = DatasetFactory.createRange(6, 8, 1, Dataset.FLOAT64).reshape(1,2);
+		a = DatasetFactory.createRange(6).reshape(3,2);
+		b = DatasetFactory.createRange(6., 8, 1).reshape(1,2);
 		c = DatasetUtils.concatenate(new IDataset[] {a, b}, 0);
-		d = DatasetFactory.createRange(8, Dataset.FLOAT64).reshape(4,2);
+		d = DatasetFactory.createRange(8).reshape(4,2);
 		assertEquals("Rank", 2, c.getRank());
 		assertTrue("Dataset", c.equals(d));
 
 		a.setShape(2,3);
-		b = DatasetFactory.createRange(6, 9, 1, Dataset.FLOAT64).reshape(1,3);
+		b = DatasetFactory.createRange(6., 9, 1).reshape(1,3);
 		c = DatasetUtils.concatenate(new IDataset[] {a, b}, 0);
-		d = DatasetFactory.createRange(9, Dataset.FLOAT64).reshape(3,3);
+		d = DatasetFactory.createRange(9).reshape(3,3);
 		assertEquals("Rank", 2, c.getRank());
 		assertTrue("Dataset", c.equals(d));
 
-		a = DatasetFactory.createRange(2, Dataset.FLOAT64).reshape(1,2);
-		b = DatasetFactory.createRange(3, 5, 1, Dataset.FLOAT64).reshape(1,2);
+		a = DatasetFactory.createRange(2).reshape(1,2);
+		b = DatasetFactory.createRange(3., 5, 1).reshape(1,2);
 		a = DatasetUtils.concatenate(new IDataset[] {a, b}, 0);
-		b = DatasetFactory.createRange(2, 6, 3, Dataset.FLOAT64).reshape(2,1);
+		b = DatasetFactory.createRange(2., 6, 3).reshape(2,1);
 		c = DatasetUtils.concatenate(new IDataset[] {a, b}, 1);
-		d = DatasetFactory.createRange(6, Dataset.FLOAT64).reshape(2,3);
+		d = DatasetFactory.createRange(6).reshape(2,3);
 		assertEquals("Rank", 2, c.getRank());
 		assertTrue("Dataset", c.equals(d));
 	}

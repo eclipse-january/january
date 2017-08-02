@@ -27,6 +27,17 @@ public class DatasetFactory {
 		return createRange(DoubleDataset.class, 0, stop, 1);
 	}
 
+	/**
+	 * Create dataset with items ranging from given start up to given stop in given steps
+	 * @param start
+	 * @param stop stop value is <strong>not</strong> included
+	 * @param step spacing between items
+	 * @return a new 1D dataset of given type, filled with values determined by parameters
+	 * @since 2.1
+	 */
+	public static DoubleDataset createRange(final double start, final double stop, final double step) {
+		return createRange(DoubleDataset.class, start, stop, step);
+	}
 
 	/**
 	 * Create dataset with items ranging from 0 up to given stop in steps of 1
@@ -36,7 +47,7 @@ public class DatasetFactory {
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory, 
 	 *             such as {@link #createRange(Class, double)} 
-	 */	
+	 */
 	@Deprecated
 	public static Dataset createRange(final double stop, final int dtype) {
 		return createRange(0, stop, 1, dtype);
@@ -52,7 +63,7 @@ public class DatasetFactory {
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory, 
 	 *             such as {@link #createRange(Class, double, double, double)} 
-	 */	
+	 */
 	@Deprecated
 	public static Dataset createRange(final double start, final double stop, final double step, final int dtype) {
 		if ((step > 0) != (start <= stop)) {
@@ -91,7 +102,7 @@ public class DatasetFactory {
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory, 
 	 *             such as {@link #createRange(Class, double, double, double)} 
-	 */	
+	 */
 	@Deprecated
 	public static CompoundDataset createRange(final int itemSize, final double stop, final int dtype) {
 		return createRange(itemSize, 0, stop, 1, dtype);
@@ -108,7 +119,7 @@ public class DatasetFactory {
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory, 
 	 *             such as {@link #createRange(Class, double, double, double)} 
-	 */	
+	 */
 	@Deprecated
 	public static CompoundDataset createRange(final int itemSize, final double start, final double stop, final double step, final int dtype) {
 		if (itemSize < 1) {
@@ -152,6 +163,7 @@ public class DatasetFactory {
 		}
 		throw new IllegalArgumentException("dtype not known");
 	}
+
 	/**
 	 * Create a dataset from object (automatically detect dataset type)
 	 *
@@ -213,7 +225,7 @@ public class DatasetFactory {
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory, 
 	 *             such as {@link #createFromObject(Class, Object, int)} 
-	 */	
+	 */
 	@Deprecated
 	public static Dataset createFromObject(final int dtype, final Object obj) {
 		return createFromObject(dtype, obj, null);
@@ -230,7 +242,7 @@ public class DatasetFactory {
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory, 
 	 *             such as {@link #createFromObject(Class, Object, int...)} 
-	 */	
+	 */
 	@Deprecated
 	public static Dataset createFromObject(final int dtype, final Object obj, final int... shape) {
 		return createFromObject(1, dtype, obj, shape);
@@ -248,7 +260,7 @@ public class DatasetFactory {
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory, 
 	 *             such as {@link #createFromObject(int, Class, Object, int...)} 
-	 */	
+	 */
 	@Deprecated
 	public static Dataset createFromObject(final int itemSize, final int dtype, final Object obj, final int... shape) {
 		Dataset d = null;
@@ -443,7 +455,7 @@ public class DatasetFactory {
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory, 
 	 *             such as {@link #createCompoundDataset(Class, Object...)} 
-	 */	
+	 */
 	@Deprecated
 	public static CompoundDataset createCompoundDataset(final int dtype, Object... objects) {
 		Dataset[] datasets = new Dataset[objects.length];
@@ -463,7 +475,7 @@ public class DatasetFactory {
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory, 
 	 *             such as {@link #createComplexDataset(Class, Object, Object)} 
-	 */	
+	 */
 	@Deprecated
 	public static CompoundDataset createComplexDataset(final int dtype, Object real, Object imag) {
 		switch (dtype) {
@@ -491,7 +503,7 @@ public class DatasetFactory {
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory, 
 	 *             such as {@link #zeros(Class, int...)} 
-	 */	
+	 */
 	@Deprecated
 	public static Dataset zeros(final int[] shape, final int dtype) {
 		switch (dtype) {
@@ -540,7 +552,7 @@ public class DatasetFactory {
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory, 
 	 *             such as {@link #zeros(int, Class, int...)} 
-	 */	
+	 */
 	@Deprecated
 	public static Dataset zeros(final int itemSize, final int[] shape, final int dtype) {
 		if (itemSize == 1) {
@@ -558,7 +570,7 @@ public class DatasetFactory {
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory, 
 	 *             such as {@link #compoundZeros(int, Class, int)} 
-	 */	
+	 */
 	@Deprecated
 	public static CompoundDataset compoundZeros(final int itemSize, final int[] shape, final int dtype) {
 		switch (dtype) {
@@ -619,7 +631,7 @@ public class DatasetFactory {
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory, 
 	 *             such as {@link #zeros(Dataset, Class)} 
-	 */	
+	 */
 	@Deprecated
 	public static Dataset zeros(final Dataset dataset, final int dtype) {
 		final int[] shape = dataset.getShapeRef();
@@ -646,7 +658,7 @@ public class DatasetFactory {
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory, 
 	 *             such as {@link #createRange(Class, double, double, double)} 
-	 */	
+	 */
 	@Deprecated
 	public static Dataset ones(final Dataset dataset, final int dtype) {
 		final int[] shape = dataset.getShapeRef();
@@ -670,7 +682,7 @@ public class DatasetFactory {
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory, 
 	 *             such as {@link #ones(int[], Class)} 
-	 */	
+	 */
 	@Deprecated
 	public static Dataset ones(final int[] shape, final int dtype) {
 		switch (dtype) {
@@ -707,7 +719,7 @@ public class DatasetFactory {
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory, 
 	 *             such as {@link #ones(Class, int...)} 
-	 */	
+	 */
 	@Deprecated
 	public static Dataset ones(final int itemSize, final int[] shape, final int dtype) {
 		if (itemSize == 1) {
@@ -762,7 +774,7 @@ public class DatasetFactory {
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory, 
 	 *             such as {@link #createLinearSpace(Class, double, double, int)} 
-	 */	
+	 */
 	@Deprecated
 	public static Dataset createLinearSpace(final double start, final double stop, final int length, final int dtype) {
 		if (length < 1) {
@@ -798,7 +810,7 @@ public class DatasetFactory {
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory, 
 	 *             such as {@link #createLogSpace(Class, double, double, int, double)} 
-	 */	
+	 */
 	@Deprecated
 	public static Dataset createLogSpace(final double start, final double stop, final int length, final double base, final int dtype) {
 		if (length < 1) {
@@ -841,6 +853,34 @@ public class DatasetFactory {
 	@SuppressWarnings("unchecked")
 	public static <T extends Dataset> T createRange(Class<T> clazz, final double start, final double stop, final double step) {
 		return (T) createRange(start, stop, step, DTypeUtils.getDType(clazz));
+	}
+
+	/**
+	 * Create compound dataset with items ranging from 0 up to given stop in steps of 1
+	 * @param itemSize
+	 * @param clazz compound dataset class
+	 * @param stop stop value is <strong>not</strong> included
+	 * @return a new 1D dataset of given class, filled with values determined by parameters
+	 * @since 2.1
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T extends CompoundDataset> T createRange(final int itemSize, Class<T> clazz, final double stop) {
+		return (T) createRange(itemSize, 0, stop, 1, DTypeUtils.getDType(clazz));
+	}
+
+	/**
+	 * Create compound dataset with items ranging from given start up to given stop in given steps
+	 * @param itemSize
+	 * @param clazz compound dataset class
+	 * @param start
+	 * @param stop stop value is <strong>not</strong> included
+	 * @param step spacing between items
+	 * @return a new 1D dataset of given class, filled with values determined by parameters
+	 * @since 2.1
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T extends CompoundDataset> T createRange(final int itemSize, Class<T> clazz, final double start, final double stop, final double step) {
+		return (T) createRange(itemSize, start, stop, step, DTypeUtils.getDType(clazz));
 	}
 
 	/**

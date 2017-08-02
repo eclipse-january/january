@@ -17,6 +17,7 @@ import org.eclipse.january.asserts.TestUtils;
 import org.eclipse.january.dataset.Dataset;
 import org.eclipse.january.dataset.DatasetFactory;
 import org.eclipse.january.dataset.SliceIterator;
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -28,30 +29,25 @@ public class SliceIteratorTest {
 	 */
 	@Test
 	public void testIterations() {
-		int size, type;
+		int size = 1024;
+		testIterationsND(size, DoubleDataset.class);
 
-		size = 1024;
-		type = Dataset.FLOAT64;
-		testIterationsND(size, type);
-
-		type = Dataset.COMPLEX128;
-		testIterationsND(size, type);
+		testIterationsND(size, ComplexDoubleDataset.class);
 	}
 
-	@SuppressWarnings("deprecation")
-	private void testIterationsND(int size, int type) {
+	private void testIterationsND(int size, Class<? extends Dataset> clazz) {
 		Dataset ta;
 
 		TestUtils.verbosePrintf("Size: %d\n", size);
 
 		// 0D
-		ta = DatasetFactory.zeros(new int[] {}, type);
+		ta = DatasetFactory.zeros(clazz, new int[] {});
 		testDataset(ta);
 		testDatasetSteps(ta, new int[] {});
 		testDatasetAxes(ta, new boolean[] {});
 
 		// 1D
-		ta = DatasetFactory.createRange(0, size, 1, type);
+		ta = DatasetFactory.createRange(clazz, 0, size, 1);
 		testDataset(ta);
 		testDatasetSteps(ta, new int[] {2});
 		testDatasetSteps(ta, new int[] {-3});

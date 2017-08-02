@@ -9,13 +9,6 @@
 
 package org.eclipse.january.dataset;
 
-import org.eclipse.january.dataset.BroadcastIterator;
-import org.eclipse.january.dataset.BroadcastUtils;
-import org.eclipse.january.dataset.CompoundDataset;
-import org.eclipse.january.dataset.Dataset;
-import org.eclipse.january.dataset.DatasetFactory;
-import org.eclipse.january.dataset.DoubleDataset;
-import org.eclipse.january.dataset.Slice;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -24,33 +17,33 @@ public class BroadcastIteratorTest {
 	@Test
 	public void testBroadcastShape() {
 		Dataset a;
-		a = DatasetFactory.ones(DoubleDataset.class);
+		a = DatasetFactory.ones();
 		checkBroadcastShape(a, "scalar as scalar", new int[0], new int[0]);
 		checkBroadcastShape(a, "scalar as [1]", new int[] {1}, new int[] {1}, 1);
 		checkBroadcastShape(a, "scalar as [3]", new int[] {1}, new int[] {3}, 3);
 		checkBroadcastShape(a, "scalar as [3,4]", new int[] {1,1}, new int[] {3,4}, 3, 4);
 
-		a = DatasetFactory.ones(DoubleDataset.class, 1);
+		a = DatasetFactory.ones(1);
 		checkBroadcastShape(a, "[1] as scalar", new int[] {1}, new int[] {});
 		checkBroadcastShape(a, "[1] as [1]", new int[] {1}, new int[] {1}, 1);
 		checkBroadcastShape(a, "[1] as [3]", new int[] {1}, new int[] {3}, 3);
 		checkBroadcastShape(a, "[1] as [3,4]", new int[] {1,1}, new int[] {3,4}, 3, 4);
 
-		a = DatasetFactory.ones(DoubleDataset.class, 1,1);
+		a = DatasetFactory.ones(1,1);
 		checkBroadcastShape(a, "[1,1] as scalar", new int[] {1,1}, new int[] {});
 		checkBroadcastShape(a, "[1,1] as [1]", new int[] {1,1}, new int[] {1,1}, 1);
 		checkBroadcastShape(a, "[1,1] as [3]", new int[] {1,1}, new int[] {1,3}, 3);
 		checkBroadcastShape(a, "[1,1] as [1,3]", new int[] {1,1}, new int[] {1,3}, 1, 3);
 		checkBroadcastShape(a, "[1,1] as [3,4]", new int[] {1,1}, new int[] {3,4}, 3, 4);
 
-		a = DatasetFactory.ones(DoubleDataset.class, 3);
+		a = DatasetFactory.ones(3);
 		checkBroadcastShape(a, "[3] as scalar", null, null);
 		checkBroadcastShape(a, "[3] as [1]", new int[] {3}, new int[] {1}, 1);
 		checkBroadcastShape(a, "[3] as [3]", new int[] {3}, new int[] {3}, 3);
 		checkBroadcastShape(a, "[3] as [1,3]", new int[] {1,3}, new int[] {1,3}, 1, 3);
 		checkBroadcastShape(a, "[3] as [3,4]", null, null, 3, 4);
 
-		a = DatasetFactory.ones(DoubleDataset.class, 3,1);
+		a = DatasetFactory.ones(3,1);
 		checkBroadcastShape(a, "[3,1] as scalar", null, null);
 		checkBroadcastShape(a, "[3,1] as [1]", new int[] {3,1}, new int[] {1,1}, 1);
 		checkBroadcastShape(a, "[3,1] as [3]", new int[] {3,1}, new int[] {1,3}, 3);
@@ -59,7 +52,7 @@ public class BroadcastIteratorTest {
 		checkBroadcastShape(a, "[3,1] as [6,3,4]", new int[] {1,3,1}, new int[] {6,3,4}, 6, 3, 4);
 		checkBroadcastShape(a, "[3,1] as [3,4,6]", null, null, 3, 4, 6);
 
-		a = DatasetFactory.ones(DoubleDataset.class, 1,3);
+		a = DatasetFactory.ones(1,3);
 		checkBroadcastShape(a, "[1,3] as scalar", null, null);
 		checkBroadcastShape(a, "[1,3] as [1]", new int[] {1,3}, new int[] {1,1}, 1);
 		checkBroadcastShape(a, "[1,3] as [3]", new int[] {1,3}, new int[] {1,3}, 3);
@@ -76,17 +69,16 @@ public class BroadcastIteratorTest {
 		Assert.assertArrayEquals("Broadcasting " + msg, answer, result);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Test
 	public void testBroadcastWithNoOutput() {
 		Dataset a, b, c;
 		BroadcastIterator it;
 
-		a = DatasetFactory.createRange(5, Dataset.FLOAT64).reshape(5, 1);
-		b = DatasetFactory.createRange(2, 8, 1, Dataset.FLOAT64).reshape(1, 6);
+		a = DatasetFactory.createRange(5).reshape(5, 1);
+		b = DatasetFactory.createRange(2., 8, 1).reshape(1, 6);
 		it = BroadcastIterator.createIterator(a, b);
 		Assert.assertArrayEquals("Broadcast shape", new int[] {5, 6}, it.getShape());
-		c = DatasetFactory.zeros(it.getShape(), Dataset.FLOAT64);
+		c = DatasetFactory.zeros(it.getShape());
 
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 6; j++) {
@@ -101,7 +93,7 @@ public class BroadcastIteratorTest {
 		b.setShape(6);
 		it = BroadcastIterator.createIterator(a, b);
 		Assert.assertArrayEquals("Broadcast shape", new int[] {5, 6}, it.getShape());
-		c = DatasetFactory.zeros(it.getShape(), Dataset.FLOAT64);
+		c = DatasetFactory.zeros(it.getShape());
 
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 6; j++) {
@@ -113,10 +105,10 @@ public class BroadcastIteratorTest {
 			}
 		}
 
-		a = DatasetFactory.ones(new int[] {1}, Dataset.INT16);
+		a = DatasetFactory.ones(ShortDataset.class, 1);
 		it = BroadcastIterator.createIterator(a, b);
 		Assert.assertArrayEquals("Broadcast shape", new int[] {6}, it.getShape());
-		c = DatasetFactory.zeros(it.getShape(), Dataset.FLOAT64);
+		c = DatasetFactory.zeros(it.getShape());
 
 		for (int j = 0; j < 6; j++) {
 			Assert.assertTrue(it.hasNext());
@@ -130,7 +122,7 @@ public class BroadcastIteratorTest {
 		a = DatasetFactory.createFromObject(1);
 		it = BroadcastIterator.createIterator(a, b);
 		Assert.assertArrayEquals("Broadcast shape", new int[] {6}, it.getShape());
-		c = DatasetFactory.zeros(it.getShape(), Dataset.FLOAT64);
+		c = DatasetFactory.zeros(it.getShape());
 
 		for (int j = 0; j < 6; j++) {
 			Assert.assertTrue(it.hasNext());
@@ -144,7 +136,7 @@ public class BroadcastIteratorTest {
 		it = BroadcastIterator.createIterator(a, b);
 		it.setOutputDouble(true);
 		Assert.assertArrayEquals("Broadcast shape", new int[] {}, it.getShape());
-		c = DatasetFactory.zeros(it.getShape(), Dataset.FLOAT64);
+		c = DatasetFactory.zeros(it.getShape());
 		Assert.assertTrue(it.hasNext());
 		c.set(it.aDouble * it.bDouble);
 		Assert.assertEquals(a.getDouble(), it.aDouble, 1e-15);
@@ -152,11 +144,11 @@ public class BroadcastIteratorTest {
 		Assert.assertEquals(c.getDouble(), 2.0, 1e-15);
 
 		// also sliced views
-		a = DatasetFactory.createRange(5, Dataset.FLOAT64).reshape(5, 1);
-		b = DatasetFactory.createRange(2, 8, 1, Dataset.FLOAT64).getSliceView(new Slice(null, null, 2));
+		a = DatasetFactory.createRange(5).reshape(5, 1);
+		b = DatasetFactory.createRange(2., 8, 1).getSliceView(new Slice(null, null, 2));
 		it = BroadcastIterator.createIterator(a, b);
 		Assert.assertArrayEquals("Broadcast shape", new int[] {5, 3}, it.getShape());
-		c = DatasetFactory.zeros(it.getShape(), Dataset.FLOAT64);
+		c = DatasetFactory.zeros(it.getShape());
 
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 3; j++) {
@@ -170,15 +162,14 @@ public class BroadcastIteratorTest {
 
 	}
 
-	@SuppressWarnings("deprecation")
 	@Test
 	public void testBroadcastWithOutput() {
 		Dataset a, b, c;
 		BroadcastIterator it;
 
-		a = DatasetFactory.createRange(10, Dataset.FLOAT64).reshape(10, 1);
-		b = DatasetFactory.createRange(2, 14, 1, Dataset.FLOAT64).reshape(1, 12);
-		c = DatasetFactory.zeros(new int[] {10, 12}, Dataset.FLOAT64);
+		a = DatasetFactory.createRange(10).reshape(10, 1);
+		b = DatasetFactory.createRange(2., 14, 1).reshape(1, 12);
+		c = DatasetFactory.zeros(10, 12);
 		it = BroadcastIterator.createIterator(a, b, c);
 		Assert.assertArrayEquals("Broadcast shape", new int[] {10, 12}, it.getShape());
 
@@ -193,8 +184,8 @@ public class BroadcastIteratorTest {
 		}
 
 		// same output
-		a = DatasetFactory.createRange(120, Dataset.FLOAT64).reshape(10, 12);
-		b = DatasetFactory.createRange(2, 14, 1, Dataset.FLOAT64).reshape(1, 12);
+		a = DatasetFactory.createRange(120).reshape(10, 12);
+		b = DatasetFactory.createRange(2., 14, 1).reshape(1, 12);
 		c = a;
 		it = BroadcastIterator.createIterator(a, b, c);
 		Assert.assertArrayEquals("Broadcast shape", new int[] {10, 12}, it.getShape());
@@ -209,8 +200,8 @@ public class BroadcastIteratorTest {
 			}
 		}
 
-		a = DatasetFactory.createRange(10, Dataset.FLOAT64).reshape(10, 1);
-		b = DatasetFactory.createRange(2, 122, 1, Dataset.FLOAT64).reshape(10, 12);
+		a = DatasetFactory.createRange(10).reshape(10, 1);
+		b = DatasetFactory.createRange(2., 122, 1).reshape(10, 12);
 		c = b;
 		it = BroadcastIterator.createIterator(a, b, c);
 		Assert.assertArrayEquals("Broadcast shape", new int[] {10, 12}, it.getShape());
@@ -226,8 +217,8 @@ public class BroadcastIteratorTest {
 		}
 
 		// sliced input/output view
-		a = DatasetFactory.createRange(240, Dataset.FLOAT64).reshape(20, 12).getSliceView(new Slice(null, null, 2));
-		b = DatasetFactory.createRange(2, 14, 1, Dataset.FLOAT64).reshape(1, 12);
+		a = DatasetFactory.createRange(240).reshape(20, 12).getSliceView(new Slice(null, null, 2));
+		b = DatasetFactory.createRange(2., 14, 1).reshape(1, 12);
 		c = a;
 		it = BroadcastIterator.createIterator(a, b, c);
 		Assert.assertArrayEquals("Broadcast shape", new int[] {10, 12}, it.getShape());
@@ -243,9 +234,9 @@ public class BroadcastIteratorTest {
 		}
 
 		// independent output
-		a = DatasetFactory.createRange(12, Dataset.FLOAT64);
-		b = DatasetFactory.createRange(2, 14, 1, Dataset.FLOAT64);
-		c = DatasetFactory.zeros(new int[] {10, 12}, Dataset.FLOAT64);
+		a = DatasetFactory.createRange(12);
+		b = DatasetFactory.createRange(2., 14, 1);
+		c = DatasetFactory.zeros(10, 12);
 		it = BroadcastIterator.createIterator(a, b, c);
 		Assert.assertArrayEquals("Broadcast shape", new int[] {10, 12}, it.getShape());
 
@@ -260,7 +251,7 @@ public class BroadcastIteratorTest {
 		}
 
 		// compound output
-		c = DatasetFactory.zeros(3, new int[] {10, 12}, Dataset.FLOAT64);
+		c = DatasetFactory.zeros(3, CompoundDoubleDataset.class, 10, 12);
 		it = BroadcastIterator.createIterator(a, b, c);
 		Assert.assertArrayEquals("Broadcast shape", new int[] {10, 12}, it.getShape());
 

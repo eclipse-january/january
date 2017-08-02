@@ -123,12 +123,11 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 				return d.getSlice(mon, slice);
 			}
 
-			@SuppressWarnings("deprecation")
 			@Override
 			public void setSlice(IMonitor mon, IDataset data, SliceND slice) throws IOException {
 				if (slice.isExpanded()) {
 					Dataset od = d;
-					d = DatasetFactory.zeros(slice.getSourceShape(), od.getDType());
+					d = DatasetFactory.zeros(od.getClass(), slice.getSourceShape());
 					d.setSlice(od, SliceND.createSlice(od, null, null));
 				}
 				d.setSlice(data, slice);

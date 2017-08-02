@@ -472,7 +472,6 @@ public class DatasetUtils {
 	 * @param axis
 	 * @return list of split datasets
 	 */
-	@SuppressWarnings("deprecation")
 	public static List<Dataset> split(final Dataset a, int[] indices, final int axis) {
 		final int[] ashape = a.getShapeRef();
 		final int rank = ashape.length;
@@ -498,12 +497,12 @@ public class DatasetUtils {
 		}
 		for (int ind : indices) {
 			if (ind > imax) {
-				result.add(DatasetFactory.zeros(is, new int[] {0}, a.getDType()));
+				result.add(DatasetFactory.zeros(is, a.getClass(), 0));
 			} else {
 				nshape[axis] = ind - oind;
 				start[axis] = oind;
 				stop[axis] = ind;
-				Dataset n = DatasetFactory.zeros(is, nshape, a.getDType());
+				Dataset n = DatasetFactory.zeros(is, a.getClass(), nshape);
 				IndexIterator iter = a.getSliceIterator(start, stop, step);
 
 				a.fillDataset(n, iter);
@@ -516,7 +515,7 @@ public class DatasetUtils {
 			nshape[axis] = imax - oind;
 			start[axis] = oind;
 			stop[axis] = imax;
-			Dataset n = DatasetFactory.zeros(is, nshape, a.getDType());
+			Dataset n = DatasetFactory.zeros(is, a.getClass(), nshape);
 			IndexIterator iter = a.getSliceIterator(start, stop, step);
 
 			a.fillDataset(n, iter);

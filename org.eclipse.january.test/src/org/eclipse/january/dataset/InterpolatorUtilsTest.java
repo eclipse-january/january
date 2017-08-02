@@ -21,17 +21,12 @@ public class InterpolatorUtilsTest {
 
 	@Test
 	public void test() {
-		
-		@SuppressWarnings("deprecation")
-		Dataset im = DatasetFactory.createRange(0.0,10000.0,1.0, Dataset.FLOAT32);
+		Dataset im = DatasetFactory.createRange(FloatDataset.class, 0.0,10000.0,1.0);
 		im = im.reshape(100,100);
-		@SuppressWarnings("deprecation")
-		Dataset off = Maths.sin(DatasetFactory.createRange(0.0, 10.0, 0.1,Dataset.FLOAT32));
-		@SuppressWarnings("deprecation")
-		Dataset axis = DatasetFactory.createRange(-5.0, 5.0, 0.1, Dataset.FLOAT32);
+		Dataset off = Maths.sin(DatasetFactory.createRange(FloatDataset.class, 0.0, 10.0, 0.1));
+		Dataset axis = DatasetFactory.createRange(FloatDataset.class, -5.0, 5.0, 0.1);
 		
-		@SuppressWarnings("deprecation")
-		Dataset newaxis = DatasetFactory.createRange(-10.0, 10.0, 0.1, Dataset.FLOAT32);
+		Dataset newaxis = DatasetFactory.createRange(FloatDataset.class, -10.0, 10.0, 0.1);
 		
 		Dataset output = InterpolatorUtils.remapOneAxis(im, 0, off, axis, newaxis);
 		

@@ -23,18 +23,17 @@ import org.junit.Test;
 
 public class LazyDynamicLoaderTest {
 	
-	@SuppressWarnings("deprecation")
 	@Test
 	public void testLoader() throws Exception {
 		
-		Dataset range = DatasetFactory.createRange(10*13*20*20,Dataset.INT64);
+		Dataset range = DatasetFactory.createRange(LongDataset.class, 10*13*20*20);
 		range.setShape(new int[]{10,13,20,20} );
 		
 		LazyDynamicDataset dataset = getDataset(range,2,"data");
 		
 		AxesMetadata ax = MetadataFactory.createMetadata(AxesMetadata.class, 4);
-		ax.setAxis(0, DatasetFactory.createRange(10, Dataset.INT64));
-		ax.setAxis(1, DatasetFactory.createRange(13, Dataset.INT64));
+		ax.setAxis(0, DatasetFactory.createRange(LongDataset.class, 10));
+		ax.setAxis(1, DatasetFactory.createRange(LongDataset.class, 13));
 		dataset.addMetadata(ax);
 		
 		int max = 399;
@@ -65,15 +64,12 @@ public class LazyDynamicLoaderTest {
 		
 		int[] maxShape = new int[]{10,13,20,20};
 		
-		@SuppressWarnings("deprecation")
-		Dataset range = DatasetFactory.createRange(10*13*20*20,Dataset.INT64);
+		Dataset range = DatasetFactory.createRange(LongDataset.class, 10*13*20*20);
 		range.setShape(maxShape);
 		
 		LazyDynamicDataset dataset = getDataset(range,2,"data");
-		@SuppressWarnings("deprecation")
-		LazyDynamicDataset ax1 = getDataset(DatasetFactory.createRange(10, Dataset.INT64),0,"ax0");
-		@SuppressWarnings("deprecation")
-		LazyDynamicDataset ax2 = getDataset(DatasetFactory.createRange(13, Dataset.INT64),0,"ax1");
+		LazyDynamicDataset ax1 = getDataset(DatasetFactory.createRange(LongDataset.class, 10),0,"ax0");
+		LazyDynamicDataset ax2 = getDataset(DatasetFactory.createRange(LongDataset.class, 13),0,"ax1");
 		
 		AxesMetadata ax = MetadataFactory.createMetadata(AxesMetadata.class, 4);
 		ax.setAxis(0, ax1);

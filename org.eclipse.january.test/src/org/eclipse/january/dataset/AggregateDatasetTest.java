@@ -27,19 +27,17 @@ import org.junit.Test;
 public class AggregateDatasetTest {
 	ILazyDataset[] datasets;
 
-	@SuppressWarnings("deprecation")
 	@Before
 	public void init() {
 		datasets = new ILazyDataset[] {
-				DatasetFactory.zeros(new int[] {2,6}, Dataset.INT32).fill(0),
-				DatasetFactory.zeros(new int[] {2,6}, Dataset.INT32).fill(1),
-				DatasetFactory.zeros(new int[] {2,6}, Dataset.INT32).fill(2),
-				DatasetFactory.zeros(new int[] {2,6}, Dataset.INT32).fill(3),
-				DatasetFactory.zeros(new int[] {2,6}, Dataset.INT32).fill(4)
+				DatasetFactory.zeros(IntegerDataset.class, 2, 6).fill(0),
+				DatasetFactory.zeros(IntegerDataset.class, 2, 6).fill(1),
+				DatasetFactory.zeros(IntegerDataset.class, 2, 6).fill(2),
+				DatasetFactory.zeros(IntegerDataset.class, 2, 6).fill(3),
+				DatasetFactory.zeros(IntegerDataset.class, 2, 6).fill(4),
 		};
 	}
 
-	@SuppressWarnings("deprecation")
 	@Test
 	public void testConstructorFailures() {
 		@SuppressWarnings("unused")
@@ -52,13 +50,13 @@ public class AggregateDatasetTest {
 			} catch (Exception e1) {
 				try {
 					a = new AggregateDataset(false, new ILazyDataset[] {
-							DatasetFactory.ones(new int[] { 2, 3 }, Dataset.BOOL),
-							DatasetFactory.ones(new int[] { 3, 4 }, Dataset.BOOL), });
+							DatasetFactory.ones(BooleanDataset.class, 2, 3),
+							DatasetFactory.ones(BooleanDataset.class, 3, 4),});
 				} catch (Exception e2) {
 					try {
 						a = new AggregateDataset(true, new ILazyDataset[] {
-								DatasetFactory.ones(new int[] { 2, 3 }, Dataset.BOOL),
-								DatasetFactory.ones(new int[] { 3, 3 }, Dataset.BOOL), });
+								DatasetFactory.ones(BooleanDataset.class, 2, 3),
+								DatasetFactory.ones(BooleanDataset.class, 3, 3), });
 					} catch (Exception e3) {
 						System.out.println("Success!");
 						return;
@@ -123,8 +121,7 @@ public class AggregateDatasetTest {
 
 	@Test
 	public void testRepeatedDataset() throws Exception {
-		@SuppressWarnings("deprecation")
-		Dataset a = DatasetFactory.createRange(3, Dataset.FLOAT64);
+		Dataset a = DatasetFactory.createRange(3);
 		Dataset[] as = new Dataset[5];
 		Arrays.fill(as, a);
 		AggregateDataset b = new AggregateDataset(true, as);
