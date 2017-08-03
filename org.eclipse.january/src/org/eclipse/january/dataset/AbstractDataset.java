@@ -1103,13 +1103,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public String toString() {
-		return toString(false);
-	}
-
-	@Override
-	public String toString(boolean showData) {
 		final int rank = shape == null ? 0 : shape.length;
 		final StringBuilder out = new StringBuilder();
+
 		if (DTypeUtils.isDTypeElemental(getDType())) {
 			out.append("Dataset ");
 		} else {
@@ -1118,29 +1114,37 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			out.append(") ");
 		}
 
-		if (!showData) {
-			if (name != null && name.length() > 0) {
-				out.append("'");
-				out.append(name);
-				out.append("' has shape ");
-			} else {
-				out.append("shape is ");
-			}
+		if (name != null && name.length() > 0) {
+			out.append("'");
+			out.append(name);
+			out.append("' has shape ");
+		} else {
+			out.append("shape is ");
+		}
 
-			out.append(BLOCK_OPEN);
-			if (rank > 0) {
-				out.append(shape[0]);
-			}
-			for (int i = 1; i < rank; i++) {
-				out.append(", " + shape[i]);
-			}
-			out.append(BLOCK_CLOSE);
-			return out.toString();
+		out.append(BLOCK_OPEN);
+		if (rank > 0) {
+			out.append(shape[0]);
+		}
+		for (int i = 1; i < rank; i++) {
+			out.append(", " + shape[i]);
+		}
+		out.append(BLOCK_CLOSE);
+		return out.toString();
+	}
+
+	@Override
+	public String toString(boolean showData) {
+		if (!showData) {
+			return toString();
 		}
 
 		if (size == 0) {
-			return out.toString();
+			return "[]";
 		}
+
+		final int rank = shape == null ? 0 : shape.length;
+		final StringBuilder out = new StringBuilder();
 
 		if (rank > 0) {
 			int[] pos = new int[rank];
