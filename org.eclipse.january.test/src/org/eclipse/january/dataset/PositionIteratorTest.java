@@ -9,15 +9,13 @@
 
 package org.eclipse.january.dataset;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import java.util.Arrays;
 
 import org.eclipse.january.asserts.TestUtils;
-import org.eclipse.january.dataset.Dataset;
-import org.eclipse.january.dataset.DatasetFactory;
-import org.eclipse.january.dataset.PositionIterator;
-import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -46,6 +44,13 @@ public class PositionIteratorTest {
 		int[] step = new int[] {1,1,1,1};
 		int[] axes = new int[] {2,3};
 		testDatasetAxes(ta, axes, start, stop, step);
+	}
+
+	@Test
+	public void testZeroSizedIteration() {
+		PositionIterator it = new PositionIterator(new int[] {4, 0, 4});
+
+		assertFalse(it.hasNext());
 	}
 
 	private void testIterationND(int size, Class<? extends Dataset> clazz) {

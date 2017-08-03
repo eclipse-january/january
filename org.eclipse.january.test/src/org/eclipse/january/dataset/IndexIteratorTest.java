@@ -10,6 +10,7 @@
 package org.eclipse.january.dataset;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,6 +34,17 @@ public class IndexIteratorTest {
 		testIterationsND(size, DoubleDataset.class);
 
 		testIterationsND(size, ComplexDoubleDataset.class);
+	}
+
+	@Test
+	public void testZeroSizedIteration() {
+		Dataset ta = DatasetFactory.zeros(new int[] {4,0,4});
+		IndexIterator it = ta.getIterator();
+
+		assertFalse(it.hasNext());
+
+		it = ta.getIterator(true);
+		assertFalse(it.hasNext());
 	}
 
 	private void testIterationsND(int size, Class<? extends Dataset> clazz) {

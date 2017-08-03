@@ -9,6 +9,8 @@
 
 package org.eclipse.january.dataset;
 
+import static org.junit.Assert.assertFalse;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -57,5 +59,13 @@ public class IntegerIteratorTest {
 						": ", expected.getAbs(at.index + j), calc.getAbs(bt.index + j));
 			}
 		}
+	}
+
+	@Test
+	public void testZeroSizedIteration() {
+		IntegerDataset ind = DatasetFactory.zeros(IntegerDataset.class, 0);
+		IntegerIterator it = new IntegerIterator(ind, 100);
+
+		assertFalse(it.hasNext());
 	}
 }
