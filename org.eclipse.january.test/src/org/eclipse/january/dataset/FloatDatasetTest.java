@@ -43,8 +43,7 @@ public class FloatDatasetTest {
 
 	@Test
 	public void testStats() {
-		@SuppressWarnings("deprecation")
-		Dataset a = DatasetFactory.createRange(12, Dataset.FLOAT32);
+		Dataset a = DatasetFactory.createRange(FloatDataset.class, 12);
 		assertEquals(11., a.max().doubleValue(), 1e-6);
 		assertEquals(0., a.min().doubleValue(), 1e-6);
 		assertEquals(5.5, ((Number) a.mean()).doubleValue(), 1e-6);

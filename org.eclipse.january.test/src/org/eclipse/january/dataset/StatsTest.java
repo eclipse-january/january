@@ -60,7 +60,7 @@ public class StatsTest {
 		start += System.nanoTime();
 		TestUtils.verbosePrintf("New residual takes %.3fms\n", start*1e-6);
 
-		DoubleDataset tw = DatasetFactory.zeros(DoubleDataset.class, ta.getSize());
+		DoubleDataset tw = DatasetFactory.zeros(ta.getSize());
 		double wv = 2.5;
 		tw.fill(wv);
 		double wres = Stats.weightedResidual(ta, tb, tw);
@@ -135,8 +135,7 @@ public class StatsTest {
 
 	@Test
 	public void testNaNs() {
-		@SuppressWarnings("deprecation")
-		Dataset a = DatasetFactory.createRange(1, 7, 1, Dataset.FLOAT64);
+		Dataset a = DatasetFactory.createRange(1., 7, 1);
 
 		assertEquals("Sum", 21, ((Number) a.sum()).doubleValue(), 1e-6);
 		assertEquals("Product", 720, (Double) Stats.product(a), 1e-6);
@@ -153,8 +152,7 @@ public class StatsTest {
 
 	@Test
 	public void testInfs() {
-		@SuppressWarnings("deprecation")
-		Dataset a = DatasetFactory.createRange(1, 7, 1, Dataset.FLOAT64);
+		Dataset a = DatasetFactory.createRange(1., 7, 1);
 
 		assertEquals("Sum", 21, ((Number) a.sum()).doubleValue(), 1e-6);
 		assertEquals("Product", 720, (Double) Stats.product(a), 1e-6);
@@ -212,7 +210,7 @@ public class StatsTest {
 
 	@Test
 	public void testSkewness() {
-		Dataset a = Maths.abs(DatasetFactory.createRange(DoubleDataset.class, 60., -40., -1.));
+		Dataset a = Maths.abs(DatasetFactory.createRange(60., -40., -1.));
 		assertEquals(0.3002253, (Double) Stats.skewness(a), 1e-6);
 
 		Dataset b = a.reshape(10, 10); // so now [[0, ..., 9], [10,...], ..., [..., 99]]
@@ -305,8 +303,7 @@ public class StatsTest {
 
 	@Test
 	public void testOutlierValues() {
-		@SuppressWarnings("deprecation")
-		Dataset a = DatasetFactory.zeros(new int[] {20}, Dataset.FLOAT64);
+		Dataset a = DatasetFactory.zeros(20);
 
 		double[] o = Stats.outlierValues(a, 0.01, 99.9, 10);
 		assertEquals(0, o[0], 1e-4);
@@ -331,7 +328,7 @@ public class StatsTest {
 		DoubleDataset cexpect = DatasetFactory.createFromObject(DoubleDataset.class, new double[]{2., 0., -2., 0., 0., 0., -2., 0., 2.}, 3, 3);
 		assertArrayEquals(cexpect.getData(), covc.getData(), 1E-7);
 		
-		Dataset d = DatasetFactory.createFromObject(DoubleDataset.class, new double[]{0., 2., 4., 8., 16., 32., 64., 128.}, 2, 2, 2);
+		Dataset d = DatasetFactory.createFromObject(new double[]{0., 2., 4., 8., 16., 32., 64., 128.}, 2, 2, 2);
 		DoubleDataset covd = (DoubleDataset)Stats.covariance(d);
 		DoubleDataset dexpect = DatasetFactory.createFromObject(DoubleDataset.class, new double[]{-2., -24., -3., -48., 2., 24., 3., 48., -48., -576., -72., -1152., 48., 576., 72., 1152.}, 2, 2, 2, 2);
 		assertArrayEquals(dexpect.getData(), covd.getData(), 1E-7);

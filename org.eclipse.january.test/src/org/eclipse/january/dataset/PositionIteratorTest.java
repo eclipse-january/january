@@ -17,6 +17,7 @@ import org.eclipse.january.asserts.TestUtils;
 import org.eclipse.january.dataset.Dataset;
 import org.eclipse.january.dataset.DatasetFactory;
 import org.eclipse.january.dataset.PositionIterator;
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -28,23 +29,17 @@ public class PositionIteratorTest {
 	 */
 	@Test
 	public void testIterations() {
-		int size, type;
+		int size = 1024;
+		testIterationND(size, DoubleDataset.class);
 
-		size = 1024;
-		type = Dataset.FLOAT64;
-		testIterationND(size, type);
-
-		type = Dataset.COMPLEX128;
-		testIterationND(size, type);
+		testIterationND(size, ComplexDoubleDataset.class);
 	}
 
 	@Test
 	public void testOffsetIteration() {
 		int size = 3 * 3 * 1024 * 1024;
-		int type = Dataset.FLOAT64;
 		
-		@SuppressWarnings("deprecation")
-		Dataset ta = DatasetFactory.createRange(0, size, 1, type).reshape(3, 3, 1024, 1024);
+		Dataset ta = DatasetFactory.createRange(0., size, 1).reshape(3, 3, 1024, 1024);
 		
 		int[] start = new int[] {1,1,0,0};
 		int[] stop = new int[] {3,3,1024,1024};
@@ -53,31 +48,30 @@ public class PositionIteratorTest {
 		testDatasetAxes(ta, axes, start, stop, step);
 	}
 
-	@SuppressWarnings("deprecation")
-	private void testIterationND(int size, int type) {
+	private void testIterationND(int size, Class<? extends Dataset> clazz) {
 		Dataset ta;
 
 		TestUtils.verbosePrintf("Size: %d\n", size);
 
 		// 1D
-		ta = DatasetFactory.createRange(0, size, 1, type);
+		ta = DatasetFactory.createRange(clazz, 0, size, 1);
 		testDataset(ta);
 
 		// 2D
-		ta = DatasetFactory.createRange(0, size, 1, type).reshape(16, size / 16);
+		ta = DatasetFactory.createRange(clazz, 0, size, 1).reshape(16, size / 16);
 		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
 		testDataset(ta);
 		testDatasetAxes(ta, new int[] {0});
 		testDatasetAxes(ta, new int[] {1});
 
-		ta = DatasetFactory.createRange(0, size, 1, type).reshape(size / 32, 32);
+		ta = DatasetFactory.createRange(clazz, 0, size, 1).reshape(size / 32, 32);
 		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
 		testDataset(ta);
 		testDatasetAxes(ta, new int[] {0});
 		testDatasetAxes(ta, new int[] {1});
 
 		// 3D
-		ta = DatasetFactory.createRange(0, size, 1, type).reshape(16, 8, size / (16 * 8));
+		ta = DatasetFactory.createRange(clazz, 0, size, 1).reshape(16, 8, size / (16 * 8));
 		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
 		testDataset(ta);
 		testDatasetAxes(ta, new int[] {0});
@@ -85,7 +79,7 @@ public class PositionIteratorTest {
 		testDatasetAxes(ta, new int[] {0,1});
 		testDatasetAxes(ta, new int[] {0,2});
 
-		ta = DatasetFactory.createRange(0, size, 1, type).reshape(size / (16 * 8), 16, 8);
+		ta = DatasetFactory.createRange(clazz, 0, size, 1).reshape(size / (16 * 8), 16, 8);
 		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
 		testDataset(ta);
 		testDatasetAxes(ta, new int[] {0});

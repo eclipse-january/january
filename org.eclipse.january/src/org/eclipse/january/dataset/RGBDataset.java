@@ -557,9 +557,36 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 
 	/**
 	 * Convert colour dataset to a grey-scale one using the NTSC formula, aka ITU-R BT.601, for RGB to luma mapping
-	 * @param dtype
+	 * @param clazz
 	 * @return a grey-scale dataset of given type
+	 * @since 2.1
 	 */
+	public <T extends Dataset> T createGreyDataset(final T clazz) {
+		return (T) createGreyDataset(clazz, Wr, Wg, Wb);
+	}
+
+	/**
+	 * Convert colour dataset to a grey-scale one using given RGB to luma mapping
+	 * @param clazz
+	 * @param red weight
+	 * @param green weight
+	 * @param blue weight
+	 * @param dtype
+	 * @return a grey-scale dataset of given class
+	 * @since 2.1
+	 */
+	@SuppressWarnings("unchecked")
+	public <T extends Dataset> T createGreyDataset(final T clazz, final double red, final double green, final double blue) {
+		return (T) createGreyDataset(red, green, blue, DTypeUtils.getDType(clazz));
+	}
+
+	/**
+	 * Convert colour dataset to a grey-scale one using the NTSC formula, aka ITU-R BT.601, for RGB to luma mapping
+	 * @param dtype
+	 * @return a grey-scale dataset of given class
+	 * @deprecated Use {@link RGBDataset#createGreyDataset(Class)}
+	 */
+	@Deprecated
 	public Dataset createGreyDataset(final int dtype) {
 		return createGreyDataset(Wr, Wg, Wb, dtype);
 	}
@@ -571,9 +598,10 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * @param blue weight
 	 * @param dtype
 	 * @return a grey-scale dataset of given type
+	 * @deprecated Use {@link RGBDataset#createGreyDataset(Class, double, double, double)}
 	 */
+	@Deprecated
 	public Dataset createGreyDataset(final double red, final double green, final double blue, final int dtype) {
-		@SuppressWarnings("deprecation")
 		final Dataset grey = DatasetFactory.zeros(shape, dtype);
 		final IndexIterator it = getIterator();
 
@@ -586,9 +614,41 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 
 	/**
 	 * Extract red colour channel
+	 * @param clazz
+	 * @return a dataset of given class
+	 * @since 2.1
+	 */
+	public <T extends Dataset> T createRedDataset(final T clazz) {
+		return createColourChannelDataset(0, clazz, "red");
+	}
+
+	/**
+	 * Extract green colour channel
+	 * @param clazz
+	 * @return a dataset of given class
+	 * @since 2.1
+	 */
+	public <T extends Dataset> T createGreenDataset(final T clazz) {
+		return createColourChannelDataset(1, clazz, "green");
+	}
+
+	/**
+	 * Extract blue colour channel
+	 * @param clazz
+	 * @return a dataset of given class
+	 * @since 2.1
+	 */
+	public <T extends Dataset> T createBlueDataset(final T clazz) {
+		return createColourChannelDataset(2, clazz, "blue");
+	}
+
+	/**
+	 * Extract red colour channel
 	 * @param dtype
 	 * @return a dataset of given type
+	 * @deprecated Use {@link RGBDataset#createRedDataset(Class)}
 	 */
+	@Deprecated
 	public Dataset createRedDataset(final int dtype) {
 		return createColourChannelDataset(0, dtype, "red");
 	}
@@ -597,7 +657,9 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * Extract green colour channel
 	 * @param dtype
 	 * @return a dataset of given type
+	 * @deprecated Use {@link RGBDataset#createGreenDataset(Class)}
 	 */
+	@Deprecated
 	public Dataset createGreenDataset(final int dtype) {
 		return createColourChannelDataset(1, dtype, "green");
 	}
@@ -606,13 +668,21 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * Extract blue colour channel
 	 * @param dtype
 	 * @return a dataset of given type
+	 * @deprecated Use {@link RGBDataset#createBlueDataset(Class)}
 	 */
+	@Deprecated
 	public Dataset createBlueDataset(final int dtype) {
 		return createColourChannelDataset(2, dtype, "blue");
 	}
 
+	@SuppressWarnings("unchecked")
+	private <T extends Dataset> T createColourChannelDataset(int channelOffset, T clazz, String cName) {
+		return (T) createColourChannelDataset(channelOffset, DTypeUtils.getDType(clazz), cName);
+	}
+
+
+	@Deprecated
 	private Dataset createColourChannelDataset(final int channelOffset, final int dtype, final String cName) {
-		@SuppressWarnings("deprecation")
 		final Dataset channel = DatasetFactory.zeros(shape, dtype);
 
 		final StringBuilder cname = name == null ? new StringBuilder() : new StringBuilder(name);

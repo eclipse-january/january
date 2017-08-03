@@ -448,8 +448,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 		final int length = ((Number) selection.sum()).intValue();
 		final int is = getElementsPerItem();
-		@SuppressWarnings("deprecation")
-		Dataset r = DatasetFactory.zeros(is, new int[] { length }, getDType());
+		Dataset r = DatasetFactory.zeros(is, getClass(), length);
 		BooleanIterator biter = getBooleanIterator(selection);
 
 		int i = 0;
@@ -463,8 +462,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	@Override
 	public Dataset getBy1DIndex(IntegerDataset index) {
 		final int is = getElementsPerItem();
-		@SuppressWarnings("deprecation")
-		final Dataset r = DatasetFactory.zeros(is, index.getShape(), getDType());
+		final Dataset r = DatasetFactory.zeros(is, getClass(), index.getShape());
 		final IntegerIterator iter = new IntegerIterator(index, size, is);
 
 		int i = 0;
@@ -479,8 +477,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	public Dataset getByIndexes(final Object... indexes) {
 		final IntegersIterator iter = new IntegersIterator(shape, indexes);
 		final int is = getElementsPerItem();
-		@SuppressWarnings("deprecation")
-		final Dataset r = DatasetFactory.zeros(is, iter.getShape(), getDType());
+		final Dataset r = DatasetFactory.zeros(is, getClass(), iter.getShape());
 
 		final int[] pos = iter.getPos();
 		int i = 0;

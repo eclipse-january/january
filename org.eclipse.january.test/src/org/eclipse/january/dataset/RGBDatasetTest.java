@@ -26,13 +26,12 @@ import org.junit.Test;
  * Basic tests of RGB dataset
  */
 public class RGBDatasetTest {
-	@SuppressWarnings("deprecation")
 	@Test
 	public void testConstructors() {
 		int n = 250;
-		Dataset r = DatasetFactory.createRange(n, Dataset.INT32);
-		Dataset g = DatasetFactory.createRange(1., n+1, 1, Dataset.INT32);
-		Dataset b = DatasetFactory.createRange(2., n+2, 1, Dataset.INT32);
+		Dataset r = DatasetFactory.createRange(IntegerDataset.class, n);
+		Dataset g = DatasetFactory.createRange(IntegerDataset.class, 1., n+1, 1);
+		Dataset b = DatasetFactory.createRange(IntegerDataset.class, 2., n+2, 1);
 		RGBDataset c = new RGBDataset(r, g, b);
 
 		for (int i = 0; i < n; i++) {
@@ -59,7 +58,7 @@ public class RGBDatasetTest {
 			assertEquals(i + 2, c.getBlue(i));
 		}
 
-		CompoundDataset cc = DatasetFactory.createRange(2, n, Dataset.INT32);
+		CompoundDataset cc = DatasetFactory.createRange(2, CompoundIntegerDataset.class, n);
 		c = RGBDataset.createFromCompoundDataset(cc);
 		for (int i = 0; i < n; i++) {
 			assertEquals(i, c.getRed(i));
@@ -67,7 +66,7 @@ public class RGBDatasetTest {
 			assertEquals(i, c.getBlue(i));
 		}
 		
-		cc = DatasetFactory.createRange(4, n, Dataset.INT32);
+		cc = DatasetFactory.createRange(4, CompoundIntegerDataset.class, n);
 		c = RGBDataset.createFromCompoundDataset(cc);
 		for (int i = 0; i < n; i++) {
 			assertEquals(i, c.getRed(i));

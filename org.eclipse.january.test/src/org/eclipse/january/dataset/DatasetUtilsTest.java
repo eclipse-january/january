@@ -36,11 +36,10 @@ public class DatasetUtilsTest {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	@Test
 	public void testSplit2() {
 		Dataset dataset = DatasetFactory.createFromObject(new int[] { 1, 2, 3 });
-		Dataset expected1 = DatasetFactory.zeros(1, new int[] { 0 }, dataset.getDType());
+		Dataset expected1 = DatasetFactory.zeros(1, dataset.getClass(), 0);
 		Dataset expected2 = DatasetFactory.createFromObject(new int[] { 1, 2, 3 });
 		List<Dataset> expected = new ArrayList<Dataset>();
 		expected.add(expected1);
@@ -99,7 +98,6 @@ public class DatasetUtilsTest {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	@Test
 	public void testSplitEqual2() {
 		Dataset dataset = DatasetFactory.createFromObject(new int[] { 1, 2, 3, 4 });
@@ -107,7 +105,7 @@ public class DatasetUtilsTest {
 		Dataset expected2 = DatasetFactory.createFromObject(new int[] { 2 });
 		Dataset expected3 = DatasetFactory.createFromObject(new int[] { 3 });
 		Dataset expected4 = DatasetFactory.createFromObject(new int[] { 4 });
-		Dataset expected5 = DatasetFactory.zeros(1, new int[] { 0 }, dataset.getDType());
+		Dataset expected5 = DatasetFactory.zeros(1, dataset.getClass(), 0);
 		List<Dataset> expected = new ArrayList<Dataset>();
 		expected.add(expected1);
 		expected.add(expected2);

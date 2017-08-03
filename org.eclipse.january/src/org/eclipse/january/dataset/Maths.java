@@ -2628,10 +2628,9 @@ public class Maths extends GeneratedMaths {
 	 * @param axis
 	 * @return difference
 	 */
-	@SuppressWarnings("deprecation")
 	public static Dataset difference(Dataset a, final int n, int axis) {
 		Dataset ds;
-		final int dt = a.getDType();
+		final Class<? extends Dataset> clazz = a.getClass();
 		final int rank = a.getRank();
 		final int is = a.getElementsPerItem();
 
@@ -2645,16 +2644,16 @@ public class Maths extends GeneratedMaths {
 		int[] nshape = a.getShape();
 		if (nshape[axis] <= n) {
 			nshape[axis] = 0;
-			return DatasetFactory.zeros(is, nshape, dt);
+			return DatasetFactory.zeros(is, clazz, nshape);
 		}
 
 		nshape[axis] -= n;
-		ds = DatasetFactory.zeros(is, nshape, dt);
+		ds = DatasetFactory.zeros(is, clazz, nshape);
 		if (rank == 1) {
 			difference(DatasetUtils.convertToDataset(a), ds, n);
 		} else {
-			final Dataset src = DatasetFactory.zeros(is, new int[] { a.getShapeRef()[axis] }, dt);
-			final Dataset dest = DatasetFactory.zeros(is, new int[] { nshape[axis] }, dt);
+			final Dataset src = DatasetFactory.zeros(is, clazz, a.getShapeRef()[axis]);
+			final Dataset dest = DatasetFactory.zeros(is, clazz, nshape[axis]);
 			final PositionIterator pi = a.getPositionIterator(axis);
 			final int[] pos = pi.getPos();
 			final boolean[] hit = pi.getOmit();
@@ -2728,7 +2727,6 @@ public class Maths extends GeneratedMaths {
 	 *            smoothing, the higher the value, the more smoothing occurs.
 	 * @return A dataset which contains all the derivative point for point.
 	 */
-	@SuppressWarnings("deprecation")
 	public static Dataset derivative(Dataset x, Dataset y, int n) {
 		if (x.getRank() != 1 || y.getRank() != 1) {
 			throw new IllegalArgumentException("Only one dimensional dataset supported");
@@ -2744,13 +2742,13 @@ public class Maths extends GeneratedMaths {
 		case Dataset.INT16:
 		case Dataset.ARRAYINT8:
 		case Dataset.ARRAYINT16:
-			result = DatasetFactory.zeros(y, Dataset.FLOAT32);
+			result = DatasetFactory.zeros(y, FloatDataset.class);
 			break;
 		case Dataset.INT32:
 		case Dataset.INT64:
 		case Dataset.ARRAYINT32:
 		case Dataset.ARRAYINT64:
-			result = DatasetFactory.zeros(y, Dataset.FLOAT64);
+			result = DatasetFactory.zeros(y, DoubleDataset.class);
 			break;
 		case Dataset.FLOAT32:
 		case Dataset.FLOAT64:
@@ -2806,10 +2804,9 @@ public class Maths extends GeneratedMaths {
 	 * @param axis
 	 * @return difference
 	 */
-	@SuppressWarnings("deprecation")
 	public static Dataset centralDifference(Dataset a, int axis) {
 		Dataset ds;
-		final int dt = a.getDType();
+		final Class<? extends Dataset> clazz = a.getClass();
 		final int rank = a.getRank();
 		final int is = a.getElementsPerItem();
 
@@ -2824,12 +2821,12 @@ public class Maths extends GeneratedMaths {
 		if (len < 2) {
 			throw new IllegalArgumentException("Dataset should have a size > 1 along given axis");
 		}
-		ds = DatasetFactory.zeros(is, a.getShapeRef(), dt);
+		ds = DatasetFactory.zeros(is, clazz, a.getShapeRef());
 		if (rank == 1) {
 			centralDifference(a, ds);
 		} else {
-			final Dataset src = DatasetFactory.zeros(is, new int[] { len }, dt);
-			final Dataset dest = DatasetFactory.zeros(is, new int[] { len }, dt);
+			final Dataset src = DatasetFactory.zeros(is, clazz, len);
+			final Dataset dest = DatasetFactory.zeros(is, clazz, len);
 			final PositionIterator pi = a.getPositionIterator(axis);
 			final int[] pos = pi.getPos();
 			final boolean[] hit = pi.getOmit();
@@ -3123,10 +3120,8 @@ public class Maths extends GeneratedMaths {
 				if (r == rank) {
 					g.idivide(centralDifference(dx, a));
 				} else {
-					final int dt = dx.getDType();
 					final int is = dx.getElementsPerItem();
-					@SuppressWarnings("deprecation")
-					final Dataset bdx = DatasetFactory.zeros(is, y.getShapeRef(), dt);
+					final Dataset bdx = DatasetFactory.zeros(is, dx.getClass(), y.getShapeRef());
 					final PositionIterator pi = y.getPositionIterator(a);
 					final int[] pos = pi.getPos();
 					final boolean[] hit = pi.getOmit();

@@ -1675,7 +1675,6 @@ public class MathsTest {
 		checkDatasets(null, null, d, ta);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Test
 	public void testGradient() {
 		double[] data = {1, 2, 4, 7, 11, 16};
@@ -1692,7 +1691,7 @@ public class MathsTest {
 		checkDatasets(null, null, d, ta);
 
 
-		Dataset b = DatasetFactory.createRange(a.getShape()[0], a.getDType());
+		Dataset b = DatasetFactory.createRange(a.getClass(), a.getShape()[0]);
 		b.imultiply(2);
 		tdata = new double[] {0.5 , 0.75, 1.25, 1.75, 2.25, 2.5};
 		ta = DatasetFactory.createFromObject(tdata);
@@ -1712,9 +1711,9 @@ public class MathsTest {
 		ta = DatasetFactory.createFromObject(tdata, 2, 3);
 		checkDatasets(null, null, l.get(1), ta);
 
-		b = DatasetFactory.createRange(a.getShape()[0], a.getDType());
+		b = DatasetFactory.createRange(a.getClass(), a.getShape()[0]);
 		b.imultiply(2);
-		Dataset c = DatasetFactory.createRange(a.getShape()[1], a.getDType());
+		Dataset c = DatasetFactory.createRange(a.getClass(), a.getShape()[1]);
 		c.imultiply(-1.5);
 
 		l = Maths.gradient(a, b, c);
@@ -1817,12 +1816,11 @@ public class MathsTest {
 		Assert.assertEquals((1 - t) * f1 + t * f2, v, 1e-15);
 	}
 
-	@SuppressWarnings("deprecation")
 	private void checkInterpolate2(Dataset a, double x) {
 		int s = a.getShapeRef()[0];
-		Dataset xa = DatasetFactory.createRange(s, Dataset.FLOAT64);
+		Dataset xa = DatasetFactory.createRange(s);
 		double a1 = checkInterpolate2(xa, a, x, false);
-		xa = DatasetFactory.createRange(s-1, -1, -1, Dataset.FLOAT64);
+		xa = DatasetFactory.createRange(s-1., -1, -1);
 		double a2 = checkInterpolate2(xa.getSliceView(new Slice(null, null, -1)), a, x, false);
 		TestUtils.assertEquals("Flipped x - but reflipped", a1, a2);
 		a2 = checkInterpolate2(xa, a.getSliceView(new Slice(null, null, -1)), x, true);
@@ -1873,8 +1871,7 @@ public class MathsTest {
 
 	private void checkInterpolate3(Dataset a, double x) {
 		int s = a.getShapeRef()[0];
-		@SuppressWarnings("deprecation")
-		Dataset dv = Maths.interpolate(DatasetFactory.createRange(s, Dataset.INT32), a, DatasetFactory.createFromObject(x), 0, 0);
+		Dataset dv = Maths.interpolate(DatasetFactory.createRange(IntegerDataset.class, s), a, DatasetFactory.createFromObject(x), 0, 0);
 		double v = dv.getElementDoubleAbs(0);
 		if (x <= -1 || x >= s) {
 			Assert.assertEquals(0, v, 1e-15);
@@ -2034,8 +2031,7 @@ public class MathsTest {
 
 	@Test
 	public void testLinearInterpolation() {
-		@SuppressWarnings("deprecation")
-		Dataset xa = DatasetFactory.createRange(60, Dataset.INT32);
+		Dataset xa = DatasetFactory.createRange(IntegerDataset.class, 60);
 		xa.iadd(1);
 
 		double[] xc = {-1.25, -1, -0.25, 0, 0.25, 58.25, 59, 59.25, 60, 60.25};
@@ -2047,8 +2043,7 @@ public class MathsTest {
 			checkInterpolate3(xa, x);
 		}
 
-		@SuppressWarnings("deprecation")
-		Dataset xb = DatasetFactory.createRange(120, Dataset.INT32);
+		Dataset xb = DatasetFactory.createRange(IntegerDataset.class, 120);
 		xb.setShape(60, 2);
 		xb.ifloorDivide(2);
 		xb = DatasetUtils.createCompoundDatasetFromLastAxis(xb, true);
@@ -2089,10 +2084,8 @@ public class MathsTest {
 
 	@Test
 	public void testBitwise() {
-		@SuppressWarnings("deprecation")
-		Dataset xa = DatasetFactory.createRange(-4, 4, 1, Dataset.INT8);
-		@SuppressWarnings("deprecation")
-		Dataset xb = DatasetFactory.createRange(8, Dataset.INT8);
+		Dataset xa = DatasetFactory.createRange(ByteDataset.class, -4, 4, 1);
+		Dataset xb = DatasetFactory.createRange(ByteDataset.class, 8);
 
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new byte[] {0, 1, 2, 3, 0, 1, 2, 3}),
 				Maths.bitwiseAnd(xa, xb), ABSERRD, ABSERRD);
@@ -2132,8 +2125,7 @@ public class MathsTest {
 
 	@Test
 	public void testDivideTowardsFloor() {
-		@SuppressWarnings("deprecation")
-		Dataset xa = DatasetFactory.createRange(-4, 4, 1, Dataset.INT8);
+		Dataset xa = DatasetFactory.createRange(ByteDataset.class, -4, 4, 1);
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new byte[] {-2, -2, -1, -1,  0,  0,  1,  1}),
 				Maths.divideTowardsFloor(xa, 2), true, ABSERRD, ABSERRD);
 
@@ -2149,8 +2141,7 @@ public class MathsTest {
 
 	@Test
 	public void testFloorDivide() {
-		@SuppressWarnings("deprecation")
-		Dataset xa = DatasetFactory.createRange(-4, 4, 1, Dataset.INT8);
+		Dataset xa = DatasetFactory.createRange(ByteDataset.class, -4, 4, 1);
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new byte[] {-2, -2, -1, -1,  0,  0,  1,  1}),
 				Maths.floorDivide(xa, 2), true, ABSERRD, ABSERRD);
 
@@ -2166,8 +2157,7 @@ public class MathsTest {
 
 	@Test
 	public void testFloorRemainder() {
-		@SuppressWarnings("deprecation")
-		Dataset xa = DatasetFactory.createRange(-4, 4, 1, Dataset.INT8);
+		Dataset xa = DatasetFactory.createRange(ByteDataset.class, -4, 4, 1);
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new byte[] {0, 1, 0, 1, 0, 1, 0, 1}),
 				Maths.floorRemainder(xa, 2), true, ABSERRD, ABSERRD);
 

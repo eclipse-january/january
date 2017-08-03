@@ -962,7 +962,6 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	protected ILazyDataset createFromSerializable(Serializable blob, boolean keepLazy) {
 		ILazyDataset d = null;
 		if (blob instanceof ILazyDataset) {
@@ -986,12 +985,12 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		} else {
 			final int is = getElementsPerItem();
 			if (is == 1) {
-				d = DatasetFactory.createFromObject(Dataset.FLOAT64, blob);
+				d = DatasetFactory.createFromObject(DoubleDataset.class, blob);
 			} else {
 				try {
-					d = DatasetFactory.createFromObject(is, Dataset.ARRAYFLOAT64, blob);
+					d = DatasetFactory.createFromObject(is, CompoundDoubleDataset.class, blob);
 				} catch (IllegalArgumentException e) { // if only single value supplied try again
-					d = DatasetFactory.createFromObject(Dataset.FLOAT64, blob);
+					d = DatasetFactory.createFromObject(DoubleDataset.class, blob);
 				}
 			}
 			if (d.getSize() == getSize() && !Arrays.equals(d.getShape(), shape)) {
