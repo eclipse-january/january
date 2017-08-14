@@ -447,6 +447,13 @@ public interface Dataset extends IDataset {
 	public IndexIterator getSliceIterator(int[] start, int[] stop, int[] step);
 
 	/**
+	 * @param slice an n-D slice
+	 * @return an slice iterator that operates like an IndexIterator
+	 * @since 2.1
+	 */
+	public IndexIterator getSliceIterator(SliceND slice);
+
+	/**
 	 * Get a slice iterator that is defined by a starting position and a set of axes to include
 	 * 
 	 * @param pos
