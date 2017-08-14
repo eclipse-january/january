@@ -1047,8 +1047,8 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 
 	@Override
 	public void fillDataset(Dataset result, IndexIterator iter) {
-		setDirty();
 		IndexIterator riter = result.getIterator();
+		result.setDirty();
 
 		double[] rdata = ((CompoundDoubleDataset) result).data; // PRIM_TYPE
 
