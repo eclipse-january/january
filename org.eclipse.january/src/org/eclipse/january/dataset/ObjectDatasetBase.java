@@ -682,8 +682,8 @@ public class ObjectDatasetBase extends AbstractDataset {
 
 	@Override
 	public void fillDataset(Dataset result, IndexIterator iter) {
-		setDirty();
 		IndexIterator riter = result.getIterator();
+		result.setDirty();
 
 		Object[] rdata = ((ObjectDatasetBase) result).data; // PRIM_TYPE
 

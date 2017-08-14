@@ -708,8 +708,8 @@ public class ByteDataset extends AbstractDataset {
 
 	@Override
 	public void fillDataset(Dataset result, IndexIterator iter) {
-		setDirty();
 		IndexIterator riter = result.getIterator();
+		result.setDirty();
 
 		byte[] rdata = ((ByteDataset) result).data; // PRIM_TYPE
 

@@ -1047,8 +1047,8 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 
 	@Override
 	public void fillDataset(Dataset result, IndexIterator iter) {
-		setDirty();
 		IndexIterator riter = result.getIterator();
+		result.setDirty();
 
 		int[] rdata = ((CompoundIntegerDataset) result).data; // PRIM_TYPE
 

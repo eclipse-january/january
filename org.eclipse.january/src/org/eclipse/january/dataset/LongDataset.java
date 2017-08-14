@@ -708,8 +708,8 @@ public class LongDataset extends AbstractDataset {
 
 	@Override
 	public void fillDataset(Dataset result, IndexIterator iter) {
-		setDirty();
 		IndexIterator riter = result.getIterator();
+		result.setDirty();
 
 		long[] rdata = ((LongDataset) result).data; // PRIM_TYPE
 

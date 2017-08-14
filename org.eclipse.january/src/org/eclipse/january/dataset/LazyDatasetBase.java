@@ -242,8 +242,10 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	@SuppressWarnings("unchecked")
 	@Override
 	public synchronized <S extends MetadataType, T extends S> List<S> getMetadata(Class<T> clazz) throws MetadataException {
-		if (metadata == null)
+		if (metadata == null) {
+			dirty = false;
 			return null;
+		}
 
 		if (dirty) {
 			dirtyMetadata();
@@ -265,9 +267,13 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	public synchronized <S extends MetadataType, T extends S> S getFirstMetadata(Class<T> clazz) {
 		try {
 			List<S> ml = getMetadata(clazz);
-			if (ml == null) return null;
+			if (ml == null) {
+				return null;
+			}
 			for (S t : ml) {
-				if (clazz.isInstance(t)) return t;
+				if (clazz.isInstance(t)) {
+					return t;
+				}
 			}
 		} catch (Exception e) {
 			logger.error("Get metadata failed!",e);

@@ -708,8 +708,8 @@ public class ShortDataset extends AbstractDataset {
 
 	@Override
 	public void fillDataset(Dataset result, IndexIterator iter) {
-		setDirty();
 		IndexIterator riter = result.getIterator();
+		result.setDirty();
 
 		short[] rdata = ((ShortDataset) result).data; // PRIM_TYPE
 

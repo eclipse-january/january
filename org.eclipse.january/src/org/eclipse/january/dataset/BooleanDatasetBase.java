@@ -660,8 +660,8 @@ public class BooleanDatasetBase extends AbstractDataset {
 
 	@Override
 	public void fillDataset(Dataset result, IndexIterator iter) {
-		setDirty();
 		IndexIterator riter = result.getIterator();
+		result.setDirty();
 
 		boolean[] rdata = ((BooleanDatasetBase) result).data; // PRIM_TYPE
 

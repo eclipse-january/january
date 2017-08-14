@@ -708,8 +708,8 @@ public class DoubleDataset extends AbstractDataset {
 
 	@Override
 	public void fillDataset(Dataset result, IndexIterator iter) {
-		setDirty();
 		IndexIterator riter = result.getIterator();
+		result.setDirty();
 
 		double[] rdata = ((DoubleDataset) result).data; // PRIM_TYPE
 

@@ -1282,6 +1282,22 @@ public class AbstractDatasetTest {
 	}
 
 	@Test
+	public void testFillDataset() {
+		Dataset other = DatasetFactory.zeros(10);
+		Dataset a = DatasetFactory.createRange(100).reshape(20, 5);
+
+		assertEquals(0.0, other.max().doubleValue(), 1e-14);
+		a.fillDataset(other, a.getSliceIterator(null, new int[] {10, 1}, null));
+		assertEquals(45.0, other.max().doubleValue(), 1e-14);
+
+		CompoundDataset c = DatasetFactory.createRange(3, CompoundDoubleDataset.class, 100).reshape(20, 5);
+		CompoundDataset cOther = DatasetFactory.compoundZeros(3, CompoundDoubleDataset.class, 10);
+		assertArrayEquals(new double[] {0, 0, 0}, cOther.maxItem(), 1e-14);
+		c.fillDataset(cOther, c.getSliceIterator(null, new int[] {10, 1}, null));
+		assertArrayEquals(new double[] {45.0, 0, 0}, cOther.maxItem(), 1e-14);
+	}
+
+	@Test
 	public void test1DErrors() {
 		
 		// test 1D errors for single value

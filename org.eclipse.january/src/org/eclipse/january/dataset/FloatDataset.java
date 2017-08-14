@@ -708,8 +708,8 @@ public class FloatDataset extends AbstractDataset {
 
 	@Override
 	public void fillDataset(Dataset result, IndexIterator iter) {
-		setDirty();
 		IndexIterator riter = result.getIterator();
+		result.setDirty();
 
 		float[] rdata = ((FloatDataset) result).data; // PRIM_TYPE
 

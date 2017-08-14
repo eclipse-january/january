@@ -1047,8 +1047,8 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 
 	@Override
 	public void fillDataset(Dataset result, IndexIterator iter) {
-		setDirty();
 		IndexIterator riter = result.getIterator();
+		result.setDirty();
 
 		byte[] rdata = ((CompoundByteDataset) result).data; // PRIM_TYPE
 
