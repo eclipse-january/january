@@ -1683,6 +1683,9 @@ public class Stats {
 		IndexIterator it = a.getIterator();
 		while (it.hasNext()) {
 			Double x = a.getElementDoubleAbs(it.index);
+			if (Double.isNaN(x)) {
+				continue;
+			}
 			Integer i;
 			if (ml == nl) {
 				Double k = lMap.lastKey();
@@ -1760,8 +1763,6 @@ public class Stats {
 	static double[] outlierValuesList(final Dataset a, int nl, int nh) {
 		final List<Double> lList = new ArrayList<Double>(nl);
 		final List<Double> hList = new ArrayList<Double>(nh);
-//		final List<Double> lList = new LinkedList<Double>();
-//		final List<Double> hList = new LinkedList<Double>();
 
 		double lx = Double.POSITIVE_INFINITY;
 		double hx = Double.NEGATIVE_INFINITY;
@@ -1769,6 +1770,9 @@ public class Stats {
 		IndexIterator it = a.getIterator();
 		while (it.hasNext()) {
 			double x = a.getElementDoubleAbs(it.index);
+			if (Double.isNaN(x)) {
+				continue;
+			}
 			if (x < lx) {
 				if (lList.size() == nl) {
 					lList.remove(lx);

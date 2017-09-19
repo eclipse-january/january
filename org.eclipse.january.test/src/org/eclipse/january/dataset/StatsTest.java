@@ -303,13 +303,27 @@ public class StatsTest {
 
 	@Test
 	public void testOutlierValues() {
-		Dataset a = DatasetFactory.zeros(20);
+		testOutlierValues(DatasetFactory.zeros(20));
 
+		testOutlierValues(DatasetFactory.zeros(1000));
+	}
+
+	private void testOutlierValues(Dataset a) {
 		double[] o = Stats.outlierValues(a, 0.01, 99.9, 10);
 		assertEquals(0, o[0], 1e-4);
 		assertEquals(0, o[1], 1e-4);
 		assertEquals(0, o[2], 1e-4);
 		assertEquals(100, o[3], 1e-4);
+
+		a.fill(Double.NaN);
+		a.set(200, 5);
+		a.set(0, 10);
+		o = Stats.outlierValues(a, 0.01, 99.9, 10);
+		assertEquals(0, o[0], 1e-4);
+		assertEquals(200, o[1], 1e-4);
+		double f = 100./a.getSize();
+		assertEquals(f, o[2], 1e-4);
+		assertEquals(100-f, o[3], 1e-4);
 	}
 
 	@Test
