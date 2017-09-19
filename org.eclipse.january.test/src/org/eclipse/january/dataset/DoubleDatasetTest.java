@@ -55,6 +55,34 @@ public class DoubleDatasetTest {
 	}
 
 	@Test
+	public void testClone() {
+		DoubleDataset z = new DoubleDataset();
+		TestUtils.assertDatasetEquals(z, z.clone());
+
+		double[] da = null;
+		try {
+			z = new DoubleDataset(da);
+			fail("Should have thrown an IAE");
+		} catch (IllegalArgumentException e) {
+		}
+
+		da = new double[0];
+		z = new DoubleDataset(da);
+		TestUtils.assertDatasetEquals(z, z.clone());
+
+		z = new DoubleDataset(0);
+		TestUtils.assertDatasetEquals(z, z.clone());
+
+		z = new DoubleDataset(0, 1);
+		TestUtils.assertDatasetEquals(z, z.clone());
+
+		da = new double[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
+		DoubleDataset a = new DoubleDataset(da);
+
+		TestUtils.assertDatasetEquals(a, a.clone());
+	}
+
+	@Test
 	public void testGetter() {
 		double[] da = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
 		DoubleDataset a = new DoubleDataset(da);
