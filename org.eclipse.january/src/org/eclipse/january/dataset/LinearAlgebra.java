@@ -49,20 +49,12 @@ public class LinearAlgebra {
 		final int[] bshape = b.getShapeRef();
 		final int arank = ashape.length;
 		final int brank = bshape.length;
-		int aaxis = axisa;
-		if (aaxis < 0)
-			aaxis += arank;
-		if (aaxis < 0 || aaxis >= arank)
-			throw new IllegalArgumentException("Summing axis outside valid rank of 1st dataset");
+		int aaxis = ShapeUtils.checkAxis(arank, axisa);
 
 		if (ashape[aaxis] < CROSSOVERPOINT) { // faster to use position iteration
 			return tensorDotProduct(a, b, new int[] {axisa}, new int[] {axisb});
 		}
-		int baxis = axisb;
-		if (baxis < 0)
-			baxis += arank;
-		if (baxis < 0 || baxis >= arank)
-			throw new IllegalArgumentException("Summing axis outside valid rank of 2nd dataset");
+		int baxis = ShapeUtils.checkAxis(brank, axisb);
 
 		final boolean[] achoice = new boolean[arank];
 		final boolean[] bchoice = new boolean[brank];
@@ -135,22 +127,13 @@ public class LinearAlgebra {
 		final int[] aaxes = new int[axisa.length];
 		final int[] baxes = new int[axisa.length];
 		for (int i = 0; i < axisa.length; i++) {
-			int n;
-
-			n = axisa[i];
-			if (n < 0) n += arank;
-			if (n < 0 || n >= arank)
-				throw new IllegalArgumentException("Summing axis outside valid rank of 1st dataset");
-			aaxes[i] = n;
-
-			n = axisb[i];
-			if (n < 0) n += brank;
-			if (n < 0 || n >= brank)
-				throw new IllegalArgumentException("Summing axis outside valid rank of 2nd dataset");
+			aaxes[i] = ShapeUtils.checkAxis(arank, axisa[i]);
+			int n = ShapeUtils.checkAxis(brank, axisb[i]);
 			baxes[i] = n;
 
-			if (ashape[aaxes[i]] != bshape[n])
+			if (ashape[aaxes[i]] != bshape[n]) {
 				throw new IllegalArgumentException("Summing axes do not have matching lengths");
+			}
 		}
 
 		final boolean[] achoice = new boolean[arank];
@@ -295,18 +278,8 @@ public class LinearAlgebra {
 		if (rankA == 0 || rankB == 0) {
 			throw new IllegalArgumentException("Datasets must have one or more dimensions");
 		}
-		if (axisA < 0) {
-			axisA += rankA;
-		}
-		if (axisA < 0 || axisA >= rankA) {
-			throw new IllegalArgumentException("Axis A argument exceeds rank");
-		}
-		if (axisB < 0) {
-			axisB += rankB;
-		}
-		if (axisB < 0 || axisB >= rankB) {
-			throw new IllegalArgumentException("Axis B argument exceeds rank");
-		}
+		axisA = a.checkAxis(axisA);
+		axisB = b.checkAxis(axisB);
 
 		final int[] shapeA = a.getShape();
 		final int[] shapeB = b.getShape();
@@ -412,12 +385,7 @@ public class LinearAlgebra {
 
 		int[] maxShape = fullShapes.get(0);
 		int rankC = maxShape.length + 1;
-		if (axisC < 0) {
-			axisC += rankC;
-		}
-		if (axisC < 0 || axisC >= rankC) {
-			throw new IllegalArgumentException("Axis C argument exceeds rank");
-		}
+		axisC = ShapeUtils.checkAxis(rankC, axisC);
 		maxShape = addAxisToShape(maxShape, axisC, 3);
 		@SuppressWarnings("deprecation")
 		Dataset c = DatasetFactory.zeros(maxShape, DTypeUtils.getBestDType(a.getDType(), b.getDType()));

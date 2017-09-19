@@ -17,6 +17,7 @@ import java.util.Map;
 
 import org.eclipse.january.dataset.IDynamicDataset;
 import org.eclipse.january.dataset.ILazyDataset;
+import org.eclipse.january.dataset.ShapeUtils;
 import org.eclipse.january.metadata.AxesMetadata;
 import org.eclipse.january.metadata.Reshapeable;
 import org.eclipse.january.metadata.Sliceable;
@@ -102,6 +103,7 @@ public class AxesMetadataImpl implements AxesMetadata {
 	 * @param axisData dataset for axis
 	 */
 	public void addAxis(int axisDim, ILazyDataset axisData) {
+		axisDim = ShapeUtils.checkAxis(allAxes.length, axisDim);
 		if (allAxes[axisDim] == null) {
 			allAxes[axisDim] = new ArrayList<ILazyDataset>();
 		}
@@ -116,6 +118,7 @@ public class AxesMetadataImpl implements AxesMetadata {
 	 * @param dimMapping indicates where each axis dimension maps to in the dataset dimensions  
 	 */
 	public void addAxis(int primaryAxisDim, ILazyDataset axisData, int... dimMapping) {
+		primaryAxisDim = ShapeUtils.checkAxis(allAxes.length, primaryAxisDim);
 		if (allAxes[primaryAxisDim] == null) {
 			allAxes[primaryAxisDim] = new ArrayList<ILazyDataset>();
 		}
@@ -131,7 +134,7 @@ public class AxesMetadataImpl implements AxesMetadata {
 		if (axisData == null) return null;
 		
 		if (axisDims.length == 1) {
-			int ad = axisDims[0];
+			int ad =  ShapeUtils.checkAxis(allAxes.length, axisDims[0]);
 			ILazyDataset view = axisData.getSliceView();
 			view.clearMetadata(AxesMetadata.class);
 			int r = axisData.getRank(); 
@@ -154,7 +157,7 @@ public class AxesMetadataImpl implements AxesMetadata {
 			int[] newShape = new int[allAxes.length];
 			Arrays.fill(newShape, 1);
 			for (int i = 0 ; i < axisDims.length; i++) {
-				newShape[axisDims[i]] = axisShape[i];
+				newShape[ShapeUtils.checkAxis(allAxes.length, axisDims[i])] = axisShape[i];
 			}
 			view.setShape(newShape);
 			return view;

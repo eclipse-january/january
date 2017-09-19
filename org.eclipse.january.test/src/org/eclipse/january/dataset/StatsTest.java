@@ -200,6 +200,8 @@ public class StatsTest {
 
 		Dataset ids = Stats.iqr(b, 1);
 		TestUtils.assertDatasetEquals(DatasetFactory.zeros(10).fill(4.5), ids);
+		ids = Stats.iqr(b, -1);
+		TestUtils.assertDatasetEquals(DatasetFactory.zeros(10).fill(4.5), ids);
 		
 		a = DatasetFactory.createRange(81.);
 		assertEquals(40., (Double) Stats.iqr(a), 1e-12);
@@ -217,6 +219,8 @@ public class StatsTest {
 
 		Dataset sds = Stats.skewness(b, 1);
 		TestUtils.assertDatasetEquals(DatasetFactory.zeros(10), sds);
+		sds = Stats.skewness(b, -1);
+		TestUtils.assertDatasetEquals(DatasetFactory.zeros(10), sds);
 	}
 
 	@Test
@@ -227,6 +231,8 @@ public class StatsTest {
 		Dataset b = a.reshape(10, 10); // so now [[0, ..., 9], [10,...], ..., [..., 99]]
 
 		Dataset sds = Stats.kurtosis(b, 1);
+		TestUtils.assertDatasetEquals(DatasetFactory.zeros(10).fill(-1.2), sds);
+		sds = Stats.kurtosis(b, -1);
 		TestUtils.assertDatasetEquals(DatasetFactory.zeros(10).fill(-1.2), sds);
 	}
 

@@ -10,10 +10,10 @@
 package org.eclipse.january.dataset;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.eclipse.january.asserts.TestUtils;
 import org.junit.Test;
 
@@ -28,11 +28,17 @@ public class DatasetUtilsTest {
 		expected.add(expected1);
 		expected.add(expected2);
 		int[] indices = { 1 };
+
 		List<Dataset> actual = DatasetUtils.split(dataset, indices, 0);
-		if (actual.size() != expected.size())
-			fail();
+		assertEquals(expected.size(), actual.size());
 		for (int i = 0; i < expected.size(); i++) {
-			TestUtils.assertDatasetEquals(actual.get(i), expected.get(i));
+			TestUtils.assertDatasetEquals(expected.get(i), actual.get(i));
+		}
+
+		actual = DatasetUtils.split(dataset, indices, -1);
+		assertEquals(expected.size(), actual.size());
+		for (int i = 0; i < expected.size(); i++) {
+			TestUtils.assertDatasetEquals(expected.get(i), actual.get(i));
 		}
 	}
 
@@ -45,11 +51,11 @@ public class DatasetUtilsTest {
 		expected.add(expected1);
 		expected.add(expected2);
 		int[] indices = { 4 };
+
 		List<Dataset> actual = DatasetUtils.split(dataset, indices, 0);
-		if (actual.size() != expected.size())
-			fail();
+		assertEquals(expected.size(), actual.size());
 		for (int i = 0; i < expected.size(); i++) {
-			TestUtils.assertDatasetEquals(actual.get(i), expected.get(i));
+			TestUtils.assertDatasetEquals(expected.get(i), actual.get(i));
 		}
 	}
 
@@ -90,11 +96,17 @@ public class DatasetUtilsTest {
 		List<Dataset> expected = new ArrayList<Dataset>();
 		expected.add(expected1);
 		expected.add(expected2);
+
 		List<Dataset> actual = DatasetUtils.split(dataset, 2, 0, false);
-		if (actual.size() != expected.size())
-			fail();
+		assertEquals(expected.size(), actual.size());
 		for (int i = 0; i < expected.size(); i++) {
-			TestUtils.assertDatasetEquals(actual.get(i), expected.get(i));
+			TestUtils.assertDatasetEquals(expected.get(i), actual.get(i));
+		}
+
+		actual = DatasetUtils.split(dataset, 2, -1, false);
+		assertEquals(expected.size(), actual.size());
+		for (int i = 0; i < expected.size(); i++) {
+			TestUtils.assertDatasetEquals(expected.get(i), actual.get(i));
 		}
 	}
 
@@ -112,11 +124,11 @@ public class DatasetUtilsTest {
 		expected.add(expected3);
 		expected.add(expected4);
 		expected.add(expected5);
+
 		List<Dataset> actual = DatasetUtils.split(dataset, 6, 0, false);
-		if (actual.size() != expected.size())
-			fail();
+		assertEquals(expected.size(), actual.size());
 		for (int i = 0; i < expected.size(); i++) {
-			TestUtils.assertDatasetEquals(actual.get(i), expected.get(i));
+			TestUtils.assertDatasetEquals(expected.get(i), actual.get(i));
 		}
 	}
 	
@@ -273,5 +285,4 @@ public class DatasetUtilsTest {
 		Dataset actual = DatasetUtils.norm(dataset);
 		TestUtils.assertDatasetEquals(expected, actual);
 	}
-
 }

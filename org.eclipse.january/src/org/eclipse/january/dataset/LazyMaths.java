@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
  */
 public final class LazyMaths {
 
-	private static final String INVALID_AXIS_ERROR = "Axis argument is outside allowed range";
 	private static final String DUPLICATE_AXIS_ERROR = "Axis arguments must be unique";
 	private static final String TOO_MANY_AXES_ERROR = "Number of axes cannot be greater than the rank";
 
@@ -101,12 +100,7 @@ public final class LazyMaths {
 					logger.error(DUPLICATE_AXIS_ERROR);
 					throw new IllegalArgumentException(DUPLICATE_AXIS_ERROR);
 				}
-				if (axes[axisIndex] < 0)
-					axes[axisIndex] += rank;
-				if (axes[axisIndex] < 0 || axes[axisIndex] >= rank) {
-					logger.error(INVALID_AXIS_ERROR);
-					throw new IllegalArgumentException(INVALID_AXIS_ERROR);
-				}
+				axes[axisIndex] = ShapeUtils.checkAxis(rank, axes[axisIndex]);
 			}
 		}
 		return axes;
@@ -332,12 +326,7 @@ public final class LazyMaths {
 
 	private static Dataset prepareDataset(int axis, int[] shape, int[][] sliceInfo) {
 		int rank = shape.length;
-		if (axis < 0)
-			axis += rank;
-		if (axis < 0 || axis >= rank) {
-			logger.error(INVALID_AXIS_ERROR);
-			throw new IllegalArgumentException(INVALID_AXIS_ERROR);
-		}
+		axis = ShapeUtils.checkAxis(rank, axis);
 
 		sliceInfo[0] = new int[rank];
 		sliceInfo[1] = shape.clone();

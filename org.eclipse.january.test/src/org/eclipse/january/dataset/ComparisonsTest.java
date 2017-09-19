@@ -159,6 +159,7 @@ public class ComparisonsTest {
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {false, true, true}), Comparisons.allTrue(c, 0));
 		Dataset d = b.clone().reshape(2, 3);
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {true, true}), Comparisons.allTrue(d, 1));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {true, true}), Comparisons.allTrue(d, -1));
 	}
 
 	@Test
@@ -170,6 +171,7 @@ public class ComparisonsTest {
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {true, true, true}), Comparisons.anyTrue(c, 0));
 		Dataset d = b.clone().reshape(2, 3);
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {true, true}), Comparisons.anyTrue(d, 1));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {true, true}), Comparisons.anyTrue(d, -1));
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {false, true}),
 				Comparisons.anyTrue(DatasetFactory.createFromObject(new double[] {0, 0, 0, 1}).reshape(2,2), 1));
 	}

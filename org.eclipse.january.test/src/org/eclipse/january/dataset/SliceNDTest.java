@@ -955,6 +955,12 @@ public class SliceNDTest {
 		Assert.assertArrayEquals(new int[] {3, 4}, slice.getStart());
 		Assert.assertArrayEquals(new int[] {7, -1}, slice.getStop());
 		Assert.assertArrayEquals(new int[] {2, -3}, slice.getStep());
+		slice.flip(-2);
+		Assert.assertArrayEquals(new int[] {2, 2}, slice.getShape());
+		Assert.assertArrayEquals(new int[] {5, 4}, slice.getStart());
+		Assert.assertArrayEquals(new int[] {1, -1}, slice.getStop());
+		Assert.assertArrayEquals(new int[] {-2, -3}, slice.getStep());
+		slice.flip(0);
 
 		slice.flip();
 		Assert.assertArrayEquals(new int[] {2, 2}, slice.getShape());

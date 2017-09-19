@@ -502,6 +502,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 		if (isDirty) {
 			clearAll();
 		}
+		axis = dataset.checkAxis(axis);
 		int axisOffset = (ignoreNaNs ? 1 : 0)*2 + (ignoreInfs ? 1 : 0) + COMBOS * axis;
 		if (axisStats[axisOffset] == null) {
 			axisStats[axisOffset] = createAxisStats(axis, ignoreNaNs, ignoreInfs);
