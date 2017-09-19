@@ -112,7 +112,9 @@ public class ObjectDatasetBase extends AbstractDataset {
 
 		try {
 			if (dataset.stride == null) {
-				odata = data = dataset.data.clone();
+				if (dataset.data != null) {
+					odata = data = dataset.data.clone();
+				}
 			} else {
 				offset = 0;
 				stride = null;

@@ -1066,8 +1066,8 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	 * @return cleaned up axes or null if trivial
 	 */
 	public static int[] checkPermutatedAxes(int[] shape, int... axes) {
-		int rank = shape.length;
-	
+		int rank = shape == null ? 0 : shape.length;
+
 		if (axes == null || axes.length == 0) {
 			axes = new int[rank];
 			for (int i = 0; i < rank; i++) {

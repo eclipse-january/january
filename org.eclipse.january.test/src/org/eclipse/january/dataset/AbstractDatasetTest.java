@@ -610,9 +610,12 @@ public class AbstractDatasetTest {
 	 */
 	@Test
 	public void testTranspose() {
-		Dataset ds = DatasetFactory.createRange(DoubleDataset.class, 6);
-		ds.setShape(2,3);
+		Dataset ds = DatasetFactory.createFromObject(DoubleDataset.class, (Object) null);
+		TestUtils.assertDatasetEquals(ds, ds.transpose());
+		ds = DatasetFactory.createRange(DoubleDataset.class, 6);
+		TestUtils.assertDatasetEquals(ds, ds.transpose());
 
+		ds.setShape(2,3);
 		Dataset ta = DatasetUtils.transpose(ds, 1, 0);
 		double[][] xa = { { 0., 1., 2. }, { 3., 4., 5. } };
 
@@ -1597,9 +1600,14 @@ public class AbstractDatasetTest {
 
 	@Test
 	public void testCast() {
-		long[] udata = new long[] {0, 1, 127, 128, 255, 256, 32767, 32768, 65535, 65536, 2147483647L, 2147483648L, 4294967295L, 4294967296L};
-		Dataset d = new LongDataset(udata);
-		Dataset a, c;
+		Dataset a, c, d;
+
+		d = new LongDataset();
+		c = DatasetUtils.cast(DoubleDataset.class, d);
+
+		long[] udata;
+		udata = new long[] {0, 1, 127, 128, 255, 256, 32767, 32768, 65535, 65536, 2147483647L, 2147483648L, 4294967295L, 4294967296L};
+		d = new LongDataset(udata);
 		c = DatasetUtils.cast(IntegerDataset.class, d);
 		Assert.assertTrue(c.max().doubleValue() < d.max().doubleValue()); // check stored values
 		a = DatasetFactory.createFromObject(true, c);

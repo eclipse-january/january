@@ -368,6 +368,10 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			return base.getSize() == 1  ? (withPosition ? new PositionIterator(offset, shape) :
 				new SingleItemIterator(offset, size)) : new StrideIterator(shape, stride, offset);
 		}
+		if (shape == null) {
+			return new NullIterator(shape, shape);
+		}
+		
 		return withPosition ? new ContiguousIteratorWithPosition(shape, size) : new ContiguousIterator(size);
 	}
 
