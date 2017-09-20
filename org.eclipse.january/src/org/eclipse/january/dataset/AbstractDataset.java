@@ -259,15 +259,8 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	@Override
 	public Dataset swapAxes(int axis1, int axis2) {
 		int rank = shape.length;
-		if (axis1 < 0)
-			axis1 += rank;
-		if (axis2 < 0)
-			axis2 += rank;
-
-		if (axis1 < 0 || axis2 < 0 || axis1 >= rank || axis2 >= rank) {
-			logger.error("Axis value invalid - out of range");
-			throw new IllegalArgumentException("Axis value invalid - out of range");
-		}
+		axis1 = ShapeUtils.checkAxis(rank, axis1);
+		axis2 = ShapeUtils.checkAxis(rank, axis2);
 
 		if (rank == 1 || axis1 == axis2) {
 			return this;
@@ -1081,25 +1074,12 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public int checkAxis(int axis) {
-		return checkAxis(shape.length, axis);
+		return ShapeUtils.checkAxis(shape.length, axis);
 	}
 
-	/**
-	 * Check that axis is in range [-rank,rank)
-	 * 
-	 * @param rank
-	 * @param axis
-	 * @return sanitized axis in range [0, rank)
-	 */
+	@Deprecated
 	protected static int checkAxis(int rank, int axis) {
-		if (axis < 0) {
-			axis += rank;
-		}
-
-		if (axis < 0 || axis >= rank) {
-			throw new IndexOutOfBoundsException("Axis " + axis + " given is out of range [0, " + rank + ")");
-		}
-		return axis;
+		return ShapeUtils.checkAxis(rank, axis);
 	}
 
 	protected static final char BLOCK_OPEN = '[';

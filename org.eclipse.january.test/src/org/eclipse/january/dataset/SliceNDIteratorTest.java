@@ -72,6 +72,25 @@ public class SliceNDIteratorTest {
 			size++;
 		}
 		assertEquals(2*6*7, size);
+
+		it = new SliceNDIterator(sa, -3);
+
+		assertArrayEquals(new int[]{2, 1, 6, 7}, it.getShape());
+		myAssertEquals(new SliceND(new int[] {5}), it.getOmittedSlice());
+
+		size = 0;
+		while (it.hasNext()) {
+			TestUtils.verbosePrintln(size + ": " + Arrays.toString(it.getPos()) + " or " + Arrays.toString(it.getUsedPos()));
+			TestUtils.verbosePrintln("use: " + it.getUsedSlice() + ", cur: " + it.getCurrentSlice() + ", out: " + it.getOutputSlice());
+			if (size == (1*6*7 + 3*7 + 5)) {
+				assertArrayEquals(new int[]{3, 0, 3, 5}, it.getPos());
+				assertArrayEquals(new int[]{3, 3, 5}, it.getUsedPos());
+				myAssertEquals(new SliceND(new int[] {4, 6, 7}, new Slice(1, 2), new Slice(3, 4), new Slice(5, 6)), it.getUsedSlice());
+				myAssertEquals(new SliceND(new int[] {2, 5, 6, 7}, new Slice(1, 2), null, new Slice(3, 4), new Slice(5, 6)), it.getOutputSlice());
+			}
+			size++;
+		}
+		assertEquals(2*6*7, size);
 	}
 
 	/**

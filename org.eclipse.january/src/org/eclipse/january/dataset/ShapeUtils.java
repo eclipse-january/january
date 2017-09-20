@@ -387,5 +387,22 @@ public class ShapeUtils {
 		}
 	}
 
+	/**
+	 * Check that axis is in range [-rank,rank)
+	 * 
+	 * @param rank
+	 * @param axis
+	 * @return sanitized axis in range [0, rank)
+	 * @since 2.1
+	 */
+	public static int checkAxis(int rank, int axis) {
+		if (axis < 0) {
+			axis += rank;
+		}
 	
+		if (axis < 0 || axis >= rank) {
+			throw new IllegalArgumentException("Axis " + axis + " given is out of range [0, " + rank + ")");
+		}
+		return axis;
+	}
 }

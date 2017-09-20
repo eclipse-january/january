@@ -111,9 +111,13 @@ public class AbstractDatasetTest {
 		assertEquals("Max", 11, a.max().doubleValue(), 1e-6);
 		assertEquals("Max 0", DatasetFactory.createFromObject(new double[] {8,9,10,11}), a.max(0));
 		assertEquals("Max 1", DatasetFactory.createFromObject(new double[] {3,7,11}), a.max(1));
+		assertEquals("Max -2", DatasetFactory.createFromObject(new double[] {8,9,10,11}), a.max(-2));
+		assertEquals("Max -1", DatasetFactory.createFromObject(new double[] {3,7,11}), a.max(-1));
 		assertEquals("Max arg", 11, a.argMax());
 		assertEquals("Max arg 0 ", DatasetFactory.createFromObject(new int[] {2,2,2,2}), a.argMax(0));
 		assertEquals("Max arg 1 ", DatasetFactory.createFromObject(new int[] {3,3,3}), a.argMax(1));
+		assertEquals("Max arg -2 ", DatasetFactory.createFromObject(new int[] {2,2,2,2}), a.argMax(-2));
+		assertEquals("Max arg -1 ", DatasetFactory.createFromObject(new int[] {3,3,3}), a.argMax(-1));
 		a.set(Double.NaN, 1, 0);
 		System.out.println(a.toString(true));
 		assertTrue("Max", Double.isNaN(a.max().doubleValue()));
@@ -1667,7 +1671,6 @@ public class AbstractDatasetTest {
 		Dataset a = DatasetFactory.createRange(IntegerDataset.class, 10);
 
 		Dataset r = DatasetUtils.roll(a, 2, null);
-
 		TestUtils.assertDatasetEquals(r, Maths.add(a, 10-2).iremainder(10), 1e-6, 1e-6);
 
 		r = DatasetUtils.roll(a, -2, null);
@@ -1682,6 +1685,12 @@ public class AbstractDatasetTest {
 
 		r = DatasetUtils.roll(a, 1, 1);
 		TestUtils.assertDatasetEquals(r, DatasetFactory.createFromObject(new int[] {4, 0, 1, 2, 3, 9, 5, 6, 7, 8}, 2,5), 1e-6, 1e-6);
+
+		r = DatasetUtils.roll(a, 1, -2);
+		TestUtils.assertDatasetEquals(r, Maths.add(a, 5).iremainder(10).reshape(2,5), 1e-6, 1e-6);
+
+		r = DatasetUtils.roll(a, 1, -1);
+		TestUtils.assertDatasetEquals(r, DatasetFactory.createFromObject(new int[] {4, 0, 1, 2, 3, 9, 5, 6, 7, 8}, 2,5), 1e-6, 1e-6);
 	}
 
 	@Test
@@ -1690,6 +1699,7 @@ public class AbstractDatasetTest {
 		Assert.assertArrayEquals(new int[] {3, 6, 4, 5}, DatasetUtils.rollAxis(a, 3, 1).getShape());
 		Assert.assertArrayEquals(new int[] {5, 3, 4, 6}, DatasetUtils.rollAxis(a, 2, 0).getShape());
 		Assert.assertArrayEquals(new int[] {3, 5, 6, 4}, DatasetUtils.rollAxis(a, 1, 4).getShape());
+		Assert.assertArrayEquals(new int[] {3, 6, 4, 5}, DatasetUtils.rollAxis(a, -1, 1).getShape());
 	}
 
 	@Test
@@ -1745,6 +1755,9 @@ public class AbstractDatasetTest {
 				assertEquals("Append 3", d4.getDouble(i, j), d3.getDouble(i, j), 1e-8);
 			}
 		}
+
+		d3 = DatasetUtils.append(d1, d2, -1);
+		TestUtils.assertDatasetEquals(d4, d3);
 	}
 
 	@Test

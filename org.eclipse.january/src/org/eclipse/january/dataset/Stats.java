@@ -161,8 +161,7 @@ public class Stats {
 		return m;
 	}
 
-	static private QStatisticsImpl<?> getQStatistics(final Dataset a, int axis) {
-		axis = a.checkAxis(axis);
+	static private QStatisticsImpl<?> getQStatistics(final Dataset a, final int axis) {
 		final int is = a.getElementsPerItem();
 		QStatisticsImpl<?> qstats = a.getFirstMetadata(QStatisticsImpl.class);
 
@@ -340,9 +339,10 @@ public class Stats {
 	 * @return points at which CDF has given values
 	 */
 	@SuppressWarnings({ "unchecked" })
-	public static Dataset[] quantile(final Dataset a, final int axis, final double... values) {
+	public static Dataset[] quantile(final Dataset a, int axis, final double... values) {
 		final Dataset[] points  = new Dataset[values.length];
 		final int is = a.getElementsPerItem();
+		axis = a.checkAxis(axis);
 
 		if (is == 1) {
 			QStatisticsImpl<Double> qs = (QStatisticsImpl<Double>) getQStatistics(a, axis);
@@ -395,7 +395,8 @@ public class Stats {
 	 * @param axis
 	 * @return median
 	 */
-	public static Dataset median(final Dataset a, final int axis) {
+	public static Dataset median(final Dataset a, int axis) {
+		axis = a.checkAxis(axis);
 		return getQStatistics(a, axis).getQuantile(axis, QStatisticsImpl.Q2);
 	}
 
@@ -435,7 +436,8 @@ public class Stats {
 	 * @param axis
 	 * @return range
 	 */
-	public static Dataset iqr(final Dataset a, final int axis) {
+	public static Dataset iqr(final Dataset a, int axis) {
+		axis = a.checkAxis(axis);
 		QStatisticsImpl<?> qs = getQStatistics(a, axis);
 		Dataset q3 = qs.getQuantile(axis, QStatisticsImpl.Q3);
 
@@ -459,15 +461,13 @@ public class Stats {
 		return stats;
 	}
 
-	static private HigherStatisticsImpl<?> getHigherStatistic(final Dataset a, final boolean[] ignoreInvalids, int axis) {
+	static private HigherStatisticsImpl<?> getHigherStatistic(final Dataset a, final boolean[] ignoreInvalids, final int axis) {
 		boolean ignoreNaNs = false;
 		boolean ignoreInfs = false;
 		if (a.hasFloatingPointElements()) {
 			ignoreNaNs = ignoreInvalids != null && ignoreInvalids.length > 0 ? ignoreInvalids[0] : false;
 			ignoreInfs = ignoreInvalids != null && ignoreInvalids.length > 1 ? ignoreInvalids[1] : ignoreNaNs;
 		}
-
-		axis = a.checkAxis(axis);
 	
 		HigherStatisticsImpl<?> stats = a.getFirstMetadata(HigherStatisticsImpl.class);
 		if (stats == null || stats.getSkewness(axis) == null || stats.isDirty) {
@@ -764,7 +764,8 @@ public class Stats {
 	 * @return skewness along axis in dataset
 	 * @since 2.0
 	 */
-	public static Dataset skewness(final Dataset a, final int axis, final boolean... ignoreInvalids) {
+	public static Dataset skewness(final Dataset a, int axis, final boolean... ignoreInvalids) {
+		axis = a.checkAxis(axis);
 		return getHigherStatistic(a, ignoreInvalids, axis).getSkewness(axis);
 	}
 
@@ -775,7 +776,8 @@ public class Stats {
 	 * @return kurtosis along axis in dataset
 	 * @since 2.0
 	 */
-	public static Dataset kurtosis(final Dataset a, final int axis, final boolean... ignoreInvalids) {
+	public static Dataset kurtosis(final Dataset a, int axis, final boolean... ignoreInvalids) {
+		axis = a.checkAxis(axis);
 		return getHigherStatistic(a, ignoreInvalids, axis).getKurtosis(axis);
 	}
 

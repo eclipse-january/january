@@ -66,32 +66,43 @@ public class PositionIteratorTest {
 		ta = DatasetFactory.createRange(clazz, 0, size, 1).reshape(16, size / 16);
 		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
 		testDataset(ta);
-		testDatasetAxes(ta, new int[] {0});
-		testDatasetAxes(ta, new int[] {1});
+		testDatasetAxes(ta, 0);
+		testDatasetAxes(ta, 1);
+		testDatasetAxes(ta, -1);
+		testDatasetAxes(ta, -2);
 
 		ta = DatasetFactory.createRange(clazz, 0, size, 1).reshape(size / 32, 32);
 		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
 		testDataset(ta);
-		testDatasetAxes(ta, new int[] {0});
-		testDatasetAxes(ta, new int[] {1});
+		testDatasetAxes(ta, 0);
+		testDatasetAxes(ta, 1);
+		testDatasetAxes(ta, -1);
+		testDatasetAxes(ta, -2);
 
 		// 3D
 		ta = DatasetFactory.createRange(clazz, 0, size, 1).reshape(16, 8, size / (16 * 8));
 		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
 		testDataset(ta);
-		testDatasetAxes(ta, new int[] {0});
-		testDatasetAxes(ta, new int[] {2});
-		testDatasetAxes(ta, new int[] {0,1});
-		testDatasetAxes(ta, new int[] {0,2});
+		testDatasetAxes(ta, 0);
+		testDatasetAxes(ta, 2);
+		testDatasetAxes(ta, -1);
+		testDatasetAxes(ta, -3);
+		testDatasetAxes(ta, 0, 1);
+		testDatasetAxes(ta, 0, -1);
+		testDatasetAxes(ta, 0, 2);
+		testDatasetAxes(ta, -2, -1);
 
 		ta = DatasetFactory.createRange(clazz, 0, size, 1).reshape(size / (16 * 8), 16, 8);
 		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
 		testDataset(ta);
-		testDatasetAxes(ta, new int[] {0});
-		testDatasetAxes(ta, new int[] {2});
-		testDatasetAxes(ta, new int[] {0,1});
-		testDatasetAxes(ta, new int[] {0,2});
-
+		testDatasetAxes(ta, 0);
+		testDatasetAxes(ta, 2);
+		testDatasetAxes(ta, -1);
+		testDatasetAxes(ta, -3);
+		testDatasetAxes(ta, 0, 1);
+		testDatasetAxes(ta, 0, -1);
+		testDatasetAxes(ta, 0, 2);
+		testDatasetAxes(ta, -2, -1);
 	}
 
 	private void testDataset(Dataset ta) {
@@ -104,7 +115,7 @@ public class PositionIteratorTest {
 		}
 	}
 
-	private void testDatasetAxes(Dataset ta, int[] axes) {
+	private void testDatasetAxes(Dataset ta, int... axes) {
 		int[] shape = ta.getShapeRef();
 		int rank = shape.length;
 		int[] step = new int[rank];
@@ -122,7 +133,8 @@ public class PositionIteratorTest {
 		int[] tpos = start.clone();
 
 		for (int i = 0; i < axes.length; i++) {
-			step[axes[i]] = 0;
+			int a = ta.checkAxis(axes[i]);
+			step[a] = 0;
 		}
 		for (int i = 0; i <= endrank; i++) {
 			int s = iter.getShape()[i];

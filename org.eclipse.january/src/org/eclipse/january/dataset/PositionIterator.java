@@ -128,9 +128,7 @@ public class PositionIterator extends IndexIterator {
 		shape = oshape.clone();
 		if (axes != null) {
 			for (int a : axes) {
-				if (a < 0) {
-					a += rank;
-				}
+				a = ShapeUtils.checkAxis(rank, a);
 				if (a >= 0 && a <= endrank) {
 					omit[a] = true;
 					shape[a] = 1;

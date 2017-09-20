@@ -250,6 +250,7 @@ public class SliceND {
 		if (step == 0) {
 			throw new IllegalArgumentException("Step size must not be zero");
 		}
+		i = ShapeUtils.checkAxis(oshape.length, i);
 		final int s = oshape[i];
 		final int m = mshape[i];
 
@@ -444,9 +445,7 @@ public class SliceND {
 	 *            dimension to flip
 	 */
 	public SliceND flip(int i) {
-		if (i < 0 || i >= lshape.length) {
-			throw new IllegalArgumentException("Given dimension is less than zero or greater than last dimension");
-		}
+		i = ShapeUtils.checkAxis(lshape.length, i);
 
 		int beg = lstart[i];
 		int end = lstop[i];

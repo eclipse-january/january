@@ -50,14 +50,7 @@ public class DatasetUtils {
 		if (rank != bshape.length) {
 			throw new IllegalArgumentException("Incompatible number of dimensions");
 		}
-		if (axis >= rank) {
-			throw new IllegalArgumentException("Axis specified exceeds array dimensions");
-		} else if (axis > -rank) {
-			if (axis < 0)
-				axis += rank;
-		} else {
-			throw new IllegalArgumentException("Axis specified is less than " + (-rank));
-		}
+		axis = ShapeUtils.checkAxis(rank, axis);
 
 		for (int i = 0; i < rank; i++) {
 			if (i != axis && ashape[i] != bshape[i]) {
@@ -384,7 +377,7 @@ public class DatasetUtils {
 	 * @param axis
 	 * @return concatenated dataset
 	 */
-	public static Dataset concatenate(final IDataset[] as, final int axis) {
+	public static Dataset concatenate(final IDataset[] as, int axis) {
 		if (as == null || as.length == 0) {
 			utilsLogger.error("No datasets given");
 			throw new IllegalArgumentException("No datasets given");
@@ -393,7 +386,9 @@ public class DatasetUtils {
 		if (as.length == 1) {
 			return convertToDataset(a.clone());
 		}
+
 		int[] ashape = a.getShape();
+		axis = ShapeUtils.checkAxis(ashape.length, axis);
 		int at = DTypeUtils.getDType(a);
 		int anum = as.length;
 		int isize = a.getElementsPerItem();
@@ -446,13 +441,9 @@ public class DatasetUtils {
 	 * @param checkEqual makes sure the division is into equal parts
 	 * @return list of split datasets
 	 */
-	public static List<Dataset> split(final Dataset a, int sections, final int axis, final boolean checkEqual) {
+	public static List<Dataset> split(final Dataset a, int sections, int axis, final boolean checkEqual) {
 		int[] ashape = a.getShapeRef();
-		int rank = ashape.length;
-		if (axis >= rank) {
-			utilsLogger.error("Axis exceeds rank of dataset");
-			throw new IllegalArgumentException("Axis exceeds rank of dataset");
-		}
+		axis = a.checkAxis(axis);
 		int imax = ashape[axis];
 		if (checkEqual && (imax%sections) != 0) {
 			utilsLogger.error("Number of sections does not divide axis into equal parts");
@@ -472,13 +463,10 @@ public class DatasetUtils {
 	 * @param axis
 	 * @return list of split datasets
 	 */
-	public static List<Dataset> split(final Dataset a, int[] indices, final int axis) {
+	public static List<Dataset> split(final Dataset a, int[] indices, int axis) {
 		final int[] ashape = a.getShapeRef();
+		axis = a.checkAxis(axis);
 		final int rank = ashape.length;
-		if (axis >= rank) {
-			utilsLogger.error("Axis exceeds rank of dataset");
-			throw new IllegalArgumentException("Axis exceeds rank of dataset");
-		}
 		final int imax = ashape[axis];
 
 		final List<Dataset> result = new ArrayList<Dataset>();
@@ -2227,7 +2215,7 @@ public class DatasetUtils {
 	 * @param axis if null, then roll flattened dataset
 	 * @return rolled dataset
 	 */
-	public static <T extends Dataset> T roll(final T a, final int shift, final Integer axis) {
+	public static <T extends Dataset> T roll(final T a, final int shift, Integer axis) {
 		Dataset r = DatasetFactory.zeros(a);
 		int is = a.getElementsPerItem();
 		if (axis == null) {
@@ -2244,10 +2232,10 @@ public class DatasetUtils {
 				}
 			}
 		} else {
+			axis = a.checkAxis(axis);
 			PositionIterator pi = a.getPositionIterator(axis);
 			int s = a.getShapeRef()[axis];
-			@SuppressWarnings("deprecation")
-			Dataset u = DatasetFactory.zeros(is, new int[] {s}, a.getDType());
+			Dataset u = DatasetFactory.zeros(is, a.getClass(), new int[] {s});
 			Dataset v = DatasetFactory.zeros(u);
 			int[] pos = pi.getPos();
 			boolean[] hit = pi.getOmit();
@@ -2278,11 +2266,7 @@ public class DatasetUtils {
 	 */
 	public static <T extends Dataset> T rollAxis(final T a, int axis, int start) {
 		int r = a.getRank();
-		if (axis < 0)
-			axis += r;
-		if (axis < 0 || axis >= r) {
-			throw new IllegalArgumentException("Axis is out of range: it should be >= 0 and < " + r);
-		}
+		axis = a.checkAxis(axis);
 		if (start < 0)
 			start += r;
 		if (start < 0 || start > r) {

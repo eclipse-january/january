@@ -1081,11 +1081,8 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		}
 	
 		// check all permutation values are within bounds
-		for (int d : axes) {
-			if (d < 0 || d >= rank) {
-				logger.error("axis permutation contains element {} outside rank of dataset", d);
-				throw new IllegalArgumentException("axis permutation contains element outside rank of dataset");
-			}
+		for (int i = 0; i < rank; i++) {
+			axes[i] = ShapeUtils.checkAxis(rank, axes[i]);
 		}
 	
 		// check for a valid permutation (is this an unnecessary restriction?)
