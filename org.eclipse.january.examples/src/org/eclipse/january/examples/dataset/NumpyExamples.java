@@ -27,7 +27,11 @@ import org.eclipse.january.dataset.Maths;
 import org.eclipse.january.dataset.Random;
 import org.eclipse.january.dataset.Slice;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
+import org.junit.rules.TestWatcher;
+import org.junit.runner.Description;
 
 
 /**
@@ -42,6 +46,8 @@ import org.junit.Test;
 @SuppressWarnings("unused")
 public class NumpyExamples {
 	
+	@Rule
+	public TestRule watcher = Utils.testWatcherCreator();
 	/**
 	 * IDataset is like ndarray
 	 */
@@ -51,9 +57,10 @@ public class NumpyExamples {
 	public void create() {
 		Utils.suppressSLF4JError();
 
+		Random.seed(12371L); // to ensure tests using Random pass
 		a = DatasetFactory.createFromObject(new double[]{1,2,3,6,4,5,8,9,7}, 3, 3);
-		b = DatasetFactory.createFromObject(new double[]{1.1,2.2,3.3,4.4,5.5,6.6}, 2, 3);
-		c = DatasetFactory.createFromObject(new double[]{1.1,2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9}, 3, 3);
+		b = DatasetFactory.createFromObject(new double[]{1.1,2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9}, 3, 3);
+		c = DatasetFactory.createFromObject(new double[]{1.1,2.2,3.3,4.4,5.5,6.6}, 2, 3);
 		v = DatasetFactory.createFromObject(new double[]{7,1,9});
 	}
 	
@@ -105,7 +112,7 @@ public class NumpyExamples {
 	@Test
 	public void concatenate() {
 		
-		IDataset h1 = DatasetUtils.concatenate(new IDataset[]{a,c},   1);
+		IDataset h1 = DatasetUtils.concatenate(new IDataset[]{a,b},   1);
 
 		IDataset c = DatasetFactory.createFromObject(new double[]{1,2,3,4,5,6}, 2, 3);
 		IDataset d = DatasetFactory.createFromObject(new double[]{1,2,3,4,5,6}, 2, 3);
@@ -265,8 +272,8 @@ public class NumpyExamples {
     @Test
     public void multiply() {
     	
-    	IDataset c = Maths.multiply(a, b);
-       	System.out.println("Multiply element-wise to new array is "+c);
+    	IDataset d = Maths.multiply(a, b);
+       	System.out.println("Multiply element-wise to new array is "+d);
 
         a.imultiply(b);
        	System.out.println("Multiply element-wise on a is "+a);
@@ -279,8 +286,8 @@ public class NumpyExamples {
     @Test
     public void divide() {
     	
-    	IDataset c = Maths.divide(a, b);
-       	System.out.println("Divide element-wise to new array is "+c);
+    	IDataset d = Maths.divide(a, b);
+       	System.out.println("Divide element-wise to new array is "+d);
 
         a.idivide(b);
        	System.out.println("Divide element-wise on a is "+a);
@@ -391,7 +398,8 @@ public class NumpyExamples {
      * 1:10                                  arange(1.,11.) 
      * 0:9                                   arange(10.)
      */
-    @Test
+    @SuppressWarnings("deprecation")
+	@Test
     public void arange() {
     	IDataset aran = DatasetFactory.createRange(1, 11, 1, Dataset.FLOAT64);
     	System.out.println("arange type notation in dawnsci(1) "+aran);  	
@@ -406,7 +414,8 @@ public class NumpyExamples {
      */
     @Test
     public void columnVector() {
-    	IDataset aran = DatasetFactory.createRange(1, 11, 1, Dataset.FLOAT64);
+    	@SuppressWarnings("deprecation")
+		IDataset aran = DatasetFactory.createRange(1, 11, 1, Dataset.FLOAT64);
     	aran.resize(aran.getSize(), 1);
     }
     
@@ -435,6 +444,7 @@ public class NumpyExamples {
     4 equally spaced samples between 1 and 3, inclusive
     linspace(1,3,4)                          linspace(1,3,4)     
     */
+	@SuppressWarnings("deprecation")
 	@Test
     public void various() {
     	
@@ -455,7 +465,8 @@ public class NumpyExamples {
      */
     @Test
     public void meshGrid() {
-    	List<Dataset> mg = DatasetUtils.meshGrid(DatasetFactory.createRange(9, Dataset.FLOAT64),
+    	@SuppressWarnings("deprecation")
+		List<Dataset> mg = DatasetUtils.meshGrid(DatasetFactory.createRange(9, Dataset.FLOAT64),
     			                                 DatasetFactory.createRange(6, Dataset.FLOAT64));
     	System.out.println("Created mesh grid of size "+mg.size());
     }
@@ -465,7 +476,8 @@ public class NumpyExamples {
      */
     @Test
     public void oGrid() {
-    	Dataset[] indexes = new Dataset[] {DatasetFactory.createRange(9, Dataset.FLOAT64),
+    	@SuppressWarnings("deprecation")
+		Dataset[] indexes = new Dataset[] {DatasetFactory.createRange(9, Dataset.FLOAT64),
                 DatasetFactory.createRange(6, Dataset.FLOAT64)};
     	List<Dataset> og = new ArrayList<Dataset>();
     	int rank = indexes.length;
@@ -494,7 +506,7 @@ public class NumpyExamples {
      */
     @Test
     public void concatenateColumns() {
-		IDataset h1 = DatasetUtils.concatenate(new IDataset[]{a,c},   1);
+		IDataset h1 = DatasetUtils.concatenate(new IDataset[]{a,b},   1);
 		System.out.println("Concatenate (already done!) "+h1);
     }
     
@@ -503,7 +515,7 @@ public class NumpyExamples {
      */
     @Test
     public void concatenateRows() {
-		IDataset h1 = DatasetUtils.concatenate(new IDataset[]{a,b},   0);
+		IDataset h1 = DatasetUtils.concatenate(new IDataset[]{a,c},   0);
 		System.out.println("Concatenate (already done!) "+h1);
     }
  
@@ -542,7 +554,8 @@ public class NumpyExamples {
     @Test
     public void norm() {
     	
-    	Dataset oneD = DatasetFactory.createRange(100, Dataset.FLOAT);
+    	@SuppressWarnings("deprecation")
+		Dataset oneD = DatasetFactory.createRange(100, Dataset.FLOAT);
     	double vNorm = LinearAlgebra.norm(oneD);
     	System.out.println("Vector norm is "+vNorm);
     	
@@ -561,7 +574,7 @@ public class NumpyExamples {
       	System.out.println("Result of a && b "+bs);
   	
     	// Or more useful (?)
-    	final IDataset booleans = DatasetFactory.zeros(BooleanDataset.class, 2, 3);
+    	final IDataset booleans = DatasetFactory.zeros(BooleanDataset.class, 3, 3);
        	booleans.set(true, 0,0);
        	booleans.set(true, 1,1);
        	booleans.set(true, 1,2);

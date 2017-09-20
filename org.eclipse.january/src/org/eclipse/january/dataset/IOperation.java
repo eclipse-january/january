@@ -14,6 +14,7 @@ package org.eclipse.january.dataset;
 
 /**
  * Marker interface for all operations
+ * @since 2.0
  */
 public interface IOperation {
 

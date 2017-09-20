@@ -43,14 +43,14 @@ public class StatsTest {
 		DoubleDataset ta = Random.rand(100000);
 
 		assertEquals(msg, 0.5, ((Number) ta.mean()).doubleValue(), 4e-2);
-		assertEquals(msg, 0.5/Math.sqrt(3), ta.stdDeviation().doubleValue(), 4e-2);
+		assertEquals(msg, 0.5/Math.sqrt(3), ta.stdDeviation(), 4e-2);
 		assertEquals(msg, 0.0, ((Number) Stats.skewness(ta)).doubleValue(), 1.5e-2);
 		assertEquals(msg, -1.2, ((Number) Stats.kurtosis(ta)).doubleValue(), 1e-3);
 		assertEquals(msg, 0.5, ((Number) Stats.median(ta)).doubleValue(), 4e-3);
 
 		DoubleDataset tb = Random.rand(100000);
 		assertEquals(msg, 0.5, ((Number) tb.mean()).doubleValue(), 4e-2);
-		assertEquals(msg, 0.5/Math.sqrt(3), tb.stdDeviation().doubleValue(), 4e-2);
+		assertEquals(msg, 0.5/Math.sqrt(3), tb.stdDeviation(), 4e-2);
 
 		double res = 0;
 		long start;
@@ -60,7 +60,7 @@ public class StatsTest {
 		start += System.nanoTime();
 		TestUtils.verbosePrintf("New residual takes %.3fms\n", start*1e-6);
 
-		DoubleDataset tw = DatasetFactory.zeros(DoubleDataset.class, ta.getSize());
+		DoubleDataset tw = DatasetFactory.zeros(ta.getSize());
 		double wv = 2.5;
 		tw.fill(wv);
 		double wres = Stats.weightedResidual(ta, tb, tw);
@@ -89,7 +89,7 @@ public class StatsTest {
 		DoubleDataset ta = Random.randn(100000);
 
 		assertEquals(msg, 0, ((Number) ta.mean()).doubleValue(), 4e-2);
-		assertEquals(msg, 1.0, ta.stdDeviation().doubleValue(), 4e-2);
+		assertEquals(msg, 1.0, ta.stdDeviation(), 4e-2);
 		assertEquals(msg, 0.0, ((Number) Stats.skewness(ta)).doubleValue(), 1.5e-2);
 		assertEquals(msg, 0.0, ((Number) Stats.kurtosis(ta)).doubleValue(), 6e-2);
 		assertEquals(msg, 0.0, ((Number) Stats.median(ta)).doubleValue(), 4e-2);
@@ -107,7 +107,7 @@ public class StatsTest {
 		DoubleDataset ta = Random.exponential(beta, 100000);
 
 		assertEquals(msg, beta, ((Number) ta.mean()).doubleValue(), 4e-2);
-		assertEquals(msg, beta, ta.stdDeviation().doubleValue(), 4e-2);
+		assertEquals(msg, beta, ta.stdDeviation(), 4e-2);
 		assertEquals(msg, 2.0, ((Number) Stats.skewness(ta)).doubleValue(), 4e-2);
 		assertEquals(msg, 6.0, ((Number) Stats.kurtosis(ta)).doubleValue(), 3e-1);
 		assertEquals(msg, Math.log(2.)*beta, ((Number) Stats.median(ta)).doubleValue(), 4e-3);
@@ -125,7 +125,7 @@ public class StatsTest {
 		IntegerDataset ta = Random.poisson(lam, 100000);
 
 		assertEquals(msg, lam, ((Number) ta.mean()).doubleValue(), 4e-2);
-		assertEquals(msg, Math.sqrt(lam), ta.stdDeviation().doubleValue(), 4e-2);
+		assertEquals(msg, Math.sqrt(lam), ta.stdDeviation(), 4e-2);
 		assertEquals(msg, 1./Math.sqrt(lam), ((Number) Stats.skewness(ta)).doubleValue(), 5e-2);
 		assertEquals(msg, 1./lam, ((Number) Stats.kurtosis(ta)).doubleValue(), 3.5e-1);
 		assertEquals(msg, Math.floor(lam + 1./3 - 0.02/lam), ((Number) Stats.median(ta)).doubleValue(), 4e-3);
@@ -135,16 +135,109 @@ public class StatsTest {
 
 	@Test
 	public void testNaNs() {
-		Dataset a = DatasetFactory.createRange(1, 7, 1, Dataset.FLOAT64);
+		Dataset a = DatasetFactory.createRange(1., 7, 1);
 
 		assertEquals("Sum", 21, ((Number) a.sum()).doubleValue(), 1e-6);
 		assertEquals("Product", 720, (Double) Stats.product(a), 1e-6);
 		a.set(Double.NaN, 0);
 		assertTrue("Sum", Double.isNaN(((Number) a.sum()).doubleValue()));
 		assertTrue("Product", Double.isNaN((Double) Stats.product(a)));
+		assertTrue("Sum", Double.isNaN(((Number) a.sum(false, true)).doubleValue()));
+		assertTrue("Product", Double.isNaN((Double) Stats.product(a, false, true)));
 		assertEquals("Sum", 20, ((Number) a.sum(true)).doubleValue(), 1e-6);
 		assertEquals("Product", 720, (Double) Stats.product(a, true), 1e-6);
+		assertEquals("Sum", 20, ((Number) a.sum(true, false)).doubleValue(), 1e-6);
+		assertEquals("Product", 720, (Double) Stats.product(a, true, false), 1e-6);
 	}
+
+	@Test
+	public void testInfs() {
+		Dataset a = DatasetFactory.createRange(1., 7, 1);
+
+		assertEquals("Sum", 21, ((Number) a.sum()).doubleValue(), 1e-6);
+		assertEquals("Product", 720, (Double) Stats.product(a), 1e-6);
+		a.set(Double.POSITIVE_INFINITY, 0);
+		assertTrue("Sum", Double.isInfinite(((Number) a.sum()).doubleValue()));
+		assertTrue("Product", Double.isInfinite((Double) Stats.product(a)));
+		assertTrue("Sum", Double.isInfinite(((Number) a.sum(true, false)).doubleValue()));
+		assertTrue("Product", Double.isInfinite((Double) Stats.product(a, true, false)));
+		assertEquals("Sum", 20, ((Number) a.sum(true)).doubleValue(), 1e-6);
+		assertEquals("Product", 720, (Double) Stats.product(a, true), 1e-6);
+		assertEquals("Sum", 20, ((Number) a.sum(true, true)).doubleValue(), 1e-6);
+		assertEquals("Product", 720, (Double) Stats.product(a, true, true), 1e-6);
+		assertEquals("Sum", 20, ((Number) a.sum(false, true)).doubleValue(), 1e-6);
+		assertEquals("Product", 720, (Double) Stats.product(a, false, true), 1e-6);
+	}
+
+	@Test
+	public void testQuantile() {
+		DoubleDataset a = DatasetFactory.createRange(100.);
+		double[] q = Stats.quantile(a, 0., 0.25, 0.5, 0.75, 1.);
+		assertArrayEquals(new double[] {0, 24.75, 49.5, 74.25, 99}, q, 1e-12);
+
+		Dataset b = a.reshape(10, 10); // so now [[0, ..., 9], [10,...], ..., [..., 99]]
+		Dataset[] qds = Stats.quantile(b, 1, 0, 0.25, 0.5, 0.75, 1);
+		for (int i = 0; i < 5; i++) {
+			TestUtils.assertDatasetEquals(DatasetFactory.createRange(DoubleDataset.class, 2.25 * i, 100., 10.), qds[i]);
+		}
+
+		a = DatasetFactory.createRange(81.);
+		q = Stats.quantile(a, 0., 0.25, 0.5, 0.75, 1.);
+		assertArrayEquals(new double[] {0, 20, 40, 60, 80}, q, 1e-12);
+		b = a.reshape(9, 9);
+		qds = Stats.quantile(b, 1, 0, 0.25, 0.5, 0.75, 1);
+		for (int i = 0; i < 5; i++) {
+			TestUtils.assertDatasetEquals(DatasetFactory.createRange(DoubleDataset.class, 2 * i, 81., 9.), qds[i]);
+		}
+	}
+
+	@Test
+	public void testIqr() {
+		DoubleDataset a = DatasetFactory.createRange(100.);
+		assertEquals(49.5, (Double) Stats.iqr(a), 1e-12);
+
+		Dataset b = a.reshape(10, 10); // so now [[0, ..., 9], [10,...], ..., [..., 99]]
+
+		Dataset ids = Stats.iqr(b, 1);
+		TestUtils.assertDatasetEquals(DatasetFactory.zeros(10).fill(4.5), ids);
+		ids = Stats.iqr(b, -1);
+		TestUtils.assertDatasetEquals(DatasetFactory.zeros(10).fill(4.5), ids);
+		
+		a = DatasetFactory.createRange(81.);
+		assertEquals(40., (Double) Stats.iqr(a), 1e-12);
+		b = a.reshape(9, 9);
+		ids = Stats.iqr(b, 1);
+		TestUtils.assertDatasetEquals(DatasetFactory.zeros(9).fill(4.), ids);
+	}
+
+	@Test
+	public void testSkewness() {
+		Dataset a = Maths.abs(DatasetFactory.createRange(60., -40., -1.));
+		assertEquals(0.3002253, (Double) Stats.skewness(a), 1e-6);
+
+		Dataset b = a.reshape(10, 10); // so now [[0, ..., 9], [10,...], ..., [..., 99]]
+
+		Dataset sds = Stats.skewness(b, 1);
+		TestUtils.assertDatasetEquals(DatasetFactory.zeros(10), sds);
+		sds = Stats.skewness(b, -1);
+		TestUtils.assertDatasetEquals(DatasetFactory.zeros(10), sds);
+	}
+
+	@Test
+	public void testKurtosis() {
+		DoubleDataset a = DatasetFactory.createRange(100.);
+		assertEquals(-1.19999999, (Double) Stats.kurtosis(a), 1e-6);
+
+		Dataset b = a.reshape(10, 10); // so now [[0, ..., 9], [10,...], ..., [..., 99]]
+
+		Dataset sds = Stats.kurtosis(b, 1);
+		TestUtils.assertDatasetEquals(DatasetFactory.zeros(10).fill(-1.2), sds);
+		sds = Stats.kurtosis(b, -1);
+		TestUtils.assertDatasetEquals(DatasetFactory.zeros(10).fill(-1.2), sds);
+	}
+
+	// TODO expand tests
+	// especially typedProducts
 
 	@Ignore
 	@Test
@@ -216,13 +309,27 @@ public class StatsTest {
 
 	@Test
 	public void testOutlierValues() {
-		Dataset a = DatasetFactory.zeros(new int[] {20}, Dataset.FLOAT64);
+		testOutlierValues(DatasetFactory.zeros(20));
 
+		testOutlierValues(DatasetFactory.zeros(1000));
+	}
+
+	private void testOutlierValues(Dataset a) {
 		double[] o = Stats.outlierValues(a, 0.01, 99.9, 10);
 		assertEquals(0, o[0], 1e-4);
 		assertEquals(0, o[1], 1e-4);
 		assertEquals(0, o[2], 1e-4);
 		assertEquals(100, o[3], 1e-4);
+
+		a.fill(Double.NaN);
+		a.set(200, 5);
+		a.set(0, 10);
+		o = Stats.outlierValues(a, 0.01, 99.9, 10);
+		assertEquals(0, o[0], 1e-4);
+		assertEquals(200, o[1], 1e-4);
+		double f = 100./a.getSize();
+		assertEquals(f, o[2], 1e-4);
+		assertEquals(100-f, o[3], 1e-4);
 	}
 
 	@Test
@@ -241,7 +348,7 @@ public class StatsTest {
 		DoubleDataset cexpect = DatasetFactory.createFromObject(DoubleDataset.class, new double[]{2., 0., -2., 0., 0., 0., -2., 0., 2.}, 3, 3);
 		assertArrayEquals(cexpect.getData(), covc.getData(), 1E-7);
 		
-		Dataset d = DatasetFactory.createFromObject(DoubleDataset.class, new double[]{0., 2., 4., 8., 16., 32., 64., 128.}, 2, 2, 2);
+		Dataset d = DatasetFactory.createFromObject(new double[]{0., 2., 4., 8., 16., 32., 64., 128.}, 2, 2, 2);
 		DoubleDataset covd = (DoubleDataset)Stats.covariance(d);
 		DoubleDataset dexpect = DatasetFactory.createFromObject(DoubleDataset.class, new double[]{-2., -24., -3., -48., 2., 24., 3., 48., -48., -576., -72., -1152., 48., 576., 72., 1152.}, 2, 2, 2, 2);
 		assertArrayEquals(dexpect.getData(), covd.getData(), 1E-7);

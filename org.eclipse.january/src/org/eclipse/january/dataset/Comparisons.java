@@ -871,11 +871,13 @@ public class Comparisons {
 	}
 
 	/**
+	 * Test if all items along given axis are true in the input dataset
 	 * @param a
-	 * @return true if all elements are true
+	 * @param axis axis to reduce 
+	 * @return boolean dataset
 	 */
 	public static BooleanDataset allTrue(IDataset a, int axis) {
-		axis = AbstractDataset.checkAxis(a.getRank(), axis);
+		axis = ShapeUtils.checkAxis(a.getRank(), axis);
 
 		int rank = a.getRank();
 		int[] oshape = a.getShape();
@@ -936,11 +938,13 @@ public class Comparisons {
 	}
 
 	/**
+	 * Test if any items along given axis are true in the input dataset
 	 * @param a
-	 * @return true if any element is true
+	 * @param axis axis to reduce 
+	 * @return boolean dataset
 	 */
 	public static BooleanDataset anyTrue(IDataset a, int axis) {
-		axis = AbstractDataset.checkAxis(a.getRank(), axis);
+		axis = ShapeUtils.checkAxis(a.getRank(), axis);
 
 		int rank = a.getRank();
 		int[] oshape = a.getShape();
@@ -1272,12 +1276,8 @@ public class Comparisons {
 			}
 		}
 
-	
-		final int length = indices.get(0).size();
-		if (length > 0 ) {
-			for (int j = 0; j < rank; j++) {
-				indexList.add((IntegerDataset) DatasetFactory.createFromList(indices.get(j)));
-			}
+		for (int j = 0; j < rank; j++) {
+			indexList.add((IntegerDataset) DatasetFactory.createFromList(IntegerDataset.class, indices.get(j)));
 		}
 		return indexList;
 	}

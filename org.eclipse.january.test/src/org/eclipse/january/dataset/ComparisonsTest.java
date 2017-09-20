@@ -10,6 +10,7 @@
 package org.eclipse.january.dataset;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import org.eclipse.january.asserts.TestUtils;
 import org.eclipse.january.dataset.BooleanDataset;
@@ -158,6 +159,7 @@ public class ComparisonsTest {
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {false, true, true}), Comparisons.allTrue(c, 0));
 		Dataset d = b.clone().reshape(2, 3);
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {true, true}), Comparisons.allTrue(d, 1));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {true, true}), Comparisons.allTrue(d, -1));
 	}
 
 	@Test
@@ -169,6 +171,7 @@ public class ComparisonsTest {
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {true, true, true}), Comparisons.anyTrue(c, 0));
 		Dataset d = b.clone().reshape(2, 3);
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {true, true}), Comparisons.anyTrue(d, 1));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {true, true}), Comparisons.anyTrue(d, -1));
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {false, true}),
 				Comparisons.anyTrue(DatasetFactory.createFromObject(new double[] {0, 0, 0, 1}).reshape(2,2), 1));
 	}
@@ -208,6 +211,16 @@ public class ComparisonsTest {
 		List<IntegerDataset> e = Comparisons.nonZero(c);
 		TestUtils.assertDatasetEquals(e.get(0), DatasetFactory.createFromObject(new int[] {0, 0, 1, 1, 1}));
 		TestUtils.assertDatasetEquals(e.get(1), DatasetFactory.createFromObject(new int[] {1, 2, 0, 1, 2}));
+	}
+
+	@Test
+	public void testNoNonZeros() {
+		Dataset c = DatasetFactory.createFromObject(new byte[] { 0, 0, 0, 0, 0, 0 }).reshape(2, 3);
+		List<IntegerDataset> e = Comparisons.nonZero(c);
+		Assert.assertEquals(e.size(), 2);
+		Dataset empty = DatasetFactory.createFromList(IntegerDataset.class, new ArrayList<Integer>());
+		TestUtils.assertDatasetEquals(e.get(0), empty);
+		TestUtils.assertDatasetEquals(e.get(1), empty);
 	}
 
 	@Test
@@ -382,7 +395,7 @@ public class ComparisonsTest {
 		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.STRICTLY_DECREASING));
 		Assert.assertFalse(Comparisons.isMonotonic(x, Monotonicity.STRICTLY_INCREASING));
 
-		Dataset d = DatasetFactory.createRange(5, Dataset.INT32);
+		Dataset d = DatasetFactory.createRange(IntegerDataset.class, 5);
 		Assert.assertTrue(Comparisons.isMonotonic(d, Monotonicity.NONDECREASING));
 		Assert.assertTrue(Comparisons.isMonotonic(d, Monotonicity.STRICTLY_INCREASING));
 

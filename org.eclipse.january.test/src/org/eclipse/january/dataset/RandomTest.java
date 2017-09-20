@@ -31,7 +31,7 @@ public class RandomTest {
 		DoubleDataset ta = Random.rand(10000);
 
 		assertEquals(msg, 0.5, ((Number) ta.mean()).doubleValue(), 4e-2);
-		assertEquals(msg, 0.5/Math.sqrt(3), ta.stdDeviation().doubleValue(), 4e-2);
+		assertEquals(msg, 0.5/Math.sqrt(3), ta.stdDeviation(), 4e-2);
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class RandomTest {
 		DoubleDataset ta = Random.randn(10000);
 
 		assertEquals(msg, 0., ((Number) ta.mean()).doubleValue(), 4e-2);
-		assertEquals(msg, 1., ta.stdDeviation().doubleValue(), 4e-2);
+		assertEquals(msg, 1., ta.stdDeviation(), 4e-2);
 	}
 
 	/**
@@ -71,7 +71,7 @@ public class RandomTest {
 		IntegerDataset ta = Random.random_integers(13, 27, new int[] {10000});
 
 		assertEquals(msg, (27+13)/2., ((Number) ta.mean()).doubleValue(), 7e-2);
-		assertEquals(msg, Math.sqrt(((27-13+1)*(27-13+1) -1)/12.), ta.stdDeviation().doubleValue(), 7e-2);
+		assertEquals(msg, Math.sqrt(((27-13+1)*(27-13+1) -1)/12.), ta.stdDeviation(), 7e-2);
 		assertEquals(msg, 13, ta.min().doubleValue(), 0);
 		assertEquals(msg, 27, ta.max().doubleValue(), 0);
 
@@ -89,7 +89,7 @@ public class RandomTest {
 		DoubleDataset ta = Random.exponential(2.3, new int[] {10000});
 
 		assertEquals(msg, 2.3, ((Number) ta.mean()).doubleValue(), 2.3*5e-2);
-		assertEquals(msg, 2.3, ta.stdDeviation().doubleValue(), 2.3*5e-2);
+		assertEquals(msg, 2.3, ta.stdDeviation(), 2.3*5e-2);
 	}
 
 	/**
@@ -101,6 +101,6 @@ public class RandomTest {
 		IntegerDataset ta = Random.poisson(2.3, new int[] {10000});
 
 		assertEquals(msg, 2.3, ((Number) ta.mean()).doubleValue(), 2.3*5e-2);
-		assertEquals(msg, Math.sqrt(2.3), ta.stdDeviation().doubleValue(), 2.3*5e-2);
+		assertEquals(msg, Math.sqrt(2.3), ta.stdDeviation(), 2.3*5e-2);
 	}
 }

@@ -10,6 +10,7 @@
 package org.eclipse.january.dataset;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,11 +18,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.january.asserts.TestUtils;
-import org.eclipse.january.dataset.Dataset;
-import org.eclipse.january.dataset.DatasetFactory;
-import org.eclipse.january.dataset.IndexIterator;
-import org.eclipse.january.dataset.SliceIterator;
-import org.eclipse.january.dataset.StrideIterator;
 import org.junit.Test;
 
 /**
@@ -34,48 +30,55 @@ public class StrideIteratorTest {
 	 */
 	@Test
 	public void testIterations() {
-		int size, type;
+		int size = 1024;
 
-		size = 1024;
-		type = Dataset.FLOAT64;
-		testIterationsND(size, type);
+		testIterationsND(size, DoubleDataset.class);
 
-		type = Dataset.COMPLEX128;
-		testIterationsND(size, type);
+		testIterationsND(size, ComplexDoubleDataset.class);
 	}
 
-	private void testIterationsND(int size, int type) {
+	@Test
+	public void testZeroSizedIteration() {
+		Dataset ta = DatasetFactory.zeros(new int[] {4,4,4});
+
+		IndexIterator it = ta.getSliceView(null, new int[] {4, 0, 4}, null).getIterator();
+		assertFalse(it.hasNext());
+
+		it = new StrideIterator(new int[] {4,0,4});
+		assertFalse(it.hasNext());
+	}
+
+	private void testIterationsND(int size, Class<? extends Dataset> clazz) {
 		Dataset ta;
 
 
-		System.out.println("Size: " + size);
+		TestUtils.verbosePrintf("Size: %d\n", size);
 
 		// 0D
-		ta = DatasetFactory.zeros(new int[] {}, type);
+		ta = DatasetFactory.zeros(clazz, new int[] {});
 		testDataset(ta);
 
 		// 1D
-		ta = DatasetFactory.createRange(0, size, 1, type);
+		ta = DatasetFactory.createRange(clazz, 0, size, 1);
 		testDataset(ta);
 
 		// 2D
-		ta = DatasetFactory.createRange(0, size, 1, type).reshape(16, size / 16);
+		ta = DatasetFactory.createRange(clazz, 0, size, 1).reshape(16, size / 16);
 		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
 		testDataset(ta);
 
-		ta = DatasetFactory.createRange(0, size, 1, type).reshape(size / 32, 32);
+		ta = DatasetFactory.createRange(clazz, 0, size, 1).reshape(size / 32, 32);
 		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
 		testDataset(ta);
 
 		// 3D
-		ta = DatasetFactory.createRange(0, size, 1, type).reshape(16, 8, size / (16 * 8));
+		ta = DatasetFactory.createRange(clazz, 0, size, 1).reshape(16, 8, size / (16 * 8));
 		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
 		testDataset(ta);
 
-		ta = DatasetFactory.createRange(0, size, 1, type).reshape(size / (16 * 8), 16, 8);
+		ta = DatasetFactory.createRange(clazz, 0, size, 1).reshape(size / (16 * 8), 16, 8);
 		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
 		testDataset(ta);
-
 	}
 
 	private void testDataset(Dataset ta) {
@@ -114,7 +117,7 @@ public class StrideIteratorTest {
 		int rank = shape.length;
 		int[] lstart = siter.getStart();
 		int[] lstep = siter.getStep();
-		Dataset result = DatasetFactory.zeros(shape, Dataset.FLOAT64);
+		Dataset result = DatasetFactory.zeros(shape);
 
 		// set up the vectors needed to do this
 		int relative[] = new int[rank];
@@ -186,7 +189,7 @@ public class StrideIteratorTest {
 	private Dataset newSlice(Dataset t, int[] start, int[] stop, int[] step) {
 		StrideIterator iter = new StrideIterator(t.getElementsPerItem(), t.getShape(), start, stop, step);
 
-		Dataset result = DatasetFactory.zeros(iter.getShape(), Dataset.FLOAT64);
+		Dataset result = DatasetFactory.zeros(iter.getShape());
 		int i = 0;
 		while (iter.hasNext()) {
 			result.setObjectAbs(i++, t.getElementDoubleAbs(iter.index));
@@ -292,7 +295,7 @@ public class StrideIteratorTest {
 
 	@Test
 	public void testNegativeStrideIteration() {
-		Dataset t = DatasetFactory.createRange(40, Dataset.FLOAT);
+		Dataset t = DatasetFactory.createRange(40);
 
 		SliceIterator siter = (SliceIterator) t.getSliceIterator(new int[] {12}, null, new int[] {-2});
 		Dataset sliced = oldSlice(t, siter);
@@ -314,23 +317,19 @@ public class StrideIteratorTest {
 	 */
 	@Test
 	public void testSliceIteration() {
-		int size, type;
+		int size = 6000;
+		testSliceIterationND(size, DoubleDataset.class);
 
-		size = 6000;
-		type = Dataset.FLOAT64;
-		testSliceIterationND(size, type);
-
-		type = Dataset.COMPLEX128;
-		testSliceIterationND(size, type);
+		testSliceIterationND(size, ComplexDoubleDataset.class);
 	}
 
-	private void testSliceIterationND(int size, int type) {
+	private void testSliceIterationND(int size, Class<? extends Dataset> clazz) {
 		Dataset ta;
 
 		TestUtils.verbosePrintf(" Size: %d\n", size);
 
 		// 1D
-		ta = DatasetFactory.createRange(0, size, 1, type);
+		ta = DatasetFactory.createRange(clazz, 0, size, 1);
 		testSlicedDataset(ta, 0, 0, 3, 0);
 		testSlicedDataset(ta, 0, 0, 62, 0);
 		testSlicedDataset(ta, 23, 0, 3, 0);
@@ -339,8 +338,8 @@ public class StrideIteratorTest {
 		testSlicedDataset(ta, -3, 0, -2, 0);
 
 		// 2D
-		ta = DatasetFactory.createRange(0, size, 1, type).reshape(size / 15, 15);
-		ta.setShape(15, size / 15);
+		ta = DatasetFactory.createRange(clazz, 0, size, 1).reshape(size / 15, 15);
+//		ta.reshape(15, size / 15);
 		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
 		testSlicedDataset(ta, 0, 0, 3, 0);
 		testSlicedDataset(ta, 0, 0, 3, 1);
@@ -381,8 +380,8 @@ public class StrideIteratorTest {
 		testSlicedDataset(ta, 8, 1, -3, 1);
 
 		// 3D
-		ta = DatasetFactory.createRange(0, size, 1, type).reshape(size / 10, 2, 5);
-		ta.setShape(5, size / 20, 4);
+		ta = DatasetFactory.createRange(clazz, 0, size, 1).reshape(size / 10, 2, 5);
+//		ta.reshape(5, size / 10, 2);
 		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
 
 		testSlicedDataset(ta, 0, 0, 3, 0);
@@ -457,7 +456,7 @@ public class StrideIteratorTest {
 
 		// 0D to 1D
 		b = DatasetFactory.createFromObject(2., 1).getBroadcastView(4);
-		r = DatasetFactory.zeros(b.getShape(), b.getDType()).fill(b.getObjectAbs(0));
+		r = DatasetFactory.zeros(b.getClass(), b.getShape()).fill(b.getObjectAbs(0));
 		checkSliced(r, b);
 
 		// 1D to 2D
@@ -475,7 +474,7 @@ public class StrideIteratorTest {
 		// compound datasets
 		// 0D to 1D
 		b = DatasetFactory.createCompoundDataset(1., 2., 3.).getBroadcastView(4);
-		r = DatasetFactory.zeros(b.getElementsPerItem(), b.getShape(), b.getDType()).fill(b.getObjectAbs(0));
+		r = DatasetFactory.zeros(b.getElementsPerItem(), b.getClass(), b.getShape()).fill(b.getObjectAbs(0));
 		checkSliced(r, b);
 
 		// 1D to 2D

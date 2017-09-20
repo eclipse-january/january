@@ -101,34 +101,7 @@ public interface CompoundDataset extends Dataset {
 	public CompoundDataset isubtract(Object o);
 
 	@Override
-	public CompoundDataset max(boolean ignoreNaNs, int axis);
-
-	@Override
-	public CompoundDataset max(int axis);
-
-	@Override
-	public CompoundDataset mean(boolean ignoreNaNs, int axis);
-
-	@Override
-	public CompoundDataset mean(int axis);
-
-	@Override
-	public CompoundDataset min(boolean ignoreNaNs, int axis);
-
-	@Override
-	public CompoundDataset min(int axis);
-
-	@Override
-	public CompoundDataset peakToPeak(int axis);
-
-	@Override
-	public CompoundDataset product(int axis);
-
-	@Override
 	public CompoundDataset reshape(int... shape);
-
-	@Override
-	public CompoundDataset rootMeanSquare(int axis);
 
 	@Override
 	public CompoundDataset setBy1DIndex(Object obj, Dataset index);
@@ -161,15 +134,6 @@ public interface CompoundDataset extends Dataset {
 	public CompoundDataset squeeze(boolean onlyFromEnd);
 
 	@Override
-	public CompoundDataset stdDeviation(int axis);
-
-	@Override
-	public CompoundDataset sum(boolean ignoreNaNs, int axis);
-
-	@Override
-	public CompoundDataset sum(int axis);
-
-	@Override
 	public CompoundDataset swapAxes(int axis1, int axis2);
 
 	@Override
@@ -178,18 +142,70 @@ public interface CompoundDataset extends Dataset {
 	@Override
 	public CompoundDataset transpose(int... axes);
 
+	/**
+	 * @since 2.0
+	 */
 	@Override
-	public CompoundDataset typedProduct(int dtype, int axis);
+	public CompoundDataset max(int axis, boolean... ignoreInvalids);
+
+	/**
+	 * @since 2.0
+	 */
+	@Override
+	public CompoundDataset min(int axis, boolean... ignoreInvalids);
+
+	/**
+	 * @since 2.0
+	 */
+	@Override
+	public CompoundDataset peakToPeak(int axis, boolean... ignoreInvalids);
+
+	/**
+	 * @since 2.0
+	 */
+	@Override
+	public CompoundDataset sum(int axis, boolean... ignoreInvalids);
+
+	/**
+	 * @since 2.0
+	 */
+	@Override
+	public CompoundDataset product(int axis, boolean... ignoreInvalids);
+
+	/**
+	 * @since 2.0
+	 */
+	@Override
+	public CompoundDataset mean(int axis, boolean... ignoreInvalids);
+
+	/**
+	 * @since 2.0
+	 */
+	@Override
+	public CompoundDataset rootMeanSquare(int axis, boolean... ignoreInvalids);
 
 	@Override
-	public CompoundDataset typedSum(int dtype, int axis);
+	public CompoundDataset stdDeviation(int axis);
+
+	/**
+	 * @since 2.0
+	 */
+	@Override
+	public CompoundDataset stdDeviation(int axis, boolean isWholePopulation, boolean... ignoreInvalids);
 
 	@Override
 	public CompoundDataset variance(int axis);
 
 	/**
+	 * @since 2.0
+	 */
+	@Override
+	public CompoundDataset variance(int axis, boolean isWholePopulation, boolean... ignoreInvalids);
+
+	/**
 	 * Get first item as a double array
 	 * @param darray double array must be allocated and have sufficient length
+	 * @since 2.0
 	 */
 	public void getDoubleArray(double[] darray);
 
@@ -269,11 +285,15 @@ public interface CompoundDataset extends Dataset {
 	 */
 	public double[] minItem();
 
+	/**
+	 * @since 2.0
+	 */
 	@Override
 	public CompoundDataset getErrors();
 
 	/**
 	 * @return item in first position
+	 * @since 2.0
 	 */
 	public byte[] getByteArray();
 
@@ -298,6 +318,7 @@ public interface CompoundDataset extends Dataset {
 
 	/**
 	 * @return item in first position
+	 * @since 2.0
 	 */
 	public short[] getShortArray();
 
@@ -322,6 +343,7 @@ public interface CompoundDataset extends Dataset {
 
 	/**
 	 * @return item in first position
+	 * @since 2.0
 	 */
 	public int[] getIntArray();
 
@@ -341,11 +363,13 @@ public interface CompoundDataset extends Dataset {
 	/**
 	 * @param pos
 	 * @return item in given position
+	 * @since 2.0
 	 */
 	public int[] getIntArray(final int... pos);
 
 	/**
 	 * @return item in first position
+	 * @since 2.0
 	 */
 	public long[] getLongArray();
 
@@ -370,6 +394,7 @@ public interface CompoundDataset extends Dataset {
 
 	/**
 	 * @return item in first position
+	 * @since 2.0
 	 */
 	public float[] getFloatArray();
 
@@ -394,6 +419,7 @@ public interface CompoundDataset extends Dataset {
 
 	/**
 	 * @return item in first position
+	 * @since 2.0
 	 */
 	public double[] getDoubleArray();
 

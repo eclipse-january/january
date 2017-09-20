@@ -71,7 +71,7 @@ public class MathsTest {
 	public void closeDown() {
 		TestUtils.setVerbosity(Verbosity.QUIET);
 	}
-	
+
 	private Map<String, Integer> classes;
 
 	private void checkDatasets(Object a, Object b, Dataset c, Dataset d) {
@@ -262,7 +262,7 @@ public class MathsTest {
 						break;
 					start += System.nanoTime();
 					double otime = ((double) start) / d.getSize();
-	
+
 					TestUtils.verbosePrintf("Time taken by add for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.
 								* (otime - ntime) / otime);
 					checkDatasets(a, b, c, d);
@@ -329,7 +329,7 @@ public class MathsTest {
 				start += System.nanoTime();
 
 				double otime = ((double) start)/d.getSize();
-	
+
 				TestUtils.verbosePrintf("Time taken by add for %s: %s; %s (%.1f%%)\n", n, otime, ntime, 100.*(otime - ntime)/otime);
 				checkDatasets(a, dv, c, d);
 
@@ -1690,8 +1690,8 @@ public class MathsTest {
 		ta = Maths.gradient(a.getSlice(slices)).get(0);
 		checkDatasets(null, null, d, ta);
 
-		
-		Dataset b = DatasetFactory.createRange(a.getShape()[0], a.getDType());
+
+		Dataset b = DatasetFactory.createRange(a.getClass(), a.getShape()[0]);
 		b.imultiply(2);
 		tdata = new double[] {0.5 , 0.75, 1.25, 1.75, 2.25, 2.5};
 		ta = DatasetFactory.createFromObject(tdata);
@@ -1700,7 +1700,7 @@ public class MathsTest {
 		d = Maths.gradient(a.getSliceView(slices), b.getSliceView(slices)).get(0);
 		ta = Maths.gradient(a.getSlice(slices), b.getSlice(slices)).get(0);
 		checkDatasets(null, null, d, ta);
-		
+
 		data = new double[] {1, 2, 6, 3, 4, 5};
 		a = DatasetFactory.createFromObject(data, 2, 3);
 		List<? extends Dataset> l = Maths.gradient(a);
@@ -1711,9 +1711,9 @@ public class MathsTest {
 		ta = DatasetFactory.createFromObject(tdata, 2, 3);
 		checkDatasets(null, null, l.get(1), ta);
 
-		b = DatasetFactory.createRange(a.getShape()[0], a.getDType());
+		b = DatasetFactory.createRange(a.getClass(), a.getShape()[0]);
 		b.imultiply(2);
-		Dataset c = DatasetFactory.createRange(a.getShape()[1], a.getDType());
+		Dataset c = DatasetFactory.createRange(a.getClass(), a.getShape()[1]);
 		c.imultiply(-1.5);
 
 		l = Maths.gradient(a, b, c);
@@ -1818,9 +1818,9 @@ public class MathsTest {
 
 	private void checkInterpolate2(Dataset a, double x) {
 		int s = a.getShapeRef()[0];
-		Dataset xa = DatasetFactory.createRange(s, Dataset.FLOAT64);
+		Dataset xa = DatasetFactory.createRange(s);
 		double a1 = checkInterpolate2(xa, a, x, false);
-		xa = DatasetFactory.createRange(s-1, -1, -1, Dataset.FLOAT64);
+		xa = DatasetFactory.createRange(s-1., -1, -1);
 		double a2 = checkInterpolate2(xa.getSliceView(new Slice(null, null, -1)), a, x, false);
 		TestUtils.assertEquals("Flipped x - but reflipped", a1, a2);
 		a2 = checkInterpolate2(xa, a.getSliceView(new Slice(null, null, -1)), x, true);
@@ -1832,7 +1832,7 @@ public class MathsTest {
 			checkInterpolate2(xa, a, x, false);
 			Assert.fail("No exception raised");
 		} catch (IllegalArgumentException e) {
-			
+
 		} catch (Exception e) {
 			Assert.fail("Wrong exception raised");
 		}
@@ -1871,7 +1871,7 @@ public class MathsTest {
 
 	private void checkInterpolate3(Dataset a, double x) {
 		int s = a.getShapeRef()[0];
-		Dataset dv = Maths.interpolate(DatasetFactory.createRange(s, Dataset.INT32), a, DatasetFactory.createFromObject(x), 0, 0);
+		Dataset dv = Maths.interpolate(DatasetFactory.createRange(IntegerDataset.class, s), a, DatasetFactory.createFromObject(x), 0, 0);
 		double v = dv.getElementDoubleAbs(0);
 		if (x <= -1 || x >= s) {
 			Assert.assertEquals(0, v, 1e-15);
@@ -2031,7 +2031,7 @@ public class MathsTest {
 
 	@Test
 	public void testLinearInterpolation() {
-		Dataset xa = DatasetFactory.createRange(60, Dataset.INT32);
+		Dataset xa = DatasetFactory.createRange(IntegerDataset.class, 60);
 		xa.iadd(1);
 
 		double[] xc = {-1.25, -1, -0.25, 0, 0.25, 58.25, 59, 59.25, 60, 60.25};
@@ -2043,7 +2043,7 @@ public class MathsTest {
 			checkInterpolate3(xa, x);
 		}
 
-		Dataset xb = DatasetFactory.createRange(120, Dataset.INT32);
+		Dataset xb = DatasetFactory.createRange(IntegerDataset.class, 120);
 		xb.setShape(60, 2);
 		xb.ifloorDivide(2);
 		xb = DatasetUtils.createCompoundDatasetFromLastAxis(xb, true);
@@ -2084,8 +2084,8 @@ public class MathsTest {
 
 	@Test
 	public void testBitwise() {
-		Dataset xa = DatasetFactory.createRange(-4, 4, 1, Dataset.INT8);
-		Dataset xb = DatasetFactory.createRange(8, Dataset.INT8);
+		Dataset xa = DatasetFactory.createRange(ByteDataset.class, -4, 4, 1);
+		Dataset xb = DatasetFactory.createRange(ByteDataset.class, 8);
 
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new byte[] {0, 1, 2, 3, 0, 1, 2, 3}),
 				Maths.bitwiseAnd(xa, xb), ABSERRD, ABSERRD);
@@ -2125,7 +2125,7 @@ public class MathsTest {
 
 	@Test
 	public void testDivideTowardsFloor() {
-		Dataset xa = DatasetFactory.createRange(-4, 4, 1, Dataset.INT8);
+		Dataset xa = DatasetFactory.createRange(ByteDataset.class, -4, 4, 1);
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new byte[] {-2, -2, -1, -1,  0,  0,  1,  1}),
 				Maths.divideTowardsFloor(xa, 2), true, ABSERRD, ABSERRD);
 
@@ -2141,7 +2141,7 @@ public class MathsTest {
 
 	@Test
 	public void testFloorDivide() {
-		Dataset xa = DatasetFactory.createRange(-4, 4, 1, Dataset.INT8);
+		Dataset xa = DatasetFactory.createRange(ByteDataset.class, -4, 4, 1);
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new byte[] {-2, -2, -1, -1,  0,  0,  1,  1}),
 				Maths.floorDivide(xa, 2), true, ABSERRD, ABSERRD);
 
@@ -2157,7 +2157,7 @@ public class MathsTest {
 
 	@Test
 	public void testFloorRemainder() {
-		Dataset xa = DatasetFactory.createRange(-4, 4, 1, Dataset.INT8);
+		Dataset xa = DatasetFactory.createRange(ByteDataset.class, -4, 4, 1);
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new byte[] {0, 1, 0, 1, 0, 1, 0, 1}),
 				Maths.floorRemainder(xa, 2), true, ABSERRD, ABSERRD);
 
@@ -2169,5 +2169,209 @@ public class MathsTest {
 
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new float[] {-1.5f, -0.5f, -2, -1, 0, -1.5f, -0.5f, -2}),
 				Maths.floorRemainder(xa, -2.5f), true, ABSERRD, ABSERRD);
+	}
+
+	@Test
+	public void testArctan2Integer() {
+		Dataset a = DatasetFactory.createFromObject(new int[] { 4, 2, 6 });
+		Dataset b = DatasetFactory.createFromObject(new int[] { 1, 2, 3 });
+
+		int size = a.getSize();
+		int[] c = new int[size];
+		for (int i = 0; i < size; i++) {
+			double atan2 = Math.atan2(a.getDouble(i), b.getDouble(i));
+			c[i] = (int) atan2;
+		}
+		Dataset expectedResult = DatasetFactory.createFromObject(c);
+
+		Dataset actualResult = Maths.arctan2(a, b);
+		TestUtils.assertDatasetEquals(expectedResult, actualResult, true, ABSERRD, ABSERRD);
+	}
+
+	@Test
+	public void testHypotenusInteger() {
+		Dataset a = DatasetFactory.createFromObject(new int[] { 4, 2, 6 });
+		Dataset b = DatasetFactory.createFromObject(new int[] { 1, 2, 3 });
+
+		int size = a.getSize();
+		int[] c = new int[size];
+		for (int i = 0; i < size; i++) {
+			double hypot = Math.hypot(a.getDouble(i), b.getDouble(i));
+			c[i] = (int) hypot;
+		}
+		Dataset expectedResult = DatasetFactory.createFromObject(c);
+
+		Dataset actualResult = Maths.hypot(a, b);
+		TestUtils.assertDatasetEquals(expectedResult, actualResult, true, ABSERRD, ABSERRD);
+	}
+
+	@Test
+	public void testAbsComplexInput() {
+		double[] ds = new double[] { -0, 1, 2, -3, 4, 5 };
+		Dataset a = DatasetFactory.createFromObject(ComplexDoubleDataset.class, ds);
+		Dataset o = DatasetFactory.createFromObject(ComplexDoubleDataset.class, new double[] { 0, 4, 0, 0, 0, 0 });
+
+		int size = ds.length;
+		double[] c = new double[size];
+		for (int i = 0; i < size; i = i + 2) {
+			double val = Math.hypot(ds[i], ds[i + 1]);
+			c[i] = val; // real part
+			c[i + 1] = 0; // imaginary part
+		}
+		Dataset expectedResult = DatasetFactory.createFromObject(ComplexDoubleDataset.class, c);
+
+		Dataset actualResult = Maths.abs(a, o);
+		TestUtils.assertDatasetEquals(expectedResult, actualResult, true, ABSERRD, ABSERRD);
+	}
+
+	@Test
+	public void testSingleInputCompoundOutputHandling() {
+		short[] sa = new short[] { 0, -1, -3, 4};
+		int is = 2;
+		testSingleInputCompoundOutputHandling(DatasetFactory.createFromObject(is, CompoundShortDataset.class, sa));
+		testSingleInputCompoundOutputHandling(DatasetFactory.createFromObject(is, CompoundFloatDataset.class, sa));
+	}
+
+	private void testSingleInputCompoundOutputHandling(CompoundDataset a) {
+		int is = a.getElementsPerItem();
+		int os;
+		Dataset o;
+		int size = a.getSize();
+		short[] c;
+		int ms;
+
+		// 2-element -> 1-element
+		os = 1;
+		o = DatasetFactory.createFromObject(os, CompoundShortDataset.class, new short[] { 0, 4});
+		c = new short[os*size];
+		ms = Math.min(is, os);
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < ms; j++) {
+				short val = (short) Math.tan(a.getElementLongAbs(i*is + j));
+				c[i*os + j] = val;
+			}
+		}
+		Dataset expectedResult = DatasetFactory.createFromObject(os, CompoundShortDataset.class, c);
+		Maths.tan(a, o);
+		TestUtils.assertDatasetEquals(expectedResult, o, true, ABSERRD, ABSERRD);
+
+		// 2-element -> 2-element
+		os = 2;
+		o = DatasetFactory.createFromObject(os, CompoundShortDataset.class, new short[] { 0, 4, 0, 0});
+		c = new short[os*size];
+		ms = Math.min(is, os);
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < ms; j++) {
+				short val = (short) Math.tan(a.getElementLongAbs(i*is + j));
+				c[i*os + j] = val;
+			}
+		}
+		expectedResult = DatasetFactory.createFromObject(os, CompoundShortDataset.class, c);
+		Maths.tan(a, o);
+		TestUtils.assertDatasetEquals(expectedResult, o, true, ABSERRD, ABSERRD);
+
+		// 1-element -> 3-element
+		os = 3;
+		o = DatasetFactory.createFromObject(os, CompoundShortDataset.class, new short[] { 0, 4, 1, 0, 0, -2});
+		c = new short[os*size];
+		for (int i = 0; i < size; i++) {
+			short val = (short) Math.tan(a.getElementLongAbs(i*is));
+			for (int j = 0; j < os; j++) {
+				c[i*os + j] = val;
+			}
+		}
+		expectedResult = DatasetFactory.createFromObject(os, CompoundShortDataset.class, c);
+		Maths.tan(a.getElements(0), o);
+		TestUtils.assertDatasetEquals(expectedResult, o, true, ABSERRD, ABSERRD);
+	}
+
+	@Test
+	public void testDoubleInputCompoundOutputHandling() {
+		short[] sa = new short[] { 0, -1, -3, 4};
+		int is = 2;
+		short[] sb = new short[] { -1, 2, -1, 3};
+
+		testDoubleInputCompoundOutputHandling(DatasetFactory.createFromObject(is, CompoundShortDataset.class, sa),
+				DatasetFactory.createFromObject(is, CompoundShortDataset.class, sb));
+
+		testDoubleInputCompoundOutputHandling(DatasetFactory.createFromObject(is, CompoundFloatDataset.class, sa),
+				DatasetFactory.createFromObject(is, CompoundFloatDataset.class, sb));
+	}
+
+	private void testDoubleInputCompoundOutputHandling(CompoundDataset a, CompoundDataset b) {
+		int is = a.getElementsPerItem();
+		int os;
+		Dataset o;
+		Dataset expectedResult;
+		int size = a.getSize();
+		short[] c;
+
+		// 2-element + 2-element -> 1-element
+		os = 1;
+		o = DatasetFactory.createFromObject(os, CompoundShortDataset.class, new short[] { 4, -5});
+		c = new short[os*size];
+		for (int i = 0; i < size; i++) {
+			short val = (short) (a.getElementLongAbs(i*is) + b.getElementLongAbs(i*is));
+			c[i*os] = val;
+		}
+		expectedResult = DatasetFactory.createFromObject(os, CompoundShortDataset.class, c);
+
+		Maths.add(a, b, o);
+		TestUtils.assertDatasetEquals(expectedResult, o, true, ABSERRD, ABSERRD);
+
+		// 2-element + 2-element -> 2-element
+		os = 2;
+		o = DatasetFactory.createFromObject(os, CompoundShortDataset.class, new short[] { 0, 4, 0, -5});
+		c = new short[os*size];
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < os; j++) {
+				short val = (short) (a.getElementLongAbs(i*is + j) + b.getElementLongAbs(i*is + j));
+				c[i*os + j] = val;
+			}
+		}
+		expectedResult = DatasetFactory.createFromObject(os, CompoundShortDataset.class, c);
+
+		Maths.add(a, b, o);
+		TestUtils.assertDatasetEquals(expectedResult, o, true, ABSERRD, ABSERRD);
+
+		// 1-element + 2-element -> 2-element
+		o.fill(-1);
+		c = new short[os*size];
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < os; j++) {
+				short val = (short) (a.getElementLongAbs(i*is) + b.getElementLongAbs(i*is + j));
+				c[i*os + j] = val;
+			}
+		}
+		expectedResult = DatasetFactory.createFromObject(os, CompoundShortDataset.class, c);
+
+		Maths.add(a.getElements(0), b, o);
+		TestUtils.assertDatasetEquals(expectedResult, o, true, ABSERRD, ABSERRD);
+
+		// 2-element + 1-element -> 2-element
+		o.fill(-1);
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < os; j++) {
+				short val = (short) (a.getElementLongAbs(i*is + j) + b.getElementLongAbs(i*is));
+				c[i*os + j] = val;
+			}
+		}
+		expectedResult = DatasetFactory.createFromObject(os, CompoundShortDataset.class, c);
+
+		Maths.add(a, b.getElements(0), o);
+		TestUtils.assertDatasetEquals(expectedResult, o, true, ABSERRD, ABSERRD);
+
+		// 1-element + 1-element -> 2-element
+		o.fill(-1);
+		for (int i = 0; i < size; i++) {
+			short val = (short) (a.getElementLongAbs(i*is) + b.getElementLongAbs(i*is));
+			for (int j = 0; j < os; j++) {
+				c[i*os + j] = val;
+			}
+		}
+		expectedResult = DatasetFactory.createFromObject(os, CompoundShortDataset.class, c);
+
+		Maths.add(a.getElements(0), b.getElements(0), o);
+		TestUtils.assertDatasetEquals(expectedResult, o, true, ABSERRD, ABSERRD);
 	}
 }

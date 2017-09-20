@@ -14,6 +14,7 @@ package org.eclipse.january.dataset;
 
 /**
  * Interface to represent a unary operation for implementations over different output domains
+ * @since 2.0
  */
 public interface UnaryOperation extends IOperation {
 
@@ -67,15 +68,9 @@ public interface UnaryOperation extends IOperation {
 			return doubleOperate(a) != 0;
 		}
 
-		private static long toLong(double d) {
-			if (Double.isInfinite(d) || Double.isNaN(d))
-				return 0;
-			return (long) d;
-		}
-
 		@Override
 		public long longOperate(long a) {
-			return toLong(doubleOperate(a));
+			return DTypeUtils.toLong(doubleOperate(a));
 		}
 
 		/**

@@ -19,3 +19,5 @@ org.eclipse.january.dataset.ComplexFloatDataset
 The file functions.txt defines functions for the org.eclipse.january.dataset.Maths class 
 This class also has a fixed part which includes its license header.
 
+Use generate_all.sh (or the "January Generate all dataset classes from templates" 
+launch configuration) to generate the classes.

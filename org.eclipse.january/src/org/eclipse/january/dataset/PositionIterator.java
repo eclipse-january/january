@@ -41,6 +41,7 @@ public class PositionIterator extends IndexIterator {
 	 */
 	final private int[] pos;
 	private boolean once;
+	final private boolean zero; // no iterations allowed
 
 	/**
 	 * Constructor for an iterator over elements of a dataset that are within
@@ -127,9 +128,7 @@ public class PositionIterator extends IndexIterator {
 		shape = oshape.clone();
 		if (axes != null) {
 			for (int a : axes) {
-				if (a < 0) {
-					a += rank;
-				}
+				a = ShapeUtils.checkAxis(rank, a);
 				if (a >= 0 && a <= endrank) {
 					omit[a] = true;
 					shape[a] = 1;
@@ -141,12 +140,17 @@ public class PositionIterator extends IndexIterator {
 
 		pos = new int[rank];
 
+		zero = ShapeUtils.calcSize(shape) == 0;
+
 		reset();
 	}
 
 	@Override
 	public boolean hasNext() {
 		// now move on one position
+		if (zero) {
+			return false;
+		}
 		if (once) {
 			once = false;
 			return true;
@@ -179,13 +183,18 @@ public class PositionIterator extends IndexIterator {
 
 	@Override
 	public void reset() {
-		for (int i = 0; i <= endrank; i++)
+		for (int i = 0; i <= endrank; i++) {
 			pos[i] = start[i];
+		}
+		if (zero) {
+			return;
+		}
 
 		int j = 0;
 		for (; j <= endrank; j++) {
-			if (!omit[j])
+			if (!omit[j]) {
 				break;
+			}
 		}
 		if (j > endrank) {
 			once = true;

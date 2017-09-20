@@ -131,6 +131,12 @@ public class SliceNDTest {
 		Assert.assertArrayEquals(new int[] {0}, slice.getStart());
 		Assert.assertArrayEquals(new int[] {7}, slice.getStop());
 
+		lstart[0] = 4;
+		lstop[0] = 2;
+		slice = new SliceND(new int[] {7}, lstart, lstop, step);
+		Assert.assertArrayEquals(new int[] {0}, slice.getShape());
+		Assert.assertArrayEquals(new int[] {4}, slice.getStart());
+		Assert.assertArrayEquals(new int[] {4}, slice.getStop());
 
 		step = new int[] {-2};
 		try {
@@ -241,6 +247,33 @@ public class SliceNDTest {
 		Assert.assertArrayEquals(new int[] {4}, slice.getShape());
 		Assert.assertArrayEquals(new int[] {6}, slice.getStart());
 		Assert.assertArrayEquals(new int[] {-1}, slice.getStop());
+
+		lstart[0] = 1;
+		lstop[0] = 5;
+		slice = new SliceND(new int[] {7}, lstart, lstop, step);
+		Assert.assertArrayEquals(new int[] {0}, slice.getShape());
+		Assert.assertArrayEquals(new int[] {1}, slice.getStart());
+		Assert.assertArrayEquals(new int[] {1}, slice.getStop());
+
+		slice = new SliceND(new int[] {8, 4}, new int[] {1 , 1}, new int[] {8, 4}, new int[] {3, 1});
+		Assert.assertArrayEquals(new int[] {3, 3}, slice.getShape());
+		Assert.assertArrayEquals(new int[] {1, 1}, slice.getStart());
+		Assert.assertArrayEquals(new int[] {8, 4}, slice.getStop());
+
+		slice = new SliceND(new int[] {8, 4}, new int[] {5 , 1}, new int[] {1, 4}, new int[] {3, 1});
+		Assert.assertArrayEquals(new int[] {0, 3}, slice.getShape());
+		Assert.assertArrayEquals(new int[] {5, 1}, slice.getStart());
+		Assert.assertArrayEquals(new int[] {5, 4}, slice.getStop());
+
+		slice = new SliceND(new int[] {8, 4}, new int[] {5 , 1}, new int[] {1, 4}, new int[] {-3, 1});
+		Assert.assertArrayEquals(new int[] {2, 3}, slice.getShape());
+		Assert.assertArrayEquals(new int[] {5, 1}, slice.getStart());
+		Assert.assertArrayEquals(new int[] {1, 4}, slice.getStop());
+
+		slice = new SliceND(new int[] {8, 4}, new int[] {1 , 1}, new int[] {8, 4}, new int[] {-3, 1});
+		Assert.assertArrayEquals(new int[] {0, 3}, slice.getShape());
+		Assert.assertArrayEquals(new int[] {1, 1}, slice.getStart());
+		Assert.assertArrayEquals(new int[] {1, 4}, slice.getStop());
 	}
 
 	@Test
@@ -922,6 +955,12 @@ public class SliceNDTest {
 		Assert.assertArrayEquals(new int[] {3, 4}, slice.getStart());
 		Assert.assertArrayEquals(new int[] {7, -1}, slice.getStop());
 		Assert.assertArrayEquals(new int[] {2, -3}, slice.getStep());
+		slice.flip(-2);
+		Assert.assertArrayEquals(new int[] {2, 2}, slice.getShape());
+		Assert.assertArrayEquals(new int[] {5, 4}, slice.getStart());
+		Assert.assertArrayEquals(new int[] {1, -1}, slice.getStop());
+		Assert.assertArrayEquals(new int[] {-2, -3}, slice.getStep());
+		slice.flip(0);
 
 		slice.flip();
 		Assert.assertArrayEquals(new int[] {2, 2}, slice.getShape());

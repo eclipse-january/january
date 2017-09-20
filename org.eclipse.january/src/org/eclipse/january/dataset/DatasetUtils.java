@@ -50,14 +50,7 @@ public class DatasetUtils {
 		if (rank != bshape.length) {
 			throw new IllegalArgumentException("Incompatible number of dimensions");
 		}
-		if (axis >= rank) {
-			throw new IllegalArgumentException("Axis specified exceeds array dimensions");
-		} else if (axis > -rank) {
-			if (axis < 0)
-				axis += rank;
-		} else {
-			throw new IllegalArgumentException("Axis specified is less than " + (-rank));
-		}
+		axis = ShapeUtils.checkAxis(rank, axis);
 
 		for (int i = 0; i < rank; i++) {
 			if (i != axis && ashape[i] != bshape[i]) {
@@ -71,6 +64,7 @@ public class DatasetUtils {
 		nshape[axis] += bshape[axis];
 		final int ot = DTypeUtils.getDType(b);
 		final int dt = DTypeUtils.getDType(a);
+		@SuppressWarnings("deprecation")
 		Dataset ds = DatasetFactory.zeros(a.getElementsPerItem(), nshape, dt > ot ? dt : ot);
 		IndexIterator iter = ds.getIterator(true);
 		int[] pos = iter.getPos();
@@ -144,6 +138,7 @@ public class DatasetUtils {
 	 * @param axis if null, then use flattened view
 	 * @return a sub-array
 	 */
+	@SuppressWarnings("deprecation")
 	public static <T extends Dataset> T take(final T a, final int[] indices, Integer axis) {
 		if (indices == null || indices.length == 0) {
 			utilsLogger.error("No indices given");
@@ -234,6 +229,7 @@ public class DatasetUtils {
 			newShape[i] = shape[i]*reps[i];
 		}
 
+		@SuppressWarnings("deprecation")
 		Dataset tdata = DatasetFactory.zeros(a.getElementsPerItem(), newShape, DTypeUtils.getDType(a));
 
 		// decide which way to put slices
@@ -381,7 +377,7 @@ public class DatasetUtils {
 	 * @param axis
 	 * @return concatenated dataset
 	 */
-	public static Dataset concatenate(final IDataset[] as, final int axis) {
+	public static Dataset concatenate(final IDataset[] as, int axis) {
 		if (as == null || as.length == 0) {
 			utilsLogger.error("No datasets given");
 			throw new IllegalArgumentException("No datasets given");
@@ -390,7 +386,9 @@ public class DatasetUtils {
 		if (as.length == 1) {
 			return convertToDataset(a.clone());
 		}
+
 		int[] ashape = a.getShape();
+		axis = ShapeUtils.checkAxis(ashape.length, axis);
 		int at = DTypeUtils.getDType(a);
 		int anum = as.length;
 		int isize = a.getElementsPerItem();
@@ -418,6 +416,7 @@ public class DatasetUtils {
 			ashape[axis] += as[i].getShape()[axis];
 		}
 
+		@SuppressWarnings("deprecation")
 		Dataset result = DatasetFactory.zeros(isize, ashape, at);
 
 		int[] start = new int[ashape.length];
@@ -442,13 +441,9 @@ public class DatasetUtils {
 	 * @param checkEqual makes sure the division is into equal parts
 	 * @return list of split datasets
 	 */
-	public static List<Dataset> split(final Dataset a, int sections, final int axis, final boolean checkEqual) {
+	public static List<Dataset> split(final Dataset a, int sections, int axis, final boolean checkEqual) {
 		int[] ashape = a.getShapeRef();
-		int rank = ashape.length;
-		if (axis > rank) {
-			utilsLogger.error("Axis exceeds rank of dataset");
-			throw new IllegalArgumentException("Axis exceeds rank of dataset");
-		}
+		axis = a.checkAxis(axis);
 		int imax = ashape[axis];
 		if (checkEqual && (imax%sections) != 0) {
 			utilsLogger.error("Number of sections does not divide axis into equal parts");
@@ -468,13 +463,10 @@ public class DatasetUtils {
 	 * @param axis
 	 * @return list of split datasets
 	 */
-	public static List<Dataset> split(final Dataset a, int[] indices, final int axis) {
+	public static List<Dataset> split(final Dataset a, int[] indices, int axis) {
 		final int[] ashape = a.getShapeRef();
+		axis = a.checkAxis(axis);
 		final int rank = ashape.length;
-		if (axis > rank) {
-			utilsLogger.error("Axis exceeds rank of dataset");
-			throw new IllegalArgumentException("Axis exceeds rank of dataset");
-		}
 		final int imax = ashape[axis];
 
 		final List<Dataset> result = new ArrayList<Dataset>();
@@ -493,12 +485,12 @@ public class DatasetUtils {
 		}
 		for (int ind : indices) {
 			if (ind > imax) {
-				result.add(DatasetFactory.zeros(is, new int[] {0}, a.getDType()));
+				result.add(DatasetFactory.zeros(is, a.getClass(), 0));
 			} else {
 				nshape[axis] = ind - oind;
 				start[axis] = oind;
 				stop[axis] = ind;
-				Dataset n = DatasetFactory.zeros(is, nshape, a.getDType());
+				Dataset n = DatasetFactory.zeros(is, a.getClass(), nshape);
 				IndexIterator iter = a.getSliceIterator(start, stop, step);
 
 				a.fillDataset(n, iter);
@@ -511,7 +503,7 @@ public class DatasetUtils {
 			nshape[axis] = imax - oind;
 			start[axis] = oind;
 			stop[axis] = imax;
-			Dataset n = DatasetFactory.zeros(is, nshape, a.getDType());
+			Dataset n = DatasetFactory.zeros(is, a.getClass(), nshape);
 			IndexIterator iter = a.getSliceIterator(start, stop, step);
 
 			a.fillDataset(n, iter);
@@ -580,6 +572,7 @@ public class DatasetUtils {
 			newShape[axis] = nlen;
 		}
 
+		@SuppressWarnings("deprecation")
 		Dataset rdata = DatasetFactory.zeros(is, newShape, a.getDType());
 		Serializable nbuf = rdata.getBuffer();
 
@@ -627,6 +620,7 @@ public class DatasetUtils {
 	 */
 	public static <T extends Dataset> T resize(final T a, final int... shape) {
 		int size = a.getSize();
+		@SuppressWarnings("deprecation")
 		Dataset rdata = DatasetFactory.zeros(a.getElementsPerItem(), shape, a.getDType());
 		IndexIterator it = rdata.getIterator();
 		while (it.hasNext()) {
@@ -931,12 +925,32 @@ public class DatasetUtils {
 
 	/**
 	 * Make a dataset unsigned by promoting it to a wider dataset type and unwrapping the signs
-	 * of its content
+	 * of its contents
 	 * @param a
 	 * @return unsigned dataset or original if it is not an integer dataset
 	 */
 	public static Dataset makeUnsigned(IDataset a) {
+		return makeUnsigned(a, false);
+	}
+
+	/**
+	 * Make a dataset unsigned by promoting it to a wider dataset type and unwrapping the signs
+	 * of its contents
+	 * @param a
+	 * @param check if true, then check for negative values
+	 * @return unsigned dataset or original if it is not an integer dataset or it has been check for negative numbers
+	 * @since 2.1
+	 */
+	public static Dataset makeUnsigned(IDataset a, boolean check) {
 		Dataset d = convertToDataset(a);
+
+		if (d.hasFloatingPointElements()) {
+			return d;
+		}
+		if (check && d.min(true).longValue() >= 0) {
+			return d;
+		}
+
 		int dtype = d.getDType();
 		switch (dtype) {
 		case Dataset.INT32:
@@ -1099,6 +1113,7 @@ public class DatasetUtils {
 	 */
 	public static Dataset eye(final int rows, final int cols, final int offset, final int dtype) {
 		int[] shape = new int[] {rows, cols};
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.zeros(shape, dtype);
 
 		int[] pos = new int[] {0, offset};
@@ -1121,6 +1136,7 @@ public class DatasetUtils {
 	 * @param offset
 	 * @return diagonal matrix
 	 */
+	@SuppressWarnings("deprecation")
 	public static <T extends Dataset> T diag(final T a, final int offset) {
 		final int dtype = a.getDType();
 		final int rank = a.getRank();
@@ -1171,15 +1187,6 @@ public class DatasetUtils {
 	}
 
 	/**
-	 * Convert (if necessary) a dataset obeying the interface to our implementation
-	 * @param data can be null
-	 * @return Converted dataset or null
-	 */
-	public static AbstractDataset convertToAbstractDataset(IDataset data) {
-		return (AbstractDataset) convertToDataset(data);
-	}
-
-	/**
 	 * Slice (or fully load), if necessary, a lazy dataset, otherwise take a slice view and
 	 * convert to our dataset implementation. If a slice is necessary, this may cause resource
 	 * problems when used on large datasets and throw runtime exceptions
@@ -1216,6 +1223,7 @@ public class DatasetUtils {
 			throw new IllegalArgumentException("Datasets with " + isize + " elements per item not supported");
 		}
 
+		@SuppressWarnings("deprecation")
 		final Dataset result = DatasetFactory.zeros(isize, data.getShape(), dtype);
 		result.setName(data.getName());
 
@@ -1551,6 +1559,7 @@ public class DatasetUtils {
 
 		for (int i = 0; i < rank; i++) {
 			Dataset axis = axes[i];
+			@SuppressWarnings("deprecation")
 			Dataset coord = DatasetFactory.zeros(nshape, axis.getDType());
 			result.add(coord);
 
@@ -1681,7 +1690,7 @@ public class DatasetUtils {
 		IndexIterator it = d.getIterator();
 		double y1, y2;
 
-		y2 = it.hasNext() ? y2 = d.getElementDoubleAbs(it.index) : 0;
+		y2 = it.hasNext() ? d.getElementDoubleAbs(it.index) : 0;
 		double x = 1;
 		while (it.hasNext()) {
 			y1 = y2;
@@ -1712,6 +1721,11 @@ public class DatasetUtils {
 	 * @return An list of doubles containing all the X coordinates of where the line crosses
 	 */
 	public static List<Double> crossings(Dataset xAxis, Dataset yAxis, double yValue) {
+		if (xAxis.getSize() > yAxis.getSize()) {
+			throw new IllegalArgumentException(
+					"Number of values of yAxis must as least be equal to the number of values of xAxis");
+		}
+		
 		List<Double> results = new ArrayList<Double>();
 
 		List<Double> indices = crossings(yAxis, yValue);
@@ -1746,7 +1760,7 @@ public class DatasetUtils {
 		int i = 0;
 		// now go through and check for groups of three crossings which are all
 		// within the boundaries
-		while (i < vals.size() - 3) {
+		while (i <= vals.size() - 3) {
 			double v1 = Math.abs(vals.get(i) - vals.get(i + 2));
 			if (v1 < error) {
 				// these 3 points should be treated as one
@@ -2201,7 +2215,7 @@ public class DatasetUtils {
 	 * @param axis if null, then roll flattened dataset
 	 * @return rolled dataset
 	 */
-	public static <T extends Dataset> T roll(final T a, final int shift, final Integer axis) {
+	public static <T extends Dataset> T roll(final T a, final int shift, Integer axis) {
 		Dataset r = DatasetFactory.zeros(a);
 		int is = a.getElementsPerItem();
 		if (axis == null) {
@@ -2218,9 +2232,10 @@ public class DatasetUtils {
 				}
 			}
 		} else {
+			axis = a.checkAxis(axis);
 			PositionIterator pi = a.getPositionIterator(axis);
 			int s = a.getShapeRef()[axis];
-			Dataset u = DatasetFactory.zeros(is, new int[] {s}, a.getDType());
+			Dataset u = DatasetFactory.zeros(is, a.getClass(), new int[] {s});
 			Dataset v = DatasetFactory.zeros(u);
 			int[] pos = pi.getPos();
 			boolean[] hit = pi.getOmit();
@@ -2251,11 +2266,7 @@ public class DatasetUtils {
 	 */
 	public static <T extends Dataset> T rollAxis(final T a, int axis, int start) {
 		int r = a.getRank();
-		if (axis < 0)
-			axis += r;
-		if (axis < 0 || axis >= r) {
-			throw new IllegalArgumentException("Axis is out of range: it should be >= 0 and < " + r);
-		}
+		axis = a.checkAxis(axis);
 		if (start < 0)
 			start += r;
 		if (start < 0 || start > r) {
@@ -2369,6 +2380,7 @@ public class DatasetUtils {
 		int dt = DTypeUtils.getBestDType(dx.getDType(),dy.getDType());
 		int ds = Math.max(dx.getElementsPerItem(), dy.getElementsPerItem());
 
+		@SuppressWarnings("deprecation")
 		Dataset r = DatasetFactory.zeros(ds, condition.getShapeRef(), dt);
 		IndexIterator iter = condition.getIterator(true);
 		final int[] pos = iter.getPos();
@@ -2414,6 +2426,7 @@ public class DatasetUtils {
 			throw new IllegalArgumentException("Dataset types of choices are invalid");
 		}
 
+		@SuppressWarnings("deprecation")
 		Dataset r = DatasetFactory.zeros(ds, conditions[0].getShapeRef(), dt);
 		Dataset d = DatasetFactory.createFromObject(def).getBroadcastView(r.getShapeRef());
 		PositionIterator iter = new PositionIterator(r.getShapeRef());
@@ -2469,6 +2482,7 @@ public class DatasetUtils {
 		index = (IntegerDataset) dChoices[n];
 		dChoices[n] = null;
 
+		@SuppressWarnings("deprecation")
 		Dataset r = DatasetFactory.zeros(ds, index.getShape(), dt);
 		IndexIterator iter = index.getIterator(true);
 		final int[] pos = iter.getPos();
@@ -2606,6 +2620,7 @@ public class DatasetUtils {
 	 * @param condition should be broadcastable to data
 	 * @return 1-D dataset of values
 	 */
+	@SuppressWarnings("deprecation")
 	public static Dataset extract(final IDataset data, final IDataset condition) {
 		Dataset a = convertToDataset(data.getSliceView());
 		Dataset b = cast(condition.getSliceView(), Dataset.BOOL);

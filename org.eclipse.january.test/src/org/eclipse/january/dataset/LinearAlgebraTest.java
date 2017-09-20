@@ -32,6 +32,7 @@ public class LinearAlgebraTest {
 		return x == 0 ? Math.abs(b) < 10e-6 : Math.abs(x - b) < 10e-6*x;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testTensorDot() {
 		Dataset a = DatasetFactory.createRange(60, Dataset.FLOAT32).reshape(3, 4, 5);
@@ -68,7 +69,9 @@ public class LinearAlgebraTest {
 
 	@Test
 	public void testDot() {
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.createRange(10, Dataset.FLOAT32);
+		@SuppressWarnings("deprecation")
 		Dataset b = DatasetFactory.createRange(-6, 4, 1, Dataset.INT16);
 
 		long start;
@@ -79,7 +82,7 @@ public class LinearAlgebraTest {
 		
 		long nstart = -System.nanoTime();
 		Dataset d = Maths.multiply(a, b);
-		Number n = (Number) d.typedSum();
+		Number n = ((Number) d.sum()).floatValue();
 		nstart += System.nanoTime();
 		System.out.printf("Time taken %dus %dus\n", start/1000, nstart/1000);
 		assertTrue("Data does not match", n.equals(c.getObjectAbs(0)));
@@ -180,6 +183,7 @@ public class LinearAlgebraTest {
 		TestUtils.assertDatasetEquals(Maths.negative(c), d, 1e-15, 1e-15);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testNorm() {
 		Dataset a, b;
@@ -219,10 +223,12 @@ public class LinearAlgebraTest {
 
 	@Test
 	public void testDeterminant() {
+		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.createRange(1, 21, 1, Dataset.INT32).reshape(4, 5);
 		assertEquals(0, LinearAlgebra.calcDeterminant(a.getSliceView(null, new Slice(4))), 1e-8);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testTrace() {
 		Dataset a = DatasetFactory.createRange(20, Dataset.INT32).reshape(4, 5);
@@ -234,6 +240,7 @@ public class LinearAlgebraTest {
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new int[]{36, 116, 196}, null), LinearAlgebra.trace(a, 0, 1, 2), true, 1e-12, 1e-12);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testKronecker() {
 		Dataset a = DatasetFactory.createFromObject(Dataset.INT32, new int[] {1, 10, 100});
@@ -247,6 +254,7 @@ public class LinearAlgebraTest {
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new float[]{1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1}, 4, 4), LinearAlgebra.kroneckerProduct(a, b), true, 1e-12, 1e-12);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testPower() {
 		Dataset a = DatasetFactory.createFromObject(new int[] {0, 1, -1, 0}, 2, 2);

@@ -9,14 +9,12 @@
 
 package org.eclipse.january.dataset;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 
 import org.eclipse.january.asserts.TestUtils;
-import org.eclipse.january.dataset.Slice;
-import org.eclipse.january.dataset.SliceND;
-import org.eclipse.january.dataset.SliceNDIterator;
 import org.junit.Test;
 
 /**
@@ -30,6 +28,7 @@ public class SliceNDIteratorTest {
 		SliceNDIterator it = new SliceNDIterator(sa, 2, 3); // scan only first two dimensions (omit detector dimensions)
 
 		assertArrayEquals(new int[]{4, 5, 1, 1}, it.getShape());
+		assertArrayEquals(new int[]{4, 5}, it.getUsedSlice().getSourceShape());
 		myAssertEquals(new SliceND(new int[] {6, 7}), it.getOmittedSlice());
 
 		int size = 0;
@@ -73,9 +72,54 @@ public class SliceNDIteratorTest {
 			size++;
 		}
 		assertEquals(2*6*7, size);
+
+		it = new SliceNDIterator(sa, -3);
+
+		assertArrayEquals(new int[]{2, 1, 6, 7}, it.getShape());
+		myAssertEquals(new SliceND(new int[] {5}), it.getOmittedSlice());
+
+		size = 0;
+		while (it.hasNext()) {
+			TestUtils.verbosePrintln(size + ": " + Arrays.toString(it.getPos()) + " or " + Arrays.toString(it.getUsedPos()));
+			TestUtils.verbosePrintln("use: " + it.getUsedSlice() + ", cur: " + it.getCurrentSlice() + ", out: " + it.getOutputSlice());
+			if (size == (1*6*7 + 3*7 + 5)) {
+				assertArrayEquals(new int[]{3, 0, 3, 5}, it.getPos());
+				assertArrayEquals(new int[]{3, 3, 5}, it.getUsedPos());
+				myAssertEquals(new SliceND(new int[] {4, 6, 7}, new Slice(1, 2), new Slice(3, 4), new Slice(5, 6)), it.getUsedSlice());
+				myAssertEquals(new SliceND(new int[] {2, 5, 6, 7}, new Slice(1, 2), null, new Slice(3, 4), new Slice(5, 6)), it.getOutputSlice());
+			}
+			size++;
+		}
+		assertEquals(2*6*7, size);
 	}
 
-	private void myAssertEquals(SliceND a, SliceND b) {
+	/**
+	 *
+	 */
+	@Test
+	public void testIterationsSliced() {
+		SliceND sa = new SliceND(new int[] {4, 5, 6, 7}, new Slice(1, 5, 2), null, null, new Slice(null, null, 2));
+
+		SliceNDIterator it = new SliceNDIterator(sa, 2, 3);
+
+		assertArrayEquals(new int[]{2, 5, 1, 1}, it.getShape());
+		myAssertEquals(new SliceND(new int[] {6, 7}, (Slice) null, new Slice(null, null, 2)), it.getOmittedSlice());
+
+		int size = 0;
+		while (it.hasNext()) {
+			TestUtils.verbosePrintln(size + ": " + Arrays.toString(it.getPos()) + " or " + Arrays.toString(it.getUsedPos()));
+			TestUtils.verbosePrintln("use: " + it.getUsedSlice() + ", cur: " + it.getCurrentSlice() + ", out: " + it.getOutputSlice());
+			if (size == (1*5 + 2)) {
+				assertArrayEquals(new int[]{3, 2, 0, 0}, it.getPos());
+				assertArrayEquals(new int[]{3, 2}, it.getUsedPos());
+				myAssertEquals(new SliceND(new int[] {4, 5}, new Slice(1, 2), new Slice(2, 3)), it.getUsedSlice());
+				myAssertEquals(new SliceND(new int[] {2, 5, 6, 4}, new Slice(1, 2), new Slice(2, 3), null, null), it.getOutputSlice());
+			}
+			size++;
+		}
+	}
+
+	private static void myAssertEquals(SliceND a, SliceND b) {
 		assertArrayEquals(a.getSourceShape(), b.getSourceShape());
 		assertArrayEquals(a.getShape(), b.getShape());
 	}

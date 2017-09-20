@@ -19,12 +19,14 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.january.DatasetException;
 import org.eclipse.january.MetadataException;
+import org.eclipse.january.metadata.Dirtiable;
 import org.eclipse.january.metadata.ErrorMetadata;
 import org.eclipse.january.metadata.IMetadata;
 import org.eclipse.january.metadata.MetadataFactory;
@@ -45,14 +47,20 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	protected static final Logger logger = LoggerFactory.getLogger(LazyDatasetBase.class);
 
 	protected static boolean catchExceptions;
-	
+
 	static {
 		/**
 		 * Boolean to set to true if running jython scripts that utilise ScisoftPy in IDE
 		 */
-		catchExceptions = Boolean.getBoolean("run.in.eclipse");
+		try {
+			catchExceptions = Boolean.getBoolean("run.in.eclipse");
+		} catch (SecurityException e) {
+			// set a default for when the security manager does not allow access to the requested key
+			catchExceptions = false;
+		}
 	}
 
+	transient private boolean dirty = true; // indicate dirty state of metadata
 	protected String name = "";
 
 	/**
@@ -60,7 +68,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	 */
 	protected int[] shape;
 
-	protected Map<Class<? extends MetadataType>, List<MetadataType>> metadata = null;
+	protected ConcurrentMap<Class<? extends MetadataType>, List<MetadataType>> metadata = null;
 
 	/**
 	 * @return type of dataset item
@@ -133,6 +141,15 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	}
 
 	/**
+	 * This method allows anything that dirties the dataset to clear various metadata values
+	 * so that the other methods can work correctly.
+	 * @since 2.1
+	 */
+	public void setDirty() {
+		dirty = true;
+	}
+
+	/**
 	 * Find first sub-interface of (or class that directly implements) MetadataType
 	 * @param clazz
 	 * @return sub-interface
@@ -188,12 +205,12 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		addMetadata(metadata, false);
 	}
 
-	private void addMetadata(MetadataType metadata, boolean clear) {
+	private synchronized void addMetadata(MetadataType metadata, boolean clear) {
 		if (metadata == null)
 			return;
 
 		if (this.metadata == null) {
-			this.metadata = new HashMap<Class<? extends MetadataType>, List<MetadataType>>();
+			this.metadata = new ConcurrentHashMap<Class<? extends MetadataType>, List<MetadataType>>();
 		}
 
 		Class<? extends MetadataType> clazz = findMetadataTypeSubInterfaces(metadata.getClass());
@@ -218,15 +235,22 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 
 	@Override
 	@Deprecated
-	public IMetadata getMetadata() {
+	public synchronized IMetadata getMetadata() {
 		return getFirstMetadata(IMetadata.class);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <S extends MetadataType, T extends S> List<S> getMetadata(Class<T> clazz) throws MetadataException {
-		if (metadata == null)
+	public synchronized <S extends MetadataType, T extends S> List<S> getMetadata(Class<T> clazz) throws MetadataException {
+		if (metadata == null) {
+			dirty = false;
 			return null;
+		}
+
+		if (dirty) {
+			dirtyMetadata();
+			dirty = false;
+		}
 
 		if (clazz == null) {
 			List<S> all = new ArrayList<S>();
@@ -240,12 +264,16 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	}
 
 	@Override
-	public <S extends MetadataType, T extends S> S getFirstMetadata(Class<T> clazz) {
+	public synchronized <S extends MetadataType, T extends S> S getFirstMetadata(Class<T> clazz) {
 		try {
 			List<S> ml = getMetadata(clazz);
-			if (ml == null) return null;
+			if (ml == null) {
+				return null;
+			}
 			for (S t : ml) {
-				if (clazz.isInstance(t)) return t;
+				if (clazz.isInstance(t)) {
+					return t;
+				}
 			}
 		} catch (Exception e) {
 			logger.error("Get metadata failed!",e);
@@ -255,7 +283,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	}
 
 	@Override
-	public void clearMetadata(Class<? extends MetadataType> clazz) {
+	public synchronized void clearMetadata(Class<? extends MetadataType> clazz) {
 		if (metadata == null)
 			return;
 
@@ -270,15 +298,21 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		}
 	}
 
-	protected Map<Class<? extends MetadataType>, List<MetadataType>> copyMetadata() {
+	/**
+	 * @since 2.0
+	 */
+	protected synchronized ConcurrentMap<Class<? extends MetadataType>, List<MetadataType>> copyMetadata() {
 		return copyMetadata(metadata);
 	}
 
-	protected static Map<Class<? extends MetadataType>, List<MetadataType>> copyMetadata(Map<Class<? extends MetadataType>, List<MetadataType>> metadata) {
+	/**
+	 * @since 2.0
+	 */
+	protected static ConcurrentMap<Class<? extends MetadataType>, List<MetadataType>> copyMetadata(Map<Class<? extends MetadataType>, List<MetadataType>> metadata) {
 		if (metadata == null)
 			return null;
 
-		HashMap<Class<? extends MetadataType>, List<MetadataType>> map = new HashMap<Class<? extends MetadataType>, List<MetadataType>>();
+		ConcurrentHashMap<Class<? extends MetadataType>, List<MetadataType>> map = new ConcurrentHashMap<Class<? extends MetadataType>, List<MetadataType>>();
 
 		for (Class<? extends MetadataType> c : metadata.keySet()) {
 			List<MetadataType> l = metadata.get(c);
@@ -292,18 +326,39 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	}
 
 	interface MetadatasetAnnotationOperation {
+		/**
+		 * Process value of given field
+		 * <p>
+		 * When the field is not a container then the returned value
+		 * may replace the old value
+		 * @param f given field
+		 * @param o value of field
+		 * @return transformed field
+		 */
 		Object processField(Field f, Object o);
+
+		/**
+		 * @return annotated class
+		 */
 		Class<? extends Annotation> getAnnClass();
+
 		/**
 		 * @param axis
 		 * @return number of dimensions to insert or remove
 		 */
 		int change(int axis);
+
 		/**
 		 * 
 		 * @return rank or -1 to match
 		 */
 		int getNewRank();
+
+		/**
+		 * Run on given lazy dataset
+		 * @param lz
+		 * @return 
+		 */
 		ILazyDataset run(ILazyDataset lz);
 	}
 
@@ -347,8 +402,9 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		@Override
 		public ILazyDataset run(ILazyDataset lz) {
 			int rank = lz.getRank();
-			if (start.length != rank)
+			if (start.length != rank) {
 				throw new IllegalArgumentException("Slice dimensions do not match dataset!");
+			}
 
 			int[] shape = lz.getShape();
 			int[] stt;
@@ -406,8 +462,8 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 
 		@Override
 		public Object processField(Field field, Object o) {
-			Annotation a = field.getAnnotation(getAnnClass());
-			if (a instanceof Reshapeable) {
+			Annotation a = field.getAnnotation(Reshapeable.class);
+			if (a != null) { // cannot be null
 				matchRank = ((Reshapeable) a).matchRank();
 			}
 			return o;
@@ -416,7 +472,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		@Override
 		public Class<? extends Annotation> getAnnClass() {
 			return Reshapeable.class;
-		}	
+		}
 
 		@Override
 		public int change(int axis) {
@@ -598,7 +654,12 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 			}
 
 			ILazyDataset nlz = lz.getSliceView();
-			nlz.setShape(nshape);
+			if (lz instanceof Dataset) {
+				nlz = ((Dataset) lz).reshape(nshape);
+			} else {
+				nlz = lz.getSliceView();
+				nlz.setShape(nshape);
+			}
 			return nlz;
 		}
 	}
@@ -613,6 +674,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		@Override
 		public Object processField(Field f, Object o) {
+			// reorder arrays and lists according the axes map
 			if (o.getClass().isArray()) {
 				int l = Array.getLength(o);
 				if (l == map.length) {
@@ -662,6 +724,41 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		}
 	}
 
+	class MdsDirty implements MetadatasetAnnotationOperation {
+
+		@Override
+		public Object processField(Field f, Object o) {
+			// throw exception if not boolean???
+			Class<?> t = f.getType();
+			if (t.equals(boolean.class) || t.equals(Boolean.class)) {
+				if (o.equals(false)) {
+					o = true;
+				}
+			}
+			return o;
+		}
+
+		@Override
+		public Class<? extends Annotation> getAnnClass() {
+			return Dirtiable.class;
+		}
+
+		@Override
+		public int change(int axis) {
+			return 0;
+		}
+
+		@Override
+		public int getNewRank() {
+			return -1;
+		}
+
+		@Override
+		public ILazyDataset run(ILazyDataset lz) {
+			return lz;
+		}
+	}
+
 	/**
 	 * Slice all datasets in metadata that are annotated by @Sliceable. Call this on the new sliced
 	 * dataset after cloning the metadata
@@ -689,6 +786,14 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	 */
 	protected void transposeMetadata(final int[] axesMap) {
 		processAnnotatedMetadata(new MdsTranspose(axesMap), true);
+	}
+
+	/**
+	 * Dirty metadata that are annotated by @Dirtiable. Call this when the dataset has been modified
+	 * @since 2.0
+	 */
+	protected void dirtyMetadata() {
+		processAnnotatedMetadata(new MdsDirty(), true);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -725,7 +830,11 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 				if (o == null)
 					continue;
 
-				o = op.processField(f, o);
+				Object no = op.processField(f, o);
+				if (no != o) {
+					f.set(m, no);
+					continue;
+				}
 				Object r = null;
 				if (o instanceof ILazyDataset) {
 					try {
@@ -882,12 +991,12 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		} else {
 			final int is = getElementsPerItem();
 			if (is == 1) {
-				d = DatasetFactory.createFromObject(Dataset.FLOAT64, blob);
+				d = DatasetFactory.createFromObject(DoubleDataset.class, blob);
 			} else {
 				try {
-					d = DatasetFactory.createFromObject(is, Dataset.ARRAYFLOAT64, blob);
+					d = DatasetFactory.createFromObject(is, CompoundDoubleDataset.class, blob);
 				} catch (IllegalArgumentException e) { // if only single value supplied try again
-					d = DatasetFactory.createFromObject(Dataset.FLOAT64, blob);
+					d = DatasetFactory.createFromObject(DoubleDataset.class, blob);
 				}
 			}
 			if (d.getSize() == getSize() && !Arrays.equals(d.getShape(), shape)) {
@@ -947,7 +1056,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 
 	@Override
 	public boolean hasErrors() {
-		return getErrors() != null;
+		return LazyDatasetBase.this.getErrors() != null;
 	}
 
 	/**
@@ -957,8 +1066,8 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	 * @return cleaned up axes or null if trivial
 	 */
 	public static int[] checkPermutatedAxes(int[] shape, int... axes) {
-		int rank = shape.length;
-	
+		int rank = shape == null ? 0 : shape.length;
+
 		if (axes == null || axes.length == 0) {
 			axes = new int[rank];
 			for (int i = 0; i < rank; i++) {
@@ -972,11 +1081,8 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		}
 	
 		// check all permutation values are within bounds
-		for (int d : axes) {
-			if (d < 0 || d >= rank) {
-				logger.error("axis permutation contains element {} outside rank of dataset", d);
-				throw new IllegalArgumentException("axis permutation contains element outside rank of dataset");
-			}
+		for (int i = 0; i < rank; i++) {
+			axes[i] = ShapeUtils.checkAxis(rank, axes[i]);
 		}
 	
 		// check for a valid permutation (is this an unnecessary restriction?)
@@ -986,7 +1092,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		for (int i = 0; i < rank; i++) {
 			if (perm[i] != i) {
 				logger.error("axis permutation is not valid: it does not contain complete set of axes");
-				throw new IllegalArgumentException("axis permutation does not contain complete set of axes");	
+				throw new IllegalArgumentException("axis permutation does not contain complete set of axes");
 			}
 		}
 

@@ -42,58 +42,56 @@ public class AbstractCompoundDatasetTest {
 
 	@Test
 	public void testSlice() {
-		int isize, size, type;
+		int isize, size;
 		isize = 5;
 		size = 1024;
-		type = Dataset.ARRAYFLOAT64;
-		testSliceND(isize, size, type);
+		testSliceND(isize, size, CompoundDoubleDataset.class);
 
-		type = Dataset.COMPLEX128;
-		testSliceND(2, size, type);
+		testSliceND(2, size, ComplexDoubleDataset.class);
 
-		testSliceND(size, Dataset.FLOAT64);
-		testSliceND(size, Dataset.INT16);
+		testSliceND(size, DoubleDataset.class);
+		testSliceND(size, ShortDataset.class);
 	}
 
-	private void testSliceND(int isize, int size, int type) {
+	private void testSliceND(int isize, int size, Class<? extends CompoundDataset> clazz) {
 		// 1D
 		CompoundDataset ta;
-		ta = DatasetFactory.createRange(isize, 0, size, 1, type);
+		ta = DatasetFactory.createRange(isize, clazz, 0, size, 1);
 		testSlicedDataset(ta);
 
 		// 2D
-		ta = DatasetFactory.createRange(isize, 0, size, 1, type).reshape(16, size / 16);
+		ta = DatasetFactory.createRange(isize, clazz, 0, size, 1).reshape(16, size / 16);
 		System.out.println(" Shape: " + Arrays.toString(ta.getShape()));
 		testSlicedDataset(ta);
 
-		ta = DatasetFactory.createRange(isize, 0, size, 1, type).reshape(size / 32, 32);
+		ta = DatasetFactory.createRange(isize, clazz, 0, size, 1).reshape(size / 32, 32);
 		System.out.println(" Shape: " + Arrays.toString(ta.getShape()));
 		testSlicedDataset(ta);
 
 		// 3D
-		ta = DatasetFactory.createRange(isize, 0, size, 1, type).reshape(16, 8, size / (16 * 8));
+		ta = DatasetFactory.createRange(isize, clazz, 0, size, 1).reshape(16, 8, size / (16 * 8));
 		System.out.println(" Shape: " + Arrays.toString(ta.getShape()));
 		testSlicedDataset(ta);
 
-		ta = DatasetFactory.createRange(isize, 0, size, 1, type).reshape(size / (16 * 8), 16, 8);
+		ta = DatasetFactory.createRange(isize, clazz, 0, size, 1).reshape(size / (16 * 8), 16, 8);
 		System.out.println(" Shape: " + Arrays.toString(ta.getShape()));
 		testSlicedDataset(ta);
 	}
 
-	private void testSliceND(int size, int type) {
+	private void testSliceND(int size, Class<? extends Dataset> clazz) {
 		// 1D
 		CompoundDataset ta;
-		ta = DatasetUtils.createCompoundDatasetFromLastAxis(DatasetFactory.createRange(size, type).reshape(size/16, 16), true);
+		ta = DatasetUtils.createCompoundDatasetFromLastAxis(DatasetFactory.createRange(clazz, size).reshape(size/16, 16), true);
 		testSlicedDataset(ta);
 		testElementViews(ta);
 
 		// 2D
-		ta = DatasetUtils.createCompoundDatasetFromLastAxis(DatasetFactory.createRange(size, type).reshape(size/(16*8), 16, 8), true);
+		ta = DatasetUtils.createCompoundDatasetFromLastAxis(DatasetFactory.createRange(clazz, size).reshape(size/(16*8), 16, 8), true);
 		testSlicedDataset(ta);
 		testElementViews(ta);
 
 		// 3D
-		ta = DatasetUtils.createCompoundDatasetFromLastAxis(DatasetFactory.createRange(size, type).reshape(size/(16*8), 8, 8, 2), true);
+		ta = DatasetUtils.createCompoundDatasetFromLastAxis(DatasetFactory.createRange(clazz, size).reshape(size/(16*8), 8, 8, 2), true);
 		testSlicedDataset(ta);
 		testElementViews(ta);
 	}
@@ -470,7 +468,7 @@ public class AbstractCompoundDatasetTest {
 
 	@Test
 	public void testTake() {
-		Dataset a = DatasetFactory.createRange(12, Dataset.COMPLEX128);
+		Dataset a = DatasetFactory.createRange(ComplexDoubleDataset.class, 12);
 		Dataset t;
 		System.out.println(a);
 
@@ -508,7 +506,7 @@ public class AbstractCompoundDatasetTest {
 		// test 1D errors for single value
 		Dataset[] aa =  new Dataset[5];
 		for (int i = 0 ; i < 5; i++) {
-			aa[i] = DatasetFactory.createRange(100, Dataset.INT32);
+			aa[i] = DatasetFactory.createRange(IntegerDataset.class, 100);
 		}
 		CompoundDataset a = new CompoundIntegerDataset(aa);
 		
@@ -630,7 +628,7 @@ public class AbstractCompoundDatasetTest {
 	public void testInternalErrors() {
 		Dataset[] aa =  new Dataset[5];
 		for (int i = 0 ; i < 5; i++) {
-			aa[i] = DatasetFactory.createRange(100, Dataset.INT32);
+			aa[i] = DatasetFactory.createRange(IntegerDataset.class, 100);
 		}
 		CompoundDataset a = new CompoundIntegerDataset(aa);
 		
@@ -668,7 +666,7 @@ public class AbstractCompoundDatasetTest {
 	@Test
 	public void testSlicing() {
 		CompoundDataset a;
-		a = DatasetFactory.createRange(3, 12, Dataset.INT32).reshape(3, 4);
+		a = DatasetFactory.createRange(3, CompoundIntegerDataset.class, 12).reshape(3, 4);
 
 		a.setSlice(new short[] {-1, -2, -3},  new Slice(1, 3), new Slice(3,4));
 
@@ -691,7 +689,7 @@ public class AbstractCompoundDatasetTest {
 		assertEquals(3, b.getInt(1));
 
 
-		a = DatasetFactory.createRange(3, 4, Dataset.INT32).getBroadcastView(5, 4);
+		a = DatasetFactory.createRange(3, CompoundIntegerDataset.class, 4).getBroadcastView(5, 4);
 		b = a.getElements(0);
 		assertEquals(0, b.getInt(0, 0));
 		assertEquals(1, b.getInt(0, 1));
@@ -715,15 +713,15 @@ public class AbstractCompoundDatasetTest {
 
 	@Test
 	public void testBroadcastSliceView() {
-		Dataset a = DatasetFactory.createRange(3, 12, Dataset.INT32);
+		Dataset a = DatasetFactory.createRange(3, CompoundIntegerDataset.class, 12);
 		Dataset b = a.getSliceView(new Slice(5, 8)).getBroadcastView(2, 3);
 
-		Dataset r = DatasetFactory.createRange(3, 5, 8, 1, Dataset.INT32).reshape(1, 3);
+		Dataset r = DatasetFactory.createRange(3, CompoundIntegerDataset.class, 5, 8, 1).reshape(1, 3);
 		Dataset c = DatasetUtils.concatenate(new Dataset[] {r, r}, 0);
 		TestUtils.assertDatasetEquals(c, b);
 
 		b = a.getSliceView(new Slice(5, 6)).getBroadcastView(3, 3);
-		c = DatasetFactory.zeros(3, new int[] {3, 3}, Dataset.INT32).fill(new int[] {5, 0, 0});
+		c = DatasetFactory.zeros(3, CompoundIntegerDataset.class, 3, 3).fill(new int[] {5, 0, 0});
 		TestUtils.assertDatasetEquals(c, b);
 	}
 }

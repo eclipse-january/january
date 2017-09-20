@@ -23,6 +23,7 @@ Mark up source class with following comment markers:
 // PRIM_TYPE      - java primitive type
 // PRIM_TYPE_LONG - java primitive type (cast to long first if integer)
 // GET_ELEMENT    - use get element method
+// GET_ELEMENT_WITH_CAST - use get element method
 // FROM_OBJECT    - use convert from object method
 // REAL_ONLY      - keep line when a real dataset
 // OBJECT_UNEQUAL - use object inequality
@@ -39,7 +40,7 @@ Mark up source class with following comment markers:
 // ADD_CAST       - add a cast to primitive type
 // OMIT_SAME_CAST - omit a cast to same type
 // OMIT_REAL_CAST - omit a cast to real type
-// OMIT_CAST_INT  - omit a cast for int type
+// OMIT_TOLONG_INT - omit toLong call for int type
 // OMIT_UPCAST    - omit a cast to same type
 // IGNORE_CLASS   - ignored dataset class used in line
 // GEN_COMMENT    - replace this with a message about generated class
@@ -119,7 +120,7 @@ class transmutate(object):
             ("// INT_USE", self.intuse),
             ("// OMIT_SAME_CAST", self.omitcast),
             ("// OMIT_REAL_CAST", self.omitrealcast),
-            ("// OMIT_CAST_INT", self.omitcastint),
+            ("// OMIT_TOLONG_INT", self.omittolong),
             ("// OMIT_UPCAST", self.omitupcast),
             ("// DEFAULT_VAL", self.defval),
             ("// BCAST_WITH_CAST", self.broadcast),
@@ -128,6 +129,7 @@ class transmutate(object):
 
         self.icasts = [ "(byte) ", "(short) ", "(int) ", "(long) "]
         self.rcasts = [ "(float) ", "(double) "]
+        self.tolong = "DTypeUtils.toLong("
 
         # also // IGNORE_CLASS
 #        print "prim |", self.dprim, "| conv |", self.dconv, "| cast |", self.dcast
@@ -217,13 +219,11 @@ class transmutate(object):
     def omitcast(self, line):
         return line.replace(self.dcast, "")
 
-    def omitcastint(self, line):
+    def omittolong(self, line):
         if self.isreal or self.isbool:
             return line
-        for c in self.icasts:
-            if c in line:
-                return line.replace(c, "")
-        return line
+        l = line.replace(self.tolong, "")
+        return l.replace(");", ";")
 
     def omitrealcast(self, line):
 #        if self.isreal:

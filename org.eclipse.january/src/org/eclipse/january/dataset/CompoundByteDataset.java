@@ -95,7 +95,9 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 		copyToView(dataset, this, true, true);
 		try {
 			if (dataset.stride == null) {
-				odata = data = dataset.data.clone();
+				if (dataset.data != null) {
+					odata = data = dataset.data.clone();
+				}
 			} else {
 				offset = 0;
 				stride = null;
@@ -172,8 +174,9 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 			throw new IllegalArgumentException("Array of datasets must have length greater than zero");
 		}
 
-		for (int i = 1; i < datasets.length; i++)
+		for (int i = 1; i < datasets.length; i++) {
 			datasets[0].checkCompatibility(datasets[i]);
+		}
 
 		isize = datasets.length;
 		size = ShapeUtils.calcSize(datasets[0].getShapeRef());
@@ -187,8 +190,9 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 		}
 
 		IndexIterator[] iters = new IndexIterator[isize];
-		for (int i = 0; i < datasets.length; i++)
+		for (int i = 0; i < datasets.length; i++) {
 			iters[i] = datasets[i].getIterator();
+		}
 
 		for (int j = 0; iters[0].hasNext();) {
 			data[j++] = (byte) datasets[0].getElementLongAbs(iters[0].index); // GET_ELEMENT_WITH_CAST
@@ -227,15 +231,17 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 			int i = 0;
 			while (iter.hasNext()) {
 				final byte v = (byte) dataset.getElementLongAbs(iter.index); // PRIM_TYPE // GET_ELEMENT_WITH_CAST
-				for (int k = 0; k < isize; k++)
+				for (int k = 0; k < isize; k++) {
 					data[i++] = v;
+				}
 			}
 		} else {
 			final int kmax = Math.min(isize, os);
 			int i = 0;
 			while (iter.hasNext()) {
-				for (int k = 0; k < kmax; k++)
+				for (int k = 0; k < kmax; k++) {
 					data[i + k] = (byte) dataset.getElementLongAbs(iter.index + k); // GET_ELEMENT_WITH_CAST
+				}
 				i += isize;
 			}
 		}
@@ -383,15 +389,16 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 
 	@Override
 	public CompoundByteDataset fill(final Object obj) {
+		setDirty();
 		byte[] vr = DTypeUtils.toByteArray(obj, isize); // PRIM_TYPE // CLASS_TYPE
 		IndexIterator iter = getIterator();
 
 		while (iter.hasNext()) {
-			for (int i = 0; i < isize; i++)
+			for (int i = 0; i < isize; i++) {
 				data[iter.index + i] = vr[i]; // PRIM_TYPE
+			}
 		}
 
-		setDirty();
 		return this;
 	}
 
@@ -428,8 +435,9 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	 */
 	public byte[] getAbs(final int index) { // PRIM_TYPE
 		byte[] result = new byte[isize]; // PRIM_TYPE
-		for (int i = 0; i < isize; i++)
+		for (int i = 0; i < isize; i++) {
 			result[i] = data[index + i];
+		}
 		return result;
 	}
 
@@ -442,18 +450,14 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	 * @param values
 	 */
 	public void getAbs(final int index, final byte[] values) { // PRIM_TYPE
-		for (int i = 0; i < isize; i++)
+		for (int i = 0; i < isize; i++) {
 			values[i] = data[index + i];
+		}
 	}
 
 	@Override
 	public boolean getElementBooleanAbs(final int index) {
-		for (int i = 0; i < isize; i++) {
-			if (data[index + i] == 0) {
-				return false;
-			}
-		}
-		return true;
+		return data[index] != 0;
 	}
 
 	@Override
@@ -463,14 +467,16 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 
 	@Override
 	public long getElementLongAbs(final int index) {
-		return data[index]; // OMIT_CAST_INT
+		return data[index]; // OMIT_TOLONG_INT
 	}
 
 	@Override
 	protected void setItemDirect(final int dindex, final int sindex, final Object src) {
+		setDirty();
 		byte[] dsrc = (byte[]) src; // PRIM_TYPE
-		for (int i = 0; i < isize; i++)
+		for (int i = 0; i < isize; i++) {
 			data[dindex + i] = dsrc[sindex + i];
+		}
 	}
 
 	/**
@@ -483,9 +489,10 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	 *            new values
 	 */
 	public void setAbs(final int index, final byte[] val) { // PRIM_TYPE
-		for (int i = 0; i < isize; i++)
-			data[index + i] = val[i];
 		setDirty();
+		for (int i = 0; i < isize; i++) {
+			data[index + i] = val[i];
+		}
 	}
 
 	/**
@@ -498,8 +505,8 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	 *            new value
 	 */
 	public void setAbs(final int index, final byte val) { // PRIM_TYPE
-		data[index] = val;
 		setDirty();
+		data[index] = val;
 	}
 
 	@Override
@@ -526,8 +533,9 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	public byte[] getByteArray() {
 		byte[] result = new byte[isize];
 		int index = getFirst1DIndex();
-		for (int k = 0; k < isize; k++)
+		for (int k = 0; k < isize; k++) {
 			result[k] = data[index + k]; // OMIT_UPCAST
+		}
 		return result;
 	}
 
@@ -535,8 +543,9 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	public byte[] getByteArray(final int i) {
 		byte[] result = new byte[isize];
 		int index = get1DIndex(i);
-		for (int k = 0; k < isize; k++)
+		for (int k = 0; k < isize; k++) {
 			result[k] = data[index + k]; // OMIT_UPCAST
+		}
 		return result;
 	}
 
@@ -544,8 +553,9 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	public byte[] getByteArray(final int i, final int j) {
 		byte[] result = new byte[isize];
 		int index = get1DIndex(i, j);
-		for (int k = 0; k < isize; k++)
+		for (int k = 0; k < isize; k++) {
 			result[k] = data[index + k]; // OMIT_UPCAST
+		}
 		return result;
 	}
 
@@ -553,8 +563,9 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	public byte[] getByteArray(final int... pos) {
 		byte[] result = new byte[isize];
 		int index = get1DIndex(pos);
-		for (int k = 0; k < isize; k++)
+		for (int k = 0; k < isize; k++) {
 			result[k] = data[index + k]; // OMIT_UPCAST
+		}
 		return result;
 	}
 
@@ -562,8 +573,9 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	public short[] getShortArray() {
 		short[] result = new short[isize];
 		int index = getFirst1DIndex();
-		for (int k = 0; k < isize; k++)
+		for (int k = 0; k < isize; k++) {
 			result[k] = data[index + k]; // OMIT_UPCAST
+		}
 		return result;
 	}
 
@@ -571,8 +583,9 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	public short[] getShortArray(final int i) {
 		short[] result = new short[isize];
 		int index = get1DIndex(i);
-		for (int k = 0; k < isize; k++)
+		for (int k = 0; k < isize; k++) {
 			result[k] = data[index + k]; // OMIT_UPCAST
+		}
 		return result;
 	}
 
@@ -580,8 +593,9 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	public short[] getShortArray(final int i, final int j) {
 		short[] result = new short[isize];
 		int index = get1DIndex(i, j);
-		for (int k = 0; k < isize; k++)
+		for (int k = 0; k < isize; k++) {
 			result[k] = data[index + k]; // OMIT_UPCAST
+		}
 		return result;
 	}
 
@@ -589,8 +603,9 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	public short[] getShortArray(final int... pos) {
 		short[] result = new short[isize];
 		int index = get1DIndex(pos);
-		for (int k = 0; k < isize; k++)
+		for (int k = 0; k < isize; k++) {
 			result[k] = data[index + k]; // OMIT_UPCAST
+		}
 		return result;
 	}
 
@@ -598,8 +613,9 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	public int[] getIntArray() {
 		int[] result = new int[isize];
 		int index = getFirst1DIndex();
-		for (int k = 0; k < isize; k++)
+		for (int k = 0; k < isize; k++) {
 			result[k] = data[index + k]; // OMIT_UPCAST
+		}
 		return result;
 	}
 
@@ -607,8 +623,9 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	public int[] getIntArray(final int i) {
 		int[] result = new int[isize];
 		int index = get1DIndex(i);
-		for (int k = 0; k < isize; k++)
+		for (int k = 0; k < isize; k++) {
 			result[k] = data[index + k]; // OMIT_UPCAST
+		}
 		return result;
 	}
 
@@ -616,8 +633,9 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	public int[] getIntArray(final int i, final int j) {
 		int[] result = new int[isize];
 		int index = get1DIndex(i, j);
-		for (int k = 0; k < isize; k++)
+		for (int k = 0; k < isize; k++) {
 			result[k] = data[index + k]; // OMIT_UPCAST
+		}
 		return result;
 	}
 
@@ -625,8 +643,9 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	public int[] getIntArray(final int... pos) {
 		int[] result = new int[isize];
 		int index = get1DIndex(pos);
-		for (int k = 0; k < isize; k++)
+		for (int k = 0; k < isize; k++) {
 			result[k] = data[index + k]; // OMIT_UPCAST
+		}
 		return result;
 	}
 
@@ -634,8 +653,9 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	public long[] getLongArray() {
 		long[] result = new long[isize];
 		int index = getFirst1DIndex();
-		for (int k = 0; k < isize; k++)
+		for (int k = 0; k < isize; k++) {
 			result[k] = data[index + k]; // OMIT_UPCAST
+		}
 		return result;
 	}
 
@@ -643,8 +663,9 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	public long[] getLongArray(final int i) {
 		long[] result = new long[isize];
 		int index = get1DIndex(i);
-		for (int k = 0; k < isize; k++)
+		for (int k = 0; k < isize; k++) {
 			result[k] = data[index + k]; // OMIT_UPCAST
+		}
 		return result;
 	}
 
@@ -652,8 +673,9 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	public long[] getLongArray(final int i, final int j) {
 		long[] result = new long[isize];
 		int index = get1DIndex(i, j);
-		for (int k = 0; k < isize; k++)
+		for (int k = 0; k < isize; k++) {
 			result[k] = data[index + k]; // OMIT_UPCAST
+		}
 		return result;
 	}
 
@@ -661,8 +683,9 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	public long[] getLongArray(final int... pos) {
 		long[] result = new long[isize];
 		int index = get1DIndex(pos);
-		for (int k = 0; k < isize; k++)
+		for (int k = 0; k < isize; k++) {
 			result[k] = data[index + k]; // OMIT_UPCAST
+		}
 		return result;
 	}
 
@@ -670,8 +693,9 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	public float[] getFloatArray() {
 		float[] result = new float[isize];
 		int index = getFirst1DIndex();
-		for (int k = 0; k < isize; k++)
+		for (int k = 0; k < isize; k++) {
 			result[k] = data[index + k]; // OMIT_REAL_CAST
+		}
 		return result;
 	}
 
@@ -679,8 +703,9 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	public float[] getFloatArray(final int i) {
 		float[] result = new float[isize];
 		int index = get1DIndex(i);
-		for (int k = 0; k < isize; k++)
+		for (int k = 0; k < isize; k++) {
 			result[k] = data[index + k]; // OMIT_REAL_CAST
+		}
 		return result;
 	}
 
@@ -688,8 +713,9 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	public float[] getFloatArray(final int i, final int j) {
 		float[] result = new float[isize];
 		int index = get1DIndex(i, j);
-		for (int k = 0; k < isize; k++)
+		for (int k = 0; k < isize; k++) {
 			result[k] = data[index + k]; // OMIT_REAL_CAST
+		}
 		return result;
 	}
 
@@ -697,8 +723,9 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	public float[] getFloatArray(final int... pos) {
 		float[] result = new float[isize];
 		int index = get1DIndex(pos);
-		for (int k = 0; k < isize; k++)
+		for (int k = 0; k < isize; k++) {
 			result[k] = data[index + k]; // OMIT_REAL_CAST
+		}
 		return result;
 	}
 
@@ -706,8 +733,9 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	public double[] getDoubleArray() {
 		double[] result = new double[isize];
 		int index = getFirst1DIndex();
-		for (int k = 0; k < isize; k++)
+		for (int k = 0; k < isize; k++) {
 			result[k] = data[index + k]; // OMIT_REAL_CAST
+		}
 		return result;
 	}
 
@@ -715,8 +743,9 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	public double[] getDoubleArray(final int i) {
 		double[] result = new double[isize];
 		int index = get1DIndex(i);
-		for (int k = 0; k < isize; k++)
+		for (int k = 0; k < isize; k++) {
 			result[k] = data[index + k]; // OMIT_REAL_CAST
+		}
 		return result;
 	}
 
@@ -724,8 +753,9 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	public double[] getDoubleArray(final int i, final int j) {
 		double[] result = new double[isize];
 		int index = get1DIndex(i, j);
-		for (int k = 0; k < isize; k++)
+		for (int k = 0; k < isize; k++) {
 			result[k] = data[index + k]; // OMIT_REAL_CAST
+		}
 		return result;
 	}
 
@@ -733,15 +763,17 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	public double[] getDoubleArray(final int... pos) {
 		double[] result = new double[isize];
 		int index = get1DIndex(pos);
-		for (int k = 0; k < isize; k++)
+		for (int k = 0; k < isize; k++) {
 			result[k] = data[index + k]; // OMIT_REAL_CAST
+		}
 		return result;
 	}
 
 	@Override
 	public void getDoubleArrayAbs(final int index, final double[] darray) {
-		for (int i = 0; i < isize; i++)
+		for (int i = 0; i < isize; i++) {
 			darray[i] = data[index + i];
+		}
 	}
 
 	@Override
@@ -787,8 +819,9 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	@Override
 	public Object getObjectAbs(final int index) {
 		byte[] result = new byte[isize]; // PRIM_TYPE
-		for (int i = 0; i < isize; i++)
+		for (int i = 0; i < isize; i++) {
 			result[i] = data[index + i];
+		}
 		return result;
 	}
 
@@ -841,6 +874,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	 * Set values at first position. The dataset must not be null
 	 *
 	 * @param d
+	 * @since 2.0
 	 */
 	public void setItem(final byte[] d) { // PRIM_TYPE
 		if (d.length > isize) {
@@ -896,6 +930,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 
 	@Override
 	public void resize(int... newShape) {
+		setDirty();
 		IndexIterator iter = getIterator();
 		int nsize = ShapeUtils.calcSize(newShape);
 		byte[] ndata; // PRIM_TYPE
@@ -981,6 +1016,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 
 		final IndexIterator it = getIterator(element);
 		final byte[] elements = ((ByteDataset) destination).data; // CLASS_TYPE // PRIM_TYPE
+		destination.setDirty();
 
 		int n = 0;
 		while (it.hasNext()) {
@@ -991,6 +1027,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 
 	@Override
 	public void setElements(Dataset source, int element) {
+		setDirty();
 		if (element < 0)
 			element += isize;
 		if (element < 0 || element > isize) {
@@ -1008,23 +1045,25 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 			data[it.index] = elements[n];
 			n++;
 		}
-		setDirty();
 	}
 
 	@Override
 	public void fillDataset(Dataset result, IndexIterator iter) {
 		IndexIterator riter = result.getIterator();
+		result.setDirty();
 
 		byte[] rdata = ((CompoundByteDataset) result).data; // PRIM_TYPE
 
 		while (riter.hasNext() && iter.hasNext()) {
-			for (int i = 0; i < isize; i++)
+			for (int i = 0; i < isize; i++) {
 				rdata[riter.index + i] = data[iter.index + i];
+			}
 		}
 	}
 
 	@Override
 	public CompoundByteDataset setByBoolean(final Object o, Dataset selection) {
+		setDirty();
 		if (o instanceof Dataset) {
 			Dataset ds = (Dataset) o;
 			final int length = ((Number) selection.sum()).intValue();
@@ -1042,14 +1081,16 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 				}
 
 				while (biter.hasNext() && iter.hasNext()) {
-					for (int i = 0; i < isize; i++)
+					for (int i = 0; i < isize; i++) {
 						data[biter.index + i] = (byte) ds.getElementLongAbs(iter.index + i); // GET_ELEMENT_WITH_CAST
+					}
 				}
 			} else {
 				while (biter.hasNext() && iter.hasNext()) {
 					data[biter.index] = (byte) ds.getElementLongAbs(iter.index); // GET_ELEMENT_WITH_CAST
-					for (int i = 1; i < isize; i++)
+					for (int i = 1; i < isize; i++) {
 						data[biter.index + i] = 0;
+					}
 				}
 			}
 		} else {
@@ -1059,19 +1100,20 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 				final BooleanIterator biter = getBooleanIterator(selection);
 
 				while (biter.hasNext()) {
-					for (int i = 0; i < isize; i++)
+					for (int i = 0; i < isize; i++) {
 						data[biter.index + i] = vr[i];
+					}
 				}
 			} catch (IllegalArgumentException e) {
 				throw new IllegalArgumentException("Object for setting is not a dataset or number");
 			}
 		}
-		setDirty();
 		return this;
 	}
 
 	@Override
 	public CompoundByteDataset setBy1DIndex(final Object o, Dataset index) {
+		setDirty();
 		if (o instanceof Dataset) {
 			Dataset ds = (Dataset) o;
 			if (index.getSize() != ds.getSize()) {
@@ -1093,14 +1135,16 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 					setDoubleArrayAbs(iter.index, temp);
 				}
 				while (iter.hasNext() && oiter.hasNext()) {
-					for (int i = 0; i < isize; i++)
+					for (int i = 0; i < isize; i++) {
 						data[iter.index + i] = (byte) ds.getElementLongAbs(oiter.index + i); // GET_ELEMENT_WITH_CAST
+					}
 				}
 			} else {
 				while (iter.hasNext() && oiter.hasNext()) {
 					data[iter.index] = (byte) ds.getElementLongAbs(oiter.index); // GET_ELEMENT_WITH_CAST
-					for (int i = 1; i < isize; i++)
+					for (int i = 1; i < isize; i++) {
 						data[iter.index + i] = 0;
+					}
 				}
 			}
 		} else {
@@ -1116,12 +1160,12 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 				throw new IllegalArgumentException("Object for setting is not a dataset or number");
 			}
 		}
-		setDirty();
 		return this;
 	}
 
 	@Override
 	public CompoundByteDataset setByIndexes(final Object o, final Object... indexes) {
+		setDirty();
 		final IntegersIterator iter = new IntegersIterator(shape, indexes);
 		final int[] pos = iter.getPos();
 
@@ -1148,8 +1192,9 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 				while (iter.hasNext() && oiter.hasNext()) {
 					int n = get1DIndex(pos);
 					data[n] = (byte) ds.getElementLongAbs(oiter.index); // GET_ELEMENT_WITH_CAST
-					for (int i = 1; i < isize; i++)
+					for (int i = 1; i < isize; i++) {
 						data[n + i] = 0;
+					}
 				}
 			}
 		} else {
@@ -1163,12 +1208,12 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 				throw new IllegalArgumentException("Object for setting is not a dataset or number");
 			}
 		}
-		setDirty();
 		return this;
 	}
 
 	@Override
 	CompoundByteDataset setSlicedView(Dataset view, Dataset d) {
+		setDirty();
 		final BroadcastSelfIterator it = BroadcastSelfIterator.createIterator(view, d);
 
 		final int is = view.getElementsPerItem();
@@ -1200,6 +1245,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 
 	@Override
 	public CompoundByteDataset setSlice(final Object o, final IndexIterator siter) {
+		setDirty();
 		if (o instanceof IDataset) {
 			final IDataset ds = (IDataset) o;
 			final int[] oshape = ds.getShape();
@@ -1220,14 +1266,16 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 					}
 
 					while (siter.hasNext() && oiter.hasNext()) {
-						for (int i = 0; i < isize; i++)
+						for (int i = 0; i < isize; i++) {
 							data[siter.index + i] = (byte) ads.getElementLongAbs(oiter.index + i); // GET_ELEMENT_WITH_CAST
+						}
 					}
 				} else {
 					while (siter.hasNext() && oiter.hasNext()) {
 						data[siter.index] = (byte) ads.getElementLongAbs(oiter.index); // GET_ELEMENT_WITH_CAST
-						for (int i = 1; i < isize; i++)
+						for (int i = 1; i < isize; i++) {
 							data[siter.index + i] = 0;
+						}
 					}
 				}
 			} else {
@@ -1237,14 +1285,16 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 				if (ds.getElementsPerItem() == 1) {
 					while (siter.hasNext() && oiter.hasNext()) {
 						data[siter.index] = ds.getByte(pos); // PRIM_TYPE
-						for (int i = 1; i < isize; i++)
+						for (int i = 1; i < isize; i++) {
 							data[siter.index + i] = 0;
+						}
 					}
 				} else {
 					while (siter.hasNext() && oiter.hasNext()) {
 						final byte[] val = DTypeUtils.toByteArray(ds.getObject(pos), isize); // PRIM_TYPE // CLASS_TYPE
-						for (int i = 0; i < isize; i++)
+						for (int i = 0; i < isize; i++) {
 							data[siter.index + i] = val[i];
+						}
 					}
 				}
 			}
@@ -1253,14 +1303,14 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 				final byte[] vr = DTypeUtils.toByteArray(o, isize); // PRIM_TYPE // CLASS_TYPE
 
 				while (siter.hasNext()) {
-					for (int i = 0; i < isize; i++)
+					for (int i = 0; i < isize; i++) {
 						data[siter.index + i] = vr[i];
+					}
 				}
 			} catch (IllegalArgumentException e) {
 				throw new IllegalArgumentException("Object for setting slice is not a dataset or number");
 			}
 		}
-		setDirty();
 		return this;
 	}
 
@@ -1283,14 +1333,17 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 			throw new IllegalArgumentException("destination array is not large enough");
 		}
 
+		dest.setDirty();
 		while (siter.hasNext() && diter.hasNext()) {
-			for (int i = 0; i < isize; i++)
+			for (int i = 0; i < isize; i++) {
 				ddata[diter.index + i] = data[siter.index + i];
+			}
 		}
 	}
 
 	@Override
 	public void setItemsOnAxes(final int[] pos, final boolean[] axes, final Object src) {
+		setDirty();
 		byte[] sdata = (byte[]) src; // PRIM_TYPE
 
 		SliceIterator siter = getSliceIteratorFromAxes(pos, axes);
@@ -1300,11 +1353,10 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 		}
 
 		for (int i = 0; siter.hasNext(); i++) {
-			for (int j = 0; j < isize; j++)
+			for (int j = 0; j < isize; j++) {
 				data[siter.index + j] = sdata[isize * i + j];
+			}
 		}
-
-		setDirty();
 	}
 
 	@Override
@@ -1324,21 +1376,23 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 
 	@Override
 	public CompoundByteDataset iadd(final Object b) {
+		setDirty();
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 		boolean useLong = bds.getElementClass().equals(Long.class);
 		int is = bds.getElementsPerItem();
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
+			final int bOffset = bds.getOffset();
 			if (is == 1) {
 				if (useLong) {
-					final long lb = bds.getElementLongAbs(0);
+					final long lb = bds.getElementLongAbs(bOffset);
 					while (it.hasNext()) {
 						for (int i = 0; i < isize; i++) {
 							data[it.index + i] += lb;
 						}
 					}
 				} else {
-					final double db = bds.getElementDoubleAbs(0);
+					final double db = bds.getElementDoubleAbs(bOffset);
 					while (it.hasNext()) {
 						for (int i = 0; i < isize; i++) {
 							data[it.index + i] += db;
@@ -1403,27 +1457,28 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 				throw new IllegalArgumentException("Argument does not have same number of elements per item or is not a non-compound dataset");
 			}
 		}
-		setDirty();
 		return this;
 	}
 
 	@Override
 	public CompoundByteDataset isubtract(final Object b) {
+		setDirty();
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 		boolean useLong = bds.getElementClass().equals(Long.class);
 		int is = bds.getElementsPerItem();
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
+			final int bOffset = bds.getOffset();
 			if (is == 1) {
 				if (useLong) {
-					final long lb = bds.getElementLongAbs(0);
+					final long lb = bds.getElementLongAbs(bOffset);
 					while (it.hasNext()) {
 						for (int i = 0; i < isize; i++) {
 							data[it.index + i] -= lb;
 						}
 					}
 				} else {
-					final double db = bds.getElementDoubleAbs(0);
+					final double db = bds.getElementDoubleAbs(bOffset);
 					while (it.hasNext()) {
 						for (int i = 0; i < isize; i++) {
 							data[it.index + i] -= db;
@@ -1488,20 +1543,21 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 				throw new IllegalArgumentException("Argument does not have same number of elements per item or is not a non-compound dataset");
 			}
 		}
-		setDirty();
 		return this;
 	}
 
 	@Override
 	public CompoundByteDataset imultiply(final Object b) {
+		setDirty();
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 		boolean useLong = bds.getElementClass().equals(Long.class);
 		int is = bds.getElementsPerItem();
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
+			final int bOffset = bds.getOffset();
 			if (useLong) {
 				if (is == 1) {
-					final long lb = bds.getElementLongAbs(0);
+					final long lb = bds.getElementLongAbs(bOffset);
 					while (it.hasNext()) {
 						for (int i = 0; i < isize; i++) {
 							data[it.index + i] *= lb;
@@ -1518,7 +1574,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 				}
 			} else {
 				if (is == 1) {
-					final double db = bds.getElementDoubleAbs(0);
+					final double db = bds.getElementDoubleAbs(bOffset);
 					while (it.hasNext()) {
 						for (int i = 0; i < isize; i++) {
 							data[it.index + i] *= db;
@@ -1575,20 +1631,21 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 				}
 			}
 		}
-		setDirty();
 		return this;
 	}
 
 	@Override
 	public CompoundByteDataset idivide(final Object b) {
+		setDirty();
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 		boolean useLong = bds.getElementClass().equals(Long.class);
 		int is = bds.getElementsPerItem();
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
+			final int bOffset = bds.getOffset();
 			if (useLong) {
 				if (is == 1) {
-					final long lb = bds.getElementLongAbs(0);
+					final long lb = bds.getElementLongAbs(bOffset);
 					if (lb == 0) { // INT_USE
 						fill(0); // INT_USE
 					} else { // INT_USE
@@ -1614,7 +1671,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 				}
 			} else {
 				if (is == 1) {
-					final double db = bds.getElementDoubleAbs(0);
+					final double db = bds.getElementDoubleAbs(bOffset);
 					if (db == 0) { // INT_USE
 						fill(0); // INT_USE
 					} else { // INT_USE
@@ -1700,7 +1757,6 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 				}
 			}
 		}
-		setDirty();
 		return this;
 	}
 
@@ -1711,14 +1767,16 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 
 	@Override
 	public CompoundByteDataset iremainder(final Object b) {
+		setDirty();
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 		boolean useLong = bds.getElementClass().equals(Long.class);
 		int is = bds.getElementsPerItem();
 		if (bds.getSize() == 1) {
 			final IndexIterator it = getIterator();
+			final int bOffset = bds.getOffset();
 			if (useLong) {
 				if (is == 1) {
-					final long lb = bds.getElementLongAbs(0);
+					final long lb = bds.getElementLongAbs(bOffset);
 					if (lb == 0) { // INT_USE
 						fill(0); // INT_USE
 					} else { // INT_USE
@@ -1743,7 +1801,7 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 				}
 			} else {
 				if (is == 1) {
-					final double db = bds.getElementDoubleAbs(0);
+					final double db = bds.getElementDoubleAbs(bOffset);
 					if (db == 0) { // INT_USE
 						fill(0); // INT_USE
 					} else { // INT_USE
@@ -1804,8 +1862,9 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 							for (int i = 0; i < isize; i++) // INT_USE
 								data[it.aIndex + i] = 0; // INT_USE
 						} else { // INT_USE
-						for (int i = 0; i < isize; i++)
+						for (int i = 0; i < isize; i++) {
 							data[it.aIndex + i] %= db;
+						}
 						} // INT_USE
 					}
 				} else if (is == isize) {
@@ -1824,19 +1883,20 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 				}
 			}
 		}
-		setDirty();
 		return this;
 	}
 
 	@Override
 	public CompoundByteDataset ipower(final Object b) {
+		setDirty();
 		Dataset bds = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
 		final int is = bds.getElementsPerItem();
 		if (bds.getSize() == 1) {
-			final double vr = bds.getElementDoubleAbs(0);
+			final int bOffset = bds.getOffset();
+			final double vr = bds.getElementDoubleAbs(bOffset);
 			final IndexIterator it = getIterator();
 			if (bds.isComplex()) {
-				final double vi = bds.getElementDoubleAbs(1);
+				final double vi = bds.getElementDoubleAbs(bOffset + 1);
 				if (vi == 0) {
 					while (it.hasNext()) {
 						for (int i = 0; i < isize; i++) {
@@ -1925,7 +1985,6 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 				}
 			}
 		}
-		setDirty();
 		return this;
 	}
 

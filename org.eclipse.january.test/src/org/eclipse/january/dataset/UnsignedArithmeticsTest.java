@@ -17,7 +17,7 @@ import org.junit.Test;
  * Check out arithmetic with unsigned numbers
  * 
  */
-public class UnsignedArithmetics {
+public class UnsignedArithmeticsTest {
 	final static int MAX = 1 << Byte.SIZE;
 
 	@Test

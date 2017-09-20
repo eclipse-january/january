@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.eclipse.january.metadata.StatisticsMetadata;
 
 
 /**
@@ -111,7 +112,9 @@ public class BooleanDatasetBase extends AbstractDataset {
 
 		try {
 			if (dataset.stride == null) {
-				odata = data = dataset.data.clone();
+				if (dataset.data != null) {
+					odata = data = dataset.data.clone();
+				}
 			} else {
 				offset = 0;
 				stride = null;
@@ -220,13 +223,13 @@ public class BooleanDatasetBase extends AbstractDataset {
 
 	@Override
 	public BooleanDatasetBase fill(final Object obj) {
+		setDirty();
 		boolean dv = DTypeUtils.toBoolean(obj); // PRIM_TYPE // FROM_OBJECT
 		IndexIterator iter = getIterator();
 		while (iter.hasNext()) {
 			data[iter.index] = dv;
 		}
 
-		setDirty();
 		return this;
 	}
 
@@ -301,12 +304,13 @@ public class BooleanDatasetBase extends AbstractDataset {
 	 *            new value
 	 */
 	public void setAbs(final int index, final boolean val) { // PRIM_TYPE
-		data[index] = val;
 		setDirty();
+		data[index] = val;
 	}
 
 	@Override
 	protected void setItemDirect(final int dindex, final int sindex, final Object src) {
+		setDirty();
 		boolean[] dsrc = (boolean[]) src; // PRIM_TYPE
 		data[dindex] = dsrc[sindex];
 	}
@@ -322,6 +326,7 @@ public class BooleanDatasetBase extends AbstractDataset {
 
 	/**
 	 * @return item in first position
+	 * @since 2.0
 	 */
 	public boolean get() { // PRIM_TYPE
 		return data[getFirst1DIndex()];
@@ -536,6 +541,7 @@ public class BooleanDatasetBase extends AbstractDataset {
 	 * Sets the value at first point to the passed value. The dataset must not be null
 	 *
 	 * @param value
+	 * @since 2.0
 	 */
 	public void setItem(final boolean value) { // PRIM_TYPE
 		setAbs(getFirst1DIndex(), value);
@@ -596,9 +602,9 @@ public class BooleanDatasetBase extends AbstractDataset {
 		setItem(DTypeUtils.toBoolean(obj), pos); // FROM_OBJECT
 	}
 
-
 	@Override
 	public void resize(int... newShape) {
+		setDirty();
 		final IndexIterator iter = getIterator();
 		final int nsize = ShapeUtils.calcSize(newShape);
 		final boolean[] ndata; // PRIM_TYPE
@@ -657,15 +663,18 @@ public class BooleanDatasetBase extends AbstractDataset {
 	@Override
 	public void fillDataset(Dataset result, IndexIterator iter) {
 		IndexIterator riter = result.getIterator();
+		result.setDirty();
 
 		boolean[] rdata = ((BooleanDatasetBase) result).data; // PRIM_TYPE
 
-		while (riter.hasNext() && iter.hasNext())
+		while (riter.hasNext() && iter.hasNext()) {
 			rdata[riter.index] = data[iter.index];
+		}
 	}
 
 	@Override
 	public BooleanDatasetBase setByBoolean(final Object obj, Dataset selection) {
+		setDirty();
 		if (obj instanceof Dataset) {
 			final Dataset ds = (Dataset) obj;
 			final int length = ((Number) selection.sum()).intValue();
@@ -688,12 +697,12 @@ public class BooleanDatasetBase extends AbstractDataset {
 				data[biter.index] = dv;
 			}
 		}
-		setDirty();
 		return this;
 	}
 
 	@Override
 	public BooleanDatasetBase setBy1DIndex(final Object obj, final Dataset index) {
+		setDirty();
 		if (obj instanceof Dataset) {
 			final Dataset ds = (Dataset) obj;
 			if (index.getSize() != ds.getSize()) {
@@ -715,12 +724,12 @@ public class BooleanDatasetBase extends AbstractDataset {
 				data[iter.index] = dv;
 			}
 		}
-		setDirty();
 		return this;
 	}
 
 	@Override
 	public BooleanDatasetBase setByIndexes(final Object obj, final Object... indexes) {
+		setDirty();
 		final IntegersIterator iter = new IntegersIterator(shape, indexes);
 		final int[] pos = iter.getPos();
 
@@ -743,12 +752,12 @@ public class BooleanDatasetBase extends AbstractDataset {
 				setItem(dv, pos);
 			}
 		}
-		setDirty();
 		return this;
 	}
 
 	@Override
 	BooleanDatasetBase setSlicedView(Dataset view, Dataset d) {
+		setDirty();
 		final BroadcastSelfIterator it = BroadcastSelfIterator.createIterator(view, d);
 
 		while (it.hasNext()) {
@@ -759,6 +768,7 @@ public class BooleanDatasetBase extends AbstractDataset {
 
 	@Override
 	public BooleanDatasetBase setSlice(final Object obj, final IndexIterator siter) {
+		setDirty();
 
 		if (obj instanceof IDataset) {
 			final IDataset ds = (IDataset) obj;
@@ -793,7 +803,6 @@ public class BooleanDatasetBase extends AbstractDataset {
 				throw new IllegalArgumentException("Object for setting slice is not a dataset or number");
 			}
 		}
-		setDirty();
 		return this;
 	}
 
@@ -810,12 +819,15 @@ public class BooleanDatasetBase extends AbstractDataset {
 			throw new IllegalArgumentException("destination array is not large enough");
 		}
 
-		while (siter.hasNext() && diter.hasNext())
+		dest.setDirty();
+		while (siter.hasNext() && diter.hasNext()) {
 			ddata[diter.index] = data[siter.index];
+		}
 	}
 
 	@Override
 	public void setItemsOnAxes(final int[] pos, final boolean[] axes, final Object src) {
+		setDirty();
 		boolean[] sdata = (boolean[]) src; // PRIM_TYPE
 
 		SliceIterator siter = getSliceIteratorFromAxes(pos, axes);
@@ -827,13 +839,6 @@ public class BooleanDatasetBase extends AbstractDataset {
 		for (int i = 0; siter.hasNext(); i++) {
 			data[siter.index] = sdata[i];
 		}
-		setDirty();
-	}
-
-	@Override
-	protected Number fromDoubleToNumber(double x) {
-		return Integer.valueOf((int) (long) x); // BOOLEAN_USE
-		// return null; // OBJECT_USE
 	}
 
 	private List<int[]> findPositions(final boolean value) { // PRIM_TYPE
@@ -851,46 +856,33 @@ public class BooleanDatasetBase extends AbstractDataset {
 		return posns;
 	}
 
-	@SuppressWarnings({ "unchecked" })
 	@Override
-	public int[] maxPos(boolean ignoreInvalids) {
-		if (storedValues == null || storedValues.isEmpty()) {
-			calculateMaxMin(ignoreInvalids, ignoreInvalids);
-		}
-		String n = storeName(ignoreInvalids, ignoreInvalids, STORE_MAX_POS);
-		Object o = storedValues.get(n);
+	public int[] maxPos(boolean... ignoreInvalids) {
+		StatisticsMetadata<Number> md = getStats(); // BOOLEAN_USE
+		// StatisticsMetadata<String> md = getStringStats(); // OBJECT_USE
+		List<int[]> max = md.getMaximumPositions(ignoreInvalids);
 
-		List<int[]> max = null;
-		if (o == null) {
-			max = findPositions(max(false).intValue() != 0); // BOOLEAN_USE
-			// max = findPositions(null); // OBJECT_USE
-			storedValues.put(n, max);
-		} else if (o instanceof List<?>) {
-			max = (List<int[]>) o;
-		} else {
-			throw new InternalError("Inconsistent internal state of stored values for statistics calculation");
+		if (max == null) {
+			max = findPositions(md.getMaximum(ignoreInvalids).intValue() != 0); // BOOLEAN_USE
+			// max = findPositions(md.getMaximum(ignoreInvalids).toString()); // OBJECT_USE
+
+			md.setMaximumPositions(max);
 		}
 
 		return max.get(0); // first maximum
 	}
 
-	@SuppressWarnings({ "unchecked" })
 	@Override
-	public int[] minPos(boolean ignoreInvalids) {
-		if (storedValues == null || storedValues.isEmpty()) {
-			calculateMaxMin(ignoreInvalids, ignoreInvalids);
-		}
-		String n = storeName(ignoreInvalids, ignoreInvalids, STORE_MIN_POS);
-		Object o = storedValues.get(n);
-		List<int[]> min = null;
-		if (o == null) {
-			min = findPositions(min(false).intValue() != 0); // BOOLEAN_USE
-			// min = findPositions(null); // OBJECT_USE
-			storedValues.put(n, min);
-		} else if (o instanceof List<?>) {
-			min = (List<int[]>) o;
-		} else {
-			throw new InternalError("Inconsistent internal state of stored values for statistics calculation");
+	public int[] minPos(boolean... ignoreInvalids) {
+		StatisticsMetadata<Number> md = getStats(); // BOOLEAN_USE
+		// StatisticsMetadata<String> md = getStringStats(); // OBJECT_USE
+		List<int[]> min = md.getMinimumPositions(ignoreInvalids);
+
+		if (min == null) {
+			min = findPositions(md.getMinimum(ignoreInvalids).intValue() != 0); // BOOLEAN_USE
+			// min = findPositions(md.getMinimum(ignoreInvalids).toString()); // OBJECT_USE
+
+			md.setMinimumPositions(min);
 		}
 
 		return min.get(0); // first minimum

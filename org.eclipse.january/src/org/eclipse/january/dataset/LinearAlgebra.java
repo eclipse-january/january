@@ -49,20 +49,12 @@ public class LinearAlgebra {
 		final int[] bshape = b.getShapeRef();
 		final int arank = ashape.length;
 		final int brank = bshape.length;
-		int aaxis = axisa;
-		if (aaxis < 0)
-			aaxis += arank;
-		if (aaxis < 0 || aaxis >= arank)
-			throw new IllegalArgumentException("Summing axis outside valid rank of 1st dataset");
+		int aaxis = ShapeUtils.checkAxis(arank, axisa);
 
 		if (ashape[aaxis] < CROSSOVERPOINT) { // faster to use position iteration
 			return tensorDotProduct(a, b, new int[] {axisa}, new int[] {axisb});
 		}
-		int baxis = axisb;
-		if (baxis < 0)
-			baxis += arank;
-		if (baxis < 0 || baxis >= arank)
-			throw new IllegalArgumentException("Summing axis outside valid rank of 2nd dataset");
+		int baxis = ShapeUtils.checkAxis(brank, axisb);
 
 		final boolean[] achoice = new boolean[arank];
 		final boolean[] bchoice = new boolean[brank];
@@ -88,6 +80,7 @@ public class LinearAlgebra {
 				dshape[d++] = bshape[i];
 		}
 		int dtype = DTypeUtils.getBestDType(a.getDType(), b.getDType());
+		@SuppressWarnings("deprecation")
 		Dataset data = DatasetFactory.zeros(dshape, dtype);
 
 		SliceIterator ita = a.getSliceIteratorFromAxes(null, achoice);
@@ -134,22 +127,13 @@ public class LinearAlgebra {
 		final int[] aaxes = new int[axisa.length];
 		final int[] baxes = new int[axisa.length];
 		for (int i = 0; i < axisa.length; i++) {
-			int n;
-
-			n = axisa[i];
-			if (n < 0) n += arank;
-			if (n < 0 || n >= arank)
-				throw new IllegalArgumentException("Summing axis outside valid rank of 1st dataset");
-			aaxes[i] = n;
-
-			n = axisb[i];
-			if (n < 0) n += brank;
-			if (n < 0 || n >= brank)
-				throw new IllegalArgumentException("Summing axis outside valid rank of 2nd dataset");
+			aaxes[i] = ShapeUtils.checkAxis(arank, axisa[i]);
+			int n = ShapeUtils.checkAxis(brank, axisb[i]);
 			baxes[i] = n;
 
-			if (ashape[aaxes[i]] != bshape[n])
+			if (ashape[aaxes[i]] != bshape[n]) {
 				throw new IllegalArgumentException("Summing axes do not have matching lengths");
+			}
 		}
 
 		final boolean[] achoice = new boolean[arank];
@@ -173,6 +157,7 @@ public class LinearAlgebra {
 				dshape[d++] = bshape[i];
 		}
 		int dtype = DTypeUtils.getBestDType(a.getDType(), b.getDType());
+		@SuppressWarnings("deprecation")
 		Dataset data = DatasetFactory.zeros(dshape, dtype);
 
 		SliceIterator ita = a.getSliceIteratorFromAxes(null, achoice);
@@ -249,6 +234,7 @@ public class LinearAlgebra {
 		if (isa != 1 || isb != 1) {
 			throw new UnsupportedOperationException("Compound datasets not supported");
 		}
+		@SuppressWarnings("deprecation")
 		Dataset o = DatasetFactory.zeros(shape, DTypeUtils.getBestDType(a.getDType(), b.getDType()));
 
 		IndexIterator ita = a.getIterator();
@@ -292,18 +278,8 @@ public class LinearAlgebra {
 		if (rankA == 0 || rankB == 0) {
 			throw new IllegalArgumentException("Datasets must have one or more dimensions");
 		}
-		if (axisA < 0) {
-			axisA += rankA;
-		}
-		if (axisA < 0 || axisA >= rankA) {
-			throw new IllegalArgumentException("Axis A argument exceeds rank");
-		}
-		if (axisB < 0) {
-			axisB += rankB;
-		}
-		if (axisB < 0 || axisB >= rankB) {
-			throw new IllegalArgumentException("Axis B argument exceeds rank");
-		}
+		axisA = a.checkAxis(axisA);
+		axisB = b.checkAxis(axisB);
 
 		final int[] shapeA = a.getShape();
 		final int[] shapeB = b.getShape();
@@ -367,28 +343,6 @@ public class LinearAlgebra {
 		return s;
 	}
 
-	// assume axes is in increasing order
-	private static int[] addAxesToShape(int[] shape, int[] axes, int[] lengths) {
-		int n = axes.length;
-		if (lengths.length != n) {
-			throw new IllegalArgumentException("Axes and lengths arrays must be same size");
-		}
-		int[] s = new int[shape.length + n];
-		int i = 0;
-		int j = 0;
-		for (int k = 0; k < n; k++) {
-			int a = axes[k];
-			while (i < a) {
-				s[j++] = shape[i++];
-			}
-			s[j++] = lengths[k];
-		}
-		while (i < shape.length) {
-			s[j++] = shape[i++];
-		}
-		return s;
-	}
-
 	private static Dataset crossProduct2D(Dataset a, Dataset b, int axisA, int axisB) {
 		// need to broadcast and omit given axes
 		int[] shapeA = removeAxisFromShape(a.getShapeRef(), axisA);
@@ -397,6 +351,7 @@ public class LinearAlgebra {
 		List<int[]> fullShapes = BroadcastUtils.broadcastShapes(shapeA, shapeB);
 
 		int[] maxShape = fullShapes.get(0);
+		@SuppressWarnings("deprecation")
 		Dataset c = DatasetFactory.zeros(maxShape, DTypeUtils.getBestDType(a.getDType(), b.getDType()));
 
 		PositionIterator ita = a.getPositionIterator(axisA);
@@ -430,13 +385,9 @@ public class LinearAlgebra {
 
 		int[] maxShape = fullShapes.get(0);
 		int rankC = maxShape.length + 1;
-		if (axisC < 0) {
-			axisC += rankC;
-		}
-		if (axisC < 0 || axisC >= rankC) {
-			throw new IllegalArgumentException("Axis C argument exceeds rank");
-		}
+		axisC = ShapeUtils.checkAxis(rankC, axisC);
 		maxShape = addAxisToShape(maxShape, axisC, 3);
+		@SuppressWarnings("deprecation")
 		Dataset c = DatasetFactory.zeros(maxShape, DTypeUtils.getBestDType(a.getDType(), b.getDType()));
 
 		PositionIterator ita = a.getPositionIterator(axisA);
@@ -612,6 +563,7 @@ public class LinearAlgebra {
 		for (int i = 0; i < r; i++) {
 			nShape[i] = aShape[i] * bShape[i];
 		}
+		@SuppressWarnings("deprecation")
 		Dataset kron = DatasetFactory.zeros(nShape, DTypeUtils.getBestDType(a.getDType(), b.getDType()));
 		IndexIterator ita = a.getIterator(true);
 		IndexIterator itb = b.getIterator(true);
@@ -682,6 +634,7 @@ public class LinearAlgebra {
 		int[] axes = new int[] { a.checkAxis(axis1), a.checkAxis(axis2) };
 		Arrays.sort(axes);
 		int is = a.getElementsPerItem();
+		@SuppressWarnings("deprecation")
 		Dataset trace = DatasetFactory.zeros(is, removeAxesFromShape(shape, axes), a.getDType());
 
 		int am = axes[0];

@@ -8,7 +8,8 @@ Developer resources:
 
 Information regarding source code management, builds, coding standards, and more.
 
-- https://projects.eclipse.org/projects/technology.january/developer
+- On the Wiki: https://github.com/eclipse/january/wiki
+- On the Eclipse Project Portal: https://projects.eclipse.org/projects/technology.january/developer
 
 Contributor License Agreement:
 ------------------------------

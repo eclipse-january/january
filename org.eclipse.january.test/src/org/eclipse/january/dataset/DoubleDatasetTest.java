@@ -13,6 +13,8 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import org.apache.commons.math3.complex.Complex;
+import org.eclipse.january.asserts.TestUtils;
 import org.eclipse.january.dataset.Dataset;
 import org.eclipse.january.dataset.DatasetFactory;
 import org.eclipse.january.dataset.DoubleDataset;
@@ -50,6 +52,34 @@ public class DoubleDatasetTest {
 		a.hashCode();
 		b.hashCode();
 		c.hashCode();
+	}
+
+	@Test
+	public void testClone() {
+		DoubleDataset z = new DoubleDataset();
+		TestUtils.assertDatasetEquals(z, z.clone());
+
+		double[] da = null;
+		try {
+			z = new DoubleDataset(da);
+			fail("Should have thrown an IAE");
+		} catch (IllegalArgumentException e) {
+		}
+
+		da = new double[0];
+		z = new DoubleDataset(da);
+		TestUtils.assertDatasetEquals(z, z.clone());
+
+		z = new DoubleDataset(0);
+		TestUtils.assertDatasetEquals(z, z.clone());
+
+		z = new DoubleDataset(0, 1);
+		TestUtils.assertDatasetEquals(z, z.clone());
+
+		da = new double[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
+		DoubleDataset a = new DoubleDataset(da);
+
+		TestUtils.assertDatasetEquals(a, a.clone());
 	}
 
 	@Test
@@ -94,6 +124,9 @@ public class DoubleDatasetTest {
 		} catch (UnsupportedOperationException e) {
 		}
 
+		sc = a.getSlice(new Slice(7, 2));
+		TestUtils.assertDatasetEquals(new DoubleDataset(0), sc);
+
 		Dataset b = a.reshape(4, 3);
 		try {
 			b.getDouble(new int[1]);
@@ -106,6 +139,12 @@ public class DoubleDatasetTest {
 			fail("Should have thrown a UOE");
 		} catch (UnsupportedOperationException e) {
 		}
+
+		sc = b.getSlice(new Slice(7, 2));
+		TestUtils.assertDatasetEquals(new DoubleDataset(0, 3), sc);
+
+		sc = b.getSlice(new Slice(2, 5, -1));
+		TestUtils.assertDatasetEquals(new DoubleDataset(0, 3), sc);
 	}
 
 	@Test
@@ -167,13 +206,31 @@ public class DoubleDatasetTest {
 	}
 
 	@Test
+	public void testRange() {
+		DoubleDataset a = DoubleDataset.createRange(2, 12.4, 4.3);
+		DoubleDataset e = new DoubleDataset(new double[] {2, 6.3, 10.6});
+		TestUtils.assertDatasetEquals(e, a);
+
+		a = DoubleDataset.createRange(12.4, 2, -4.3);
+		e = new DoubleDataset(new double[] {12.4, 8.1, 3.8});
+		TestUtils.assertDatasetEquals(e, a);
+
+		a = DoubleDataset.createRange(2, 12.4, -4.3);
+		e = new DoubleDataset(0);
+		TestUtils.assertDatasetEquals(e, a);
+
+		a = DoubleDataset.createRange(12.4, 2, 4.3);
+		TestUtils.assertDatasetEquals(e, a);
+	}
+
+	@Test
 	public void testStats() {
-		Dataset a = DatasetFactory.createRange(12, Dataset.FLOAT64);
+		Dataset a = DatasetFactory.createRange(12);
 		assertEquals(11., a.max().doubleValue(), 1e-6);
 		assertEquals(0., a.min().doubleValue(), 1e-6);
 		assertEquals(5.5, ((Number) a.mean()).doubleValue(), 1e-6);
-		assertEquals(3.6055512754639891, a.stdDeviation().doubleValue(), 1e-6);
-		assertEquals(13., a.variance().doubleValue(), 1e-6);
+		assertEquals(3.6055512754639891, a.stdDeviation(), 1e-6);
+		assertEquals(13., a.variance(), 1e-6);
 
 		a.setShape(3, 1, 4);
 		Dataset b = a.sum(0);
@@ -183,10 +240,12 @@ public class DoubleDatasetTest {
 		assertEquals(15., b.getDouble(0, 1), 1e-6);
 		assertEquals(18., b.getDouble(0, 2), 1e-6);
 		assertEquals(21., b.getDouble(0, 3), 1e-6);
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new double[] {16, 16, 16, 16}, 1, 4), a.variance(0));
 
 		b = a.sum(1);
 		assertEquals(2, b.getRank());
 		assertArrayEquals(new int[] { 3, 4 }, b.getShape());
+		TestUtils.assertDatasetEquals(DatasetFactory.zeros(new int[] {3, 4}), a.variance(1));
 		assertEquals(a.squeeze(), b);
 
 		a.setShape(3, 1, 4);
@@ -196,6 +255,16 @@ public class DoubleDatasetTest {
 		assertEquals(6., b.getDouble(0, 0), 1e-6);
 		assertEquals(22., b.getDouble(1, 0), 1e-6);
 		assertEquals(38., b.getDouble(2, 0), 1e-6);
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new double[] {1.666666666667, 1.666666666667, 1.666666666667}, 3, 1), a.variance(2));
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new double[] {1.25, 1.25, 1.25}, 3, 1), a.variance(2, true));
+
+		a.setShape(12);
+		a.set(-1, 0);
+		assertEquals(-1, a.min().doubleValue(), 1e-6);
+		assertEquals(11, a.max().doubleValue(), 1e-6);
+		assertEquals(5.41666667, ((Number) a.mean()).doubleValue(), 1e-6);
+		assertEquals(3.75277675, a.stdDeviation(), 1e-6);
+		assertEquals(14.0833333, a.variance(), 1e-6);
 	}
 
 	@Test
@@ -218,17 +287,17 @@ public class DoubleDatasetTest {
 		assertEquals(6, a.maxPos()[0]);
 		assertEquals(0, a.minPos()[0]);
 
-		Dataset b = DatasetFactory.zeros(new int[] { 100, 200 }, Dataset.FLOAT64);
+		Dataset b = DatasetFactory.zeros(100, 200);
 
-		b.set(100.00, new int[] { 50, 100 });
-		b.set(-100.00, new int[] { 51, 101 });
+		b.set(100.00, 50, 100);
+		b.set(-100.00, 51, 101);
 
 		assertEquals(50, b.maxPos()[0]);
 		assertEquals(100, b.maxPos()[1]);
 		assertEquals(51, b.minPos()[0]);
 		assertEquals(101, b.minPos()[1]);
 
-		b.set(Double.NaN, new int[] { 52, 53 });
+		b.set(Double.NaN, 52, 53);
 
 		assertEquals(52, b.maxPos()[0]);
 		assertEquals(53, b.maxPos()[1]);
@@ -236,14 +305,201 @@ public class DoubleDatasetTest {
 		assertEquals(50, b.maxPos(true)[0]);
 		assertEquals(100, b.maxPos(true)[1]);
 
-		Dataset c = DatasetFactory.zeros(new int[] { 100, 200 }, Dataset.FLOAT64);
-		c.set(100.00, new int[] { 99, 50 });
-		c.set(99.99, new int[] { 50, 50 });
+		Dataset c = DatasetFactory.zeros(100, 200);
+		c.set(100.00, 99, 50);
+		c.set(99.99, 50, 50);
 		assertEquals(99, c.maxPos()[0]);
 		assertEquals(50, c.maxPos()[1]);
 
-		c.set(101, new int[] { 0, 0 });
+		c.set(101, 0, 0);
 		assertEquals(0, c.maxPos()[0]);
 		assertEquals(0, c.maxPos()[1]);
+	}
+
+	@Test
+	public void testInplaceMethods() {
+		Dataset a = DatasetFactory.createRange(6);
+		Dataset b = DatasetFactory.createRange(6);
+		Dataset bl = DatasetFactory.createRange(LongDataset.class, 6);
+		Dataset c, t;
+
+		// add
+		c = a.clone();
+		TestUtils.assertDatasetEquals(a, c.iadd(b.getSliceView(new Slice(1))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(a, c.iadd(bl.getSliceView(new Slice(1))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.add(a, 3), c.iadd(b.getSliceView(new Slice(3, 4))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.add(a, 3l), c.iadd(bl.getSliceView(new Slice(3, 4))));
+
+		c = a.clone();
+		c.iadd(b);
+		TestUtils.assertDatasetEquals(Maths.add(a, b), c);
+		TestUtils.assertDatasetEquals(Maths.multiply(a, 2), c);
+
+		c = a.clone();
+		c.iadd(bl);
+		TestUtils.assertDatasetEquals(Maths.add(a, bl), c);
+		TestUtils.assertDatasetEquals(Maths.multiply(a, 2l), c);
+
+		// subtract
+		c = a.clone();
+		TestUtils.assertDatasetEquals(a, c.isubtract(b.getSliceView(new Slice(1))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(a, c.isubtract(bl.getSliceView(new Slice(1))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.subtract(a, 3), c.isubtract(b.getSliceView(new Slice(3, 4))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.subtract(a, 3l), c.isubtract(bl.getSliceView(new Slice(3, 4))));
+
+		c = a.clone();
+		c.isubtract(b);
+		TestUtils.assertDatasetEquals(DatasetFactory.zeros(a), c);
+		TestUtils.assertDatasetEquals(Maths.multiply(a, 0), c);
+
+		c = a.clone();
+		c.isubtract(bl);
+		TestUtils.assertDatasetEquals(DatasetFactory.zeros(a), c);
+		TestUtils.assertDatasetEquals(Maths.multiply(a, 0), c);
+
+		// multiply
+		c = a.clone();
+		TestUtils.assertDatasetEquals(a, c.imultiply(b.getSliceView(new Slice(1, 2))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(a, c.imultiply(bl.getSliceView(new Slice(1, 2))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.multiply(a, 3), c.imultiply(b.getSliceView(new Slice(3, 4))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.multiply(a, 3l), c.imultiply(bl.getSliceView(new Slice(3, 4))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.multiply(a, b), c.imultiply(b));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.multiply(a, bl), c.imultiply(bl));
+
+		c = a.clone();
+		c.imultiply(b);
+		TestUtils.assertDatasetEquals(Maths.power(a, 2), c);
+		TestUtils.assertDatasetEquals(Maths.square(a), c);
+
+		c = a.clone();
+		c.imultiply(bl);
+		TestUtils.assertDatasetEquals(Maths.power(a, 2l), c);
+		TestUtils.assertDatasetEquals(Maths.square(a), c);
+
+		// divide
+		c = a.clone();
+		TestUtils.assertDatasetEquals(a, c.idivide(b.getSliceView(new Slice(1, 2))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(a, c.idivide(bl.getSliceView(new Slice(1, 2))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.divide(a, 3), c.idivide(b.getSliceView(new Slice(3, 4))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.divide(a, 3l), c.idivide(bl.getSliceView(new Slice(3, 4))));
+
+		c = a.clone();
+		t = DatasetFactory.ones(a);
+		t.set(Double.NaN, 0);
+		TestUtils.assertDatasetEquals(t, c.idivide(b));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(t, c.idivide(bl));
+
+		// remainder
+		c = a.clone();
+		TestUtils.assertDatasetEquals(DatasetFactory.zeros(a), c.iremainder(b.getSliceView(new Slice(1, 2))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(DatasetFactory.zeros(a), c.iremainder(bl.getSliceView(new Slice(1, 2))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.remainder(a, 3), c.iremainder(b.getSliceView(new Slice(3, 4))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.remainder(a, 3l), c.iremainder(bl.getSliceView(new Slice(3, 4))));
+
+		c = a.clone();
+		t = DatasetFactory.zeros(a);
+		t.set(Double.NaN, 0);
+		TestUtils.assertDatasetEquals(t, c.iremainder(b));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(t, c.iremainder(bl));
+
+		// power
+		c = a.clone();
+		TestUtils.assertDatasetEquals(a, c.ipower(b.getSliceView(new Slice(1, 2))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(a, c.ipower(bl.getSliceView(new Slice(1, 2))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.power(a, 3), c.ipower(b.getSliceView(new Slice(3, 4))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.power(a, 3), c.ipower(bl.getSliceView(new Slice(3, 4))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.power(a, b), c.ipower(b));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.power(a, bl), c.ipower(bl));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(a, c.ipower(bl.getSliceView(new Slice(1, 2))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.power(a, 3), c.ipower(b.getSliceView(new Slice(3, 4))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.power(a, 3), c.ipower(bl.getSliceView(new Slice(3, 4))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.power(a, b), c.ipower(b));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.power(a, bl), c.ipower(bl));
+		
+		ComplexDoubleDataset z;
+		z = DatasetFactory.createComplexDataset(ComplexDoubleDataset.class, a, DatasetFactory.zeros(a));
+		c = a.clone();
+		TestUtils.assertDatasetEquals(a, c.ipower(z.getSliceView(new Slice(1, 2))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.power(a, 3), c.ipower(z.getSliceView(new Slice(3, 4))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.power(a, z).cast(DoubleDataset.class), c.ipower(z));
+
+		z = DatasetFactory.createComplexDataset(ComplexDoubleDataset.class, a, a);
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.power(a, new Complex(1, 1)).cast(DoubleDataset.class), c.ipower(z.getSliceView(new Slice(1, 2))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.power(a, new Complex(3, 3)).cast(DoubleDataset.class), c.ipower(z.getSliceView(new Slice(3, 4))));
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.power(a, z).cast(DoubleDataset.class), c.ipower(z));
+
+
+		// floor
+		a = Maths.multiply(a, 1.5);
+
+		c = a.clone();
+		TestUtils.assertDatasetEquals(Maths.floor(a), c.ifloor());
 	}
 }

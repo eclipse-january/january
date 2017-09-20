@@ -73,9 +73,7 @@ public class SliceNDIterator extends IndexIterator {
 		sRank = rank;
 		if (axes != null) {
 			for (int a : axes) {
-				if (a < 0) {
-					a += rank;
-				}
+				a =  ShapeUtils.checkAxis(rank, a);
 				if (a >= 0 && a <= endrank) {
 					sRank--;
 					omit[a] = true;
@@ -96,8 +94,8 @@ public class SliceNDIterator extends IndexIterator {
 			sSlice = cSlice;
 		} else {
 			int[] dShape = dSlice.getShape();
-			int[] lShape = new int[sRank];
-			int[] oShape = new int[rank - sRank];
+			int[] lShape = new int[sRank]; // inner shape
+			int[] oShape = new int[rank - sRank]; // output shape
 			for (int i = 0, j = 0, k = 0; i < rank; i++) {
 				if (omit[i]) {
 					oShape[j++] = sShape[i];
@@ -109,14 +107,13 @@ public class SliceNDIterator extends IndexIterator {
 			sSlice = new SliceND(lShape);
 			sStart = sSlice.getStart();
 			sStop = sSlice.getStop();
-//			lShape = sSlice.getShape();
-//			for (int k = 0; k < sRank; k++) {
-//				lShape[k] = 1;
-//			}
+
 			oSlice = new SliceND(oShape);
-			for (int i = 0, j = 0; i < rank; i++) {
+			for (int i = 0, j = 0, k = 0; i < rank; i++) {
 				if (omit[i]) {
 					oSlice.setSlice(j++, start[i], stop[i], step[i]);
+				} else {
+					sSlice.setSlice(k++, start[i], stop[i], step[i]);
 				}
 			}
 		}

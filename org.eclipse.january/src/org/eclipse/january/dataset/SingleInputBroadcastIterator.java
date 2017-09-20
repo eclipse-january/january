@@ -81,17 +81,22 @@ public class SingleInputBroadcastIterator extends IndexIterator {
 	 * @param allowInteger if true, can create integer datasets
 	 * @param allowComplex if true, can create complex datasets
 	 */
+	@SuppressWarnings("deprecation")
 	public SingleInputBroadcastIterator(Dataset a, Dataset o, boolean createIfNull, boolean allowInteger, boolean allowComplex) {
 		List<int[]> fullShapes = BroadcastUtils.broadcastShapes(a.getShapeRef(), o == null ? null : o.getShapeRef());
 
-		checkItemSize(a, o);
+		BroadcastUtils.checkItemSize(a, o);
 
 		maxShape = fullShapes.remove(0);
 
 		oStride = null;
-		if (o != null && !Arrays.equals(maxShape, o.getShapeRef())) {
-			throw new IllegalArgumentException("Output does not match broadcasted shape");
+		if (o != null) {
+			if (!Arrays.equals(maxShape, o.getShapeRef())) {
+				throw new IllegalArgumentException("Output does not match broadcasted shape");
+			}
+			o.setDirty();
 		}
+
 		aShape = fullShapes.remove(0);
 
 		int rank = maxShape.length;
@@ -138,18 +143,8 @@ public class SingleInputBroadcastIterator extends IndexIterator {
 				oDelta[j] = oStride[j] * maxShape[j];
 			}
 		}
-		if (endrank < 0) {
-			aMax = aStep;
-		} else {
-			aMax = Integer.MIN_VALUE; // use max delta
-			for (int j = endrank; j >= 0; j--) {
-				if (aDelta[j] > aMax) {
-					aMax = aDelta[j];
-				}
-			}
-		}
 		aStart = aDataset.getOffset();
-		aMax += aStart;
+		aMax = endrank < 0 ? aStep + aStart: Integer.MIN_VALUE;
 		oStart = oDelta == null ? 0 : oDataset.getOffset();
 		asDouble = aDataset.hasFloatingPointElements();
 		reset();
@@ -173,16 +168,6 @@ public class SingleInputBroadcastIterator extends IndexIterator {
 		}
 	}
 
-	private static void checkItemSize(Dataset a, Dataset o) {
-		final int isa = a.getElementsPerItem();
-		if (o != null) {
-			final int iso = o.getElementsPerItem();
-			if (isa != 1 && iso != isa) {
-				throw new IllegalArgumentException("Can not output to dataset whose number of elements per item mismatch inputs'");
-			}
-		}
-	}
-
 	@Override
 	public int[] getShape() {
 		return maxShape;
@@ -195,32 +180,35 @@ public class SingleInputBroadcastIterator extends IndexIterator {
 		for (; j >= 0; j--) {
 			pos[j]++;
 			aIndex += aStride[j];
-			if (oDelta != null)
+			if (oDelta != null) {
 				oIndex += oStride[j];
+			}
 			if (pos[j] >= maxShape[j]) {
 				pos[j] = 0;
 				aIndex -= aDelta[j]; // reset these dimensions
-				if (oDelta != null)
+				if (oDelta != null) {
 					oIndex -= oDelta[j];
+				}
 			} else {
 				break;
 			}
 		}
 		if (j == -1) {
 			if (endrank >= 0) {
-				aIndex = aMax;
 				return false;
 			}
 			aIndex += aStep;
-			if (oDelta != null)
+			if (oDelta != null) {
 				oIndex += oStep;
+			}
 		}
 		if (outputA) {
 			oIndex = aIndex;
 		}
 
-		if (aIndex == aMax)
-			return false;
+		if (aIndex == aMax) {
+			return false; // used for zero-rank datasets
+		}
 
 		if (oldA != aIndex) {
 			if (asDouble) {
@@ -247,8 +235,9 @@ public class SingleInputBroadcastIterator extends IndexIterator {
 
 	@Override
 	public void reset() {
-		for (int i = 0; i <= endrank; i++)
+		for (int i = 0; i <= endrank; i++) {
 			pos[i] = 0;
+		}
 
 		if (endrank >= 0) {
 			pos[endrank] = -1;
@@ -262,8 +251,6 @@ public class SingleInputBroadcastIterator extends IndexIterator {
 		// for zero-ranked datasets
 		if (aIndex == 0) {
 			storeCurrentValues();
-			if (aMax == aIndex)
-				aMax++;
 		}
 	}
 
