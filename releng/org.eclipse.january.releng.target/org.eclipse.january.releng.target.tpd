@@ -11,7 +11,7 @@
  *******************************************************************************/
 target "January" with source requirements
 
-location "http://download.eclipse.org/tools/orbit/downloads/drops/R20170307180635/repository" eclipse-orbit-neon-sr3 {
+location "http://download.eclipse.org/tools/orbit/downloads/drops/R20170818183741/repository" eclipse-orbit-oxygen-sr1 {
 
 // The versions we point to in Orbit are the versions we have CQs approved for, please
 // raise CQ for items not in this list or version changes
