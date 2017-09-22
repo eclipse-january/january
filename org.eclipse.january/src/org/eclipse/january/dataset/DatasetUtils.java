@@ -16,6 +16,7 @@ import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.math3.util.MathArrays;
@@ -313,7 +314,7 @@ public class DatasetUtils {
 
 	/**
 	 * @param a
-	 * @return sorted flattened copy of dataset 
+	 * @return sorted flattened copy of dataset
 	 */
 	public static <T extends Dataset> T sort(final T a) {
 		return sort(a, (Integer) null);
@@ -321,7 +322,7 @@ public class DatasetUtils {
 
 	/**
 	 * @param a
-	 * @param axis to sort along
+	 * @param axis to sort along, if null then dataset is first flattened
 	 * @return dataset sorted along axis
 	 */
 	public static <T extends Dataset> T sort(final T a, final Integer axis) {
@@ -369,6 +370,71 @@ public class DatasetUtils {
 				b[i].setSlice(t[i]);
 			}
 		}
+	}
+
+	/**
+	 * Indirectly sort along given axis 
+	 * @param a dataset whose indexes will be sorted
+	 * @param axis to sort along, if null then dataset is first flattened
+	 * @return indexes
+	 */
+	public static IntegerDataset indexSort(Dataset a, Integer axis) {
+		if (axis == null) {
+			int size = a.getSize();
+			Integer[] index = new Integer[size];
+			for (int i = 0; i < size; i++) {
+				index[i] = i;
+			}
+			final Dataset f = a.flatten(); // is this correct for views??? Check with NumPy
+			Comparator<Integer> cmp = new Comparator<Integer>() {
+				
+				@Override
+				public int compare(Integer o1, Integer o2) {
+					
+					return Double.compare(f.getElementDoubleAbs(o1), f.getElementDoubleAbs(o2));
+				}
+			};
+			Arrays.sort(index, cmp);
+			return DatasetFactory.createFromObject(IntegerDataset.class, index);
+		}
+
+		axis = a.checkAxis(axis);
+		final int[] shape = a.getShapeRef();
+		IntegerDataset id = DatasetFactory.zeros(IntegerDataset.class, shape);
+		int size = shape[axis];
+		Integer[] index = new Integer[size];
+
+		int[] dShape = new int[shape.length];
+		Arrays.fill(dShape, 1);
+		dShape[axis] = size;
+		final DoubleDataset dd = DatasetFactory.zeros(DoubleDataset.class, dShape);
+		final Comparator<Integer> cmp = new Comparator<Integer>() {
+			@Override
+			public int compare(Integer o1, Integer o2) {
+				
+				return Double.compare(dd.getElementDoubleAbs(o1), dd.getElementDoubleAbs(o2));
+			}
+		};
+
+		SliceND ds = new SliceND(dShape);
+		SliceNDIterator it = new SliceNDIterator(new SliceND(shape), axis);
+		int[] pos = it.getPos();
+		int[] ipos = pos.clone();
+		while (it.hasNext()) {
+			dd.setSlice(a.getSliceView(it.getCurrentSlice()), ds);
+			for (int i = 0; i < size; i++) {
+				index[i] = i;
+			}
+			Arrays.sort(index, cmp);
+
+			System.arraycopy(pos, 0, ipos, 0, pos.length);
+			for (int i = 0; i < size; i++) {
+				ipos[axis] = i;
+				id.set(index[i], ipos);
+			}
+		}
+
+		return id;
 	}
 
 	/**
