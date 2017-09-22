@@ -117,5 +117,10 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>1.7.10</version>
 		</dependency>
+		<dependency>
+			<groupId>javax.measure</groupId>
+			<artifactId>unit-api</artifactId>
+			<version>1.0</version>
+		</dependency>
 	</dependencies>
 </project>
