@@ -15,7 +15,7 @@ location "http://download.eclipse.org/january/releases/2.0.0/repository/" januar
 	org.eclipse.january lazy
 }
 
-location "http://download.eclipse.org/tools/orbit/downloads/drops/S20170120205402/repository" eclipse-orbit-oxygen-m5 {
+location "http://download.eclipse.org/tools/orbit/downloads/drops/R20170818183741/repository" eclipse-orbit-oxygen-sr1 {
 
 // The versions we point to in Orbit are the versions we have CQs approved for, please
 // raise CQ for items not in this list or version changes
