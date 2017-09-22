@@ -278,4 +278,11 @@
 			</properties>
 		</profile>
 	</profiles>
+	<dependencies>
+		<dependency>
+			<groupId>javax.measure</groupId>
+			<artifactId>unit-api</artifactId>
+			<version>1.0</version>
+		</dependency>
+	</dependencies>
 </project>
