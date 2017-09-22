@@ -102,20 +102,28 @@ public class ParameterizeDatasetTests {
 	}
 
 	@Test
-	public void testSort() {
+	public void testSortWithNull() {
 		Class<? extends Dataset> class1 = classType;
 		double[] value = new double[] { 4.2, -7.9, 6.10, 0.0 };
 		double[] sortedObj = new double[] { -7.9, 0.0, 4.2, 6.10 };
 
 		Dataset input = DatasetFactory.createFromObject(class1, value);
 		Dataset expected = DatasetFactory.createFromObject(class1, sortedObj);
-		input.sort(0);
+		input.sort(null);
 
 		TestUtils.assertDatasetEquals(expected, input, true, ABSERRD, ABSERRD);
+	}
 
-		// test with null argument
-		input = DatasetFactory.createFromObject(class1, value);
-		input.sort(null);
+	@Test
+	public void testSort() {
+		Class<? extends Dataset> class1 = classType;
+		double[] value = new double[] { 4.2, -7.9, 6.10, 0.0 };
+		double[] sortedObj = new double[] { -7.9, 4.2, 0.0, 6.10 };
+
+		Dataset input = DatasetFactory.createFromObject(class1, value).reshape(2,2);
+		Dataset expected = DatasetFactory.createFromObject(class1, sortedObj).reshape(2,2);
+		input.sort(1);
+
 		TestUtils.assertDatasetEquals(expected, input, true, ABSERRD, ABSERRD);
 	}
 
@@ -179,21 +187,18 @@ public class ParameterizeDatasetTests {
 	public void testMaxPos() throws Exception {
 		Class<? extends Dataset> class1 = classType;
 		double da[] = { 1.2, 2.3, 13.0, 4.6, 2.8, 2.3, 13.0 };
-		int maxExpected = 2;
 
 		Dataset dataset = DatasetFactory.createFromObject(class1, da);
-		int maxActual = dataset.maxPos()[0];
-		assertEquals(maxExpected, maxActual);
+		assertArrayEquals(new int[] {2}, dataset.maxPos());
 	}
 
 	@Test
 	public void testMinPos() throws Exception {
 		Class<? extends Dataset> class1 = classType;
 		double da[] = { 1.2, 2.3, 13.0, 4.6, 2.8, 2.3, 13.0 };
-		int minExpected = 0;
+
 		Dataset dataset = DatasetFactory.createFromObject(class1, da);
-		int minActual = dataset.minPos()[0];
-		assertEquals(minActual, minExpected);
+		assertArrayEquals(new int[] {0}, dataset.minPos());
 	}
 
 	@Test
@@ -234,7 +239,7 @@ public class ParameterizeDatasetTests {
 	public void testIReminder() {
 		Class<? extends Dataset> class1 = classType;
 		double[] value = new double[] { 4.2, -7.9, 6.10, 0.0 };
-		double[] valueToSubstract = new double[] { 5.4, 6, 7.3, 4.6 };
+		double[] valueToSubstract = new double[] { 5.9, 6, 7.3, 4.6 };
 		Dataset input = DatasetFactory.createFromObject(class1, value);
 
 		double[] result = new double[4];
@@ -265,6 +270,24 @@ public class ParameterizeDatasetTests {
 	}
 
 	@Test
+	public void testIpowerWithSingleNumber() {
+		Class<? extends Dataset> class1 = classType;
+		double[] value = new double[] { 4, -7, 6, 0 };
+		Dataset input = DatasetFactory.createFromObject(class1, value);
+	
+		double[] result = new double[4];
+	
+		// test power with one number
+		for (int index = 0; index < 4; index++) {
+			result[index] = Math.pow(value[index], 2);
+		}
+		Dataset expected = DatasetFactory.createFromObject(class1, result);
+		input.ipower(2);
+	
+		TestUtils.assertDatasetEquals(expected, input, true, 0.000001, 0.000001);
+	}
+
+	@Test
 	public void testIpower() {
 		Class<? extends Dataset> class1 = classType;
 		double[] value = new double[] { 4, -7, 6, 0 };
@@ -277,17 +300,6 @@ public class ParameterizeDatasetTests {
 		}
 		Dataset expected = DatasetFactory.createFromObject(class1, result);
 		input.ipower(valueToAdd);
-
-		TestUtils.assertDatasetEquals(expected, input, true, 0.000001, 0.000001);
-
-		// test power with one number
-		input = DatasetFactory.createFromObject(class1, value);
-		result = new double[4];
-		for (int index = 0; index < 4; index++) {
-			result[index] = Math.pow(value[index], 2);
-		}
-		input.ipower(2);
-		expected = DatasetFactory.createFromObject(class1, result);
 
 		TestUtils.assertDatasetEquals(expected, input, true, 0.000001, 0.000001);
 	}
