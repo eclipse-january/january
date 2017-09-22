@@ -9,6 +9,7 @@
       <unit id="org.junit" version="4.12.0.v201504281640"/>
       <unit id="org.mockito" version="1.9.5.v201605172210"/>
       <unit id="org.hamcrest" version="1.1.0.v20090501071000"/>
+      <unit id="javax.measure.unit-api" version="1.0.0.v20170818-1538"/>
       <repository id="eclipse-orbit-oxygen-sr1" location="http://download.eclipse.org/tools/orbit/downloads/drops/R20170818183741/repository"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
