@@ -11,7 +11,7 @@ location "http://download.eclipse.org/january/builds/january-master/latest/repos
 	org.eclipse.january lazy
 }
 
-location "http://download.eclipse.org/tools/orbit/downloads/drops/S20170120205402/repository" eclipse-orbit-oxygen-m5 {
+location "http://download.eclipse.org/tools/orbit/downloads/drops/R20170818183741/repository" eclipse-orbit-oxygen-sr1 {
 // Core requirements
 	org.apache.commons.math3 [3.5.0,3.5.1)
 	org.slf4j.api [1.7.2,2.0.0)
