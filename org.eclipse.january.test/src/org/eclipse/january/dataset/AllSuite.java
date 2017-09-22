@@ -36,6 +36,7 @@ import org.junit.runners.Suite.SuiteClasses;
 		StrideIteratorTest.class, StringDatasetTest.class,
 		UnsignedArithmeticsTest.class, UnaryOperationTest.class,
 		org.eclipse.january.metadata.AllSuite.class,
+		ParameterizeDatasetTests.class
 		})
 public class AllSuite {
 
