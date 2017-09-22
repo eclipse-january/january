@@ -285,4 +285,19 @@ public class DatasetUtilsTest {
 		Dataset actual = DatasetUtils.norm(dataset);
 		TestUtils.assertDatasetEquals(expected, actual);
 	}
+
+	@Test
+	public void testIndexSort() {
+		Dataset a = DatasetFactory.createFromObject(new int[] {0, 3, 1, 2, 2, -1}).reshape(2, 3);
+		Dataset e;
+
+		e = DatasetFactory.createFromObject(new int[] {5, 0, 2, 3, 4, 1});
+		TestUtils.assertDatasetEquals(e, DatasetUtils.indexSort(a, null));
+
+		e = DatasetFactory.createFromObject(new int[] {0, 1, 1, 1, 0, 0}).reshape(2, 3);
+		TestUtils.assertDatasetEquals(e, DatasetUtils.indexSort(a, 0));
+
+		e = DatasetFactory.createFromObject(new int[] {0, 2, 1, 2, 0, 1}).reshape(2, 3);
+		TestUtils.assertDatasetEquals(e, DatasetUtils.indexSort(a, 1));
+	}
 }
