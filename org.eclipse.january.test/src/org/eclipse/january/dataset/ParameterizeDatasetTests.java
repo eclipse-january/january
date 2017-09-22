@@ -160,8 +160,7 @@ public class ParameterizeDatasetTests {
 		Dataset input = DatasetFactory.createFromObject(class1, value);
 
 		IndexIterator iter = input.getIterator();
-		Dataset n = DatasetFactory.zeros(4);
-		Dataset expected = DatasetFactory.createFromObject(class1, n);
+		Dataset expected = DatasetFactory.zeros(class1, 4);
 		input.fillDataset(expected, iter);
 		TestUtils.assertDatasetEquals(expected, input, true, ABSERRD, ABSERRD);
 	}
@@ -171,8 +170,7 @@ public class ParameterizeDatasetTests {
 		Class<? extends Dataset> class1 = classType;
 		double[] value = new double[] { 4.2, -7.9, 6.10, 0.0 };
 		Dataset input = DatasetFactory.createFromObject(class1, value);
-		Dataset output = DatasetFactory.ones(4);
-		Dataset expected = DatasetFactory.createFromObject(class1, output);
+		Dataset expected = DatasetFactory.ones(class1, 4);
 		input.fill(1);
 		TestUtils.assertDatasetEquals(expected, input, true, ABSERRD, ABSERRD);
 	}
@@ -377,7 +375,7 @@ public class ParameterizeDatasetTests {
 		assertEquals(sumExpected, sum, ABSERRD);
 
 		sum = in.residual(in2, null, true);
-		sumExpected = 1;
+		sumExpected = 4;
 		assertEquals(sumExpected, sum, ABSERRD);
 	}
 }
