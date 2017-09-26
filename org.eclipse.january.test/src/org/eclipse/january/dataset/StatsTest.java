@@ -271,10 +271,10 @@ public class StatsTest {
 		int[] ls;
 		ls = new int[] {256, 640};
 		for (int l : ls) {
-			vs = Stats.outlierValuesList(a, l, l);
+			vs = Stats.outlierValuesList(a, a.getIterator(), l, l);
 			for (int i = 0; i < REPEAT; i++) {
 				times[i] = -System.nanoTime();
-				Stats.outlierValuesList(a, l, l);
+				Stats.outlierValuesList(a, a.getIterator(), l, l);
 				times[i] += System.nanoTime();
 			}
 			Arrays.sort(times);
@@ -283,20 +283,20 @@ public class StatsTest {
 
 		ls = new int[] {640, 1024, 8192};
 		for (int l : ls) {
-			vs = Stats.outlierValuesMap(a, l, l);
+			vs = Stats.outlierValuesMap(a, a.getIterator(), l, l);
 			for (int i = 0; i < REPEAT; i++) {
 				times[i] = -System.nanoTime();
-				Stats.outlierValuesMap(a, l, l);
+				Stats.outlierValuesMap(a, a.getIterator(), l, l);
 				times[i] += System.nanoTime();
 			}
 			Arrays.sort(times);
 			TestUtils.verbosePrintf("%4d: Low/High (%g/%g - %.4f/%.4f) took %.2fms\n", l, vs[0], vs[1], vs[2]/s, 1-vs[3]/s, times[0]/1e6);
 		}
 
-		vs = Stats.outlierValuesMap(a, (int) lx, (int) hx);
+		vs = Stats.outlierValuesMap(a, a.getIterator(), (int) lx, (int) hx);
 		for (int i = 0; i < REPEAT; i++) {
 			times[i] = -System.nanoTime();
-			Stats.outlierValuesMap(a, (int) lx, (int) hx);
+			Stats.outlierValuesMap(a, a.getIterator(), (int) lx, (int) hx);
 			times[i] += System.nanoTime();
 		}
 		Arrays.sort(times);
@@ -309,12 +309,19 @@ public class StatsTest {
 
 	@Test
 	public void testOutlierValues() {
-		testOutlierValues(DatasetFactory.zeros(20));
+		testOutlierValues(DatasetFactory.zeros(20), null);
 
-		testOutlierValues(DatasetFactory.zeros(1000));
+		testOutlierValues(DatasetFactory.zeros(1000), null);
 	}
 
-	private void testOutlierValues(Dataset a) {
+	@Test
+	public void testOutlierValuesWithMask() {
+		testOutlierValues(DatasetFactory.zeros(20), DatasetFactory.zeros(BooleanDataset.class, 20));
+
+		testOutlierValues(DatasetFactory.zeros(1000), DatasetFactory.zeros(BooleanDataset.class, 1000));
+	}
+
+	private void testOutlierValues(Dataset a, Dataset m) {
 		double[] o = Stats.outlierValues(a, 0.01, 99.9, 10);
 		assertEquals(0, o[0], 1e-4);
 		assertEquals(0, o[1], 1e-4);
@@ -323,6 +330,7 @@ public class StatsTest {
 
 		a.fill(Double.NaN);
 		a.set(200, 5);
+		a.set(100, 7);
 		a.set(0, 10);
 		o = Stats.outlierValues(a, 0.01, 99.9, 10);
 		assertEquals(0, o[0], 1e-4);
@@ -330,6 +338,25 @@ public class StatsTest {
 		double f = 100./a.getSize();
 		assertEquals(f, o[2], 1e-4);
 		assertEquals(100-f, o[3], 1e-4);
+
+		if (m != null) {
+			m.set(true, 7);
+			o = Stats.outlierValues(a, m, false, 0.01, 99.9, 10);
+			assertEquals(0, o[0], 1e-4);
+			assertEquals(200, o[1], 1e-4);
+			f = 100./a.getSize();
+			assertEquals(f, o[2], 1e-4);
+			assertEquals(100-f, o[3], 1e-4);
+
+			m.fill(true);
+			m.set(false, 5);
+			o = Stats.outlierValues(a, m, true, 0.01, 99.9, 10);
+			assertEquals(0, o[0], 1e-4);
+			assertEquals(100, o[1], 1e-4);
+			f = 100./a.getSize();
+			assertEquals(f, o[2], 1e-4);
+			assertEquals(100-f, o[3], 1e-4);
+		}
 	}
 
 	@Test
