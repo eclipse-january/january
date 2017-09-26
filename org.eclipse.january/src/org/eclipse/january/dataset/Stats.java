@@ -1658,6 +1658,29 @@ public class Stats {
 	 * @return double array with low and high values, and low and high percentage thresholds
 	 */
 	public static double[] outlierValues(final Dataset a, double lo, double hi, final int length) {
+		return outlierValues(a, null, true, lo, hi, length);
+	}
+
+	/**
+	 * Calculate approximate outlier values. These are defined as the values in the dataset
+	 * that are approximately below and above the given thresholds - in terms of percentages
+	 * of dataset size.
+	 * <p>
+	 * It approximates by limiting the number of items (given by length) used internally by
+	 * data structures - the larger this is, the more accurate will those outlier values become.
+	 * The actual thresholds used are returned in the array.
+	 * <p>
+	 * Also, the low and high values will be made distinct if possible by adjusting the thresholds
+	 * @param a
+	 * @param mask can be null
+	 * @param value value of mask to match to include for calculation
+	 * @param lo percentage threshold for lower limit
+	 * @param hi percentage threshold for higher limit
+	 * @param length maximum number of items used internally, if negative, then unlimited
+	 * @return double array with low and high values, and low and high percentage thresholds
+	 * @since 2.1
+	 */
+	public static double[] outlierValues(final Dataset a, final Dataset mask, final boolean value, double lo, double hi, final int length) {
 		if (lo <= 0 || hi <= 0 || lo >= hi || hi >= 100  || Double.isNaN(lo)|| Double.isNaN(hi)) {
 			throw new IllegalArgumentException("Thresholds must be between (0,100) and in order");
 		}
@@ -1669,20 +1692,20 @@ public class Stats {
 		if (length > 0 && nh > length)
 			nh = length;
 
-		double[] results = Math.max(nl, nh) > 640 ? outlierValuesMap(a, nl, nh) : outlierValuesList(a, nl, nh);
+		IndexIterator it = mask == null ? a.getIterator() : a.getBooleanIterator(mask, value);
+		double[] results = Math.max(nl, nh) > 640 ? outlierValuesMap(a, it, nl, nh) : outlierValuesList(a, it, nl, nh);
 
 		results[2] = results[2]*100./size;
 		results[3] = 100. - results[3]*100./size;
 		return results;
 	}
 
-	static double[] outlierValuesMap(final Dataset a, int nl, int nh) {
+	static double[] outlierValuesMap(final Dataset a, final IndexIterator it, int nl, int nh) {
 		final TreeMap<Double, Integer> lMap = new TreeMap<Double, Integer>();
 		final TreeMap<Double, Integer> hMap = new TreeMap<Double, Integer>();
 
 		int ml = 0;
 		int mh = 0;
-		IndexIterator it = a.getIterator();
 		while (it.hasNext()) {
 			Double x = a.getElementDoubleAbs(it.index);
 			if (Double.isNaN(x)) {
@@ -1762,14 +1785,13 @@ public class Stats {
 		return new double[] {lMap.lastKey(), hMap.firstKey(), ml, mh};
 	}
 
-	static double[] outlierValuesList(final Dataset a, int nl, int nh) {
+	static double[] outlierValuesList(final Dataset a, final IndexIterator it, int nl, int nh) {
 		final List<Double> lList = new ArrayList<Double>(nl);
 		final List<Double> hList = new ArrayList<Double>(nh);
 
 		double lx = Double.POSITIVE_INFINITY;
 		double hx = Double.NEGATIVE_INFINITY;
 
-		IndexIterator it = a.getIterator();
 		while (it.hasNext()) {
 			double x = a.getElementDoubleAbs(it.index);
 			if (Double.isNaN(x)) {
