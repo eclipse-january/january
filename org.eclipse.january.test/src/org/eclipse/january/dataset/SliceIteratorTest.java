@@ -49,13 +49,17 @@ public class SliceIteratorTest {
 		ta = DatasetFactory.zeros(clazz, new int[] {});
 		testDataset(ta);
 		testDatasetSteps(ta, new int[] {});
+		testDatasetSlice(ta, new int[] {}, new int[] {});
 		testDatasetAxes(ta, new boolean[] {});
 
 		// 1D
 		ta = DatasetFactory.createRange(clazz, 0, size, 1);
 		testDataset(ta);
 		testDatasetSteps(ta, new int[] {2});
+		testDatasetSteps(ta.getSliceView(new Slice(null, null, -1)), new int[] {2});
 		testDatasetSteps(ta, new int[] {-3});
+		testDatasetSlice(ta, new int[] {size/3}, new int[] {2*size/3});
+		testDatasetSlice(ta.getSliceView(new Slice(null, null, -1)), new int[] {2*size/3}, new int[] {size/3});
 		testDatasetAxes(ta, new boolean[] {true});
 
 		// 2D
@@ -64,6 +68,9 @@ public class SliceIteratorTest {
 		testDataset(ta);
 		testDatasetSteps(ta, new int[] {1, 2});
 		testDatasetSteps(ta, new int[] {3, 1});
+		int l = size/16;
+		testDatasetSlice(ta, new int[] {2, l/3}, new int[] {12, 2*l/3});
+		testDatasetSlice(ta.getSliceView(new Slice(null, null, -1)), new int[] {12, l/3}, new int[] {2, 2*l/3});
 		testDatasetAxes(ta, new boolean[] {true, true});
 		testDatasetAxes(ta, new boolean[] {true, false});
 		testDatasetAxes(ta, new boolean[] {false, true});
@@ -164,6 +171,36 @@ public class SliceIteratorTest {
 		}
 	}
 
+	private void testDatasetSlice(Dataset ta, int[] start, int[] stop) {
+		SliceIterator iter = (SliceIterator) ta.getSliceIterator(start, stop, null);
+		int[] pos = iter.getPos();
+		int[] shape = ta.getShapeRef();
+		int endrank = shape.length - 1;
+		int[] tpos = new int[shape.length];
+
+		for (int j = 0; j <= endrank; j++) {
+			tpos[j] = start[j];
+		}
+
+		while (iter.hasNext()) {
+//			 TestUtils.verbosePrintf("        %s\n", Arrays.toString(pos));
+			for (int j = 0; j <= endrank; j++) {
+				assertEquals(" start: " + Arrays.toString(start) + "; stop: " + Arrays.toString(stop) + "; dim " + j,
+						tpos[j], pos[j], 1e-5 * tpos[j]);
+			}
+
+			int j = endrank;
+			for (; j >= 0; j--) {
+				tpos[j] += 1;
+				if (tpos[j] >= stop[j]) {
+					tpos[j] = start[j];
+				} else {
+					break;
+				}
+			}
+		}
+	}
+	
 	private void testDatasetAxes(Dataset ta, boolean[] axes) {
 		SliceIterator iter = ta.getSliceIteratorFromAxes(null, axes);
 		int[] pos = iter.getPos();
