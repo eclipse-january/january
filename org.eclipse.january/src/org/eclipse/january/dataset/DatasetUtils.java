@@ -37,7 +37,7 @@ public class DatasetUtils {
 
 	/**
 	 * Append copy of dataset with another dataset along n-th axis
-	 * 
+	 *
 	 * @param a
 	 * @param b
 	 * @param axis
@@ -191,7 +191,7 @@ public class DatasetUtils {
 	 * of times in each axis given by corresponding entries in the reps array
 	 *
 	 * @param a
-	 * @param reps 
+	 * @param reps
 	 * @return tiled dataset
 	 */
 	public static Dataset tile(final IDataset a, int... reps) {
@@ -243,7 +243,7 @@ public class DatasetUtils {
 		if (manyColumns) {
 			// generate each start point and put a slice in
 			IndexIterator iter = tdata.getSliceIterator(null, null, shape);
-			SliceIterator siter = (SliceIterator) tdata.getSliceIterator(null, shape, null); 
+			SliceIterator siter = (SliceIterator) tdata.getSliceIterator(null, shape, null);
 			final int[] pos = iter.getPos();
 			while (iter.hasNext()) {
 				siter.setStart(pos);
@@ -260,7 +260,7 @@ public class DatasetUtils {
 					skip[i] = shape[i];
 				}
 			}
-			
+
 			Dataset aa = convertToDataset(a);
 			IndexIterator ita = aa.getIterator(true);
 			final int[] pos = ita.getPos();
@@ -292,7 +292,7 @@ public class DatasetUtils {
 	 * I.e. for a 3D dataset (1,0,2) implies the new dataset has its 1st dimension
 	 * running along the old dataset's 2nd dimension and the new 2nd is the old 1st.
 	 * The 3rd dimension is left unchanged.
-	 * 
+	 *
 	 * @param a
 	 * @param axes if null or zero length then axes order reversed
 	 * @return remapped copy of data
@@ -373,10 +373,11 @@ public class DatasetUtils {
 	}
 
 	/**
-	 * Indirectly sort along given axis 
+	 * Indirectly sort along given axis
 	 * @param a dataset whose indexes will be sorted
 	 * @param axis to sort along, if null then dataset is first flattened
 	 * @return indexes
+	 * @since 2.1
 	 */
 	public static IntegerDataset indexSort(Dataset a, Integer axis) {
 		if (axis == null) {
@@ -387,10 +388,10 @@ public class DatasetUtils {
 			}
 			final Dataset f = a.flatten(); // is this correct for views??? Check with NumPy
 			Comparator<Integer> cmp = new Comparator<Integer>() {
-				
+
 				@Override
 				public int compare(Integer o1, Integer o2) {
-					
+
 					return Double.compare(f.getElementDoubleAbs(o1), f.getElementDoubleAbs(o2));
 				}
 			};
@@ -411,7 +412,7 @@ public class DatasetUtils {
 		final Comparator<Integer> cmp = new Comparator<Integer>() {
 			@Override
 			public int compare(Integer o1, Integer o2) {
-				
+
 				return Double.compare(dd.getElementDoubleAbs(o1), dd.getElementDoubleAbs(o2));
 			}
 		};
@@ -582,11 +583,11 @@ public class DatasetUtils {
 	/**
 	 * Constructs a dataset which has its elements along an axis replicated from
 	 * the original dataset by the number of times given in the repeats array.
-	 * 
-	 * By default, axis=-1 implies using a flattened version of the input dataset 
+	 *
+	 * By default, axis=-1 implies using a flattened version of the input dataset
 	 *
 	 * @param a
-	 * @param repeats 
+	 * @param repeats
 	 * @param axis
 	 * @return dataset
 	 */
@@ -679,7 +680,7 @@ public class DatasetUtils {
 	}
 
 	/**
-	 * Resize a dataset 
+	 * Resize a dataset
 	 * @param a
 	 * @param shape
 	 * @return new dataset with new shape and items that are truncated or repeated, as necessary
@@ -698,7 +699,7 @@ public class DatasetUtils {
 
 	/**
 	 * Copy and cast a dataset
-	 * 
+	 *
 	 * @param d
 	 *            The dataset to be copied
 	 * @param dtype dataset type
@@ -809,7 +810,7 @@ public class DatasetUtils {
 
 	/**
 	 * Copy and cast a dataset
-	 * 
+	 *
 	 * @param clazz dataset class
 	 * @param d
 	 *            The dataset to be copied
@@ -822,7 +823,7 @@ public class DatasetUtils {
 
 	/**
 	 * Cast a dataset
-	 * 
+	 *
 	 * @param d
 	 *            The dataset to be cast.
 	 * @param dtype dataset type
@@ -839,7 +840,7 @@ public class DatasetUtils {
 
 	/**
 	 * Cast a dataset
-	 * 
+	 *
 	 * @param clazz dataset class
 	 * @param d
 	 *            The dataset to be cast.
@@ -851,7 +852,7 @@ public class DatasetUtils {
 
 	/**
 	 * Cast a dataset
-	 * 
+	 *
 	 * @param d
 	 *            The dataset to be cast.
 	 * @param repeat repeat elements over item
@@ -937,7 +938,7 @@ public class DatasetUtils {
 
 	/**
 	 * Cast array of datasets to a compound dataset
-	 * 
+	 *
 	 * @param a
 	 *            The datasets to be cast.
 	 */
@@ -1465,7 +1466,7 @@ public class DatasetUtils {
 		}
 	}
 
-	
+
 	/**
 	 * Create a compound dataset by using last axis as elements of an item
 	 * @param a
@@ -1551,7 +1552,7 @@ public class DatasetUtils {
 			Arrays.sort(amin);
 			Arrays.sort(amax);
 			double aptp = amax[0] - amin[0];
-			
+
 			result = Maths.subtract(a, amin[0]);
 			result.idivide(aptp);
 		} else {
@@ -1599,7 +1600,7 @@ public class DatasetUtils {
 	/**
 	 * Construct a list of datasets where each represents a coordinate varying over the hypergrid
 	 * formed by the input list of axes
-	 * 
+	 *
 	 * @param axes an array of 1D datasets representing axes
 	 * @return a list of coordinate datasets
 	 */
@@ -1688,7 +1689,7 @@ public class DatasetUtils {
 
 	/**
 	 * Get the centroid value of a dataset, this function works out the centroid in every direction
-	 * 
+	 *
 	 * @param a
 	 *            the dataset to be analysed
 	 * @param bases the optional array of base coordinates to use as weights.
@@ -1700,7 +1701,7 @@ public class DatasetUtils {
 		if (bases.length > 0 && bases.length != rank) {
 			throw new IllegalArgumentException("Number of bases must be zero or match rank of dataset");
 		}
-		
+
 		int[] shape = a.getShapeRef();
 		if (bases.length == rank) {
 			for (int i = 0; i < rank; i++) {
@@ -1740,7 +1741,7 @@ public class DatasetUtils {
 
 	/**
 	 * Find linearly-interpolated crossing points where the given dataset crosses the given value
-	 * 
+	 *
 	 * @param d
 	 * @param value
 	 * @return list of interpolated indices
@@ -1777,7 +1778,7 @@ public class DatasetUtils {
 
 	/**
 	 * Find x values of all the crossing points of the dataset with the given y value
-	 * 
+	 *
 	 * @param xAxis
 	 *            Dataset of the X axis that needs to be looked at
 	 * @param yAxis
@@ -1791,7 +1792,7 @@ public class DatasetUtils {
 			throw new IllegalArgumentException(
 					"Number of values of yAxis must as least be equal to the number of values of xAxis");
 		}
-		
+
 		List<Double> results = new ArrayList<Double>();
 
 		List<Double> indices = crossings(yAxis, yValue);
@@ -1805,7 +1806,7 @@ public class DatasetUtils {
 	/**
 	 * Function that uses the crossings function but prunes the result, so that multiple crossings within a
 	 * certain proportion of the overall range of the x values
-	 * 
+	 *
 	 * @param xAxis
 	 *            Dataset of the X axis
 	 * @param yAxis
@@ -1907,11 +1908,11 @@ public class DatasetUtils {
 		setRow(matrix, a);
 		return matrix;
 	}
-	
+
 	/**
 	 * Removes NaNs and infinities from floating point datasets.
 	 * All other dataset types are ignored.
-	 * 
+	 *
 	 * @param a dataset
 	 * @param value replacement value
 	 */
@@ -1969,7 +1970,7 @@ public class DatasetUtils {
 	 * Make floating point datasets contain only finite values. Infinities and NaNs are replaced
 	 * by +/- MAX_VALUE and 0, respectively.
 	 * All other dataset types are ignored.
-	 * 
+	 *
 	 * @param a dataset
 	 */
 	public static void makeFinite(Dataset a) {
@@ -2107,7 +2108,7 @@ public class DatasetUtils {
 	}
 
 	/**
-	 * Find first occurrences in one dataset of values given in another sorted dataset  
+	 * Find first occurrences in one dataset of values given in another sorted dataset
 	 * @param a
 	 * @param values sorted 1D dataset of values to find
 	 * @return absolute indexes of those first occurrences (-1 is used to indicate value not found)
@@ -2124,7 +2125,7 @@ public class DatasetUtils {
 		if (values.getDType() == Dataset.INT64) {
 			while (it.hasNext()) {
 				long x = a.getElementLongAbs(it.index);
-	
+
 				int l = 0; // binary search to find value in sorted dataset
 				long vl = values.getLong(l);
 				if (x <= vl) {
@@ -2156,7 +2157,7 @@ public class DatasetUtils {
 		} else {
 			while (it.hasNext()) {
 				double x = a.getElementDoubleAbs(it.index);
-	
+
 				int l = 0; // binary search to find value in sorted dataset
 				double vl = values.getDouble(l);
 				if (x <= vl) {
@@ -2209,7 +2210,7 @@ public class DatasetUtils {
 			while (it.hasNext()) {
 				i++;
 				long x = a.getElementLongAbs(it.index);
-	
+
 				int l = 0; // binary search to find value in sorted dataset
 				long vl = values.getLong(l);
 				if (x <= vl) {
@@ -2241,7 +2242,7 @@ public class DatasetUtils {
 			while (it.hasNext()) {
 				i++;
 				double x = a.getElementDoubleAbs(it.index);
-	
+
 				int l = 0; // binary search to find value in sorted dataset
 				double vl = values.getDouble(l);
 				if (x <= vl) {
@@ -2326,7 +2327,7 @@ public class DatasetUtils {
 	/**
 	 * Roll the specified axis backwards until it lies in given position
 	 * @param a
-	 * @param axis The rolled axis (index in shape array). Other axes are left unchanged in relative positions 
+	 * @param axis The rolled axis (index in shape array). Other axes are left unchanged in relative positions
 	 * @param start The position with it right of the destination of the rolled axis
 	 * @return dataset with rolled axis
 	 */
@@ -2366,7 +2367,7 @@ public class DatasetUtils {
 	}
 
 	/**
-	 * Flip items in left/right direction, column-wise, or along second axis 
+	 * Flip items in left/right direction, column-wise, or along second axis
 	 * @param a dataset must be at least 2D
 	 * @return view of flipped dataset
 	 */
@@ -2378,7 +2379,7 @@ public class DatasetUtils {
 	}
 
 	/**
-	 * Flip items in up/down direction, row-wise, or along first axis 
+	 * Flip items in up/down direction, row-wise, or along first axis
 	 * @param a dataset
 	 * @return view of flipped dataset
 	 */
@@ -2435,7 +2436,7 @@ public class DatasetUtils {
 	 * @param condition boolean dataset
 	 * @param x
 	 * @param y
-	 * @return dataset where content is x or y depending on whether condition is true or otherwise 
+	 * @return dataset where content is x or y depending on whether condition is true or otherwise
 	 */
 	public static Dataset select(BooleanDataset condition, Object x, Object y) {
 		Object[] all = new Object[] {condition, x, y};
@@ -2695,7 +2696,7 @@ public class DatasetUtils {
 			return a.getByBoolean(b);
 		} catch (IllegalArgumentException e) {
 			final int length = ((Number) b.sum()).intValue();
-	
+
 			BroadcastPairIterator it = new BroadcastPairIterator(a, b, null, false);
 			int size = ShapeUtils.calcSize(it.getShape());
 			Dataset c;
@@ -2712,7 +2713,7 @@ public class DatasetUtils {
 				}
 			}
 			c = DatasetFactory.zeros(new int[] {size}, a.getDType());
-	
+
 			int i = 0;
 			if (it.isOutputDouble()) {
 				while (it.hasNext()) {
@@ -2727,7 +2728,7 @@ public class DatasetUtils {
 					}
 				}
 			}
-	
+
 			return c;
 		}
 	}
