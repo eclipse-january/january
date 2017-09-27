@@ -1583,8 +1583,10 @@ public class AbstractDatasetTest {
 	@Test
 	public void testSum() {
 		Dataset a = DatasetFactory.createRange(IntegerDataset.class, 1024*1024);
+		assertEquals("Sum", -524288, a.sum());
 
-//		assertEquals("Typed sum", -524288, a.typedSum(Dataset.INT32));
+		a = a.cast(DoubleDataset.class);
+		assertEquals("Sum", 1024*512*(1024.*1024 - 1), ((Number) a.sum()).doubleValue(), 1e-6);
 
 		a = DatasetFactory.createRange(DoubleDataset.class, 12);
 		a.setShape(3,4);

@@ -191,4 +191,12 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/january/metadata/StatisticsMetadata.java" type="org.eclipse.january.metadata.StatisticsMetadata">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.metadata.StatisticsMetadata"/>
+                <message_argument value="setMaximumMinimumSum(T, T, T, boolean[])"/>
+            </message_arguments>
+        </filter>
+    </resource>
 </component>
