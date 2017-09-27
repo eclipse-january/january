@@ -16,6 +16,7 @@ import javax.measure.Unit;
 
 /**
  * This metadata describes the unit associated with the quantity stored in a dataset
+ * @since 2.1
  */
 public interface UnitMetadata extends MetadataType {
 
