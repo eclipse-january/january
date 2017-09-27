@@ -95,8 +95,12 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 
 	@Override
 	public IndexIterator getSliceIterator(SliceND slice) {
-		if (stride != null)
+		if (ShapeUtils.calcLongSize(slice.getShape()) == 0) {
+			return new NullIterator(shape, slice.getShape());
+		}
+		if (stride != null) {
 			return new StrideIterator(isize, shape, stride, offset, slice);
+		}
 
 		return new SliceIterator(shape, size, isize, slice);
 	}

@@ -46,6 +46,13 @@ public class StrideIterator extends SliceIterator {
 	}
 
 	public StrideIterator(final int isize, final int[] shape, final int[] strides, final int offset, final int element) {
+		int rank = shape.length;
+		start = new int[rank];
+		stop = shape;
+		step = new int[rank];
+		Arrays.fill(step, 1);
+		this.sshape = shape;
+
 		init(isize, shape, strides, offset, element);
 		reset();
 	}
@@ -58,17 +65,17 @@ public class StrideIterator extends SliceIterator {
 		this(isize, shape, oStrides, oOffset, new SliceND(shape, start, stop, step));
 	}
 
-	public StrideIterator(final int isize, final int[] shape, final int[] oStrides, final int oOffset, final SliceND slice) {
-		int rank = shape.length;
-		int[] strides = new int[rank];
-		int[] offset = new int[1];
-		int[] newShape = AbstractDataset.createStrides(slice, isize, shape, oStrides, oOffset, strides, offset);
+	public StrideIterator(final int isize, final int[] shape, final int[] strides, final int offset, final SliceND slice) {
+		start = slice.getStart();
+		stop = slice.getStop();
+		step = slice.getStep();
+		this.sshape = slice.getShape();
 
-		init(isize, newShape, strides, offset[0], 0);
+		init(isize, shape, strides, offset, 0);
 		reset();
 	}
 
-	private void init(final int isize, final int[] shape, final int[] strides, final int offset, final int element) {
+	private void init(final int isize, final int[] shape, final int[] strides, int offset, final int element) {
 		this.isize = isize;
 		istep = isize;
 		this.shape = shape;
@@ -77,37 +84,36 @@ public class StrideIterator extends SliceIterator {
 		pos = new int[rank];
 		delta = new int[rank];
 		this.element = element;
-		if (strides != null) {
-			stride = strides;
-			for (int j = endrank; j >= 0; j--) {
-				int s = shape[j];
-				if (s == 0) {
-					zero = true;
-				}
-				delta[j] = stride[j] * s;
-			}
-		} else {
+		if (strides == null) {
+			offset = 0;
 			stride = new int[rank];
 			int s = isize;
 			for (int j = endrank; j >= 0; j--) {
 				stride[j] = s;
 				s *= shape[j];
-				delta[j] = s;
 			}
-			imax = s;
-			zero = s == 0;
+		} else {
+			stride = strides.clone();
 		}
+
+		for (int j = endrank; j >= 0; j--) {
+			int t = stride[j];
+			offset += t * start[j];
+			t *= step[j];
+			stride[j] = t;
+			int s = sshape[j];
+			if (!zero) {
+				zero = s == 0;
+			}
+			delta[j] = s * t;
+		}
+
 		nstart = offset;
 	}
 
 	@Override
 	void calcGap() {
 		// do nothing
-	}
-
-	@Override
-	public int[] getShape() {
-		return shape;
 	}
 
 	@Override
@@ -124,12 +130,13 @@ public class StrideIterator extends SliceIterator {
 		}
 		for (; j >= 0; j--) {
 			index += stride[j];
-			final int p = pos[j] + 1;
-			if (p < shape[j]) {
+			final int s = step[j];
+			final int p = pos[j] + s;
+			if ((s > 0 && p < stop[j]) || (s < 0 && p > stop[j])) {
 				pos[j] = p;
 				break;
 			}
-			pos[j] = 0;
+			pos[j] = start[j];
 			index -= delta[j]; // reset this dimension
 		}
 		return j >= 0;
@@ -142,9 +149,9 @@ public class StrideIterator extends SliceIterator {
 
 	@Override
 	public void reset() {
-		Arrays.fill(pos, 0);
+		System.arraycopy(start, 0, pos, 0, start.length);
 		if (endrank >= 0) {
-			pos[endrank] = -1;
+			pos[endrank] -= step[endrank];
 			index = nstart - stride[endrank];
 		} else {
 			index = -istep;

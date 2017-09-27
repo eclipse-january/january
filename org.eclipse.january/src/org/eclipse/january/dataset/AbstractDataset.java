@@ -391,9 +391,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		if (ShapeUtils.calcLongSize(slice.getShape()) == 0) {
 			return new NullIterator(shape, slice.getShape());
 		}
-		if (stride != null)
+		if (stride != null) {
 			return new StrideIterator(getElementsPerItem(), shape, stride, offset, slice);
-
+		}
 		return new SliceIterator(shape, size, slice);
 	}
 
