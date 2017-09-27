@@ -890,7 +890,7 @@ public class DatasetFactory {
 	 *            can be a Java list, array or Number
 	 * @return dataset
 	 * @throws IllegalArgumentException if dataset class is not known
-	 * @since 2.0
+	 * @since 2.1
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Dataset> T createFromObject(Class<T> clazz, Object obj) {
