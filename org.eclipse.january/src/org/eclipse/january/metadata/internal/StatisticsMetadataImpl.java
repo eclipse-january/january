@@ -90,6 +90,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 		private static final long serialVersionUID = -8707875904521260325L;
 		T maximum;
 		T minimum;
+		T sum;
 		List<int[]> maximumPositions;
 		List<int[]> minimumPositions;
 	}
@@ -131,7 +132,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 		// FIXME not thread-safe...
 		if (maxMin) {
 			if (mms[idx].maximum == null) {
-				setMaxMin(mms[idx], ignoreNaNs, ignoreInfs);
+				setMaxMinSum(mms[idx], ignoreNaNs, ignoreInfs);
 			}
 		} else {
 			if (summaries[idx] == null) {
@@ -149,11 +150,11 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 	 * @param ignoreInfs if true, ignore infinities
 	 */
 	@SuppressWarnings("unchecked")
-	private void setMaxMin(final MaxMin<T> mm, final boolean ignoreNaNs, final boolean ignoreInfs) {
+	private void setMaxMinSum(final MaxMin<T> mm, final boolean ignoreNaNs, final boolean ignoreInfs) {
 		final IndexIterator iter = dataset.getIterator();
 
 		if (!DTypeUtils.isDTypeNumerical(dtype)) { // TODO FIXME for strings
-			 // treat non-numerical as strings in lexicographic order
+			// treat non-numerical as strings in lexicographic order
 			String smax = dataset.getStringAbs(0);
 			String smin = smax;
 			while (iter.hasNext()) {
@@ -170,6 +171,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 			hash = hash * 19 + dtype * 17 + isize;
 			mm.maximum = (T) smax;
 			mm.minimum = (T) smin;
+			mm.sum = null;
 			mm.maximumPositions = null;
 			mm.minimumPositions = null;
 			return;
@@ -178,7 +180,8 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 		if (isize == 1) {
 			double amax = Double.NEGATIVE_INFINITY;
 			double amin = Double.POSITIVE_INFINITY;
-	
+			double asum = 0;
+
 			boolean hasNaNs = false;
 			if (dataset.hasFloatingPointElements() && (ignoreNaNs || ignoreInfs)) {
 				while (iter.hasNext()) {
@@ -192,6 +195,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 						if (ignoreInfs)
 							continue;
 					}
+					asum += val;
 					if (val > amax) {
 						amax = val;
 					}
@@ -207,6 +211,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 						hasNaNs = true;
 						continue;
 					}
+					asum += val;
 					if (val > amax) {
 						amax = val;
 					}
@@ -218,6 +223,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 				while (iter.hasNext()) {
 					final long val = dataset.getElementLongAbs(iter.index);
 					hash = (int) (hash * 19 + val);
+					asum += val;
 					if (val > amax) {
 						amax = val;
 					}
@@ -229,6 +235,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 
 			mm.maximum = (T) (hasNaNs ? Double.NaN : DTypeUtils.fromDoubleToBiggestNumber(amax, dtype));
 			mm.minimum = (T) (hasNaNs ? Double.NaN : DTypeUtils.fromDoubleToBiggestNumber(amin, dtype));
+			mm.sum = (T) (hasNaNs ? Double.NaN : DTypeUtils.fromDoubleToBiggestNumber(asum, dtype));
 		} else {
 			while (iter.hasNext()) {
 				for (int j = 0; j < isize; j++) {
@@ -239,6 +246,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 
 			mm.maximum = null;
 			mm.minimum = null;
+			mm.sum = null;
 		}
 
 		hash = hash * 19 + dtype * 17 + isize;
@@ -298,6 +306,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 
 			mm.maximum = (T) (hasNaNs ? Double.NaN : DTypeUtils.fromDoubleToBiggestNumber(stats.getMax(), dtype));
 			mm.minimum = (T) (hasNaNs ? Double.NaN : DTypeUtils.fromDoubleToBiggestNumber(stats.getMin(), dtype));
+			mm.sum = (T) (hasNaNs ? Double.NaN : DTypeUtils.fromDoubleToBiggestNumber(stats.getSum(), dtype));
 		} else {
 			double[] vals = new double[isize];
 			while (iter.hasNext()) {
@@ -325,13 +334,16 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 
 			double[] lmax = new double[isize];
 			double[] lmin = new double[isize];
+			double[] lsum = new double[isize];
 			for (int j = 0; j < isize; j++) {
 				stats = istats[j];
 				lmax[j] = stats.getMax();
 				lmin[j] = stats.getMin();
+				lsum[j] = stats.getSum();
 			}
 			mm.maximum = (T) lmax;
 			mm.minimum = (T) lmin;
+			mm.sum = (T) lsum;
 		}
 
 		hash = hash * 19 + dtype * 17 + isize;
@@ -387,6 +399,12 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 	}
 
 	@Override
+	public T getSum(boolean... ignoreInvalids) {
+		int idx = refresh(isize == 1, ignoreInvalids);
+		return mms[idx].sum;
+	}
+
+	@Override
 	public T getMaximum(boolean... ignoreInvalids) {
 		int idx = refresh(isize == 1, ignoreInvalids);
 		return mms[idx].maximum;
@@ -394,10 +412,16 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 
 	@Override
 	public void setMaximumMinimum(T maximum, T minimum, boolean... ignoreInvalids) {
+		setMaximumMinimumSum(maximum, minimum, null, ignoreInvalids);
+	}
+
+	@Override
+	public void setMaximumMinimumSum(T maximum, T minimum, T sum, boolean... ignoreInvalids) {
 		int idx = refresh(true, ignoreInvalids);
 		MaxMin<T> mm = mms[idx];
 		mm.maximum = maximum;
 		mm.minimum = minimum;
+		mm.sum = sum;
 		mm.maximumPositions = null;
 		mm.minimumPositions = null;
 	}
@@ -449,22 +473,6 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 			double[] result = new double[isize];
 			for (int i = 0; i < isize; i++) {
 				result[i] = summary[i].getMean();
-			}
-			return (T) result;
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public T getSum(boolean... ignoreInvalids) { // TODO
-		int idx = refresh(false, ignoreInvalids);
-		SummaryStatistics[] summary = summaries[idx];
-		if (isize == 1) {
-			return (T) (Double) summary[0].getSum();
-		} else {
-			double[] result = new double[isize];
-			for (int i = 0; i < isize; i++) {
-				result[i] = summary[i].getSum();
 			}
 			return (T) result;
 		}

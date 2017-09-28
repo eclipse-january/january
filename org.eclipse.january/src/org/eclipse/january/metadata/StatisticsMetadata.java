@@ -24,7 +24,7 @@ import org.eclipse.january.dataset.Dataset;
 public interface StatisticsMetadata<T> extends MetadataType {
 
 	/**
-	 * 
+	 *
 	 * @param dataset
 	 */
 	public void initialize(Dataset dataset);
@@ -63,7 +63,17 @@ public interface StatisticsMetadata<T> extends MetadataType {
 	 * @param minimum the minimum to set
 	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
 	 */
+	@Deprecated
 	public void setMaximumMinimum(T maximum, T minimum, boolean... ignoreInvalids);
+
+	/**
+	 * @param maximum the maximum to set
+	 * @param minimum the minimum to set
+	 * @param sum the sum to set
+	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
+	 * @since 2.1
+	 */
+	public void setMaximumMinimumSum(T maximum, T minimum, T sum, boolean... ignoreInvalids);
 
 	/**
 	 * @param maximumPositions the maximum positions to set
