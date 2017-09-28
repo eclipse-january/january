@@ -4,7 +4,29 @@
         <filter id="923795461">
             <message_arguments>
                 <message_argument value="2.1.0"/>
+                <message_argument value="2.0.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="923795461">
+            <message_arguments>
+                <message_argument value="2.1.0"/>
                 <message_argument value="2.0.2"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.january.dataset.DiscontiguousIterator">
+        <filter id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.DiscontiguousIterator"/>
+                <message_argument value="org.eclipse.january_2.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.january.dataset.NullStorelessUnivariateStatistic">
+        <filter id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.NullStorelessUnivariateStatistic"/>
+                <message_argument value="org.eclipse.january_2.1.0"/>
             </message_arguments>
         </filter>
     </resource>
