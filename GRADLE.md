@@ -5,34 +5,16 @@ Build
 -----
 This guide assumes that you are familiar with gradle and have a build.gradle file or other named gradle where you would like to add a January dependency into your build.
 
-Goomph
-------
-The easiest way to allow p2 repositories to resolve in your gradle build is to use goomph: https://github.com/diffplug/goomph
-
 Steps
 -----
-1. Add  
+1. Make sure  
 ~~~~ 
-"com.diffplug.gradle.oomph.ide" version "3.8.1"
+mavenCentral()
 ~~~~  
-to the 'plugins { }' block of your gradle file.
+is in your repositories{} block
 
-2. Add  
-~~~~ 
-apply plugin: 'com.diffplug.gradle.oomph.ide' 
-~~~~ 
-to use the plugin
 
-3. Add 
-
-~~~~ 
-oomphIde {
-    repo 'http://download.eclipse.org/january/releases/2.0.2/repository'
-    iu   'org.eclipse.january'
-}
-~~~~
-
-4. Add dependency 
+2. Add dependency 
 ~~~~ 
 compile "org.eclipse.january:org.eclipse.january:2.0.2" 
 ~~~~ 
