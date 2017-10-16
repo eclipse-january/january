@@ -16,11 +16,13 @@ Steps
 "com.diffplug.gradle.oomph.ide" version "3.8.1"
 ~~~~  
 to the 'plugins { }' block of your gradle file.
+
 2. Add  
 ~~~~ 
 apply plugin: 'com.diffplug.gradle.oomph.ide' 
 ~~~~ 
 to use the plugin
+
 3. Add 
 
 ~~~~ 
