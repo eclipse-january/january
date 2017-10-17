@@ -1069,4 +1069,16 @@ public class DatasetFactory {
 	public static <T extends Dataset> T createLogSpace(Class<T> clazz, final double start, final double stop, final int length, final double base) {
 		return (T) createLogSpace(start, stop, length, base, DTypeUtils.getDType(clazz));
 	}
+	
+	/**
+	 * Makes a dataset unmodifiable without copying the data.
+	 * This is useful if you want to make the data available but
+	 * also to maintain encapsulation.
+	 * 
+	 * @param dataset
+	 * @return An unmodifiable dataset
+	 */
+	public static Dataset unmodifiableDataset(Dataset dataset) {
+		return new ImmutableDataset(dataset);
+	}
 }
