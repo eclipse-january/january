@@ -16,7 +16,7 @@ is in your repositories{} block
 
 2. Add dependency 
 ~~~~ 
-compile "org.eclipse.january:org.eclipse.january:2.0.2" 
+compile "org.eclipse.january:org.eclipse.january:2.1.0" 
 ~~~~ 
 to your file.
 
