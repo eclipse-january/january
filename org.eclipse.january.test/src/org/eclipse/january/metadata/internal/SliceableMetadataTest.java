@@ -27,6 +27,7 @@ import org.eclipse.january.dataset.ILazyDataset;
 import org.eclipse.january.dataset.Random;
 import org.eclipse.january.dataset.ShortDataset;
 import org.eclipse.january.dataset.Slice;
+import org.eclipse.january.dataset.SliceND;
 import org.junit.Test;
 
 public class SliceableMetadataTest {
@@ -145,6 +146,30 @@ public class SliceableMetadataTest {
 			assertArrayEquals(sliced.getShape(), tmd.getMap().get("1").getShape());
 			assertArrayEquals(sliced.getShape(), tmd.getLazyDataset2().getShape());
 			assertArrayEquals(sliced.getShape(), tmd.getListOfArrays().get(0)[0].getShape());
+		} catch (Exception e) {
+			fail("Should not fail: " + e);
+		}
+	}
+	
+	@Test
+	public void testStepBroadcasted() {
+		
+		final int[] bshape = new int[] {1, 5, 1};
+		final int[] shape = new int[] {4, 5, 6};
+		ILazyDataset ld = Random.lazyRand(Dataset.INT32, "Metadata1", bshape);
+		SliceableTestMetadata md = new SliceableTestMetadata(ld, null, null, null, null);
+
+		ILazyDataset dataset = Random.lazyRand(Dataset.INT32, "Main", shape);
+		dataset.addMetadata(md);
+		
+		try {
+			SliceND snd = new SliceND(dataset.getShape());
+			snd.setSlice(1, 0, 5, 2);
+			ILazyDataset slicedStep = dataset.getSliceView(snd);
+			SliceableTestMetadata tmd = slicedStep.getFirstMetadata(SliceableTestMetadata.class);
+			ILazyDataset lazyDataset = tmd.getLazyDataset();
+			assertEquals(slicedStep.getShape()[1], lazyDataset.getShape()[1]);
+			
 		} catch (Exception e) {
 			fail("Should not fail: " + e);
 		}
