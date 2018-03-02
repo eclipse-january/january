@@ -507,16 +507,6 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	@Override
-	public String getName() {
-		return name;
-	}
-
-	@Override
-	public void setName(final String name) {
-		this.name = name;
-	}
-
-	@Override
 	public int getSize() {
 		return size;
 	}
