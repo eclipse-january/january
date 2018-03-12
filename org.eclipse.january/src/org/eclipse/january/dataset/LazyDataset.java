@@ -418,7 +418,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 				LazyDatasetBase ba = (LazyDatasetBase) a;
 				ba.metadata = copyMetadata();
 				if (oMetadata != null)
-					ba.restoreMetadata(oMetadata);
+					ba.restoreMetadata(copyMetadata(oMetadata));
 				//metadata axis may be larger than data
 				if (!nslice.isAll() || nslice.getMaxShape() != nslice.getShape())
 					ba.sliceMetadata(true, nslice);

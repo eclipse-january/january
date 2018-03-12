@@ -15,6 +15,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.eclipse.january.DatasetException;
 import org.eclipse.january.MetadataException;
@@ -267,6 +268,34 @@ public class AxesMetadataTest {
         
         ILazyDataset view = dataset.getSliceView(new Slice(1,2),null,null);
         IDataset slice = view.getSlice();
+        assertTrue(slice != null);
+    }
+    
+    @Test
+    public void testBroadcastWithErrors() throws DatasetException {
+    	final int[] shape = new int[] { 2, 3, 10, 11};
+    	final int[] ashape = new int[] {11};
+    	
+    	ILazyDataset dataset = Random.lazyRand(Dataset.INT32, "Main", shape);
+    	ILazyDataset ax = Random.lazyRand(Dataset.INT32, "Axis", ashape);
+    	ILazyDataset er = Random.lazyRand(Dataset.INT32, "Error", ashape);
+    	ax.setErrors(er);
+    	
+    	
+    	AxesMetadata amd = MetadataFactory.createMetadata(AxesMetadata.class, shape.length);
+        amd.setAxis(3, ax);
+        dataset.setMetadata(amd); 
+        dataset = dataset.getSliceView();
+        
+        IDataset d = dataset.getSlice(new Slice(1,2),new Slice(1,2),new Slice(1,2),null);
+        AxesMetadata m = d.getFirstMetadata(AxesMetadata.class);
+        m.getAxes()[3].getSlice();
+        d = d.squeeze();
+        AxesMetadata axOut = d.getFirstMetadata(AxesMetadata.class);
+        
+        IDataset slice = axOut.getAxes()[0].getSlice();
+        
+        slice = axOut.getAxes()[0].getSlice();
         assertTrue(slice != null);
     }
 }
