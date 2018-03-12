@@ -11,6 +11,6 @@ Export-Package: org.eclipse.january;version="2.1.2",
  org.eclipse.january.metadata;version="2.1.2",
  org.eclipse.january.metadata.internal;version="2.1.2";x-internal:=true
 Require-Bundle: org.apache.commons.math3;bundle-version="[3.2.0,4.0.0)";visibility:=reexport,
- javax.measure.unit-api;bundle-version="[1.0.0,2.0.0)";visibility:=reexport
+ javax.measure.unit-api;bundle-version="[1.0.0,2.0.0)"
 Import-Package: org.slf4j;version="[1.7.2,2.0.0)"
 Bundle-Vendor: Eclipse January
