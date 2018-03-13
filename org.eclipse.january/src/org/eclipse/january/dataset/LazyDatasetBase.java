@@ -302,13 +302,24 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	 * @since 2.0
 	 */
 	protected synchronized ConcurrentMap<Class<? extends MetadataType>, List<MetadataType>> copyMetadata() {
-		return copyMetadata(metadata);
+		return copyMetadata(metadata, null);
 	}
 
 	/**
 	 * @since 2.0
 	 */
 	protected static ConcurrentMap<Class<? extends MetadataType>, List<MetadataType>> copyMetadata(Map<Class<? extends MetadataType>, List<MetadataType>> metadata) {
+		return copyMetadata(metadata, null);
+	}
+
+	/**
+	 * Copy metadata. If oMetadata is not null, then copy from that when it has the corresponding items
+	 * @since 2.1.2
+	 * @param metadata
+	 * @param oMetadata can be null
+	 * @return
+	 */
+	protected static ConcurrentMap<Class<? extends MetadataType>, List<MetadataType>> copyMetadata(Map<Class<? extends MetadataType>, List<MetadataType>> metadata, Map<Class<? extends MetadataType>, List<MetadataType>> oMetadata) {
 		if (metadata == null)
 			return null;
 
@@ -316,6 +327,9 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 
 		for (Class<? extends MetadataType> c : metadata.keySet()) {
 			List<MetadataType> l = metadata.get(c);
+			if (!l.isEmpty() && oMetadata != null && oMetadata.containsKey(c)) { // only override when not empty
+				l = oMetadata.get(c); 
+			}
 			List<MetadataType> nl = new ArrayList<MetadataType>(l.size());
 			map.put(c, nl);
 			for (MetadataType m : l) {
