@@ -397,8 +397,9 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	@Override
 	public Dataset getSlice(IMonitor monitor, SliceND slice) throws DatasetException {
 
-		if (loader != null && !loader.isFileReadable())
+		if (loader != null && !loader.isFileReadable()) {
 			return null; // TODO add interaction to use plot (or remote) server to load dataset
+		}
 
 		SliceND nslice = calcTrueSlice(slice);
 
@@ -416,19 +417,19 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 			a.setName(name + AbstractDataset.BLOCK_OPEN + nslice.toString() + AbstractDataset.BLOCK_CLOSE);
 			if (metadata != null && a instanceof LazyDatasetBase) {
 				LazyDatasetBase ba = (LazyDatasetBase) a;
-				ba.metadata = copyMetadata();
-				if (oMetadata != null)
-					ba.restoreMetadata(oMetadata);
-				//metadata axis may be larger than data
-				if (!nslice.isAll() || nslice.getMaxShape() != nslice.getShape())
+				ba.metadata = copyMetadata(metadata, oMetadata);
+				// metadata axis may be larger than data
+				if (!nslice.isAll() || nslice.getMaxShape() != nslice.getShape()) {
 					ba.sliceMetadata(true, nslice);
+				}
 			}
 		}
 		if (map != null) {
 			a = a.getTransposedView(map);
 		}
-		if (slice != null)
+		if (slice != null) {
 			a.setShape(slice.getShape());
+		}
 		a.addMetadata(MetadataFactory.createMetadata(OriginMetadata.class, this, nslice.convertToSlice(), oShape, null, name));
 		
 		return a;
