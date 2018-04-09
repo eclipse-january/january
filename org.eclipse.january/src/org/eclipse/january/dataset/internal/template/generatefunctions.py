@@ -1,6 +1,6 @@
 ###
 # *******************************************************************************
-# * Copyright (c) 2011, 2017 Diamond Light Source Ltd.
+# * Copyright (c) 2011, 2017, 2018 Diamond Light Source Ltd.
 # * All rights reserved. This program and the accompanying materials
 # * are made available under the terms of the Eclipse Public License v1.0
 # * which accompanies this distribution, and is available at
@@ -799,6 +799,29 @@ def generatefunctions(funcs_file):
 def generateclass(funcs, shell):
     while True:
         l = shell.readline()
+        if l.startswith("package org.eclipse.january.dataset.internal.template;"):
+            print("package org.eclipse.january.dataset;")
+            break
+        print l,
+    while True: # edit imports
+        l = shell.readline()
+        if l.startswith("// start of imports that will be omitted in derived class"):
+            break
+        print l,
+    print("import org.apache.commons.math3.complex.Complex;")
+    print("import org.eclipse.january.dataset.DTypeUtils;")
+    while True: # edit imports
+        l = shell.readline()
+        if l.startswith("// end of imports that will be omitted in derived class"):
+            break
+    while True:
+        l = shell.readline()
+        if l.startswith("class MathsPreface {"):
+            print("public class Maths {")
+            break
+        print l,
+    while True:
+        l = shell.readline()
         if l.startswith("// Start of generated code"):
             print l,
             break
@@ -829,7 +852,7 @@ if __name__ == '__main__':
     if len(sys.argv) > 2:
         fname = sys.argv[2]
     else:
-        fname = "../GeneratedMaths.java"
+        fname = "MathsPreface.java"
     shell_file = open(fname, 'r')
 
     generateclass(funcs_file, shell_file)
