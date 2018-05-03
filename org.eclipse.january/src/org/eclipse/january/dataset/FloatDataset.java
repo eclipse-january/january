@@ -156,22 +156,29 @@ public class FloatDataset extends AbstractDataset {
 
 	@Override
 	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
 		if (!super.equals(obj)) {
 			return false;
 		}
 
-		if (getRank() == 0 && !getClass().equals(obj.getClass())) // already true for zero-rank dataset
+		if (getRank() == 0 && !getClass().equals(obj.getClass())) { // already true for zero-rank dataset
 			return true;
+		}
 
 		FloatDataset other = (FloatDataset) obj;
-//		if (size == 1) // for zero-rank datasets
-//			return getAbs(offset) == other.getAbs(other.offset);
+		if (data == other.data && stride == null && other.stride == null) {
+			return true;
+		}
 
 		IndexIterator iter = getIterator();
 		IndexIterator oiter = other.getIterator();
 		while (iter.hasNext() && oiter.hasNext()) {
-			if (data[iter.index] != other.data[oiter.index]) // OBJECT_UNEQUAL
+			if (data[iter.index] != other.data[oiter.index]) { // OBJECT_UNEQUAL
 				return false;
+			}
 		}
 		return true;
 	}
