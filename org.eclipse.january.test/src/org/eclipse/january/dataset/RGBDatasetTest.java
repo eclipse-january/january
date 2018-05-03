@@ -87,8 +87,8 @@ public class RGBDatasetTest {
 				};
 
 		RGBDataset rgb = RGBDataset.createFromCompoundDataset(new CompoundShortDataset(3, rgbs, 6));
-		Dataset g = new ShortDataset(new short[] {76,  169,   74,  216,  141,  115}, 6);
-		TestUtils.assertDatasetEquals(g, rgb.createGreyDataset(Dataset.INT16), 1, 1);
+		ShortDataset g = new ShortDataset(new short[] {76,  169,   74,  216,  141,  115}, 6);
+		TestUtils.assertDatasetEquals(g, rgb.createGreyDataset(ShortDataset.class), 1, 1);
 
 		Dataset h = new ShortDataset(new short[] {0, 60, 120, 180, 240, 300}, 6);
 		Dataset v = new FloatDataset(new float[] {1, 0.75f, 0.5f, 1, 1, 0.75f}, 6);

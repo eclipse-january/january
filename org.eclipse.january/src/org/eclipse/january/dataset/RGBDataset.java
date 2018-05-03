@@ -559,9 +559,9 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * Convert colour dataset to a grey-scale one using the NTSC formula, aka ITU-R BT.601, for RGB to luma mapping
 	 * @param clazz
 	 * @return a grey-scale dataset of given type
-	 * @since 2.1
+	 * @since 2.2
 	 */
-	public <T extends Dataset> T createGreyDataset(final T clazz) {
+	public <T extends Dataset> T createGreyDataset(final Class<T> clazz) {
 		return (T) createGreyDataset(clazz, Wr, Wg, Wb);
 	}
 
@@ -573,10 +573,10 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * @param blue weight
 	 * @param dtype
 	 * @return a grey-scale dataset of given class
-	 * @since 2.1
+	 * @since 2.2
 	 */
 	@SuppressWarnings("unchecked")
-	public <T extends Dataset> T createGreyDataset(final T clazz, final double red, final double green, final double blue) {
+	public <T extends Dataset> T createGreyDataset(final Class<T> clazz, final double red, final double green, final double blue) {
 		return (T) createGreyDataset(red, green, blue, DTypeUtils.getDType(clazz));
 	}
 
