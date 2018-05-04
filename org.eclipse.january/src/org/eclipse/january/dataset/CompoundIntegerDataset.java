@@ -253,15 +253,27 @@ public class CompoundIntegerDataset extends AbstractCompoundDataset {
 			return true;
 		}
 
-		if (!super.equals(obj)) {
+		if (obj == null) {
 			return false;
 		}
 
-		if (getRank() == 0 && !getClass().equals(obj.getClass())) { // already true for zero-rank dataset
-			return true;
+		if (!getClass().equals(obj.getClass())) {
+			if (getRank() == 0) { // for zero-rank datasets
+				return obj.equals(getObjectAbs(offset));
+			}
+			return false;
 		}
 
 		CompoundIntegerDataset other = (CompoundIntegerDataset) obj;
+		if (isize != other.isize) {
+			return false;
+		}
+		if (size != other.size) {
+			return false;
+		}
+		if (!Arrays.equals(shape, other.shape)) {
+			return false;
+		}
 		if (data == other.data && stride == null && other.stride == null) {
 			return true;
 		}

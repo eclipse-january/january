@@ -72,33 +72,6 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (obj == null) {
-			return false;
-		}
-
-		if (!getClass().equals(obj.getClass())) {
-			if (getRank() == 0) { // for zero-rank datasets
-				return obj.equals(getObjectAbs(offset));
-			}
-			return false;
-		}
-
-		Dataset other = (Dataset) obj;
-		if (getElementsPerItem() != other.getElementsPerItem()) {
-			return false;
-		}
-		if (size != other.getSize()) {
-			return false;
-		}
-		if (!Arrays.equals(shape, other.getShapeRef())) {
-			return false;
-		}
-
-		return true;
-	}
-
-	@Override
 	public int hashCode() {
 		return getStats().getHash(shape);
 	}
