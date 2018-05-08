@@ -316,16 +316,20 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		}
 
 		ConcurrentHashMap<Class<? extends MetadataType>, List<MetadataType>> map = new ConcurrentHashMap<Class<? extends MetadataType>, List<MetadataType>>();
+		copyMetadata(metadata, map);
+		return map;
+	}
 
-		for (Class<? extends MetadataType> c : metadata.keySet()) {
-			List<MetadataType> l = metadata.get(c);
+	private static void copyMetadata(Map<Class<? extends MetadataType>, List<MetadataType>> inMetadata,
+			Map<Class<? extends MetadataType>, List<MetadataType>> outMetadata) {
+		for (Class<? extends MetadataType> c : inMetadata.keySet()) {
+			List<MetadataType> l = inMetadata.get(c);
 			List<MetadataType> nl = new ArrayList<MetadataType>(l.size());
-			map.put(c, nl);
+			outMetadata.put(c, nl);
 			for (MetadataType m : l) {
 				nl.add(m.clone());
 			}
 		}
-		return map;
 	}
 
 	interface MetadatasetAnnotationOperation {
@@ -982,9 +986,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	}
 
 	protected void restoreMetadata(Map<Class<? extends MetadataType>, List<MetadataType>> oldMetadata) {
-		for (Class<? extends MetadataType> mc : oldMetadata.keySet()) {
-			metadata.put(mc, oldMetadata.get(mc));
-		}
+		copyMetadata(oldMetadata, metadata);
 	}
 
 	protected ILazyDataset createFromSerializable(Serializable blob, boolean keepLazy) {
