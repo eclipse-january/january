@@ -13,6 +13,12 @@
                 <message_argument value="2.0.2"/>
             </message_arguments>
         </filter>
+        <filter id="923795461">
+            <message_arguments>
+                <message_argument value="2.2.0"/>
+                <message_argument value="2.0.0"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.january.dataset.DiscontiguousIterator">
         <filter id="305324134">
@@ -21,12 +27,42 @@
                 <message_argument value="org.eclipse.january_2.1.0"/>
             </message_arguments>
         </filter>
+        <filter id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.DiscontiguousIterator"/>
+                <message_argument value="org.eclipse.january_2.2.0"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.january.dataset.NullStorelessUnivariateStatistic">
         <filter id="305324134">
             <message_arguments>
                 <message_argument value="org.eclipse.january.dataset.NullStorelessUnivariateStatistic"/>
                 <message_argument value="org.eclipse.january_2.1.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.NullStorelessUnivariateStatistic"/>
+                <message_argument value="org.eclipse.january_2.2.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/january/dataset/BooleanBroadcastIterator.java" type="org.eclipse.january.dataset.BooleanBroadcastIterator">
+        <filter id="1108344834">
+            <message_arguments>
+                <message_argument value="2.1"/>
+                <message_argument value="2.2"/>
+                <message_argument value="org.eclipse.january.dataset.BooleanBroadcastIterator"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/january/dataset/BooleanContiguousIterator.java" type="org.eclipse.january.dataset.BooleanContiguousIterator">
+        <filter id="1108344834">
+            <message_arguments>
+                <message_argument value="2.1"/>
+                <message_argument value="2.2"/>
+                <message_argument value="org.eclipse.january.dataset.BooleanContiguousIterator"/>
             </message_arguments>
         </filter>
     </resource>
@@ -126,6 +162,48 @@
                 <message_argument value="BooleanIterator(IndexIterator, Dataset, boolean)"/>
             </message_arguments>
         </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.1"/>
+                <message_argument value="2.2"/>
+                <message_argument value="createIterator(Dataset, Dataset)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.1"/>
+                <message_argument value="2.2"/>
+                <message_argument value="createIterator(Dataset, Dataset, Dataset)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.1"/>
+                <message_argument value="2.2"/>
+                <message_argument value="createIterator(boolean, Dataset, Dataset, Dataset)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.1"/>
+                <message_argument value="2.2"/>
+                <message_argument value="createIterator(boolean, Dataset, Dataset, Dataset, boolean)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.1"/>
+                <message_argument value="2.2"/>
+                <message_argument value="getChoice()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.1"/>
+                <message_argument value="2.2"/>
+                <message_argument value="getOutput()"/>
+            </message_arguments>
+        </filter>
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="BooleanIterator(boolean, Dataset, Dataset, Dataset)"/>
@@ -197,11 +275,98 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/january/dataset/BooleanNullIterator.java" type="org.eclipse.january.dataset.BooleanNullIterator">
+        <filter id="1108344834">
+            <message_arguments>
+                <message_argument value="2.1"/>
+                <message_argument value="2.2"/>
+                <message_argument value="org.eclipse.january.dataset.BooleanNullIterator"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/january/dataset/DTypeUtils.java" type="org.eclipse.january.dataset.DTypeUtils">
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.1"/>
+                <message_argument value="2.2"/>
+                <message_argument value="toLong(double)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.1"/>
+                <message_argument value="2.2"/>
+                <message_argument value="toLong(float)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/january/dataset/Dataset.java" type="org.eclipse.january.dataset.Dataset">
         <filter id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.january.dataset.Dataset"/>
                 <message_argument value="getSliceIterator(SliceND)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1209008130">
+            <message_arguments>
+                <message_argument value="2.1"/>
+                <message_argument value="2.2"/>
+                <message_argument value="getSliceIterator(SliceND)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/january/dataset/DatasetFactory.java" type="org.eclipse.january.dataset.DatasetFactory">
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.1"/>
+                <message_argument value="2.2"/>
+                <message_argument value="createFromObject(Class&lt;T&gt;, Object)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.1"/>
+                <message_argument value="2.2"/>
+                <message_argument value="createRange(double, double, double)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.1"/>
+                <message_argument value="2.2"/>
+                <message_argument value="createRange(int, Class&lt;T&gt;, double)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.1"/>
+                <message_argument value="2.2"/>
+                <message_argument value="createRange(int, Class&lt;T&gt;, double, double, double)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/january/dataset/DatasetUtils.java" type="org.eclipse.january.dataset.DatasetUtils">
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.1"/>
+                <message_argument value="2.2"/>
+                <message_argument value="indexSort(Dataset, Integer)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.1"/>
+                <message_argument value="2.2"/>
+                <message_argument value="makeUnsigned(IDataset, boolean)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/january/dataset/LazyDatasetBase.java" type="org.eclipse.january.dataset.LazyDatasetBase">
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.1"/>
+                <message_argument value="2.2"/>
+                <message_argument value="setDirty()"/>
             </message_arguments>
         </filter>
     </resource>
@@ -212,12 +377,90 @@
                 <message_argument value="LazyMaths()"/>
             </message_arguments>
         </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.1"/>
+                <message_argument value="2.2"/>
+                <message_argument value="max(ILazyDataset, int[])"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.1"/>
+                <message_argument value="2.2"/>
+                <message_argument value="min(ILazyDataset, int[])"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/january/dataset/Maths.java" type="org.eclipse.january.dataset.Maths">
+        <filter id="338849923">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.Maths"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/january/dataset/RGBDataset.java" type="org.eclipse.january.dataset.RGBDataset">
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.1"/>
+                <message_argument value="2.2"/>
+                <message_argument value="createBlueDataset(T)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.1"/>
+                <message_argument value="2.2"/>
+                <message_argument value="createGreenDataset(T)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.1"/>
+                <message_argument value="2.2"/>
+                <message_argument value="createRedDataset(T)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/january/dataset/ShapeUtils.java" type="org.eclipse.january.dataset.ShapeUtils">
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.1"/>
+                <message_argument value="2.2"/>
+                <message_argument value="checkAxis(int, int)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/january/dataset/Stats.java" type="org.eclipse.january.dataset.Stats">
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.1"/>
+                <message_argument value="2.2"/>
+                <message_argument value="outlierValues(Dataset, Dataset, boolean, double, double, int)"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/january/metadata/StatisticsMetadata.java" type="org.eclipse.january.metadata.StatisticsMetadata">
         <filter id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.january.metadata.StatisticsMetadata"/>
                 <message_argument value="setMaximumMinimumSum(T, T, T, boolean[])"/>
+            </message_arguments>
+        </filter>
+        <filter id="1209008130">
+            <message_arguments>
+                <message_argument value="2.1"/>
+                <message_argument value="2.2"/>
+                <message_argument value="setMaximumMinimumSum(T, T, T, boolean[])"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/january/metadata/UnitMetadata.java" type="org.eclipse.january.metadata.UnitMetadata">
+        <filter id="1108344834">
+            <message_arguments>
+                <message_argument value="2.1"/>
+                <message_argument value="2.2"/>
+                <message_argument value="org.eclipse.january.metadata.UnitMetadata"/>
             </message_arguments>
         </filter>
     </resource>
