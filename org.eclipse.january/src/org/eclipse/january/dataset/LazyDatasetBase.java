@@ -206,8 +206,9 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	}
 
 	private synchronized void addMetadata(MetadataType metadata, boolean clear) {
-		if (metadata == null)
+		if (metadata == null) {
 			return;
+		}
 
 		if (this.metadata == null) {
 			this.metadata = new ConcurrentHashMap<Class<? extends MetadataType>, List<MetadataType>>();
@@ -284,8 +285,9 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 
 	@Override
 	public synchronized void clearMetadata(Class<? extends MetadataType> clazz) {
-		if (metadata == null)
+		if (metadata == null) {
 			return;
+		}
 
 		if (clazz == null) {
 			metadata.clear();
@@ -309,8 +311,9 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	 * @since 2.0
 	 */
 	protected static ConcurrentMap<Class<? extends MetadataType>, List<MetadataType>> copyMetadata(Map<Class<? extends MetadataType>, List<MetadataType>> metadata) {
-		if (metadata == null)
+		if (metadata == null) {
 			return null;
+		}
 
 		ConcurrentHashMap<Class<? extends MetadataType>, List<MetadataType>> map = new ConcurrentHashMap<Class<? extends MetadataType>, List<MetadataType>>();
 
@@ -419,7 +422,9 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 				stp = stop.clone();
 				ste = step.clone();
 				for (int i = 0; i < rank; i++) {
-					if (shape[i] >= oShape[i]) continue;
+					if (shape[i] >= oShape[i]) {
+						continue;
+					}
 					if (shape[i] == 1) {
 						stt[i] = 0;
 						stp[i] = 1;
@@ -430,8 +435,9 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 				}
 			}
 
-			if (asView || (lz instanceof IDataset))
+			if (asView || (lz instanceof IDataset)) {
 				return lz.getSliceView(stt, stp, ste);
+			}
 			try {
 				return lz.getSlice(stt, stp, ste);
 			} catch (DatasetException e) {
@@ -477,8 +483,9 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		@Override
 		public int change(int axis) {
 			if (matchRank) {
-				if (differences == null)
+				if (differences == null) {
 					init();
+				}
 
 				if (onesOnly) {
 					return differences[axis];
@@ -604,8 +611,9 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 
 		@Override
 		public ILazyDataset run(ILazyDataset lz) {
-			if (differences == null)
+			if (differences == null) {
 				init();
+			}
 
 			int[] lshape = lz.getShape();
 			if (Arrays.equals(newShape, lshape)) {
@@ -801,17 +809,19 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		if (metadata == null)
 			return;
 
-		for (Class<? extends MetadataType> c : metadata.keySet()) {
-			for (MetadataType m : metadata.get(c)) {
-				if (m == null)
+		for (List<MetadataType> l : metadata.values()) {
+			for (MetadataType m : l) {
+				if (m == null) {
 					continue;
+				}
 
 				Class<? extends MetadataType> mc = m.getClass();
 				do { // iterate over super-classes
 					processClass(op, m, mc, throwException);
 					Class<?> sclazz = mc.getSuperclass();
-					if (!MetadataType.class.isAssignableFrom(sclazz))
+					if (!MetadataType.class.isAssignableFrom(sclazz)) {
 						break;
+					}
 					mc = (Class<? extends MetadataType>) sclazz;
 				} while (true);
 			}
@@ -827,8 +837,9 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 			try {
 				f.setAccessible(true);
 				Object o = f.get(m);
-				if (o == null)
+				if (o == null) {
 					continue;
+				}
 
 				Object no = op.processField(f, o);
 				if (no != o) {
@@ -841,13 +852,15 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 						f.set(m, op.run((ILazyDataset) o));
 					} catch (Exception e) {
 						logger.error("Problem processing " + o, e);
-						if (!catchExceptions)
+						if (!catchExceptions) {
 							throw e;
+						}
 					}
 				} else if (o.getClass().isArray()) {
 					int l = Array.getLength(o);
-					if (l <= 0)
+					if (l <= 0) {
 						continue;
+					}
 
 					for (int i = 0; r == null && i < l; i++) {
 						r = Array.get(o, i);
@@ -859,8 +872,9 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 						}
 						continue;
 					}
-					if (n < 0)
+					if (n < 0) {
 						n = l;
+					}
 					Object narray = Array.newInstance(r.getClass(), n);
 					for (int i = 0, si = 0, di = 0; di < n && si < l; i++) {
 						int c = op.change(i);
@@ -882,8 +896,9 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 				} else if (o instanceof List<?>) {
 					List list = (List) o;
 					int l = list.size();
-					if (l <= 0)
+					if (l <= 0) {
 						continue;
+					}
 
 					for (int i = 0; r == null && i < l; i++) {
 						r = list.get(i);
@@ -899,8 +914,9 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 						continue;
 					}
 
-					if (n < 0)
+					if (n < 0) {
 						n = l;
+					}
 					Object narray = Array.newInstance(r.getClass(), n);
 					for (int i = 0, si = 0, di = 0; i < l && si < l; i++) {
 						int c = op.change(i);
@@ -924,24 +940,27 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 				}
 			} catch (Exception e) {
 				logger.error("Problem occurred when processing metadata of class {}: {}", mc.getCanonicalName(), e);
-				if (throwException)
+				if (throwException) {
 					throw new RuntimeException(e);
+				} 
 			}
 		}
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private static Object processObject(MetadatasetAnnotationOperation op, Object o) throws Exception {
-		if (o == null)
+		if (o == null) {
 			return o;
+		}
 
 		if (o instanceof ILazyDataset) {
 			try {
 				return op.run((ILazyDataset) o);
 			} catch (Exception e) {
 				logger.error("Problem processing " + o, e);
-				if (!catchExceptions)
+				if (!catchExceptions) {
 					throw e;
+				}
 			}
 		} else if (o.getClass().isArray()) {
 			int l = Array.getLength(o);
@@ -1096,8 +1115,9 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 			}
 		}
 
-		if (Arrays.equals(axes, perm))
+		if (Arrays.equals(axes, perm)) {
 			return null; // signal identity or trivial permutation
+		}
 
 		return axes;
 	}

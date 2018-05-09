@@ -336,8 +336,9 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	@Override
 	public LazyDataset getSliceView(SliceND slice) {
 		LazyDataset view = clone();
-		if (slice.isAll())
+		if (slice.isAll()) {
 			return view;
+		}
 
 		int[] lstart = slice.getStart();
 		int[] lstep  = slice.getStep();
@@ -369,8 +370,9 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 		// everything now is seen through a map
 		axes = checkPermutatedAxes(shape, axes);
-		if (axes == null)
+		if (axes == null) {
 			return view;
+		}
 
 		int r = shape.length;
 		view.shape = new int[r];
@@ -397,8 +399,9 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	@Override
 	public Dataset getSlice(IMonitor monitor, SliceND slice) throws DatasetException {
 
-		if (loader != null && !loader.isFileReadable())
+		if (loader != null && !loader.isFileReadable()) {
 			return null; // TODO add interaction to use plot (or remote) server to load dataset
+		}
 
 		SliceND nslice = calcTrueSlice(slice);
 
@@ -417,18 +420,21 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 			if (metadata != null && a instanceof LazyDatasetBase) {
 				LazyDatasetBase ba = (LazyDatasetBase) a;
 				ba.metadata = copyMetadata();
-				if (oMetadata != null)
+				if (oMetadata != null) {
 					ba.restoreMetadata(oMetadata);
+				}
 				//metadata axis may be larger than data
-				if (!nslice.isAll() || nslice.getMaxShape() != nslice.getShape())
+				if (!nslice.isAll() || nslice.getMaxShape() != nslice.getShape()) {
 					ba.sliceMetadata(true, nslice);
+				}
 			}
 		}
 		if (map != null) {
 			a = a.getTransposedView(map);
 		}
-		if (slice != null)
+		if (slice != null) {
 			a.setShape(slice.getShape());
+		}
 		a.addMetadata(MetadataFactory.createMetadata(OriginMetadata.class, this, nslice.convertToSlice(), oShape, null, name));
 		
 		return a;
@@ -436,11 +442,13 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	// reverse transform
 	private int[] getOriginal(int[] values) {
-		if (values == null)
+		if (values == null) {
 			return null;
+		}
 		int r = values.length;
-		if (map == null || r < 2)
+		if (map == null || r < 2) {
 			return values;
+		}
 		int[] ovalues = new int[r];
 		for (int i = 0; i < r; i++) {
 			ovalues[map[i]] = values[i];
@@ -509,8 +517,9 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	}
 
 	protected final IDataset transformInput(IDataset data) {
-		if (map == null)
+		if (map == null) {
 			return data;
+		}
 		return data.getTransposedView(map);
 	}
 
@@ -525,15 +534,17 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	 */
 	private void storeMetadata(Map<Class<? extends MetadataType>, List<MetadataType>> origMetadata, Class<? extends Annotation> aclazz) {
 		List<Class<? extends MetadataType>> mclazzes = findAnnotatedMetadata(aclazz);
-		if (mclazzes.size() == 0)
+		if (mclazzes.size() == 0) {
 			return;
+		}
 
 		if (oMetadata == null) {
 			oMetadata = new HashMap<Class<? extends MetadataType>, List<MetadataType>>();
 		}
 		for (Class<? extends MetadataType> mc : mclazzes) {
-			if (oMetadata.containsKey(mc))
+			if (oMetadata.containsKey(mc)) {
 				continue; // do not overwrite original
+			}
 
 			List<MetadataType> l = origMetadata.get(mc);
 			List<MetadataType> nl = new ArrayList<MetadataType>(l.size());
@@ -547,14 +558,16 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	@SuppressWarnings("unchecked")
 	private List<Class<? extends MetadataType>> findAnnotatedMetadata(Class<? extends Annotation> aclazz) {
 		List<Class<? extends MetadataType>> mclazzes = new ArrayList<Class<? extends MetadataType>>();
-		if (metadata == null)
+		if (metadata == null) {
 			return mclazzes;
+		}
 
 		for (Class<? extends MetadataType> c : metadata.keySet()) {
 			boolean hasAnn = false;
 			for (MetadataType m : metadata.get(c)) {
-				if (m == null)
+				if (m == null) {
 					continue;
+				}
 
 				Class<? extends MetadataType> mc = m.getClass();
 				do { // iterate over super-classes
@@ -565,12 +578,14 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 						}
 					}
 					Class<?> sclazz = mc.getSuperclass();
-					if (!MetadataType.class.isAssignableFrom(sclazz))
+					if (!MetadataType.class.isAssignableFrom(sclazz)) {
 						break;
+					}
 					mc = (Class<? extends MetadataType>) sclazz;
 				} while (!hasAnn);
-				if (hasAnn)
+				if (hasAnn) {
 					break;
+				}
 			}
 			if (hasAnn) {
 				mclazzes.add(c);
@@ -601,26 +616,29 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 		// Max in bytes takes into account our minimum requirement
 		final double max  = Math.max(Runtime.getRuntime().totalMemory(), Runtime.getRuntime().maxMemory());
 		
-        // Firstly if the whole dataset it likely to fit in memory, then we allow it.
+		// Firstly if the whole dataset it likely to fit in memory, then we allow it.
 		// Space specified in bytes per item available
 		final double space = max/lazySet.getSize();
 
 		// If we have room for this whole dataset, then fine
 		int[] shape = lazySet.getShape();
-		if (space >= size)
+		if (space >= size) {
 			return shape[dimension];
-		
+		}
+
 		// Otherwise estimate what we can fit in, conservatively.
 		// First get size of one slice, see it that fits, if not, still return 1
 		double sizeOneSlice = size; // in bytes
 		for (int dim = 0; dim < shape.length; dim++) {
-			if (dim == dimension)
+			if (dim == dimension) {
 				continue;
+			}
 			sizeOneSlice *= shape[dim];
 		}
 		double avail = max / sizeOneSlice;
-		if (avail < 1)
+		if (avail < 1) {
 			return 1;
+		}
 
 		// We fudge this to leave some room
 		return (int) Math.floor(avail/4d);

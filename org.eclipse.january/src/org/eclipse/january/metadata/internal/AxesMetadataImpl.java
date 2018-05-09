@@ -50,16 +50,16 @@ public class AxesMetadataImpl implements AxesMetadata {
 		dimensionMap = new IdentityHashMap<>();
 		for (int i = 0; i < r; i++) {
 			List<ILazyDataset> ol = axesMetadataImpl.allAxes[i];
-			if (ol == null)
+			if (ol == null) {
 				continue;
+			}
 			List<ILazyDataset> list = new ArrayList<ILazyDataset>();
 			for (ILazyDataset l : ol) {
 				ILazyDataset lv = l == null ? null : l.getSliceView();
 				list.add(lv);
-				if (lv != null) {
-					if (axesMetadataImpl.dimensionMap.containsKey(l)) dimensionMap.put(lv, axesMetadataImpl.dimensionMap.get(l).clone());
+				if (lv != null && axesMetadataImpl.dimensionMap.containsKey(l)) {
+					dimensionMap.put(lv, axesMetadataImpl.dimensionMap.get(l).clone());
 				}
-				
 			}
 			allAxes[i] = list;
 		}
@@ -79,15 +79,18 @@ public class AxesMetadataImpl implements AxesMetadata {
 		ILazyDataset[] result = new ILazyDataset[allAxes.length];
 		for (int i = 0; i < result.length; i++) {
 			ILazyDataset[] ax = getAxis(i);
-			if (ax != null && ax.length > 0) result[i] = ax[0];
+			if (ax != null && ax.length > 0) {
+				result[i] = ax[0];
+			}
 		}
 		return result;
 	}
 
 	@Override
 	public ILazyDataset[] getAxis(int axisDim) {
-		if (allAxes[axisDim] == null)
+		if (allAxes[axisDim] == null) {
 			return null;
+		}
 		return allAxes[axisDim].toArray(new ILazyDataset[0]);
 	}
 
@@ -125,16 +128,20 @@ public class AxesMetadataImpl implements AxesMetadata {
 		
 		ILazyDataset lz = sanitizeAxisData(axisData, dimMapping);
 		allAxes[primaryAxisDim].add(lz);
-		if (lz != null) dimensionMap.put(lz, dimMapping);
+		if (lz != null) {
+			dimensionMap.put(lz, dimMapping);
+		}
 	}
 
 	private ILazyDataset sanitizeAxisData(ILazyDataset axisData, int... axisDims) {
 		// remove any axes metadata to prevent infinite recursion
 		// and also check rank
-		if (axisData == null) return null;
-		
+		if (axisData == null) {
+			return null;
+		}
+
 		if (axisDims.length == 1) {
-			int ad =  ShapeUtils.checkAxis(allAxes.length, axisDims[0]);
+			int ad = ShapeUtils.checkAxis(allAxes.length, axisDims[0]);
 			ILazyDataset view = axisData.getSliceView();
 			view.clearMetadata(AxesMetadata.class);
 			int r = axisData.getRank(); 
@@ -173,7 +180,9 @@ public class AxesMetadataImpl implements AxesMetadata {
 			if (axis == null) continue;
 			for (int j = 0; j < axis.size(); j++) {
 				ILazyDataset l = axis.get(j);
-				if (l == null) continue;
+				if (l == null) {
+					continue;
+				}
 				int[] dims = dimensionMap.get(l);
 
 				if (l instanceof IDynamicDataset) {
@@ -188,8 +197,9 @@ public class AxesMetadataImpl implements AxesMetadata {
 						int[] tempShape = new int[dims.length];
 						Arrays.fill(tempShape,1);
 						int[] ss = l.getShape();
-						for (int k = 0 ; k < tempShape.length && k < ss.length; k++) tempShape[k] = ss[k];
-						
+						for (int k = 0 ; k < tempShape.length && k < ss.length; k++) {
+							tempShape[k] = ss[k];
+						}
 						l.setShape(tempShape);
 					}
 					
@@ -197,7 +207,9 @@ public class AxesMetadataImpl implements AxesMetadata {
 						((IDynamicDataset) l).refreshShape();
 					} catch (Exception e) {
 						String name = l.getName();
-						if (name == null) name = "unknown_dataset";
+						if (name == null) {
+							name = "unknown_dataset";
+						}
 						dimensionMap.remove(l);
 						axis.set(j,null);
 						continue;
@@ -207,7 +219,9 @@ public class AxesMetadataImpl implements AxesMetadata {
 				// need to look at rank of l;
 				if (dims == null || dims.length == 1) {
 					int k = l.getShape()[0];
-					if (k < maxShape[i]) maxShape[i] = k;
+					if (k < maxShape[i]) {
+						maxShape[i] = k;
+					}
 					int[] newShape = shape.clone();
 					Arrays.fill(newShape, 1);
 					newShape[i] = k;
@@ -218,7 +232,9 @@ public class AxesMetadataImpl implements AxesMetadata {
 					Arrays.fill(newShape, 1);
 					for (int k = 0 ; k < dims.length; k++) {
 						int[] s = l.getShape();
-						if (s[dims[k]] < maxShape[k]) maxShape[k] = s[dims[k]];
+						if (s[dims[k]] < maxShape[k]) {
+							maxShape[k] = s[dims[k]];
+						}
 						newShape[k] = s[dims[k]];
 					}
 					l.setShape(newShape);
