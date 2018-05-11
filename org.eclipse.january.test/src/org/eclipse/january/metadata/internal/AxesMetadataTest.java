@@ -268,4 +268,26 @@ public class AxesMetadataTest {
 		IDataset slice = view.getSlice();
 		assertTrue(slice != null);
 	}
+
+	@Test
+	public void testSliceOfSqueezed() throws DatasetException {
+		final int[] shape = new int[] { 3, 10, 1 };
+
+		ILazyDataset dataset = Random.lazyRand(shape);
+		Dataset ax = Random.rand(shape[0]);
+		Dataset bx = Random.rand(shape[1]);
+
+		AxesMetadata amd = MetadataFactory.createMetadata(AxesMetadata.class, shape.length);
+		amd.setAxis(0, ax);
+		amd.setAxis(1, bx);
+		dataset.setMetadata(amd);
+
+		ILazyDataset nd;
+		IDataset slice;
+
+		nd = dataset.getSliceView().squeezeEnds(); // axes metadata now possess different shapes
+		slice = nd.getSlice(new Slice(1, 2), null); // this used to alter the original axes metadata
+		slice = nd.getSlice(new Slice(1, 2), null);
+		assertTrue(slice != null);
+	}
 }
