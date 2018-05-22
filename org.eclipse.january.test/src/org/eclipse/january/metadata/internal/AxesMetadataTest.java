@@ -301,4 +301,30 @@ public class AxesMetadataTest {
 		ErrorMetadata em = ax.getSlice().getFirstMetadata(ErrorMetadata.class);
 		assertTrue(em == null);
 	}
+
+	@Test
+	public void testReversedSlice() throws DatasetException {
+		final int[] shape = new int[] {3, 10};
+	
+		ILazyDataset dataset = Random.lazyRand(shape);
+		Dataset ax = Random.rand(shape[0]);
+		Dataset bx = Random.rand(shape[1]);
+	
+		AxesMetadata amd = MetadataFactory.createMetadata(AxesMetadata.class, shape.length);
+		amd.setAxis(0, ax);
+		amd.setAxis(1, bx);
+		dataset.setMetadata(amd);
+	
+		IDataset slice;
+	
+		slice = dataset.getSlice((Slice) null, new Slice(null, 7));
+		amd = slice.getFirstMetadata(AxesMetadata.class);
+		assertEquals(ax.getSize(), amd.getAxes()[0].getSize());
+		assertEquals(7, amd.getAxes()[1].getSize());
+	
+		slice = dataset.getSlice((Slice) null, new Slice(7, null, -1));
+		amd = slice.getFirstMetadata(AxesMetadata.class);
+		assertEquals(ax.getSize(), amd.getAxes()[0].getSize());
+		assertEquals(8, amd.getAxes()[1].getSize());
+	}
 }
