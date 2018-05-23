@@ -371,18 +371,14 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 
 	class MdsSlice implements MetadatasetAnnotationOperation {
 		private boolean asView;
-		private int[] start;
-		private int[] stop;
-		private int[] step;
+		private SliceND slice;
 		private int[] oShape;
 		private long oSize;
 
-		public MdsSlice(boolean asView, final int[] start, final int[] stop, final int[] step, final int[] oShape) {
+		public MdsSlice(boolean asView, SliceND slice) {
 			this.asView = asView;
- 			this.start = start;
-			this.stop = stop;
-			this.step = step;
-			this.oShape = oShape;
+			this.slice = slice;
+			oShape = slice.getSourceShape();
 			oSize = ShapeUtils.calcLongSize(oShape);
 		}
 
@@ -409,30 +405,22 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		@Override
 		public ILazyDataset run(ILazyDataset lz) {
 			int rank = lz.getRank();
-			if (start.length != rank) {
+			if (slice.getStart().length != rank) {
 				throw new IllegalArgumentException("Slice dimensions do not match dataset!");
 			}
 
 			int[] shape = lz.getShape();
-			int[] stt;
-			int[] stp;
-			int[] ste;
+			SliceND nslice;
 			if (lz.getSize() == oSize) {
-				stt = start;
-				stp = stop;
-				ste = step;
+				nslice = slice;
 			} else {
-				stt = start.clone();
-				stp = stop.clone();
-				ste = step.clone();
+				nslice = slice.clone();
 				for (int i = 0; i < rank; i++) {
 					if (shape[i] >= oShape[i]) {
 						continue;
 					}
 					if (shape[i] == 1) {
-						stt[i] = 0;
-						stp[i] = 1;
-						ste[i] = 1;
+						nslice.setSlice(i, 0, 1, 1);
 					} else {
 						throw new IllegalArgumentException("Sliceable dataset has invalid size!");
 					}
@@ -440,10 +428,10 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 			}
 
 			if (asView || (lz instanceof IDataset)) {
-				return lz.getSliceView(stt, stp, ste);
+				return lz.getSliceView(nslice);
 			}
 			try {
-				return lz.getSlice(stt, stp, ste);
+				return lz.getSlice(nslice);
 			} catch (DatasetException e) {
 				logger.error("Could not slice dataset in metadata", e);
 				return null;
@@ -778,7 +766,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	 * @param slice
 	 */
 	protected void sliceMetadata(boolean asView, final SliceND slice) {
-		processAnnotatedMetadata(new MdsSlice(asView, slice.getStart(), slice.getStop(), slice.getStep(), slice.getSourceShape()), true);
+		processAnnotatedMetadata(new MdsSlice(asView, slice), true);
 	}
 
 	/**
