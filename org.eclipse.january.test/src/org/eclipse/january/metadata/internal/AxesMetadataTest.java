@@ -18,7 +18,9 @@ import java.util.Arrays;
 
 import org.eclipse.january.DatasetException;
 import org.eclipse.january.MetadataException;
+import org.eclipse.january.asserts.TestUtils;
 import org.eclipse.january.dataset.Dataset;
+import org.eclipse.january.dataset.DatasetUtils;
 import org.eclipse.january.dataset.DoubleDataset;
 import org.eclipse.january.dataset.IDataset;
 import org.eclipse.january.dataset.ILazyDataset;
@@ -326,5 +328,61 @@ public class AxesMetadataTest {
 		amd = slice.getFirstMetadata(AxesMetadata.class);
 		assertEquals(ax.getSize(), amd.getAxes()[0].getSize());
 		assertEquals(8, amd.getAxes()[1].getSize());
+	}
+
+	@Test
+	public void testAxesLongerThanShape() throws DatasetException {
+		testAxesLongerThanShape(Random.lazyRand(10));
+		testAxesLongerThanShape(Random.rand(new int [] {10}));
+
+		testAxesLongerThanShape(Random.lazyRand(4, 10));
+		testAxesLongerThanShape(Random.rand(new int [] {4, 10}));
+	}
+
+	public void testAxesLongerThanShape(ILazyDataset dataset) throws DatasetException {
+		int[] shape = dataset.getShape();
+		int rank = shape.length;
+
+		Dataset[] axes = new Dataset[rank];
+		AxesMetadata amd = MetadataFactory.createMetadata(AxesMetadata.class, shape.length);
+		for (int i = 0; i < rank; i++) {
+			axes[i] = Random.rand(shape[i] + 2*i + 2);
+			amd.setAxis(i, axes[i]);
+		}
+		dataset.setMetadata(amd);
+
+		IDataset ds;
+		Slice[] slices = new Slice[rank];
+
+		for (int i = 0; i < rank; i++) {
+			slices[i] = new Slice(shape[i]);
+		}
+		ds = dataset.getSlice();
+		amd = ds.getFirstMetadata(AxesMetadata.class);
+		for (int i = 0; i < rank; i++) {
+			assertEquals(shape[i], amd.getAxes()[i].getSize());
+			TestUtils.assertDatasetEquals(axes[i].getSlice(slices[i]), DatasetUtils.sliceAndConvertLazyDataset(amd.getAxes()[i]).squeeze());
+		}
+
+		for (int i = 0; i < rank; i++) {
+			slices[i] = new Slice(shape[i] - i  - 2);
+		}
+		ds = dataset.getSlice(slices);
+		amd = ds.getFirstMetadata(AxesMetadata.class);
+		for (int i = 0; i < rank; i++) {
+			assertEquals(shape[i] - i - 2, amd.getAxes()[i].getSize());
+			TestUtils.assertDatasetEquals(axes[i].getSlice(slices[i]), DatasetUtils.sliceAndConvertLazyDataset(amd.getAxes()[i]).squeeze());
+		}
+
+		for (int i = 0; i < rank; i++) {
+			slices[i] = new Slice(shape[i] - i - 2, null, -1);
+		}
+		ds = dataset.getSlice(slices);
+		amd = ds.getFirstMetadata(AxesMetadata.class);
+		for (int i = 0; i < rank; i++) {
+			assertEquals(shape[i] - i - 1, amd.getAxes()[i].getSize());
+			Dataset a = axes[i].getSliceView(new Slice(ds.getShape()[i])); // crop longer axis
+			TestUtils.assertDatasetEquals(a.getSlice(slices[i]), DatasetUtils.sliceAndConvertLazyDataset(amd.getAxes()[i]).squeeze());
+		}
 	}
 }
