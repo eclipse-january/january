@@ -406,23 +406,38 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		public ILazyDataset run(ILazyDataset lz) {
 			int rank = lz.getRank();
 			if (slice.getStart().length != rank) {
-				throw new IllegalArgumentException("Slice dimensions do not match dataset!");
+				throw new IllegalArgumentException("Slice rank does not match dataset!");
 			}
 
 			int[] shape = lz.getShape();
 			SliceND nslice;
+			if (!ShapeUtils.areShapesBroadcastCompatible(oShape, shape)) {
+				nslice = new SliceND(shape);
+				for (int i = 0; i < rank; i++) {
+					int s = shape[i];
+					int os = oShape[i];
+					if (s >= os) {
+						nslice.setSlice(i, 0, os, 1);
+					} else if (s == 1) {
+						nslice.setSlice(i, 0, 1, 1);
+					} else {
+						throw new IllegalArgumentException("Sliceable dataset has non-unit dimension less than host!");
+					}
+				}
+				lz = lz.getSliceView(nslice);
+			}
 			if (lz.getSize() == oSize) {
 				nslice = slice;
 			} else {
 				nslice = slice.clone();
 				for (int i = 0; i < rank; i++) {
-					if (shape[i] >= oShape[i]) {
+					int s = shape[i];
+					if (s >= oShape[i]) {
 						continue;
-					}
-					if (shape[i] == 1) {
+					} else if (s == 1) {
 						nslice.setSlice(i, 0, 1, 1);
 					} else {
-						throw new IllegalArgumentException("Sliceable dataset has invalid size!");
+						throw new IllegalArgumentException("Sliceable dataset has non-unit dimension less than host!");
 					}
 				}
 			}
