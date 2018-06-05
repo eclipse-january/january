@@ -9,7 +9,8 @@
 
 package org.eclipse.january.dataset;
 
-import org.junit.Assert;
+import static org.junit.Assert.*;
+
 import org.junit.Test;
 
 public class BroadcastIteratorTest {
@@ -66,7 +67,7 @@ public class BroadcastIteratorTest {
 	private void checkBroadcastShape(Dataset a, String msg, int[] bShape, int[] cShape, int... newShape) {
 		int[][] answer = bShape == null && cShape == null ? null : new int[][] { bShape, cShape };
 		int[][] result = BroadcastUtils.calculateBroadcastShapes(a.getShapeRef(), a.getSize(), newShape);
-		Assert.assertArrayEquals("Broadcasting " + msg, answer, result);
+		assertArrayEquals("Broadcasting " + msg, answer, result);
 	}
 
 	@Test
@@ -77,86 +78,86 @@ public class BroadcastIteratorTest {
 		a = DatasetFactory.createRange(5).reshape(5, 1);
 		b = DatasetFactory.createRange(2., 8, 1).reshape(1, 6);
 		it = BroadcastIterator.createIterator(a, b);
-		Assert.assertArrayEquals("Broadcast shape", new int[] {5, 6}, it.getShape());
+		assertArrayEquals("Broadcast shape", new int[] {5, 6}, it.getShape());
 		c = DatasetFactory.zeros(it.getShape());
 
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 6; j++) {
-				Assert.assertTrue(it.hasNext());
+				assertTrue(it.hasNext());
 				c.set(it.aDouble * it.bDouble, i, j);
-				Assert.assertEquals(a.getDouble(i, 0), it.aDouble, 1e-15);
-				Assert.assertEquals(b.getDouble(0, j), it.bDouble, 1e-15);
-				Assert.assertEquals(c.getDouble(i, j), i*(j + 2.0), 1e-15);
+				assertEquals(a.getDouble(i, 0), it.aDouble, 1e-15);
+				assertEquals(b.getDouble(0, j), it.bDouble, 1e-15);
+				assertEquals(c.getDouble(i, j), i*(j + 2.0), 1e-15);
 			}
 		}
 
 		b.setShape(6);
 		it = BroadcastIterator.createIterator(a, b);
-		Assert.assertArrayEquals("Broadcast shape", new int[] {5, 6}, it.getShape());
+		assertArrayEquals("Broadcast shape", new int[] {5, 6}, it.getShape());
 		c = DatasetFactory.zeros(it.getShape());
 
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 6; j++) {
-				Assert.assertTrue(it.hasNext());
+				assertTrue(it.hasNext());
 				c.set(it.aDouble * it.bDouble, i, j);
-				Assert.assertEquals(a.getDouble(i, 0), it.aDouble, 1e-15);
-				Assert.assertEquals(b.getDouble(j), it.bDouble, 1e-15);
-				Assert.assertEquals(c.getDouble(i, j), i*(j + 2.0), 1e-15);
+				assertEquals(a.getDouble(i, 0), it.aDouble, 1e-15);
+				assertEquals(b.getDouble(j), it.bDouble, 1e-15);
+				assertEquals(c.getDouble(i, j), i*(j + 2.0), 1e-15);
 			}
 		}
 
 		a = DatasetFactory.ones(ShortDataset.class, 1);
 		it = BroadcastIterator.createIterator(a, b);
-		Assert.assertArrayEquals("Broadcast shape", new int[] {6}, it.getShape());
+		assertArrayEquals("Broadcast shape", new int[] {6}, it.getShape());
 		c = DatasetFactory.zeros(it.getShape());
 
 		for (int j = 0; j < 6; j++) {
-			Assert.assertTrue(it.hasNext());
+			assertTrue(it.hasNext());
 			c.set(it.aDouble * it.bDouble, j);
-			Assert.assertEquals(a.getDouble(0), it.aDouble, 1e-15);
-			Assert.assertEquals(b.getDouble(j), it.bDouble, 1e-15);
-			Assert.assertEquals(c.getDouble(j), (j + 2.0), 1e-15);
+			assertEquals(a.getDouble(0), it.aDouble, 1e-15);
+			assertEquals(b.getDouble(j), it.bDouble, 1e-15);
+			assertEquals(c.getDouble(j), (j + 2.0), 1e-15);
 		}
 
 		// zero-rank dataset
 		a = DatasetFactory.createFromObject(1);
 		it = BroadcastIterator.createIterator(a, b);
-		Assert.assertArrayEquals("Broadcast shape", new int[] {6}, it.getShape());
+		assertArrayEquals("Broadcast shape", new int[] {6}, it.getShape());
 		c = DatasetFactory.zeros(it.getShape());
 
 		for (int j = 0; j < 6; j++) {
-			Assert.assertTrue(it.hasNext());
+			assertTrue(it.hasNext());
 			c.set(it.aDouble * it.bDouble, j);
-			Assert.assertEquals(a.getDouble(), it.aDouble, 1e-15);
-			Assert.assertEquals(b.getDouble(j), it.bDouble, 1e-15);
-			Assert.assertEquals(c.getDouble(j), (j + 2.0), 1e-15);
+			assertEquals(a.getDouble(), it.aDouble, 1e-15);
+			assertEquals(b.getDouble(j), it.bDouble, 1e-15);
+			assertEquals(c.getDouble(j), (j + 2.0), 1e-15);
 		}
 
 		b = DatasetFactory.createFromObject(2);
 		it = BroadcastIterator.createIterator(a, b);
 		it.setOutputDouble(true);
-		Assert.assertArrayEquals("Broadcast shape", new int[] {}, it.getShape());
+		assertArrayEquals("Broadcast shape", new int[] {}, it.getShape());
 		c = DatasetFactory.zeros(it.getShape());
-		Assert.assertTrue(it.hasNext());
+		assertTrue(it.hasNext());
 		c.set(it.aDouble * it.bDouble);
-		Assert.assertEquals(a.getDouble(), it.aDouble, 1e-15);
-		Assert.assertEquals(b.getDouble(), it.bDouble, 1e-15);
-		Assert.assertEquals(c.getDouble(), 2.0, 1e-15);
+		assertEquals(a.getDouble(), it.aDouble, 1e-15);
+		assertEquals(b.getDouble(), it.bDouble, 1e-15);
+		assertEquals(c.getDouble(), 2.0, 1e-15);
 
 		// also sliced views
 		a = DatasetFactory.createRange(5).reshape(5, 1);
 		b = DatasetFactory.createRange(2., 8, 1).getSliceView(new Slice(null, null, 2));
 		it = BroadcastIterator.createIterator(a, b);
-		Assert.assertArrayEquals("Broadcast shape", new int[] {5, 3}, it.getShape());
+		assertArrayEquals("Broadcast shape", new int[] {5, 3}, it.getShape());
 		c = DatasetFactory.zeros(it.getShape());
 
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 3; j++) {
-				Assert.assertTrue(it.hasNext());
+				assertTrue(it.hasNext());
 				c.set(it.aDouble * it.bDouble, i, j);
-				Assert.assertEquals(a.getDouble(i, 0), it.aDouble, 1e-15);
-				Assert.assertEquals(b.getDouble(j), it.bDouble, 1e-15);
-				Assert.assertEquals(c.getDouble(i, j), i*(2*j + 2.0), 1e-15);
+				assertEquals(a.getDouble(i, 0), it.aDouble, 1e-15);
+				assertEquals(b.getDouble(j), it.bDouble, 1e-15);
+				assertEquals(c.getDouble(i, j), i*(2*j + 2.0), 1e-15);
 			}
 		}
 
@@ -171,15 +172,15 @@ public class BroadcastIteratorTest {
 		b = DatasetFactory.createRange(2., 14, 1).reshape(1, 12);
 		c = DatasetFactory.zeros(10, 12);
 		it = BroadcastIterator.createIterator(a, b, c);
-		Assert.assertArrayEquals("Broadcast shape", new int[] {10, 12}, it.getShape());
+		assertArrayEquals("Broadcast shape", new int[] {10, 12}, it.getShape());
 
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 12; j++) {
-				Assert.assertTrue(it.hasNext());
-				Assert.assertEquals(a.getDouble(i, 0), it.aDouble, 1e-15);
-				Assert.assertEquals(b.getDouble(0, j), it.bDouble, 1e-15);
+				assertTrue(it.hasNext());
+				assertEquals(a.getDouble(i, 0), it.aDouble, 1e-15);
+				assertEquals(b.getDouble(0, j), it.bDouble, 1e-15);
 				c.setObjectAbs(it.oIndex, it.aDouble * it.bDouble);
-				Assert.assertEquals(c.getDouble(i, j), i*(j + 2.0), 1e-15);
+				assertEquals(c.getDouble(i, j), i*(j + 2.0), 1e-15);
 			}
 		}
 
@@ -188,15 +189,15 @@ public class BroadcastIteratorTest {
 		b = DatasetFactory.createRange(2., 14, 1).reshape(1, 12);
 		c = a;
 		it = BroadcastIterator.createIterator(a, b, c);
-		Assert.assertArrayEquals("Broadcast shape", new int[] {10, 12}, it.getShape());
+		assertArrayEquals("Broadcast shape", new int[] {10, 12}, it.getShape());
 
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 12; j++) {
-				Assert.assertTrue(it.hasNext());
-				Assert.assertEquals(a.getDouble(i, j), it.aDouble, 1e-15);
-				Assert.assertEquals(b.getDouble(0, j), it.bDouble, 1e-15);
+				assertTrue(it.hasNext());
+				assertEquals(a.getDouble(i, j), it.aDouble, 1e-15);
+				assertEquals(b.getDouble(0, j), it.bDouble, 1e-15);
 				c.setObjectAbs(it.oIndex, it.aDouble * it.bDouble);
-				Assert.assertEquals(c.getDouble(i, j), (i*12+j)*(j + 2.0), 1e-15);
+				assertEquals(c.getDouble(i, j), (i*12+j)*(j + 2.0), 1e-15);
 			}
 		}
 
@@ -204,15 +205,15 @@ public class BroadcastIteratorTest {
 		b = DatasetFactory.createRange(2., 122, 1).reshape(10, 12);
 		c = b;
 		it = BroadcastIterator.createIterator(a, b, c);
-		Assert.assertArrayEquals("Broadcast shape", new int[] {10, 12}, it.getShape());
+		assertArrayEquals("Broadcast shape", new int[] {10, 12}, it.getShape());
 
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 12; j++) {
-				Assert.assertTrue(it.hasNext());
-				Assert.assertEquals(a.getDouble(i, 0), it.aDouble, 1e-15);
-				Assert.assertEquals(b.getDouble(i, j), it.bDouble, 1e-15);
+				assertTrue(it.hasNext());
+				assertEquals(a.getDouble(i, 0), it.aDouble, 1e-15);
+				assertEquals(b.getDouble(i, j), it.bDouble, 1e-15);
 				c.setObjectAbs(it.oIndex, it.aDouble * it.bDouble);
-				Assert.assertEquals(c.getDouble(i, j), i*((i*12 + j) + 2.0), 1e-15);
+				assertEquals(c.getDouble(i, j), i*((i*12 + j) + 2.0), 1e-15);
 			}
 		}
 
@@ -221,15 +222,15 @@ public class BroadcastIteratorTest {
 		b = DatasetFactory.createRange(2., 14, 1).reshape(1, 12);
 		c = a;
 		it = BroadcastIterator.createIterator(a, b, c);
-		Assert.assertArrayEquals("Broadcast shape", new int[] {10, 12}, it.getShape());
+		assertArrayEquals("Broadcast shape", new int[] {10, 12}, it.getShape());
 
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 12; j++) {
-				Assert.assertTrue(it.hasNext());
-				Assert.assertEquals(a.getDouble(i, j), it.aDouble, 1e-15);
-				Assert.assertEquals(b.getDouble(0, j), it.bDouble, 1e-15);
+				assertTrue(it.hasNext());
+				assertEquals(a.getDouble(i, j), it.aDouble, 1e-15);
+				assertEquals(b.getDouble(0, j), it.bDouble, 1e-15);
 				c.setObjectAbs(it.oIndex, it.aDouble * it.bDouble);
-				Assert.assertEquals(c.getDouble(i, j), (24*i+j)*(j + 2.0), 1e-15);
+				assertEquals(c.getDouble(i, j), (24*i+j)*(j + 2.0), 1e-15);
 			}
 		}
 
@@ -238,38 +239,55 @@ public class BroadcastIteratorTest {
 		b = DatasetFactory.createRange(2., 14, 1);
 		c = DatasetFactory.zeros(10, 12);
 		it = BroadcastIterator.createIterator(a, b, c);
-		Assert.assertArrayEquals("Broadcast shape", new int[] {10, 12}, it.getShape());
+		assertArrayEquals("Broadcast shape", new int[] {10, 12}, it.getShape());
 
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 12; j++) {
-				Assert.assertTrue(it.hasNext());
-				Assert.assertEquals(a.getDouble(j), it.aDouble, 1e-15);
-				Assert.assertEquals(b.getDouble(j), it.bDouble, 1e-15);
+				assertTrue(it.hasNext());
+				assertEquals(a.getDouble(j), it.aDouble, 1e-15);
+				assertEquals(b.getDouble(j), it.bDouble, 1e-15);
 				c.setObjectAbs(it.oIndex, it.aDouble * it.bDouble);
-				Assert.assertEquals(c.getDouble(i, j), j*(j + 2.0), 1e-15);
+				assertEquals(c.getDouble(i, j), j*(j + 2.0), 1e-15);
 			}
 		}
 
 		// compound output
 		c = DatasetFactory.zeros(3, CompoundDoubleDataset.class, 10, 12);
 		it = BroadcastIterator.createIterator(a, b, c);
-		Assert.assertArrayEquals("Broadcast shape", new int[] {10, 12}, it.getShape());
+		assertArrayEquals("Broadcast shape", new int[] {10, 12}, it.getShape());
 
 		CompoundDataset cc = (CompoundDataset) c;
 		int isc = c.getElementsPerItem();
 		double[] ca = new double[isc];
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 12; j++) {
-				Assert.assertTrue(it.hasNext());
-				Assert.assertEquals(a.getDouble(j), it.aDouble, 1e-15);
-				Assert.assertEquals(b.getDouble(j), it.bDouble, 1e-15);
+				assertTrue(it.hasNext());
+				assertEquals(a.getDouble(j), it.aDouble, 1e-15);
+				assertEquals(b.getDouble(j), it.bDouble, 1e-15);
 				c.setObjectAbs(it.oIndex, it.aDouble * it.bDouble);
-				Assert.assertEquals(c.getDouble(i, j), j*(j + 2.0), 1e-15);
+				assertEquals(c.getDouble(i, j), j*(j + 2.0), 1e-15);
 				cc.getDoubleArray(ca, i, j);
 				for (int k = 1; k < isc; k++) {
-					Assert.assertEquals(ca[k], ca[0], 1e-15);
+					assertEquals(ca[k], ca[0], 1e-15);
 				}
 			}
+		}
+	}
+
+	@Test
+	public void testPair() {
+		Dataset a = DatasetFactory.zeros(5, 3);
+		Dataset b = DatasetFactory.createRange(1, 31., 2.);
+
+		Dataset bv = b.getSliceView(new Slice(3, 8));
+
+		// triggers #321
+		BroadcastIterator bit;
+		bit = BroadcastIterator.createIterator(a, bv.reshape(5, 1));
+
+		while (bit.hasNext()) {
+			assertEquals(a.getElementDoubleAbs(bit.aIndex), bit.aDouble, 1e-9);
+			assertEquals(bv.getElementDoubleAbs(bit.bIndex), bit.bDouble, 1e-9);
 		}
 	}
 }
