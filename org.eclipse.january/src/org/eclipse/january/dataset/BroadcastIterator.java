@@ -12,7 +12,8 @@ package org.eclipse.january.dataset;
 import java.util.Arrays;
 
 /**
- * Base class for broadcast iterators of pairs with output. For speed, there are public members. Note, index is not updated
+ * Base class for broadcast iterators of pairs with output.<p>
+ * For speed, there are public members. Note, index is not updated
  */
 public abstract class BroadcastIterator extends BroadcastIteratorBase {
 
