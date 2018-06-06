@@ -196,7 +196,7 @@ public class BroadcastPairIterator extends BroadcastIterator {
 			oIndex = oStart - oStep;
 		}
 
-		if (aIndex == 0 || bIndex == 0) { // for zero-ranked datasets
+		if (aIndex == 0 || bIndex == 0 || aStride[endrank] == 0 || bStride[endrank] == 0) { // for zero-ranked datasets or extended shape
 			if (read) {
 				storeCurrentValues();
 			}
