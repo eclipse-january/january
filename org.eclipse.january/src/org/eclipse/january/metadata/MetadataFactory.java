@@ -11,7 +11,9 @@
 package org.eclipse.january.metadata;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.january.MetadataException;
@@ -68,9 +70,21 @@ public class MetadataFactory {
 			throw new MetadataException("Could not create metadata object", e);
 		}
 
+		List<Method> inits = new ArrayList<Method>();
+		for (Method m : mdClass.getMethods()) {
+			if (m.getName().equals("initialize")) {
+				inits.add(m);
+			}
+		}
+
+		if (inits.isEmpty()) {
+			return obj;
+		}
+
+		int n = arguments == null ? 0 : arguments.length;
 		try {
-			for (Method m : mdClass.getMethods()) {
-				if (m.getName().equals("initialize")) {
+			for (Method m : inits) {
+				if (m.getParameterTypes().length == n) {
 					m.invoke(obj, arguments);
 					return obj;
 				}
@@ -78,7 +92,7 @@ public class MetadataFactory {
 		} catch (Exception e) {
 			throw new MetadataException("Could not initialize object", e);
 		}
-		throw new MetadataException("Could not find initialize method");
+		throw new MetadataException("Could not find initialize method that allows the given number of arguments");
 	}
 
 	/**
