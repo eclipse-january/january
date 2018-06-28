@@ -52,6 +52,14 @@ public class ErrorMetadataImpl implements ErrorMetadata, Serializable {
 
 	@Override
 	public void initialize() {
+		initialize(null);
+	}
+
+	@Override
+	public void initialize(ILazyDataset error) {
+		if (error != null) {
+			setError(error);
+		}
 	}
 
 	private ErrorMetadataImpl(ErrorMetadataImpl error) {

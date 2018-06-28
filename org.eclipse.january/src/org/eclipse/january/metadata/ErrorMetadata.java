@@ -22,6 +22,11 @@ public interface ErrorMetadata extends MetadataType {
 	public void initialize();
 
 	/**
+	 * @since 2.2
+	 */
+	public void initialize(ILazyDataset error);
+
+	/**
 	 * Get error dataset
 	 * @return error dataset
 	 */
