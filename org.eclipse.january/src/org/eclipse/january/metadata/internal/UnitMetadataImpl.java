@@ -19,14 +19,22 @@ public class UnitMetadataImpl implements UnitMetadata {
 	private static final long serialVersionUID = 8463775397065879390L;
 
 	private Unit<?> unit;
-	
-	public UnitMetadataImpl(Unit<?> unit) {
+
+	public UnitMetadataImpl() {
+	}
+
+	@Override
+	public void initialize(Unit<?> unit) {
 		this.unit = unit;
 	}
-	
+
+	protected UnitMetadataImpl(UnitMetadata unitMetadata) {
+		initialize(unitMetadata.getUnit());
+	}
+
 	@Override
 	public MetadataType clone() {
-		return new UnitMetadataImpl(unit);
+		return new UnitMetadataImpl(this);
 	}
 
 	@Override

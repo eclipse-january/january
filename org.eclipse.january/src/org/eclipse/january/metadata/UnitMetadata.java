@@ -21,6 +21,12 @@ import javax.measure.Unit;
 public interface UnitMetadata extends MetadataType {
 
 	/**
+	 * Initialize unit metadata with given unit
+	 * @param unit
+	 */
+	public void initialize(Unit<?> unit);
+
+	/**
 	 * Get unit
 	 * @return unit of dataset
 	 */
