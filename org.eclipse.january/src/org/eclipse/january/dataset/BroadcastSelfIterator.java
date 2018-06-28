@@ -12,7 +12,8 @@ package org.eclipse.january.dataset;
 import java.util.Arrays;
 
 /**
- * Base class for broadcast iterators where the second dataset could be broadcast to the first and it is also read into either bLong or bDouble fields.
+ * Base class for broadcast iterators where the second dataset could be broadcast to the first
+ * and it is also read into either bLong or bDouble fields.<p>
  * For speed, there are public members. Note, index is not updated
  */
 public abstract class BroadcastSelfIterator extends BroadcastIteratorBase {
