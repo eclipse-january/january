@@ -339,7 +339,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 	/**
 	 * Create a compound dataset using last dimension of given dataset
 	 * @param a
-	 * @param shareData
+	 * @param shareData if true, then share data when possible otherwise copy it
 	 * @return compound dataset
 	 */
 	public static CompoundFloatDataset createCompoundDatasetWithLastDimension(final Dataset a, final boolean shareData) {
@@ -364,7 +364,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 
 		result.shape = rank > 0 ? Arrays.copyOf(shape, rank) : (rank < 0 ? new int[] {} : new int[] {1});
 		result.size = ShapeUtils.calcSize(result.shape);
-		result.odata = shareData ? a.getBuffer() : a.clone().getBuffer();
+		result.odata = shareData ? a.flatten().getBuffer() : a.clone().getBuffer();
 		result.setName(a.getName());
 		result.setData();
 		return result;
@@ -381,7 +381,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 
 		result.shape = nshape;
 		result.size = ShapeUtils.calcSize(nshape);
-		result.odata = shareData ? data : data.clone();
+		result.odata = shareData && isContiguous() ? data : clone().getBuffer();
 		result.setName(name);
 		result.setData();
 		return result;
