@@ -450,7 +450,50 @@ public class AbstractCompoundDatasetTest {
 			}
 		}
 	}
-	
+
+	@Test
+	public void testCompoundCreatorsWithNonContiguousDatasets() {
+
+		double[][] db = { {0, 1, 2}, {3, 4, 5} };
+		DoubleDataset b = DoubleDataset.createFromObject(db);
+		CompoundDoubleDataset cb = CompoundDoubleDataset.createCompoundDatasetWithLastDimension(b, true);
+		int is = cb.getElementsPerItem();
+		assertEquals(3, is);
+		assertEquals(1, cb.getRank());
+		assertEquals(2, cb.getSize());
+		assertEquals(2, cb.getShape()[0]);
+		IndexIterator it = cb.getIterator();
+		for (int i = 0; it.hasNext();) {
+			for (int j = 0; j < is; j++, i++) {
+				assertEquals(i, cb.getElementDoubleAbs(it.index + j), 1e-15*i);
+			}
+		}
+
+		double[][] dc = { {0, 2, 4}, {1, 3, 5} };
+		b = DoubleDataset.createFromObject(dc);
+		cb = CompoundDoubleDataset.createCompoundDatasetWithLastDimension(b.getTransposedView(), true);
+		is = cb.getElementsPerItem();
+		it = cb.getIterator();
+		assertEquals(2, is);
+		assertEquals(1, cb.getRank());
+		assertEquals(3, cb.getSize());
+		assertEquals(3, cb.getShape()[0]);
+		for (int i = 0; it.hasNext();) {
+			for (int j = 0; j < is; j++, i++) {
+				assertEquals(i, cb.getElementDoubleAbs(it.index + j), 1e-15*i);
+			}
+		}
+
+		CompoundDataset cc = cb.getSliceView(new Slice(null, null, 2));
+		Dataset c = cc.asNonCompoundDataset(true);
+		double[][] dd = { {0, 1}, {4, 5} };
+		b = DoubleDataset.createFromObject(dd);
+		it = c.getIterator();
+		for (int i = 0; it.hasNext(); i++) {
+			assertEquals(b.getElementDoubleAbs(i), c.getElementDoubleAbs(it.index), 1e-15*i);
+		}
+	}
+
 	@Test
 	public void testRGB() {
 		Dataset r = Random.randint(0, 255, new int[] {128, 128});
