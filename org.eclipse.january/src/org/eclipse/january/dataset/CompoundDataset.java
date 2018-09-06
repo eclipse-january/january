@@ -268,7 +268,7 @@ public interface CompoundDataset extends Dataset {
 
 	/**
 	 * Get a non-compound dataset version
-	 * @param shareData if true, share data otherwise copy it
+	 * @param shareData if true, then share data when possible otherwise copy it
 	 * @return non-compound dataset
 	 */
 	public Dataset asNonCompoundDataset(final boolean shareData);

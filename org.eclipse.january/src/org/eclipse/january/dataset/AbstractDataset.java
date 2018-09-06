@@ -250,7 +250,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		return getTransposedView(axes);
 	}
 
-	private boolean isContiguous() {
+	boolean isContiguous() {
 		if (stride == null)
 			return true;
 
