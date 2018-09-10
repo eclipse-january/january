@@ -40,12 +40,14 @@ public class DateDatasetTest {
 			assertEquals(dates[i], dataset.getDateAbs(i));
 		}
 	}
-	
+
 	@Test
 	public void testCreateFromObject() {
 		final Date date = new Date(1443657600000l); // 2015-10-01 00:00:00 GMT
 		DateDataset dataset = DateDatasetImpl.createFromObject(date);
 		assertEquals(date, dataset.getDateAbs(0));
+
+		Dataset d = DatasetFactory.createFromObject(date);
+		assertEquals(Dataset.DATE, d.getDType());
 	}
-	
 }
