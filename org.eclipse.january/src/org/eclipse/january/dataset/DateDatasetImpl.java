@@ -37,15 +37,20 @@ public class DateDatasetImpl extends StringDataset implements DateDataset {
 	DateDatasetImpl() {
 		super();
 	}
-	
+
 	DateDatasetImpl(final int... shape) {
 		super(shape);
 	}
-	
+
 	DateDatasetImpl(final Date[] data, int... shape) {
 		super(datesToStrings(data), shape);
 	}
-	
+
+	@Override
+	public int getDType() {
+		return DATE;
+	}
+
 	private static String[] datesToStrings(final Date[] dates) {
 		final String[] dateStrings = new String[dates.length];
 		for (int i = 0; i < dates.length; i++) {
