@@ -128,8 +128,8 @@ public class AbstractDatasetTest {
 		assertEquals("Max arg 0 ", DatasetFactory.createFromObject(new int[] {1,2,2,2}), a.argMax(0));
 		assertEquals("Max arg 1 ", DatasetFactory.createFromObject(new int[] {3,0,3}), a.argMax(1));
 		assertEquals("Max", 11, a.max(true).doubleValue(), 1e-6);
-		assertEquals("Max 0", DatasetFactory.createFromObject(new double[] {8,9,10,11}), a.max(0,true));
-		assertEquals("Max 1", DatasetFactory.createFromObject(new double[] {3,7,11}), a.max(1,true));
+		assertEquals("Max 0", DatasetFactory.createFromObject(new double[] {8,9,10,11}), a.max(0, true));
+		assertEquals("Max 1", DatasetFactory.createFromObject(new double[] {3,7,11}), a.max(1, true));
 		assertEquals("Max arg", 11, a.argMax(true));
 		assertEquals("Max arg 0 ", DatasetFactory.createFromObject(new int[] {2,2,2,2}), a.argMax(0, true));
 		assertEquals("Max arg 1 ", DatasetFactory.createFromObject(new int[] {3,3,3}), a.argMax(1, true));

@@ -15,18 +15,14 @@ package org.eclipse.january.dataset;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.text.Format;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 import org.eclipse.january.DatasetException;
 import org.eclipse.january.IMonitor;
 import org.eclipse.january.MetadataException;
 import org.eclipse.january.metadata.ErrorMetadata;
 import org.eclipse.january.metadata.MetadataFactory;
-import org.eclipse.january.metadata.MetadataType;
 import org.eclipse.january.metadata.StatisticsMetadata;
 import org.eclipse.january.metadata.internal.ErrorMetadataImpl;
 import org.eclipse.january.metadata.internal.StatisticsMetadataImpl;
@@ -152,40 +148,6 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		if (odtype != vdtype) {
 			view.setDirty();
 		}
-	}
-
-	/**
-	 * @since 2.0
-	 */
-	protected static ConcurrentMap<Class<? extends MetadataType>, List<MetadataType>> getMetadataMap(Dataset a, boolean clone) {
-		if (a == null)
-			return null;
-
-		List<MetadataType> all = null;
-		try {
-			all = a.getMetadata(null);
-		} catch (Exception e) {
-		}
-		if (all == null)
-			return null;
-
-		ConcurrentMap<Class<? extends MetadataType>, List<MetadataType>> map = new ConcurrentHashMap<Class<? extends MetadataType>, List<MetadataType>>();
-
-		for (MetadataType m : all) {
-			if (m == null) {
-				continue;
-			}
-			Class<? extends MetadataType> c = findMetadataTypeSubInterfaces(m.getClass());
-			List<MetadataType> l = map.get(c);
-			if (l == null) {
-				l = new ArrayList<MetadataType>();
-				map.put(c, l);
-			}
-			if (clone)
-				m = m.clone();
-			l.add(m);
-		}
-		return map;
 	}
 
 	@Override
@@ -642,7 +604,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		}
 
 		setDirty();
-		if (this.shape != null) {
+		if (this.shape != null && metadata != null) {
 			reshapeMetadata(this.shape, nshape);
 		}
 		this.shape = nshape;
@@ -1512,7 +1474,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	@SuppressWarnings("unchecked")
 	protected StatisticsMetadata<Number> getStats() {
 		StatisticsMetadata<Number> md = getFirstMetadata(StatisticsMetadata.class);
-		if (md == null || md.isDirty()) {
+		if (md == null || md.isDirty(this)) {
 			md = new StatisticsMetadataImpl<Number>();
 			md.initialize(this);
 			setMetadata(md);
@@ -1526,7 +1488,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	@SuppressWarnings("unchecked")
 	protected StatisticsMetadata<String> getStringStats() {
 		StatisticsMetadata<String> md = getFirstMetadata(StatisticsMetadata.class);
-		if (md == null || md.isDirty()) {
+		if (md == null || md.isDirty(this)) {
 			md = new StatisticsMetadataImpl<String>();
 			md.initialize(this);
 			setMetadata(md);

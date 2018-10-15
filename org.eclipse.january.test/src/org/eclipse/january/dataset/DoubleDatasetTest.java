@@ -11,9 +11,11 @@ package org.eclipse.january.dataset;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import org.apache.commons.math3.complex.Complex;
+import org.eclipse.january.MetadataException;
 import org.eclipse.january.asserts.TestUtils;
 import org.eclipse.january.dataset.Dataset;
 import org.eclipse.january.dataset.DatasetFactory;
@@ -21,6 +23,7 @@ import org.eclipse.january.dataset.DoubleDataset;
 import org.eclipse.january.dataset.IndexIterator;
 import org.eclipse.january.dataset.Maths;
 import org.eclipse.january.dataset.Slice;
+import org.eclipse.january.metadata.StatisticsMetadata;
 import org.junit.Test;
 
 public class DoubleDatasetTest {
@@ -265,6 +268,15 @@ public class DoubleDatasetTest {
 		assertEquals(5.41666667, ((Number) a.mean()).doubleValue(), 1e-6);
 		assertEquals(3.75277675, a.stdDeviation(), 1e-6);
 		assertEquals(14.0833333, a.variance(), 1e-6);
+	}
+
+	@Test
+	public void testShapeChangingStats() throws MetadataException {
+		Dataset a = DatasetFactory.createRange(12).reshape(3, 4);
+		a.max();
+		a.setShape(3, 1, 4);
+		Dataset b = a.getView(true);
+		assertNull(b.getMetadata(StatisticsMetadata.class));;
 	}
 
 	@Test

@@ -2676,7 +2676,7 @@ public class DatasetUtils {
 	 * @return some java array
 	 */
 	public static Serializable serializeDataset(final IDataset data) {
-		Dataset d = convertToDataset(data.getSliceView());
+		Dataset d = convertToDataset(data).getView(false);
 		d.clearMetadata(null);
 		return d.flatten().getBuffer();
 	}

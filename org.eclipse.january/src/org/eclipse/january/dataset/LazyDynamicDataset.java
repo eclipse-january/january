@@ -39,7 +39,7 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 				if (checker == null || checker.check()) {
 					fireDataListeners();
 				}
-			}				
+			}
 		}
 	}
 
