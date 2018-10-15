@@ -452,7 +452,7 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 	@SuppressWarnings("unchecked")
 	protected StatisticsMetadata<double[]> getCompoundStats() {
 		StatisticsMetadata<double[]> md = getFirstMetadata(StatisticsMetadata.class);
-		if (md == null || md.isDirty()) {
+		if (md == null || md.isDirty(this)) {
 			md = new StatisticsMetadataImpl<double[]>();
 			md.initialize(this);
 			setMetadata(md);

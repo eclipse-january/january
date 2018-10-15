@@ -96,7 +96,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		if (!getClass().equals(obj.getClass())) {
 			return false;
 		}
-	
+
 		LazyDatasetBase other = (LazyDatasetBase) obj;
 		if (getDType() != other.getDType()) {
 			return false;
@@ -327,9 +327,71 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 			List<MetadataType> nl = new ArrayList<MetadataType>(l.size());
 			outMetadata.put(c, nl);
 			for (MetadataType m : l) {
+				if (m == null || isMetadataDirty(m)) { // skip dirty metadata
+					continue;
+				}
 				nl.add(m.clone());
 			}
 		}
+	}
+
+	protected void restoreMetadata(Map<Class<? extends MetadataType>, List<MetadataType>> oldMetadata) {
+		copyMetadata(oldMetadata, metadata);
+	}
+
+	/**
+	 * @since 2.2
+	 */
+	protected static ConcurrentMap<Class<? extends MetadataType>, List<MetadataType>> getMetadataMap(ILazyDataset a, boolean clone) {
+		List<MetadataType> all = null;
+		try {
+			all = a.getMetadata(null);
+		} catch (Exception e) {
+		}
+		if (all == null) {
+			return null;
+		}
+
+		ConcurrentMap<Class<? extends MetadataType>, List<MetadataType>> map = new ConcurrentHashMap<Class<? extends MetadataType>, List<MetadataType>>();
+
+		for (MetadataType m : all) {
+			if (m == null || isMetadataDirty(m)) { // skip dirty metadata
+				continue;
+			}
+			Class<? extends MetadataType> c = findMetadataTypeSubInterfaces(m.getClass());
+			List<MetadataType> l = map.get(c);
+			if (l == null) {
+				l = new ArrayList<MetadataType>();
+				map.put(c, l);
+			}
+			if (clone) {
+				m = m.clone();
+			}
+			l.add(m);
+		}
+		return map;
+	}
+
+	private static boolean isMetadataDirty(MetadataType m) {
+		Class<? extends MetadataType> c = m.getClass();
+		for (Field f : c.getDeclaredFields()) {
+			if (f.isAnnotationPresent(Dirtiable.class)) {
+				Class<?> t = f.getType();
+				if (t.equals(boolean.class) || t.equals(Boolean.class)) {
+					try {
+						f.setAccessible(true);
+						Object o = f.get(m);
+						if (o.equals(true)) {
+							return true;
+						}
+					} catch (Exception e) {
+						logger.debug("Could not retrieve value of dirty variable: {}", c.getCanonicalName(), e);
+					}
+				}
+			}
+		}
+
+		return false;
 	}
 
 	interface MetadatasetAnnotationOperation {
@@ -986,10 +1048,6 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 			}
 		}
 		return o;
-	}
-
-	protected void restoreMetadata(Map<Class<? extends MetadataType>, List<MetadataType>> oldMetadata) {
-		copyMetadata(oldMetadata, metadata);
 	}
 
 	protected ILazyDataset createFromSerializable(Serializable blob, boolean keepLazy) {

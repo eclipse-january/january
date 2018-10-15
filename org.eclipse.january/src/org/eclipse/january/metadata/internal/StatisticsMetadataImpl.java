@@ -41,7 +41,8 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 	private int hash;
 	private int dtype;
 	private int isize;
-	private Dataset dataset;
+	private boolean isFloat;
+	private transient Dataset dataset;
 	private Dataset[][] axisStats = null;
 
 	private MaxMin<T>[] mms;
@@ -58,6 +59,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 		hash = statsMetadata.hash;
 		isize = statsMetadata.isize;
 		dtype = statsMetadata.dtype;
+		isFloat = statsMetadata.isFloat;
 		dataset = statsMetadata.dataset.getView(false);
 		axisStats = new Dataset[dataset.getRank() * COMBOS][];
 		for (int i = 0; i < axisStats.length; i++) {
@@ -99,6 +101,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 	public void initialize(Dataset dataset) {
 		this.dataset = dataset.getView(false);
 		this.dataset.clearMetadata(null);
+		isFloat = dataset.hasFloatingPointElements();
 		dtype = dataset.getDType();
 		isize = dataset.getElementsPerItem();
 		mms = new MaxMin[COMBOS];
@@ -117,14 +120,15 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 	private int refresh(boolean maxMin, boolean... ignoreInvalids) {
 		boolean ignoreNaNs = false;
 		boolean ignoreInfs = false;
-		if (dataset.hasFloatingPointElements()) {
+		if (isDirty) {
+			clearAll();
+		}
+
+		if (isFloat) {
 			ignoreNaNs = ignoreInvalids != null && ignoreInvalids.length > 0 ? ignoreInvalids[0] : false;
 			ignoreInfs = ignoreInvalids != null && ignoreInvalids.length > 1 ? ignoreInvalids[1] : ignoreNaNs;
 		}
 
-		if (isDirty) {
-			clearAll();
-		}
 		int idx = (ignoreNaNs ? 1 : 0)*2 + (ignoreInfs ? 1 : 0);
 		if (mms[idx] == null) {
 			mms[idx] = new MaxMin<T>();
@@ -183,7 +187,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 			double asum = 0;
 
 			boolean hasNaNs = false;
-			if (dataset.hasFloatingPointElements() && (ignoreNaNs || ignoreInfs)) {
+			if (isFloat && (ignoreNaNs || ignoreInfs)) {
 				while (iter.hasNext()) {
 					final double val = dataset.getElementDoubleAbs(iter.index);
 					hash = (int) (hash * 19 + Double.doubleToRawLongBits(val));
@@ -203,7 +207,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 						amin = val;
 					}
 				}
-			} else if (dataset.hasFloatingPointElements()) {
+			} else if (isFloat) {
 				while (iter.hasNext()) {
 					final double val = dataset.getElementDoubleAbs(iter.index);
 					hash = (int) (hash * 19 + Double.doubleToRawLongBits(val));
@@ -273,7 +277,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 		if (isize == 1) {
 			boolean hasNaNs = false;
 			stats = istats[0];
-			if (dataset.hasFloatingPointElements() && (ignoreNaNs || ignoreInfs)) {
+			if (isFloat && (ignoreNaNs || ignoreInfs)) {
 				while (iter.hasNext()) {
 					final double val = dataset.getElementDoubleAbs(iter.index);
 					hash = (int) (hash * 19 + Double.doubleToRawLongBits(val));
@@ -287,7 +291,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 					}
 					stats.addValue(val);
 				}
-			} else if (dataset.hasFloatingPointElements()) {
+			} else if (isFloat) {
 				while (iter.hasNext()) {
 					final double val = dataset.getElementDoubleAbs(iter.index);
 					hash = (int) (hash * 19 + Double.doubleToRawLongBits(val));
@@ -360,6 +364,17 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 	@Override
 	public boolean isDirty() {
 		return isDirty;
+	}
+
+	@Override
+	public boolean isDirty(Dataset dataset) {
+		if (isDirty) {
+			return true; // usage is to create a new instance of this class
+		}
+		if (this.dataset != dataset) { // when marshalled the field is null
+			this.dataset = dataset;
+		}
+		return false; 
 	}
 
 	private void clearAll() {

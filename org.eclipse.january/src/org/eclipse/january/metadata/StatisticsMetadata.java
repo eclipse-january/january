@@ -40,6 +40,12 @@ public interface StatisticsMetadata<T> extends MetadataType {
 	public boolean isDirty();
 
 	/**
+	 * @return true if dataset has been modified
+	 * @since 2.2
+	 */
+	public boolean isDirty(Dataset dataset);
+
+	/**
 	 * @param hash the hash to set
 	 */
 	public void setHash(int hash);
