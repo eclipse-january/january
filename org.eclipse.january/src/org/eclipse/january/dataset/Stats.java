@@ -843,6 +843,17 @@ public class Stats {
 
 	/**
 	 * @param a dataset
+	 * @param axis
+	 * @param ignoreInvalids see {@link Dataset#max(int, boolean...)}
+	 * @return product of items along axis in dataset
+	 * @since 2.2
+	 */
+	public static Dataset product(final Dataset a, final int[] axis, final boolean... ignoreInvalids) {
+		return typedProduct(a, a.getDType(), axis, ignoreInvalids);
+	}
+
+	/**
+	 * @param a dataset
 	 * @param dtype
 	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
 	 * @return typed product of all items in dataset
@@ -970,11 +981,23 @@ public class Stats {
 	 * @since 2.0
 	 */
 	public static Dataset typedProduct(final Dataset a, final int dtype, int axis, final boolean... ignoreInvalids) {
-		axis = a.checkAxis(axis);
-		final int[] oshape = a.getShape();
+		return typedProduct(a, dtype, new int[] {axis}, ignoreInvalids);
+	}
+
+	/**
+	 * @param a dataset
+	 * @param dtype
+	 * @param axes
+	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
+	 * @return typed product of items in axes of dataset
+	 * @since 2.2
+	 */
+	public static Dataset typedProduct(final Dataset a, final int dtype, int[] axes, final boolean... ignoreInvalids) {
+		axes = ShapeUtils.checkAxes(a.getRank(), axes);
+		SliceNDIterator siter = new SliceNDIterator(new SliceND(a.getShapeRef()), axes);
+
+		int[] nshape = siter.getUsedSlice().getSourceShape();
 		final int is = a.getElementsPerItem();
-		final int alen = oshape[axis];
-		oshape[axis] = 1;
 
 		final boolean ignoreNaNs;
 		final boolean ignoreInfs;
@@ -986,25 +1009,24 @@ public class Stats {
 			ignoreInfs = false;
 		}
 		@SuppressWarnings("deprecation")
-		Dataset result = DatasetFactory.zeros(is, oshape, dtype);
+		Dataset result = DatasetFactory.zeros(is, nshape, dtype);
 
-		IndexIterator qiter = result.getIterator(true);
-		int[] qpos = qiter.getPos();
-		int[] spos;
+		int[] spos = siter.getUsedPos();
 
 		// TODO add getLongArray(long[], int...) to CompoundDataset
-		while (qiter.hasNext()) {
-			spos = qpos.clone();
+		final boolean isComplex = a.isComplex();
+		while (siter.hasNext()) {
+			IndexIterator iter = a.getSliceIterator(siter.getCurrentSlice());
+			final int[] pos = iter.getPos();
 
-			if (a.isComplex()) {
+			if (isComplex) {
 				double rv = 1, iv = 0;
 				switch (dtype) {
 				case Dataset.COMPLEX64:
 					ComplexFloatDataset af = (ComplexFloatDataset) a;
-					for (int j = 0; j < alen; j++) {
-						spos[axis] = j;
-						final float r1 = af.getReal(spos);
-						final float i1 = af.getImag(spos);
+					while (iter.hasNext()) {
+						final float r1 = af.getReal(pos);
+						final float i1 = af.getImag(pos);
 						if (ignoreNaNs && (Float.isNaN(r1) || Float.isNaN(i1))) {
 							continue;
 						}
@@ -1021,10 +1043,9 @@ public class Stats {
 					break;
 				case Dataset.COMPLEX128:
 					ComplexDoubleDataset ad = (ComplexDoubleDataset) a;
-					for (int j = 0; j < alen; j++) {
-						spos[axis] = j;
-						final double r1 = ad.getReal(spos);
-						final double i1 = ad.getImag(spos);
+					while (iter.hasNext()) {
+						final double r1 = ad.getReal(pos);
+						final double i1 = ad.getImag(pos);
 						if (ignoreNaNs && (Double.isNaN(r1) || Double.isNaN(i1))) {
 							continue;
 						}
@@ -1041,7 +1062,7 @@ public class Stats {
 					break;
 				}
 
-				result.set(new Complex(rv, iv), qpos);
+				result.set(new Complex(rv, iv), spos);
 			} else {
 				final long[] lresults;
 				final double[] dresults;
@@ -1051,73 +1072,67 @@ public class Stats {
 				case Dataset.INT8: case Dataset.INT16:
 				case Dataset.INT32: case Dataset.INT64:
 					long lresult = 1;
-					for (int j = 0; j < alen; j++) {
-						spos[axis] = j;
-						lresult *= a.getInt(spos);
+					while (iter.hasNext()) {
+						lresult *= a.getInt(pos);
 					}
-					result.set(lresult, qpos);
+					result.set(lresult, spos);
 					break;
 				case Dataset.ARRAYINT8:
 					lresults = new long[is];
 					for (int k = 0; k < is; k++) {
 						lresults[k] = 1;
 					}
-					for (int j = 0; j < alen; j++) {
-						spos[axis] = j;
-						final byte[] va = (byte[]) a.getObject(spos);
+					while (iter.hasNext()) {
+						final byte[] va = (byte[]) a.getObject(pos);
 						for (int k = 0; k < is; k++) {
 							lresults[k] *= va[k];
 						}
 					}
-					result.set(lresults, qpos);
+					result.set(lresults, spos);
 					break;
 				case Dataset.ARRAYINT16:
 					lresults = new long[is];
 					for (int k = 0; k < is; k++) {
 						lresults[k] = 1;
 					}
-					for (int j = 0; j < alen; j++) {
-						spos[axis] = j;
-						final short[] va = (short[]) a.getObject(spos);
+					while (iter.hasNext()) {
+						final short[] va = (short[]) a.getObject(pos);
 						for (int k = 0; k < is; k++) {
 							lresults[k] *= va[k];
 						}
 					}
-					result.set(lresults, qpos);
+					result.set(lresults, spos);
 					break;
 				case Dataset.ARRAYINT32:
 					lresults = new long[is];
 					for (int k = 0; k < is; k++) {
 						lresults[k] = 1;
 					}
-					for (int j = 0; j < alen; j++) {
-						spos[axis] = j;
-						final int[] va = (int[]) a.getObject(spos);
+					while (iter.hasNext()) {
+						final int[] va = (int[]) a.getObject(pos);
 						for (int k = 0; k < is; k++) {
 							lresults[k] *= va[k];
 						}
 					}
-					result.set(lresults, qpos);
+					result.set(lresults, spos);
 					break;
 				case Dataset.ARRAYINT64:
 					lresults = new long[is];
 					for (int k = 0; k < is; k++) {
 						lresults[k] = 1;
 					}
-					for (int j = 0; j < alen; j++) {
-						spos[axis] = j;
-						final long[] va = (long[]) a.getObject(spos);
+					while (iter.hasNext()) {
+						final long[] va = (long[]) a.getObject(pos);
 						for (int k = 0; k < is; k++) {
 							lresults[k] *= va[k];
 						}
 					}
-					result.set(lresults, qpos);
+					result.set(lresults, spos);
 					break;
 				case Dataset.FLOAT32: case Dataset.FLOAT64:
 					double dresult = 1.;
-					for (int j = 0; j < alen; j++) {
-						spos[axis] = j;
-						final double x = a.getDouble(spos); 
+					while (iter.hasNext()) {
+						final double x = a.getElementDoubleAbs(iter.index); 
 						if (ignoreNaNs && Double.isNaN(x)) {
 							continue;
 						}
@@ -1129,7 +1144,7 @@ public class Stats {
 							break;
 						}
 					}
-					result.set(dresult, qpos);
+					result.set(dresult, spos);
 					break;
 				case Dataset.ARRAYFLOAT32: case Dataset.ARRAYFLOAT64:
 					CompoundDataset da = (CompoundDataset) a;
@@ -1138,9 +1153,8 @@ public class Stats {
 					for (int k = 0; k < is; k++) {
 						dresults[k] = 1.;
 					}
-					for (int j = 0; j < alen; j++) {
-						spos[axis] = j;
-						da.getDoubleArray(dvalues, spos);
+					while (iter.hasNext()) {
+						da.getDoubleArrayAbs(iter.index, dvalues);
 						boolean okay = true;
 						for (int k = 0; k < is; k++) {
 							final double val = dvalues[k];
@@ -1159,13 +1173,13 @@ public class Stats {
 							}
 						}
 					}
-					result.set(dresults, qpos);
+					result.set(dresults, spos);
 					break;
 				}
 			}
 		}
 
-		result.setShape(ShapeUtils.squeezeShape(oshape, axis));
+//		result.setShape(ShapeUtils.squeezeShape(oshape, axes));
 		return result;
 	}
 

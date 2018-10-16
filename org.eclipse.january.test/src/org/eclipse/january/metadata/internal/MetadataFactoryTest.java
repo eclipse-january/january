@@ -267,7 +267,7 @@ public class MetadataFactoryTest {
 		new Object[] { DatasetFactory.ones(3, 2) },
 		new Object[] { null , null, new int[] {1,2}, "/file/path", "/data/path" },
 		new Object[] { new double[] {-3, 2.5}, 1.25, 3.14 },
-		new Object[] { DatasetFactory.createRange(12) },
+		new Object[] { DatasetFactory.createRange(60).reshape(4, 3, 5) },
 		new Object[] { new TimeUnit() },
 		};
 
@@ -279,6 +279,7 @@ public class MetadataFactoryTest {
 			Class<? extends MetadataType> mc = types[i];
 			Object[] params = arguments[i];
 			MetadataType md = MetadataFactory.createMetadata(mc, params);
+			StatisticsMetadata<Double> m7 = null;
 
 			Object exp = null;
 			Object act = null;
@@ -319,9 +320,9 @@ public class MetadataFactoryTest {
 				act = m6.getScaling();
 				break;
 			case 7:
-				StatisticsMetadata<Double> m7 = (StatisticsMetadata<Double>) md;
-				exp = ((Dataset) params[0]).min(true);
-				act = m7.getMinimum(true);
+				m7 = (StatisticsMetadata<Double>) md;
+				exp = ((Dataset) params[0]).min(0);
+				act = m7.getMinimum(0);
 				break;
 			case 8:
 				UnitMetadata m8 = (UnitMetadata) md;
@@ -332,13 +333,20 @@ public class MetadataFactoryTest {
 
 			assertTrue(Objects.deepEquals(exp, act));
 
-			checkSerializable(md);
+			Dataset d = checkSerializable(md);
+			if (i == 7) { // check for stats only
+				act = d.min(0, true);
+				assertTrue(Objects.deepEquals(exp, act));
+
+				act = d.min(1, false);
+				assertTrue(Objects.deepEquals(m7.getMinimum(1, false), act));
+			}
 		}
 	}
 
-	private void checkSerializable(MetadataType md) throws IOException, ClassNotFoundException, MetadataException {
-		Dataset a = DatasetFactory.createRange(12);
-		a.setShape(3,4);
+	private Dataset checkSerializable(MetadataType md) throws IOException, ClassNotFoundException, MetadataException {
+		Dataset a = DatasetFactory.createRange(60);
+		a.setShape(4, 3, 5);
 		a.addMetadata(md);
 
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -351,5 +359,7 @@ public class MetadataFactoryTest {
 		Dataset b = Dataset.class.cast(istream.readObject());
 
 		assertDatasetEquals(a, b);
+
+		return b;
 	}
 }

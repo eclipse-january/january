@@ -9,6 +9,7 @@
 
 package org.eclipse.january.dataset;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
@@ -299,5 +300,13 @@ public class DatasetUtilsTest {
 
 		e = DatasetFactory.createFromObject(new int[] {0, 2, 1, 2, 0, 1}).reshape(2, 3);
 		TestUtils.assertDatasetEquals(e, DatasetUtils.indexSort(a, 1));
+	}
+
+	@Test
+	public void testSetShape() {
+		int[] oShape = new int[] {5, 4, 3, 6, 7};
+		Dataset a = DatasetFactory.createRange(120).reshape(5, 4, 6);
+		DatasetUtils.setShapeToOriginalRank(a, oShape, 2, 4);
+		assertArrayEquals(new int[] {5, 4, 1, 6, 1}, a.getShapeRef());
 	}
 }

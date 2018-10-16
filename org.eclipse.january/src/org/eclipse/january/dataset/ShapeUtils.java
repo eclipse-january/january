@@ -12,7 +12,10 @@ package org.eclipse.january.dataset;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class ShapeUtils {
 
@@ -404,5 +407,92 @@ public class ShapeUtils {
 			throw new IllegalArgumentException("Axis " + axis + " given is out of range [0, " + rank + ")");
 		}
 		return axis;
+	}
+
+	private static int[] convert(Collection<Integer> list) {
+		int[] array = new int[list.size()];
+		int i = 0;
+		for (Integer l : list) {
+			array[i++] = l;
+		}
+		return array;
+	}
+
+	/**
+	 * Check that all axes are in range [-rank,rank)
+	 * @param rank
+	 * @param axes
+	 * @return sanitized axes in range [0, rank) and sorted in increasing order
+	 * @since 2.2
+	 */
+	public static int[] checkAxes(int rank, int... axes) {
+		return convert(sanitizeAxes(rank, axes));
+	}
+
+	/**
+	 * Check that all axes are in range [-rank,rank)
+	 * @param rank
+	 * @param axes
+	 * @return sanitized axes in range [0, rank) and sorted in increasing order
+	 * @since 2.2
+	 */
+	private static SortedSet<Integer> sanitizeAxes(int rank, int... axes) {
+		SortedSet<Integer> nAxes = new TreeSet<>(); 
+		for (int i = 0; i < axes.length; i++) {
+			nAxes.add(checkAxis(rank, axes[i]));
+		}
+
+		return nAxes;
+	}
+
+	/**
+	 * @param rank
+	 * @param axes
+	 * @return remaining axes not given by input
+	 * @since 2.2
+	 */
+	public static int[] getRemainingAxes(int rank, int... axes) {
+		SortedSet<Integer> nAxes = sanitizeAxes(rank, axes);
+
+		int[] remains = new int[rank - axes.length];
+		int j = 0;
+		for (int i = 0; i < rank; i++) {
+			if (!nAxes.contains(i)) {
+				remains[j++] = i;
+			}
+		}
+		return remains;
+	}
+
+	/**
+	 * Remove axes from shape
+	 * @param shape
+	 * @param axes
+	 * @return reduced shape
+	 * @since 2.2
+	 */
+	public static int[] reduceShape(int[] shape, int... axes) {
+		int[] remain = getRemainingAxes(shape.length, axes);
+		for (int i = 0; i < remain.length; i++) {
+			int a = remain[i];
+			remain[i] = shape[a];
+		}
+		return remain;
+	}
+
+	/**
+	 * Set reduced axes to 1
+	 * @param shape
+	 * @param axes
+	 * @return shape with same rank
+	 * @since 2.2
+	 */
+	public static int[] getReducedShapeKeepRank(int[] shape, int... axes) {
+		int[] keep = shape.clone();
+		axes = checkAxes(shape.length, axes);
+		for (int i : axes) {
+			keep[i] = 1;
+		}
+		return keep;
 	}
 }

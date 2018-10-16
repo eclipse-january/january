@@ -2732,4 +2732,15 @@ public class DatasetUtils {
 			return c;
 		}
 	}
+
+	/**
+	 * Set shape to keep original rank
+	 * @param a
+	 * @param originalShape
+	 * @param axes
+	 * @since 2.2
+	 */
+	public static void setShapeToOriginalRank(ILazyDataset a, int[] originalShape, int... axes) {
+		a.setShape(ShapeUtils.getReducedShapeKeepRank(originalShape, axes));
+	}
 }

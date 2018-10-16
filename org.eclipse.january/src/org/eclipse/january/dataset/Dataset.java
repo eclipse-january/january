@@ -1107,12 +1107,28 @@ public interface Dataset extends IDataset {
 	public Dataset max(int axis, boolean... ignoreInvalids);
 
 	/**
+	 * @param axes
+	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
+	 * @return maxima in given axes of dataset
+	 * @since 2.2
+	 */
+	public Dataset max(int[] axes, boolean... ignoreInvalids);
+
+	/**
 	 * @param axis
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return minima along axis in dataset
 	 * @since 2.0
 	 */
 	public Dataset min(int axis, boolean... ignoreInvalids);
+
+	/**
+	 * @param axes
+	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
+	 * @return minima in given axes of dataset
+	 * @since 2.2
+	 */
+	public Dataset min(int[] axes, boolean... ignoreInvalids);
 
 	/**
 	 * Find absolute index of maximum value (in a flattened view)
@@ -1164,6 +1180,14 @@ public interface Dataset extends IDataset {
 	public Dataset peakToPeak(int axis, boolean... ignoreInvalids);
 
 	/**
+	 * @param axes
+	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
+	 * @return peak-to-peak dataset, the difference of maxima and minima of dataset in given axes
+	 * @since 2.2
+	 */
+	public Dataset peakToPeak(int[] axes, boolean... ignoreInvalids);
+
+	/**
 	 * @param ignoreInvalids - see {@link IDataset#max(boolean...)}
 	 * @return number of items in dataset
 	 * @since 2.0
@@ -1177,6 +1201,14 @@ public interface Dataset extends IDataset {
 	 * @since 2.0
 	 */
 	public Dataset count(int axis, boolean... ignoreInvalids);
+
+	/**
+	 * @param axes
+	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
+	 * @return number of items in given axes of dataset
+	 * @since 2.2
+	 */
+	public Dataset count(int[] axes, boolean... ignoreInvalids);
 
 	/**
 	 * @param ignoreInvalids - see {@link IDataset#max(boolean...)}
@@ -1194,6 +1226,14 @@ public interface Dataset extends IDataset {
 	public Dataset sum(int axis, boolean... ignoreInvalids);
 
 	/**
+	 * @param axes
+	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
+	 * @return sum  in given axes of dataset
+	 * @since 2.2
+	 */
+	public Dataset sum(int[] axes, boolean... ignoreInvalids);
+
+	/**
 	 * @param ignoreInvalids - see {@link IDataset#max(boolean...)}
 	 * @return product over all items in dataset
 	 * @since 2.0
@@ -1209,12 +1249,28 @@ public interface Dataset extends IDataset {
 	public Dataset product(int axis, boolean... ignoreInvalids);
 
 	/**
+	 * @param axes
+	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
+	 * @return product in given axes of dataset
+	 * @since 2.2
+	 */
+	public Dataset product(int[] axes, boolean... ignoreInvalids);
+
+	/**
 	 * @param axis
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return mean along axis in dataset
 	 * @since 2.0
 	 */
 	public Dataset mean(int axis, boolean... ignoreInvalids);
+
+	/**
+	 * @param axes
+	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
+	 * @return mean in given axes of dataset
+	 * @since 2.2
+	 */
+	public Dataset mean(int[] axes, boolean... ignoreInvalids);
 
 	/**
 	 * @return sample variance of whole dataset
@@ -1258,14 +1314,30 @@ public interface Dataset extends IDataset {
 	public Dataset variance(int axis);
 
 	/**
+	 * @param axes
+	 * @return sample variance in given axes of dataset
+	 * @see #variance(int[], boolean, boolean...) with isWholePopulation = false
+	 * @since 2.2
+	 */
+	public Dataset variance(int[] axes);
+
+	/**
 	 * @param axis
 	 * @param isWholePopulation
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return sample variance along axis in dataset
-	 * @see #variance(boolean, boolean...) with isWholePopulation = false
 	 * @since 2.0
 	 */
 	public Dataset variance(int axis, boolean isWholePopulation, boolean... ignoreInvalids);
+
+	/**
+	 * @param axes
+	 * @param isWholePopulation
+	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
+	 * @return sample variance in given axes of dataset
+	 * @since 2.2
+	 */
+	public Dataset variance(int[] axes, boolean isWholePopulation, boolean... ignoreInvalids);
 
 	/**
 	 * Standard deviation is square root of the variance
@@ -1299,14 +1371,34 @@ public interface Dataset extends IDataset {
 	/**
 	 * Standard deviation is square root of the variance
 	 * 
+	 * @param axes
+	 * @return standard deviation in given axes of dataset
+	 * @see #stdDeviation(int[], boolean, boolean...) with isWholePopulation = false
+	 * @since 2.2
+	 */
+	public Dataset stdDeviation(int[] axes);
+
+	/**
+	 * Standard deviation is square root of the variance
+	 * 
 	 * @param axis
 	 * @param isWholePopulation
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return standard deviation along axis in dataset
-	 * @see #variance(boolean, boolean...) with isWholePopulation = false
 	 * @since 2.0
 	 */
 	public Dataset stdDeviation(int axis, boolean isWholePopulation, boolean... ignoreInvalids);
+
+	/**
+	 * Standard deviation is square root of the variance
+	 * 
+	 * @param axes
+	 * @param isWholePopulation
+	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
+	 * @return standard deviation in given axes of dataset
+	 * @since 2.2
+	 */
+	public Dataset stdDeviation(int[] axes, boolean isWholePopulation, boolean... ignoreInvalids);
 
 	/**
 	 * @param ignoreInvalids - see {@link IDataset#max(boolean...)}
@@ -1322,4 +1414,12 @@ public interface Dataset extends IDataset {
 	 * @since 2.0
 	 */
 	public Dataset rootMeanSquare(int axis, boolean... ignoreInvalids);
+
+	/**
+	 * @param axes
+	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
+	 * @return root mean square in given axes of dataset
+	 * @since 2.2
+	 */
+	public Dataset rootMeanSquare(int[] axes, boolean... ignoreInvalids);
 }

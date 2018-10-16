@@ -13,9 +13,10 @@
 package org.eclipse.january.dataset;
 
 /**
- * <p>Class to provide slice iteration through a dataset</p>
+ * Class to provide slice iteration through a dataset
  * <p>It allows a number of axes to be omitted and iterates over
- * the axes left over.</p>
+ * the axes left over. The omitted axes define an inner shape and
+ * the remaining axes define an outer shape which is iterated over.
  */
 public class SliceNDIterator extends IndexIterator {
 	final private int[] shape;
@@ -36,7 +37,7 @@ public class SliceNDIterator extends IndexIterator {
 	private SliceND cSlice; // current slice
 	
 	private int sRank; // number of dimensions used (i.e. not missing)
-	final private SliceND oSlice; // omitted source slice
+	final private SliceND iSlice; // omitted source or inner slice
 
 	final private SliceND sSlice; // shortened slice
 	final private int[] sStart; // shortened position
@@ -72,8 +73,8 @@ public class SliceNDIterator extends IndexIterator {
 		dStop  = dSlice.getStop();
 		sRank = rank;
 		if (axes != null) {
+			axes = ShapeUtils.checkAxes(rank, axes);
 			for (int a : axes) {
-				a =  ShapeUtils.checkAxis(rank, a);
 				if (a >= 0 && a <= endrank) {
 					sRank--;
 					omit[a] = true;
@@ -90,28 +91,28 @@ public class SliceNDIterator extends IndexIterator {
 		if (sRank == rank) {
 			sStart = pos;
 			sStop = null;
-			oSlice = null;
+			iSlice = null;
 			sSlice = cSlice;
 		} else {
 			int[] dShape = dSlice.getShape();
-			int[] lShape = new int[sRank]; // inner shape
-			int[] oShape = new int[rank - sRank]; // output shape
+			int[] oShape = new int[sRank]; // outer shape
+			int[] iShape = new int[rank - sRank]; // inner shape
 			for (int i = 0, j = 0, k = 0; i < rank; i++) {
 				if (omit[i]) {
-					oShape[j++] = sShape[i];
+					iShape[j++] = sShape[i];
 				} else {
-					lShape[k++] = sShape[i];
+					oShape[k++] = sShape[i];
 					dShape[i] = 1;
 				}
 			}
-			sSlice = new SliceND(lShape);
+			sSlice = new SliceND(oShape);
 			sStart = sSlice.getStart();
 			sStop = sSlice.getStop();
 
-			oSlice = new SliceND(oShape);
+			iSlice = new SliceND(iShape);
 			for (int i = 0, j = 0, k = 0; i < rank; i++) {
 				if (omit[i]) {
-					oSlice.setSlice(j++, start[i], stop[i], step[i]);
+					iSlice.setSlice(j++, start[i], stop[i], step[i]);
 				} else {
 					sSlice.setSlice(k++, start[i], stop[i], step[i]);
 				}
@@ -165,16 +166,16 @@ public class SliceNDIterator extends IndexIterator {
 	}
 
 	/**
-	 * Get omitted part of source slice which never changes
+	 * Get omitted part of source slice which never changes. I.e. the inner slice
 	 * @return slice (can be null)
 	 */
 	public SliceND getOmittedSlice() {
-		return oSlice;
+		return iSlice;
 	}
 
 	/**
 	 * Get output or destination slice
-	 * @return slice
+	 * @return slice 
 	 */
 	public SliceND getOutputSlice() {
 		return dSlice;
@@ -198,7 +199,7 @@ public class SliceNDIterator extends IndexIterator {
 
 	/**
 	 * Shortened slice where axes are omitted
-	 * @return used slice
+	 * @return used (or outer) slice
 	 */
 	public SliceND getUsedSlice() {
 		return sSlice;
