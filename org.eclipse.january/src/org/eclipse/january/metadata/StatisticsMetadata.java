@@ -137,6 +137,21 @@ public interface StatisticsMetadata<T> extends MetadataType {
 	public double getVariance(boolean isWholePopulation, boolean... ignoreInvalids);
 
 	/**
+	 * @param axis
+	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
+	 * @return the argument at which the maximum first occurs
+	 */
+	public Dataset getArgMaximum(int axis, boolean... ignoreInvalids);
+
+	/**
+	 * @param axis
+	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
+	 * @return the argument at which the minimum first occurs
+	 */
+	public Dataset getArgMinimum(int axis, boolean... ignoreInvalids);
+
+	/**
+	 * @param axis
 	 * @param ignoreInvalids - Can be null, one boolean, or two booleans. By default, both are false. If
 	 * the first boolean is true, will ignore NaNs and ignore infinities. Use the second boolean to
 	 * ignore infinities separately.
@@ -145,46 +160,89 @@ public interface StatisticsMetadata<T> extends MetadataType {
 	public Dataset getMaximum(int axis, boolean... ignoreInvalids);
 
 	/**
+	 * @param axis
 	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
 	 * @return the minimum
 	 */
 	public Dataset getMinimum(int axis, boolean... ignoreInvalids);
 
 	/**
-	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
-	 * @return the argument at which the maximum first occurs
-	 */
-	public Dataset getArgMaximum(int axis, boolean... ignoreInvalids);
-
-	/**
-	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
-	 * @return the argument at which the minimum first occurs
-	 */
-	public Dataset getArgMinimum(int axis, boolean... ignoreInvalids);
-
-	// TODO LongDataset
-	/**
+	 * @param axis
 	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
 	 * @return the number of samples
 	 */
 	public Dataset getCount(int axis, boolean... ignoreInvalids);
 
 	/**
+	 * @param axis
 	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
 	 * @return the mean of samples
 	 */
 	public Dataset getMean(int axis, boolean... ignoreInvalids);
 
 	/**
+	 * @param axis
 	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
 	 * @return the sum of samples
 	 */
 	public Dataset getSum(int axis, boolean... ignoreInvalids);
 
 	/**
+	 * @param axis
 	 * @param isWholePopulation
 	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
 	 * @return the variance of samples
 	 */
 	public Dataset getVariance(int axis, boolean isWholePopulation, boolean... ignoreInvalids);
+
+	/**
+	 * @param axes
+	 * @param ignoreInvalids - Can be null, one boolean, or two booleans. By default, both are false. If
+	 * the first boolean is true, will ignore NaNs and ignore infinities. Use the second boolean to
+	 * ignore infinities separately.
+	 * @return the maximum
+	 * @since 2.2
+	 */
+	public Dataset getMaximum(int[] axes, boolean... ignoreInvalids);
+
+	/**
+	 * @param axes
+	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
+	 * @return the minimum
+	 * @since 2.2
+	 */
+	public Dataset getMinimum(int[] axes, boolean... ignoreInvalids);
+
+	/**
+	 * @param axes
+	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
+	 * @return the number of samples
+	 * @since 2.2
+	 */
+	public Dataset getCount(int[] axes, boolean... ignoreInvalids);
+
+	/**
+	 * @param axes
+	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
+	 * @return the mean of samples
+	 * @since 2.2
+	 */
+	public Dataset getMean(int[] axes, boolean... ignoreInvalids);
+
+	/**
+	 * @param axes
+	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
+	 * @return the sum of samples
+	 * @since 2.2
+	 */
+	public Dataset getSum(int[] axes, boolean... ignoreInvalids);
+
+	/**
+	 * @param axes
+	 * @param isWholePopulation
+	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
+	 * @return the variance of samples
+	 * @since 2.2
+	 */
+	public Dataset getVariance(int[] axes, boolean isWholePopulation, boolean... ignoreInvalids);
 }

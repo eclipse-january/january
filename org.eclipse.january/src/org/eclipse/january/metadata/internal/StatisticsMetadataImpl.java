@@ -13,7 +13,9 @@
 package org.eclipse.january.metadata.internal;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
 import org.eclipse.january.dataset.CompoundDataset;
@@ -26,8 +28,12 @@ import org.eclipse.january.dataset.IndexIterator;
 import org.eclipse.january.dataset.IntegerDataset;
 import org.eclipse.january.dataset.LongDataset;
 import org.eclipse.january.dataset.Maths;
+import org.eclipse.january.dataset.ShapeUtils;
+import org.eclipse.january.dataset.SliceND;
+import org.eclipse.january.dataset.SliceNDIterator;
 import org.eclipse.january.metadata.Dirtiable;
 import org.eclipse.january.metadata.StatisticsMetadata;
+
 
 /**
  * Calculate and store standard statistics
@@ -43,11 +49,12 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 	private int isize;
 	private boolean isFloat;
 	private transient Dataset dataset;
-	private Dataset[][] axisStats = null;
+	private Map<Axes, Dataset[][]> axisStats = null;
 
 	private MaxMin<T>[] mms;
 	private SummaryStatistics[][] summaries;
 
+	
 	@Dirtiable
 	private boolean isDirty = true;
 
@@ -61,10 +68,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 		dtype = statsMetadata.dtype;
 		isFloat = statsMetadata.isFloat;
 		dataset = statsMetadata.dataset.getView(false);
-		axisStats = new Dataset[dataset.getRank() * COMBOS][];
-		for (int i = 0; i < axisStats.length; i++) {
-			axisStats[i] = statsMetadata.axisStats[i];
-		}
+		axisStats = new HashMap<>(statsMetadata.axisStats);
 
 		if (statsMetadata.mms != null) {
 			mms = new MaxMin[COMBOS];
@@ -107,7 +111,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 		mms = new MaxMin[COMBOS];
 		summaries = new SummaryStatistics[COMBOS][];
 
-		axisStats = new Dataset[this.dataset.getRank() * COMBOS][];
+		axisStats = new HashMap<>();
 		setDirty();
 	}
 
@@ -383,9 +387,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 			summaries[i] = null;
 			mms[i] = null;
 		}
-		for (int i = 0; i < axisStats.length; i++) {
-			axisStats[i] = null;
-		}
+		axisStats.clear();
 	}
 
 	@Override
@@ -515,9 +517,20 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 	 * ignore infinities separately.
 	 */
 	private int refresh(int axis, boolean... ignoreInvalids) {
+		return refresh(new int[] {axis}, ignoreInvalids);
+	}
+
+	/**
+	 * @param axes
+	 * @param ignoreInvalids - Can be null, one boolean, or two booleans. By default, both are false. If
+	 * the first boolean is true, will ignore NaNs and ignore infinities. Use the second boolean to
+	 * ignore infinities separately.
+	 */
+	private int refresh(int[] axes, boolean... ignoreInvalids) {
+		axes = ShapeUtils.checkAxes(dataset.getRank(), axes);
 		boolean ignoreNaNs = false;
 		boolean ignoreInfs = false;
-		if (dataset.hasFloatingPointElements()) {
+		if (isFloat) {
 			ignoreNaNs = ignoreInvalids != null && ignoreInvalids.length > 0 ? ignoreInvalids[0] : false;
 			ignoreInfs = ignoreInvalids != null && ignoreInvalids.length > 1 ? ignoreInvalids[1] : ignoreNaNs;
 		}
@@ -525,10 +538,15 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 		if (isDirty) {
 			clearAll();
 		}
-		axis = dataset.checkAxis(axis);
-		int axisOffset = (ignoreNaNs ? 1 : 0)*2 + (ignoreInfs ? 1 : 0) + COMBOS * axis;
-		if (axisStats[axisOffset] == null) {
-			axisStats[axisOffset] = createAxisStats(axis, ignoreNaNs, ignoreInfs);
+		Axes a = new Axes(axes);
+		Dataset[][] as = axisStats.get(a);
+		if (as == null) {
+			as = new Dataset[COMBOS][];
+			axisStats.put(a, as);
+		}
+		int axisOffset = (ignoreNaNs ? 1 : 0)*2 + (ignoreInfs ? 1 : 0);
+		if (as[axisOffset] == null) {
+			as[axisOffset] = createAxisStats(axes, ignoreNaNs, ignoreInfs);
 		}
 
 		isDirty = false;
@@ -536,26 +554,15 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 	}
 
 	/**
-	 * Calculate summary statistics for a dataset along an axis
+	 * Calculate summary statistics for a dataset by iterating over remaining axes not given
 	 * @param ignoreNaNs if true, ignore NaNs
 	 * @param ignoreInfs if true, ignore infinities
-	 * @param axis
+	 * @param axes axes to remain
 	 */
 	@SuppressWarnings("deprecation")
-	private Dataset[] createAxisStats(final int axis, final boolean ignoreNaNs, final boolean ignoreInfs) {
-		int rank = dataset.getRank();
-
-		int[] oshape = dataset.getShape();
-		int alen = oshape[axis];
-		oshape[axis] = 1;
-
-		int[] nshape = new int[rank - 1];
-		for (int i = 0; i < axis; i++) {
-			nshape[i] = oshape[i];
-		}
-		for (int i = axis + 1; i < rank; i++) {
-			nshape[i - 1] = oshape[i];
-		}
+	private Dataset[] createAxisStats(final int[] axes, final boolean ignoreNaNs, final boolean ignoreInfs) {
+		SliceNDIterator siter = new SliceNDIterator(new SliceND(dataset.getShapeRef()), axes);
+		int[] nshape = siter.getUsedSlice().getSourceShape();
 
 		Dataset max;
 		Dataset min;
@@ -569,8 +576,8 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 		if (isize == 1) {
 			max = DatasetFactory.zeros(nshape, dtype);
 			min = DatasetFactory.zeros(nshape, dtype);
-			maxIndex = DatasetFactory.zeros(IntegerDataset.class, nshape);
-			minIndex = DatasetFactory.zeros(IntegerDataset.class, nshape);
+			maxIndex = axes.length == 1 ? DatasetFactory.zeros(IntegerDataset.class, nshape) : null;
+			minIndex = axes.length == 1 ? DatasetFactory.zeros(IntegerDataset.class, nshape) : null;
 			sum = DatasetFactory.zeros(nshape, DTypeUtils.getLargestDType(dtype));
 			mean = DatasetFactory.zeros(DoubleDataset.class, nshape);
 			var = DatasetFactory.zeros(DoubleDataset.class, nshape);
@@ -584,26 +591,16 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 			var = DatasetFactory.zeros(isize, CompoundDoubleDataset.class, nshape);
 		}
 
-
-		IndexIterator qiter = count.getIterator(true);
-		int[] qpos = qiter.getPos();
-		int[] spos = oshape.clone();
-
+		int[] spos = siter.getUsedPos();
+		int index = -1;
 		if (isize == 1) {
 			DoubleDataset lmean = (DoubleDataset) mean;
 			DoubleDataset lvar = (DoubleDataset) var;
 
 			final SummaryStatistics stats = new SummaryStatistics();
-			while (qiter.hasNext()) {
-				int i = 0;
-				for (; i < axis; i++) {
-					spos[i] = qpos[i];
-				}
-				spos[i++] = 0;
-				for (; i < rank; i++) {
-					spos[i] = qpos[i - 1];
-				}
-	
+			while (siter.hasNext()) {
+				index++;
+
 				stats.clear();
 				//sum of logs is slow and we dont use it, so blocking its calculation here
 				stats.setSumLogImpl(new NullStorelessUnivariateStatistic());
@@ -611,11 +608,11 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 				double amax = Double.NEGATIVE_INFINITY;
 				double amin = Double.POSITIVE_INFINITY;
 				boolean hasNaNs = false;
+				IndexIterator iter = dataset.getSliceIterator(siter.getCurrentSlice());
 				if (ignoreNaNs) {
-					for (int j = 0; j < alen; j++) {
-						spos[axis] = j;
-						final double val = dataset.getDouble(spos);
-	
+					while (iter.hasNext()) {
+						final double val = dataset.getElementDoubleAbs(iter.index);
+
 						if (Double.isNaN(val)) {
 							hasNaNs = true;
 							continue;
@@ -633,9 +630,8 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 						stats.addValue(val);
 					}
 				} else {
-					for (int j = 0; j < alen; j++) {
-						spos[axis] = j;
-						final double val = dataset.getDouble(spos);
+					while (iter.hasNext()) {
+						final double val = dataset.getElementDoubleAbs(iter.index);
 	
 						if (hasNaNs) {
 							if (!Double.isNaN(val))
@@ -661,65 +657,70 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 					}
 				}
 	
-				count.setAbs(qiter.index, stats.getN());
+				count.setAbs(index, stats.getN());
 
-				max.set(amax, qpos);
-				min.set(amin, qpos);
-				boolean fmax = false;
-				boolean fmin = false;
-				if (hasNaNs) {
-					if (ignoreNaNs) {
-						for (int j = 0; j < alen; j++) {
-							spos[axis] = j;
-							final double val = dataset.getDouble(spos);
-							if (Double.isNaN(val))
-								continue;
-	
-							if (!fmax && val == amax) { // FIXME qiter.index is wrong!!!
-								maxIndex.setAbs(qiter.index, j);
+				max.set(amax, spos);
+				min.set(amin, spos);
+
+				if (maxIndex != null && minIndex != null) {
+					boolean fmax = false;
+					boolean fmin = false;
+					iter.reset();
+					int i = -1;
+					if (hasNaNs) {
+						if (ignoreNaNs) {
+							while (iter.hasNext()) {
+								i++;
+								final double val = dataset.getElementDoubleAbs(iter.index);
+								if (Double.isNaN(val))
+									continue;
+		
+								if (!fmax && val == amax) { // FIXME qiter.index is wrong!!!
+									maxIndex.setAbs(index, i);
+									fmax = true;
+									if (fmin)
+										break;
+								}
+								if (!fmin && val == amin) {
+									minIndex.setAbs(index, i);
+									fmin = true;
+									if (fmax)
+										break;
+								}
+							}
+						} else {
+							while (iter.hasNext()) {
+								i++;
+								final double val = dataset.getElementDoubleAbs(iter.index);
+								if (Double.isNaN(val)) {
+									maxIndex.setAbs(index, i);
+									minIndex.setAbs(index, i);
+									break;
+								}
+							}
+						}
+					} else {
+						while (iter.hasNext()) {
+							i++;
+							final double val = dataset.getElementDoubleAbs(iter.index);
+							if (!fmax && val == amax) {
+								maxIndex.setAbs(index, i);
 								fmax = true;
 								if (fmin)
 									break;
 							}
 							if (!fmin && val == amin) {
-								minIndex.setAbs(qiter.index, j);
+								minIndex.setAbs(index, i);
 								fmin = true;
 								if (fmax)
 									break;
 							}
 						}
-					} else {
-						for (int j = 0; j < alen; j++) {
-							spos[axis] = j;
-							final double val = dataset.getDouble(spos);
-							if (Double.isNaN(val)) {
-								maxIndex.setAbs(qiter.index, j);
-								minIndex.setAbs(qiter.index, j);
-								break;
-							}
-						}
-					}
-				} else {
-					for (int j = 0; j < alen; j++) {
-						spos[axis] = j;
-						final double val = dataset.getDouble(spos);
-						if (!fmax && val == amax) {
-							maxIndex.setAbs(qiter.index, j);
-							fmax = true;
-							if (fmin)
-								break;
-						}
-						if (!fmin && val == amin) {
-							minIndex.setAbs(qiter.index, j);
-							fmin = true;
-							if (fmax)
-								break;
-						}
 					}
 				}
-				sum.setObjectAbs(qiter.index, stats.getSum());
-				lmean.setAbs(qiter.index, stats.getMean());
-				lvar.setAbs(qiter.index, stats.getVariance());
+				sum.setObjectAbs(index, stats.getSum());
+				lmean.setAbs(index, stats.getMean());
+				lvar.setAbs(index, stats.getVariance());
 			}
 		} else {
 			CompoundDataset ldataset = (CompoundDataset) dataset;
@@ -727,23 +728,16 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 			CompoundDoubleDataset lvar = (CompoundDoubleDataset) var;
 			double[] darray = new double[isize];
 
-			while (qiter.hasNext()) {
-				int i = 0;
-				for (; i < axis; i++) {
-					spos[i] = qpos[i];
-				}
-				spos[i++] = 0;
-				for (; i < rank; i++) {
-					spos[i] = qpos[i-1];
-				}
-
+			while (siter.hasNext()) {
+				index++;
 				final SummaryStatistics[] stats = new SummaryStatistics[isize];
 				for (int k = 0; k < isize; k++) {
 					stats[k] = new SummaryStatistics();
 				}
-				for (int j = 0; j < alen; j++) {
-					spos[axis] = j;
-					ldataset.getDoubleArray(darray, spos);
+				IndexIterator iter = dataset.getSliceIterator(siter.getCurrentSlice());
+				int[] pos = iter.getPos();
+				while (iter.hasNext()) {
+					ldataset.getDoubleArray(darray, pos);
 					boolean skip = false;
 					for (int k = 0; k < isize; k++) {
 						double v = darray[k];
@@ -762,23 +756,23 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 						}
 				}
 
-				count.setAbs(qiter.index, (int) stats[0].getN());
+				count.setAbs(index, (int) stats[0].getN());
 
 				for (int k = 0; k < isize; k++) {
 					darray[k] = stats[k].getSum();
 				}
-				sum.set(darray, qpos);
+				sum.set(darray, spos);
 				for (int k = 0; k < isize; k++) {
 					darray[k] = stats[k].getMean();
 				}
-				lmean.setItem(darray, qpos);
+				lmean.setItem(darray, spos);
 				for (int k = 0; k < isize; k++) {
 					darray[k] = stats[k].getVariance();
 				}
-				lvar.setItem(darray, qpos);
+				lvar.setItem(darray, spos);
 			}
 		}
-		
+
 		return new Dataset[] {max, min, maxIndex, minIndex, count, mean, sum, var};
 	}
 
@@ -791,54 +785,103 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 			AS_SUM = 6,
 			AS_VAR = 7;
 
-	@Override
-	public Dataset getMaximum(int axis, boolean... ignoreInvalids) {
-		int axisOffset = refresh(axis, ignoreInvalids);
-		return axisStats[axisOffset][AS_MAX];
+	private Dataset getAxisStat(int axis, int offset, int item) {
+		return getAxesStat(new int[] {axis}, offset, item);
 	}
-
-	@Override
-	public Dataset getMinimum(int axis, boolean... ignoreInvalids) {
-		int axisOffset = refresh(axis, ignoreInvalids);
-		return axisStats[axisOffset][AS_MIN];
+	private Dataset getAxesStat(int[] axes, int offset, int item) {
+		axes = ShapeUtils.checkAxes(dataset.getRank(), axes);
+		return axisStats.get(new Axes(axes))[offset][item];
 	}
 
 	@Override
 	public Dataset getArgMaximum(int axis, boolean... ignoreInvalids) {
 		int axisOffset = refresh(axis, ignoreInvalids);
-		return axisStats[axisOffset][AS_MAX_INDEX];
+		return getAxisStat(axis, axisOffset, AS_MAX_INDEX);
 	}
 
 	@Override
 	public Dataset getArgMinimum(int axis, boolean... ignoreInvalids) {
 		int axisOffset = refresh(axis, ignoreInvalids);
-		return axisStats[axisOffset][AS_MIN_INDEX];
+		return getAxisStat(axis, axisOffset, AS_MIN_INDEX);
+	}
+
+	@Override
+	public Dataset getMaximum(int axis, boolean... ignoreInvalids) {
+		int axisOffset = refresh(axis, ignoreInvalids);
+		return getAxisStat(axis, axisOffset, AS_MAX);
+	}
+
+	@Override
+	public Dataset getMinimum(int axis, boolean... ignoreInvalids) {
+		int axisOffset = refresh(axis, ignoreInvalids);
+		return getAxisStat(axis, axisOffset, AS_MIN);
 	}
 
 	@Override
 	public Dataset getCount(int axis, boolean... ignoreInvalids) {
 		int axisOffset = refresh(axis, ignoreInvalids);
-		return axisStats[axisOffset][AS_CNT];
+		return getAxisStat(axis, axisOffset, AS_CNT);
 	}
 
 	@Override
 	public Dataset getMean(int axis, boolean... ignoreInvalids) {
 		int axisOffset = refresh(axis, ignoreInvalids);
-		return axisStats[axisOffset][AS_MEAN];
+		return getAxisStat(axis, axisOffset, AS_MEAN);
 	}
 
 	@Override
 	public Dataset getSum(int axis, boolean... ignoreInvalids) {
 		int axisOffset = refresh(axis, ignoreInvalids);
-		return axisStats[axisOffset][AS_SUM];
+		return getAxisStat(axis, axisOffset, AS_SUM);
 	}
 
 	@Override
 	public Dataset getVariance(int axis, boolean isWholePopulation, boolean... ignoreInvalids) {
 		int axisOffset = refresh(axis, ignoreInvalids);
-		Dataset v = axisStats[axisOffset][AS_VAR];
+		Dataset v = getAxisStat(axis, axisOffset, AS_VAR);
 		if (isWholePopulation) {
-			Dataset c = axisStats[axisOffset][AS_CNT];
+			Dataset c = getAxisStat(axis, axisOffset, AS_CNT);
+			v = Maths.multiply(v, Maths.subtract(c, 1.).idivide(c));
+		}
+		return v;
+	}
+
+	@Override
+	public Dataset getMaximum(int[] axes, boolean... ignoreInvalids) {
+		int axisOffset = refresh(axes, ignoreInvalids);
+		return getAxesStat(axes, axisOffset, AS_MAX);
+	}
+
+	@Override
+	public Dataset getMinimum(int[] axes, boolean... ignoreInvalids) {
+		int axisOffset = refresh(axes, ignoreInvalids);
+		return getAxesStat(axes, axisOffset, AS_MIN);
+	}
+
+	@Override
+	public Dataset getCount(int[] axes, boolean... ignoreInvalids) {
+		int axisOffset = refresh(axes, ignoreInvalids);
+		return getAxesStat(axes, axisOffset, AS_CNT);
+	}
+
+	@Override
+	public Dataset getMean(int[] axes, boolean... ignoreInvalids) {
+		int axisOffset = refresh(axes, ignoreInvalids);
+		return getAxesStat(axes, axisOffset, AS_MEAN);
+	}
+
+	@Override
+	public Dataset getSum(int[] axes, boolean... ignoreInvalids) {
+		int axisOffset = refresh(axes, ignoreInvalids);
+		return getAxesStat(axes, axisOffset, AS_SUM);
+	}
+
+	@Override
+	public Dataset getVariance(int[] axes, boolean isWholePopulation, boolean... ignoreInvalids) {
+		int axisOffset = refresh(axes, ignoreInvalids);
+		Dataset v = getAxesStat(axes, axisOffset, AS_VAR);
+		if (isWholePopulation) {
+			Dataset c = getAxesStat(axes, axisOffset, AS_CNT);
 			v = Maths.multiply(v, Maths.subtract(c, 1.).idivide(c));
 		}
 		return v;

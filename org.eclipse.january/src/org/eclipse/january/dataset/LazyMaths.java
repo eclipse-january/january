@@ -13,9 +13,7 @@
 
 package org.eclipse.january.dataset;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import org.eclipse.january.DatasetException;
 import org.slf4j.Logger;
@@ -25,9 +23,6 @@ import org.slf4j.LoggerFactory;
  * Mathematics class for lazy datasets
  */
 public final class LazyMaths {
-
-	private static final String DUPLICATE_AXIS_ERROR = "Axis arguments must be unique";
-	private static final String TOO_MANY_AXES_ERROR = "Number of axes cannot be greater than the rank";
 
 	private LazyMaths() {
 
@@ -81,43 +76,15 @@ public final class LazyMaths {
 
 	}
 
-	private static int[] requireSortedAxes(final ILazyDataset data, int[] axes) {
-		int rank = data.getRank();
-		if (axes == null || axes.length == 0) { // take to mean use all axes
-			axes = new int[rank];
-			for (int i = 0; i < rank; i++) {
-				axes[i] = i;
-			}
-		} else {
-			Arrays.sort(axes);
-			if (rank < axes.length) {
-				logger.error(TOO_MANY_AXES_ERROR);
-				throw new IllegalArgumentException(TOO_MANY_AXES_ERROR);
-			}
-				
-			for (int axisIndex = 0 ; axisIndex < axes.length ; axisIndex++) {
-				if (axes.length > 1 && axisIndex > 0 && axes[axisIndex] == axes[axisIndex-1]) {
-					logger.error(DUPLICATE_AXIS_ERROR);
-					throw new IllegalArgumentException(DUPLICATE_AXIS_ERROR);
-				}
-				axes[axisIndex] = ShapeUtils.checkAxis(rank, axes[axisIndex]);
-			}
-		}
-		return axes;
-	}
-
-	private static Dataset maxmin(final ILazyDataset data, MathOperation operation, int...axes) throws DatasetException {
-		axes = requireSortedAxes(data, axes);
-		
+	private static Dataset maxmin(final ILazyDataset data, MathOperation operation, int[] axes) throws DatasetException {
 		// we will be working here with the "ignoreAxes" instead to improve performance dramatically
-		int[] ignoreAxes = new int[data.getRank()-axes.length];
-		
-		int k = 0;
-		for (int i = 0 ; i < data.getRank() ; i++) {
-			if (Arrays.binarySearch(axes, i) < 0)
-				ignoreAxes[k++] = i;
+		int[] ignoreAxes;
+		if (axes.length == 0) {
+			ignoreAxes = axes;
+		} else {
+			ignoreAxes = ShapeUtils.getRemainingAxes(data.getRank(), axes);
 		}
-		
+
 		final int[] oldShape = data.getShape();
 
 		SliceND sa = new SliceND(oldShape);
@@ -127,10 +94,11 @@ public final class LazyMaths {
 		while (it.hasNext()) {
 			SliceND currentSlice = it.getCurrentSlice();
 			IDataset slice = data.getSlice(currentSlice);
-			if (result == null)
+			if (result == null) {
 				result = DatasetUtils.convertToDataset(slice);
-			else
+			} else {
 				operation.execute(result, slice, result);
+			}
 		}
 		if (result != null) {
 			result.setName(operation.getOperationName());
@@ -149,12 +117,8 @@ public final class LazyMaths {
 	public static Dataset max(final ILazyDataset data, int... axes) throws DatasetException {
 		if (data instanceof Dataset) {
 			Dataset tmp = (Dataset) data;
-			axes = requireSortedAxes(data, axes);
-			for (int i = axes.length - 1; i >= 0; i--) {
-				tmp = tmp.max(axes[i]);
-			}
-			
-			return tmp;
+			axes = ShapeUtils.checkAxes(data.getRank(), axes);
+			return tmp.max(axes);
 		}
 		return maxmin(data, MathOperation.MAX, axes);
 	}
@@ -169,12 +133,8 @@ public final class LazyMaths {
 	public static Dataset min(final ILazyDataset data, int... axes) throws DatasetException {
 		if (data instanceof Dataset) {
 			Dataset tmp = (Dataset) data;
-			axes = requireSortedAxes(data, axes);
-			for (int i = axes.length - 1; i >= 0; i--) {
-				tmp = tmp.min(axes[i]);
-			}
-			
-			return tmp;
+			axes = ShapeUtils.checkAxes(data.getRank(), axes);
+			return tmp.min(axes);
 		}
 		return maxmin(data, MathOperation.MIN, axes);
 	}
@@ -186,8 +146,9 @@ public final class LazyMaths {
 	 * @throws DatasetException 
 	 */
 	public static Dataset sum(final ILazyDataset data, int axis) throws DatasetException {
-		if (data instanceof Dataset)
+		if (data instanceof Dataset) {
 			return ((Dataset) data).sum(axis);
+		}
 		int[][] sliceInfo = new int[3][];
 		int[] shape = data.getShape();
 		final Dataset result = prepareDataset(axis, shape, sliceInfo);
@@ -217,7 +178,7 @@ public final class LazyMaths {
 	public static Dataset sum(final ILazyDataset data, int... ignoreAxes) throws DatasetException {
 		return sum(data, true, ignoreAxes);
 	}
-	
+
 	/**
 	 * @param data
 	 * @param ignore if true, ignore the provided axes, otherwise use only the provided axes 
@@ -227,35 +188,20 @@ public final class LazyMaths {
 	 * @since 2.0
 	 */
 	public static Dataset sum(final ILazyDataset data, boolean ignore, int... axes) throws DatasetException {
-		Arrays.sort(axes); // ensure they are properly sorted
-	
 		ILazyDataset rv = data;
 		
 		if (ignore) {
-			List<Integer> goodAxes = new ArrayList<>();
-			for (int i = 0 ; i < data.getRank() ; i++) {
-				boolean found = false;
-				for (int j = 0 ; j < axes.length ; j++) {
-					if (i == axes[j]) {
-						found = true;
-						break;
-					}
-				}
-				if (!found)		
-					goodAxes.add(i);
-			}
-
-			for (int i = 0 ; i < goodAxes.size() ; i++) {
-				rv = sum(rv, goodAxes.get(i) - i);
-			}
+			axes = ShapeUtils.getRemainingAxes(data.getRank(), axes);
 		} else {
-			for (int i = 0 ; i < axes.length ; i++) {
-				rv = sum(rv, axes[i] - i);
-			}
+			axes = ShapeUtils.checkAxes(data.getRank(), axes);
 		}
+		for (int i = 0 ; i < axes.length ; i++) {
+			rv = sum(rv, axes[i] - i);
+		}
+
 		return DatasetUtils.sliceAndConvertLazyDataset(rv);
 	}
-	
+
 	/**
 	 * @param data
 	 * @param axis (can be negative)

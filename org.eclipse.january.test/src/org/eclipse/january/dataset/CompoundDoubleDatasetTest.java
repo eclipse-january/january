@@ -17,6 +17,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import org.eclipse.january.asserts.TestUtils;
 import org.eclipse.january.dataset.Dataset;
 import org.eclipse.january.dataset.DatasetFactory;
 import org.eclipse.january.dataset.DoubleDataset;
@@ -260,6 +261,24 @@ public class CompoundDoubleDatasetTest {
 		assertArrayEquals(new double[] {18, 22, 26}, b.getDoubleArray(0, 0), 1e-10);
 		assertArrayEquals(new double[] {66, 70, 74}, b.getDoubleArray(1, 0), 1e-10);
 		assertArrayEquals(new double[] {114, 118, 122}, b.getDoubleArray(2, 0), 1e-10);
+
+		d = DatasetFactory.createRange(DoubleDataset.class, 180);
+		d.setShape(4, 3, 5, 3);
+		a = DatasetUtils.createCompoundDatasetFromLastAxis(d, true);
+		CompoundDataset c = a.sum(2);
+		assertArrayEquals(new double[] {30, 35, 40}, c.getDoubleArray(0, 0), 1e-10);
+		TestUtils.assertDatasetEquals(c, a.sum(new int[] {2}));
+		TestUtils.assertDatasetEquals(c.sum(0), a.sum(new int[] {0, 2}));
+		c = a.sum(0);
+		assertArrayEquals(new double[] {270, 274, 278}, c.getDoubleArray(0, 0), 1e-10);
+		TestUtils.assertDatasetEquals(c, a.sum(new int[] {0}));
+		TestUtils.assertDatasetEquals(c.sum(1), a.sum(new int[] {0, 2}));
+
+		c = a.product(2);
+		TestUtils.assertDatasetEquals(c.product(0), a.product(new int[] {0, 2}));
+		c = a.product(0);
+		TestUtils.assertDatasetEquals(c.product(1), a.product(new int[] {0, 2}));
+
 	}
 
 	@Test

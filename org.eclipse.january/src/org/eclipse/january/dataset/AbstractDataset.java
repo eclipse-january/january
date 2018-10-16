@@ -1507,6 +1507,11 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	@Override
+	public Dataset max(int[] axes, boolean... ignoreInvalids) {
+		return getStats().getMaximum(axes, ignoreInvalids);
+	}
+
+	@Override
 	public Number min(boolean... ignoreInvalids) {
 		return getStats().getMinimum(ignoreInvalids);
 	}
@@ -1514,6 +1519,11 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	@Override
 	public Dataset min(int axis, boolean... ignoreInvalids) {
 		return getStats().getMinimum(axis, ignoreInvalids);
+	}
+
+	@Override
+	public Dataset min(int[] axes, boolean... ignoreInvalids) {
+		return getStats().getMinimum(axes, ignoreInvalids);
 	}
 
 	@Override
@@ -1552,6 +1562,10 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		return Maths.subtract(max(axis, ignoreInvalids), min(axis, ignoreInvalids));
 	}
 
+	@Override
+	public Dataset peakToPeak(int[] axes,  boolean... ignoreInvalids) {
+		return Maths.subtract(max(axes, ignoreInvalids), min(axes, ignoreInvalids));
+	}
 
 	@Override
 	public long count(boolean... ignoreInvalids) {
@@ -1561,6 +1575,11 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	@Override
 	public Dataset count(int axis, boolean... ignoreInvalids) {
 		return getStats().getCount(axis, ignoreInvalids);
+	}
+
+	@Override
+	public Dataset count(int[] axes, boolean... ignoreInvalids) {
+		return getStats().getCount(axes, ignoreInvalids);
 	}
 
 	@Override
@@ -1574,6 +1593,11 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	@Override
+	public Dataset sum(int[] axes, boolean... ignoreInvalids) {
+		return getStats().getSum(axes, ignoreInvalids);
+	}
+
+	@Override
 	public Object product(boolean... ignoreInvalids) {
 		return Stats.product(this, ignoreInvalids);
 	}
@@ -1584,6 +1608,11 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	@Override
+	public Dataset product(int[] axes, boolean... ignoreInvalids) {
+		return Stats.product(this, axes, ignoreInvalids);
+	}
+
+	@Override
 	public Object mean(boolean... ignoreInvalids) {
 		return getStats().getMean(ignoreInvalids);
 	}
@@ -1591,6 +1620,11 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	@Override
 	public Dataset mean(int axis, boolean... ignoreInvalids) {
 		return getStats().getMean(axis, ignoreInvalids);
+	}
+
+	@Override
+	public Dataset mean(int[] axes, boolean... ignoreInvalids) {
+		return getStats().getMean(axes, ignoreInvalids);
 	}
 
 	@Override
@@ -1609,8 +1643,18 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	@Override
+	public Dataset variance(int[] axes) {
+		return getStats().getVariance(axes, false);
+	}
+
+	@Override
 	public Dataset variance(int axis, boolean isWholePopulation, boolean... ignoreInvalids) {
 		return getStats().getVariance(axis, isWholePopulation, ignoreInvalids);
+	}
+
+	@Override
+	public Dataset variance(int[] axes, boolean isWholePopulation, boolean... ignoreInvalids) {
+		return getStats().getVariance(axes, isWholePopulation, ignoreInvalids);
 	}
 
 	@Override
@@ -1629,8 +1673,18 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	@Override
+	public Dataset stdDeviation(int[] axes) {
+		return Maths.sqrt(variance(axes, false));
+	}
+
+	@Override
 	public Dataset stdDeviation(int axis, boolean isWholePopulation, boolean... ignoreInvalids) {
 		return Maths.sqrt(variance(axis, isWholePopulation, ignoreInvalids));
+	}
+
+	@Override
+	public Dataset stdDeviation(int[] axes, boolean isWholePopulation, boolean... ignoreInvalids) {
+		return Maths.sqrt(variance(axes, isWholePopulation, ignoreInvalids));
 	}
 
 	@Override
@@ -1646,6 +1700,15 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		StatisticsMetadata<Number> stats = getStats();
 		Dataset v = stats.getVariance(axis, true, ignoreInvalids);
 		Dataset m = stats.getMean(axis, ignoreInvalids);
+		Dataset result = Maths.multiply(m, m);
+		return Maths.sqrt(result.iadd(v));
+	}
+
+	@Override
+	public Dataset rootMeanSquare(int[] axes, boolean... ignoreInvalids) {
+		StatisticsMetadata<Number> stats = getStats();
+		Dataset v = stats.getVariance(axes, true, ignoreInvalids);
+		Dataset m = stats.getMean(axes, ignoreInvalids);
 		Dataset result = Maths.multiply(m, m);
 		return Maths.sqrt(result.iadd(v));
 	}

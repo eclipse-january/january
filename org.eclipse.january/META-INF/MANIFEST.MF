@@ -13,3 +13,4 @@ Require-Bundle: org.apache.commons.math3;bundle-version="[3.2.0,4.0.0)";visibili
  javax.measure.unit-api;bundle-version="[1.0.0,2.0.0)";visibility:=reexport
 Import-Package: org.slf4j;version="[1.7.2,2.0.0)"
 Bundle-Vendor: Eclipse January
+Automatic-Module-Name: org.eclipse.january

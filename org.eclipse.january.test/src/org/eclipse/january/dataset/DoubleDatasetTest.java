@@ -238,7 +238,7 @@ public class DoubleDatasetTest {
 		a.setShape(3, 1, 4);
 		Dataset b = a.sum(0);
 		assertEquals(2, b.getRank());
-		assertArrayEquals(new int[] { 1, 4 }, b.getShape());
+		assertArrayEquals(new int[] { 1, 4 }, b.getShapeRef());
 		assertEquals(12., b.getDouble(0, 0), 1e-6);
 		assertEquals(15., b.getDouble(0, 1), 1e-6);
 		assertEquals(18., b.getDouble(0, 2), 1e-6);
@@ -247,14 +247,13 @@ public class DoubleDatasetTest {
 
 		b = a.sum(1);
 		assertEquals(2, b.getRank());
-		assertArrayEquals(new int[] { 3, 4 }, b.getShape());
+		assertArrayEquals(new int[] { 3, 4 }, b.getShapeRef());
 		TestUtils.assertDatasetEquals(DatasetFactory.zeros(new int[] {3, 4}), a.variance(1));
-		assertEquals(a.squeeze(), b);
+		assertEquals(a.getView(true).squeeze(), b);
 
-		a.setShape(3, 1, 4);
 		b = a.sum(2);
 		assertEquals(2, b.getRank());
-		assertArrayEquals(new int[] { 3, 1 }, b.getShape());
+		assertArrayEquals(new int[] { 3, 1 }, b.getShapeRef());
 		assertEquals(6., b.getDouble(0, 0), 1e-6);
 		assertEquals(22., b.getDouble(1, 0), 1e-6);
 		assertEquals(38., b.getDouble(2, 0), 1e-6);
@@ -268,6 +267,30 @@ public class DoubleDatasetTest {
 		assertEquals(5.41666667, ((Number) a.mean()).doubleValue(), 1e-6);
 		assertEquals(3.75277675, a.stdDeviation(), 1e-6);
 		assertEquals(14.0833333, a.variance(), 1e-6);
+
+		a = DatasetFactory.createRange(60).reshape(4, 3, 5);
+		assertEquals(a.max().doubleValue(), a.max(new int[] {0, 1, 2}).getDouble(), 1e-6);
+		Dataset c = a.sum(2);
+		assertArrayEquals(new int[] {4, 3}, c.getShapeRef());
+		TestUtils.assertDatasetEquals(c, a.sum(new int[] {2}));
+		c = c.sum(0);
+		assertArrayEquals(new int[] {3}, c.getShapeRef());
+		TestUtils.assertDatasetEquals(c, a.sum(new int[] {0, 2}));
+		c = a.sum(0);
+		assertArrayEquals(new int[] {3, 5}, c.getShapeRef());
+		TestUtils.assertDatasetEquals(c, a.sum(new int[] {0}));
+		c = c.sum(1);
+		assertArrayEquals(new int[] {3}, c.getShapeRef());
+		TestUtils.assertDatasetEquals(c, a.sum(new int[] {0, 2}));
+
+		c = a.product(2);
+		assertArrayEquals(new int[] {4, 3}, c.getShapeRef());
+		TestUtils.assertDatasetEquals(c.product(0), a.product(new int[] {0, 2}));
+		c = a.product(0);
+		assertArrayEquals(new int[] {3, 5}, c.getShapeRef());
+		TestUtils.assertDatasetEquals(c.product(1), a.product(new int[] {0, 2}));
+
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new double[] {49, 49, 49}), a.peakToPeak(new int[] {0, 2}));
 	}
 
 	@Test

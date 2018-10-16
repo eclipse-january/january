@@ -138,16 +138,31 @@ public class StatsTest {
 		Dataset a = DatasetFactory.createRange(1., 7, 1);
 
 		assertEquals("Sum", 21, ((Number) a.sum()).doubleValue(), 1e-6);
-		assertEquals("Product", 720, (Double) Stats.product(a), 1e-6);
+		assertEquals("Product", 720, (Double) a.product(), 1e-6);
 		a.set(Double.NaN, 0);
 		assertTrue("Sum", Double.isNaN(((Number) a.sum()).doubleValue()));
-		assertTrue("Product", Double.isNaN((Double) Stats.product(a)));
+		assertTrue("Product", Double.isNaN((Double) a.product()));
 		assertTrue("Sum", Double.isNaN(((Number) a.sum(false, true)).doubleValue()));
-		assertTrue("Product", Double.isNaN((Double) Stats.product(a, false, true)));
+		assertTrue("Product", Double.isNaN((Double) a.product(false, true)));
 		assertEquals("Sum", 20, ((Number) a.sum(true)).doubleValue(), 1e-6);
-		assertEquals("Product", 720, (Double) Stats.product(a, true), 1e-6);
+		assertEquals("Product", 720, (Double) a.product(true), 1e-6);
 		assertEquals("Sum", 20, ((Number) a.sum(true, false)).doubleValue(), 1e-6);
-		assertEquals("Product", 720, (Double) Stats.product(a, true, false), 1e-6);
+		assertEquals("Product", 720, (Double) a.product(true, false), 1e-6);
+
+		a = DatasetFactory.createRange(60).reshape(3, 2, 10);
+		a.set(Double.NaN, 0, 0, 0);
+		assertTrue("Sum", Double.isNaN(a.sum(0).getDouble(0, 0)));
+		assertTrue("Product", Double.isNaN(a.product(0).getDouble(0, 0)));
+		assertTrue("Sum", Double.isNaN(a.sum(0, false, true).getDouble(0, 0)));
+		assertTrue("Product", Double.isNaN(a.product(0, false, true).getDouble(0, 0)));
+		assertEquals("Sum", 60, a.sum(0, true).getDouble(0, 0), 1e-6);
+		assertEquals("Product", 800, a.product(0, true).getDouble(0, 0), 1e-6);
+		assertTrue("Sum", Double.isNaN(a.sum(new int[] {0, 2}).getDouble(0)));
+		assertTrue("Product", Double.isNaN(a.product(new int[] {0, 2}).getDouble(0)));
+		assertTrue("Sum", Double.isNaN(a.sum(new int[] {0, 2}, false, true).getDouble(0)));
+		assertTrue("Product", Double.isNaN(a.product(new int[] {0, 2}, false, true).getDouble(0)));
+		assertEquals("Sum", 735, a.sum(new int[] {0, 2}, true).getDouble(0), 1e-6);
+		assertEquals("Product", 7.86551246e+35, a.product(new int[] {0, 2}, true).getDouble(0), 1e29);
 	}
 
 	@Test
@@ -167,6 +182,25 @@ public class StatsTest {
 		assertEquals("Product", 720, (Double) Stats.product(a, true, true), 1e-6);
 		assertEquals("Sum", 20, ((Number) a.sum(false, true)).doubleValue(), 1e-6);
 		assertEquals("Product", 720, (Double) Stats.product(a, false, true), 1e-6);
+
+		a = DatasetFactory.createRange(60).reshape(3, 2, 10);
+		a.set(Double.POSITIVE_INFINITY, 0, 0, 0);
+		assertTrue("Sum", Double.isInfinite(a.sum(0).getDouble(0, 0)));
+		assertTrue("Product", Double.isInfinite(a.product(0).getDouble(0, 0)));
+		assertTrue("Sum", Double.isInfinite(a.sum(0, true, false).getDouble(0, 0)));
+		assertTrue("Product", Double.isInfinite(a.product(0, true, false).getDouble(0, 0)));
+		assertEquals("Sum", 60, a.sum(0, true).getDouble(0, 0), 1e-6);
+		assertEquals("Product", 800, a.product(0, true).getDouble(0, 0), 1e-6);
+		assertEquals("Sum", 60, a.sum(0, false, true).getDouble(0, 0), 1e-6);
+		assertEquals("Product", 800, a.product(0, false, true).getDouble(0, 0), 1e-6);
+		assertTrue("Sum", Double.isInfinite(a.sum(new int[] {0, 2}).getDouble(0)));
+		assertTrue("Product", Double.isInfinite(a.product(new int[] {0, 2}).getDouble(0)));
+		assertTrue("Sum", Double.isInfinite(a.sum(new int[] {0, 2}, true, false).getDouble(0)));
+		assertTrue("Product", Double.isInfinite(a.product(new int[] {0, 2}, true, false).getDouble(0)));
+		assertEquals("Sum", 735, a.sum(new int[] {0, 2}, true).getDouble(0), 1e-6);
+		assertEquals("Product", 7.86551246e+35, a.product(new int[] {0, 2}, true).getDouble(0), 1e29);
+		assertEquals("Sum", 735, a.sum(new int[] {0, 2}, false, true).getDouble(0), 1e-6);
+		assertEquals("Product", 7.86551246e+35, a.product(new int[] {0, 2}, false, true).getDouble(0), 1e29);
 	}
 
 	@Test
