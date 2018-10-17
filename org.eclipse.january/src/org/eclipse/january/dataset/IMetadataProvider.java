@@ -24,7 +24,7 @@ import org.eclipse.january.metadata.MetadataType;
 public interface IMetadataProvider {
 
 	/**
-	 * @deprecated Use {@link #getFirstMetadata(IMetadata.class)} instead
+	 * @deprecated Use {@code getFirstMetadata(IMetadata.class)} instead
 	 * @return an instance of IMetadata
 	 * @throws Exception
 	 */

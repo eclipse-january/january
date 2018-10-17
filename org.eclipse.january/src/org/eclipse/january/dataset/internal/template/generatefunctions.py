@@ -630,7 +630,12 @@ def func(cargo):
         l = l.strip(' ')
         name, jdoc = l.split(" - ", 1)
         jdoc = jdoc.strip()
-        beginmethod(name, jdoc, nparams)
+        jbits = jdoc.split(',')
+        if len(jbits) == 2: # escape expression
+            doc = '{@code %s},%s' % tuple(jbits)
+        else:
+            doc = jdoc
+        beginmethod(name, doc, nparams)
 #        if len(plist) > 0: print "Parameters", plist
         return cases, (f, '', name, jdoc, [])
 

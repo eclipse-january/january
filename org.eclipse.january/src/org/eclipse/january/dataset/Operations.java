@@ -22,7 +22,7 @@ public class Operations {
 	 * This function returns the name of the dataset, bracketed if it already
 	 * includes some mathematical symbol
 	 * 
-	 * @param dataset
+	 * @param a
 	 * @return the bracketed if necessary method name
 	 */
 	public static StringBuilder bracketIfNecessary(final String a) {
@@ -470,7 +470,7 @@ public class Operations {
 	}
 
 	/**
-	 * Use given value if a > b else use a
+	 * Use given value if {@code a > b} else use a
 	 */
 	public static class UseBase implements BinaryOperation {
 		protected boolean br;
@@ -527,7 +527,7 @@ public class Operations {
 	}
 
 	/**
-	 * Use given value if a > b else use a
+	 * Use given value if {@code a > b} else use a
 	 */
 	public static class UseIfGreaterThan extends UseBase {
 		/**
@@ -577,7 +577,7 @@ public class Operations {
 	}
 
 	/**
-	 * Use given value if a >= b else use a
+	 * Use given value if {@code a >= b} else use a
 	 */
 	public static class UseIfGreaterThanOrEqualTo extends UseBase {
 		/**
@@ -627,7 +627,7 @@ public class Operations {
 	}
 
 	/**
-	 * Use given value if a < b else use a
+	 * Use given value if {@code a < b} else use a
 	 */
 	public static class UseIfLessThan extends UseBase {
 		/**
@@ -677,7 +677,7 @@ public class Operations {
 	}
 
 	/**
-	 * Use given value if a <= b else use a
+	 * Use given value if {@code a <= b} else use a
 	 */
 	public static class UseIfLessThanOrEqualTo extends UseBase {
 		/**
@@ -727,7 +727,7 @@ public class Operations {
 	}
 
 	/**
-	 * Use given value if a == b else use a
+	 * Use given value if {@code a == b} else use a
 	 */
 	public static class UseIfEqualTo extends UseBase {
 		private double di;

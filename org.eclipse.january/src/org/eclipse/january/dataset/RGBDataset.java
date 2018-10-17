@@ -571,7 +571,6 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * @param red weight
 	 * @param green weight
 	 * @param blue weight
-	 * @param dtype
 	 * @return a grey-scale dataset of given class
 	 * @since 2.2
 	 */
@@ -646,7 +645,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * Extract red colour channel
 	 * @param dtype
 	 * @return a dataset of given type
-	 * @deprecated Use {@link RGBDataset#createRedDataset(Class)}
+	 * @deprecated Use {@link #createRedDataset}
 	 */
 	@Deprecated
 	public Dataset createRedDataset(final int dtype) {
@@ -657,7 +656,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * Extract green colour channel
 	 * @param dtype
 	 * @return a dataset of given type
-	 * @deprecated Use {@link RGBDataset#createGreenDataset(Class)}
+	 * @deprecated Use {@link #createGreenDataset}
 	 */
 	@Deprecated
 	public Dataset createGreenDataset(final int dtype) {
@@ -668,7 +667,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * Extract blue colour channel
 	 * @param dtype
 	 * @return a dataset of given type
-	 * @deprecated Use {@link RGBDataset#createBlueDataset(Class)}
+	 * @deprecated Use {@link #createBlueDataset}
 	 */
 	@Deprecated
 	public Dataset createBlueDataset(final int dtype) {

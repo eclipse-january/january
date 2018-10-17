@@ -224,7 +224,7 @@ public class DatasetFactory {
 	 * @throws IllegalArgumentException if dataset type is not known
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory, 
-	 *             such as {@link #createFromObject(Class, Object, int)} 
+	 *             such as {@link #createFromObject(Class, Object, int...)} 
 	 */
 	@Deprecated
 	public static Dataset createFromObject(final int dtype, final Object obj) {
@@ -419,7 +419,7 @@ public class DatasetFactory {
 	 * @return dataset filled with values from list
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory, 
-	 *             such as {@link #createFromList(Class, List<?>)} 
+	 *             such as {@link #createFromList(Class, List)} 
 	 */	
 	@Deprecated
 	public static Dataset createFromList(final int dtype, List<?> objectList) {
@@ -569,7 +569,7 @@ public class DatasetFactory {
 	 * @since 2.0
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory, 
-	 *             such as {@link #compoundZeros(int, Class, int)} 
+	 *             such as {@link #compoundZeros(int, Class, int...)} 
 	 */
 	@Deprecated
 	public static CompoundDataset compoundZeros(final int itemSize, final int[] shape, final int dtype) {
@@ -681,7 +681,7 @@ public class DatasetFactory {
 	 * @return a new dataset of given shape and type, filled with ones
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory, 
-	 *             such as {@link #ones(int[], Class)} 
+	 *             such as {@link #ones(Class, int...)} 
 	 */
 	@Deprecated
 	public static Dataset ones(final int[] shape, final int dtype) {

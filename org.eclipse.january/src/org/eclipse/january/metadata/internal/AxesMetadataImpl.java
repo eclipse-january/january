@@ -118,7 +118,7 @@ public class AxesMetadataImpl implements AxesMetadata {
 	 * with the associating dataset
 	 * @param primaryAxisDim dimension (n.b. this is zero-based)
 	 * @param axisData dataset for axis
-	 * @param dimMapping indicates where each axis dimension maps to in the dataset dimensions  
+	 * @param dimMapping indicates where each axis dimension maps to in the dataset dimensions
 	 */
 	public void addAxis(int primaryAxisDim, ILazyDataset axisData, int... dimMapping) {
 		primaryAxisDim = ShapeUtils.checkAxis(allAxes.length, primaryAxisDim);
