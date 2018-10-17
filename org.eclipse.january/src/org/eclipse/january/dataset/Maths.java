@@ -3165,7 +3165,7 @@ public class Maths {
 	 * add operator
 	 * @param a
 	 * @param b
-	 * @return a + b, addition of a and b
+	 * @return {@code a + b}, addition of a and b
 	 */
 	public static Dataset add(final Object a, final Object b) {
 		return add(a, b, null);
@@ -3176,7 +3176,7 @@ public class Maths {
 	 * @param a
 	 * @param b
 	 * @param o output can be null - in which case, a new dataset is created
-	 * @return a + b, addition of a and b
+	 * @return {@code a + b}, addition of a and b
 	 */
 	public static Dataset add(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
@@ -4187,7 +4187,7 @@ public class Maths {
 	 * subtract operator
 	 * @param a
 	 * @param b
-	 * @return a - b, subtraction of a by b
+	 * @return {@code a - b}, subtraction of a by b
 	 */
 	public static Dataset subtract(final Object a, final Object b) {
 		return subtract(a, b, null);
@@ -4198,7 +4198,7 @@ public class Maths {
 	 * @param a
 	 * @param b
 	 * @param o output can be null - in which case, a new dataset is created
-	 * @return a - b, subtraction of a by b
+	 * @return {@code a - b}, subtraction of a by b
 	 */
 	public static Dataset subtract(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
@@ -5209,7 +5209,7 @@ public class Maths {
 	 * multiply operator
 	 * @param a
 	 * @param b
-	 * @return a * b, product of a and b
+	 * @return {@code a * b}, product of a and b
 	 */
 	public static Dataset multiply(final Object a, final Object b) {
 		return multiply(a, b, null);
@@ -5220,7 +5220,7 @@ public class Maths {
 	 * @param a
 	 * @param b
 	 * @param o output can be null - in which case, a new dataset is created
-	 * @return a * b, product of a and b
+	 * @return {@code a * b}, product of a and b
 	 */
 	public static Dataset multiply(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
@@ -6231,7 +6231,7 @@ public class Maths {
 	 * divide operator
 	 * @param a
 	 * @param b
-	 * @return a / b, division of a by b
+	 * @return {@code a / b}, division of a by b
 	 */
 	public static Dataset divide(final Object a, final Object b) {
 		return divide(a, b, null);
@@ -6242,7 +6242,7 @@ public class Maths {
 	 * @param a
 	 * @param b
 	 * @param o output can be null - in which case, a new dataset is created
-	 * @return a / b, division of a by b
+	 * @return {@code a / b}, division of a by b
 	 */
 	public static Dataset divide(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
@@ -7355,7 +7355,7 @@ public class Maths {
 	 * dividez operator
 	 * @param a
 	 * @param b
-	 * @return a / b, division of a by b
+	 * @return {@code a / b}, division of a by b
 	 */
 	public static Dataset dividez(final Object a, final Object b) {
 		return dividez(a, b, null);
@@ -7366,7 +7366,7 @@ public class Maths {
 	 * @param a
 	 * @param b
 	 * @param o output can be null - in which case, a new dataset is created
-	 * @return a / b, division of a by b
+	 * @return {@code a / b}, division of a by b
 	 */
 	public static Dataset dividez(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
@@ -8461,7 +8461,7 @@ public class Maths {
 	 * divideTowardsFloor operator
 	 * @param a
 	 * @param b
-	 * @return a / b, division of a by b but rounded towards negative infinity
+	 * @return {@code a / b}, division of a by b but rounded towards negative infinity
 	 */
 	public static Dataset divideTowardsFloor(final Object a, final Object b) {
 		return divideTowardsFloor(a, b, null);
@@ -8472,7 +8472,7 @@ public class Maths {
 	 * @param a
 	 * @param b
 	 * @param o output can be null - in which case, a new dataset is created
-	 * @return a / b, division of a by b but rounded towards negative infinity
+	 * @return {@code a / b}, division of a by b but rounded towards negative infinity
 	 */
 	public static Dataset divideTowardsFloor(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
@@ -10089,7 +10089,7 @@ public class Maths {
 	 * power operator
 	 * @param a
 	 * @param b
-	 * @return a ** b, raise a to power of b
+	 * @return {@code a ** b}, raise a to power of b
 	 */
 	public static Dataset power(final Object a, final Object b) {
 		return power(a, b, null);
@@ -10100,7 +10100,7 @@ public class Maths {
 	 * @param a
 	 * @param b
 	 * @param o output can be null - in which case, a new dataset is created
-	 * @return a ** b, raise a to power of b
+	 * @return {@code a ** b}, raise a to power of b
 	 */
 	public static Dataset power(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
@@ -11123,7 +11123,7 @@ public class Maths {
 	 * remainder operator
 	 * @param a
 	 * @param b
-	 * @return a % b, remainder of division of a by b
+	 * @return {@code a % b}, remainder of division of a by b
 	 */
 	public static Dataset remainder(final Object a, final Object b) {
 		return remainder(a, b, null);
@@ -11134,7 +11134,7 @@ public class Maths {
 	 * @param a
 	 * @param b
 	 * @param o output can be null - in which case, a new dataset is created
-	 * @return a % b, remainder of division of a by b
+	 * @return {@code a % b}, remainder of division of a by b
 	 */
 	public static Dataset remainder(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
@@ -14199,7 +14199,7 @@ public class Maths {
 	 * bitwiseAnd operator
 	 * @param a
 	 * @param b
-	 * @return a & b, bitwise AND of a and b
+	 * @return {@code a & b}, bitwise AND of a and b
 	 */
 	public static Dataset bitwiseAnd(final Object a, final Object b) {
 		return bitwiseAnd(a, b, null);
@@ -14210,7 +14210,7 @@ public class Maths {
 	 * @param a
 	 * @param b
 	 * @param o output can be null - in which case, a new dataset is created
-	 * @return a & b, bitwise AND of a and b
+	 * @return {@code a & b}, bitwise AND of a and b
 	 */
 	public static Dataset bitwiseAnd(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
@@ -14572,7 +14572,7 @@ public class Maths {
 	 * bitwiseOr operator
 	 * @param a
 	 * @param b
-	 * @return a | b, bitwise inclusive OR of a and b
+	 * @return {@code a | b}, bitwise inclusive OR of a and b
 	 */
 	public static Dataset bitwiseOr(final Object a, final Object b) {
 		return bitwiseOr(a, b, null);
@@ -14583,7 +14583,7 @@ public class Maths {
 	 * @param a
 	 * @param b
 	 * @param o output can be null - in which case, a new dataset is created
-	 * @return a | b, bitwise inclusive OR of a and b
+	 * @return {@code a | b}, bitwise inclusive OR of a and b
 	 */
 	public static Dataset bitwiseOr(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
@@ -14945,7 +14945,7 @@ public class Maths {
 	 * bitwiseXor operator
 	 * @param a
 	 * @param b
-	 * @return a ^ b, bitwise exclusive OR of a and b
+	 * @return {@code a ^ b}, bitwise exclusive OR of a and b
 	 */
 	public static Dataset bitwiseXor(final Object a, final Object b) {
 		return bitwiseXor(a, b, null);
@@ -14956,7 +14956,7 @@ public class Maths {
 	 * @param a
 	 * @param b
 	 * @param o output can be null - in which case, a new dataset is created
-	 * @return a ^ b, bitwise exclusive OR of a and b
+	 * @return {@code a ^ b}, bitwise exclusive OR of a and b
 	 */
 	public static Dataset bitwiseXor(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
@@ -15318,7 +15318,7 @@ public class Maths {
 	 * leftShift operator
 	 * @param a
 	 * @param b
-	 * @return a << b, bitwise left shift of a by b
+	 * @return {@code a << b}, bitwise left shift of a by b
 	 */
 	public static Dataset leftShift(final Object a, final Object b) {
 		return leftShift(a, b, null);
@@ -15329,7 +15329,7 @@ public class Maths {
 	 * @param a
 	 * @param b
 	 * @param o output can be null - in which case, a new dataset is created
-	 * @return a << b, bitwise left shift of a by b
+	 * @return {@code a << b}, bitwise left shift of a by b
 	 */
 	public static Dataset leftShift(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
@@ -15691,7 +15691,7 @@ public class Maths {
 	 * rightShift operator
 	 * @param a
 	 * @param b
-	 * @return a >> b, bitwise right shift of a by b
+	 * @return {@code a >> b}, bitwise right shift of a by b
 	 */
 	public static Dataset rightShift(final Object a, final Object b) {
 		return rightShift(a, b, null);
@@ -15702,7 +15702,7 @@ public class Maths {
 	 * @param a
 	 * @param b
 	 * @param o output can be null - in which case, a new dataset is created
-	 * @return a >> b, bitwise right shift of a by b
+	 * @return {@code a >> b}, bitwise right shift of a by b
 	 */
 	public static Dataset rightShift(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
@@ -16064,7 +16064,7 @@ public class Maths {
 	 * unsignedRightShift operator
 	 * @param a
 	 * @param b
-	 * @return a >>> b, bitwise right shift of a by b with zeros added
+	 * @return {@code a >>> b}, bitwise right shift of a by b with zeros added
 	 */
 	public static Dataset unsignedRightShift(final Object a, final Object b) {
 		return unsignedRightShift(a, b, null);
@@ -16075,7 +16075,7 @@ public class Maths {
 	 * @param a
 	 * @param b
 	 * @param o output can be null - in which case, a new dataset is created
-	 * @return a >>> b, bitwise right shift of a by b with zeros added
+	 * @return {@code a >>> b}, bitwise right shift of a by b with zeros added
 	 */
 	public static Dataset unsignedRightShift(final Object a, final Object b, final Dataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
@@ -16443,7 +16443,7 @@ public class Maths {
 	}
 
 	/**
-	 * bitwiseInvert - ~a, bitwise invert (or NOT) each element
+	 * bitwiseInvert - {@code ~a}, bitwise invert (or NOT) each element
 	 * @param a
 	 * @return dataset
 	 */
@@ -16452,7 +16452,7 @@ public class Maths {
 	}
 
 	/**
-	 * bitwiseInvert - ~a, bitwise invert (or NOT) each element
+	 * bitwiseInvert - {@code ~a}, bitwise invert (or NOT) each element
 	 * @param a
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset

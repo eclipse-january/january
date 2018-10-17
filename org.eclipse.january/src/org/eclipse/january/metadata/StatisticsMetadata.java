@@ -40,6 +40,7 @@ public interface StatisticsMetadata<T> extends MetadataType {
 	public boolean isDirty();
 
 	/**
+	 * @param dataset dataset whose statistics is stored by this metadata
 	 * @return true if dataset has been modified
 	 * @since 2.2
 	 */
@@ -67,7 +68,7 @@ public interface StatisticsMetadata<T> extends MetadataType {
 	/**
 	 * @param maximum the maximum to set
 	 * @param minimum the minimum to set
-	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
+	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 */
 	@Deprecated
 	public void setMaximumMinimum(T maximum, T minimum, boolean... ignoreInvalids);
@@ -76,76 +77,76 @@ public interface StatisticsMetadata<T> extends MetadataType {
 	 * @param maximum the maximum to set
 	 * @param minimum the minimum to set
 	 * @param sum the sum to set
-	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
+	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @since 2.1
 	 */
 	public void setMaximumMinimumSum(T maximum, T minimum, T sum, boolean... ignoreInvalids);
 
 	/**
 	 * @param maximumPositions the maximum positions to set
-	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
+	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 */
 	public void setMaximumPositions(List<int[]> maximumPositions, boolean... ignoreInvalids);
 
 	/**
 	 * @param minimumPositions the minimum positions to set
-	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
+	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 */
 	public void setMinimumPositions(List<int[]> minimumPositions, boolean... ignoreInvalids);
 
 	/**
-	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
+	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @return the maximum positions
 	 */
 	public List<int[]> getMaximumPositions(boolean... ignoreInvalids);
 
 	/**
-	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
+	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @return the minimum
 	 */
 	public T getMinimum(boolean... ignoreInvalids);
 
 	/**
-	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
+	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @return the minimum positions
 	 */
 	public List<int[]> getMinimumPositions(boolean... ignoreInvalids);
 
 	/**
-	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
+	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @return the number of samples
 	 */
 	public long getCount(boolean... ignoreInvalids);
 
 	/**
-	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
+	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @return the mean of samples
 	 */
 	public T getMean(boolean... ignoreInvalids);
 
 	/**
-	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
+	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @return the sum of samples
 	 */
 	public T getSum(boolean... ignoreInvalids);
 
 	/**
 	 * @param isWholePopulation
-	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
+	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @return the variance of samples
 	 */
 	public double getVariance(boolean isWholePopulation, boolean... ignoreInvalids);
 
 	/**
 	 * @param axis
-	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
+	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @return the argument at which the maximum first occurs
 	 */
 	public Dataset getArgMaximum(int axis, boolean... ignoreInvalids);
 
 	/**
 	 * @param axis
-	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
+	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @return the argument at which the minimum first occurs
 	 */
 	public Dataset getArgMinimum(int axis, boolean... ignoreInvalids);
@@ -161,28 +162,28 @@ public interface StatisticsMetadata<T> extends MetadataType {
 
 	/**
 	 * @param axis
-	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
+	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @return the minimum
 	 */
 	public Dataset getMinimum(int axis, boolean... ignoreInvalids);
 
 	/**
 	 * @param axis
-	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
+	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @return the number of samples
 	 */
 	public Dataset getCount(int axis, boolean... ignoreInvalids);
 
 	/**
 	 * @param axis
-	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
+	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @return the mean of samples
 	 */
 	public Dataset getMean(int axis, boolean... ignoreInvalids);
 
 	/**
 	 * @param axis
-	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
+	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @return the sum of samples
 	 */
 	public Dataset getSum(int axis, boolean... ignoreInvalids);
@@ -190,7 +191,7 @@ public interface StatisticsMetadata<T> extends MetadataType {
 	/**
 	 * @param axis
 	 * @param isWholePopulation
-	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
+	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @return the variance of samples
 	 */
 	public Dataset getVariance(int axis, boolean isWholePopulation, boolean... ignoreInvalids);
@@ -207,7 +208,7 @@ public interface StatisticsMetadata<T> extends MetadataType {
 
 	/**
 	 * @param axes
-	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
+	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @return the minimum
 	 * @since 2.2
 	 */
@@ -215,7 +216,7 @@ public interface StatisticsMetadata<T> extends MetadataType {
 
 	/**
 	 * @param axes
-	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
+	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @return the number of samples
 	 * @since 2.2
 	 */
@@ -223,7 +224,7 @@ public interface StatisticsMetadata<T> extends MetadataType {
 
 	/**
 	 * @param axes
-	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
+	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @return the mean of samples
 	 * @since 2.2
 	 */
@@ -231,7 +232,7 @@ public interface StatisticsMetadata<T> extends MetadataType {
 
 	/**
 	 * @param axes
-	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
+	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @return the sum of samples
 	 * @since 2.2
 	 */
@@ -240,7 +241,7 @@ public interface StatisticsMetadata<T> extends MetadataType {
 	/**
 	 * @param axes
 	 * @param isWholePopulation
-	 * @param ignoreInvalids @see {@link #getMaximum(boolean...)} for explanation
+	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @return the variance of samples
 	 * @since 2.2
 	 */

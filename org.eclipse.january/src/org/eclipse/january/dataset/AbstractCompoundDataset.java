@@ -277,6 +277,7 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 
 	/**
 	 * @since 2.0
+	 * @return first value
 	 */
 	abstract protected double getFirstValue();
 
@@ -447,6 +448,7 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 	}
 
 	/**
+	 * @return statistics metadata
 	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")

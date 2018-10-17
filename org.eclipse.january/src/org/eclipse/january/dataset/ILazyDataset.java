@@ -171,10 +171,10 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 	/**
 	 * Permute copy of dataset's axes so that given order is old order:
 	 * 
-	 * <pre>
+	 * <pre>{@literal
 	 *  axisPerm = (p(0), p(1),...) => newdata(n(0), n(1),...) = olddata(o(0), o(1), ...)
 	 *  such that n(i) = o(p(i)) for all i
-	 * </pre>
+	 * }</pre>
 	 * 
 	 * I.e. for a 3D dataset (1,0,2) implies the new dataset has its 1st dimension running along
 	 * the old dataset's 2nd dimension and the new 2nd is the old 1st. The 3rd dimension is left

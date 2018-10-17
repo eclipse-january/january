@@ -27,7 +27,7 @@ public class Comparisons {
 	 * of the dataset with smaller items is used for comparison.
 	 * @param a
 	 * @param b
-	 * @return dataset where item is true if a == b
+	 * @return dataset where item is true if {@code a == b}
 	 */
 	public static BooleanDataset equalTo(Object a, Object b) {
 		return equalTo(a, b, null);
@@ -42,7 +42,7 @@ public class Comparisons {
 	 * @param a
 	 * @param b
 	 * @param o output can be null - in which case, a new dataset is created
-	 * @return dataset where item is true if a == b
+	 * @return dataset where item is true if {@code a == b}
 	 */
 	public static BooleanDataset equalTo(Object a, Object b, BooleanDataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
@@ -151,7 +151,7 @@ public class Comparisons {
 	 * @param b
 	 * @param relTolerance
 	 * @param absTolerance
-	 * @return dataset where item is true if abs(a - b) <= absTol + relTol*max(abs(a),abs(b))
+	 * @return dataset where item is true if {@code abs(a - b) <= absTol + relTol*max(abs(a),abs(b))}
 	 */
 	public static BooleanDataset almostEqualTo(Object a, Object b, double relTolerance, double absTolerance) {
 		return almostEqualTo(a, b, null, relTolerance, absTolerance);
@@ -163,7 +163,7 @@ public class Comparisons {
 	 * @param b
 	 * @param relTol
 	 * @param absTol
-	 * @return true if abs(a - b) <= max(absTol, relTol*max(abs(a),abs(b)))
+	 * @return true if {@code abs(a - b) <= max(absTol, relTol*max(abs(a),abs(b)))}
 	 */
 	public final static boolean isClose(double a, double b, double relTol, double absTol) {
 		return Math.abs(a - b) <= Math.max(absTol, relTol * Math.max(Math.abs(a), Math.abs(b)));
@@ -189,7 +189,7 @@ public class Comparisons {
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @param relTolerance
 	 * @param absTolerance
-	 * @return dataset where item is true if abs(a - b) <= absTol + relTol*max(abs(a),abs(b))
+	 * @return dataset where item is true if {@code abs(a - b) <= absTol + relTol*max(abs(a),abs(b))}
 	 */
 	public static BooleanDataset almostEqualTo(Object a, Object b, BooleanDataset o, double relTolerance, double absTolerance) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
@@ -269,7 +269,7 @@ public class Comparisons {
 	 * of the dataset with smaller items is used for comparison.
 	 * @param a
 	 * @param b
-	 * @return dataset where item is true if a > b
+	 * @return dataset where item is true if {@code a > b}
 	 */
 	public static BooleanDataset greaterThan(Object a, Object b) {
 		return greaterThan(a, b, null);
@@ -284,7 +284,7 @@ public class Comparisons {
 	 * @param a
 	 * @param b
 	 * @param o output can be null - in which case, a new dataset is created
-	 * @return dataset where item is true if a > b
+	 * @return dataset where item is true if {@code a > b}
 	 */
 	public static BooleanDataset greaterThan(Object a, Object b, BooleanDataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
@@ -379,7 +379,7 @@ public class Comparisons {
 	 * of the dataset with smaller items is used for comparison.
 	 * @param a
 	 * @param b
-	 * @return dataset where item is true if a >= b
+	 * @return dataset where item is true if {@code a >= b}
 	 */
 	public static BooleanDataset greaterThanOrEqualTo(Object a, Object b) {
 		return greaterThanOrEqualTo(a, b, null);
@@ -394,7 +394,7 @@ public class Comparisons {
 	 * @param a
 	 * @param b
 	 * @param o output can be null - in which case, a new dataset is created
-	 * @return dataset where item is true if a >= b
+	 * @return dataset where item is true if {@code a >= b}
 	 */
 	public static BooleanDataset greaterThanOrEqualTo(Object a, Object b, BooleanDataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
@@ -489,7 +489,7 @@ public class Comparisons {
 	 * of the dataset with smaller items is used for comparison.
 	 * @param a
 	 * @param b
-	 * @return dataset where item is true if a < b
+	 * @return dataset where item is true if {@code a < b}
 	 */
 	public static BooleanDataset lessThan(Object a, Object b) {
 		return lessThan(a, b, null);
@@ -504,7 +504,7 @@ public class Comparisons {
 	 * @param a
 	 * @param b
 	 * @param o output can be null - in which case, a new dataset is created
-	 * @return dataset where item is true if a < b
+	 * @return dataset where item is true if {@code a < b}
 	 */
 	public static BooleanDataset lessThan(Object a, Object b, BooleanDataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
@@ -600,7 +600,7 @@ public class Comparisons {
 	 * of the dataset with smaller items is used for comparison.
 	 * @param a
 	 * @param b
-	 * @return dataset where item is true if a <= b
+	 * @return dataset where item is true if {@code a <= b}
 	 */
 	public static BooleanDataset lessThanOrEqualTo(Object a, Object b) {
 		return lessThanOrEqualTo(a, b, null);
@@ -615,7 +615,7 @@ public class Comparisons {
 	 * @param a
 	 * @param b
 	 * @param o output can be null - in which case, a new dataset is created
-	 * @return dataset where item is true if a <= b
+	 * @return dataset where item is true if {@code a <= b}
 	 */
 	public static BooleanDataset lessThanOrEqualTo(Object a, Object b, BooleanDataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
@@ -707,7 +707,7 @@ public class Comparisons {
 	 * @param a
 	 * @param lo lower bound
 	 * @param hi upper bound
-	 * @return dataset where item is true if l <= a <= h
+	 * @return dataset where item is true if {@code l <= a <= h}
 	 */
 	public static BooleanDataset withinRange(Object a, Number lo, Number hi) {
 		return withinRange(a, null, lo, hi);
@@ -718,7 +718,7 @@ public class Comparisons {
 	 * @param lo lower bound
 	 * @param hi upper bound
 	 * @param o output can be null - in which case, a new dataset is created
-	 * @return dataset where item is true if l <= a <= h
+	 * @return dataset where item is true if {@code l <= a <= h}
 	 */
 	public static BooleanDataset withinRange(Object a, BooleanDataset o, Number lo, Number hi) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
@@ -781,7 +781,7 @@ public class Comparisons {
 	 * @param b
 	 * @param relTolerance
 	 * @param absTolerance
-	 * @return true if all items satisfy abs(a - b) <= absTol + relTol*max(abs(a),abs(b))
+	 * @return true if all items satisfy {@code abs(a - b) <= absTol + relTol*max(abs(a),abs(b))}
 	 */
 	public static boolean allCloseTo(Object a, Object b, double relTolerance, double absTolerance) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
@@ -1034,7 +1034,7 @@ public class Comparisons {
 	 * of the dataset with smaller items is used for comparison.
 	 * @param a
 	 * @param b
-	 * @return dataset where item is true if a && b is true
+	 * @return dataset where item is true if {@code a && b} is true
 	 */
 	public static BooleanDataset logicalAnd(Object a, Object b) {
 		return logicalAnd(a, b, null);
@@ -1049,7 +1049,7 @@ public class Comparisons {
 	 * @param a
 	 * @param b
 	 * @param o output can be null - in which case, a new dataset is created
-	 * @return dataset where item is true if a && b is true
+	 * @return dataset where item is true if {@code a && b} is true
 	 */
 	public static BooleanDataset logicalAnd(Object a, Object b, BooleanDataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
@@ -1109,7 +1109,7 @@ public class Comparisons {
 	 * of the dataset with smaller items is used for comparison.
 	 * @param a
 	 * @param b
-	 * @return dataset where item is true if a || b is true
+	 * @return dataset where item is true if {@code a || b} is true
 	 */
 	public static BooleanDataset logicalOr(Object a, Object b) {
 		return logicalOr(a, b, null);
@@ -1124,7 +1124,7 @@ public class Comparisons {
 	 * @param a
 	 * @param b
 	 * @param o output can be null - in which case, a new dataset is created
-	 * @return dataset where item is true if a || b is true
+	 * @return dataset where item is true if {@code a || b} is true
 	 */
 	public static BooleanDataset logicalOr(Object a, Object b, BooleanDataset o) {
 		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
@@ -1184,7 +1184,7 @@ public class Comparisons {
 	 * of the dataset with smaller items is used for comparison.
 	 * @param a
 	 * @param b
-	 * @return dataset where item is true if a ^ b is true
+	 * @return dataset where item is true if {@code a ^ b} is true
 	 */
 	public static BooleanDataset logicalXor(Object a, Object b) {
 		return logicalXor(a, b, null);
@@ -1563,27 +1563,27 @@ public class Comparisons {
 	 */
 	public static enum Monotonicity {
 		/**
-		 * No order: x_0 != x_1 != x_2 ...
+		 * No order: {@code x_0 != x_1 != x_2 ...}
 		 */
 		NOT_ORDERED,
 		/**
-		 * All equal: x_0 == x_1 == x_2 ...
+		 * All equal: {@code x_0 == x_1 == x_2 ...}
 		 */
 		ALL_EQUAL,
 		/**
-		 * Strictly decreasing x_0 > x_1 > x_2 ...
+		 * Strictly decreasing {@code x_0 > x_1 > x_2 ...}
 		 */
 		STRICTLY_DECREASING,
 		/**
-		 * Non-increasing or weakly decreasing x_0 >= x_1 >= x_2 ...
+		 * Non-increasing or weakly decreasing {@code x_0 >= x_1 >= x_2 ...}
 		 */
 		NONINCREASING,
 		/**
-		 * Non-decreasing or weakly increasing x_0 <= x_1 <= x_2 ...
+		 * Non-decreasing or weakly increasing {@code x_0 <= x_1 <= x_2 ...}
 		 */
 		NONDECREASING,
 		/**
-		 * Strictly increasing x_0 < x_1 < x_2 ...
+		 * Strictly increasing {@code x_0 < x_1 < x_2 ...}
 		 */
 		STRICTLY_INCREASING,
 	}
