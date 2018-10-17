@@ -55,15 +55,16 @@ public interface AxesMetadata extends MetadataType {
 	 * @param axisDim dimension (n.b. this is zero-based)
 	 * @param axisData dataset for axis
 	 */
-	public void addAxis(int i, ILazyDataset lazyDataset);
+	public void addAxis(int axisDim, ILazyDataset axisData);
 
 	/**
-	 * 
-	 * @param primaryAxisDim primary dimension (n.b. this is zero-based)
-	 * @param iLazyDataset
+	 * Add axis data to given dimension. This dataset must be one dimensional or match rank
+	 * with the associating dataset
+	 * @param primaryAxisDim dimension (n.b. this is zero-based)
+	 * @param axisData dataset for axis
 	 * @param dimMapping indicates where each axis dimension maps to in the dataset dimensions  
 	 */
-	public void addAxis(int primaryAxisDim, ILazyDataset iLazyDataset, int... dimMapping);
+	public void addAxis(int primaryAxisDim, ILazyDataset axisData, int... dimMapping);
 
 	/**
 	 * Refresh with given shape

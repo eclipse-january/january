@@ -107,7 +107,7 @@ public interface IMetadata extends IDataAnalysisObject, MetadataType, Serializab
 	 * (NOTE method should be public, people can define loaders outside this
 	 * package like the DESY FIO loader for instance.)
 	 */
-	public void addDataInfo(String n, int... shape);
+	public void addDataInfo(String name, int... shape);
 
 	public void addNames(Collection<String> names);
 
@@ -115,5 +115,5 @@ public interface IMetadata extends IDataAnalysisObject, MetadataType, Serializab
 	 * Set metadata map
 	 * @param metadata
 	 */
-	public void setMetadata(Map<String, ? extends Serializable> map);
+	public void setMetadata(Map<String, ? extends Serializable> metadata);
 }

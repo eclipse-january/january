@@ -50,6 +50,7 @@ public class MetadataFactory {
 	
 	/**
 	 * Create a metadata object of given class with given arguments
+	 * @param <T> metadata type
 	 * @param clazz
 	 * @param arguments these must match the arguments given in the initialize method specified in the class
 	 * @return metadata object or null if type not available
@@ -97,6 +98,7 @@ public class MetadataFactory {
 
 	/**
 	 * Register metadata class
+	 * @param <T> metadata type
 	 * @param clazz
 	 */
 	public static <T extends MetadataType> void registerClass(Class<T> clazz) {

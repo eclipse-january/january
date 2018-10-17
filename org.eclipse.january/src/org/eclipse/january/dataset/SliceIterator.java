@@ -283,7 +283,7 @@ public class SliceIterator extends IndexIterator {
 	 * Returns {@code true} if there is an other element after the current
 	 * Slice.
 	 * 
-	 * @return Returns {@true} if the iteration has more Slice, {@code false} in
+	 * @return Returns {@code true} if the iteration has more Slice, {@code false} in
 	 *         the other case
 	 */
 	@Override

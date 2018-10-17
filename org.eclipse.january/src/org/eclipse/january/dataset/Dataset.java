@@ -23,7 +23,7 @@ import org.eclipse.january.IMonitor;
  * <p>
  * <b>Warning:</b>
  * It is important to note that methods (get*Abs() and set*Abs()) which use the absolute
- * index <emph>must</emph> be used with care. In (sliced) views of datasets, neighbouring
+ * index <em>must</em> be used with care. In (sliced) views of datasets, neighbouring
  * positions do not necessarily correspond to contiguous indexes. This is also the case
  * with multi-element (or compound) items. Therefore index iterators should be used in
  * conjunction with these methods unless the dataset can be proven to be not a view or
@@ -207,6 +207,7 @@ public interface Dataset extends IDataset {
 	public Dataset getView(boolean deepCopyMetadata);
 
 	/**
+	 * @param shape
 	 * @return view of dataset that is broadcasted to given shape
 	 */
 	public Dataset getBroadcastView(int... shape);
@@ -288,8 +289,8 @@ public interface Dataset extends IDataset {
 	/**
 	 * Returns new dataset with new shape but old data if possible, otherwise a copy is made
 	 * 
-	 * @param shape
-	 *            new shape
+	 * @param shape new shape
+	 * @return reshaped dataset
 	 */
 	public Dataset reshape(int... shape);
 
@@ -329,7 +330,7 @@ public interface Dataset extends IDataset {
 	/**
 	 * Set the buffer that backs the (squared) error data
 	 *
-	 * @buffer the buffer which contains the (squared) error information (can be null)
+	 * @param buffer the buffer which contains the (squared) error information (can be null)
 	 */
 	public void setErrorBuffer(Serializable buffer);
 
@@ -345,6 +346,7 @@ public interface Dataset extends IDataset {
 	/**
 	 * Copy and cast a dataset
 	 * 
+	 * @param <T> dataset subclass
 	 * @param clazz dataset class
 	 * @return a converted copy of the dataset
 	 */
@@ -362,6 +364,7 @@ public interface Dataset extends IDataset {
 	/**
 	 * Cast a dataset
 	 * 
+	 * @param <T> dataset subclass
 	 * @param clazz dataset class
 	 * @return a converted dataset
 	 */
@@ -391,6 +394,7 @@ public interface Dataset extends IDataset {
 
 	/**
 	 * See {@link #getTransposedView}
+	 * @param axes
 	 * @return remapped copy of data
 	 */
 	public Dataset transpose(int... axes);
