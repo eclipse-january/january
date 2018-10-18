@@ -499,7 +499,7 @@ public class LinearAlgebra {
 	 * Raise dataset to given power by matrix multiplication
 	 * @param a
 	 * @param n power
-	 * @return a ** n
+	 * @return {@code a ** n}
 	 */
 	public static Dataset power(Dataset a, int n) {
 		if (n < 0) {
@@ -514,8 +514,8 @@ public class LinearAlgebra {
 
 	/**
 	 * Create the Kronecker product as defined by 
-	 * kron[k0,...,kN] = a[i0,...,iN] * b[j0,...,jN]
-	 * where kn = sn * in + jn for n = 0...N and s is shape of b
+	 * {@code kron[k0,...,kN] = a[i0,...,iN] * b[j0,...,jN]}
+	 * where {@code kn = sn * in + jn} for {@code n = 0...N} and {@code s} is shape of {@code b}
 	 * @param a
 	 * @param b
 	 * @return Kronecker product of a and b
@@ -991,7 +991,7 @@ public class LinearAlgebra {
 
 
 	/**
-	 * Calculate singular value decomposition A = U S V^T
+	 * Calculate singular value decomposition {@code A = U S V^T}
 	 * @param a
 	 * @return array of U - orthogonal matrix, s - singular values vector, V - orthogonal matrix
 	 */
@@ -1056,7 +1056,7 @@ public class LinearAlgebra {
 	}
 
 	/**
-	 * Calculate eigen-decomposition A = V D V^T
+	 * Calculate eigen-decomposition {@code A = V D V^T}
 	 * @param a
 	 * @return array of D eigenvalues (can be double or complex double) and V eigenvectors
 	 */
@@ -1076,7 +1076,7 @@ public class LinearAlgebra {
 	}
 
 	/**
-	 * Calculate QR decomposition A = Q R
+	 * Calculate QR decomposition {@code A = Q R}
 	 * @param a
 	 * @return array of Q and R
 	 */
@@ -1086,7 +1086,7 @@ public class LinearAlgebra {
 	}
 
 	/**
-	 * Calculate LU decomposition A = P^-1 L U
+	 * Calculate LU decomposition {@code A = P^-1 L U}
 	 * @param a
 	 * @return array of L, U and P
 	 */
@@ -1107,7 +1107,7 @@ public class LinearAlgebra {
 	}
 
 	/**
-	 * Solve linear matrix equation A x = v
+	 * Solve linear matrix equation {@code A x = v}
 	 * @param a
 	 * @param v
 	 * @return x
@@ -1124,7 +1124,7 @@ public class LinearAlgebra {
 
 	
 	/**
-	 * Solve least squares matrix equation A x = v by SVD
+	 * Solve least squares matrix equation {@code A x = v} by SVD
 	 * @param a
 	 * @param v
 	 * @return x
@@ -1140,7 +1140,7 @@ public class LinearAlgebra {
 	}
 	
 	/**
-	 * Calculate Cholesky decomposition A = L L^T
+	 * Calculate Cholesky decomposition {@code A = L L^T}
 	 * @param a
 	 * @return L
 	 */
@@ -1150,24 +1150,24 @@ public class LinearAlgebra {
 	}
 
 	/**
-	 * Calculation A x = v by conjugate gradient method with the stopping criterion being
-	 * that the estimated residual r = v - A x satisfies ||r|| < ||v|| with maximum of 100 iterations
+	 * Calculation {@code A x = v} by conjugate gradient method with the stopping criterion being
+	 * that the estimated residual {@code r = v - A x} satisfies {@code ||r|| < ||v||} with maximum of 100 iterations
 	 * @param a
 	 * @param v
-	 * @return solution of A^-1 v by conjugate gradient method
+	 * @return value of {@code A^-1 v} by conjugate gradient method
 	 */
 	public static Dataset calcConjugateGradient(Dataset a, Dataset v) {
 		return calcConjugateGradient(a, v, 100, 1);
 	}
 
 	/**
-	 * Calculation A x = v by conjugate gradient method with the stopping criterion being
-	 * that the estimated residual r = v - A x satisfies ||r|| < delta ||v||
+	 * Calculation {@code A x = v} by conjugate gradient method with the stopping criterion being
+	 * that the estimated residual {@code r = v - A x} satisfies {@code ||r|| < delta ||v||}
 	 * @param a
 	 * @param v
 	 * @param maxIterations
 	 * @param delta parameter used by stopping criterion
-	 * @return solution of A^-1 v by conjugate gradient method
+	 * @return value of {@code A^-1 v} by conjugate gradient method
 	 */
 	public static Dataset calcConjugateGradient(Dataset a, Dataset v, int maxIterations, double delta) {
 		ConjugateGradient cg = new ConjugateGradient(maxIterations, delta, false);

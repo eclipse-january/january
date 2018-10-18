@@ -29,10 +29,10 @@ import org.eclipse.january.metadata.internal.StatisticsMetadataImpl;
 
 /**
  * Generic container class for data 
- * <p/>
+ * <p>
  * Each subclass has an array of primitive types, elements of this array are grouped or
  * compounded to make items 
- * <p/>
+ * <p>
  * Data items can be boolean, integer, float, complex float, vector float, etc
  */
 public abstract class AbstractDataset extends LazyDatasetBase implements Dataset {
