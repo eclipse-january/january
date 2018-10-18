@@ -23,3 +23,10 @@ install:
 script: 
  - mvn verify
 
+# display log to debug build
+after_failure:
+ - for i in /home/travis/build/eclipse/january/org.eclipse.january*/target/work/configuration/*.log; do
+     echo $i;
+     cat $i;
+   done
+
