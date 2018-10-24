@@ -265,66 +265,67 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 		if (nsize == 1) {
 			shape = nShape.clone();
-			return;
-		}
-
-		int ob = -1; // first non-unit dimension
-		int or = shape.length;
-		for (int i = 0; i < or; i++) {
-			if (shape[i] != 1) {
-				ob = i;
-				break;
-			}
-		}
-		assert ob >= 0;
-		int oe = -1; // last non-unit dimension
-		for (int i = or - 1; i >= ob; i--) {
-			if (shape[i] != 1) {
-				oe = i;
-				break;
-			}
-		}
-		assert oe >= 0;
-		oe++;
-
-		int nb = -1; // first non-unit dimension
-		int nr = nShape.length;
-		for (int i = 0; i < nr; i++) {
-			if (nShape[i] != 1) {
-				nb = i;
-				break;
-			}
-		}
-
-		int i = ob;
-		int j = nb;
-		if (begSlice == null) {
-			for (; i < oe && j < nr; i++, j++) {
-				if (shape[i] != nShape[j]) {
-					throw new IllegalArgumentException("New shape not allowed - can only change shape by adding or removing ones to ends of old shape");
-				}
-			}
 		} else {
-			int[] nBegSlice = new int[nr];
-			int[] nDelSlice = new int[nr];
-			Arrays.fill(nDelSlice, 1);
-			for (; i < oe && j < nr; i++, j++) {
-				if (shape[i] != nShape[j]) {
-					throw new IllegalArgumentException("New shape not allowed - can only change shape by adding or removing ones to ends of old shape");
+			int ob = -1; // first non-unit dimension
+			int or = shape.length;
+			for (int i = 0; i < or; i++) {
+				if (shape[i] != 1) {
+					ob = i;
+					break;
 				}
-				nBegSlice[j] = begSlice[i];
-				nDelSlice[j] = delSlice[i];
+			}
+			assert ob >= 0;
+			int oe = -1; // last non-unit dimension
+			for (int i = or - 1; i >= ob; i--) {
+				if (shape[i] != 1) {
+					oe = i;
+					break;
+				}
+			}
+			assert oe >= 0;
+			oe++;
+	
+			int nb = -1; // first non-unit dimension
+			int nr = nShape.length;
+			for (int i = 0; i < nr; i++) {
+				if (nShape[i] != 1) {
+					nb = i;
+					break;
+				}
 			}
 	
-			begSlice = nBegSlice;
-			delSlice = nDelSlice;
+			int i = ob;
+			int j = nb;
+			if (begSlice == null) {
+				for (; i < oe && j < nr; i++, j++) {
+					if (shape[i] != nShape[j]) {
+						throw new IllegalArgumentException("New shape not allowed - can only change shape by adding or removing ones to ends of old shape");
+					}
+				}
+			} else {
+				int[] nBegSlice = new int[nr];
+				int[] nDelSlice = new int[nr];
+				Arrays.fill(nDelSlice, 1);
+				for (; i < oe && j < nr; i++, j++) {
+					if (shape[i] != nShape[j]) {
+						throw new IllegalArgumentException("New shape not allowed - can only change shape by adding or removing ones to ends of old shape");
+					}
+					nBegSlice[j] = begSlice[i];
+					nDelSlice[j] = delSlice[i];
+				}
+		
+				begSlice = nBegSlice;
+				delSlice = nDelSlice;
+			}
+			prepShape += nb - ob;
+			postShape += nr - oe;
 		}
-		prepShape += nb - ob;
-		postShape += nr - oe;
 
-		storeMetadata(metadata, Reshapeable.class);
-		metadata = copyMetadata();
-		reshapeMetadata(shape, nShape);
+		if (metadata != null) {
+			storeMetadata(metadata, Reshapeable.class);
+			metadata = copyMetadata();
+			reshapeMetadata(shape, nShape);
+		}
 		shape = nShape;
 	}
 
