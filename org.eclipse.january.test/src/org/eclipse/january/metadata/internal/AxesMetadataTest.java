@@ -20,6 +20,7 @@ import org.eclipse.january.DatasetException;
 import org.eclipse.january.MetadataException;
 import org.eclipse.january.asserts.TestUtils;
 import org.eclipse.january.dataset.Dataset;
+import org.eclipse.january.dataset.DatasetFactory;
 import org.eclipse.january.dataset.DatasetUtils;
 import org.eclipse.january.dataset.DoubleDataset;
 import org.eclipse.january.dataset.IDataset;
@@ -373,5 +374,26 @@ public class AxesMetadataTest {
 			Dataset a = axes[i].getSliceView(new Slice(ds.getShape()[i])); // crop longer axis
 			TestUtils.assertDatasetEquals(a.getSlice(slices[i]), DatasetUtils.sliceAndConvertLazyDataset(amd.getAxes()[i]).squeeze());
 		}
+	}
+
+	@Test
+	public void testAxesMetadataScalar() throws MetadataException {
+		final int[] reshape = new int[] { 1, 1 };
+
+		ILazyDataset lazy = Random.lazyRand(Dataset.INT32, "Main");
+		AxesMetadata amd = MetadataFactory.createMetadata(AxesMetadata.class, 0);
+		lazy.addMetadata(amd);
+		lazy.setShape(reshape);
+		amd = lazy.getFirstMetadata(AxesMetadata.class);
+
+		assertEquals(2, amd.getAxes().length);
+
+		Dataset data = DatasetFactory.createFromObject(1.);
+		amd = MetadataFactory.createMetadata(AxesMetadata.class, 0);
+		data.addMetadata(amd);
+		data.setShape(reshape);
+		amd = data.getFirstMetadata(AxesMetadata.class);
+
+		assertEquals(2, amd.getAxes().length);
 	}
 }

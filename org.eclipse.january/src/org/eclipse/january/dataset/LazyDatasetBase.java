@@ -927,9 +927,6 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 					}
 				} else if (o.getClass().isArray()) {
 					int l = Array.getLength(o);
-					if (l <= 0) {
-						continue;
-					}
 
 					for (int i = 0; r == null && i < l; i++) {
 						r = Array.get(o, i);
@@ -965,9 +962,6 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 				} else if (o instanceof List<?>) {
 					List list = (List) o;
 					int l = list.size();
-					if (l <= 0) {
-						continue;
-					}
 
 					for (int i = 0; r == null && i < l; i++) {
 						r = list.get(i);
