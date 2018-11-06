@@ -290,4 +290,27 @@ public class BroadcastIteratorTest {
 			assertEquals(bv.getElementDoubleAbs(bit.bIndex), bit.bDouble, 1e-9);
 		}
 	}
+
+	@Test
+	public void testScalar() {
+		ComplexDoubleDataset a = (ComplexDoubleDataset) DatasetFactory.createFromObject(ComplexDoubleDataset.class, new double[] {-1, 2}).reshape();
+		Dataset b = DatasetFactory.createFromObject(-1);
+
+		Dataset ra = a.getRealView();
+		
+		BroadcastIterator bit;
+		bit = BroadcastIterator.createIterator(ra, b);
+		while (bit.hasNext()) {
+			assertEquals(a.getElementDoubleAbs(bit.aIndex), bit.aDouble, 1e-9);
+			assertEquals(a.getElementDoubleAbs(bit.aIndex), bit.bDouble, 1e-9);
+		}
+
+		Dataset ia = a.getImaginaryView();
+		b = DatasetFactory.createFromObject(2);
+		bit = BroadcastIterator.createIterator(ia, b);
+		while (bit.hasNext()) {
+			assertEquals(a.getElementDoubleAbs(bit.aIndex), bit.aDouble, 1e-9);
+			assertEquals(a.getElementDoubleAbs(bit.aIndex), bit.bDouble, 1e-9);
+		}
+	}
 }
