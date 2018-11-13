@@ -14,12 +14,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>org.eclipse.january.test</artifactId>
-	<version>2.2.0</version>
+	<version>2.2.1-SNAPSHOT</version>
 	<parent>
 		<relativePath>../releng/org.eclipse.january.releng/pom.xml</relativePath>
 		<groupId>org.eclipse.january</groupId>
 		<artifactId>org.eclipse.january.releng</artifactId>
-		<version>2.2.0</version>
+		<version>2.2.1-SNAPSHOT</version>
 	</parent>
 	<packaging>eclipse-test-plugin</packaging>
 </project>
