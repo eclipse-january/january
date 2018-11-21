@@ -182,8 +182,9 @@ public class BroadcastPairIterator extends BroadcastIterator {
 
 	@Override
 	public void reset() {
-		for (int i = 0; i <= endrank; i++)
+		for (int i = 0; i <= endrank; i++) {
 			pos[i] = 0;
+		}
 
 		if (endrank >= 0) {
 			pos[endrank] = -1;
@@ -196,7 +197,7 @@ public class BroadcastPairIterator extends BroadcastIterator {
 			oIndex = oStart - oStep;
 		}
 
-		if (aIndex == 0 || bIndex == 0 || aStride[endrank] == 0 || bStride[endrank] == 0) { // for zero-ranked datasets or extended shape
+		if (aIndex == 0 || bIndex == 0 || (endrank >= 0 && (aStride[endrank] == 0 || bStride[endrank] == 0))) { // for zero-ranked datasets or extended shape
 			if (read) {
 				storeCurrentValues();
 			}
