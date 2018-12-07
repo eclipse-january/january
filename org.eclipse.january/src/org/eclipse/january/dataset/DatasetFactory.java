@@ -399,16 +399,16 @@ public class DatasetFactory {
 			}
 		}
 		if (obj == null) {
-			return zeros(new int[objectList.size()], Dataset.OBJECT);
+			return zeros(ObjectDataset.class, objectList.size());
 		}
 
 		Class<? extends Object> clazz = obj.getClass();
-		if (!DTypeUtils.isClassSupportedAsElement(clazz)) {
-			throw new IllegalArgumentException("Class of list element not supported");
+		if (DTypeUtils.isClassSupportedAsElement(clazz)) {
+			int dtype = DTypeUtils.getDTypeFromClass(clazz);
+			return createFromList(dtype, objectList);
 		}
 
-		int dtype = DTypeUtils.getDTypeFromClass(clazz);
-		return createFromList(dtype, objectList);
+		return createFromObject(objectList);
 	}
 
 	/**

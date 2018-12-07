@@ -9,7 +9,11 @@
 
 package org.eclipse.january.dataset;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.january.asserts.TestUtils;
 import org.eclipse.january.dataset.CompoundDoubleDataset;
@@ -302,6 +306,27 @@ public class DatasetFactoryTest {
 		// one dimensional
 		exp = new RGBDataset(new short[] {3, 4, 5, 6, 7, 8});
 		act = DatasetFactory.createFromObject(RGBDataset.class, new short[] {3, 4, 5, 6, 7, 8});
+		assertEquals(exp, act);
+	}
+
+	@Test
+	public void testCreatorDataset() {
+		Dataset a = DatasetFactory.createRange(10).reshape(5, 2);
+		Dataset act = DatasetFactory.createFromObject(new IDataset[] {a, a, a});
+		assertEquals(3, act.getRank());
+		assertArrayEquals(new int[] {3, 5, 2}, act.getShape());
+		Dataset b = a.reshape(1, 5, 2);
+		Dataset exp = DatasetUtils.concatenate(new IDataset[] {b, b, b}, 0);
+		assertEquals(exp, act);
+
+		List<IDataset> list = new ArrayList<>();
+		list.add(a);
+		list.add(a);
+		list.add(a);
+		act = DatasetFactory.createFromObject(list);
+		assertEquals(exp, act);
+
+		act = DatasetFactory.createFromList(list);
 		assertEquals(exp, act);
 	}
 
