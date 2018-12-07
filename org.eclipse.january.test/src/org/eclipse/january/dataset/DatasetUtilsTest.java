@@ -309,4 +309,23 @@ public class DatasetUtilsTest {
 		DatasetUtils.setShapeToOriginalRank(a, oShape, 2, 4);
 		assertArrayEquals(new int[] {5, 4, 1, 6, 1}, a.getShapeRef());
 	}
+
+	@Test
+	public void testCast() {
+		DoubleDataset a = DatasetFactory.createRange(12.);
+		for (Class<? extends Dataset> c : DTypeUtils.interface2DTypes.keySet()) {
+			Dataset b = DatasetUtils.cast(c, a);
+			if (b instanceof AbstractDataset) {
+				((AbstractDataset) b).setData();
+			}
+		}
+
+		ComplexDoubleDataset z = DatasetFactory.createRange(ComplexDoubleDataset.class, 12.);
+		for (Class<? extends Dataset> c : DTypeUtils.interface2DTypes.keySet()) {
+			Dataset b = DatasetUtils.cast(c, z);
+			if (b instanceof AbstractDataset) {
+				((AbstractDataset) b).setData();
+			}
+		}
+	}
 }
