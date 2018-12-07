@@ -245,4 +245,16 @@ public class AxesMetadataImpl implements AxesMetadata {
 		}
 		return maxShape;
 	}
+
+	@Override
+	public String toString() {
+		String[] out = new String[allAxes.length];
+		for (int i = 0; i < out.length; i++) {
+			List<ILazyDataset> l = allAxes[i];
+			if (l != null) {
+				out[i] = l.toString();
+			}
+		}
+		return Arrays.toString(out);
+	}
 }
