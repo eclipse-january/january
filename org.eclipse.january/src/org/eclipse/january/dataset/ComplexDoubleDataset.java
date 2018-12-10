@@ -129,17 +129,22 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 		offset = 0;
 		stride = null;
 		base = null;
+		try {
+			odata = data = createArray(size);
+		} catch (Throwable t) {
+			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
+			throw new IllegalArgumentException(t);
+		}
 
 		IndexIterator iter = dataset.getIterator();
-		int disize = dataset.getElementsPerItem();
-		if (disize == 1) {
+		if (dataset.isComplex()) {
 			for (int i = 0; iter.hasNext(); i += isize) {
 				data[i] = dataset.getElementDoubleAbs(iter.index); // ADD_CAST
+				data[i+1] = dataset.getElementDoubleAbs(iter.index+1); // ADD_CAST
 			}
 		} else {
 			for (int i = 0; iter.hasNext(); i += isize) {
 				data[i] = dataset.getElementDoubleAbs(iter.index); // ADD_CAST
-				data[i+1] = dataset.getElementDoubleAbs(iter.index+1); // ADD_CAST
 			}
 		}
 	}
