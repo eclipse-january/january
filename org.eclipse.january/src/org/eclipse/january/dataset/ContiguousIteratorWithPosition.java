@@ -55,7 +55,7 @@ public class ContiguousIteratorWithPosition extends IndexIterator {
 			pos[endrank] = -1;
 		}
 		index = -isize;
-		imax = length;
+		imax = length * isize;
 	}
 
 	@Override
