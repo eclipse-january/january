@@ -2,13 +2,13 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Eclipse January Datasets (Incubation)
 Bundle-SymbolicName: org.eclipse.january
-Bundle-Version: 2.2.1
+Bundle-Version: 2.2.2.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Export-Package: org.eclipse.january;version="2.2.1",
- org.eclipse.january.dataset;version="2.2.1",
- org.eclipse.january.io;version="2.2.1",
- org.eclipse.january.metadata;version="2.2.1",
- org.eclipse.january.metadata.internal;version="2.2.1";x-internal:=true
+Export-Package: org.eclipse.january;version="2.2.2",
+ org.eclipse.january.dataset;version="2.2.2",
+ org.eclipse.january.io;version="2.2.2",
+ org.eclipse.january.metadata;version="2.2.2",
+ org.eclipse.january.metadata.internal;version="2.2.2";x-internal:=true
 Require-Bundle: org.apache.commons.math3;bundle-version="[3.2.0,4.0.0)";visibility:=reexport,
  javax.measure.unit-api;bundle-version="[1.0.0,2.0.0)";visibility:=reexport
 Import-Package: org.slf4j;version="[1.7.2,2.0.0)"
