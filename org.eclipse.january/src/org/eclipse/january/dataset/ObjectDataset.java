@@ -94,8 +94,9 @@ public class ObjectDataset extends ObjectDatasetBase {
 	static ObjectDataset createFromObject(final Object obj) {
 		ObjectDatasetBase result = ObjectDatasetBase.createFromObject(obj);
 		ObjectDataset ds = new ObjectDataset(result.data, result.shape);
-		if (result.shape.length == 0)
-			ds.setShape(result.shape); // special case of single item 
+		if (result.shape.length == 0) {
+			ds.setShape(result.shape); // special case of single item
+		}
 		return ds;
 	}
 

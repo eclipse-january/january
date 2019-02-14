@@ -19,6 +19,9 @@ public class ObjectDatasetTest {
 
 	@Test
 	public void testConstructor() {
+		assertEquals(0, new ObjectDataset().getSize());
+		assertEquals(0, DatasetFactory.createFromObject(ObjectDataset.class, 1d).getRank());
+
 		Object[] da = { "0", (byte) 1, (short) 2, (int) 3, (float) 4, (double) 5, "6", "7", "8", "9", "10", "11" };
 		ObjectDataset a = new ObjectDataset(da, null);
 

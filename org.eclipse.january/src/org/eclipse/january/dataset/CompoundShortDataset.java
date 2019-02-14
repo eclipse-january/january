@@ -310,7 +310,7 @@ public class CompoundShortDataset extends AbstractCompoundDataset {
 	 */
 	static CompoundShortDataset createFromObject(final Object obj) {
 		ShortDataset result = ShortDataset.createFromObject(obj); // CLASS_TYPE
-		return (CompoundShortDataset) DatasetUtils.createCompoundDatasetFromLastAxis(result, true);
+		return createCompoundDatasetWithLastDimension(result, true);
 	}
 
 	/**
@@ -323,7 +323,16 @@ public class CompoundShortDataset extends AbstractCompoundDataset {
 	 */
 	public static CompoundShortDataset createFromObject(final int itemSize, final Object obj) {
 		ShortDataset result = ShortDataset.createFromObject(obj); // CLASS_TYPE
-		return new CompoundShortDataset(itemSize, result.getData(), null);
+		boolean zeroRank = result.shape == null ? false : result.shape.length == 0;
+		if (zeroRank) {
+			result.resize(itemSize); // special case of single item
+			result.fill(obj);
+		}
+		CompoundShortDataset ds = new CompoundShortDataset(itemSize, result.getData(), null);
+		if (zeroRank) {
+			ds.setShape(new int[0]);
+		}
+		return ds;
 	}
 
 	/**
@@ -384,7 +393,7 @@ public class CompoundShortDataset extends AbstractCompoundDataset {
 
 		CompoundShortDataset result = new CompoundShortDataset(is);
 
-		result.shape = rank > 0 ? Arrays.copyOf(shape, rank) : (rank < 0 ? new int[] {} : new int[] {1});
+		result.shape = rank > 0 ? Arrays.copyOf(shape, rank) : (rank < 0 ? new int[0] : new int[] {1});
 		result.size = ShapeUtils.calcSize(result.shape);
 		result.odata = shareData ? a.flatten().getBuffer() : a.clone().getBuffer();
 		result.setName(a.getName());

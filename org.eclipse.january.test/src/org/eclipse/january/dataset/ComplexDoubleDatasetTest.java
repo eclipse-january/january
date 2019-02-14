@@ -26,6 +26,9 @@ import org.junit.Test;
 public class ComplexDoubleDatasetTest {
 	@Test
 	public void testConstructor() {
+		assertEquals(0, new ComplexDoubleDataset().getSize());
+		assertEquals(0, DatasetFactory.createFromObject(new Complex(1, 1)).getRank());
+
 		double[] da = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
 		ComplexDoubleDataset a = new ComplexDoubleDataset(da);
 

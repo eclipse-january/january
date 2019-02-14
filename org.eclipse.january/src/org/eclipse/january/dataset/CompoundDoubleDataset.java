@@ -310,7 +310,7 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 	 */
 	static CompoundDoubleDataset createFromObject(final Object obj) {
 		DoubleDataset result = DoubleDataset.createFromObject(obj); // CLASS_TYPE
-		return (CompoundDoubleDataset) DatasetUtils.createCompoundDatasetFromLastAxis(result, true);
+		return createCompoundDatasetWithLastDimension(result, true);
 	}
 
 	/**
@@ -323,7 +323,16 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 	 */
 	public static CompoundDoubleDataset createFromObject(final int itemSize, final Object obj) {
 		DoubleDataset result = DoubleDataset.createFromObject(obj); // CLASS_TYPE
-		return new CompoundDoubleDataset(itemSize, result.getData(), null);
+		boolean zeroRank = result.shape == null ? false : result.shape.length == 0;
+		if (zeroRank) {
+			result.resize(itemSize); // special case of single item
+			result.fill(obj);
+		}
+		CompoundDoubleDataset ds = new CompoundDoubleDataset(itemSize, result.getData(), null);
+		if (zeroRank) {
+			ds.setShape(new int[0]);
+		}
+		return ds;
 	}
 
 	/**
@@ -384,7 +393,7 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 
 		CompoundDoubleDataset result = new CompoundDoubleDataset(is);
 
-		result.shape = rank > 0 ? Arrays.copyOf(shape, rank) : (rank < 0 ? new int[] {} : new int[] {1});
+		result.shape = rank > 0 ? Arrays.copyOf(shape, rank) : (rank < 0 ? new int[0] : new int[] {1});
 		result.size = ShapeUtils.calcSize(result.shape);
 		result.odata = shareData ? a.flatten().getBuffer() : a.clone().getBuffer();
 		result.setName(a.getName());

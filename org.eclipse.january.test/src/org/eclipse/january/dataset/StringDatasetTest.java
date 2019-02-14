@@ -19,6 +19,9 @@ public class StringDatasetTest {
 
 	@Test
 	public void testConstructor() {
+		assertEquals(0, new StringDataset().getSize());
+		assertEquals(0, DatasetFactory.createFromObject("1").getRank());
+
 		String[] da = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11" };
 		StringDataset a = new StringDataset(da, null);
 

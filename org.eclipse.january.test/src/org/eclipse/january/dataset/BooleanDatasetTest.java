@@ -21,6 +21,9 @@ public class BooleanDatasetTest {
 
 	@Test
 	public void testConstructor() {
+		assertEquals(0, new BooleanDataset().getSize());
+		assertEquals(0, DatasetFactory.createFromObject(true).getRank());
+
 		boolean[] da = { false, true, false, true, false, true, false, true, false, true, false, true };
 		BooleanDataset a = DatasetFactory.createFromObject(BooleanDataset.class, da);
 
