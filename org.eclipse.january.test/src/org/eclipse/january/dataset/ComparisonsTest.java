@@ -58,7 +58,7 @@ public class ComparisonsTest {
 		TestUtils.assertDatasetEquals(Comparisons.equalTo(ta, tb), bd);
 
 		c = Comparisons.equalTo(DatasetFactory.zeros(DoubleDataset.class).fill(1), 1);
-		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {true}), c);
+		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(true), c);
 
 		c = Comparisons.equalTo(a, 3);
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {false, false, true, false, false, false}), c);

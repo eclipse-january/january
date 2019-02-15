@@ -21,6 +21,9 @@ public class ByteDatasetTest {
 
 	@Test
 	public void testConstructor() {
+		assertEquals(0, new ByteDataset().getSize());
+		assertEquals(0, DatasetFactory.createFromObject((byte) 1).getRank());
+
 		byte[] da = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
 		ByteDataset a = new ByteDataset(da);
 
