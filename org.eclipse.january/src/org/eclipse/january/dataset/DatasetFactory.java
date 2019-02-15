@@ -281,6 +281,9 @@ public class DatasetFactory {
 					d = createFromPrimitiveArray(DTypeUtils.getDTypeFromClass(ca), obj);
 					if (!DTypeUtils.isDTypeElemental(dtype)) {
 						d = DatasetUtils.createCompoundDataset(d, dtype == Dataset.RGB ? 3 : itemSize);
+						if (dtype == Dataset.RGB && d.getSize() == 1) { // special case of allowing a zero-rank RGB dataset
+							d.setShape();
+						}
 					}
 					d = DatasetUtils.cast(d, dtype);
 				}

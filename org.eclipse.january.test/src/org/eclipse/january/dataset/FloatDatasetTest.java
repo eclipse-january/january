@@ -21,6 +21,9 @@ public class FloatDatasetTest {
 
 	@Test
 	public void testConstructor() {
+		assertEquals(0, new FloatDataset().getSize());
+		assertEquals(0, DatasetFactory.createFromObject(1f).getRank());
+
 		float[] da = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
 		FloatDataset a = new FloatDataset(da);
 

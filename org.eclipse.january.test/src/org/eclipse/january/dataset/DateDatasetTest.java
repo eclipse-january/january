@@ -22,6 +22,9 @@ public class DateDatasetTest {
 	
 	@Test
 	public void testConstructor() {
+		assertEquals(0, new DateDatasetImpl().getSize());
+		assertEquals(0, DatasetFactory.createFromObject(new Date(0)).getRank());
+
 		// create an array of dates starting 1st Oct 2015, each 1 day apart
 		final long startDate = 1443657600000l; // 2015-10-01 00:00:00 GMT
 		final long interval = 24 * 60 * 60 * 1000; // 1 day

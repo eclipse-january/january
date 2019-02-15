@@ -253,7 +253,7 @@ public class DatasetFactoryTest {
 
 		// zero-ranked (unit size)
 		exp = new CompoundDoubleDataset(1, new double[] {3}, new int[0]);
-		act = DatasetFactory.createFromObject(1, CompoundDoubleDataset.class, new double[] {3});
+		act = DatasetFactory.createFromObject(1, CompoundDoubleDataset.class, 3.);
 		assertEquals(exp, act);
 
 		exp = new CompoundDoubleDataset(2, new double[] {3, 4}, new int[0]);

@@ -22,6 +22,9 @@ public class LongDatasetTest {
 
 	@Test
 	public void testConstructor() {
+		assertEquals(0, new LongDataset().getSize());
+		assertEquals(0, DatasetFactory.createFromObject(1).getRank());
+
 		long[] da = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
 		LongDataset a = new LongDataset(da);
 

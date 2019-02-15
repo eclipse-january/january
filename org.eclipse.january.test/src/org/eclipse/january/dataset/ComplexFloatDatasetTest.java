@@ -20,6 +20,9 @@ import org.junit.Test;
 public class ComplexFloatDatasetTest {
 	@Test
 	public void testConstructor() {
+		assertEquals(0, new ComplexFloatDataset().getSize());
+		assertEquals(0, DatasetFactory.createFromObject(ComplexFloatDataset.class, 1f).getRank());
+
 		float[] da = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
 		ComplexFloatDataset a = new ComplexFloatDataset(da);
 

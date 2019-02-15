@@ -30,6 +30,10 @@ public class CompoundDoubleDatasetTest {
 
 	@Test
 	public void testConstructor() {
+		assertEquals(0, new CompoundDoubleDataset().getSize());
+		assertEquals(0, new CompoundDoubleDataset(2).getSize());
+		assertEquals(0, DatasetFactory.createFromObject(2, CompoundDoubleDataset.class, 1d).getRank());
+
 		double[] da = { 0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5,
 				6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5 };
 		CompoundDoubleDataset a = new CompoundDoubleDataset(2, da);

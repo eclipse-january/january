@@ -28,6 +28,9 @@ import org.junit.Test;
 public class RGBDatasetTest {
 	@Test
 	public void testConstructors() {
+		assertEquals(0, new RGBDataset().getSize());
+		assertEquals(0, DatasetFactory.createFromObject(RGBDataset.class, new short[] {1,3,5}).getRank());
+
 		int n = 250;
 		Dataset r = DatasetFactory.createRange(IntegerDataset.class, n);
 		Dataset g = DatasetFactory.createRange(IntegerDataset.class, 1., n+1, 1);

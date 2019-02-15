@@ -21,6 +21,9 @@ public class ShortDatasetTest {
 
 	@Test
 	public void testConstructor() {
+		assertEquals(0, new ShortDataset().getSize());
+		assertEquals(0, DatasetFactory.createFromObject((short) 1).getRank());
+
 		short[] da = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
 		ShortDataset a = new ShortDataset(da);
 
