@@ -35,6 +35,7 @@ import org.eclipse.january.metadata.Transposable;
 public class LazyDataset extends LazyDatasetBase implements Serializable, Cloneable {
 	private static final long serialVersionUID = 2467865859867440242L;
 
+	protected Map<Class<? extends MetadataType>, List<MetadataType>> oMetadata = null;
 	protected int[]     oShape; // original shape
 	protected long      size;   // number of items
 	protected int       dtype;  // dataset type
@@ -49,7 +50,6 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	protected int[]       begSlice = null; // slice begin
 	protected int[]       delSlice = null; // slice delta
 	protected int[]       map; // transposition map (same length as current shape)
-	protected Map<Class<? extends MetadataType>, List<MetadataType>> oMetadata = null;
 
 	/**
 	 * Create a lazy dataset
@@ -82,6 +82,25 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	 */
 	public LazyDataset(String name, int dtype, int[] shape, ILazyLoader loader) {
 		this(name, dtype, 1, shape, loader);
+	}
+
+	LazyDataset(LazyDataset other) {
+		name  = other.name;
+		shape = other.shape.clone();
+		metadata  = other.copyMetadata();
+		oMetadata = other.oMetadata;
+		oShape = other.oShape;
+		size   = other.size;
+		dtype  = other.dtype;
+		isize  = other.isize;
+		loader = other.loader;
+		base   = other.base;
+
+		prepShape = other.prepShape;
+		postShape = other.postShape;
+		begSlice = other.begSlice;
+		delSlice = other.delSlice;
+		map      = other.map;
 	}
 
 	/**
@@ -194,18 +213,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	@Override
 	public LazyDataset clone() {
-		LazyDataset ret = new LazyDataset(new String(name), dtype, isize, oShape, loader);
-		ret.shape = shape;
-		ret.size = size;
-		ret.prepShape = prepShape;
-		ret.postShape = postShape;
-		ret.begSlice = begSlice;
-		ret.delSlice = delSlice;
-		ret.map = map;
-		ret.base = base;
-		ret.metadata = copyMetadata();
-		ret.oMetadata = oMetadata;
-		return ret;
+		return new LazyDataset(this);
 	}
 
 	@Override

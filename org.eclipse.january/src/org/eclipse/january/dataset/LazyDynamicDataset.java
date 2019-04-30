@@ -72,6 +72,19 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 		this.eventDelegate = new DataListenerDelegate();
 	}
 
+	/**
+	 * @since 2.2
+	 */
+	protected LazyDynamicDataset(LazyDynamicDataset other) {
+		super(other);
+
+		maxShape = other.maxShape;
+		eventDelegate = other.eventDelegate;
+		checker = other.checker;
+		stop = other.stop;
+		runner = other.runner;
+	}
+
 	@Override
 	public ILazyDataset getDataset() {
 		return this;
@@ -168,20 +181,7 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 
 	@Override
 	public LazyDynamicDataset clone() {
-		LazyDynamicDataset ret = new LazyDynamicDataset(new String(name), getDType(), getElementsPerItem(), 
-				oShape, maxShape, loader);
-		ret.shape = shape;
-		ret.size = size;
-		ret.prepShape = prepShape;
-		ret.postShape = postShape;
-		ret.begSlice = begSlice;
-		ret.delSlice = delSlice;
-		ret.map = map;
-		ret.base = base;
-		ret.metadata = copyMetadata();
-		ret.oMetadata = oMetadata;
-		ret.eventDelegate = eventDelegate;
-		return ret;
+		return new LazyDynamicDataset(this);
 	}
 
 	@Override
