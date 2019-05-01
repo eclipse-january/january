@@ -171,34 +171,60 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((base == null) ? 0 : base.hashCode());
+		result = prime * result + Arrays.hashCode(begSlice);
+		result = prime * result + Arrays.hashCode(delSlice);
+		result = prime * result + dtype;
+		result = prime * result + isize;
+		result = prime * result + ((loader == null) ? 0 : loader.hashCode());
+		result = prime * result + Arrays.hashCode(map);
+		result = prime * result + Arrays.hashCode(oShape);
+		result = prime * result + postShape;
+		result = prime * result + prepShape;
+		result = prime * result + (int) (size ^ (size >>> 32));
+		return result;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
-		if (!super.equals(obj))
+		if (!super.equals(obj)) {
 			return false;
+		}
 
 		LazyDataset other = (LazyDataset) obj;
+		if (size != other.size) {
+			return false;
+		}
 		if (dtype != other.dtype) {
 			return false;
 		}
 		if (isize != other.isize) {
 			return false;
 		}
-
-		if (!Arrays.equals(shape, other.shape)) {
+		if (!Arrays.equals(oShape, other.oShape)) {
 			return false;
 		}
 
 		if (loader != other.loader) {
 			return false;
 		}
+		if (base == null) {
+			if (other.base != null) {
+				return false;
+			}
+		} else if (!base.equals(other)) {
+			return false;
+		}
 
 		if (prepShape != other.prepShape) {
 			return false;
 		}
-
 		if (postShape != other.postShape) {
 			return false;
 		}
-
 		if (!Arrays.equals(begSlice, other.begSlice)) {
 			return false;
 		}
@@ -208,6 +234,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 		if (!Arrays.equals(map, other.map)) {
 			return false;
 		}
+
 		return true;
 	}
 
