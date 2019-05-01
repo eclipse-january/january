@@ -24,7 +24,7 @@ public class LazyDynamicDatasetTest {
 
 	class CountingListener implements IDataListener {
 		int count = 0;
-		
+
 		@Override
 		public void dataChangePerformed(DataEvent evt) {
 			TestUtils.verbosePrintf("New shape: %s\n", Arrays.toString(evt.getShape()));
@@ -47,6 +47,17 @@ public class LazyDynamicDatasetTest {
 		int period = 200;
 		int repeat = 5;
 		long total = (long) ((repeat + 0.1) * period); // include partial end period
+		lazy.startUpdateChecker(period, null);
+		try {
+			Thread.sleep(total);
+			lazy.startUpdateChecker(0, null); // switch off
+		} catch (InterruptedException e) {
+			Assert.fail("Sleep interrupted!");
+		}
+		Assert.assertEquals(repeat, counter.count);
+
+		// try again
+		counter.count = 0;
 		lazy.startUpdateChecker(period, null);
 		try {
 			Thread.sleep(total);
