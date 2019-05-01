@@ -18,7 +18,6 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 	private static final long serialVersionUID = -6296506563932840938L;
 
 	protected int[] maxShape;
-	private boolean stop;
 
 	protected transient DataListenerDelegate eventDelegate; // this does not need to be serialised!
 
@@ -29,12 +28,11 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 
 		@Override
 		public void run() {
-			while (!stop) {
+			while (true) {
 				try {
 					Thread.sleep(millis);
 				} catch (InterruptedException e) {
-					logger.error("Something has interrupted this periodic runner!");
-					stop = true; // ends runner
+					break;
 				}
 				if (checker == null || checker.check()) {
 					fireDataListeners();
@@ -79,7 +77,6 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 		super(other);
 
 		maxShape = other.maxShape;
-		stop = other.stop;
 		eventDelegate = other.eventDelegate;
 		checker = other.checker;
 		runner = other.runner;
@@ -92,7 +89,7 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 		result = prime * result + ((checker == null) ? 0 : checker.hashCode());
 		result = prime * result + ((checkingThread == null) ? 0 : checkingThread.hashCode());
 		result = prime * result + Arrays.hashCode(maxShape);
-		result = prime * result + (stop ? 1231 : 1237);
+//		result = prime * result + (stop ? 1231 : 1237);
 		return result;
 	}
 
@@ -104,9 +101,6 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 
 		LazyDynamicDataset other = (LazyDynamicDataset) obj;
 		if (!Arrays.equals(maxShape, other.maxShape)) {
-			return false;
-		}
-		if (stop != other.stop) {
 			return false;
 		}
 
@@ -230,10 +224,7 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 	public synchronized void startUpdateChecker(int milliseconds, IDatasetChangeChecker checker) {
 		// stop any current checking threads
 		if (checkingThread != null) {
-			stop = true;
-			if (checkingThread != null) {
-				checkingThread.interrupt();
-			}
+			checkingThread.interrupt();
 		}
 		this.checker = checker;
 		if (checker != null) {
