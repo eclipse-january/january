@@ -18,11 +18,11 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 	private static final long serialVersionUID = -6296506563932840938L;
 
 	protected int[] maxShape;
+	private boolean stop;
 
 	protected transient DataListenerDelegate eventDelegate; // this does not need to be serialised!
 
 	protected IDatasetChangeChecker checker;
-	private boolean stop;
 
 	class PeriodicRunnable implements Runnable {
 		long millis;
@@ -79,10 +79,52 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 		super(other);
 
 		maxShape = other.maxShape;
+		stop = other.stop;
 		eventDelegate = other.eventDelegate;
 		checker = other.checker;
-		stop = other.stop;
 		runner = other.runner;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((checker == null) ? 0 : checker.hashCode());
+		result = prime * result + ((checkingThread == null) ? 0 : checkingThread.hashCode());
+		result = prime * result + Arrays.hashCode(maxShape);
+		result = prime * result + (stop ? 1231 : 1237);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!super.equals(obj)) {
+			return false;
+		}
+
+		LazyDynamicDataset other = (LazyDynamicDataset) obj;
+		if (!Arrays.equals(maxShape, other.maxShape)) {
+			return false;
+		}
+		if (stop != other.stop) {
+			return false;
+		}
+
+		if (checker == null) {
+			if (other.checker != null) {
+				return false;
+			}
+		} else if (!checker.equals(other.checker)) {
+			return false;
+		}
+		if (checkingThread == null) {
+			if (other.checkingThread != null) {
+				return false;
+			}
+		} else if (!checkingThread.equals(other.checkingThread)) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override

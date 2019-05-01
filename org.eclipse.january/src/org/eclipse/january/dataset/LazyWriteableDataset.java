@@ -148,6 +148,47 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Arrays.hashCode(chunks);
+		result = prime * result + ((fillValue == null) ? 0 : fillValue.hashCode());
+		result = prime * result + (writeAsync ? 1231 : 1237);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!super.equals(obj)) {
+			return false;
+		}
+
+		LazyWriteableDataset other = (LazyWriteableDataset) obj;
+		if (!Arrays.equals(chunks, other.chunks)) {
+			return false;
+		}
+		if (fillValue == null) {
+			if (other.fillValue != null) {
+				return false;
+			}
+		} else if (!fillValue.equals(other.fillValue)) {
+			return false;
+		}
+		if (saver == null) {
+			if (other.saver != null) {
+				return false;
+			}
+		} else if (!saver.equals(other.saver)) {
+			return false;
+		}
+		if (writeAsync != other.writeAsync) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	public int[] getChunking() {
 		return chunks;
 	}
