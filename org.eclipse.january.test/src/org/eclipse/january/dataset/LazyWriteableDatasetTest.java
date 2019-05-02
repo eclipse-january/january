@@ -84,5 +84,8 @@ public class LazyWriteableDatasetTest {
 		Dataset sd = DatasetFactory.ones(d.getClass(), s.getShape());
 		ld.setSlice(sd, s);
 		Assert.assertEquals(ld.getSlice(s), sd);
-	}	
+	}
+
+	// TODO test set slice on squeezed sliced view
+	
 }

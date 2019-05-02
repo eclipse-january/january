@@ -142,11 +142,17 @@ public class Slice implements Cloneable, Serializable {
 	 * @return The Slice which the method is called on
 	 */
 	public Slice setLength(int length) {
-		if (stop != null && step > 0 && length < stop) {
-			throw new IllegalArgumentException("Length must be greater than or equal to stop");
+		if (stop != null) {
+			if (step > 0) {
+				if (length < stop) {
+					throw new IllegalArgumentException("Length must be greater than or equal to stop");
+				}
+			}
 		}
-		if (start != null && step < 0 && length < start) {
-			throw new IllegalArgumentException("Length must be greater than or equal to start");
+		if (start != null) {
+			if (start >= length) {
+				throw new IllegalArgumentException("Start must be greater than or equal to start");
+			}
 		}
 		this.length = length;
 		return this;
