@@ -525,7 +525,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 			slice = new SliceND(shape);
 		}
 
-		if (ShapeUtils.calcSize(slice.getShape()) == 0) {
+		if (ShapeUtils.calcLongSize(slice.getShape()) == 0) {
 			return null;
 		}
 
