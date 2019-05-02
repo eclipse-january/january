@@ -332,15 +332,21 @@ public class SliceND {
 		}
 
 		stop = lstop[i];
-		if (start == stop) {
-			lshape[i] = 0;
-		} else if (step > 0) {
-			lshape[i] = Math.max(0, (stop - start - 1) / step + 1);
-		} else {
-			lshape[i] = Math.max(0, (stop - start + 1) / step + 1);
-		}
+		lshape[i] = calcLength(start, stop, step);
 		lstart[i] = start;
 		lstep[i] = step;
+	}
+
+	private static int calcLength(int start, int stop, int step) {
+		int l;
+		if (start == stop) {
+			l = 0;
+		} else if (step > 0) {
+			l = Math.max(0, (stop - start - 1) / step + 1);
+		} else {
+			l = Math.max(0, (stop - start + 1) / step + 1);
+		}
+		return l;
 	}
 
 	/**
@@ -563,4 +569,47 @@ public class SliceND {
 		}
 		return new SliceND(data.getShape(), start, stop, step);
 	}
+
+	/**
+	 * Create SliceND without sanity checks on start, stop and step
+	 * @param shape
+	 * @param maxShape
+	 * @param start
+	 * @param stop
+	 * @param step
+	 * @return slice
+	 */
+	static SliceND createSlice(final int[] shape, final int[] maxShape, final int[] start, final int[] stop, final int[] step) {
+		if (shape == null) {
+			throw new IllegalArgumentException("Shape must not be null");
+		}
+		int rank = shape.length;
+
+		if (maxShape != null && maxShape.length != rank) {
+			throw new IllegalArgumentException("Max shape must have same rank as shape");
+		}
+		if (start.length != rank || stop.length != rank || step.length != rank) {
+			throw new IllegalArgumentException("No of indexes does not match data dimensions: you passed it start="
+					+ start.length + ", stop=" + stop.length + ", step=" + step.length + ", and it needs " + rank);
+		}
+
+		SliceND s = new SliceND(shape);
+		if (maxShape != null) {
+			s.initMaxShape(maxShape);
+		}
+		s.lstart = start;
+		s.lstop  = stop;
+		s.lstep  = step;
+
+		for (int i = 0; i < rank; i++) {
+			int e = stop[i];
+			s.lshape[i] = calcLength(start[i], e, step[i]);
+			if (e > shape[i]) {
+				s.oshape[i] = e;
+				s.expanded = true;
+			}
+		}
+		return s;
+	}
+
 }
