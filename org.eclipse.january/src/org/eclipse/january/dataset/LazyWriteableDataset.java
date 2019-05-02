@@ -266,30 +266,30 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 		}
 
 		SliceND nslice = calcTrueSlice(slice);
-		data = transformInput(data);
+		if (nslice == null) {
+			return; // nothing to set
+		}
 
-		if (base != null) {
-			((ILazyWriteableDataset) base).setSlice(monitor, data, nslice);
-		} else {
-			if (saver == null) {
-				throw new DatasetException("Cannot write to file as saver not defined!");
-			}
+		data = transformInput(data, slice);
 
-			try {
-				if (async && saver instanceof ILazyAsyncSaver) {
-					((ILazyAsyncSaver)saver).setSliceAsync(monitor, data, nslice);
-				} else {
-					if (!saver.isFileWriteable()) {
-						throw new DatasetException("Cannot write to file as it is not writeable!");
-					}
-					saver.setSlice(monitor, data, nslice);
+		if (saver == null) {
+			throw new DatasetException("Cannot write to file as saver not defined!");
+		}
+
+		try {
+			if (async && saver instanceof ILazyAsyncSaver) {
+				((ILazyAsyncSaver)saver).setSliceAsync(monitor, data, nslice);
+			} else {
+				if (!saver.isFileWriteable()) {
+					throw new DatasetException("Cannot write to file as it is not writeable!");
 				}
-			} catch (IOException e) {
-				throw new DatasetException("Could not save dataset", e);
+				saver.setSlice(monitor, data, nslice);
 			}
-			if (!refreshShape()) { // send event as data has changed
-				eventDelegate.fire(new DataEvent(name, shape));
-			}
+		} catch (IOException e) {
+			throw new DatasetException("Could not save dataset", e);
+		}
+		if (!refreshShape()) { // send event as data has changed
+			eventDelegate.fire(new DataEvent(name, shape));
 		}
 	}
 
@@ -305,10 +305,7 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 
 	@Override
 	protected SliceND createSlice(int[] nstart, int[] nstop, int[] nstep) {
-		if (base == null) {
-			return new SliceND(oShape, maxShape, nstart, nstop, nstep);
-		}
-		return base.createSlice(nstart, nstop, nstep);
+		return SliceND.createSlice(oShape, maxShape, nstart, nstop, nstep);
 	}
 
 	@Override

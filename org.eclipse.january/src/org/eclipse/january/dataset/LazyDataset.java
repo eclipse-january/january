@@ -19,6 +19,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -36,20 +37,26 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	private static final long serialVersionUID = 2467865859867440242L;
 
 	protected Map<Class<? extends MetadataType>, List<MetadataType>> oMetadata = null;
-	protected int[]     oShape; // original shape
-	protected long      size;   // number of items
-	protected int       dtype;  // dataset type
-	protected int       isize;  // number of elements per item
+	protected int[] oShape; // original shape
+	protected long  size;   // number of items
+	protected int   dtype;  // dataset type
+	protected int   isize;  // number of elements per item
 
 	protected ILazyLoader loader;
-	protected LazyDataset base = null; // used for transpose
 
-	// relative to loader or base
-	protected int         prepShape = 0; // prepending and post-pending 
-	protected int         postShape = 0; // changes to shape
-	protected int[]       begSlice = null; // slice begin
-	protected int[]       delSlice = null; // slice delta
-	protected int[]       map; // transposition map (same length as current shape)
+	// relative to loader
+	protected int[] begSlice = null; // slice begin
+	protected int[] delSlice = null; // slice delta
+	/**
+	 * @since 2.2
+	 */
+	protected int[] sShape   = null; // sliced shape
+
+	/**
+	 * @since 2.2
+	 */
+	protected int[] padding = null; // differences in shape from original (or sliced) shape
+	protected int[] map; // transposition map (same length as current shape)
 
 	/**
 	 * Create a lazy dataset
@@ -94,12 +101,11 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 		dtype  = other.dtype;
 		isize  = other.isize;
 		loader = other.loader;
-		base   = other.base;
 
-		prepShape = other.prepShape;
-		postShape = other.postShape;
 		begSlice = other.begSlice;
 		delSlice = other.delSlice;
+		sShape   = other.sShape;
+		padding  = other.padding;
 		map      = other.map;
 	}
 
@@ -174,17 +180,16 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((base == null) ? 0 : base.hashCode());
-		result = prime * result + Arrays.hashCode(begSlice);
-		result = prime * result + Arrays.hashCode(delSlice);
+		result = prime * result + Arrays.hashCode(oShape);
+		result = prime * result + (int) (size ^ (size >>> 32));
 		result = prime * result + dtype;
 		result = prime * result + isize;
 		result = prime * result + ((loader == null) ? 0 : loader.hashCode());
+		result = prime * result + Arrays.hashCode(begSlice);
+		result = prime * result + Arrays.hashCode(delSlice);
+		result = prime * result + Arrays.hashCode(sShape);
+		result = prime * result + Arrays.hashCode(padding);
 		result = prime * result + Arrays.hashCode(map);
-		result = prime * result + Arrays.hashCode(oShape);
-		result = prime * result + postShape;
-		result = prime * result + prepShape;
-		result = prime * result + (int) (size ^ (size >>> 32));
 		return result;
 	}
 
@@ -195,6 +200,9 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 		}
 
 		LazyDataset other = (LazyDataset) obj;
+		if (!Arrays.equals(oShape, other.oShape)) {
+			return false;
+		}
 		if (size != other.size) {
 			return false;
 		}
@@ -204,31 +212,21 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 		if (isize != other.isize) {
 			return false;
 		}
-		if (!Arrays.equals(oShape, other.oShape)) {
-			return false;
-		}
 
 		if (loader != other.loader) {
 			return false;
 		}
-		if (base == null) {
-			if (other.base != null) {
-				return false;
-			}
-		} else if (!base.equals(other)) {
-			return false;
-		}
 
-		if (prepShape != other.prepShape) {
-			return false;
-		}
-		if (postShape != other.postShape) {
-			return false;
-		}
 		if (!Arrays.equals(begSlice, other.begSlice)) {
 			return false;
 		}
 		if (!Arrays.equals(delSlice, other.delSlice)) {
+			return false;
+		}
+		if (!Arrays.equals(sShape, other.sShape)) {
+			return false;
+		}
+		if (!Arrays.equals(padding, other.padding)) {
 			return false;
 		}
 		if (!Arrays.equals(map, other.map)) {
@@ -292,68 +290,10 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	 * @param nShape
 	 */
 	private void setShapeInternal(int... nShape) {
-		
-		long nsize = ShapeUtils.calcLongSize(nShape);
-		if (nsize != size) {
-			throw new IllegalArgumentException("Size of new shape is not equal to current size");
-		}
-
-		if (nsize == 1) {
-			shape = nShape.clone();
-		} else {
-			int ob = -1; // first non-unit dimension
-			int or = shape.length;
-			for (int i = 0; i < or; i++) {
-				if (shape[i] != 1) {
-					ob = i;
-					break;
-				}
-			}
-			assert ob >= 0;
-			int oe = -1; // last non-unit dimension
-			for (int i = or - 1; i >= ob; i--) {
-				if (shape[i] != 1) {
-					oe = i;
-					break;
-				}
-			}
-			assert oe >= 0;
-			oe++;
-	
-			int nb = -1; // first non-unit dimension
-			int nr = nShape.length;
-			for (int i = 0; i < nr; i++) {
-				if (nShape[i] != 1) {
-					nb = i;
-					break;
-				}
-			}
-	
-			int i = ob;
-			int j = nb;
-			if (begSlice == null) {
-				for (; i < oe && j < nr; i++, j++) {
-					if (shape[i] != nShape[j]) {
-						throw new IllegalArgumentException("New shape not allowed - can only change shape by adding or removing ones to ends of old shape");
-					}
-				}
-			} else {
-				int[] nBegSlice = new int[nr];
-				int[] nDelSlice = new int[nr];
-				Arrays.fill(nDelSlice, 1);
-				for (; i < oe && j < nr; i++, j++) {
-					if (shape[i] != nShape[j]) {
-						throw new IllegalArgumentException("New shape not allowed - can only change shape by adding or removing ones to ends of old shape");
-					}
-					nBegSlice[j] = begSlice[i];
-					nDelSlice[j] = delSlice[i];
-				}
-		
-				begSlice = nBegSlice;
-				delSlice = nDelSlice;
-			}
-			prepShape += nb - ob;
-			postShape += nr - oe;
+		// work out transposed (sliced) shape (instead of removing padding from current shape)
+		if (size != 0) {
+			int[] pShape = calcTransposed(map, sShape == null ? oShape : sShape);
+			padding = ShapeUtils.calcShapePadding(pShape, nShape);
 		}
 
 		if (metadata != null) {
@@ -376,54 +316,17 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 			return view;
 		}
 
-		int[] lstart = slice.getStart();
-		int[] lstep  = slice.getStep();
-		final int rank = shape.length;
-
-		int[] nShape = slice.getShape();
-		view.shape = nShape;
-		view.size = ShapeUtils.calcLongSize(nShape);
-		if (begSlice == null) {
-			view.begSlice = lstart.clone();
-			view.delSlice = lstep.clone();
-		} else {
-			view.begSlice = new int[rank];
-			view.delSlice = new int[rank];
-			for (int i = 0; i < rank; i++) {
-				view.begSlice[i] = begSlice[i] + lstart[i] * delSlice[i];
-				view.delSlice[i] = delSlice[i] * lstep[i];
-			}
+		SliceND nslice = calcTrueSlice(slice);
+		if (nslice != null) {
+			view.begSlice = nslice.getStart();
+			view.delSlice = nslice.getStep();
+			view.sShape = nslice.getShape();
 		}
+		view.shape = slice.getShape();
+		view.size = ShapeUtils.calcLongSize(view.shape);
 		view.storeMetadata(metadata, Sliceable.class);
-		
+
 		view.sliceMetadata(true, slice);
-		return view;
-	}
-
-	@Override
-	public LazyDataset getTransposedView(int... axes) {
-		LazyDataset view = clone();
-
-		// everything now is seen through a map
-		axes = checkPermutatedAxes(shape, axes);
-		if (axes == null) {
-			return view;
-		}
-
-		int r = shape.length;
-		view.shape = new int[r];
-		for (int i = 0; i < r; i++) {
-			view.shape[i] = shape[axes[i]];
-		}
-
-		view.prepShape = 0;
-		view.postShape = 0;
-		view.begSlice = null;
-		view.delSlice = null;
-		view.map = axes;
-		view.base = this;
-		view.storeMetadata(metadata, Transposable.class);
-		view.transposeMetadata(axes);
 		return view;
 	}
 
@@ -434,16 +337,15 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	@Override
 	public Dataset getSlice(IMonitor monitor, SliceND slice) throws DatasetException {
-
 		if (loader != null && !loader.isFileReadable()) {
-			return null; // TODO add interaction to use plot (or remote) server to load dataset
+			return null;
 		}
 
 		SliceND nslice = calcTrueSlice(slice);
 
 		Dataset a;
-		if (base != null) {
-			a = base.getSlice(monitor, nslice);
+		if (nslice == null) {
+			a = DatasetFactory.zeros(slice.getShape(), getDType());
 		} else {
 			try {
 				a = DatasetUtils.convertToDataset(loader.getDataset(monitor, nslice));
@@ -452,32 +354,136 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 								Arrays.toString(slice.getStep()), loader), e);
 				throw new DatasetException(e);
 			}
-			a.setName(name + AbstractDataset.BLOCK_OPEN + nslice.toString() + AbstractDataset.BLOCK_CLOSE);
-			if (metadata != null && a instanceof LazyDatasetBase) {
-				LazyDatasetBase ba = (LazyDatasetBase) a;
-				ba.metadata = copyMetadata();
-				if (oMetadata != null) {
-					ba.restoreMetadata(oMetadata);
-				}
-				//metadata axis may be larger than data
-				if (!nslice.isAll() || nslice.getMaxShape() != nslice.getShape()) {
-					ba.sliceMetadata(true, nslice);
-				}
+		}
+		a.setName(name + AbstractDataset.BLOCK_OPEN + (nslice == null ? slice : nslice) + AbstractDataset.BLOCK_CLOSE);
+		if (metadata != null && a instanceof LazyDatasetBase) {
+			LazyDatasetBase ba = (LazyDatasetBase) a;
+			ba.metadata = copyMetadata();
+			if (oMetadata != null) {
+				ba.restoreMetadata(oMetadata);
+			}
+			// metadata axis may be larger than data
+			if (nslice != null && (!nslice.isAll() || nslice.getMaxShape() != nslice.getShape())) {
+				ba.sliceMetadata(true, nslice);
 			}
 		}
-		if (map != null) {
-			a = a.getTransposedView(map);
+
+		if (nslice != null) {
+			if (map != null) {
+				a = a.getTransposedView(map);
+			}
+			if (padding != null) {
+				a.setShape(slice.getShape());
+			}
 		}
-		if (slice != null) {
-			a.setShape(slice.getShape());
-		}
-		a.addMetadata(MetadataFactory.createMetadata(OriginMetadata.class, this, nslice.convertToSlice(), oShape, null, name));
-		
+		a.addMetadata(MetadataFactory.createMetadata(OriginMetadata.class, this, nslice == null ? slice.convertToSlice() : nslice.convertToSlice(), oShape, null, name));
+
 		return a;
 	}
 
-	// reverse transform
-	private int[] getOriginal(int[] values) {
+	@Override
+	public LazyDataset getTransposedView(final int... axes) {
+		LazyDataset view = clone();
+
+		int[] naxes = checkPermutatedAxes(shape, axes);
+		if (naxes == null) {
+			return view;
+		}
+
+		view.shape = calcTransposed(naxes, shape);
+		if (view.size != 0 && padding != null) { // work out transpose by reverting effect of padding
+			int or = oShape.length;
+			int nr = shape.length;
+			int j = 0; // naxes index
+			int[] mShape = calcTransposed(map, sShape == null ? oShape : sShape); // pre-padded shape
+			int m = 0; // shape index
+			int e = -1; // index of unit dimension
+			final List<Integer> uaxes = new LinkedList<>();
+			for (int a : naxes) {
+				uaxes.add(a);
+			}
+			List<Integer> oList = new ArrayList<>(); // dimensions left out by padding (in order)
+			int np = padding.length;
+			for (int i = 0; i < np; i++) {
+				int p = padding[i];
+				if (p > 0) { // remove added dimensions
+					for (int k = 0; k < p; k++, j++) {
+						uaxes.remove((Integer) j);
+					}
+				} else if (p == 0) { // leave alone
+					if (mShape[m] == 1) { // bump up last unit dimension index
+						e = m;
+					}
+					j++;
+					m++;
+				} else { // add omitted dimensions to list
+					p = -p;
+					for (int k = 0; k < p; k++) {
+						e = find(mShape, 1, e + 1);
+						oList.add(e);
+					}
+				}
+			}
+			
+			int[] omitted = new int[oList.size()];
+			j = 0;
+			for (Integer o : oList) {
+				omitted[j++] = o;
+			}
+			int[] used = new int[or - omitted.length]; // all dimensions not omitted in pre-padded shape
+			j = 0;
+			for (int i = 0; i < or; i++) {
+				if (Arrays.binarySearch(omitted, i) < 0) {
+					used[j++] = i;
+				}
+			}
+
+			int[] vaxes = new int[uaxes.size()];
+			j = 0;
+			for (int i = 0; i < nr; i++) { // remap dimension numbering
+				int l = uaxes.indexOf(i);
+				if (l >= 0) {
+					vaxes[l] = used[j++];
+				}
+			}
+			int[] taxes = new int[or];
+			j = 0;
+			for (int i = 0; i < or; i++) { // reassemble map
+				if (Arrays.binarySearch(omitted, i) >= 0) {
+					taxes[i] = i;
+				} else {
+					taxes[i] = vaxes[j++];
+				}
+			}
+
+			naxes = taxes;
+		}
+
+		view.map = map == null ? naxes : calcTransposed(naxes, map);
+		if (view.size != 0) {
+			// work out transposed (sliced) shape
+			int[] tShape = calcTransposed(view.map, sShape == null ? oShape : sShape);
+			try {
+				view.padding = ShapeUtils.calcShapePadding(tShape, view.shape);
+			} catch (IllegalArgumentException e) {
+				System.err.println(e.getMessage() + ": " + Arrays.toString(tShape) + " cf " + Arrays.toString(view.shape));
+			}
+		}
+		view.storeMetadata(metadata, Transposable.class);
+		view.transposeMetadata(axes);
+		return view;
+	}
+
+	private static int find(int[] map, int m, int off) {
+		for (int i = off, imax = map.length; i < imax; i++) {
+			if (map[i] == m) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	private static int[] calcTransposed(int[] map, int[] values) {
 		if (values == null) {
 			return null;
 		}
@@ -487,80 +493,135 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 		}
 		int[] ovalues = new int[r];
 		for (int i = 0; i < r; i++) {
-			ovalues[map[i]] = values[i];
+			ovalues[i] = values[map[i]];
 		}
 		return ovalues;
 	}
 
+	/**
+	 * Calculate absolute slice
+	 * @param slice
+	 * @return true slice or null if zero-sized
+	 */
 	protected final SliceND calcTrueSlice(SliceND slice) {
+		/*
+		 * Lazy dataset operations: getTransposedView (T), getSliceView (G), setShape/squeezeEnds (S+/S-):
+		 * 
+		 *     . T sets shape, base, and map in new view
+		 *     . G sets shape, size, begSlice and delSlice in new view
+		 *     . S sets shape, shapePadding in current view
+		 * 
+		 * Then getSlice needs to interpret all info to find true slice, load data, get transposition (view)
+		 * and set shape. Therefore:
+		 *     . S needs to update shapePadding only
+		 *     . T needs to update shapePadding too
+		 *     . G needs to work out true slice to update
+		 * 
+		 * slice -> true slice
+		 *   adjusts for shape (S^-1) then remap dimensions (T^-1)
+		 */
+
 		if (slice == null) {
 			slice = new SliceND(shape);
 		}
-		int[] lstart = slice.getStart();
-		int[] lstop  = slice.getStop();
-		int[] lstep  = slice.getStep();
 
+		if (ShapeUtils.calcSize(slice.getShape()) == 0) {
+			return null;
+		}
+
+		int[] nshape;
 		int[] nstart;
-		int[] nstop;
 		int[] nstep;
 
-		int r = base == null ? oShape.length : base.shape.length;
-		nstart = new int[r];
-		nstop = new int[r];
-		nstep = new int[r];
-		Arrays.fill(nstop, 1);
-		Arrays.fill(nstep, 1);
-		{
+		int r = oShape.length;
+		if (padding == null) {
+			nshape = slice.getShape();
+			nstart = slice.getStart();
+			nstep = slice.getStep();
+		} else {
+			final int[] lshape = slice.getShape();
+			final int[] lstart = slice.getStart();
+			final int[] lstep  = slice.getStep();
+
+			nstart = new int[r];
+			nstep = new int[r];
+			nshape = new int[r];
 			int i = 0;
 			int j = 0;
-			if (prepShape < 0) { // ignore entries from new slice 
-				i = -prepShape;
-			} else if (prepShape > 0) {
-				j = prepShape;
-			}
-			if (begSlice == null) {
-				for (; i < r && j < shape.length; i++, j++) {
+			for (int p : padding) { // remove padding
+				if (p == 0) {
+					nshape[i] = lshape[j];
 					nstart[i] = lstart[j];
-					nstop[i]  = lstop[j];
-					int d = lstep[j];
-					if (d < 0 && nstop[i] < 0) { // need to wrap around further
-						int l = base == null ? oShape[j]: base.shape[j];
-						nstop[i] -= l;
+					nstep[i]  = lstep[j];
+					i++;
+					j++;
+				} else if (p < 0) {
+					int imax = i - p;
+					while (i < imax) {
+						nshape[i] = 1;
+						nstep[i]  = 1;
+						i++;
 					}
-					nstep[i]  = d;
-				}
-			} else {
-				for (; i < r && j < shape.length; i++, j++) {
-					int b = begSlice[j];
-					int d = delSlice[j];
-					nstart[i] = b + lstart[j] * d;
-					nstop[i]  = b + (lstop[j] - 1) * d + (d >= 0 ? 1 : -1);
-					if (d < 0 && nstop[i] < 0) { // need to wrap around further
-						int l = base == null ? oShape[j]: base.shape[j];
-						nstop[i] -= l;
-					}
-					nstep[i]  = lstep[j] * d;
+				} else {
+					j += p;
 				}
 			}
-			if (map != null) {
-				nstart = getOriginal(nstart);
-				nstop  = getOriginal(nstop);
-				nstep  = getOriginal(nstep);
+		}
+
+		if (map != null && r > 1) { // transpose dimensions
+			int[] pshape = new int[r];
+			int[] pstart = new int[r];
+			int[] pstep = new int[r];
+			for (int i = 0; i < r; i++) {
+				int m = map[i];
+				pshape[m] = nshape[i];
+				pstart[m] = nstart[i];
+				pstep[m]  = nstep[i];
+			}
+
+			nshape = pshape;
+			nstart = pstart;
+			nstep  = pstep;
+		}
+
+		int[] nstop = new int[r];
+		if (begSlice != null) { // find net slice
+			for (int i = 0; i < r; i++) {
+				int b = begSlice[i];
+				int d = delSlice[i];
+				nstart[i] = b + nstart[i] * d;
+				int nd = nstep[i] * d;
+				nstep[i] = nd;
+				nstop[i]  = nstart[i] + (nshape[i] - 1) * nd + (nd >= 0 ? 1 : -1);
+			}
+		} else {
+			for (int i = 0; i < r; i++) {
+				int d = nstep[i];
+				nstop[i] = nstart[i] + (nshape[i] - 1) * d + (d >= 0 ? 1 : -1);
 			}
 		}
 
 		return createSlice(nstart, nstop, nstep);
 	}
 
-	protected final IDataset transformInput(IDataset data) {
-		if (map == null) {
-			return data;
-		}
-		return data.getTransposedView(map);
+	protected SliceND createSlice(int[] nstart, int[] nstop, int[] nstep) {
+		return SliceND.createSlice(oShape, null, nstart, nstop, nstep);
 	}
 
-	protected SliceND createSlice(int[] nstart, int[] nstop, int[] nstep) {
-		return new SliceND(base == null ? oShape : base.shape, nstart, nstop, nstep);
+	/**
+	 * Transform data so that it can be used in setSlice of saver
+	 * @param data
+	 * @param tslice true slice 
+	 * @return data with dimensions adjusted and remapped 
+	 */
+	final IDataset transformInput(IDataset data, SliceND tslice) {
+		if (padding != null) { // remove padding
+			data = data.getSliceView();
+			int[] nshape = tslice.getShape();
+			data.setShape(nshape);
+		}
+
+		return map == null ? data : data.getTransposedView(map);
 	}
 
 	/**

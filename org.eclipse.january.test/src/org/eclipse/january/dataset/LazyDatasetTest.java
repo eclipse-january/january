@@ -9,14 +9,11 @@
 
 package org.eclipse.january.dataset;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 import org.eclipse.january.DatasetException;
 import org.eclipse.january.asserts.TestUtils;
-import org.eclipse.january.dataset.Dataset;
-import org.eclipse.january.dataset.ILazyDataset;
-import org.eclipse.january.dataset.LazyDataset;
-import org.eclipse.january.dataset.Random;
-import org.eclipse.january.dataset.Slice;
-import org.eclipse.january.dataset.SliceND;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -25,22 +22,24 @@ public class LazyDatasetTest {
 	private void setShape(String msg, boolean well, LazyDataset l, int... shape) {
 		try {
 			l.setShape(shape);
-			if (well)
+			if (well) {
 				TestUtils.verbosePrintf("Succeeded setting shape for %s\n", msg);
-			else
+			} else {
 				Assert.fail("Should have thrown exception for " + msg);
+			}
 		} catch (IllegalArgumentException iae) {
-			// do nothing
-			if (well)
+			if (well) {
 				Assert.fail("Unexpected exception for " + msg);
-			else
+			} else {
 				TestUtils.verbosePrintf("Correctly failed setting shape for %s\n", msg);
+			}
 		} catch (Exception e) {
 			msg += ": " + e.getMessage();
-			if (well)
+			if (well) {
 				Assert.fail("Unexpected exception for " + msg);
-			else
+			} else {
 				Assert.fail("Thrown wrong exception for " + msg);
+			}
 		}
 	}
 
@@ -57,6 +56,7 @@ public class LazyDatasetTest {
 
 		setShape("check on greater rank", true, ld, 2, 3, 4, 1, 1, 1);
 		setShape("check on greater rank", true, ld, 1, 1, 2, 3, 4, 1, 1, 1);
+		setShape("check on greater rank", false, ld, 2, 3, 4, 5);
 
 		setShape("check on lesser rank", true, ld, 2, 3, 4);
 		setShape("check on lesser rank", false, ld, 3, 4);
@@ -271,7 +271,7 @@ public class LazyDatasetTest {
 
 	@Test
 	public void testSlicePadRankSlice() throws DatasetException {
-		Dataset data = Random.rand(new int[] { 10 });
+		Dataset data = Random.rand(10);
 		data.setName("random");
 		LazyDataset ld = LazyDataset.createLazyDataset(data);
 
@@ -280,5 +280,408 @@ public class LazyDatasetTest {
 		LazyDataset view = sv.getSliceView(new int[] { 0, 0, 0 }, new int[] { 1, 1, 4 }, null);
 		TestUtils.assertDatasetEquals(data.getSliceView(new Slice(5)).reshape(1, 1, 5).getSliceView(null, null, new Slice(4)),
 				view.getSlice(), true, 1e-14, 1e-14);
+	}
+
+	@Test
+	public void testMultipleTransposeAndShape() throws DatasetException {
+		ILazyDataset d = Random.rand(new int[] {3, 2, 1, 5});
+		ILazyDataset l = LazyDataset.createLazyDataset((Dataset) d);
+	
+		ILazyDataset td = d.getTransposedView(2, 0, 3, 1);
+		ILazyDataset tl = l.getTransposedView(2, 0, 3, 1); // shape = 1, 3, 5, 2
+		TestUtils.assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(td),
+				DatasetUtils.sliceAndConvertLazyDataset(tl));
+		
+		td.setShape(3, 5, 1, 1, 2);
+		tl.setShape(3, 5, 1, 1, 2); // pad = -1, 0, 0, 2, 0
+		TestUtils.assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(td),
+				DatasetUtils.sliceAndConvertLazyDataset(tl));
+	
+		ILazyDataset ttd = td.getTransposedView(1, 3, 4, 2, 0);
+		ILazyDataset ttl = tl.getTransposedView(1, 3, 4, 2, 0); // shape = 5, 1, 2, 1, 3
+		TestUtils.assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(ttd),
+				DatasetUtils.sliceAndConvertLazyDataset(ttl));
+
+		ttd.setShape(5, 2, 1, 1, 1, 3, 1, 1, 1);
+		ttl.setShape(5, 2, 1, 1, 1, 3, 1, 1, 1);
+		TestUtils.assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(ttd),
+				DatasetUtils.sliceAndConvertLazyDataset(ttl));
+
+		ttd = ttd.getTransposedView(5, 7, 1, 3, 2, 8, 6, 4, 0);
+		ttl = ttl.getTransposedView(5, 7, 1, 3, 2, 8, 6, 4, 0);
+		TestUtils.assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(ttd),
+				DatasetUtils.sliceAndConvertLazyDataset(ttl));
+	}
+
+	@Test
+	public void testSqueezedSliceView() throws DatasetException {
+		Dataset data = Random.rand(new int[] {2, 10});
+		data.setName("random");
+		LazyDataset ld = LazyDataset.createLazyDataset(data);
+
+		LazyDataset sv = ld.getSliceView(new Slice(1,2));
+		Dataset s = DatasetUtils.sliceAndConvertLazyDataset(sv);
+		s.squeezeEnds();
+		TestUtils.assertDatasetEquals(data.getSlice(new Slice(1,2)).squeeze(), s);
+
+		sv.squeezeEnds();
+		TestUtils.assertDatasetEquals(data.getSlice(new Slice(1,2)).squeeze(), sv.getSlice());
+	}
+
+	enum LDOp {
+		TRANSPOSE() {
+			@Override
+			public ILazyDataset operate(ILazyDataset a, int... p) {
+				int r = a.getRank();
+				int d = r - p.length;
+				if (d > 0) {
+					p = Arrays.copyOf(p, r);
+					for (int i = r - d; i < r; i++) {
+						p[i] = i;
+					}
+				} else if (d < 0) {
+					p = Arrays.copyOf(p, r);
+					Integer[] q = new Integer[r];
+					for (int i = 0; i < r; i++) {
+						q[i] = i;
+					}
+					final int[] fp = p;
+					Arrays.sort(q, new Comparator<Integer>() {
+						@Override
+						public int compare(Integer o1, Integer o2) {
+							return Integer.compare(fp[o1], fp[o2]);
+						}
+						
+					});
+					for (int i = 0; i < r; i++) {
+						p[q[i]] = i;
+					}
+				}
+				return a.getTransposedView(p);
+			}
+		},
+		SHAPE() {
+			@Override
+			public ILazyDataset operate(ILazyDataset a, int... p) {
+				int d = 0;
+				for (int i : p) {
+					d += i;
+				}
+
+				a = a.getSliceView();
+				a.setShape(ShapeUtils.padShape(p, d + a.getRank(), a.getShape()));
+				return a;
+			}
+		},
+		SHAPEL() { // pad on left
+			@Override
+			public ILazyDataset operate(ILazyDataset a, int... p) {
+				int[] np = new int[a.getRank() + 1];
+				int d = p[0];
+				np[0] = d;
+
+				a = a.getSliceView();
+				a.setShape(ShapeUtils.padShape(np, d + a.getRank(), a.getShape()));
+				return a;
+			}
+		},
+		SHAPER() { // pad on right
+			@Override
+			public ILazyDataset operate(ILazyDataset a, int... p) {
+				int[] np = new int[a.getRank() + 1];
+				int d = p[0];
+				np[a.getRank()] = d;
+
+				a = a.getSliceView();
+				a.setShape(ShapeUtils.padShape(np, d + a.getRank(), a.getShape()));
+				return a;
+			}
+		},
+		SLICE() { // dimension (can be -ve), stop [or start, stop (and step)]
+			@Override
+			public ILazyDataset operate(ILazyDataset a, int... p) {
+				Slice s = null;
+				switch (p.length) {
+				case 4:
+					s = new Slice(p[1], p[2], p[3]);
+					break;
+				case 3:
+					s = new Slice(p[1], p[2]);
+					break;
+				case 2:
+					s = new Slice(null, p[1]);
+					break;
+				default:
+					break;
+				}
+				Slice[] ss = new Slice[a.getRank()];
+				int[] shape = a.getShape();
+				int d = p[0];
+				// ensure slice is compatible with dimension
+				if (d < 0) {
+					d += shape.length;
+					while (d >= 0) {
+						if (s.getStart() != null) {
+							int b = s.getStart();
+							if (b > 0 && b >= shape[d]) {
+								d--;
+								continue;
+							}
+						}
+						if (s.getStop() != null) {
+							int e = s.getStop();
+							if (e > 0 && e > shape[d]) {
+								d--;
+								continue;
+							}
+						}
+						break;
+					}
+				} else {
+					while (d < shape.length) {
+						if (s.getStart() != null) {
+							int b = s.getStart();
+							if (b > 0 && b >= shape[d]) {
+								d++;
+								continue;
+							}
+						}
+						if (s.getStop() != null) {
+							int e = s.getStop();
+							if (e > 0 && e > shape[d]) {
+								d++;
+								continue;
+							}
+						}
+						break;
+					}
+				}
+				if (d < 0 || d >= shape.length) {
+					return null;
+				}
+
+				ss[d] = s;
+				return a.getSliceView(ss);
+			}
+		},
+		SQUEEZE() { // pad on left
+			@Override
+			public ILazyDataset operate(ILazyDataset a, int... p) {
+				a = a.getSliceView();
+				a.squeezeEnds();
+				return a;
+			}
+		},
+		;
+
+		abstract ILazyDataset operate(ILazyDataset a, int... p);
+	}
+
+	static class Operator {
+		private LDOp op;
+		private int[] p;
+
+		public Operator(LDOp op, int... p) {
+			this.op = op;
+			this.p = p;
+		}
+
+		public ILazyDataset apply(ILazyDataset a) {
+			return op.operate(a, p);
+		}
+
+		@Override
+		public String toString() {
+			return op.toString() + ": " + Arrays.toString(p);
+		}
+	}
+
+	@Test
+	public void testTPT() throws DatasetException {
+		testOps(new Operator(LDOp.TRANSPOSE, 4, 1, 0, 2, 3),
+				new Operator(LDOp.SHAPE, 2, 0, 0, 0, -1, 0, 1),
+				new Operator(LDOp.TRANSPOSE, 1, 4, 6, 0, 5, 3, 2));
+	}
+
+	@Test
+	public void testTGT() throws DatasetException {
+		testOps(new Operator(LDOp.TRANSPOSE, 4, 1, 0, 2, 3),
+				new Operator(LDOp.SLICE, 4, -1, 0, -2),
+				new Operator(LDOp.TRANSPOSE, 1, 4, 0, 3, 2));
+	}
+
+	@Test
+	public void testTSG() throws DatasetException {
+		testOps(new Operator(LDOp.TRANSPOSE, 4, 1, 0, 2, 3),
+				new Operator(LDOp.SHAPEL, 3),
+				new Operator(LDOp.SLICE, 3, 3, 0, -2));
+	}
+
+	@Test
+	public void testTTSG() throws DatasetException {
+		testOps(new Operator(LDOp.TRANSPOSE, 4, 1, 0, 2, 3),
+				new Operator(LDOp.TRANSPOSE, 1, 2, 3, 4, 0),
+				new Operator(LDOp.SHAPEL, 1),
+				new Operator(LDOp.SLICE, 0, -1, 0, -1));
+	}
+
+	@Test
+	public void testTTQT() throws DatasetException {
+		testOps(new Operator(LDOp.TRANSPOSE, 4, 1, 0, 2, 3),
+				new Operator(LDOp.TRANSPOSE, 4, 1, 0, 2, 3),
+				new Operator(LDOp.SQUEEZE),
+				new Operator(LDOp.TRANSPOSE, 4, 1, 0, 2, 3)
+				);
+	}
+
+	@Test
+	public void testSTQT() throws DatasetException {
+		testOps(new Operator(LDOp.SHAPEL, 2),
+				new Operator(LDOp.TRANSPOSE, 4, 1, 0, 2, 3),
+				new Operator(LDOp.SQUEEZE),
+				new Operator(LDOp.TRANSPOSE, 4, 1, 0, 2, 3)
+				);
+	}
+
+	@Test
+	public void testSGST() throws DatasetException {
+		testOps(new Operator(LDOp.SHAPEL, 2),
+				new Operator(LDOp.SLICE, 0, -1, 0, -1),
+				new Operator(LDOp.SHAPEL, 2),
+				new Operator(LDOp.TRANSPOSE, 4, 1, 0, 2, 3)
+				);
+	}
+
+	@Test
+	public void testS() throws DatasetException {
+		testOps(
+				new Operator(LDOp.SLICE, 0, 1),
+				new Operator(LDOp.SQUEEZE),
+				new Operator(LDOp.TRANSPOSE, 2, 3, 4, 1, 0),
+				new Operator(LDOp.TRANSPOSE, 4, 1, 0, 2, 3)
+				);
+	}
+
+	private void testOps(Operator... ops) throws DatasetException {
+		ILazyDataset d = Random.rand(new int[] {2, 3, 1, 4, 5});
+		d.setName("random");
+		ILazyDataset l = LazyDataset.createLazyDataset((Dataset) d);
+
+		for (Operator o : ops) {
+			System.out.println(o + ": " + d);
+			d = o.apply(d);
+			if (d == null) {
+				break;
+			}
+			System.out.println("\t\t\t -> " + d);
+			l = o.apply(l);
+			System.out.println("\t\t\t -> " + l);
+			TestUtils.assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(d),
+					DatasetUtils.sliceAndConvertLazyDataset(l));
+		}
+	}
+
+	private static Operator createOperator(LDOp op, int[] pShapeL, int[] pShapeR, int[] pSlice, int[] pTranspose) {
+		switch (op) {
+		case SHAPEL:
+			return new Operator(op, pShapeL);
+		case SHAPER:
+			return new Operator(op, pShapeR);
+		case SLICE:
+			return new Operator(op, pSlice);
+		case SQUEEZE:
+			return new Operator(op);
+		case TRANSPOSE:
+			return new Operator(op, pTranspose);
+		default:
+			return new Operator(op, null);
+		}
+	}
+
+	@Test
+	public void testAll() throws DatasetException {
+		final int[][][] pAll = new int[][][] {
+			{{2}, {3}, {2,1}, {4,1,0,2,3}},
+			{{3}, {1}, {-2,1,-1,2}, {1,2,3,4,0}},
+			{{1}, {2}, {0,1}, {2,3,4,1,0}},
+			{{4}, {2}, {0,-1,0,-1}, {3,0,2,4,1}}
+		};
+
+		int n = pAll.length;
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				for (int k = 0; k < n; k++) {
+					for (int l = 0; l < n; l++) {
+						testAll(pAll[i], pAll[j], pAll[k], pAll[l]);
+					}
+				}
+			}
+		}
+	}
+
+	private void testAll(final int[][] p1, final int[][] p2, final int[][] p3, final int[][] p4)
+			throws DatasetException {
+		Dataset d0 = Random.rand(new int[] {2, 3, 1, 4, 5});
+		d0.setName("random");
+		LazyDataset l0 = LazyDataset.createLazyDataset(d0);
+
+		for (LDOp op1 : LDOp.values()) {
+			if (op1 == LDOp.SHAPE) {
+				continue;
+			}
+			Operator o1 = createOperator(op1, p1[0], p1[1], p1[2], p1[3]);
+			TestUtils.verbosePrintln(o1.toString());
+			ILazyDataset d1 = o1.apply(d0);
+			ILazyDataset l1 = o1.apply(l0);
+			TestUtils.verbosePrintln("\t\t -> " + Arrays.toString(l1.getShape()));
+
+			TestUtils.assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(d1),
+					DatasetUtils.sliceAndConvertLazyDataset(l1));
+
+			for (LDOp op2 : LDOp.values()) {
+				if (op2 == LDOp.SHAPE) {
+					continue;
+				}
+				Operator o2 = createOperator(op2, p2[0], p2[1], p2[2], p2[3]);
+				TestUtils.verbosePrintln("\t" + o2);
+				ILazyDataset d2 = o2.apply(d1);
+				ILazyDataset l2 = o2.apply(l1);
+				TestUtils.verbosePrintln("\t\t\t -> " + Arrays.toString(l2.getShape()));
+
+				TestUtils.assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(d2),
+						DatasetUtils.sliceAndConvertLazyDataset(l2));
+
+				for (LDOp op3 : LDOp.values()) {
+					if (op3 == LDOp.SHAPE) {
+						continue;
+					}
+					Operator o3 = createOperator(op3, p3[0], p3[1], p3[2], p3[3]);
+					TestUtils.verbosePrintln("\t\t" + o3);
+					ILazyDataset d3 = o3.apply(d2);
+					ILazyDataset l3 = o3.apply(l2);
+					TestUtils.verbosePrintln("\t\t\t\t -> " + Arrays.toString(l3.getShape()));
+
+					TestUtils.assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(d3),
+							DatasetUtils.sliceAndConvertLazyDataset(l3));
+
+					for (LDOp op4 : LDOp.values()) {
+						if (op4 == LDOp.SHAPE) {
+							continue;
+						}
+						Operator o4 = createOperator(op4, p4[0], p4[1], p4[2], p4[3]);
+						TestUtils.verbosePrintln("\t\t\t" + o4);
+						ILazyDataset d4 = o4.apply(d3);
+						if (d4 == null) {
+							continue;
+						}
+						ILazyDataset l4 = o4.apply(l3);
+						TestUtils.verbosePrintln("\t\t\t\t -> " + Arrays.toString(l4.getShape()));
+
+						TestUtils.assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(d4),
+								DatasetUtils.sliceAndConvertLazyDataset(l4));
+					}
+				}
+			}
+		}
 	}
 }

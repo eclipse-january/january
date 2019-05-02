@@ -557,7 +557,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 				}
 
 				if (onesOnly) {
-					return differences[axis];
+					return differences == null ? 0 : differences[axis];
 				}
 				throw new UnsupportedOperationException("TODO support other shape operations");
 			}
@@ -578,53 +578,13 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 				differences[0] = or < 0 ? nr + 1 : or + 1;
 				return;
 			}
+			onesOnly = ShapeUtils.differsByOnes(oldShape, newShape);
 			int ob = 0;
 			int nb = 0;
-			onesOnly = true;
-			do {
-				while (oldShape[ob] == 1 && ob < or) {
-					ob++; // next non-unit dimension
-				}
-				while (newShape[nb] == 1 && nb < nr) {
-					nb++;
-				}
-				if (oldShape[ob++] != newShape[nb++]) {
-					onesOnly = false;
-					break;
-				}
-			} while (ob <= or && nb <= nr);
-
-			ob = 0;
-			nb = 0;
-			differences = new int[or + 2];
 			if (onesOnly) {
-				// work out unit dimensions removed from or add to old
-				int j = 0;
-				do {
-					if (oldShape[ob] != 1 && newShape[nb] != 1) {
-						ob++;
-						nb++;
-					} else {
-						while (oldShape[ob] == 1 && ob < or) {
-							ob++;
-							differences[j]--;
-						}
-						while (newShape[nb] == 1 && nb < nr) {
-							nb++;
-							differences[j]++;
-						}
-					}
-					j++;
-				} while (ob <= or && nb <= nr && j <= or);
-				while (ob <= or && oldShape[ob] == 1) {
-					ob++;
-					differences[j]--;
-				}
-				while (nb <= nr && newShape[nb] == 1) {
-					nb++;
-					differences[j]++;
-				}
+				differences = ShapeUtils.calcShapePadding(oldShape, newShape);
 			} else {
+				differences = new int[or + 2];
 				if (matchRank) {
 					logger.error("Combining dimensions is currently not supported");
 					throw new IllegalArgumentException("Combining dimensions is currently not supported");
@@ -668,13 +628,11 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 							logger.error("Subshape is incompatible with single dimension");
 							throw new IllegalArgumentException("Subshape is incompatible with single dimension");
 						}
-
 					}
 
 					ob = oe;
 					nb = ne;
 				}
-
 			}
 		}
 
@@ -688,25 +646,13 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 			if (Arrays.equals(newShape, lshape)) {
 				return lz;
 			}
-			int or = lz.getRank();
+			int or = lshape.length;
 			int nr = newShape.length;
-			int[] nshape = new int[nr];
-			Arrays.fill(nshape, 1);
+			int[] nshape;
 			if (onesOnly) {
-				// ignore omit removed dimensions
-				for (int i = 0, si = 0, di = 0; i < (or+1) && si <= or && di < nr; i++) {
-					int c = differences[i];
-					if (c == 0) {
-						nshape[di++] = lshape[si++];
-					} else if (c > 0) {
-						while (c-- > 0 && di < nr) {
-							di++;
-						}
-					} else if (c < 0) {
-						si -= c; // remove dimensions by skipping forward in source array
-					}
-				}
+				nshape = ShapeUtils.padShape(differences, nr, lshape);
 			} else {
+				nshape = new int[nr];
 				boolean[] broadcast = new boolean[or];
 				for (int ob = 0; ob < or; ob++) {
 					broadcast[ob] = oldShape[ob] != 1 && lshape[ob] == 1;
@@ -722,6 +668,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 							logger.error("Metadata contains a broadcast axis which cannot be reshaped");
 							throw new IllegalArgumentException("Metadata contains a broadcast axis which cannot be reshaped");
 						}
+						nshape[i] = 1;
 					} else {
 						nshape[i] = nsize < osize ? newShape[i] : 1;
 					}
@@ -730,7 +677,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 				}
 			}
 
-			ILazyDataset nlz = lz.getSliceView();
+			ILazyDataset nlz;
 			if (lz instanceof Dataset) {
 				nlz = ((Dataset) lz).reshape(nshape);
 			} else {
@@ -1139,7 +1086,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	 * Check permutation axes
 	 * @param shape
 	 * @param axes
-	 * @return cleaned up axes or null if trivial
+	 * @return cleaned up copy of axes or null if trivial
 	 */
 	public static int[] checkPermutatedAxes(int[] shape, int... axes) {
 		int rank = shape == null ? 0 : shape.length;
@@ -1149,6 +1096,8 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 			for (int i = 0; i < rank; i++) {
 				axes[i] = rank - 1 - i;
 			}
+		} else {
+			axes = axes.clone();
 		}
 
 		if (axes.length != rank) {

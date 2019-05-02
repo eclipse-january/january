@@ -120,7 +120,7 @@ public class AxesMetadataTest {
 	@Test
 	public void testAxesMetadataReshape() throws MetadataException {
 		final int[] shape = new int[] { 1, 2, 3, 1 };
-		final int[] reshape = new int[] { 1, 1, 2, 3, 1 };
+		final int[] reshape = new int[] { 1, 1, 2, 1, 3, 1 };
 
 		int r = shape.length;
 		int[] nShape = new int[r];
@@ -154,12 +154,12 @@ public class AxesMetadataTest {
 		IDataset d = v.getSlice(new Slice(1), null);
 		assertEquals(2, d.getMetadata(AxesMetadata.class).get(0).getAxes().length);
 
-		final int[] reshape = new int[] { 1, 1, 2, 3, 1 };
+		final int[] reshape = new int[] { 1, 1, 2, 1, 3, 1 };
 		v.setShape(reshape);
-		assertEquals(5, v.getMetadata(AxesMetadata.class).get(0).getAxes().length);
+		assertEquals(6, v.getMetadata(AxesMetadata.class).get(0).getAxes().length);
 
 		d = v.getSlice((Slice) null, null, new Slice(1));
-		assertEquals(5, d.getMetadata(AxesMetadata.class).get(0).getAxes().length);
+		assertEquals(6, d.getMetadata(AxesMetadata.class).get(0).getAxes().length);
 	}
 
 	@Test

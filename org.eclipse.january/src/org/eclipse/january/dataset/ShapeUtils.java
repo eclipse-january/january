@@ -12,6 +12,7 @@ package org.eclipse.january.dataset;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.SortedSet;
@@ -494,5 +495,154 @@ public class ShapeUtils {
 			keep[i] = 1;
 		}
 		return keep;
+	}
+
+	/**
+	 * @param a
+	 * @param b
+	 * @return true if arrays only differs by unit entries
+	 * @since 2.2
+	 */
+	public static boolean differsByOnes(int[] a, int[] b) {
+		int aRank = a.length;
+		int bRank = b.length;
+		int ai = 0;
+		int bi = 0;
+		int al = 1;
+		int bl = 1;
+		do {
+			while (ai < aRank && (al = a[ai++]) == 1) { // next non-unit dimension
+			}
+			while (bi < bRank && (bl = b[bi++]) == 1) {
+			}
+			if (al != bl) {
+				return false;
+			}
+		} while (ai < aRank && bi < bRank);
+
+		if (ai == aRank) {
+			while (bi < bRank) {
+				if (b[bi++] != 1) {
+					return false;
+				}
+			}
+		}
+		if (bi == bRank) {
+			while (ai < aRank) {
+				if (a[ai++] != 1) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Calculate the padding difference between two shapes. Padding can be positive (negative)
+	 * for added (removed) dimensions. NB positive or negative padding is given after matched
+	 * dimensions
+	 * @param aShape
+	 * @param bShape
+	 * @return padding can be null if shapes are equal
+	 * @throws IllegalArgumentException if one shape is null but not the other, or if shapes do
+	 * not possess common non-unit lengths
+	 * @since 2.2
+	 */
+	public static int[] calcShapePadding(int[] aShape, int[] bShape) {
+		if (Arrays.equals(aShape, bShape)) {
+			return null;
+		}
+
+		if (aShape == null || bShape == null) {
+			throw new IllegalArgumentException("If one shape is null then the other must be null too");
+		}
+
+		if (!differsByOnes(aShape, bShape)) {
+			throw new IllegalArgumentException("Non-unit lengths in shapes must be equal");
+		}
+		int aRank = aShape.length;
+		int bRank = bShape.length;
+
+		int[] padding;
+		if (aRank == 0 || bRank == 0) {
+			padding = new int[1];
+			padding[0] = aRank == 0 ? bRank : -aRank;
+			return padding;
+		}
+
+		padding = new int[Math.max(aRank, bRank) + 2];
+		int ai = 0;
+		int bi = 0;
+		int al = 0;
+		int bl = 0;
+		int pi = 0;
+		int p;
+		boolean aLeft = ai < aRank;
+		boolean bLeft = bi < bRank;
+		while (aLeft && bLeft) {
+			if (aLeft) {
+				al = aShape[ai++];
+				aLeft = ai < aRank;
+			}
+			if (bLeft) {
+				bl = bShape[bi++];
+				bLeft = bi < bRank;
+			}
+			if (al != bl) {
+				p = 0;
+				while (al == 1 && aLeft) {
+					al = aShape[ai++];
+					aLeft = ai < aRank;
+					p--;
+				}
+				while (bl == 1 && bLeft) {
+					bl = bShape[bi++];
+					bLeft = bi < bRank;
+					p++;
+				}
+				padding[pi++] = p;
+			}
+			if (al == bl) {
+				pi++;
+			}
+		}
+		if (aLeft || bLeft) {
+			p = 0;
+			while (ai < aRank && aShape[ai++] == 1) {
+				p--;
+			}
+			while (bi < bRank && bShape[bi++] == 1) {
+				p++;
+			}
+			padding[pi++] = p;
+		}
+
+		return Arrays.copyOf(padding, pi);
+	}
+
+	static int[] padShape(int[] padding, int nr, int[] oldShape) {
+		if (padding == null) {
+			return oldShape.clone();
+		}
+		int or = oldShape.length;
+		int[] newShape = new int[nr];
+		int di = 0;
+		for (int i = 0, si = 0; i < (or+1) && si <= or && di < nr; i++) {
+			int c = padding[i];
+			if (c == 0) {
+				newShape[di++] = oldShape[si++];
+			} else if (c > 0) {
+				int dim = di + c;
+				while (di < dim) {
+					newShape[di++] = 1;
+				}
+			} else if (c < 0) {
+				si -= c; // remove dimensions by skipping forward in source array (should check that they are unit entries)
+			}
+		}
+		while (di < nr) {
+			newShape[di++] = 1;
+		}
+		return newShape;
 	}
 }
