@@ -30,6 +30,9 @@ public class DoubleDatasetTest {
 
 	@Test
 	public void testConstructor() {
+		assertEquals(0, new DoubleDataset().getSize());
+		assertEquals(0, DatasetFactory.createFromObject(1d).getRank());
+
 		double[] da = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
 		DoubleDataset a = new DoubleDataset(da);
 

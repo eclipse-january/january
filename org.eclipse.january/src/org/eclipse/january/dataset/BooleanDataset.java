@@ -83,8 +83,15 @@ public class BooleanDataset extends BooleanDatasetBase {
 	 * @return dataset with contents given by input
 	 */
 	static BooleanDataset createFromObject(final Object obj) {
+		if (obj == null) {
+			return new BooleanDataset();
+		}
 		BooleanDatasetBase result = BooleanDatasetBase.createFromObject(obj);
-		return new BooleanDataset(result.data, result.shape);
+		BooleanDataset ds = new BooleanDataset(result.data, result.shape);
+		if (result.shape.length == 0) {
+			ds.setShape(result.shape); // special case of single item
+		}
+		return ds;
 	}
 
 	/**

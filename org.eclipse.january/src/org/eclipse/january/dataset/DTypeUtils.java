@@ -292,7 +292,7 @@ public class DTypeUtils {
 		int dtype = -1;
 
 		if (obj == null) {
-			return dtype;
+			return Dataset.OBJECT;
 		}
 
 		if (obj instanceof List<?>) {

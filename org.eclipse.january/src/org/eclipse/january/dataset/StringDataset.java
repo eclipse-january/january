@@ -95,8 +95,9 @@ public class StringDataset extends StringDatasetBase {
 	static StringDataset createFromObject(final Object obj) {
 		StringDatasetBase result = StringDatasetBase.createFromObject(obj);
 		StringDataset ds = new StringDataset(result.data, result.shape);
-		if (result.shape.length == 0)
-			ds.setShape(result.shape); // special case of single item 
+		if (result.shape.length == 0) {
+			ds.setShape(result.shape); // special case of single item
+		}
 		return ds;
 	}
 
