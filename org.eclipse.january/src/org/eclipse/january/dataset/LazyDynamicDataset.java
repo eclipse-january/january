@@ -89,7 +89,6 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 		result = prime * result + ((checker == null) ? 0 : checker.hashCode());
 		result = prime * result + ((checkingThread == null) ? 0 : checkingThread.hashCode());
 		result = prime * result + Arrays.hashCode(maxShape);
-//		result = prime * result + (stop ? 1231 : 1237);
 		return result;
 	}
 
@@ -150,12 +149,9 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public boolean resize(int... newShape) {
-		if (base != null) {
-			throw new UnsupportedOperationException("Changing the shape of a view is not allowed");
-		}
 		int rank = shape.length;
 		if (newShape.length != rank) {
 			throw new IllegalArgumentException("Rank of new shape must match current shape");
