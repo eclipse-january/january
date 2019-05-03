@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform -->
-<target name="JanuaryExamples" sequenceNumber="1544448858">
+<target name="JanuaryExamples" sequenceNumber="1556874442">
   <locations>
-    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
+    <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
       <unit id="org.eclipse.january" version="0.0.0"/>
-      <repository id="january-2.2.1" location="https://download.eclipse.org/january/releases/2.2.1/repository"/>
+      <repository id="january-2.2.2RC1" location="https://download.eclipse.org/january/releasecandidates/2.2.2RC1/repository"/>
     </location>
-    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
+    <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
       <unit id="javax.measure.unit-api" version="1.0.0.v20170818-1538"/>
       <unit id="org.apache.commons.math3" version="3.5.0.v20160301-1110"/>
       <unit id="org.slf4j.api" version="1.7.10.v20170428-1633"/>
