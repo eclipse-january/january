@@ -86,6 +86,18 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 	}
 
 	/**
+	 * @since 2.2
+	 */
+	protected LazyWriteableDataset(LazyWriteableDataset other) {
+		super(other);
+
+		chunks = other.chunks;
+		saver  = other.saver;
+		fillValue  = other.fillValue;
+		writeAsync = other.writeAsync;
+	}
+
+	/**
 	 * Create a lazy writeable dataset based on in-memory data (handy for testing)
 	 * @param dataset
 	 */
@@ -147,20 +159,7 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 
 	@Override
 	public LazyWriteableDataset clone() {
-		LazyWriteableDataset ret = new LazyWriteableDataset(new String(name), getDType(), getElementsPerItem(), 
-				oShape, maxShape, chunks, saver);
-		ret.shape = shape;
-		ret.size = size;
-		ret.prepShape = prepShape;
-		ret.postShape = postShape;
-		ret.begSlice = begSlice;
-		ret.delSlice = delSlice;
-		ret.map = map;
-		ret.base = base;
-		ret.metadata = copyMetadata();
-		ret.oMetadata = oMetadata;
-		ret.eventDelegate = eventDelegate;
-		return ret;
+		return new LazyWriteableDataset(this);
 	}
 
 	@Override
