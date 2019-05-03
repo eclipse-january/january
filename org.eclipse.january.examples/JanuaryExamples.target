@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform -->
-<target name="JanuaryExamples" sequenceNumber="1556874442">
+<target name="JanuaryExamples" sequenceNumber="1556879234">
   <locations>
     <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
       <unit id="org.eclipse.january" version="0.0.0"/>
-      <repository id="january-2.2.2RC1" location="https://download.eclipse.org/january/releasecandidates/2.2.2RC1/repository"/>
+      <repository id="january-2.2.2" location="https://download.eclipse.org/january/releases/2.2.2/repository"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
       <unit id="javax.measure.unit-api" version="1.0.0.v20170818-1538"/>
