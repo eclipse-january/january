@@ -1517,7 +1517,7 @@ public class AbstractDatasetTest {
 		assertEquals("MinPos", 0, a.minPos().length);
 		assertEquals("ArgMax", 0, a.argMax());
 		assertEquals("ArgMin", 0, a.argMin());
-		assertEquals("Value", true, a.equals(new Double(1.0)));
+		assertEquals("Value", true, a.equals(Double.valueOf(1.0)));
 
 		a = DatasetFactory.zeros(ShortDataset.class);
 		assertEquals("Rank", 0, a.getRank());
