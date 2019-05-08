@@ -907,7 +907,7 @@ public class Stats {
 			while (it.hasNext()) {
 				lresult *= a.getElementLongAbs(it.index);
 			}
-			return new Long(lresult);
+			return Long.valueOf(lresult);
 		case Dataset.ARRAYINT8: case Dataset.ARRAYINT16:
 		case Dataset.ARRAYINT32: case Dataset.ARRAYINT64:
 			lresult = 1;
