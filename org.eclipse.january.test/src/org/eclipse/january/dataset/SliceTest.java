@@ -613,4 +613,16 @@ public class SliceTest {
 			fail("Wrong exception type passed, this should give an IllegalArgumentException");
 		}
 	}
+
+	@Test
+	public void testSetZeroLength() {
+		Slice s = new Slice(4, 5);
+		s.setLength(9);
+
+		s.setStart(0);
+		s.setStop(0);
+		s.setLength(0);
+
+		assertEquals(0, s.getNumSteps());
+	}
 }
