@@ -4092,17 +4092,46 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iay = 0;
-				while (it.hasNext()) {
-					final double iax = it.aDouble;
-					final double ibx = it.bDouble;
-					final double iby = db.getElementDoubleAbs(it.bIndex + 1);
-					float ox;
-					float oy;
-					ox = (float) (iax + ibx);
-					oy = (float) (iay + iby);
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iay = 0;
+					if (db.isComplex()) {
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = db.getElementDoubleAbs(it.bIndex + 1);
+							float ox;
+							float oy;
+							ox = (float) (iax + ibx);
+							oy = (float) (iay + iby);
+							oc64data[it.oIndex] = ox;
+							oc64data[it.oIndex + 1] = oy;
+						}
+					} else {
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = 0;
+							float ox;
+							float oy;
+							ox = (float) (iax + ibx);
+							oy = (float) (iay + iby);
+							oc64data[it.oIndex] = ox;
+							oc64data[it.oIndex + 1] = oy;
+						}
+					}
+				} else {
+					final long iay = 0;
+					while (it.hasNext()) {
+						final long iax = it.aLong;
+						final long ibx = it.bLong;
+						final long iby = 0;
+						float ox;
+						float oy;
+						ox = (float) (iax + ibx);
+						oy = (float) (iay + iby);
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else if (bs == 1) {
 				final double iby = 0;
@@ -4135,17 +4164,46 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iay = 0;
-				while (it.hasNext()) {
-					final double iax = it.aDouble;
-					final double ibx = it.bDouble;
-					final double iby = db.getElementDoubleAbs(it.bIndex + 1);
-					double ox;
-					double oy;
-					ox = (iax + ibx);
-					oy = (iay + iby);
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iay = 0;
+					if (db.isComplex()) {
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = db.getElementDoubleAbs(it.bIndex + 1);
+							double ox;
+							double oy;
+							ox = (iax + ibx);
+							oy = (iay + iby);
+							oc128data[it.oIndex] = ox;
+							oc128data[it.oIndex + 1] = oy;
+						}
+					} else {
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = 0;
+							double ox;
+							double oy;
+							ox = (iax + ibx);
+							oy = (iay + iby);
+							oc128data[it.oIndex] = ox;
+							oc128data[it.oIndex + 1] = oy;
+						}
+					}
+				} else {
+					final long iay = 0;
+					while (it.hasNext()) {
+						final long iax = it.aLong;
+						final long ibx = it.bLong;
+						final long iby = 0;
+						double ox;
+						double oy;
+						ox = (iax + ibx);
+						oy = (iay + iby);
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else if (bs == 1) {
 				final double iby = 0;
@@ -5114,17 +5172,46 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iay = 0;
-				while (it.hasNext()) {
-					final double iax = it.aDouble;
-					final double ibx = it.bDouble;
-					final double iby = db.getElementDoubleAbs(it.bIndex + 1);
-					float ox;
-					float oy;
-					ox = (float) (iax - ibx);
-					oy = (float) (iay - iby);
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iay = 0;
+					if (db.isComplex()) {
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = db.getElementDoubleAbs(it.bIndex + 1);
+							float ox;
+							float oy;
+							ox = (float) (iax - ibx);
+							oy = (float) (iay - iby);
+							oc64data[it.oIndex] = ox;
+							oc64data[it.oIndex + 1] = oy;
+						}
+					} else {
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = 0;
+							float ox;
+							float oy;
+							ox = (float) (iax - ibx);
+							oy = (float) (iay - iby);
+							oc64data[it.oIndex] = ox;
+							oc64data[it.oIndex + 1] = oy;
+						}
+					}
+				} else {
+					final long iay = 0;
+					while (it.hasNext()) {
+						final long iax = it.aLong;
+						final long ibx = it.bLong;
+						final long iby = 0;
+						float ox;
+						float oy;
+						ox = (float) (iax - ibx);
+						oy = (float) (iay - iby);
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else if (bs == 1) {
 				final double iby = 0;
@@ -5157,17 +5244,46 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iay = 0;
-				while (it.hasNext()) {
-					final double iax = it.aDouble;
-					final double ibx = it.bDouble;
-					final double iby = db.getElementDoubleAbs(it.bIndex + 1);
-					double ox;
-					double oy;
-					ox = (iax - ibx);
-					oy = (iay - iby);
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iay = 0;
+					if (db.isComplex()) {
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = db.getElementDoubleAbs(it.bIndex + 1);
+							double ox;
+							double oy;
+							ox = (iax - ibx);
+							oy = (iay - iby);
+							oc128data[it.oIndex] = ox;
+							oc128data[it.oIndex + 1] = oy;
+						}
+					} else {
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = 0;
+							double ox;
+							double oy;
+							ox = (iax - ibx);
+							oy = (iay - iby);
+							oc128data[it.oIndex] = ox;
+							oc128data[it.oIndex + 1] = oy;
+						}
+					}
+				} else {
+					final long iay = 0;
+					while (it.hasNext()) {
+						final long iax = it.aLong;
+						final long ibx = it.bLong;
+						final long iby = 0;
+						double ox;
+						double oy;
+						ox = (iax - ibx);
+						oy = (iay - iby);
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else if (bs == 1) {
 				final double iby = 0;
@@ -6136,17 +6252,46 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iay = 0;
-				while (it.hasNext()) {
-					final double iax = it.aDouble;
-					final double ibx = it.bDouble;
-					final double iby = db.getElementDoubleAbs(it.bIndex + 1);
-					float ox;
-					float oy;
-					ox = (float) (iax * ibx - iay * iby);
-					oy = (float) (iax * iby + iay * ibx);
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iay = 0;
+					if (db.isComplex()) {
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = db.getElementDoubleAbs(it.bIndex + 1);
+							float ox;
+							float oy;
+							ox = (float) (iax * ibx - iay * iby);
+							oy = (float) (iax * iby + iay * ibx);
+							oc64data[it.oIndex] = ox;
+							oc64data[it.oIndex + 1] = oy;
+						}
+					} else {
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = 0;
+							float ox;
+							float oy;
+							ox = (float) (iax * ibx - iay * iby);
+							oy = (float) (iax * iby + iay * ibx);
+							oc64data[it.oIndex] = ox;
+							oc64data[it.oIndex + 1] = oy;
+						}
+					}
+				} else {
+					final long iay = 0;
+					while (it.hasNext()) {
+						final long iax = it.aLong;
+						final long ibx = it.bLong;
+						final long iby = 0;
+						float ox;
+						float oy;
+						ox = (float) (iax * ibx - iay * iby);
+						oy = (float) (iax * iby + iay * ibx);
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else if (bs == 1) {
 				final double iby = 0;
@@ -6179,17 +6324,46 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iay = 0;
-				while (it.hasNext()) {
-					final double iax = it.aDouble;
-					final double ibx = it.bDouble;
-					final double iby = db.getElementDoubleAbs(it.bIndex + 1);
-					double ox;
-					double oy;
-					ox = (iax * ibx - iay * iby);
-					oy = (iax * iby + iay * ibx);
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iay = 0;
+					if (db.isComplex()) {
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = db.getElementDoubleAbs(it.bIndex + 1);
+							double ox;
+							double oy;
+							ox = (iax * ibx - iay * iby);
+							oy = (iax * iby + iay * ibx);
+							oc128data[it.oIndex] = ox;
+							oc128data[it.oIndex + 1] = oy;
+						}
+					} else {
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = 0;
+							double ox;
+							double oy;
+							ox = (iax * ibx - iay * iby);
+							oy = (iax * iby + iay * ibx);
+							oc128data[it.oIndex] = ox;
+							oc128data[it.oIndex + 1] = oy;
+						}
+					}
+				} else {
+					final long iay = 0;
+					while (it.hasNext()) {
+						final long iax = it.aLong;
+						final long ibx = it.bLong;
+						final long iby = 0;
+						double ox;
+						double oy;
+						ox = (iax * ibx - iay * iby);
+						oy = (iax * iby + iay * ibx);
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else if (bs == 1) {
 				final double iby = 0;
@@ -7158,34 +7332,97 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iay = 0;
-				while (it.hasNext()) {
-					final double iax = it.aDouble;
-					final double ibx = it.bDouble;
-					final double iby = db.getElementDoubleAbs(it.bIndex + 1);
-					float ox;
-					float oy;
-					float q;
-					float den;
-					if (iby == 0) {
-						ox = (float) (iax / ibx);
-						oy = (float) (iay / ibx);
-					} else if (ibx == 0) {
-						ox = (float) (iay / iby);
-						oy = (float) (-iax / iby);
-					} else if (Math.abs(ibx) < Math.abs(iby)) {
-						q = (float) (ibx / iby);
-						den = (float) (ibx * q + iby);
-						ox = (float) ((iax * q + iay) / den);
-						oy = (float) ((iay * q - ibx) / den);
+				if (it.isOutputDouble()) {
+					final double iay = 0;
+					if (db.isComplex()) {
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = db.getElementDoubleAbs(it.bIndex + 1);
+							float ox;
+							float oy;
+							float q;
+							float den;
+							if (iby == 0) {
+								ox = (float) (iax / ibx);
+								oy = (float) (iay / ibx);
+							} else if (ibx == 0) {
+								ox = (float) (iay / iby);
+								oy = (float) (-iax / iby);
+							} else if (Math.abs(ibx) < Math.abs(iby)) {
+								q = (float) (ibx / iby);
+								den = (float) (ibx * q + iby);
+								ox = (float) ((iax * q + iay) / den);
+								oy = (float) ((iay * q - ibx) / den);
+							} else {
+								q = (float) (iby / ibx);
+								den = (float) (iby * q + ibx);
+								ox = (float) ((iay * q + iax) / den);
+								oy = (float) ((iay - iax * q) / den);
+							}
+							oc64data[it.oIndex] = ox;
+							oc64data[it.oIndex + 1] = oy;
+						}
 					} else {
-						q = (float) (iby / ibx);
-						den = (float) (iby * q + ibx);
-						ox = (float) ((iay * q + iax) / den);
-						oy = (float) ((iay - iax * q) / den);
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = 0;
+							float ox;
+							float oy;
+							float q;
+							float den;
+							if (iby == 0) {
+								ox = (float) (iax / ibx);
+								oy = (float) (iay / ibx);
+							} else if (ibx == 0) {
+								ox = (float) (iay / iby);
+								oy = (float) (-iax / iby);
+							} else if (Math.abs(ibx) < Math.abs(iby)) {
+								q = (float) (ibx / iby);
+								den = (float) (ibx * q + iby);
+								ox = (float) ((iax * q + iay) / den);
+								oy = (float) ((iay * q - ibx) / den);
+							} else {
+								q = (float) (iby / ibx);
+								den = (float) (iby * q + ibx);
+								ox = (float) ((iay * q + iax) / den);
+								oy = (float) ((iay - iax * q) / den);
+							}
+							oc64data[it.oIndex] = ox;
+							oc64data[it.oIndex + 1] = oy;
+						}
 					}
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				} else {
+					final long iay = 0;
+					while (it.hasNext()) {
+						final long iax = it.aLong;
+						final long ibx = it.bLong;
+						final long iby = 0;
+						float ox;
+						float oy;
+						float q;
+						float den;
+						if (iby == 0) {
+							ox = (float) (iax / ibx);
+							oy = (float) (iay / ibx);
+						} else if (ibx == 0) {
+							ox = (float) (iay / iby);
+							oy = (float) (-iax / iby);
+						} else if (Math.abs(ibx) < Math.abs(iby)) {
+							q = (float) (ibx / iby);
+							den = (float) (ibx * q + iby);
+							ox = (float) ((iax * q + iay) / den);
+							oy = (float) ((iay * q - ibx) / den);
+						} else {
+							q = (float) (iby / ibx);
+							den = (float) (iby * q + ibx);
+							ox = (float) ((iay * q + iax) / den);
+							oy = (float) ((iay - iax * q) / den);
+						}
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else if (bs == 1) {
 				final double iby = 0;
@@ -7252,34 +7489,97 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iay = 0;
-				while (it.hasNext()) {
-					final double iax = it.aDouble;
-					final double ibx = it.bDouble;
-					final double iby = db.getElementDoubleAbs(it.bIndex + 1);
-					double ox;
-					double oy;
-					double q;
-					double den;
-					if (iby == 0) {
-						ox = (iax / ibx);
-						oy = (iay / ibx);
-					} else if (ibx == 0) {
-						ox = (iay / iby);
-						oy = (-iax / iby);
-					} else if (Math.abs(ibx) < Math.abs(iby)) {
-						q = (ibx / iby);
-						den = (ibx * q + iby);
-						ox = ((iax * q + iay) / den);
-						oy = ((iay * q - ibx) / den);
+				if (it.isOutputDouble()) {
+					final double iay = 0;
+					if (db.isComplex()) {
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = db.getElementDoubleAbs(it.bIndex + 1);
+							double ox;
+							double oy;
+							double q;
+							double den;
+							if (iby == 0) {
+								ox = (iax / ibx);
+								oy = (iay / ibx);
+							} else if (ibx == 0) {
+								ox = (iay / iby);
+								oy = (-iax / iby);
+							} else if (Math.abs(ibx) < Math.abs(iby)) {
+								q = (ibx / iby);
+								den = (ibx * q + iby);
+								ox = ((iax * q + iay) / den);
+								oy = ((iay * q - ibx) / den);
+							} else {
+								q = (iby / ibx);
+								den = (iby * q + ibx);
+								ox = ((iay * q + iax) / den);
+								oy = ((iay - iax * q) / den);
+							}
+							oc128data[it.oIndex] = ox;
+							oc128data[it.oIndex + 1] = oy;
+						}
 					} else {
-						q = (iby / ibx);
-						den = (iby * q + ibx);
-						ox = ((iay * q + iax) / den);
-						oy = ((iay - iax * q) / den);
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = 0;
+							double ox;
+							double oy;
+							double q;
+							double den;
+							if (iby == 0) {
+								ox = (iax / ibx);
+								oy = (iay / ibx);
+							} else if (ibx == 0) {
+								ox = (iay / iby);
+								oy = (-iax / iby);
+							} else if (Math.abs(ibx) < Math.abs(iby)) {
+								q = (ibx / iby);
+								den = (ibx * q + iby);
+								ox = ((iax * q + iay) / den);
+								oy = ((iay * q - ibx) / den);
+							} else {
+								q = (iby / ibx);
+								den = (iby * q + ibx);
+								ox = ((iay * q + iax) / den);
+								oy = ((iay - iax * q) / den);
+							}
+							oc128data[it.oIndex] = ox;
+							oc128data[it.oIndex + 1] = oy;
+						}
 					}
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				} else {
+					final long iay = 0;
+					while (it.hasNext()) {
+						final long iax = it.aLong;
+						final long ibx = it.bLong;
+						final long iby = 0;
+						double ox;
+						double oy;
+						double q;
+						double den;
+						if (iby == 0) {
+							ox = (iax / ibx);
+							oy = (iay / ibx);
+						} else if (ibx == 0) {
+							ox = (iay / iby);
+							oy = (-iax / iby);
+						} else if (Math.abs(ibx) < Math.abs(iby)) {
+							q = (ibx / iby);
+							den = (ibx * q + iby);
+							ox = ((iax * q + iay) / den);
+							oy = ((iay * q - ibx) / den);
+						} else {
+							q = (iby / ibx);
+							den = (iby * q + ibx);
+							ox = ((iay * q + iax) / den);
+							oy = ((iay - iax * q) / den);
+						}
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else if (bs == 1) {
 				final double iby = 0;
@@ -8282,31 +8582,88 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iay = 0;
-				while (it.hasNext()) {
-					final double iax = it.aDouble;
-					final double ibx = it.bDouble;
-					final double iby = db.getElementDoubleAbs(it.bIndex + 1);
-					float ox;
-					float oy;
-					float q;
-					float den;
-					if (ibx == 0 && iby == 0) {
-						ox = 0;
-						oy = 0;
-					} else if (Math.abs(ibx) < Math.abs(iby)) {
-						q = (float) (ibx / iby);
-						den = (float) (ibx * q + iby);
-						ox = (float) ((iax * q + iay) / den);
-						oy = (float) ((iay * q - ibx) / den);
+				if (it.isOutputDouble()) {
+					final double iay = 0;
+					if (db.isComplex()) {
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = db.getElementDoubleAbs(it.bIndex + 1);
+							float ox;
+							float oy;
+							float q;
+							float den;
+							if (ibx == 0 && iby == 0) {
+								ox = 0;
+								oy = 0;
+							} else if (Math.abs(ibx) < Math.abs(iby)) {
+								q = (float) (ibx / iby);
+								den = (float) (ibx * q + iby);
+								ox = (float) ((iax * q + iay) / den);
+								oy = (float) ((iay * q - ibx) / den);
+							} else {
+								q = (float) (iby / ibx);
+								den = (float) (iby * q + ibx);
+								ox = (float) ((iay * q + iax) / den);
+								oy = (float) ((iay - iax * q) / den);
+							}
+							oc64data[it.oIndex] = ox;
+							oc64data[it.oIndex + 1] = oy;
+						}
 					} else {
-						q = (float) (iby / ibx);
-						den = (float) (iby * q + ibx);
-						ox = (float) ((iay * q + iax) / den);
-						oy = (float) ((iay - iax * q) / den);
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = 0;
+							float ox;
+							float oy;
+							float q;
+							float den;
+							if (ibx == 0 && iby == 0) {
+								ox = 0;
+								oy = 0;
+							} else if (Math.abs(ibx) < Math.abs(iby)) {
+								q = (float) (ibx / iby);
+								den = (float) (ibx * q + iby);
+								ox = (float) ((iax * q + iay) / den);
+								oy = (float) ((iay * q - ibx) / den);
+							} else {
+								q = (float) (iby / ibx);
+								den = (float) (iby * q + ibx);
+								ox = (float) ((iay * q + iax) / den);
+								oy = (float) ((iay - iax * q) / den);
+							}
+							oc64data[it.oIndex] = ox;
+							oc64data[it.oIndex + 1] = oy;
+						}
 					}
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				} else {
+					final long iay = 0;
+					while (it.hasNext()) {
+						final long iax = it.aLong;
+						final long ibx = it.bLong;
+						final long iby = 0;
+						float ox;
+						float oy;
+						float q;
+						float den;
+						if (ibx == 0 && iby == 0) {
+							ox = 0;
+							oy = 0;
+						} else if (Math.abs(ibx) < Math.abs(iby)) {
+							q = (float) (ibx / iby);
+							den = (float) (ibx * q + iby);
+							ox = (float) ((iax * q + iay) / den);
+							oy = (float) ((iay * q - ibx) / den);
+						} else {
+							q = (float) (iby / ibx);
+							den = (float) (iby * q + ibx);
+							ox = (float) ((iay * q + iax) / den);
+							oy = (float) ((iay - iax * q) / den);
+						}
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else if (bs == 1) {
 				final double iby = 0;
@@ -8367,31 +8724,88 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iay = 0;
-				while (it.hasNext()) {
-					final double iax = it.aDouble;
-					final double ibx = it.bDouble;
-					final double iby = db.getElementDoubleAbs(it.bIndex + 1);
-					double ox;
-					double oy;
-					double q;
-					double den;
-					if (ibx == 0 && iby == 0) {
-						ox = 0;
-						oy = 0;
-					} else if (Math.abs(ibx) < Math.abs(iby)) {
-						q = (ibx / iby);
-						den = (ibx * q + iby);
-						ox = ((iax * q + iay) / den);
-						oy = ((iay * q - ibx) / den);
+				if (it.isOutputDouble()) {
+					final double iay = 0;
+					if (db.isComplex()) {
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = db.getElementDoubleAbs(it.bIndex + 1);
+							double ox;
+							double oy;
+							double q;
+							double den;
+							if (ibx == 0 && iby == 0) {
+								ox = 0;
+								oy = 0;
+							} else if (Math.abs(ibx) < Math.abs(iby)) {
+								q = (ibx / iby);
+								den = (ibx * q + iby);
+								ox = ((iax * q + iay) / den);
+								oy = ((iay * q - ibx) / den);
+							} else {
+								q = (iby / ibx);
+								den = (iby * q + ibx);
+								ox = ((iay * q + iax) / den);
+								oy = ((iay - iax * q) / den);
+							}
+							oc128data[it.oIndex] = ox;
+							oc128data[it.oIndex + 1] = oy;
+						}
 					} else {
-						q = (iby / ibx);
-						den = (iby * q + ibx);
-						ox = ((iay * q + iax) / den);
-						oy = ((iay - iax * q) / den);
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = 0;
+							double ox;
+							double oy;
+							double q;
+							double den;
+							if (ibx == 0 && iby == 0) {
+								ox = 0;
+								oy = 0;
+							} else if (Math.abs(ibx) < Math.abs(iby)) {
+								q = (ibx / iby);
+								den = (ibx * q + iby);
+								ox = ((iax * q + iay) / den);
+								oy = ((iay * q - ibx) / den);
+							} else {
+								q = (iby / ibx);
+								den = (iby * q + ibx);
+								ox = ((iay * q + iax) / den);
+								oy = ((iay - iax * q) / den);
+							}
+							oc128data[it.oIndex] = ox;
+							oc128data[it.oIndex + 1] = oy;
+						}
 					}
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				} else {
+					final long iay = 0;
+					while (it.hasNext()) {
+						final long iax = it.aLong;
+						final long ibx = it.bLong;
+						final long iby = 0;
+						double ox;
+						double oy;
+						double q;
+						double den;
+						if (ibx == 0 && iby == 0) {
+							ox = 0;
+							oy = 0;
+						} else if (Math.abs(ibx) < Math.abs(iby)) {
+							q = (ibx / iby);
+							den = (ibx * q + iby);
+							ox = ((iax * q + iay) / den);
+							oy = ((iay * q - ibx) / den);
+						} else {
+							q = (iby / ibx);
+							den = (iby * q + ibx);
+							ox = ((iay * q + iax) / den);
+							oy = ((iay - iax * q) / den);
+						}
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else if (bs == 1) {
 				final double iby = 0;
@@ -9892,34 +10306,97 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iay = 0;
-				while (it.hasNext()) {
-					final double iax = it.aDouble;
-					final double ibx = it.bDouble;
-					final double iby = db.getElementDoubleAbs(it.bIndex + 1);
-					float ox;
-					float oy;
-					float q;
-					float den;
-					if (iby == 0) {
-						ox = (float) (iax / ibx);
-						oy = (float) (iay / ibx);
-					} else if (ibx == 0) {
-						ox = (float) (iay / iby);
-						oy = (float) (-iax / iby);
-					} else if (Math.abs(ibx) < Math.abs(iby)) {
-						q = (float) (ibx / iby);
-						den = (float) (ibx * q + iby);
-						ox = (float) ((iax * q + iay) / den);
-						oy = (float) ((iay * q - ibx) / den);
+				if (it.isOutputDouble()) {
+					final double iay = 0;
+					if (db.isComplex()) {
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = db.getElementDoubleAbs(it.bIndex + 1);
+							float ox;
+							float oy;
+							float q;
+							float den;
+							if (iby == 0) {
+								ox = (float) (iax / ibx);
+								oy = (float) (iay / ibx);
+							} else if (ibx == 0) {
+								ox = (float) (iay / iby);
+								oy = (float) (-iax / iby);
+							} else if (Math.abs(ibx) < Math.abs(iby)) {
+								q = (float) (ibx / iby);
+								den = (float) (ibx * q + iby);
+								ox = (float) ((iax * q + iay) / den);
+								oy = (float) ((iay * q - ibx) / den);
+							} else {
+								q = (float) (iby / ibx);
+								den = (float) (iby * q + ibx);
+								ox = (float) ((iay * q + iax) / den);
+								oy = (float) ((iay - iax * q) / den);
+							}
+							oc64data[it.oIndex] = ox;
+							oc64data[it.oIndex + 1] = oy;
+						}
 					} else {
-						q = (float) (iby / ibx);
-						den = (float) (iby * q + ibx);
-						ox = (float) ((iay * q + iax) / den);
-						oy = (float) ((iay - iax * q) / den);
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = 0;
+							float ox;
+							float oy;
+							float q;
+							float den;
+							if (iby == 0) {
+								ox = (float) (iax / ibx);
+								oy = (float) (iay / ibx);
+							} else if (ibx == 0) {
+								ox = (float) (iay / iby);
+								oy = (float) (-iax / iby);
+							} else if (Math.abs(ibx) < Math.abs(iby)) {
+								q = (float) (ibx / iby);
+								den = (float) (ibx * q + iby);
+								ox = (float) ((iax * q + iay) / den);
+								oy = (float) ((iay * q - ibx) / den);
+							} else {
+								q = (float) (iby / ibx);
+								den = (float) (iby * q + ibx);
+								ox = (float) ((iay * q + iax) / den);
+								oy = (float) ((iay - iax * q) / den);
+							}
+							oc64data[it.oIndex] = ox;
+							oc64data[it.oIndex + 1] = oy;
+						}
 					}
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				} else {
+					final long iay = 0;
+					while (it.hasNext()) {
+						final long iax = it.aLong;
+						final long ibx = it.bLong;
+						final long iby = 0;
+						float ox;
+						float oy;
+						float q;
+						float den;
+						if (iby == 0) {
+							ox = (float) (iax / ibx);
+							oy = (float) (iay / ibx);
+						} else if (ibx == 0) {
+							ox = (float) (iay / iby);
+							oy = (float) (-iax / iby);
+						} else if (Math.abs(ibx) < Math.abs(iby)) {
+							q = (float) (ibx / iby);
+							den = (float) (ibx * q + iby);
+							ox = (float) ((iax * q + iay) / den);
+							oy = (float) ((iay * q - ibx) / den);
+						} else {
+							q = (float) (iby / ibx);
+							den = (float) (iby * q + ibx);
+							ox = (float) ((iay * q + iax) / den);
+							oy = (float) ((iay - iax * q) / den);
+						}
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else if (bs == 1) {
 				final double iby = 0;
@@ -9986,34 +10463,97 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iay = 0;
-				while (it.hasNext()) {
-					final double iax = it.aDouble;
-					final double ibx = it.bDouble;
-					final double iby = db.getElementDoubleAbs(it.bIndex + 1);
-					double ox;
-					double oy;
-					double q;
-					double den;
-					if (iby == 0) {
-						ox = (iax / ibx);
-						oy = (iay / ibx);
-					} else if (ibx == 0) {
-						ox = (iay / iby);
-						oy = (-iax / iby);
-					} else if (Math.abs(ibx) < Math.abs(iby)) {
-						q = (ibx / iby);
-						den = (ibx * q + iby);
-						ox = ((iax * q + iay) / den);
-						oy = ((iay * q - ibx) / den);
+				if (it.isOutputDouble()) {
+					final double iay = 0;
+					if (db.isComplex()) {
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = db.getElementDoubleAbs(it.bIndex + 1);
+							double ox;
+							double oy;
+							double q;
+							double den;
+							if (iby == 0) {
+								ox = (iax / ibx);
+								oy = (iay / ibx);
+							} else if (ibx == 0) {
+								ox = (iay / iby);
+								oy = (-iax / iby);
+							} else if (Math.abs(ibx) < Math.abs(iby)) {
+								q = (ibx / iby);
+								den = (ibx * q + iby);
+								ox = ((iax * q + iay) / den);
+								oy = ((iay * q - ibx) / den);
+							} else {
+								q = (iby / ibx);
+								den = (iby * q + ibx);
+								ox = ((iay * q + iax) / den);
+								oy = ((iay - iax * q) / den);
+							}
+							oc128data[it.oIndex] = ox;
+							oc128data[it.oIndex + 1] = oy;
+						}
 					} else {
-						q = (iby / ibx);
-						den = (iby * q + ibx);
-						ox = ((iay * q + iax) / den);
-						oy = ((iay - iax * q) / den);
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = 0;
+							double ox;
+							double oy;
+							double q;
+							double den;
+							if (iby == 0) {
+								ox = (iax / ibx);
+								oy = (iay / ibx);
+							} else if (ibx == 0) {
+								ox = (iay / iby);
+								oy = (-iax / iby);
+							} else if (Math.abs(ibx) < Math.abs(iby)) {
+								q = (ibx / iby);
+								den = (ibx * q + iby);
+								ox = ((iax * q + iay) / den);
+								oy = ((iay * q - ibx) / den);
+							} else {
+								q = (iby / ibx);
+								den = (iby * q + ibx);
+								ox = ((iay * q + iax) / den);
+								oy = ((iay - iax * q) / den);
+							}
+							oc128data[it.oIndex] = ox;
+							oc128data[it.oIndex + 1] = oy;
+						}
 					}
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				} else {
+					final long iay = 0;
+					while (it.hasNext()) {
+						final long iax = it.aLong;
+						final long ibx = it.bLong;
+						final long iby = 0;
+						double ox;
+						double oy;
+						double q;
+						double den;
+						if (iby == 0) {
+							ox = (iax / ibx);
+							oy = (iay / ibx);
+						} else if (ibx == 0) {
+							ox = (iay / iby);
+							oy = (-iax / iby);
+						} else if (Math.abs(ibx) < Math.abs(iby)) {
+							q = (ibx / iby);
+							den = (ibx * q + iby);
+							ox = ((iax * q + iay) / den);
+							oy = ((iay * q - ibx) / den);
+						} else {
+							q = (iby / ibx);
+							den = (iby * q + ibx);
+							ox = ((iay * q + iax) / den);
+							oy = ((iay - iax * q) / den);
+						}
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else if (bs == 1) {
 				final double iby = 0;
@@ -11016,19 +11556,52 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iay = 0;
-				while (it.hasNext()) {
-					final double iax = it.aDouble;
-					final double ibx = it.bDouble;
-					final double iby = db.getElementDoubleAbs(it.bIndex + 1);
-					Complex tz;
-					float ox;
-					float oy;
-					tz = new Complex(iax, iay).pow(new Complex(ibx, iby));
-					ox = (float) (tz.getReal());
-					oy = (float) (tz.getImaginary());
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iay = 0;
+					if (db.isComplex()) {
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = db.getElementDoubleAbs(it.bIndex + 1);
+							Complex tz;
+							float ox;
+							float oy;
+							tz = new Complex(iax, iay).pow(new Complex(ibx, iby));
+							ox = (float) (tz.getReal());
+							oy = (float) (tz.getImaginary());
+							oc64data[it.oIndex] = ox;
+							oc64data[it.oIndex + 1] = oy;
+						}
+					} else {
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = 0;
+							Complex tz;
+							float ox;
+							float oy;
+							tz = new Complex(iax, iay).pow(new Complex(ibx, iby));
+							ox = (float) (tz.getReal());
+							oy = (float) (tz.getImaginary());
+							oc64data[it.oIndex] = ox;
+							oc64data[it.oIndex + 1] = oy;
+						}
+					}
+				} else {
+					final long iay = 0;
+					while (it.hasNext()) {
+						final long iax = it.aLong;
+						final long ibx = it.bLong;
+						final long iby = 0;
+						Complex tz;
+						float ox;
+						float oy;
+						tz = new Complex(iax, iay).pow(new Complex(ibx, iby));
+						ox = (float) (tz.getReal());
+						oy = (float) (tz.getImaginary());
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else if (bs == 1) {
 				final double iby = 0;
@@ -11065,19 +11638,52 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iay = 0;
-				while (it.hasNext()) {
-					final double iax = it.aDouble;
-					final double ibx = it.bDouble;
-					final double iby = db.getElementDoubleAbs(it.bIndex + 1);
-					Complex tz;
-					double ox;
-					double oy;
-					tz = new Complex(iax, iay).pow(new Complex(ibx, iby));
-					ox = (tz.getReal());
-					oy = (tz.getImaginary());
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iay = 0;
+					if (db.isComplex()) {
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = db.getElementDoubleAbs(it.bIndex + 1);
+							Complex tz;
+							double ox;
+							double oy;
+							tz = new Complex(iax, iay).pow(new Complex(ibx, iby));
+							ox = (tz.getReal());
+							oy = (tz.getImaginary());
+							oc128data[it.oIndex] = ox;
+							oc128data[it.oIndex + 1] = oy;
+						}
+					} else {
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = 0;
+							Complex tz;
+							double ox;
+							double oy;
+							tz = new Complex(iax, iay).pow(new Complex(ibx, iby));
+							ox = (tz.getReal());
+							oy = (tz.getImaginary());
+							oc128data[it.oIndex] = ox;
+							oc128data[it.oIndex + 1] = oy;
+						}
+					}
+				} else {
+					final long iay = 0;
+					while (it.hasNext()) {
+						final long iax = it.aLong;
+						final long ibx = it.bLong;
+						final long iby = 0;
+						Complex tz;
+						double ox;
+						double oy;
+						tz = new Complex(iax, iay).pow(new Complex(ibx, iby));
+						ox = (tz.getReal());
+						oy = (tz.getImaginary());
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else if (bs == 1) {
 				final double iby = 0;
@@ -12986,25 +13592,70 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iay = 0;
-				while (it.hasNext()) {
-					final double iax = it.aDouble;
-					final double ibx = it.bDouble;
-					final double iby = db.getElementDoubleAbs(it.bIndex + 1);
-					float ox;
-					float oy;
-					if (Double.isNaN(iax) || Double.isNaN(iay)) {
-						ox = (float) (iax);
-						oy = (float) (iay);
-					} else if (Double.isNaN(ibx) || Double.isNaN(iby)) {
-						ox = (float) (ibx);
-						oy = (float) (iby);
+				if (it.isOutputDouble()) {
+					final double iay = 0;
+					if (db.isComplex()) {
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = db.getElementDoubleAbs(it.bIndex + 1);
+							float ox;
+							float oy;
+							if (Double.isNaN(iax) || Double.isNaN(iay)) {
+								ox = (float) (iax);
+								oy = (float) (iay);
+							} else if (Double.isNaN(ibx) || Double.isNaN(iby)) {
+								ox = (float) (ibx);
+								oy = (float) (iby);
+							} else {
+								ox = (float) (Math.max(iax, ibx));
+								oy = (float) (Math.max(iay, iby));
+							}
+							oc64data[it.oIndex] = ox;
+							oc64data[it.oIndex + 1] = oy;
+						}
 					} else {
-						ox = (float) (Math.max(iax, ibx));
-						oy = (float) (Math.max(iay, iby));
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = 0;
+							float ox;
+							float oy;
+							if (Double.isNaN(iax) || Double.isNaN(iay)) {
+								ox = (float) (iax);
+								oy = (float) (iay);
+							} else if (Double.isNaN(ibx) || Double.isNaN(iby)) {
+								ox = (float) (ibx);
+								oy = (float) (iby);
+							} else {
+								ox = (float) (Math.max(iax, ibx));
+								oy = (float) (Math.max(iay, iby));
+							}
+							oc64data[it.oIndex] = ox;
+							oc64data[it.oIndex + 1] = oy;
+						}
 					}
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				} else {
+					final long iay = 0;
+					while (it.hasNext()) {
+						final long iax = it.aLong;
+						final long ibx = it.bLong;
+						final long iby = 0;
+						float ox;
+						float oy;
+						if (Double.isNaN(iax) || Double.isNaN(iay)) {
+							ox = (float) (iax);
+							oy = (float) (iay);
+						} else if (Double.isNaN(ibx) || Double.isNaN(iby)) {
+							ox = (float) (ibx);
+							oy = (float) (iby);
+						} else {
+							ox = (float) (Math.max(iax, ibx));
+							oy = (float) (Math.max(iay, iby));
+						}
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else if (bs == 1) {
 				final double iby = 0;
@@ -13053,25 +13704,70 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iay = 0;
-				while (it.hasNext()) {
-					final double iax = it.aDouble;
-					final double ibx = it.bDouble;
-					final double iby = db.getElementDoubleAbs(it.bIndex + 1);
-					double ox;
-					double oy;
-					if (Double.isNaN(iax) || Double.isNaN(iay)) {
-						ox = (iax);
-						oy = (iay);
-					} else if (Double.isNaN(ibx) || Double.isNaN(iby)) {
-						ox = (ibx);
-						oy = (iby);
+				if (it.isOutputDouble()) {
+					final double iay = 0;
+					if (db.isComplex()) {
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = db.getElementDoubleAbs(it.bIndex + 1);
+							double ox;
+							double oy;
+							if (Double.isNaN(iax) || Double.isNaN(iay)) {
+								ox = (iax);
+								oy = (iay);
+							} else if (Double.isNaN(ibx) || Double.isNaN(iby)) {
+								ox = (ibx);
+								oy = (iby);
+							} else {
+								ox = (Math.max(iax, ibx));
+								oy = (Math.max(iay, iby));
+							}
+							oc128data[it.oIndex] = ox;
+							oc128data[it.oIndex + 1] = oy;
+						}
 					} else {
-						ox = (Math.max(iax, ibx));
-						oy = (Math.max(iay, iby));
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = 0;
+							double ox;
+							double oy;
+							if (Double.isNaN(iax) || Double.isNaN(iay)) {
+								ox = (iax);
+								oy = (iay);
+							} else if (Double.isNaN(ibx) || Double.isNaN(iby)) {
+								ox = (ibx);
+								oy = (iby);
+							} else {
+								ox = (Math.max(iax, ibx));
+								oy = (Math.max(iay, iby));
+							}
+							oc128data[it.oIndex] = ox;
+							oc128data[it.oIndex + 1] = oy;
+						}
 					}
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				} else {
+					final long iay = 0;
+					while (it.hasNext()) {
+						final long iax = it.aLong;
+						final long ibx = it.bLong;
+						final long iby = 0;
+						double ox;
+						double oy;
+						if (Double.isNaN(iax) || Double.isNaN(iay)) {
+							ox = (iax);
+							oy = (iay);
+						} else if (Double.isNaN(ibx) || Double.isNaN(iby)) {
+							ox = (ibx);
+							oy = (iby);
+						} else {
+							ox = (double) (Math.max(iax, ibx));
+							oy = (double) (Math.max(iay, iby));
+						}
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else if (bs == 1) {
 				final double iby = 0;
@@ -14056,25 +14752,70 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iay = 0;
-				while (it.hasNext()) {
-					final double iax = it.aDouble;
-					final double ibx = it.bDouble;
-					final double iby = db.getElementDoubleAbs(it.bIndex + 1);
-					float ox;
-					float oy;
-					if (Double.isNaN(iax) || Double.isNaN(iay)) {
-						ox = (float) (iax);
-						oy = (float) (iay);
-					} else if (Double.isNaN(ibx) || Double.isNaN(iby)) {
-						ox = (float) (ibx);
-						oy = (float) (iby);
+				if (it.isOutputDouble()) {
+					final double iay = 0;
+					if (db.isComplex()) {
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = db.getElementDoubleAbs(it.bIndex + 1);
+							float ox;
+							float oy;
+							if (Double.isNaN(iax) || Double.isNaN(iay)) {
+								ox = (float) (iax);
+								oy = (float) (iay);
+							} else if (Double.isNaN(ibx) || Double.isNaN(iby)) {
+								ox = (float) (ibx);
+								oy = (float) (iby);
+							} else {
+								ox = (float) (Math.min(iax, ibx));
+								oy = (float) (Math.min(iay, iby));
+							}
+							oc64data[it.oIndex] = ox;
+							oc64data[it.oIndex + 1] = oy;
+						}
 					} else {
-						ox = (float) (Math.min(iax, ibx));
-						oy = (float) (Math.min(iay, iby));
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = 0;
+							float ox;
+							float oy;
+							if (Double.isNaN(iax) || Double.isNaN(iay)) {
+								ox = (float) (iax);
+								oy = (float) (iay);
+							} else if (Double.isNaN(ibx) || Double.isNaN(iby)) {
+								ox = (float) (ibx);
+								oy = (float) (iby);
+							} else {
+								ox = (float) (Math.min(iax, ibx));
+								oy = (float) (Math.min(iay, iby));
+							}
+							oc64data[it.oIndex] = ox;
+							oc64data[it.oIndex + 1] = oy;
+						}
 					}
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				} else {
+					final long iay = 0;
+					while (it.hasNext()) {
+						final long iax = it.aLong;
+						final long ibx = it.bLong;
+						final long iby = 0;
+						float ox;
+						float oy;
+						if (Double.isNaN(iax) || Double.isNaN(iay)) {
+							ox = (float) (iax);
+							oy = (float) (iay);
+						} else if (Double.isNaN(ibx) || Double.isNaN(iby)) {
+							ox = (float) (ibx);
+							oy = (float) (iby);
+						} else {
+							ox = (float) (Math.min(iax, ibx));
+							oy = (float) (Math.min(iay, iby));
+						}
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else if (bs == 1) {
 				final double iby = 0;
@@ -14123,25 +14864,70 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iay = 0;
-				while (it.hasNext()) {
-					final double iax = it.aDouble;
-					final double ibx = it.bDouble;
-					final double iby = db.getElementDoubleAbs(it.bIndex + 1);
-					double ox;
-					double oy;
-					if (Double.isNaN(iax) || Double.isNaN(iay)) {
-						ox = (iax);
-						oy = (iay);
-					} else if (Double.isNaN(ibx) || Double.isNaN(iby)) {
-						ox = (ibx);
-						oy = (iby);
+				if (it.isOutputDouble()) {
+					final double iay = 0;
+					if (db.isComplex()) {
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = db.getElementDoubleAbs(it.bIndex + 1);
+							double ox;
+							double oy;
+							if (Double.isNaN(iax) || Double.isNaN(iay)) {
+								ox = (iax);
+								oy = (iay);
+							} else if (Double.isNaN(ibx) || Double.isNaN(iby)) {
+								ox = (ibx);
+								oy = (iby);
+							} else {
+								ox = (Math.min(iax, ibx));
+								oy = (Math.min(iay, iby));
+							}
+							oc128data[it.oIndex] = ox;
+							oc128data[it.oIndex + 1] = oy;
+						}
 					} else {
-						ox = (Math.min(iax, ibx));
-						oy = (Math.min(iay, iby));
+						while (it.hasNext()) {
+							final double iax = it.aDouble;
+							final double ibx = it.bDouble;
+							final double iby = 0;
+							double ox;
+							double oy;
+							if (Double.isNaN(iax) || Double.isNaN(iay)) {
+								ox = (iax);
+								oy = (iay);
+							} else if (Double.isNaN(ibx) || Double.isNaN(iby)) {
+								ox = (ibx);
+								oy = (iby);
+							} else {
+								ox = (Math.min(iax, ibx));
+								oy = (Math.min(iay, iby));
+							}
+							oc128data[it.oIndex] = ox;
+							oc128data[it.oIndex + 1] = oy;
+						}
 					}
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				} else {
+					final long iay = 0;
+					while (it.hasNext()) {
+						final long iax = it.aLong;
+						final long ibx = it.bLong;
+						final long iby = 0;
+						double ox;
+						double oy;
+						if (Double.isNaN(iax) || Double.isNaN(iay)) {
+							ox = (iax);
+							oy = (iay);
+						} else if (Double.isNaN(ibx) || Double.isNaN(iby)) {
+							ox = (ibx);
+							oy = (iby);
+						} else {
+							ox = (double) (Math.min(iax, ibx));
+							oy = (double) (Math.min(iay, iby));
+						}
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else if (bs == 1) {
 				final double iby = 0;
@@ -17153,15 +17939,28 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					float ox;
-					float oy;
-					ox = (float) (Math.sin(ix)*Math.cosh(iy));
-					oy = (float) (Math.cos(ix)*Math.sinh(iy));
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						float ox;
+						float oy;
+						ox = (float) (Math.sin(ix)*Math.cosh(iy));
+						oy = (float) (Math.cos(ix)*Math.sinh(iy));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						float ox;
+						float oy;
+						ox = (float) toLong(Math.sin(ix)*Math.cosh(iy));
+						oy = (float) toLong(Math.cos(ix)*Math.sinh(iy));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -17179,15 +17978,28 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					double ox;
-					double oy;
-					ox = (Math.sin(ix)*Math.cosh(iy));
-					oy = (Math.cos(ix)*Math.sinh(iy));
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						double ox;
+						double oy;
+						ox = (Math.sin(ix)*Math.cosh(iy));
+						oy = (Math.cos(ix)*Math.sinh(iy));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						double ox;
+						double oy;
+						ox = (double) (Math.sin(ix)*Math.cosh(iy));
+						oy = (double) (Math.cos(ix)*Math.sinh(iy));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -17705,15 +18517,28 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					float ox;
-					float oy;
-					ox = (float) (Math.cos(ix)*Math.cosh(iy));
-					oy = (float) (-Math.sin(ix)*Math.sinh(iy));
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						float ox;
+						float oy;
+						ox = (float) (Math.cos(ix)*Math.cosh(iy));
+						oy = (float) (-Math.sin(ix)*Math.sinh(iy));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						float ox;
+						float oy;
+						ox = (float) toLong(Math.cos(ix)*Math.cosh(iy));
+						oy = (float) toLong(-Math.sin(ix)*Math.sinh(iy));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -17731,15 +18556,28 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					double ox;
-					double oy;
-					ox = (Math.cos(ix)*Math.cosh(iy));
-					oy = (-Math.sin(ix)*Math.sinh(iy));
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						double ox;
+						double oy;
+						ox = (Math.cos(ix)*Math.cosh(iy));
+						oy = (-Math.sin(ix)*Math.sinh(iy));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						double ox;
+						double oy;
+						ox = (double) (Math.cos(ix)*Math.cosh(iy));
+						oy = (double) (-Math.sin(ix)*Math.sinh(iy));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -18257,21 +19095,40 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					float x;
-					float y;
-					float tf;
-					float ox;
-					float oy;
-					x = (float) (2.*ix);
-					y = (float) (2.*iy);
-					tf = (float) (1./(Math.cos(x)+Math.cosh(y)));
-					ox = (float) (tf*Math.sin(x));
-					oy = (float) (tf*Math.sinh(y));
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						float x;
+						float y;
+						float tf;
+						float ox;
+						float oy;
+						x = (float) (2.*ix);
+						y = (float) (2.*iy);
+						tf = (float) (1./(Math.cos(x)+Math.cosh(y)));
+						ox = (float) (tf*Math.sin(x));
+						oy = (float) (tf*Math.sinh(y));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						float x;
+						float y;
+						float tf;
+						float ox;
+						float oy;
+						x = (float) toLong(2.*ix);
+						y = (float) toLong(2.*iy);
+						tf = (float) toLong(1./(Math.cos(x)+Math.cosh(y)));
+						ox = (float) toLong(tf*Math.sin(x));
+						oy = (float) toLong(tf*Math.sinh(y));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -18295,21 +19152,40 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					double x;
-					double y;
-					double tf;
-					double ox;
-					double oy;
-					x = (2.*ix);
-					y = (2.*iy);
-					tf = (1./(Math.cos(x)+Math.cosh(y)));
-					ox = (tf*Math.sin(x));
-					oy = (tf*Math.sinh(y));
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						double x;
+						double y;
+						double tf;
+						double ox;
+						double oy;
+						x = (2.*ix);
+						y = (2.*iy);
+						tf = (1./(Math.cos(x)+Math.cosh(y)));
+						ox = (tf*Math.sin(x));
+						oy = (tf*Math.sinh(y));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						double x;
+						double y;
+						double tf;
+						double ox;
+						double oy;
+						x = (2.*ix);
+						y = (2.*iy);
+						tf = (double) (1./(Math.cos(x)+Math.cosh(y)));
+						ox = (double) (tf*Math.sin(x));
+						oy = (double) (tf*Math.sinh(y));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -18833,17 +19709,32 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					Complex tz;
-					float ox;
-					float oy;
-					tz = new Complex(ix, iy).asin();
-					ox = (float) (tz.getReal());
-					oy = (float) (tz.getImaginary());
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						Complex tz;
+						float ox;
+						float oy;
+						tz = new Complex(ix, iy).asin();
+						ox = (float) (tz.getReal());
+						oy = (float) (tz.getImaginary());
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						Complex tz;
+						float ox;
+						float oy;
+						tz = new Complex(ix, iy).asin();
+						ox = (float) toLong(tz.getReal());
+						oy = (float) toLong(tz.getImaginary());
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -18863,17 +19754,32 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					Complex tz;
-					double ox;
-					double oy;
-					tz = new Complex(ix, iy).asin();
-					ox = (tz.getReal());
-					oy = (tz.getImaginary());
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						Complex tz;
+						double ox;
+						double oy;
+						tz = new Complex(ix, iy).asin();
+						ox = (tz.getReal());
+						oy = (tz.getImaginary());
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						Complex tz;
+						double ox;
+						double oy;
+						tz = new Complex(ix, iy).asin();
+						ox = (tz.getReal());
+						oy = (tz.getImaginary());
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -19393,17 +20299,32 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					Complex tz;
-					float ox;
-					float oy;
-					tz = new Complex(ix, iy).acos();
-					ox = (float) (tz.getReal());
-					oy = (float) (tz.getImaginary());
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						Complex tz;
+						float ox;
+						float oy;
+						tz = new Complex(ix, iy).acos();
+						ox = (float) (tz.getReal());
+						oy = (float) (tz.getImaginary());
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						Complex tz;
+						float ox;
+						float oy;
+						tz = new Complex(ix, iy).acos();
+						ox = (float) toLong(tz.getReal());
+						oy = (float) toLong(tz.getImaginary());
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -19423,17 +20344,32 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					Complex tz;
-					double ox;
-					double oy;
-					tz = new Complex(ix, iy).acos();
-					ox = (tz.getReal());
-					oy = (tz.getImaginary());
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						Complex tz;
+						double ox;
+						double oy;
+						tz = new Complex(ix, iy).acos();
+						ox = (tz.getReal());
+						oy = (tz.getImaginary());
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						Complex tz;
+						double ox;
+						double oy;
+						tz = new Complex(ix, iy).acos();
+						ox = (tz.getReal());
+						oy = (tz.getImaginary());
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -19953,17 +20889,32 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					Complex tz;
-					float ox;
-					float oy;
-					tz = new Complex(ix, iy).atan();
-					ox = (float) (tz.getReal());
-					oy = (float) (tz.getImaginary());
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						Complex tz;
+						float ox;
+						float oy;
+						tz = new Complex(ix, iy).atan();
+						ox = (float) (tz.getReal());
+						oy = (float) (tz.getImaginary());
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						Complex tz;
+						float ox;
+						float oy;
+						tz = new Complex(ix, iy).atan();
+						ox = (float) toLong(tz.getReal());
+						oy = (float) toLong(tz.getImaginary());
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -19983,17 +20934,32 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					Complex tz;
-					double ox;
-					double oy;
-					tz = new Complex(ix, iy).atan();
-					ox = (tz.getReal());
-					oy = (tz.getImaginary());
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						Complex tz;
+						double ox;
+						double oy;
+						tz = new Complex(ix, iy).atan();
+						ox = (tz.getReal());
+						oy = (tz.getImaginary());
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						Complex tz;
+						double ox;
+						double oy;
+						tz = new Complex(ix, iy).atan();
+						ox = (tz.getReal());
+						oy = (tz.getImaginary());
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -20513,15 +21479,28 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					float ox;
-					float oy;
-					ox = (float) (Math.sinh(ix)*Math.cos(iy));
-					oy = (float) (Math.cosh(ix)*Math.sin(iy));
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						float ox;
+						float oy;
+						ox = (float) (Math.sinh(ix)*Math.cos(iy));
+						oy = (float) (Math.cosh(ix)*Math.sin(iy));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						float ox;
+						float oy;
+						ox = (float) toLong(Math.sinh(ix)*Math.cos(iy));
+						oy = (float) toLong(Math.cosh(ix)*Math.sin(iy));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -20539,15 +21518,28 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					double ox;
-					double oy;
-					ox = (Math.sinh(ix)*Math.cos(iy));
-					oy = (Math.cosh(ix)*Math.sin(iy));
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						double ox;
+						double oy;
+						ox = (Math.sinh(ix)*Math.cos(iy));
+						oy = (Math.cosh(ix)*Math.sin(iy));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						double ox;
+						double oy;
+						ox = (double) (Math.sinh(ix)*Math.cos(iy));
+						oy = (double) (Math.cosh(ix)*Math.sin(iy));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -21065,15 +22057,28 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					float ox;
-					float oy;
-					ox = (float) (Math.cosh(ix)*Math.cos(iy));
-					oy = (float) (Math.sinh(ix)*Math.sin(iy));
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						float ox;
+						float oy;
+						ox = (float) (Math.cosh(ix)*Math.cos(iy));
+						oy = (float) (Math.sinh(ix)*Math.sin(iy));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						float ox;
+						float oy;
+						ox = (float) toLong(Math.cosh(ix)*Math.cos(iy));
+						oy = (float) toLong(Math.sinh(ix)*Math.sin(iy));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -21091,15 +22096,28 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					double ox;
-					double oy;
-					ox = (Math.cosh(ix)*Math.cos(iy));
-					oy = (Math.sinh(ix)*Math.sin(iy));
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						double ox;
+						double oy;
+						ox = (Math.cosh(ix)*Math.cos(iy));
+						oy = (Math.sinh(ix)*Math.sin(iy));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						double ox;
+						double oy;
+						ox = (double) (Math.cosh(ix)*Math.cos(iy));
+						oy = (double) (Math.sinh(ix)*Math.sin(iy));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -21617,21 +22635,40 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					float tx;
-					float ty;
-					float tf;
-					float ox;
-					float oy;
-					tx = (float) (2.*ix);
-					ty = (float) (2.*iy);
-					tf = (float) (1./(Math.cos(tx)+Math.cosh(ty)));
-					ox = (float) (tf*Math.sinh(tx));
-					oy = (float) (tf*Math.sin(ty));
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						float tx;
+						float ty;
+						float tf;
+						float ox;
+						float oy;
+						tx = (float) (2.*ix);
+						ty = (float) (2.*iy);
+						tf = (float) (1./(Math.cos(tx)+Math.cosh(ty)));
+						ox = (float) (tf*Math.sinh(tx));
+						oy = (float) (tf*Math.sin(ty));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						float tx;
+						float ty;
+						float tf;
+						float ox;
+						float oy;
+						tx = (float) toLong(2.*ix);
+						ty = (float) toLong(2.*iy);
+						tf = (float) toLong(1./(Math.cos(tx)+Math.cosh(ty)));
+						ox = (float) toLong(tf*Math.sinh(tx));
+						oy = (float) toLong(tf*Math.sin(ty));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -21655,21 +22692,40 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					double tx;
-					double ty;
-					double tf;
-					double ox;
-					double oy;
-					tx = (2.*ix);
-					ty = (2.*iy);
-					tf = (1./(Math.cos(tx)+Math.cosh(ty)));
-					ox = (tf*Math.sinh(tx));
-					oy = (tf*Math.sin(ty));
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						double tx;
+						double ty;
+						double tf;
+						double ox;
+						double oy;
+						tx = (2.*ix);
+						ty = (2.*iy);
+						tf = (1./(Math.cos(tx)+Math.cosh(ty)));
+						ox = (tf*Math.sinh(tx));
+						oy = (tf*Math.sin(ty));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						double tx;
+						double ty;
+						double tf;
+						double ox;
+						double oy;
+						tx = (2.*ix);
+						ty = (2.*iy);
+						tf = (double) (1./(Math.cos(tx)+Math.cosh(ty)));
+						ox = (double) (tf*Math.sinh(tx));
+						oy = (double) (tf*Math.sin(ty));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -22193,17 +23249,32 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					Complex tz;
-					float ox;
-					float oy;
-					tz = new Complex(-iy, ix).asin();
-					ox = (float) (tz.getImaginary());
-					oy = (float) (-tz.getReal());
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						Complex tz;
+						float ox;
+						float oy;
+						tz = new Complex(-iy, ix).asin();
+						ox = (float) (tz.getImaginary());
+						oy = (float) (-tz.getReal());
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						Complex tz;
+						float ox;
+						float oy;
+						tz = new Complex(-iy, ix).asin();
+						ox = (float) toLong(tz.getImaginary());
+						oy = (float) toLong(-tz.getReal());
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -22223,17 +23294,32 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					Complex tz;
-					double ox;
-					double oy;
-					tz = new Complex(-iy, ix).asin();
-					ox = (tz.getImaginary());
-					oy = (-tz.getReal());
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						Complex tz;
+						double ox;
+						double oy;
+						tz = new Complex(-iy, ix).asin();
+						ox = (tz.getImaginary());
+						oy = (-tz.getReal());
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						Complex tz;
+						double ox;
+						double oy;
+						tz = new Complex(-iy, ix).asin();
+						ox = (tz.getImaginary());
+						oy = (-tz.getReal());
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -22753,17 +23839,32 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					Complex tz;
-					float ox;
-					float oy;
-					tz = new Complex(-iy, ix).acos();
-					ox = (float) (tz.getImaginary());
-					oy = (float) (-tz.getReal());
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						Complex tz;
+						float ox;
+						float oy;
+						tz = new Complex(-iy, ix).acos();
+						ox = (float) (tz.getImaginary());
+						oy = (float) (-tz.getReal());
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						Complex tz;
+						float ox;
+						float oy;
+						tz = new Complex(-iy, ix).acos();
+						ox = (float) toLong(tz.getImaginary());
+						oy = (float) toLong(-tz.getReal());
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -22783,17 +23884,32 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					Complex tz;
-					double ox;
-					double oy;
-					tz = new Complex(-iy, ix).acos();
-					ox = (tz.getImaginary());
-					oy = (-tz.getReal());
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						Complex tz;
+						double ox;
+						double oy;
+						tz = new Complex(-iy, ix).acos();
+						ox = (tz.getImaginary());
+						oy = (-tz.getReal());
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						Complex tz;
+						double ox;
+						double oy;
+						tz = new Complex(-iy, ix).acos();
+						ox = (tz.getImaginary());
+						oy = (-tz.getReal());
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -23313,17 +24429,32 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					Complex tz;
-					float ox;
-					float oy;
-					tz = new Complex(-iy, ix).atan();
-					ox = (float) (tz.getImaginary());
-					oy = (float) (-tz.getReal());
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						Complex tz;
+						float ox;
+						float oy;
+						tz = new Complex(-iy, ix).atan();
+						ox = (float) (tz.getImaginary());
+						oy = (float) (-tz.getReal());
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						Complex tz;
+						float ox;
+						float oy;
+						tz = new Complex(-iy, ix).atan();
+						ox = (float) toLong(tz.getImaginary());
+						oy = (float) toLong(-tz.getReal());
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -23343,17 +24474,32 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					Complex tz;
-					double ox;
-					double oy;
-					tz = new Complex(-iy, ix).atan();
-					ox = (tz.getImaginary());
-					oy = (-tz.getReal());
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						Complex tz;
+						double ox;
+						double oy;
+						tz = new Complex(-iy, ix).atan();
+						ox = (tz.getImaginary());
+						oy = (-tz.getReal());
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						Complex tz;
+						double ox;
+						double oy;
+						tz = new Complex(-iy, ix).atan();
+						ox = (tz.getImaginary());
+						oy = (-tz.getReal());
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -23873,15 +25019,28 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					float ox;
-					float oy;
-					ox = (float) (Math.log(Math.hypot(ix, iy)));
-					oy = (float) (Math.atan2(iy, ix));
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						float ox;
+						float oy;
+						ox = (float) (Math.log(Math.hypot(ix, iy)));
+						oy = (float) (Math.atan2(iy, ix));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						float ox;
+						float oy;
+						ox = (float) toLong(Math.log(Math.hypot(ix, iy)));
+						oy = (float) toLong(Math.atan2(iy, ix));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -23899,15 +25058,28 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					double ox;
-					double oy;
-					ox = (Math.log(Math.hypot(ix, iy)));
-					oy = (Math.atan2(iy, ix));
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						double ox;
+						double oy;
+						ox = (Math.log(Math.hypot(ix, iy)));
+						oy = (Math.atan2(iy, ix));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						double ox;
+						double oy;
+						ox = (double) (Math.log(Math.hypot(ix, iy)));
+						oy = (double) (Math.atan2(iy, ix));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -24425,15 +25597,28 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					float ox;
-					float oy;
-					ox = (float) (Math.log(Math.hypot(ix, iy))/Math.log(2.));
-					oy = (float) (Math.atan2(iy, ix));
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						float ox;
+						float oy;
+						ox = (float) (Math.log(Math.hypot(ix, iy))/Math.log(2.));
+						oy = (float) (Math.atan2(iy, ix));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						float ox;
+						float oy;
+						ox = (float) toLong(Math.log(Math.hypot(ix, iy))/Math.log(2.));
+						oy = (float) toLong(Math.atan2(iy, ix));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -24451,15 +25636,28 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					double ox;
-					double oy;
-					ox = (Math.log(Math.hypot(ix, iy))/Math.log(2.));
-					oy = (Math.atan2(iy, ix));
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						double ox;
+						double oy;
+						ox = (Math.log(Math.hypot(ix, iy))/Math.log(2.));
+						oy = (Math.atan2(iy, ix));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						double ox;
+						double oy;
+						ox = (double) (Math.log(Math.hypot(ix, iy))/Math.log(2.));
+						oy = (double) (Math.atan2(iy, ix));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -24977,15 +26175,28 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					float ox;
-					float oy;
-					ox = (float) (Math.log10(Math.hypot(ix, iy)));
-					oy = (float) (Math.atan2(iy, ix));
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						float ox;
+						float oy;
+						ox = (float) (Math.log10(Math.hypot(ix, iy)));
+						oy = (float) (Math.atan2(iy, ix));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						float ox;
+						float oy;
+						ox = (float) toLong(Math.log10(Math.hypot(ix, iy)));
+						oy = (float) toLong(Math.atan2(iy, ix));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -25003,15 +26214,28 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					double ox;
-					double oy;
-					ox = (Math.log10(Math.hypot(ix, iy)));
-					oy = (Math.atan2(iy, ix));
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						double ox;
+						double oy;
+						ox = (Math.log10(Math.hypot(ix, iy)));
+						oy = (Math.atan2(iy, ix));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						double ox;
+						double oy;
+						ox = (double) (Math.log10(Math.hypot(ix, iy)));
+						oy = (double) (Math.atan2(iy, ix));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -25529,15 +26753,28 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					float ox;
-					float oy;
-					ox = (float) (0.5*Math.log1p(ix*ix + 2.*ix + iy*iy));
-					oy = (float) (Math.atan2(iy, ix+1));
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						float ox;
+						float oy;
+						ox = (float) (0.5*Math.log1p(ix*ix + 2.*ix + iy*iy));
+						oy = (float) (Math.atan2(iy, ix+1));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						float ox;
+						float oy;
+						ox = (float) toLong(0.5*Math.log1p(ix*ix + 2.*ix + iy*iy));
+						oy = (float) toLong(Math.atan2(iy, ix+1));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -25555,15 +26792,28 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					double ox;
-					double oy;
-					ox = (0.5*Math.log1p(ix*ix + 2.*ix + iy*iy));
-					oy = (Math.atan2(iy, ix+1));
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						double ox;
+						double oy;
+						ox = (0.5*Math.log1p(ix*ix + 2.*ix + iy*iy));
+						oy = (Math.atan2(iy, ix+1));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						double ox;
+						double oy;
+						ox = (double) (0.5*Math.log1p(ix*ix + 2.*ix + iy*iy));
+						oy = (double) (Math.atan2(iy, ix+1));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -26081,17 +27331,32 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					float tf;
-					float ox;
-					float oy;
-					tf = (float) (Math.exp(ix));
-					ox = (float) (tf*Math.cos(iy));
-					oy = (float) (tf*Math.sin(iy));
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						float tf;
+						float ox;
+						float oy;
+						tf = (float) (Math.exp(ix));
+						ox = (float) (tf*Math.cos(iy));
+						oy = (float) (tf*Math.sin(iy));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						float tf;
+						float ox;
+						float oy;
+						tf = (float) toLong(Math.exp(ix));
+						ox = (float) toLong(tf*Math.cos(iy));
+						oy = (float) toLong(tf*Math.sin(iy));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -26111,17 +27376,32 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					double tf;
-					double ox;
-					double oy;
-					tf = (Math.exp(ix));
-					ox = (tf*Math.cos(iy));
-					oy = (tf*Math.sin(iy));
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						double tf;
+						double ox;
+						double oy;
+						tf = (Math.exp(ix));
+						ox = (tf*Math.cos(iy));
+						oy = (tf*Math.sin(iy));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						double tf;
+						double ox;
+						double oy;
+						tf = (double) (Math.exp(ix));
+						ox = (double) (tf*Math.cos(iy));
+						oy = (double) (tf*Math.sin(iy));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -26641,17 +27921,32 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					float tf;
-					float ox;
-					float oy;
-					tf = (float) (Math.expm1(ix));
-					ox = (float) (tf*Math.cos(iy));
-					oy = (float) (tf*Math.sin(iy));
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						float tf;
+						float ox;
+						float oy;
+						tf = (float) (Math.expm1(ix));
+						ox = (float) (tf*Math.cos(iy));
+						oy = (float) (tf*Math.sin(iy));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						float tf;
+						float ox;
+						float oy;
+						tf = (float) toLong(Math.expm1(ix));
+						ox = (float) toLong(tf*Math.cos(iy));
+						oy = (float) toLong(tf*Math.sin(iy));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -26671,17 +27966,32 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					double tf;
-					double ox;
-					double oy;
-					tf = (Math.expm1(ix));
-					ox = (tf*Math.cos(iy));
-					oy = (tf*Math.sin(iy));
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						double tf;
+						double ox;
+						double oy;
+						tf = (Math.expm1(ix));
+						ox = (tf*Math.cos(iy));
+						oy = (tf*Math.sin(iy));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						double tf;
+						double ox;
+						double oy;
+						tf = (double) (Math.expm1(ix));
+						ox = (double) (tf*Math.cos(iy));
+						oy = (double) (tf*Math.sin(iy));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -27201,17 +28511,32 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					Complex tz;
-					float ox;
-					float oy;
-					tz = new Complex(ix, iy).sqrt();
-					ox = (float) (tz.getReal());
-					oy = (float) (tz.getImaginary());
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						Complex tz;
+						float ox;
+						float oy;
+						tz = new Complex(ix, iy).sqrt();
+						ox = (float) (tz.getReal());
+						oy = (float) (tz.getImaginary());
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						Complex tz;
+						float ox;
+						float oy;
+						tz = new Complex(ix, iy).sqrt();
+						ox = (float) toLong(tz.getReal());
+						oy = (float) toLong(tz.getImaginary());
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -27231,17 +28556,32 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					Complex tz;
-					double ox;
-					double oy;
-					tz = new Complex(ix, iy).sqrt();
-					ox = (tz.getReal());
-					oy = (tz.getImaginary());
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						Complex tz;
+						double ox;
+						double oy;
+						tz = new Complex(ix, iy).sqrt();
+						ox = (tz.getReal());
+						oy = (tz.getImaginary());
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						Complex tz;
+						double ox;
+						double oy;
+						tz = new Complex(ix, iy).sqrt();
+						ox = (tz.getReal());
+						oy = (tz.getImaginary());
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -27761,17 +29101,32 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					Complex tz;
-					float ox;
-					float oy;
-					tz = new Complex(ix, iy).pow(new Complex(1./3.,0));
-					ox = (float) (tz.getReal());
-					oy = (float) (tz.getImaginary());
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						Complex tz;
+						float ox;
+						float oy;
+						tz = new Complex(ix, iy).pow(new Complex(1./3.,0));
+						ox = (float) (tz.getReal());
+						oy = (float) (tz.getImaginary());
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						Complex tz;
+						float ox;
+						float oy;
+						tz = new Complex(ix, iy).pow(new Complex(1./3.,0));
+						ox = (float) toLong(tz.getReal());
+						oy = (float) toLong(tz.getImaginary());
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -27791,17 +29146,32 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					Complex tz;
-					double ox;
-					double oy;
-					tz = new Complex(ix, iy).pow(new Complex(1./3.,0));
-					ox = (tz.getReal());
-					oy = (tz.getImaginary());
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						Complex tz;
+						double ox;
+						double oy;
+						tz = new Complex(ix, iy).pow(new Complex(1./3.,0));
+						ox = (tz.getReal());
+						oy = (tz.getImaginary());
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						Complex tz;
+						double ox;
+						double oy;
+						tz = new Complex(ix, iy).pow(new Complex(1./3.,0));
+						ox = (tz.getReal());
+						oy = (tz.getImaginary());
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -28321,15 +29691,28 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					float ox;
-					float oy;
-					ox = (float) (ix*ix - iy*iy);
-					oy = (float) (2.*ix*iy);
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						float ox;
+						float oy;
+						ox = (float) (ix*ix - iy*iy);
+						oy = (float) (2.*ix*iy);
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						float ox;
+						float oy;
+						ox = (float) toLong(ix*ix - iy*iy);
+						oy = (float) toLong(2.*ix*iy);
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -28347,15 +29730,28 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					double ox;
-					double oy;
-					ox = (ix*ix - iy*iy);
-					oy = (2.*ix*iy);
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						double ox;
+						double oy;
+						ox = (ix*ix - iy*iy);
+						oy = (2.*ix*iy);
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						double ox;
+						double oy;
+						ox = (ix*ix - iy*iy);
+						oy = (2.*ix*iy);
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -28873,15 +30269,28 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					float ox;
-					float oy;
-					ox = (float) (Math.floor(ix));
-					oy = (float) (Math.floor(iy));
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						float ox;
+						float oy;
+						ox = (float) (Math.floor(ix));
+						oy = (float) (Math.floor(iy));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						float ox;
+						float oy;
+						ox = (float) toLong(Math.floor(ix));
+						oy = (float) toLong(Math.floor(iy));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -28899,15 +30308,28 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					double ox;
-					double oy;
-					ox = (Math.floor(ix));
-					oy = (Math.floor(iy));
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						double ox;
+						double oy;
+						ox = (Math.floor(ix));
+						oy = (Math.floor(iy));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						double ox;
+						double oy;
+						ox = (double) (Math.floor(ix));
+						oy = (double) (Math.floor(iy));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -29425,15 +30847,28 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					float ox;
-					float oy;
-					ox = (float) (Math.ceil(ix));
-					oy = (float) (Math.ceil(iy));
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						float ox;
+						float oy;
+						ox = (float) (Math.ceil(ix));
+						oy = (float) (Math.ceil(iy));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						float ox;
+						float oy;
+						ox = (float) toLong(Math.ceil(ix));
+						oy = (float) toLong(Math.ceil(iy));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -29451,15 +30886,28 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					double ox;
-					double oy;
-					ox = (Math.ceil(ix));
-					oy = (Math.ceil(iy));
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						double ox;
+						double oy;
+						ox = (Math.ceil(ix));
+						oy = (Math.ceil(iy));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						double ox;
+						double oy;
+						ox = (double) (Math.ceil(ix));
+						oy = (double) (Math.ceil(iy));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -29977,15 +31425,28 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					float ox;
-					float oy;
-					ox = (float) (Math.rint(ix));
-					oy = (float) (Math.rint(iy));
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						float ox;
+						float oy;
+						ox = (float) (Math.rint(ix));
+						oy = (float) (Math.rint(iy));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						float ox;
+						float oy;
+						ox = (float) toLong(Math.rint(ix));
+						oy = (float) toLong(Math.rint(iy));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -30003,15 +31464,28 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					double ox;
-					double oy;
-					ox = (Math.rint(ix));
-					oy = (Math.rint(iy));
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						double ox;
+						double oy;
+						ox = (Math.rint(ix));
+						oy = (Math.rint(iy));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						double ox;
+						double oy;
+						ox = (double) (Math.rint(ix));
+						oy = (double) (Math.rint(iy));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -30529,15 +32003,28 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					float ox;
-					float oy;
-					ox = (float) (toLong(ix));
-					oy = (float) (toLong(iy));
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						float ox;
+						float oy;
+						ox = (float) (toLong(ix));
+						oy = (float) (toLong(iy));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						float ox;
+						float oy;
+						ox = (float) toLong(toLong(ix));
+						oy = (float) toLong(toLong(iy));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -30555,15 +32042,28 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					double ox;
-					double oy;
-					ox = (toLong(ix));
-					oy = (toLong(iy));
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						double ox;
+						double oy;
+						ox = (toLong(ix));
+						oy = (toLong(iy));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						double ox;
+						double oy;
+						ox = (toLong(ix));
+						oy = (toLong(iy));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -31081,15 +32581,28 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					float ox;
-					float oy;
-					ox = (float) (Math.toDegrees(ix));
-					oy = (float) (Math.toDegrees(iy));
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						float ox;
+						float oy;
+						ox = (float) (Math.toDegrees(ix));
+						oy = (float) (Math.toDegrees(iy));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						float ox;
+						float oy;
+						ox = (float) toLong(Math.toDegrees(ix));
+						oy = (float) toLong(Math.toDegrees(iy));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -31107,15 +32620,28 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					double ox;
-					double oy;
-					ox = (Math.toDegrees(ix));
-					oy = (Math.toDegrees(iy));
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						double ox;
+						double oy;
+						ox = (Math.toDegrees(ix));
+						oy = (Math.toDegrees(iy));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						double ox;
+						double oy;
+						ox = (double) (Math.toDegrees(ix));
+						oy = (double) (Math.toDegrees(iy));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -31633,15 +33159,28 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					float ox;
-					float oy;
-					ox = (float) (Math.toRadians(ix));
-					oy = (float) (Math.toRadians(iy));
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						float ox;
+						float oy;
+						ox = (float) (Math.toRadians(ix));
+						oy = (float) (Math.toRadians(iy));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						float ox;
+						float oy;
+						ox = (float) toLong(Math.toRadians(ix));
+						oy = (float) toLong(Math.toRadians(iy));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -31659,15 +33198,28 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					double ox;
-					double oy;
-					ox = (Math.toRadians(ix));
-					oy = (Math.toRadians(iy));
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						double ox;
+						double oy;
+						ox = (Math.toRadians(ix));
+						oy = (Math.toRadians(iy));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						double ox;
+						double oy;
+						ox = (double) (Math.toRadians(ix));
+						oy = (double) (Math.toRadians(iy));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -32185,15 +33737,28 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					float ox;
-					float oy;
-					ox = (float) (Math.signum(ix));
-					oy = (float) (Math.signum(iy));
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						float ox;
+						float oy;
+						ox = (float) (Math.signum(ix));
+						oy = (float) (Math.signum(iy));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						float ox;
+						float oy;
+						ox = (float) toLong(Math.signum(ix));
+						oy = (float) toLong(Math.signum(iy));
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -32211,15 +33776,28 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					double ox;
-					double oy;
-					ox = (Math.signum(ix));
-					oy = (Math.signum(iy));
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						double ox;
+						double oy;
+						ox = (Math.signum(ix));
+						oy = (Math.signum(iy));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						double ox;
+						double oy;
+						ox = (double) (Math.signum(ix));
+						oy = (double) (Math.signum(iy));
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -32737,15 +34315,28 @@ public class Maths {
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					float ox;
-					float oy;
-					ox = (float) (-ix);
-					oy = (float) (-iy);
-					oc64data[it.oIndex] = ox;
-					oc64data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						float ox;
+						float oy;
+						ox = (float) (-ix);
+						oy = (float) (-iy);
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						float ox;
+						float oy;
+						ox = (float) toLong(-ix);
+						oy = (float) toLong(-iy);
+						oc64data[it.oIndex] = ox;
+						oc64data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {
@@ -32763,15 +34354,28 @@ public class Maths {
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
 			if (as == 1) {
-				final double iy = 0;
-				while (it.hasNext()) {
-					final double ix = it.aDouble;
-					double ox;
-					double oy;
-					ox = (-ix);
-					oy = (-iy);
-					oc128data[it.oIndex] = ox;
-					oc128data[it.oIndex + 1] = oy;
+				if (it.isOutputDouble()) {
+					final double iy = 0;
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						double ox;
+						double oy;
+						ox = (-ix);
+						oy = (-iy);
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
+				} else {
+					final long iy = 0;
+					while (it.hasNext()) {
+						final long ix = it.aLong;
+						double ox;
+						double oy;
+						ox = (-ix);
+						oy = (-iy);
+						oc128data[it.oIndex] = ox;
+						oc128data[it.oIndex + 1] = oy;
+					}
 				}
 			} else {
 				while (it.hasNext()) {

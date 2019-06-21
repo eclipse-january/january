@@ -366,21 +366,58 @@ def loop(text, jtype, ovar, is_int, override_long):
 
 def loopcomplex(text, jtype, ovar, real, is_int):
     print("\t\t\tif (as == 1) {")
+    print("\t\t\t\tif (it.isOutputDouble()) {")
     if is_binaryop:
-        print("\t\t\t\tfinal double iay = 0;")
+        print("\t\t\t\t\tfinal double iay = 0;")
+        print("\t\t\t\t\tif (db.isComplex()) {")
+        print("\t\t\t\t\t\twhile (it.hasNext()) {")
+        print("\t\t\t\t\t\t\tfinal double iax = it.aDouble;")
+        print("\t\t\t\t\t\t\tfinal double ibx = it.bDouble;")
+        print("\t\t\t\t\t\t\tfinal double iby = db.getElementDoubleAbs(it.bIndex + 1);")
+        transtext(text, jtype, lprefix="\t\t\t\t\t\t\t", is_int=is_int)
+        print("\t\t\t\t\t\t\t%s[it.oIndex] = ox;" % ovar)
+        if not real:
+            print("\t\t\t\t\t\t\t%s[it.oIndex + 1] = oy;" % ovar)
+        print("\t\t\t\t\t\t}")
+        print("\t\t\t\t\t} else {")
+        print("\t\t\t\t\t\twhile (it.hasNext()) {")
+        print("\t\t\t\t\t\t\tfinal double iax = it.aDouble;")
+        print("\t\t\t\t\t\t\tfinal double ibx = it.bDouble;")
+        print("\t\t\t\t\t\t\tfinal double iby = 0;")
+        transtext(text, jtype, lprefix="\t\t\t\t\t\t\t", is_int=is_int)
+        print("\t\t\t\t\t\t\t%s[it.oIndex] = ox;" % ovar)
+        if not real:
+            print("\t\t\t\t\t\t\t%s[it.oIndex + 1] = oy;" % ovar)
+        print("\t\t\t\t\t\t}")
+        print("\t\t\t\t\t}")
     else:
-        print("\t\t\t\tfinal double iy = 0;")
-    print("\t\t\t\twhile (it.hasNext()) {")
+        print("\t\t\t\t\tfinal double iy = 0;")
+    
+        print("\t\t\t\t\twhile (it.hasNext()) {")
+        print("\t\t\t\t\t\tfinal double ix = it.aDouble;")
+        transtext(text, jtype, lprefix="\t\t\t\t\t\t", is_int=is_int)
+        print("\t\t\t\t\t\t%s[it.oIndex] = ox;" % ovar)
+        if not real:
+            print("\t\t\t\t\t\t%s[it.oIndex + 1] = oy;" % ovar)
+        print("\t\t\t\t\t}")
+
+    print("\t\t\t\t} else {")
     if is_binaryop:
-        print("\t\t\t\t\tfinal double iax = it.aDouble;")
-        print("\t\t\t\t\tfinal double ibx = it.bDouble;")
-        print("\t\t\t\t\tfinal double iby = db.getElementDoubleAbs(it.bIndex + 1);")
+        print("\t\t\t\t\tfinal long iay = 0;")
     else:
-        print("\t\t\t\t\tfinal double ix = it.aDouble;")
-    transtext(text, jtype, lprefix="\t\t\t\t\t", is_int=is_int)
-    print("\t\t\t\t\t%s[it.oIndex] = ox;" % ovar)
+        print("\t\t\t\t\tfinal long iy = 0;")
+    print("\t\t\t\t\twhile (it.hasNext()) {")
+    if is_binaryop:
+        print("\t\t\t\t\t\tfinal long iax = it.aLong;")
+        print("\t\t\t\t\t\tfinal long ibx = it.bLong;")
+        print("\t\t\t\t\t\tfinal long iby = 0;")
+    else:
+        print("\t\t\t\t\t\tfinal long ix = it.aLong;")
+    transtext(text, jtype, lprefix="\t\t\t\t\t\t", is_int=True, use_long=True)
+    print("\t\t\t\t\t\t%s[it.oIndex] = ox;" % ovar)
     if not real:
-        print("\t\t\t\t\t%s[it.oIndex + 1] = oy;" % ovar)
+        print("\t\t\t\t\t\t%s[it.oIndex + 1] = oy;" % ovar)
+    print("\t\t\t\t\t}")
     print("\t\t\t\t}")
     if is_binaryop:
         print("\t\t\t} else if (bs == 1) {")
