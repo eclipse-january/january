@@ -1,87 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.january" version="2">
-    <resource path="src/org/eclipse/january/dataset/AbstractDataset.java" type="org.eclipse.january.dataset.AbstractDataset">
-        <filter id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.january.dataset.AbstractDataset"/>
-                <message_argument value="getMetadataMap(Dataset, boolean)"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/january/dataset/Dataset.java" type="org.eclipse.january.dataset.Dataset">
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.january.dataset.Dataset"/>
-                <message_argument value="count(int[], boolean[])"/>
-            </message_arguments>
-        </filter>
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.january.dataset.Dataset"/>
-                <message_argument value="max(int[], boolean[])"/>
-            </message_arguments>
-        </filter>
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.january.dataset.Dataset"/>
-                <message_argument value="mean(int[], boolean[])"/>
-            </message_arguments>
-        </filter>
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.january.dataset.Dataset"/>
-                <message_argument value="min(int[], boolean[])"/>
-            </message_arguments>
-        </filter>
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.january.dataset.Dataset"/>
-                <message_argument value="peakToPeak(int[], boolean[])"/>
-            </message_arguments>
-        </filter>
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.january.dataset.Dataset"/>
-                <message_argument value="product(int[], boolean[])"/>
-            </message_arguments>
-        </filter>
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.january.dataset.Dataset"/>
-                <message_argument value="rootMeanSquare(int[], boolean[])"/>
-            </message_arguments>
-        </filter>
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.january.dataset.Dataset"/>
-                <message_argument value="stdDeviation(int[])"/>
-            </message_arguments>
-        </filter>
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.january.dataset.Dataset"/>
-                <message_argument value="stdDeviation(int[], boolean, boolean[])"/>
-            </message_arguments>
-        </filter>
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.january.dataset.Dataset"/>
-                <message_argument value="sum(int[], boolean[])"/>
-            </message_arguments>
-        </filter>
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.january.dataset.Dataset"/>
-                <message_argument value="variance(int[])"/>
-            </message_arguments>
-        </filter>
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.january.dataset.Dataset"/>
-                <message_argument value="variance(int[], boolean, boolean[])"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/january/dataset/LazyDataset.java" type="org.eclipse.january.dataset.LazyDataset">
         <filter id="336658481">
             <message_arguments>
@@ -119,90 +37,52 @@
                 <message_argument value="transformInput(IDataset)"/>
             </message_arguments>
         </filter>
-    </resource>
-    <resource path="src/org/eclipse/january/dataset/Maths.java" type="org.eclipse.january.dataset.Maths">
-        <filter id="338849923">
+        <filter id="1141899266">
             <message_arguments>
-                <message_argument value="org.eclipse.january.dataset.Maths"/>
+                <message_argument value="2.2"/>
+                <message_argument value="2.3"/>
+                <message_argument value="padding"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.2"/>
+                <message_argument value="2.3"/>
+                <message_argument value="sShape"/>
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/january/dataset/RGBDataset.java" type="org.eclipse.january.dataset.RGBDataset">
-        <filter id="338792546">
+    <resource path="src/org/eclipse/january/dataset/LazyDynamicDataset.java" type="org.eclipse.january.dataset.LazyDynamicDataset">
+        <filter id="1141899266">
             <message_arguments>
-                <message_argument value="org.eclipse.january.dataset.RGBDataset"/>
-                <message_argument value="createGreyDataset(T)"/>
-            </message_arguments>
-        </filter>
-        <filter id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.january.dataset.RGBDataset"/>
-                <message_argument value="createGreyDataset(T, double, double, double)"/>
+                <message_argument value="2.2"/>
+                <message_argument value="2.3"/>
+                <message_argument value="LazyDynamicDataset(LazyDynamicDataset)"/>
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/january/metadata/ErrorMetadata.java" type="org.eclipse.january.metadata.ErrorMetadata">
-        <filter id="403804204">
+    <resource path="src/org/eclipse/january/dataset/LazyWriteableDataset.java" type="org.eclipse.january.dataset.LazyWriteableDataset">
+        <filter id="1141899266">
             <message_arguments>
-                <message_argument value="org.eclipse.january.metadata.ErrorMetadata"/>
-                <message_argument value="initialize(ILazyDataset)"/>
+                <message_argument value="2.2"/>
+                <message_argument value="2.3"/>
+                <message_argument value="LazyWriteableDataset(LazyWriteableDataset)"/>
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/january/metadata/StatisticsMetadata.java" type="org.eclipse.january.metadata.StatisticsMetadata">
-        <filter id="403804204">
+    <resource path="src/org/eclipse/january/dataset/ShapeUtils.java" type="org.eclipse.january.dataset.ShapeUtils">
+        <filter id="1141899266">
             <message_arguments>
-                <message_argument value="org.eclipse.january.metadata.StatisticsMetadata"/>
-                <message_argument value="getCount(int[], boolean[])"/>
+                <message_argument value="2.2"/>
+                <message_argument value="2.3"/>
+                <message_argument value="calcShapePadding(int[], int[])"/>
             </message_arguments>
         </filter>
-        <filter id="403804204">
+        <filter id="1141899266">
             <message_arguments>
-                <message_argument value="org.eclipse.january.metadata.StatisticsMetadata"/>
-                <message_argument value="getMaximum(int[], boolean[])"/>
-            </message_arguments>
-        </filter>
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.january.metadata.StatisticsMetadata"/>
-                <message_argument value="getMean(int[], boolean[])"/>
-            </message_arguments>
-        </filter>
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.january.metadata.StatisticsMetadata"/>
-                <message_argument value="getMinimum(int[], boolean[])"/>
-            </message_arguments>
-        </filter>
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.january.metadata.StatisticsMetadata"/>
-                <message_argument value="getSum(int[], boolean[])"/>
-            </message_arguments>
-        </filter>
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.january.metadata.StatisticsMetadata"/>
-                <message_argument value="getVariance(int[], boolean, boolean[])"/>
-            </message_arguments>
-        </filter>
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.january.metadata.StatisticsMetadata"/>
-                <message_argument value="isDirty(Dataset)"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/january/metadata/UnitMetadata.java" type="org.eclipse.january.metadata.UnitMetadata">
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.january.metadata.UnitMetadata"/>
-                <message_argument value="initialize(Unit&lt;?&gt;)"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="initialize(Unit&lt;?&gt;)"/>
+                <message_argument value="2.2"/>
+                <message_argument value="2.3"/>
+                <message_argument value="differsByOnes(int[], int[])"/>
             </message_arguments>
         </filter>
     </resource>
