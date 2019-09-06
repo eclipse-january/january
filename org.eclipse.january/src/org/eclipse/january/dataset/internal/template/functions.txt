@@ -456,9 +456,35 @@ complex:
   ox = -ix;
   oy = -iy;
 
+func: 1
+  lowerClip - clip elements to lower limit; @since 2.3
+integer:
+  if (ix < pax)
+       ox = pax;
+  else
+       ox = ix;
+real:
+  if (ix < pax)
+       ox = pax;
+  else
+       ox = ix;
+
+func: 1
+  upperClip - clip elements to upper limit; @since 2.3
+integer:
+  if (ix > pax)
+       ox = pax;
+  else
+       ox = ix;
+real:
+  if (ix > pax)
+       ox = pax;
+  else
+       ox = ix;
+
 func: 2
   clip - clip elements to limits
-integer_with_reals:
+integer:
   if (ix < pax)
   	ox = pax;
   else if (ix > pbx)

@@ -2432,4 +2432,24 @@ public class MathsTest {
 		Maths.add(a, b, c);
 		TestUtils.assertDatasetEquals(e, c);
 	}
+
+	@Test
+	public void testClipping() {
+		Dataset a = DatasetFactory.createFromObject(FloatDataset.class,
+				new float[] {0, 0, 3, 0, 6, 0, 9, 0, 12, 0, 15, 0});
+
+		ByteDataset b = a.cast(ByteDataset.class);
+		Dataset c = b;
+		TestUtils.assertDatasetEquals(Maths.clip(c, 0, 9), Maths.upperClip(c, 9));
+		TestUtils.assertDatasetEquals(Maths.clip(c, 0, 8.1), Maths.upperClip(c, 8.1));
+		TestUtils.assertDatasetEquals(Maths.clip(c, 2, 15), Maths.lowerClip(c, 2));
+		TestUtils.assertDatasetEquals(Maths.clip(c, 2.1, 15), Maths.lowerClip(c, 2.1));
+
+		a.idivide(10);
+		c = a;
+		TestUtils.assertDatasetEquals(Maths.clip(c, 0, 0.9), Maths.upperClip(c, 0.9));
+		TestUtils.assertDatasetEquals(Maths.clip(c, 0, 0.81), Maths.upperClip(c, 0.81));
+		TestUtils.assertDatasetEquals(Maths.clip(c, 0.2, 15), Maths.lowerClip(c, 0.2));
+		TestUtils.assertDatasetEquals(Maths.clip(c, 0.21, 15), Maths.lowerClip(c, 0.21));
+	}
 }

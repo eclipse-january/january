@@ -22,7 +22,7 @@ $ python generatefunctions.py functions.txt MathsPreface.java > Maths.java
 The format is
 
 func: [number of parameters]
-  foo - javadoc for foo
+  foo - javadoc for foo; @since 2.1
 integer:
   ox = ix + 1
 real:
@@ -42,7 +42,7 @@ An "ifunc" allows integer datasets to be output.
 
 Or a binary operation can be specified like:
 biop: [number of parameters] [(s|u) [(s|u)]]
-  add - a + b, addition of a and b
+  add - a + b, addition of a and b; @since: 2.1
 integer:
   ox = iax + ibx;
 real:
@@ -99,7 +99,7 @@ is_binaryop = False
 def_unsigned_mask = False
 allow_ints = False
 
-def oldmethod(name, jdoc=None, params=0):
+def oldmethod(name, jdoc=None, edoc="", params=0):
     if is_binaryop:
         print("\t/**\n\t * %s operator" %  name)
         print("\t * @param a")
@@ -122,26 +122,30 @@ def oldmethod(name, jdoc=None, params=0):
             ptext += "%s, " % p
         ptext = ptext[:-2]
         if is_binaryop:
-            print("\t * @return %s\n\t */" % jdoc)
+            print("\t * @return %s\n%s\t */" % (jdoc, edoc))
             print("\tpublic static Dataset %s(final Object a, final Object b, %s) {" % (name, psig))
             print ("\t\treturn %s(a, b, null, %s);" % (name, ptext))
         else:
-            print("\t * @return dataset\n\t */")
+            print("\t * @return dataset\n%s\t */" % edoc)
             print("\tpublic static Dataset %s(final Object a, %s) {" % (name, psig))
             print ("\t\treturn %s(a, null, %s);" % (name, ptext))
     else:
         if is_binaryop:
-            print("\t * @return %s\n\t */" % jdoc)
+            print("\t * @return %s\n%s\t */" % (jdoc, edoc))
             print("\tpublic static Dataset %s(final Object a, final Object b) {" % name)
             print("\t\treturn %s(a, b, null);" % name)
         else:
-            print("\t * @return dataset\n\t */")
+            print("\t * @return dataset\n%s\t */" % edoc)
             print("\tpublic static Dataset %s(final Object a) {" % name)
             print("\t\treturn %s(a, null);" % name)
     print("\t}\n")
 
-def beginmethod(name, jdoc=None, params=0):
-    oldmethod(name, jdoc, params)
+def beginmethod(name, jdoc=None, edoc=None, params=0):
+    if edoc is None:
+        edoc = ""
+    else:
+        edoc = "".join(["\t * %s\n" % e.strip() for e in edoc ])
+    oldmethod(name, jdoc, edoc, params)
     if is_binaryop:
         print("\t/**\n\t * %s operator" %  name)
         print("\t * @param a")
@@ -163,17 +167,17 @@ def beginmethod(name, jdoc=None, params=0):
         for p in plist:
             print("\t * @param %s" % p)
         if is_binaryop:
-            print("\t * @return %s\n\t */" % jdoc)
+            print("\t * @return %s\n%s\t */" % (jdoc, edoc))
             print("\tpublic static Dataset %s(final Object a, final Object b, final Dataset o, %s) {" % (name, psig))
         else:
-            print("\t * @return dataset\n\t */")
+            print("\t * @return dataset\n%s\t */" % edoc)
             print("\tpublic static Dataset %s(final Object a, final Dataset o, %s) {" % (name, psig))
     else:
         if is_binaryop:
-            print("\t * @return %s\n\t */" % jdoc)
+            print("\t * @return %s\n%s\t */" % (jdoc, edoc))
             print("\tpublic static Dataset %s(final Object a, final Object b, final Dataset o) {" % name)
         else:
-            print("\t * @return dataset\n\t */")
+            print("\t * @return dataset\n%s\t */" % edoc)
             print("\tpublic static Dataset %s(final Object a, final Dataset o) {" % name)
     print("\t\tDataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);")
     if is_binaryop:
@@ -691,12 +695,20 @@ def func(cargo):
         l = l.strip(' ')
         name, jdoc = l.split(" - ", 1)
         jdoc = jdoc.strip()
+        jextra = jdoc.split(';')
+        if len(jextra) >= 1: # add new lines of javadocs
+            edoc = jextra[1:]
+            jdoc = jextra[0]
+        else:
+            edoc = None
+
         jbits = jdoc.split(',')
         if len(jbits) == 2: # escape expression
             doc = '{@code %s},%s' % tuple(jbits)
         else:
             doc = jdoc
-        beginmethod(name, doc, nparams)
+
+        beginmethod(name, doc, edoc, nparams)
 #        if len(plist) > 0: print "Parameters", plist
         return cases, (f, '', name, jdoc, [])
 
