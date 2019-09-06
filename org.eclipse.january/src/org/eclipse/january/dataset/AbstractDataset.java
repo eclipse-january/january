@@ -134,7 +134,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		view.base = orig instanceof AbstractDataset ? ((AbstractDataset) orig).base : null;
 
 		if (clone) {
-			view.shape = orig.getShape();
+			view.shape = orig.getShapeRef() == null ? null : orig.getShape();
 			view.stride = orig instanceof AbstractDataset && ((AbstractDataset) orig).stride != null ?
 					((AbstractDataset) orig).stride.clone() : null;
 		} else {
@@ -395,7 +395,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	@Override
 	public Dataset getBy1DIndex(IntegerDataset index) {
 		final int is = getElementsPerItem();
-		final Dataset r = DatasetFactory.zeros(is, getClass(), index.getShape());
+		final Dataset r = DatasetFactory.zeros(is, getClass(), index.getShapeRef());
 		final IntegerIterator iter = new IntegerIterator(index, size, is);
 
 		int i = 0;

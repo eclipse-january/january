@@ -1539,8 +1539,9 @@ public class Maths {
 					}
 					final double d1 = xa[0] - xa[1];
 					double t = d1 - v + xa[0];
-					if (t >= 0)
+					if (t >= 0) {
 						continue; // sets to zero
+					}
 					t /= d1;
 					r.setAbs(k, t * d.getDouble(isReversed ? s : 0));
 				} else if (i == -s - 2) {
@@ -1550,8 +1551,9 @@ public class Maths {
 					}
 					final double d1 = xa[s] - xa[s - 1];
 					double t = d1 - v + xa[s];
-					if (t <= 0)
+					if (t <= 0) {
 						continue; // sets to zero
+					}
 					t /= d1;
 					r.setAbs(k, t * d.getDouble(isReversed ? 0 : s));
 				} else {
@@ -1587,8 +1589,9 @@ public class Maths {
 
 		final int i0 = (int) Math.floor(x0);
 		final int e0 = d.getSize() - 1;
-		if (i0 < -1 || i0 > e0)
+		if (i0 < -1 || i0 > e0) {
 			return 0;
+		}
 
 		final double u0 = x0 - i0;
 
@@ -1621,8 +1624,9 @@ public class Maths {
 
 		final int i0 = (int) Math.floor(x0);
 		final int e0 = d.getSize() - 1;
-		if (i0 < -1 || i0 > e0)
+		if (i0 < -1 || i0 > e0) {
 			return 0;
+		}
 
 		final double u0 = x0 - i0;
 
@@ -1653,8 +1657,9 @@ public class Maths {
 		assert d.getRank() == 1;
 
 		final int is = d.getElementsPerItem();
-		if (is != values.length)
+		if (is != values.length) {
 			throw new IllegalArgumentException("Output array length must match elements in item");
+		}
 		final double[] f1, f2;
 
 		final int i0 = (int) Math.floor(x0);
@@ -1667,23 +1672,27 @@ public class Maths {
 
 		if (u0 > 0) {
 			f1 = new double[is];
-			if (i0 >= 0)
+			if (i0 >= 0) {
 				d.getDoubleArray(f1, i0);
+			}
 			double t = 1 - u0;
 			if (i0 == e0) {
-				for (int j = 0; j < is; j++)
+				for (int j = 0; j < is; j++) {
 					values[j] = t * f1[j];
+				}
 			} else {
 				f2 = new double[is];
 				d.getDoubleArray(f2, i0 + 1);
-				for (int j = 0; j < is; j++)
+				for (int j = 0; j < is; j++) {
 					values[j] = t * f1[j] + u0 * f2[j];
+				}
 			}
 		} else {
-			if (i0 >= 0)
+			if (i0 >= 0) {
 				d.getDoubleArray(values, i0);
-			else
+			} else {
 				Arrays.fill(values, 0);
+			}
 		}
 	}
 
@@ -1710,8 +1719,9 @@ public class Maths {
 		final int i1 = (int) Math.floor(x1);
 		final double u0 = x0 - i0;
 		final double u1 = x1 - i1;
-		if (i0 < -1 || i0 > e0 || i1 < -1 || i1 > e1)
+		if (i0 < -1 || i0 > e0 || i1 < -1 || i1 > e1) {
 			return 0;
+		}
 
 		// use bilinear interpolation
 		double r = 0;
@@ -1765,10 +1775,11 @@ public class Maths {
 	 * @return bilinear interpolation
 	 */
 	public static double interpolate(final Dataset d, final Dataset m, final double x0, final double x1) {
-		if (m == null)
+		if (m == null) {
 			return interpolate(d, x0, x1);
+		}
 
-		final int[] s = d.getShape();
+		final int[] s = d.getShapeRef();
 		assert s.length == 2;
 		assert m.getRank() == 2;
 
@@ -1778,8 +1789,9 @@ public class Maths {
 		final int i1 = (int) Math.floor(x1);
 		final double u0 = x0 - i0;
 		final double u1 = x1 - i1;
-		if (i0 < -1 || i0 > e0 || i1 < -1 || i1 > e1)
+		if (i0 < -1 || i0 > e0 || i1 < -1 || i1 > e1) {
 			return 0;
+		}
 
 		// use bilinear interpolation
 		double r = 0;
@@ -1829,8 +1841,9 @@ public class Maths {
 		assert s.length == 2;
 
 		final int is = d.getElementsPerItem();
-		if (is != values.length)
+		if (is != values.length) {
 			throw new IllegalArgumentException("Output array length must match elements in item");
+		}
 
 		final int e0 = s[0] - 1;
 		final int e1 = s[1] - 1;
@@ -1844,8 +1857,9 @@ public class Maths {
 		}
 		// use bilinear interpolation
 		double[] f1 = new double[is];
-		if (i0 >= 0 && i1 >= 0)
+		if (i0 >= 0 && i1 >= 0) {
 			d.getDoubleArray(f1, i0, i1);
+		}
 
 		if (u1 > 0) {
 			if (u0 > 0) {
@@ -1853,42 +1867,51 @@ public class Maths {
 				double[] f3 = new double[is];
 				double[] f4 = new double[is];
 				if (i0 != e0) {
-					if (i1 != e1)
+					if (i1 != e1) {
 						d.getDoubleArray(f3, i0 + 1, i1 + 1);
-					if (i1 >= 0)
+					}
+					if (i1 >= 0) {
 						d.getDoubleArray(f4, i0 + 1, i1);
+					}
 				}
-				if (i0 >= 0 && i1 != e1)
+				if (i0 >= 0 && i1 != e1) {
 					d.getDoubleArray(f2, i0, i1 + 1);
+				}
 				final double t0 = 1 - u0;
 				final double t1 = 1 - u1;
 				final double w1 = t0 * t1;
 				final double w2 = t0 * u1;
 				final double w3 = u0 * u1;
 				final double w4 = u0 * t1;
-				for (int j = 0; j < is; j++)
+				for (int j = 0; j < is; j++) {
 					values[j] = w1 * f1[j] + w2 * f2[j] + w3 * f3[j] + w4 * f4[j];
+				}
 			} else {
 				double[] f2 = new double[is];
-				if (i0 >= 0 && i1 != e1)
+				if (i0 >= 0 && i1 != e1) {
 					d.getDoubleArray(f2, i0, i1 + 1);
+				}
 				final double t1 = 1 - u1;
-				for (int j = 0; j < is; j++)
+				for (int j = 0; j < is; j++) {
 					values[j] = t1 * f1[j] + u1 * f2[j];
+				}
 			}
 		} else { // exactly on axis 1
 			if (u0 > 0) {
 				double[] f4 = new double[is];
-				if (i0 != e0 && i1 >= 0)
+				if (i0 != e0 && i1 >= 0) {
 					d.getDoubleArray(f4, i0 + 1, i1);
+				}
 				final double t0 = 1 - u0;
-				for (int j = 0; j < is; j++)
+				for (int j = 0; j < is; j++) {
 					values[j] = t0 * f1[j] + u0 * f4[j];
+				}
 			} else { // exactly on axis 0
-				if (i0 >= 0 && i1 >= 0)
+				if (i0 >= 0 && i1 >= 0) {
 					d.getDoubleArray(values, i0, i1);
-				else
+				} else {
 					Arrays.fill(values, 0);
+				}
 			}
 		}
 	}
@@ -2035,8 +2058,9 @@ public class Maths {
 		}
 
 		final int is = d.getElementsPerItem();
-		if (is != values.length)
+		if (is != values.length) {
 			throw new IllegalArgumentException("Output array length must match elements in item");
+		}
 
 		// now do it iteratively
 		int[] l = new int[r]; // lower indexes
@@ -2655,7 +2679,7 @@ public class Maths {
 		nshape[axis] -= n;
 		ds = DatasetFactory.zeros(is, clazz, nshape);
 		if (rank == 1) {
-			difference(DatasetUtils.convertToDataset(a), ds, n);
+			difference(a, ds, n);
 		} else {
 			final Dataset src = DatasetFactory.zeros(is, clazz, a.getShapeRef()[axis]);
 			final Dataset dest = DatasetFactory.zeros(is, clazz, nshape[axis]);

@@ -212,7 +212,7 @@ public class AxesMetadataTest {
 
 		int[] map = new int[] {3, 1, 2, 0};
 		Dataset t = dataset.getTransposedView(map);
-		assertArrayEquals(new int[]{4, 2, 3, 1}, t.getShape());
+		assertArrayEquals(new int[]{4, 2, 3, 1}, t.getShapeRef());
 		amd = t.getMetadata(AxesMetadata.class).get(0);
 
 		for (int i = 0; i < r; i++) {

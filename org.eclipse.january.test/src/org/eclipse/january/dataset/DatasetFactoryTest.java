@@ -314,7 +314,7 @@ public class DatasetFactoryTest {
 		Dataset a = DatasetFactory.createRange(10).reshape(5, 2);
 		Dataset act = DatasetFactory.createFromObject(new IDataset[] {a, a, a});
 		assertEquals(3, act.getRank());
-		assertArrayEquals(new int[] {3, 5, 2}, act.getShape());
+		assertArrayEquals(new int[] {3, 5, 2}, act.getShapeRef());
 		Dataset b = a.reshape(1, 5, 2);
 		Dataset exp = DatasetUtils.concatenate(new IDataset[] {b, b, b}, 0);
 		assertEquals(exp, act);

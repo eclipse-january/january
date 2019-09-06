@@ -64,25 +64,25 @@ public class StrideIteratorTest {
 
 		// 2D
 		ta = DatasetFactory.createRange(clazz, 0, size, 1).reshape(16, size / 16);
-		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShapeRef()));
 		testDataset(ta);
 
 		ta = DatasetFactory.createRange(clazz, 0, size, 1).reshape(size / 32, 32);
-		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShapeRef()));
 		testDataset(ta);
 
 		// 3D
 		ta = DatasetFactory.createRange(clazz, 0, size, 1).reshape(16, 8, size / (16 * 8));
-		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShapeRef()));
 		testDataset(ta);
 
 		ta = DatasetFactory.createRange(clazz, 0, size, 1).reshape(size / (16 * 8), 16, 8);
-		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShapeRef()));
 		testDataset(ta);
 	}
 
 	private void testDataset(Dataset ta) {
-		IndexIterator iter = new StrideIterator(ta.getElementsPerItem(), ta.getShape());
+		IndexIterator iter = new StrideIterator(ta.getElementsPerItem(), ta.getShapeRef());
 		double[] data = (double[]) ta.getBuffer();
 
 		int size = ta.getSize();
@@ -187,7 +187,7 @@ public class StrideIteratorTest {
 	}
 
 	private Dataset newSlice(Dataset t, int[] start, int[] stop, int[] step) {
-		StrideIterator iter = new StrideIterator(t.getElementsPerItem(), t.getShape(), start, stop, step);
+		StrideIterator iter = new StrideIterator(t.getElementsPerItem(), t.getShapeRef(), start, stop, step);
 
 		Dataset result = DatasetFactory.zeros(iter.getShape());
 		int i = 0;
@@ -199,7 +199,7 @@ public class StrideIteratorTest {
 	}
 
 	private void timeNewSlice(Dataset t, int[] start, int[] stop, int[] step) {
-		StrideIterator iter = new StrideIterator(t.getElementsPerItem(), t.getShape(), start, stop, step);
+		StrideIterator iter = new StrideIterator(t.getElementsPerItem(), t.getShapeRef(), start, stop, step);
 
 		while (iter.hasNext()) {
 		}
@@ -340,7 +340,7 @@ public class StrideIteratorTest {
 		// 2D
 		ta = DatasetFactory.createRange(clazz, 0, size, 1).reshape(size / 15, 15);
 //		ta.reshape(15, size / 15);
-		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShapeRef()));
 		testSlicedDataset(ta, 0, 0, 3, 0);
 		testSlicedDataset(ta, 0, 0, 3, 1);
 		testSlicedDataset(ta, 2, 0, 3, 0);
@@ -382,7 +382,7 @@ public class StrideIteratorTest {
 		// 3D
 		ta = DatasetFactory.createRange(clazz, 0, size, 1).reshape(size / 10, 2, 5);
 //		ta.reshape(5, size / 10, 2);
-		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShapeRef()));
 
 		testSlicedDataset(ta, 0, 0, 3, 0);
 		testSlicedDataset(ta, 0, 0, 3, 1);
@@ -456,7 +456,7 @@ public class StrideIteratorTest {
 
 		// 0D to 1D
 		b = DatasetFactory.createFromObject(2., 1).getBroadcastView(4);
-		r = DatasetFactory.zeros(b.getClass(), b.getShape()).fill(b.getObjectAbs(0));
+		r = DatasetFactory.zeros(b.getClass(), b.getShapeRef()).fill(b.getObjectAbs(0));
 		checkSliced(r, b);
 
 		// 1D to 2D
@@ -474,7 +474,7 @@ public class StrideIteratorTest {
 		// compound datasets
 		// 0D to 1D
 		b = DatasetFactory.createCompoundDataset(1., 2., 3.).getBroadcastView(4);
-		r = DatasetFactory.zeros(b.getElementsPerItem(), b.getClass(), b.getShape()).fill(b.getObjectAbs(0));
+		r = DatasetFactory.zeros(b.getElementsPerItem(), b.getClass(), b.getShapeRef()).fill(b.getObjectAbs(0));
 		checkSliced(r, b);
 
 		// 1D to 2D

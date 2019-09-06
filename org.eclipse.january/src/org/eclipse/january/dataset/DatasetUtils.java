@@ -1877,27 +1877,28 @@ public class DatasetUtils {
 		}
 		Object matrix;
 
+		int[] shape = a.getShapeRef();
 		switch (a.getDType()) {
 		case Dataset.BOOL:
-			matrix = Array.newInstance(boolean.class, a.getShape());
+			matrix = Array.newInstance(boolean.class, shape);
 			break;
 		case Dataset.INT8:
-			matrix = Array.newInstance(byte.class, a.getShape());
+			matrix = Array.newInstance(byte.class, shape);
 			break;
 		case Dataset.INT16:
-			matrix = Array.newInstance(short.class, a.getShape());
+			matrix = Array.newInstance(short.class, shape);
 			break;
 		case Dataset.INT32:
-			matrix = Array.newInstance(int.class, a.getShape());
+			matrix = Array.newInstance(int.class, shape);
 			break;
 		case Dataset.INT64:
-			matrix = Array.newInstance(long.class, a.getShape());
+			matrix = Array.newInstance(long.class, shape);
 			break;
 		case Dataset.FLOAT32:
-			matrix = Array.newInstance(float.class, a.getShape());
+			matrix = Array.newInstance(float.class, shape);
 			break;
 		case Dataset.FLOAT64:
-			matrix = Array.newInstance(double.class, a.getShape());
+			matrix = Array.newInstance(double.class, shape);
 			break;
 		default:
 			utilsLogger.error("Dataset type not supported");
@@ -2550,7 +2551,7 @@ public class DatasetUtils {
 		dChoices[n] = null;
 
 		@SuppressWarnings("deprecation")
-		Dataset r = DatasetFactory.zeros(ds, index.getShape(), dt);
+		Dataset r = DatasetFactory.zeros(ds, index.getShapeRef(), dt);
 		IndexIterator iter = index.getIterator(true);
 		final int[] pos = iter.getPos();
 		int i = 0;

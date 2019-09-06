@@ -69,8 +69,8 @@ public class DatasetUtilsTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testCrossingsException() {
-		Dataset xAxis = DatasetFactory.createFromObject(new Double[] { 0.0, 0.0, 0.0 });
-		Dataset yAxis = DatasetFactory.createFromObject(new Double[] { 0.0, 0.0 });
+		Dataset xAxis = DatasetFactory.createFromObject(new double[] { 0.0, 0.0, 0.0 });
+		Dataset yAxis = DatasetFactory.createFromObject(new double[] { 0.0, 0.0 });
 		DatasetUtils.crossings(xAxis, yAxis, 0);
 	}
 
@@ -148,9 +148,9 @@ public class DatasetUtilsTest {
 	public void testRemoveNansAndInfinitiesDouble() {
 		double dvalue = 13;
 		Dataset dataset = DatasetFactory.createFromObject(
-				new Double[][] { { 10.0, 11.0, Double.NaN }, { Double.POSITIVE_INFINITY, Double.MAX_VALUE, 69.0 },
+				new double[][] { { 10.0, 11.0, Double.NaN }, { Double.POSITIVE_INFINITY, Double.MAX_VALUE, 69.0 },
 						{ Double.MIN_VALUE, 0.0, Double.NEGATIVE_INFINITY } });
-		Dataset expected = DatasetFactory.createFromObject(new Double[][] { { 10.0, 11.0, dvalue },
+		Dataset expected = DatasetFactory.createFromObject(new double[][] { { 10.0, 11.0, dvalue },
 				{ dvalue, Double.MAX_VALUE, 69.0 }, { Double.MIN_VALUE, 0.0, dvalue } });
 		DatasetUtils.removeNansAndInfinities(dataset, dvalue);
 		TestUtils.assertDatasetEquals(dataset, expected);
@@ -160,9 +160,9 @@ public class DatasetUtilsTest {
 	public void testRemoveNansAndInfinitiesFloat() {
 		float dvalue = 13;
 		Dataset dataset = DatasetFactory.createFromObject(
-				new Float[][] { { 10.0f, 11.0f, Float.NaN }, { Float.POSITIVE_INFINITY, Float.MAX_VALUE, 69.0f },
+				new float[][] { { 10.0f, 11.0f, Float.NaN }, { Float.POSITIVE_INFINITY, Float.MAX_VALUE, 69.0f },
 						{ Float.MIN_VALUE, 0.0f, Float.NEGATIVE_INFINITY } });
-		Dataset expected = DatasetFactory.createFromObject(new Float[][] { { 10.0f, 11.0f, dvalue },
+		Dataset expected = DatasetFactory.createFromObject(new float[][] { { 10.0f, 11.0f, dvalue },
 				{ dvalue, Float.MAX_VALUE, 69.0f }, { Float.MIN_VALUE, 0.0f, dvalue } });
 		DatasetUtils.removeNansAndInfinities(dataset, dvalue);
 		TestUtils.assertDatasetEquals(dataset, expected);
@@ -208,7 +208,7 @@ public class DatasetUtilsTest {
 
 	@Test
 	public void testFindIndexEqualTo() {
-		Dataset dataset = DatasetFactory.createFromObject(new Double[] { 5.2, 2.0, 4.8, 13.0, 0.8, 96.0, 13.0 });
+		Dataset dataset = DatasetFactory.createFromObject(new double[] { 5.2, 2.0, 4.8, 13.0, 0.8, 96.0, 13.0 });
 		int expected = 3;
 		int actual = DatasetUtils.findIndexEqualTo(dataset, 13.0);
 		assertEquals(expected, actual);
@@ -216,7 +216,7 @@ public class DatasetUtilsTest {
 
 	@Test
 	public void testFindIndexGreaterThan() {
-		Dataset dataset = DatasetFactory.createFromObject(new Double[] { 5.2, 2.0, 4.8, 13.0, 0.8, 96.0, 13.0 });
+		Dataset dataset = DatasetFactory.createFromObject(new double[] { 5.2, 2.0, 4.8, 13.0, 0.8, 96.0, 13.0 });
 		int expected = 5;
 		int actual = DatasetUtils.findIndexGreaterThan(dataset, 50.0);
 		assertEquals(expected, actual);
@@ -224,7 +224,7 @@ public class DatasetUtilsTest {
 
 	@Test
 	public void testFindIndexGreaterThanOrEqualTo() {
-		Dataset dataset = DatasetFactory.createFromObject(new Double[] { 5.2, 2.0, 4.8, 13.0, 0.8, 96.0, 13.0 });
+		Dataset dataset = DatasetFactory.createFromObject(new double[] { 5.2, 2.0, 4.8, 13.0, 0.8, 96.0, 13.0 });
 		int expected = 3;
 		int actual = DatasetUtils.findIndexGreaterThanOrEqualTo(dataset, 13.0);
 		assertEquals(expected, actual);
@@ -232,7 +232,7 @@ public class DatasetUtilsTest {
 
 	@Test
 	public void testFindIndexLessThan() {
-		Dataset dataset = DatasetFactory.createFromObject(new Double[] { 5.2, 2.0, 4.8, 13.0, 0.8, 96.0, 13.0 });
+		Dataset dataset = DatasetFactory.createFromObject(new double[] { 5.2, 2.0, 4.8, 13.0, 0.8, 96.0, 13.0 });
 		int expected = 4;
 		int actual = DatasetUtils.findIndexLessThan(dataset, 1.0);
 		assertEquals(expected, actual);
@@ -240,7 +240,7 @@ public class DatasetUtilsTest {
 
 	@Test
 	public void testFindIndexLesshanOrEqualTo() {
-		Dataset dataset = DatasetFactory.createFromObject(new Double[] { 5.2, 2.0, 4.8, 13.0, 0.8, 96.0, 13.0 });
+		Dataset dataset = DatasetFactory.createFromObject(new double[] { 5.2, 2.0, 4.8, 13.0, 0.8, 96.0, 13.0 });
 		int expected = 4;
 		int actual = DatasetUtils.findIndexLessThanOrEqualTo(dataset, 0.8);
 		assertEquals(expected, actual);
@@ -248,7 +248,7 @@ public class DatasetUtilsTest {
 
 	@Test
 	public void testCrossings() {
-		Dataset dataset = DatasetFactory.createFromObject(new Double[] { 0.8, 1.2, 1.6, 0.4, 0.9, 1.1 });
+		Dataset dataset = DatasetFactory.createFromObject(new double[] { 0.8, 1.2, 1.6, 0.4, 0.9, 1.1 });
 		List<Double> expected = new ArrayList<Double>();
 		expected.add(0.5);
 		expected.add(2.5);
@@ -259,8 +259,8 @@ public class DatasetUtilsTest {
 
 	@Test
 	public void testCrossings2() {
-		Dataset yAxis = DatasetFactory.createFromObject(new Double[] { 0.8, 1.2, 1.6, 0.4, 0.9, 1.1 });
-		Dataset xAxis = DatasetFactory.createFromObject(new Double[] { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0 });
+		Dataset yAxis = DatasetFactory.createFromObject(new double[] { 0.8, 1.2, 1.6, 0.4, 0.9, 1.1 });
+		Dataset xAxis = DatasetFactory.createFromObject(new double[] { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0 });
 		List<Double> expected = new ArrayList<Double>();
 		expected.add(1.5);
 		expected.add(3.5);
@@ -271,8 +271,8 @@ public class DatasetUtilsTest {
 	
 	@Test
 	public void testCrossings3() {
-		Dataset yAxis = DatasetFactory.createFromObject(new Double[] { 0.5, 1.1, 0.9, 1.5 });
-		Dataset xAxis = DatasetFactory.createFromObject(new Double[] { 1.0, 2.0, 3.0, 4.0 });
+		Dataset yAxis = DatasetFactory.createFromObject(new double[] { 0.5, 1.1, 0.9, 1.5 });
+		Dataset xAxis = DatasetFactory.createFromObject(new double[] { 1.0, 2.0, 3.0, 4.0 });
 		List<Double> expected = new ArrayList<Double>();
 		expected.add(2.5);
 		List<Double> actual = DatasetUtils.crossings(xAxis, yAxis, 1, 0.5);
@@ -282,7 +282,7 @@ public class DatasetUtilsTest {
 	@Test
 	public void testNorm() {
 		Dataset dataset = DatasetFactory.createFromObject(new int[] { -10, -5, -1, 3, 5, 9, 10 });
-		Dataset expected = DatasetFactory.createFromObject(new Double[] { 0.0, 0.25, 0.45, 0.65, 0.75, 0.95, 1.0 });
+		Dataset expected = DatasetFactory.createFromObject(new double[] { 0.0, 0.25, 0.45, 0.65, 0.75, 0.95, 1.0 });
 		Dataset actual = DatasetUtils.norm(dataset);
 		TestUtils.assertDatasetEquals(expected, actual);
 	}

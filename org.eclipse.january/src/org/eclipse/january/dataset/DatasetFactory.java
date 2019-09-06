@@ -616,7 +616,7 @@ public class DatasetFactory {
 
 	/**
 	 * @param dataset
-	 * @return a new dataset of same shape and type as input dataset, filled with zeros
+	 * @return a new dataset of same shape and class as input dataset, filled with zeros
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Dataset> T zeros(final T dataset) {
@@ -645,7 +645,7 @@ public class DatasetFactory {
 
 	/**
 	 * @param dataset
-	 * @return a new dataset of same shape and type as input dataset, filled with ones
+	 * @return a new dataset of same shape and class as input dataset, filled with ones
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Dataset> T ones(final T dataset) {
@@ -836,9 +836,9 @@ public class DatasetFactory {
 
 	/**
 	 * Create dataset with items ranging from 0 up to given stop in steps of 1
-	 * @param clazz
+	 * @param clazz dataset class
 	 * @param stop stop value is <strong>not</strong> included
-	 * @return a new dataset of given shape and type, filled with values determined by parameters
+	 * @return a new dataset of given shape and class, filled with values determined by parameters
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Dataset> T createRange(Class<T> clazz, final double stop) {
@@ -908,7 +908,6 @@ public class DatasetFactory {
 	 *            can be a Java list, array or Number
 	 * @param shape can be null
 	 * @return dataset
-	 * @throws IllegalArgumentException if dataset type is not known
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Dataset> T createFromObject(Class<T> clazz, Object obj, int... shape) {
@@ -923,7 +922,6 @@ public class DatasetFactory {
 	 *            can be a Java list, array or Number
 	 * @param shape can be null
 	 * @return dataset
-	 * @throws IllegalArgumentException if dataset type is not known
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Dataset> T createFromObject(final int itemSize, Class<T> clazz, Object obj, int... shape) {
@@ -945,7 +943,7 @@ public class DatasetFactory {
 	/**
 	 * Create compound dataset of given class from given parts
 	 *
-	 * @param clazz
+	 * @param clazz dataset class
 	 * @param objects
 	 * @return compound dataset
 	 */

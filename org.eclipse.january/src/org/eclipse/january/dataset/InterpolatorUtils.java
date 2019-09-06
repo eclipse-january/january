@@ -401,7 +401,7 @@ public class InterpolatorUtils {
 	
 	public static Dataset remapOneAxis(Dataset dataset, int axisIndex, Dataset corrections,
 			Dataset originalAxisForCorrection, Dataset outputAxis) {
-		int[] stop = dataset.getShape();
+		int[] stop = dataset.getShapeRef();
 		int[] start = new int[stop.length];
 		int[] step = new int[stop.length];
 		int[] resultSize = new int[stop.length];

@@ -91,7 +91,8 @@ public class NumpyExamples {
 	 */
 	@Test
 	public void sizeN() {
-		System.out.println("a has size "+a.getShape()[0]);
+		int n = a.getRank();
+		System.out.println("a has size "+a.getShapeRef()[n - 1]);
 	}
 	
 	/**
@@ -398,13 +399,12 @@ public class NumpyExamples {
      * 1:10                                  arange(1.,11.) 
      * 0:9                                   arange(10.)
      */
-    @SuppressWarnings("deprecation")
 	@Test
     public void arange() {
-    	IDataset aran = DatasetFactory.createRange(1, 11, 1, Dataset.FLOAT64);
+    	IDataset aran = DatasetFactory.createRange(1., 11, 1);
     	System.out.println("arange type notation in dawnsci(1) "+aran);  	
     	
-    	aran = DatasetFactory.createRange(10, Dataset.FLOAT64);
+    	aran = DatasetFactory.createRange(10);
     	System.out.println("arange type notation in dawnsci(2) "+aran);
     }
     
@@ -414,8 +414,7 @@ public class NumpyExamples {
      */
     @Test
     public void columnVector() {
-    	@SuppressWarnings("deprecation")
-		IDataset aran = DatasetFactory.createRange(1, 11, 1, Dataset.FLOAT64);
+		IDataset aran = DatasetFactory.createRange(1., 11, 1);
     	aran.resize(aran.getSize(), 1);
     }
     
@@ -444,20 +443,19 @@ public class NumpyExamples {
     4 equally spaced samples between 1 and 3, inclusive
     linspace(1,3,4)                          linspace(1,3,4)     
     */
-	@SuppressWarnings("deprecation")
 	@Test
     public void various() {
     	
-    	IDataset zeros = DatasetFactory.zeros(new int[]{3, 4}, Dataset.FLOAT64);
-    	zeros = DatasetFactory.zeros(new int[]{3, 4, 5}, Dataset.FLOAT64);
+    	IDataset zeros = DatasetFactory.zeros(new int[]{3, 4});
+    	zeros = DatasetFactory.zeros(new int[]{3, 4, 5});
     	
-    	IDataset ones = DatasetFactory.ones(new int[]{3,4}, Dataset.FLOAT64);
+    	IDataset ones = DatasetFactory.ones(new int[]{3, 4});
     	
     	IDataset eye = DatasetUtils.eye(3, 3, 0, Dataset.FLOAT64);
     	
     	IDataset rand = Random.rand(new int[]{3,4});
     	
-    	IDataset line = DatasetFactory.createLinearSpace(1, 3, 4, Dataset.FLOAT64);
+    	IDataset line = DatasetFactory.createLinearSpace(DoubleDataset.class, 1, 3, 4);
     }
      
     /**two 2D arrays: one of x values, the other of y values
@@ -465,9 +463,8 @@ public class NumpyExamples {
      */
     @Test
     public void meshGrid() {
-    	@SuppressWarnings("deprecation")
-		List<Dataset> mg = DatasetUtils.meshGrid(DatasetFactory.createRange(9, Dataset.FLOAT64),
-    			                                 DatasetFactory.createRange(6, Dataset.FLOAT64));
+		List<Dataset> mg = DatasetUtils.meshGrid(DatasetFactory.createRange(9),
+    			                                 DatasetFactory.createRange(6));
     	System.out.println("Created mesh grid of size "+mg.size());
     }
     
@@ -476,9 +473,8 @@ public class NumpyExamples {
      */
     @Test
     public void oGrid() {
-    	@SuppressWarnings("deprecation")
-		Dataset[] indexes = new Dataset[] {DatasetFactory.createRange(9, Dataset.FLOAT64),
-                DatasetFactory.createRange(6, Dataset.FLOAT64)};
+		Dataset[] indexes = new Dataset[] {DatasetFactory.createRange(9),
+                DatasetFactory.createRange(6)};
     	List<Dataset> og = new ArrayList<Dataset>();
     	int rank = indexes.length;
     	int[] shape = new int[rank];
@@ -554,8 +550,7 @@ public class NumpyExamples {
     @Test
     public void norm() {
     	
-    	@SuppressWarnings("deprecation")
-		Dataset oneD = DatasetFactory.createRange(100, Dataset.FLOAT);
+		Dataset oneD = DatasetFactory.createRange(100);
     	double vNorm = LinearAlgebra.norm(oneD);
     	System.out.println("Vector norm is "+vNorm);
     	

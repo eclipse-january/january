@@ -355,7 +355,7 @@ public class AbstractCompoundDatasetTest {
 		assertEquals(6, is);
 		assertEquals(1, a.getRank());
 		assertEquals(1, a.getSize());
-		assertEquals(1, a.getShape()[0]);
+		assertEquals(1, a.getShapeRef()[0]);
 		IndexIterator it = a.getIterator();
 		for (int i = 0; it.hasNext();) {
 			for (int j = 0; j < is; j++, i++)
@@ -367,7 +367,7 @@ public class AbstractCompoundDatasetTest {
 		assertEquals(6, is);
 		assertEquals(1, a.getRank());
 		assertEquals(1, a.getSize());
-		assertEquals(1, a.getShape()[0]);
+		assertEquals(1, a.getShapeRef()[0]);
 		it = a.getIterator();
 		for (int i = 0; it.hasNext();) {
 			for (int j = 0; j < is; j++, i++)
@@ -391,7 +391,7 @@ public class AbstractCompoundDatasetTest {
 		assertEquals(6, is);
 		assertEquals(1, a.getRank());
 		assertEquals(1, a.getSize());
-		assertEquals(1, a.getShape()[0]);
+		assertEquals(1, a.getShapeRef()[0]);
 		IndexIterator it = a.getIterator();
 		for (int i = 0; it.hasNext();) {
 			for (int j = 0; j < is; j++, i++)
@@ -404,7 +404,7 @@ public class AbstractCompoundDatasetTest {
 		assertEquals(3, is);
 		assertEquals(1, b.getRank());
 		assertEquals(2, b.getSize());
-		assertEquals(2, b.getShape()[0]);
+		assertEquals(2, b.getShapeRef()[0]);
 		it = b.getIterator();
 		for (int i = 0; it.hasNext();) {
 			for (int j = 0; j < is; j++, i++)
@@ -422,7 +422,7 @@ public class AbstractCompoundDatasetTest {
 		assertEquals(4, is);
 		assertEquals(1, c.getRank());
 		assertEquals(2, c.getSize());
-		assertEquals(2, c.getShape()[0]);
+		assertEquals(2, c.getShapeRef()[0]);
 		it = c.getIterator();
 		for (int i = 0; it.hasNext();) {
 			for (int j = 0; j < is; j++, i++) {
@@ -439,7 +439,7 @@ public class AbstractCompoundDatasetTest {
 		assertEquals(4, is);
 		assertEquals(1, d.getRank());
 		assertEquals(2, d.getSize());
-		assertEquals(2, d.getShape()[0]);
+		assertEquals(2, d.getShapeRef()[0]);
 		it = d.getIterator();
 		for (int i = 0; it.hasNext();) {
 			for (int j = 0; j < is; j++, i++) {
@@ -461,7 +461,7 @@ public class AbstractCompoundDatasetTest {
 		assertEquals(3, is);
 		assertEquals(1, cb.getRank());
 		assertEquals(2, cb.getSize());
-		assertEquals(2, cb.getShape()[0]);
+		assertEquals(2, cb.getShapeRef()[0]);
 		IndexIterator it = cb.getIterator();
 		for (int i = 0; it.hasNext();) {
 			for (int j = 0; j < is; j++, i++) {
@@ -477,7 +477,7 @@ public class AbstractCompoundDatasetTest {
 		assertEquals(2, is);
 		assertEquals(1, cb.getRank());
 		assertEquals(3, cb.getSize());
-		assertEquals(3, cb.getShape()[0]);
+		assertEquals(3, cb.getShapeRef()[0]);
 		for (int i = 0; it.hasNext();) {
 			for (int j = 0; j < is; j++, i++) {
 				assertEquals(i, cb.getElementDoubleAbs(it.index + j), 1e-15*i);
@@ -497,8 +497,8 @@ public class AbstractCompoundDatasetTest {
 	@Test
 	public void testRGB() {
 		Dataset r = Random.randint(0, 255, new int[] {128, 128});
-		Dataset g = Random.randint(0, 255, r.getShape());
-		Dataset b = Random.randint(0, 255, r.getShape());
+		Dataset g = Random.randint(0, 255, r.getShapeRef());
+		Dataset b = Random.randint(0, 255, r.getShapeRef());
 		RGBDataset c = new RGBDataset(r, g, b);
 		System.out.println("" + c.hashCode());
 		double[] mc = (double[]) c.mean();
@@ -630,7 +630,7 @@ public class AbstractCompoundDatasetTest {
 		
 		// finally check the array setting
 		
-		a.setErrors(new Double[] { 1.0, 2.0, 3.0, 4.0, 5.0});
+		a.setErrors(new double[] { 1.0, 2.0, 3.0, 4.0, 5.0});
 		
 		assertEquals(1.0, a.getErrorArray(0)[0], 0.001);
 		assertEquals(3.0, a.getErrorArray(0)[2], 0.001);

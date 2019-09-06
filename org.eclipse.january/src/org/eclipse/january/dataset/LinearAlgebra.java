@@ -281,10 +281,8 @@ public class LinearAlgebra {
 		axisA = a.checkAxis(axisA);
 		axisB = b.checkAxis(axisB);
 
-		final int[] shapeA = a.getShape();
-		final int[] shapeB = b.getShape();
-		int la = shapeA[axisA];
-		int lb = shapeB[axisB];
+		int la = a.getShapeRef()[axisA];
+		int lb = b.getShapeRef()[axisB];
 		if (Math.min(la,  lb) < 2 || Math.max(la, lb) > 3) {
 			throw new IllegalArgumentException("Chosen dimension of A & B must be 2 or 3");
 		}

@@ -218,6 +218,7 @@ public class LazyDatasetTest {
 		Assert.assertEquals(tld.getSize(), ld.getSize());
 		Assert.assertArrayEquals(new int[] {4, 2, 1, 3}, tld.getShape());
 		TestUtils.assertDatasetEquals(data.getTransposedView(3, 1, 0, 2), tld.getSlice(), true, 1e-14, 1e-14);
+		TestUtils.assertDatasetEquals(data.transpose(3, 1, 0, 2), tld.getSlice(), true, 1e-14, 1e-14);
 
 		LazyDataset uld = tld.getTransposedView(3, 2, 1, 0);
 		Assert.assertArrayEquals(new int[] {3, 1, 2, 4}, uld.getShape());

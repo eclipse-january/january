@@ -110,7 +110,7 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 	 * @param dataset
 	 */
 	public static LazyWriteableDataset createLazyDataset(final Dataset dataset, final int[] maxShape) {
-		return new LazyWriteableDataset(dataset.getName(), dataset.getDType(), dataset.getElementsPerItem(), dataset.getShape(),
+		return new LazyWriteableDataset(dataset.getName(), dataset.getDType(), dataset.getElementsPerItem(), dataset.getShapeRef(),
 				maxShape, null,
 		new ILazySaver() {
 			private static final long serialVersionUID = ILazySaver.serialVersionUID;

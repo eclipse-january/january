@@ -127,10 +127,10 @@ public class TestUtils {
 		}
 		Assert.assertEquals("Size", expected.getSize(), actual.getSize());
 		try {
-			Assert.assertArrayEquals("Shape", expected.getShape(), actual.getShape());
+			Assert.assertArrayEquals("Shape", expected.getShapeRef(), actual.getShapeRef());
 		} catch (AssertionError e) {
 			if (actual.getSize() == 1) {
-				Assert.assertArrayEquals("Shape", new int[0], actual.getShape());
+				Assert.assertArrayEquals("Shape", new int[0], actual.getShapeRef());
 			} else {
 				throw e;
 			}

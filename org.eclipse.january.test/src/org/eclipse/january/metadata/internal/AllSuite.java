@@ -17,9 +17,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(TestUtils.VerboseSuite.class)
-@SuiteClasses({ MetadataFactoryTest.class,AxesMetadataTest.class,
-	SliceableMetadataTest.class
-	})
+@SuiteClasses({ AxesMetadataTest.class, MetadataFactoryTest.class, SliceableMetadataTest.class })
 public class AllSuite {
 
 }

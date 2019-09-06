@@ -425,9 +425,9 @@ public class AbstractDatasetTest {
 		ds.setShape(2,1,5);
 
 		ds.squeeze();
-		assertEquals(2, ds.getShape().length);
-		assertEquals(2, ds.getShape()[0]);
-		assertEquals(5, ds.getShape()[1]);
+		assertEquals(2, ds.getShapeRef().length);
+		assertEquals(2, ds.getShapeRef()[0]);
+		assertEquals(5, ds.getShapeRef()[1]);
 
 		int[] os, ns;
 		os = new int[] { 1, 1 };
@@ -492,26 +492,26 @@ public class AbstractDatasetTest {
 		Dataset ta = DatasetUtils.tile(ds, 2);
 		double[] xa = { 0., 1., 2., 0., 1., 2. };
 
-		assertEquals(1, ta.getShape().length);
-		assertEquals(6, ta.getShape()[0]);
+		assertEquals(1, ta.getShapeRef().length);
+		assertEquals(6, ta.getShapeRef()[0]);
 		for (int i = 0; i < xa.length; i++) {
 			assertEquals(xa[i], ((DoubleDataset) ta).getData()[i], 1e-6);
 		}
 
 		Dataset tb = DatasetUtils.tile(ds, 1, 2);
 
-		assertEquals(2, tb.getShape().length);
-		assertEquals(1, tb.getShape()[0]);
-		assertEquals(6, tb.getShape()[1]);
+		assertEquals(2, tb.getShapeRef().length);
+		assertEquals(1, tb.getShapeRef()[0]);
+		assertEquals(6, tb.getShapeRef()[1]);
 		for (int i = 0; i < xa.length; i++) {
 			assertEquals(xa[i], ((DoubleDataset) tb).getData()[i], 1e-6);
 		}
 
 		Dataset tc = DatasetUtils.tile(ds, 2, 1);
 
-		assertEquals(2, tc.getShape().length);
-		assertEquals(2, tc.getShape()[0]);
-		assertEquals(3, tc.getShape()[1]);
+		assertEquals(2, tc.getShapeRef().length);
+		assertEquals(2, tc.getShapeRef()[0]);
+		assertEquals(3, tc.getShapeRef()[1]);
 		for (int i = 0; i < xa.length; i++) {
 			assertEquals(xa[i], ((DoubleDataset) tc).getData()[i], 1e-6);
 		}
@@ -522,18 +522,18 @@ public class AbstractDatasetTest {
 		Dataset td = DatasetUtils.tile(ds, 2);
 		double[] xd = { 0., 1., 2., 0., 1., 2., 3., 4., 5., 3., 4., 5. };
 
-		assertEquals(2, td.getShape().length);
-		assertEquals(2, td.getShape()[0]);
-		assertEquals(6, td.getShape()[1]);
+		assertEquals(2, td.getShapeRef().length);
+		assertEquals(2, td.getShapeRef()[0]);
+		assertEquals(6, td.getShapeRef()[1]);
 		for (int i = 0; i < xd.length; i++) {
 			assertEquals(xd[i], ((DoubleDataset) td).getData()[i], 1e-6);
 		}
 
 		Dataset te = DatasetUtils.tile(ds, 1, 2);
 
-		assertEquals(2, te.getShape().length);
-		assertEquals(2, te.getShape()[0]);
-		assertEquals(6, te.getShape()[1]);
+		assertEquals(2, te.getShapeRef().length);
+		assertEquals(2, te.getShapeRef()[0]);
+		assertEquals(6, te.getShapeRef()[1]);
 		for (int i = 0; i < xd.length; i++) {
 			assertEquals(xd[i], ((DoubleDataset) te).getData()[i], 1e-6);
 		}
@@ -541,9 +541,9 @@ public class AbstractDatasetTest {
 		Dataset tf = DatasetUtils.tile(ds, 2, 1);
 		double[] xf = { 0., 1., 2., 3., 4., 5., 0., 1., 2., 3., 4., 5. };
 
-		assertEquals(2, tf.getShape().length);
-		assertEquals(4, tf.getShape()[0]);
-		assertEquals(3, tf.getShape()[1]);
+		assertEquals(2, tf.getShapeRef().length);
+		assertEquals(4, tf.getShapeRef()[0]);
+		assertEquals(3, tf.getShapeRef()[1]);
 		for (int i = 0; i < xf.length; i++) {
 			assertEquals(xf[i], ((DoubleDataset) tf).getData()[i], 1e-6);
 		}
@@ -601,8 +601,8 @@ public class AbstractDatasetTest {
 		long diff2 = end - start;
 		TestUtils.verbosePrintf("tile = %d ms\n", diff2);
 
-		assertEquals(rows, tiled.getShape()[0]);
-		assertEquals(cols, tiled.getShape()[1]);
+		assertEquals(rows, tiled.getShapeRef()[0]);
+		assertEquals(cols, tiled.getShapeRef()[1]);
 		assertEquals("Datasets not equal", tiled, b);
 
 		assertTrue("Creation of tile took more than 50x as long as array creation of same size! (It took "
@@ -623,14 +623,16 @@ public class AbstractDatasetTest {
 		Dataset ta = DatasetUtils.transpose(ds, 1, 0);
 		double[][] xa = { { 0., 1., 2. }, { 3., 4., 5. } };
 
-		assertEquals(2, ta.getShape().length);
-		assertEquals(3, ta.getShape()[0]);
-		assertEquals(2, ta.getShape()[1]);
+		assertEquals(2, ta.getShapeRef().length);
+		assertEquals(3, ta.getShapeRef()[0]);
+		assertEquals(2, ta.getShapeRef()[1]);
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 3; j++) {
 				assertEquals(xa[i][j], ta.getDouble(j, i), 1e-6);
 			}
 		}
+		TestUtils.assertDatasetEquals(ta, ds.getTransposedView(1, 0).getSlice());
+
 		ds.set(-2, 1, 2);
 		assertEquals(-2., ds.getDouble(1, 2), 1e-6);
 		assertEquals(5., ta.getDouble(2, 1), 1e-6);
@@ -671,10 +673,10 @@ public class AbstractDatasetTest {
 		}
 
 		tb = DatasetUtils.transpose(ds, 0, 1, 2);
-		assertEquals(3, tb.getShape().length);
-		assertEquals(2, tb.getShape()[0]);
-		assertEquals(3, tb.getShape()[1]);
-		assertEquals(4, tb.getShape()[2]);
+		assertEquals(3, tb.getShapeRef().length);
+		assertEquals(2, tb.getShapeRef()[0]);
+		assertEquals(3, tb.getShapeRef()[1]);
+		assertEquals(4, tb.getShapeRef()[2]);
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 3; j++) {
 				for (int k = 0; k < 4; k++) {
@@ -684,10 +686,10 @@ public class AbstractDatasetTest {
 		}
 
 		tb = DatasetUtils.transpose(ds, 1, 0, 2);
-		assertEquals(3, tb.getShape().length);
-		assertEquals(3, tb.getShape()[0]);
-		assertEquals(2, tb.getShape()[1]);
-		assertEquals(4, tb.getShape()[2]);
+		assertEquals(3, tb.getShapeRef().length);
+		assertEquals(3, tb.getShapeRef()[0]);
+		assertEquals(2, tb.getShapeRef()[1]);
+		assertEquals(4, tb.getShapeRef()[2]);
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 3; j++) {
 				for (int k = 0; k < 4; k++) {
@@ -697,10 +699,10 @@ public class AbstractDatasetTest {
 		}
 
 		tb = DatasetUtils.transpose(ds, 2, 0, 1);
-		assertEquals(3, tb.getShape().length);
-		assertEquals(4, tb.getShape()[0]);
-		assertEquals(2, tb.getShape()[1]);
-		assertEquals(3, tb.getShape()[2]);
+		assertEquals(3, tb.getShapeRef().length);
+		assertEquals(4, tb.getShapeRef()[0]);
+		assertEquals(2, tb.getShapeRef()[1]);
+		assertEquals(3, tb.getShapeRef()[2]);
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 3; j++) {
 				for (int k = 0; k < 4; k++) {
@@ -721,17 +723,17 @@ public class AbstractDatasetTest {
 
 		double[] xa = { 0., 0., 1., 1., 2., 2., 3., 3., 4., 4., 5., 5. };
 		DoubleDataset ta = (DoubleDataset) DatasetUtils.repeat(ds, new int[] {2}, -1);
-		assertEquals(1, ta.getShape().length);
-		assertEquals(12, ta.getShape()[0]);
+		assertEquals(1, ta.getShapeRef().length);
+		assertEquals(12, ta.getShapeRef()[0]);
 		for (int i = 0; i < 12; i++) {
 			assertEquals(xa[i], ta.get(i), 1e-6);
 		}
 
 		double[][] xb = { { 0., 0., 1., 1., 2., 2. }, {  3., 3., 4., 4., 5., 5. }  };
 		DoubleDataset tb = (DoubleDataset) DatasetUtils.repeat(ds, new int[] {2}, 1);
-		assertEquals(2, tb.getShape().length);
-		assertEquals(2, tb.getShape()[0]);
-		assertEquals(6, tb.getShape()[1]);
+		assertEquals(2, tb.getShapeRef().length);
+		assertEquals(2, tb.getShapeRef()[0]);
+		assertEquals(6, tb.getShapeRef()[1]);
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 6; j++) {
 				assertEquals(xb[i][j], tb.get(i, j), 1e-6);
@@ -740,9 +742,9 @@ public class AbstractDatasetTest {
 
 		double[][] xc = { { 0., 1., 2. }, { 0., 1., 2. }, {  3., 4., 5. }, {  3., 4., 5. }  };
 		DoubleDataset tc = (DoubleDataset) DatasetUtils.repeat(ds, new int[] {2}, 0);
-		assertEquals(2, tc.getShape().length);
-		assertEquals(4, tc.getShape()[0]);
-		assertEquals(3, tc.getShape()[1]);
+		assertEquals(2, tc.getShapeRef().length);
+		assertEquals(4, tc.getShapeRef()[0]);
+		assertEquals(3, tc.getShapeRef()[1]);
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 3; j++) {
 				assertEquals(xc[i][j], tc.get(i, j), 1e-6);
@@ -751,9 +753,9 @@ public class AbstractDatasetTest {
 
 		double[][] xd = { { 0., 1., 2. }, { 0., 1., 2. }, {  3., 4., 5. } };
 		DoubleDataset td = (DoubleDataset) DatasetUtils.repeat(ds, new int[] {2, 1}, 0);
-		assertEquals(2, td.getShape().length);
-		assertEquals(3, td.getShape()[0]);
-		assertEquals(3, td.getShape()[1]);
+		assertEquals(2, td.getShapeRef().length);
+		assertEquals(3, td.getShapeRef()[0]);
+		assertEquals(3, td.getShapeRef()[1]);
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
 				assertEquals(xd[i][j], td.get(i, j), 1e-6);
@@ -762,9 +764,9 @@ public class AbstractDatasetTest {
 
 		double[][] xe = { { 0., 1., 1., 2., 2., 2.}, {  3., 4., 4., 5., 5., 5. }  };
 		DoubleDataset te = (DoubleDataset) DatasetUtils.repeat(ds, new int[] {1, 2, 3}, 1);
-		assertEquals(2, te.getShape().length);
-		assertEquals(2, te.getShape()[0]);
-		assertEquals(6, te.getShape()[1]);
+		assertEquals(2, te.getShapeRef().length);
+		assertEquals(2, te.getShapeRef()[0]);
+		assertEquals(6, te.getShapeRef()[1]);
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 6; j++) {
 				assertEquals(xe[i][j], te.get(i, j), 1e-6);
@@ -773,8 +775,8 @@ public class AbstractDatasetTest {
 
 		double[] xf = { 0., 1., 2., 2., 5., 5., 5. };
 		DoubleDataset tf = (DoubleDataset) DatasetUtils.repeat(ds, new int[] {1, 1, 2, 0, 0, 3}, -1);
-		assertEquals(1, tf.getShape().length);
-		assertEquals(7, tf.getShape()[0]);
+		assertEquals(1, tf.getShapeRef().length);
+		assertEquals(7, tf.getShapeRef()[0]);
 		for (int i = 0; i < 7; i++) {
 			assertEquals(xf[i], tf.get(i), 1e-6);
 		}
@@ -815,21 +817,21 @@ public class AbstractDatasetTest {
 		IndexIterator it;
 
 		tf = DatasetUtils.resize(ds, 3);
-		assertArrayEquals(new int[] {3}, tf.getShape());
+		assertArrayEquals(new int[] {3}, tf.getShapeRef());
 		it = tf.getIterator();
 		while (it.hasNext()) {
 			assertEquals(it.index % size, tf.getElementDoubleAbs(it.index), 1e-6);
 		}
 
 		tf = DatasetUtils.resize(ds, 8);
-		assertArrayEquals(new int[] {8}, tf.getShape());
+		assertArrayEquals(new int[] {8}, tf.getShapeRef());
 		it = tf.getIterator();
 		while (it.hasNext()) {
 			assertEquals(it.index % size, tf.getElementDoubleAbs(it.index), 1e-6);
 		}
 
 		tf = DatasetUtils.resize(ds, 3, 4);
-		assertArrayEquals(new int[] {3, 4}, tf.getShape());
+		assertArrayEquals(new int[] {3, 4}, tf.getShapeRef());
 		it = tf.getIterator();
 		while (it.hasNext()) {
 			assertEquals(it.index % size, tf.getElementDoubleAbs(it.index), 1e-6);
@@ -838,21 +840,21 @@ public class AbstractDatasetTest {
 		ds.setShape(2,3);
 
 		tf = DatasetUtils.resize(ds, 3);
-		assertArrayEquals(new int[] {3}, tf.getShape());
+		assertArrayEquals(new int[] {3}, tf.getShapeRef());
 		it = tf.getIterator();
 		while (it.hasNext()) {
 			assertEquals(it.index % size, tf.getElementDoubleAbs(it.index), 1e-6);
 		}
 
 		tf = DatasetUtils.resize(ds, 8);
-		assertArrayEquals(new int[] {8}, tf.getShape());
+		assertArrayEquals(new int[] {8}, tf.getShapeRef());
 		it = tf.getIterator();
 		while (it.hasNext()) {
 			assertEquals(it.index % size, tf.getElementDoubleAbs(it.index), 1e-6);
 		}
 
 		tf = DatasetUtils.resize(ds, 3, 4);
-		assertArrayEquals(new int[] {3, 4}, tf.getShape());
+		assertArrayEquals(new int[] {3, 4}, tf.getShapeRef());
 		it = tf.getIterator();
 		while (it.hasNext()) {
 			assertEquals(it.index % size, tf.getElementDoubleAbs(it.index), 1e-6);
@@ -996,8 +998,8 @@ public class AbstractDatasetTest {
 		IndexIterator is, it;
 
 		s = a.getSlice(null, new int[] {10}, null);
-		assertEquals(1, s.getShape().length);
-		assertEquals(10, s.getShape()[0]);
+		assertEquals(1, s.getShapeRef().length);
+		assertEquals(10, s.getShapeRef()[0]);
 
 		is = s.getIterator();
 		for (int i = 0; is.hasNext(); i++) {
@@ -1005,8 +1007,8 @@ public class AbstractDatasetTest {
 		}
 
 		t = a.getSlice(new Slice(10));
-		assertEquals(1, t.getShape().length);
-		assertEquals(10, t.getShape()[0]);
+		assertEquals(1, t.getShapeRef().length);
+		assertEquals(10, t.getShapeRef()[0]);
 
 		it = t.getIterator();
 		for (int i = 0; it.hasNext(); i++) {
@@ -1020,16 +1022,16 @@ public class AbstractDatasetTest {
 		}
 
 		s = a.getSlice(new int[]{0}, new int[] {10}, null);
-		assertEquals(1, s.getShape().length);
-		assertEquals(10, s.getShape()[0]);
+		assertEquals(1, s.getShapeRef().length);
+		assertEquals(10, s.getShapeRef()[0]);
 
 		s = a.getSlice(new int[]{-1000}, new int[] {10}, null);
-		assertEquals(1, s.getShape().length);
-		assertEquals(10, s.getShape()[0]);
+		assertEquals(1, s.getShapeRef().length);
+		assertEquals(10, s.getShapeRef()[0]);
 
 		s = a.getSlice(new int[] {9}, null, new int[] {-1});
-		assertEquals(1, s.getShape().length);
-		assertEquals(10, s.getShape()[0]);
+		assertEquals(1, s.getShapeRef().length);
+		assertEquals(10, s.getShapeRef()[0]);
 
 		is = s.getIterator();
 		for (int i = 9; is.hasNext(); i--) {
@@ -1037,8 +1039,8 @@ public class AbstractDatasetTest {
 		}
 
 		t = a.getSlice(new Slice(9, null, -1));
-		assertEquals(1, t.getShape().length);
-		assertEquals(10, t.getShape()[0]);
+		assertEquals(1, t.getShapeRef().length);
+		assertEquals(10, t.getShapeRef()[0]);
 
 		it = t.getIterator();
 		for (int i = 9; it.hasNext(); i--) {
@@ -1168,7 +1170,7 @@ public class AbstractDatasetTest {
 	private Dataset checkSliceView(Dataset a, int[] start, int[] stop, int[] step) {
 		Dataset s = a.getSliceView(start, stop, step).squeeze();
 		Dataset t = a.getSlice(start, stop, step).squeeze();
-		assertArrayEquals(t.getShape(), s.getShape());
+		assertArrayEquals(t.getShapeRef(), s.getShapeRef());
 		assertEquals(t.toString(true), t, s);
 		IndexIterator iter = s.getIterator(true);
 		int[] pos = iter.getPos();
@@ -1427,7 +1429,7 @@ public class AbstractDatasetTest {
 		
 		Dataset a = DatasetFactory.zeros(IntegerDataset.class, 100, 100);
 		Dataset err = DatasetFactory.createLinearSpace(DoubleDataset.class, 0, a.getSize() - 1, a.getSize());
-		err.setShape(a.getShape());
+		err.setShape(a.getShapeRef());
 		
 		a.setErrorBuffer(null);
 		assertFalse(a.hasErrors());
@@ -1509,7 +1511,7 @@ public class AbstractDatasetTest {
 		Dataset a;
 		a = DatasetFactory.ones();
 		assertEquals("Rank", 0, a.getRank());
-		assertEquals("Shape", 0, a.getShape().length);
+		assertEquals("Shape", 0, a.getShapeRef().length);
 		assertEquals("Value", 1.0, a.getObject());
 		assertEquals("Max", 1.0, a.max());
 		assertEquals("Min", 1.0, a.min());
@@ -1521,25 +1523,25 @@ public class AbstractDatasetTest {
 
 		a = DatasetFactory.zeros(ShortDataset.class);
 		assertEquals("Rank", 0, a.getRank());
-		assertEquals("Shape", 0, a.getShape().length);
+		assertEquals("Shape", 0, a.getShapeRef().length);
 		assertEquals("Value", (short) 0, a.getObject());
 
 		a = DatasetFactory.createFromObject(new Complex(1.0, -0.5));
 		assertEquals("Rank", 0, a.getRank());
-		assertEquals("Shape", 0, a.getShape().length);
+		assertEquals("Shape", 0, a.getShapeRef().length);
 		assertEquals("Value", new Complex(1.0, -0.5), a.getObject());
 		assertEquals("Real view value", 1.0, a.getRealView().getObject());
 		assertEquals("Imaginary view value", -0.5, ((ComplexDoubleDataset) a).getImaginaryView().getObject());
 
 		a = DatasetFactory.createFromObject(1.f);
 		assertEquals("Rank", 0, a.getRank());
-		assertEquals("Shape", 0, a.getShape().length);
+		assertEquals("Shape", 0, a.getShapeRef().length);
 		assertEquals("Value", 1.f, a.getObject());
 
 		a = DatasetFactory.ones(1);
 		a.squeeze();
 		assertEquals("Rank", 0, a.getRank());
-		assertEquals("Shape", 0, a.getShape().length);
+		assertEquals("Shape", 0, a.getShapeRef().length);
 
 		a = DatasetFactory.createFromObject(1.f);
 		assertEquals("Equals", a, DatasetFactory.createFromObject(1.f));
@@ -1698,10 +1700,10 @@ public class AbstractDatasetTest {
 	@Test
 	public void testRollAxis() {
 		Dataset a = DatasetFactory.ones(ByteDataset.class, 3, 4, 5, 6);
-		Assert.assertArrayEquals(new int[] {3, 6, 4, 5}, DatasetUtils.rollAxis(a, 3, 1).getShape());
-		Assert.assertArrayEquals(new int[] {5, 3, 4, 6}, DatasetUtils.rollAxis(a, 2, 0).getShape());
-		Assert.assertArrayEquals(new int[] {3, 5, 6, 4}, DatasetUtils.rollAxis(a, 1, 4).getShape());
-		Assert.assertArrayEquals(new int[] {3, 6, 4, 5}, DatasetUtils.rollAxis(a, -1, 1).getShape());
+		Assert.assertArrayEquals(new int[] {3, 6, 4, 5}, DatasetUtils.rollAxis(a, 3, 1).getShapeRef());
+		Assert.assertArrayEquals(new int[] {5, 3, 4, 6}, DatasetUtils.rollAxis(a, 2, 0).getShapeRef());
+		Assert.assertArrayEquals(new int[] {3, 5, 6, 4}, DatasetUtils.rollAxis(a, 1, 4).getShapeRef());
+		Assert.assertArrayEquals(new int[] {3, 6, 4, 5}, DatasetUtils.rollAxis(a, -1, 1).getShapeRef());
 	}
 
 	@Test
@@ -2116,7 +2118,7 @@ public class AbstractDatasetTest {
 
 	private Dataset checkBroadcast2D(Dataset a, boolean broadcastFirstDim, int... broadcastShape) {
 		Dataset b = a.getBroadcastView(broadcastShape);
-		Assert.assertArrayEquals(broadcastShape, b.getShape());
+		Assert.assertArrayEquals(broadcastShape, b.getShapeRef());
 		int size = ShapeUtils.calcSize(broadcastShape);
 		Assert.assertEquals(size, b.getSize());
 
