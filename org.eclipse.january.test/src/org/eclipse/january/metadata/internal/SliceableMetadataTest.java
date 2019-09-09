@@ -78,10 +78,10 @@ public class SliceableMetadataTest {
 			assertEquals(2, tmd.getMap().size());
 			assertEquals(2, tmd.getListOfArrays().size());
 			assertArrayEquals(sliced.getShape(), tmd.getLazyDataset().getShape());
-			assertArrayEquals(sliced.getShape(), tmd.getArray()[0].getShape());
-			assertArrayEquals(sliced.getShape(), tmd.getList().get(0).getShape());
-			assertArrayEquals(sliced.getShape(), tmd.getMap().get("1").getShape());
-			assertArrayEquals(sliced.getShape(), tmd.getListOfArrays().get(0)[0].getShape());
+			assertArrayEquals(sliced.getShape(), tmd.getArray()[0].getShapeRef());
+			assertArrayEquals(sliced.getShape(), tmd.getList().get(0).getShapeRef());
+			assertArrayEquals(sliced.getShape(), tmd.getMap().get("1").getShapeRef());
+			assertArrayEquals(sliced.getShape(), tmd.getListOfArrays().get(0)[0].getShapeRef());
 			
 			//test original unchanged
 			tmd = dataset.getMetadata(SliceableTestMetadata.class).get(0);
@@ -89,10 +89,10 @@ public class SliceableMetadataTest {
 			assertEquals(2, tmd.getList().size());
 			assertEquals(2, tmd.getMap().size());
 			assertArrayEquals(shape, tmd.getLazyDataset().getShape());
-			assertArrayEquals(shape, tmd.getArray()[0].getShape());
-			assertArrayEquals(shape, tmd.getList().get(0).getShape());
-			assertArrayEquals(shape, tmd.getMap().get("1").getShape());
-			assertArrayEquals(shape, tmd.getListOfArrays().get(0)[0].getShape());
+			assertArrayEquals(shape, tmd.getArray()[0].getShapeRef());
+			assertArrayEquals(shape, tmd.getList().get(0).getShapeRef());
+			assertArrayEquals(shape, tmd.getMap().get("1").getShapeRef());
+			assertArrayEquals(shape, tmd.getListOfArrays().get(0)[0].getShapeRef());
 			
 			IDataset slice2 = sliced.getSlice();
 			tmd = slice2.getMetadata(SliceableTestMetadata.class).get(0);
@@ -100,10 +100,10 @@ public class SliceableMetadataTest {
 			assertEquals(2, tmd.getList().size());
 			assertEquals(2, tmd.getMap().size());
 			assertArrayEquals(sliced.getShape(), tmd.getLazyDataset().getShape());
-			assertArrayEquals(sliced.getShape(), tmd.getArray()[0].getShape());
-			assertArrayEquals(sliced.getShape(), tmd.getList().get(0).getShape());
-			assertArrayEquals(sliced.getShape(), tmd.getMap().get("1").getShape());
-			assertArrayEquals(sliced.getShape(), tmd.getListOfArrays().get(0)[0].getShape());
+			assertArrayEquals(sliced.getShape(), tmd.getArray()[0].getShapeRef());
+			assertArrayEquals(sliced.getShape(), tmd.getList().get(0).getShapeRef());
+			assertArrayEquals(sliced.getShape(), tmd.getMap().get("1").getShapeRef());
+			assertArrayEquals(sliced.getShape(), tmd.getListOfArrays().get(0)[0].getShapeRef());
 			
 			//test original unchanged
 			tmd = dataset.getMetadata(SliceableTestMetadata.class).get(0);
@@ -111,10 +111,10 @@ public class SliceableMetadataTest {
 			assertEquals(2, tmd.getList().size());
 			assertEquals(2, tmd.getMap().size());
 			assertArrayEquals(shape, tmd.getLazyDataset().getShape());
-			assertArrayEquals(shape, tmd.getArray()[0].getShape());
-			assertArrayEquals(shape, tmd.getList().get(0).getShape());
-			assertArrayEquals(shape, tmd.getMap().get("1").getShape());
-			assertArrayEquals(shape, tmd.getListOfArrays().get(0)[0].getShape());
+			assertArrayEquals(shape, tmd.getArray()[0].getShapeRef());
+			assertArrayEquals(shape, tmd.getList().get(0).getShapeRef());
+			assertArrayEquals(shape, tmd.getMap().get("1").getShapeRef());
+			assertArrayEquals(shape, tmd.getListOfArrays().get(0)[0].getShapeRef());
 		} catch (Exception e) {
 			fail("Should not fail: " + e);
 		}
@@ -141,11 +141,11 @@ public class SliceableMetadataTest {
 			assertEquals(2, tmd.getList().size());
 			assertEquals(2, tmd.getMap().size());
 			assertArrayEquals(sliced.getShape(), tmd.getLazyDataset().getShape());
-			assertArrayEquals(sliced.getShape(), tmd.getArray()[0].getShape());
-			assertArrayEquals(sliced.getShape(), tmd.getList().get(0).getShape());
-			assertArrayEquals(sliced.getShape(), tmd.getMap().get("1").getShape());
+			assertArrayEquals(sliced.getShape(), tmd.getArray()[0].getShapeRef());
+			assertArrayEquals(sliced.getShape(), tmd.getList().get(0).getShapeRef());
+			assertArrayEquals(sliced.getShape(), tmd.getMap().get("1").getShapeRef());
 			assertArrayEquals(sliced.getShape(), tmd.getLazyDataset2().getShape());
-			assertArrayEquals(sliced.getShape(), tmd.getListOfArrays().get(0)[0].getShape());
+			assertArrayEquals(sliced.getShape(), tmd.getListOfArrays().get(0)[0].getShapeRef());
 		} catch (Exception e) {
 			fail("Should not fail: " + e);
 		}
@@ -276,10 +276,10 @@ public class SliceableMetadataTest {
 			assertEquals(2, tmd.getList().size());
 			assertEquals(2, tmd.getMap().size());
 			assertArrayEquals(result2, tmd.getLazyDataset().getShape());
-			assertArrayEquals(result1, tmd.getArray()[0].getShape());
-			assertArrayEquals(result2, tmd.getList().get(0).getShape());
-			assertArrayEquals(result1, tmd.getMap().get("1").getShape());
-			assertArrayEquals(result1, tmd.getListOfArrays().get(0)[0].getShape());
+			assertArrayEquals(result1, tmd.getArray()[0].getShapeRef());
+			assertArrayEquals(result2, tmd.getList().get(0).getShapeRef());
+			assertArrayEquals(result1, tmd.getMap().get("1").getShapeRef());
+			assertArrayEquals(result1, tmd.getListOfArrays().get(0)[0].getShapeRef());
 			
 			//test original unchanged
 			tmd = dataset.getMetadata(SliceableTestMetadata.class).get(0);
@@ -287,10 +287,10 @@ public class SliceableMetadataTest {
 			assertEquals(2, tmd.getList().size());
 			assertEquals(2, tmd.getMap().size());
 			assertArrayEquals(shape, tmd.getLazyDataset().getShape());
-			assertArrayEquals(partial1, tmd.getArray()[0].getShape());
-			assertArrayEquals(partial2, tmd.getList().get(0).getShape());
-			assertArrayEquals(partial3, tmd.getMap().get("1").getShape());
-			assertArrayEquals(partial1, tmd.getListOfArrays().get(0)[0].getShape());
+			assertArrayEquals(partial1, tmd.getArray()[0].getShapeRef());
+			assertArrayEquals(partial2, tmd.getList().get(0).getShapeRef());
+			assertArrayEquals(partial3, tmd.getMap().get("1").getShapeRef());
+			assertArrayEquals(partial1, tmd.getListOfArrays().get(0)[0].getShapeRef());
 			
 			IDataset slice2 = sliced.getSlice();
 			tmd = slice2.getMetadata(SliceableTestMetadata.class).get(0);
@@ -298,10 +298,10 @@ public class SliceableMetadataTest {
 			assertEquals(2, tmd.getList().size());
 			assertEquals(2, tmd.getMap().size());
 			assertArrayEquals(result2, tmd.getLazyDataset().getShape());
-			assertArrayEquals(result1, tmd.getArray()[0].getShape());
-			assertArrayEquals(result2, tmd.getList().get(0).getShape());
-			assertArrayEquals(result1, tmd.getMap().get("1").getShape());
-			assertArrayEquals(result1, tmd.getListOfArrays().get(0)[0].getShape());
+			assertArrayEquals(result1, tmd.getArray()[0].getShapeRef());
+			assertArrayEquals(result2, tmd.getList().get(0).getShapeRef());
+			assertArrayEquals(result1, tmd.getMap().get("1").getShapeRef());
+			assertArrayEquals(result1, tmd.getListOfArrays().get(0)[0].getShapeRef());
 			
 			//test original unchanged
 			tmd = dataset.getMetadata(SliceableTestMetadata.class).get(0);
@@ -309,10 +309,10 @@ public class SliceableMetadataTest {
 			assertEquals(2, tmd.getList().size());
 			assertEquals(2, tmd.getMap().size());
 			assertArrayEquals(shape, tmd.getLazyDataset().getShape());
-			assertArrayEquals(partial1, tmd.getArray()[0].getShape());
-			assertArrayEquals(partial2, tmd.getList().get(0).getShape());
-			assertArrayEquals(partial3, tmd.getMap().get("1").getShape());
-			assertArrayEquals(partial1, tmd.getListOfArrays().get(0)[0].getShape());
+			assertArrayEquals(partial1, tmd.getArray()[0].getShapeRef());
+			assertArrayEquals(partial2, tmd.getList().get(0).getShapeRef());
+			assertArrayEquals(partial3, tmd.getMap().get("1").getShapeRef());
+			assertArrayEquals(partial1, tmd.getListOfArrays().get(0)[0].getShapeRef());
 			
 		} catch (Exception e) {
 			fail("Should not fail: " + e);
@@ -380,10 +380,10 @@ public class SliceableMetadataTest {
 			assertEquals(2, tmd.getList().size());
 			assertEquals(2, tmd.getMap().size());
 			assertArrayEquals(new int[] {1, 1, 3, 2}, tmd.getLazyDataset().getShape());
-			assertArrayEquals(result1, tmd.getArray()[0].getShape());
-			assertArrayEquals(result2, tmd.getList().get(0).getShape());
-			assertArrayEquals(result3, tmd.getMap().get("1").getShape());
-			assertArrayEquals(result3, tmd.getMap().get("2").getShape());
+			assertArrayEquals(result1, tmd.getArray()[0].getShapeRef());
+			assertArrayEquals(result2, tmd.getList().get(0).getShapeRef());
+			assertArrayEquals(result3, tmd.getMap().get("1").getShapeRef());
+			assertArrayEquals(result3, tmd.getMap().get("2").getShapeRef());
 		} catch (Exception e) {
 			fail("Should not fail: " + e);
 		}

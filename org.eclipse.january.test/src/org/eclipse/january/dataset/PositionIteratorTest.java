@@ -64,7 +64,7 @@ public class PositionIteratorTest {
 
 		// 2D
 		ta = DatasetFactory.createRange(clazz, 0, size, 1).reshape(16, size / 16);
-		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShapeRef()));
 		testDataset(ta);
 		testDatasetAxes(ta, 0);
 		testDatasetAxes(ta, 1);
@@ -72,7 +72,7 @@ public class PositionIteratorTest {
 		testDatasetAxes(ta, -2);
 
 		ta = DatasetFactory.createRange(clazz, 0, size, 1).reshape(size / 32, 32);
-		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShapeRef()));
 		testDataset(ta);
 		testDatasetAxes(ta, 0);
 		testDatasetAxes(ta, 1);
@@ -81,7 +81,7 @@ public class PositionIteratorTest {
 
 		// 3D
 		ta = DatasetFactory.createRange(clazz, 0, size, 1).reshape(16, 8, size / (16 * 8));
-		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShapeRef()));
 		testDataset(ta);
 		testDatasetAxes(ta, 0);
 		testDatasetAxes(ta, 2);

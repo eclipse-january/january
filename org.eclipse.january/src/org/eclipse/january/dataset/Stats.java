@@ -1910,21 +1910,21 @@ public class Stats {
 		//Create a working copy of the dataset & check its rank.
 		Dataset vars = a.clone();
 		if (a.getRank() == 1) {
-			vars.setShape(1, a.getShape()[0]);
+			vars.setShape(1, a.getShapeRef()[0]);
 		}
 		
 		//1D of variables, so consider rows as variables
-		if (vars.getShape()[0] == 1) {
+		if (vars.getShapeRef()[0] == 1) {
 			rowvar = true;
 		}
 		
 		//nr is the number of records; axis is index
 		int nr, axis;
 		if (rowvar) {
-			nr = vars.getShape()[1];
+			nr = vars.getShapeRef()[1];
 			axis = 0;
 		} else {
-			nr = vars.getShape()[0];
+			nr = vars.getShapeRef()[0];
 			axis = 1;
 		}
 		
@@ -1947,7 +1947,7 @@ public class Stats {
 			//Create a working copy of the dataset & check its rank.
 			Dataset extraVars = b.clone();
 			if (b.getRank() == 1) {
-				extraVars.setShape(1, a.getShape()[0]);
+				extraVars.setShape(1, a.getShapeRef()[0]);
 			}
 			vars = DatasetUtils.concatenate(new Dataset[]{vars, extraVars}, axis);
 		}

@@ -63,20 +63,20 @@ public class IndexIteratorTest {
 
 		// 2D
 		ta = DatasetFactory.createRange(clazz, 0, size, 1).reshape(16, size / 16);
-		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShapeRef()));
 		testDataset(ta);
 
 		ta = DatasetFactory.createRange(clazz, 0, size, 1).reshape(size / 32, 32);
-		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShapeRef()));
 		testDataset(ta);
 
 		// 3D
 		ta = DatasetFactory.createRange(clazz, 0, size, 1).reshape(16, 8, size / (16 * 8));
-		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShapeRef()));
 		testDataset(ta);
 
 		ta = DatasetFactory.createRange(clazz, 0, size, 1).reshape(size / (16 * 8), 16, 8);
-		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShapeRef()));
 		testDataset(ta);
 	}
 
@@ -270,7 +270,7 @@ public class IndexIteratorTest {
 		// 3D
 		ta = DatasetFactory.createRange(clazz, 0, size, 1).reshape(size / 10, 2, 5);
 //		ta.reshape(5, size / 10, 2);
-		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShapeRef()));
 
 		testSlicedDataset(ta, 0, 0, 3, 0);
 		testSlicedDataset(ta, 0, 0, 3, 1);

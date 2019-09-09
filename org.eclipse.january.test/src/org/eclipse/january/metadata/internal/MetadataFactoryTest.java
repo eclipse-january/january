@@ -306,7 +306,7 @@ public class MetadataFactoryTest {
 				break;
 			case 4:
 				MaskMetadata m4 = (MaskMetadata) md;
-				exp = ((Dataset) params[0]).getShape();
+				exp = ((Dataset) params[0]).getShapeRef();
 				act = m4.getMask().getShape();
 				break;
 			case 5:

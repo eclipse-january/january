@@ -114,7 +114,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	 * @param dataset
 	 */
 	public static LazyDataset createLazyDataset(final Dataset dataset) {
-		return new LazyDataset(dataset.getName(), dataset.getDType(), dataset.getElementsPerItem(), dataset.getShape(),
+		return new LazyDataset(dataset.getName(), dataset.getDType(), dataset.getElementsPerItem(), dataset.getShapeRef(),
 		new ILazyLoader() {
 			private static final long serialVersionUID = -6725268922780517523L;
 
@@ -243,7 +243,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	@Override
 	public void setShape(int... shape) {
-		setShapeInternal(shape);
+		setShapeInternal(shape.clone());
 	}
 
 	@Override

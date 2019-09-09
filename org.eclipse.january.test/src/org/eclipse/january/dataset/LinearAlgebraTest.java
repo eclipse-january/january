@@ -32,11 +32,10 @@ public class LinearAlgebraTest {
 		return x == 0 ? Math.abs(b) < 10e-6 : Math.abs(x - b) < 10e-6*x;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Test
 	public void testTensorDot() {
-		Dataset a = DatasetFactory.createRange(60, Dataset.FLOAT32).reshape(3, 4, 5);
-		Dataset b = DatasetFactory.createRange(24, Dataset.INT16).reshape(4, 3, 2);
+		Dataset a = DatasetFactory.createRange(FloatDataset.class, 60).reshape(3, 4, 5);
+		Dataset b = DatasetFactory.createRange(ShortDataset.class, 24).reshape(4, 3, 2);
 
 		long start;
 		start = -System.nanoTime();
@@ -45,7 +44,7 @@ public class LinearAlgebraTest {
 
 		System.out.printf("Time taken %dus\n", start/1000);
 
-		assertArrayEquals("Shape", new int[] {5, 2}, c.getShape());
+		assertArrayEquals("Shape", new int[] {5, 2}, c.getShapeRef());
 		assertEquals("Type", Dataset.FLOAT32, c.getDType());
 
 		Dataset d = DatasetFactory.createFromObject(new double[] { 4400., 4730.,
@@ -53,8 +52,8 @@ public class LinearAlgebraTest {
 		assertTrue("Data does not match", d.cast(c.getDType()).equals(c));
 
 		int n = 16;
-		a = DatasetFactory.createRange(20*n, Dataset.FLOAT32).reshape(n, 4, 5);
-		b = DatasetFactory.createRange(8*n, Dataset.INT16).reshape(4, n, 2);
+		a = DatasetFactory.createRange(FloatDataset.class, 20*n).reshape(n, 4, 5);
+		b = DatasetFactory.createRange(ShortDataset.class, 8*n).reshape(4, n, 2);
 		start = -System.nanoTime();
 		c = LinearAlgebra.tensorDotProduct(a, b, 0, 1);
 		start += System.nanoTime();
@@ -69,10 +68,8 @@ public class LinearAlgebraTest {
 
 	@Test
 	public void testDot() {
-		@SuppressWarnings("deprecation")
-		Dataset a = DatasetFactory.createRange(10, Dataset.FLOAT32);
-		@SuppressWarnings("deprecation")
-		Dataset b = DatasetFactory.createRange(-6, 4, 1, Dataset.INT16);
+		Dataset a = DatasetFactory.createRange(10);
+		Dataset b = DatasetFactory.createRange(ShortDataset.class, -6, 4, 1);
 
 		long start;
 		start = -System.nanoTime();
@@ -82,7 +79,7 @@ public class LinearAlgebraTest {
 		
 		long nstart = -System.nanoTime();
 		Dataset d = Maths.multiply(a, b);
-		Number n = ((Number) d.sum()).floatValue();
+		Number n = (Number) d.sum();
 		nstart += System.nanoTime();
 		System.out.printf("Time taken %dus %dus\n", start/1000, nstart/1000);
 		assertTrue("Data does not match", n.equals(c.getObjectAbs(0)));
@@ -183,11 +180,10 @@ public class LinearAlgebraTest {
 		TestUtils.assertDatasetEquals(Maths.negative(c), d, 1e-15, 1e-15);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Test
 	public void testNorm() {
 		Dataset a, b;
-		a = DatasetFactory.createRange(9, Dataset.INT32);
+		a = DatasetFactory.createRange(IntegerDataset.class, 9);
 		a.isubtract(4);
 		b = a.reshape(3, 3);
 
@@ -223,38 +219,34 @@ public class LinearAlgebraTest {
 
 	@Test
 	public void testDeterminant() {
-		@SuppressWarnings("deprecation")
-		Dataset a = DatasetFactory.createRange(1, 21, 1, Dataset.INT32).reshape(4, 5);
+		Dataset a = DatasetFactory.createRange(IntegerDataset.class, 1, 21, 1).reshape(4, 5);
 		assertEquals(0, LinearAlgebra.calcDeterminant(a.getSliceView(null, new Slice(4))), 1e-8);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Test
 	public void testTrace() {
-		Dataset a = DatasetFactory.createRange(20, Dataset.INT32).reshape(4, 5);
+		Dataset a = DatasetFactory.createRange(IntegerDataset.class, 20).reshape(4, 5);
 		assertEquals(36, LinearAlgebra.trace(a).getInt());
 		assertEquals(33, LinearAlgebra.trace(a, -1, 0, 1).getInt());
 		assertEquals(40, LinearAlgebra.trace(a, 1, 0, 1).getInt());
 
-		a = DatasetFactory.createRange(60, Dataset.INT32).reshape(3, 4, 5);
+		a = DatasetFactory.createRange(IntegerDataset.class, 60).reshape(3, 4, 5);
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new int[]{36, 116, 196}, null), LinearAlgebra.trace(a, 0, 1, 2), true, 1e-12, 1e-12);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Test
 	public void testKronecker() {
-		Dataset a = DatasetFactory.createFromObject(Dataset.INT32, new int[] {1, 10, 100});
-		Dataset b = DatasetFactory.createFromObject(Dataset.INT32, new int[] {5, 6, 7});
+		Dataset a = DatasetFactory.createFromObject(IntegerDataset.class, new int[] {1, 10, 100}, null);
+		Dataset b = DatasetFactory.createFromObject(IntegerDataset.class, new int[] {5, 6, 7}, null);
 		
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new int[]{5, 6, 7, 50, 60, 70, 500, 600, 700}, null), LinearAlgebra.kroneckerProduct(a, b), true, 1e-12, 1e-12);
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new int[]{5, 50, 500, 6, 60, 600, 7, 70, 700}, null), LinearAlgebra.kroneckerProduct(b, a), true, 1e-12, 1e-12);
 
 		a = DatasetUtils.eye(2, 2, 0, Dataset.INT16);
-		b = DatasetFactory.ones(new int[] {2, 2}, Dataset.FLOAT32);
+		b = DatasetFactory.ones(FloatDataset.class, new int[] {2, 2});
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new float[]{1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1}, 4, 4), LinearAlgebra.kroneckerProduct(a, b), true, 1e-12, 1e-12);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Test
 	public void testPower() {
 		Dataset a = DatasetFactory.createFromObject(new int[] {0, 1, -1, 0}, 2, 2);
@@ -262,7 +254,7 @@ public class LinearAlgebraTest {
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new int[]{0, -1, 1, 0}, 2, 2), LinearAlgebra.power(a, 3), true, 1e-12, 1e-12);
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new double[]{0, 1, -1, 0}, 2, 2), LinearAlgebra.power(a, -3), true, 1e-12, 1e-12);
 
-		TestUtils.assertDatasetEquals(DatasetUtils.eye(4, 4, 0, Dataset.INT32), LinearAlgebra.power(DatasetFactory.zeros(new int[] {4, 4}, Dataset.INT32), 0), true, 1e-12, 1e-12);
+		TestUtils.assertDatasetEquals(DatasetUtils.eye(4, 4, 0, Dataset.INT32), LinearAlgebra.power(DatasetFactory.zeros(IntegerDataset.class, 4, 4), 0), true, 1e-12, 1e-12);
 	}
 
 	@Test

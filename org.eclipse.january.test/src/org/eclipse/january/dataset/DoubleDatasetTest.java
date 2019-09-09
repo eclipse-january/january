@@ -165,7 +165,7 @@ public class DoubleDatasetTest {
 		DoubleDataset a = DoubleDataset.createFromObject(da);
 		assertEquals(1, a.getRank());
 		assertEquals(6, a.getSize());
-		assertEquals(6, a.getShape()[0]);
+		assertEquals(6, a.getShapeRef()[0]);
 		IndexIterator it = a.getIterator();
 		for (int i = 0; it.hasNext(); i++) {
 			assertEquals(i, a.getElementDoubleAbs(it.index), 1e-15 * i);
@@ -175,8 +175,8 @@ public class DoubleDatasetTest {
 		DoubleDataset b = DoubleDataset.createFromObject(db);
 		assertEquals(2, b.getRank());
 		assertEquals(6, b.getSize());
-		assertEquals(2, b.getShape()[0]);
-		assertEquals(3, b.getShape()[1]);
+		assertEquals(2, b.getShapeRef()[0]);
+		assertEquals(3, b.getShapeRef()[1]);
 		it = b.getIterator();
 		for (int i = 0; it.hasNext(); i++) {
 			assertEquals(i, b.getElementDoubleAbs(it.index), 1e-15 * i);
@@ -186,8 +186,8 @@ public class DoubleDatasetTest {
 		DoubleDataset c = DoubleDataset.createFromObject(dc);
 		assertEquals(2, c.getRank());
 		assertEquals(8, c.getSize());
-		assertEquals(2, c.getShape()[0]);
-		assertEquals(4, c.getShape()[1]);
+		assertEquals(2, c.getShapeRef()[0]);
+		assertEquals(4, c.getShapeRef()[1]);
 		it = c.getIterator();
 		for (int i = 0; it.hasNext(); i++) {
 			if (i < 7)
@@ -200,8 +200,8 @@ public class DoubleDatasetTest {
 		DoubleDataset d = DoubleDataset.createFromObject(dd);
 		assertEquals(2, d.getRank());
 		assertEquals(8, d.getSize());
-		assertEquals(2, d.getShape()[0]);
-		assertEquals(4, d.getShape()[1]);
+		assertEquals(2, d.getShapeRef()[0]);
+		assertEquals(4, d.getShapeRef()[1]);
 		it = d.getIterator();
 		for (int i = 0; it.hasNext(); i++) {
 			if (i != 3)

@@ -49,7 +49,7 @@ public class ComparisonsTest {
 		DoubleDataset tb = DatasetFactory.zeros(DoubleDataset.class, 20, 10);
 		tb.fill(Double.NaN);
 		
-		BooleanDataset bd = DatasetFactory.zeros(BooleanDataset.class, ta.getShape());
+		BooleanDataset bd = DatasetFactory.zeros(BooleanDataset.class, ta.getShapeRef());
 		bd.fill(Boolean.FALSE);
 		TestUtils.assertDatasetEquals(Comparisons.equalTo(ta, tb), bd);
 		ta.fill(Double.POSITIVE_INFINITY);

@@ -394,6 +394,14 @@ public class StatsTest {
 	}
 
 	@Test
+	public void testOutlierValuesNaNs() {
+		DoubleDataset a = DatasetFactory.zeros(20).fill(Double.NaN);
+		double[] o = Stats.outlierValues(a, 0.01, 99.9, 10);
+		assertTrue(Double.isInfinite(o[0])); // NaNs are skipped over so 
+		assertTrue(Double.isInfinite(o[1]));
+	}
+
+ 	@Test
 	public void testCovarianceRanks() {
 		Dataset a = DatasetFactory.createFromObject(new double[]{-3.5, 6., 8., 14., -2.2, 1.6, 4.0, 7});
 		DoubleDataset cova = (DoubleDataset)Stats.covariance(a);

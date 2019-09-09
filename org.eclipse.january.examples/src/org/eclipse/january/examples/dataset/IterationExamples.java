@@ -93,7 +93,7 @@ public class IterationExamples {
 	public void strideIterator() {
 
 	   Dataset       ta   = DatasetFactory.createRange(DoubleDataset.class, 0, 1024, 1).reshape(16, 8, 1024 / (16 * 8));
-	   IndexIterator iter = new StrideIterator(ta.getElementsPerItem(), ta.getShape());
+	   IndexIterator iter = new StrideIterator(ta.getElementsPerItem(), ta.getShapeRef());
 	 
 		for (int i = 0; iter.hasNext(); i++) {
 			assertEquals(i, ta.getElementDoubleAbs(iter.index), 1e-5*i);

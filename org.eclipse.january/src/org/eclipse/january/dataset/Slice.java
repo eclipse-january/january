@@ -331,7 +331,7 @@ public class Slice implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Returns a String representation of the Slice comparable to the python
+	 * Appends a String representation of the Slice comparable to the python
 	 * representation.
 	 * 
 	 * @param s
@@ -587,8 +587,7 @@ public class Slice implements Cloneable, Serializable {
 	 */
 	public static Slice[] convertFromString(String sliceString) {
 
-		String clean = sliceString.replace("[", "");
-		clean = clean.replace("]", "");
+		String clean = sliceString.replace("[", "").replace("]", "");
 
 		String[] sub = clean.split(",");
 

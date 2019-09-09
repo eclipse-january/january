@@ -18,26 +18,21 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(TestUtils.VerboseSuite.class)
 @SuiteClasses({ AbstractCompoundDatasetTest.class, AbstractDatasetTest.class, AggregateDatasetTest.class,
-		BinaryOperationTest.class, BooleanDatasetTest.class, BooleanIteratorTest.class,
-		BroadcastIteratorTest.class, BroadcastUtilsTest.class, ByteDatasetTest.class,
-		ComparisonsTest.class, CompoundDoubleDatasetTest.class, ComplexDoubleDatasetTest.class,
-		ComplexFloatDatasetTest.class,
-		DatasetFactoryTest.class, DateDatasetTest.class, DoubleDatasetTest.class,
-		FloatDatasetTest.class, IndexIteratorTest.class, IntegerDatasetTest.class,
-		IntegerIteratorTest.class, IntegersIteratorTest.class, InterpolatorUtilsTest.class,
-		LazyDatasetTest.class, LazyDynamicDatasetTest.class, LazyDynamicLoaderTest.class,
-		LazyMathsTest.class, LazyWriteableDatasetTest.class, LinearAlgebraTest.class, LongDatasetTest.class,
-		MathsArrayTypeAbsFunctionParameterizeTest.class, MathsBasicTypeAbsFunctionParameterizeTest.class,
-		MathsComplexAbsFunctionParameterizeTest.class, MathsTest.class,
-		ObjectDatasetTest.class, OutlierCorrectnessTest.class, OutlierStatsTest.class,
-		PositionIteratorTest.class, RandomTest.class, RGBDatasetTest.class,
+		BinaryOperationTest.class, BooleanDatasetTest.class, BooleanIteratorTest.class, BroadcastIteratorTest.class,
+		BroadcastSelfIteratorTest.class, BroadcastUtilsTest.class, ByteDatasetTest.class, ComparisonsTest.class,
+		ComplexDoubleDatasetTest.class, ComplexFloatDatasetTest.class, CompoundDoubleDatasetTest.class,
+		DatasetFactoryTest.class, DatasetUtilsTest.class, DateDatasetTest.class, DoubleDatasetTest.class,
+		FloatDatasetTest.class, IndexIteratorTest.class, IntegerDatasetTest.class, IntegerIteratorTest.class,
+		IntegersIteratorTest.class, InterpolatorUtilsTest.class, LazyDatasetTest.class, LazyDynamicDatasetTest.class,
+		LazyDynamicLoaderTest.class, LazyMathsTest.class, LazyWriteableDatasetTest.class, LinearAlgebraTest.class,
+		LongDatasetTest.class, MathsArrayTypeAbsFunctionParameterizeTest.class,
+		MathsBasicTypeAbsFunctionParameterizeTest.class, MathsComplexAbsFunctionParameterizeTest.class, MathsTest.class,
+		ObjectDatasetTest.class, OutlierCorrectnessTest.class, OutlierStatsTest.class, ParameterizeDatasetTests.class,
+		PositionIteratorTest.class, RandomTest.class, RGBDatasetTest.class, ShapeUtilsTest.class,
 		ShortDatasetTest.class, SingleInputBroadcastIteratorTest.class, SliceIteratorTest.class,
-		SliceNDIteratorTest.class, SliceNDTest.class, SliceTest.class, StatsTest.class,
-		StrideIteratorTest.class, StringDatasetTest.class,
-		UnsignedArithmeticsTest.class, UnaryOperationTest.class,
-		org.eclipse.january.metadata.AllSuite.class,
-		ParameterizeDatasetTests.class
-		})
+		SliceNDIteratorTest.class, SliceNDTest.class, SliceTest.class, StatsTest.class, StrideIteratorTest.class,
+		StringDatasetTest.class, UnaryOperationTest.class, UnsignedArithmeticsTest.class,
+		org.eclipse.january.metadata.AllSuite.class, })
 public class AllSuite {
 
 }

@@ -17,7 +17,7 @@ Takes a functions definition file and the shell of a Java class,
 generates the methods and prints to standard output the completed class
 
 Runs as follows
-$ python generatefunctions.py functions.txt ../GeneratedMaths.java > GeneratedMaths.java
+$ python generatefunctions.py functions.txt MathsPreface.java > Maths.java
 
 The format is
 

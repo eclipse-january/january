@@ -80,7 +80,7 @@ public class MathsTest {
 		Assert.assertEquals("Dtype does not match", c.getDType(), d.getDType());
 		Assert.assertEquals("Size does not match", c.getSize(), d.getSize());
 		Assert.assertEquals("ISize does not match", c.getElementsPerItem(), d.getElementsPerItem());
-		Assert.assertArrayEquals("Shape does not match", c.getShape(), d.getShape());
+		Assert.assertArrayEquals("Shape does not match", c.getShapeRef(), d.getShapeRef());
 
 		final IndexIterator ci = c.getIterator(true);
 		final IndexIterator di = d.getIterator();
@@ -1691,7 +1691,7 @@ public class MathsTest {
 		checkDatasets(null, null, d, ta);
 
 
-		Dataset b = DatasetFactory.createRange(a.getClass(), a.getShape()[0]);
+		Dataset b = DatasetFactory.createRange(a.getClass(), a.getShapeRef()[0]);
 		b.imultiply(2);
 		tdata = new double[] {0.5 , 0.75, 1.25, 1.75, 2.25, 2.5};
 		ta = DatasetFactory.createFromObject(tdata);
@@ -1711,9 +1711,9 @@ public class MathsTest {
 		ta = DatasetFactory.createFromObject(tdata, 2, 3);
 		checkDatasets(null, null, l.get(1), ta);
 
-		b = DatasetFactory.createRange(a.getClass(), a.getShape()[0]);
+		b = DatasetFactory.createRange(a.getClass(), a.getShapeRef()[0]);
 		b.imultiply(2);
-		Dataset c = DatasetFactory.createRange(a.getClass(), a.getShape()[1]);
+		Dataset c = DatasetFactory.createRange(a.getClass(), a.getShapeRef()[1]);
 		c.imultiply(-1.5);
 
 		l = Maths.gradient(a, b, c);

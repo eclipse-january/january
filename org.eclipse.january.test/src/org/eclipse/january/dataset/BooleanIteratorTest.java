@@ -163,7 +163,7 @@ public class BooleanIteratorTest {
 
 		// 2D
 		ta = ta.reshape(16, size / 16);
-		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShapeRef()));
 		if (choice != null) {
 			ch = choice.reshape(ta.getShapeRef());
 		}
@@ -177,7 +177,7 @@ public class BooleanIteratorTest {
 		testDataset(ta, out, BooleanIterator.createIterator(ta, ch, out), count);
 
 		ta = ta.reshape(size / 32, 32);
-		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShapeRef()));
 		if (choice != null) {
 			ch = choice.reshape(ta.getShapeRef());
 		}
@@ -192,7 +192,7 @@ public class BooleanIteratorTest {
 
 		// 3D
 		ta = ta.reshape(16, 8, size / (16 * 8));
-		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShapeRef()));
 		if (choice != null) {
 			ch = choice.reshape(ta.getShapeRef());
 		}
@@ -206,7 +206,7 @@ public class BooleanIteratorTest {
 		testDataset(ta, out, BooleanIterator.createIterator(ta, ch, out), count);
 
 		ta = ta.reshape(size / (16 * 8), 16, 8);
-		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShapeRef()));
 		if (choice != null) {
 			ch = choice.reshape(ta.getShapeRef());
 		}
@@ -259,7 +259,7 @@ public class BooleanIteratorTest {
 
 		// 2D
 		ta = ta.reshape(16, size / 16);
-		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShapeRef()));
 		if (choice != null) {
 			ch = choice.reshape(ta.getShapeRef());
 		}
@@ -273,7 +273,7 @@ public class BooleanIteratorTest {
 		testDataset(ta, out, BooleanIterator.createIterator(ta, ch, out), count);
 
 		ta = ta.reshape(size / 32, 32);
-		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShapeRef()));
 		if (choice != null) {
 			ch = choice.reshape(ta.getShapeRef());
 		}
@@ -288,7 +288,7 @@ public class BooleanIteratorTest {
 
 		// 3D
 		ta = ta.reshape(16, 8, size / (16 * 8));
-		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShapeRef()));
 		if (choice != null) {
 			ch = choice.reshape(ta.getShapeRef());
 		}
@@ -302,7 +302,7 @@ public class BooleanIteratorTest {
 		testDataset(ta, out, BooleanIterator.createIterator(ta, ch, out), count);
 
 		ta = ta.reshape(size / (16 * 8), 16, 8);
-		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShapeRef()));
 		if (choice != null) {
 			ch = choice.reshape(ta.getShapeRef());
 		}

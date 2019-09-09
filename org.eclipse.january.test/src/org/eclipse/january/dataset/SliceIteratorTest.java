@@ -64,7 +64,7 @@ public class SliceIteratorTest {
 
 		// 2D
 		ta.setShape(16, size / 16);
-		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShapeRef()));
 		testDataset(ta);
 		testDatasetSteps(ta, new int[] {1, 2});
 		testDatasetSteps(ta, new int[] {3, 1});
@@ -76,7 +76,7 @@ public class SliceIteratorTest {
 		testDatasetAxes(ta, new boolean[] {false, true});
 
 		ta.setShape(size / 32, 32);
-		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShapeRef()));
 		testDataset(ta);
 		testDatasetSteps(ta, new int[] {1, 2});
 		testDatasetSteps(ta, new int[] {3, 1});
@@ -86,7 +86,7 @@ public class SliceIteratorTest {
 
 		// 3D
 		ta.setShape(16, 8, size / (16 * 8));
-		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShapeRef()));
 		testDataset(ta);
 		testDatasetSteps(ta, new int[] {1, 1, 3});
 		testDatasetSteps(ta, new int[] {1, 2, 1});
@@ -103,7 +103,7 @@ public class SliceIteratorTest {
 		testDatasetAxes(ta, new boolean[] {false, false, false});
 
 		ta.setShape(size / (16 * 8), 16, 8);
-		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShape()));
+		TestUtils.verbosePrintf(" Shape: %s\n", Arrays.toString(ta.getShapeRef()));
 		testDataset(ta);
 		testDatasetSteps(ta, new int[] {1, 1, 3});
 		testDatasetSteps(ta, new int[] {1, 2, 1});
