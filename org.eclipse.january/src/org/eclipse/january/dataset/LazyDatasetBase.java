@@ -1001,11 +1001,11 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 				if (is != 1 && is != getElementsPerItem()) {
 					throw new IllegalArgumentException("Dataset has incompatible number of elements with this dataset");
 				}
-				d = ed.cast(is == 1 ? Dataset.FLOAT64 : Dataset.ARRAYFLOAT64);
+				d = ed.cast(is == 1 ? DoubleDataset.class: CompoundDoubleDataset.class);
 			} else if (!keepLazy) {
 				final int is = getElementsPerItem();
 				try {
-					d = DatasetUtils.cast(d.getSlice(), is == 1 ? Dataset.FLOAT64 : Dataset.ARRAYFLOAT64);
+					d = DatasetUtils.cast(is == 1 ? DoubleDataset.class: CompoundDoubleDataset.class, d.getSlice());
 				} catch (DatasetException e) {
 					logger.error("Could not get data from lazy dataset", e);
 					return null;

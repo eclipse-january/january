@@ -129,7 +129,7 @@ public class DatasetUtils {
 	 * @return a sub-array
 	 */
 	public static <T extends Dataset> T take(final T a, final Dataset indices, Integer axis) {
-		IntegerDataset indexes = (IntegerDataset) indices.flatten().cast(Dataset.INT32);
+		IntegerDataset indexes = (IntegerDataset) indices.flatten().cast(IntegerDataset.class);
 		return take(a, indexes.getData(), axis);
 	}
 
@@ -139,7 +139,6 @@ public class DatasetUtils {
 	 * @param axis if null, then use flattened view
 	 * @return a sub-array
 	 */
-	@SuppressWarnings("deprecation")
 	public static <T extends Dataset> T take(final T a, final int[] indices, Integer axis) {
 		if (indices == null || indices.length == 0) {
 			utilsLogger.error("No indices given");
@@ -147,7 +146,7 @@ public class DatasetUtils {
 		}
 		int[] ashape = a.getShape();
 		final int rank = ashape.length;
-		final int at = a.getDType();
+		final Class<? extends Dataset> ac = a.getClass();
 		final int ilen = indices.length;
 		final int is = a.getElementsPerItem();
 
@@ -155,7 +154,7 @@ public class DatasetUtils {
 		if (axis == null) {
 			ashape = new int[1];
 			ashape[0] = ilen;
-			result = DatasetFactory.zeros(is, ashape, at);
+			result = DatasetFactory.zeros(is, ac, ashape);
 			Serializable src = a.getBuffer();
 			for (int i = 0; i < ilen; i++) {
 				((AbstractDataset) result).setItemDirect(i, indices[i], src);
@@ -163,7 +162,7 @@ public class DatasetUtils {
 		} else {
 			axis = a.checkAxis(axis);
 			ashape[axis] = ilen;
-			result = DatasetFactory.zeros(is, ashape, at);
+			result = DatasetFactory.zeros(is, ac, ashape);
 
 			int[] dpos = new int[rank];
 			int[] spos = new int[rank];
@@ -639,8 +638,7 @@ public class DatasetUtils {
 			newShape[axis] = nlen;
 		}
 
-		@SuppressWarnings("deprecation")
-		Dataset rdata = DatasetFactory.zeros(is, newShape, a.getDType());
+		Dataset rdata = DatasetFactory.zeros(is, a.getClass(), newShape);
 		Serializable nbuf = rdata.getBuffer();
 
 		int csize = is; // chunk size
@@ -687,8 +685,7 @@ public class DatasetUtils {
 	 */
 	public static <T extends Dataset> T resize(final T a, final int... shape) {
 		int size = a.getSize();
-		@SuppressWarnings("deprecation")
-		Dataset rdata = DatasetFactory.zeros(a.getElementsPerItem(), shape, a.getDType());
+		Dataset rdata = DatasetFactory.zeros(a.getElementsPerItem(), a.getClass(), shape);
 		IndexIterator it = rdata.getIterator();
 		while (it.hasNext()) {
 			rdata.setObjectAbs(it.index, a.getObjectAbs(it.index % size));
@@ -700,11 +697,26 @@ public class DatasetUtils {
 	/**
 	 * Copy and cast a dataset
 	 *
+	 * @param clazz dataset class
+	 * @param d
+	 *            The dataset to be copied
+	 * @return copied dataset of given class
+	 */
+	public static <T extends Dataset> T copy(Class<T> clazz, final IDataset d) {
+		return (T) copy(d, DTypeUtils.getDType(clazz));
+	}
+
+	/**
+	 * Copy and cast a dataset
+	 *
 	 * @param d
 	 *            The dataset to be copied
 	 * @param dtype dataset type
 	 * @return copied dataset of given type
+	 * @deprecated Please use the class-based methods in DatasetUtils,
+	 *             such as {@link #copy(Class, IDataset)}
 	 */
+	@Deprecated
 	public static Dataset copy(final IDataset d, final int dtype) {
 		Dataset a = convertToDataset(d);
 
@@ -809,17 +821,16 @@ public class DatasetUtils {
 	}
 
 	/**
-	 * Copy and cast a dataset
+	 * Cast a dataset
 	 *
 	 * @param clazz dataset class
 	 * @param d
-	 *            The dataset to be copied
-	 * @return copied dataset of given type
+	 *            The dataset to be cast.
+	 * @return dataset of given class (or same dataset if already of the right class)
 	 */
-	public static <T extends Dataset> T copy(Class<T> clazz, final IDataset d) {
-		return (T) copy(d, DTypeUtils.getDType(clazz));
+	public static <T extends Dataset> T cast(Class<T> clazz, final IDataset d) {
+		return (T) cast(d, DTypeUtils.getDType(clazz));
 	}
-
 
 	/**
 	 * Cast a dataset
@@ -828,7 +839,10 @@ public class DatasetUtils {
 	 *            The dataset to be cast.
 	 * @param dtype dataset type
 	 * @return dataset of given type (or same dataset if already of the right type)
+	 * @deprecated Please use the class-based methods in DatasetUtils,
+	 *             such as {@link #cast(Class, IDataset)}
 	 */
+	@Deprecated
 	public static Dataset cast(final IDataset d, final int dtype) {
 		Dataset a = convertToDataset(d);
 
@@ -840,14 +854,18 @@ public class DatasetUtils {
 
 	/**
 	 * Cast a dataset
-	 *
+	 * @param isize item size
 	 * @param clazz dataset class
 	 * @param d
 	 *            The dataset to be cast.
-	 * @return dataset of given type (or same dataset if already of the right type)
+	 * @param repeat repeat elements over item
+	 * @param dtype dataset type
+	 *
+	 * @return dataset of given class
+	 * @since 2.3
 	 */
-	public static <T extends Dataset> T cast(Class<T> clazz, final IDataset d) {
-		return (T) cast(d, DTypeUtils.getDType(clazz));
+	public static <T extends Dataset> T cast(final int isize, Class<T> clazz, final IDataset d, final boolean repeat) {
+		return (T) cast(d, repeat, DTypeUtils.getDType(clazz), isize);
 	}
 
 	/**
@@ -858,7 +876,11 @@ public class DatasetUtils {
 	 * @param repeat repeat elements over item
 	 * @param dtype dataset type
 	 * @param isize item size
+	 * @return dataset of given type
+	 * @deprecated Please use the class-based methods in DatasetUtils,
+	 *             such as {@link #cast(Class, IDataset)}
 	 */
+	@Deprecated
 	public static Dataset cast(final IDataset d, final boolean repeat, final int dtype, final int isize) {
 		Dataset a = convertToDataset(d);
 
@@ -939,9 +961,26 @@ public class DatasetUtils {
 	/**
 	 * Cast array of datasets to a compound dataset
 	 *
+	 * @param clazz dataset class
 	 * @param a
 	 *            The datasets to be cast.
+	 * @return compound dataset of given class
+	 * @since 2.3
 	 */
+	public static <T extends CompoundDataset> T cast(Class<T> clazz, final Dataset...a) {
+		return (T) cast(a, DTypeUtils.getDType(clazz));
+	}
+
+	/**
+	 * Cast array of datasets to a compound dataset
+	 *
+	 * @param a
+	 *            The datasets to be cast.
+	 * @return compound dataset of given type
+	 * @deprecated Please use the class-based methods in DatasetUtils,
+	 *             such as {@link #cast(Class, Dataset...)}
+	 */
+	@Deprecated
 	public static CompoundDataset cast(final Dataset[] a, final int dtype) {
 		CompoundDataset c = null;
 
@@ -1172,15 +1211,44 @@ public class DatasetUtils {
 	}
 
 	/**
+	 * @param clazz dataset class
+	 * @param rows
+	 * @param cols
+	 * @param offset
+	 * @param dtype
+	 * @return a new 2d dataset of given shape and class, filled with ones on the (offset) diagonal
+	 * @since 2.3
+	 */
+	public static <T extends Dataset> T eye(final Class<T> clazz, final int rows, final int cols, final int offset) {
+		int[] shape = new int[] {rows, cols};
+		T a = DatasetFactory.zeros(clazz, shape);
+
+		int[] pos = new int[] {0, offset};
+		while (pos[1] < 0) {
+			pos[0]++;
+			pos[1]++;
+		}
+		while (pos[0] < rows && pos[1] < cols) {
+			a.set(1, pos);
+			pos[0]++;
+			pos[1]++;
+		}
+
+		return a;
+	}
+
+	/**
 	 * @param rows
 	 * @param cols
 	 * @param offset
 	 * @param dtype
 	 * @return a new 2d dataset of given shape and type, filled with ones on the (offset) diagonal
+	 * @deprecated Please use the class-based methods in DatasetUtils,
+	 *             such as {@link #eye(Class, int, int, int)}
 	 */
+	@Deprecated
 	public static Dataset eye(final int rows, final int cols, final int offset, final int dtype) {
 		int[] shape = new int[] {rows, cols};
-		@SuppressWarnings("deprecation")
 		Dataset a = DatasetFactory.zeros(shape, dtype);
 
 		int[] pos = new int[] {0, offset};
@@ -1203,9 +1271,7 @@ public class DatasetUtils {
 	 * @param offset
 	 * @return diagonal matrix
 	 */
-	@SuppressWarnings("deprecation")
 	public static <T extends Dataset> T diag(final T a, final int offset) {
-		final int dtype = a.getDType();
 		final int rank = a.getRank();
 		final int is = a.getElementsPerItem();
 
@@ -1219,7 +1285,7 @@ public class DatasetUtils {
 		if (rank == 1) {
 			int side = shape[0] + Math.abs(offset);
 			int[] pos = new int[] {side, side};
-			result = DatasetFactory.zeros(is, pos, dtype);
+			result = DatasetFactory.zeros(is, a.getClass(), pos);
 			if (offset >= 0) {
 				pos[0] = 0;
 				pos[1] = offset;
@@ -1237,7 +1303,7 @@ public class DatasetUtils {
 			int side = offset >= 0 ? Math.min(shape[0], shape[1]-offset) : Math.min(shape[0]+offset, shape[1]);
 			if (side < 0)
 				side = 0;
-			result = DatasetFactory.zeros(is, new int[] {side}, dtype);
+			result = DatasetFactory.zeros(is, a.getClass(), side);
 
 			if (side > 0) {
 				int[] pos = offset >= 0 ? new int[] { 0, offset } : new int[] { -offset, 0 };
@@ -1357,10 +1423,23 @@ public class DatasetUtils {
 
 	/**
 	 * Create a compound dataset from given datasets
-	 * @param dtype
+	 * @param clazz dataset class
 	 * @param datasets
 	 * @return compound dataset or null if none given
 	 */
+	public static <T extends CompoundDataset> T createCompoundDataset(Class<T> clazz, final Dataset... datasets) {
+		return (T) createCompoundDataset(DTypeUtils.getDType(clazz), datasets);
+	}
+
+	/**
+	 * Create a compound dataset from given datasets
+	 * @param dtype
+	 * @param datasets
+	 * @return compound dataset or null if none given
+	 * @deprecated Please use the class-based methods in DatasetUtils,
+	 *             such as {@link #createCompoundDataset(Class, Dataset...)}
+	 */
+	@Deprecated
 	public static CompoundDataset createCompoundDataset(final int dtype, final Dataset... datasets) {
 		if (datasets == null || datasets.length == 0)
 			return null;
@@ -1406,16 +1485,6 @@ public class DatasetUtils {
 			utilsLogger.error("Dataset type not supported for this operation");
 			throw new UnsupportedOperationException("Dataset type not supported");
 		}
-	}
-
-	/**
-	 * Create a compound dataset from given datasets
-	 * @param clazz dataset class
-	 * @param datasets
-	 * @return compound dataset or null if none given
-	 */
-	public static <T extends CompoundDataset> T createCompoundDataset(Class<T> clazz, final Dataset... datasets) {
-		return (T) createCompoundDataset(DTypeUtils.getDType(clazz), datasets);
 	}
 
 	/**
@@ -1626,8 +1695,7 @@ public class DatasetUtils {
 
 		for (int i = 0; i < rank; i++) {
 			Dataset axis = axes[i];
-			@SuppressWarnings("deprecation")
-			Dataset coord = DatasetFactory.zeros(nshape, axis.getDType());
+			Dataset coord = DatasetFactory.zeros(axis.getClass(), nshape);
 			result.add(coord);
 
 			final int alen = axis.getSize();
@@ -2123,7 +2191,7 @@ public class DatasetUtils {
 
 		IndexIterator it = a.getIterator();
 		final int n = values.getSize();
-		if (values.getDType() == Dataset.INT64) {
+		if (values instanceof LongDataset) {
 			while (it.hasNext()) {
 				long x = a.getElementLongAbs(it.index);
 
@@ -2207,7 +2275,7 @@ public class DatasetUtils {
 		IndexIterator it = a.getIterator();
 		int i = -1;
 		final int n = values.getSize();
-		if (values.getDType() == Dataset.INT64) {
+		if (values instanceof LongDataset) {
 			while (it.hasNext()) {
 				i++;
 				long x = a.getElementLongAbs(it.index);
@@ -2688,10 +2756,9 @@ public class DatasetUtils {
 	 * @param condition should be broadcastable to data
 	 * @return 1-D dataset of values
 	 */
-	@SuppressWarnings("deprecation")
 	public static Dataset extract(final IDataset data, final IDataset condition) {
 		Dataset a = convertToDataset(data.getSliceView());
-		Dataset b = cast(condition.getSliceView(), Dataset.BOOL);
+		Dataset b = cast(BooleanDataset.class, condition.getSliceView());
 
 		try {
 			return a.getByBoolean(b);
@@ -2713,7 +2780,7 @@ public class DatasetUtils {
 					}
 				}
 			}
-			c = DatasetFactory.zeros(new int[] {size}, a.getDType());
+			c = DatasetFactory.zeros(a.getClass(), size);
 
 			int i = 0;
 			if (it.isOutputDouble()) {

@@ -39,7 +39,7 @@ public class IntegerIterator extends IndexIterator {
 	 * @param isize number of elements in an item
 	 */
 	public IntegerIterator(final Dataset index, final int length, final int isize) {
-		indices = (IntegerDataset) (index instanceof IntegerDataset ? index : DatasetUtils.convertToDataset(index).cast(Dataset.INT32));
+		indices = DatasetUtils.convertToDataset(index).cast(IntegerDataset.class);
 		iter = index.getIterator();
 		istep = isize;
 		imax = length*istep;

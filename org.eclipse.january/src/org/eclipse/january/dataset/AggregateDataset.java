@@ -222,6 +222,7 @@ public class AggregateDataset extends LazyDatasetBase implements ILazyDataset {
 		return getSlice(monitor, new SliceND(shape, start, stop, step));
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public Dataset getSlice(IMonitor monitor, SliceND slice) throws DatasetException {
 		int[] start = slice.getStart();

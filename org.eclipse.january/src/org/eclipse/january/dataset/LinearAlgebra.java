@@ -505,8 +505,9 @@ public class LinearAlgebra {
 			return createDataset(lud.getSolver().getInverse().power(-n));
 		}
 		Dataset p = createDataset(createRealMatrix(a).power(n));
-		if (!a.hasFloatingPointElements())
-			return p.cast(a.getDType());
+		if (!a.hasFloatingPointElements()) {
+			return p.cast(a.getClass());
+		}
 		return p;
 	}
 
@@ -569,7 +570,7 @@ public class LinearAlgebra {
 		int[] pb = itb.getPos();
 		int[] off = new int[1];
 		int[] stride = AbstractDataset.createStrides(1, nShape, null, 0, off);
-		if (kron.getDType() == Dataset.INT64) {
+		if (kron instanceof LongDataset) {
 			while (ita.hasNext()) {
 				long av = a.getElementLongAbs(ita.index);
 
@@ -632,8 +633,7 @@ public class LinearAlgebra {
 		int[] axes = new int[] { a.checkAxis(axis1), a.checkAxis(axis2) };
 		Arrays.sort(axes);
 		int is = a.getElementsPerItem();
-		@SuppressWarnings("deprecation")
-		Dataset trace = DatasetFactory.zeros(is, removeAxesFromShape(shape, axes), a.getDType());
+		Dataset trace = DatasetFactory.zeros(is, a.getClass(), removeAxesFromShape(shape, axes));
 
 		int am = axes[0];
 		int mmax = shape[am];
@@ -652,7 +652,7 @@ public class LinearAlgebra {
 			nmin = 0;
 		}
 		if (is == 1) {
-			if (a.getDType() == Dataset.INT64) {
+			if (a instanceof LongDataset) {
 				while (it.hasNext()) {
 					int m = mmin;
 					int n = nmin;

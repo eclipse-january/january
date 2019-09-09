@@ -335,6 +335,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 		return getSlice(monitor, new SliceND(shape, start, stop, step));
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public Dataset getSlice(IMonitor monitor, SliceND slice) throws DatasetException {
 		if (loader != null && !loader.isFileReadable()) {

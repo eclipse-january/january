@@ -340,7 +340,9 @@ public interface Dataset extends IDataset {
 	 * @param dtype
 	 *            dataset type
 	 * @return a converted copy of the dataset
+	 * @deprecated Please use class-based method {@link Dataset#copy(Class)}
 	 */
+	@Deprecated
 	public Dataset copy(int dtype);
 
 	/**
@@ -358,7 +360,9 @@ public interface Dataset extends IDataset {
 	 * @param dtype
 	 *            dataset type
 	 * @return a converted dataset
+	 * @deprecated Please use class-based method {@link Dataset#cast(Class)}
 	 */
+	@Deprecated
 	public Dataset cast(int dtype);
 
 	/**
@@ -373,13 +377,27 @@ public interface Dataset extends IDataset {
 	/**
 	 * Cast a dataset
 	 * 
+	 * @param isize
+	 *            item size
+	 * @param <T> dataset subclass
+	 * @param repeat
+	 * @return a converted dataset
+	 * @since 2.3
+	 */
+	public <T extends Dataset> T cast(int isize, Class<T> clazz, boolean repeat);
+
+	/**
+	 * Cast a dataset
+	 * 
 	 * @param repeat
 	 * @param dtype
 	 *            dataset type
 	 * @param isize
 	 *            item size
 	 * @return a converted dataset
+	 * @deprecated Please use class-based method {@link Dataset#cast(int, Class, boolean))}
 	 */
+	@Deprecated
 	public Dataset cast(boolean repeat, int dtype, int isize);
 
 	/**

@@ -36,6 +36,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+@SuppressWarnings("deprecation")
 public class MathsTest {
 	private final static int SSTEP = 15;
 	private final static int SITER = 3;
