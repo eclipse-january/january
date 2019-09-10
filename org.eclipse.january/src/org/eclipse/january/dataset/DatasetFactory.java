@@ -45,8 +45,8 @@ public class DatasetFactory {
 	 * @param dtype
 	 * @return a new dataset of given shape and type, filled with values determined by parameters
 	 * 
-	 * @deprecated Please use the class-based methods in DatasetFactory, 
-	 *             such as {@link #createRange(Class, double)} 
+	 * @deprecated Please use the class-based methods in DatasetFactory,
+	 *             such as {@link #createRange(Class, double)}
 	 */
 	@Deprecated
 	public static Dataset createRange(final double stop, final int dtype) {
@@ -61,8 +61,8 @@ public class DatasetFactory {
 	 * @param dtype
 	 * @return a new 1D dataset of given type, filled with values determined by parameters
 	 * 
-	 * @deprecated Please use the class-based methods in DatasetFactory, 
-	 *             such as {@link #createRange(Class, double, double, double)} 
+	 * @deprecated Please use the class-based methods in DatasetFactory,
+	 *             such as {@link #createRange(Class, double, double, double)}
 	 */
 	@Deprecated
 	public static Dataset createRange(final double start, final double stop, final double step, final int dtype) {
@@ -100,8 +100,8 @@ public class DatasetFactory {
 	 * @param dtype
 	 * @return a new dataset of given shape and type, filled with values determined by parameters
 	 * 
-	 * @deprecated Please use the class-based methods in DatasetFactory, 
-	 *             such as {@link #createRange(Class, double, double, double)} 
+	 * @deprecated Please use the class-based methods in DatasetFactory,
+	 *             such as {@link #createRange(Class, double, double, double)}
 	 */
 	@Deprecated
 	public static CompoundDataset createRange(final int itemSize, final double stop, final int dtype) {
@@ -117,8 +117,8 @@ public class DatasetFactory {
 	 * @param dtype
 	 * @return a new 1D dataset of given type, filled with values determined by parameters
 	 * 
-	 * @deprecated Please use the class-based methods in DatasetFactory, 
-	 *             such as {@link #createRange(Class, double, double, double)} 
+	 * @deprecated Please use the class-based methods in DatasetFactory,
+	 *             such as {@link #createRange(Class, double, double, double)}
 	 */
 	@Deprecated
 	public static CompoundDataset createRange(final int itemSize, final double start, final double stop, final double step, final int dtype) {
@@ -223,8 +223,8 @@ public class DatasetFactory {
 	 * @return dataset
 	 * @throws IllegalArgumentException if dataset type is not known
 	 * 
-	 * @deprecated Please use the class-based methods in DatasetFactory, 
-	 *             such as {@link #createFromObject(Class, Object, int...)} 
+	 * @deprecated Please use the class-based methods in DatasetFactory,
+	 *             such as {@link #createFromObject(Class, Object, int...)}
 	 */
 	@Deprecated
 	public static Dataset createFromObject(final int dtype, final Object obj) {
@@ -240,8 +240,8 @@ public class DatasetFactory {
 	 * @return dataset
 	 * @throws IllegalArgumentException if dataset type is not known
 	 * 
-	 * @deprecated Please use the class-based methods in DatasetFactory, 
-	 *             such as {@link #createFromObject(Class, Object, int...)} 
+	 * @deprecated Please use the class-based methods in DatasetFactory,
+	 *             such as {@link #createFromObject(Class, Object, int...)}
 	 */
 	@Deprecated
 	public static Dataset createFromObject(final int dtype, final Object obj, final int... shape) {
@@ -258,8 +258,8 @@ public class DatasetFactory {
 	 * @return dataset
 	 * @throws IllegalArgumentException if dataset type is not known
 	 * 
-	 * @deprecated Please use the class-based methods in DatasetFactory, 
-	 *             such as {@link #createFromObject(int, Class, Object, int...)} 
+	 * @deprecated Please use the class-based methods in DatasetFactory,
+	 *             such as {@link #createFromObject(int, Class, Object, int...)}
 	 */
 	@Deprecated
 	public static Dataset createFromObject(final int itemSize, final int dtype, final Object obj, final int... shape) {
@@ -406,9 +406,8 @@ public class DatasetFactory {
 		}
 
 		Class<? extends Object> clazz = obj.getClass();
-		if (DTypeUtils.isClassSupportedAsElement(clazz)) {
-			int dtype = DTypeUtils.getDTypeFromClass(clazz);
-			return createFromList(dtype, objectList);
+		if (InterfaceUtils.isElementSupported(clazz)) {
+			return createFromList(InterfaceUtils.getInterface(obj), objectList);
 		}
 
 		return createFromObject(objectList);
@@ -421,8 +420,8 @@ public class DatasetFactory {
 	 * @param objectList
 	 * @return dataset filled with values from list
 	 * 
-	 * @deprecated Please use the class-based methods in DatasetFactory, 
-	 *             such as {@link #createFromList(Class, List)} 
+	 * @deprecated Please use the class-based methods in DatasetFactory,
+	 *             such as {@link #createFromList(Class, List)}
 	 */	
 	@Deprecated
 	public static Dataset createFromList(final int dtype, List<?> objectList) {
@@ -456,8 +455,8 @@ public class DatasetFactory {
 	 * @param objects
 	 * @return compound dataset
 	 * 
-	 * @deprecated Please use the class-based methods in DatasetFactory, 
-	 *             such as {@link #createCompoundDataset(Class, Object...)} 
+	 * @deprecated Please use the class-based methods in DatasetFactory,
+	 *             such as {@link #createCompoundDataset(Class, Object...)}
 	 */
 	@Deprecated
 	public static CompoundDataset createCompoundDataset(final int dtype, Object... objects) {
@@ -476,8 +475,8 @@ public class DatasetFactory {
 	 * @param imag
 	 * @return complex dataset
 	 * 
-	 * @deprecated Please use the class-based methods in DatasetFactory, 
-	 *             such as {@link #createComplexDataset(Class, Object, Object)} 
+	 * @deprecated Please use the class-based methods in DatasetFactory,
+	 *             such as {@link #createComplexDataset(Class, Object, Object)}
 	 */
 	@Deprecated
 	public static CompoundDataset createComplexDataset(final int dtype, Object real, Object imag) {
@@ -504,8 +503,8 @@ public class DatasetFactory {
 	 * @param dtype
 	 * @return a new dataset of given shape and type, filled with zeros
 	 * 
-	 * @deprecated Please use the class-based methods in DatasetFactory, 
-	 *             such as {@link #zeros(Class, int...)} 
+	 * @deprecated Please use the class-based methods in DatasetFactory,
+	 *             such as {@link #zeros(Class, int...)}
 	 */
 	@Deprecated
 	public static Dataset zeros(final int[] shape, final int dtype) {
@@ -553,8 +552,8 @@ public class DatasetFactory {
 	 * @param dtype
 	 * @return a new dataset of given item size, shape and type, filled with zeros
 	 * 
-	 * @deprecated Please use the class-based methods in DatasetFactory, 
-	 *             such as {@link #zeros(int, Class, int...)} 
+	 * @deprecated Please use the class-based methods in DatasetFactory,
+	 *             such as {@link #zeros(int, Class, int...)}
 	 */
 	@Deprecated
 	public static Dataset zeros(final int itemSize, final int[] shape, final int dtype) {
@@ -571,8 +570,8 @@ public class DatasetFactory {
 	 * @return a new dataset of given item size, shape and type, filled with zeros
 	 * @since 2.0
 	 * 
-	 * @deprecated Please use the class-based methods in DatasetFactory, 
-	 *             such as {@link #compoundZeros(int, Class, int...)} 
+	 * @deprecated Please use the class-based methods in DatasetFactory,
+	 *             such as {@link #compoundZeros(int, Class, int...)}
 	 */
 	@Deprecated
 	public static CompoundDataset compoundZeros(final int itemSize, final int[] shape, final int dtype) {
@@ -632,8 +631,8 @@ public class DatasetFactory {
 	 * @param dtype
 	 * @return a new dataset
 	 * 
-	 * @deprecated Please use the class-based methods in DatasetFactory, 
-	 *             such as {@link #zeros(Dataset, Class)} 
+	 * @deprecated Please use the class-based methods in DatasetFactory,
+	 *             such as {@link #zeros(Dataset, Class)}
 	 */
 	@Deprecated
 	public static Dataset zeros(final Dataset dataset, final int dtype) {
@@ -659,8 +658,8 @@ public class DatasetFactory {
 	 * @param dtype
 	 * @return a new dataset
 	 * 
-	 * @deprecated Please use the class-based methods in DatasetFactory, 
-	 *             such as {@link #createRange(Class, double, double, double)} 
+	 * @deprecated Please use the class-based methods in DatasetFactory,
+	 *             such as {@link #ones(Dataset, Class)}
 	 */
 	@Deprecated
 	public static Dataset ones(final Dataset dataset, final int dtype) {
@@ -683,8 +682,8 @@ public class DatasetFactory {
 	 * @param dtype
 	 * @return a new dataset of given shape and type, filled with ones
 	 * 
-	 * @deprecated Please use the class-based methods in DatasetFactory, 
-	 *             such as {@link #ones(Class, int...)} 
+	 * @deprecated Please use the class-based methods in DatasetFactory,
+	 *             such as {@link #ones(Class, int...)}
 	 */
 	@Deprecated
 	public static Dataset ones(final int[] shape, final int dtype) {
@@ -720,8 +719,8 @@ public class DatasetFactory {
 	 * @param dtype
 	 * @return a new dataset of given item size, shape and type, filled with ones
 	 * 
-	 * @deprecated Please use the class-based methods in DatasetFactory, 
-	 *             such as {@link #ones(Class, int...)} 
+	 * @deprecated Please use the class-based methods in DatasetFactory,
+	 *             such as {@link #ones(Class, int...)}
 	 */
 	@Deprecated
 	public static Dataset ones(final int itemSize, final int[] shape, final int dtype) {
@@ -775,17 +774,30 @@ public class DatasetFactory {
 	 * @param dtype
 	 * @return dataset with linearly spaced values
 	 * 
-	 * @deprecated Please use the class-based methods in DatasetFactory, 
-	 *             such as {@link #createLinearSpace(Class, double, double, int)} 
+	 * @deprecated Please use the class-based methods in DatasetFactory,
+	 *             such as {@link #createLinearSpace(Class, double, double, int)}
 	 */
 	@Deprecated
 	public static Dataset createLinearSpace(final double start, final double stop, final int length, final int dtype) {
+		return createLinearSpace(DTypeUtils.getInterface(dtype), start, stop, length);
+	}
+
+	/**
+	 * Create a 1D dataset of linearly spaced values in closed interval
+	 * 
+	 * @param clazz dataset class
+	 * @param start
+	 * @param stop stop value is included
+	 * @param length number of points
+	 * @return dataset with linearly spaced values
+	 */
+	public static <T extends Dataset> T createLinearSpace(Class<T> clazz, final double start, final double stop, final int length) {
 		if (length < 1) {
 			throw new IllegalArgumentException("Length is less than one");
 		} else if (length == 1) {
-			return createFromObject(dtype, start);
+			return createFromObject(clazz, start);
 		} else {
-			Dataset ds = zeros(new int[] {length}, dtype);
+			T ds = zeros(clazz, length);
 			double num = stop - start;
 			double den = length - 1;
 			double value;
@@ -794,7 +806,7 @@ public class DatasetFactory {
 				value = start + (num * i) / den;
 				ds.setObjectAbs(i, value);
 			}
-	
+
 			return ds;
 		}
 	}
@@ -811,17 +823,33 @@ public class DatasetFactory {
 	 * @param dtype
 	 * @return dataset with logarithmically spaced values
 	 * 
-	 * @deprecated Please use the class-based methods in DatasetFactory, 
-	 *             such as {@link #createLogSpace(Class, double, double, int, double)} 
+	 * @deprecated Please use the class-based methods in DatasetFactory,
+	 *             such as {@link #createLogSpace(Class, double, double, int, double)}
 	 */
 	@Deprecated
 	public static Dataset createLogSpace(final double start, final double stop, final int length, final double base, final int dtype) {
+		return createLogSpace(DTypeUtils.getInterface(dtype), start, stop, length, base);
+	}
+
+	/**
+	 * Create a 1D dataset of logarithmically spaced values in closed interval. The base value is used to
+	 * determine the factor between values: factor = base ** step, where step is the interval between linearly
+	 * spaced sequence of points
+	 * 
+	 * @param clazz dataset class
+	 * @param start
+	 * @param stop stop value is included
+	 * @param length number of points
+	 * @param base
+	 * @return dataset with logarithmically spaced values
+	 */
+	public static <T extends Dataset> T createLogSpace(Class<T> clazz, final double start, final double stop, final int length, final double base) {
 		if (length < 1) {
 			throw new IllegalArgumentException("Length is less than one");
 		} else if (length == 1) {
-			return createFromObject(dtype, Math.pow(base, start));
+			return createFromObject(clazz, Math.pow(base, start));
 		} else {
-			Dataset ds = zeros(new int[] {length}, dtype);
+			T ds = zeros(clazz, length);
 			double step = (stop - start) / (length - 1);
 			double value;
 	
@@ -1039,35 +1067,5 @@ public class DatasetFactory {
 	@SuppressWarnings("unchecked")
 	public static <T extends Dataset> T ones(Dataset dataset, Class<T> clazz) {
 		return (T) ones(dataset, DTypeUtils.getDType(clazz));
-	}
-
-	/**
-	 * Create a 1D dataset of linearly spaced values in closed interval
-	 * 
-	 * @param clazz dataset class
-	 * @param start
-	 * @param stop stop value is included
-	 * @param length number of points
-	 * @return dataset with linearly spaced values
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T extends Dataset> T createLinearSpace(Class<T> clazz, final double start, final double stop, final int length) {
-		return (T) createLinearSpace(start, stop, length, DTypeUtils.getDType(clazz));
-	}
-
-	/**
-	 * Create a 1D dataset of logarithmically spaced values in closed interval. The base value is used to
-	 * determine the factor between values: factor = base ** step, where step is the interval between linearly
-	 * spaced sequence of points
-	 * 
-	 * @param start
-	 * @param stop stop value is included
-	 * @param length number of points
-	 * @param base
-	 * @return dataset with logarithmically spaced values
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T extends Dataset> T createLogSpace(Class<T> clazz, final double start, final double stop, final int length, final double base) {
-		return (T) createLogSpace(start, stop, length, base, DTypeUtils.getDType(clazz));
 	}
 }

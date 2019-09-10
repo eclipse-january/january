@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.math3.complex.Complex;
 import org.slf4j.Logger;
@@ -47,35 +48,14 @@ public class DTypeUtils {
 		return map;
 	}
 
-	transient private static final Map<Class<?>, Integer> class2DType = createElementClassMap();
-
-	private static Map<Class<?>, Integer> createElementClassMap() {
-		Map<Class<?>, Integer> result = new HashMap<Class<?>, Integer>();
-		result.put(Boolean.class, Dataset.BOOL);
-		result.put(Byte.class, Dataset.INT8);
-		result.put(Short.class, Dataset.INT16);
-		result.put(Integer.class, Dataset.INT32);
-		result.put(Long.class, Dataset.INT64);
-		result.put(Float.class, Dataset.FLOAT32);
-		result.put(Double.class, Dataset.FLOAT64);
-		result.put(boolean.class, Dataset.BOOL);
-		result.put(byte.class, Dataset.INT8);
-		result.put(short.class, Dataset.INT16);
-		result.put(int.class, Dataset.INT32);
-		result.put(long.class, Dataset.INT64);
-		result.put(float.class, Dataset.FLOAT32);
-		result.put(double.class, Dataset.FLOAT64);
-		result.put(Complex.class, Dataset.COMPLEX128);
-		result.put(String.class, Dataset.STRING);
-		result.put(Date.class, Dataset.DATE);
-		result.put(Object.class, Dataset.OBJECT);
-		return result;
-	}
-
 	static final Map<Class<? extends Dataset>, Integer> interface2DTypes; // map interface to dataset type
-
+	private static final Map<Integer, Class<? extends Dataset>> dtype2Interface; // map dataset type to interface
 	static {
 		interface2DTypes = createInterfaceMap();
+		dtype2Interface = new HashMap<>();
+		for (Entry<Class<? extends Dataset>, Integer> e : interface2DTypes.entrySet()) {
+			dtype2Interface.put(e.getValue(), e.getKey());
+		}
 	}
 
 	/**
@@ -83,7 +63,7 @@ public class DTypeUtils {
 	 * @return name of dataset type
 	 */
 	public static String getDTypeName(Dataset a) {
-		return getDTypeName(a.getDType(), a.getElementsPerItem());
+		return getDatasetName(a);
 	}
 
 	/**
@@ -91,7 +71,7 @@ public class DTypeUtils {
 	 * @return name of dataset type
 	 */
 	public static String getDTypeName(ILazyDataset a) {
-		return getDTypeName(getDTypeFromClass(a.getElementClass()), a.getElementsPerItem());
+		return getDatasetName(a);
 	}
 
 	/**
@@ -100,29 +80,7 @@ public class DTypeUtils {
 	 * @return name of dataset type
 	 */
 	public static String getDTypeName(int dtype, int itemSize) {
-		int bytes = getItemBytes(dtype, 1);
-		if (isDTypeComplex(dtype)) {
-			return "COMPLEX" + bytes*16;
-		} else if (dtype == Dataset.RGB) {
-			return "RGB";
-		}
-
-		String prefix = itemSize > 1 ? ("ARRAY of " + itemSize + " ") : "";
-		if (isDTypeFloating(dtype)) {
-			return prefix + "FLOAT" + bytes*8;
-		}
-		switch (dtype) {
-		case Dataset.BOOL:
-			return prefix + "BOOLEAN";
-		case Dataset.STRING:
-			return prefix + "STRING";
-		case Dataset.DATE:
-			return prefix + "DATE";
-		case Dataset.OBJECT:
-			return prefix + "OBJECT";
-		}
-
-		return prefix + "INT" + bytes*8;
+		return getDatasetName(dtype2Interface.get(dtype), itemSize);
 	}
 
 	/**
@@ -172,34 +130,7 @@ public class DTypeUtils {
 	 * @return best dataset type
 	 */
 	public static int getBestDType(final int atype, final int btype) {
-		int besttype;
-
-		int a = atype >= Dataset.ARRAYINT8 ? atype / Dataset.ARRAYMUL : atype;
-		int b = btype >= Dataset.ARRAYINT8 ? btype / Dataset.ARRAYMUL : btype;
-
-		if (isDTypeFloating(a)) {
-			if (!isDTypeFloating(b)) {
-				b = getBestFloatDType(b);
-				if (isDTypeComplex(a)) {
-					b += Dataset.COMPLEX64 - Dataset.FLOAT32;
-				}
-			}
-		} else if (isDTypeFloating(b)) {
-			a = getBestFloatDType(a);
-			if (isDTypeComplex(b)) {
-				a += Dataset.COMPLEX64 - Dataset.FLOAT32;
-			}
-		}
-		besttype = a > b ? a : b;
-
-		if (atype >= Dataset.ARRAYINT8 || btype >= Dataset.ARRAYINT8) {
-			if (besttype >= Dataset.COMPLEX64) {
-				throw new IllegalArgumentException("Complex type cannot be promoted to compound type");
-			}
-			besttype *= Dataset.ARRAYMUL;
-		}
-
-		return besttype;
+		return interface2DTypes.get(InterfaceUtils.getBestInterface(getInterface(atype), getInterface(btype)));
 	}
 
 	/**
@@ -211,34 +142,7 @@ public class DTypeUtils {
 	 * @return best dataset type
 	 */
 	public static int getBestFloatDType(final int otype) {
-		int btype;
-		switch (otype) {
-		case Dataset.BOOL:
-		case Dataset.INT8:
-		case Dataset.INT16:
-		case Dataset.ARRAYINT8:
-		case Dataset.ARRAYINT16:
-		case Dataset.FLOAT32:
-		case Dataset.ARRAYFLOAT32:
-		case Dataset.COMPLEX64:
-		case Dataset.RGB:
-			btype = Dataset.FLOAT32; // demote, if necessary
-			break;
-		case Dataset.INT32:
-		case Dataset.INT64:
-		case Dataset.ARRAYINT32:
-		case Dataset.ARRAYINT64:
-		case Dataset.FLOAT64:
-		case Dataset.ARRAYFLOAT64:
-		case Dataset.COMPLEX128:
-			btype = Dataset.FLOAT64; // promote, if necessary
-			break;
-		default:
-			btype = otype; // for non-numeric datasets, preserve type
-			break;
-		}
-
-		return btype;
+		return getDType(InterfaceUtils.getBestFloatInterface(getInterface(otype)));
 	}
 
 	/**
@@ -270,15 +174,7 @@ public class DTypeUtils {
 	 * @return dataset type
 	 */
 	public static int getDTypeFromClass(Class<? extends Object> cls, int isize) {
-		Integer dtype = class2DType.get(cls);
-		if (dtype == null) {
-			throw new IllegalArgumentException("Class of object not supported");
-		}
-		if (isize != 1) {
-			if (dtype < Dataset.FLOAT64)
-				dtype *= Dataset.ARRAYMUL;
-		}
-		return dtype;
+		return getDType(InterfaceUtils.getInterfaceFromClass(isize, cls));
 	}
 
 	/**
@@ -306,7 +202,7 @@ public class DTypeUtils {
 			}
 		} else if (obj.getClass().isArray()) {
 			Class<?> ca = obj.getClass().getComponentType();
-			if (isClassSupportedAsElement(ca)) {
+			if (InterfaceUtils.isElementSupported(ca)) {
 				return getDTypeFromClass(ca);
 			}
 			int l = Array.getLength(obj);
@@ -379,6 +275,32 @@ public class DTypeUtils {
 	}
 
 	/**
+	 * The largest dataset class suitable for a summation of around a few thousand items without changing from the "kind"
+	 * of dataset
+	 *
+	 * @param clazz
+	 * @return largest dataset class available for given dataset class
+	 * @since 2.3
+	 */
+	public static Class<? extends Dataset> getLargestDataset(final Class<? extends Dataset> clazz) {
+		if (BooleanDataset.class.equals(clazz) || ByteDataset.class.equals(clazz) || ShortDataset.class.equals(clazz)) {
+			return IntegerDataset.class;
+		} else if (IntegerDataset.class.equals(clazz) || LongDataset.class.equals(clazz)) {
+			return LongDataset.class;
+		} else if (FloatDataset.class.equals(clazz) || DoubleDataset.class.equals(clazz)) {
+			return DoubleDataset.class;
+		} else if (ComplexFloatDataset.class.equals(clazz) || ComplexDoubleDataset.class.equals(clazz)) {
+			return ComplexDoubleDataset.class;
+		} else if (CompoundByteDataset.class.equals(clazz) || CompoundShortDataset.class.equals(clazz)) {
+			return CompoundIntegerDataset.class;
+		} else if (CompoundIntegerDataset.class.equals(clazz) || CompoundLongDataset.class.equals(clazz)) {
+			return CompoundLongDataset.class;
+		}
+
+		return clazz;
+	}
+
+	/**
 	 * @param otype
 	 * @return elemental dataset type available for given dataset type
 	 */
@@ -404,15 +326,6 @@ public class DTypeUtils {
 		default:
 			return otype;
 		}
-	}
-
-	/**
-	 * @param comp
-	 * @return true if supported
-	 */
-	public static boolean isClassSupportedAsElement(Class<? extends Object> comp) {
-		return comp.isPrimitive() || Number.class.isAssignableFrom(comp) || comp.equals(Boolean.class)
-				|| comp.equals(Complex.class) || comp.equals(String.class) || comp.equals(Date.class);
 	}
 
 	/**
@@ -1162,50 +1075,6 @@ public class DTypeUtils {
 	}
 
 	/**
-	 * @param x
-	 * @param dtype
-	 * @return biggest native primitive if integer (should test for 64bit?)
-	 */
-	public static Number fromDoubleToBiggestNumber(double x, int dtype) {
-		switch (dtype) {
-		case Dataset.BOOL:
-		case Dataset.INT8:
-		case Dataset.INT16:
-		case Dataset.INT32:
-			return Integer.valueOf((int) (long) x);
-		case Dataset.INT64:
-			return Long.valueOf((long) x);
-		case Dataset.FLOAT32:
-			return Float.valueOf((float) x);
-		case Dataset.FLOAT64:
-			return Double.valueOf(x);
-		}
-		return null;
-	}
-
-	/**
-	 * @param b
-	 * @return length of object
-	 */
-	public static final int getLength(final Object b) {
-		if (b instanceof Number) {
-			return 1;
-		} else if (b instanceof Complex) {
-			return 1;
-		} else if (b instanceof List<?>) {
-			List<?> jl = (List<?>) b;
-			return jl.size();
-		} else if (b.getClass().isArray()) {
-			return Array.getLength(b);
-		} else if (b instanceof IDataset) {
-			IDataset db = (Dataset) b;
-			return db.getSize();
-		}
-
-		throw new IllegalArgumentException("Cannot find length as object not supported");
-	}
-
-	/**
 	 * @param dtype
 	 * @return (boxed) class of constituent element
 	 */
@@ -1244,4 +1113,123 @@ public class DTypeUtils {
 		return Object.class;
 	}
 
+	/**
+	 * @param dtype dataset type
+	 * @return dataset interface can be null
+	 * @since 2.3
+	 */
+	public static Class<? extends Dataset> getInterface(final int dtype) {
+		return dtype2Interface.get(dtype);
+	}
+
+	/**
+	 * @param x
+	 * @param dtype
+	 * @return biggest native primitive if integer (should test for 64bit?)
+	 * @since 2.2
+	 */
+	public static Number fromDoubleToBiggestNumber(double x, int dtype) {
+		switch (dtype) {
+		case Dataset.BOOL:
+		case Dataset.INT8:
+		case Dataset.INT16:
+		case Dataset.INT32:
+			return Integer.valueOf((int) (long) x);
+		case Dataset.INT64:
+			return Long.valueOf((long) x);
+		case Dataset.FLOAT32:
+			return Float.valueOf((float) x);
+		case Dataset.FLOAT64:
+			return Double.valueOf(x);
+		}
+		return null;
+	}
+
+	/**
+	 * @param clazz
+	 * @return true if supported
+	 * @deprecated Use {@link InterfaceUtils#isElementSupported(Class)}
+	 */
+	@Deprecated
+	public static boolean isClassSupportedAsElement(Class<? extends Object> clazz) {
+		return InterfaceUtils.isElementSupported(clazz);
+	}
+
+	/**
+	 * @param b
+	 * @return length of object
+	 */
+	public static final int getLength(final Object b) {
+		if (b instanceof Number) {
+			return 1;
+		} else if (b instanceof Complex) {
+			return 1;
+		} else if (b instanceof List<?>) {
+			List<?> jl = (List<?>) b;
+			return jl.size();
+		} else if (b.getClass().isArray()) {
+			return Array.getLength(b);
+		} else if (b instanceof IDataset) {
+			IDataset db = (Dataset) b;
+			return db.getSize();
+		}
+
+		throw new IllegalArgumentException("Cannot find length as object not supported");
+	}
+
+	/**
+	 * @param a
+	 * @return name of dataset interface
+	 * @since 2.3
+	 */
+	public static String getDatasetName(Dataset a) {
+		return getDatasetName(a.getClass(), a.getElementsPerItem());
+	}
+
+	/**
+	 * @param a
+	 * @return name of dataset interface
+	 * @since 2.3
+	 */
+	public static String getDatasetName(ILazyDataset a) {
+		if (a instanceof Dataset) {
+			return getDatasetName((Dataset) a);
+		}
+		int isize = a.getElementsPerItem();
+		return getDatasetName(InterfaceUtils.getInterfaceFromClass(isize, a.getElementClass()), isize);
+	}
+
+	/**
+	 * @param clazz dataset interface
+	 * @param itemSize
+	 * @return name of dataset interface
+	 * @since 2.3
+	 */
+	public static String getDatasetName(final Class<? extends Dataset> clazz, int itemSize) {
+		int bytes = InterfaceUtils.getItemBytes(1, clazz);
+		if (InterfaceUtils.isComplex(clazz)) {
+			return "COMPLEX" + bytes*16;
+		} else if (RGBDataset.class.equals(clazz)) {
+			return "RGB";
+		}
+
+		String prefix = itemSize > 1 ? ("ARRAY of " + itemSize + " ") : "";
+		if (InterfaceUtils.isFloating(clazz)) {
+			return prefix + "FLOAT" + bytes*8;
+		}
+		if (BooleanDataset.class.equals(clazz)) {
+			return prefix + "BOOLEAN";
+		}
+		if (StringDataset.class.equals(clazz)) {
+			return prefix + "STRING";
+		}
+		if (DateDataset.class.isAssignableFrom(clazz)) {
+			return prefix + "DATE";
+		}
+		if (ObjectDataset.class.equals(clazz)) {
+			return prefix + "OBJECT";
+		}
+
+		return prefix + "INT" + bytes*8;
+	}
 }

@@ -36,7 +36,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-@SuppressWarnings("deprecation")
 public class MathsTest {
 	private final static int SSTEP = 15;
 	private final static int SITER = 3;
@@ -47,24 +46,26 @@ public class MathsTest {
 	private final static int ISIZEB = 3;
 	private final static int MAXISIZE = Math.max(ISIZEA, ISIZEB);
 
+	private Map<String, Class<? extends Dataset>> classes;
+
 	@Before
 	public void setUpClass() {
-		classes = new LinkedHashMap<String, Integer>();
-//		classes.put("Boolean", Dataset.BOOL);
-		classes.put("Byte", Dataset.INT8);
-		classes.put("Short", Dataset.INT16);
-		classes.put("Integer", Dataset.INT32);
-		classes.put("Long", Dataset.INT64);
-		classes.put("Float", Dataset.FLOAT32);
-		classes.put("Double", Dataset.FLOAT64);
-		classes.put("ComplexF", Dataset.COMPLEX64);
-		classes.put("ComplexD", Dataset.COMPLEX128);
-		classes.put("ArrayB", Dataset.ARRAYINT8);
-		classes.put("ArrayS", Dataset.ARRAYINT16);
-		classes.put("ArrayI", Dataset.ARRAYINT32);
-		classes.put("ArrayL", Dataset.ARRAYINT64);
-		classes.put("ArrayF", Dataset.ARRAYFLOAT32);
-		classes.put("ArrayD", Dataset.ARRAYFLOAT64);
+		classes = new LinkedHashMap<>();
+//		classes.put("Boolean", BooleanDataset.class);
+		classes.put("Byte", ByteDataset.class);
+		classes.put("Short", ShortDataset.class);
+		classes.put("Integer", IntegerDataset.class);
+		classes.put("Long", LongDataset.class);
+		classes.put("Float", FloatDataset.class);
+		classes.put("Double", DoubleDataset.class);
+		classes.put("ComplexF", ComplexFloatDataset.class);
+		classes.put("ComplexD", ComplexDoubleDataset.class);
+		classes.put("ArrayB", CompoundByteDataset.class);
+		classes.put("ArrayS", CompoundShortDataset.class);
+		classes.put("ArrayI", CompoundIntegerDataset.class);
+		classes.put("ArrayL", CompoundLongDataset.class);
+		classes.put("ArrayF", CompoundFloatDataset.class);
+		classes.put("ArrayD", CompoundDoubleDataset.class);
 		TestUtils.setVerbosity(Verbosity.QUIET);
 	}
 
@@ -73,12 +74,10 @@ public class MathsTest {
 		TestUtils.setVerbosity(Verbosity.QUIET);
 	}
 
-	private Map<String, Integer> classes;
-
 	private void checkDatasets(Object a, Object b, Dataset c, Dataset d) {
 		Assert.assertNotNull(c);
 		Assert.assertNotNull(d);
-		Assert.assertEquals("Dtype does not match", c.getDType(), d.getDType());
+		Assert.assertEquals("Class does not match", c.getClass(), d.getClass());
 		Assert.assertEquals("Size does not match", c.getSize(), d.getSize());
 		Assert.assertEquals("ISize does not match", c.getElementsPerItem(), d.getElementsPerItem());
 		Assert.assertArrayEquals("Shape does not match", c.getShapeRef(), d.getShapeRef());
@@ -87,9 +86,7 @@ public class MathsTest {
 		final IndexIterator di = d.getIterator();
 		final int is = c.getElementsPerItem();
 
-		final double abserr = (c.getDType() == Dataset.FLOAT32 ||
-				c.getDType() == Dataset.COMPLEX64 ||
-				c.getDType() == Dataset.ARRAYFLOAT32) ? ABSERRF : ABSERRD;
+		final double abserr = c.getElementClass().equals(Float.class) ? ABSERRF : ABSERRD;
 
 		if (is == 1) {
 			while (ci.hasNext() && di.hasNext()) {
@@ -142,6 +139,7 @@ public class MathsTest {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testAddition() {
 		Dataset a, b, c = null, d = null;
@@ -152,34 +150,34 @@ public class MathsTest {
 		int eCount = 0;
 
 		for (String dn : classes.keySet()) {
-			final int dtype = classes.get(dn);
+			final Class<? extends Dataset> dClass = classes.get(dn);
 			Random.seed(12735L);
 			for (String en : classes.keySet()) {
-				final int etype = classes.get(en);
+				final Class<? extends Dataset> eClass = classes.get(en);
 
 				TestUtils.verbosePrintf("%s to %s, ", dn, en);
 
 				n = 32;
 				for (int i = 0; i < SITER; i++) {
-					if (dtype < Dataset.ARRAYINT8) {
+					if (!InterfaceUtils.isCompound(dClass)) {
 						a = Random.randn(n).imultiply(100);
-						a = a.cast(dtype);
+						a = a.cast(dClass);
 					} else {
 						Dataset[] aa = new Dataset[ISIZEA];
 						for (int j = 0; j < ISIZEA; j++) {
 							aa[j] = Random.randn(n).imultiply(100);
 						}
-						a = DatasetUtils.cast(aa, dtype);
+						a = DatasetUtils.cast((Class<CompoundDataset>) dClass, aa);
 					}
-					if (etype < Dataset.ARRAYINT8) {
+					if (!InterfaceUtils.isCompound(eClass)) {
 						b = Random.randn(n).imultiply(100);
-						b = b.cast(etype);
+						b = b.cast(eClass);
 					} else {
 						Dataset[] ab = new Dataset[ISIZEB];
 						for (int j = 0; j < ISIZEB; j++) {
 							ab[j] = Random.randn(n).imultiply(100);
 						}
-						b = DatasetUtils.cast(ab, etype);
+						b = DatasetUtils.cast((Class<CompoundDataset>) eClass, ab);
 					}
 
 					start = -System.nanoTime();
@@ -198,30 +196,27 @@ public class MathsTest {
 					IndexIterator ita = a.getIterator();
 					IndexIterator itb = b.getIterator();
 					int j = 0;
-					if ((dtype == Dataset.COMPLEX64 || dtype == Dataset.COMPLEX128)
-							&& (etype == Dataset.COMPLEX64 || etype == Dataset.COMPLEX128)) {
+					if (InterfaceUtils.isComplex(dClass) && InterfaceUtils.isComplex(eClass)) {
 						final int is = d.getElementsPerItem();
 						while (ita.hasNext() && itb.hasNext()) {
 							d.setObjectAbs(j, ((Complex) a.getObjectAbs(ita.index)).add((Complex) b
 											.getObjectAbs(itb.index)));
 							j += is;
 						}
-					} else if ((dtype == Dataset.COMPLEX64 || dtype == Dataset.COMPLEX128)
-							&& !(etype == Dataset.COMPLEX64 || etype == Dataset.COMPLEX128)) {
+					} else if (InterfaceUtils.isComplex(dClass) && !InterfaceUtils.isComplex(eClass)) {
 						final int is = d.getElementsPerItem();
 						while (ita.hasNext() && itb.hasNext()) {
 							d.setObjectAbs(j, ((Complex) a.getObjectAbs(ita.index)).add(new Complex(b.getElementDoubleAbs(itb.index), 0)));
 							j += is;
 						}
-					} else if (!(dtype == Dataset.COMPLEX64 || dtype == Dataset.COMPLEX128)
-							&& (etype == Dataset.COMPLEX64 || etype == Dataset.COMPLEX128)) {
+					} else if (!InterfaceUtils.isComplex(dClass) && InterfaceUtils.isComplex(eClass)) {
 						final int is = d.getElementsPerItem();
 						while (ita.hasNext() && itb.hasNext()) {
 							d.setObjectAbs(j, new Complex(a.getElementDoubleAbs(ita.index), 0).add((Complex) b.getObjectAbs(itb.index)));
 							j += is;
 						}
 					} else {
-						if (dtype < Dataset.ARRAYINT8 && etype < Dataset.ARRAYINT8) {
+						if (!InterfaceUtils.isCompound(dClass) && !InterfaceUtils.isCompound(eClass)) {
 							while (ita.hasNext() && itb.hasNext()) {
 								d.setObjectAbs(j++, ((Number) a.getObjectAbs(ita.index)).doubleValue()
 												+ ((Number) b.getObjectAbs(itb.index)).doubleValue());
@@ -276,16 +271,16 @@ public class MathsTest {
 			n = 32;
 			TestUtils.verbosePrintf("constant to %s, ", dn);
 			for (int i = 0; i < SITER; i++) {
-				if (dtype < Dataset.ARRAYINT8) {
+				if (!InterfaceUtils.isCompound(dClass)) {
 					a = Random.randn(n);
 					a.imultiply(100);
-					a = a.cast(dtype);
+					a = a.cast(dClass);
 				} else {
 					Dataset[] aa = new Dataset[ISIZEA];
 					for (int j = 0; j < ISIZEA; j++) {
 						aa[j] = Random.randn(n).imultiply(100);
 					}
-					a = DatasetUtils.cast(aa, dtype);
+					a = DatasetUtils.cast((Class<CompoundDataset>) dClass, aa);
 				}
 
 				start = -System.nanoTime();
@@ -303,14 +298,14 @@ public class MathsTest {
 				start = -System.nanoTime();
 				IndexIterator ita = a.getIterator();
 				int j = 0;
-				if (dtype == Dataset.COMPLEX64 || dtype == Dataset.COMPLEX128) {
+				if (InterfaceUtils.isComplex(dClass)) {
 					final int is = d.getElementsPerItem();
 					while (ita.hasNext()) {
 						d.setObjectAbs(j, ((Complex) a.getObjectAbs(ita.index)).add(zv));
 						j += is;
 					}
 				} else {
-					if (dtype < Dataset.ARRAYINT8) {
+					if (!InterfaceUtils.isCompound(dClass)) {
 						while (ita.hasNext()) {
 							d.setObjectAbs(j++, ((Number) a.getObjectAbs(ita.index)).doubleValue() + dv);
 						}
@@ -343,6 +338,7 @@ public class MathsTest {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testSubtraction() {
 		Dataset a, b, c = null, d = null;
@@ -353,34 +349,34 @@ public class MathsTest {
 		int eCount = 0;
 
 		for (String dn : classes.keySet()) {
-			final int dtype = classes.get(dn);
+			final Class<? extends Dataset> dClass = classes.get(dn);
 			Random.seed(12735L);
 			for (String en : classes.keySet()) {
-				final int etype = classes.get(en);
+				final Class<? extends Dataset> eClass = classes.get(en);
 
 				TestUtils.verbosePrintf("%s to %s, ", dn, en);
 
 				n = 32;
 				for (int i = 0; i < SITER; i++) {
-					if (dtype < Dataset.ARRAYINT8) {
+					if (!InterfaceUtils.isCompound(dClass)) {
 						a = Random.randn(n).imultiply(100);
-						a = a.cast(dtype);
+						a = a.cast(dClass);
 					} else {
 						Dataset[] aa = new Dataset[ISIZEA];
 						for (int j = 0; j < ISIZEA; j++) {
 							aa[j] = Random.randn(n).imultiply(100);
 						}
-						a = DatasetUtils.cast(aa, dtype);
+						a = DatasetUtils.cast((Class<CompoundDataset>) dClass, aa);
 					}
-					if (etype < Dataset.ARRAYINT8) {
+					if (!InterfaceUtils.isCompound(eClass)) {
 						b = Random.randn(n).imultiply(100);
-						b = b.cast(etype);
+						b = b.cast(eClass);
 					} else {
 						Dataset[] ab = new Dataset[ISIZEB];
 						for (int j = 0; j < ISIZEB; j++) {
 							ab[j] = Random.randn(n).imultiply(100);
 						}
-						b = DatasetUtils.cast(ab, etype);
+						b = DatasetUtils.cast((Class<CompoundDataset>) eClass, ab);
 					}
 
 					start = -System.nanoTime();
@@ -399,30 +395,27 @@ public class MathsTest {
 					IndexIterator ita = a.getIterator();
 					IndexIterator itb = b.getIterator();
 					int j = 0;
-					if ((dtype == Dataset.COMPLEX64 || dtype == Dataset.COMPLEX128)
-							&& (etype == Dataset.COMPLEX64 || etype == Dataset.COMPLEX128)) {
+					if (InterfaceUtils.isComplex(dClass) && InterfaceUtils.isComplex(eClass)) {
 						final int is = d.getElementsPerItem();
 						while (ita.hasNext() && itb.hasNext()) {
 							d.setObjectAbs(j, ((Complex) a.getObjectAbs(ita.index)).subtract((Complex) b
 											.getObjectAbs(itb.index)));
 							j += is;
 						}
-					} else if ((dtype == Dataset.COMPLEX64 || dtype == Dataset.COMPLEX128)
-							&& !(etype == Dataset.COMPLEX64 || etype == Dataset.COMPLEX128)) {
+					} else if (InterfaceUtils.isComplex(dClass) && !InterfaceUtils.isComplex(eClass)) {
 						final int is = d.getElementsPerItem();
 						while (ita.hasNext() && itb.hasNext()) {
 							d.setObjectAbs(j, ((Complex) a.getObjectAbs(ita.index)).subtract(new Complex(b.getElementDoubleAbs(itb.index), 0)));
 							j += is;
 						}
-					} else if (!(dtype == Dataset.COMPLEX64 || dtype == Dataset.COMPLEX128)
-							&& (etype == Dataset.COMPLEX64 || etype == Dataset.COMPLEX128)) {
+					} else if (!InterfaceUtils.isComplex(dClass) && InterfaceUtils.isComplex(eClass)) {
 						final int is = d.getElementsPerItem();
 						while (ita.hasNext() && itb.hasNext()) {
 							d.setObjectAbs(j, new Complex(a.getElementDoubleAbs(ita.index), 0).subtract((Complex) b.getObjectAbs(itb.index)));
 							j += is;
 						}
 					} else {
-						if (dtype < Dataset.ARRAYINT8 && etype < Dataset.ARRAYINT8) {
+						if (!InterfaceUtils.isCompound(dClass) && !InterfaceUtils.isCompound(eClass)) {
 							while (ita.hasNext() && itb.hasNext()) {
 								d.setObjectAbs(j++, ((Number) a.getObjectAbs(ita.index)).doubleValue()
 												- ((Number) b.getObjectAbs(itb.index)).doubleValue());
@@ -478,16 +471,16 @@ public class MathsTest {
 			n = 32;
 			TestUtils.verbosePrintf("constant from %s, ", dn);
 			for (int i = 0; i < SITER; i++) {
-				if (dtype < Dataset.ARRAYINT8) {
+				if (!InterfaceUtils.isCompound(dClass)) {
 					a = Random.randn(n);
 					a.imultiply(100);
-					a = a.cast(dtype);
+					a = a.cast(dClass);
 				} else {
 					Dataset[] aa = new Dataset[ISIZEA];
 					for (int j = 0; j < ISIZEA; j++) {
 						aa[j] = Random.randn(n).imultiply(100);
 					}
-					a = DatasetUtils.cast(aa, dtype);
+					a = DatasetUtils.cast((Class<CompoundDataset>) dClass, aa);
 				}
 
 				start = -System.nanoTime();
@@ -505,14 +498,14 @@ public class MathsTest {
 				start = -System.nanoTime();
 				IndexIterator ita = a.getIterator();
 				int j = 0;
-				if (dtype == Dataset.COMPLEX64 || dtype == Dataset.COMPLEX128) {
+				if (InterfaceUtils.isComplex(dClass)) {
 					final int is = d.getElementsPerItem();
 					while (ita.hasNext()) {
 						d.setObjectAbs(j, ((Complex) a.getObjectAbs(ita.index)).subtract(zv));
 						j += is;
 					}
 				} else {
-					if (dtype < Dataset.ARRAYINT8) {
+					if (!InterfaceUtils.isCompound(dClass)) {
 						while (ita.hasNext()) {
 							d.setObjectAbs(j++, ((Number) a.getObjectAbs(ita.index)).doubleValue() - dv);
 						}
@@ -542,16 +535,16 @@ public class MathsTest {
 			n = 32;
 			TestUtils.verbosePrintf("%s from constant, ", dn);
 			for (int i = 0; i < SITER; i++) {
-				if (dtype < Dataset.ARRAYINT8) {
+				if (!InterfaceUtils.isCompound(dClass)) {
 					a = Random.randn(n);
 					a.imultiply(100);
-					a = a.cast(dtype);
+					a = a.cast(dClass);
 				} else {
 					Dataset[] aa = new Dataset[ISIZEA];
 					for (int j = 0; j < ISIZEA; j++) {
 						aa[j] = Random.randn(n).imultiply(100);
 					}
-					a = DatasetUtils.cast(aa, dtype);
+					a = DatasetUtils.cast((Class<CompoundDataset>) dClass, aa);
 				}
 
 				start = -System.nanoTime();
@@ -569,14 +562,14 @@ public class MathsTest {
 				start = -System.nanoTime();
 				IndexIterator ita = a.getIterator();
 				int j = 0;
-				if (dtype == Dataset.COMPLEX64 || dtype == Dataset.COMPLEX128) {
+				if (InterfaceUtils.isComplex(dClass)) {
 					final int is = d.getElementsPerItem();
 					while (ita.hasNext()) {
 						d.setObjectAbs(j, zv.subtract((Complex) a.getObjectAbs(ita.index)));
 						j += is;
 					}
 				} else {
-					if (dtype < Dataset.ARRAYINT8) {
+					if (!InterfaceUtils.isCompound(dClass)) {
 						while (ita.hasNext()) {
 							d.setObjectAbs(j++, dv - ((Number) a.getObjectAbs(ita.index)).doubleValue());
 						}
@@ -608,6 +601,7 @@ public class MathsTest {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testMultiplication() {
 		Dataset a, b, c = null, d = null;
@@ -618,34 +612,34 @@ public class MathsTest {
 		int eCount = 0;
 
 		for (String dn : classes.keySet()) {
-			final int dtype = classes.get(dn);
+			final Class<? extends Dataset> dClass = classes.get(dn);
 			Random.seed(12735L);
 
 			for (String en : classes.keySet()) {
-				final int etype = classes.get(en);
+				final Class<? extends Dataset> eClass = classes.get(en);
 
 				TestUtils.verbosePrintf("%s by %s, ", dn, en);
 				n = 32;
 				for (int i = 0; i < SITER; i++) {
-					if (dtype < Dataset.ARRAYINT8) {
+					if (!InterfaceUtils.isCompound(dClass)) {
 						a = Random.randn(n).imultiply(100);
-						a = a.cast(dtype);
+						a = a.cast(dClass);
 					} else {
 						Dataset[] aa = new Dataset[ISIZEA];
 						for (int j = 0; j < ISIZEA; j++) {
 							aa[j] = Random.randn(n).imultiply(100);
 						}
-						a = DatasetUtils.cast(aa, dtype);
+						a = DatasetUtils.cast((Class<CompoundDataset>) dClass, aa);
 					}
-					if (etype < Dataset.ARRAYINT8) {
+					if (!InterfaceUtils.isCompound(eClass)) {
 						b = Random.randn(n).imultiply(100);
-						b = b.cast(etype);
+						b = b.cast(eClass);
 					} else {
 						Dataset[] ab = new Dataset[ISIZEB];
 						for (int j = 0; j < ISIZEB; j++) {
 							ab[j] = Random.randn(n).imultiply(100);
 						}
-						b = DatasetUtils.cast(ab, etype);
+						b = DatasetUtils.cast((Class<CompoundDataset>) eClass, ab);
 					}
 
 					start = -System.nanoTime();
@@ -664,30 +658,27 @@ public class MathsTest {
 					IndexIterator ita = a.getIterator();
 					IndexIterator itb = b.getIterator();
 					int j = 0;
-					if ((dtype == Dataset.COMPLEX64 || dtype == Dataset.COMPLEX128)
-							&& (etype == Dataset.COMPLEX64 || etype == Dataset.COMPLEX128)) {
+					if (InterfaceUtils.isComplex(dClass) && InterfaceUtils.isComplex(eClass)) {
 						final int is = d.getElementsPerItem();
 						while (ita.hasNext() && itb.hasNext()) {
 							d.setObjectAbs(j, ((Complex) a.getObjectAbs(ita.index)).multiply((Complex) b
 											.getObjectAbs(itb.index)));
 							j += is;
 						}
-					} else if ((dtype == Dataset.COMPLEX64 || dtype == Dataset.COMPLEX128)
-							&& !(etype == Dataset.COMPLEX64 || etype == Dataset.COMPLEX128)) {
+					} else if (InterfaceUtils.isComplex(dClass) && !InterfaceUtils.isComplex(eClass)) {
 						final int is = d.getElementsPerItem();
 						while (ita.hasNext() && itb.hasNext()) {
 							d.setObjectAbs(j, ((Complex) a.getObjectAbs(ita.index)).multiply(b.getElementDoubleAbs(itb.index)));
 							j += is;
 						}
-					} else if (!(dtype == Dataset.COMPLEX64 || dtype == Dataset.COMPLEX128)
-							&& (etype == Dataset.COMPLEX64 || etype == Dataset.COMPLEX128)) {
+					} else if (!InterfaceUtils.isComplex(dClass) && InterfaceUtils.isComplex(eClass)) {
 						final int is = d.getElementsPerItem();
 						while (ita.hasNext() && itb.hasNext()) {
 							d.setObjectAbs(j, new Complex(a.getElementDoubleAbs(ita.index), 0).multiply((Complex) b.getObjectAbs(itb.index)));
 							j += is;
 						}
 					} else {
-						if (dtype < Dataset.ARRAYINT8 && etype < Dataset.ARRAYINT8) {
+						if (!InterfaceUtils.isCompound(dClass) && !InterfaceUtils.isCompound(eClass)) {
 							while (ita.hasNext() && itb.hasNext()) {
 								d.setObjectAbs(j++, ((Number) a.getObjectAbs(ita.index)).doubleValue()
 												* ((Number) b.getObjectAbs(itb.index)).doubleValue());
@@ -744,16 +735,16 @@ public class MathsTest {
 			n = 32;
 			TestUtils.verbosePrintf("constant with %s, ", dn);
 			for (int i = 0; i < SITER; i++) {
-				if (dtype < Dataset.ARRAYINT8) {
+				if (!InterfaceUtils.isCompound(dClass)) {
 					a = Random.randn(n);
 					a.imultiply(100);
-					a = a.cast(dtype);
+					a = a.cast(dClass);
 				} else {
 					Dataset[] aa = new Dataset[ISIZEA];
 					for (int j = 0; j < ISIZEA; j++) {
 						aa[j] = Random.randn(n).imultiply(100);
 					}
-					a = DatasetUtils.cast(aa, dtype);
+					a = DatasetUtils.cast((Class<CompoundDataset>) dClass, aa);
 				}
 
 				start = -System.nanoTime();
@@ -771,14 +762,14 @@ public class MathsTest {
 				start = -System.nanoTime();
 				IndexIterator ita = a.getIterator();
 				int j = 0;
-				if (dtype == Dataset.COMPLEX64 || dtype == Dataset.COMPLEX128) {
+				if (InterfaceUtils.isComplex(dClass)) {
 					final int is = d.getElementsPerItem();
 					while (ita.hasNext()) {
 						d.setObjectAbs(j, ((Complex) a.getObjectAbs(ita.index)).multiply(zv));
 						j += is;
 					}
 				} else {
-					if (dtype < Dataset.ARRAYINT8) {
+					if (!InterfaceUtils.isCompound(dClass)) {
 						while (ita.hasNext()) {
 							d.setObjectAbs(j++, ((Number) a.getObjectAbs(ita.index)).doubleValue() * dv);
 						}
@@ -810,6 +801,7 @@ public class MathsTest {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testDivision() {
 		Dataset a, b, c = null, d = null;
@@ -820,34 +812,34 @@ public class MathsTest {
 		int eCount = 0;
 
 		for (String dn : classes.keySet()) {
-			final int dtype = classes.get(dn);
+			final Class<? extends Dataset> dClass = classes.get(dn);
 			Random.seed(12735L);
 
 			for (String en : classes.keySet()) {
-				final int etype = classes.get(en);
+				final Class<? extends Dataset> eClass = classes.get(en);
 
 				TestUtils.verbosePrintf("%s by %s, ", dn, en);
 				n = 32;
 				for (int i = 0; i < SITER; i++) {
-					if (dtype < Dataset.ARRAYINT8) {
+					if (!InterfaceUtils.isCompound(dClass)) {
 						a = Random.randn(n).imultiply(100);
-						a = a.cast(dtype);
+						a = a.cast(dClass);
 					} else {
 						Dataset[] aa = new Dataset[ISIZEA];
 						for (int j = 0; j < ISIZEA; j++) {
 							aa[j] = Random.randn(n).imultiply(100);
 						}
-						a = DatasetUtils.cast(aa, dtype);
+						a = DatasetUtils.cast((Class<CompoundDataset>) dClass, aa);
 					}
-					if (etype < Dataset.ARRAYINT8) {
+					if (!InterfaceUtils.isCompound(eClass)) {
 						b = Random.randn(n).imultiply(100);
-						b = b.cast(etype);
+						b = b.cast(eClass);
 					} else {
 						Dataset[] ab = new Dataset[ISIZEB];
 						for (int j = 0; j < ISIZEB; j++) {
 							ab[j] = Random.randn(n).imultiply(100);
 						}
-						b = DatasetUtils.cast(ab, etype);
+						b = DatasetUtils.cast((Class<CompoundDataset>) eClass, ab);
 					}
 
 					start = -System.nanoTime();
@@ -866,16 +858,14 @@ public class MathsTest {
 					IndexIterator ita = a.getIterator();
 					IndexIterator itb = b.getIterator();
 					int j = 0;
-					if ((dtype == Dataset.COMPLEX64 || dtype == Dataset.COMPLEX128)
-							&& (etype == Dataset.COMPLEX64 || etype == Dataset.COMPLEX128)) {
+					if (InterfaceUtils.isComplex(dClass) && InterfaceUtils.isComplex(eClass)) {
 						final int is = d.getElementsPerItem();
 						while (ita.hasNext() && itb.hasNext()) {
 							d.setObjectAbs(j, ((Complex) a.getObjectAbs(ita.index)).divide((Complex) b
 											.getObjectAbs(itb.index)));
 							j += is;
 						}
-					} else if ((dtype == Dataset.COMPLEX64 || dtype == Dataset.COMPLEX128)
-							&& !(etype == Dataset.COMPLEX64 || etype == Dataset.COMPLEX128)) {
+					} else if (InterfaceUtils.isComplex(dClass) && !InterfaceUtils.isComplex(eClass)) {
 						final int is = d.getElementsPerItem();
 						while (ita.hasNext() && itb.hasNext()) {
 							Complex z = (Complex) a.getObjectAbs(ita.index);
@@ -888,15 +878,14 @@ public class MathsTest {
 							d.setObjectAbs(j, zr);
 							j += is;
 						}
-					} else if (!(dtype == Dataset.COMPLEX64 || dtype == Dataset.COMPLEX128)
-							&& (etype == Dataset.COMPLEX64 || etype == Dataset.COMPLEX128)) {
+					} else if (!InterfaceUtils.isComplex(dClass) && InterfaceUtils.isComplex(eClass)) {
 						final int is = d.getElementsPerItem();
 						while (ita.hasNext() && itb.hasNext()) {
 							d.setObjectAbs(j, new Complex(a.getElementDoubleAbs(ita.index), 0).divide((Complex) b.getObjectAbs(itb.index)));
 							j += is;
 						}
 					} else {
-						if (dtype < Dataset.ARRAYINT8 && etype < Dataset.ARRAYINT8) {
+						if (!InterfaceUtils.isCompound(dClass) && !InterfaceUtils.isCompound(eClass)) {
 							if (d.hasFloatingPointElements()) {
 								while (ita.hasNext() && itb.hasNext()) {
 									d.setObjectAbs(j++, ((Number) a.getObjectAbs(ita.index)).doubleValue()
@@ -988,16 +977,16 @@ public class MathsTest {
 			n = 32;
 			TestUtils.verbosePrintf("%s by constant, ", dn);
 			for (int i = 0; i < SITER; i++) {
-				if (dtype < Dataset.ARRAYINT8) {
+				if (!InterfaceUtils.isCompound(dClass)) {
 					a = Random.randn(n);
 					a.imultiply(100);
-					a = a.cast(dtype);
+					a = a.cast(dClass);
 				} else {
 					Dataset[] aa = new Dataset[ISIZEA];
 					for (int j = 0; j < ISIZEA; j++) {
 						aa[j] = Random.randn(n).imultiply(100);
 					}
-					a = DatasetUtils.cast(aa, dtype);
+					a = DatasetUtils.cast((Class<CompoundDataset>) dClass, aa);
 				}
 
 				start = -System.nanoTime();
@@ -1015,14 +1004,14 @@ public class MathsTest {
 				start = -System.nanoTime();
 				IndexIterator ita = a.getIterator();
 				int j = 0;
-				if (dtype == Dataset.COMPLEX64 || dtype == Dataset.COMPLEX128) {
+				if (InterfaceUtils.isComplex(dClass)) {
 					final int is = d.getElementsPerItem();
 					while (ita.hasNext()) {
 						d.setObjectAbs(j, ((Complex) a.getObjectAbs(ita.index)).divide(zv));
 						j += is;
 					}
 				} else {
-					if (dtype < Dataset.ARRAYINT8) {
+					if (!InterfaceUtils.isCompound(dClass)) {
 						while (ita.hasNext()) {
 							d.setObjectAbs(j++, ((Number) a.getObjectAbs(ita.index)).doubleValue() / dv);
 						}
@@ -1052,16 +1041,16 @@ public class MathsTest {
 			n = 32;
 			TestUtils.verbosePrintf("constant by %s, ", dn);
 			for (int i = 0; i < SITER; i++) {
-				if (dtype < Dataset.ARRAYINT8) {
+				if (!InterfaceUtils.isCompound(dClass)) {
 					a = Random.randn(n);
 					a.imultiply(100);
-					a = a.cast(dtype);
+					a = a.cast(dClass);
 				} else {
 					Dataset[] aa = new Dataset[ISIZEA];
 					for (int j = 0; j < ISIZEA; j++) {
 						aa[j] = Random.randn(n).imultiply(100);
 					}
-					a = DatasetUtils.cast(aa, dtype);
+					a = DatasetUtils.cast((Class<CompoundDataset>) dClass, aa);
 				}
 
 				start = -System.nanoTime();
@@ -1079,14 +1068,14 @@ public class MathsTest {
 				start = -System.nanoTime();
 				IndexIterator ita = a.getIterator();
 				int j = 0;
-				if (dtype == Dataset.COMPLEX64 || dtype == Dataset.COMPLEX128) {
+				if (InterfaceUtils.isComplex(dClass)) {
 					final int is = d.getElementsPerItem();
 					while (ita.hasNext()) {
 						d.setObjectAbs(j, zv.divide((Complex) a.getObjectAbs(ita.index)));
 						j += is;
 					}
 				} else {
-					if (dtype < Dataset.ARRAYINT8) {
+					if (!InterfaceUtils.isCompound(dClass)) {
 						while (ita.hasNext()) {
 							d.setObjectAbs(j++, dv / ((Number) a.getObjectAbs(ita.index)).doubleValue());
 						}
@@ -1118,6 +1107,7 @@ public class MathsTest {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testRemainder() {
 		Dataset a, b, c = null, d = null;
@@ -1128,35 +1118,35 @@ public class MathsTest {
 		int eCount = 0;
 
 		for (String dn : classes.keySet()) {
-			final int dtype = classes.get(dn);
+			final Class<? extends Dataset> dClass = classes.get(dn);
 			Random.seed(12735L);
 
 			for (String en : classes.keySet()) {
-				final int etype = classes.get(en);
+				final Class<? extends Dataset> eClass = classes.get(en);
 
 				TestUtils.verbosePrintf("%s by %s, ", dn, en);
 
 				n = 32;
 				for (int i = 0; i < SITER; i++) {
-					if (dtype < Dataset.ARRAYINT8) {
+					if (!InterfaceUtils.isCompound(dClass)) {
 						a = Random.randn(n).imultiply(100);
-						a = a.cast(dtype);
+						a = a.cast(dClass);
 					} else {
 						Dataset[] aa = new Dataset[ISIZEA];
 						for (int j = 0; j < ISIZEA; j++) {
 							aa[j] = Random.randn(n).imultiply(100);
 						}
-						a = DatasetUtils.cast(aa, dtype);
+						a = DatasetUtils.cast((Class<CompoundDataset>) dClass, aa);
 					}
-					if (etype < Dataset.ARRAYINT8) {
+					if (!InterfaceUtils.isCompound(eClass)) {
 						b = Random.randn(n).imultiply(100);
-						b = b.cast(etype);
+						b = b.cast(eClass);
 					} else {
 						Dataset[] ab = new Dataset[ISIZEB];
 						for (int j = 0; j < ISIZEB; j++) {
 							ab[j] = Random.randn(n).imultiply(100);
 						}
-						b = DatasetUtils.cast(ab, etype);
+						b = DatasetUtils.cast((Class<CompoundDataset>) eClass, ab);
 					}
 
 					start = -System.nanoTime();
@@ -1178,7 +1168,7 @@ public class MathsTest {
 					IndexIterator ita = a.getIterator();
 					IndexIterator itb = b.getIterator();
 					int j = 0;
-					if (dtype < Dataset.ARRAYINT8 && etype < Dataset.ARRAYINT8) {
+					if (!InterfaceUtils.isCompound(dClass) && !InterfaceUtils.isCompound(eClass)) {
 						while (ita.hasNext() && itb.hasNext()) {
 							d.setObjectAbs(j++, ((Number) a.getObjectAbs(ita.index)).doubleValue()
 											% ((Number) b.getObjectAbs(itb.index)).doubleValue());
@@ -1232,16 +1222,16 @@ public class MathsTest {
 			n = 32;
 			TestUtils.verbosePrintf("%s by constant, ", dn);
 			for (int i = 0; i < SITER; i++) {
-				if (dtype < Dataset.ARRAYINT8) {
+				if (!InterfaceUtils.isCompound(dClass)) {
 					a = Random.randn(n);
 					a.imultiply(100);
-					a = a.cast(dtype);
+					a = a.cast(dClass);
 				} else {
 					Dataset[] aa = new Dataset[ISIZEA];
 					for (int j = 0; j < ISIZEA; j++) {
 						aa[j] = Random.randn(n).imultiply(100);
 					}
-					a = DatasetUtils.cast(aa, dtype);
+					a = DatasetUtils.cast((Class<CompoundDataset>) dClass, aa);
 				}
 
 				start = -System.nanoTime();
@@ -1262,7 +1252,7 @@ public class MathsTest {
 				start = -System.nanoTime();
 				IndexIterator ita = a.getIterator();
 				int j = 0;
-				if (dtype < Dataset.ARRAYINT8) {
+				if (!InterfaceUtils.isCompound(dClass)) {
 					while (ita.hasNext()) {
 						d.setObjectAbs(j++, ((Number) a.getObjectAbs(ita.index)).doubleValue() % dv);
 					}
@@ -1289,16 +1279,16 @@ public class MathsTest {
 			n = 32;
 			TestUtils.verbosePrintf("constant by %s, ", dn);
 			for (int i = 0; i < SITER; i++) {
-				if (dtype < Dataset.ARRAYINT8) {
+				if (!InterfaceUtils.isCompound(dClass)) {
 					a = Random.randn(n);
 					a.imultiply(100);
-					a = a.cast(dtype);
+					a = a.cast(dClass);
 				} else {
 					Dataset[] aa = new Dataset[ISIZEA];
 					for (int j = 0; j < ISIZEA; j++) {
 						aa[j] = Random.randn(n).imultiply(100);
 					}
-					a = DatasetUtils.cast(aa, dtype);
+					a = DatasetUtils.cast((Class<CompoundDataset>) dClass, aa);
 				}
 
 				start = -System.nanoTime();
@@ -1319,7 +1309,7 @@ public class MathsTest {
 				start = -System.nanoTime();
 				IndexIterator ita = a.getIterator();
 				int j = 0;
-				if (dtype < Dataset.ARRAYINT8) {
+				if (!InterfaceUtils.isCompound(dClass)) {
 					while (ita.hasNext()) {
 						d.setObjectAbs(j++, dv % ((Number) a.getObjectAbs(ita.index)).doubleValue());
 					}
@@ -1348,6 +1338,7 @@ public class MathsTest {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testPower() {
 		Dataset a, b, c = null, d = null;
@@ -1358,35 +1349,35 @@ public class MathsTest {
 		int eCount = 0;
 
 		for (String dn : classes.keySet()) {
-			final int dtype = classes.get(dn);
+			final Class<? extends Dataset> dClass = classes.get(dn);
 			Random.seed(12735L);
 
 			for (String en : classes.keySet()) {
-				final int etype = classes.get(en);
+				final Class<? extends Dataset> eClass = classes.get(en);
 
 				TestUtils.verbosePrintf("%s by %s, ", dn, en);
 
 				n = 32;
 				for (int i = 0; i < SITER; i++) {
-					if (dtype < Dataset.ARRAYINT8) {
+					if (!InterfaceUtils.isCompound(dClass)) {
 						a = Random.randn(n).imultiply(100);
-						a = a.cast(dtype);
+						a = a.cast(dClass);
 					} else {
 						Dataset[] aa = new Dataset[ISIZEA];
 						for (int j = 0; j < ISIZEA; j++) {
 							aa[j] = Random.randn(n).imultiply(100);
 						}
-						a = DatasetUtils.cast(aa, dtype);
+						a = DatasetUtils.cast((Class<CompoundDataset>) dClass, aa);
 					}
-					if (etype < Dataset.ARRAYINT8) {
+					if (!InterfaceUtils.isCompound(eClass)) {
 						b = Random.randn(n).imultiply(100);
-						b = b.cast(etype);
+						b = b.cast(eClass);
 					} else {
 						Dataset[] ab = new Dataset[ISIZEB];
 						for (int j = 0; j < ISIZEB; j++) {
 							ab[j] = Random.randn(n).imultiply(100);
 						}
-						b = DatasetUtils.cast(ab, etype);
+						b = DatasetUtils.cast((Class<CompoundDataset>) eClass, ab);
 					}
 
 					start = -System.nanoTime();
@@ -1405,30 +1396,27 @@ public class MathsTest {
 					IndexIterator ita = a.getIterator();
 					IndexIterator itb = b.getIterator();
 					int j = 0;
-					if ((dtype == Dataset.COMPLEX64 || dtype == Dataset.COMPLEX128)
-							&& (etype == Dataset.COMPLEX64 || etype == Dataset.COMPLEX128)) {
+					if (InterfaceUtils.isComplex(dClass) && InterfaceUtils.isComplex(eClass)) {
 						final int is = d.getElementsPerItem();
 						while (ita.hasNext() && itb.hasNext()) {
 							d.setObjectAbs(j, ((Complex) a.getObjectAbs(ita.index)).pow((Complex) b
 											.getObjectAbs(itb.index)));
 							j += is;
 						}
-					} else if ((dtype == Dataset.COMPLEX64 || dtype == Dataset.COMPLEX128)
-							&& !(etype == Dataset.COMPLEX64 || etype == Dataset.COMPLEX128)) {
+					} else if (InterfaceUtils.isComplex(dClass) && !InterfaceUtils.isComplex(eClass)) {
 						final int is = d.getElementsPerItem();
 						while (ita.hasNext() && itb.hasNext()) {
 							d.setObjectAbs(j, ((Complex) a.getObjectAbs(ita.index)).pow(new Complex(b.getElementDoubleAbs(itb.index), 0)));
 							j += is;
 						}
-					} else if (!(dtype == Dataset.COMPLEX64 || dtype == Dataset.COMPLEX128)
-							&& (etype == Dataset.COMPLEX64 || etype == Dataset.COMPLEX128)) {
+					} else if (!InterfaceUtils.isComplex(dClass) && InterfaceUtils.isComplex(eClass)) {
 						final int is = d.getElementsPerItem();
 						while (ita.hasNext() && itb.hasNext()) {
 							d.setObjectAbs(j, new Complex(a.getElementDoubleAbs(ita.index), 0).pow((Complex) b.getObjectAbs(itb.index)));
 							j += is;
 						}
 					} else {
-						if (dtype < Dataset.ARRAYINT8 && etype < Dataset.ARRAYINT8) {
+						if (!InterfaceUtils.isCompound(dClass) && !InterfaceUtils.isCompound(eClass)) {
 							while (ita.hasNext() && itb.hasNext()) {
 								d.setObjectAbs(j++, Math.pow(a.getElementDoubleAbs(ita.index),
 												b.getElementDoubleAbs(itb.index)));
@@ -1484,16 +1472,16 @@ public class MathsTest {
 			n = 32;
 			TestUtils.verbosePrintf("%s by constant, ", dn);
 			for (int i = 0; i < SITER; i++) {
-				if (dtype < Dataset.ARRAYINT8) {
+				if (!InterfaceUtils.isCompound(dClass)) {
 					a = Random.randn(n);
 					a.imultiply(100);
-					a = a.cast(dtype);
+					a = a.cast(dClass);
 				} else {
 					Dataset[] aa = new Dataset[ISIZEA];
 					for (int j = 0; j < ISIZEA; j++) {
 						aa[j] = Random.randn(n).imultiply(100);
 					}
-					a = DatasetUtils.cast(aa, dtype);
+					a = DatasetUtils.cast((Class<CompoundDataset>) dClass, aa);
 				}
 
 				start = -System.nanoTime();
@@ -1511,14 +1499,14 @@ public class MathsTest {
 				start = -System.nanoTime();
 				IndexIterator ita = a.getIterator();
 				int j = 0;
-				if (dtype == Dataset.COMPLEX64 || dtype == Dataset.COMPLEX128) {
+				if (InterfaceUtils.isComplex(dClass)) {
 					final int is = d.getElementsPerItem();
 					while (ita.hasNext()) {
 						d.setObjectAbs(j, ((Complex) a.getObjectAbs(ita.index)).pow(zv));
 						j += is;
 					}
 				} else {
-					if (dtype < Dataset.ARRAYINT8) {
+					if (!InterfaceUtils.isCompound(dClass)) {
 						while (ita.hasNext()) {
 							d.setObjectAbs(j++, Math.pow(((Number) a.getObjectAbs(ita.index)).doubleValue(), dv));
 						}
@@ -1548,16 +1536,16 @@ public class MathsTest {
 			n = 32;
 			TestUtils.verbosePrintf("constant by %s, ", dn);
 			for (int i = 0; i < SITER; i++) {
-				if (dtype < Dataset.ARRAYINT8) {
+				if (!InterfaceUtils.isCompound(dClass)) {
 					a = Random.randn(n);
 					a.imultiply(100);
-					a = a.cast(dtype);
+					a = a.cast(dClass);
 				} else {
 					Dataset[] aa = new Dataset[ISIZEA];
 					for (int j = 0; j < ISIZEA; j++) {
 						aa[j] = Random.randn(n).imultiply(100);
 					}
-					a = DatasetUtils.cast(aa, dtype);
+					a = DatasetUtils.cast((Class<CompoundDataset>) dClass, aa);
 				}
 
 				start = -System.nanoTime();
@@ -1575,14 +1563,14 @@ public class MathsTest {
 				start = -System.nanoTime();
 				IndexIterator ita = a.getIterator();
 				int j = 0;
-				if (dtype == Dataset.COMPLEX64 || dtype == Dataset.COMPLEX128) {
+				if (InterfaceUtils.isComplex(dClass)) {
 					final int is = d.getElementsPerItem();
 					while (ita.hasNext()) {
 						d.setObjectAbs(j, zv.pow((Complex) a.getObjectAbs(ita.index)));
 						j += is;
 					}
 				} else {
-					if (dtype < Dataset.ARRAYINT8) {
+					if (!InterfaceUtils.isCompound(dClass)) {
 						while (ita.hasNext()) {
 							d.setObjectAbs(j++, Math.pow(dv, ((Number) a.getObjectAbs(ita.index)).doubleValue()));
 						}

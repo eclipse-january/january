@@ -299,7 +299,7 @@ public class ShapeUtils {
 		if (ca != null) {
 			final int l = Array.getLength(obj);
 			updateShape(ldims, depth, l);
-			if (DTypeUtils.isClassSupportedAsElement(ca)) {
+			if (InterfaceUtils.isElementSupported(ca)) {
 				return true;
 			}
 			for (int i = 0; i < l; i++) {

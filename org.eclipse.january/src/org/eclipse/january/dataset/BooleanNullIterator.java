@@ -44,7 +44,6 @@ public class BooleanNullIterator extends BooleanIteratorBase {
 	 * @param allowInteger if true, can create integer datasets
 	 * @param allowComplex if true, can create complex datasets
 	 */
-	@SuppressWarnings("deprecation")
 	public BooleanNullIterator(Dataset a, Dataset o, boolean createIfNull, boolean allowInteger, boolean allowComplex) {
 		super(true, a, null, o);
 		List<int[]> fullShapes = BroadcastUtils.broadcastShapes(a.getShapeRef(), o == null ? null : o.getShapeRef());
@@ -75,14 +74,14 @@ public class BooleanNullIterator extends BooleanIteratorBase {
 			oStep = o.getElementsPerItem();
 		} else if (createIfNull) {
 			int is = aDataset.getElementsPerItem();
-			int dt = aDataset.getDType();
+			Class<? extends Dataset> dc = aDataset.getClass();
 			if (aDataset.isComplex() && !allowComplex) {
 				is = 1;
-				dt = DTypeUtils.getBestFloatDType(dt);
+				dc = InterfaceUtils.getBestFloatInterface(dc);
 			} else if (!aDataset.hasFloatingPointElements() && !allowInteger) {
-				dt = DTypeUtils.getBestFloatDType(dt);
+				dc = InterfaceUtils.getBestFloatInterface(dc);
 			}
-			oDataset = DatasetFactory.zeros(is, maxShape, dt);
+			oDataset = DatasetFactory.zeros(is, dc, maxShape);
 			oStride = BroadcastUtils.createBroadcastStrides(oDataset, maxShape);
 			oDelta = new int[rank];
 			oStep = is;

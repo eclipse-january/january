@@ -419,8 +419,11 @@ public class CompoundLongDataset extends AbstractCompoundDataset {
 	}
 
 	@Override
-	public CompoundLongDataset fill(final Object obj) {
+	public CompoundLongDataset fill(Object obj) {
 		setDirty();
+		if (obj instanceof Complex) {
+			obj = new Complex(((Complex) obj).getReal(), 0);
+		}
 		long[] vr = DTypeUtils.toLongArray(obj, isize); // PRIM_TYPE // CLASS_TYPE
 		IndexIterator iter = getIterator();
 
@@ -872,7 +875,10 @@ public class CompoundLongDataset extends AbstractCompoundDataset {
 	}
 
 	@Override
-	public void setObjectAbs(final int index, final Object obj) {
+	public void setObjectAbs(final int index, Object obj) {
+		if (obj instanceof Complex) {
+			obj = new Complex(((Complex) obj).getReal(), 0);
+		}
 		long[] oa = DTypeUtils.toLongArray(obj, isize); // PRIM_TYPE // CLASS_TYPE
 		setAbs(index, oa);
 	}

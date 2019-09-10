@@ -419,8 +419,11 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 	}
 
 	@Override
-	public CompoundFloatDataset fill(final Object obj) {
+	public CompoundFloatDataset fill(Object obj) {
 		setDirty();
+		if (obj instanceof Complex) {
+			obj = new Complex(((Complex) obj).getReal(), 0);
+		}
 		float[] vr = DTypeUtils.toFloatArray(obj, isize); // PRIM_TYPE // CLASS_TYPE
 		IndexIterator iter = getIterator();
 
@@ -872,7 +875,10 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 	}
 
 	@Override
-	public void setObjectAbs(final int index, final Object obj) {
+	public void setObjectAbs(final int index, Object obj) {
+		if (obj instanceof Complex) {
+			obj = new Complex(((Complex) obj).getReal(), 0);
+		}
 		float[] oa = DTypeUtils.toFloatArray(obj, isize); // PRIM_TYPE // CLASS_TYPE
 		setAbs(index, oa);
 	}

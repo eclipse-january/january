@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.january" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter id="923795461">
+            <message_arguments>
+                <message_argument value="2.3.0"/>
+                <message_argument value="2.2.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/january/dataset/Dataset.java" type="org.eclipse.january.dataset.Dataset">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.Dataset"/>
+                <message_argument value="cast(int, Class&lt;T&gt;, boolean)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/january/dataset/LazyDataset.java" type="org.eclipse.january.dataset.LazyDataset">
         <filter id="336658481">
             <message_arguments>

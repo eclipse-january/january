@@ -26,6 +26,7 @@ import org.eclipse.january.dataset.DatasetFactory;
 import org.eclipse.january.dataset.DoubleDataset;
 import org.eclipse.january.dataset.IndexIterator;
 import org.eclipse.january.dataset.IntegerDataset;
+import org.eclipse.january.dataset.InterfaceUtils;
 import org.eclipse.january.dataset.LongDataset;
 import org.eclipse.january.dataset.Maths;
 import org.eclipse.january.dataset.ShapeUtils;
@@ -45,7 +46,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 	private static final int COMBOS = 4; // number of combinations of ignoreInvalids
 
 	private int hash;
-	private int dtype;
+	private Class<? extends Dataset> clazz;
 	private int isize;
 	private boolean isFloat;
 	private transient Dataset dataset;
@@ -65,7 +66,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 	private StatisticsMetadataImpl(StatisticsMetadataImpl<T> statsMetadata) {
 		hash = statsMetadata.hash;
 		isize = statsMetadata.isize;
-		dtype = statsMetadata.dtype;
+		clazz = statsMetadata.clazz;
 		isFloat = statsMetadata.isFloat;
 		dataset = statsMetadata.dataset.getView(false);
 		axisStats = new HashMap<>(statsMetadata.axisStats);
@@ -106,7 +107,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 		this.dataset = dataset.getView(false);
 		this.dataset.clearMetadata(null);
 		isFloat = dataset.hasFloatingPointElements();
-		dtype = dataset.getDType();
+		clazz = dataset.getClass();
 		isize = dataset.getElementsPerItem();
 		mms = new MaxMin[COMBOS];
 		summaries = new SummaryStatistics[COMBOS][];
@@ -161,7 +162,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 	private void setMaxMinSum(final MaxMin<T> mm, final boolean ignoreNaNs, final boolean ignoreInfs) {
 		final IndexIterator iter = dataset.getIterator();
 
-		if (!DTypeUtils.isDTypeNumerical(dtype)) { // TODO FIXME for strings
+		if (!InterfaceUtils.isNumerical(clazz)) { // TODO FIXME for strings
 			// treat non-numerical as strings in lexicographic order
 			String smax = dataset.getStringAbs(0);
 			String smin = smax;
@@ -176,7 +177,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 				}
 			}
 
-			hash = hash * 19 + dtype * 17 + isize;
+			hash = hash * 19 + clazz.hashCode() * 17 + isize;
 			mm.maximum = (T) smax;
 			mm.minimum = (T) smin;
 			mm.sum = null;
@@ -241,9 +242,9 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 				}
 			}
 
-			mm.maximum = (T) (hasNaNs ? Double.NaN : DTypeUtils.fromDoubleToBiggestNumber(amax, dtype));
-			mm.minimum = (T) (hasNaNs ? Double.NaN : DTypeUtils.fromDoubleToBiggestNumber(amin, dtype));
-			mm.sum = (T) (hasNaNs ? Double.NaN : DTypeUtils.fromDoubleToBiggestNumber(asum, dtype));
+			mm.maximum = (T) (hasNaNs ? Double.NaN : InterfaceUtils.fromDoubleToBiggestNumber(clazz, amax));
+			mm.minimum = (T) (hasNaNs ? Double.NaN : InterfaceUtils.fromDoubleToBiggestNumber(clazz, amin));
+			mm.sum     = (T) (hasNaNs ? Double.NaN : InterfaceUtils.fromDoubleToBiggestNumber(clazz, asum));
 		} else {
 			while (iter.hasNext()) {
 				for (int j = 0; j < isize; j++) {
@@ -257,7 +258,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 			mm.sum = null;
 		}
 
-		hash = hash * 19 + dtype * 17 + isize;
+		hash = hash * 19 + clazz.hashCode() * 17 + isize;
 		mm.maximumPositions = null;
 		mm.minimumPositions = null;
 	}
@@ -312,9 +313,9 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 				}
 			}
 
-			mm.maximum = (T) (hasNaNs ? Double.NaN : DTypeUtils.fromDoubleToBiggestNumber(stats.getMax(), dtype));
-			mm.minimum = (T) (hasNaNs ? Double.NaN : DTypeUtils.fromDoubleToBiggestNumber(stats.getMin(), dtype));
-			mm.sum = (T) (hasNaNs ? Double.NaN : DTypeUtils.fromDoubleToBiggestNumber(stats.getSum(), dtype));
+			mm.maximum = (T) (hasNaNs ? Double.NaN : InterfaceUtils.fromDoubleToBiggestNumber(clazz, stats.getMax()));
+			mm.minimum = (T) (hasNaNs ? Double.NaN : InterfaceUtils.fromDoubleToBiggestNumber(clazz, stats.getMin()));
+			mm.sum     = (T) (hasNaNs ? Double.NaN : InterfaceUtils.fromDoubleToBiggestNumber(clazz, stats.getSum()));
 		} else {
 			double[] vals = new double[isize];
 			while (iter.hasNext()) {
@@ -354,7 +355,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 			mm.sum = (T) lsum;
 		}
 
-		hash = hash * 19 + dtype * 17 + isize;
+		hash = hash * 19 + clazz.hashCode() * 17 + isize;
 		mm.maximumPositions = null;
 		mm.minimumPositions = null;
 		return istats;
@@ -559,7 +560,6 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 	 * @param ignoreInfs if true, ignore infinities
 	 * @param axes axes to remain
 	 */
-	@SuppressWarnings("deprecation")
 	private Dataset[] createAxisStats(final int[] axes, final boolean ignoreNaNs, final boolean ignoreInfs) {
 		SliceNDIterator siter = new SliceNDIterator(new SliceND(dataset.getShapeRef()), axes);
 		int[] nshape = siter.getUsedSlice().getSourceShape();
@@ -574,11 +574,11 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 		Dataset var;
 
 		if (isize == 1) {
-			max = DatasetFactory.zeros(nshape, dtype);
-			min = DatasetFactory.zeros(nshape, dtype);
+			max = DatasetFactory.zeros(clazz, nshape);
+			min = DatasetFactory.zeros(clazz, nshape);
 			maxIndex = axes.length == 1 ? DatasetFactory.zeros(IntegerDataset.class, nshape) : null;
 			minIndex = axes.length == 1 ? DatasetFactory.zeros(IntegerDataset.class, nshape) : null;
-			sum = DatasetFactory.zeros(nshape, DTypeUtils.getLargestDType(dtype));
+			sum = DatasetFactory.zeros(DTypeUtils.getLargestDataset(clazz), nshape);
 			mean = DatasetFactory.zeros(DoubleDataset.class, nshape);
 			var = DatasetFactory.zeros(DoubleDataset.class, nshape);
 		} else {
@@ -586,7 +586,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 			min = null;
 			maxIndex = null;
 			minIndex = null;
-			sum = DatasetFactory.zeros(isize, nshape, DTypeUtils.getLargestDType(dtype));
+			sum = DatasetFactory.zeros(isize, DTypeUtils.getLargestDataset(clazz), nshape);
 			mean = DatasetFactory.zeros(isize, CompoundDoubleDataset.class, nshape);
 			var = DatasetFactory.zeros(isize, CompoundDoubleDataset.class, nshape);
 		}

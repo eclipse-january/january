@@ -175,23 +175,47 @@ def beginmethod(name, jdoc=None, params=0):
         else:
             print("\t * @return dataset\n\t */")
             print("\tpublic static Dataset %s(final Object a, final Dataset o) {" % name)
-    print("\t\tfinal Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);")
+    print("\t\tDataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);")
     if is_binaryop:
-        print("\t\tfinal Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);")
-        print("\t\tfinal BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);")
+        print("\t\tDataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);")
+        print("\t\tBroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);")
         if allow_ints:
             print("\t\tit.setOutputDouble(false);");
     else:
         if allow_ints:
-            print("\t\tfinal SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true, true, true);")
+            print("\t\tSingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true, true, true);")
         else:
-            print("\t\tfinal SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);")
+            print("\t\tSingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);")
 
     if def_unsigned_mask:
         print("\t\tfinal long unsignedMask;")
 
 
     print("\t\tfinal Dataset result = it.getOutput();")
+    print("\t\tif (!result.isComplex()) {")
+    if is_binaryop:
+        print("\t\t\tboolean change = false;")
+    print("\t\t\tif (da.isComplex()) {")
+    print("\t\t\t\tda = da.getRealView();")
+    if is_binaryop:
+        print("\t\t\t\tchange = true;")
+    else:
+        if allow_ints:
+            print("\t\t\t\tit = new SingleInputBroadcastIterator(da, result, true, true, true);")
+        else:
+            print("\t\t\t\tit = new SingleInputBroadcastIterator(da, result, true);")
+    print("\t\t\t}")
+    if is_binaryop:
+        print("\t\t\tif (db.isComplex()) {")
+        print("\t\t\t\tdb = db.getRealView();")
+        print("\t\t\t\tchange = true;")
+        print("\t\t\t}")
+        print("\t\t\tif (change) {")
+        print("\t\t\t\tit = BroadcastIterator.createIterator(da, db, result, true);")
+        if allow_ints:
+            print("\t\t\t\tit.setOutputDouble(false);");
+        print("\t\t\t}")
+    print("\t\t}")
     print("\t\tfinal int is = result.getElementsPerItem();")
     print("\t\tfinal int as = da.getElementsPerItem();")
     if is_binaryop:
@@ -365,7 +389,7 @@ def loop(text, jtype, ovar, is_int, override_long):
     print("\t\t\t}")
 
 def loopcomplex(text, jtype, ovar, real, is_int):
-    print("\t\t\tif (as == 1) {")
+    print("\t\t\tif (!da.isComplex()) {")
     print("\t\t\t\tif (it.isOutputDouble()) {")
     if is_binaryop:
         print("\t\t\t\t\tfinal double iay = 0;")
@@ -420,7 +444,7 @@ def loopcomplex(text, jtype, ovar, real, is_int):
     print("\t\t\t\t\t}")
     print("\t\t\t\t}")
     if is_binaryop:
-        print("\t\t\t} else if (bs == 1) {")
+        print("\t\t\t} else if (!db.isComplex()) {")
         print("\t\t\t\tfinal double iby = 0;")
         print("\t\t\t\twhile (it.hasNext()) {")
         print("\t\t\t\t\tfinal double iax = it.aDouble;")

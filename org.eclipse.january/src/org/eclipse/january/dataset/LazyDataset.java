@@ -39,7 +39,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	protected Map<Class<? extends MetadataType>, List<MetadataType>> oMetadata = null;
 	protected int[] oShape; // original shape
 	protected long  size;   // number of items
-	protected int   dtype;  // dataset type
+	private Class<? extends Dataset> clazz = null;
 	protected int   isize;  // number of elements per item
 
 	protected ILazyLoader loader;
@@ -60,19 +60,20 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	/**
 	 * Create a lazy dataset
-	 * @param name
-	 * @param dtype dataset type
-	 * @param elements
-	 * @param shape
 	 * @param loader
+	 * @param name
+	 * @param elements
+	 * @param clazz dataset interface
+	 * @param shape
+	 * @since 2.3
 	 */
-	public LazyDataset(String name, int dtype, int elements, int[] shape, ILazyLoader loader) {
+	public LazyDataset(ILazyLoader loader, String name, int elements, Class<? extends Dataset> clazz, int... shape) {
+		this.loader = loader;
 		this.name = name;
+		this.isize = elements;
+		this.clazz = clazz;
 		this.shape = shape.clone();
 		this.oShape = this.shape;
-		this.loader = loader;
-		this.dtype = dtype;
-		this.isize = elements;
 		try {
 			size = ShapeUtils.calcLongSize(shape);
 		} catch (IllegalArgumentException e) {
@@ -82,11 +83,39 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	/**
 	 * Create a lazy dataset
+	 * @param loader
+	 * @param name
+	 * @param clazz dataset interface
+	 * @param shape
+	 * @since 2.3
+	 */
+	public LazyDataset(ILazyLoader loader, String name, Class<? extends Dataset> clazz, int... shape) {
+		this(loader, name, 1, clazz, shape);
+	}
+
+	/**
+	 * Create a lazy dataset
+	 * @param name
+	 * @param dtype dataset type
+	 * @param elements
+	 * @param shape
+	 * @param loader
+	 * @deprecated Use {@link #LazyDataset(ILazyLoader, String, int, Class, int[])}
+	 */
+	@Deprecated
+	public LazyDataset(String name, int dtype, int elements, int[] shape, ILazyLoader loader) {
+		this(loader, name, elements, DTypeUtils.getInterface(dtype), shape);
+	}
+
+	/**
+	 * Create a lazy dataset
 	 * @param name
 	 * @param dtype dataset type
 	 * @param shape
 	 * @param loader
+	 * @deprecated Use {@link #LazyDataset(ILazyLoader, String, int, Class, int[])}
 	 */
+	@Deprecated
 	public LazyDataset(String name, int dtype, int[] shape, ILazyLoader loader) {
 		this(name, dtype, 1, shape, loader);
 	}
@@ -98,7 +127,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 		oMetadata = other.oMetadata;
 		oShape = other.oShape;
 		size   = other.size;
-		dtype  = other.dtype;
+		clazz  = other.clazz;
 		isize  = other.isize;
 		loader = other.loader;
 
@@ -136,7 +165,14 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	 */
 	@Override
 	public int getDType() {
-		return dtype;
+		return DTypeUtils.getDType(clazz);
+	}
+
+	/**
+	 * @return dataset interface that supports element class and number of elements
+	 */
+	public Class<? extends Dataset> getInterface() {
+		return clazz;
 	}
 
 	/**
@@ -182,7 +218,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 		int result = super.hashCode();
 		result = prime * result + Arrays.hashCode(oShape);
 		result = prime * result + (int) (size ^ (size >>> 32));
-		result = prime * result + dtype;
+		result = prime * result + clazz.hashCode();
 		result = prime * result + isize;
 		result = prime * result + ((loader == null) ? 0 : loader.hashCode());
 		result = prime * result + Arrays.hashCode(begSlice);
@@ -195,6 +231,9 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	@Override
 	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
 		if (!super.equals(obj)) {
 			return false;
 		}
@@ -206,7 +245,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 		if (size != other.size) {
 			return false;
 		}
-		if (dtype != other.dtype) {
+		if (!clazz.equals(other.clazz)) {
 			return false;
 		}
 		if (isize != other.isize) {
@@ -335,7 +374,6 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 		return getSlice(monitor, new SliceND(shape, start, stop, step));
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public Dataset getSlice(IMonitor monitor, SliceND slice) throws DatasetException {
 		if (loader != null && !loader.isFileReadable()) {
@@ -346,7 +384,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 		Dataset a;
 		if (nslice == null) {
-			a = DatasetFactory.zeros(slice.getShape(), getDType());
+			a = DatasetFactory.zeros(clazz, slice.getShape());
 		} else {
 			try {
 				a = DatasetUtils.convertToDataset(loader.getDataset(monitor, nslice));

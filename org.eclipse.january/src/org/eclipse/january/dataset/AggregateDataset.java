@@ -34,7 +34,7 @@ public class AggregateDataset extends LazyDatasetBase implements ILazyDataset {
 	private int[] map = null;    // map first dimension to index of dataset
 	private int[] offset = null; // cumulative first dimension lengths used as slice offsets
 	private int size;
-	private int dtype = -1;
+	private Class<? extends Dataset> clazz = null;
 	private int isize; // number of elements per item
 	protected AggregateDataset base = null;
 	private int[] sliceStart = null;
@@ -85,7 +85,7 @@ public class AggregateDataset extends LazyDatasetBase implements ILazyDataset {
 		return shapes;
 	}
 
-	AggregateDataset(int itemSize, int[] shape, int dtype) {
+	AggregateDataset(int itemSize, Class<? extends Dataset> clazz, int... shape) {
 		isize = itemSize;
 		this.shape = shape.clone();
 		try {
@@ -93,7 +93,11 @@ public class AggregateDataset extends LazyDatasetBase implements ILazyDataset {
 		} catch (IllegalArgumentException e) {
 			size = Integer.MAX_VALUE; // this indicates that the entire dataset cannot be read in! 
 		}
-		this.dtype = dtype;
+		this.clazz = clazz;
+	}
+
+	AggregateDataset(int itemSize, int[] shape, int dtype) {
+		this(itemSize, DTypeUtils.getInterface(dtype), shape);
 	}
 
 	/**
@@ -166,11 +170,7 @@ public class AggregateDataset extends LazyDatasetBase implements ILazyDataset {
 		}
 
 		for (ILazyDataset d : data) {
-			if (d instanceof LazyDatasetBase) {
-				dtype = DTypeUtils.getBestDType(dtype, ((LazyDatasetBase) d).getDType());
-			} else {
-				dtype = DTypeUtils.getBestDType(dtype, DTypeUtils.getDTypeFromClass(d.getElementClass(), d.getElementsPerItem()));
-			}
+			clazz = InterfaceUtils.getBestInterface(clazz, InterfaceUtils.getInterfaceFromClass(d.getElementsPerItem(), d.getElementClass()));
 		}
 
 		for (ILazyDataset d : data) {
@@ -184,7 +184,7 @@ public class AggregateDataset extends LazyDatasetBase implements ILazyDataset {
 
 	@Override
 	public Class<?> getElementClass() {
-		return DTypeUtils.getElementClass(dtype);
+		return InterfaceUtils.getElementClass(clazz);
 	}
 
 	@Override
@@ -194,7 +194,7 @@ public class AggregateDataset extends LazyDatasetBase implements ILazyDataset {
 
 	@Override
 	public int getDType() {
-		return dtype;
+		return DTypeUtils.getDType(clazz);
 	}
 
 	@Override
@@ -222,7 +222,6 @@ public class AggregateDataset extends LazyDatasetBase implements ILazyDataset {
 		return getSlice(monitor, new SliceND(shape, start, stop, step));
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public Dataset getSlice(IMonitor monitor, SliceND slice) throws DatasetException {
 		int[] start = slice.getStart();
@@ -256,7 +255,7 @@ public class AggregateDataset extends LazyDatasetBase implements ILazyDataset {
 				start[0] = op - offset[map[op]];
 				stop[0] = p - offset[map[op]];
 				Dataset a = DatasetUtils.convertToDataset(od.getSlice(monitor, start, stop, step));
-				sliced.add(a.cast(dtype));
+				sliced.add(a.cast(clazz));
 
 				od = nd;
 				op = p;
@@ -266,7 +265,7 @@ public class AggregateDataset extends LazyDatasetBase implements ILazyDataset {
 		start[0] = op - offset[map[op]];
 		stop[0] = p - offset[map[op]];
 		Dataset a = DatasetUtils.convertToDataset(od.getSlice(monitor, start, stop, step));
-		sliced.add(a.cast(dtype));
+		sliced.add(a.cast(clazz));
 
 		Dataset d = DatasetUtils.concatenate(sliced.toArray(new Dataset[0]), 0);
 		d.setName(name);
@@ -300,7 +299,7 @@ public class AggregateDataset extends LazyDatasetBase implements ILazyDataset {
 
 	@Override
 	public AggregateDataset getSliceView(SliceND slice) {
-		AggregateDataset lazy = new AggregateDataset(isize, slice.getShape(), dtype);
+		AggregateDataset lazy = new AggregateDataset(isize, clazz, slice.getShape());
 		lazy.sliceStart = slice.getStart();
 		lazy.sliceStep  = slice.getStep();
 		lazy.name = name + "[" + slice + "]";

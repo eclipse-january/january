@@ -57,7 +57,7 @@ public class SliceableMetadataTest {
 		dataset.addMetadata(md);
 
 		try {
-			SliceableTestMetadata tmd = dataset.getMetadata(SliceableTestMetadata.class).get(0);
+			SliceableTestMetadata tmd = dataset.getFirstMetadata(SliceableTestMetadata.class);
 			assertEquals(md, tmd);
 			assertEquals(2, tmd.getArray().length);
 			assertEquals(2, tmd.getList().size());
@@ -72,7 +72,7 @@ public class SliceableMetadataTest {
 
 		assertArrayEquals(new int[] {1, 1, 3, 2}, sliced.getShape());
 		try {
-			SliceableTestMetadata tmd = sliced.getMetadata(SliceableTestMetadata.class).get(0);
+			SliceableTestMetadata tmd = sliced.getFirstMetadata(SliceableTestMetadata.class);
 			assertEquals(2, tmd.getArray().length);
 			assertEquals(2, tmd.getList().size());
 			assertEquals(2, tmd.getMap().size());
@@ -84,7 +84,7 @@ public class SliceableMetadataTest {
 			assertArrayEquals(sliced.getShape(), tmd.getListOfArrays().get(0)[0].getShapeRef());
 			
 			//test original unchanged
-			tmd = dataset.getMetadata(SliceableTestMetadata.class).get(0);
+			tmd = dataset.getFirstMetadata(SliceableTestMetadata.class);
 			assertEquals(2, tmd.getArray().length);
 			assertEquals(2, tmd.getList().size());
 			assertEquals(2, tmd.getMap().size());
@@ -95,7 +95,7 @@ public class SliceableMetadataTest {
 			assertArrayEquals(shape, tmd.getListOfArrays().get(0)[0].getShapeRef());
 			
 			IDataset slice2 = sliced.getSlice();
-			tmd = slice2.getMetadata(SliceableTestMetadata.class).get(0);
+			tmd = slice2.getFirstMetadata(SliceableTestMetadata.class);
 			assertEquals(2, tmd.getArray().length);
 			assertEquals(2, tmd.getList().size());
 			assertEquals(2, tmd.getMap().size());
@@ -106,7 +106,7 @@ public class SliceableMetadataTest {
 			assertArrayEquals(sliced.getShape(), tmd.getListOfArrays().get(0)[0].getShapeRef());
 			
 			//test original unchanged
-			tmd = dataset.getMetadata(SliceableTestMetadata.class).get(0);
+			tmd = dataset.getFirstMetadata(SliceableTestMetadata.class);
 			assertEquals(2, tmd.getArray().length);
 			assertEquals(2, tmd.getList().size());
 			assertEquals(2, tmd.getMap().size());
@@ -124,7 +124,7 @@ public class SliceableMetadataTest {
 		sliced = dataset.getSliceView(slice);
 
 		try {
-			SubMetadata tmd = dataset.getMetadata(SubMetadata.class).get(0);
+			SubMetadata tmd = dataset.getFirstMetadata(SubMetadata.class);
 			assertEquals(smd, tmd);
 			assertEquals(2, tmd.getArray().length);
 			assertEquals(2, tmd.getList().size());
@@ -136,7 +136,7 @@ public class SliceableMetadataTest {
 
 		assertArrayEquals(new int[] {1, 1, 3, 2}, sliced.getShape());
 		try {
-			SubMetadata tmd = sliced.getMetadata(SubMetadata.class).get(0);
+			SubMetadata tmd = sliced.getFirstMetadata(SubMetadata.class);
 			assertEquals(2, tmd.getArray().length);
 			assertEquals(2, tmd.getList().size());
 			assertEquals(2, tmd.getMap().size());
@@ -193,7 +193,7 @@ public class SliceableMetadataTest {
 		assertEquals(1, dataset.getRank());
 		assertArrayEquals(new int[] {128}, dataset.getShape());
 		try {
-			SliceableTestMetadata tmd = dataset.getMetadata(SliceableTestMetadata.class).get(0);
+			SliceableTestMetadata tmd = dataset.getFirstMetadata(SliceableTestMetadata.class);
 			assertEquals(1, tmd.getLazyDataset().getRank());
 			assertArrayEquals(new int[] {128}, tmd.getLazyDataset().getShape());
 		} catch (Exception e) {
@@ -205,7 +205,7 @@ public class SliceableMetadataTest {
 		assertEquals(1, sliced.getRank());
 		assertArrayEquals(new int[] {64}, sliced.getShape());
 		try {
-			SliceableTestMetadata tmd = sliced.getMetadata(SliceableTestMetadata.class).get(0);
+			SliceableTestMetadata tmd = sliced.getFirstMetadata(SliceableTestMetadata.class);
 			assertEquals(1, tmd.getLazyDataset().getRank());
 			assertArrayEquals(new int[] {64}, tmd.getLazyDataset().getShape());
 		} catch (Exception e) {
@@ -217,7 +217,7 @@ public class SliceableMetadataTest {
 		assertEquals(1, sliced.getRank());
 		assertArrayEquals(new int[] {64}, sliced.getShape());
 		try {
-			SliceableTestMetadata tmd = sliced.getMetadata(SliceableTestMetadata.class).get(0);
+			SliceableTestMetadata tmd = sliced.getFirstMetadata(SliceableTestMetadata.class);
 			assertEquals(1, tmd.getLazyDataset().getRank());
 			assertArrayEquals(new int[] {64}, tmd.getLazyDataset().getShape());
 		} catch (Exception e) {
@@ -256,7 +256,7 @@ public class SliceableMetadataTest {
 		dataset.addMetadata(md);
 		
 		try {
-			SliceableTestMetadata tmd = dataset.getMetadata(SliceableTestMetadata.class).get(0);
+			SliceableTestMetadata tmd = dataset.getFirstMetadata(SliceableTestMetadata.class);
 			assertEquals(md, tmd);
 			assertEquals(2, tmd.getArray().length);
 			assertEquals(2, tmd.getList().size());
@@ -271,7 +271,7 @@ public class SliceableMetadataTest {
 
 		assertArrayEquals(new int[] {1, 1, 3, 1}, sliced.getShape());
 		try {
-			SliceableTestMetadata tmd = sliced.getMetadata(SliceableTestMetadata.class).get(0);
+			SliceableTestMetadata tmd = sliced.getFirstMetadata(SliceableTestMetadata.class);
 			assertEquals(2, tmd.getArray().length);
 			assertEquals(2, tmd.getList().size());
 			assertEquals(2, tmd.getMap().size());
@@ -282,7 +282,7 @@ public class SliceableMetadataTest {
 			assertArrayEquals(result1, tmd.getListOfArrays().get(0)[0].getShapeRef());
 			
 			//test original unchanged
-			tmd = dataset.getMetadata(SliceableTestMetadata.class).get(0);
+			tmd = dataset.getFirstMetadata(SliceableTestMetadata.class);
 			assertEquals(2, tmd.getArray().length);
 			assertEquals(2, tmd.getList().size());
 			assertEquals(2, tmd.getMap().size());
@@ -293,7 +293,7 @@ public class SliceableMetadataTest {
 			assertArrayEquals(partial1, tmd.getListOfArrays().get(0)[0].getShapeRef());
 			
 			IDataset slice2 = sliced.getSlice();
-			tmd = slice2.getMetadata(SliceableTestMetadata.class).get(0);
+			tmd = slice2.getFirstMetadata(SliceableTestMetadata.class);
 			assertEquals(2, tmd.getArray().length);
 			assertEquals(2, tmd.getList().size());
 			assertEquals(2, tmd.getMap().size());
@@ -304,7 +304,7 @@ public class SliceableMetadataTest {
 			assertArrayEquals(result1, tmd.getListOfArrays().get(0)[0].getShapeRef());
 			
 			//test original unchanged
-			tmd = dataset.getMetadata(SliceableTestMetadata.class).get(0);
+			tmd = dataset.getFirstMetadata(SliceableTestMetadata.class);
 			assertEquals(2, tmd.getArray().length);
 			assertEquals(2, tmd.getList().size());
 			assertEquals(2, tmd.getMap().size());
@@ -351,7 +351,7 @@ public class SliceableMetadataTest {
 		dataset.addMetadata(md);
 		
 		try {
-			SliceableTestMetadata tmd = dataset.getMetadata(SliceableTestMetadata.class).get(0);
+			SliceableTestMetadata tmd = dataset.getFirstMetadata(SliceableTestMetadata.class);
 			assertEquals(md, tmd);
 			assertEquals(2, tmd.getArray().length);
 			assertEquals(2, tmd.getList().size());
@@ -375,7 +375,7 @@ public class SliceableMetadataTest {
 		sliced = dataset.getSliceView(slice);
 		assertArrayEquals(new int[] {1, 1, 3, 2}, sliced.getShape());
 		try {
-			SliceableTestMetadata tmd = sliced.getMetadata(SliceableTestMetadata.class).get(0);
+			SliceableTestMetadata tmd = sliced.getFirstMetadata(SliceableTestMetadata.class);
 			assertEquals(2, tmd.getArray().length);
 			assertEquals(2, tmd.getList().size());
 			assertEquals(2, tmd.getMap().size());
@@ -418,7 +418,7 @@ public class SliceableMetadataTest {
 		dataset.addMetadata(md);
 		
 		try {
-			SliceableTestMetadata tmd = dataset.getMetadata(SliceableTestMetadata.class).get(0);
+			SliceableTestMetadata tmd = dataset.getFirstMetadata(SliceableTestMetadata.class);
 			assertEquals(md, tmd);
 			assertEquals(2, tmd.getArray().length);
 			assertEquals(2, tmd.getList().size());
@@ -435,7 +435,7 @@ public class SliceableMetadataTest {
 		int rank = sliced.getRank();
 		assertArrayEquals(new int[] {3, 4}, sliced.getShape());
 		try {
-			SliceableTestMetadata tmd = sliced.getMetadata(SliceableTestMetadata.class).get(0);
+			SliceableTestMetadata tmd = sliced.getFirstMetadata(SliceableTestMetadata.class);
 			assertEquals(2, tmd.getArray().length);
 			assertEquals(2, tmd.getList().size());
 			assertEquals(2, tmd.getMap().size());
@@ -462,7 +462,7 @@ public class SliceableMetadataTest {
 		rank = dataset.getRank();
 		assertArrayEquals(new int[] {1, 2, 3, 2, 2}, dataset.getShape());
 		try {
-			SliceableTestMetadata tmd = dataset.getMetadata(SliceableTestMetadata.class).get(0);
+			SliceableTestMetadata tmd = dataset.getFirstMetadata(SliceableTestMetadata.class);
 			assertEquals(2, tmd.getArray().length);
 			assertEquals(2, tmd.getList().size());
 			assertEquals(2, tmd.getMap().size());

@@ -82,13 +82,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		stringFormat = format;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public Dataset copy(final int dtype) {
-		if (getDType() == dtype) {
-			return clone();
-		}
-		return DatasetUtils.copy(this, dtype);
+		return copy(DTypeUtils.getInterface(dtype));
 	}
 
 	@Override
@@ -96,17 +92,17 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		return DatasetUtils.copy(clazz, this);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public Dataset cast(final int dtype) {
-		if (getDType() == dtype) {
-			return this;
-		}
-		return DatasetUtils.cast(this, dtype);
+		return cast(DTypeUtils.getInterface(dtype));
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends Dataset> T cast(Class<T> clazz) {
+		if (getClass().equals(clazz)) {
+			return (T) this;
+		}
 		return DatasetUtils.cast(clazz, this);
 	}
 
@@ -114,18 +110,18 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	 * {@inheritDoc Dataset#cast(int, Class, boolean)}
 	 * @since 2.3
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends Dataset> T cast(final int isize, Class<T> clazz, final boolean repeat) {
+		if (getClass().equals(clazz) && getElementsPerItem() == isize) {
+			return (T) this;
+		}
 		return DatasetUtils.cast(isize, clazz, this, repeat);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public Dataset cast(final boolean repeat, final int dtype, final int isize) {
-		if (getDType() == dtype && getElementsPerItem() == isize) {
-			return this;
-		}
-		return DatasetUtils.cast(this, repeat, dtype, isize);
+		return cast(isize, DTypeUtils.getInterface(dtype), repeat);
 	}
 
 	@Override
@@ -258,11 +254,12 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	 */
 	protected void fillData(Object obj, final int depth, final int[] pos) {
 		if (obj == null) {
-			int dtype = getDType();
-			if (dtype == FLOAT32)
+			Class<?> c = InterfaceUtils.getElementClass(getClass());
+			if (Float.class.equals(c)) {
 				set(Float.NaN, pos);
-			else if (dtype == FLOAT64)
+			} else if (Float.class.equals(c)) {
 				set(Double.NaN, pos);
+			}
 			return;
 		}
 
@@ -295,8 +292,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			}
 		} else if (obj instanceof IDataset) {
 			boolean[] a = new boolean[shape.length];
-			for (int i = depth; i < a.length; i++)
-				a[i] = true;
+			Arrays.fill(a, depth, a.length, true);
 			setSlice(obj, getSliceIteratorFromAxes(pos, a));
 		} else {
 			set(obj, pos);
@@ -431,11 +427,6 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			i += is;
 		}
 		return r;
-	}
-
-	@Override
-	public Class<?> getElementClass() {
-		return DTypeUtils.getElementClass(getDType());
 	}
 
 	@Override
@@ -1405,7 +1396,6 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	 */
 	abstract public AbstractDataset getSlice(final SliceIterator iterator);
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public Dataset setSlice(final Object obj, final SliceND slice) {
 		Dataset ds;
@@ -1414,11 +1404,11 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		} else if (obj instanceof IDataset) {
 			ds = DatasetUtils.convertToDataset((IDataset) obj);
 		} else {
-			int dtype = getDType();
-			if (dtype != Dataset.BOOL) {
-				dtype = DTypeUtils.getLargestDType(dtype);
+			Class<? extends Dataset> dClass = getClass();
+			if (!BooleanDataset.class.equals(dClass)) {
+				dClass = DTypeUtils.getLargestDataset(dClass);
 			}
-			ds = DatasetFactory.createFromObject(getElementsPerItem(), dtype, obj);
+			ds = DatasetFactory.createFromObject(getElementsPerItem(), dClass, obj);
 		}
 
 		return setSlicedView(getSliceView(slice), ds);
@@ -1566,7 +1556,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public Number peakToPeak(boolean... ignoreInvalids) {
-		return DTypeUtils.fromDoubleToBiggestNumber(max(ignoreInvalids).doubleValue() - min(ignoreInvalids).doubleValue(), getDType());
+		return InterfaceUtils.fromDoubleToBiggestNumber(getClass(), max(ignoreInvalids).doubleValue() - min(ignoreInvalids).doubleValue());
 	}
 
 	@Override
