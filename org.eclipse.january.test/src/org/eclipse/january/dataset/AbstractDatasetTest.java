@@ -354,7 +354,7 @@ public class AbstractDatasetTest {
 
 		// sort ancillary datasets
 		b = DatasetFactory.createRange(IntegerDataset.class, 12);
-		a = b.getSlice(new Slice(null, null, -1)).cast(Dataset.INT16);
+		a = b.getSlice(new Slice(null, null, -1)).cast(ShortDataset.class);
 		DatasetUtils.sort(a, b);
 		assertEquals("First element", 0, a.getInt(0));
 		assertEquals("Second element", 1, a.getInt(1));
@@ -882,7 +882,7 @@ public class AbstractDatasetTest {
 		assertEquals(true, Double.isNaN(tb.max().doubleValue()));
 		assertEquals(false, Double.isInfinite(tb.max().doubleValue()));
 
-		Dataset f = tb.cast(Dataset.FLOAT32);
+		Dataset f = tb.cast(FloatDataset.class);
 		assertEquals(true, f.containsNans());
 		assertEquals(true, f.containsInfs());
 		assertEquals(true, Double.isNaN(f.min().doubleValue()));
@@ -946,8 +946,8 @@ public class AbstractDatasetTest {
 		assertTrue(set.contains(e));
 		assertTrue(set.contains(Maths.subtract(d, 0.5)));
 		assertFalse(set.contains(Maths.subtract(d, 0.5001)));
-		assertTrue(set.contains(e.cast(Dataset.FLOAT64)));
-		assertTrue(set.contains(b.cast(Dataset.FLOAT32)));
+		assertTrue(set.contains(e.cast(DoubleDataset.class)));
+		assertTrue(set.contains(b.cast(FloatDataset.class)));
 	}
 
 	@Test
@@ -1662,11 +1662,11 @@ public class AbstractDatasetTest {
 	public void testCopy() {
 		int[] idata = new int[] {1, -2, 3};
 		Dataset d = new IntegerDataset(idata, null);
-		Dataset c = d.copy(Dataset.INT32);
+		Dataset c = d.copy(IntegerDataset.class);
 		assertTrue(c != d);
 		TestUtils.assertDatasetEquals(c, d);
 
-		c = d.copy(Dataset.FLOAT32);
+		c = d.copy(FloatDataset.class);
 		TestUtils.assertDatasetEquals(c, d, false);
 	}
 

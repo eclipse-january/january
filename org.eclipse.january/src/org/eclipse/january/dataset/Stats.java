@@ -792,12 +792,25 @@ public class Stats {
 	}
 
 	/**
+	 * @param clazz dataset class
+	 * @param a dataset
+	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
+	 * @return typed sum of dataset
+	 * @since 2.3
+	 */
+	public static Object typedSum(final Class<? extends Dataset> clazz, final Dataset a, final boolean... ignoreInvalids) {
+		return typedSum(a, DTypeUtils.getDType(clazz), ignoreInvalids);
+	}
+
+	/**
 	 * @param a dataset
 	 * @param dtype
 	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
 	 * @return typed sum of dataset
 	 * @since 2.0
+	 * @deprecated Please use the class-based method {@link #typedSum(Class, Dataset, boolean...)}
 	 */
+	@Deprecated
 	public static Object typedSum(final Dataset a, int dtype, final boolean... ignoreInvalids) {
 		if (a.isComplex()) {
 			Complex m = (Complex) a.sum(ignoreInvalids);
@@ -809,13 +822,39 @@ public class Stats {
 	}
 
 	/**
+	 * @param clazz dataset class
+	 * @param a dataset
+	 * @param axis
+	 * @param ignoreInvalids see {@link Dataset#max(int, boolean...)}
+	 * @return typed sum of items along axis in dataset
+	 * @since 2.3
+	 */
+	public static <T extends Dataset> T typedSum(final Class<T> clazz, final Dataset a, int axis, final boolean... ignoreInvalids) {
+		return a.sum(axis, ignoreInvalids).cast(clazz);
+	}
+
+	/**
+	 * @param clazz dataset class
+	 * @param a dataset
+	 * @param axes
+	 * @param ignoreInvalids see {@link Dataset#max(int, boolean...)}
+	 * @return typed sum of items along axes in dataset
+	 * @since 2.3
+	 */
+	public static <T extends Dataset> T typedSum(final Class<T> clazz, final Dataset a, int[] axes, final boolean... ignoreInvalids) {
+		return a.sum(axes, ignoreInvalids).cast(clazz);
+	}
+
+	/**
 	 * @param a dataset
 	 * @param dtype
 	 * @param axis
 	 * @param ignoreInvalids see {@link Dataset#max(int, boolean...)}
 	 * @return typed sum of items along axis in dataset
 	 * @since 2.0
+	 * @deprecated Please use the class-based method {@link #typedSum(Class, Dataset, axis, boolean...)}
 	 */
+	@Deprecated
 	public static Dataset typedSum(final Dataset a, int dtype, int axis, final boolean... ignoreInvalids) {
 		return DatasetUtils.cast(a.sum(axis, ignoreInvalids), dtype);
 	}
@@ -827,7 +866,7 @@ public class Stats {
 	 * @since 2.0
 	 */
 	public static Object product(final Dataset a, final boolean... ignoreInvalids) {
-		return typedProduct(a, a.getDType(), ignoreInvalids);
+		return typedProduct(a.getClass(), a, ignoreInvalids);
 	}
 
 	/**
@@ -838,18 +877,30 @@ public class Stats {
 	 * @since 2.0
 	 */
 	public static Dataset product(final Dataset a, final int axis, final boolean... ignoreInvalids) {
-		return typedProduct(a, a.getDType(), axis, ignoreInvalids);
+		return typedProduct(a.getClass(), a, axis, ignoreInvalids);
 	}
 
 	/**
 	 * @param a dataset
-	 * @param axis
+	 * @param axes
 	 * @param ignoreInvalids see {@link Dataset#max(int, boolean...)}
-	 * @return product of items along axis in dataset
+	 * @return product of items along axes in dataset
 	 * @since 2.2
 	 */
-	public static Dataset product(final Dataset a, final int[] axis, final boolean... ignoreInvalids) {
-		return typedProduct(a, a.getDType(), axis, ignoreInvalids);
+	public static Dataset product(final Dataset a, final int[] axes, final boolean... ignoreInvalids) {
+		return typedProduct(a.getClass(), a, axes, ignoreInvalids);
+	}
+
+	/**
+	 * @param clazz dataset class
+	 * @param a dataset
+	 * @param dtype
+	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
+	 * @return typed product of all items in dataset
+	 * @since 2.3
+	 */
+	public static Object typedProduct(final Class<? extends Dataset> clazz, final Dataset a, final boolean... ignoreInvalids) {
+		return typedProduct(a, DTypeUtils.getDType(clazz), ignoreInvalids);
 	}
 
 	/**
@@ -858,7 +909,9 @@ public class Stats {
 	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
 	 * @return typed product of all items in dataset
 	 * @since 2.0
+	 * @deprecated Please use the class-based method {@link #typedProduct(Class, Dataset, boolean...)}
 	 */
+	@Deprecated
 	public static Object typedProduct(final Dataset a, final int dtype, final boolean... ignoreInvalids) {
 		final boolean ignoreNaNs;
 		final boolean ignoreInfs;
@@ -973,13 +1026,40 @@ public class Stats {
 	}
 
 	/**
+	 * @param clazz dataset class
+	 * @param a dataset
+	 * @param axis
+	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
+	 * @return typed product of items along axis in dataset
+	 * @since 2.3
+	 */
+	public static <T extends Dataset> T typedProduct(final Class<T> clazz, final Dataset a, int axis, final boolean... ignoreInvalids) {
+		return typedProduct(clazz, a, new int[] {axis}, ignoreInvalids);
+	}
+
+	/**
+	 * @param clazz dataset class
+	 * @param a dataset
+	 * @param axes
+	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
+	 * @return typed product of items in axes of dataset
+	 * @since 2.3
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T extends Dataset> T typedProduct(final Class<T> clazz, final Dataset a, int[] axes, final boolean... ignoreInvalids) {
+		return (T) typedProduct(a, DTypeUtils.getDType(clazz), axes, ignoreInvalids);
+	}
+
+	/**
 	 * @param a dataset
 	 * @param dtype
 	 * @param axis
 	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
 	 * @return typed product of items along axis in dataset
 	 * @since 2.0
+	 * @deprecated Please use the class-based method {@link #typedProduct(Class, Dataset, int, boolean...)}
 	 */
+	@Deprecated
 	public static Dataset typedProduct(final Dataset a, final int dtype, int axis, final boolean... ignoreInvalids) {
 		return typedProduct(a, dtype, new int[] {axis}, ignoreInvalids);
 	}
@@ -991,7 +1071,9 @@ public class Stats {
 	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
 	 * @return typed product of items in axes of dataset
 	 * @since 2.2
+	 * @deprecated Please use the class-based method {@link #typedProduct(Class, Dataset, int[], boolean...)}
 	 */
+	@Deprecated
 	public static Dataset typedProduct(final Dataset a, final int dtype, int[] axes, final boolean... ignoreInvalids) {
 		axes = ShapeUtils.checkAxes(a.getRank(), axes);
 		SliceNDIterator siter = new SliceNDIterator(new SliceND(a.getShapeRef()), axes);
@@ -1008,7 +1090,6 @@ public class Stats {
 			ignoreNaNs = false;
 			ignoreInfs = false;
 		}
-		@SuppressWarnings("deprecation")
 		Dataset result = DatasetFactory.zeros(is, nshape, dtype);
 
 		int[] spos = siter.getUsedPos();

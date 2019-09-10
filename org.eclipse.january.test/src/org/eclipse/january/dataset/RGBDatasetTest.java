@@ -50,9 +50,9 @@ public class RGBDatasetTest {
 			assertEquals(i + 1, c.getBlue(i));
 		}
 
-		r = r.cast(Dataset.INT8);
-		g = g.cast(Dataset.INT8);
-		b = b.cast(Dataset.INT8);
+		r = r.cast(ByteDataset.class);
+		g = g.cast(ByteDataset.class);
+		b = b.cast(ByteDataset.class);
 
 		c = new RGBDataset((byte[]) r.getBuffer(), (byte[]) g.getBuffer(), (byte[]) b.getBuffer());
 		for (int i = 0; i < n; i++) {

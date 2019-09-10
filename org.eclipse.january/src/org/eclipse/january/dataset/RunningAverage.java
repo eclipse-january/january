@@ -25,13 +25,12 @@ public class RunningAverage {
 	 */
 	public RunningAverage(IDataset dataset) {
 		average = (DoubleDataset) (dataset.getElementClass().equals(Double.class) ? DatasetUtils.convertToDataset(dataset).clone()
-				: DatasetUtils.cast(dataset, Dataset.FLOAT64));
+				: DatasetUtils.cast(DoubleDataset.class, dataset));
 
 		sqAveError = null;
 		Dataset eb = average.getErrorBuffer();
 		if (eb != null) {
-			sqAveError = eb.getDType() != Dataset.FLOAT64 ? (DoubleDataset) DatasetUtils.cast(eb, Dataset.FLOAT64) :
-				(DoubleDataset) eb;
+			sqAveError = DatasetUtils.cast(DoubleDataset.class, eb);
 		}
 	}
 

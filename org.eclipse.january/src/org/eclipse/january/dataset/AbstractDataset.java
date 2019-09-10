@@ -82,6 +82,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		stringFormat = format;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public Dataset copy(final int dtype) {
 		if (getDType() == dtype) {
@@ -95,6 +96,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		return DatasetUtils.copy(clazz, this);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public Dataset cast(final int dtype) {
 		if (getDType() == dtype) {
@@ -108,6 +110,16 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		return DatasetUtils.cast(clazz, this);
 	}
 
+	/**
+	 * {@inheritDoc Dataset#cast(int, Class, boolean)}
+	 * @since 2.3
+	 */
+	@Override
+	public <T extends Dataset> T cast(final int isize, Class<T> clazz, final boolean repeat) {
+		return DatasetUtils.cast(isize, clazz, this, repeat);
+	}
+
+	@SuppressWarnings("deprecation")
 	@Override
 	public Dataset cast(final boolean repeat, final int dtype, final int isize) {
 		if (getDType() == dtype && getElementsPerItem() == isize) {

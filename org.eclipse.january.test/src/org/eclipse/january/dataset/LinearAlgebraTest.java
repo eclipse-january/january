@@ -49,7 +49,7 @@ public class LinearAlgebraTest {
 
 		Dataset d = DatasetFactory.createFromObject(new double[] { 4400., 4730.,
 			4532.,  4874., 4664., 5018., 4796.,  5162., 4928.,  5306. }, 5, 2);
-		assertTrue("Data does not match", d.cast(c.getDType()).equals(c));
+		assertTrue("Data does not match", d.cast(c.getClass()).equals(c));
 
 		int n = 16;
 		a = DatasetFactory.createRange(FloatDataset.class, 20*n).reshape(n, 4, 5);
@@ -242,7 +242,7 @@ public class LinearAlgebraTest {
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new int[]{5, 6, 7, 50, 60, 70, 500, 600, 700}, null), LinearAlgebra.kroneckerProduct(a, b), true, 1e-12, 1e-12);
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new int[]{5, 50, 500, 6, 60, 600, 7, 70, 700}, null), LinearAlgebra.kroneckerProduct(b, a), true, 1e-12, 1e-12);
 
-		a = DatasetUtils.eye(2, 2, 0, Dataset.INT16);
+		a = DatasetUtils.eye(ShortDataset.class, 2, 2, 0);
 		b = DatasetFactory.ones(FloatDataset.class, new int[] {2, 2});
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new float[]{1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1}, 4, 4), LinearAlgebra.kroneckerProduct(a, b), true, 1e-12, 1e-12);
 	}
@@ -254,7 +254,7 @@ public class LinearAlgebraTest {
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new int[]{0, -1, 1, 0}, 2, 2), LinearAlgebra.power(a, 3), true, 1e-12, 1e-12);
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new double[]{0, 1, -1, 0}, 2, 2), LinearAlgebra.power(a, -3), true, 1e-12, 1e-12);
 
-		TestUtils.assertDatasetEquals(DatasetUtils.eye(4, 4, 0, Dataset.INT32), LinearAlgebra.power(DatasetFactory.zeros(IntegerDataset.class, 4, 4), 0), true, 1e-12, 1e-12);
+		TestUtils.assertDatasetEquals(DatasetUtils.eye(IntegerDataset.class, 4, 4, 0), LinearAlgebra.power(DatasetFactory.zeros(IntegerDataset.class, 4, 4), 0), true, 1e-12, 1e-12);
 	}
 
 	@Test

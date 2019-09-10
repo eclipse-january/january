@@ -22,9 +22,11 @@ import org.eclipse.january.dataset.DatasetFactory;
 import org.eclipse.january.dataset.DatasetUtils;
 import org.eclipse.january.dataset.DoubleDataset;
 import org.eclipse.january.dataset.IDataset;
+import org.eclipse.january.dataset.IntegerDataset;
 import org.eclipse.january.dataset.LinearAlgebra;
 import org.eclipse.january.dataset.Maths;
 import org.eclipse.january.dataset.Random;
+import org.eclipse.january.dataset.ShortDataset;
 import org.eclipse.january.dataset.Slice;
 import org.junit.Before;
 import org.junit.Rule;
@@ -451,9 +453,9 @@ public class NumpyExamples {
     	
     	IDataset ones = DatasetFactory.ones(new int[]{3, 4});
     	
-    	IDataset eye = DatasetUtils.eye(3, 3, 0, Dataset.FLOAT64);
+    	IDataset eye = DatasetUtils.eye(DoubleDataset.class, 3, 3, 0);
     	
-    	IDataset rand = Random.rand(new int[]{3,4});
+    	IDataset rand = Random.rand(new int[]{3, 4});
     	
     	IDataset line = DatasetFactory.createLinearSpace(DoubleDataset.class, 1, 3, 4);
     }
@@ -601,7 +603,7 @@ public class NumpyExamples {
     		
     	}
 
-    	and = Maths.bitwiseAnd(DatasetUtils.cast(a, Dataset.INT32), DatasetUtils.cast(b, Dataset.INT16));
+    	and = Maths.bitwiseAnd(DatasetUtils.cast(IntegerDataset.class, a), DatasetUtils.cast(ShortDataset.class, b));
       	System.out.println("Result of a & b " + and);
     }
     
@@ -618,7 +620,7 @@ public class NumpyExamples {
     		
     	}
 
-    	or = Maths.bitwiseOr(DatasetUtils.cast(a, Dataset.INT32), DatasetUtils.cast(b, Dataset.INT16));
+    	or = Maths.bitwiseOr(DatasetUtils.cast(IntegerDataset.class, a), DatasetUtils.cast(ShortDataset.class, b));
       	System.out.println("Result of a | b " + or);
     }
     
@@ -799,7 +801,7 @@ public class NumpyExamples {
     **/
     @Test
     public void unique() {
-    	Dataset u = Random.rand(100).imultiply(10).cast(Dataset.INT16);
+    	Dataset u = Random.rand(100).imultiply(10).cast(ShortDataset.class);
     	System.out.println("Unique is " + u.getUniqueItems().toString(true));
     }
 
