@@ -1586,7 +1586,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public Object sum(boolean... ignoreInvalids) {
-		return getStats().getSum(ignoreInvalids);
+		return InterfaceUtils.toBiggestNumber(getClass(), getStats().getSum(ignoreInvalids));
 	}
 
 	@Override

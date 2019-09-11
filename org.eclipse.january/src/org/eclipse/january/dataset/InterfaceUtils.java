@@ -395,20 +395,20 @@ public class InterfaceUtils {
 	public static Class<? extends Dataset> getLargestInterface(Dataset a) {
 		if (a instanceof BooleanDataset || a instanceof ByteDataset || a instanceof ShortDataset) {
 			return IntegerDataset.class;
-		} else if (a instanceof IntegerDataset || a instanceof LongDataset) {
+		} else if (a instanceof IntegerDataset) {
 			return LongDataset.class;
-		} else if (a instanceof FloatDataset || a instanceof DoubleDataset) {
+		} else if (a instanceof FloatDataset) {
 			return DoubleDataset.class;
-		} else if (a instanceof ComplexFloatDataset || a instanceof ComplexDoubleDataset) {
+		} else if (a instanceof ComplexFloatDataset) {
 			return ComplexDoubleDataset.class;
 		} else if (a instanceof CompoundByteDataset || a instanceof CompoundShortDataset) {
 			return CompoundIntegerDataset.class;
-		} else if (a instanceof CompoundIntegerDataset || a instanceof CompoundLongDataset) {
+		} else if (a instanceof CompoundIntegerDataset) {
 			return CompoundLongDataset.class;
-		} else if (a instanceof CompoundFloatDataset || a instanceof CompoundDoubleDataset) {
+		} else if (a instanceof CompoundFloatDataset) {
 			return CompoundDoubleDataset.class;
 		}
-		throw new IllegalArgumentException("Unsupported dataset type");
+		return a.getClass();
 	}
 
 	/**
@@ -488,6 +488,26 @@ public class InterfaceUtils {
 			return Float.valueOf((float) x);
 		} else if (DoubleDataset.class.isAssignableFrom(clazz)) {
 			return Double.valueOf(x);
+		}
+		return null;
+	}
+
+	/**
+	 * @param clazz dataset interface
+	 * @param x
+	 * @return biggest native primitive if integer
+	 * @since 2.3
+	 */
+	public static Number toBiggestNumber(Class<? extends Dataset> clazz, Number x) {
+		if (BooleanDataset.class.isAssignableFrom(clazz) || ByteDataset.class.isAssignableFrom(clazz)
+				|| ShortDataset.class.isAssignableFrom(clazz) || IntegerDataset.class.isAssignableFrom(clazz)) {
+			return x instanceof Integer ? x : Integer.valueOf(x.intValue());
+		} else if (LongDataset.class.isAssignableFrom(clazz)) {
+			return x instanceof Long ? x : Long.valueOf(x.longValue());
+		} else if (FloatDataset.class.isAssignableFrom(clazz)) {
+			return x instanceof Float ? x : Float.valueOf(x.floatValue());
+		} else if (DoubleDataset.class.isAssignableFrom(clazz)) {
+			return x instanceof Double ? x : Double.valueOf(x.doubleValue());
 		}
 		return null;
 	}
