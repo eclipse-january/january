@@ -392,7 +392,7 @@ class MathsPreface {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				while (it.hasNext()) {
 					oc64data[it.oIndex] = (float) Math.abs(it.aDouble);
 					if (reset) {
@@ -410,7 +410,7 @@ class MathsPreface {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				while (it.hasNext()) {
 					oc128data[it.oIndex] = Math.abs(it.aDouble);
 					if (reset) {

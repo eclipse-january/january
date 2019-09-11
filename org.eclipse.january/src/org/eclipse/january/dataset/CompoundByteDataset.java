@@ -419,8 +419,11 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	}
 
 	@Override
-	public CompoundByteDataset fill(final Object obj) {
+	public CompoundByteDataset fill(Object obj) {
 		setDirty();
+		if (obj instanceof Complex) {
+			obj = new Complex(((Complex) obj).getReal(), 0);
+		}
 		byte[] vr = DTypeUtils.toByteArray(obj, isize); // PRIM_TYPE // CLASS_TYPE
 		IndexIterator iter = getIterator();
 
@@ -872,7 +875,10 @@ public class CompoundByteDataset extends AbstractCompoundDataset {
 	}
 
 	@Override
-	public void setObjectAbs(final int index, final Object obj) {
+	public void setObjectAbs(final int index, Object obj) {
+		if (obj instanceof Complex) {
+			obj = new Complex(((Complex) obj).getReal(), 0);
+		}
 		byte[] oa = DTypeUtils.toByteArray(obj, isize); // PRIM_TYPE // CLASS_TYPE
 		setAbs(index, oa);
 	}

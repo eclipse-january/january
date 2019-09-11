@@ -162,25 +162,24 @@ public final class BroadcastUtils {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	static Dataset createDataset(final Dataset a, final Dataset b, final int[] shape) {
-		final int rt;
+		final Class<? extends Dataset> rc;
 		final int ar = a.getRank();
 		final int br = b.getRank();
-		final int tt = DTypeUtils.getBestDType(a.getDType(), b.getDType());
+		Class<? extends Dataset> tc = InterfaceUtils.getBestInterface(a.getClass(), b.getClass());
 		if (ar == 0 ^ br == 0) { // ignore type of zero-rank dataset unless it's floating point 
 			if (ar == 0) {
-				rt = a.hasFloatingPointElements() ? tt : b.getDType();
+				rc = a.hasFloatingPointElements() ? tc : b.getClass();
 			} else {
-				rt = b.hasFloatingPointElements() ? tt : a.getDType();
+				rc = b.hasFloatingPointElements() ? tc : a.getClass();
 			}
 		} else {
-			rt = tt;
+			rc = tc;
 		}
 		final int ia = a.getElementsPerItem();
 		final int ib = b.getElementsPerItem();
 	
-		return DatasetFactory.zeros(ia > ib ? ia : ib, shape, rt);
+		return DatasetFactory.zeros(ia > ib ? ia : ib, rc, shape);
 	}
 
 	/**

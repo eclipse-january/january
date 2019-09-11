@@ -94,6 +94,9 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 
 	@Override
 	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
 		if (!super.equals(obj)) {
 			return false;
 		}

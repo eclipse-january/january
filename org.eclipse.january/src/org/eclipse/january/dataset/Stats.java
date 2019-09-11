@@ -799,7 +799,13 @@ public class Stats {
 	 * @since 2.3
 	 */
 	public static Object typedSum(final Class<? extends Dataset> clazz, final Dataset a, final boolean... ignoreInvalids) {
-		return typedSum(a, DTypeUtils.getDType(clazz), ignoreInvalids);
+		if (a.isComplex()) {
+			Complex m = (Complex) a.sum(ignoreInvalids);
+			return m;
+		} else if (a instanceof CompoundDataset) {
+			return InterfaceUtils.fromDoublesToBiggestPrimitives(clazz, (double[]) a.sum(ignoreInvalids));
+		}
+		return InterfaceUtils.fromDoubleToBiggestNumber(clazz, DTypeUtils.toReal(a.sum(ignoreInvalids)));
 	}
 
 	/**
@@ -812,13 +818,7 @@ public class Stats {
 	 */
 	@Deprecated
 	public static Object typedSum(final Dataset a, int dtype, final boolean... ignoreInvalids) {
-		if (a.isComplex()) {
-			Complex m = (Complex) a.sum(ignoreInvalids);
-			return m;
-		} else if (a instanceof CompoundDataset) {
-			return  DTypeUtils.fromDoublesToBiggestPrimitives((double[]) a.sum(ignoreInvalids), dtype);
-		}
-		return DTypeUtils.fromDoubleToBiggestNumber(DTypeUtils.toReal(a.sum(ignoreInvalids)), dtype);
+		return typedSum(DTypeUtils.getInterface(dtype), a, ignoreInvalids);
 	}
 
 	/**

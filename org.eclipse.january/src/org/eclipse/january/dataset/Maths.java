@@ -365,7 +365,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				while (it.hasNext()) {
 					oc64data[it.oIndex] = (float) Math.abs(it.aDouble);
 					if (reset) {
@@ -383,7 +383,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				while (it.hasNext()) {
 					oc128data[it.oIndex] = Math.abs(it.aDouble);
 					if (reset) {
@@ -3203,10 +3203,24 @@ public class Maths {
 	 * @return {@code a + b}, addition of a and b
 	 */
 	public static Dataset add(final Object a, final Object b, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
+		BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			boolean change = false;
+			if (da.isComplex()) {
+				da = da.getRealView();
+				change = true;
+			}
+			if (db.isComplex()) {
+				db = db.getRealView();
+				change = true;
+			}
+			if (change) {
+				it = BroadcastIterator.createIterator(da, db, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int bs = db.getElementsPerItem();
@@ -4115,7 +4129,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iay = 0;
 					if (db.isComplex()) {
@@ -4157,7 +4171,7 @@ public class Maths {
 						oc64data[it.oIndex + 1] = oy;
 					}
 				}
-			} else if (bs == 1) {
+			} else if (!db.isComplex()) {
 				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -4187,7 +4201,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iay = 0;
 					if (db.isComplex()) {
@@ -4229,7 +4243,7 @@ public class Maths {
 						oc128data[it.oIndex + 1] = oy;
 					}
 				}
-			} else if (bs == 1) {
+			} else if (!db.isComplex()) {
 				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -4283,10 +4297,24 @@ public class Maths {
 	 * @return {@code a - b}, subtraction of a by b
 	 */
 	public static Dataset subtract(final Object a, final Object b, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
+		BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			boolean change = false;
+			if (da.isComplex()) {
+				da = da.getRealView();
+				change = true;
+			}
+			if (db.isComplex()) {
+				db = db.getRealView();
+				change = true;
+			}
+			if (change) {
+				it = BroadcastIterator.createIterator(da, db, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int bs = db.getElementsPerItem();
@@ -5195,7 +5223,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iay = 0;
 					if (db.isComplex()) {
@@ -5237,7 +5265,7 @@ public class Maths {
 						oc64data[it.oIndex + 1] = oy;
 					}
 				}
-			} else if (bs == 1) {
+			} else if (!db.isComplex()) {
 				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -5267,7 +5295,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iay = 0;
 					if (db.isComplex()) {
@@ -5309,7 +5337,7 @@ public class Maths {
 						oc128data[it.oIndex + 1] = oy;
 					}
 				}
-			} else if (bs == 1) {
+			} else if (!db.isComplex()) {
 				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -5363,10 +5391,24 @@ public class Maths {
 	 * @return {@code a * b}, product of a and b
 	 */
 	public static Dataset multiply(final Object a, final Object b, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
+		BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			boolean change = false;
+			if (da.isComplex()) {
+				da = da.getRealView();
+				change = true;
+			}
+			if (db.isComplex()) {
+				db = db.getRealView();
+				change = true;
+			}
+			if (change) {
+				it = BroadcastIterator.createIterator(da, db, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int bs = db.getElementsPerItem();
@@ -6275,7 +6317,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iay = 0;
 					if (db.isComplex()) {
@@ -6317,7 +6359,7 @@ public class Maths {
 						oc64data[it.oIndex + 1] = oy;
 					}
 				}
-			} else if (bs == 1) {
+			} else if (!db.isComplex()) {
 				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -6347,7 +6389,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iay = 0;
 					if (db.isComplex()) {
@@ -6389,7 +6431,7 @@ public class Maths {
 						oc128data[it.oIndex + 1] = oy;
 					}
 				}
-			} else if (bs == 1) {
+			} else if (!db.isComplex()) {
 				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -6443,10 +6485,24 @@ public class Maths {
 	 * @return {@code a / b}, division of a by b
 	 */
 	public static Dataset divide(final Object a, final Object b, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
+		BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			boolean change = false;
+			if (da.isComplex()) {
+				da = da.getRealView();
+				change = true;
+			}
+			if (db.isComplex()) {
+				db = db.getRealView();
+				change = true;
+			}
+			if (change) {
+				it = BroadcastIterator.createIterator(da, db, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int bs = db.getElementsPerItem();
@@ -7355,7 +7411,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iay = 0;
 					if (db.isComplex()) {
@@ -7448,7 +7504,7 @@ public class Maths {
 						oc64data[it.oIndex + 1] = oy;
 					}
 				}
-			} else if (bs == 1) {
+			} else if (!db.isComplex()) {
 				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -7512,7 +7568,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iay = 0;
 					if (db.isComplex()) {
@@ -7605,7 +7661,7 @@ public class Maths {
 						oc128data[it.oIndex + 1] = oy;
 					}
 				}
-			} else if (bs == 1) {
+			} else if (!db.isComplex()) {
 				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -7693,10 +7749,24 @@ public class Maths {
 	 * @return {@code a / b}, division of a by b
 	 */
 	public static Dataset dividez(final Object a, final Object b, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
+		BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			boolean change = false;
+			if (da.isComplex()) {
+				da = da.getRealView();
+				change = true;
+			}
+			if (db.isComplex()) {
+				db = db.getRealView();
+				change = true;
+			}
+			if (change) {
+				it = BroadcastIterator.createIterator(da, db, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int bs = db.getElementsPerItem();
@@ -8605,7 +8675,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iay = 0;
 					if (db.isComplex()) {
@@ -8689,7 +8759,7 @@ public class Maths {
 						oc64data[it.oIndex + 1] = oy;
 					}
 				}
-			} else if (bs == 1) {
+			} else if (!db.isComplex()) {
 				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -8747,7 +8817,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iay = 0;
 					if (db.isComplex()) {
@@ -8831,7 +8901,7 @@ public class Maths {
 						oc128data[it.oIndex + 1] = oy;
 					}
 				}
-			} else if (bs == 1) {
+			} else if (!db.isComplex()) {
 				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -8913,10 +8983,24 @@ public class Maths {
 	 * @return {@code a / b}, division of a by b but rounded towards negative infinity
 	 */
 	public static Dataset divideTowardsFloor(final Object a, final Object b, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
+		BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			boolean change = false;
+			if (da.isComplex()) {
+				da = da.getRealView();
+				change = true;
+			}
+			if (db.isComplex()) {
+				db = db.getRealView();
+				change = true;
+			}
+			if (change) {
+				it = BroadcastIterator.createIterator(da, db, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int bs = db.getElementsPerItem();
@@ -10329,7 +10413,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iay = 0;
 					if (db.isComplex()) {
@@ -10422,7 +10506,7 @@ public class Maths {
 						oc64data[it.oIndex + 1] = oy;
 					}
 				}
-			} else if (bs == 1) {
+			} else if (!db.isComplex()) {
 				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -10486,7 +10570,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iay = 0;
 					if (db.isComplex()) {
@@ -10579,7 +10663,7 @@ public class Maths {
 						oc128data[it.oIndex + 1] = oy;
 					}
 				}
-			} else if (bs == 1) {
+			} else if (!db.isComplex()) {
 				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -10667,10 +10751,24 @@ public class Maths {
 	 * @return {@code a ** b}, raise a to power of b
 	 */
 	public static Dataset power(final Object a, final Object b, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
+		BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			boolean change = false;
+			if (da.isComplex()) {
+				da = da.getRealView();
+				change = true;
+			}
+			if (db.isComplex()) {
+				db = db.getRealView();
+				change = true;
+			}
+			if (change) {
+				it = BroadcastIterator.createIterator(da, db, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int bs = db.getElementsPerItem();
@@ -11579,7 +11677,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iay = 0;
 					if (db.isComplex()) {
@@ -11627,7 +11725,7 @@ public class Maths {
 						oc64data[it.oIndex + 1] = oy;
 					}
 				}
-			} else if (bs == 1) {
+			} else if (!db.isComplex()) {
 				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -11661,7 +11759,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iay = 0;
 					if (db.isComplex()) {
@@ -11709,7 +11807,7 @@ public class Maths {
 						oc128data[it.oIndex + 1] = oy;
 					}
 				}
-			} else if (bs == 1) {
+			} else if (!db.isComplex()) {
 				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -11767,10 +11865,24 @@ public class Maths {
 	 * @return {@code a % b}, remainder of division of a by b
 	 */
 	public static Dataset remainder(final Object a, final Object b, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
+		BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			boolean change = false;
+			if (da.isComplex()) {
+				da = da.getRealView();
+				change = true;
+			}
+			if (db.isComplex()) {
+				db = db.getRealView();
+				change = true;
+			}
+			if (change) {
+				it = BroadcastIterator.createIterator(da, db, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int bs = db.getElementsPerItem();
@@ -12703,10 +12815,24 @@ public class Maths {
 	 * @return return maximum of a and b
 	 */
 	public static Dataset maximum(final Object a, final Object b, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
+		BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			boolean change = false;
+			if (da.isComplex()) {
+				da = da.getRealView();
+				change = true;
+			}
+			if (db.isComplex()) {
+				db = db.getRealView();
+				change = true;
+			}
+			if (change) {
+				it = BroadcastIterator.createIterator(da, db, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int bs = db.getElementsPerItem();
@@ -13615,7 +13741,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iay = 0;
 					if (db.isComplex()) {
@@ -13681,7 +13807,7 @@ public class Maths {
 						oc64data[it.oIndex + 1] = oy;
 					}
 				}
-			} else if (bs == 1) {
+			} else if (!db.isComplex()) {
 				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -13727,7 +13853,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iay = 0;
 					if (db.isComplex()) {
@@ -13793,7 +13919,7 @@ public class Maths {
 						oc128data[it.oIndex + 1] = oy;
 					}
 				}
-			} else if (bs == 1) {
+			} else if (!db.isComplex()) {
 				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -13863,10 +13989,24 @@ public class Maths {
 	 * @return return minimum of a and b
 	 */
 	public static Dataset minimum(final Object a, final Object b, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
+		BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			boolean change = false;
+			if (da.isComplex()) {
+				da = da.getRealView();
+				change = true;
+			}
+			if (db.isComplex()) {
+				db = db.getRealView();
+				change = true;
+			}
+			if (change) {
+				it = BroadcastIterator.createIterator(da, db, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int bs = db.getElementsPerItem();
@@ -14775,7 +14915,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iay = 0;
 					if (db.isComplex()) {
@@ -14841,7 +14981,7 @@ public class Maths {
 						oc64data[it.oIndex + 1] = oy;
 					}
 				}
-			} else if (bs == 1) {
+			} else if (!db.isComplex()) {
 				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -14887,7 +15027,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iay = 0;
 					if (db.isComplex()) {
@@ -14953,7 +15093,7 @@ public class Maths {
 						oc128data[it.oIndex + 1] = oy;
 					}
 				}
-			} else if (bs == 1) {
+			} else if (!db.isComplex()) {
 				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
@@ -15023,11 +15163,26 @@ public class Maths {
 	 * @return {@code a & b}, bitwise AND of a and b
 	 */
 	public static Dataset bitwiseAnd(final Object a, final Object b, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
+		BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		it.setOutputDouble(false);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			boolean change = false;
+			if (da.isComplex()) {
+				da = da.getRealView();
+				change = true;
+			}
+			if (db.isComplex()) {
+				db = db.getRealView();
+				change = true;
+			}
+			if (change) {
+				it = BroadcastIterator.createIterator(da, db, result, true);
+				it.setOutputDouble(false);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int bs = db.getElementsPerItem();
@@ -15396,11 +15551,26 @@ public class Maths {
 	 * @return {@code a | b}, bitwise inclusive OR of a and b
 	 */
 	public static Dataset bitwiseOr(final Object a, final Object b, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
+		BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		it.setOutputDouble(false);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			boolean change = false;
+			if (da.isComplex()) {
+				da = da.getRealView();
+				change = true;
+			}
+			if (db.isComplex()) {
+				db = db.getRealView();
+				change = true;
+			}
+			if (change) {
+				it = BroadcastIterator.createIterator(da, db, result, true);
+				it.setOutputDouble(false);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int bs = db.getElementsPerItem();
@@ -15769,11 +15939,26 @@ public class Maths {
 	 * @return {@code a ^ b}, bitwise exclusive OR of a and b
 	 */
 	public static Dataset bitwiseXor(final Object a, final Object b, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
+		BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		it.setOutputDouble(false);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			boolean change = false;
+			if (da.isComplex()) {
+				da = da.getRealView();
+				change = true;
+			}
+			if (db.isComplex()) {
+				db = db.getRealView();
+				change = true;
+			}
+			if (change) {
+				it = BroadcastIterator.createIterator(da, db, result, true);
+				it.setOutputDouble(false);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int bs = db.getElementsPerItem();
@@ -16142,11 +16327,26 @@ public class Maths {
 	 * @return {@code a << b}, bitwise left shift of a by b
 	 */
 	public static Dataset leftShift(final Object a, final Object b, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
+		BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		it.setOutputDouble(false);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			boolean change = false;
+			if (da.isComplex()) {
+				da = da.getRealView();
+				change = true;
+			}
+			if (db.isComplex()) {
+				db = db.getRealView();
+				change = true;
+			}
+			if (change) {
+				it = BroadcastIterator.createIterator(da, db, result, true);
+				it.setOutputDouble(false);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int bs = db.getElementsPerItem();
@@ -16515,11 +16715,26 @@ public class Maths {
 	 * @return {@code a >> b}, bitwise right shift of a by b
 	 */
 	public static Dataset rightShift(final Object a, final Object b, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
+		BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		it.setOutputDouble(false);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			boolean change = false;
+			if (da.isComplex()) {
+				da = da.getRealView();
+				change = true;
+			}
+			if (db.isComplex()) {
+				db = db.getRealView();
+				change = true;
+			}
+			if (change) {
+				it = BroadcastIterator.createIterator(da, db, result, true);
+				it.setOutputDouble(false);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int bs = db.getElementsPerItem();
@@ -16888,12 +17103,27 @@ public class Maths {
 	 * @return {@code a >>> b}, bitwise right shift of a by b with zeros added
 	 */
 	public static Dataset unsignedRightShift(final Object a, final Object b, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
-		final BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		Dataset db = b instanceof Dataset ? (Dataset) b : DatasetFactory.createFromObject(b);
+		BroadcastIterator it = BroadcastIterator.createIterator(da, db, o, true);
 		it.setOutputDouble(false);
 		final long unsignedMask;
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			boolean change = false;
+			if (da.isComplex()) {
+				da = da.getRealView();
+				change = true;
+			}
+			if (db.isComplex()) {
+				db = db.getRealView();
+				change = true;
+			}
+			if (change) {
+				it = BroadcastIterator.createIterator(da, db, result, true);
+				it.setOutputDouble(false);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int bs = db.getElementsPerItem();
@@ -17268,9 +17498,15 @@ public class Maths {
 	 * @return dataset
 	 */
 	public static Dataset bitwiseInvert(final Object a, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true, true, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true, true, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			if (da.isComplex()) {
+				da = da.getRealView();
+				it = new SingleInputBroadcastIterator(da, result, true, true, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
@@ -17484,9 +17720,15 @@ public class Maths {
 	 * @return dataset
 	 */
 	public static Dataset sin(final Object a, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			if (da.isComplex()) {
+				da = da.getRealView();
+				it = new SingleInputBroadcastIterator(da, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
@@ -17962,7 +18204,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -18001,7 +18243,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -18062,9 +18304,15 @@ public class Maths {
 	 * @return dataset
 	 */
 	public static Dataset cos(final Object a, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			if (da.isComplex()) {
+				da = da.getRealView();
+				it = new SingleInputBroadcastIterator(da, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
@@ -18540,7 +18788,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -18579,7 +18827,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -18640,9 +18888,15 @@ public class Maths {
 	 * @return dataset
 	 */
 	public static Dataset tan(final Object a, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			if (da.isComplex()) {
+				da = da.getRealView();
+				it = new SingleInputBroadcastIterator(da, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
@@ -19118,7 +19372,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -19175,7 +19429,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -19254,9 +19508,15 @@ public class Maths {
 	 * @return dataset
 	 */
 	public static Dataset arcsin(final Object a, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			if (da.isComplex()) {
+				da = da.getRealView();
+				it = new SingleInputBroadcastIterator(da, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
@@ -19732,7 +19992,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -19777,7 +20037,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -19844,9 +20104,15 @@ public class Maths {
 	 * @return dataset
 	 */
 	public static Dataset arccos(final Object a, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			if (da.isComplex()) {
+				da = da.getRealView();
+				it = new SingleInputBroadcastIterator(da, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
@@ -20322,7 +20588,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -20367,7 +20633,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -20434,9 +20700,15 @@ public class Maths {
 	 * @return dataset
 	 */
 	public static Dataset arctan(final Object a, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			if (da.isComplex()) {
+				da = da.getRealView();
+				it = new SingleInputBroadcastIterator(da, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
@@ -20912,7 +21184,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -20957,7 +21229,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -21024,9 +21296,15 @@ public class Maths {
 	 * @return dataset
 	 */
 	public static Dataset sinh(final Object a, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			if (da.isComplex()) {
+				da = da.getRealView();
+				it = new SingleInputBroadcastIterator(da, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
@@ -21502,7 +21780,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -21541,7 +21819,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -21602,9 +21880,15 @@ public class Maths {
 	 * @return dataset
 	 */
 	public static Dataset cosh(final Object a, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			if (da.isComplex()) {
+				da = da.getRealView();
+				it = new SingleInputBroadcastIterator(da, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
@@ -22080,7 +22364,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -22119,7 +22403,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -22180,9 +22464,15 @@ public class Maths {
 	 * @return dataset
 	 */
 	public static Dataset tanh(final Object a, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			if (da.isComplex()) {
+				da = da.getRealView();
+				it = new SingleInputBroadcastIterator(da, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
@@ -22658,7 +22948,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -22715,7 +23005,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -22794,9 +23084,15 @@ public class Maths {
 	 * @return dataset
 	 */
 	public static Dataset arcsinh(final Object a, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			if (da.isComplex()) {
+				da = da.getRealView();
+				it = new SingleInputBroadcastIterator(da, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
@@ -23272,7 +23568,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -23317,7 +23613,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -23384,9 +23680,15 @@ public class Maths {
 	 * @return dataset
 	 */
 	public static Dataset arccosh(final Object a, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			if (da.isComplex()) {
+				da = da.getRealView();
+				it = new SingleInputBroadcastIterator(da, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
@@ -23862,7 +24164,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -23907,7 +24209,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -23974,9 +24276,15 @@ public class Maths {
 	 * @return dataset
 	 */
 	public static Dataset arctanh(final Object a, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			if (da.isComplex()) {
+				da = da.getRealView();
+				it = new SingleInputBroadcastIterator(da, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
@@ -24452,7 +24760,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -24497,7 +24805,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -24564,9 +24872,15 @@ public class Maths {
 	 * @return dataset
 	 */
 	public static Dataset log(final Object a, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			if (da.isComplex()) {
+				da = da.getRealView();
+				it = new SingleInputBroadcastIterator(da, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
@@ -25042,7 +25356,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -25081,7 +25395,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -25142,9 +25456,15 @@ public class Maths {
 	 * @return dataset
 	 */
 	public static Dataset log2(final Object a, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			if (da.isComplex()) {
+				da = da.getRealView();
+				it = new SingleInputBroadcastIterator(da, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
@@ -25620,7 +25940,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -25659,7 +25979,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -25720,9 +26040,15 @@ public class Maths {
 	 * @return dataset
 	 */
 	public static Dataset log10(final Object a, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			if (da.isComplex()) {
+				da = da.getRealView();
+				it = new SingleInputBroadcastIterator(da, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
@@ -26198,7 +26524,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -26237,7 +26563,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -26298,9 +26624,15 @@ public class Maths {
 	 * @return dataset
 	 */
 	public static Dataset log1p(final Object a, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			if (da.isComplex()) {
+				da = da.getRealView();
+				it = new SingleInputBroadcastIterator(da, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
@@ -26776,7 +27108,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -26815,7 +27147,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -26876,9 +27208,15 @@ public class Maths {
 	 * @return dataset
 	 */
 	public static Dataset exp(final Object a, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			if (da.isComplex()) {
+				da = da.getRealView();
+				it = new SingleInputBroadcastIterator(da, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
@@ -27354,7 +27692,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -27399,7 +27737,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -27466,9 +27804,15 @@ public class Maths {
 	 * @return dataset
 	 */
 	public static Dataset expm1(final Object a, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			if (da.isComplex()) {
+				da = da.getRealView();
+				it = new SingleInputBroadcastIterator(da, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
@@ -27944,7 +28288,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -27989,7 +28333,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -28056,9 +28400,15 @@ public class Maths {
 	 * @return dataset
 	 */
 	public static Dataset sqrt(final Object a, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			if (da.isComplex()) {
+				da = da.getRealView();
+				it = new SingleInputBroadcastIterator(da, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
@@ -28534,7 +28884,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -28579,7 +28929,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -28646,9 +28996,15 @@ public class Maths {
 	 * @return dataset
 	 */
 	public static Dataset cbrt(final Object a, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			if (da.isComplex()) {
+				da = da.getRealView();
+				it = new SingleInputBroadcastIterator(da, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
@@ -29124,7 +29480,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -29169,7 +29525,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -29236,9 +29592,15 @@ public class Maths {
 	 * @return dataset
 	 */
 	public static Dataset square(final Object a, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			if (da.isComplex()) {
+				da = da.getRealView();
+				it = new SingleInputBroadcastIterator(da, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
@@ -29714,7 +30076,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -29753,7 +30115,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -29814,9 +30176,15 @@ public class Maths {
 	 * @return dataset
 	 */
 	public static Dataset floor(final Object a, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			if (da.isComplex()) {
+				da = da.getRealView();
+				it = new SingleInputBroadcastIterator(da, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
@@ -30292,7 +30660,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -30331,7 +30699,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -30392,9 +30760,15 @@ public class Maths {
 	 * @return dataset
 	 */
 	public static Dataset ceil(final Object a, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			if (da.isComplex()) {
+				da = da.getRealView();
+				it = new SingleInputBroadcastIterator(da, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
@@ -30870,7 +31244,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -30909,7 +31283,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -30970,9 +31344,15 @@ public class Maths {
 	 * @return dataset
 	 */
 	public static Dataset rint(final Object a, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			if (da.isComplex()) {
+				da = da.getRealView();
+				it = new SingleInputBroadcastIterator(da, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
@@ -31448,7 +31828,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -31487,7 +31867,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -31548,9 +31928,15 @@ public class Maths {
 	 * @return dataset
 	 */
 	public static Dataset truncate(final Object a, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			if (da.isComplex()) {
+				da = da.getRealView();
+				it = new SingleInputBroadcastIterator(da, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
@@ -32026,7 +32412,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -32065,7 +32451,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -32126,9 +32512,15 @@ public class Maths {
 	 * @return dataset
 	 */
 	public static Dataset toDegrees(final Object a, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			if (da.isComplex()) {
+				da = da.getRealView();
+				it = new SingleInputBroadcastIterator(da, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
@@ -32604,7 +32996,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -32643,7 +33035,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -32704,9 +33096,15 @@ public class Maths {
 	 * @return dataset
 	 */
 	public static Dataset toRadians(final Object a, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			if (da.isComplex()) {
+				da = da.getRealView();
+				it = new SingleInputBroadcastIterator(da, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
@@ -33182,7 +33580,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -33221,7 +33619,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -33282,9 +33680,15 @@ public class Maths {
 	 * @return dataset
 	 */
 	public static Dataset signum(final Object a, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			if (da.isComplex()) {
+				da = da.getRealView();
+				it = new SingleInputBroadcastIterator(da, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
@@ -33760,7 +34164,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -33799,7 +34203,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -33860,9 +34264,15 @@ public class Maths {
 	 * @return dataset
 	 */
 	public static Dataset negative(final Object a, final Dataset o) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			if (da.isComplex()) {
+				da = da.getRealView();
+				it = new SingleInputBroadcastIterator(da, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
@@ -34338,7 +34748,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX64:
 			final float[] oc64data = ((ComplexFloatDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -34377,7 +34787,7 @@ public class Maths {
 			break;
 		case Dataset.COMPLEX128:
 			final double[] oc128data = ((ComplexDoubleDataset) result).getData();
-			if (as == 1) {
+			if (!da.isComplex()) {
 				if (it.isOutputDouble()) {
 					final double iy = 0;
 					while (it.hasNext()) {
@@ -34442,9 +34852,15 @@ public class Maths {
 	 * @return dataset
 	 */
 	public static Dataset clip(final Object a, final Dataset o, final Object pa, final Object pb) {
-		final Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
-		final SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
+		Dataset da = a instanceof Dataset ? (Dataset) a : DatasetFactory.createFromObject(a);
+		SingleInputBroadcastIterator it = new SingleInputBroadcastIterator(da, o, true);
 		final Dataset result = it.getOutput();
+		if (!result.isComplex()) {
+			if (da.isComplex()) {
+				da = da.getRealView();
+				it = new SingleInputBroadcastIterator(da, result, true);
+			}
+		}
 		final int is = result.getElementsPerItem();
 		final int as = da.getElementsPerItem();
 		final int dt = result.getDType();
