@@ -38,6 +38,12 @@
         <filter id="338755678">
             <message_arguments>
                 <message_argument value="org.eclipse.january.dataset.LazyDataset"/>
+                <message_argument value="dtype"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.LazyDataset"/>
                 <message_argument value="postShape"/>
             </message_arguments>
         </filter>

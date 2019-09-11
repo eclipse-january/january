@@ -170,6 +170,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	/**
 	 * @return dataset interface that supports element class and number of elements
+	 * @since 2.3
 	 */
 	public Class<? extends Dataset> getInterface() {
 		return clazz;
