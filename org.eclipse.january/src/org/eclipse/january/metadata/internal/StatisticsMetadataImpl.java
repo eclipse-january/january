@@ -107,7 +107,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 		this.dataset = dataset.getView(false);
 		this.dataset.clearMetadata(null);
 		isFloat = dataset.hasFloatingPointElements();
-		clazz = dataset.getClass();
+		clazz = InterfaceUtils.getLargestInterface(dataset);
 		isize = dataset.getElementsPerItem();
 		mms = new MaxMin[COMBOS];
 		summaries = new SummaryStatistics[COMBOS][];

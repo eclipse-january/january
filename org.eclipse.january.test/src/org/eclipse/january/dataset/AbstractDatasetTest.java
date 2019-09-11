@@ -1585,7 +1585,7 @@ public class AbstractDatasetTest {
 	@Test
 	public void testSum() {
 		Dataset a = DatasetFactory.createRange(IntegerDataset.class, 1024*1024);
-		assertEquals("Sum", -524288, a.sum());
+		assertEquals("Sum", -524288, a.sum()); // 549755289600
 
 		a = a.cast(DoubleDataset.class);
 		assertEquals("Sum", 1024*512*(1024.*1024 - 1), ((Number) a.sum()).doubleValue(), 1e-6);
