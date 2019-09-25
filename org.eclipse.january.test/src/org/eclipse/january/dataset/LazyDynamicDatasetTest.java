@@ -12,11 +12,6 @@ package org.eclipse.january.dataset;
 import java.util.Arrays;
 
 import org.eclipse.january.asserts.TestUtils;
-import org.eclipse.january.dataset.DataEvent;
-import org.eclipse.january.dataset.Dataset;
-import org.eclipse.january.dataset.IDataListener;
-import org.eclipse.january.dataset.IDynamicDataset;
-import org.eclipse.january.dataset.LazyDynamicDataset;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -33,7 +28,7 @@ public class LazyDynamicDatasetTest {
 	}
 
 	IDynamicDataset createDynamic() {
-		IDynamicDataset lazy = new LazyDynamicDataset("test", Dataset.INT32, 1, new int[] {0,4}, new int[] {IDynamicDataset.UNLIMITED, 4}, null);
+		IDynamicDataset lazy = new LazyDynamicDataset(null, "test", 1, IntegerDataset.class, new int[] {0,4}, new int[] {IDynamicDataset.UNLIMITED, 4});
 		return lazy;
 	}
 

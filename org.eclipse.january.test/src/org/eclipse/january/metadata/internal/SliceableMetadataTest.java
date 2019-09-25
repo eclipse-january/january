@@ -24,6 +24,7 @@ import org.eclipse.january.dataset.Dataset;
 import org.eclipse.january.dataset.DoubleDataset;
 import org.eclipse.january.dataset.IDataset;
 import org.eclipse.january.dataset.ILazyDataset;
+import org.eclipse.january.dataset.IntegerDataset;
 import org.eclipse.january.dataset.Random;
 import org.eclipse.january.dataset.ShortDataset;
 import org.eclipse.january.dataset.Slice;
@@ -35,7 +36,7 @@ public class SliceableMetadataTest {
 	@Test
 	public void testSlicingMetadata() {
 		final int[] shape = new int[] {1, 2, 3, 4};
-		ILazyDataset ld = Random.lazyRand(Dataset.INT32, "Metadata1", shape);
+		ILazyDataset ld = Random.lazyRand("Metadata1", IntegerDataset.class, shape);
 
 		final DoubleDataset[] dda = new DoubleDataset[] {Random.randn(shape), Random.randn(shape),};
 
@@ -53,7 +54,7 @@ public class SliceableMetadataTest {
 		
 		SliceableTestMetadata md = new SliceableTestMetadata(ld, dda, sdl, bdm, l2);
 
-		ILazyDataset dataset = Random.lazyRand(Dataset.INT32, "Main", shape);
+		ILazyDataset dataset = Random.lazyRand("Main", IntegerDataset.class, shape);
 		dataset.addMetadata(md);
 
 		try {
@@ -156,10 +157,10 @@ public class SliceableMetadataTest {
 		
 		final int[] bshape = new int[] {1, 5, 1};
 		final int[] shape = new int[] {4, 5, 6};
-		ILazyDataset ld = Random.lazyRand(Dataset.INT32, "Metadata1", bshape);
+		ILazyDataset ld = Random.lazyRand("Metadata1", IntegerDataset.class, bshape);
 		SliceableTestMetadata md = new SliceableTestMetadata(ld, null, null, null, null);
 
-		ILazyDataset dataset = Random.lazyRand(Dataset.INT32, "Main", shape);
+		ILazyDataset dataset = Random.lazyRand("Main", IntegerDataset.class, shape);
 		dataset.addMetadata(md);
 		
 		try {
@@ -178,10 +179,10 @@ public class SliceableMetadataTest {
 	@Test
 	public void testSlicingSqueezedMetadata() throws DatasetException {
 		final int[] shape = new int[] {1, 1, 128};
-		ILazyDataset ld = Random.lazyRand(Dataset.INT32, "Metadata1", shape);
+		ILazyDataset ld = Random.lazyRand("Metadata1", IntegerDataset.class, shape);
 		SliceableTestMetadata md = new SliceableTestMetadata(ld, null, null, null, null);
 
-		ILazyDataset dataset = Random.lazyRand(Dataset.INT32, "Main", shape);
+		ILazyDataset dataset = Random.lazyRand("Main", IntegerDataset.class, shape);
 		dataset.addMetadata(md);
 
 		Slice[] slice = new Slice[] {null, null, new Slice(64)};
@@ -231,7 +232,7 @@ public class SliceableMetadataTest {
 		final int[] result2 = new int[] {1, 1, 3, 1};
 		
 		final int[] shape = new int[] {1, 2, 3, 4};
-		ILazyDataset ld = Random.lazyRand(Dataset.INT32, "Metadata1", shape);
+		ILazyDataset ld = Random.lazyRand("Metadata1", IntegerDataset.class, shape);
 
 		final int [] partial1 = new int[] {1, 1, 1, 4};
 		final DoubleDataset[] dda = new DoubleDataset[] {Random.randn(partial1), Random.randn(partial1),};
@@ -252,7 +253,7 @@ public class SliceableMetadataTest {
 		
 		SliceableTestMetadata md = new SliceableTestMetadata(ld, dda, sdl, bdm, l2);
 
-		ILazyDataset dataset = Random.lazyRand(Dataset.INT32, "Main", shape);
+		ILazyDataset dataset = Random.lazyRand("Main", IntegerDataset.class, shape);
 		dataset.addMetadata(md);
 		
 		try {
@@ -326,7 +327,7 @@ public class SliceableMetadataTest {
 		final int[] result2 = new int[] {1, 1, 3, 2};
 		
 		final int[] shape = new int[] {1, 2, 3, 4};
-		ILazyDataset ld = Random.lazyRand(Dataset.INT32, "Metadata1", shape);
+		ILazyDataset ld = Random.lazyRand("Metadata1", IntegerDataset.class, shape);
 
 		final int [] partial1 = new int[] {1, 1, 1, 4};
 		final DoubleDataset[] dda = new DoubleDataset[] {Random.randn(partial1), Random.randn(partial1),};
@@ -347,7 +348,7 @@ public class SliceableMetadataTest {
 
 		SliceableTestMetadata md = new SliceableTestMetadata(ld, dda, sdl, bdm, l2);
 
-		ILazyDataset dataset = Random.lazyRand(Dataset.INT32, "Main", shape);
+		ILazyDataset dataset = Random.lazyRand("Main", IntegerDataset.class, shape);
 		dataset.addMetadata(md);
 		
 		try {
@@ -393,7 +394,7 @@ public class SliceableMetadataTest {
 	public void testSlicingSameRankDifferentShapeSqueezeMetadata() {
 		
 		final int[] shape = new int[] {1, 2, 3, 4};
-		ILazyDataset ld = Random.lazyRand(Dataset.INT32, "Metadata1", shape);
+		ILazyDataset ld = Random.lazyRand("Metadata1", IntegerDataset.class, shape);
 
 		final int [] partial1 = new int[] {1, 1, 1, 4};
 		final DoubleDataset[] dda = new DoubleDataset[] {Random.randn(partial1), Random.randn(partial1),};
@@ -414,7 +415,7 @@ public class SliceableMetadataTest {
 		
 		SliceableTestMetadata md = new SliceableTestMetadata(ld, dda, sdl, bdm, l2);
 
-		ILazyDataset dataset = Random.lazyRand(Dataset.INT32, "Main", shape);
+		ILazyDataset dataset = Random.lazyRand("Main", IntegerDataset.class, shape);
 		dataset.addMetadata(md);
 		
 		try {

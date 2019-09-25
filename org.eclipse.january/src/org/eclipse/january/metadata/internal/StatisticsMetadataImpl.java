@@ -55,7 +55,6 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 	private MaxMin<T>[] mms;
 	private SummaryStatistics[][] summaries;
 
-	
 	@Dirtiable
 	private boolean isDirty = true;
 

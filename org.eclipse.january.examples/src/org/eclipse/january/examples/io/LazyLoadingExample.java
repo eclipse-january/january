@@ -27,6 +27,7 @@ import org.eclipse.january.dataset.DatasetFactory;
 import org.eclipse.january.dataset.DatasetUtils;
 import org.eclipse.january.dataset.IDataset;
 import org.eclipse.january.dataset.ILazyDataset;
+import org.eclipse.january.dataset.IntegerDataset;
 import org.eclipse.january.dataset.LazyDataset;
 import org.eclipse.january.dataset.Slice;
 import org.eclipse.january.dataset.SliceND;
@@ -73,7 +74,7 @@ public class LazyLoadingExample {
 					return tmp.getSliceView(slice);
 				}
 			};
-			LazyDataset lazy = new LazyDataset(file.getName(), Dataset.INT32, shape, loader);
+			LazyDataset lazy = new LazyDataset(loader, file.getName(), IntegerDataset.class, shape);
 			return lazy;
 		} catch (IOException e) {
 			e.printStackTrace();

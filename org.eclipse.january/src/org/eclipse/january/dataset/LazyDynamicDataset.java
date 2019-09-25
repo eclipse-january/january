@@ -45,8 +45,49 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 
 	private Thread checkingThread;
 
+	/**
+	 * Create a dynamic lazy dataset
+	 * @param name
+	 * @param dtype
+	 * @param elements
+	 * @param shape
+	 * @param maxShape
+	 * @param loader
+	 * @deprecated Use {@link #LazyDynamicDataset(ILazyLoader, String, int, Class, int[], int[])}
+	 */
+	@Deprecated
 	public LazyDynamicDataset(String name, int dtype, int elements, int[] shape, int[] maxShape, ILazyLoader loader) {
-		super(name, dtype, elements, shape, loader);
+		this(name, elements, DTypeUtils.getInterface(dtype), shape, maxShape, loader);
+	}
+
+	/**
+	 * Create a dynamic lazy dataset
+	 * @param name
+	 * @param elements
+	 * @param clazz
+	 * @param shape
+	 * @param maxShape
+	 * @param loader
+	 * @since 2.3
+	 * @deprecated Use {@link #LazyDynamicDataset(ILazyLoader, String, int, Class, int[], int[])}
+	 */
+	@Deprecated
+	public LazyDynamicDataset(String name, int elements, Class<? extends Dataset> clazz, int[] shape, int[] maxShape, ILazyLoader loader) {
+		this(loader, name, elements, clazz, shape, maxShape);
+	}
+
+	/**
+	 * Create a dynamic lazy dataset
+	 * @param loader
+	 * @param name
+	 * @param elements
+	 * @param clazz
+	 * @param shape
+	 * @param maxShape
+	 * @since 2.3
+	 */
+	public LazyDynamicDataset(ILazyLoader loader, String name, int elements, Class<? extends Dataset> clazz, int[] shape, int[] maxShape) {
+		super(loader, name, elements, clazz, shape);
 		if (maxShape == null) {
 			this.maxShape = shape.clone();
 			// check there are no unlimited dimensions in shape
