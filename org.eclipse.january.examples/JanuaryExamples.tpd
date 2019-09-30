@@ -7,11 +7,11 @@ target "JanuaryExamples" with source requirements
 // This set of examples is for the latest master branch build of January.
 // The examples are available for the released version of January on the
 // respective release branches (e.g. january_1_0 for the 1.0 release)
-location "http://download.eclipse.org/january/releasecandidates/2.3RC1/repository" january-2.3RC1 {
+location "https://download.eclipse.org/january/releases/2.3/repository" january-2.3 {
 	org.eclipse.january lazy
 }
 
-location "http://download.eclipse.org/tools/orbit/downloads/drops/R20180606145124/repository" eclipse-orbit-photon {
+location "https://download.eclipse.org/tools/orbit/downloads/drops/R20180606145124/repository" eclipse-orbit-photon {
 // Core requirements
 	javax.measure.unit-api [1.0.0]
 	org.apache.commons.math3 [3.5.0,3.5.1)
