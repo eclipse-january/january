@@ -476,6 +476,30 @@ public class InterfaceUtils {
 	 * Convert double to number
 	 * @param clazz dataset interface
 	 * @param x
+	 * @return number if integer. Return null if not interface is not numerical
+	 * @since 2.3
+	 */
+	public static Number fromDoubleToNumber(Class<? extends Dataset> clazz, double x) {
+		if (BooleanDataset.class.isAssignableFrom(clazz) || ByteDataset.class.isAssignableFrom(clazz)) {
+			return Byte.valueOf((byte) (long) x);
+		} else if (ShortDataset.class.isAssignableFrom(clazz)) {
+			return Short.valueOf((short) (long) x);
+		} else if (IntegerDataset.class.isAssignableFrom(clazz)) {
+			return Integer.valueOf((int) (long) x);
+		} else if (LongDataset.class.isAssignableFrom(clazz)) {
+			return Long.valueOf((long) x);
+		} else if (FloatDataset.class.isAssignableFrom(clazz)) {
+			return Float.valueOf((float) x);
+		} else if (DoubleDataset.class.isAssignableFrom(clazz)) {
+			return Double.valueOf(x);
+		}
+		return null;
+	}
+
+	/**
+	 * Convert double to number
+	 * @param clazz dataset interface
+	 * @param x
 	 * @return biggest number if integer. Return null if not interface is not numerical
 	 */
 	public static Number fromDoubleToBiggestNumber(Class<? extends Dataset> clazz, double x) {

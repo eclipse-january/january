@@ -152,6 +152,13 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 		return idx;
 	}
 
+	private Number toNumber(double x) {
+		if (dataset != null) {
+			return InterfaceUtils.fromDoubleToNumber(dataset.getClass(), x);
+		}
+		return Double.valueOf(x);
+	}
+
 	/**
 	 * Calculate summary statistics for a dataset
 	 * @param mm
@@ -242,8 +249,8 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 				}
 			}
 
-			mm.maximum = (T) (hasNaNs ? Double.NaN : InterfaceUtils.fromDoubleToBiggestNumber(clazz, amax));
-			mm.minimum = (T) (hasNaNs ? Double.NaN : InterfaceUtils.fromDoubleToBiggestNumber(clazz, amin));
+			mm.maximum = (T) (hasNaNs ? Double.NaN : toNumber(amax));
+			mm.minimum = (T) (hasNaNs ? Double.NaN : toNumber(amin));
 			mm.sum     = (T) (hasNaNs ? Double.NaN : InterfaceUtils.fromDoubleToBiggestNumber(clazz, asum));
 		} else {
 			while (iter.hasNext()) {
@@ -313,8 +320,8 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 				}
 			}
 
-			mm.maximum = (T) (hasNaNs ? Double.NaN : InterfaceUtils.fromDoubleToBiggestNumber(clazz, stats.getMax()));
-			mm.minimum = (T) (hasNaNs ? Double.NaN : InterfaceUtils.fromDoubleToBiggestNumber(clazz, stats.getMin()));
+			mm.maximum = (T) (hasNaNs ? Double.NaN : toNumber(stats.getMax()));
+			mm.minimum = (T) (hasNaNs ? Double.NaN : toNumber(stats.getMin()));
 			mm.sum     = (T) (hasNaNs ? Double.NaN : InterfaceUtils.fromDoubleToBiggestNumber(clazz, stats.getSum()));
 		} else {
 			double[] vals = new double[isize];

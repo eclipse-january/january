@@ -232,7 +232,7 @@ public class DoubleDatasetTest {
 	@Test
 	public void testStats() {
 		Dataset a = DatasetFactory.createRange(12);
-		assertEquals(11., a.max().doubleValue(), 1e-6);
+		assertEquals(Double.valueOf(11), a.max());
 		assertEquals(0., a.min().doubleValue(), 1e-6);
 		assertEquals(5.5, ((Number) a.mean()).doubleValue(), 1e-6);
 		assertEquals(3.6055512754639891, a.stdDeviation(), 1e-6);
