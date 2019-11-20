@@ -12,7 +12,6 @@
 
 package org.eclipse.january.dataset;
 
-import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
@@ -190,9 +189,6 @@ public class DatasetFactory {
 				d.setShape(shape);
 			}
 			return d;
-		}
-		if (obj instanceof BigInteger) {
-			obj = ((BigInteger) obj).longValue();
 		}
 
 		final int dtype = DTypeUtils.getDTypeFromObject(obj);
