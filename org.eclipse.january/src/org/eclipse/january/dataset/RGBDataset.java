@@ -184,8 +184,8 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 
 		for (int i = 0; riter.hasNext() && giter.hasNext() && biter.hasNext();) {
 			data[i++] = (short) red.getElementLongAbs(riter.index);
-			data[i++] = (short) green.getElementLongAbs(riter.index);
-			data[i++] = (short) blue.getElementLongAbs(riter.index);
+			data[i++] = (short) green.getElementLongAbs(giter.index);
+			data[i++] = (short) blue.getElementLongAbs(biter.index);
 		}
 	}
 
