@@ -10,6 +10,7 @@
 # *    Peter Chang - initial API and implementation and/or initial documentation
 # *******************************************************************************/
 ###
+from __builtin__ import True
 
 #!/usr/bin/env python
 '''
@@ -56,6 +57,8 @@ arguments are treated as signed or unsigned integers - they are "s" by
 default. When "u" is specified, a (long) "unsignedMask" is defined
 that will be available for use.
 
+A 'complex_b_real;' marker can be appended to the 'complex' case to
+handle the special case of the second operand being real
 '''
 
 #
@@ -262,14 +265,14 @@ def sameloop(codedict, cprefix, vletter, text, use_long=False, override_long=Fal
         loop(text, otype, ovar, is_int, override_long)
         postloop()
 
-def complexloop(codedict, cprefix, vletter, text, real):
+def complexloop(codedict, cprefix, vletter, text, text_b_real, real):
     is_int = cprefix.endswith("INT")
     for w in codedict.keys():
         dtype = "%s%d" % (cprefix, w)
         ovar = "o%s%ddata" % (vletter,w)
         otype, oclass, owide = codedict[w]
         preloop(dtype, otype, oclass, ovar, is_int)
-        loopcomplex(text, otype, ovar, real, is_int)
+        loopcomplex(text, text_b_real, otype, ovar, real, is_int)
         postloop()
 
 def compoundloop(codedict, cprefix, vletter, text, use_long=False, override_long=False, unsigned=False):
@@ -392,7 +395,7 @@ def loop(text, jtype, ovar, is_int, override_long):
     print("\t\t\t\t}")
     print("\t\t\t}")
 
-def loopcomplex(text, jtype, ovar, real, is_int):
+def loopcomplex(text, text_b_real, jtype, ovar, real, is_int):
     print("\t\t\tif (!da.isComplex()) {")
     print("\t\t\t\tif (it.isOutputDouble()) {")
     if is_binaryop:
@@ -411,8 +414,11 @@ def loopcomplex(text, jtype, ovar, real, is_int):
         print("\t\t\t\t\t\twhile (it.hasNext()) {")
         print("\t\t\t\t\t\t\tfinal double iax = it.aDouble;")
         print("\t\t\t\t\t\t\tfinal double ibx = it.bDouble;")
-        print("\t\t\t\t\t\t\tfinal double iby = 0;")
-        transtext(text, jtype, lprefix="\t\t\t\t\t\t\t", is_int=is_int)
+        if text_b_real:
+            transtext(text_b_real, jtype, lprefix="\t\t\t\t\t\t\t", is_int=is_int)
+        else:
+            print("\t\t\t\t\t\t\tfinal double iby = 0;")
+            transtext(text, jtype, lprefix="\t\t\t\t\t\t\t", is_int=is_int)
         print("\t\t\t\t\t\t\t%s[it.oIndex] = ox;" % ovar)
         if not real:
             print("\t\t\t\t\t\t\t%s[it.oIndex + 1] = oy;" % ovar)
@@ -438,10 +444,14 @@ def loopcomplex(text, jtype, ovar, real, is_int):
     if is_binaryop:
         print("\t\t\t\t\t\tfinal long iax = it.aLong;")
         print("\t\t\t\t\t\tfinal long ibx = it.bLong;")
-        print("\t\t\t\t\t\tfinal long iby = 0;")
+        if not text_b_real:
+            print("\t\t\t\t\t\tfinal long iby = 0;")
     else:
         print("\t\t\t\t\t\tfinal long ix = it.aLong;")
-    transtext(text, jtype, lprefix="\t\t\t\t\t\t", is_int=True, use_long=True)
+    if is_binaryop and text_b_real:
+        transtext(text_b_real, jtype, lprefix="\t\t\t\t\t\t", is_int=True, use_long=True)
+    else:
+        transtext(text, jtype, lprefix="\t\t\t\t\t\t", is_int=True, use_long=True)
     print("\t\t\t\t\t\t%s[it.oIndex] = ox;" % ovar)
     if not real:
         print("\t\t\t\t\t\t%s[it.oIndex + 1] = oy;" % ovar)
@@ -449,12 +459,16 @@ def loopcomplex(text, jtype, ovar, real, is_int):
     print("\t\t\t\t}")
     if is_binaryop:
         print("\t\t\t} else if (!db.isComplex()) {")
-        print("\t\t\t\tfinal double iby = 0;")
+        if not text_b_real:
+            print("\t\t\t\tfinal double iby = 0;")
         print("\t\t\t\twhile (it.hasNext()) {")
         print("\t\t\t\t\tfinal double iax = it.aDouble;")
         print("\t\t\t\t\tfinal double ibx = it.bDouble;")
         print("\t\t\t\t\tfinal double iay = da.getElementDoubleAbs(it.aIndex + 1);")
-        transtext(text, jtype, lprefix="\t\t\t\t\t", is_int=is_int)
+        if text_b_real:
+            transtext(text_b_real, jtype, lprefix="\t\t\t\t\t", is_int=is_int)
+        else:
+            transtext(text, jtype, lprefix="\t\t\t\t\t", is_int=is_int)
         print("\t\t\t\t\t%s[it.oIndex] = ox;" % ovar)
         if not real:
             print("\t\t\t\t\t%s[it.oIndex + 1] = oy;" % ovar)
@@ -828,6 +842,20 @@ def rcode(cargo):
     types.append("compound real")
     return cases, (f, last, name, jdoc, types)
 
+def parse_b_real(text):
+    new_text = []
+    text_b_real = []
+    has_b_real = False
+    for t in text:
+        if t.startswith('complex_b_real;'):
+            has_b_real = True
+        elif has_b_real:
+            text_b_real.append(t)
+        else:
+            new_text.append(t)
+            
+    return new_text, text_b_real
+
 def ccode(cargo):
     f, all, name, jdoc, types = cargo
     text, last = getcode(f)
@@ -837,8 +865,10 @@ def ccode(cargo):
         real = True
     else:
         real = False
+
+    text, text_b_real = parse_b_real(text)
     complexloop({ 64: ("float", "ComplexFloatDataset", "32"), 128 : ("double", "ComplexDoubleDataset", "64") },
-                "COMPLEX", "c", text, real)
+                "COMPLEX", "c", text, text_b_real, real)
     types.append("complex")
     return cases, (f, last, name, jdoc, types)
 
