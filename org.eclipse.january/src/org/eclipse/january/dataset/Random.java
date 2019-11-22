@@ -188,7 +188,7 @@ public class Random {
 	 * @return a lazy dataset with uniformly distributed random numbers
 	 */
 	public static ILazyDataset lazyRand(int... shape) {
-		return lazyRand(Dataset.FLOAT64, "random", shape);
+		return lazyRand("random", DoubleDataset.class, shape);
 	}
 
 	/**
@@ -197,7 +197,7 @@ public class Random {
 	 * @return a lazy dataset with uniformly distributed random numbers
 	 */
 	public static ILazyDataset lazyRand(String name, int... shape) {
-		return lazyRand(Dataset.FLOAT64, name, shape);
+		return lazyRand(name, DoubleDataset.class, shape);
 	}
 
 	/**
@@ -205,10 +205,23 @@ public class Random {
 	 * @param name
 	 * @param shape
 	 * @return a lazy dataset with uniformly distributed random numbers
+	 * @deprecated Use {@link #lazyRand(String, Class, int...)}
 	 */
+	@Deprecated
 	public static ILazyDataset lazyRand(int dtype, String name, int... shape) {
+		return lazyRand(name, DTypeUtils.getInterface(dtype), shape);
+	}
+
+	/**
+	 * @param name
+	 * @param clazz dataset interface
+	 * @param shape
+	 * @return a lazy dataset with uniformly distributed random numbers
+	 * @since 2.3
+	 */
+	public static ILazyDataset lazyRand(String name, final Class<? extends Dataset> clazz, int... shape) {
 		
-		return new LazyDataset(name, dtype, shape, new ILazyLoader() {
+		return new LazyDataset(new ILazyLoader() {
 			private static final long serialVersionUID = ILazyLoader.serialVersionUID;
 
 			@Override
@@ -218,8 +231,9 @@ public class Random {
 
 			@Override
 			public IDataset getDataset(IMonitor mon, SliceND slice) throws IOException {
-				return rand(slice.getShape());
+				return rand(slice.getShape()).cast(clazz);
 			}
-		});
+		},
+		name, clazz, shape);
 	}
 }

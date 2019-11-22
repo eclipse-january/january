@@ -110,8 +110,7 @@ public class LazyDynamicLoaderTest {
 	private LazyDynamicDataset getDataset(IDataset data, int detectorRank, String name) {
 		
 		int[] shape = determineInitialShape(data.getShape(), detectorRank);
-		return new LazyDynamicDataset(name, Dataset.FLOAT64, 1, shape, data.getShape(), new LazyDynamicTestLoader(data, detectorRank));
-		
+		return new LazyDynamicDataset(new LazyDynamicTestLoader(data, detectorRank), name, 1, DoubleDataset.class, shape, data.getShape());
 	}
 	
 	private static int[] determineInitialShape(int[] maxShape, int detectorRank) {
