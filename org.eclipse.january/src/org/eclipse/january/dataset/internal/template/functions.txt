@@ -45,7 +45,7 @@ complex:
   	q = ibx / iby;
   	den = ibx * q + iby;
   	ox = (iax * q + iay) / den;
-  	oy = (iay * q - ibx) / den;
+  	oy = (iay * q - iax) / den;
   } else {
   	q = iby / ibx;
   	den = iby * q + ibx;
@@ -70,7 +70,7 @@ complex:
   	q = ibx / iby;
   	den = ibx * q + iby;
   	ox = (iax * q + iay) / den;
-  	oy = (iay * q - ibx) / den;
+  	oy = (iay * q - iax) / den;
   } else {
   	q = iby / ibx;
   	den = iby * q + ibx;
@@ -110,7 +110,7 @@ complex:
   	q = ibx / iby;
   	den = ibx * q + iby;
   	ox = (iax * q + iay) / den;
-  	oy = (iay * q - ibx) / den;
+  	oy = (iay * q - iax) / den;
   } else {
   	q = iby / ibx;
   	den = iby * q + ibx;

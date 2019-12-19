@@ -7433,7 +7433,7 @@ public class Maths {
 								q = (float) (ibx / iby);
 								den = (float) (ibx * q + iby);
 								ox = (float) ((iax * q + iay) / den);
-								oy = (float) ((iay * q - ibx) / den);
+								oy = (float) ((iay * q - iax) / den);
 							} else {
 								q = (float) (iby / ibx);
 								den = (float) (iby * q + ibx);
@@ -7500,7 +7500,7 @@ public class Maths {
 						q = (float) (ibx / iby);
 						den = (float) (ibx * q + iby);
 						ox = (float) ((iax * q + iay) / den);
-						oy = (float) ((iay * q - ibx) / den);
+						oy = (float) ((iay * q - iax) / den);
 					} else {
 						q = (float) (iby / ibx);
 						den = (float) (iby * q + ibx);
@@ -7536,7 +7536,7 @@ public class Maths {
 								q = (ibx / iby);
 								den = (ibx * q + iby);
 								ox = ((iax * q + iay) / den);
-								oy = ((iay * q - ibx) / den);
+								oy = ((iay * q - iax) / den);
 							} else {
 								q = (iby / ibx);
 								den = (iby * q + ibx);
@@ -7603,7 +7603,7 @@ public class Maths {
 						q = (ibx / iby);
 						den = (ibx * q + iby);
 						ox = ((iax * q + iay) / den);
-						oy = ((iay * q - ibx) / den);
+						oy = ((iay * q - iax) / den);
 					} else {
 						q = (iby / ibx);
 						den = (iby * q + ibx);
@@ -8586,7 +8586,7 @@ public class Maths {
 								q = (float) (ibx / iby);
 								den = (float) (ibx * q + iby);
 								ox = (float) ((iax * q + iay) / den);
-								oy = (float) ((iay * q - ibx) / den);
+								oy = (float) ((iay * q - iax) / den);
 							} else {
 								q = (float) (iby / ibx);
 								den = (float) (iby * q + ibx);
@@ -8665,7 +8665,7 @@ public class Maths {
 						q = (float) (ibx / iby);
 						den = (float) (ibx * q + iby);
 						ox = (float) ((iax * q + iay) / den);
-						oy = (float) ((iay * q - ibx) / den);
+						oy = (float) ((iay * q - iax) / den);
 					} else {
 						q = (float) (iby / ibx);
 						den = (float) (iby * q + ibx);
@@ -8698,7 +8698,7 @@ public class Maths {
 								q = (ibx / iby);
 								den = (ibx * q + iby);
 								ox = ((iax * q + iay) / den);
-								oy = ((iay * q - ibx) / den);
+								oy = ((iay * q - iax) / den);
 							} else {
 								q = (iby / ibx);
 								den = (iby * q + ibx);
@@ -8777,7 +8777,7 @@ public class Maths {
 						q = (ibx / iby);
 						den = (ibx * q + iby);
 						ox = ((iax * q + iay) / den);
-						oy = ((iay * q - ibx) / den);
+						oy = ((iay * q - iax) / den);
 					} else {
 						q = (iby / ibx);
 						den = (iby * q + ibx);
@@ -10267,7 +10267,7 @@ public class Maths {
 								q = (float) (ibx / iby);
 								den = (float) (ibx * q + iby);
 								ox = (float) ((iax * q + iay) / den);
-								oy = (float) ((iay * q - ibx) / den);
+								oy = (float) ((iay * q - iax) / den);
 							} else {
 								q = (float) (iby / ibx);
 								den = (float) (iby * q + ibx);
@@ -10334,7 +10334,7 @@ public class Maths {
 						q = (float) (ibx / iby);
 						den = (float) (ibx * q + iby);
 						ox = (float) ((iax * q + iay) / den);
-						oy = (float) ((iay * q - ibx) / den);
+						oy = (float) ((iay * q - iax) / den);
 					} else {
 						q = (float) (iby / ibx);
 						den = (float) (iby * q + ibx);
@@ -10370,7 +10370,7 @@ public class Maths {
 								q = (ibx / iby);
 								den = (ibx * q + iby);
 								ox = ((iax * q + iay) / den);
-								oy = ((iay * q - ibx) / den);
+								oy = ((iay * q - iax) / den);
 							} else {
 								q = (iby / ibx);
 								den = (iby * q + ibx);
@@ -10437,7 +10437,7 @@ public class Maths {
 						q = (ibx / iby);
 						den = (ibx * q + iby);
 						ox = ((iax * q + iay) / den);
-						oy = ((iay * q - ibx) / den);
+						oy = ((iay * q - iax) / den);
 					} else {
 						q = (iby / ibx);
 						den = (iby * q + ibx);
