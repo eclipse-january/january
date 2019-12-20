@@ -166,6 +166,15 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 	 */
 	@SuppressWarnings("unchecked")
 	private void setMaxMinSum(final MaxMin<T> mm, final boolean ignoreNaNs, final boolean ignoreInfs) {
+		if (dataset.getSize() == 0) {
+			mm.maximum = null;
+			mm.minimum = null;
+			mm.sum = (T) (isize == 1 ? InterfaceUtils.fromDoubleToBiggestNumber(clazz, 0) : null);
+			mm.maximumPositions = null;
+			mm.minimumPositions = null;
+			return;
+		}
+
 		final IndexIterator iter = dataset.getIterator();
 
 		if (!InterfaceUtils.isNumerical(clazz)) { // TODO FIXME for strings
@@ -431,7 +440,11 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 	@Override
 	public T getMaximum(boolean... ignoreInvalids) {
 		int idx = refresh(isize == 1, ignoreInvalids);
-		return mms[idx].maximum;
+		T t = mms[idx].maximum;
+		if (t == null) {
+			throw new UnsupportedOperationException("Cannot operate on zero-sized dataset");
+		}
+		return t;
 	}
 
 	@Override
@@ -465,7 +478,11 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 	@Override
 	public T getMinimum(boolean... ignoreInvalids) {
 		int idx = refresh(isize == 1, ignoreInvalids);
-		return mms[idx].minimum;
+		T t = mms[idx].minimum;
+		if (t == null) {
+			throw new UnsupportedOperationException("Cannot operate on zero-sized dataset");
+		}
+		return t;
 	}
 
 	@Override
