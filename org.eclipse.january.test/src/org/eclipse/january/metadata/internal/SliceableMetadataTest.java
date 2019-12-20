@@ -20,7 +20,6 @@ import java.util.Map;
 
 import org.eclipse.january.DatasetException;
 import org.eclipse.january.dataset.BooleanDataset;
-import org.eclipse.january.dataset.Dataset;
 import org.eclipse.january.dataset.DoubleDataset;
 import org.eclipse.january.dataset.IDataset;
 import org.eclipse.january.dataset.ILazyDataset;
@@ -41,17 +40,17 @@ public class SliceableMetadataTest {
 		final DoubleDataset[] dda = new DoubleDataset[] {Random.randn(shape), Random.randn(shape),};
 
 		List<ShortDataset> sdl = new ArrayList<>();
-		sdl.add((ShortDataset) Random.randn(shape).cast(Dataset.INT16));
-		sdl.add((ShortDataset) Random.randn(shape).cast(Dataset.INT16));
+		sdl.add(Random.randn(shape).cast(ShortDataset.class));
+		sdl.add(Random.randn(shape).cast(ShortDataset.class));
 
 		Map<String, BooleanDataset> bdm = new HashMap<String, BooleanDataset>();
-		bdm.put("1", (BooleanDataset) Random.randn(shape).cast(Dataset.BOOL));
-		bdm.put("2", (BooleanDataset) Random.randn(shape).cast(Dataset.BOOL));
-		
+		bdm.put("1", Random.randn(shape).cast(BooleanDataset.class));
+		bdm.put("2", Random.randn(shape).cast(BooleanDataset.class));
+
 		List<DoubleDataset[]> l2 = new ArrayList<DoubleDataset[]>();
 		l2.add(new DoubleDataset[]{Random.randn(shape)});
 		l2.add(new DoubleDataset[]{Random.randn(shape)});
-		
+
 		SliceableTestMetadata md = new SliceableTestMetadata(ld, dda, sdl, bdm, l2);
 
 		ILazyDataset dataset = Random.lazyRand("Main", IntegerDataset.class, shape);
@@ -239,18 +238,18 @@ public class SliceableMetadataTest {
 
 		final int [] partial2 = new int[] {1, 1, 3, 1};
 		List<ShortDataset> sdl = new ArrayList<>();
-		sdl.add((ShortDataset) Random.randn(partial2).cast(Dataset.INT16));
-		sdl.add((ShortDataset) Random.randn(partial2).cast(Dataset.INT16));
+		sdl.add(Random.randn(partial2).cast(ShortDataset.class));
+		sdl.add(Random.randn(partial2).cast(ShortDataset.class));
 
 		final int [] partial3 = new int[] {1, 2, 1, 1};
 		Map<String, BooleanDataset> bdm = new HashMap<String, BooleanDataset>();
-		bdm.put("1", (BooleanDataset) Random.randn(partial3).cast(Dataset.BOOL));
-		bdm.put("2", (BooleanDataset) Random.randn(partial3).cast(Dataset.BOOL));
+		bdm.put("1", Random.randn(partial3).cast(BooleanDataset.class));
+		bdm.put("2", Random.randn(partial3).cast(BooleanDataset.class));
 
 		List<DoubleDataset[]> l2 = new ArrayList<DoubleDataset[]>();
 		l2.add(new DoubleDataset[]{Random.randn(partial1)});
 		l2.add(new DoubleDataset[]{Random.randn(partial1)});
-		
+
 		SliceableTestMetadata md = new SliceableTestMetadata(ld, dda, sdl, bdm, l2);
 
 		ILazyDataset dataset = Random.lazyRand("Main", IntegerDataset.class, shape);
@@ -334,14 +333,14 @@ public class SliceableMetadataTest {
 
 		final int [] partial2 = new int[] {1, 1, 3, 4};
 		List<ShortDataset> sdl = new ArrayList<>();
-		sdl.add((ShortDataset) Random.randn(partial2).cast(Dataset.INT16));
-		sdl.add((ShortDataset) Random.randn(partial2).cast(Dataset.INT16));
+		sdl.add(Random.randn(partial2).cast(ShortDataset.class));
+		sdl.add(Random.randn(partial2).cast(ShortDataset.class));
 
 		final int [] partial3 = new int[] {1, 1, 1, 3};
 		Map<String, BooleanDataset> bdm = new HashMap<String, BooleanDataset>();
-		bdm.put("1", (BooleanDataset) Random.randn(partial3).cast(Dataset.BOOL));
-		bdm.put("2", (BooleanDataset) Random.randn(partial3).cast(Dataset.BOOL));
-		
+		bdm.put("1", Random.randn(partial3).cast(BooleanDataset.class));
+		bdm.put("2", Random.randn(partial3).cast(BooleanDataset.class));
+
 		List<DoubleDataset[]> l2 = new ArrayList<DoubleDataset[]>();
 		l2.add(new DoubleDataset[]{Random.randn(shape)});
 		l2.add(new DoubleDataset[]{Random.randn(shape)});
@@ -371,8 +370,8 @@ public class SliceableMetadataTest {
 
 		final int [] partial4 = new int[] {1, 2, 1, 1};
 		final int[] result3 = new int[] {1, 1, 1, 1};
-		bdm.put("1", (BooleanDataset) Random.randn(partial4).cast(Dataset.BOOL));
-		bdm.put("2", (BooleanDataset) Random.randn(partial4).cast(Dataset.BOOL));
+		bdm.put("1", Random.randn(partial4).cast(BooleanDataset.class));
+		bdm.put("2", Random.randn(partial4).cast(BooleanDataset.class));
 		sliced = dataset.getSliceView(slice);
 		assertArrayEquals(new int[] {1, 1, 3, 2}, sliced.getShape());
 		try {
@@ -401,13 +400,13 @@ public class SliceableMetadataTest {
 
 		final int [] partial2 = new int[] {1, 1, 3, 1};
 		List<ShortDataset> sdl = new ArrayList<>();
-		sdl.add((ShortDataset) Random.randn(partial2).cast(Dataset.INT16));
-		sdl.add((ShortDataset) Random.randn(partial2).cast(Dataset.INT16));
+		sdl.add(Random.randn(partial2).cast(ShortDataset.class));
+		sdl.add(Random.randn(partial2).cast(ShortDataset.class));
 
 		final int [] partial3 = new int[] {1, 2, 1, 1};
 		Map<String, BooleanDataset> bdm = new HashMap<String, BooleanDataset>();
-		bdm.put("1", (BooleanDataset) Random.randn(partial3).cast(Dataset.BOOL));
-		bdm.put("2", (BooleanDataset) Random.randn(partial3).cast(Dataset.BOOL));
+		bdm.put("1", Random.randn(partial3).cast(BooleanDataset.class));
+		bdm.put("2", Random.randn(partial3).cast(BooleanDataset.class));
 
 		List<DoubleDataset[]> l2 = new ArrayList<DoubleDataset[]>();
 		l2.add(new DoubleDataset[]{Random.randn(partial1)});
@@ -450,7 +449,7 @@ public class SliceableMetadataTest {
 			fail("Should not fail: " + e);
 		}
 
-		dataset = Random.randn(shape).cast(Dataset.INT32);
+		dataset = Random.randn(shape).cast(IntegerDataset.class);
 		md = new SliceableTestMetadata(null, dda, sdl, bdm, l2);
 		dataset.addMetadata(md);
 		try {
