@@ -15,6 +15,7 @@ package org.eclipse.january.dataset;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.eclipse.january.asserts.TestUtils;
@@ -240,6 +241,29 @@ public class CompoundDoubleDatasetTest {
 		assertEquals(Math.sqrt(1242.5), a.rootMeanSquare(), 1e-10);
 
 		assertArrayEquals(new double[] {33, 34, 35}, a.maxItem(), 1e-10);
+
+		// invalid slice view check
+		CompoundDataset v = a.getSliceView(new Slice(14, 24));
+		try {
+			v.max();
+			fail("Should have thrown exception");
+		} catch (UnsupportedOperationException e) {
+			// do nothing
+		} catch (Exception e) {
+			fail("Unexpected exception");
+		}
+		try {
+			v.minPos();
+			fail("Should have thrown exception");
+		} catch (UnsupportedOperationException e) {
+			// do nothing
+		} catch (Exception e) {
+			fail("Unexpected exception");
+		}
+		assertArrayEquals(new double[3], (double[]) v.sum(), 1e-10);
+		for (double x : (double[]) v.mean()) {
+			assertTrue(Double.isNaN(x));
+		}
 
 		a.setShape(3, 1, 4);
 		CompoundDataset b = a.sum(0);
