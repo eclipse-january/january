@@ -10,6 +10,9 @@
 package org.eclipse.january.dataset;
 
 import java.util.List;
+
+import static org.junit.Assert.assertNull;
+
 import java.util.ArrayList;
 
 import org.eclipse.january.asserts.TestUtils;
@@ -69,6 +72,10 @@ public class ComparisonsTest {
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {false, false, false, true}), c);
 		c = Comparisons.equalTo(2.5, z);
 		TestUtils.assertDatasetEquals(DatasetFactory.createFromObject(new boolean[] {false, false, false, true}), c);
+
+		// test null dataset
+		c = Comparisons.equalTo(DatasetFactory.zeros((int[]) null), DatasetFactory.zeros(ShortDataset.class, null));
+		assertNull(c.getShapeRef());
 	}
 
 	@Test

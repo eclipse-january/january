@@ -306,9 +306,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 				new SingleItemIterator(offset, size)) : new StrideIterator(shape, stride, offset);
 		}
 		if (shape == null) {
-			return new NullIterator(shape, shape);
+			return new NullIterator();
 		}
-		
+
 		return withPosition ? new ContiguousIteratorWithPosition(shape, size) : new ContiguousIterator(size);
 	}
 
@@ -476,6 +476,13 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	 * @param size
 	 */
 	private void checkShape(int[] shape, int size) {
+		if (shape == null) {
+			if (size == 0) {
+				return;
+			}
+			logger.error("New shape must not be null for nonzero-sized dataset");
+			throw new IllegalArgumentException("New shape must not be null for nonzero-sized dataset");
+		}
 		int rank = shape.length;
 		int found = -1;
 		int nsize = 1;
@@ -502,7 +509,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public void setShape(final int... shape) {
-		int[] nshape = shape.clone();
+		int[] nshape = shape == null ? null : shape.clone();
 		checkShape(nshape, size);
 		if (Arrays.equals(this.shape, nshape)) {
 			return;

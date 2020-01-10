@@ -331,7 +331,7 @@ public class Slice implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Appends a String representation of the Slice comparable to the python
+	 * Append a string representation of the Slice comparable to the Python
 	 * representation.
 	 * 
 	 * @param s
@@ -381,7 +381,7 @@ public class Slice implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Returns a string construction of the slice with the python form.
+	 * Returns a string construction of the slice with the Python form.
 	 * 
 	 * @return Constructed String.
 	 */
@@ -578,6 +578,8 @@ public class Slice implements Cloneable, Serializable {
 		return slice;
 	}
 
+	private static final int COLON = ':';
+
 	/**
 	 * Converts string in a Slice array
 	 * 
@@ -599,7 +601,7 @@ public class Slice implements Cloneable, Serializable {
 			Slice slice = new Slice();
 			slices[i] = slice;
 
-			int idx0 = s.indexOf(":");
+			int idx0 = s.indexOf(COLON);
 
 			int n = 0;
 			if (idx0 == -1) {
@@ -613,11 +615,12 @@ public class Slice implements Cloneable, Serializable {
 			slice.setStart(n);
 
 			idx0++;
-			int idx1 = s.indexOf(":", idx0);
+			int idx1 = s.indexOf(COLON, idx0);
 			if (idx1 == -1) {
 				String t = s.substring(idx0).trim();
-				if (t.length() == 0)
+				if (t.length() == 0) {
 					continue;
+				}
 
 				slice.setStop(Integer.parseInt(t));
 				continue;
@@ -626,8 +629,9 @@ public class Slice implements Cloneable, Serializable {
 			}
 
 			String t = s.substring(idx1 + 1).trim();
-			if (t.length() > 0)
+			if (t.length() > 0) {
 				slice.setStep(Integer.parseInt(t));
+			}
 		}
 
 		return slices;

@@ -47,6 +47,20 @@ public class IndexIteratorTest {
 		assertFalse(it.hasNext());
 	}
 
+	@Test
+	public void testNullShapeIteration() {
+		Dataset ta = DatasetFactory.zeros((int[]) null);
+		IndexIterator it = ta.getIterator();
+
+		assertFalse(it.hasNext());
+
+		it = ta.getIterator(true);
+		assertFalse(it.hasNext());
+
+		it = new ContiguousIteratorWithPosition(null, 0);
+		assertFalse(it.hasNext());
+	}
+
 	private void testIterationsND(int size, Class<? extends Dataset> clazz) {
 		Dataset ta;
 

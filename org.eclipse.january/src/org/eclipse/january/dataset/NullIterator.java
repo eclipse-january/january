@@ -10,6 +10,13 @@
 package org.eclipse.january.dataset;
 
 public class NullIterator extends SliceIterator {
+
+	/**
+	 * @since 2.3
+	 */
+	public NullIterator() {
+	}
+
 	/**
 	 * @param shape shape of dataset
 	 * @param sshape shape of slice

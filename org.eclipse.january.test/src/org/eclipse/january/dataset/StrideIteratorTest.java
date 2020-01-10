@@ -38,6 +38,13 @@ public class StrideIteratorTest {
 	}
 
 	@Test
+	public void testNullShapeIteration() {
+		StrideIterator it = new StrideIterator(null);
+
+		assertFalse(it.hasNext());
+	}
+
+	@Test
 	public void testZeroSizedIteration() {
 		Dataset ta = DatasetFactory.zeros(new int[] {4,4,4});
 
