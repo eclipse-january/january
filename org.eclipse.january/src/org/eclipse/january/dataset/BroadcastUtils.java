@@ -23,32 +23,34 @@ public final class BroadcastUtils {
 	 * @return broadcasted shape and full new shape or null if it cannot be done
 	 */
 	public static int[][] calculateBroadcastShapes(int[] oldShape, int size, int... newShape) {
-		if (newShape == null)
-			return null;
-	
-		int brank = newShape.length;
-		if (brank == 0) {
-			if (size == 1)
-				return new int[][] {oldShape, newShape};
+		if (newShape == null) {
 			return null;
 		}
 	
-		if (Arrays.equals(oldShape, newShape))
-			return new int[][] {oldShape, newShape};
+		int brank = newShape.length;
+		if (brank == 0) {
+			if (size == 1) {
+				return new int[][] {oldShape, newShape};
+			}
+			return null;
+		}
 	
+		if (Arrays.equals(oldShape, newShape)) {
+			return new int[][] {oldShape, newShape};
+		}
+
+		if (ShapeUtils.calcSize(oldShape) != size) {
+			throw new IllegalArgumentException("Size must match old shape");
+		}
+
 		int offset = brank - oldShape.length;
 		if (offset < 0) { // when new shape is incomplete
 			newShape = padShape(newShape, -offset);
 			offset = 0;
 		}
-	
-		int[] bshape;
-		if (offset > 0) { // new shape has extra dimensions
-			bshape = padShape(oldShape, offset);
-		} else {
-			bshape = oldShape;
-		}
-	
+
+		int[] bshape = padShape(oldShape, offset); // new shape has extra dimensions
+
 		for (int i = 0; i < brank; i++) {
 			if (newShape[i] != bshape[i] && bshape[i] != 1 && newShape[i] != 1) {
 				return null;
@@ -65,12 +67,14 @@ public final class BroadcastUtils {
 	 * @return new shape or old shape if padding is zero
 	 */
 	public static int[] padShape(final int[] shape, final int padding) {
-		if (padding < 0)
+		if (padding < 0) {
 			throw new IllegalArgumentException("Padding must be zero or greater");
+		}
 	
-		if (padding == 0)
+		if (padding == 0) {
 			return shape;
-	
+		}
+
 		final int[] nshape = new int[shape.length + padding];
 		Arrays.fill(nshape, 1);
 		System.arraycopy(shape, 0, nshape, padding, shape.length);
@@ -79,14 +83,15 @@ public final class BroadcastUtils {
 
 	/**
 	 * Take in shapes and broadcast them to same rank
-	 * @param shapes
+	 * @param shapes null shapes are ignored and passed through
 	 * @return list of broadcasted shapes plus the first entry is the maximum shape
 	 */
 	public static List<int[]> broadcastShapes(int[]... shapes) {
 		int maxRank = -1;
 		for (int[] s : shapes) {
-			if (s == null)
+			if (s == null) {
 				continue;
+			}
 	
 			int r = s.length;
 			if (r > maxRank) {
@@ -95,16 +100,24 @@ public final class BroadcastUtils {
 		}
 	
 		List<int[]> newShapes = new ArrayList<int[]>();
-		for (int[] s : shapes) {
-			if (s == null)
-				continue;
-			newShapes.add(padShape(s, maxRank - s.length));
+		if (maxRank < 0) {
+			for (int i = 0; i <= shapes.length; i++) { // note the extra null
+				newShapes.add(null);
+			}
+			return newShapes;
 		}
-	
+
+		for (int[] s : shapes) {
+			newShapes.add(s == null ? null : padShape(s, maxRank - s.length));
+		}
+
 		int[] maxShape = new int[maxRank];
 		for (int i = 0; i < maxRank; i++) {
 			int m = -1;
 			for (int[] s : newShapes) {
+				if (s == null) {
+					continue;
+				}
 				int l = s[i];
 				if (l > m) {
 					if (m > 1) {
@@ -128,10 +141,11 @@ public final class BroadcastUtils {
 	 * @return list of broadcasted shapes
 	 */
 	public static List<int[]> broadcastShapesToMax(int[] maxShape, int[]... shapes) {
-		int maxRank = maxShape.length;
+		int maxRank = maxShape == null ? -1 : maxShape.length;
 		for (int[] s : shapes) {
-			if (s == null)
+			if (s == null) {
 				continue;
+			}
 	
 			int r = s.length;
 			if (r > maxRank) {
@@ -141,12 +155,12 @@ public final class BroadcastUtils {
 	
 		List<int[]> newShapes = new ArrayList<int[]>();
 		for (int[] s : shapes) {
-			if (s == null)
-				continue;
-			newShapes.add(padShape(s, maxRank - s.length));
+			newShapes.add(s == null ? null : padShape(s, maxRank - s.length));
 		}
 
-		checkShapes(maxShape, newShapes);
+		if (maxShape != null ) {
+			checkShapes(maxShape, newShapes);
+		}
 		return newShapes;
 	}
 
@@ -154,6 +168,9 @@ public final class BroadcastUtils {
 		for (int i = 0; i < maxShape.length; i++) {
 			int m = maxShape[i];
 			for (int[] s : newShapes) {
+				if (s == null) {
+					continue;
+				}
 				int l = s[i];
 				if (l != 1 && l != m) {
 					throw new IllegalArgumentException("A shape's dimension was not one or equal to maximum");
@@ -167,7 +184,7 @@ public final class BroadcastUtils {
 		final int ar = a.getRank();
 		final int br = b.getRank();
 		Class<? extends Dataset> tc = InterfaceUtils.getBestInterface(a.getClass(), b.getClass());
-		if (ar == 0 ^ br == 0) { // ignore type of zero-rank dataset unless it's floating point 
+		if (ar == 0 ^ br == 0) { // ignore type of zero-rank dataset unless it's floating point
 			if (ar == 0) {
 				rc = a.hasFloatingPointElements() ? tc : b.getClass();
 			} else {
@@ -264,6 +281,12 @@ public final class BroadcastUtils {
 	 * @return stride array
 	 */
 	public static int[] createBroadcastStrides(final int isize, final int[] oShape, final int[] oStride, final int[] broadcastShape) {
+		if (oShape == null) {
+			if (broadcastShape == null) {
+				return null;
+			}
+			throw new IllegalArgumentException("Broadcast shape must be null if original shape is null");
+		}
 		int rank = oShape.length;
 		if (broadcastShape.length != rank) {
 			throw new IllegalArgumentException("Dataset must have same rank as broadcast shape");
@@ -309,7 +332,7 @@ public final class BroadcastUtils {
 			shapes[i] = d.getShapeRef();
 		}
 
-		List<int[]> nShapes = BroadcastUtils.broadcastShapes(shapes);
+		List<int[]> nShapes = broadcastShapes(shapes);
 		int[] mshape = nShapes.get(0);
 		for (int i = 0; i < n; i++) {
 			datasets[i] = datasets[i].getBroadcastView(mshape);

@@ -121,11 +121,17 @@ public class PositionIterator extends IndexIterator {
 				throw new UnsupportedOperationException("Negative steps not implemented");
 			}
 		}
-		int rank = oshape.length;
+		int rank;
+		if (oshape == null) {
+			rank = 0;
+			shape = null;
+		} else {
+			rank = oshape.length;
+			shape = oshape.clone();
+		}
 		endrank = rank - 1;
 
 		omit = new boolean[rank];
-		shape = oshape.clone();
 		if (axes != null) {
 			for (int a : axes) {
 				a = ShapeUtils.checkAxis(rank, a);

@@ -46,7 +46,7 @@ public class StrideIterator extends SliceIterator {
 	}
 
 	public StrideIterator(final int isize, final int[] shape, final int[] strides, final int offset, final int element) {
-		int rank = shape.length;
+		final int rank = shape == null ? 0 : shape.length;
 		start = new int[rank];
 		stop = shape;
 		step = new int[rank];
@@ -79,7 +79,8 @@ public class StrideIterator extends SliceIterator {
 		this.isize = isize;
 		istep = isize;
 		this.shape = shape;
-		int rank = shape.length;
+		final int rank = shape == null ? 0 : shape.length;
+		zero = shape == null;
 		endrank = rank - 1;
 		pos = new int[rank];
 		delta = new int[rank];

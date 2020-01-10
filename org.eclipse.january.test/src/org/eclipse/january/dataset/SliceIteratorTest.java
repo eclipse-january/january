@@ -33,6 +33,13 @@ public class SliceIteratorTest {
 	}
 
 	@Test
+	public void testNullShapeIteration() {
+		IndexIterator it = new SliceIterator(null, 0, (int[]) null);
+
+		assertFalse(it.hasNext());
+	}
+
+	@Test
 	public void testZeroSizedIteration() {
 		Dataset ta = DatasetFactory.createRange(24);
 		IndexIterator it = ta.getSliceIterator(null, new int[] {0}, null);

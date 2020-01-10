@@ -11,6 +11,7 @@ package org.eclipse.january.dataset;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import java.util.Arrays;
 
@@ -47,9 +48,14 @@ public class SliceNDIteratorTest {
 		assertEquals(4*5, size);
 	}
 
-	/**
-	 * 
-	 */
+	@Test
+	public void testNullShapeIterations() {
+		SliceND sa = new SliceND(null);
+
+		SliceNDIterator it = new SliceNDIterator(sa);
+		assertFalse(it.hasNext());
+	}
+
 	@Test
 	public void testIterations() {
 		SliceND sa = new SliceND(new int[] {4, 5, 6, 7}, new Slice(1, 5, 2), null, null, null);
