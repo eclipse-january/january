@@ -9,12 +9,11 @@
 
 package org.eclipse.january.dataset;
 
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertNull;
+
 import java.util.List;
 
-import org.eclipse.january.dataset.BroadcastUtils;
-import org.eclipse.january.dataset.Dataset;
-import org.eclipse.january.dataset.DatasetFactory;
-import org.junit.Assert;
 import org.junit.Test;
 
 public class BroadcastUtilsTest {
@@ -29,6 +28,16 @@ public class BroadcastUtilsTest {
 		view.setShape(nShapes.get(0));
 		int[] strides = BroadcastUtils.createBroadcastStrides(view, mShape);
 
-		Assert.assertArrayEquals(new int[] {0,  1}, strides);
+		assertArrayEquals(new int[] {0,  1}, strides);
+	}
+
+	@Test
+	public void testBroadcastNullShape() {
+		int[] shape = null;
+		Dataset view = DatasetFactory.zeros(ByteDataset.class, shape);
+		List<int[]> nShapes = BroadcastUtils.broadcastShapesToMax(null, shape);
+		view.setShape(nShapes.get(0));
+		int[] strides = BroadcastUtils.createBroadcastStrides(view, null);
+		assertNull(strides);
 	}
 }

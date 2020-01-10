@@ -28,6 +28,10 @@ public class SliceND {
 
 	private boolean expanded;
 
+	private static int[] copy(int[] in) {
+		return in == null ? null : in.clone();
+	}
+
 	/**
 	 * Construct a nD Slice for whole of shape.
 	 * 
@@ -35,13 +39,13 @@ public class SliceND {
 	 *            Shape of the dataset, see {@link ILazyDataset#getShape()}
 	 */
 	public SliceND(final int[] shape) {
-		final int rank = shape.length;
+		final int rank = shape == null ? 0 : shape.length;
 		lstart = new int[rank];
-		lstop = shape.clone();
+		lstop = copy(shape);
 		lstep = new int[rank];
 		Arrays.fill(lstep, 1);
-		lshape = shape.clone();
-		oshape = shape.clone();
+		lshape = copy(shape);
+		oshape = copy(shape);
 		mshape = oshape;
 		expanded = false;
 	}
@@ -148,8 +152,7 @@ public class SliceND {
 		//
 		// thus the final index in each dimension is
 		// start + (shape-1)*step
-
-		int rank = shape.length;
+		final int rank = shape == null ? 0 : shape.length;
 
 		if (start == null) {
 			lstart = new int[rank];
@@ -174,7 +177,7 @@ public class SliceND {
 		}
 
 		lshape = new int[rank];
-		oshape = shape.clone();
+		oshape = copy(shape);
 		if (maxShape == null) {
 			mshape = oshape;
 		} else {
@@ -505,11 +508,13 @@ public class SliceND {
 	@Override
 	public SliceND clone() {
 		SliceND c = new SliceND(oshape);
-		for (int i = 0; i < lshape.length; i++) {
-			c.lstart[i] = lstart[i];
-			c.lstop[i] = lstop[i];
-			c.lstep[i] = lstep[i];
-			c.lshape[i] = lshape[i];
+		if (lshape != null) {
+			for (int i = 0; i < lshape.length; i++) {
+				c.lstart[i] = lstart[i];
+				c.lstop[i] = lstop[i];
+				c.lstep[i] = lstep[i];
+				c.lshape[i] = lshape[i];
+			}
 		}
 		c.expanded = expanded;
 		return c;

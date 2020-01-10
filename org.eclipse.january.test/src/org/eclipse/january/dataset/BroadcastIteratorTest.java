@@ -18,6 +18,10 @@ public class BroadcastIteratorTest {
 	@Test
 	public void testBroadcastShape() {
 		Dataset a;
+
+		a = DatasetFactory.ones((int[]) null);
+		checkBroadcastShape(a, "null as null", null, null);
+		
 		a = DatasetFactory.ones();
 		checkBroadcastShape(a, "scalar as scalar", new int[0], new int[0]);
 		checkBroadcastShape(a, "scalar as [1]", new int[] {1}, new int[] {1}, 1);
@@ -312,5 +316,19 @@ public class BroadcastIteratorTest {
 			assertEquals(a.getElementDoubleAbs(bit.aIndex), bit.aDouble, 1e-9);
 			assertEquals(a.getElementDoubleAbs(bit.aIndex), bit.bDouble, 1e-9);
 		}
+	}
+
+	@Test
+	public void testNullDataset() {
+		DoubleDataset a = DatasetFactory.zeros((int[]) null);
+		ShortDataset b = DatasetFactory.zeros(ShortDataset.class, null);
+
+		BroadcastIterator bit;
+		bit = BroadcastIterator.createIterator(a, b);
+		assertFalse(bit.hasNext());
+
+		bit = BroadcastIterator.createIterator(a, b, null, true);
+		assertFalse(bit.hasNext());
+		assertNull(bit.getOutput().getShapeRef());
 	}
 }
