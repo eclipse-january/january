@@ -52,11 +52,6 @@ public class LongDataset extends AbstractDataset {
 		return array;
 	}
 
-	@Override
-	public int getDType() {
-		return INT64; // DATA_TYPE
-	}
-
 	/**
 	 * Create a null dataset
 	 */

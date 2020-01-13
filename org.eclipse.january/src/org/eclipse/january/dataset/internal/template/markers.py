@@ -50,7 +50,7 @@ Mark up source class with following comment markers:
 
 class transmutate(object):
     def __init__(self, scriptfile, srcclass, source, dstclass, destination, disreal=True,
-                 disbool=False, disobj=False, isatomic=True):
+                 disbool=False, disobj=False):
         '''
         scriptfile
         srcclass
@@ -60,7 +60,6 @@ class transmutate(object):
         disreal indicates whether destination is a real dataset
         disbool indicates whether destination is a boolean dataset
         disobj indicates whether destination is an object type-dataset
-        isatomic indicates whether dataset is atomic or compound
 
         source and destination are lists of strings which describe dtype,
         Java boxed primitive class, Java primitive type, getElement abstract method,
@@ -91,15 +90,10 @@ class transmutate(object):
         self.isreal = disreal
         self.isbool = disbool
         self.isobj = disobj
-        self.isatomic = isatomic
         if self.isbool:
             self.isreal = False
-        if not self.isatomic: # make compound dataset types
-            self.scdtype = "ARRAY" + self.sdtype
-            self.dcdtype = "ARRAY" + self.ddtype
 
-        processors = [("// DATA_TYPE", self.data),
-            ("// CLASS_TYPE", self.jpclass),
+        processors = [ ("// CLASS_TYPE", self.jpclass),
             ("// PRIM_TYPE", self.primitive),
             ("// ADD_CAST", self.addcast),
             ("// PRIM_TYPE_LONG", self.primitivelong),
@@ -125,7 +119,7 @@ class transmutate(object):
             ("// DEFAULT_VAL", self.defval),
             ("// BCAST_WITH_CAST", self.broadcast),
             ("@SuppressWarnings(\"cast\")", self.omit),
-            (srcclass, self.jclass)]
+            (srcclass, self.jclass) ]
 
         self.icasts = [ "(byte) ", "(short) ", "(int) ", "(long) "]
         self.rcasts = [ "(float) ", "(double) "]
@@ -143,15 +137,6 @@ class transmutate(object):
     # starts with _, $ and unicode letter and comprises Unicode letters and digits
     import re
     separator = re.compile(r'[\s(]')
-
-    def data(self, line):
-        '''
-        dataset type
-        '''
-        l = line.replace(self.sdtype, self.ddtype)
-        if not self.isatomic:
-            l = l.replace(self.scdtype, self.dcdtype)
-        return l
 
     def jclass(self, line):
         '''

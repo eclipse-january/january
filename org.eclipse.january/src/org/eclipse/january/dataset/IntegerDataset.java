@@ -52,11 +52,6 @@ public class IntegerDataset extends AbstractDataset {
 		return array;
 	}
 
-	@Override
-	public int getDType() {
-		return INT32; // DATA_TYPE
-	}
-
 	/**
 	 * Create a null dataset
 	 */

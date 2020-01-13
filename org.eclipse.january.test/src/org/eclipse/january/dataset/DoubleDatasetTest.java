@@ -555,11 +555,27 @@ public class DoubleDatasetTest {
 		c = a.clone();
 		TestUtils.assertDatasetEquals(Maths.power(a, z).cast(DoubleDataset.class), c.ipower(z));
 
-
 		// floor
 		a = Maths.multiply(a, 1.5);
 
 		c = a.clone();
 		TestUtils.assertDatasetEquals(Maths.floor(a), c.ifloor());
+	}
+
+	static class DoubleDataset2 extends DoubleDataset {
+		private static final long serialVersionUID = 1L;
+
+		public DoubleDataset2(final DoubleDataset dataset) {
+			super(dataset);
+		}
+	}
+
+	@Test
+	public void testSubclassing() {
+		double[] da = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
+		DoubleDataset a = new DoubleDataset(da);
+
+		DoubleDataset2 b = new DoubleDataset2(a);
+		TestUtils.assertDatasetEquals(a, b);
 	}
 }

@@ -277,6 +277,20 @@ public class DatasetFactoryTest {
 		exp = new CompoundDoubleDataset(2, new double[] {3, 4, 5, 6, 7, 8}, new int[] {3, 1});
 		act = DatasetFactory.createFromObject(2, CompoundDoubleDataset.class, new double[] {3, 4, 5, 6, 7, 8}, 3, 1);
 		TestUtils.assertDatasetEquals(exp, act);
+
+		act = DatasetFactory.createCompoundDataset(CompoundDoubleDataset.class, new double[] {3, 5, 7} , new double[] {4, 6, 8});
+		act.setShape(3, 1);
+		TestUtils.assertDatasetEquals(exp, act);
+	}
+
+	@Test
+	public void testCreatorComplex() {
+		ComplexDoubleDataset act, exp;
+
+		exp = new ComplexDoubleDataset(new double[] {3, 5, 7}, new double[] {4, 6, 8}, new int[] {3, 1});
+		act = DatasetFactory.createComplexDataset(ComplexDoubleDataset.class, new double[] {3, 5, 7} , new double[] {4, 6, 8});
+		act.setShape(3, 1);
+		TestUtils.assertDatasetEquals(exp, act);
 	}
 
 	@Test

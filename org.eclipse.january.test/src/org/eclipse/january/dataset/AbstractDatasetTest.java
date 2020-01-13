@@ -34,10 +34,10 @@ import org.junit.Test;
 public class AbstractDatasetTest {
 	@Test
 	public void testBestDType() {
-		assertEquals(Dataset.FLOAT32, DTypeUtils.getBestDType(Dataset.INT16, Dataset.FLOAT32));
-		assertEquals(Dataset.FLOAT64, DTypeUtils.getBestDType(Dataset.INT32, Dataset.FLOAT32));
-		assertEquals(Dataset.COMPLEX64, DTypeUtils.getBestDType(Dataset.FLOAT32, Dataset.COMPLEX64));
-		assertEquals(Dataset.COMPLEX128, DTypeUtils.getBestDType(Dataset.INT32, Dataset.COMPLEX64));
+		assertEquals(FloatDataset.class, InterfaceUtils.getBestInterface(ShortDataset.class, FloatDataset.class));
+		assertEquals(DoubleDataset.class, InterfaceUtils.getBestInterface(LongDataset.class, FloatDataset.class));
+		assertEquals(ComplexFloatDataset.class, InterfaceUtils.getBestInterface(FloatDataset.class, ComplexFloatDataset.class));
+		assertEquals(ComplexDoubleDataset.class, InterfaceUtils.getBestInterface(IntegerDataset.class, ComplexFloatDataset.class));
 	}
 
 	@Test

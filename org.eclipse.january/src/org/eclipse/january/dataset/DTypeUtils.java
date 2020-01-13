@@ -26,6 +26,7 @@ public class DTypeUtils {
 
 	private static Map<Class<? extends Dataset>, Integer> createInterfaceMap() {
 		Map<Class<? extends Dataset>, Integer> map = new LinkedHashMap<>();
+		map.put(BooleanDatasetBase.class, Dataset.BOOL);
 		map.put(BooleanDataset.class, Dataset.BOOL);
 		map.put(ByteDataset.class, Dataset.INT8);
 		map.put(ShortDataset.class, Dataset.INT16);
@@ -41,8 +42,11 @@ public class DTypeUtils {
 		map.put(CompoundLongDataset.class, Dataset.ARRAYINT64);
 		map.put(CompoundFloatDataset.class, Dataset.ARRAYFLOAT32);
 		map.put(CompoundDoubleDataset.class, Dataset.ARRAYFLOAT64);
+		map.put(StringDatasetBase.class, Dataset.STRING);
 		map.put(StringDataset.class, Dataset.STRING);
+		map.put(ObjectDatasetBase.class, Dataset.OBJECT);
 		map.put(ObjectDataset.class, Dataset.OBJECT);
+		map.put(DateDatasetImpl.class, Dataset.DATE);
 		map.put(DateDataset.class, Dataset.DATE);
 		map.put(RGBDataset.class, Dataset.RGB);
 		return map;
@@ -88,10 +92,24 @@ public class DTypeUtils {
 	 * @return dataset type for dataset class
 	 */
 	public static int getDType(Class<? extends Dataset> clazz) {
-		if (!interface2DTypes.containsKey(clazz)) {
+		Class<? extends Dataset> c = findInterface(clazz);
+		if (c == null) {
 			throw new IllegalArgumentException("Interface class not allowed or supported");
 		}
-		return interface2DTypes.get(clazz);
+		return interface2DTypes.get(c);
+	}
+
+	private static Class<? extends Dataset> findInterface(Class<? extends Dataset> clazz) {
+		if (interface2DTypes.containsKey(clazz)) {
+			return clazz;
+		}
+
+		Class<? extends Dataset> c = InterfaceUtils.findSubInterface(clazz);
+		if (c != null) {
+			return findInterface(c);
+		}
+
+		return null;
 	}
 
 	public static boolean isDTypeElemental(int dtype) {
@@ -214,7 +232,7 @@ public class DTypeUtils {
 				}
 			}
 		} else if (obj instanceof Dataset) {
-			return ((Dataset) obj).getDType();
+			return interface2DTypes.get(obj.getClass());
 		} else if (obj instanceof ILazyDataset) {
 			dtype = getDTypeFromClass(((ILazyDataset) obj).getElementClass(), ((ILazyDataset) obj).getElementsPerItem());
 		} else {
@@ -283,18 +301,20 @@ public class DTypeUtils {
 	 * @since 2.3
 	 */
 	public static Class<? extends Dataset> getLargestDataset(final Class<? extends Dataset> clazz) {
-		if (BooleanDataset.class.equals(clazz) || ByteDataset.class.equals(clazz) || ShortDataset.class.equals(clazz)) {
+		if (BooleanDataset.class.isAssignableFrom(clazz) || ByteDataset.class.isAssignableFrom(clazz) || ShortDataset.class.isAssignableFrom(clazz)) {
 			return IntegerDataset.class;
-		} else if (IntegerDataset.class.equals(clazz) || LongDataset.class.equals(clazz)) {
+		} else if (IntegerDataset.class.isAssignableFrom(clazz) || LongDataset.class.isAssignableFrom(clazz)) {
 			return LongDataset.class;
-		} else if (FloatDataset.class.equals(clazz) || DoubleDataset.class.equals(clazz)) {
+		} else if (FloatDataset.class.isAssignableFrom(clazz) || DoubleDataset.class.isAssignableFrom(clazz)) {
 			return DoubleDataset.class;
-		} else if (ComplexFloatDataset.class.equals(clazz) || ComplexDoubleDataset.class.equals(clazz)) {
+		} else if (ComplexFloatDataset.class.isAssignableFrom(clazz) || ComplexDoubleDataset.class.isAssignableFrom(clazz)) {
 			return ComplexDoubleDataset.class;
-		} else if (CompoundByteDataset.class.equals(clazz) || CompoundShortDataset.class.equals(clazz)) {
+		} else if (CompoundByteDataset.class.isAssignableFrom(clazz) || CompoundShortDataset.class.isAssignableFrom(clazz)) {
 			return CompoundIntegerDataset.class;
-		} else if (CompoundIntegerDataset.class.equals(clazz) || CompoundLongDataset.class.equals(clazz)) {
+		} else if (CompoundIntegerDataset.class.isAssignableFrom(clazz) || CompoundLongDataset.class.isAssignableFrom(clazz)) {
 			return CompoundLongDataset.class;
+		} else if (CompoundFloatDataset.class.isAssignableFrom(clazz) || CompoundDoubleDataset.class.isAssignableFrom(clazz)) {
+			return CompoundDoubleDataset.class;
 		}
 
 		return clazz;
@@ -1209,7 +1229,7 @@ public class DTypeUtils {
 		int bytes = InterfaceUtils.getItemBytes(1, clazz);
 		if (InterfaceUtils.isComplex(clazz)) {
 			return "COMPLEX" + bytes*16;
-		} else if (RGBDataset.class.equals(clazz)) {
+		} else if (RGBDataset.class.isAssignableFrom(clazz)) {
 			return "RGB";
 		}
 
@@ -1217,16 +1237,16 @@ public class DTypeUtils {
 		if (InterfaceUtils.isFloating(clazz)) {
 			return prefix + "FLOAT" + bytes*8;
 		}
-		if (BooleanDataset.class.equals(clazz)) {
+		if (BooleanDataset.class.isAssignableFrom(clazz)) {
 			return prefix + "BOOLEAN";
 		}
-		if (StringDataset.class.equals(clazz)) {
+		if (StringDataset.class.isAssignableFrom(clazz)) {
 			return prefix + "STRING";
 		}
 		if (DateDataset.class.isAssignableFrom(clazz)) {
 			return prefix + "DATE";
 		}
-		if (ObjectDataset.class.equals(clazz)) {
+		if (ObjectDataset.class.isAssignableFrom(clazz)) {
 			return prefix + "OBJECT";
 		}
 

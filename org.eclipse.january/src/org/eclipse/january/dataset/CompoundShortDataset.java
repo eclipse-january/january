@@ -46,11 +46,6 @@ public class CompoundShortDataset extends AbstractCompoundDataset {
 		return array;
 	}
 
-	@Override
-	public int getDType() {
-		return Dataset.ARRAYINT16; // DATA_TYPE
-	}
-
 	/**
 	 * Create a null dataset
 	 */
@@ -378,7 +373,7 @@ public class CompoundShortDataset extends AbstractCompoundDataset {
 			logger.error("Need a single-element dataset");
 			throw new IllegalArgumentException("Need a single-element dataset");
 		}
-		if (a.getDType() != Dataset.INT16) { // DATA_TYPE
+		if (!ShortDataset.class.isAssignableFrom(a.getClass())) { // CLASS_TYPE
 			logger.error("Dataset type must be short"); // PRIM_TYPE
 			throw new IllegalArgumentException("Dataset type must be short"); // PRIM_TYPE
 		}

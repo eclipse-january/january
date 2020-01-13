@@ -51,11 +51,6 @@ public class ObjectDatasetBase extends AbstractDataset {
 		return array;
 	}
 
-	@Override
-	public int getDType() {
-		return OBJECT; // DATA_TYPE
-	}
-
 	/**
 	 * Create a null dataset
 	 */

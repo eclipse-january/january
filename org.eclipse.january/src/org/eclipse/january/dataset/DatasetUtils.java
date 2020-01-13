@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
 /**
  * Utilities for manipulating datasets
  */
-@SuppressWarnings("unchecked")
 public class DatasetUtils {
 
 	/**
@@ -132,6 +131,11 @@ public class DatasetUtils {
 		return take(a, indexes.getData(), axis);
 	}
 
+	@SuppressWarnings("unchecked")
+	private static <T extends Dataset> T zeros(final T a, final int... shape) {
+		return (T) DatasetFactory.zeros(a.getElementsPerItem(), a.getClass(), shape);
+	}
+
 	/**
 	 * Take items from dataset along an axis
 	 * @param indices
@@ -145,15 +149,13 @@ public class DatasetUtils {
 		}
 		int[] ashape = a.getShape();
 		final int rank = ashape.length;
-		final Class<? extends Dataset> ac = a.getClass();
 		final int ilen = indices.length;
-		final int is = a.getElementsPerItem();
 
-		Dataset result;
+		T result;
 		if (axis == null) {
 			ashape = new int[1];
 			ashape[0] = ilen;
-			result = DatasetFactory.zeros(is, ac, ashape);
+			result = zeros(a, ashape);
 			Serializable src = a.getBuffer();
 			for (int i = 0; i < ilen; i++) {
 				((AbstractDataset) result).setItemDirect(i, indices[i], src);
@@ -161,7 +163,7 @@ public class DatasetUtils {
 		} else {
 			axis = a.checkAxis(axis);
 			ashape[axis] = ilen;
-			result = DatasetFactory.zeros(is, ac, ashape);
+			result = zeros(a, ashape);
 
 			int[] dpos = new int[rank];
 			int[] spos = new int[rank];
@@ -181,7 +183,7 @@ public class DatasetUtils {
 			}
 		}
 		result.setDirty();
-		return (T) result;
+		return result;
 	}
 
 	/**
@@ -322,8 +324,9 @@ public class DatasetUtils {
 	 * @param axis to sort along, if null then dataset is first flattened
 	 * @return dataset sorted along axis
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T extends Dataset> T sort(final T a, final Integer axis) {
-		Dataset s = a.clone();
+		T s = (T) a.clone();
 		return (T) s.sort(axis);
 	}
 
@@ -333,7 +336,7 @@ public class DatasetUtils {
 	 * @param b ancillary datasets
 	 */
 	public static void sort(Dataset a, Dataset... b) {
-		if (!DTypeUtils.isDTypeNumerical(a.getDType())) {
+		if (!InterfaceUtils.isNumerical(a.getClass())) {
 			throw new UnsupportedOperationException("Sorting non-numerical datasets not supported yet");
 		}
 
@@ -344,7 +347,7 @@ public class DatasetUtils {
 		int n = 0;
 		for (int i = 0; i < l; i++) {
 			if (b[i] != null) {
-				if (!DTypeUtils.isDTypeNumerical(b[i].getDType())) {
+				if (!InterfaceUtils.isNumerical(b[i].getClass())) {
 					throw new UnsupportedOperationException("Sorting non-numerical datasets not supported yet");
 				}
 				t[i] = copy(DoubleDataset.class, b[i]);
@@ -591,7 +594,6 @@ public class DatasetUtils {
 		Serializable buf = a.getBuffer();
 		int[] shape = a.getShape();
 		int rank = shape.length;
-		final int is = a.getElementsPerItem();
 
 		if (axis >= rank) {
 			utilsLogger.warn("Axis value is out of bounds");
@@ -635,10 +637,10 @@ public class DatasetUtils {
 			newShape[axis] = nlen;
 		}
 
-		Dataset rdata = DatasetFactory.zeros(is, a.getClass(), newShape);
+		T rdata = zeros(a, newShape);
 		Serializable nbuf = rdata.getBuffer();
 
-		int csize = is; // chunk size
+		int csize = a.getElementsPerItem(); // chunk size
 		for (int i = axis+1; i < rank; i++) {
 			csize *= newShape[i];
 		}
@@ -671,7 +673,7 @@ public class DatasetUtils {
 			}
 		}
 
-		return (T) rdata;
+		return rdata;
 	}
 
 	/**
@@ -682,13 +684,13 @@ public class DatasetUtils {
 	 */
 	public static <T extends Dataset> T resize(final T a, final int... shape) {
 		int size = a.getSize();
-		Dataset rdata = DatasetFactory.zeros(a.getElementsPerItem(), a.getClass(), shape);
+		T rdata = zeros(a, shape);
 		IndexIterator it = rdata.getIterator();
 		while (it.hasNext()) {
 			rdata.setObjectAbs(it.index, a.getObjectAbs(it.index % size));
 		}
 
-		return (T) rdata;
+		return rdata;
 	}
 
 	/**
@@ -714,76 +716,77 @@ public class DatasetUtils {
 	 *            The dataset to be cast.
 	 * @return dataset of given class (or same dataset if already of the right class)
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T extends Dataset> T copy(Class<T> clazz, final IDataset d) {
 		Dataset a = convertToDataset(d);
 		Dataset c = null;
 		try {
 			// copy across the data
-			if (BooleanDataset.class.equals(clazz)) {
+			if (BooleanDataset.class.isAssignableFrom(clazz)) {
 				c = new BooleanDataset(a);
-			} else if (ByteDataset.class.equals(clazz)) {
+			} else if (ByteDataset.class.isAssignableFrom(clazz)) {
 				c = new ByteDataset(a);
-			} else if (ShortDataset.class.equals(clazz)) {
+			} else if (ShortDataset.class.isAssignableFrom(clazz)) {
 				c = new ShortDataset(a);
-			} else if (IntegerDataset.class.equals(clazz)) {
+			} else if (IntegerDataset.class.isAssignableFrom(clazz)) {
 				c = new IntegerDataset(a);
-			} else if (LongDataset.class.equals(clazz)) {
+			} else if (LongDataset.class.isAssignableFrom(clazz)) {
 				c = new LongDataset(a);
-			} else if (CompoundByteDataset.class.equals(clazz)) {
+			} else if (CompoundByteDataset.class.isAssignableFrom(clazz)) {
 				if (a instanceof CompoundByteDataset) {
 					c = new CompoundByteDataset((CompoundDataset) a);
 				} else {
 					c = new CompoundByteDataset(a);
 				}
-			} else if (CompoundShortDataset.class.equals(clazz)) {
-				if (a instanceof CompoundDataset) {
-					c = new CompoundShortDataset((CompoundDataset) a);
-				} else {
-					c = new CompoundShortDataset(a);
-				}
-			} else if (CompoundIntegerDataset.class.equals(clazz)) {
-				if (a instanceof CompoundDataset) {
-					c = new CompoundIntegerDataset((CompoundDataset) a);
-				} else {
-					c = new CompoundIntegerDataset(a);
-				}
-			} else if (CompoundLongDataset.class.equals(clazz)) {
-				if (a instanceof CompoundDataset) {
-					c = new CompoundLongDataset((CompoundDataset) a);
-				} else {
-					c = new CompoundLongDataset(a);
-				}
-			} else if (FloatDataset.class.equals(clazz)) {
-				c = new FloatDataset(a);
-			} else if (DoubleDataset.class.equals(clazz)) {
-				c = new DoubleDataset(a);
-			} else if (CompoundFloatDataset.class.equals(clazz)) {
-				if (a instanceof CompoundDataset) {
-					c = new CompoundFloatDataset((CompoundDataset) a);
-				} else {
-					c = new CompoundFloatDataset(a);
-				}
-			} else if (CompoundDoubleDataset.class.equals(clazz)) {
-				if (a instanceof CompoundDataset) {
-					c = new CompoundDoubleDataset((CompoundDataset) a);
-				} else {
-					c = new CompoundDoubleDataset(a);
-				}
-			} else if (ComplexFloatDataset.class.equals(clazz)) {
-				c = new ComplexFloatDataset(a);
-			} else if (ComplexDoubleDataset.class.equals(clazz)) {
-				c = new ComplexDoubleDataset(a);
-			} else if (RGBDataset.class.equals(clazz)) {
+			} else if (RGBDataset.class.isAssignableFrom(clazz)) {
 				if (a instanceof CompoundDataset) {
 					c = RGBDataset.createFromCompoundDataset((CompoundDataset) a);
 				} else {
 					c = new RGBDataset(a);
 				}
-			} else if (StringDataset.class.equals(clazz)) {
-				c = new StringDataset(a);
-			} else if (DateDataset.class.equals(clazz)) {
+			} else if (CompoundShortDataset.class.isAssignableFrom(clazz)) {
+				if (a instanceof CompoundDataset) {
+					c = new CompoundShortDataset((CompoundDataset) a);
+				} else {
+					c = new CompoundShortDataset(a);
+				}
+			} else if (CompoundIntegerDataset.class.isAssignableFrom(clazz)) {
+				if (a instanceof CompoundDataset) {
+					c = new CompoundIntegerDataset((CompoundDataset) a);
+				} else {
+					c = new CompoundIntegerDataset(a);
+				}
+			} else if (CompoundLongDataset.class.isAssignableFrom(clazz)) {
+				if (a instanceof CompoundDataset) {
+					c = new CompoundLongDataset((CompoundDataset) a);
+				} else {
+					c = new CompoundLongDataset(a);
+				}
+			} else if (FloatDataset.class.isAssignableFrom(clazz)) {
+				c = new FloatDataset(a);
+			} else if (DoubleDataset.class.isAssignableFrom(clazz)) {
+				c = new DoubleDataset(a);
+			} else if (ComplexFloatDataset.class.isAssignableFrom(clazz)) {
+				c = new ComplexFloatDataset(a);
+			} else if (ComplexDoubleDataset.class.isAssignableFrom(clazz)) {
+				c = new ComplexDoubleDataset(a);
+			} else if (CompoundFloatDataset.class.isAssignableFrom(clazz)) {
+				if (a instanceof CompoundDataset) {
+					c = new CompoundFloatDataset((CompoundDataset) a);
+				} else {
+					c = new CompoundFloatDataset(a);
+				}
+			} else if (CompoundDoubleDataset.class.isAssignableFrom(clazz)) {
+				if (a instanceof CompoundDataset) {
+					c = new CompoundDoubleDataset((CompoundDataset) a);
+				} else {
+					c = new CompoundDoubleDataset(a);
+				}
+			} else if (DateDataset.class.isAssignableFrom(clazz)) {
 				c = DateDatasetImpl.createFromObject(a);
-			} else if (ObjectDataset.class.equals(clazz)) {
+			} else if (StringDataset.class.isAssignableFrom(clazz)) {
+				c = new StringDataset(a);
+			} else if (ObjectDataset.class.isAssignableFrom(clazz)) {
 				c = new ObjectDataset(a);
 			} else {
 				utilsLogger.error("Dataset of unknown type!");
@@ -818,10 +821,11 @@ public class DatasetUtils {
 	 *            The dataset to be cast.
 	 * @return dataset of given class
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T extends Dataset> T cast(Class<T> clazz, final IDataset d) {
 		Dataset a = convertToDataset(d);
 
-		if ((a.getClass().equals(clazz))) {
+		if (a.getClass().equals(clazz)) {
 			return (T) a;
 		}
 		return copy(clazz, d);
@@ -855,6 +859,7 @@ public class DatasetUtils {
 	 * @param isize item size
 	 * @since 2.3
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T extends Dataset> T cast(final int isize, Class<T> clazz, final IDataset d, final boolean repeat) {
 		Dataset a = convertToDataset(d);
 
@@ -874,47 +879,47 @@ public class DatasetUtils {
 
 		try {
 			// copy across the data
-			if (BooleanDataset.class.equals(clazz)) {
+			if (BooleanDataset.class.isAssignableFrom(clazz)) {
 				c = new BooleanDataset(a);
-			} else if (ByteDataset.class.equals(clazz)) {
+			} else if (ByteDataset.class.isAssignableFrom(clazz)) {
 				c = new ByteDataset(a);
-			} else if (ShortDataset.class.equals(clazz)) {
+			} else if (ShortDataset.class.isAssignableFrom(clazz)) {
 				c = new ShortDataset(a);
-			} else if (IntegerDataset.class.equals(clazz)) {
+			} else if (IntegerDataset.class.isAssignableFrom(clazz)) {
 				c = new IntegerDataset(a);
-			} else if (LongDataset.class.equals(clazz)) {
+			} else if (LongDataset.class.isAssignableFrom(clazz)) {
 				c = new LongDataset(a);
-			} else if (CompoundByteDataset.class.equals(clazz)) {
+			} else if (CompoundByteDataset.class.isAssignableFrom(clazz)) {
 				c = new CompoundByteDataset(isize, repeat, a);
-			} else if (CompoundShortDataset.class.equals(clazz)) {
-				c = new CompoundShortDataset(isize, repeat, a);
-			} else if (CompoundIntegerDataset.class.equals(clazz)) {
-				c = new CompoundIntegerDataset(isize, repeat, a);
-			} else if (CompoundLongDataset.class.equals(clazz)) {
-				c = new CompoundLongDataset(isize, repeat, a);
-			} else if (FloatDataset.class.equals(clazz)) {
-				c = new FloatDataset(a);
-			} else if (DoubleDataset.class.equals(clazz)) {
-				c = new DoubleDataset(a);
-			} else if (CompoundFloatDataset.class.equals(clazz)) {
-				c = new CompoundFloatDataset(isize, repeat, a);
-			} else if (CompoundDoubleDataset.class.equals(clazz)) {
-				c = new CompoundDoubleDataset(isize, repeat, a);
-			} else if (ComplexFloatDataset.class.equals(clazz)) {
-				c = new ComplexFloatDataset(a);
-			} else if (ComplexDoubleDataset.class.equals(clazz)) {
-				c = new ComplexDoubleDataset(a);
-			} else if (RGBDataset.class.equals(clazz)) {
+			} else if (RGBDataset.class.isAssignableFrom(clazz)) {
 				if (a instanceof CompoundDataset) {
 					c = RGBDataset.createFromCompoundDataset((CompoundDataset) a);
 				} else {
 					c = new RGBDataset(a);
 				}
-			} else if (StringDataset.class.equals(clazz)) {
-				c = new StringDataset(a);
-			} else if (DateDataset.class.equals(clazz)) {
+			} else if (CompoundShortDataset.class.isAssignableFrom(clazz)) {
+				c = new CompoundShortDataset(isize, repeat, a);
+			} else if (CompoundIntegerDataset.class.isAssignableFrom(clazz)) {
+				c = new CompoundIntegerDataset(isize, repeat, a);
+			} else if (CompoundLongDataset.class.isAssignableFrom(clazz)) {
+				c = new CompoundLongDataset(isize, repeat, a);
+			} else if (FloatDataset.class.isAssignableFrom(clazz)) {
+				c = new FloatDataset(a);
+			} else if (DoubleDataset.class.isAssignableFrom(clazz)) {
+				c = new DoubleDataset(a);
+			} else if (ComplexFloatDataset.class.isAssignableFrom(clazz)) {
+				c = new ComplexFloatDataset(a);
+			} else if (ComplexDoubleDataset.class.isAssignableFrom(clazz)) {
+				c = new ComplexDoubleDataset(a);
+			} else if (CompoundFloatDataset.class.isAssignableFrom(clazz)) {
+				c = new CompoundFloatDataset(isize, repeat, a);
+			} else if (CompoundDoubleDataset.class.isAssignableFrom(clazz)) {
+				c = new CompoundDoubleDataset(isize, repeat, a);
+			} else if (DateDataset.class.isAssignableFrom(clazz)) {
 				c = DateDatasetImpl.createFromObject(a);
-			} else if (ObjectDataset.class.equals(clazz)) {
+			} else if (StringDataset.class.isAssignableFrom(clazz)) {
+				c = new StringDataset(a);
+			} else if (ObjectDataset.class.isAssignableFrom(clazz)) {
 				c = new ObjectDataset(a);
 			} else {
 				utilsLogger.error("Dataset of unknown type!");
@@ -937,7 +942,7 @@ public class DatasetUtils {
 	 * @since 2.3
 	 */
 	public static  <T extends CompoundDataset> T compoundCast(Class<T> clazz, final Dataset... a) {
-		return (T) cast((Class<? extends Dataset>) clazz, a);
+		return createCompoundDataset(clazz, a);
 	}
 
 
@@ -951,34 +956,7 @@ public class DatasetUtils {
 	 * @since 2.3
 	 */
 	public static  CompoundDataset cast(Class<? extends Dataset> clazz, final Dataset... a) {
-		CompoundDataset c = null;
-		if (ByteDataset.class.equals(clazz) || CompoundByteDataset.class.equals(clazz)) {
-			c = new CompoundByteDataset(a);
-		} else if (ShortDataset.class.equals(clazz) || CompoundShortDataset.class.equals(clazz)) {
-			c = new CompoundShortDataset(a);
-		} else if (IntegerDataset.class.equals(clazz) || CompoundIntegerDataset.class.equals(clazz)) {
-			c = new CompoundIntegerDataset(a);
-		} else if (LongDataset.class.equals(clazz) || CompoundLongDataset.class.equals(clazz)) {
-			c = new CompoundLongDataset(a);
-		} else if (FloatDataset.class.equals(clazz) || CompoundFloatDataset.class.equals(clazz)) {
-			c = new CompoundFloatDataset(a);
-		} else if (DoubleDataset.class.equals(clazz) || CompoundDoubleDataset.class.equals(clazz)) {
-			c = new CompoundDoubleDataset(a);
-		} else if (ComplexFloatDataset.class.equals(clazz)) {
-			if (a.length != 2) {
-				throw new IllegalArgumentException("Need two datasets for complex dataset type");
-			}
-			c = new ComplexFloatDataset(a[0], a[1]);
-		} else if (ComplexDoubleDataset.class.equals(clazz)) {
-			if (a.length != 2) {
-				throw new IllegalArgumentException("Need two datasets for complex dataset type");
-			}
-			c = new ComplexDoubleDataset(a[0], a[1]);
-		} else {
-			utilsLogger.error("Dataset of unsupported type!");
-		}
-
-		return c;
+		return compoundCast(InterfaceUtils.getCompoundInterface(clazz), a);
 	}
 
 	/**
@@ -1023,32 +1001,24 @@ public class DatasetUtils {
 			return d;
 		}
 
-		int dtype = d.getDType();
-		switch (dtype) {
-		case Dataset.INT32:
-			d = new LongDataset(d);
-			unwrapUnsigned(d, 32);
-			break;
-		case Dataset.INT16:
-			d = new IntegerDataset(d);
-			unwrapUnsigned(d, 16);
-			break;
-		case Dataset.INT8:
+		if (d instanceof ByteDataset) {
 			d = new ShortDataset(d);
 			unwrapUnsigned(d, 8);
-			break;
-		case Dataset.ARRAYINT32:
-			d = new CompoundLongDataset(d);
-			unwrapUnsigned(d, 32);
-			break;
-		case Dataset.ARRAYINT16:
-			d = new CompoundIntegerDataset(d);
+		} else if (d instanceof ShortDataset) {
+			d = new IntegerDataset(d);
 			unwrapUnsigned(d, 16);
-			break;
-		case Dataset.ARRAYINT8:
+		} else if (d instanceof IntegerDataset) {
+			d = new LongDataset(d);
+			unwrapUnsigned(d, 32);
+		} else if (d instanceof CompoundByteDataset) {
 			d = new CompoundShortDataset(d);
 			unwrapUnsigned(d, 8);
-			break;
+		} else if (d instanceof CompoundShortDataset) {
+			d = new CompoundIntegerDataset(d);
+			unwrapUnsigned(d, 16);
+		} else if (d instanceof CompoundIntegerDataset) {
+			d = new CompoundLongDataset(d);
+			unwrapUnsigned(d, 32);
 		}
 		return d;
 	}
@@ -1059,64 +1029,38 @@ public class DatasetUtils {
 	 * @param bitWidth width of original primitive in bits
 	 */
 	public static void unwrapUnsigned(Dataset a, final int bitWidth) {
-		final int dtype = a.getDType();
 		final double dv = 1L << bitWidth;
 		final int isize = a.getElementsPerItem();
 		IndexIterator it = a.getIterator();
 
-		switch (dtype) {
-		case Dataset.BOOL:
-			break;
-		case Dataset.INT8:
-			break;
-		case Dataset.INT16:
+		if (a instanceof ShortDataset) {
 			ShortDataset sds = (ShortDataset) a;
 			final short soffset = (short) dv;
 			while (it.hasNext()) {
 				final short x = sds.getAbs(it.index);
-				if (x < 0)
+				if (x < 0) {
 					sds.setAbs(it.index, (short) (x + soffset));
+				}
 			}
-			break;
-		case Dataset.INT32:
+		} else if (a instanceof IntegerDataset) {
 			IntegerDataset ids = (IntegerDataset) a;
 			final int ioffset = (int) dv;
 			while (it.hasNext()) {
 				final int x = ids.getAbs(it.index);
-				if (x < 0)
+				if (x < 0) {
 					ids.setAbs(it.index, x + ioffset);
+				}
 			}
-			break;
-		case Dataset.INT64:
+		} else if (a instanceof LongDataset) {
 			LongDataset lds = (LongDataset) a;
 			final long loffset = (long) dv;
 			while (it.hasNext()) {
 				final long x = lds.getAbs(it.index);
-				if (x < 0)
+				if (x < 0) {
 					lds.setAbs(it.index, x + loffset);
+				}
 			}
-			break;
-		case Dataset.FLOAT32:
-			FloatDataset fds = (FloatDataset) a;
-			final float foffset = (float) dv;
-			while (it.hasNext()) {
-				final float x = fds.getAbs(it.index);
-				if (x < 0)
-					fds.setAbs(it.index, x + foffset);
-			}
-			break;
-		case Dataset.FLOAT64:
-			DoubleDataset dds = (DoubleDataset) a;
-			final double doffset = dv;
-			while (it.hasNext()) {
-				final double x = dds.getAbs(it.index);
-				if (x < 0)
-					dds.setAbs(it.index, x + doffset);
-			}
-			break;
-		case Dataset.ARRAYINT8:
-			break;
-		case Dataset.ARRAYINT16:
+		} else if (a instanceof CompoundShortDataset) {
 			CompoundShortDataset csds = (CompoundShortDataset) a;
 			final short csoffset = (short) dv;
 			final short[] csa = new short[isize];
@@ -1130,11 +1074,11 @@ public class DatasetUtils {
 						dirty = true;
 					}
 				}
-				if (dirty)
+				if (dirty) {
 					csds.setAbs(it.index, csa);
+				}
 			}
-			break;
-		case Dataset.ARRAYINT32:
+		} else if (a instanceof CompoundIntegerDataset) {
 			CompoundIntegerDataset cids = (CompoundIntegerDataset) a;
 			final int cioffset = (int) dv;
 			final int[] cia = new int[isize];
@@ -1148,11 +1092,11 @@ public class DatasetUtils {
 						dirty = true;
 					}
 				}
-				if (dirty)
+				if (dirty) {
 					cids.setAbs(it.index, cia);
+				}
 			}
-			break;
-		case Dataset.ARRAYINT64:
+		} else if (a instanceof CompoundLongDataset) {
 			CompoundLongDataset clds = (CompoundLongDataset) a;
 			final long cloffset = (long) dv;
 			final long[] cla = new long[isize];
@@ -1166,13 +1110,10 @@ public class DatasetUtils {
 						dirty = true;
 					}
 				}
-				if (dirty)
+				if (dirty) {
 					clds.setAbs(it.index, cla);
+				}
 			}
-			break;
-		default:
-			utilsLogger.error("Dataset of unsupported type for this method");
-			break;
 		}
 	}
 
@@ -1214,21 +1155,7 @@ public class DatasetUtils {
 	 */
 	@Deprecated
 	public static Dataset eye(final int rows, final int cols, final int offset, final int dtype) {
-		int[] shape = new int[] {rows, cols};
-		Dataset a = DatasetFactory.zeros(shape, dtype);
-
-		int[] pos = new int[] {0, offset};
-		while (pos[1] < 0) {
-			pos[0]++;
-			pos[1]++;
-		}
-		while (pos[0] < rows && pos[1] < cols) {
-			a.set(1, pos);
-			pos[0]++;
-			pos[1]++;
-		}
-
-		return a;
+		return eye(DTypeUtils.getInterface(dtype), rows, cols, offset);
 	}
 
 	/**
@@ -1239,19 +1166,18 @@ public class DatasetUtils {
 	 */
 	public static <T extends Dataset> T diag(final T a, final int offset) {
 		final int rank = a.getRank();
-		final int is = a.getElementsPerItem();
 
 		if (rank == 0 || rank > 2) {
 			utilsLogger.error("Rank of dataset should be one or two");
 			throw new IllegalArgumentException("Rank of dataset should be one or two");
 		}
 
-		Dataset result;
+		T result;
 		final int[] shape = a.getShapeRef();
 		if (rank == 1) {
 			int side = shape[0] + Math.abs(offset);
 			int[] pos = new int[] {side, side};
-			result = DatasetFactory.zeros(is, a.getClass(), pos);
+			result = zeros(a, pos);
 			if (offset >= 0) {
 				pos[0] = 0;
 				pos[1] = offset;
@@ -1269,7 +1195,7 @@ public class DatasetUtils {
 			int side = offset >= 0 ? Math.min(shape[0], shape[1]-offset) : Math.min(shape[0]+offset, shape[1]);
 			if (side < 0)
 				side = 0;
-			result = DatasetFactory.zeros(is, a.getClass(), side);
+			result = zeros(a, side);
 
 			if (side > 0) {
 				int[] pos = offset >= 0 ? new int[] { 0, offset } : new int[] { -offset, 0 };
@@ -1326,47 +1252,38 @@ public class DatasetUtils {
 
 		final IndexIterator it = result.getIterator(true);
 		final int[] pos = it.getPos();
-		switch (DTypeUtils.getDType(clazz)) {
-		case Dataset.BOOL:
+		if (BooleanDataset.class.isAssignableFrom(clazz)) {
 			while (it.hasNext()) {
 				result.setObjectAbs(it.index, data.getBoolean(pos));
 			}
-			break;
-		case Dataset.INT8:
+		} else if (ByteDataset.class.isAssignableFrom(clazz)) {
 			while (it.hasNext()) {
 				result.setObjectAbs(it.index, data.getByte(pos));
 			}
-			break;
-		case Dataset.INT16:
+		} else if (ShortDataset.class.isAssignableFrom(clazz)) {
 			while (it.hasNext()) {
 				result.setObjectAbs(it.index, data.getShort(pos));
 			}
-			break;
-		case Dataset.INT32:
+		} else if (IntegerDataset.class.isAssignableFrom(clazz)) {
 			while (it.hasNext()) {
 				result.setObjectAbs(it.index, data.getInt(pos));
 			}
-			break;
-		case Dataset.INT64:
+		} else if (LongDataset.class.isAssignableFrom(clazz)) {
 			while (it.hasNext()) {
 				result.setObjectAbs(it.index, data.getLong(pos));
 			}
-			break;
-		case Dataset.FLOAT32:
+		} else if (FloatDataset.class.isAssignableFrom(clazz)) {
 			while (it.hasNext()) {
 				result.setObjectAbs(it.index, data.getFloat(pos));
 			}
-			break;
-		case Dataset.FLOAT64:
+		} else if (DoubleDataset.class.isAssignableFrom(clazz)) {
 			while (it.hasNext()) {
 				result.setObjectAbs(it.index, data.getDouble(pos));
 			}
-			break;
-		default:
+		} else {
 			while (it.hasNext()) {
 				result.setObjectAbs(it.index, data.getObject(pos));
 			}
-			break;
 		}
 
 		result.setErrors(data.getErrors());
@@ -1382,7 +1299,7 @@ public class DatasetUtils {
 		if (datasets == null || datasets.length == 0)
 			return null;
 
-		return createCompoundDataset(datasets[0].getDType(), datasets);
+		return (CompoundDataset) createCompoundDataset(InterfaceUtils.getCompoundInterface(datasets[0].getClass()), datasets);
 	}
 
 	/**
@@ -1391,8 +1308,52 @@ public class DatasetUtils {
 	 * @param datasets
 	 * @return compound dataset or null if none given
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T extends CompoundDataset> T createCompoundDataset(Class<T> clazz, final Dataset... datasets) {
-		return (T) createCompoundDataset(DTypeUtils.getDType(clazz), datasets);
+		if (datasets == null || datasets.length == 0)
+			return null;
+
+		CompoundDataset c = null;
+		if (CompoundByteDataset.class.isAssignableFrom(clazz)) {
+			c = new CompoundByteDataset(datasets);
+		} else if (RGBDataset.class.isAssignableFrom(clazz)) {
+			if (datasets.length == 1) {
+				c = new RGBDataset(datasets[0]);
+			} else if (datasets.length == 3) {
+				c = new RGBDataset(datasets[0], datasets[1], datasets[2]);
+			} else {
+				throw new IllegalArgumentException("Need one or three datasets for RGB dataset");
+			}
+		} else if (CompoundShortDataset.class.isAssignableFrom(clazz)) {
+			c = new CompoundShortDataset(datasets);
+		} else if (CompoundIntegerDataset.class.isAssignableFrom(clazz)) {
+			c = new CompoundIntegerDataset(datasets);
+		} else if (CompoundLongDataset.class.isAssignableFrom(clazz)) {
+			c = new CompoundLongDataset(datasets);
+		} else if (ComplexFloatDataset.class.isAssignableFrom(clazz)) {
+			if (datasets.length == 1) {
+				c = new ComplexFloatDataset(datasets[0]);
+			} else if (datasets.length >= 2) {
+				c = new ComplexFloatDataset(datasets[0], datasets[1]);
+			} else {
+				throw new IllegalArgumentException("Need one or more datasets for complex dataset type");
+			}
+		} else if (ComplexDoubleDataset.class.isAssignableFrom(clazz)) {
+			if (datasets.length == 1) {
+				c = new ComplexDoubleDataset(datasets[0]);
+			} else if (datasets.length >= 2) {
+				c = new ComplexDoubleDataset(datasets[0], datasets[1]);
+			} else {
+				throw new IllegalArgumentException("Need one or more datasets for complex dataset type");
+			}
+		} else if (CompoundFloatDataset.class.isAssignableFrom(clazz)) {
+			c = new CompoundFloatDataset(datasets);
+		} else if (DoubleDataset.class.equals(clazz) || CompoundDoubleDataset.class.isAssignableFrom(clazz)) {
+			c = new CompoundDoubleDataset(datasets);
+		} else {
+			utilsLogger.error("Dataset of unsupported interface");
+		}
+		return (T) c;
 	}
 
 	/**
@@ -1405,50 +1366,7 @@ public class DatasetUtils {
 	 */
 	@Deprecated
 	public static CompoundDataset createCompoundDataset(final int dtype, final Dataset... datasets) {
-		if (datasets == null || datasets.length == 0)
-			return null;
-
-		switch (dtype) {
-		case Dataset.INT8:
-		case Dataset.ARRAYINT8:
-			return new CompoundByteDataset(datasets);
-		case Dataset.INT16:
-		case Dataset.ARRAYINT16:
-			return new CompoundShortDataset(datasets);
-		case Dataset.INT32:
-		case Dataset.ARRAYINT32:
-			return new CompoundIntegerDataset(datasets);
-		case Dataset.INT64:
-		case Dataset.ARRAYINT64:
-			return new CompoundLongDataset(datasets);
-		case Dataset.FLOAT32:
-		case Dataset.ARRAYFLOAT32:
-			return new CompoundFloatDataset(datasets);
-		case Dataset.FLOAT64:
-		case Dataset.ARRAYFLOAT64:
-			return new CompoundDoubleDataset(datasets);
-		case Dataset.COMPLEX64:
-		case Dataset.COMPLEX128:
-			if (datasets.length > 2) {
-				utilsLogger.error("At most two datasets are allowed");
-				throw new IllegalArgumentException("At most two datasets are allowed");
-			} else if (datasets.length == 2) {
-				return dtype == Dataset.COMPLEX64 ? new ComplexFloatDataset(datasets[0], datasets[1]) : new ComplexDoubleDataset(datasets[0], datasets[1]);
-			}
-			return dtype == Dataset.COMPLEX64 ? new ComplexFloatDataset(datasets[0]) : new ComplexDoubleDataset(datasets[0]);
-		case Dataset.RGB:
-			if (datasets.length == 1) {
-				return new RGBDataset(datasets[0]);
-			} else if (datasets.length == 3) {
-				return new RGBDataset(datasets[0], datasets[1], datasets[2]);
-			} else {
-				utilsLogger.error("Only one or three datasets are allowed to create a RGB dataset");
-				throw new IllegalArgumentException("Only one or three datasets are allowed to create a RGB dataset");
-			}
-		default:
-			utilsLogger.error("Dataset type not supported for this operation");
-			throw new UnsupportedOperationException("Dataset type not supported");
-		}
+		return createCompoundDataset(InterfaceUtils.getCompoundInterface(DTypeUtils.getInterface(dtype)), datasets);
 	}
 
 	/**
@@ -1480,23 +1398,23 @@ public class DatasetUtils {
 			}
 			nshape[d] = l / itemSize;
 		}
-		switch (dataset.getDType()) {
-		case Dataset.INT8:
+
+		if (dataset instanceof ByteDataset) {
 			return new CompoundByteDataset(itemSize, (byte[]) dataset.getBuffer(), nshape);
-		case Dataset.INT16:
+		} else if (dataset instanceof ShortDataset) {
 			return new CompoundShortDataset(itemSize, (short[]) dataset.getBuffer(), nshape);
-		case Dataset.INT32:
+		} else if (dataset instanceof IntegerDataset) {
 			return new CompoundIntegerDataset(itemSize, (int[]) dataset.getBuffer(), nshape);
-		case Dataset.INT64:
+		} else if (dataset instanceof LongDataset) {
 			return new CompoundLongDataset(itemSize, (long[]) dataset.getBuffer(), nshape);
-		case Dataset.FLOAT32:
+		} else if (dataset instanceof FloatDataset) {
 			return new CompoundFloatDataset(itemSize, (float[]) dataset.getBuffer(), nshape);
-		case Dataset.FLOAT64:
+		} else if (dataset instanceof DoubleDataset) {
 			return new CompoundDoubleDataset(itemSize, (double[]) dataset.getBuffer(), nshape);
-		default:
-			utilsLogger.error("Dataset type not supported for this operation");
-			throw new UnsupportedOperationException("Dataset type not supported");
-		}
+		} 
+
+		utilsLogger.error("Dataset interface not supported for this operation");
+		throw new UnsupportedOperationException("Dataset interface not supported");
 	}
 
 
@@ -1507,23 +1425,22 @@ public class DatasetUtils {
 	 * @return compound dataset
 	 */
 	public static CompoundDataset createCompoundDatasetFromLastAxis(final Dataset a, final boolean shareData) {
-		switch (a.getDType()) {
-		case Dataset.INT8:
+		if (a instanceof ByteDataset) {
 			return CompoundByteDataset.createCompoundDatasetWithLastDimension(a, shareData);
-		case Dataset.INT16:
+		} else if (a instanceof ShortDataset) {
 			return CompoundShortDataset.createCompoundDatasetWithLastDimension(a, shareData);
-		case Dataset.INT32:
+		} else if (a instanceof IntegerDataset) {
 			return CompoundIntegerDataset.createCompoundDatasetWithLastDimension(a, shareData);
-		case Dataset.INT64:
+		} else if (a instanceof LongDataset) {
 			return CompoundLongDataset.createCompoundDatasetWithLastDimension(a, shareData);
-		case Dataset.FLOAT32:
+		} else if (a instanceof FloatDataset) {
 			return CompoundFloatDataset.createCompoundDatasetWithLastDimension(a, shareData);
-		case Dataset.FLOAT64:
+		} else if (a instanceof DoubleDataset) {
 			return CompoundDoubleDataset.createCompoundDatasetWithLastDimension(a, shareData);
-		default:
-			utilsLogger.error("Dataset type not supported for this operation");
-			throw new UnsupportedOperationException("Dataset type not supported");
 		}
+
+		utilsLogger.error("Dataset interface not supported for this operation");
+		throw new UnsupportedOperationException("Dataset interface not supported");
 	}
 
 	/**
@@ -1907,33 +1824,24 @@ public class DatasetUtils {
 		Object matrix;
 
 		int[] shape = a.getShapeRef();
-		switch (a.getDType()) {
-		case Dataset.BOOL:
+		if (a instanceof BooleanDataset) {
 			matrix = Array.newInstance(boolean.class, shape);
-			break;
-		case Dataset.INT8:
+		} else if (a instanceof ByteDataset) {
 			matrix = Array.newInstance(byte.class, shape);
-			break;
-		case Dataset.INT16:
+		} else if (a instanceof ShortDataset) {
 			matrix = Array.newInstance(short.class, shape);
-			break;
-		case Dataset.INT32:
+		} else if (a instanceof IntegerDataset) {
 			matrix = Array.newInstance(int.class, shape);
-			break;
-		case Dataset.INT64:
+		} else if (a instanceof LongDataset) {
 			matrix = Array.newInstance(long.class, shape);
-			break;
-		case Dataset.FLOAT32:
+		} else if (a instanceof FloatDataset) {
 			matrix = Array.newInstance(float.class, shape);
-			break;
-		case Dataset.FLOAT64:
+		} else if (a instanceof DoubleDataset) {
 			matrix = Array.newInstance(double.class, shape);
-			break;
-		default:
+		} else {
 			utilsLogger.error("Dataset type not supported");
 			throw new IllegalArgumentException("Dataset type not supported");
 		}
-
 		// populate matrix
 		setRow(matrix, a);
 		return matrix;
@@ -2313,7 +2221,7 @@ public class DatasetUtils {
 	 * @return rolled dataset
 	 */
 	public static <T extends Dataset> T roll(final T a, final int shift, Integer axis) {
-		Dataset r = DatasetFactory.zeros(a);
+		T r = DatasetFactory.zeros(a);
 		int is = a.getElementsPerItem();
 		if (axis == null) {
 			IndexIterator it = a.getIterator();
@@ -2351,7 +2259,7 @@ public class DatasetUtils {
 				r.setItemsOnAxes(pos, hit, v.getBuffer());
 			}
 		}
-		return (T) r;
+		return r;
 	}
 
 	/**
@@ -2361,6 +2269,7 @@ public class DatasetUtils {
 	 * @param start The position with it right of the destination of the rolled axis
 	 * @return dataset with rolled axis
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T extends Dataset> T rollAxis(final T a, int axis, int start) {
 		int r = a.getRank();
 		axis = a.checkAxis(axis);
@@ -2401,6 +2310,7 @@ public class DatasetUtils {
 	 * @param a dataset must be at least 2D
 	 * @return view of flipped dataset
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T extends Dataset> T flipLeftRight(final T a) {
 		if (a.getRank() < 2) {
 			throw new IllegalArgumentException("Dataset must be at least 2D");
@@ -2413,6 +2323,7 @@ public class DatasetUtils {
 	 * @param a dataset
 	 * @return view of flipped dataset
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T extends Dataset> T flipUpDown(final T a) {
 		return (T) a.getSliceView(createFlippedSlice(a, 0));
 	}
@@ -2432,6 +2343,7 @@ public class DatasetUtils {
 	 * @param k number of 90-degree rotations
 	 * @return view of flipped dataset
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T extends Dataset> T rotate90(final T a, int k) {
 		k = k % 4;
 		while (k < 0) {
@@ -2516,7 +2428,7 @@ public class DatasetUtils {
 			int s = a.getElementsPerItem();
 			if (s > ds) {
 				ds = s;
-		}
+			}
 		}
 		if (dc == null || ds < 1) {
 			throw new IllegalArgumentException("Dataset types of choices are invalid");
@@ -2569,7 +2481,7 @@ public class DatasetUtils {
 			int s = a.getElementsPerItem();
 			if (s > ds) {
 				ds = s;
-		}
+			}
 		}
 		if (dc == null || ds < 1) {
 			throw new IllegalArgumentException("Dataset types of choices are invalid");
