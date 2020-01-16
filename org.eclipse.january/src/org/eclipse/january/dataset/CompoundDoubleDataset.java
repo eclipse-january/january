@@ -46,11 +46,6 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 		return array;
 	}
 
-	@Override
-	public int getDType() {
-		return Dataset.ARRAYFLOAT64; // DATA_TYPE
-	}
-
 	/**
 	 * Create a null dataset
 	 */
@@ -378,7 +373,7 @@ public class CompoundDoubleDataset extends AbstractCompoundDataset {
 			logger.error("Need a single-element dataset");
 			throw new IllegalArgumentException("Need a single-element dataset");
 		}
-		if (a.getDType() != Dataset.FLOAT64) { // DATA_TYPE
+		if (!DoubleDataset.class.isAssignableFrom(a.getClass())) { // CLASS_TYPE
 			logger.error("Dataset type must be double"); // PRIM_TYPE 
 			throw new IllegalArgumentException("Dataset type must be double"); // PRIM_TYPE 
 		}

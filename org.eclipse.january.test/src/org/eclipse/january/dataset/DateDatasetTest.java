@@ -10,33 +10,38 @@
 package org.eclipse.january.dataset;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
 
-import org.eclipse.january.dataset.DateDataset;
-import org.eclipse.january.dataset.DateDatasetImpl;
-import org.eclipse.january.dataset.IndexIterator;
+import org.eclipse.january.asserts.TestUtils;
 import org.junit.Test;
 
 public class DateDatasetTest {
+	static final long START_DATE = 1443657600000l; // 2015-10-01 00:00:00 GMT
+	static final int INTERVAL = 24 * 60 * 60 * 1000; // 1 day in seconds
 	
+	// create an array of dates starting 1st Oct 2015, each 1 day apart
+	private int[] createOffsets(int pts) {
+		int[] times = new int[pts];
+		for (int i = 0; i < pts; i++) {
+			times[i] = INTERVAL * i;
+		}
+		return times;
+	}
+
 	@Test
 	public void testConstructor() {
 		assertEquals(0, new DateDatasetImpl().getSize());
 		assertEquals(0, DatasetFactory.createFromObject(new Date(0)).getRank());
 
-		// create an array of dates starting 1st Oct 2015, each 1 day apart
-		final long startDate = 1443657600000l; // 2015-10-01 00:00:00 GMT
-		final long interval = 24 * 60 * 60 * 1000; // 1 day
-		final int numDates = 10;
-		final Date[] dates = new Date[numDates];
-		long currentDate = startDate;
+		int numDates = 10;
+		int[] times = createOffsets(numDates);
+		Date[] dates = new Date[numDates];
 		for (int i = 0; i < numDates; i++) {
-			dates[i] = new Date(currentDate);
-			currentDate += interval;
+			dates[i] = new Date(times[i] + START_DATE);
 		}
-		// add to new DateDataset
-		DateDatasetImpl dataset = new DateDatasetImpl(dates, null);
+		DateDatasetImpl dataset = new DateDatasetImpl(dates);
 		
 		IndexIterator it = dataset.getIterator();
 		for (int i = 0; it.hasNext(); i++) {
@@ -51,6 +56,120 @@ public class DateDatasetTest {
 		assertEquals(date, dataset.getDateAbs(0));
 
 		Dataset d = DatasetFactory.createFromObject(date);
-		assertEquals(Dataset.DATE, d.getDType());
+		assertTrue(d instanceof DateDataset);
+	}
+
+	static class TimeDataset extends IntegerDataset implements DateDataset {
+		private static final long serialVersionUID = 1L;
+		long start;
+
+		public TimeDataset(int[] times) {
+			super(times, null);
+		}
+		
+		static TimeDataset createDateDataset(Date start, int[] times) {
+			TimeDataset t = new TimeDataset(times);
+			t.setEpoch(start);
+			return t;
+		}
+
+		/**
+		 * Set instant in time as origin used internally
+		 * @param start
+		 */
+		public void setEpoch(Date start) {
+			this.start = start.getTime();
+		}
+
+		@Override
+		public Date getDate() {
+			long t = getLong();
+			return new Date(start + t);
+		}
+
+		@Override
+		public Date getDate(int i) {
+			long t = getLong(i);
+			return new Date(start + t);
+		}
+
+		@Override
+		public Date getDate(int i, int j) {
+			long t = getLong(i, j);
+			return new Date(start + t);
+		}
+
+		@Override
+		public Date getDate(int... pos) {
+			long t = getLong(pos);
+			return new Date(start + t);
+		}
+
+		@Override
+		public Date getDateAbs(int index) {
+			long t = getElementLongAbs(index);
+			return new Date(start + t);
+		}
+
+		@Override
+		public Object getObject() {
+			return getDate();
+		}
+
+		@Override
+		public Object getObject(int i) {
+			return getDate(i);
+		}
+
+		@Override
+		public Object getObject(int i, int j) {
+			return getDate(i, j);
+		}
+
+		@Override
+		public Object getObject(int... pos) {
+			return getDate(pos);
+		}
+
+		@Override
+		public Object getObjectAbs(int index) {
+			return getDateAbs(index);
+		}
+	}
+
+	static class TimeDataset2 extends TimeDataset {
+		private static final long serialVersionUID = 1L;
+
+		public TimeDataset2(int[] times) {
+			super(times);
+		}
+
+		static TimeDataset2 createDateDataset(Date start, int[] times) {
+			TimeDataset2 t = new TimeDataset2(times);
+			t.setEpoch(start);
+			return t;
+		}
+	}
+
+	@Test
+	public void testOtherImplementation() {
+		int numDates = 10;
+		int[] times = createOffsets(numDates);
+		Date[] dates = new Date[numDates];
+		for (int i = 0; i < numDates; i++) {
+			dates[i] = new Date(times[i] + START_DATE);
+		}
+		DateDatasetImpl d = new DateDatasetImpl(dates);
+
+		assertTrue(d instanceof DateDataset);
+		assertEquals(dates[0], d.getDateAbs(0));
+
+		TimeDataset t = TimeDataset.createDateDataset(new Date(START_DATE), times);
+		assertTrue(t instanceof DateDataset);
+		TestUtils.assertDatasetEquals(d, t);
+
+		TimeDataset2 t2 = TimeDataset2.createDateDataset(new Date(START_DATE), times);
+		assertTrue(t2 instanceof DateDataset);
+		TestUtils.assertDatasetEquals(t, t2);
 	}
 }

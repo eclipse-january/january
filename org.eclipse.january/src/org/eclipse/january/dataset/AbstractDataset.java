@@ -68,6 +68,16 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	@Override
+	public Class<?> getElementClass() {
+		return InterfaceUtils.getElementClass(getClass());
+	}
+
+	@Override
+	public int getDType() {
+		return DTypeUtils.getDType(getClass());
+	}
+
+	@Override
 	public int hashCode() {
 		return getStats().getHash(shape);
 	}
@@ -100,7 +110,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends Dataset> T cast(Class<T> clazz) {
-		if (getClass().equals(clazz)) {
+		if (clazz.isInstance(this)) {
 			return (T) this;
 		}
 		return DatasetUtils.cast(clazz, this);
@@ -113,7 +123,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends Dataset> T cast(final int isize, Class<T> clazz, final boolean repeat) {
-		if (getClass().equals(clazz) && getElementsPerItem() == isize) {
+		if (clazz.isInstance(this) && getElementsPerItem() == isize) {
 			return (T) this;
 		}
 		return DatasetUtils.cast(isize, clazz, this, repeat);
@@ -139,21 +149,22 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		view.size = orig.getSize();
 		view.odata = orig.getBuffer();
 		view.offset = orig.getOffset();
-		view.base = orig instanceof AbstractDataset ? ((AbstractDataset) orig).base : null;
+		AbstractDataset a = orig instanceof AbstractDataset ? (AbstractDataset) orig : null;
+		view.base = a == null ? null : a.base;
 
+		int[] s = a == null ? null : a.stride;
 		if (clone) {
 			view.shape = orig.getShapeRef() == null ? null : orig.getShape();
-			view.stride = orig instanceof AbstractDataset && ((AbstractDataset) orig).stride != null ?
-					((AbstractDataset) orig).stride.clone() : null;
+			view.stride = s == null ? null : s.clone();
 		} else {
 			view.shape = orig.getShapeRef();
-			view.stride = orig instanceof AbstractDataset ? ((AbstractDataset) orig).stride : null;
+			view.stride = s;
 		}
 
 		view.metadata = getMetadataMap(orig, cloneMetadata);
-		int odtype = orig.getDType();
-		int vdtype = view.getDType();
-		if (odtype != vdtype) {
+		Class<? extends Dataset> oc = InterfaceUtils.findSubInterface(orig.getClass());
+		Class<? extends Dataset> vc = InterfaceUtils.findSubInterface(view.getClass());
+		if (!oc.equals(vc)) {
 			view.setDirty();
 		}
 	}
@@ -437,12 +448,12 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public int getElementsPerItem() {
-		return DTypeUtils.getElementsPerItem(getDType());
+		return InterfaceUtils.getElementsPerItem(getClass());
 	}
 
 	@Override
 	public int getItemBytes() {
-		return DTypeUtils.getItemBytes(getDType(), getElementsPerItem());
+		return InterfaceUtils.getItemBytes(getElementsPerItem(), getClass());
 	}
 
 	@Override
@@ -1026,7 +1037,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		final int rank = shape == null ? 0 : shape.length;
 		final StringBuilder out = new StringBuilder();
 
-		if (DTypeUtils.isDTypeElemental(getDType())) {
+		if (InterfaceUtils.isElemental(getClass())) {
 			out.append("Dataset ");
 		} else {
 			out.append("Compound dataset (");
@@ -1341,8 +1352,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public boolean isComplex() {
-		int type = getDType();
-		return type == COMPLEX64 || type == COMPLEX128;
+		return false;
 	}
 
 	@Override
@@ -1413,7 +1423,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		} else {
 			Class<? extends Dataset> dClass = getClass();
 			if (!BooleanDataset.class.equals(dClass)) {
-				dClass = DTypeUtils.getLargestDataset(dClass);
+				dClass = InterfaceUtils.getLargestInterface(this);
 			}
 			ds = DatasetFactory.createFromObject(getElementsPerItem(), dClass, obj);
 		}

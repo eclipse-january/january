@@ -43,8 +43,8 @@ allds = {
  }
 
 def generateclass(dclass):
-    handlers  = [ transmutate(__file__, defkey, defds[defkey], d, fds[d], True, isatomic=False) for d in fds ]
-    handlers += [ transmutate(__file__, defkey, defds[defkey], d, allds[d], False, isatomic=False) for d in allds ]
+    handlers  = [ transmutate(__file__, defkey, defds[defkey], d, fds[d], True) for d in fds ]
+    handlers += [ transmutate(__file__, defkey, defds[defkey], d, allds[d], False) for d in allds ]
     files  = [ open(d + ".java", "w") for d in fds ]
     files += [ open(d + ".java", "w") for d in allds ]
     ncls = len(files)

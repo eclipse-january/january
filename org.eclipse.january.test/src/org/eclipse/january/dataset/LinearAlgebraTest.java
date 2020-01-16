@@ -45,7 +45,7 @@ public class LinearAlgebraTest {
 		System.out.printf("Time taken %dus\n", start/1000);
 
 		assertArrayEquals("Shape", new int[] {5, 2}, c.getShapeRef());
-		assertEquals("Type", Dataset.FLOAT32, c.getDType());
+		assertTrue("Interface", c instanceof FloatDataset);
 
 		Dataset d = DatasetFactory.createFromObject(new double[] { 4400., 4730.,
 			4532.,  4874., 4664., 5018., 4796.,  5162., 4928.,  5306. }, 5, 2);

@@ -19,12 +19,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.eclipse.january.asserts.TestUtils;
-import org.eclipse.january.dataset.Dataset;
-import org.eclipse.january.dataset.DatasetFactory;
-import org.eclipse.january.dataset.DoubleDataset;
-import org.eclipse.january.dataset.IndexIterator;
-import org.eclipse.january.dataset.Maths;
-import org.eclipse.january.dataset.Slice;
 import org.junit.Test;
 
 public class CompoundDoubleDatasetTest {
@@ -355,5 +349,23 @@ public class CompoundDoubleDatasetTest {
 			}
 			
 		}
+	}
+
+	static class CompoundDoubleDataset2 extends CompoundDoubleDataset {
+		private static final long serialVersionUID = 1L;
+
+		public CompoundDoubleDataset2(final CompoundDoubleDataset dataset) {
+			super(dataset);
+		}
+	}
+
+	@Test
+	public void testSubclassing() {
+		double[] da = { 0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5,
+				6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5 };
+		CompoundDoubleDataset a = new CompoundDoubleDataset(2, da);
+
+		CompoundDoubleDataset2 b = new CompoundDoubleDataset2(a);
+		TestUtils.assertDatasetEquals(a, b);
 	}
 }

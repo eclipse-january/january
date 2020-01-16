@@ -160,6 +160,11 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 		}, dataset.getName(), dataset.getElementsPerItem(), dataset.getClass(), dataset.getShapeRef());
 	}
 
+	@Override
+	public Class<?> getElementClass() {
+		return InterfaceUtils.getElementClass(clazz);
+	}
+
 	/**
 	 * Can return -1 for unknown
 	 */
@@ -757,7 +762,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	 */
 	public static int getMaxSliceLength(ILazyDataset lazySet, int dimension) {
 		// size in bytes of each item
-		final double size = DTypeUtils.getItemBytes(DTypeUtils.getDTypeFromClass(lazySet.getElementClass()), lazySet.getElementsPerItem());
+		final double size = InterfaceUtils.getItemBytes(lazySet.getElementsPerItem(), InterfaceUtils.getInterface(lazySet));
 		
 		// Max in bytes takes into account our minimum requirement
 		final double max  = Math.max(Runtime.getRuntime().totalMemory(), Runtime.getRuntime().maxMemory());

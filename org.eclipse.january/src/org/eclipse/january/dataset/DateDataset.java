@@ -51,5 +51,4 @@ public interface DateDataset extends Dataset {
 	 * @return date
 	 */
 	public Date getDateAbs(final int index);
-	
 }

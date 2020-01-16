@@ -46,11 +46,6 @@ public class DateDatasetImpl extends StringDataset implements DateDataset {
 		super(datesToStrings(data), shape);
 	}
 
-	@Override
-	public int getDType() {
-		return DATE;
-	}
-
 	private static String[] datesToStrings(final Date[] dates) {
 		final String[] dateStrings = new String[dates.length];
 		for (int i = 0; i < dates.length; i++) {
@@ -138,7 +133,32 @@ public class DateDatasetImpl extends StringDataset implements DateDataset {
 		
 		return null;
 	}
-	
+
+	@Override
+	public Object getObject() {
+		return getDate();
+	}
+
+	@Override
+	public Object getObject(int i) {
+		return getDate(i);
+	}
+
+	@Override
+	public Object getObject(int i, int j) {
+		return getDate(i, j);
+	}
+
+	@Override
+	public Object getObject(int... pos) {
+		return getDate(pos);
+	}
+
+	@Override
+	public Object getObjectAbs(int index) {
+		return getDateAbs(index);
+	}
+
 	@Override
 	public void setItemDirect(final int dindex, final int sindex, final Object src) {
 		if (src instanceof String[]) {

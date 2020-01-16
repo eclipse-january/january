@@ -46,11 +46,6 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 		return array;
 	}
 
-	@Override
-	public int getDType() {
-		return Dataset.ARRAYFLOAT32; // DATA_TYPE
-	}
-
 	/**
 	 * Create a null dataset
 	 */
@@ -378,7 +373,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 			logger.error("Need a single-element dataset");
 			throw new IllegalArgumentException("Need a single-element dataset");
 		}
-		if (a.getDType() != Dataset.FLOAT32) { // DATA_TYPE
+		if (!FloatDataset.class.isAssignableFrom(a.getClass())) { // CLASS_TYPE
 			logger.error("Dataset type must be float"); // PRIM_TYPE
 			throw new IllegalArgumentException("Dataset type must be float"); // PRIM_TYPE
 		}
