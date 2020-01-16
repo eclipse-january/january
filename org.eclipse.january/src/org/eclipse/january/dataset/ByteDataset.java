@@ -52,11 +52,6 @@ public class ByteDataset extends AbstractDataset {
 		return array;
 	}
 
-	@Override
-	public int getDType() {
-		return INT8; // DATA_TYPE
-	}
-
 	/**
 	 * Create a null dataset
 	 */

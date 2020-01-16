@@ -11,9 +11,10 @@ package org.eclipse.january.asserts;
 
 import java.util.Arrays;
 
-import org.eclipse.january.dataset.DTypeUtils;
+import org.eclipse.january.dataset.BooleanDataset;
 import org.eclipse.january.dataset.Dataset;
 import org.eclipse.january.dataset.IndexIterator;
+import org.eclipse.january.dataset.InterfaceUtils;
 import org.eclipse.january.dataset.ObjectDataset;
 import org.eclipse.january.dataset.StringDataset;
 import org.junit.Assert;
@@ -118,11 +119,11 @@ public class TestUtils {
 	 * @param absTolerance 
 	 */
 	public static void assertDatasetEquals(Dataset expected, Dataset actual, boolean testDTypeAndItemSize, double relTolerance, double absTolerance) {
-		final int dtype = expected.getDType();
 		final int eis = expected.getElementsPerItem();
 		final int ais = actual.getElementsPerItem();
+		Class<? extends Dataset> clazz = InterfaceUtils.findSubInterface(expected.getClass());
 		if (testDTypeAndItemSize) {
-			Assert.assertEquals("Type", dtype, actual.getDType());
+			Assert.assertEquals("Interface", clazz, InterfaceUtils.findSubInterface(actual.getClass()));
 			Assert.assertEquals("Itemsize", eis, ais);
 		}
 		Assert.assertEquals("Size", expected.getSize(), actual.getSize());
@@ -140,7 +141,7 @@ public class TestUtils {
 		final int is = Math.max(eis, ais);
 
 		int n = 0;
-		if (DTypeUtils.isDTypeInteger(dtype)) {
+		if (InterfaceUtils.isInteger(clazz)) {
 			while (et.hasNext() && at.hasNext()) {
 				for (int j = 0; j < is; j++) {
 					long e = j >= eis ? 0 : expected.getElementLongAbs(et.index + j);
@@ -150,7 +151,7 @@ public class TestUtils {
 				}
 				n++;
 			}
-		} else if (DTypeUtils.isDTypeFloating(dtype)) {
+		} else if (InterfaceUtils.isFloating(clazz)) {
 			while (et.hasNext() && at.hasNext()) {
 				for (int j = 0; j < is; j++) {
 					double e = j >= eis ? 0 : expected.getElementDoubleAbs(et.index + j);
@@ -160,7 +161,7 @@ public class TestUtils {
 				}
 				n++;
 			}
-		} else if (dtype == Dataset.BOOL) {
+		} else if (BooleanDataset.class.isAssignableFrom(clazz)) {
 			while (et.hasNext() && at.hasNext()) {
 				for (int j = 0; j < is; j++) {
 					boolean e = j >= eis ? false : expected.getElementBooleanAbs(et.index + j);
@@ -170,7 +171,7 @@ public class TestUtils {
 				}
 				n++;
 			}
-		} else if (dtype == Dataset.STRING) {
+		} else if (StringDataset.class.isAssignableFrom(clazz)) {
 			StringDataset es = (StringDataset) expected;
 			StringDataset as = (StringDataset) actual;
 	
@@ -179,7 +180,7 @@ public class TestUtils {
 						es.getAbs(et.index), as.getAbs(at.index));
 				n++;
 			}
-		} else if (dtype == Dataset.OBJECT) {
+		} else if (ObjectDataset.class.isAssignableFrom(clazz)) {
 			ObjectDataset eo = (ObjectDataset) expected;
 			ObjectDataset ao = (ObjectDataset) actual;
 	
@@ -189,7 +190,11 @@ public class TestUtils {
 				n++;
 			}
 		} else {
-			throw new IllegalArgumentException("Unknown or unsupported dataset type");
+			while (et.hasNext() && at.hasNext()) {
+				Assert.assertEquals("Value does not match at " + Arrays.toString(et.getPos()) + ": ",
+						expected.getObjectAbs(et.index), actual.getObjectAbs(at.index));
+				n++;
+			}
 		}
 
 		Assert.assertEquals("Total items checked", expected.getSize(), n);

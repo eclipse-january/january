@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.january" version="2">
     <resource path="META-INF/MANIFEST.MF">
-        <filter id="923795461">
+        <filter id="931135546">
             <message_arguments>
-                <message_argument value="2.3.0"/>
+                <message_argument value="2.3.1"/>
                 <message_argument value="2.2.0"/>
             </message_arguments>
         </filter>
@@ -13,6 +13,20 @@
             <message_arguments>
                 <message_argument value="org.eclipse.january.dataset.Dataset"/>
                 <message_argument value="cast(int, Class&lt;T&gt;, boolean)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/january/dataset/DatasetFactory.java" type="org.eclipse.january.dataset.DatasetFactory">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.DatasetFactory"/>
+                <message_argument value="createComplexDataset(Class&lt;T&gt;, Object, Object)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.DatasetFactory"/>
+                <message_argument value="createCompoundDataset(Class&lt;T&gt;, Object[])"/>
             </message_arguments>
         </filter>
     </resource>
@@ -74,6 +88,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/january/dataset/LazyDatasetBase.java" type="org.eclipse.january.dataset.LazyDatasetBase">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.LazyDatasetBase"/>
+                <message_argument value="getElementClass()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/january/dataset/LazyDynamicDataset.java" type="org.eclipse.january.dataset.LazyDynamicDataset">
         <filter id="1141899266">
             <message_arguments>
@@ -89,6 +111,47 @@
                 <message_argument value="2.2"/>
                 <message_argument value="2.3"/>
                 <message_argument value="LazyWriteableDataset(LazyWriteableDataset)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/january/dataset/RGBDataset.java" type="org.eclipse.january.dataset.RGBDataset">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.RGBDataset"/>
+                <message_argument value="createBlueDataset(T)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.RGBDataset"/>
+                <message_argument value="createGreenDataset(T)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.RGBDataset"/>
+                <message_argument value="createRedDataset(T)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.1"/>
+                <message_argument value="2.3"/>
+                <message_argument value="createBlueDataset(Class&lt;T&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.1"/>
+                <message_argument value="2.3"/>
+                <message_argument value="createGreenDataset(Class&lt;T&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.1"/>
+                <message_argument value="2.3"/>
+                <message_argument value="createRedDataset(Class&lt;T&gt;)"/>
             </message_arguments>
         </filter>
     </resource>

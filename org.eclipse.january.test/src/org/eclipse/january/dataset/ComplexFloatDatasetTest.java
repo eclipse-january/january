@@ -10,6 +10,7 @@
 package org.eclipse.january.dataset;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.eclipse.january.dataset.ComplexFloatDataset;
 import org.eclipse.january.dataset.Dataset;
@@ -26,7 +27,7 @@ public class ComplexFloatDatasetTest {
 		float[] da = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
 		ComplexFloatDataset a = new ComplexFloatDataset(da);
 
-		assertEquals(Dataset.COMPLEX64, a.getDType());
+		assertTrue("Interface", ComplexFloatDataset.class.isAssignableFrom(a.getClass()));
 		assertEquals(2, a.getElementsPerItem());
 		assertEquals(8, a.getItemBytes());
 
@@ -43,7 +44,7 @@ public class ComplexFloatDatasetTest {
 		}
 
 		Dataset aa = Maths.abs(a);
-		assertEquals(Dataset.FLOAT32, aa.getDType());
+		assertTrue("Interface", FloatDataset.class.isAssignableFrom(aa.getClass()));
 		assertEquals(1, aa.getElementsPerItem());
 		assertEquals(4, aa.getItemBytes());		
 

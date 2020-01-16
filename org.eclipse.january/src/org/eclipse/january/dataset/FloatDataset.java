@@ -52,11 +52,6 @@ public class FloatDataset extends AbstractDataset {
 		return array;
 	}
 
-	@Override
-	public int getDType() {
-		return FLOAT32; // DATA_TYPE
-	}
-
 	/**
 	 * Create a null dataset
 	 */

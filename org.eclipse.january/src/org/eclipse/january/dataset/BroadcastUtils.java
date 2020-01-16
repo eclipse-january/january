@@ -253,7 +253,7 @@ public final class BroadcastUtils {
 				throw new IllegalArgumentException("Can not broadcast where number of elements per item mismatch and one does not equal another");
 			}
 		}
-		if (o != null && o.getDType() != Dataset.BOOL) {
+		if (o != null && BooleanDataset.class.isAssignableFrom(o.getClass())) {
 			final int ism = Math.max(isa, isb);
 			final int iso = o.getElementsPerItem();
 			if (iso != ism && iso != 1 && ism != 1) {

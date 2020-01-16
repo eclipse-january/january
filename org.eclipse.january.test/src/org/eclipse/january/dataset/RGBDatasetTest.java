@@ -128,5 +128,9 @@ public class RGBDatasetTest {
 		h.iadd(360);
 		a = RGBDataset.createFromHSL(h, s, l);
 		TestUtils.assertDatasetEquals(rgb, a, 1, 1);
+
+		FloatDataset bf = rgb.createBlueDataset(FloatDataset.class);
+		s = DatasetFactory.createFromObject(FloatDataset.class, new short[] {0, 0, 0, 255, 255, 191});
+		TestUtils.assertDatasetEquals(s, bf, 1, 1);
 	}
 }

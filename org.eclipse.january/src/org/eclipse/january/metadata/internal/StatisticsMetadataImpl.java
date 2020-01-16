@@ -20,7 +20,6 @@ import java.util.Map;
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
 import org.eclipse.january.dataset.CompoundDataset;
 import org.eclipse.january.dataset.CompoundDoubleDataset;
-import org.eclipse.january.dataset.DTypeUtils;
 import org.eclipse.january.dataset.Dataset;
 import org.eclipse.january.dataset.DatasetFactory;
 import org.eclipse.january.dataset.DoubleDataset;
@@ -601,7 +600,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 			min = DatasetFactory.zeros(clazz, nshape);
 			maxIndex = axes.length == 1 ? DatasetFactory.zeros(IntegerDataset.class, nshape) : null;
 			minIndex = axes.length == 1 ? DatasetFactory.zeros(IntegerDataset.class, nshape) : null;
-			sum = DatasetFactory.zeros(DTypeUtils.getLargestDataset(clazz), nshape);
+			sum = DatasetFactory.zeros(InterfaceUtils.getLargestInterface(dataset), nshape);
 			mean = DatasetFactory.zeros(DoubleDataset.class, nshape);
 			var = DatasetFactory.zeros(DoubleDataset.class, nshape);
 		} else {
@@ -609,7 +608,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 			min = null;
 			maxIndex = null;
 			minIndex = null;
-			sum = DatasetFactory.zeros(isize, DTypeUtils.getLargestDataset(clazz), nshape);
+			sum = DatasetFactory.zeros(isize, InterfaceUtils.getLargestInterface(dataset), nshape);
 			mean = DatasetFactory.zeros(isize, CompoundDoubleDataset.class, nshape);
 			var = DatasetFactory.zeros(isize, CompoundDoubleDataset.class, nshape);
 		}
