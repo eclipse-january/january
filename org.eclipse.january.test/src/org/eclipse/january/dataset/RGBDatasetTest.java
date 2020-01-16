@@ -26,6 +26,7 @@ import org.junit.Test;
  * Basic tests of RGB dataset
  */
 public class RGBDatasetTest {
+
 	@Test
 	public void testConstructors() {
 		assertEquals(0, new RGBDataset().getSize());
@@ -79,6 +80,23 @@ public class RGBDatasetTest {
 	}
 
 	@Test
+	public void testConstructorsWithSliceViews() {
+		int n = 10;
+		Dataset a = DatasetFactory.createRange(IntegerDataset.class, 3*n).reshape(3, n);
+
+		Dataset r = a.getSliceView(new Slice(0, 1)).squeeze();
+		Dataset g = a.getSliceView(new Slice(1, 2)).squeeze();
+		Dataset b = a.getSliceView(new Slice(2, 3)).squeeze();
+
+		RGBDataset c = new RGBDataset(r, g, b);
+		for (int i = 0; i < n; i++) {
+			assertEquals(r.getInt(i), c.getRed(i));
+			assertEquals(g.getInt(i), c.getGreen(i));
+			assertEquals(b.getInt(i), c.getBlue(i));
+		}
+	}
+
+	@Test
 	public void testConverters() {
 		short[] rgbs = new short[] {
 				255, 0, 0,     // Red
@@ -110,5 +128,9 @@ public class RGBDatasetTest {
 		h.iadd(360);
 		a = RGBDataset.createFromHSL(h, s, l);
 		TestUtils.assertDatasetEquals(rgb, a, 1, 1);
+
+		FloatDataset bf = rgb.createBlueDataset(FloatDataset.class);
+		s = DatasetFactory.createFromObject(FloatDataset.class, new short[] {0, 0, 0, 255, 255, 191});
+		TestUtils.assertDatasetEquals(s, bf, 1, 1);
 	}
 }

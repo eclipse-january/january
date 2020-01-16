@@ -51,11 +51,6 @@ public class StringDatasetBase extends AbstractDataset {
 		return array;
 	}
 
-	@Override
-	public int getDType() {
-		return STRING; // DATA_TYPE
-	}
-
 	/**
 	 * Create a null dataset
 	 */

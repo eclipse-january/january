@@ -177,7 +177,7 @@ public class SliceIterator extends IndexIterator {
 	public SliceIterator(final int[] shape, final int length, final int[] start, final int[] step, final int[] sshape,
 			final int isize) {
 		this.isize = isize;
-		int rank = shape.length;
+		final int rank = shape == null ? 0 : shape.length;
 		endrank = rank - 1;
 		this.shape = shape;
 		this.start = new int[rank];
@@ -232,7 +232,7 @@ public class SliceIterator extends IndexIterator {
 	 *            may be {@code null}
 	 */
 	public void setStart(int... newStart) {
-		final int rank = shape.length;
+		final int rank = shape == null ? 0 : shape.length;
 		if (rank == 0) {
 			index = -istep;
 			return;
@@ -263,7 +263,8 @@ public class SliceIterator extends IndexIterator {
 	 */
 	@Override
 	public void reset() {
-		if (shape.length == 0) {
+		final int rank = shape == null ? 0 : shape.length;
+		if (rank == 0) {
 			index = -istep;
 		} else {
 			// work out index of first position

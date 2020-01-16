@@ -47,6 +47,13 @@ public class PositionIteratorTest {
 	}
 
 	@Test
+	public void testNullShapeIteration() {
+		PositionIterator it = new PositionIterator(null);
+
+		assertFalse(it.hasNext());
+	}
+
+	@Test
 	public void testZeroSizedIteration() {
 		PositionIterator it = new PositionIterator(new int[] {4, 0, 4});
 

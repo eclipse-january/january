@@ -20,7 +20,6 @@ import java.util.Map;
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
 import org.eclipse.january.dataset.CompoundDataset;
 import org.eclipse.january.dataset.CompoundDoubleDataset;
-import org.eclipse.january.dataset.DTypeUtils;
 import org.eclipse.january.dataset.Dataset;
 import org.eclipse.january.dataset.DatasetFactory;
 import org.eclipse.january.dataset.DoubleDataset;
@@ -55,7 +54,6 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 	private MaxMin<T>[] mms;
 	private SummaryStatistics[][] summaries;
 
-	
 	@Dirtiable
 	private boolean isDirty = true;
 
@@ -152,6 +150,13 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 		return idx;
 	}
 
+	private Number toNumber(double x) {
+		if (dataset != null) {
+			return InterfaceUtils.fromDoubleToNumber(dataset.getClass(), x);
+		}
+		return Double.valueOf(x);
+	}
+
 	/**
 	 * Calculate summary statistics for a dataset
 	 * @param mm
@@ -160,6 +165,15 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 	 */
 	@SuppressWarnings("unchecked")
 	private void setMaxMinSum(final MaxMin<T> mm, final boolean ignoreNaNs, final boolean ignoreInfs) {
+		if (dataset.getSize() == 0) {
+			mm.maximum = null;
+			mm.minimum = null;
+			mm.sum = (T) (isize == 1 ? InterfaceUtils.fromDoubleToBiggestNumber(clazz, 0) : null);
+			mm.maximumPositions = null;
+			mm.minimumPositions = null;
+			return;
+		}
+
 		final IndexIterator iter = dataset.getIterator();
 
 		if (!InterfaceUtils.isNumerical(clazz)) { // TODO FIXME for strings
@@ -242,8 +256,8 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 				}
 			}
 
-			mm.maximum = (T) (hasNaNs ? Double.NaN : InterfaceUtils.fromDoubleToBiggestNumber(clazz, amax));
-			mm.minimum = (T) (hasNaNs ? Double.NaN : InterfaceUtils.fromDoubleToBiggestNumber(clazz, amin));
+			mm.maximum = (T) (hasNaNs ? Double.NaN : toNumber(amax));
+			mm.minimum = (T) (hasNaNs ? Double.NaN : toNumber(amin));
 			mm.sum     = (T) (hasNaNs ? Double.NaN : InterfaceUtils.fromDoubleToBiggestNumber(clazz, asum));
 		} else {
 			while (iter.hasNext()) {
@@ -313,8 +327,8 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 				}
 			}
 
-			mm.maximum = (T) (hasNaNs ? Double.NaN : InterfaceUtils.fromDoubleToBiggestNumber(clazz, stats.getMax()));
-			mm.minimum = (T) (hasNaNs ? Double.NaN : InterfaceUtils.fromDoubleToBiggestNumber(clazz, stats.getMin()));
+			mm.maximum = (T) (hasNaNs ? Double.NaN : toNumber(stats.getMax()));
+			mm.minimum = (T) (hasNaNs ? Double.NaN : toNumber(stats.getMin()));
 			mm.sum     = (T) (hasNaNs ? Double.NaN : InterfaceUtils.fromDoubleToBiggestNumber(clazz, stats.getSum()));
 		} else {
 			double[] vals = new double[isize];
@@ -425,7 +439,11 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 	@Override
 	public T getMaximum(boolean... ignoreInvalids) {
 		int idx = refresh(isize == 1, ignoreInvalids);
-		return mms[idx].maximum;
+		T t = mms[idx].maximum;
+		if (t == null) {
+			throw new UnsupportedOperationException("Cannot operate on zero-sized dataset");
+		}
+		return t;
 	}
 
 	@Override
@@ -459,7 +477,11 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 	@Override
 	public T getMinimum(boolean... ignoreInvalids) {
 		int idx = refresh(isize == 1, ignoreInvalids);
-		return mms[idx].minimum;
+		T t = mms[idx].minimum;
+		if (t == null) {
+			throw new UnsupportedOperationException("Cannot operate on zero-sized dataset");
+		}
+		return t;
 	}
 
 	@Override
@@ -578,7 +600,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 			min = DatasetFactory.zeros(clazz, nshape);
 			maxIndex = axes.length == 1 ? DatasetFactory.zeros(IntegerDataset.class, nshape) : null;
 			minIndex = axes.length == 1 ? DatasetFactory.zeros(IntegerDataset.class, nshape) : null;
-			sum = DatasetFactory.zeros(DTypeUtils.getLargestDataset(clazz), nshape);
+			sum = DatasetFactory.zeros(InterfaceUtils.getLargestInterface(dataset), nshape);
 			mean = DatasetFactory.zeros(DoubleDataset.class, nshape);
 			var = DatasetFactory.zeros(DoubleDataset.class, nshape);
 		} else {
@@ -586,7 +608,7 @@ public class StatisticsMetadataImpl<T> implements StatisticsMetadata<T> {
 			min = null;
 			maxIndex = null;
 			minIndex = null;
-			sum = DatasetFactory.zeros(isize, DTypeUtils.getLargestDataset(clazz), nshape);
+			sum = DatasetFactory.zeros(isize, InterfaceUtils.getLargestInterface(dataset), nshape);
 			mean = DatasetFactory.zeros(isize, CompoundDoubleDataset.class, nshape);
 			var = DatasetFactory.zeros(isize, CompoundDoubleDataset.class, nshape);
 		}

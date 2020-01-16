@@ -15,15 +15,10 @@ package org.eclipse.january.dataset;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.eclipse.january.asserts.TestUtils;
-import org.eclipse.january.dataset.Dataset;
-import org.eclipse.january.dataset.DatasetFactory;
-import org.eclipse.january.dataset.DoubleDataset;
-import org.eclipse.january.dataset.IndexIterator;
-import org.eclipse.january.dataset.Maths;
-import org.eclipse.january.dataset.Slice;
 import org.junit.Test;
 
 public class CompoundDoubleDatasetTest {
@@ -241,6 +236,29 @@ public class CompoundDoubleDatasetTest {
 
 		assertArrayEquals(new double[] {33, 34, 35}, a.maxItem(), 1e-10);
 
+		// invalid slice view check
+		CompoundDataset v = a.getSliceView(new Slice(14, 24));
+		try {
+			v.max();
+			fail("Should have thrown exception");
+		} catch (UnsupportedOperationException e) {
+			// do nothing
+		} catch (Exception e) {
+			fail("Unexpected exception");
+		}
+		try {
+			v.minPos();
+			fail("Should have thrown exception");
+		} catch (UnsupportedOperationException e) {
+			// do nothing
+		} catch (Exception e) {
+			fail("Unexpected exception");
+		}
+		assertArrayEquals(new double[3], (double[]) v.sum(), 1e-10);
+		for (double x : (double[]) v.mean()) {
+			assertTrue(Double.isNaN(x));
+		}
+
 		a.setShape(3, 1, 4);
 		CompoundDataset b = a.sum(0);
 		assertEquals(DatasetFactory.zeros(LongDataset.class, 1, 4).fill(3) , a.count(0));
@@ -331,5 +349,23 @@ public class CompoundDoubleDatasetTest {
 			}
 			
 		}
+	}
+
+	static class CompoundDoubleDataset2 extends CompoundDoubleDataset {
+		private static final long serialVersionUID = 1L;
+
+		public CompoundDoubleDataset2(final CompoundDoubleDataset dataset) {
+			super(dataset);
+		}
+	}
+
+	@Test
+	public void testSubclassing() {
+		double[] da = { 0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5,
+				6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5 };
+		CompoundDoubleDataset a = new CompoundDoubleDataset(2, da);
+
+		CompoundDoubleDataset2 b = new CompoundDoubleDataset2(a);
+		TestUtils.assertDatasetEquals(a, b);
 	}
 }

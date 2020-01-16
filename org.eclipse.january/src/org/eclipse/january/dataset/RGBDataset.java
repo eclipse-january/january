@@ -23,11 +23,6 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 
 	private static final int ISIZE = 3; // number of elements per item
 
-	@Override
-	public int getDType() {
-		return Dataset.RGB;
-	}
-
 	/**
 	 * Create a null dataset
 	 */
@@ -184,8 +179,8 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 
 		for (int i = 0; riter.hasNext() && giter.hasNext() && biter.hasNext();) {
 			data[i++] = (short) red.getElementLongAbs(riter.index);
-			data[i++] = (short) green.getElementLongAbs(riter.index);
-			data[i++] = (short) blue.getElementLongAbs(riter.index);
+			data[i++] = (short) green.getElementLongAbs(giter.index);
+			data[i++] = (short) blue.getElementLongAbs(biter.index);
 		}
 	}
 
@@ -562,7 +557,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * @since 2.2
 	 */
 	public <T extends Dataset> T createGreyDataset(final Class<T> clazz) {
-		return (T) createGreyDataset(clazz, Wr, Wg, Wb);
+		return createGreyDataset(clazz, Wr, Wg, Wb);
 	}
 
 	/**
@@ -574,9 +569,15 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * @return a grey-scale dataset of given class
 	 * @since 2.2
 	 */
-	@SuppressWarnings("unchecked")
 	public <T extends Dataset> T createGreyDataset(final Class<T> clazz, final double red, final double green, final double blue) {
-		return (T) createGreyDataset(red, green, blue, DTypeUtils.getDType(clazz));
+		final T grey = DatasetFactory.zeros(clazz, shape);
+		final IndexIterator it = getIterator();
+
+		int i = 0;
+		while (it.hasNext()) {
+			grey.setObjectAbs(i++, red*data[it.index] + green*data[it.index + 1] + blue*data[it.index + 2]);
+		}
+		return grey;
 	}
 
 	/**
@@ -601,14 +602,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 */
 	@Deprecated
 	public Dataset createGreyDataset(final double red, final double green, final double blue, final int dtype) {
-		final Dataset grey = DatasetFactory.zeros(shape, dtype);
-		final IndexIterator it = getIterator();
-
-		int i = 0;
-		while (it.hasNext()) {
-			grey.setObjectAbs(i++, red*data[it.index] + green*data[it.index + 1] + blue*data[it.index + 2]);
-		}
-		return grey;
+		return createGreyDataset(DTypeUtils.getInterface(dtype), red, green, blue);
 	}
 
 	/**
@@ -617,7 +611,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * @return a dataset of given class
 	 * @since 2.1
 	 */
-	public <T extends Dataset> T createRedDataset(final T clazz) {
+	public <T extends Dataset> T createRedDataset(final Class<T> clazz) {
 		return createColourChannelDataset(0, clazz, "red");
 	}
 
@@ -627,7 +621,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * @return a dataset of given class
 	 * @since 2.1
 	 */
-	public <T extends Dataset> T createGreenDataset(final T clazz) {
+	public <T extends Dataset> T createGreenDataset(final Class<T> clazz) {
 		return createColourChannelDataset(1, clazz, "green");
 	}
 
@@ -637,7 +631,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * @return a dataset of given class
 	 * @since 2.1
 	 */
-	public <T extends Dataset> T createBlueDataset(final T clazz) {
+	public <T extends Dataset> T createBlueDataset(final Class<T> clazz) {
 		return createColourChannelDataset(2, clazz, "blue");
 	}
 
@@ -649,7 +643,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 */
 	@Deprecated
 	public Dataset createRedDataset(final int dtype) {
-		return createColourChannelDataset(0, dtype, "red");
+		return createColourChannelDataset(0, DTypeUtils.getInterface(dtype), "red");
 	}
 
 	/**
@@ -660,7 +654,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 */
 	@Deprecated
 	public Dataset createGreenDataset(final int dtype) {
-		return createColourChannelDataset(1, dtype, "green");
+		return createColourChannelDataset(1, DTypeUtils.getInterface(dtype), "green");
 	}
 
 	/**
@@ -671,18 +665,11 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 */
 	@Deprecated
 	public Dataset createBlueDataset(final int dtype) {
-		return createColourChannelDataset(2, dtype, "blue");
+		return createColourChannelDataset(2, DTypeUtils.getInterface(dtype), "blue");
 	}
 
-	@SuppressWarnings("unchecked")
-	private <T extends Dataset> T createColourChannelDataset(int channelOffset, T clazz, String cName) {
-		return (T) createColourChannelDataset(channelOffset, DTypeUtils.getDType(clazz), cName);
-	}
-
-
-	@Deprecated
-	private Dataset createColourChannelDataset(final int channelOffset, final int dtype, final String cName) {
-		final Dataset channel = DatasetFactory.zeros(shape, dtype);
+	private <T extends Dataset> T createColourChannelDataset(int channelOffset, Class<T> clazz, String cName) {
+		final T channel = DatasetFactory.zeros(clazz, shape);
 
 		final StringBuilder cname = name == null ? new StringBuilder() : new StringBuilder(name);
 		if (cname.length() > 0) {
@@ -700,6 +687,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 
 		return channel;
 	}
+
 
 	/**
 	 * @return red view

@@ -51,11 +51,6 @@ public class BooleanDatasetBase extends AbstractDataset {
 		return array;
 	}
 
-	@Override
-	public int getDType() {
-		return BOOL; // DATA_TYPE
-	}
-
 	/**
 	 * Create a null dataset
 	 */

@@ -12,6 +12,7 @@ package org.eclipse.january.dataset;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.apache.commons.math3.complex.Complex;
@@ -232,11 +233,32 @@ public class DoubleDatasetTest {
 	@Test
 	public void testStats() {
 		Dataset a = DatasetFactory.createRange(12);
-		assertEquals(11., a.max().doubleValue(), 1e-6);
+		assertEquals(Double.valueOf(11), a.max());
 		assertEquals(0., a.min().doubleValue(), 1e-6);
 		assertEquals(5.5, ((Number) a.mean()).doubleValue(), 1e-6);
 		assertEquals(3.6055512754639891, a.stdDeviation(), 1e-6);
 		assertEquals(13., a.variance(), 1e-6);
+
+		// invalid slice view check
+		Dataset v = a.getSliceView(new Slice(14, 24));
+		try {
+			v.max();
+			fail("Should have thrown exception");
+		} catch (UnsupportedOperationException e) {
+			// do nothing
+		} catch (Exception e) {
+			fail("Unexpected exception");
+		}
+		try {
+			v.minPos();
+			fail("Should have thrown exception");
+		} catch (UnsupportedOperationException e) {
+			// do nothing
+		} catch (Exception e) {
+			fail("Unexpected exception");
+		}
+		assertEquals(0., ((Number) v.sum()).doubleValue(), 1e-6);
+		assertTrue(Double.isNaN(((Number) v.mean()).doubleValue()));
 
 		a.setShape(3, 1, 4);
 		Dataset b = a.sum(0);
@@ -533,11 +555,27 @@ public class DoubleDatasetTest {
 		c = a.clone();
 		TestUtils.assertDatasetEquals(Maths.power(a, z).cast(DoubleDataset.class), c.ipower(z));
 
-
 		// floor
 		a = Maths.multiply(a, 1.5);
 
 		c = a.clone();
 		TestUtils.assertDatasetEquals(Maths.floor(a), c.ifloor());
+	}
+
+	static class DoubleDataset2 extends DoubleDataset {
+		private static final long serialVersionUID = 1L;
+
+		public DoubleDataset2(final DoubleDataset dataset) {
+			super(dataset);
+		}
+	}
+
+	@Test
+	public void testSubclassing() {
+		double[] da = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
+		DoubleDataset a = new DoubleDataset(da);
+
+		DoubleDataset2 b = new DoubleDataset2(a);
+		TestUtils.assertDatasetEquals(a, b);
 	}
 }

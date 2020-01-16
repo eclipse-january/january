@@ -45,10 +45,11 @@ public class ContiguousIteratorWithPosition extends IndexIterator {
 	 * @param isize number of elements in an item
 	 */
 	public ContiguousIteratorWithPosition(final int[] shape, final int length, final int isize) {
+		final int rank = shape == null ? 0 : shape.length;
 		this.shape = shape;
-		endrank = this.shape.length - 1;
+		endrank = rank - 1;
 		istep = isize;
-		if (shape.length == 0) {
+		if (rank == 0) {
 			pos = new int[0];
 		} else {
 			pos = new int[endrank + 1];
@@ -88,7 +89,7 @@ public class ContiguousIteratorWithPosition extends IndexIterator {
 
 	@Override
 	public void reset() {
-		if (shape.length > 0) {
+		if (shape != null && shape.length > 0) {
 			Arrays.fill(pos, 0);
 			pos[endrank] = -1;
 		}

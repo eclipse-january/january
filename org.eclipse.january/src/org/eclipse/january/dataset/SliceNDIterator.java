@@ -55,7 +55,7 @@ public class SliceNDIterator extends IndexIterator {
 	public SliceNDIterator(SliceND slice, int... axes) {
 		cSlice = slice.clone();
 		int[] sShape = cSlice.getSourceShape();
-		shape = cSlice.getShape().clone();
+		shape = sShape == null ? null : cSlice.getShape().clone();
 		start = cSlice.getStart();
 		stop  = cSlice.getStop();
 		step  = cSlice.getStep();
@@ -64,7 +64,7 @@ public class SliceNDIterator extends IndexIterator {
 				throw new UnsupportedOperationException("Negative steps not implemented");
 			}
 		}
-		int rank = shape.length;
+		final int rank = shape == null ? 0 : shape.length;
 		endrank = rank - 1;
 
 		omit = new boolean[rank];
@@ -214,6 +214,7 @@ public class SliceNDIterator extends IndexIterator {
 
 	@Override
 	public void reset() {
+		once = false;
 		for (int i = 0, k = 0; i <= endrank; i++) {
 			int b = start[i];
 			int d = step[i];
@@ -235,7 +236,7 @@ public class SliceNDIterator extends IndexIterator {
 				break;
 		}
 		if (j > endrank) {
-			once = true;
+			once = shape != null;
 			return;
 		}
 

@@ -45,13 +45,16 @@ complex:
   	q = ibx / iby;
   	den = ibx * q + iby;
   	ox = (iax * q + iay) / den;
-  	oy = (iay * q - ibx) / den;
+  	oy = (iay * q - iax) / den;
   } else {
   	q = iby / ibx;
   	den = iby * q + ibx;
   	ox = (iay * q + iax) / den;
   	oy = (iay - iax * q) / den;
   }
+complex_b_real;
+  ox = iax / ibx;
+  oy = iay / ibx;
 
 biop:
   dividez - a / b, division of a by b
@@ -67,12 +70,20 @@ complex:
   	q = ibx / iby;
   	den = ibx * q + iby;
   	ox = (iax * q + iay) / den;
-  	oy = (iay * q - ibx) / den;
+  	oy = (iay * q - iax) / den;
   } else {
   	q = iby / ibx;
   	den = iby * q + ibx;
   	ox = (iay * q + iax) / den;
   	oy = (iay - iax * q) / den;
+  }
+complex_b_real;
+  if (ibx == 0) {
+  	ox = 0;
+  	oy = 0;
+  } else {
+  	ox = iax / ibx;
+  	oy = iay / ibx;
   }
 
 biop:
@@ -99,13 +110,16 @@ complex:
   	q = ibx / iby;
   	den = ibx * q + iby;
   	ox = (iax * q + iay) / den;
-  	oy = (iay * q - ibx) / den;
+  	oy = (iay * q - iax) / den;
   } else {
   	q = iby / ibx;
   	den = iby * q + ibx;
   	ox = (iay * q + iax) / den;
   	oy = (iay - iax * q) / den;
   }
+complex_b_real;
+  ox = iax / ibx;
+  oy = iay / ibx;
 
 biop:
   power - a ** b, raise a to power of b

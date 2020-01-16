@@ -29,11 +29,6 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 
 	private static final int ISIZE = 2; // number of elements per item
 
-	@Override
-	public int getDType() {
-		return Dataset.COMPLEX64; // DATA_TYPE
-	}
-
 	/**
 	 * Create a null dataset
 	 */
@@ -208,6 +203,11 @@ public class ComplexFloatDataset extends CompoundFloatDataset { // CLASS_TYPE
 	 */
 	static ComplexFloatDataset ones(final int... shape) {
 		return new ComplexFloatDataset(shape).fill(1);
+	}
+
+	@Override
+	public boolean isComplex() {
+		return true;
 	}
 
 	@Override

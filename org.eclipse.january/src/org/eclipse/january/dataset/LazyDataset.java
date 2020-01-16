@@ -143,11 +143,11 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	 * @param dataset
 	 */
 	public static LazyDataset createLazyDataset(final Dataset dataset) {
-		return new LazyDataset(dataset.getName(), dataset.getDType(), dataset.getElementsPerItem(), dataset.getShapeRef(),
-		new ILazyLoader() {
+		return new LazyDataset(new ILazyLoader() {
 			private static final long serialVersionUID = -6725268922780517523L;
 
 			final Dataset d = dataset;
+
 			@Override
 			public boolean isFileReadable() {
 				return true;
@@ -157,7 +157,12 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 			public Dataset getDataset(IMonitor mon, SliceND slice) throws IOException {
 				return d.getSlice(mon, slice);
 			}
-		});
+		}, dataset.getName(), dataset.getElementsPerItem(), dataset.getClass(), dataset.getShapeRef());
+	}
+
+	@Override
+	public Class<?> getElementClass() {
+		return InterfaceUtils.getElementClass(clazz);
 	}
 
 	/**
@@ -174,6 +179,15 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	 */
 	public Class<? extends Dataset> getInterface() {
 		return clazz;
+	}
+
+	/**
+	 * Set interface
+	 * @param clazz
+	 * @since 2.3
+	 */
+	public void setInterface(Class<? extends Dataset> clazz) {
+		this.clazz = clazz;
 	}
 
 	/**
@@ -748,7 +762,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	 */
 	public static int getMaxSliceLength(ILazyDataset lazySet, int dimension) {
 		// size in bytes of each item
-		final double size = DTypeUtils.getItemBytes(DTypeUtils.getDTypeFromClass(lazySet.getElementClass()), lazySet.getElementsPerItem());
+		final double size = InterfaceUtils.getItemBytes(lazySet.getElementsPerItem(), InterfaceUtils.getInterface(lazySet));
 		
 		// Max in bytes takes into account our minimum requirement
 		final double max  = Math.max(Runtime.getRuntime().totalMemory(), Runtime.getRuntime().maxMemory());

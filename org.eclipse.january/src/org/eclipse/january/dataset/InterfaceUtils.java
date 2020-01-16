@@ -16,6 +16,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.apache.commons.math3.complex.Complex;
 
@@ -34,10 +35,14 @@ public class InterfaceUtils {
 	private static final Map<Class<? extends Dataset>, Class<? extends CompoundDataset>> interface2Compound;
 
 	private static final Map<Class<? extends CompoundDataset>, Class<? extends Dataset>> compound2Interface;
+
+	private static Set<Class<? extends Dataset>> interfaces;
+
 	static {
 		class2Interface = createClassInterfaceMap();
 
 		interface2Class = createInterfaceClassMap();
+		interfaces = interface2Class.keySet();
 
 		elementBytes = createElementBytesMap();
 
@@ -48,6 +53,9 @@ public class InterfaceUtils {
 		for (Entry<Class<? extends Dataset>, Class<? extends CompoundDataset>> e : interface2Compound.entrySet()) {
 			compound2Interface.put(e.getValue(), e.getKey());
 		}
+		compound2Interface.put(RGBDataset.class, ShortDataset.class);
+		compound2Interface.put(ComplexFloatDataset.class, FloatDataset.class);
+		compound2Interface.put(ComplexDoubleDataset.class, DoubleDataset.class);
 	}
 
 	private static Map<Class<?>, Class<? extends Dataset>> createClassInterfaceMap() {
@@ -73,25 +81,27 @@ public class InterfaceUtils {
 	}
 
 	private static Map<Class<? extends Dataset>, Class<?>> createInterfaceClassMap() {
-		Map<Class<? extends Dataset>, Class<?>> result = new HashMap<>();
+		Map<Class<? extends Dataset>, Class<?>> result = new LinkedHashMap<>();
+		// ordering is likelihood of occurrence as it is used in an iterative check
+		// XXX for current implementation
+		result.put(DoubleDataset.class, Double.class);
+		result.put(DateDataset.class, Date.class); // XXX must be before string (and integer for unit test)
+		result.put(IntegerDataset.class, Integer.class);
 		result.put(BooleanDataset.class, Boolean.class);
+		result.put(StringDataset.class, String.class);
+		result.put(ComplexDoubleDataset.class, Double.class); // XXX must be before compound double
+		result.put(RGBDataset.class, Short.class); // XXX must be before compound short
 		result.put(ByteDataset.class, Byte.class);
 		result.put(ShortDataset.class, Short.class);
-		result.put(IntegerDataset.class, Integer.class);
 		result.put(LongDataset.class, Long.class);
 		result.put(FloatDataset.class, Float.class);
-		result.put(DoubleDataset.class, Double.class);
-		result.put(CompoundByteDataset.class, Byte.class);
+		result.put(ComplexFloatDataset.class, Float.class); // XXX must be before compound float
 		result.put(CompoundShortDataset.class, Short.class);
+		result.put(CompoundByteDataset.class, Byte.class);
 		result.put(CompoundIntegerDataset.class, Integer.class);
 		result.put(CompoundLongDataset.class, Long.class);
 		result.put(CompoundFloatDataset.class, Float.class);
 		result.put(CompoundDoubleDataset.class, Double.class);
-		result.put(ComplexFloatDataset.class, Float.class);
-		result.put(ComplexDoubleDataset.class, Double.class);
-		result.put(RGBDataset.class, Short.class);
-		result.put(StringDataset.class, String.class);
-		result.put(DateDataset.class, Date.class);
 		result.put(ObjectDataset.class, Object.class);
 		return result;
 	}
@@ -135,6 +145,39 @@ public class InterfaceUtils {
 	}
 
 	/**
+	 * @param object
+	 * @param dInterface dataset interface
+	 * @return true if object is an instance of dataset interface
+	 */
+	public static boolean isInstance(Object object, final Class<? extends Dataset> dInterface) {
+		return dInterface.isInstance(object);
+	}
+
+	/**
+	 * @param clazz
+	 * @param dInterface dataset interface
+	 * @return true if given class implements interface
+	 */
+	public static boolean hasInterface(final Class<? extends Dataset> clazz, final Class<? extends Dataset> dInterface) {
+		return dInterface.isAssignableFrom(clazz);
+	}
+
+	/**
+	 * @param clazz
+	 * @param dInterfaces dataset interface
+	 * @return true if given class implements any of the interfaces
+	 */
+	@SuppressWarnings("unchecked")
+	public static boolean hasInterface(final Class<? extends Dataset> clazz, final Class<? extends Dataset>... dInterfaces) {
+		for (Class<? extends Dataset> d : dInterfaces) {
+			if (d != null && d.isAssignableFrom(clazz)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * @param clazz
 	 * @return true if supported as an element class (note, Object is not supported)
 	 */
@@ -152,7 +195,7 @@ public class InterfaceUtils {
 
 	/**
 	 * Get dataset interface from an object. The following are supported: Java Number objects, Apache common math Complex
-	 * objects, Java arrays and lists
+	 * objects, Java arrays and lists, Dataset objects and ILazyDataset object
 	 *
 	 * @param obj
 	 * @return dataset interface 
@@ -168,10 +211,7 @@ public class InterfaceUtils {
 			List<?> jl = (List<?>) obj;
 			int l = jl.size();
 			for (int i = 0; i < l; i++) {
-				Class<? extends Dataset> lc = getInterface(jl.get(i));
-				if (isBetter(lc, dc)) {
-					dc = lc;
-				}
+				dc = getBestInterface(dc, getInterface(jl.get(i)));
 			}
 		} else if (obj.getClass().isArray()) {
 			Class<?> ca = obj.getClass().getComponentType();
@@ -181,13 +221,10 @@ public class InterfaceUtils {
 			int l = Array.getLength(obj);
 			for (int i = 0; i < l; i++) {
 				Object lo = Array.get(obj, i);
-				Class<? extends Dataset> lc = getInterface(lo);
-				if (isBetter(lc, dc)) {
-					dc = lc;
-				}
+				dc = getBestInterface(dc, getInterface(lo));
 			}
 		} else if (obj instanceof Dataset) {
-			return ((Dataset) obj).getClass();
+			dc = findSubInterface(((Dataset) obj).getClass());
 		} else if (obj instanceof ILazyDataset) {
 			dc = getInterfaceFromClass(((ILazyDataset) obj).getElementsPerItem(), ((ILazyDataset) obj).getElementClass());
 		} else {
@@ -197,6 +234,34 @@ public class InterfaceUtils {
 			}
 		}
 		return dc;
+	}
+
+	/**
+	 * Find sub-interface of Dataset
+	 * @param clazz
+	 * @return sub-interface or null if given class is Dataset.class
+	 * @since 2.3
+	 */
+	public static Class<? extends Dataset> findSubInterface(Class<? extends Dataset> clazz) {
+		if (Dataset.class.equals(clazz)) {
+			throw new IllegalArgumentException("Class must be a sub-interface of Dataset");
+		}
+		for (Class<? extends Dataset> i : interfaces) {
+			if (i.isAssignableFrom(clazz)) {
+				return i;
+			}
+		}
+		// XXX special cases for current implementation
+		if (BooleanDatasetBase.class.equals(clazz)) {
+			return BooleanDataset.class;
+		}
+		if (StringDatasetBase.class.equals(clazz)) {
+			return StringDataset.class;
+		}
+		if (ObjectDatasetBase.class.equals(clazz)) {
+			return ObjectDataset.class;
+		}
+		throw new IllegalArgumentException("Unknown sub-interface of Dataset");
 	}
 
 	/**
@@ -220,7 +285,27 @@ public class InterfaceUtils {
 	 * @return elemental dataset interface available for given dataset interface
 	 */
 	public static Class<? extends Dataset> getElementalInterface(final Class<? extends Dataset> clazz) {
-		return isElemental(clazz) ? clazz : compound2Interface.get(clazz);
+		Class<? extends Dataset> c = findSubInterface(clazz);
+		return isElemental(c) ? c : compound2Interface.get(c);
+	}
+
+	/**
+	 * @param clazz dataset interface
+	 * @return compound dataset interface available for given dataset interface
+	 */
+	@SuppressWarnings("unchecked")
+	public static Class<? extends CompoundDataset> getCompoundInterface(final Class<? extends Dataset> clazz) {
+		Class<? extends CompoundDataset> c = null; 
+		Class<? extends Dataset> d = findSubInterface(clazz);
+		if (isElemental(d)) {
+			c = interface2Compound.get(d);
+		} else {
+			c = (Class<? extends CompoundDataset>) d;
+		}
+		if (c == null) {
+			throw new IllegalArgumentException("Interface cannot be compound");
+		}
+		return c;
 	}
 
 	/**
@@ -236,7 +321,7 @@ public class InterfaceUtils {
 	 * @return true if dataset interface is not compound or complex
 	 */
 	public static boolean isElemental(Class<? extends Dataset> clazz) {
-		return !CompoundDataset.class.isAssignableFrom(clazz) || !ComplexFloatDataset.class.equals(clazz) || !ComplexDoubleDataset.class.equals(clazz);
+		return !CompoundDataset.class.isAssignableFrom(clazz);
 	}
 
 	/**
@@ -244,7 +329,8 @@ public class InterfaceUtils {
 	 * @return true if dataset interface is compound (not complex)
 	 */
 	public static boolean isCompound(Class<? extends Dataset> clazz) {
-		return compound2Interface.containsKey(clazz) || RGBDataset.class.equals(clazz);
+		Class<? extends Dataset> c = findSubInterface(clazz);
+		return compound2Interface.containsKey(c);
 	}
 
 	/**
@@ -332,19 +418,21 @@ public class InterfaceUtils {
 	 * @return best dataset interface
 	 */
 	public static Class<? extends Dataset> getBestInterface(Class<? extends Dataset> a, Class<? extends Dataset> b) {
-		boolean isElemental = true;
-		
 		if (a == null) {
 			return b;
 		}
 		if (b == null) {
 			return a;
 		}
-		if (!isElemental(a)) {
+
+		boolean isElemental = true;
+		final boolean az = isComplex(a);
+		if (!az && !isElemental(a)) {
 			isElemental = false;
 			a = compound2Interface.get(a);
 		}
-		if (!isElemental(b)) {
+		final boolean bz = isComplex(b);
+		if (!bz && !isElemental(b)) {
 			isElemental = false;
 			b = compound2Interface.get(b);
 		}
@@ -352,20 +440,21 @@ public class InterfaceUtils {
 		if (isFloating(a)) {
 			if (!isFloating(b)) {
 				b = getBestFloatInterface(b); // note doesn't change if not numerical!!!
-			} else if (isComplex(b)) {
-				a = DoubleDataset.class.isAssignableFrom(a) ? ComplexDoubleDataset.class : ComplexFloatDataset.class;
 			}
-			if (isComplex(a) && !isComplex(b)) {
+			if (az) {
 				b = DoubleDataset.class.isAssignableFrom(b) ? ComplexDoubleDataset.class : ComplexFloatDataset.class;
 			}
 		} else if (isFloating(b)) {
 			a = getBestFloatInterface(a);
-			if (isComplex(b)) {
+			if (bz) {
 				a = DoubleDataset.class.isAssignableFrom(a) ? ComplexDoubleDataset.class : ComplexFloatDataset.class;
 			}
 		}
 
 		Class<? extends Dataset> c = isBetter(interface2Class.get(a), interface2Class.get(b)) ? a : b;
+		if ((az || bz) && !isComplex(c)) {
+			c = DoubleDataset.class.isAssignableFrom(c) ? ComplexDoubleDataset.class : ComplexFloatDataset.class;
+		}
 
 		if (!isElemental && interface2Compound.containsKey(c)) {
 			c = interface2Compound.get(c);
@@ -468,6 +557,30 @@ public class InterfaceUtils {
 			return f32;
 		} else if (DoubleDataset.class.isAssignableFrom(clazz)) {
 			return x;
+		}
+		return null;
+	}
+
+	/**
+	 * Convert double to number
+	 * @param clazz dataset interface
+	 * @param x
+	 * @return number if integer. Return null if not interface is not numerical
+	 * @since 2.3
+	 */
+	public static Number fromDoubleToNumber(Class<? extends Dataset> clazz, double x) {
+		if (BooleanDataset.class.isAssignableFrom(clazz) || ByteDataset.class.isAssignableFrom(clazz)) {
+			return Byte.valueOf((byte) (long) x);
+		} else if (ShortDataset.class.isAssignableFrom(clazz)) {
+			return Short.valueOf((short) (long) x);
+		} else if (IntegerDataset.class.isAssignableFrom(clazz)) {
+			return Integer.valueOf((int) (long) x);
+		} else if (LongDataset.class.isAssignableFrom(clazz)) {
+			return Long.valueOf((long) x);
+		} else if (FloatDataset.class.isAssignableFrom(clazz)) {
+			return Float.valueOf((float) x);
+		} else if (DoubleDataset.class.isAssignableFrom(clazz)) {
+			return Double.valueOf(x);
 		}
 		return null;
 	}

@@ -55,8 +55,13 @@ public class IntegersIterator extends IndexIterator {
 	 * @param index an array of integer dataset, boolean dataset, slices or null entries (same as full slices)
 	 */
 	public IntegersIterator(final boolean restrict1D, final int[] shape, final Object... index) {
-		ishape = shape.clone();
-		irank = shape.length;
+		if (shape == null) {
+			ishape = null;
+			irank = 0;
+		}  else {
+			ishape = shape.clone();
+			irank = shape.length;
+		}
 		if (irank < index.length) {
 			throw new IllegalArgumentException("Number of index datasets is greater than rank of dataset");
 		}
@@ -166,7 +171,7 @@ public class IntegersIterator extends IndexIterator {
 			}
 		}
 		orank = oShape.size();
-		oshape = new int[orank];
+		oshape = orank == 0 && ishape == null ? null : new int[orank];
 		for (int i = 0; i < orank; i++) {
 			oshape[i] = oShape.get(i);
 		}

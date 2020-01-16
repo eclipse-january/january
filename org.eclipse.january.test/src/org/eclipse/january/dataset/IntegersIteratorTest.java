@@ -309,8 +309,12 @@ public class IntegersIteratorTest {
 
 	@Test
 	public void testZeroSizedIteration() {
-		IntegersIterator it = new IntegersIterator(new int[] {4, 0, 4});
+		IntegersIterator it;
 
+		it = new IntegersIterator(null);
+		assertFalse(it.hasNext());
+
+		it = new IntegersIterator(new int[] {4, 0, 4});
 		assertFalse(it.hasNext());
 
 		it = new IntegersIterator(new int[] {4, 4, 4}, new Slice(2, 2));

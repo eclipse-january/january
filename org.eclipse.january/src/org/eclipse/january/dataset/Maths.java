@@ -7433,7 +7433,7 @@ public class Maths {
 								q = (float) (ibx / iby);
 								den = (float) (ibx * q + iby);
 								ox = (float) ((iax * q + iay) / den);
-								oy = (float) ((iay * q - ibx) / den);
+								oy = (float) ((iay * q - iax) / den);
 							} else {
 								q = (float) (iby / ibx);
 								den = (float) (iby * q + ibx);
@@ -7447,28 +7447,10 @@ public class Maths {
 						while (it.hasNext()) {
 							final double iax = it.aDouble;
 							final double ibx = it.bDouble;
-							final double iby = 0;
 							float ox;
 							float oy;
-							float q;
-							float den;
-							if (iby == 0) {
-								ox = (float) (iax / ibx);
-								oy = (float) (iay / ibx);
-							} else if (ibx == 0) {
-								ox = (float) (iay / iby);
-								oy = (float) (-iax / iby);
-							} else if (Math.abs(ibx) < Math.abs(iby)) {
-								q = (float) (ibx / iby);
-								den = (float) (ibx * q + iby);
-								ox = (float) ((iax * q + iay) / den);
-								oy = (float) ((iay * q - ibx) / den);
-							} else {
-								q = (float) (iby / ibx);
-								den = (float) (iby * q + ibx);
-								ox = (float) ((iay * q + iax) / den);
-								oy = (float) ((iay - iax * q) / den);
-							}
+							ox = (float) (iax / ibx);
+							oy = (float) (iay / ibx);
 							oc64data[it.oIndex] = ox;
 							oc64data[it.oIndex + 1] = oy;
 						}
@@ -7478,59 +7460,23 @@ public class Maths {
 					while (it.hasNext()) {
 						final long iax = it.aLong;
 						final long ibx = it.bLong;
-						final long iby = 0;
 						float ox;
 						float oy;
-						float q;
-						float den;
-						if (iby == 0) {
-							ox = (float) (iax / ibx);
-							oy = (float) (iay / ibx);
-						} else if (ibx == 0) {
-							ox = (float) (iay / iby);
-							oy = (float) (-iax / iby);
-						} else if (Math.abs(ibx) < Math.abs(iby)) {
-							q = (float) (ibx / iby);
-							den = (float) (ibx * q + iby);
-							ox = (float) ((iax * q + iay) / den);
-							oy = (float) ((iay * q - ibx) / den);
-						} else {
-							q = (float) (iby / ibx);
-							den = (float) (iby * q + ibx);
-							ox = (float) ((iay * q + iax) / den);
-							oy = (float) ((iay - iax * q) / den);
-						}
+						ox = (float) (iax / ibx);
+						oy = (float) (iay / ibx);
 						oc64data[it.oIndex] = ox;
 						oc64data[it.oIndex + 1] = oy;
 					}
 				}
 			} else if (!db.isComplex()) {
-				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					final double iay = da.getElementDoubleAbs(it.aIndex + 1);
 					float ox;
 					float oy;
-					float q;
-					float den;
-					if (iby == 0) {
-						ox = (float) (iax / ibx);
-						oy = (float) (iay / ibx);
-					} else if (ibx == 0) {
-						ox = (float) (iay / iby);
-						oy = (float) (-iax / iby);
-					} else if (Math.abs(ibx) < Math.abs(iby)) {
-						q = (float) (ibx / iby);
-						den = (float) (ibx * q + iby);
-						ox = (float) ((iax * q + iay) / den);
-						oy = (float) ((iay * q - ibx) / den);
-					} else {
-						q = (float) (iby / ibx);
-						den = (float) (iby * q + ibx);
-						ox = (float) ((iay * q + iax) / den);
-						oy = (float) ((iay - iax * q) / den);
-					}
+					ox = (float) (iax / ibx);
+					oy = (float) (iay / ibx);
 					oc64data[it.oIndex] = ox;
 					oc64data[it.oIndex + 1] = oy;
 				}
@@ -7554,7 +7500,7 @@ public class Maths {
 						q = (float) (ibx / iby);
 						den = (float) (ibx * q + iby);
 						ox = (float) ((iax * q + iay) / den);
-						oy = (float) ((iay * q - ibx) / den);
+						oy = (float) ((iay * q - iax) / den);
 					} else {
 						q = (float) (iby / ibx);
 						den = (float) (iby * q + ibx);
@@ -7590,7 +7536,7 @@ public class Maths {
 								q = (ibx / iby);
 								den = (ibx * q + iby);
 								ox = ((iax * q + iay) / den);
-								oy = ((iay * q - ibx) / den);
+								oy = ((iay * q - iax) / den);
 							} else {
 								q = (iby / ibx);
 								den = (iby * q + ibx);
@@ -7604,28 +7550,10 @@ public class Maths {
 						while (it.hasNext()) {
 							final double iax = it.aDouble;
 							final double ibx = it.bDouble;
-							final double iby = 0;
 							double ox;
 							double oy;
-							double q;
-							double den;
-							if (iby == 0) {
-								ox = (iax / ibx);
-								oy = (iay / ibx);
-							} else if (ibx == 0) {
-								ox = (iay / iby);
-								oy = (-iax / iby);
-							} else if (Math.abs(ibx) < Math.abs(iby)) {
-								q = (ibx / iby);
-								den = (ibx * q + iby);
-								ox = ((iax * q + iay) / den);
-								oy = ((iay * q - ibx) / den);
-							} else {
-								q = (iby / ibx);
-								den = (iby * q + ibx);
-								ox = ((iay * q + iax) / den);
-								oy = ((iay - iax * q) / den);
-							}
+							ox = (iax / ibx);
+							oy = (iay / ibx);
 							oc128data[it.oIndex] = ox;
 							oc128data[it.oIndex + 1] = oy;
 						}
@@ -7635,59 +7563,23 @@ public class Maths {
 					while (it.hasNext()) {
 						final long iax = it.aLong;
 						final long ibx = it.bLong;
-						final long iby = 0;
 						double ox;
 						double oy;
-						double q;
-						double den;
-						if (iby == 0) {
-							ox = (iax / ibx);
-							oy = (iay / ibx);
-						} else if (ibx == 0) {
-							ox = (iay / iby);
-							oy = (-iax / iby);
-						} else if (Math.abs(ibx) < Math.abs(iby)) {
-							q = (ibx / iby);
-							den = (ibx * q + iby);
-							ox = ((iax * q + iay) / den);
-							oy = ((iay * q - ibx) / den);
-						} else {
-							q = (iby / ibx);
-							den = (iby * q + ibx);
-							ox = ((iay * q + iax) / den);
-							oy = ((iay - iax * q) / den);
-						}
+						ox = (iax / ibx);
+						oy = (iay / ibx);
 						oc128data[it.oIndex] = ox;
 						oc128data[it.oIndex + 1] = oy;
 					}
 				}
 			} else if (!db.isComplex()) {
-				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					final double iay = da.getElementDoubleAbs(it.aIndex + 1);
 					double ox;
 					double oy;
-					double q;
-					double den;
-					if (iby == 0) {
-						ox = (iax / ibx);
-						oy = (iay / ibx);
-					} else if (ibx == 0) {
-						ox = (iay / iby);
-						oy = (-iax / iby);
-					} else if (Math.abs(ibx) < Math.abs(iby)) {
-						q = (ibx / iby);
-						den = (ibx * q + iby);
-						ox = ((iax * q + iay) / den);
-						oy = ((iay * q - ibx) / den);
-					} else {
-						q = (iby / ibx);
-						den = (iby * q + ibx);
-						ox = ((iay * q + iax) / den);
-						oy = ((iay - iax * q) / den);
-					}
+					ox = (iax / ibx);
+					oy = (iay / ibx);
 					oc128data[it.oIndex] = ox;
 					oc128data[it.oIndex + 1] = oy;
 				}
@@ -7711,7 +7603,7 @@ public class Maths {
 						q = (ibx / iby);
 						den = (ibx * q + iby);
 						ox = ((iax * q + iay) / den);
-						oy = ((iay * q - ibx) / den);
+						oy = ((iay * q - iax) / den);
 					} else {
 						q = (iby / ibx);
 						den = (iby * q + ibx);
@@ -8694,7 +8586,7 @@ public class Maths {
 								q = (float) (ibx / iby);
 								den = (float) (ibx * q + iby);
 								ox = (float) ((iax * q + iay) / den);
-								oy = (float) ((iay * q - ibx) / den);
+								oy = (float) ((iay * q - iax) / den);
 							} else {
 								q = (float) (iby / ibx);
 								den = (float) (iby * q + ibx);
@@ -8708,24 +8600,14 @@ public class Maths {
 						while (it.hasNext()) {
 							final double iax = it.aDouble;
 							final double ibx = it.bDouble;
-							final double iby = 0;
 							float ox;
 							float oy;
-							float q;
-							float den;
-							if (ibx == 0 && iby == 0) {
+							if (ibx == 0) {
 								ox = 0;
 								oy = 0;
-							} else if (Math.abs(ibx) < Math.abs(iby)) {
-								q = (float) (ibx / iby);
-								den = (float) (ibx * q + iby);
-								ox = (float) ((iax * q + iay) / den);
-								oy = (float) ((iay * q - ibx) / den);
 							} else {
-								q = (float) (iby / ibx);
-								den = (float) (iby * q + ibx);
-								ox = (float) ((iay * q + iax) / den);
-								oy = (float) ((iay - iax * q) / den);
+								ox = (float) (iax / ibx);
+								oy = (float) (iay / ibx);
 							}
 							oc64data[it.oIndex] = ox;
 							oc64data[it.oIndex + 1] = oy;
@@ -8736,52 +8618,32 @@ public class Maths {
 					while (it.hasNext()) {
 						final long iax = it.aLong;
 						final long ibx = it.bLong;
-						final long iby = 0;
 						float ox;
 						float oy;
-						float q;
-						float den;
-						if (ibx == 0 && iby == 0) {
+						if (ibx == 0) {
 							ox = 0;
 							oy = 0;
-						} else if (Math.abs(ibx) < Math.abs(iby)) {
-							q = (float) (ibx / iby);
-							den = (float) (ibx * q + iby);
-							ox = (float) ((iax * q + iay) / den);
-							oy = (float) ((iay * q - ibx) / den);
 						} else {
-							q = (float) (iby / ibx);
-							den = (float) (iby * q + ibx);
-							ox = (float) ((iay * q + iax) / den);
-							oy = (float) ((iay - iax * q) / den);
+							ox = (float) (iax / ibx);
+							oy = (float) (iay / ibx);
 						}
 						oc64data[it.oIndex] = ox;
 						oc64data[it.oIndex + 1] = oy;
 					}
 				}
 			} else if (!db.isComplex()) {
-				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					final double iay = da.getElementDoubleAbs(it.aIndex + 1);
 					float ox;
 					float oy;
-					float q;
-					float den;
-					if (ibx == 0 && iby == 0) {
+					if (ibx == 0) {
 						ox = 0;
 						oy = 0;
-					} else if (Math.abs(ibx) < Math.abs(iby)) {
-						q = (float) (ibx / iby);
-						den = (float) (ibx * q + iby);
-						ox = (float) ((iax * q + iay) / den);
-						oy = (float) ((iay * q - ibx) / den);
 					} else {
-						q = (float) (iby / ibx);
-						den = (float) (iby * q + ibx);
-						ox = (float) ((iay * q + iax) / den);
-						oy = (float) ((iay - iax * q) / den);
+						ox = (float) (iax / ibx);
+						oy = (float) (iay / ibx);
 					}
 					oc64data[it.oIndex] = ox;
 					oc64data[it.oIndex + 1] = oy;
@@ -8803,7 +8665,7 @@ public class Maths {
 						q = (float) (ibx / iby);
 						den = (float) (ibx * q + iby);
 						ox = (float) ((iax * q + iay) / den);
-						oy = (float) ((iay * q - ibx) / den);
+						oy = (float) ((iay * q - iax) / den);
 					} else {
 						q = (float) (iby / ibx);
 						den = (float) (iby * q + ibx);
@@ -8836,7 +8698,7 @@ public class Maths {
 								q = (ibx / iby);
 								den = (ibx * q + iby);
 								ox = ((iax * q + iay) / den);
-								oy = ((iay * q - ibx) / den);
+								oy = ((iay * q - iax) / den);
 							} else {
 								q = (iby / ibx);
 								den = (iby * q + ibx);
@@ -8850,24 +8712,14 @@ public class Maths {
 						while (it.hasNext()) {
 							final double iax = it.aDouble;
 							final double ibx = it.bDouble;
-							final double iby = 0;
 							double ox;
 							double oy;
-							double q;
-							double den;
-							if (ibx == 0 && iby == 0) {
+							if (ibx == 0) {
 								ox = 0;
 								oy = 0;
-							} else if (Math.abs(ibx) < Math.abs(iby)) {
-								q = (ibx / iby);
-								den = (ibx * q + iby);
-								ox = ((iax * q + iay) / den);
-								oy = ((iay * q - ibx) / den);
 							} else {
-								q = (iby / ibx);
-								den = (iby * q + ibx);
-								ox = ((iay * q + iax) / den);
-								oy = ((iay - iax * q) / den);
+								ox = (iax / ibx);
+								oy = (iay / ibx);
 							}
 							oc128data[it.oIndex] = ox;
 							oc128data[it.oIndex + 1] = oy;
@@ -8878,52 +8730,32 @@ public class Maths {
 					while (it.hasNext()) {
 						final long iax = it.aLong;
 						final long ibx = it.bLong;
-						final long iby = 0;
 						double ox;
 						double oy;
-						double q;
-						double den;
-						if (ibx == 0 && iby == 0) {
+						if (ibx == 0) {
 							ox = 0;
 							oy = 0;
-						} else if (Math.abs(ibx) < Math.abs(iby)) {
-							q = (ibx / iby);
-							den = (ibx * q + iby);
-							ox = ((iax * q + iay) / den);
-							oy = ((iay * q - ibx) / den);
 						} else {
-							q = (iby / ibx);
-							den = (iby * q + ibx);
-							ox = ((iay * q + iax) / den);
-							oy = ((iay - iax * q) / den);
+							ox = (iax / ibx);
+							oy = (iay / ibx);
 						}
 						oc128data[it.oIndex] = ox;
 						oc128data[it.oIndex + 1] = oy;
 					}
 				}
 			} else if (!db.isComplex()) {
-				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					final double iay = da.getElementDoubleAbs(it.aIndex + 1);
 					double ox;
 					double oy;
-					double q;
-					double den;
-					if (ibx == 0 && iby == 0) {
+					if (ibx == 0) {
 						ox = 0;
 						oy = 0;
-					} else if (Math.abs(ibx) < Math.abs(iby)) {
-						q = (ibx / iby);
-						den = (ibx * q + iby);
-						ox = ((iax * q + iay) / den);
-						oy = ((iay * q - ibx) / den);
 					} else {
-						q = (iby / ibx);
-						den = (iby * q + ibx);
-						ox = ((iay * q + iax) / den);
-						oy = ((iay - iax * q) / den);
+						ox = (iax / ibx);
+						oy = (iay / ibx);
 					}
 					oc128data[it.oIndex] = ox;
 					oc128data[it.oIndex + 1] = oy;
@@ -8945,7 +8777,7 @@ public class Maths {
 						q = (ibx / iby);
 						den = (ibx * q + iby);
 						ox = ((iax * q + iay) / den);
-						oy = ((iay * q - ibx) / den);
+						oy = ((iay * q - iax) / den);
 					} else {
 						q = (iby / ibx);
 						den = (iby * q + ibx);
@@ -10435,7 +10267,7 @@ public class Maths {
 								q = (float) (ibx / iby);
 								den = (float) (ibx * q + iby);
 								ox = (float) ((iax * q + iay) / den);
-								oy = (float) ((iay * q - ibx) / den);
+								oy = (float) ((iay * q - iax) / den);
 							} else {
 								q = (float) (iby / ibx);
 								den = (float) (iby * q + ibx);
@@ -10449,28 +10281,10 @@ public class Maths {
 						while (it.hasNext()) {
 							final double iax = it.aDouble;
 							final double ibx = it.bDouble;
-							final double iby = 0;
 							float ox;
 							float oy;
-							float q;
-							float den;
-							if (iby == 0) {
-								ox = (float) (iax / ibx);
-								oy = (float) (iay / ibx);
-							} else if (ibx == 0) {
-								ox = (float) (iay / iby);
-								oy = (float) (-iax / iby);
-							} else if (Math.abs(ibx) < Math.abs(iby)) {
-								q = (float) (ibx / iby);
-								den = (float) (ibx * q + iby);
-								ox = (float) ((iax * q + iay) / den);
-								oy = (float) ((iay * q - ibx) / den);
-							} else {
-								q = (float) (iby / ibx);
-								den = (float) (iby * q + ibx);
-								ox = (float) ((iay * q + iax) / den);
-								oy = (float) ((iay - iax * q) / den);
-							}
+							ox = (float) (iax / ibx);
+							oy = (float) (iay / ibx);
 							oc64data[it.oIndex] = ox;
 							oc64data[it.oIndex + 1] = oy;
 						}
@@ -10480,59 +10294,23 @@ public class Maths {
 					while (it.hasNext()) {
 						final long iax = it.aLong;
 						final long ibx = it.bLong;
-						final long iby = 0;
 						float ox;
 						float oy;
-						float q;
-						float den;
-						if (iby == 0) {
-							ox = (float) (iax / ibx);
-							oy = (float) (iay / ibx);
-						} else if (ibx == 0) {
-							ox = (float) (iay / iby);
-							oy = (float) (-iax / iby);
-						} else if (Math.abs(ibx) < Math.abs(iby)) {
-							q = (float) (ibx / iby);
-							den = (float) (ibx * q + iby);
-							ox = (float) ((iax * q + iay) / den);
-							oy = (float) ((iay * q - ibx) / den);
-						} else {
-							q = (float) (iby / ibx);
-							den = (float) (iby * q + ibx);
-							ox = (float) ((iay * q + iax) / den);
-							oy = (float) ((iay - iax * q) / den);
-						}
+						ox = (float) (iax / ibx);
+						oy = (float) (iay / ibx);
 						oc64data[it.oIndex] = ox;
 						oc64data[it.oIndex + 1] = oy;
 					}
 				}
 			} else if (!db.isComplex()) {
-				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					final double iay = da.getElementDoubleAbs(it.aIndex + 1);
 					float ox;
 					float oy;
-					float q;
-					float den;
-					if (iby == 0) {
-						ox = (float) (iax / ibx);
-						oy = (float) (iay / ibx);
-					} else if (ibx == 0) {
-						ox = (float) (iay / iby);
-						oy = (float) (-iax / iby);
-					} else if (Math.abs(ibx) < Math.abs(iby)) {
-						q = (float) (ibx / iby);
-						den = (float) (ibx * q + iby);
-						ox = (float) ((iax * q + iay) / den);
-						oy = (float) ((iay * q - ibx) / den);
-					} else {
-						q = (float) (iby / ibx);
-						den = (float) (iby * q + ibx);
-						ox = (float) ((iay * q + iax) / den);
-						oy = (float) ((iay - iax * q) / den);
-					}
+					ox = (float) (iax / ibx);
+					oy = (float) (iay / ibx);
 					oc64data[it.oIndex] = ox;
 					oc64data[it.oIndex + 1] = oy;
 				}
@@ -10556,7 +10334,7 @@ public class Maths {
 						q = (float) (ibx / iby);
 						den = (float) (ibx * q + iby);
 						ox = (float) ((iax * q + iay) / den);
-						oy = (float) ((iay * q - ibx) / den);
+						oy = (float) ((iay * q - iax) / den);
 					} else {
 						q = (float) (iby / ibx);
 						den = (float) (iby * q + ibx);
@@ -10592,7 +10370,7 @@ public class Maths {
 								q = (ibx / iby);
 								den = (ibx * q + iby);
 								ox = ((iax * q + iay) / den);
-								oy = ((iay * q - ibx) / den);
+								oy = ((iay * q - iax) / den);
 							} else {
 								q = (iby / ibx);
 								den = (iby * q + ibx);
@@ -10606,28 +10384,10 @@ public class Maths {
 						while (it.hasNext()) {
 							final double iax = it.aDouble;
 							final double ibx = it.bDouble;
-							final double iby = 0;
 							double ox;
 							double oy;
-							double q;
-							double den;
-							if (iby == 0) {
-								ox = (iax / ibx);
-								oy = (iay / ibx);
-							} else if (ibx == 0) {
-								ox = (iay / iby);
-								oy = (-iax / iby);
-							} else if (Math.abs(ibx) < Math.abs(iby)) {
-								q = (ibx / iby);
-								den = (ibx * q + iby);
-								ox = ((iax * q + iay) / den);
-								oy = ((iay * q - ibx) / den);
-							} else {
-								q = (iby / ibx);
-								den = (iby * q + ibx);
-								ox = ((iay * q + iax) / den);
-								oy = ((iay - iax * q) / den);
-							}
+							ox = (iax / ibx);
+							oy = (iay / ibx);
 							oc128data[it.oIndex] = ox;
 							oc128data[it.oIndex + 1] = oy;
 						}
@@ -10637,59 +10397,23 @@ public class Maths {
 					while (it.hasNext()) {
 						final long iax = it.aLong;
 						final long ibx = it.bLong;
-						final long iby = 0;
 						double ox;
 						double oy;
-						double q;
-						double den;
-						if (iby == 0) {
-							ox = (iax / ibx);
-							oy = (iay / ibx);
-						} else if (ibx == 0) {
-							ox = (iay / iby);
-							oy = (-iax / iby);
-						} else if (Math.abs(ibx) < Math.abs(iby)) {
-							q = (ibx / iby);
-							den = (ibx * q + iby);
-							ox = ((iax * q + iay) / den);
-							oy = ((iay * q - ibx) / den);
-						} else {
-							q = (iby / ibx);
-							den = (iby * q + ibx);
-							ox = ((iay * q + iax) / den);
-							oy = ((iay - iax * q) / den);
-						}
+						ox = (iax / ibx);
+						oy = (iay / ibx);
 						oc128data[it.oIndex] = ox;
 						oc128data[it.oIndex + 1] = oy;
 					}
 				}
 			} else if (!db.isComplex()) {
-				final double iby = 0;
 				while (it.hasNext()) {
 					final double iax = it.aDouble;
 					final double ibx = it.bDouble;
 					final double iay = da.getElementDoubleAbs(it.aIndex + 1);
 					double ox;
 					double oy;
-					double q;
-					double den;
-					if (iby == 0) {
-						ox = (iax / ibx);
-						oy = (iay / ibx);
-					} else if (ibx == 0) {
-						ox = (iay / iby);
-						oy = (-iax / iby);
-					} else if (Math.abs(ibx) < Math.abs(iby)) {
-						q = (ibx / iby);
-						den = (ibx * q + iby);
-						ox = ((iax * q + iay) / den);
-						oy = ((iay * q - ibx) / den);
-					} else {
-						q = (iby / ibx);
-						den = (iby * q + ibx);
-						ox = ((iay * q + iax) / den);
-						oy = ((iay - iax * q) / den);
-					}
+					ox = (iax / ibx);
+					oy = (iay / ibx);
 					oc128data[it.oIndex] = ox;
 					oc128data[it.oIndex + 1] = oy;
 				}
@@ -10713,7 +10437,7 @@ public class Maths {
 						q = (ibx / iby);
 						den = (ibx * q + iby);
 						ox = ((iax * q + iay) / den);
-						oy = ((iay * q - ibx) / den);
+						oy = ((iay * q - iax) / den);
 					} else {
 						q = (iby / ibx);
 						den = (iby * q + ibx);

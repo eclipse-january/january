@@ -820,12 +820,139 @@ public class Operations {
 		final Dataset result = it.getOutput();
 		it.setOutputDouble(result.hasFloatingPointElements() || da.isComplex());
 		final int is = result.getElementsPerItem();
-		final int dt = result.getDType();
 		final int as = da.getElementsPerItem();
 		final double[] z;
 
-		switch (dt) {
-		case Dataset.BOOL:
+		if (result instanceof FloatDataset) {
+			final float[] f32data = ((FloatDataset) result).getData();
+	
+			if (!da.isComplex()) {
+				while (it.hasNext()) {
+					f32data[it.oIndex] = (float) op.doubleOperate(it.aDouble);
+				}
+			} else { // only for complex input
+				z = new double[2];
+				while (it.hasNext()) {
+					op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1));
+					f32data[it.oIndex] = (float) z[0];
+				}
+			}
+		} else if (result instanceof DoubleDataset) {
+			final double[] f64data = ((DoubleDataset) result).getData();
+	
+			if (!da.isComplex()) {
+				while (it.hasNext()) {
+					f64data[it.oIndex] = op.doubleOperate(it.aDouble);
+				}
+			} else {
+				z = new double[2];
+				while (it.hasNext()) {
+					op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1));
+					f64data[it.oIndex] = z[0];
+				}
+			}
+		} else if (result instanceof ComplexFloatDataset) {
+			final float[] c64data = ((ComplexFloatDataset) result).getData();
+			z = new double[2];
+	
+			if (!da.isComplex()) {
+				while (it.hasNext()) {
+					op.complexOperate(z, it.aDouble, 0);
+					c64data[it.oIndex] = (float) z[0];
+				}
+			} else {
+				while (it.hasNext()) {
+					op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1));
+					c64data[it.oIndex] = (float) z[0];
+					c64data[it.oIndex + 1] = (float) z[1];
+				}
+			}
+		} else if (result instanceof ComplexDoubleDataset) {
+			final double[] c128data = ((ComplexDoubleDataset) result).getData();
+			z = new double[2];
+	
+			if (!da.isComplex()) {
+				while (it.hasNext()) {
+					op.complexOperate(z, it.aDouble, 0);
+					c128data[it.oIndex] = z[0];
+				}
+			} else {
+				while (it.hasNext()) {
+					op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1));
+					c128data[it.oIndex] = z[0];
+					c128data[it.oIndex + 1] = z[1];
+				}
+			}
+		} else if (result instanceof CompoundFloatDataset) {
+			final float[] af32data = ((CompoundFloatDataset) result).getData();
+	
+			if (!da.isComplex()) {
+				if (is == 1) {
+					while (it.hasNext()) {
+						af32data[it.oIndex] = (float) op.doubleOperate(it.aDouble);
+					}
+				} else if (as == 1) {
+					while (it.hasNext()) {
+						float ox = (float) op.doubleOperate(it.aDouble);
+						for (int j = 0; j < is; j++) {
+							af32data[it.oIndex + j] = ox;
+						}
+					}
+				} else {
+					int ms = Math.min(is, as);
+					while (it.hasNext()) {
+						af32data[it.oIndex] = (float) op.doubleOperate(it.aDouble);
+						for (int j = 1; j < ms; j++) {
+							af32data[it.oIndex + j] = (float) op.doubleOperate(da.getElementDoubleAbs(it.aIndex + j));
+						}
+					}
+				}
+			} else {
+				z = new double[2];
+				while (it.hasNext()) {
+					op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1));
+					float ox = (float) z[0];
+					for (int j = 0; j < is; j++) {
+						af32data[it.oIndex + j] = ox;
+					}
+				}
+			}
+		} else if (result instanceof CompoundDoubleDataset) {
+			final double[] af64data = ((CompoundDoubleDataset) result).getData();
+	
+			if (!da.isComplex()) {
+				if (is == 1) {
+					while (it.hasNext()) {
+						af64data[it.oIndex] = op.doubleOperate(it.aDouble);
+					}
+				} else if (as == 1) {
+					while (it.hasNext()) {
+						final double ix = it.aDouble;
+						double ox = op.doubleOperate(ix);
+						for (int j = 0; j < is; j++) {
+							af64data[it.oIndex + j] = ox;
+						}
+					}
+				} else {
+					int ms = Math.min(is, as);
+					while (it.hasNext()) {
+						af64data[it.oIndex] = op.doubleOperate(it.aDouble);
+						for (int j = 1; j < ms; j++) {
+							af64data[it.oIndex + j] = op.doubleOperate(da.getElementDoubleAbs(it.aIndex + j));
+						}
+					}
+				}
+			} else {
+				z = new double[2];
+				while (it.hasNext()) {
+					op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1));
+					double ox = z[0];
+					for (int j = 0; j < is; j++) {
+						af64data[it.oIndex + j] = ox;
+					}
+				}
+			}
+		} else if (result instanceof BooleanDataset) {
 			boolean[] bdata = ((BooleanDataset) result).getData();
 
 			if (!da.isComplex()) {
@@ -839,8 +966,7 @@ public class Operations {
 					bdata[it.oIndex] = z[0] != 0;
 				}
 			}
-			break;
-		case Dataset.INT8:
+		} else if (result instanceof ByteDataset) {
 			final byte[] i8data = ((ByteDataset) result).getData();
 
 			if (!da.isComplex()) {
@@ -854,8 +980,7 @@ public class Operations {
 					i8data[it.oIndex] = (byte) toLong(z[0]);
 				}
 			}
-			break;
-		case Dataset.INT16:
+		} else if (result instanceof ShortDataset) {
 			final short[] i16data = ((ShortDataset) result).getData();
 
 			if (!da.isComplex()) {
@@ -869,8 +994,7 @@ public class Operations {
 					i16data[it.oIndex] = (short) toLong(z[0]);
 				}
 			}
-			break;
-		case Dataset.INT32:
+		} else if (result instanceof IntegerDataset) {
 			final int[] i32data = ((IntegerDataset) result).getData();
 
 			if (!da.isComplex()) {
@@ -884,8 +1008,7 @@ public class Operations {
 					i32data[it.oIndex] = (int) toLong(z[0]);
 				}
 			}
-			break;
-		case Dataset.INT64:
+		} else if (result instanceof LongDataset) {
 			final long[] i64data = ((LongDataset) result).getData();
 
 			if (!da.isComplex()) {
@@ -899,8 +1022,7 @@ public class Operations {
 					i64data[it.oIndex] = toLong(z[0]);
 				}
 			}
-			break;
-		case Dataset.ARRAYINT8:
+		} else if (result instanceof CompoundByteDataset) {
 			final byte[] ai8data = ((CompoundByteDataset) result).getData();
 
 			if (!da.isComplex()) {
@@ -934,8 +1056,7 @@ public class Operations {
 					}
 				}
 			}
-			break;
-		case Dataset.ARRAYINT16:
+		} else if (result instanceof CompoundShortDataset) {
 			final short[] ai16data = ((CompoundShortDataset) result).getData();
 
 			if (!da.isComplex()) {
@@ -969,8 +1090,7 @@ public class Operations {
 					}
 				}
 			}
-			break;
-		case Dataset.ARRAYINT32:
+		} else if (result instanceof CompoundIntegerDataset) {
 			final int[] ai32data = ((CompoundIntegerDataset) result).getData();
 
 			if (!da.isComplex()) {
@@ -1004,8 +1124,7 @@ public class Operations {
 					}
 				}
 			}
-			break;
-		case Dataset.ARRAYINT64:
+		} else if (result instanceof CompoundLongDataset) {
 			final long[] ai64data = ((CompoundLongDataset) result).getData();
 
 			if (!da.isComplex()) {
@@ -1039,143 +1158,7 @@ public class Operations {
 					}
 				}
 			}
-			break;
-		case Dataset.FLOAT32:
-			final float[] f32data = ((FloatDataset) result).getData();
-
-			if (!da.isComplex()) {
-				while (it.hasNext()) {
-					f32data[it.oIndex] = (float) op.doubleOperate(it.aDouble);
-				}
-			} else { // only for complex input
-				z = new double[2];
-				while (it.hasNext()) {
-					op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1));
-					f32data[it.oIndex] = (float) z[0];
-				}
-			}
-			break;
-		case Dataset.FLOAT64:
-			final double[] f64data = ((DoubleDataset) result).getData();
-
-			if (!da.isComplex()) {
-				while (it.hasNext()) {
-					f64data[it.oIndex] = op.doubleOperate(it.aDouble);
-				}
-			} else {
-				z = new double[2];
-				while (it.hasNext()) {
-					op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1));
-					f64data[it.oIndex] = z[0];
-				}
-			}
-			break;
-		case Dataset.ARRAYFLOAT32:
-			final float[] af32data = ((CompoundFloatDataset) result).getData();
-
-			if (!da.isComplex()) {
-				if (is == 1) {
-					while (it.hasNext()) {
-						af32data[it.oIndex] = (float) op.doubleOperate(it.aDouble);
-					}
-				} else if (as == 1) {
-					while (it.hasNext()) {
-						float ox = (float) op.doubleOperate(it.aDouble);
-						for (int j = 0; j < is; j++) {
-							af32data[it.oIndex + j] = ox;
-						}
-					}
-				} else {
-					int ms = Math.min(is, as);
-					while (it.hasNext()) {
-						af32data[it.oIndex] = (float) op.doubleOperate(it.aDouble);
-						for (int j = 1; j < ms; j++) {
-							af32data[it.oIndex + j] = (float) op.doubleOperate(da.getElementDoubleAbs(it.aIndex + j));
-						}
-					}
-				}
-			} else {
-				z = new double[2];
-				while (it.hasNext()) {
-					op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1));
-					float ox = (float) z[0];
-					for (int j = 0; j < is; j++) {
-						af32data[it.oIndex + j] = ox;
-					}
-				}
-			}
-			break;
-		case Dataset.ARRAYFLOAT64:
-			final double[] af64data = ((CompoundDoubleDataset) result).getData();
-
-			if (!da.isComplex()) {
-				if (is == 1) {
-					while (it.hasNext()) {
-						af64data[it.oIndex] = op.doubleOperate(it.aDouble);
-					}
-				} else if (as == 1) {
-					while (it.hasNext()) {
-						final double ix = it.aDouble;
-						double ox = op.doubleOperate(ix);
-						for (int j = 0; j < is; j++) {
-							af64data[it.oIndex + j] = ox;
-						}
-					}
-				} else {
-					int ms = Math.min(is, as);
-					while (it.hasNext()) {
-						af64data[it.oIndex] = op.doubleOperate(it.aDouble);
-						for (int j = 1; j < ms; j++) {
-							af64data[it.oIndex + j] = op.doubleOperate(da.getElementDoubleAbs(it.aIndex + j));
-						}
-					}
-				}
-			} else {
-				z = new double[2];
-				while (it.hasNext()) {
-					op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1));
-					double ox = z[0];
-					for (int j = 0; j < is; j++) {
-						af64data[it.oIndex + j] = ox;
-					}
-				}
-			}
-			break;
-		case Dataset.COMPLEX64:
-			final float[] c64data = ((ComplexFloatDataset) result).getData();
-			z = new double[2];
-
-			if (!da.isComplex()) {
-				while (it.hasNext()) {
-					op.complexOperate(z, it.aDouble, 0);
-					c64data[it.oIndex] = (float) z[0];
-				}
-			} else {
-				while (it.hasNext()) {
-					op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1));
-					c64data[it.oIndex] = (float) z[0];
-					c64data[it.oIndex + 1] = (float) z[1];
-				}
-			}
-			break;
-		case Dataset.COMPLEX128:
-			final double[] c128data = ((ComplexDoubleDataset) result).getData();
-			z = new double[2];
-
-			if (!da.isComplex()) {
-				while (it.hasNext()) {
-					op.complexOperate(z, it.aDouble, 0);
-					c128data[it.oIndex] = z[0];
-				}
-			} else {
-				while (it.hasNext()) {
-					op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1));
-					c128data[it.oIndex] = z[0];
-					c128data[it.oIndex + 1] = z[1];
-				}
-			}
-			break;
-		default:
+		} else {
 			throw new UnsupportedOperationException("operate does not support this dataset type");
 		}
 
@@ -1206,422 +1189,7 @@ public class Operations {
 		int bs = db.getElementsPerItem();
 		final double[] z;
 
-		switch (result.getDType()) {
-		case Dataset.BOOL:
-			boolean[] bdata = ((BooleanDataset) result).getData();
-
-			if (!da.isComplex() && !db.isComplex()) {
-				while (it.hasNext()) {
-					bdata[it.oIndex] = op.booleanOperate(it.aLong, it.aLong);
-				}
-			} else {
-				z = new double[2];
-				if (!db.isComplex()) {
-					while (it.hasNext()) {
-						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1), it.bDouble, 0);
-						bdata[it.oIndex] = z[0] != 0;
-					}
-				} else if (!da.isComplex()) {
-					while (it.hasNext()) {
-						op.complexOperate(z, it.aDouble, 0, it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
-						bdata[it.oIndex] = z[0] != 0;
-					}
-				} else {
-					while (it.hasNext()) {
-						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1),
-								it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
-						bdata[it.oIndex] = z[0] != 0;
-					}
-				}
-			}
-			break;
-		case Dataset.INT8:
-			byte[] i8data = ((ByteDataset) result).getData();
-
-			if (!da.isComplex() && !db.isComplex()) {
-				while (it.hasNext()) {
-					i8data[it.oIndex] = (byte) op.longOperate(it.aLong, it.aLong);
-				}
-			} else {
-				z = new double[2];
-				if (!db.isComplex()) { // only a complex
-					while (it.hasNext()) {
-						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1), it.bDouble, 0);
-						i8data[it.oIndex] = (byte) toLong(z[0]);
-					}
-				} else if (!da.isComplex()) { // only b complex
-					while (it.hasNext()) {
-						op.complexOperate(z, it.aDouble, 0, it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
-						i8data[it.oIndex] = (byte) toLong(z[0]);
-					}
-				} else {
-					while (it.hasNext()) {
-						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1),
-								it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
-						i8data[it.oIndex] = (byte) toLong(z[0]);
-					}
-				}
-			}
-			break;
-		case Dataset.INT16:
-			short[] i16data = ((ShortDataset) result).getData();
-
-			if (!da.isComplex() && !db.isComplex()) {
-				while (it.hasNext()) {
-					i16data[it.oIndex] = (short) op.longOperate(it.aLong, it.aLong);
-				}
-			} else {
-				z = new double[2];
-				if (!db.isComplex()) { // only a complex
-					while (it.hasNext()) {
-						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1), it.bDouble, 0);
-						i16data[it.oIndex] = (short) toLong(z[0]);
-					}
-				} else if (!da.isComplex()) { // only b complex
-					while (it.hasNext()) {
-						op.complexOperate(z, it.aDouble, 0, it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
-						i16data[it.oIndex] = (short) toLong(z[0]);
-					}
-				} else {
-					while (it.hasNext()) {
-						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1),
-								it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
-						i16data[it.oIndex] = (short) toLong(z[0]);
-					}
-				}
-			}
-			break;
-		case Dataset.INT32:
-			int[] i32data = ((IntegerDataset) result).getData();
-
-			if (!da.isComplex() && !db.isComplex()) {
-				while (it.hasNext()) {
-					i32data[it.oIndex] = (int) op.longOperate(it.aLong, it.aLong);
-				}
-			} else {
-				z = new double[2];
-				if (!db.isComplex()) { // only a complex
-					while (it.hasNext()) {
-						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1), it.bDouble, 0);
-						i32data[it.oIndex] = (int) toLong(z[0]);
-					}
-				} else if (!da.isComplex()) { // only b complex
-					while (it.hasNext()) {
-						op.complexOperate(z, it.aDouble, 0, it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
-						i32data[it.oIndex] = (int) toLong(z[0]);
-					}
-				} else {
-					while (it.hasNext()) {
-						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1),
-								it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
-						i32data[it.oIndex] = (int) toLong(z[0]);
-					}
-				}
-			}
-			break;
-		case Dataset.INT64:
-			long[] i64data = ((LongDataset) result).getData();
-
-			if (!da.isComplex() && !db.isComplex()) {
-				while (it.hasNext()) {
-					i64data[it.oIndex] = op.longOperate(it.aLong, it.aLong);
-				}
-			} else {
-				z = new double[2];
-				if (!db.isComplex()) { // only a complex
-					while (it.hasNext()) {
-						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1), it.bDouble, 0);
-						i64data[it.oIndex] = toLong(z[0]);
-					}
-				} else if (!da.isComplex()) { // only b complex
-					while (it.hasNext()) {
-						op.complexOperate(z, it.aDouble, 0, it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
-						i64data[it.oIndex] = toLong(z[0]);
-					}
-				} else {
-					while (it.hasNext()) {
-						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1),
-								it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
-						i64data[it.oIndex] = toLong(z[0]);
-					}
-				}
-			}
-			break;
-		case Dataset.ARRAYINT8:
-			byte[] ai8data = ((CompoundByteDataset) result).getData();
-
-			if (!da.isComplex() && !db.isComplex()) {
-				if (is == 1) {
-					while (it.hasNext()) {
-						ai8data[it.oIndex] = (byte) op.longOperate(it.aLong, it.bLong);
-					}
-				} else { // broadcast to other elements of output if possible
-					int ms;
-					if (as == 1 && bs != 1) {
-						ms = Math.min(is, bs);
-						while (it.hasNext()) {
-							ai8data[it.oIndex] = (byte) op.longOperate(it.aLong, it.bLong);
-							for (int j = 1; j < ms; j++) {
-								ai8data[it.oIndex + j] = (byte) op.longOperate(it.aLong,
-										db.getElementLongAbs(it.bIndex + j));
-							}
-						}
-					} else if (as != 1 && bs == 1) {
-						ms = Math.min(is, as);
-						while (it.hasNext()) {
-							ai8data[it.oIndex] = (byte) op.longOperate(it.aLong, it.bLong);
-							for (int j = 1; j < ms; j++) {
-								ai8data[it.oIndex + j] = (byte) op.longOperate(da.getElementLongAbs(it.aIndex + j),
-										it.bLong);
-							}
-						}
-					} else {
-						ms = Math.min(is, Math.min(as, bs));
-						while (it.hasNext()) {
-							ai8data[it.oIndex] = (byte) op.longOperate(it.aLong, it.bLong);
-							for (int j = 1; j < ms; j++) {
-								ai8data[it.oIndex + j] = (byte) op.longOperate(da.getElementLongAbs(it.aIndex + j),
-										db.getElementLongAbs(it.bIndex + j));
-							}
-						}
-					}
-				}
-			} else {
-				z = new double[2];
-				if (!db.isComplex()) { // only a complex
-					while (it.hasNext()) {
-						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1), it.bDouble, 0);
-						byte ox = (byte) toLong(z[0]);
-						for (int j = 0; j < is; j++) {
-							ai8data[it.oIndex + j] = ox;
-						}
-					}
-				} else if (!da.isComplex()) { // only b complex
-					while (it.hasNext()) {
-						op.complexOperate(z, it.aDouble, 0, it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
-						byte ox = (byte) toLong(z[0]);
-						for (int j = 0; j < is; j++) {
-							ai8data[it.oIndex + j] = ox;
-						}
-					}
-				} else {
-					while (it.hasNext()) {
-						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1),
-								it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
-						byte ox = (byte) toLong(z[0]);
-						for (int j = 0; j < is; j++) {
-							ai8data[it.oIndex + j] = ox;
-						}
-					}
-				}
-			}
-			break;
-		case Dataset.ARRAYINT16:
-			short[] ai16data = ((CompoundShortDataset) result).getData();
-
-			if (!da.isComplex() && !db.isComplex()) {
-				if (is == 1) {
-					while (it.hasNext()) {
-						ai16data[it.oIndex] = (short) op.longOperate(it.aLong, it.bLong);
-					}
-				} else {
-					int ms;
-					if (as == 1 && bs != 1) {
-						ms = Math.min(is, bs);
-						while (it.hasNext()) {
-							ai16data[it.oIndex] = (short) op.longOperate(it.aLong, it.bLong);
-							for (int j = 1; j < ms; j++) {
-								ai16data[it.oIndex + j] = (short) op.longOperate(it.aLong,
-										db.getElementLongAbs(it.bIndex + j));
-							}
-						}
-					} else if (as != 1 && bs == 1) {
-						ms = Math.min(is, as);
-						while (it.hasNext()) {
-							ai16data[it.oIndex] = (short) op.longOperate(it.aLong, it.bLong);
-							for (int j = 1; j < ms; j++) {
-								ai16data[it.oIndex + j] = (short) op.longOperate(da.getElementLongAbs(it.aIndex + j),
-										it.bLong);
-							}
-						}
-					} else {
-						ms = Math.min(is, Math.min(as, bs));
-						while (it.hasNext()) {
-							ai16data[it.oIndex] = (short) op.longOperate(it.aLong, it.bLong);
-							for (int j = 1; j < ms; j++) {
-								ai16data[it.oIndex + j] = (short) op.longOperate(da.getElementLongAbs(it.aIndex + j),
-										db.getElementLongAbs(it.bIndex + j));
-							}
-						}
-					}
-				}
-			} else {
-				z = new double[2];
-				if (!db.isComplex()) { // only a complex
-					while (it.hasNext()) {
-						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1), it.bDouble, 0);
-						short ox = (short) toLong(z[0]);
-						for (int j = 0; j < is; j++) {
-							ai16data[it.oIndex + j] = ox;
-						}
-					}
-				} else if (!da.isComplex()) { // only b complex
-					while (it.hasNext()) {
-						op.complexOperate(z, it.aDouble, 0, it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
-						short ox = (short) toLong(z[0]);
-						for (int j = 0; j < is; j++) {
-							ai16data[it.oIndex + j] = ox;
-						}
-					}
-				} else {
-					while (it.hasNext()) {
-						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1),
-								it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
-						short ox = (short) toLong(z[0]);
-						for (int j = 0; j < is; j++) {
-							ai16data[it.oIndex + j] = ox;
-						}
-					}
-				}
-			}
-			break;
-		case Dataset.ARRAYINT32:
-			int[] ai32data = ((CompoundIntegerDataset) result).getData();
-
-			if (!da.isComplex() && !db.isComplex()) {
-				if (is == 1) {
-					while (it.hasNext()) {
-						ai32data[it.oIndex] = (int) op.longOperate(it.aLong, it.bLong);
-					}
-				} else {
-					int ms;
-					if (as == 1 && bs != 1) {
-						ms = Math.min(is, bs);
-						while (it.hasNext()) {
-							ai32data[it.oIndex] = (int) op.longOperate(it.aLong, it.bLong);
-							for (int j = 1; j < ms; j++) {
-								ai32data[it.oIndex + j] = (int) op.longOperate(it.aLong,
-										db.getElementLongAbs(it.bIndex + j));
-							}
-						}
-					} else if (as != 1 && bs == 1) {
-						ms = Math.min(is, as);
-						while (it.hasNext()) {
-							ai32data[it.oIndex] = (int) op.longOperate(it.aLong, it.bLong);
-							for (int j = 1; j < ms; j++) {
-								ai32data[it.oIndex + j] = (int) op.longOperate(da.getElementLongAbs(it.aIndex + j),
-										it.bLong);
-							}
-						}
-					} else {
-						ms = Math.min(is, Math.min(as, bs));
-						while (it.hasNext()) {
-							ai32data[it.oIndex] = (int) op.longOperate(it.aLong, it.bLong);
-							for (int j = 1; j < ms; j++) {
-								ai32data[it.oIndex + j] = (int) op.longOperate(da.getElementLongAbs(it.aIndex + j),
-										db.getElementLongAbs(it.bIndex + j));
-							}
-						}
-					}
-				}
-			} else {
-				z = new double[2];
-				if (!db.isComplex()) { // only a complex
-					while (it.hasNext()) {
-						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1), it.bDouble, 0);
-						short ox = (short) toLong(z[0]);
-						for (int j = 0; j < is; j++) {
-							ai32data[it.oIndex + j] = ox;
-						}
-					}
-				} else if (!da.isComplex()) { // only b complex
-					while (it.hasNext()) {
-						op.complexOperate(z, it.aDouble, 0, it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
-						short ox = (short) toLong(z[0]);
-						for (int j = 0; j < is; j++) {
-							ai32data[it.oIndex + j] = ox;
-						}
-					}
-				} else {
-					while (it.hasNext()) {
-						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1),
-								it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
-						short ox = (short) toLong(z[0]);
-						for (int j = 0; j < is; j++) {
-							ai32data[it.oIndex + j] = ox;
-						}
-					}
-				}
-			}
-			break;
-		case Dataset.ARRAYINT64:
-			long[] ai64data = ((CompoundLongDataset) result).getData();
-
-			if (!da.isComplex() && !db.isComplex()) {
-				if (is == 1) {
-					while (it.hasNext()) {
-						ai64data[it.oIndex] = op.longOperate(it.aLong, it.bLong);
-					}
-				} else {
-					int ms;
-					if (as == 1 && bs != 1) {
-						ms = Math.min(is, bs);
-						while (it.hasNext()) {
-							ai64data[it.oIndex] = op.longOperate(it.aLong, it.bLong);
-							for (int j = 1; j < ms; j++) {
-								ai64data[it.oIndex + j] = op.longOperate(it.aLong, db.getElementLongAbs(it.bIndex + j));
-							}
-						}
-					} else if (as != 1 && bs == 1) {
-						ms = Math.min(is, as);
-						while (it.hasNext()) {
-							ai64data[it.oIndex] = op.longOperate(it.aLong, it.bLong);
-							for (int j = 1; j < ms; j++) {
-								ai64data[it.oIndex + j] = op.longOperate(da.getElementLongAbs(it.aIndex + j), it.bLong);
-							}
-						}
-					} else {
-						ms = Math.min(is, Math.min(as, bs));
-						while (it.hasNext()) {
-							ai64data[it.oIndex] = op.longOperate(it.aLong, it.bLong);
-							for (int j = 1; j < ms; j++) {
-								ai64data[it.oIndex + j] = op.longOperate(da.getElementLongAbs(it.aIndex + j),
-										db.getElementLongAbs(it.bIndex + j));
-							}
-						}
-					}
-				}
-			} else {
-				z = new double[2];
-				if (!db.isComplex()) { // only a complex
-					while (it.hasNext()) {
-						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1), it.bDouble, 0);
-						long ox = toLong(z[0]);
-						for (int j = 0; j < is; j++) {
-							ai64data[it.oIndex + j] = ox;
-						}
-					}
-				} else if (!da.isComplex()) { // only b complex
-					while (it.hasNext()) {
-						op.complexOperate(z, it.aDouble, 0, it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
-						long ox = toLong(z[0]);
-						for (int j = 0; j < is; j++) {
-							ai64data[it.oIndex + j] = ox;
-						}
-					}
-				} else {
-					while (it.hasNext()) {
-						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1),
-								it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
-						long ox = toLong(z[0]);
-						for (int j = 0; j < is; j++) {
-							ai64data[it.oIndex + j] = ox;
-						}
-					}
-				}
-			}
-			break;
-		case Dataset.FLOAT32:
+		if (result instanceof FloatDataset) {
 			float[] f32data = ((FloatDataset) result).getData();
 
 			if (!da.isComplex() && !db.isComplex()) {
@@ -1648,8 +1216,7 @@ public class Operations {
 					}
 				}
 			}
-			break;
-		case Dataset.FLOAT64:
+		} else if (result instanceof DoubleDataset) {
 			double[] f64data = ((DoubleDataset) result).getData();
 
 			if (!da.isComplex() && !db.isComplex()) {
@@ -1676,8 +1243,71 @@ public class Operations {
 					}
 				}
 			}
-			break;
-		case Dataset.ARRAYFLOAT32:
+		} else if (result instanceof ComplexFloatDataset) {
+			float[] c64data = ((ComplexFloatDataset) result).getData();
+			z = new double[2];
+
+			if (da.isComplex() || db.isComplex()) {
+				if (!db.isComplex()) { // only a complex
+					while (it.hasNext()) {
+						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1), it.bDouble, 0);
+						c64data[it.oIndex] = (float) z[0];
+						c64data[it.oIndex + 1] = (float) z[1];
+					}
+				} else if (!da.isComplex()) { // only b complex
+					while (it.hasNext()) {
+						op.complexOperate(z, it.aDouble, 0, it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
+						c64data[it.oIndex] = (float) z[0];
+						c64data[it.oIndex + 1] = (float) z[1];
+					}
+				} else {
+					while (it.hasNext()) {
+						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1), it.bDouble,
+								db.getElementDoubleAbs(it.bIndex + 1));
+						c64data[it.oIndex] = (float) z[0];
+						c64data[it.oIndex + 1] = (float) z[1];
+					}
+				}
+			} else {
+				while (it.hasNext()) {
+					op.complexOperate(z, it.aDouble, 0, it.bDouble, 0);
+					c64data[it.oIndex] = (float) z[0];
+					c64data[it.oIndex + 1] = (float) z[1];
+				}
+			}
+		} else if (result instanceof ComplexDoubleDataset) {
+			double[] c128data = ((ComplexDoubleDataset) result).getData();
+			z = new double[2];
+
+			if (da.isComplex() || db.isComplex()) {
+				if (!db.isComplex()) { // only a complex
+					while (it.hasNext()) {
+						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1), it.bDouble, 0);
+						c128data[it.oIndex] = z[0];
+						c128data[it.oIndex + 1] = z[1];
+					}
+				} else if (!da.isComplex()) { // only b complex
+					while (it.hasNext()) {
+						op.complexOperate(z, it.aDouble, 0, it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
+						c128data[it.oIndex] = z[0];
+						c128data[it.oIndex + 1] = z[1];
+					}
+				} else {
+					while (it.hasNext()) {
+						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1), it.bDouble,
+								db.getElementDoubleAbs(it.bIndex + 1));
+						c128data[it.oIndex] = z[0];
+						c128data[it.oIndex + 1] = z[1];
+					}
+				}
+			} else {
+				while (it.hasNext()) {
+					op.complexOperate(z, it.aDouble, 0, it.bDouble, 0);
+					c128data[it.oIndex] = z[0];
+					c128data[it.oIndex + 1] = z[1];
+				}
+			}
+		} else if (result instanceof CompoundFloatDataset) {
 			float[] af32data = ((CompoundFloatDataset) result).getData();
 
 			if (!da.isComplex() && !db.isComplex()) {
@@ -1745,8 +1375,7 @@ public class Operations {
 					}
 				}
 			}
-			break;
-		case Dataset.ARRAYFLOAT64:
+		} else if (result instanceof CompoundDoubleDataset) {
 			double[] af64data = ((CompoundDoubleDataset) result).getData();
 
 			if (!da.isComplex() && !db.isComplex()) {
@@ -1814,74 +1443,413 @@ public class Operations {
 					}
 				}
 			}
-			break;
-		case Dataset.COMPLEX64:
-			float[] c64data = ((ComplexFloatDataset) result).getData();
-			z = new double[2];
+		} else if (result instanceof BooleanDataset) {
+			boolean[] bdata = ((BooleanDataset) result).getData();
 
-			if (da.isComplex() || db.isComplex()) {
+			if (!da.isComplex() && !db.isComplex()) {
+				while (it.hasNext()) {
+					bdata[it.oIndex] = op.booleanOperate(it.aLong, it.aLong);
+				}
+			} else {
+				z = new double[2];
+				if (!db.isComplex()) {
+					while (it.hasNext()) {
+						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1), it.bDouble, 0);
+						bdata[it.oIndex] = z[0] != 0;
+					}
+				} else if (!da.isComplex()) {
+					while (it.hasNext()) {
+						op.complexOperate(z, it.aDouble, 0, it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
+						bdata[it.oIndex] = z[0] != 0;
+					}
+				} else {
+					while (it.hasNext()) {
+						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1),
+								it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
+						bdata[it.oIndex] = z[0] != 0;
+					}
+				}
+			}
+		} else if (result instanceof ByteDataset) {
+			byte[] i8data = ((ByteDataset) result).getData();
+
+			if (!da.isComplex() && !db.isComplex()) {
+				while (it.hasNext()) {
+					i8data[it.oIndex] = (byte) op.longOperate(it.aLong, it.aLong);
+				}
+			} else {
+				z = new double[2];
 				if (!db.isComplex()) { // only a complex
 					while (it.hasNext()) {
 						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1), it.bDouble, 0);
-						c64data[it.oIndex] = (float) z[0];
-						c64data[it.oIndex + 1] = (float) z[1];
+						i8data[it.oIndex] = (byte) toLong(z[0]);
 					}
 				} else if (!da.isComplex()) { // only b complex
 					while (it.hasNext()) {
 						op.complexOperate(z, it.aDouble, 0, it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
-						c64data[it.oIndex] = (float) z[0];
-						c64data[it.oIndex + 1] = (float) z[1];
+						i8data[it.oIndex] = (byte) toLong(z[0]);
 					}
 				} else {
 					while (it.hasNext()) {
-						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1), it.bDouble,
-								db.getElementDoubleAbs(it.bIndex + 1));
-						c64data[it.oIndex] = (float) z[0];
-						c64data[it.oIndex + 1] = (float) z[1];
+						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1),
+								it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
+						i8data[it.oIndex] = (byte) toLong(z[0]);
 					}
 				}
-			} else {
-				while (it.hasNext()) {
-					op.complexOperate(z, it.aDouble, 0, it.bDouble, 0);
-					c64data[it.oIndex] = (float) z[0];
-					c64data[it.oIndex + 1] = (float) z[1];
-				}
 			}
-			break;
-		case Dataset.COMPLEX128:
-			double[] c128data = ((ComplexDoubleDataset) result).getData();
-			z = new double[2];
+		} else if (result instanceof ShortDataset) {
+			short[] i16data = ((ShortDataset) result).getData();
 
-			if (da.isComplex() || db.isComplex()) {
+			if (!da.isComplex() && !db.isComplex()) {
+				while (it.hasNext()) {
+					i16data[it.oIndex] = (short) op.longOperate(it.aLong, it.aLong);
+				}
+			} else {
+				z = new double[2];
 				if (!db.isComplex()) { // only a complex
 					while (it.hasNext()) {
 						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1), it.bDouble, 0);
-						c128data[it.oIndex] = z[0];
-						c128data[it.oIndex + 1] = z[1];
+						i16data[it.oIndex] = (short) toLong(z[0]);
 					}
 				} else if (!da.isComplex()) { // only b complex
 					while (it.hasNext()) {
 						op.complexOperate(z, it.aDouble, 0, it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
-						c128data[it.oIndex] = z[0];
-						c128data[it.oIndex + 1] = z[1];
+						i16data[it.oIndex] = (short) toLong(z[0]);
 					}
 				} else {
 					while (it.hasNext()) {
-						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1), it.bDouble,
-								db.getElementDoubleAbs(it.bIndex + 1));
-						c128data[it.oIndex] = z[0];
-						c128data[it.oIndex + 1] = z[1];
+						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1),
+								it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
+						i16data[it.oIndex] = (short) toLong(z[0]);
+					}
+				}
+			}
+		} else if (result instanceof IntegerDataset) {
+			int[] i32data = ((IntegerDataset) result).getData();
+
+			if (!da.isComplex() && !db.isComplex()) {
+				while (it.hasNext()) {
+					i32data[it.oIndex] = (int) op.longOperate(it.aLong, it.aLong);
+				}
+			} else {
+				z = new double[2];
+				if (!db.isComplex()) { // only a complex
+					while (it.hasNext()) {
+						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1), it.bDouble, 0);
+						i32data[it.oIndex] = (int) toLong(z[0]);
+					}
+				} else if (!da.isComplex()) { // only b complex
+					while (it.hasNext()) {
+						op.complexOperate(z, it.aDouble, 0, it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
+						i32data[it.oIndex] = (int) toLong(z[0]);
+					}
+				} else {
+					while (it.hasNext()) {
+						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1),
+								it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
+						i32data[it.oIndex] = (int) toLong(z[0]);
+					}
+				}
+			}
+		} else if (result instanceof LongDataset) {
+			long[] i64data = ((LongDataset) result).getData();
+
+			if (!da.isComplex() && !db.isComplex()) {
+				while (it.hasNext()) {
+					i64data[it.oIndex] = op.longOperate(it.aLong, it.aLong);
+				}
+			} else {
+				z = new double[2];
+				if (!db.isComplex()) { // only a complex
+					while (it.hasNext()) {
+						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1), it.bDouble, 0);
+						i64data[it.oIndex] = toLong(z[0]);
+					}
+				} else if (!da.isComplex()) { // only b complex
+					while (it.hasNext()) {
+						op.complexOperate(z, it.aDouble, 0, it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
+						i64data[it.oIndex] = toLong(z[0]);
+					}
+				} else {
+					while (it.hasNext()) {
+						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1),
+								it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
+						i64data[it.oIndex] = toLong(z[0]);
+					}
+				}
+			}
+		} else if (result instanceof CompoundByteDataset) {
+			byte[] ai8data = ((CompoundByteDataset) result).getData();
+
+			if (!da.isComplex() && !db.isComplex()) {
+				if (is == 1) {
+					while (it.hasNext()) {
+						ai8data[it.oIndex] = (byte) op.longOperate(it.aLong, it.bLong);
+					}
+				} else { // broadcast to other elements of output if possible
+					int ms;
+					if (as == 1 && bs != 1) {
+						ms = Math.min(is, bs);
+						while (it.hasNext()) {
+							ai8data[it.oIndex] = (byte) op.longOperate(it.aLong, it.bLong);
+							for (int j = 1; j < ms; j++) {
+								ai8data[it.oIndex + j] = (byte) op.longOperate(it.aLong,
+										db.getElementLongAbs(it.bIndex + j));
+							}
+						}
+					} else if (as != 1 && bs == 1) {
+						ms = Math.min(is, as);
+						while (it.hasNext()) {
+							ai8data[it.oIndex] = (byte) op.longOperate(it.aLong, it.bLong);
+							for (int j = 1; j < ms; j++) {
+								ai8data[it.oIndex + j] = (byte) op.longOperate(da.getElementLongAbs(it.aIndex + j),
+										it.bLong);
+							}
+						}
+					} else {
+						ms = Math.min(is, Math.min(as, bs));
+						while (it.hasNext()) {
+							ai8data[it.oIndex] = (byte) op.longOperate(it.aLong, it.bLong);
+							for (int j = 1; j < ms; j++) {
+								ai8data[it.oIndex + j] = (byte) op.longOperate(da.getElementLongAbs(it.aIndex + j),
+										db.getElementLongAbs(it.bIndex + j));
+							}
+						}
 					}
 				}
 			} else {
-				while (it.hasNext()) {
-					op.complexOperate(z, it.aDouble, 0, it.bDouble, 0);
-					c128data[it.oIndex] = z[0];
-					c128data[it.oIndex + 1] = z[1];
+				z = new double[2];
+				if (!db.isComplex()) { // only a complex
+					while (it.hasNext()) {
+						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1), it.bDouble, 0);
+						byte ox = (byte) toLong(z[0]);
+						for (int j = 0; j < is; j++) {
+							ai8data[it.oIndex + j] = ox;
+						}
+					}
+				} else if (!da.isComplex()) { // only b complex
+					while (it.hasNext()) {
+						op.complexOperate(z, it.aDouble, 0, it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
+						byte ox = (byte) toLong(z[0]);
+						for (int j = 0; j < is; j++) {
+							ai8data[it.oIndex + j] = ox;
+						}
+					}
+				} else {
+					while (it.hasNext()) {
+						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1),
+								it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
+						byte ox = (byte) toLong(z[0]);
+						for (int j = 0; j < is; j++) {
+							ai8data[it.oIndex + j] = ox;
+						}
+					}
 				}
 			}
-			break;
-		default:
+		} else if (result instanceof CompoundShortDataset) {
+			short[] ai16data = ((CompoundShortDataset) result).getData();
+
+			if (!da.isComplex() && !db.isComplex()) {
+				if (is == 1) {
+					while (it.hasNext()) {
+						ai16data[it.oIndex] = (short) op.longOperate(it.aLong, it.bLong);
+					}
+				} else {
+					int ms;
+					if (as == 1 && bs != 1) {
+						ms = Math.min(is, bs);
+						while (it.hasNext()) {
+							ai16data[it.oIndex] = (short) op.longOperate(it.aLong, it.bLong);
+							for (int j = 1; j < ms; j++) {
+								ai16data[it.oIndex + j] = (short) op.longOperate(it.aLong,
+										db.getElementLongAbs(it.bIndex + j));
+							}
+						}
+					} else if (as != 1 && bs == 1) {
+						ms = Math.min(is, as);
+						while (it.hasNext()) {
+							ai16data[it.oIndex] = (short) op.longOperate(it.aLong, it.bLong);
+							for (int j = 1; j < ms; j++) {
+								ai16data[it.oIndex + j] = (short) op.longOperate(da.getElementLongAbs(it.aIndex + j),
+										it.bLong);
+							}
+						}
+					} else {
+						ms = Math.min(is, Math.min(as, bs));
+						while (it.hasNext()) {
+							ai16data[it.oIndex] = (short) op.longOperate(it.aLong, it.bLong);
+							for (int j = 1; j < ms; j++) {
+								ai16data[it.oIndex + j] = (short) op.longOperate(da.getElementLongAbs(it.aIndex + j),
+										db.getElementLongAbs(it.bIndex + j));
+							}
+						}
+					}
+				}
+			} else {
+				z = new double[2];
+				if (!db.isComplex()) { // only a complex
+					while (it.hasNext()) {
+						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1), it.bDouble, 0);
+						short ox = (short) toLong(z[0]);
+						for (int j = 0; j < is; j++) {
+							ai16data[it.oIndex + j] = ox;
+						}
+					}
+				} else if (!da.isComplex()) { // only b complex
+					while (it.hasNext()) {
+						op.complexOperate(z, it.aDouble, 0, it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
+						short ox = (short) toLong(z[0]);
+						for (int j = 0; j < is; j++) {
+							ai16data[it.oIndex + j] = ox;
+						}
+					}
+				} else {
+					while (it.hasNext()) {
+						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1),
+								it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
+						short ox = (short) toLong(z[0]);
+						for (int j = 0; j < is; j++) {
+							ai16data[it.oIndex + j] = ox;
+						}
+					}
+				}
+			}
+		} else if (result instanceof CompoundIntegerDataset) {
+			int[] ai32data = ((CompoundIntegerDataset) result).getData();
+
+			if (!da.isComplex() && !db.isComplex()) {
+				if (is == 1) {
+					while (it.hasNext()) {
+						ai32data[it.oIndex] = (int) op.longOperate(it.aLong, it.bLong);
+					}
+				} else {
+					int ms;
+					if (as == 1 && bs != 1) {
+						ms = Math.min(is, bs);
+						while (it.hasNext()) {
+							ai32data[it.oIndex] = (int) op.longOperate(it.aLong, it.bLong);
+							for (int j = 1; j < ms; j++) {
+								ai32data[it.oIndex + j] = (int) op.longOperate(it.aLong,
+										db.getElementLongAbs(it.bIndex + j));
+							}
+						}
+					} else if (as != 1 && bs == 1) {
+						ms = Math.min(is, as);
+						while (it.hasNext()) {
+							ai32data[it.oIndex] = (int) op.longOperate(it.aLong, it.bLong);
+							for (int j = 1; j < ms; j++) {
+								ai32data[it.oIndex + j] = (int) op.longOperate(da.getElementLongAbs(it.aIndex + j),
+										it.bLong);
+							}
+						}
+					} else {
+						ms = Math.min(is, Math.min(as, bs));
+						while (it.hasNext()) {
+							ai32data[it.oIndex] = (int) op.longOperate(it.aLong, it.bLong);
+							for (int j = 1; j < ms; j++) {
+								ai32data[it.oIndex + j] = (int) op.longOperate(da.getElementLongAbs(it.aIndex + j),
+										db.getElementLongAbs(it.bIndex + j));
+							}
+						}
+					}
+				}
+			} else {
+				z = new double[2];
+				if (!db.isComplex()) { // only a complex
+					while (it.hasNext()) {
+						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1), it.bDouble, 0);
+						short ox = (short) toLong(z[0]);
+						for (int j = 0; j < is; j++) {
+							ai32data[it.oIndex + j] = ox;
+						}
+					}
+				} else if (!da.isComplex()) { // only b complex
+					while (it.hasNext()) {
+						op.complexOperate(z, it.aDouble, 0, it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
+						short ox = (short) toLong(z[0]);
+						for (int j = 0; j < is; j++) {
+							ai32data[it.oIndex + j] = ox;
+						}
+					}
+				} else {
+					while (it.hasNext()) {
+						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1),
+								it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
+						short ox = (short) toLong(z[0]);
+						for (int j = 0; j < is; j++) {
+							ai32data[it.oIndex + j] = ox;
+						}
+					}
+				}
+			}
+		} else if (result instanceof CompoundLongDataset) {
+			long[] ai64data = ((CompoundLongDataset) result).getData();
+
+			if (!da.isComplex() && !db.isComplex()) {
+				if (is == 1) {
+					while (it.hasNext()) {
+						ai64data[it.oIndex] = op.longOperate(it.aLong, it.bLong);
+					}
+				} else {
+					int ms;
+					if (as == 1 && bs != 1) {
+						ms = Math.min(is, bs);
+						while (it.hasNext()) {
+							ai64data[it.oIndex] = op.longOperate(it.aLong, it.bLong);
+							for (int j = 1; j < ms; j++) {
+								ai64data[it.oIndex + j] = op.longOperate(it.aLong, db.getElementLongAbs(it.bIndex + j));
+							}
+						}
+					} else if (as != 1 && bs == 1) {
+						ms = Math.min(is, as);
+						while (it.hasNext()) {
+							ai64data[it.oIndex] = op.longOperate(it.aLong, it.bLong);
+							for (int j = 1; j < ms; j++) {
+								ai64data[it.oIndex + j] = op.longOperate(da.getElementLongAbs(it.aIndex + j), it.bLong);
+							}
+						}
+					} else {
+						ms = Math.min(is, Math.min(as, bs));
+						while (it.hasNext()) {
+							ai64data[it.oIndex] = op.longOperate(it.aLong, it.bLong);
+							for (int j = 1; j < ms; j++) {
+								ai64data[it.oIndex + j] = op.longOperate(da.getElementLongAbs(it.aIndex + j),
+										db.getElementLongAbs(it.bIndex + j));
+							}
+						}
+					}
+				}
+			} else {
+				z = new double[2];
+				if (!db.isComplex()) { // only a complex
+					while (it.hasNext()) {
+						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1), it.bDouble, 0);
+						long ox = toLong(z[0]);
+						for (int j = 0; j < is; j++) {
+							ai64data[it.oIndex + j] = ox;
+						}
+					}
+				} else if (!da.isComplex()) { // only b complex
+					while (it.hasNext()) {
+						op.complexOperate(z, it.aDouble, 0, it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
+						long ox = toLong(z[0]);
+						for (int j = 0; j < is; j++) {
+							ai64data[it.oIndex + j] = ox;
+						}
+					}
+				} else {
+					while (it.hasNext()) {
+						op.complexOperate(z, it.aDouble, da.getElementDoubleAbs(it.aIndex + 1),
+								it.bDouble, db.getElementDoubleAbs(it.bIndex + 1));
+						long ox = toLong(z[0]);
+						for (int j = 0; j < is; j++) {
+							ai64data[it.oIndex + j] = ox;
+						}
+					}
+				}
+			}
+
+		} else {
 			throw new UnsupportedOperationException("operate does not support this dataset type");
 		}
 
