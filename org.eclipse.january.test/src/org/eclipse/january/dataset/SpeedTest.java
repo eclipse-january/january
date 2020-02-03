@@ -5,8 +5,19 @@ import static org.junit.Assert.assertTrue;
 import java.util.Arrays;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
+/**
+ * 
+ * This test attempts to show differences in the dataset iterator approach
+ * vs. compiler optimised loop. It shows where January gets slow (impressively large),
+ * where compiler optimisation wins out.
+ * 
+ * @author Matt Gerring
+ *
+ */
+@Ignore
 public class SpeedTest {
 
 	@Before
