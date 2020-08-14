@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.eclipse.january.DatasetException;
 import org.eclipse.january.IMonitor;
@@ -63,7 +64,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	 * @param loader
 	 * @param name
 	 * @param elements
-	 * @param clazz dataset interface
+	 * @param clazz dataset interface (can be null to represent undefined interface)
 	 * @param shape
 	 * @since 2.3
 	 */
@@ -85,7 +86,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	 * Create a lazy dataset
 	 * @param loader
 	 * @param name
-	 * @param clazz dataset interface
+	 * @param clazz dataset interface (can be null to represent undefined interface)
 	 * @param shape
 	 * @since 2.3
 	 */
@@ -166,15 +167,15 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	}
 
 	/**
-	 * Can return -1 for unknown
+	 * Can return -1 when dataset interface is not defined
 	 */
 	@Override
 	public int getDType() {
-		return DTypeUtils.getDType(clazz);
+		return clazz == null ? -1 : DTypeUtils.getDType(clazz);
 	}
 
 	/**
-	 * @return dataset interface that supports element class and number of elements
+	 * @return dataset interface that supports element class and number of elements. Can be null when undefined
 	 * @since 2.3
 	 */
 	public Class<? extends Dataset> getInterface() {
@@ -233,9 +234,9 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 		int result = super.hashCode();
 		result = prime * result + Arrays.hashCode(oShape);
 		result = prime * result + (int) (size ^ (size >>> 32));
-		result = prime * result + clazz.hashCode();
+		result = prime * result + Objects.hashCode(clazz);
 		result = prime * result + isize;
-		result = prime * result + ((loader == null) ? 0 : loader.hashCode());
+		result = prime * result + Objects.hashCode(loader);
 		result = prime * result + Arrays.hashCode(begSlice);
 		result = prime * result + Arrays.hashCode(delSlice);
 		result = prime * result + Arrays.hashCode(sShape);
@@ -260,7 +261,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 		if (size != other.size) {
 			return false;
 		}
-		if (!clazz.equals(other.clazz)) {
+		if (!Objects.equals(clazz, other.clazz)) {
 			return false;
 		}
 		if (isize != other.isize) {
@@ -399,7 +400,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 		Dataset a;
 		if (nslice == null) {
-			a = DatasetFactory.zeros(clazz, slice.getShape());
+			a = DatasetFactory.zeros(clazz == null ? DoubleDataset.class : clazz, slice.getShape());
 		} else {
 			try {
 				a = DatasetUtils.convertToDataset(loader.getDataset(monitor, nslice));
@@ -432,6 +433,9 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 		}
 		a.addMetadata(MetadataFactory.createMetadata(OriginMetadata.class, this, nslice == null ? slice.convertToSlice() : nslice.convertToSlice(), oShape, null, name));
 
+		if (clazz == null) {
+			clazz = a.getClass();
+		}
 		return a;
 	}
 

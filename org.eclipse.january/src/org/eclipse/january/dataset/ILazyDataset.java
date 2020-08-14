@@ -27,7 +27,7 @@ import org.eclipse.january.metadata.MetadataType;
 public interface ILazyDataset extends Serializable, IMetadataProvider, INameable {
 		
 	/**
-	 * @return Boxed class of element
+	 * @return Boxed class of element. Can be null when interface is not defined
 	 */
 	public Class<?> getElementClass();
 
