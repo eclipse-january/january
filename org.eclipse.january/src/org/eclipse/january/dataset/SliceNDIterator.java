@@ -93,6 +93,10 @@ public class SliceNDIterator extends IndexIterator {
 			sStop = null;
 			iSlice = null;
 			sSlice = cSlice;
+			int[] dShape = dSlice.getShape();
+			for (int i = 0; i < rank; i++) {
+				dShape[i] = 1;
+			}
 		} else {
 			int[] dShape = dSlice.getShape();
 			int[] oShape = new int[sRank]; // outer shape
