@@ -14,12 +14,17 @@ package org.eclipse.january.dataset;
 
 import java.util.Arrays;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Class to hold colour datasets as red, green, blue tuples of short integers
  */
 public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	// pin UID to base class
 	private static final long serialVersionUID = Dataset.serialVersionUID;
+
+	private static final Logger logger = LoggerFactory.getLogger(RGBDataset.class);
 
 	private static final int ISIZE = 3; // number of elements per item
 

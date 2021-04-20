@@ -17,6 +17,8 @@ package org.eclipse.january.dataset;
 import java.util.Arrays;
 
 import org.apache.commons.math3.complex.Complex;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Extend compound dataset for int values // PRIM_TYPE
@@ -24,6 +26,8 @@ import org.apache.commons.math3.complex.Complex;
 public class CompoundIntegerDataset extends AbstractCompoundDataset {
 	// pin UID to base class
 	private static final long serialVersionUID = Dataset.serialVersionUID;
+
+	private static final Logger logger = LoggerFactory.getLogger(CompoundIntegerDataset.class);
 
 	protected int[] data; // subclass alias // PRIM_TYPE
 

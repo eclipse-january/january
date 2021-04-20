@@ -33,9 +33,13 @@ import org.eclipse.january.metadata.OriginMetadata;
 import org.eclipse.january.metadata.Reshapeable;
 import org.eclipse.january.metadata.Sliceable;
 import org.eclipse.january.metadata.Transposable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class LazyDataset extends LazyDatasetBase implements Serializable, Cloneable {
 	private static final long serialVersionUID = 2467865859867440242L;
+
+	private static final Logger logger = LoggerFactory.getLogger(LazyDataset.class);
 
 	protected Map<Class<? extends MetadataType>, List<MetadataType>> oMetadata = null;
 	protected int[] oShape; // original shape

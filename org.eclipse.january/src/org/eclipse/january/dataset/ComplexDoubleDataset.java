@@ -18,6 +18,8 @@ package org.eclipse.january.dataset;
 import java.util.Arrays;
 
 import org.apache.commons.math3.complex.Complex;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -26,6 +28,8 @@ import org.apache.commons.math3.complex.Complex;
 public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	// pin UID to base class
 	private static final long serialVersionUID = Dataset.serialVersionUID;
+
+	private static final Logger logger = LoggerFactory.getLogger(ComplexDoubleDataset.class);
 
 	private static final int ISIZE = 2; // number of elements per item
 
