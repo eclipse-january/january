@@ -32,7 +32,7 @@ public class DatasetUtils {
 	/**
 	 * Setup the logging facilities
 	 */
-	transient private static final Logger utilsLogger = LoggerFactory.getLogger(DatasetUtils.class);
+	private static final Logger utilsLogger = LoggerFactory.getLogger(DatasetUtils.class);
 
 	/**
 	 * Append copy of dataset with another dataset along n-th axis
