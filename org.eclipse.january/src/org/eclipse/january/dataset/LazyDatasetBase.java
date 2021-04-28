@@ -44,7 +44,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 
 	private static final long serialVersionUID = 767926846438976050L;
 
-	protected static final Logger logger = LoggerFactory.getLogger(LazyDatasetBase.class);
+	private static final Logger logger = LoggerFactory.getLogger(LazyDatasetBase.class);
 
 	protected static boolean catchExceptions;
 

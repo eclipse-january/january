@@ -22,6 +22,8 @@ import java.util.TreeSet;
 
 import org.apache.commons.math3.complex.Complex;
 import org.eclipse.january.metadata.StatisticsMetadata;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -30,6 +32,8 @@ import org.eclipse.january.metadata.StatisticsMetadata;
 public class ByteDataset extends AbstractDataset {
 	// pin UID to base class
 	private static final long serialVersionUID = Dataset.serialVersionUID;
+
+	private static final Logger logger = LoggerFactory.getLogger(ByteDataset.class);
 
 	protected byte[] data; // subclass alias // PRIM_TYPE
 

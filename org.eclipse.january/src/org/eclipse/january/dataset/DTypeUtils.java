@@ -22,7 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DTypeUtils {
-	protected static final Logger logger = LoggerFactory.getLogger(DTypeUtils.class);
+	private static final Logger logger = LoggerFactory.getLogger(DTypeUtils.class);
 
 	private static Map<Class<? extends Dataset>, Integer> createInterfaceMap() {
 		Map<Class<? extends Dataset>, Integer> map = new LinkedHashMap<>();

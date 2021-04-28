@@ -26,6 +26,8 @@ import org.eclipse.january.metadata.MetadataFactory;
 import org.eclipse.january.metadata.StatisticsMetadata;
 import org.eclipse.january.metadata.internal.ErrorMetadataImpl;
 import org.eclipse.january.metadata.internal.StatisticsMetadataImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Generic container class for data 
@@ -38,6 +40,8 @@ import org.eclipse.january.metadata.internal.StatisticsMetadataImpl;
 public abstract class AbstractDataset extends LazyDatasetBase implements Dataset {
 	// pin UID to base class
 	private static final long serialVersionUID = Dataset.serialVersionUID;
+
+	private static final Logger logger = LoggerFactory.getLogger(AbstractDataset.class);
 
 	protected int size; // number of items
 

@@ -13,9 +13,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class DateDatasetImpl extends StringDataset implements DateDataset {
 	// pin UID to base class
 	private static final long serialVersionUID = Dataset.serialVersionUID;
+
+	private static final Logger logger = LoggerFactory.getLogger(DateDatasetImpl.class);
 
 	private static final SimpleDateFormat ISO8601_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 	
