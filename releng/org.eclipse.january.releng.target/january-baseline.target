@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform -->
-<target name="January-baseline" sequenceNumber="1561543382">
+<target name="January-baseline" sequenceNumber="1539764717">
   <locations>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.january" version="0.0.0"/>
-      <repository id="january-2.2" location="https://download.eclipse.org/january/releases/2.2/repository/"/>
+      <repository id="january-2.2" location="https://download.eclipse.org/january/releases/2.2.2/repository/"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
-      <unit id="org.slf4j.api" version="1.7.2.v20121108-1250"/>
+      <unit id="org.slf4j.api" version="1.7.10.v20170428-1633"/>
       <unit id="org.apache.commons.math3" version="3.5.0.v20160301-1110"/>
-      <repository id="eclipse-orbit-oxygen-sr1" location="https://download.eclipse.org/tools/orbit/downloads/drops/R20170818183741/repository"/>
+      <repository id="eclipse-orbit-photon" location="https://download.eclipse.org/tools/orbit/downloads/drops/R20180606145124/repository"/>
     </location>
   </locations>
 </target>
