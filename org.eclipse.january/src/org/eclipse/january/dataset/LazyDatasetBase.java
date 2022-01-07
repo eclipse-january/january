@@ -46,20 +46,6 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 
 	private static final Logger logger = LoggerFactory.getLogger(LazyDatasetBase.class);
 
-	protected static boolean catchExceptions;
-
-	static {
-		/**
-		 * Boolean to set to true if running jython scripts that utilise ScisoftPy in IDE
-		 */
-		try {
-			catchExceptions = Boolean.getBoolean("run.in.eclipse");
-		} catch (SecurityException e) {
-			// set a default for when the security manager does not allow access to the requested key
-			catchExceptions = false;
-		}
-	}
-
 	transient private boolean dirty = true; // indicate dirty state of metadata
 	protected String name = "";
 
@@ -810,7 +796,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	 * @param slice
 	 */
 	protected void sliceMetadata(boolean asView, final SliceND slice) {
-		processAnnotatedMetadata(new MdsSlice(asView, slice), true);
+		processAnnotatedMetadata(new MdsSlice(asView, slice));
 	}
 
 	/**
@@ -820,7 +806,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	 * @param newShape
 	 */
 	protected void reshapeMetadata(final int[] oldShape, final int[] newShape) {
-		processAnnotatedMetadata(new MdsReshape(oldShape, newShape), true);
+		processAnnotatedMetadata(new MdsReshape(oldShape, newShape));
 	}
 
 	/**
@@ -829,7 +815,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	 * @param axesMap
 	 */
 	protected void transposeMetadata(final int[] axesMap) {
-		processAnnotatedMetadata(new MdsTranspose(axesMap), true);
+		processAnnotatedMetadata(new MdsTranspose(axesMap));
 	}
 
 	/**
@@ -837,11 +823,11 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	 * @since 2.0
 	 */
 	protected void dirtyMetadata() {
-		processAnnotatedMetadata(new MdsDirty(), true);
+		processAnnotatedMetadata(new MdsDirty());
 	}
 
 	@SuppressWarnings("unchecked")
-	private void processAnnotatedMetadata(MetadatasetAnnotationOperation op, boolean throwException) {
+	private void processAnnotatedMetadata(MetadatasetAnnotationOperation op) {
 		if (metadata == null)
 			return;
 
@@ -853,7 +839,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 
 				Class<? extends MetadataType> mc = m.getClass();
 				do { // iterate over super-classes
-					processClass(op, m, mc, throwException);
+					processClass(op, m, mc);
 					Class<?> sclazz = mc.getSuperclass();
 					if (!MetadataType.class.isAssignableFrom(sclazz)) {
 						break;
@@ -865,7 +851,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private static void processClass(MetadatasetAnnotationOperation op, MetadataType m, Class<? extends MetadataType> mc, boolean throwException) {
+	private static void processClass(MetadatasetAnnotationOperation op, MetadataType m, Class<? extends MetadataType> mc) {
 		for (Field f : mc.getDeclaredFields()) {
 			if (!f.isAnnotationPresent(op.getAnnClass()))
 				continue;
@@ -888,9 +874,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 						f.set(m, op.run((ILazyDataset) o));
 					} catch (Exception e) {
 						logger.error("Problem processing " + o, e);
-						if (!catchExceptions) {
-							throw e;
-						}
+						throw e;
 					}
 				} else if (o.getClass().isArray()) {
 					int l = Array.getLength(o);
@@ -970,9 +954,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 				}
 			} catch (Exception e) {
 				logger.error("Problem occurred when processing metadata of class {}: {}", mc.getCanonicalName(), e);
-				if (throwException) {
-					throw new RuntimeException(e);
-				} 
+				throw new RuntimeException(e);
 			}
 		}
 	}
@@ -988,9 +970,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 				return op.run((ILazyDataset) o);
 			} catch (Exception e) {
 				logger.error("Problem processing " + o, e);
-				if (!catchExceptions) {
-					throw e;
-				}
+				throw e;
 			}
 		} else if (o.getClass().isArray()) {
 			int l = Array.getLength(o);
