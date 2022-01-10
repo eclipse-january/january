@@ -24,8 +24,6 @@ jobs:
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-maven-
-    - name: Install Python 2
-      run: sudo apt-get install python2
     - name: Test
       run: mvn clean verify --no-transfer-progress
 
