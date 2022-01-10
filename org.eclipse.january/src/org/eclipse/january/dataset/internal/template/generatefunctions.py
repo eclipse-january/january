@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 ###
 # *******************************************************************************
 # * Copyright (c) 2011, 2017, 2018 Diamond Light Source Ltd.
@@ -10,9 +11,7 @@
 # *    Peter Chang - initial API and implementation and/or initial documentation
 # *******************************************************************************/
 ###
-from __builtin__ import True
 
-#!/usr/bin/env python
 '''
 Takes a functions definition file and the shell of a Java class,
 generates the methods and prints to standard output the completed class
