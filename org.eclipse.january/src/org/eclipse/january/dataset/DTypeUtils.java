@@ -551,7 +551,7 @@ public class DTypeUtils {
 				logger.error("Given dataset must have only one item");
 				throw new IllegalArgumentException("Given dataset must have only one item");
 			}
-			return toImag(db.getObjectAbs(db.getOffset()));
+			return toImag(db.getObject());
 		} else if (b instanceof IDataset) {
 			IDataset db = (Dataset) b;
 			if (db.getSize() != 1) {
@@ -631,7 +631,7 @@ public class DTypeUtils {
 				logger.error("Given dataset must have only one item");
 				throw new IllegalArgumentException("Given dataset must have only one item");
 			}
-			return toDoubleArray(db.getObjectAbs(db.getOffset()), itemSize);
+			return toDoubleArray(db.getObject(), itemSize);
 		} else if (b instanceof IDataset) {
 			IDataset db = (Dataset) b;
 			if (db.getSize() != 1) {
@@ -715,7 +715,7 @@ public class DTypeUtils {
 				logger.error("Given dataset must have only one item");
 				throw new IllegalArgumentException("Given dataset must have only one item");
 			}
-			return toFloatArray(db.getObjectAbs(db.getOffset()), itemSize);
+			return toFloatArray(db.getObject(), itemSize);
 		} else if (b instanceof IDataset) {
 			IDataset db = (Dataset) b;
 			if (db.getSize() != 1) {
@@ -800,7 +800,7 @@ public class DTypeUtils {
 				logger.error("Given dataset must have only one item");
 				throw new IllegalArgumentException("Given dataset must have only one item");
 			}
-			return toLongArray(db.getObjectAbs(db.getOffset()), itemSize);
+			return toLongArray(db.getObject(), itemSize);
 		} else if (b instanceof IDataset) {
 			IDataset db = (Dataset) b;
 			if (db.getSize() != 1) {
@@ -885,7 +885,7 @@ public class DTypeUtils {
 				logger.error("Given dataset must have only one item");
 				throw new IllegalArgumentException("Given dataset must have only one item");
 			}
-			return toIntegerArray(db.getObjectAbs(db.getOffset()), itemSize);
+			return toIntegerArray(db.getObject(), itemSize);
 		} else if (b instanceof IDataset) {
 			IDataset db = (Dataset) b;
 			if (db.getSize() != 1) {
@@ -970,7 +970,7 @@ public class DTypeUtils {
 				logger.error("Given dataset must have only one item");
 				throw new IllegalArgumentException("Given dataset must have only one item");
 			}
-			return toShortArray(db.getObjectAbs(db.getOffset()), itemSize);
+			return toShortArray(db.getObject(), itemSize);
 		} else if (b instanceof IDataset) {
 			IDataset db = (Dataset) b;
 			if (db.getSize() != 1) {
@@ -1055,7 +1055,7 @@ public class DTypeUtils {
 				logger.error("Given dataset must have only one item");
 				throw new IllegalArgumentException("Given dataset must have only one item");
 			}
-			return toByteArray(db.getObjectAbs(db.getOffset()), itemSize);
+			return toByteArray(db.getObject(), itemSize);
 		} else if (b instanceof IDataset) {
 			IDataset db = (Dataset) b;
 			if (db.getSize() != 1) {

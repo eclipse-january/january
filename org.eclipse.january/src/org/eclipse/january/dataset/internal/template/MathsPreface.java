@@ -64,7 +64,7 @@ class MathsPreface {
 	 * @return a dataset if a is a dataset or an object of the same class as o
 	 */
 	public static Object unwrap(final Dataset o, final Object a) {
-		return a instanceof Dataset ? o : o.getObjectAbs(o.getOffset());
+		return a instanceof Dataset ? o : o.getObject();
 	}
 
 	/**
@@ -76,7 +76,7 @@ class MathsPreface {
 	 *         class as o
 	 */
 	public static Object unwrap(final Dataset o, final Object a, final Object b) {
-		return (a instanceof Dataset || b instanceof Dataset) ? o : o.getObjectAbs(o.getOffset());
+		return (a instanceof Dataset || b instanceof Dataset) ? o : o.getObject();
 	}
 
 	/**
@@ -95,7 +95,7 @@ class MathsPreface {
 				break;
 			}
 		}
-		return isAnyDataset ? o : o.getObjectAbs(o.getOffset());
+		return isAnyDataset ? o : o.getObject();
 	}
 
 	/**
