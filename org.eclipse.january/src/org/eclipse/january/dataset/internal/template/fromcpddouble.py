@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 ###
 # *******************************************************************************
 # * Copyright (c) 2011, 2017 Diamond Light Source Ltd.
@@ -11,7 +12,6 @@
 # *******************************************************************************/
 ###
 
-#!/usr/bin/env python
 '''
 From compound double dataset generate other classes
 
