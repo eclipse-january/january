@@ -732,6 +732,12 @@ public class DatasetUtils {
 				c = new IntegerDataset(a);
 			} else if (LongDataset.class.isAssignableFrom(clazz)) {
 				c = new LongDataset(a);
+			} else if (RGBByteDataset.class.isAssignableFrom(clazz)) {
+				if (a instanceof CompoundDataset) {
+					c = RGBByteDataset.createFromCompoundDataset((CompoundDataset) a);
+				} else {
+					c = new RGBByteDataset(a);
+				}
 			} else if (CompoundByteDataset.class.isAssignableFrom(clazz)) {
 				if (a instanceof CompoundByteDataset) {
 					c = new CompoundByteDataset((CompoundDataset) a);
@@ -889,6 +895,12 @@ public class DatasetUtils {
 				c = new IntegerDataset(a);
 			} else if (LongDataset.class.isAssignableFrom(clazz)) {
 				c = new LongDataset(a);
+			} else if (RGBByteDataset.class.isAssignableFrom(clazz)) {
+				if (a instanceof CompoundDataset) {
+					c = RGBByteDataset.createFromCompoundDataset((CompoundDataset) a);
+				} else {
+					c = new RGBByteDataset(a);
+				}
 			} else if (CompoundByteDataset.class.isAssignableFrom(clazz)) {
 				c = new CompoundByteDataset(isize, repeat, a);
 			} else if (RGBDataset.class.isAssignableFrom(clazz)) {
@@ -1303,7 +1315,7 @@ public class DatasetUtils {
 	}
 
 	/**
-	 * Create a compound dataset from given datasets
+	 * Create a compound dataset from copying given datasets
 	 * @param clazz dataset class
 	 * @param datasets
 	 * @return compound dataset or null if none given
@@ -1314,7 +1326,15 @@ public class DatasetUtils {
 			return null;
 
 		CompoundDataset c = null;
-		if (CompoundByteDataset.class.isAssignableFrom(clazz)) {
+		if (RGBByteDataset.class.isAssignableFrom(clazz)) {
+			if (datasets.length == 1) {
+				c = new RGBByteDataset(datasets[0]);
+			} else if (datasets.length == 3) {
+				c = new RGBByteDataset(datasets[0], datasets[1], datasets[2]);
+			} else {
+				throw new IllegalArgumentException("Need one or three datasets for RGB dataset");
+			}
+		} else if (CompoundByteDataset.class.isAssignableFrom(clazz)) {
 			c = new CompoundByteDataset(datasets);
 		} else if (RGBDataset.class.isAssignableFrom(clazz)) {
 			if (datasets.length == 1) {

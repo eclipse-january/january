@@ -113,6 +113,12 @@ public interface Dataset extends IDataset {
 	public static final int ARRAYINT8 = ARRAYMUL * INT8;
 
 	/**
+	 * Array of three signed 8-bit integers for RGB values
+	 * @since 2.3
+	 */
+	public static final int RGB8 = ARRAYINT8 + 3;
+ 
+	/**
 	 * Array of signed 16-bit integers
 	 */
 	public static final int ARRAYINT16 = ARRAYMUL * INT16;

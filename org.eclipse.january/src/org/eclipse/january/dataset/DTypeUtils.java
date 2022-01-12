@@ -48,6 +48,7 @@ public class DTypeUtils {
 		map.put(ObjectDataset.class, Dataset.OBJECT);
 		map.put(DateDatasetImpl.class, Dataset.DATE);
 		map.put(DateDataset.class, Dataset.DATE);
+		map.put(RGBByteDataset.class, Dataset.RGB8);
 		map.put(RGBDataset.class, Dataset.RGB);
 		return map;
 	}
@@ -118,7 +119,7 @@ public class DTypeUtils {
 
 	public static boolean isDTypeInteger(int dtype) {
 		return dtype == Dataset.INT8 || dtype == Dataset.INT16 || dtype == Dataset.INT32 || dtype == Dataset.INT64 ||
-				dtype == Dataset.ARRAYINT8 || dtype == Dataset.ARRAYINT16 || dtype == Dataset.ARRAYINT32 || dtype == Dataset.ARRAYINT64 || dtype == Dataset.RGB;
+				dtype == Dataset.ARRAYINT8 || dtype == Dataset.ARRAYINT16 || dtype == Dataset.ARRAYINT32 || dtype == Dataset.ARRAYINT64 || dtype == Dataset.RGB8 || dtype == Dataset.RGB;
 	}
 
 	public static boolean isDTypeFloating(int dtype) {
@@ -285,6 +286,7 @@ public class DTypeUtils {
 			return Dataset.ARRAYFLOAT64;
 		case Dataset.DATE:
 		case Dataset.STRING:
+		case Dataset.RGB8:
 		case Dataset.RGB:
 		case Dataset.OBJECT:
 			return otype;
@@ -331,6 +333,7 @@ public class DTypeUtils {
 		case Dataset.COMPLEX128:
 			return Dataset.FLOAT64;
 		case Dataset.ARRAYINT8:
+		case Dataset.RGB8:
 			return Dataset.INT8;
 		case Dataset.ARRAYINT16:
 		case Dataset.RGB:
@@ -364,6 +367,7 @@ public class DTypeUtils {
 		case Dataset.COMPLEX64:
 		case Dataset.COMPLEX128:
 			return 2;
+		case Dataset.RGB8:
 		case Dataset.RGB:
 			return 3;
 		}
@@ -393,6 +397,7 @@ public class DTypeUtils {
 			break;
 		case Dataset.INT8:
 		case Dataset.ARRAYINT8:
+		case Dataset.RGB8:
 			size = Byte.SIZE / 8;
 			break;
 		case Dataset.INT16:
@@ -1104,6 +1109,7 @@ public class DTypeUtils {
 			return Boolean.class;
 		case Dataset.INT8:
 		case Dataset.ARRAYINT8:
+		case Dataset.RGB8:
 			return Byte.class;
 		case Dataset.INT16:
 		case Dataset.ARRAYINT16:
@@ -1229,6 +1235,8 @@ public class DTypeUtils {
 		int bytes = InterfaceUtils.getItemBytes(1, clazz);
 		if (InterfaceUtils.isComplex(clazz)) {
 			return "COMPLEX" + bytes*16;
+		} else if (RGBByteDataset.class.isAssignableFrom(clazz)) {
+			return "RGB8";
 		} else if (RGBDataset.class.isAssignableFrom(clazz)) {
 			return "RGB";
 		}
