@@ -60,6 +60,8 @@ A 'complex_b_real;' marker can be appended to the 'complex' case to
 handle the special case of the second operand being real
 '''
 
+from __future__ import print_function
+
 #
 # State machine code from David Mertz
 # http://www.ibm.com/developerworks/library/l-python-state.html
@@ -83,9 +85,9 @@ class StateMachine:
 
     def run(self, cargo=None):
         if not self.startState:
-            raise InitializationError, "must call .set_start() before .run()"
+            raise InitializationError("must call .set_start() before .run()")
         if not self.endStates:
-            raise InitializationError, "at least one state must be an end_state"
+            raise InitializationError("at least one state must be an end_state")
         handler = self.startState
         while 1:
             (newState, cargo) = handler(cargo)
@@ -93,7 +95,7 @@ class StateMachine:
                 newState(cargo)
                 break
             elif newState not in self.handlers:
-                raise RuntimeError, "Invalid target %s" % newState
+                raise RuntimeError("Invalid target %s" % newState)
             else:
                 handler = newState
 
@@ -126,11 +128,11 @@ def oldmethod(name, jdoc=None, edoc="", params=0):
         if is_binaryop:
             print("\t * @return %s\n%s\t */" % (jdoc, edoc))
             print("\tpublic static Dataset %s(final Object a, final Object b, %s) {" % (name, psig))
-            print ("\t\treturn %s(a, b, null, %s);" % (name, ptext))
+            print("\t\treturn %s(a, b, null, %s);" % (name, ptext))
         else:
             print("\t * @return dataset\n%s\t */" % edoc)
             print("\tpublic static Dataset %s(final Object a, %s) {" % (name, psig))
-            print ("\t\treturn %s(a, null, %s);" % (name, ptext))
+            print("\t\treturn %s(a, null, %s);" % (name, ptext))
     else:
         if is_binaryop:
             print("\t * @return %s\n%s\t */" % (jdoc, edoc))
@@ -257,7 +259,7 @@ def sameloop(codedict, cprefix, vletter, text, use_long=False, override_long=Fal
         otype, oclass = codedict[w]
         ovar = "o%s%ddata" % (vletter,w)
         if unsigned:
-            mask = "0x" + (w / 4) * "f" + "L"
+            mask = "0x" + (w // 4) * "f" + "L"
         else:
             mask = None
         preloop(dtype, otype, oclass, ovar, is_int, use_long, override_long=override_long, mask=mask)
@@ -281,7 +283,7 @@ def compoundloop(codedict, cprefix, vletter, text, use_long=False, override_long
         ovar = "o%s%ddata" % (vletter,w)
         otype, oclass = codedict[w]
         if unsigned:
-            mask = "0x" + (w / 4) * "f" + "L"
+            mask = "0x" + (w // 4) * "f" + "L"
         else:
             mask = None
         preloop(dtype, otype, oclass, ovar, is_int, use_long, override_long=override_long, mask=mask)
@@ -304,12 +306,12 @@ def deftemps(text, jtype, lprefix, vars):
                     lclass,dummy = rest.split("(",1)
                     if lclass != "":
                         vars[lhs] = lclass
-                        print "%s%s %s;" % (lprefix, lclass, lhs)
+                        print("%s%s %s;" % (lprefix, lclass, lhs))
                     else:
-                        raise ValueError, "Cannot find class of new variable in line: %s" % t
+                        raise ValueError("Cannot find class of new variable in line: %s" % t)
                 else:
                     vars[lhs] = jtype
-                    print "%s%s %s;" % (lprefix, jtype, lhs)
+                    print("%s%s %s;" % (lprefix, jtype, lhs))
     return vars
 
 import re
@@ -343,28 +345,28 @@ def transtext(text, jtype, otype=None, lprefix="\t\t\t\t\t", is_int=True, overri
             lhs, rhs = t.split(" = ", 1)
             slhs = lhs.strip()
             if slhs not in vars:
-                raise ValueError, "Cannot find class of new variable in line: %s" % t
+                raise ValueError("Cannot find class of new variable in line: %s" % t)
             if t.find(" new") < 0:
                 rhs = rhs[:-2]
                 if rhs == "0":
-                    print "%s%s = 0;" % (lprefix, lhs)
+                    print("%s%s = 0;" % (lprefix, lhs))
                 elif vars[slhs] == jprim:
-                    print "%s%s = %s(%s);" % (lprefix, lhs, jconv, rhs)
+                    print("%s%s = %s(%s);" % (lprefix, lhs, jconv, rhs))
                 elif is_real:
-#                     print "%s%s = (%s) (%s);" % (lprefix, lhs, vars[slhs], rhs)
+#                     print("%s%s = (%s) (%s);" % (lprefix, lhs, vars[slhs], rhs)
                     if use_long and rhs.find("Math.") < 0 and param_re.search(rhs) is None:
-                        print "%s%s = (%s);" % (lprefix, lhs, rhs)
+                        print("%s%s = (%s);" % (lprefix, lhs, rhs))
                     else:
-                        print "%s%s = (%s) (%s);" % (lprefix, lhs, vars[slhs], rhs)
+                        print("%s%s = (%s) (%s);" % (lprefix, lhs, vars[slhs], rhs))
                 else:
                     if not is_real and otype == "long":
-                        print "%s%s = %s(%s);" % (lprefix, lhs, jconv, rhs)
+                        print("%s%s = %s(%s);" % (lprefix, lhs, jconv, rhs))
                     else:
-                        print "%s%s = (%s) %s(%s);" % (lprefix, lhs, vars[slhs], jconv, rhs)
+                        print("%s%s = (%s) %s(%s);" % (lprefix, lhs, vars[slhs], jconv, rhs))
             else:
-                print "%s%s" % (lprefix, t),
+                print("%s%s" % (lprefix, t), end='')
         else:
-            print "%s%s" % (lprefix, t),
+            print("%s%s" % (lprefix, t), end='')
 
     return vars
 
@@ -695,7 +697,7 @@ def func(cargo):
     if len(params) > 0:
         nparams = int(params[0])
         if nparams > 26:
-            raise ValueError, "Number of parameters is greater than the supported 26!"
+            raise ValueError("Number of parameters is greater than the supported 26!")
         def_unsigned_mask = any([ "u" in p for p in params[1:]])
     else:
         nparams = 0
@@ -722,12 +724,12 @@ def func(cargo):
             doc = jdoc
 
         beginmethod(name, doc, edoc, nparams)
-#        if len(plist) > 0: print "Parameters", plist
+#        if len(plist) > 0: print("Parameters", plist)
         return cases, (f, '', name, jdoc, [])
 
 def cases(cargo):
     f, last, name, jdoc, types = cargo
-#    print "cases: |%s|, |%s|" % (name, last)
+#    print("cases: |%s|, |%s|" % (name, last))
     while True:
         if last == None or len(last) > 0:
             l = last
@@ -790,29 +792,37 @@ def getcode(f):
 def icode(cargo):
     f, all, name, jdoc, types = cargo
     text, last = getcode(f)
-#    print "int case:", name
-#    print text
+#    print("int case:", name)
+#    print(text)
     sameloop({ 8 : ("byte", "ByteDataset"), 16 : ("short", "ShortDataset"),
-                32 : ("int", "IntegerDataset"), 64 : ("long", "LongDataset") },
-                "INT", "i", text, use_long=True, unsigned=def_unsigned_mask)
+              64 : ("long", "LongDataset"),
+              32 : ("int", "IntegerDataset"),
+             },
+              "INT", "i", text, use_long=True, unsigned=def_unsigned_mask)
     types.append("integer")
     compoundloop({ 8 : ("byte", "CompoundByteDataset"), 16 : ("short", "CompoundShortDataset"),
-                32 : ("int", "CompoundIntegerDataset"), 64 : ("long", "CompoundLongDataset") },
-                "ARRAYINT", "ai", text, use_long=True, unsigned=def_unsigned_mask)
+                  64 : ("long", "CompoundLongDataset"),
+                  32 : ("int", "CompoundIntegerDataset"),
+                 },
+                  "ARRAYINT", "ai", text, use_long=True, unsigned=def_unsigned_mask)
     types.append("compound integer")
     return cases, (f, last, name, jdoc, types)
 
 def ircode(cargo):
     f, all, name, jdoc, types = cargo
     text, last = getcode(f)
-#    print "int case:", name
-#    print text
+#    print("int case:", name)
+#    print(text)
     sameloop({ 8 : ("byte", "ByteDataset"), 16 : ("short", "ShortDataset"),
-                32 : ("int", "IntegerDataset"), 64 : ("long", "LongDataset") },
+                64 : ("long", "LongDataset"),
+                32 : ("int", "IntegerDataset"),
+                 },
                 "INT", "i", text, override_long=True, unsigned=def_unsigned_mask)
     types.append("integer")
     compoundloop({ 8 : ("byte", "CompoundByteDataset"), 16 : ("short", "CompoundShortDataset"),
-                32 : ("int", "CompoundIntegerDataset"), 64 : ("long", "CompoundLongDataset") },
+                64 : ("long", "CompoundLongDataset"),
+                32 : ("int", "CompoundIntegerDataset"),
+                 },
                 "ARRAYINT", "ai", text, override_long=True, unsigned=def_unsigned_mask)
     types.append("compound integer")
     return cases, (f, last, name, jdoc, types)
@@ -820,15 +830,19 @@ def ircode(cargo):
 def rcode(cargo):
     f, all, name, jdoc, types = cargo
     text, last = getcode(f)
-#    print "real case:", name
-#    print text
+#    print("real case:", name)
+#    print(text)
     if "integer" not in types:
         sameloop({ 8 : ("byte", "ByteDataset"), 16 : ("short", "ShortDataset"),
-                    32 : ("int", "IntegerDataset"), 64 : ("long", "LongDataset") },
+                    64 : ("long", "LongDataset"),
+                    32 : ("int", "IntegerDataset"),
+                    },
                     "INT", "i", text)
         types.append("integer")
         compoundloop({ 8 : ("byte", "CompoundByteDataset"), 16 : ("short", "CompoundShortDataset"),
-                    32 : ("int", "CompoundIntegerDataset"), 64 : ("long", "CompoundLongDataset") },
+                      64 : ("long", "CompoundLongDataset"),
+                      32 : ("int", "CompoundIntegerDataset"),
+                      },
                     "ARRAYINT", "ai", text)
         types.append("compound integer")
 
@@ -858,8 +872,8 @@ def parse_b_real(text):
 def ccode(cargo):
     f, all, name, jdoc, types = cargo
     text, last = getcode(f)
-#    print "comp case:", name
-#    print text
+#    print("comp case:", name)
+#    print(text)
     if all.find("real") >= 0:
         real = True
     else:
@@ -885,7 +899,7 @@ def parsefile(cargo):
         if len(l) > 0:
             if l.find("func:") >= 0 or l.find("biop:") >= 0:
                 return func, (f, l)
-            raise ValueError, "Line is not a function definition: %s" % l
+            raise ValueError("Line is not a function definition: %s" % l)
 
 def eof(cargo):
     pass
@@ -909,12 +923,12 @@ def generateclass(funcs, shell):
         if l.startswith("package org.eclipse.january.dataset.internal.template;"):
             print("package org.eclipse.january.dataset;")
             break
-        print l,
+        print(l, end='')
     while True: # edit imports
         l = shell.readline()
         if l.startswith("// start of imports that will be omitted in derived class"):
             break
-        print l,
+        print(l, end='')
     print("import org.apache.commons.math3.complex.Complex;")
     print("import org.eclipse.january.dataset.DTypeUtils;")
     while True: # edit imports
@@ -926,27 +940,27 @@ def generateclass(funcs, shell):
         if l.startswith("class MathsPreface {"):
             print("public class Maths {")
             break
-        print l,
+        print(l, end='')
     while True:
         l = shell.readline()
         if l.startswith("// Start of generated code"):
-            print l,
+            print(l, end='')
             break
-        print l,
+        print(l, end='')
 
     generatefunctions(funcs)
 
     while True:
         l = shell.readline()
         if l.startswith("// End of generated code"):
-            print l,
+            print(l, end='')
             break
 
     while True:
         l = shell.readline()
         if not l:
             break
-        print l,
+        print(l, end='')
 
 if __name__ == '__main__':
     import sys
