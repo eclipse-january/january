@@ -14,10 +14,10 @@
 
 # Generate all the template based classes using the Python scripts
 
-python generatefunctions.py functions.txt MathsPreface.java > Maths.java
-python fromdouble.py ../../DoubleDataset.java
-python fromcpxdouble.py ../../ComplexDoubleDataset.java
-python fromcpddouble.py ../../CompoundDoubleDataset.java
+python3 generatefunctions.py functions.txt MathsPreface.java > Maths.java
+python3 fromdouble.py ../../DoubleDataset.java
+python3 fromcpxdouble.py ../../ComplexDoubleDataset.java
+python3 fromcpddouble.py ../../CompoundDoubleDataset.java
 
 i=Maths.java
 dest=../../$i

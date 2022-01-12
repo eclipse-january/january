@@ -1,7 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 ###
 # *******************************************************************************
-# * Copyright (c) 2011, 2017 Diamond Light Source Ltd.
+# * Copyright (c) 2011-2022 Diamond Light Source Ltd.
 # * All rights reserved. This program and the accompanying materials
 # * are made available under the terms of the Eclipse Public License v1.0
 # * which accompanies this distribution, and is available at
@@ -15,11 +15,9 @@
 '''
 From complex double dataset generate other classes
 
-$ python fromcpxdouble.py ../../ComplexDoubleDataset.java
+$ python3 fromcpxdouble.py ../../ComplexDoubleDataset.java
 
 '''
-
-from __future__ import print_function
 
 from markers import transmutate #@UnresolvedImport
 
