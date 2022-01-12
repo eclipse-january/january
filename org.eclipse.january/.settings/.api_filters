@@ -8,7 +8,28 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/january/dataset/AbstractDataset.java" type="org.eclipse.january.dataset.AbstractDataset">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="internalGetSliceIterator(SliceND)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/january/dataset/DTypeUtils.java" type="org.eclipse.january.dataset.DTypeUtils">
+        <filter id="388018290">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.DTypeUtils"/>
+                <message_argument value="logger"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/january/dataset/Dataset.java" type="org.eclipse.january.dataset.Dataset">
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.Dataset"/>
+                <message_argument value="RGB8"/>
+            </message_arguments>
+        </filter>
         <filter id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.january.dataset.Dataset"/>
@@ -27,6 +48,14 @@
             <message_arguments>
                 <message_argument value="org.eclipse.january.dataset.DatasetFactory"/>
                 <message_argument value="createCompoundDataset(Class&lt;T&gt;, Object[])"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/january/dataset/DatasetUtils.java" type="org.eclipse.january.dataset.DatasetUtils">
+        <filter id="388018290">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.DatasetUtils"/>
+                <message_argument value="utilsLogger"/>
             </message_arguments>
         </filter>
     </resource>
@@ -87,12 +116,39 @@
                 <message_argument value="sShape"/>
             </message_arguments>
         </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="internalGetSlice(IMonitor, SliceND)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="internalGetSliceView(SliceND)"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/january/dataset/LazyDatasetBase.java" type="org.eclipse.january.dataset.LazyDatasetBase">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.LazyDatasetBase"/>
+                <message_argument value="catchExceptions"/>
+            </message_arguments>
+        </filter>
         <filter id="338792546">
             <message_arguments>
                 <message_argument value="org.eclipse.january.dataset.LazyDatasetBase"/>
                 <message_argument value="getElementClass()"/>
+            </message_arguments>
+        </filter>
+        <filter id="388018290">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.LazyDatasetBase"/>
+                <message_argument value="logger"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="checkSliceND(SliceND)"/>
             </message_arguments>
         </filter>
     </resource>

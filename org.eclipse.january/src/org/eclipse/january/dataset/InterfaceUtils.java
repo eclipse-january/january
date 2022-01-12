@@ -53,6 +53,7 @@ public class InterfaceUtils {
 		for (Entry<Class<? extends Dataset>, Class<? extends CompoundDataset>> e : interface2Compound.entrySet()) {
 			compound2Interface.put(e.getValue(), e.getKey());
 		}
+		compound2Interface.put(RGBByteDataset.class, ByteDataset.class);
 		compound2Interface.put(RGBDataset.class, ShortDataset.class);
 		compound2Interface.put(ComplexFloatDataset.class, FloatDataset.class);
 		compound2Interface.put(ComplexDoubleDataset.class, DoubleDataset.class);
@@ -90,6 +91,7 @@ public class InterfaceUtils {
 		result.put(BooleanDataset.class, Boolean.class);
 		result.put(StringDataset.class, String.class);
 		result.put(ComplexDoubleDataset.class, Double.class); // XXX must be before compound double
+		result.put(RGBByteDataset.class, Byte.class); // XXX must be before compound byte
 		result.put(RGBDataset.class, Short.class); // XXX must be before compound short
 		result.put(ByteDataset.class, Byte.class);
 		result.put(ShortDataset.class, Short.class);
@@ -399,7 +401,7 @@ public class InterfaceUtils {
 	public static int getElementsPerItem(Class<? extends Dataset> clazz) {
 		if (isComplex(clazz)) {
 			return 2;
-		} else if (RGBDataset.class.isAssignableFrom(clazz)) {
+		} else if (RGBByteDataset.class.isAssignableFrom(clazz) || RGBDataset.class.isAssignableFrom(clazz)) {
 			return 3;
 		}
 		if (CompoundDataset.class.isAssignableFrom(clazz)) {

@@ -657,7 +657,7 @@ public class DatasetFactory {
 				} else {
 					d = createFromPrimitiveArray(InterfaceUtils.getInterfaceFromClass(1, ca), obj);
 					if (!InterfaceUtils.isElemental(clazz)) {
-						if (RGBDataset.class.isAssignableFrom(clazz)) {
+						if (RGBByteDataset.class.isAssignableFrom(clazz) || RGBDataset.class.isAssignableFrom(clazz)) {
 							d = DatasetUtils.createCompoundDataset(d, 3);
 							if (d.getSize() == 1) { // special case of allowing a zero-rank RGB dataset
 								d.setShape();
@@ -682,6 +682,8 @@ public class DatasetFactory {
 					d = IntegerDataset.createFromObject(obj);
 				} else if (LongDataset.class.isAssignableFrom(clazz)) {
 					d = LongDataset.createFromObject(obj);
+				} else if (RGBByteDataset.class.isAssignableFrom(clazz)) {
+					d = RGBByteDataset.createFromObject(obj);
 				} else if (CompoundByteDataset.class.isAssignableFrom(clazz)) {
 					d = CompoundByteDataset.createFromObject(itemSize, obj);
 				} else if (RGBDataset.class.isAssignableFrom(clazz)) {
@@ -848,6 +850,8 @@ public class DatasetFactory {
 			return (T) new FloatDataset(shape);
 		} else if (DoubleDataset.class.isAssignableFrom(clazz)) {
 			return (T) new DoubleDataset(shape);
+		} else if (RGBByteDataset.class.isAssignableFrom(clazz)) {
+			return (T) new RGBByteDataset(shape);
 		} else if (RGBDataset.class.isAssignableFrom(clazz)) {
 			return (T) new RGBDataset(shape);
 		} else if (ComplexFloatDataset.class.isAssignableFrom(clazz)) {
@@ -898,9 +902,14 @@ public class DatasetFactory {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends CompoundDataset> T compoundZeros(int itemSize, Class<T> clazz, int... shape) {
-		if (CompoundByteDataset.class.isAssignableFrom(clazz)) {
+		if (RGBByteDataset.class.isAssignableFrom(clazz)) {
+			if (itemSize != 3) {
+				throw new IllegalArgumentException("Number of elements not compatible with RGB type");
+			}
+			return (T) new RGBByteDataset(shape);
+		} else if (CompoundByteDataset.class.isAssignableFrom(clazz)) {
 			return (T) new CompoundByteDataset(itemSize, shape);
-		} else if (RGBDataset.class.isAssignableFrom(clazz)) {
+		} else  if (RGBDataset.class.isAssignableFrom(clazz)) {
 			if (itemSize != 3) {
 				throw new IllegalArgumentException("Number of elements not compatible with RGB type");
 			}
@@ -967,6 +976,8 @@ public class DatasetFactory {
 			return (T) FloatDataset.ones(shape);
 		} else if (DoubleDataset.class.isAssignableFrom(clazz)) {
 			return (T) DoubleDataset.ones(shape);
+		} else if (RGBByteDataset.class.isAssignableFrom(clazz)) {
+			return (T) new RGBByteDataset(shape).fill(1);
 		} else if (RGBDataset.class.isAssignableFrom(clazz)) {
 			return (T) new RGBDataset(shape).fill(1);
 		} else if (ComplexFloatDataset.class.isAssignableFrom(clazz)) {
@@ -995,7 +1006,12 @@ public class DatasetFactory {
 			return ones(clazz, shape);
 		}
 
-		if (CompoundByteDataset.class.isAssignableFrom(clazz)) {
+		if (RGBByteDataset.class.isAssignableFrom(clazz)) {
+			if (itemSize != 3) {
+				throw new IllegalArgumentException("Number of elements not compatible with RGB type");
+			}
+			return (T) new RGBByteDataset(shape).fill(1);
+		} else if (CompoundByteDataset.class.isAssignableFrom(clazz)) {
 			return (T) CompoundByteDataset.ones(itemSize, shape);
 		} else if (RGBDataset.class.isAssignableFrom(clazz)) {
 			if (itemSize != 3) {
