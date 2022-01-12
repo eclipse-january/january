@@ -19,13 +19,15 @@ $ python fromcpddouble.py ../../CompoundDoubleDataset.java
 
 '''
 
+from __future__ import print_function
+
 from markers import transmutate #@UnresolvedImport
 
 # default dataset definition
 defds = { "CompoundDoubleDataset":["FLOAT64", "Double", "double", "getElementDoubleAbs", "DTypeUtils.toReal(obj)", "%.8g",
 "NaN"] }
 
-defkey = defds.keys()[0]
+defkey = list(defds.keys())[0]
 
 # all other dataset definitions
 fds = { "CompoundFloatDataset":["FLOAT32", "Float", "float", "getElementDoubleAbs", "(float) DTypeUtils.toReal(obj)", "%.8g",
@@ -47,16 +49,15 @@ def generateclass(dclass):
     handlers += [ transmutate(__file__, defkey, defds[defkey], d, allds[d], False) for d in allds ]
     files  = [ open(d + ".java", "w") for d in fds ]
     files += [ open(d + ".java", "w") for d in allds ]
-    ncls = len(files)
 
     while True:
         l = dclass.readline()
         if not l:
             break
-        for n in range(ncls):
-            nl = handlers[n].processline(l)
+        for h,f in zip(handlers, files):
+            nl = h.processline(l)
             if nl != None:
-                print >> files[n], nl
+                print(nl, file=f)
 
 if __name__ == '__main__':
     import sys
