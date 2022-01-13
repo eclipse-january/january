@@ -12,14 +12,6 @@ package org.eclipse.january.dataset;
 import static org.junit.Assert.assertEquals;
 
 import org.eclipse.january.asserts.TestUtils;
-import org.eclipse.january.dataset.CompoundDataset;
-import org.eclipse.january.dataset.CompoundShortDataset;
-import org.eclipse.january.dataset.Dataset;
-import org.eclipse.january.dataset.DatasetFactory;
-import org.eclipse.january.dataset.DoubleDataset;
-import org.eclipse.january.dataset.FloatDataset;
-import org.eclipse.january.dataset.RGBDataset;
-import org.eclipse.january.dataset.ShortDataset;
 import org.junit.Test;
 
 /**

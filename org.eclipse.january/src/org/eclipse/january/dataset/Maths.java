@@ -19,7 +19,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.math3.complex.Complex;
-import org.eclipse.january.dataset.DTypeUtils;
 import org.eclipse.january.dataset.Comparisons.Monotonicity;
 
 /**

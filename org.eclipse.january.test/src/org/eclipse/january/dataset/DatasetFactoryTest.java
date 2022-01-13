@@ -16,11 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.january.asserts.TestUtils;
-import org.eclipse.january.dataset.CompoundDoubleDataset;
-import org.eclipse.january.dataset.DatasetFactory;
-import org.eclipse.january.dataset.DoubleDataset;
-import org.eclipse.january.dataset.IntegerDataset;
-import org.eclipse.january.dataset.RGBDataset;
 import org.junit.Test;
 
 public class DatasetFactoryTest {

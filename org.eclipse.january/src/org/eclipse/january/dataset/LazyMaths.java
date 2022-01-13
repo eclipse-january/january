@@ -16,8 +16,6 @@ package org.eclipse.january.dataset;
 import java.util.Arrays;
 
 import org.eclipse.january.DatasetException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Mathematics class for lazy datasets
@@ -31,7 +29,7 @@ public final class LazyMaths {
 	/**
 	 * Setup the logging facilities
 	 */
-	private static final Logger logger = LoggerFactory.getLogger(LazyMaths.class);
+//	private static final Logger logger = LoggerFactory.getLogger(LazyMaths.class);
 
 	// TODO Uncomment this next line when minimum JDK is set to 1.8
 	// @FunctionalInterface

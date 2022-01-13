@@ -17,19 +17,6 @@ import static org.junit.Assert.fail;
 import java.util.Arrays;
 
 import org.eclipse.january.asserts.TestUtils;
-import org.eclipse.january.dataset.CompoundDataset;
-import org.eclipse.january.dataset.CompoundDoubleDataset;
-import org.eclipse.january.dataset.CompoundIntegerDataset;
-import org.eclipse.january.dataset.DTypeUtils;
-import org.eclipse.january.dataset.Dataset;
-import org.eclipse.january.dataset.DatasetFactory;
-import org.eclipse.january.dataset.DatasetUtils;
-import org.eclipse.january.dataset.IndexIterator;
-import org.eclipse.january.dataset.Maths;
-import org.eclipse.january.dataset.PositionIterator;
-import org.eclipse.january.dataset.RGBDataset;
-import org.eclipse.january.dataset.Random;
-import org.eclipse.january.dataset.Slice;
 import org.junit.Test;
 
 public class AbstractCompoundDatasetTest {

@@ -4,7 +4,7 @@
         <filter id="931135546">
             <message_arguments>
                 <message_argument value="2.3.1"/>
-                <message_argument value="2.2.0"/>
+                <message_argument value="2.2.2"/>
             </message_arguments>
         </filter>
     </resource>
@@ -60,60 +60,10 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/january/dataset/LazyDataset.java" type="org.eclipse.january.dataset.LazyDataset">
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.january.dataset.LazyDataset"/>
-                <message_argument value="padding"/>
-            </message_arguments>
-        </filter>
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.january.dataset.LazyDataset"/>
-                <message_argument value="sShape"/>
-            </message_arguments>
-        </filter>
-        <filter id="338755678">
-            <message_arguments>
-                <message_argument value="org.eclipse.january.dataset.LazyDataset"/>
-                <message_argument value="base"/>
-            </message_arguments>
-        </filter>
         <filter id="338755678">
             <message_arguments>
                 <message_argument value="org.eclipse.january.dataset.LazyDataset"/>
                 <message_argument value="dtype"/>
-            </message_arguments>
-        </filter>
-        <filter id="338755678">
-            <message_arguments>
-                <message_argument value="org.eclipse.january.dataset.LazyDataset"/>
-                <message_argument value="postShape"/>
-            </message_arguments>
-        </filter>
-        <filter id="338755678">
-            <message_arguments>
-                <message_argument value="org.eclipse.january.dataset.LazyDataset"/>
-                <message_argument value="prepShape"/>
-            </message_arguments>
-        </filter>
-        <filter id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.january.dataset.LazyDataset"/>
-                <message_argument value="transformInput(IDataset)"/>
-            </message_arguments>
-        </filter>
-        <filter id="1141899266">
-            <message_arguments>
-                <message_argument value="2.2"/>
-                <message_argument value="2.3"/>
-                <message_argument value="padding"/>
-            </message_arguments>
-        </filter>
-        <filter id="1141899266">
-            <message_arguments>
-                <message_argument value="2.2"/>
-                <message_argument value="2.3"/>
-                <message_argument value="sShape"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
@@ -149,24 +99,6 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="checkSliceND(SliceND)"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/january/dataset/LazyDynamicDataset.java" type="org.eclipse.january.dataset.LazyDynamicDataset">
-        <filter id="1141899266">
-            <message_arguments>
-                <message_argument value="2.2"/>
-                <message_argument value="2.3"/>
-                <message_argument value="LazyDynamicDataset(LazyDynamicDataset)"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/january/dataset/LazyWriteableDataset.java" type="org.eclipse.january.dataset.LazyWriteableDataset">
-        <filter id="1141899266">
-            <message_arguments>
-                <message_argument value="2.2"/>
-                <message_argument value="2.3"/>
-                <message_argument value="LazyWriteableDataset(LazyWriteableDataset)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -208,22 +140,6 @@
                 <message_argument value="2.1"/>
                 <message_argument value="2.3"/>
                 <message_argument value="createRedDataset(Class&lt;T&gt;)"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/january/dataset/ShapeUtils.java" type="org.eclipse.january.dataset.ShapeUtils">
-        <filter id="1141899266">
-            <message_arguments>
-                <message_argument value="2.2"/>
-                <message_argument value="2.3"/>
-                <message_argument value="calcShapePadding(int[], int[])"/>
-            </message_arguments>
-        </filter>
-        <filter id="1141899266">
-            <message_arguments>
-                <message_argument value="2.2"/>
-                <message_argument value="2.3"/>
-                <message_argument value="differsByOnes(int[], int[])"/>
             </message_arguments>
         </filter>
     </resource>

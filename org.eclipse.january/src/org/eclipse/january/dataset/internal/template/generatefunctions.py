@@ -930,7 +930,6 @@ def generateclass(funcs, shell):
             break
         print(l, end='')
     print("import org.apache.commons.math3.complex.Complex;")
-    print("import org.eclipse.january.dataset.DTypeUtils;")
     while True: # edit imports
         l = shell.readline()
         if l.startswith("// end of imports that will be omitted in derived class"):
