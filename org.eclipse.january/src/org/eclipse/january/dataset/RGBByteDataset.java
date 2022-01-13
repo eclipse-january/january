@@ -163,6 +163,9 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 		}
 	}
 
+	private final static int MIN_VALUE = 0;
+	private final static int MAX_VALUE = 255;
+
 	/**
 	 * Create a dataset using given colour data (colour components are given separately)
 	 * @param red
@@ -174,10 +177,10 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 		red.checkCompatibility(green);
 		red.checkCompatibility(blue);
 
-		if (red.max().doubleValue() > Short.MAX_VALUE || red.min().doubleValue() < Short.MIN_VALUE ||
-				green.max().doubleValue() > Short.MAX_VALUE || green.min().doubleValue() < Short.MIN_VALUE || 
-				blue.max().doubleValue() > Short.MAX_VALUE || blue.min().doubleValue() < Short.MIN_VALUE) {
-			logger.warn("Some values are out of range and will be ");
+		if (red.max().doubleValue() > MAX_VALUE || red.min().doubleValue() < MIN_VALUE ||
+				green.max().doubleValue() > MAX_VALUE || green.min().doubleValue() < MIN_VALUE || 
+				blue.max().doubleValue() > MAX_VALUE || blue.min().doubleValue() < MIN_VALUE) {
+			logger.warn("Some values are out of range and will be truncated");
 		}
 
 		IndexIterator riter = red.getIterator();
@@ -209,6 +212,25 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 	}
 
 	/**
+	 * Create a dataset using given compound data
+	 * @param colour
+	 */
+	public RGBByteDataset(final CompoundDataset colour) {
+		super(ISIZE, colour.getShapeRef());
+
+		if (colour.getElementsPerItem() != 3) {
+			throw new IllegalArgumentException("Compound dataset must have three elements per item");
+		}
+
+		final IndexIterator it = colour.getIterator();
+		for (int i = 0; it.hasNext();) {
+			data[i++] = (byte) colour.getElementLongAbs(it.index);
+			data[i++] = (byte) colour.getElementLongAbs(it.index + 1);
+			data[i++] = (byte) colour.getElementLongAbs(it.index + 2);
+		}
+	}
+
+	/**
 	 * Create a RGB dataset from an object which could be a Java list, array (of arrays...) or Number. Ragged
 	 * sequences or arrays are padded with zeros. The item size is the last dimension of the corresponding
 	 * elemental dataset
@@ -217,7 +239,7 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 	 * @return dataset with contents given by input
 	 */
 	public static RGBByteDataset createFromObject(final Object obj) {
-		CompoundByteDataset result = (CompoundByteDataset) DatasetUtils.createCompoundDataset(ShortDataset.createFromObject(obj), ISIZE);
+		CompoundByteDataset result = (CompoundByteDataset) DatasetUtils.createCompoundDataset(ByteDataset.createFromObject(obj), ISIZE);
 		return new RGBByteDataset(result.data, result.shape);
 	}
 
@@ -231,7 +253,7 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 			return (RGBByteDataset) a;
 		final int is = a.getElementsPerItem();
 		if (is < 3) {
-			return new RGBByteDataset(a);
+			return new RGBByteDataset((Dataset) a);
 		}
 
 		if (a instanceof CompoundByteDataset && is == 3) {
@@ -740,16 +762,16 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 
 	@Override
 	public Number min(boolean... ignored) {
-		int max = Short.MAX_VALUE;
+		int min = MAX_VALUE;
 		final IndexIterator it = getIterator();
 
 		while (it.hasNext()) {
 			for (int i = 0; i < ISIZE; i++) {
 				int value = Byte.toUnsignedInt(data[it.index + i]);
-				if (value < max)
-					max = value;
+				if (value < min)
+					min = value;
 			}
 		}
-		return max;
+		return min;
 	}
 }

@@ -286,6 +286,43 @@ public class DatasetFactoryTest {
 		act = DatasetFactory.createComplexDataset(ComplexDoubleDataset.class, new double[] {3, 5, 7} , new double[] {4, 6, 8});
 		act.setShape(3, 1);
 		TestUtils.assertDatasetEquals(exp, act);
+
+		act = DatasetFactory.createFromObject(ComplexDoubleDataset.class, new double[] {3, 4, 5, 6, 7, 8}, 3, 1);
+		TestUtils.assertDatasetEquals(exp, act);
+
+		act = DatasetFactory.createFromObject(ComplexDoubleDataset.class, new double[] {3, 4, 5, 6, 7, 8});
+		act.setShape(3, 1);
+		TestUtils.assertDatasetEquals(exp, act);
+	}
+
+	@Test
+	public void testRGBDatasetCreator() {
+		RGBByteDataset act, exp;
+
+		// zero-sized
+		exp = new RGBByteDataset();
+		act = DatasetFactory.createFromObject(0, RGBByteDataset.class, null, null);
+		TestUtils.assertDatasetEquals(exp, act);
+
+		// zero-ranked (unit size)
+		exp = new RGBByteDataset(new byte[] {3, 4, 5}, new int[0]);
+		act = DatasetFactory.createFromObject(2, RGBByteDataset.class, new byte[] {3, 4, 5});
+		TestUtils.assertDatasetEquals(exp, act);
+
+		// one dimensional
+		exp = new RGBByteDataset(new byte[] {3, 4, 5, 6, 7, 8});
+		act = DatasetFactory.createFromObject(2, RGBByteDataset.class, new byte[] {3, 4, 5, 6, 7, 8});
+		TestUtils.assertDatasetEquals(exp, act);
+
+		// two dimensional
+		exp = new RGBByteDataset(new byte[] {3, 4, 5, 6, 7, 8, 9, 0, 1}, new int[] {3, 1});
+		act = DatasetFactory.createFromObject(2, RGBByteDataset.class, new byte[] {3, 4, 5, 6, 7, 8, 9, 0, 1}, 3, 1);
+		TestUtils.assertDatasetEquals(exp, act);
+
+		// one dimensional
+		exp = new RGBByteDataset(new byte[] {3, 4, 5, 6, 7, 8});
+		act = DatasetFactory.createFromObject(RGBByteDataset.class, new byte[] {3, 4, 5, 6, 7, 8});
+		TestUtils.assertDatasetEquals(exp, act);
 	}
 
 	@Test
