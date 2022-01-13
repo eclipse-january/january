@@ -12,8 +12,6 @@
 
 package org.eclipse.january.metadata;
 
-import org.eclipse.january.metadata.MetadataType;
-
 /**
  * This metadata describes Peem-related information
  */

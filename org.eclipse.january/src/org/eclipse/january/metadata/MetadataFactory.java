@@ -66,7 +66,7 @@ public class MetadataFactory {
 
 		T obj = null;
 		try {
-			obj = mdClass.newInstance();
+			obj = mdClass.getConstructor().newInstance();
 		} catch (Exception e) {
 			throw new MetadataException("Could not create metadata object", e);
 		}

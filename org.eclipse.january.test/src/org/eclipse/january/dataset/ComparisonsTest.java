@@ -16,13 +16,6 @@ import static org.junit.Assert.assertNull;
 import java.util.ArrayList;
 
 import org.eclipse.january.asserts.TestUtils;
-import org.eclipse.january.dataset.BooleanDataset;
-import org.eclipse.january.dataset.Comparisons;
-import org.eclipse.january.dataset.ComplexDoubleDataset;
-import org.eclipse.january.dataset.Dataset;
-import org.eclipse.january.dataset.DatasetFactory;
-import org.eclipse.january.dataset.DoubleDataset;
-import org.eclipse.january.dataset.IntegerDataset;
 import org.eclipse.january.dataset.Comparisons.Monotonicity;
 import org.junit.Assert;
 import org.junit.Before;
