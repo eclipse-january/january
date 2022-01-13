@@ -175,7 +175,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 		if (red.max().doubleValue() > Short.MAX_VALUE || red.min().doubleValue() < Short.MIN_VALUE ||
 				green.max().doubleValue() > Short.MAX_VALUE || green.min().doubleValue() < Short.MIN_VALUE || 
 				blue.max().doubleValue() > Short.MAX_VALUE || blue.min().doubleValue() < Short.MIN_VALUE) {
-			logger.warn("Some values are out of range and will be ");
+			logger.warn("Some values are out of range and will be truncated");
 		}
 
 		IndexIterator riter = red.getIterator();
@@ -207,6 +207,25 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	}
 
 	/**
+	 * Create a dataset using given compound data
+	 * @param colour
+	 * @since 2.3
+	 */
+	public RGBDataset(final CompoundDataset colour) {
+		super(ISIZE, colour.getShapeRef());
+
+		if (colour.getElementsPerItem() != 3) {
+			throw new IllegalArgumentException("Compound dataset must have three elements per item");
+		}
+
+		final IndexIterator it = colour.getIterator();
+		for (int i = 0; it.hasNext();) {
+			data[i++] = (short) colour.getElementLongAbs(it.index);
+			data[i++] = (short) colour.getElementLongAbs(it.index + 1);
+			data[i++] = (short) colour.getElementLongAbs(it.index + 2);
+		}
+	}
+	/**
 	 * Create a RGB dataset from an object which could be a Java list, array (of arrays...) or Number. Ragged
 	 * sequences or arrays are padded with zeros. The item size is the last dimension of the corresponding
 	 * elemental dataset
@@ -229,7 +248,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 			return (RGBDataset) a;
 		final int is = a.getElementsPerItem();
 		if (is < 3) {
-			return new RGBDataset(a);
+			return new RGBDataset((Dataset) a);
 		}
 
 		if (a instanceof CompoundShortDataset && is == 3) {
@@ -738,16 +757,16 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 
 	@Override
 	public Number min(boolean... ignored) {
-		short max = Short.MAX_VALUE;
+		short min = Short.MAX_VALUE;
 		final IndexIterator it = getIterator();
 
 		while (it.hasNext()) {
 			for (int i = 0; i < ISIZE; i++) {
 				final short value = data[it.index + i];
-				if (value < max)
-					max = value;
+				if (value < min)
+					min = value;
 			}
 		}
-		return max;
+		return min;
 	}
 }

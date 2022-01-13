@@ -734,7 +734,7 @@ public class DatasetUtils {
 				c = new LongDataset(a);
 			} else if (RGBByteDataset.class.isAssignableFrom(clazz)) {
 				if (a instanceof CompoundDataset) {
-					c = RGBByteDataset.createFromCompoundDataset((CompoundDataset) a);
+					c = new RGBByteDataset((CompoundDataset) a);
 				} else {
 					c = new RGBByteDataset(a);
 				}
@@ -746,7 +746,7 @@ public class DatasetUtils {
 				}
 			} else if (RGBDataset.class.isAssignableFrom(clazz)) {
 				if (a instanceof CompoundDataset) {
-					c = RGBDataset.createFromCompoundDataset((CompoundDataset) a);
+					c = new RGBDataset((CompoundDataset) a);
 				} else {
 					c = new RGBDataset(a);
 				}
@@ -834,6 +834,16 @@ public class DatasetUtils {
 		if (a.getClass().equals(clazz)) {
 			return (T) a;
 		}
+
+		if (a instanceof CompoundDataset) {
+			if (RGBByteDataset.class.isAssignableFrom(clazz)) {
+				return (T) RGBByteDataset.createFromCompoundDataset((CompoundDataset) a);
+			}
+			if (RGBDataset.class.isAssignableFrom(clazz)) {
+				return (T) RGBDataset.createFromCompoundDataset((CompoundDataset) a);
+			}
+		}
+
 		return copy(clazz, d);
 	}
 
