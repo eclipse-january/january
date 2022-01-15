@@ -213,13 +213,13 @@ public interface Dataset extends IDataset {
 	public Dataset getView(boolean deepCopyMetadata);
 
 	/**
-	 * @param shape
+	 * @param shape to use for broadcast
 	 * @return view of dataset that is broadcasted to given shape
 	 */
 	public Dataset getBroadcastView(int... shape);
 
 	/**
-	 * @param showData
+	 * @param showData if true, show data
 	 * @return string representation
 	 */
 	public String toString(boolean showData);
@@ -265,7 +265,7 @@ public interface Dataset extends IDataset {
 	/**
 	 * Check that axis is in range [-rank,rank)
 	 * 
-	 * @param axis
+	 * @param axis to check
 	 * @return sanitized axis in range [0, rank)
 	 */
 	public int checkAxis(int axis);
@@ -354,8 +354,8 @@ public interface Dataset extends IDataset {
 	/**
 	 * Copy and cast a dataset
 	 * 
-	 * @param <T> dataset subclass
-	 * @param clazz dataset class
+	 * @param <T> dataset sub-interface
+	 * @param clazz dataset sub-interface
 	 * @return a converted copy of the dataset
 	 */
 	public <T extends Dataset> T copy(Class<T> clazz);
@@ -374,8 +374,8 @@ public interface Dataset extends IDataset {
 	/**
 	 * Cast a dataset
 	 * 
-	 * @param <T> dataset subclass
-	 * @param clazz dataset class
+	 * @param <T> dataset sub-interface
+	 * @param clazz dataset sub-interface
 	 * @return a converted dataset
 	 */
 	public <T extends Dataset> T cast(Class<T> clazz);
@@ -383,10 +383,11 @@ public interface Dataset extends IDataset {
 	/**
 	 * Cast a dataset
 	 * 
+	 * @param <T> dataset sub-interface
 	 * @param isize
 	 *            item size
-	 * @param <T> dataset subclass
-	 * @param repeat
+	 * @param clazz dataset sub-interface
+	 * @param repeat if true, repeat elements over item
 	 * @return a converted dataset
 	 * @since 2.3
 	 */
@@ -395,13 +396,13 @@ public interface Dataset extends IDataset {
 	/**
 	 * Cast a dataset
 	 * 
-	 * @param repeat
+	 * @param repeat if true, repeat elements over item
 	 * @param dtype
 	 *            dataset type
 	 * @param isize
 	 *            item size
 	 * @return a converted dataset
-	 * @deprecated Please use class-based method {@link Dataset#cast(int, Class, boolean))}
+	 * @deprecated Please use class-based method {@link Dataset#cast(int, Class, boolean)}
 	 */
 	@Deprecated
 	public Dataset cast(boolean repeat, int dtype, int isize);
@@ -419,6 +420,7 @@ public interface Dataset extends IDataset {
 	/**
 	 * See {@link #getTransposedView}
 	 * @param axes
+	 *            if zero length then axes order reversed
 	 * @return remapped copy of data
 	 */
 	public Dataset transpose(int... axes);
@@ -426,8 +428,8 @@ public interface Dataset extends IDataset {
 	/**
 	 * Swap two axes in dataset
 	 * 
-	 * @param axis1
-	 * @param axis2
+	 * @param axis1 to swap
+	 * @param axis2 to swap
 	 * @return swapped view of dataset
 	 */
 	public Dataset swapAxes(int axis1, int axis2);
@@ -484,7 +486,7 @@ public interface Dataset extends IDataset {
 	/**
 	 * Get a slice iterator that is defined by a starting position and a set of axes to include
 	 * 
-	 * @param pos
+	 * @param pos starting position (can be null for origin)
 	 * @param axes
 	 *            to include
 	 * @return slice iterator
@@ -494,21 +496,18 @@ public interface Dataset extends IDataset {
 	/**
 	 * Copy content from axes in given position to array
 	 * 
-	 * @param pos
-	 *            - null means position at origin
-	 * @param axes
-	 *            - true means copy
-	 * @param dest
+	 * @param pos starting position (can be null for origin)
+	 * @param axes if true, copy
+	 * @param dest destination
 	 */
 	public void copyItemsFromAxes(int[] pos, boolean[] axes, Dataset dest);
 
 	/**
 	 * Set content on axes in given position to values in array
 	 * 
-	 * @param pos
-	 * @param axes
-	 *            - true means copy
-	 * @param src
+	 * @param pos starting position (can be null for origin)
+	 * @param axes if true, copy
+	 * @param src source
 	 */
 	public void setItemsOnAxes(int[] pos, boolean[] axes, Object src);
 
@@ -516,7 +515,7 @@ public interface Dataset extends IDataset {
 	 * Get an iterator that visits every item in this dataset where the corresponding item in
 	 * choice dataset is true
 	 * 
-	 * @param choice
+	 * @param choice where true values are used
 	 * @return an iterator of dataset that visits items chosen by given choice dataset
 	 */
 	public BooleanIterator getBooleanIterator(Dataset choice);
@@ -525,8 +524,8 @@ public interface Dataset extends IDataset {
 	 * Get an iterator that visits every item in this dataset where the corresponding item in
 	 * choice dataset is given by value
 	 * 
-	 * @param choice
-	 * @param value
+	 * @param choice to use
+	 * @param value to match to items in choice
 	 * @return an iterator of dataset that visits items chosen by given choice dataset
 	 */
 	public BooleanIterator getBooleanIterator(Dataset choice, boolean value);
@@ -599,7 +598,7 @@ public interface Dataset extends IDataset {
 	/**
 	 * Fill dataset with given object
 	 * 
-	 * @param obj
+	 * @param obj fill value
 	 * @return filled dataset with each item being equal to the given object
 	 */
 	public Dataset fill(Object obj);
@@ -607,7 +606,7 @@ public interface Dataset extends IDataset {
 	/**
 	 * Get an element from given absolute index as a boolean. See warning in interface doc
 	 * 
-	 * @param index
+	 * @param index in array
 	 * @return element as boolean
 	 */
 	public boolean getElementBooleanAbs(int index);
@@ -615,7 +614,7 @@ public interface Dataset extends IDataset {
 	/**
 	 * Get an element from given absolute index as a double. See warning in interface doc
 	 * 
-	 * @param index
+	 * @param index in array
 	 * @return element as double
 	 */
 	public double getElementDoubleAbs(int index);
@@ -623,7 +622,7 @@ public interface Dataset extends IDataset {
 	/**
 	 * Get an element from given absolute index as a long. See warning in interface doc
 	 * 
-	 * @param index
+	 * @param index in array
 	 * @return element as long
 	 */
 	public long getElementLongAbs(int index);
@@ -631,7 +630,7 @@ public interface Dataset extends IDataset {
 	/**
 	 * Get an item from given absolute index as an object. See warning in interface doc
 	 * 
-	 * @param index
+	 * @param index in array
 	 * @return item
 	 */
 	public Object getObjectAbs(int index);
@@ -639,7 +638,7 @@ public interface Dataset extends IDataset {
 	/**
 	 * Get an item from given absolute index as a string. See warning in interface doc
 	 * 
-	 * @param index
+	 * @param index in array
 	 * @return item
 	 */
 	public String getStringAbs(int index);
@@ -647,8 +646,8 @@ public interface Dataset extends IDataset {
 	/**
 	 * Set an item at absolute index from an object. See warning in interface doc
 	 * 
-	 * @param index
-	 * @param obj
+	 * @param index in array
+	 * @param obj value to set
 	 */
 	public void setObjectAbs(int index, Object obj);
 
@@ -661,15 +660,15 @@ public interface Dataset extends IDataset {
 
 	/**
 	 * Get an item from given position as an object. The dataset must be 1D
-	 * @param i
+	 * @param i position in first dimension
 	 * @return item
 	 */
 	public Object getObject(final int i);
 
 	/**
 	 * Get an item from given position as an object. The dataset must be 2D
-	 * @param i
-	 * @param j
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 * @return item
 	 */
 	public Object getObject(final int i, final int j);
@@ -683,15 +682,15 @@ public interface Dataset extends IDataset {
 
 	/**
 	 * Get an item from given position as a string. The dataset must be 1D
-	 * @param i
+	 * @param i position in first dimension
 	 * @return item
 	 */
 	public String getString(final int i);
 
 	/**
 	 * Get an item from given position as a string. The dataset must be 2D
-	 * @param i
-	 * @param j
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 * @return item
 	 */
 	public String getString(final int i, final int j);
@@ -705,15 +704,15 @@ public interface Dataset extends IDataset {
 
 	/**
 	 * Get an item from given position as a double. The dataset must be 1D
-	 * @param i
+	 * @param i position in first dimension
 	 * @return item
 	 */
 	public double getDouble(final int i);
 
 	/**
 	 * Get an item from given position as a double. The dataset must be 2D
-	 * @param i
-	 * @param j
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 * @return item
 	 */
 	public double getDouble(final int i, final int j);
@@ -727,15 +726,15 @@ public interface Dataset extends IDataset {
 
 	/**
 	 * Get an item from given position as a float. The dataset must be 1D
-	 * @param i
+	 * @param i position in first dimension
 	 * @return item
 	 */
 	public float getFloat(final int i);
 
 	/**
 	 * Get an item from given position as a float. The dataset must be 2D
-	 * @param i
-	 * @param j
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 * @return item
 	 */
 	public float getFloat(final int i, final int j);
@@ -749,15 +748,15 @@ public interface Dataset extends IDataset {
 
 	/**
 	 * Get an item from given position as a long. The dataset must be 1D
-	 * @param i
+	 * @param i position in first dimension
 	 * @return item
 	 */
 	public long getLong(final int i);
 
 	/**
 	 * Get an item from given position as a long. The dataset must be 2D
-	 * @param i
-	 * @param j
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 * @return item
 	 */
 	public long getLong(final int i, final int j);
@@ -771,15 +770,15 @@ public interface Dataset extends IDataset {
 
 	/**
 	 * Get an item from given position as an int. The dataset must be 1D
-	 * @param i
+	 * @param i position in first dimension
 	 * @return item
 	 */
 	public int getInt(final int i);
 
 	/**
 	 * Get an item from given position as an int. The dataset must be 2D
-	 * @param i
-	 * @param j
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 * @return item
 	 */
 	public int getInt(final int i, final int j);
@@ -793,15 +792,15 @@ public interface Dataset extends IDataset {
 
 	/**
 	 * Get an item from given position as a short. The dataset must be 1D
-	 * @param i
+	 * @param i position in first dimension
 	 * @return item
 	 */
 	public short getShort(final int i);
 
 	/**
 	 * Get an item from given position as a short. The dataset must be 2D
-	 * @param i
-	 * @param j
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 * @return item
 	 */
 	public short getShort(final int i, final int j);
@@ -815,15 +814,15 @@ public interface Dataset extends IDataset {
 
 	/**
 	 * Get an item from given position as a byte. The dataset must be 1D
-	 * @param i
+	 * @param i position in first dimension
 	 * @return item
 	 */
 	public byte getByte(final int i);
 
 	/**
 	 * Get an item from given positionj as a byte. The dataset must be 2D
-	 * @param i
-	 * @param j
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 * @return item
 	 */
 	public byte getByte(final int i, final int j);
@@ -837,15 +836,15 @@ public interface Dataset extends IDataset {
 
 	/**
 	 * Get an item from given position as a boolean. The dataset must be 1D
-	 * @param i
+	 * @param i position in first dimension
 	 * @return item
 	 */
 	public boolean getBoolean(final int i);
 
 	/**
 	 * Get an item from given position as a boolean. The dataset must be 2D
-	 * @param i
-	 * @param j
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 * @return item
 	 */
 	public boolean getBoolean(final int i, final int j);
@@ -859,53 +858,53 @@ public interface Dataset extends IDataset {
 
 	/**
 	 * Get the error for given position. The dataset must be 1D
-	 * @param i
+	 * @param i position in first dimension
 	 * @return error value (symmetric)
 	 */
 	public double getError(final int i);
 
 	/**
 	 * Get the error for given position. The dataset must be 2D
-	 * @param i
-	 * @param j
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 * @return error value (symmetric)
 	 */
 	public double getError(final int i, final int j);
 
 	/**
 	 * Get the error values for given position
-	 * @param i
+	 * @param i position in first dimension
 	 * @return the values of the error at this point (can be null when no error defined)
 	 */
 	public double[] getErrorArray(final int i);
 
 	/**
 	 * Get the error values for given position
-	 * @param i
-	 * @param j
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 * @return the values of the error at this point (can be null when no error defined)
 	 */
 	public double[] getErrorArray(final int i, final int j);
 
 	/**
 	 * Set the value given by object at the first position. The dataset must not be null
-	 * @param obj
+	 * @param obj value to set
 	 * @since 2.0
 	 */
 	public void set(final Object obj);
 
 	/**
 	 * Set the value given by object at given position. The dataset must be 1D
-	 * @param obj
-	 * @param i
+	 * @param obj value to set
+	 * @param i position in first dimension
 	 */
 	public void set(final Object obj, final int i);
 
 	/**
 	 * Set the value given by object at given position. The dataset must be 2D
-	 * @param obj
-	 * @param i
-	 * @param j
+	 * @param obj value to set
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 */
 	public void set(final Object obj, final int i, final int j);
 
@@ -957,7 +956,7 @@ public interface Dataset extends IDataset {
 	 * @param step
 	 *            specifies the steps in the slice
 	 * 
-	 * @return The dataset with the sliced set to object
+	 * @return this
 	 */
 	public Dataset setSlice(Object obj, int[] start, int[] stop, int[] step);
 
@@ -965,7 +964,9 @@ public interface Dataset extends IDataset {
 	 * This is modelled after the NumPy array slice
 	 * 
 	 * @param obj
-	 * @param slice
+	 *            specifies the object used to set the specified slice
+	 * @param slice destination where items of obj are set
+	 * @return this
 	 */
 	public Dataset setSlice(Object obj, Slice... slice);
 
@@ -973,7 +974,9 @@ public interface Dataset extends IDataset {
 	 * This is modelled after the NumPy array slice
 	 * 
 	 * @param obj
-	 * @param slice
+	 *            specifies the object used to set the specified slice
+	 * @param slice destination where items of obj are set
+	 * @return this
 	 */
 	public Dataset setSlice(Object obj, SliceND slice);
 
@@ -983,84 +986,85 @@ public interface Dataset extends IDataset {
 	 * @param iterator
 	 *            specifies the slice iterator
 	 * 
-	 * @return The dataset with the sliced set to object
+	 * @return this
 	 */
 	public Dataset setSlice(Object obj, IndexIterator iterator);
 
 	/**
 	 * Populate another dataset with part of current dataset
 	 * 
-	 * @param other
+	 * @param other destination for items from iteration
 	 * @param iter
 	 *            over current dataset
 	 */
 	public void fillDataset(Dataset other, IndexIterator iter);
 
 	/**
-	 * Test if all items are true
+	 * @return true if all items are true
 	 */
 	public boolean all();
 
 	/**
-	 * @param axis
+	 * @param axis to check over
 	 * @return dataset where items are true if all items along axis are true
 	 */
 	public Dataset all(int axis);
 
 	/**
-	 * Test if any items are true
+	 * @return true if any items are true
 	 */
 	public boolean any();
 
 	/**
-	 * @param axis
+	 * @param axis to check over
 	 * @return dataset where items are true if any items along axis are true
 	 */
 	public Dataset any(int axis);
 
 	/**
-	 * In-place addition with object o
+	 * In-place addition
 	 * 
-	 * @param o
+	 * @param o object to use
 	 * @return sum dataset
 	 */
 	public Dataset iadd(Object o);
 
 	/**
-	 * In-place subtraction with object o
+	 * In-place subtraction
 	 * 
-	 * @param o
+	 * @param o object to use
 	 * @return difference dataset
 	 */
 	public Dataset isubtract(Object o);
 
 	/**
-	 * In-place multiplication with object o
+	 * In-place multiplication
 	 * 
-	 * @param o
+	 * @param o object to use
 	 * @return product dataset
 	 */
 	public Dataset imultiply(Object o);
 
 	/**
-	 * In-place division with object o
+	 * In-place division
 	 * 
-	 * @param o
+	 * @param o object to use
 	 * @return dividend dataset
 	 */
 	public Dataset idivide(Object o);
 
 	/**
-	 * In-place floor division with object o
+	 * In-place floor division
 	 * 
-	 * @param o
+	 * @param o object to use
 	 * @return dividend dataset
 	 */
 	public Dataset ifloorDivide(Object o);
 
 	/**
-	 * In-place remainder
+	 * In-place remainder of division
 	 * 
+	 * @param o object to use
 	 * @return remaindered dataset
 	 */
 	public Dataset iremainder(Object o);
@@ -1073,37 +1077,37 @@ public interface Dataset extends IDataset {
 	public Dataset ifloor();
 
 	/**
-	 * In-place raise to power of object o
+	 * In-place raise to power of argument
 	 * 
-	 * @param o
+	 * @param o object to use
 	 * @return raised dataset
 	 */
 	public Dataset ipower(Object o);
 
 	/**
-	 * Calculate residual of dataset with object o
+	 * Calculate residual of dataset with object
 	 * See {@link #residual(Object o, boolean ignoreNaNs)} with ignoreNaNs = false
 	 * 
-	 * @param o
+	 * @param o object to use
 	 * @return sum of the squares of the differences
 	 */
 	public double residual(Object o);
 
 	/**
-	 * Calculate residual of dataset with object o
+	 * Calculate residual of dataset with object
 	 * 
-	 * @param o
+	 * @param o object to use
 	 * @param ignoreNaNs if true, skip NaNs
 	 * @return sum of the squares of the differences
 	 */
 	public double residual(Object o, boolean ignoreNaNs);
 
 	/**
-	 * Calculate residual of dataset with object o and weight. The weight is used to multiply
+	 * Calculate residual of dataset with object and weight. The weight is used to multiply
 	 * the squared differences
 	 * 
-	 * @param o
-	 * @param weight
+	 * @param o object to use
+	 * @param weight to use
 	 * @param ignoreNaNs if true, skip NaNs
 	 * @return sum of the squares of the differences
 	 */
@@ -1125,7 +1129,7 @@ public interface Dataset extends IDataset {
 	public boolean containsInvalidNumbers();
 
 	/**
-	 * @param axis
+	 * @param axis to reduce over
 	 * @param ignoreInvalids - Can be null, empty, or one or more booleans. By default, all booleans
 	 * are false. If the first boolean is true, will ignore NaNs and ignore infinities. Use the second
 	 * boolean to ignore infinities separately.
@@ -1135,7 +1139,7 @@ public interface Dataset extends IDataset {
 	public Dataset max(int axis, boolean... ignoreInvalids);
 
 	/**
-	 * @param axes
+	 * @param axes to reduce over
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return maxima in given axes of dataset
 	 * @since 2.2
@@ -1143,7 +1147,7 @@ public interface Dataset extends IDataset {
 	public Dataset max(int[] axes, boolean... ignoreInvalids);
 
 	/**
-	 * @param axis
+	 * @param axis to reduce along
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return minima along axis in dataset
 	 * @since 2.0
@@ -1151,7 +1155,7 @@ public interface Dataset extends IDataset {
 	public Dataset min(int axis, boolean... ignoreInvalids);
 
 	/**
-	 * @param axes
+	 * @param axes to reduce over
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return minima in given axes of dataset
 	 * @since 2.2
@@ -1168,7 +1172,7 @@ public interface Dataset extends IDataset {
 
 	/**
 	 * Find indices of maximum values along given axis
-	 * @param axis
+	 * @param axis to reduce along
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return index dataset
 	 * @since 2.0
@@ -1185,7 +1189,7 @@ public interface Dataset extends IDataset {
 
 	/**
 	 * Find indices of minimum values along given axis
-	 * @param axis
+	 * @param axis to reduce along
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return index dataset
 	 * @since 2.0
@@ -1200,7 +1204,7 @@ public interface Dataset extends IDataset {
 	public Number peakToPeak(boolean... ignoreInvalids);
 
 	/**
-	 * @param axis
+	 * @param axis to reduce along
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return peak-to-peak dataset, the difference of maxima and minima of dataset along axis
 	 * @since 2.0
@@ -1208,7 +1212,7 @@ public interface Dataset extends IDataset {
 	public Dataset peakToPeak(int axis, boolean... ignoreInvalids);
 
 	/**
-	 * @param axes
+	 * @param axes to reduce over
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return peak-to-peak dataset, the difference of maxima and minima of dataset in given axes
 	 * @since 2.2
@@ -1223,7 +1227,7 @@ public interface Dataset extends IDataset {
 	public long count(boolean... ignoreInvalids);
 
 	/**
-	 * @param axis
+	 * @param axis to reduce along
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return number of items along axis in dataset
 	 * @since 2.0
@@ -1231,7 +1235,7 @@ public interface Dataset extends IDataset {
 	public Dataset count(int axis, boolean... ignoreInvalids);
 
 	/**
-	 * @param axes
+	 * @param axes to reduce over
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return number of items in given axes of dataset
 	 * @since 2.2
@@ -1246,7 +1250,7 @@ public interface Dataset extends IDataset {
 	public Object sum(boolean... ignoreInvalids);
 
 	/**
-	 * @param axis
+	 * @param axis to reduce along
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return sum along axis in dataset
 	 * @since 2.0
@@ -1254,7 +1258,7 @@ public interface Dataset extends IDataset {
 	public Dataset sum(int axis, boolean... ignoreInvalids);
 
 	/**
-	 * @param axes
+	 * @param axes to reduce over
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return sum  in given axes of dataset
 	 * @since 2.2
@@ -1269,7 +1273,7 @@ public interface Dataset extends IDataset {
 	public Object product(boolean... ignoreInvalids);
 
 	/**
-	 * @param axis
+	 * @param axis to reduce along
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return product along axis in dataset
 	 * @since 2.0
@@ -1277,7 +1281,7 @@ public interface Dataset extends IDataset {
 	public Dataset product(int axis, boolean... ignoreInvalids);
 
 	/**
-	 * @param axes
+	 * @param axes to reduce over
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return product in given axes of dataset
 	 * @since 2.2
@@ -1285,7 +1289,7 @@ public interface Dataset extends IDataset {
 	public Dataset product(int[] axes, boolean... ignoreInvalids);
 
 	/**
-	 * @param axis
+	 * @param axis to reduce along
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return mean along axis in dataset
 	 * @since 2.0
@@ -1293,7 +1297,7 @@ public interface Dataset extends IDataset {
 	public Dataset mean(int axis, boolean... ignoreInvalids);
 
 	/**
-	 * @param axes
+	 * @param axes to reduce over
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return mean in given axes of dataset
 	 * @since 2.2
@@ -1327,7 +1331,7 @@ public interface Dataset extends IDataset {
 	 * 
 	 * Note that the second definition is also the unbiased estimator of population variance.
 	 * 
-	 * @param isWholePopulation
+	 * @param isWholePopulation if false, consider as sample of population
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return sample variance
 	 * @since 2.0
@@ -1335,14 +1339,14 @@ public interface Dataset extends IDataset {
 	public double variance(boolean isWholePopulation, boolean... ignoreInvalids);
 
 	/**
-	 * @param axis
+	 * @param axis to reduce along
 	 * @return sample variance along axis in dataset
 	 * @see #variance(int, boolean, boolean...) with isWholePopulation = false
 	 */
 	public Dataset variance(int axis);
 
 	/**
-	 * @param axes
+	 * @param axes to reduce over
 	 * @return sample variance in given axes of dataset
 	 * @see #variance(int[], boolean, boolean...) with isWholePopulation = false
 	 * @since 2.2
@@ -1350,8 +1354,8 @@ public interface Dataset extends IDataset {
 	public Dataset variance(int[] axes);
 
 	/**
-	 * @param axis
-	 * @param isWholePopulation
+	 * @param axis to reduce along
+	 * @param isWholePopulation if false, consider as sample of population
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return sample variance along axis in dataset
 	 * @since 2.0
@@ -1359,8 +1363,8 @@ public interface Dataset extends IDataset {
 	public Dataset variance(int axis, boolean isWholePopulation, boolean... ignoreInvalids);
 
 	/**
-	 * @param axes
-	 * @param isWholePopulation
+	 * @param axes to reduce over
+	 * @param isWholePopulation if false, consider as sample of population
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return sample variance in given axes of dataset
 	 * @since 2.2
@@ -1379,7 +1383,7 @@ public interface Dataset extends IDataset {
 	/**
 	 * Standard deviation is square root of the variance
 	 * 
-	 * @param isWholePopulation
+	 * @param isWholePopulation if false, consider as sample of population
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return sample standard deviation of all items in dataset
 	 * @see #variance(boolean, boolean...)
@@ -1390,7 +1394,7 @@ public interface Dataset extends IDataset {
 	/**
 	 * Standard deviation is square root of the variance
 	 * 
-	 * @param axis
+	 * @param axis to reduce along
 	 * @return standard deviation along axis in dataset
 	 * @see #stdDeviation(int, boolean, boolean...) with isWholePopulation = false
 	 */
@@ -1399,7 +1403,7 @@ public interface Dataset extends IDataset {
 	/**
 	 * Standard deviation is square root of the variance
 	 * 
-	 * @param axes
+	 * @param axes to reduce over
 	 * @return standard deviation in given axes of dataset
 	 * @see #stdDeviation(int[], boolean, boolean...) with isWholePopulation = false
 	 * @since 2.2
@@ -1409,8 +1413,8 @@ public interface Dataset extends IDataset {
 	/**
 	 * Standard deviation is square root of the variance
 	 * 
-	 * @param axis
-	 * @param isWholePopulation
+	 * @param axis to reduce along
+	 * @param isWholePopulation if false, consider as sample of population
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return standard deviation along axis in dataset
 	 * @since 2.0
@@ -1420,8 +1424,8 @@ public interface Dataset extends IDataset {
 	/**
 	 * Standard deviation is square root of the variance
 	 * 
-	 * @param axes
-	 * @param isWholePopulation
+	 * @param axes to reduce over
+	 * @param isWholePopulation if false, consider as sample of population
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return standard deviation in given axes of dataset
 	 * @since 2.2
@@ -1436,7 +1440,7 @@ public interface Dataset extends IDataset {
 	public double rootMeanSquare(boolean... ignoreInvalids);
 
 	/**
-	 * @param axis
+	 * @param axis to reduce along
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return root mean square along axis in dataset
 	 * @since 2.0
@@ -1444,7 +1448,7 @@ public interface Dataset extends IDataset {
 	public Dataset rootMeanSquare(int axis, boolean... ignoreInvalids);
 
 	/**
-	 * @param axes
+	 * @param axes to reduce over
 	 * @param ignoreInvalids - see {@link #max(int, boolean...)}
 	 * @return root mean square in given axes of dataset
 	 * @since 2.2

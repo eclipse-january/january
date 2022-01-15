@@ -120,10 +120,6 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		return DatasetUtils.cast(clazz, this);
 	}
 
-	/**
-	 * {@inheritDoc Dataset#cast(int, Class, boolean)}
-	 * @since 2.3
-	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends Dataset> T cast(final int isize, Class<T> clazz, final boolean repeat) {
@@ -143,8 +139,8 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	/**
 	 * Copy fields from original to view
-	 * @param orig
-	 * @param view
+	 * @param orig original
+	 * @param view destination
 	 * @param clone if true, then clone everything but bulk data
 	 * @param cloneMetadata if true, clone metadata
 	 */
@@ -263,8 +259,8 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	/**
 	 * Fill dataset from object at depth dimension
-	 * @param obj
-	 * @param depth
+	 * @param obj fill value
+	 * @param depth dimension
 	 * @param pos position
 	 */
 	protected void fillData(Object obj, final int depth, final int[] pos) {
@@ -343,7 +339,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	/**
-	 * @param slice
+	 * @param slice an n-D slice
 	 * @return an slice iterator that operates like an IndexIterator
 	 */
 	public IndexIterator getSliceIterator(SliceND slice) {
@@ -352,7 +348,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	/**
-	 * @param slice
+	 * @param slice an n-D slice
 	 * @return an slice iterator that operates like an IndexIterator
 	 */
 	protected IndexIterator internalGetSliceIterator(SliceND slice) {
@@ -496,8 +492,8 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	/**
 	 * Check for -1 placeholder in shape and replace if necessary
-	 * @param shape
-	 * @param size
+	 * @param shape to use
+	 * @param size expected size
 	 */
 	private void checkShape(int[] shape, int size) {
 		if (shape == null) {
@@ -690,8 +686,8 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	/**
 	 * Create a stride array from dataset
-	 * @param isize
-	 * @param shape
+	 * @param isize item size
+	 * @param shape to use
 	 * @param oStride original stride
 	 * @param oOffset original offset (only used if there is an original stride)
 	 * @param offset output offset
@@ -717,7 +713,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	/**
 	 * Create a stride array from slice information and a dataset
-	 * @param slice
+	 * @param slice an n-D slice
 	 * @param a dataset
 	 * @param stride output stride
 	 * @param offset output offset
@@ -729,9 +725,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	/**
 	 * Create a stride array from slice and dataset information
-	 * @param slice
-	 * @param isize
-	 * @param shape
+	 * @param slice an n-D slice
+	 * @param isize item size
+	 * @param shape to use
 	 * @param oStride original stride
 	 * @param oOffset original offset (only used if there is an original stride)
 	 * @param stride output stride
@@ -800,7 +796,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	/**
 	 * Get a slice of the dataset. The returned dataset is a view on a selection of items
-	 * @param slice
+	 * @param slice an n-D slice
 	 * @return slice view
 	 */
 	@Override
@@ -852,6 +848,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	/**
+	 * @return index of first element
 	 * @since 2.0
 	 */
 	protected int getFirst1DIndex() {
@@ -875,7 +872,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	/**
-	 * @param i
+	 * @param i position in first dimension
 	 * @return the index on the data array corresponding to that location
 	 */
 	protected int get1DIndex(int i) {
@@ -896,8 +893,8 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	/**
-	 * @param i
-	 * @param j
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 * @return the index on the data array corresponding to that location
 	 */
 	protected int get1DIndex(int i, int j) {
@@ -1112,7 +1109,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	/**
 	 * Set maximum line length for toString() method
-	 * @param maxLineLength
+	 * @param maxLineLength limit on length of line
 	 */
 	public static void setMaxLineLength(int maxLineLength) {
 		maxStringLength = maxLineLength;
@@ -1137,7 +1134,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	/**
 	 * Make a line of output for last dimension of dataset
-	 * 
+	 * @param end
 	 * @param start
 	 * @return line
 	 */
@@ -1359,9 +1356,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	/**
-	 * @param start
-	 * @param stop
-	 * @param step
+	 * @param start begin
+	 * @param stop exclusive end
+	 * @param step number to skip
 	 * @return number of steps to take
 	 */
 	protected static int calcSteps(final double start, final double stop, final double step) {
@@ -1410,7 +1407,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	/**
 	 * Get a slice of the dataset. The returned dataset is a copied selection of items
-	 * @param slice
+	 * @param slice an n-D slice
 	 * @return The dataset of the sliced data
 	 */
 	@Override
@@ -1466,8 +1463,8 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	/**
 	 * Set a view of current dataset to given dataset with broadcasting
-	 * @param view
-	 * @param d
+	 * @param view destination
+	 * @param d source of data
 	 * @return this dataset
 	 */
 	abstract Dataset setSlicedView(Dataset view, Dataset d);
@@ -1516,6 +1513,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	/**
+	 * @return statistics
 	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
@@ -1530,6 +1528,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	/**
+	 * @return statistics
 	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
@@ -1763,8 +1762,8 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	/**
 	 * Set item from compatible dataset in a direct and speedy way. Remember to setDirty afterwards.
 	 * 
-	 * @param dindex
-	 * @param sindex
+	 * @param dindex destination index
+	 * @param sindex source index
 	 * @param src
 	 *            is the source data buffer
 	 */

@@ -47,7 +47,7 @@ public class PositionIterator extends IndexIterator {
 	 * Constructor for an iterator over elements of a dataset that are within
 	 * the shape
 	 *
-	 * @param shape
+	 * @param shape to use
 	 */
 	public PositionIterator(int[] shape) {
 		this(new SliceND(shape), null);
@@ -57,7 +57,7 @@ public class PositionIterator extends IndexIterator {
 	 * Constructor for an iterator over a single item broadcasted to given shape
 	 *
 	 * @param offset offset to single item
-	 * @param shape
+	 * @param shape to use
 	 */
 	public PositionIterator(int offset, int[] shape) {
 		this(offset, new SliceND(shape), null);
@@ -65,7 +65,7 @@ public class PositionIterator extends IndexIterator {
 
 	/**
 	 * Constructor for an iterator that misses out several axes
-	 * @param shape
+	 * @param shape to use
 	 * @param axes missing axes, can be null for full dataset
 	 */
 	public PositionIterator(int[] shape, int... axes) {
@@ -74,8 +74,8 @@ public class PositionIterator extends IndexIterator {
 
 	/**
 	 * Constructor for an iterator that misses out several axes
-	 * @param shape
-	 * @param slice
+	 * @param shape to use
+	 * @param slice for each dimension
 	 * @param axes missing axes
 	 */
 	public PositionIterator(int[] shape, Slice[] slice, int[] axes) {
@@ -84,10 +84,13 @@ public class PositionIterator extends IndexIterator {
 
 	/**
 	 * Constructor for an iterator that misses out several axes
-	 * @param shape
+	 * @param shape to use
 	 * @param start
+	 *            start point, may be {@code null}
 	 * @param stop
+	 *            stop point, may be {@code null}
 	 * @param step
+	 *            step, may be {@code null}
 	 * @param axes missing axes
 	 */
 	public PositionIterator(int[] shape, int[] start, int[] stop, int[] step, int[] axes) {
@@ -96,7 +99,7 @@ public class PositionIterator extends IndexIterator {
 
 	/**
 	 * Constructor for an iterator that misses out several axes
-	 * @param slice
+	 * @param slice an n-D slice
 	 * @param axes missing axes
 	 */
 	public PositionIterator(SliceND slice, int... axes) {
@@ -107,7 +110,7 @@ public class PositionIterator extends IndexIterator {
 	 * Constructor for an iterator that misses out several axes
 	 * 
 	 * @param offset offset to start with
-	 * @param slice
+	 * @param slice an n-D slice
 	 * @param axes missing axes
 	 */
 	public PositionIterator(int offset, SliceND slice, int... axes) {

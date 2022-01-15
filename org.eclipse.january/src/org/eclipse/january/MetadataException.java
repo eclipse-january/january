@@ -23,7 +23,7 @@ public class MetadataException extends DatasetException {
 	}
 
 	/**
-	 * @param message
+	 * @param message detailed message
 	 * @see Exception#Exception(String)
 	 */
 	public MetadataException(String message) {
@@ -31,7 +31,7 @@ public class MetadataException extends DatasetException {
 	}
 
 	/**
-	 * @param cause
+	 * @param cause of problem
 	 * @see Exception#Exception(Throwable)
 	 */
 	public MetadataException(Throwable cause) {
@@ -39,8 +39,8 @@ public class MetadataException extends DatasetException {
 	}
 
 	/**
-	 * @param message
-	 * @param cause
+	 * @param message detailed message
+	 * @param cause of problem
 	 * @see Exception#Exception(String, Throwable)
 	 */
 	public MetadataException(String message, Throwable cause) {

@@ -55,7 +55,7 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 	 * Set a compatible shape for dataset. A shape is compatible if it has the capacity to contain
 	 * the same number of items
 	 * 
-	 * @param shape
+	 * @param shape to set
 	 */
 	public void setShape(final int... shape);
 
@@ -68,6 +68,7 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 
 	/**
 	 * Remove dimensions of 1 from ends of shape of the dataset
+	 * @return shallow squeezed copy
 	 */
 	public ILazyDataset squeezeEnds();
 
@@ -81,14 +82,14 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 	 * @param step
 	 *            specifies the steps in the slice (can be null for unit steps)
 	 * @return The dataset of the sliced data
-	 * @throws DatasetException
+	 * @throws DatasetException when cannot retrieve slice of lazy dataset
 	 */
 	public IDataset getSlice(final int[] start, final int[] stop, final int[] step) throws DatasetException;
 
 	/**
 	 * Get a slice of the dataset. The returned dataset is a copied selection of items
 	 * 
-	 * @param monitor
+	 * @param monitor can be null
 	 * @param start
 	 *            specifies the starting indexes (can be null for origin)
 	 * @param stop
@@ -96,7 +97,7 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 	 * @param step
 	 *            specifies the steps in the slice (can be null for unit steps)
 	 * @return The dataset of the sliced data
-	 * @throws DatasetException
+	 * @throws DatasetException when cannot retrieve slice of lazy dataset
 	 */
 	public IDataset getSlice(final IMonitor monitor, final int[] start, final int[] stop,
 			final int[] step) throws DatasetException;
@@ -106,17 +107,17 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 	 * 
 	 * @param slice an array of slice objects (the array can be null or contain nulls)
 	 * @return The dataset of the sliced data
-	 * @throws DatasetException
+	 * @throws DatasetException when cannot retrieve slice of lazy dataset
 	 */
 	public IDataset getSlice(final Slice... slice) throws DatasetException;
 
 	/**
 	 * Get a slice of the dataset. The returned dataset is a copied selection of items
 	 * 
-	 * @param monitor
+	 * @param monitor can be null
 	 * @param slice an array of slice objects (the array can be null or contain nulls)
 	 * @return The dataset of the sliced data
-	 * @throws DatasetException
+	 * @throws DatasetException when cannot retrieve slice of lazy dataset
 	 */
 	public IDataset getSlice(final IMonitor monitor, final Slice... slice) throws DatasetException;
 
@@ -125,17 +126,17 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 	 * 
 	 * @param slice an n-D slice
 	 * @return The dataset of the sliced data
-	 * @throws DatasetException
+	 * @throws DatasetException when cannot retrieve slice of lazy dataset
 	 */
 	public IDataset getSlice(final SliceND slice) throws DatasetException;
 
 	/**
 	 * Get a slice of the dataset. The returned dataset is a copied selection of items
 	 * 
-	 * @param monitor
+	 * @param monitor can be null
 	 * @param slice an n-D slice
 	 * @return The dataset of the sliced data
-	 * @throws DatasetException
+	 * @throws DatasetException when cannot retrieve slice of lazy dataset
 	 */
 	public IDataset getSlice(final IMonitor monitor, final SliceND slice) throws DatasetException;
 
@@ -189,7 +190,7 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 	/**
 	 * Add metadata to the dataset
 	 * 
-	 * @param metadata
+	 * @param metadata to add
 	 */
 	public void addMetadata(final MetadataType metadata);
 
@@ -224,6 +225,7 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 
 	/**
 	 * Get the errors, if any. These will be in a shape that can broadcast to the dataset
+	 * @return errors
 	 * @since 2.0
 	 */
 	public ILazyDataset getErrors();

@@ -49,7 +49,7 @@ public class SliceNDIterator extends IndexIterator {
 
 	/**
 	 * Constructor for an iterator that misses out several axes
-	 * @param slice
+	 * @param slice an n-D slice
 	 * @param axes missing axes
 	 */
 	public SliceNDIterator(SliceND slice, int... axes) {

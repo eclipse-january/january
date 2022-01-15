@@ -21,7 +21,7 @@ public interface MaskMetadata extends MetadataType {
 
 	/**
 	 * Initialize mask
-	 * @param mask
+	 * @param mask to set
 	 */
 	public void initialize(IDataset mask);
 

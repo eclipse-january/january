@@ -25,29 +25,29 @@ public interface DateDataset extends Dataset {
 
 	/**
 	 * Get the date at index i. The dataset must be 1D
-	 * @param i
+	 * @param i position in first dimension
 	 * @return date
 	 */
 	public Date getDate(final int i);
 	
 	/**
 	 * Get the date at index i, j. The dataset must be 2D
-	 * @param i
-	 * @param j
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 * @return date
 	 */
 	public Date getDate(final int i, final int j);
 	
 	/**
 	 * Get the date at given indices
-	 * @param pos indices
+	 * @param pos position
 	 * @return date
 	 */
 	public Date getDate(final int... pos);
 	
 	/**
 	 * Get the date at the given absolute index. See warning for {@link Dataset} interface.
-	 * @param index
+	 * @param index aboslute index
 	 * @return date
 	 */
 	public Date getDateAbs(final int index);

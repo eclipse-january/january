@@ -106,25 +106,27 @@ allow_ints = False
 def oldmethod(name, jdoc=None, edoc="", params=0):
     if is_binaryop:
         print("\t/**\n\t * %s operator" %  name)
-        print("\t * @param a")
-        print("\t * @param b")
+        print("\t * @param a first operand")
+        print("\t * @param b second operand")
     else:
         print("\t/**\n\t * %s - %s" %  (name, jdoc))
-        print("\t * @param a")
+        print("\t * @param a single operand")
 
-    plist = []
     if params > 0:
-        plist = ["pa"]
-        psig = "final Object " + plist[0]
+        cp = "pa"
+        plist = [cp]
+        jdlist = [cp + " %s parameter" % ORDINALS[0]]
+        psig = "final Object " + cp
         for p in range(1, params):
-            plist.append("p"+chr(ord('a')+p))
-            psig += ", final Object " + plist[p]
+            cp = "p"+chr(ord('a')+p)
+            plist.append(cp)
+            jdlist.append(cp + " %s parameter" % ORDINALS[p])
+            psig += ", final Object " + cp
 
-        ptext = ""
-        for p in plist:
-            print("\t * @param %s" % p)
-            ptext += "%s, " % p
-        ptext = ptext[:-2]
+        for jd in jdlist:
+            print("\t * @param %s" % jd)
+
+        ptext = ", ".join(plist)
         if is_binaryop:
             print("\t * @return %s\n%s\t */" % (jdoc, edoc))
             print("\tpublic static Dataset %s(final Object a, final Object b, %s) {" % (name, psig))
@@ -144,6 +146,7 @@ def oldmethod(name, jdoc=None, edoc="", params=0):
             print("\t\treturn %s(a, null);" % name)
     print("\t}\n")
 
+ORDINALS = ('first', 'second', 'third', 'fourth', 'fifth')
 def beginmethod(name, jdoc=None, edoc=None, params=0):
     if edoc is None:
         edoc = ""
@@ -152,24 +155,29 @@ def beginmethod(name, jdoc=None, edoc=None, params=0):
     oldmethod(name, jdoc, edoc, params)
     if is_binaryop:
         print("\t/**\n\t * %s operator" %  name)
-        print("\t * @param a")
-        print("\t * @param b")
+        print("\t * @param a first operand")
+        print("\t * @param b second operand")
         print("\t * @param o output can be null - in which case, a new dataset is created")
     else:
         print("\t/**\n\t * %s - %s" %  (name, jdoc))
-        print("\t * @param a")
+        print("\t * @param a single operand")
         print("\t * @param o output can be null - in which case, a new dataset is created")
 
     plist = []
     if params > 0:
-        plist = ["pa"]
-        psig = "final Object " + plist[0]
+        cp = "pa"
+        plist.append(cp)
+        jdlist = [cp + " %s parameter" % ORDINALS[0]]
+        psig = "final Object " + cp
         for p in range(1, params):
-            plist.append("p"+chr(ord('a')+p))
-            psig += ", final Object " + plist[p]
+            cp = "p"+chr(ord('a')+p)
+            plist.append(cp)
+            jdlist.append(cp + " %s parameter" % ORDINALS[p])
+            psig += ", final Object " + cp
 
-        for p in plist:
-            print("\t * @param %s" % p)
+        for jd in jdlist:
+            print("\t * @param %s" % jd)
+
         if is_binaryop:
             print("\t * @return %s\n%s\t */" % (jdoc, edoc))
             print("\tpublic static Dataset %s(final Object a, final Object b, final Dataset o, %s) {" % (name, psig))

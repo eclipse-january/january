@@ -31,7 +31,7 @@ public interface IDynamicShape {
 
 	/**
 	 * Change shape
-	 * @param newShape
+	 * @param newShape new shape
 	 * @throws IllegalArgumentException if new shape exceeds maximum shape or is of different rank
 	 * @throws UnsupportedOperationException if used on a view
 	 * @return true if shape has changed
@@ -68,14 +68,14 @@ public interface IDynamicShape {
 	/**
 	 * Add a listener which will be fired when aspects of the data change for
 	 * instance shape or content.
-	 * @param l
+	 * @param l listener
 	 */
 	public void addDataListener(IDataListener l);
 	
 	/**
 	 * Remove a listener which will be fired when aspects of the data change for
 	 * instance shape or content.
-	 * @param l
+	 * @param l listener
 	 */
 	public void removeDataListener(IDataListener l);
 

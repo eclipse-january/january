@@ -76,7 +76,7 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 
 	/**
 	 * Get an iterator that picks out the chosen element from all items
-	 * @param element
+	 * @param element to choose
 	 * @return an iterator
 	 */
 	public IndexIterator getIterator(int element) {
@@ -104,7 +104,7 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 	}
 
 	/**
-	 * @param slice
+	 * @param slice to define iterator
 	 * @return an slice iterator that operates like an IndexIterator
 	 */
 	@Override

@@ -37,48 +37,48 @@ public interface ILazyWriteableDataset extends IDynamicDataset {
 
 	/**
 	 * Set saver
-	 * @param saver
+	 * @param saver lazy saver
 	 */
 	public void setSaver(ILazySaver saver);
 
 	/**
 	 * Set a slice of the dataset
 	 * 
-	 * @param monitor
-	 * @param data
+	 * @param monitor can be null
+	 * @param data input
 	 * @param slice an n-D slice
-	 * @throws DatasetException
+	 * @throws DatasetException when cannot write data
 	 */
 	public void setSlice(final IMonitor monitor, final IDataset data, final SliceND slice) throws DatasetException;
 
 	/**
 	 * Set a slice of the dataset
 	 * 
-	 * @param monitor
-	 * @param data
+	 * @param monitor can be null
+	 * @param data input
 	 * @param start
 	 *            specifies the starting indexes (can be null for origin)
 	 * @param stop
 	 *            specifies the stopping indexes (can be null for end)
 	 * @param step
 	 *            specifies the steps in the slice (can be null for unit steps)
-	 * @throws DatasetException
+	 * @throws DatasetException when cannot write data
 	 */
 	public void setSlice(final IMonitor monitor, final IDataset data, final int[] start, final int[] stop, final int[] step) throws DatasetException;
 
 	/**
 	 * Set a slice of the dataset synchronously
 	 * 
-	 * @param monitor
-	 * @param data
+	 * @param monitor can be null
+	 * @param data input
 	 * @param slice an n-D slice
-	 * @throws DatasetException
+	 * @throws DatasetException when cannot write data
 	 */
 	public void setSliceSync(final IMonitor monitor, final IDataset data, final SliceND slice) throws DatasetException;
 
 	/**
 	 * Set writing slices as asynchronous
-	 * @param async
+	 * @param async true if writing should be asynchronous
 	 */
 	public void setWritingAsync(boolean async);
 
@@ -90,7 +90,7 @@ public interface ILazyWriteableDataset extends IDynamicDataset {
 
 	/**
 	 * Set the value used to fill an un-initialized dataset
-	 * @param fill
+	 * @param fill value
 	 */
 	public void setFillValue(Object fill);
 }

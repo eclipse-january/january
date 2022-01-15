@@ -37,17 +37,24 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 		super(ISIZE);
 	}
 
+	/**
+	 * @param shape output shape
+	 */
 	public RGBByteDataset(final int... shape) {
 		super(ISIZE, shape);
 	}
 
+	/**
+	 * @param data interleaved RGB values
+	 * @param shape output shape
+	 */
 	public RGBByteDataset(final byte[] data, final int... shape) {
 		super(ISIZE, data, shape);
 	}
 
 	/**
 	 * Copy a dataset
-	 * @param dataset
+	 * @param dataset to clone
 	 */
 	public RGBByteDataset(final RGBByteDataset dataset) {
 		super(dataset);
@@ -60,9 +67,9 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 
 	/**
 	 * Create a dataset using given data (red, green and blue parts are given separately)
-	 * @param redData
-	 * @param greenData
-	 * @param blueData
+	 * @param redData data for red
+	 * @param greenData data for green
+	 * @param blueData data for blue
 	 * @param shape (can be null to create 1D dataset)
 	 */
 	public RGBByteDataset(final int[] redData, final int[] greenData, final int[] blueData, int... shape) {
@@ -95,9 +102,9 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 
 	/**
 	 * Create a dataset using given data (red, green and blue parts are given separately)
-	 * @param redData
-	 * @param greenData
-	 * @param blueData
+	 * @param redData data for red
+	 * @param greenData data for green
+	 * @param blueData data for blue
 	 * @param shape (can be null to create 1D dataset)
 	 */
 	public RGBByteDataset(final short[] redData, final short[] greenData, final short[] blueData, int... shape) {
@@ -130,9 +137,9 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 
 	/**
 	 * Create a dataset using given data (red, green and blue parts are given separately)
-	 * @param redData
-	 * @param greenData
-	 * @param blueData
+	 * @param redData data for red
+	 * @param greenData data for green
+	 * @param blueData data for blue
 	 * @param shape (can be null to create 1D dataset)
 	 */
 	public RGBByteDataset(final byte[] redData, final byte[] greenData, final byte[] blueData, int... shape) {
@@ -168,9 +175,9 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 
 	/**
 	 * Create a dataset using given colour data (colour components are given separately)
-	 * @param red
-	 * @param green
-	 * @param blue
+	 * @param red dataset
+	 * @param green dataset
+	 * @param blue dataset
 	 */
 	public RGBByteDataset(final Dataset red, final Dataset green, final Dataset blue) {
 		super(ISIZE, red.getShapeRef());
@@ -196,7 +203,7 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 
 	/**
 	 * Create a dataset using given grey data
-	 * @param grey
+	 * @param grey dataset
 	 */
 	public RGBByteDataset(final Dataset grey) {
 		super(ISIZE, grey.getShapeRef());
@@ -213,7 +220,7 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 
 	/**
 	 * Create a dataset using given compound data
-	 * @param colour
+	 * @param colour dataset with colour data
 	 */
 	public RGBByteDataset(final CompoundDataset colour) {
 		super(ISIZE, colour.getShapeRef());
@@ -235,7 +242,7 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 	 * sequences or arrays are padded with zeros. The item size is the last dimension of the corresponding
 	 * elemental dataset
 	 *
-	 * @param obj
+	 * @param obj object
 	 * @return dataset with contents given by input
 	 */
 	public static RGBByteDataset createFromObject(final Object obj) {
@@ -245,7 +252,7 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 
 	/**
 	 * Create a RGB dataset from a compound dataset (no normalisation performed)
-	 * @param a
+	 * @param a dataset
 	 * @return RGB dataset (grey if input dataset has less than 3 elements per item)
 	 */
 	public static RGBByteDataset createFromCompoundDataset(final CompoundDataset a) {
@@ -445,14 +452,13 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 
 	/**
 	 * @return red value in the first position
-	 * @since 2.0
 	 */
 	public byte getRed() {
 		return data[getFirst1DIndex()];
 	}
 
 	/**
-	 * @param i
+	 * @param i position in first dimension
 	 * @return red value in given position
 	 */
 	public byte getRed(final int i) {
@@ -460,8 +466,8 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 	}
 
 	/**
-	 * @param i
-	 * @param j
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 * @return red value in given position
 	 */
 	public byte getRed(final int i, final int j) {
@@ -469,7 +475,7 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 	}
 
 	/**
-	 * @param pos
+	 * @param pos position
 	 * @return red value in given position
 	 */
 	public byte getRed(final int... pos) {
@@ -478,14 +484,13 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 
 	/**
 	 * @return green value in the first position
-	 * @since 2.0
 	 */
 	public byte getGreen() {
 		return data[getFirst1DIndex() + 1];
 	}
 
 	/**
-	 * @param i
+	 * @param i position in first dimension
 	 * @return green value in given position
 	 */
 	public byte getGreen(final int i) {
@@ -493,8 +498,8 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 	}
 
 	/**
-	 * @param i
-	 * @param j
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 * @return green value in given position
 	 */
 	public byte getGreen(final int i, final int j) {
@@ -502,7 +507,7 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 	}
 
 	/**
-	 * @param pos
+	 * @param pos position
 	 * @return green value in given position
 	 */
 	public byte getGreen(final int... pos) {
@@ -511,14 +516,13 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 
 	/**
 	 * @return blue value in the first position
-	 * @since 2.0
 	 */
 	public byte getBlue() {
 		return data[getFirst1DIndex() + 2];
 	}
 
 	/**
-	 * @param i
+	 * @param i position in first dimension
 	 * @return blue value in given position
 	 */
 	public byte getBlue(final int i) {
@@ -526,8 +530,8 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 	}
 
 	/**
-	 * @param i
-	 * @param j
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 * @return blue value in given position
 	 */
 	public byte getBlue(final int i, final int j) {
@@ -535,7 +539,7 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 	}
 
 	/**
-	 * @param pos
+	 * @param pos position
 	 * @return blue value in given position
 	 */
 	public byte getBlue(final int... pos) {
@@ -546,7 +550,7 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 	 * Get a red value from given absolute index as a byte - note this index does not
 	 * take in account the item size so be careful when using with multi-element items
 	 * 
-	 * @param n
+	 * @param n absolute index
 	 * @return red value
 	 */
 	public byte getRedAbs(int n) {
@@ -557,7 +561,7 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 	 * Get a green value from given absolute index as a byte - note this index does not
 	 * take in account the item size so be careful when using with multi-element items
 	 * 
-	 * @param n
+	 * @param n absolute index
 	 * @return green value
 	 */
 	public byte getGreenAbs(int n) {
@@ -568,7 +572,7 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 	 * Get a blue value from given absolute index as a byte - note this index does not
 	 * take in account the item size so be careful when using with multi-element items
 	 * 
-	 * @param n
+	 * @param n absolute index
 	 * @return blue value
 	 */
 	public byte getBlueAbs(int n) {
@@ -581,9 +585,9 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 
 	/**
 	 * Convert colour dataset to a grey-scale one using the NTSC formula, aka ITU-R BT.601, for RGB to luma mapping
-	 * @param clazz
+	 * @param <T> dataset sub-interface
+	 * @param clazz dataset sub-interface
 	 * @return a grey-scale dataset of given type
-	 * @since 2.2
 	 */
 	public <T extends Dataset> T createGreyDataset(final Class<T> clazz) {
 		return createGreyDataset(clazz, Wr, Wg, Wb);
@@ -591,12 +595,12 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 
 	/**
 	 * Convert colour dataset to a grey-scale one using given RGB to luma mapping
-	 * @param clazz
+	 * @param <T> dataset sub-interface
+	 * @param clazz dataset sub-interface
 	 * @param red weight
 	 * @param green weight
 	 * @param blue weight
 	 * @return a grey-scale dataset of given class
-	 * @since 2.2
 	 */
 	public <T extends Dataset> T createGreyDataset(final Class<T> clazz, final double red, final double green, final double blue) {
 		final T grey = DatasetFactory.zeros(clazz, shape);
@@ -611,7 +615,7 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 
 	/**
 	 * Convert colour dataset to a grey-scale one using the NTSC formula, aka ITU-R BT.601, for RGB to luma mapping
-	 * @param dtype
+	 * @param dtype dataset type
 	 * @return a grey-scale dataset of given class
 	 * @deprecated Use {@link RGBByteDataset#createGreyDataset(Class)}
 	 */
@@ -625,7 +629,7 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 	 * @param red weight
 	 * @param green weight
 	 * @param blue weight
-	 * @param dtype
+	 * @param dtype dataset type
 	 * @return a grey-scale dataset of given type
 	 * @deprecated Use {@link RGBByteDataset#createGreyDataset(Class, double, double, double)}
 	 */
@@ -636,9 +640,9 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 
 	/**
 	 * Extract red colour channel
-	 * @param clazz
+	 * @param <T> dataset sub-interface
+	 * @param clazz dataset sub-interface
 	 * @return a dataset of given class
-	 * @since 2.1
 	 */
 	public <T extends Dataset> T createRedDataset(final Class<T> clazz) {
 		return createColourChannelDataset(0, clazz, "red");
@@ -646,9 +650,9 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 
 	/**
 	 * Extract green colour channel
-	 * @param clazz
+	 * @param <T> dataset sub-interface
+	 * @param clazz dataset sub-interface
 	 * @return a dataset of given class
-	 * @since 2.1
 	 */
 	public <T extends Dataset> T createGreenDataset(final Class<T> clazz) {
 		return createColourChannelDataset(1, clazz, "green");
@@ -656,9 +660,9 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 
 	/**
 	 * Extract blue colour channel
-	 * @param clazz
+	 * @param <T> dataset sub-interface
+	 * @param clazz dataset sub-interface
 	 * @return a dataset of given class
-	 * @since 2.1
 	 */
 	public <T extends Dataset> T createBlueDataset(final Class<T> clazz) {
 		return createColourChannelDataset(2, clazz, "blue");
@@ -666,7 +670,7 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 
 	/**
 	 * Extract red colour channel
-	 * @param dtype
+	 * @param dtype dataset type
 	 * @return a dataset of given type
 	 * @deprecated Use {@link #createRedDataset}
 	 */
@@ -677,7 +681,7 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 
 	/**
 	 * Extract green colour channel
-	 * @param dtype
+	 * @param dtype dataset type
 	 * @return a dataset of given type
 	 * @deprecated Use {@link #createGreenDataset}
 	 */
@@ -688,7 +692,7 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 
 	/**
 	 * Extract blue colour channel
-	 * @param dtype
+	 * @param dtype dataset type
 	 * @return a dataset of given type
 	 * @deprecated Use {@link #createBlueDataset}
 	 */

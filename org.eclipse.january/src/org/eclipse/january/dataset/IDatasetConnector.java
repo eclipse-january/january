@@ -30,7 +30,7 @@ public interface IDatasetConnector extends IFileConnection, IDynamicShape {
 
 	/**
 	 * The dataset location/name in the file
-	 * @param datasetName
+	 * @param datasetName name
 	 */
 	public void setDatasetName(String datasetName);
 
@@ -44,10 +44,10 @@ public interface IDatasetConnector extends IFileConnection, IDynamicShape {
 	 * Setting this boolean ensures that a given path, never will
 	 * cache on the data server.
 	 * 
-	 * Default value is false for MJPG streams and true for standard
+	 * Default value is false for MJPEG streams and true for standard
 	 * remote datasets.
 	 *  
-	 * @param expectWrite
+	 * @param expectWrite true if server should expect more data
 	 */
 	public void setWritingExpected(boolean expectWrite);
 
@@ -60,37 +60,39 @@ public interface IDatasetConnector extends IFileConnection, IDynamicShape {
 	/**
 	 * Same as calling connect(500, TimeUnit.MILLISECOND)
 	 * 
-	 * Cannot will connect with the DataServer to start listening
+	 * This will connect with the DataServer to start listening
 	 * to any updates to the file should it be written in the remote file system.
-	 * When connect it called, the remote file must exist and the dataset properties
+	 * When connect is called, the remote file must exist and the dataset properties
 	 * are read. These properties must not change in the file while you are connected.
 	 * For instance if the file is ints when you connect, it must not change data class.
 	 * 
 	 * @return the name of the thread started to run the connection or null if each event
 	 * is driven from the event thread of the service (for instance web sockets provide the
 	 * thread and this runs the connection)
-	 * 
+	 * @throws DatasetException when cannot connect
 	 */
 	public String connect() throws DatasetException;
 
 	/**
-	 * Cannot will connect with the DataServer to start listening
+	 * This will connect with the DataServer to start listening
 	 * to any updates to the file should it be written in the remote file system.
-	 * When connect it called, the remote file must exist and the dataset properties
+	 * When connect is called, the remote file must exist and the dataset properties
 	 * are read. These properties must not change in the file while you are connected.
 	 * For instance if the file is ints when you connect, it must not change data class.
 	 * 
-	 * @param time
-	 * @param unit
+	 * @param time amount to wait
+	 * @param unit of time
 	 * @return the name of the thread started to run the connection or null if each event
 	 * is driven from the event thread of the service (for instance web sockets provide the
 	 * thread and this runs the connection)
+	 * @throws DatasetException when cannot connect
 	 */
 	public String connect(long time, TimeUnit unit) throws DatasetException;
 
 	/**
 	 * Stops listening to the dataset changing and disconnects from the server.
 	 * A remote dataset may be connected and disconnected multiple times.
+	 * @throws DatasetException when cannot disconnect
 	 */
 	public void disconnect() throws DatasetException;
 }

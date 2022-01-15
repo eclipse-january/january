@@ -59,8 +59,8 @@ class MathsPreface {
 	/**
 	 * Unwrap result from mathematical methods if necessary
 	 * 
-	 * @param o
-	 * @param a
+	 * @param o dataset
+	 * @param a input
 	 * @return a dataset if a is a dataset or an object of the same class as o
 	 */
 	public static Object unwrap(final Dataset o, final Object a) {
@@ -70,8 +70,9 @@ class MathsPreface {
 	/**
 	 * Unwrap result from mathematical methods if necessary
 	 * 
-	 * @param o
-	 * @param a
+	 * @param o dataset
+	 * @param a first input
+	 * @param b second input
 	 * @return a dataset if either a and b are datasets or an object of the same
 	 *         class as o
 	 */
@@ -82,8 +83,8 @@ class MathsPreface {
 	/**
 	 * Unwrap result from mathematical methods if necessary
 	 * 
-	 * @param o
-	 * @param a
+	 * @param o dataset
+	 * @param a inputs
 	 * @return a dataset if any inputs are datasets or an object of the same
 	 *         class as o
 	 */
@@ -99,8 +100,8 @@ class MathsPreface {
 	}
 
 	/**
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return floor divide of a and b
 	 */
 	public static Dataset floorDivide(final Object a, final Object b) {
@@ -108,8 +109,8 @@ class MathsPreface {
 	}
 
 	/**
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @param o
 	 *            output can be null - in which case, a new dataset is created
 	 * @return floor divide of a and b
@@ -119,8 +120,8 @@ class MathsPreface {
 	}
 
 	/**
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return floor remainder of a and b
 	 */
 	public static Dataset floorRemainder(final Object a, final Object b) {
@@ -128,8 +129,8 @@ class MathsPreface {
 	}
 
 	/**
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @param o
 	 *            output can be null - in which case, a new dataset is created
 	 * @return floor remainder of a and b
@@ -145,7 +146,7 @@ class MathsPreface {
 	/**
 	 * Find reciprocal from dataset
 	 * 
-	 * @param a
+	 * @param a single operand
 	 * @return reciprocal dataset
 	 */
 	public static Dataset reciprocal(final Object a) {
@@ -155,7 +156,7 @@ class MathsPreface {
 	/**
 	 * Find reciprocal from dataset
 	 * 
-	 * @param a
+	 * @param a single operand
 	 * @param o
 	 *            output can be null - in which case, a new dataset is created
 	 * @return reciprocal dataset
@@ -168,7 +169,7 @@ class MathsPreface {
 	/**
 	 * abs - absolute value of each element
 	 * 
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset abs(final Object a) {
@@ -178,7 +179,7 @@ class MathsPreface {
 	/**
 	 * abs - absolute value of each element
 	 * 
-	 * @param a
+	 * @param a single operand
 	 * @param o
 	 *            output can be null - in which case, a new dataset is created
 	 * @return dataset
@@ -436,7 +437,7 @@ class MathsPreface {
 	}
 
 	/**
-	 * @param a
+	 * @param a single operand
 	 * @return a^*, complex conjugate of a
 	 */
 	public static Dataset conjugate(final Object a) {
@@ -444,7 +445,7 @@ class MathsPreface {
 	}
 
 	/**
-	 * @param a
+	 * @param a single operand
 	 * @param o
 	 *            output can be null - in which case, a new dataset is created
 	 * @return a^*, complex conjugate of a
@@ -1050,7 +1051,7 @@ class MathsPreface {
 	/**
 	 * Create a dataset of the arguments from a complex dataset
 	 * 
-	 * @param a
+	 * @param a single operand
 	 * @return dataset of angles in radians
 	 */
 	public static Dataset angle(final Object a) {
@@ -1060,7 +1061,7 @@ class MathsPreface {
 	/**
 	 * Create a dataset of the arguments from a complex dataset
 	 * 
-	 * @param a
+	 * @param a single operand
 	 * @param inDegrees
 	 *            if true then return angles in degrees else in radians
 	 * @return dataset of angles
@@ -1072,7 +1073,7 @@ class MathsPreface {
 	/**
 	 * Create a dataset of the arguments from a complex dataset
 	 * 
-	 * @param a
+	 * @param a single operand
 	 * @param o
 	 *            output can be null - in which case, a new dataset is created
 	 * @return dataset of angles in radians
@@ -1084,7 +1085,7 @@ class MathsPreface {
 	/**
 	 * Create a dataset of the arguments from a complex dataset
 	 * 
-	 * @param a
+	 * @param a single operand
 	 * @param inDegrees
 	 *            if true then return angles in degrees else in radians
 	 * @param o
@@ -1359,8 +1360,7 @@ class MathsPreface {
 	 * Create a phase only dataset. NB it will contain NaNs if there are any
 	 * items with zero amplitude
 	 * 
-	 * @param a
-	 *            dataset
+	 * @param a single operand
 	 * @param keepZeros
 	 *            if true then zero items are returned as zero rather than NaNs
 	 * @return complex dataset where items have unit amplitude
@@ -1373,8 +1373,7 @@ class MathsPreface {
 	 * Create a phase only dataset. NB it will contain NaNs if there are any
 	 * items with zero amplitude
 	 * 
-	 * @param a
-	 *            dataset
+	 * @param a single operand
 	 * @param o
 	 *            output can be null - in which case, a new dataset is created
 	 * @param keepZeros
@@ -1463,8 +1462,8 @@ class MathsPreface {
 	 * no clone is done, the original object is returned directly. Otherwise a
 	 * new data set is returned, the sum of those passed in.
 	 * 
-	 * @param sets
-	 * @param requireClone
+	 * @param sets datasets
+	 * @param requireClone if true, clone destination to hold sum
 	 * @return sum of collection
 	 */
 	public static Dataset add(final Collection<IDataset> sets, boolean requireClone) {
@@ -1488,8 +1487,8 @@ class MathsPreface {
 	 * 
 	 * The first IDataset must cast to Dataset
 	 * 
-	 * @param sets
-	 * @param requireClone
+	 * @param sets datasets
+	 * @param requireClone if true, clone destination to hold product
 	 * @return product of collection
 	 */
 	public static Dataset multiply(final Collection<IDataset> sets, boolean requireClone) {
@@ -1860,8 +1859,11 @@ class MathsPreface {
 	 * @param values
 	 *            bilinear interpolated array
 	 * @param d
+	 *            input dataset
 	 * @param x0
+	 *            coordinate
 	 * @param x1
+	 *            coordinate
 	 */
 	public static void interpolate(final double[] values, final CompoundDataset d, final double x0, final double x1) {
 		final int[] s = d.getShapeRef();
@@ -1944,7 +1946,7 @@ class MathsPreface {
 	}
 
 	/**
-	 * Linearly interpolate a value at a point in a n-D dataset. The dataset is
+	 * Linearly interpolate a value at a point in an n-D dataset. The dataset is
 	 * considered to have zero support outside its bounds. Thus points just
 	 * outside are interpolated from the boundary value to zero. The number of
 	 * coordinates must match the rank of the dataset.
@@ -1960,7 +1962,7 @@ class MathsPreface {
 	}
 
 	/**
-	 * Linearly interpolate a value at a point in a n-D dataset with a mask. The
+	 * Linearly interpolate a value at a point in an n-D dataset with a mask. The
 	 * dataset is considered to have zero support outside its bounds. Thus
 	 * points just outside are interpolated from the boundary value to zero. The
 	 * number of coordinates must match the rank of the dataset.
@@ -2067,7 +2069,9 @@ class MathsPreface {
 	 * @param values
 	 *            linearly interpolated array
 	 * @param d
+	 *            input dataset
 	 * @param x
+	 *            coordinates
 	 */
 	public static void interpolate(final double[] values, final CompoundDataset d, final double... x) {
 		int r = d.getRank();
@@ -2224,8 +2228,11 @@ class MathsPreface {
 	 * @param values
 	 *            bilinear interpolated array
 	 * @param d
+	 *            input dataset
 	 * @param x0
+	 *            coordinate
 	 * @param x1
+	 *            coordinate
 	 * @deprecated Use
 	 *             {@link #interpolate(double[], CompoundDataset, double, double)}
 	 */
@@ -2678,10 +2685,10 @@ class MathsPreface {
 	/**
 	 * Discrete difference of dataset along axis using finite difference
 	 * 
-	 * @param a
+	 * @param a dataset
 	 * @param n
 	 *            order of difference
-	 * @param axis
+	 * @param axis to take difference along
 	 * @return difference
 	 */
 	public static Dataset difference(Dataset a, final int n, int axis) {
@@ -2842,8 +2849,8 @@ class MathsPreface {
 	/**
 	 * Discrete difference of dataset along axis using finite central difference
 	 * 
-	 * @param a
-	 * @param axis
+	 * @param a dataset
+	 * @param axis to take difference along
 	 * @return difference
 	 */
 	public static Dataset centralDifference(Dataset a, int axis) {
@@ -3118,7 +3125,7 @@ class MathsPreface {
 	/**
 	 * Calculate gradient (or partial derivatives) by central difference
 	 * 
-	 * @param y
+	 * @param y dataset
 	 * @param x
 	 *            one or more datasets for dependent variables
 	 * @return a list of datasets (one for each dimension in y)

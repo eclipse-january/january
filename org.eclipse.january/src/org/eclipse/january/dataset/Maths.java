@@ -31,8 +31,8 @@ public class Maths {
 	/**
 	 * Unwrap result from mathematical methods if necessary
 	 * 
-	 * @param o
-	 * @param a
+	 * @param o dataset
+	 * @param a input
 	 * @return a dataset if a is a dataset or an object of the same class as o
 	 */
 	public static Object unwrap(final Dataset o, final Object a) {
@@ -42,8 +42,9 @@ public class Maths {
 	/**
 	 * Unwrap result from mathematical methods if necessary
 	 * 
-	 * @param o
-	 * @param a
+	 * @param o dataset
+	 * @param a first input
+	 * @param b second input
 	 * @return a dataset if either a and b are datasets or an object of the same
 	 *         class as o
 	 */
@@ -54,8 +55,8 @@ public class Maths {
 	/**
 	 * Unwrap result from mathematical methods if necessary
 	 * 
-	 * @param o
-	 * @param a
+	 * @param o dataset
+	 * @param a inputs
 	 * @return a dataset if any inputs are datasets or an object of the same
 	 *         class as o
 	 */
@@ -71,8 +72,8 @@ public class Maths {
 	}
 
 	/**
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return floor divide of a and b
 	 */
 	public static Dataset floorDivide(final Object a, final Object b) {
@@ -80,8 +81,8 @@ public class Maths {
 	}
 
 	/**
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @param o
 	 *            output can be null - in which case, a new dataset is created
 	 * @return floor divide of a and b
@@ -91,8 +92,8 @@ public class Maths {
 	}
 
 	/**
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return floor remainder of a and b
 	 */
 	public static Dataset floorRemainder(final Object a, final Object b) {
@@ -100,8 +101,8 @@ public class Maths {
 	}
 
 	/**
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @param o
 	 *            output can be null - in which case, a new dataset is created
 	 * @return floor remainder of a and b
@@ -117,7 +118,7 @@ public class Maths {
 	/**
 	 * Find reciprocal from dataset
 	 * 
-	 * @param a
+	 * @param a single operand
 	 * @return reciprocal dataset
 	 */
 	public static Dataset reciprocal(final Object a) {
@@ -127,7 +128,7 @@ public class Maths {
 	/**
 	 * Find reciprocal from dataset
 	 * 
-	 * @param a
+	 * @param a single operand
 	 * @param o
 	 *            output can be null - in which case, a new dataset is created
 	 * @return reciprocal dataset
@@ -140,7 +141,7 @@ public class Maths {
 	/**
 	 * abs - absolute value of each element
 	 * 
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset abs(final Object a) {
@@ -150,7 +151,7 @@ public class Maths {
 	/**
 	 * abs - absolute value of each element
 	 * 
-	 * @param a
+	 * @param a single operand
 	 * @param o
 	 *            output can be null - in which case, a new dataset is created
 	 * @return dataset
@@ -408,7 +409,7 @@ public class Maths {
 	}
 
 	/**
-	 * @param a
+	 * @param a single operand
 	 * @return a^*, complex conjugate of a
 	 */
 	public static Dataset conjugate(final Object a) {
@@ -416,7 +417,7 @@ public class Maths {
 	}
 
 	/**
-	 * @param a
+	 * @param a single operand
 	 * @param o
 	 *            output can be null - in which case, a new dataset is created
 	 * @return a^*, complex conjugate of a
@@ -1022,7 +1023,7 @@ public class Maths {
 	/**
 	 * Create a dataset of the arguments from a complex dataset
 	 * 
-	 * @param a
+	 * @param a single operand
 	 * @return dataset of angles in radians
 	 */
 	public static Dataset angle(final Object a) {
@@ -1032,7 +1033,7 @@ public class Maths {
 	/**
 	 * Create a dataset of the arguments from a complex dataset
 	 * 
-	 * @param a
+	 * @param a single operand
 	 * @param inDegrees
 	 *            if true then return angles in degrees else in radians
 	 * @return dataset of angles
@@ -1044,7 +1045,7 @@ public class Maths {
 	/**
 	 * Create a dataset of the arguments from a complex dataset
 	 * 
-	 * @param a
+	 * @param a single operand
 	 * @param o
 	 *            output can be null - in which case, a new dataset is created
 	 * @return dataset of angles in radians
@@ -1056,7 +1057,7 @@ public class Maths {
 	/**
 	 * Create a dataset of the arguments from a complex dataset
 	 * 
-	 * @param a
+	 * @param a single operand
 	 * @param inDegrees
 	 *            if true then return angles in degrees else in radians
 	 * @param o
@@ -1331,8 +1332,7 @@ public class Maths {
 	 * Create a phase only dataset. NB it will contain NaNs if there are any
 	 * items with zero amplitude
 	 * 
-	 * @param a
-	 *            dataset
+	 * @param a single operand
 	 * @param keepZeros
 	 *            if true then zero items are returned as zero rather than NaNs
 	 * @return complex dataset where items have unit amplitude
@@ -1345,8 +1345,7 @@ public class Maths {
 	 * Create a phase only dataset. NB it will contain NaNs if there are any
 	 * items with zero amplitude
 	 * 
-	 * @param a
-	 *            dataset
+	 * @param a single operand
 	 * @param o
 	 *            output can be null - in which case, a new dataset is created
 	 * @param keepZeros
@@ -1435,8 +1434,8 @@ public class Maths {
 	 * no clone is done, the original object is returned directly. Otherwise a
 	 * new data set is returned, the sum of those passed in.
 	 * 
-	 * @param sets
-	 * @param requireClone
+	 * @param sets datasets
+	 * @param requireClone if true, clone destination to hold sum
 	 * @return sum of collection
 	 */
 	public static Dataset add(final Collection<IDataset> sets, boolean requireClone) {
@@ -1460,8 +1459,8 @@ public class Maths {
 	 * 
 	 * The first IDataset must cast to Dataset
 	 * 
-	 * @param sets
-	 * @param requireClone
+	 * @param sets datasets
+	 * @param requireClone if true, clone destination to hold product
 	 * @return product of collection
 	 */
 	public static Dataset multiply(final Collection<IDataset> sets, boolean requireClone) {
@@ -1832,8 +1831,11 @@ public class Maths {
 	 * @param values
 	 *            bilinear interpolated array
 	 * @param d
+	 *            input dataset
 	 * @param x0
+	 *            coordinate
 	 * @param x1
+	 *            coordinate
 	 */
 	public static void interpolate(final double[] values, final CompoundDataset d, final double x0, final double x1) {
 		final int[] s = d.getShapeRef();
@@ -1916,7 +1918,7 @@ public class Maths {
 	}
 
 	/**
-	 * Linearly interpolate a value at a point in a n-D dataset. The dataset is
+	 * Linearly interpolate a value at a point in an n-D dataset. The dataset is
 	 * considered to have zero support outside its bounds. Thus points just
 	 * outside are interpolated from the boundary value to zero. The number of
 	 * coordinates must match the rank of the dataset.
@@ -1932,7 +1934,7 @@ public class Maths {
 	}
 
 	/**
-	 * Linearly interpolate a value at a point in a n-D dataset with a mask. The
+	 * Linearly interpolate a value at a point in an n-D dataset with a mask. The
 	 * dataset is considered to have zero support outside its bounds. Thus
 	 * points just outside are interpolated from the boundary value to zero. The
 	 * number of coordinates must match the rank of the dataset.
@@ -2039,7 +2041,9 @@ public class Maths {
 	 * @param values
 	 *            linearly interpolated array
 	 * @param d
+	 *            input dataset
 	 * @param x
+	 *            coordinates
 	 */
 	public static void interpolate(final double[] values, final CompoundDataset d, final double... x) {
 		int r = d.getRank();
@@ -2196,8 +2200,11 @@ public class Maths {
 	 * @param values
 	 *            bilinear interpolated array
 	 * @param d
+	 *            input dataset
 	 * @param x0
+	 *            coordinate
 	 * @param x1
+	 *            coordinate
 	 * @deprecated Use
 	 *             {@link #interpolate(double[], CompoundDataset, double, double)}
 	 */
@@ -2650,10 +2657,10 @@ public class Maths {
 	/**
 	 * Discrete difference of dataset along axis using finite difference
 	 * 
-	 * @param a
+	 * @param a dataset
 	 * @param n
 	 *            order of difference
-	 * @param axis
+	 * @param axis to take difference along
 	 * @return difference
 	 */
 	public static Dataset difference(Dataset a, final int n, int axis) {
@@ -2814,8 +2821,8 @@ public class Maths {
 	/**
 	 * Discrete difference of dataset along axis using finite central difference
 	 * 
-	 * @param a
-	 * @param axis
+	 * @param a dataset
+	 * @param axis to take difference along
 	 * @return difference
 	 */
 	public static Dataset centralDifference(Dataset a, int axis) {
@@ -3090,7 +3097,7 @@ public class Maths {
 	/**
 	 * Calculate gradient (or partial derivatives) by central difference
 	 * 
-	 * @param y
+	 * @param y dataset
 	 * @param x
 	 *            one or more datasets for dependent variables
 	 * @return a list of datasets (one for each dimension in y)
@@ -3172,8 +3179,8 @@ public class Maths {
 // Start of generated code
 	/**
 	 * add operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return {@code a + b}, addition of a and b
 	 */
 	public static Dataset add(final Object a, final Object b) {
@@ -3182,8 +3189,8 @@ public class Maths {
 
 	/**
 	 * add operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return {@code a + b}, addition of a and b
 	 */
@@ -4266,8 +4273,8 @@ public class Maths {
 
 	/**
 	 * subtract operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return {@code a - b}, subtraction of a by b
 	 */
 	public static Dataset subtract(final Object a, final Object b) {
@@ -4276,8 +4283,8 @@ public class Maths {
 
 	/**
 	 * subtract operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return {@code a - b}, subtraction of a by b
 	 */
@@ -5360,8 +5367,8 @@ public class Maths {
 
 	/**
 	 * multiply operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return {@code a * b}, product of a and b
 	 */
 	public static Dataset multiply(final Object a, final Object b) {
@@ -5370,8 +5377,8 @@ public class Maths {
 
 	/**
 	 * multiply operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return {@code a * b}, product of a and b
 	 */
@@ -6454,8 +6461,8 @@ public class Maths {
 
 	/**
 	 * divide operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return {@code a / b}, division of a by b
 	 */
 	public static Dataset divide(final Object a, final Object b) {
@@ -6464,8 +6471,8 @@ public class Maths {
 
 	/**
 	 * divide operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return {@code a / b}, division of a by b
 	 */
@@ -7610,8 +7617,8 @@ public class Maths {
 
 	/**
 	 * dividez operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return {@code a / b}, division of a by b
 	 */
 	public static Dataset dividez(final Object a, final Object b) {
@@ -7620,8 +7627,8 @@ public class Maths {
 
 	/**
 	 * dividez operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return {@code a / b}, division of a by b
 	 */
@@ -8784,8 +8791,8 @@ public class Maths {
 
 	/**
 	 * divideTowardsFloor operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return {@code a / b}, division of a by b but rounded towards negative infinity
 	 */
 	public static Dataset divideTowardsFloor(final Object a, final Object b) {
@@ -8794,8 +8801,8 @@ public class Maths {
 
 	/**
 	 * divideTowardsFloor operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return {@code a / b}, division of a by b but rounded towards negative infinity
 	 */
@@ -10444,8 +10451,8 @@ public class Maths {
 
 	/**
 	 * power operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return {@code a ** b}, raise a to power of b
 	 */
 	public static Dataset power(final Object a, final Object b) {
@@ -10454,8 +10461,8 @@ public class Maths {
 
 	/**
 	 * power operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return {@code a ** b}, raise a to power of b
 	 */
@@ -11558,8 +11565,8 @@ public class Maths {
 
 	/**
 	 * remainder operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return {@code a % b}, remainder of division of a by b
 	 */
 	public static Dataset remainder(final Object a, final Object b) {
@@ -11568,8 +11575,8 @@ public class Maths {
 
 	/**
 	 * remainder operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return {@code a % b}, remainder of division of a by b
 	 */
@@ -12508,8 +12515,8 @@ public class Maths {
 
 	/**
 	 * maximum operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return return maximum of a and b
 	 */
 	public static Dataset maximum(final Object a, final Object b) {
@@ -12518,8 +12525,8 @@ public class Maths {
 
 	/**
 	 * maximum operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return return maximum of a and b
 	 */
@@ -13682,8 +13689,8 @@ public class Maths {
 
 	/**
 	 * minimum operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return return minimum of a and b
 	 */
 	public static Dataset minimum(final Object a, final Object b) {
@@ -13692,8 +13699,8 @@ public class Maths {
 
 	/**
 	 * minimum operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return return minimum of a and b
 	 */
@@ -14856,8 +14863,8 @@ public class Maths {
 
 	/**
 	 * bitwiseAnd operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return {@code a & b}, bitwise AND of a and b
 	 */
 	public static Dataset bitwiseAnd(final Object a, final Object b) {
@@ -14866,8 +14873,8 @@ public class Maths {
 
 	/**
 	 * bitwiseAnd operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return {@code a & b}, bitwise AND of a and b
 	 */
@@ -15244,8 +15251,8 @@ public class Maths {
 
 	/**
 	 * bitwiseOr operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return {@code a | b}, bitwise inclusive OR of a and b
 	 */
 	public static Dataset bitwiseOr(final Object a, final Object b) {
@@ -15254,8 +15261,8 @@ public class Maths {
 
 	/**
 	 * bitwiseOr operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return {@code a | b}, bitwise inclusive OR of a and b
 	 */
@@ -15632,8 +15639,8 @@ public class Maths {
 
 	/**
 	 * bitwiseXor operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return {@code a ^ b}, bitwise exclusive OR of a and b
 	 */
 	public static Dataset bitwiseXor(final Object a, final Object b) {
@@ -15642,8 +15649,8 @@ public class Maths {
 
 	/**
 	 * bitwiseXor operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return {@code a ^ b}, bitwise exclusive OR of a and b
 	 */
@@ -16020,8 +16027,8 @@ public class Maths {
 
 	/**
 	 * leftShift operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return {@code a << b}, bitwise left shift of a by b
 	 */
 	public static Dataset leftShift(final Object a, final Object b) {
@@ -16030,8 +16037,8 @@ public class Maths {
 
 	/**
 	 * leftShift operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return {@code a << b}, bitwise left shift of a by b
 	 */
@@ -16408,8 +16415,8 @@ public class Maths {
 
 	/**
 	 * rightShift operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return {@code a >> b}, bitwise right shift of a by b
 	 */
 	public static Dataset rightShift(final Object a, final Object b) {
@@ -16418,8 +16425,8 @@ public class Maths {
 
 	/**
 	 * rightShift operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return {@code a >> b}, bitwise right shift of a by b
 	 */
@@ -16796,8 +16803,8 @@ public class Maths {
 
 	/**
 	 * unsignedRightShift operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return {@code a >>> b}, bitwise right shift of a by b with zeros added
 	 */
 	public static Dataset unsignedRightShift(final Object a, final Object b) {
@@ -16806,8 +16813,8 @@ public class Maths {
 
 	/**
 	 * unsignedRightShift operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return {@code a >>> b}, bitwise right shift of a by b with zeros added
 	 */
@@ -17193,7 +17200,7 @@ public class Maths {
 
 	/**
 	 * bitwiseInvert - {@code ~a}, bitwise invert (or NOT) each element
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset bitwiseInvert(final Object a) {
@@ -17202,7 +17209,7 @@ public class Maths {
 
 	/**
 	 * bitwiseInvert - {@code ~a}, bitwise invert (or NOT) each element
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset
 	 */
@@ -17415,7 +17422,7 @@ public class Maths {
 
 	/**
 	 * sin - evaluate the sine function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset sin(final Object a) {
@@ -17424,7 +17431,7 @@ public class Maths {
 
 	/**
 	 * sin - evaluate the sine function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset
 	 */
@@ -17999,7 +18006,7 @@ public class Maths {
 
 	/**
 	 * cos - evaluate the cosine function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset cos(final Object a) {
@@ -18008,7 +18015,7 @@ public class Maths {
 
 	/**
 	 * cos - evaluate the cosine function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset
 	 */
@@ -18583,7 +18590,7 @@ public class Maths {
 
 	/**
 	 * tan - evaluate the tangent function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset tan(final Object a) {
@@ -18592,7 +18599,7 @@ public class Maths {
 
 	/**
 	 * tan - evaluate the tangent function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset
 	 */
@@ -19203,7 +19210,7 @@ public class Maths {
 
 	/**
 	 * arcsin - evaluate the inverse sine function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset arcsin(final Object a) {
@@ -19212,7 +19219,7 @@ public class Maths {
 
 	/**
 	 * arcsin - evaluate the inverse sine function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset
 	 */
@@ -19799,7 +19806,7 @@ public class Maths {
 
 	/**
 	 * arccos - evaluate the inverse cosine function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset arccos(final Object a) {
@@ -19808,7 +19815,7 @@ public class Maths {
 
 	/**
 	 * arccos - evaluate the inverse cosine function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset
 	 */
@@ -20395,7 +20402,7 @@ public class Maths {
 
 	/**
 	 * arctan - evaluate the inverse tangent function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset arctan(final Object a) {
@@ -20404,7 +20411,7 @@ public class Maths {
 
 	/**
 	 * arctan - evaluate the inverse tangent function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset
 	 */
@@ -20991,7 +20998,7 @@ public class Maths {
 
 	/**
 	 * sinh - evaluate the hyperbolic sine function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset sinh(final Object a) {
@@ -21000,7 +21007,7 @@ public class Maths {
 
 	/**
 	 * sinh - evaluate the hyperbolic sine function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset
 	 */
@@ -21575,7 +21582,7 @@ public class Maths {
 
 	/**
 	 * cosh - evaluate the hyperbolic cosine function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset cosh(final Object a) {
@@ -21584,7 +21591,7 @@ public class Maths {
 
 	/**
 	 * cosh - evaluate the hyperbolic cosine function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset
 	 */
@@ -22159,7 +22166,7 @@ public class Maths {
 
 	/**
 	 * tanh - evaluate the tangent hyperbolic function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset tanh(final Object a) {
@@ -22168,7 +22175,7 @@ public class Maths {
 
 	/**
 	 * tanh - evaluate the tangent hyperbolic function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset
 	 */
@@ -22779,7 +22786,7 @@ public class Maths {
 
 	/**
 	 * arcsinh - evaluate the inverse hyperbolic sine function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset arcsinh(final Object a) {
@@ -22788,7 +22795,7 @@ public class Maths {
 
 	/**
 	 * arcsinh - evaluate the inverse hyperbolic sine function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset
 	 */
@@ -23375,7 +23382,7 @@ public class Maths {
 
 	/**
 	 * arccosh - evaluate the inverse hyperbolic cosine function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset arccosh(final Object a) {
@@ -23384,7 +23391,7 @@ public class Maths {
 
 	/**
 	 * arccosh - evaluate the inverse hyperbolic cosine function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset
 	 */
@@ -23971,7 +23978,7 @@ public class Maths {
 
 	/**
 	 * arctanh - evaluate the inverse hyperbolic tangent function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset arctanh(final Object a) {
@@ -23980,7 +23987,7 @@ public class Maths {
 
 	/**
 	 * arctanh - evaluate the inverse hyperbolic tangent function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset
 	 */
@@ -24567,7 +24574,7 @@ public class Maths {
 
 	/**
 	 * log - evaluate the logarithm function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset log(final Object a) {
@@ -24576,7 +24583,7 @@ public class Maths {
 
 	/**
 	 * log - evaluate the logarithm function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset
 	 */
@@ -25151,7 +25158,7 @@ public class Maths {
 
 	/**
 	 * log2 - evaluate the logarithm function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset log2(final Object a) {
@@ -25160,7 +25167,7 @@ public class Maths {
 
 	/**
 	 * log2 - evaluate the logarithm function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset
 	 */
@@ -25735,7 +25742,7 @@ public class Maths {
 
 	/**
 	 * log10 - evaluate the logarithm function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset log10(final Object a) {
@@ -25744,7 +25751,7 @@ public class Maths {
 
 	/**
 	 * log10 - evaluate the logarithm function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset
 	 */
@@ -26319,7 +26326,7 @@ public class Maths {
 
 	/**
 	 * log1p - evaluate the logarithm function of 1 plus on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset log1p(final Object a) {
@@ -26328,7 +26335,7 @@ public class Maths {
 
 	/**
 	 * log1p - evaluate the logarithm function of 1 plus on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset
 	 */
@@ -26903,7 +26910,7 @@ public class Maths {
 
 	/**
 	 * exp - evaluate the exponential function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset exp(final Object a) {
@@ -26912,7 +26919,7 @@ public class Maths {
 
 	/**
 	 * exp - evaluate the exponential function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset
 	 */
@@ -27499,7 +27506,7 @@ public class Maths {
 
 	/**
 	 * expm1 - evaluate the exponential function - 1 on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset expm1(final Object a) {
@@ -27508,7 +27515,7 @@ public class Maths {
 
 	/**
 	 * expm1 - evaluate the exponential function - 1 on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset
 	 */
@@ -28095,7 +28102,7 @@ public class Maths {
 
 	/**
 	 * sqrt - evaluate the square root function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset sqrt(final Object a) {
@@ -28104,7 +28111,7 @@ public class Maths {
 
 	/**
 	 * sqrt - evaluate the square root function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset
 	 */
@@ -28691,7 +28698,7 @@ public class Maths {
 
 	/**
 	 * cbrt - evaluate the cube root function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset cbrt(final Object a) {
@@ -28700,7 +28707,7 @@ public class Maths {
 
 	/**
 	 * cbrt - evaluate the cube root function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset
 	 */
@@ -29287,7 +29294,7 @@ public class Maths {
 
 	/**
 	 * square - square each element
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset square(final Object a) {
@@ -29296,7 +29303,7 @@ public class Maths {
 
 	/**
 	 * square - square each element
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset
 	 */
@@ -29871,7 +29878,7 @@ public class Maths {
 
 	/**
 	 * floor - evaluate the floor function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset floor(final Object a) {
@@ -29880,7 +29887,7 @@ public class Maths {
 
 	/**
 	 * floor - evaluate the floor function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset
 	 */
@@ -30455,7 +30462,7 @@ public class Maths {
 
 	/**
 	 * ceil - evaluate the ceiling function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset ceil(final Object a) {
@@ -30464,7 +30471,7 @@ public class Maths {
 
 	/**
 	 * ceil - evaluate the ceiling function on each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset
 	 */
@@ -31039,7 +31046,7 @@ public class Maths {
 
 	/**
 	 * rint - round each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset rint(final Object a) {
@@ -31048,7 +31055,7 @@ public class Maths {
 
 	/**
 	 * rint - round each element of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset
 	 */
@@ -31623,7 +31630,7 @@ public class Maths {
 
 	/**
 	 * truncate - truncate each element to integers of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset truncate(final Object a) {
@@ -31632,7 +31639,7 @@ public class Maths {
 
 	/**
 	 * truncate - truncate each element to integers of the dataset
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset
 	 */
@@ -32207,7 +32214,7 @@ public class Maths {
 
 	/**
 	 * toDegrees - convert to degrees
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset toDegrees(final Object a) {
@@ -32216,7 +32223,7 @@ public class Maths {
 
 	/**
 	 * toDegrees - convert to degrees
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset
 	 */
@@ -32791,7 +32798,7 @@ public class Maths {
 
 	/**
 	 * toRadians - convert to radians
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset toRadians(final Object a) {
@@ -32800,7 +32807,7 @@ public class Maths {
 
 	/**
 	 * toRadians - convert to radians
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset
 	 */
@@ -33375,7 +33382,7 @@ public class Maths {
 
 	/**
 	 * signum - sign of each element
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset signum(final Object a) {
@@ -33384,7 +33391,7 @@ public class Maths {
 
 	/**
 	 * signum - sign of each element
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset
 	 */
@@ -33959,7 +33966,7 @@ public class Maths {
 
 	/**
 	 * negative - negative value of each element
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset negative(final Object a) {
@@ -33968,7 +33975,7 @@ public class Maths {
 
 	/**
 	 * negative - negative value of each element
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset
 	 */
@@ -34543,8 +34550,8 @@ public class Maths {
 
 	/**
 	 * lowerClip - clip elements to lower limit
-	 * @param a
-	 * @param pa
+	 * @param a single operand
+	 * @param pa first parameter
 	 * @return dataset
 	 * @since 2.3
 	 */
@@ -34554,9 +34561,9 @@ public class Maths {
 
 	/**
 	 * lowerClip - clip elements to lower limit
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
-	 * @param pa
+	 * @param pa first parameter
 	 * @return dataset
 	 * @since 2.3
 	 */
@@ -35198,8 +35205,8 @@ public class Maths {
 
 	/**
 	 * upperClip - clip elements to upper limit
-	 * @param a
-	 * @param pa
+	 * @param a single operand
+	 * @param pa first parameter
 	 * @return dataset
 	 * @since 2.3
 	 */
@@ -35209,9 +35216,9 @@ public class Maths {
 
 	/**
 	 * upperClip - clip elements to upper limit
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
-	 * @param pa
+	 * @param pa first parameter
 	 * @return dataset
 	 * @since 2.3
 	 */
@@ -35853,9 +35860,9 @@ public class Maths {
 
 	/**
 	 * clip - clip elements to limits
-	 * @param a
-	 * @param pa
-	 * @param pb
+	 * @param a single operand
+	 * @param pa first parameter
+	 * @param pb second parameter
 	 * @return dataset
 	 */
 	public static Dataset clip(final Object a, final Object pa, final Object pb) {
@@ -35864,10 +35871,10 @@ public class Maths {
 
 	/**
 	 * clip - clip elements to limits
-	 * @param a
+	 * @param a single operand
 	 * @param o output can be null - in which case, a new dataset is created
-	 * @param pa
-	 * @param pb
+	 * @param pa first parameter
+	 * @param pb second parameter
 	 * @return dataset
 	 */
 	public static Dataset clip(final Object a, final Dataset o, final Object pa, final Object pb) {

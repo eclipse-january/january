@@ -19,33 +19,33 @@ package org.eclipse.january.dataset;
 public interface UnaryOperation extends IOperation {
 
 	/**
-	 * @param a
+	 * @param a single operand
 	 * @return op(a)
 	 */
 	boolean booleanOperate(long a);
 
 	/**
-	 * @param a
+	 * @param a single operand
 	 * @return op(a)
 	 */
 	long longOperate(long a);
 
 	/**
-	 * @param a
-	 * @return op(a)a
+	 * @param a single operand
+	 * @return op(a)
 	 */
 	double doubleOperate(double a);
 
 	/**
 	 * @param out holds op(ra, ia)
-	 * @param ra
-	 * @param ia
+	 * @param ra real part of operand
+	 * @param ia imaginary part of operand
 	 */
 	void complexOperate(double[] out, double ra, double ia);
 
 	/**
-	 * @param a
-	 * @return string to represent output
+	 * @param a single operand
+	 * @return op(a)
 	 */
 	String toString(String a);
 

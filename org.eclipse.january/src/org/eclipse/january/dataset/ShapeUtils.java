@@ -25,7 +25,7 @@ public class ShapeUtils {
 
 	/**
 	 * Calculate total number of items in given shape
-	 * @param shape
+	 * @param shape dataset shape
 	 * @return size
 	 */
 	public static long calcLongSize(final int[] shape) {
@@ -60,7 +60,7 @@ public class ShapeUtils {
 
 	/**
 	 * Calculate total number of items in given shape
-	 * @param shape
+	 * @param shape dataset shape
 	 * @return size
 	 */
 	public static int calcSize(final int[] shape) {
@@ -76,8 +76,8 @@ public class ShapeUtils {
 	/**
 	 * Check if shapes are broadcast compatible
 	 * 
-	 * @param ashape
-	 * @param bshape
+	 * @param ashape first shape
+	 * @param bshape second shape
 	 * @return true if they are compatible
 	 */
 	public static boolean areShapesBroadcastCompatible(final int[] ashape, final int[] bshape) {
@@ -101,8 +101,8 @@ public class ShapeUtils {
 	/**
 	 * Check if shapes are compatible, ignoring extra axes of length 1
 	 * 
-	 * @param ashape
-	 * @param bshape
+	 * @param ashape first shape
+	 * @param bshape second shape
 	 * @return true if they are compatible
 	 */
 	public static boolean areShapesCompatible(final int[] ashape, final int[] bshape) {
@@ -131,9 +131,9 @@ public class ShapeUtils {
 	/**
 	 * Check if shapes are compatible but skip axis
 	 * 
-	 * @param ashape
-	 * @param bshape
-	 * @param axis
+	 * @param ashape first shape
+	 * @param bshape second shape
+	 * @param axis to skip
 	 * @return true if they are compatible
 	 */
 	public static boolean areShapesCompatible(final int[] ashape, final int[] bshape, final int axis) {
@@ -157,26 +157,26 @@ public class ShapeUtils {
 	/**
 	 * Remove dimensions of 1 in given shape - from both ends only, if true
 	 * 
-	 * @param oshape
-	 * @param onlyFromEnds
+	 * @param shape dataset shape
+	 * @param onlyFromEnds if true, trim ends
 	 * @return newly squeezed shape (or original if unsqueezed)
 	 */
-	public static int[] squeezeShape(final int[] oshape, boolean onlyFromEnds) {
+	public static int[] squeezeShape(final int[] shape, boolean onlyFromEnds) {
 		int unitDims = 0;
-		int rank = oshape.length;
+		int rank = shape.length;
 		int start = 0;
 	
 		if (onlyFromEnds) {
 			int i = rank - 1;
 			for (; i >= 0; i--) {
-				if (oshape[i] == 1) {
+				if (shape[i] == 1) {
 					unitDims++;
 				} else {
 					break;
 				}
 			}
 			for (int j = 0; j <= i; j++) {
-				if (oshape[j] == 1) {
+				if (shape[j] == 1) {
 					unitDims++;
 				} else {
 					start = j;
@@ -185,14 +185,14 @@ public class ShapeUtils {
 			}
 		} else {
 			for (int i = 0; i < rank; i++) {
-				if (oshape[i] == 1) {
+				if (shape[i] == 1) {
 					unitDims++;
 				}
 			}
 		}
 	
 		if (unitDims == 0) {
-			return oshape;
+			return shape;
 		}
 	
 		int[] newDims = new int[rank - unitDims];
@@ -202,13 +202,13 @@ public class ShapeUtils {
 		if (onlyFromEnds) {
 			rank = newDims.length;
 			for (int i = 0; i < rank; i++) {
-				newDims[i] = oshape[i+start];
+				newDims[i] = shape[i+start];
 			}
 		} else {
 			int j = 0;
 			for (int i = 0; i < rank; i++) {
-				if (oshape[i] > 1) {
-					newDims[j++] = oshape[i];
+				if (shape[i] > 1) {
+					newDims[j++] = shape[i];
 					if (j >= newDims.length)
 						break;
 				}
@@ -221,16 +221,16 @@ public class ShapeUtils {
 	/**
 	 * Remove dimension of 1 in given shape
 	 * 
-	 * @param oshape
-	 * @param axis
+	 * @param shape dataset shape
+	 * @param axis to remove
 	 * @return newly squeezed shape
 	 */
-	public static int[] squeezeShape(final int[] oshape, int axis) {
-		if (oshape == null) {
+	public static int[] squeezeShape(final int[] shape, int axis) {
+		if (shape == null) {
 			return null;
 		}
 
-		final int rank = oshape.length;
+		final int rank = shape.length;
 		if (rank == 0) {
 			return new int[0];
 		}
@@ -242,17 +242,17 @@ public class ShapeUtils {
 		}
 		int[] nshape = new int[rank-1];
 		for (int i = 0; i < axis; i++) {
-			nshape[i] = oshape[i];
+			nshape[i] = shape[i];
 		}
 		for (int i = axis+1; i < rank; i++) {
-			nshape[i-1] = oshape[i];
+			nshape[i-1] = shape[i];
 		}
 		return nshape;
 	}
 
 	/**
 	 * Get shape from object (array or list supported)
-	 * @param obj
+	 * @param obj object
 	 * @return shape can be null if obj is null
 	 */
 	public static int[] getShapeFromObject(final Object obj) {
@@ -330,8 +330,8 @@ public class ShapeUtils {
 
 	/**
 	 * Get n-D position from given index
-	 * @param n index
-	 * @param shape
+	 * @param n absolute index
+	 * @param shape dataset shape
 	 * @return n-D position
 	 */
 	public static int[] getNDPositionFromShape(int n, int[] shape) {
@@ -359,8 +359,8 @@ public class ShapeUtils {
 	}
 
 	/**
-	 * Get flattened view index of given position 
-	 * @param shape
+	 * Get flattened view index of given position
+	 * @param shape dataset shape
 	 * @param pos
 	 *            the integer array specifying the n-D position
 	 * @return the index on the flattened dataset
@@ -394,8 +394,8 @@ public class ShapeUtils {
 	/**
 	 * Check that axis is in range [-rank,rank)
 	 * 
-	 * @param rank
-	 * @param axis
+	 * @param rank number of dimensions
+	 * @param axis dimension to check
 	 * @return sanitized axis in range [0, rank)
 	 * @since 2.1
 	 */
@@ -421,8 +421,8 @@ public class ShapeUtils {
 
 	/**
 	 * Check that all axes are in range [-rank,rank)
-	 * @param rank
-	 * @param axes
+	 * @param rank number of dimensions
+	 * @param axes to skip
 	 * @return sanitized axes in range [0, rank) and sorted in increasing order
 	 * @since 2.2
 	 */
@@ -432,8 +432,8 @@ public class ShapeUtils {
 
 	/**
 	 * Check that all axes are in range [-rank,rank)
-	 * @param rank
-	 * @param axes
+	 * @param rank number of dimensions
+	 * @param axes to skip
 	 * @return sanitized axes in range [0, rank) and sorted in increasing order
 	 * @since 2.2
 	 */
@@ -447,8 +447,8 @@ public class ShapeUtils {
 	}
 
 	/**
-	 * @param rank
-	 * @param axes
+	 * @param rank number of dimensions
+	 * @param axes to skip
 	 * @return remaining axes not given by input
 	 * @since 2.2
 	 */
@@ -467,8 +467,8 @@ public class ShapeUtils {
 
 	/**
 	 * Remove axes from shape
-	 * @param shape
-	 * @param axes
+	 * @param shape to use
+	 * @param axes to remove
 	 * @return reduced shape
 	 * @since 2.2
 	 */
@@ -483,8 +483,8 @@ public class ShapeUtils {
 
 	/**
 	 * Set reduced axes to 1
-	 * @param shape
-	 * @param axes
+	 * @param shape input
+	 * @param axes to set to 1
 	 * @return shape with same rank
 	 * @since 2.2
 	 */
@@ -498,8 +498,8 @@ public class ShapeUtils {
 	}
 
 	/**
-	 * @param a
-	 * @param b
+	 * @param a first shape
+	 * @param b second shape
 	 * @return true if arrays only differs by unit entries
 	 * @since 2.2
 	 */
@@ -541,8 +541,8 @@ public class ShapeUtils {
 	 * Calculate the padding difference between two shapes. Padding can be positive (negative)
 	 * for added (removed) dimensions. NB positive or negative padding is given after matched
 	 * dimensions
-	 * @param aShape
-	 * @param bShape
+	 * @param aShape first shape
+	 * @param bShape second shape
 	 * @return padding can be null if shapes are equal
 	 * @throws IllegalArgumentException if one shape is null but not the other, or if shapes do
 	 * not possess common non-unit lengths
