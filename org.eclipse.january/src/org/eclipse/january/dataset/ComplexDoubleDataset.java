@@ -295,8 +295,8 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	/**
 	 * Set item at index to complex value given by real and imaginary parts 
 	 * @param index absolute index
-	 * @param real
-	 * @param imag
+	 * @param real real part
+	 * @param imag imaginary part
 	 */
 	public void setAbs(final int index, final double real, final double imag) { // PRIM_TYPE
 		setDirty();
@@ -315,7 +315,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	}
 
 	/**
-	 * @param i
+	 * @param i position in first dimension
 	 * @return item in given position
 	 */
 	public Complex get(final int i) {
@@ -325,8 +325,8 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	}
 
 	/**
-	 * @param i
-	 * @param j
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 * @return item in given position
 	 */
 	public Complex get(final int i, final int j) {
@@ -336,7 +336,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	}
 
 	/**
-	 * @param pos
+	 * @param pos position
 	 * @return item in given position
 	 */
 	public Complex get(final int... pos) {
@@ -375,7 +375,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	}
 
 	/**
-	 * @param i
+	 * @param i position in first dimension
 	 * @return item in given position
 	 */
 	@SuppressWarnings("cast")
@@ -384,8 +384,8 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	}
 
 	/**
-	 * @param i
-	 * @param j
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 * @return item in given position
 	 */
 	@SuppressWarnings("cast")
@@ -394,7 +394,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	}
 
 	/**
-	 * @param pos
+	 * @param pos position
 	 * @return item in given position
 	 */
 	@SuppressWarnings("cast")
@@ -411,7 +411,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	}
 
 	/**
-	 * @param i
+	 * @param i position in first dimension
 	 * @return item in given position
 	 */
 	public double getImag(final int i) { // PRIM_TYPE
@@ -419,8 +419,8 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	}
 
 	/**
-	 * @param i
-	 * @param j
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 * @return item in given position
 	 */
 	public double getImag(final int i, final int j) { // PRIM_TYPE
@@ -428,7 +428,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	}
 
 	/**
-	 * @param pos
+	 * @param pos position
 	 * @return item in given position
 	 */
 	public double getImag(final int... pos) { // PRIM_TYPE
@@ -444,7 +444,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	}
 
 	/**
-	 * @param i
+	 * @param i position in first dimension
 	 * @return item in given position
 	 */
 	public Complex getComplex(final int i) {
@@ -452,8 +452,8 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	}
 
 	/**
-	 * @param i
-	 * @param j
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 * @return item in given position
 	 */
 	public Complex getComplex(final int i, final int j) {
@@ -461,7 +461,7 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 	}
 
 	/**
-	 * @param pos
+	 * @param pos position
 	 * @return item in given position
 	 */
 	public Complex getComplex(final int... pos) {
@@ -492,9 +492,9 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 
 	/**
 	 * Set real and imaginary values at given position
-	 * @param dr
-	 * @param di
-	 * @param i
+	 * @param dr real part
+	 * @param di imaginary part
+	 * @param i position in first dimension
 	 */
 	public void set(final double dr, final double di, final int i) { // PRIM_TYPE
 		setItem(new double[] {dr, di}, i); // PRIM_TYPE
@@ -502,10 +502,10 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 
 	/**
 	 * Set real and imaginary values at given position
-	 * @param dr
-	 * @param di
-	 * @param i
-	 * @param j
+	 * @param dr real part
+	 * @param di imaginary part
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 */
 	public void set(final double dr, final double di, final int i, final int j) { // PRIM_TYPE
 		setItem(new double[] {dr, di}, i, j); // PRIM_TYPE
@@ -513,9 +513,9 @@ public class ComplexDoubleDataset extends CompoundDoubleDataset { // CLASS_TYPE
 
 	/**
 	 * Set real and imaginary values at given position
-	 * @param dr
-	 * @param di
-	 * @param pos
+	 * @param dr real part
+	 * @param di imaginary part
+	 * @param pos position
 	 * @since 2.0
 	 */
 	public void set(final double dr, final double di, final int... pos) { // PRIM_TYPE

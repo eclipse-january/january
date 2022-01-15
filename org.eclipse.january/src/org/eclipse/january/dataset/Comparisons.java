@@ -25,8 +25,8 @@ public class Comparisons {
 	 * For multi-element items, comparison is true if all elements in an item
 	 * are equal. Where the datasets have mismatched item sizes, the first element
 	 * of the dataset with smaller items is used for comparison.
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return dataset where item is true if {@code a == b}
 	 */
 	public static BooleanDataset equalTo(Object a, Object b) {
@@ -39,8 +39,8 @@ public class Comparisons {
 	 * For multi-element items, comparison is true if all elements in an item
 	 * are equal. Where the datasets have mismatched item sizes, the first element
 	 * of the dataset with smaller items is used for comparison.
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset where item is true if {@code a == b}
 	 */
@@ -147,10 +147,10 @@ public class Comparisons {
 	 * For multi-element items, comparison is true if all elements in an item
 	 * are equal. Where the datasets have mismatched item sizes, the first element
 	 * of the dataset with smaller items is used for comparison.
-	 * @param a
-	 * @param b
-	 * @param relTolerance
-	 * @param absTolerance
+	 * @param a first operand
+	 * @param b second operand
+	 * @param relTolerance relative tolerance
+	 * @param absTolerance absolute tolerance
 	 * @return dataset where item is true if {@code abs(a - b) <= absTol + relTol*max(abs(a),abs(b))}
 	 */
 	public static BooleanDataset almostEqualTo(Object a, Object b, double relTolerance, double absTolerance) {
@@ -158,15 +158,14 @@ public class Comparisons {
 	}
 
 	/**
-	 * 
-	 * @param a
-	 * @param b
-	 * @param relTol
-	 * @param absTol
+	 * @param a first operand
+	 * @param b second operand
+	 * @param relTolerance relative tolerance
+	 * @param absTolerance absolute tolerance
 	 * @return true if {@code abs(a - b) <= max(absTol, relTol*max(abs(a),abs(b)))}
 	 */
-	public final static boolean isClose(double a, double b, double relTol, double absTol) {
-		return Math.abs(a - b) <= Math.max(absTol, relTol * Math.max(Math.abs(a), Math.abs(b)));
+	public final static boolean isClose(double a, double b, double relTolerance, double absTolerance) {
+		return Math.abs(a - b) <= Math.max(absTolerance, relTolerance * Math.max(Math.abs(a), Math.abs(b)));
 	}
 
 	private final static boolean isCloseNP(double a, double b, double rt, double at) {
@@ -184,11 +183,11 @@ public class Comparisons {
 	 * For multi-element items, comparison is true if all elements in an item
 	 * are equal. Where the datasets have mismatched item sizes, the first element
 	 * of the dataset with smaller items is used for comparison.
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @param o output can be null - in which case, a new dataset is created
-	 * @param relTolerance
-	 * @param absTolerance
+	 * @param relTolerance relative tolerance
+	 * @param absTolerance absolute tolerance
 	 * @return dataset where item is true if {@code abs(a - b) <= absTol + relTol*max(abs(a),abs(b))}
 	 */
 	public static BooleanDataset almostEqualTo(Object a, Object b, BooleanDataset o, double relTolerance, double absTolerance) {
@@ -267,8 +266,8 @@ public class Comparisons {
 	 * For multi-element items, comparison is true if all elements in an item
 	 * are greater. Where the datasets have mismatched item sizes, the first element
 	 * of the dataset with smaller items is used for comparison.
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return dataset where item is true if {@code a > b}
 	 */
 	public static BooleanDataset greaterThan(Object a, Object b) {
@@ -281,8 +280,8 @@ public class Comparisons {
 	 * For multi-element items, comparison is true if all elements in an item
 	 * are greater. Where the datasets have mismatched item sizes, the first element
 	 * of the dataset with smaller items is used for comparison.
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset where item is true if {@code a > b}
 	 */
@@ -377,8 +376,8 @@ public class Comparisons {
 	 * For multi-element items, comparison is true if all elements in an item
 	 * are greater or equal. Where the datasets have mismatched item sizes, the first element
 	 * of the dataset with smaller items is used for comparison.
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return dataset where item is true if {@code a >= b}
 	 */
 	public static BooleanDataset greaterThanOrEqualTo(Object a, Object b) {
@@ -391,8 +390,8 @@ public class Comparisons {
 	 * For multi-element items, comparison is true if all elements in an item
 	 * are greater or equal. Where the datasets have mismatched item sizes, the first element
 	 * of the dataset with smaller items is used for comparison.
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset where item is true if {@code a >= b}
 	 */
@@ -487,8 +486,8 @@ public class Comparisons {
 	 * For multi-element items, comparison is true if all elements in an item
 	 * are lesser. Where the datasets have mismatched item sizes, the first element
 	 * of the dataset with smaller items is used for comparison.
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return dataset where item is true if {@code a < b}
 	 */
 	public static BooleanDataset lessThan(Object a, Object b) {
@@ -501,8 +500,8 @@ public class Comparisons {
 	 * For multi-element items, comparison is true if all elements in an item
 	 * are lesser. Where the datasets have mismatched item sizes, the first element
 	 * of the dataset with smaller items is used for comparison.
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset where item is true if {@code a < b}
 	 */
@@ -598,8 +597,8 @@ public class Comparisons {
 	 * For multi-element items, comparison is true if all elements in an item
 	 * are lesser or equal. Where the datasets have mismatched item sizes, the first element
 	 * of the dataset with smaller items is used for comparison.
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return dataset where item is true if {@code a <= b}
 	 */
 	public static BooleanDataset lessThanOrEqualTo(Object a, Object b) {
@@ -612,8 +611,8 @@ public class Comparisons {
 	 * For multi-element items, comparison is true if all elements in an item
 	 * are lesser or equal. Where the datasets have mismatched item sizes, the first element
 	 * of the dataset with smaller items is used for comparison.
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset where item is true if {@code a <= b}
 	 */
@@ -704,7 +703,7 @@ public class Comparisons {
 	}
 
 	/**
-	 * @param a
+	 * @param a operand
 	 * @param lo lower bound
 	 * @param hi upper bound
 	 * @return dataset where item is true if {@code l <= a <= h}
@@ -714,7 +713,7 @@ public class Comparisons {
 	}
 
 	/**
-	 * @param a
+	 * @param a operand
 	 * @param lo lower bound
 	 * @param hi upper bound
 	 * @param o output can be null - in which case, a new dataset is created
@@ -777,10 +776,10 @@ public class Comparisons {
 	 * For multi-element items, comparison is true if all elements in an item
 	 * are equal up to a tolerance. Where the datasets have mismatched item sizes, the first element
 	 * of the dataset with smaller items is used for comparison.
-	 * @param a
-	 * @param b
-	 * @param relTolerance
-	 * @param absTolerance
+	 * @param a first operand
+	 * @param b second operand
+	 * @param relTolerance relative tolerance
+	 * @param absTolerance absolute tolerance
 	 * @return true if all items satisfy {@code abs(a - b) <= absTol + relTol*max(abs(a),abs(b))}
 	 */
 	public static boolean allCloseTo(Object a, Object b, double relTolerance, double absTolerance) {
@@ -846,7 +845,7 @@ public class Comparisons {
 	}
 
 	/**
-	 * @param a
+	 * @param a operand
 	 * @return true if all elements are true
 	 */
 	public static boolean allTrue(Object a) {
@@ -872,8 +871,8 @@ public class Comparisons {
 
 	/**
 	 * Test if all items along given axis are true in the input dataset
-	 * @param a
-	 * @param axis axis to reduce 
+	 * @param a operand
+	 * @param axis to reduce along
 	 * @return boolean dataset
 	 */
 	public static BooleanDataset allTrue(IDataset a, int axis) {
@@ -913,7 +912,7 @@ public class Comparisons {
 	}
 
 	/**
-	 * @param a
+	 * @param a operand
 	 * @return true if any element is true
 	 */
 	public static boolean anyTrue(Object a) {
@@ -939,8 +938,8 @@ public class Comparisons {
 
 	/**
 	 * Test if any items along given axis are true in the input dataset
-	 * @param a
-	 * @param axis axis to reduce 
+	 * @param a operand
+	 * @param axis to reduce along
 	 * @return boolean dataset
 	 */
 	public static BooleanDataset anyTrue(IDataset a, int axis) {
@@ -984,7 +983,7 @@ public class Comparisons {
 	 * <p>
 	 * For multi-element items, negation is false if all elements in a pair of items
 	 * are true.
-	 * @param a
+	 * @param a operand
 	 * @return dataset where item is true when a is false
 	 */
 	public static BooleanDataset logicalNot(Object a) {
@@ -996,7 +995,7 @@ public class Comparisons {
 	 * <p>
 	 * For multi-element items, negation is false if all elements in a pair of items
 	 * are true.
-	 * @param a
+	 * @param a operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset where item is true when a is false
 	 */
@@ -1032,8 +1031,8 @@ public class Comparisons {
 	 * For multi-element items, comparison is true if all elements in a pair of items
 	 * are true. Where the datasets have mismatched item sizes, the first element
 	 * of the dataset with smaller items is used for comparison.
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return dataset where item is true if {@code a && b} is true
 	 */
 	public static BooleanDataset logicalAnd(Object a, Object b) {
@@ -1046,8 +1045,8 @@ public class Comparisons {
 	 * For multi-element items, comparison is true if all elements in a pair of items
 	 * are true. Where the datasets have mismatched item sizes, the first element
 	 * of the dataset with smaller items is used for comparison.
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset where item is true if {@code a && b} is true
 	 */
@@ -1107,8 +1106,8 @@ public class Comparisons {
 	 * For multi-element items, comparison is true if any elements in a pair of items
 	 * are true. Where the datasets have mismatched item sizes, the first element
 	 * of the dataset with smaller items is used for comparison.
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return dataset where item is true if {@code a || b} is true
 	 */
 	public static BooleanDataset logicalOr(Object a, Object b) {
@@ -1121,8 +1120,8 @@ public class Comparisons {
 	 * For multi-element items, comparison is true if any elements in a pair of items
 	 * are true. Where the datasets have mismatched item sizes, the first element
 	 * of the dataset with smaller items is used for comparison.
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset where item is true if {@code a || b} is true
 	 */
@@ -1182,8 +1181,8 @@ public class Comparisons {
 	 * For multi-element items, comparison is true if one element in a pair of items
 	 * is true. Where the datasets have mismatched item sizes, the first element
 	 * of the dataset with smaller items is used for comparison.
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return dataset where item is true if {@code a ^ b} is true
 	 */
 	public static BooleanDataset logicalXor(Object a, Object b) {
@@ -1196,8 +1195,8 @@ public class Comparisons {
 	 * For multi-element items, comparison is true if one element in a pair of items
 	 * is true. Where the datasets have mismatched item sizes, the first element
 	 * of the dataset with smaller items is used for comparison.
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset where item is true if a ^ b is true
 	 */
@@ -1251,7 +1250,7 @@ public class Comparisons {
 
 	/**
 	 * Create a list of indices of positions where items are non-zero
-	 * @param a
+	 * @param a operand
 	 * @return list of positions as integer datasets
 	 */
 	public static List<IntegerDataset> nonZero(Dataset a) {
@@ -1286,7 +1285,7 @@ public class Comparisons {
 	 * Check item-wise for whether any a's elements are Not-a-Numbers
 	 * <p>
 	 * For multi-element items, check is true if any elements in an item is Not-a-Number.
-	 * @param a
+	 * @param a operand
 	 * @return dataset where item is true if any of its elements are NaNs
 	 */
 	public static BooleanDataset isNaN(Object a) {
@@ -1297,7 +1296,7 @@ public class Comparisons {
 	 * Check item-wise for whether any a's elements are Not-a-Numbers
 	 * <p>
 	 * For multi-element items, check is true if any elements in an item is Not-a-Number.
-	 * @param a
+	 * @param a operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset where item is true if any of its elements are NaNs
 	 */
@@ -1345,7 +1344,7 @@ public class Comparisons {
 	 * Check item-wise for whether any a's elements are infinite
 	 * <p>
 	 * For multi-element items, check is true if any elements in an item is infinite
-	 * @param a
+	 * @param a operand
 	 * @return dataset where item is true if any of its elements are infinite
 	 */
 	public static BooleanDataset isInfinite(Object a) {
@@ -1356,7 +1355,7 @@ public class Comparisons {
 	 * Check item-wise for whether any a's elements are infinite
 	 * <p>
 	 * For multi-element items, check is true if any elements in an item is infinite
-	 * @param a
+	 * @param a operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset where item is true if any of its elements are infinite
 	 */
@@ -1404,7 +1403,7 @@ public class Comparisons {
 	 * Check item-wise for whether any a's elements are positive infinite
 	 * <p>
 	 * For multi-element items, the check is true if any elements in an item is positive infinite
-	 * @param a
+	 * @param a operand
 	 * @return dataset where items are true if any of its elements are positive infinite
 	 */
 	public static BooleanDataset isPositiveInfinite(Object a) {
@@ -1415,7 +1414,7 @@ public class Comparisons {
 	 * Check item-wise for whether any a's elements are positive infinite
 	 * <p>
 	 * For multi-element items, the check is true if any elements in an item is positive infinite
-	 * @param a
+	 * @param a operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset where items are true if any of its elements are positive infinite
 	 */
@@ -1427,7 +1426,7 @@ public class Comparisons {
 	 * Check item-wise for whether any a's elements are negative infinite
 	 * <p>
 	 * For multi-element items, the check is true if any elements in an item is negative infinite
-	 * @param a
+	 * @param a operand
 	 * @return dataset where items are true if any of its elements are negative infinite
 	 */
 	public static BooleanDataset isNegativeInfinite(Object a) {
@@ -1438,7 +1437,7 @@ public class Comparisons {
 	 * Check item-wise for whether any a's elements are negative infinite
 	 * <p>
 	 * For multi-element items, the check is true if any elements in an item is negative infinite
-	 * @param a
+	 * @param a operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset where items are true if any of its elements are negative infinite
 	 */
@@ -1450,9 +1449,9 @@ public class Comparisons {
 	 * Check item-wise for whether any a's elements match given item
 	 * <p>
 	 * For multi-element items, the check is true if any elements in an item matches
-	 * @param a
+	 * @param a operand
 	 * @param o output can be null - in which case, a new dataset is created
-	 * @param match
+	 * @param match value to match
 	 * @return dataset where items are true if any of its elements match
 	 */
 	private static BooleanDataset isEqual(Object a, BooleanDataset o, final double match) {
@@ -1501,7 +1500,7 @@ public class Comparisons {
 	 * Check item-wise for whether any a's elements are finite (or not infinite and not Not-a-Number)
 	 * <p>
 	 * For multi-element items, check is true if any elements in an item is finite
-	 * @param a
+	 * @param a operand
 	 * @return dataset where item is true if any of its elements are finite
 	 */
 	public static BooleanDataset isFinite(Object a) {
@@ -1512,7 +1511,7 @@ public class Comparisons {
 	 * Check item-wise for whether any a's elements are finite (or not infinite and not Not-a-Number)
 	 * <p>
 	 * For multi-element items, check is true if any elements in an item is finite
-	 * @param a
+	 * @param a operand
 	 * @param o output can be null - in which case, a new dataset is created
 	 * @return dataset where item is true if any of its elements are finite
 	 */
@@ -1589,7 +1588,7 @@ public class Comparisons {
 	}
 
 	/**
-	 * @param a
+	 * @param a operand
 	 * @return true if all elements are in a monotonic order
 	 * @see #findMonotonicity(Object)
 	 */
@@ -1598,8 +1597,8 @@ public class Comparisons {
 	}
 
 	/**
-	 * @param a
-	 * @param monotonicity
+	 * @param a operand
+	 * @param monotonicity type
 	 * @return true if all elements are in given monotonic ordering
 	 */
 	public static boolean isMonotonic(Object a, Monotonicity monotonicity) {
@@ -1685,7 +1684,7 @@ public class Comparisons {
 	}
 
 	/**
-	 * @param a
+	 * @param a operand
 	 * @return true if all elements are in a strictly monotonic order
 	 * @see #findMonotonicity(Object)
 	 */
@@ -1696,7 +1695,7 @@ public class Comparisons {
 
 	/**
 	 * Find monotonicity. NaNs are ignored or considered not equal
-	 * @param a
+	 * @param a operand
 	 * @return monotonicity
 	 */
 	public static Monotonicity findMonotonicity(Object a) {

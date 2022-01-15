@@ -22,7 +22,7 @@ public class Operations {
 	 * This function returns the name of the dataset, bracketed if it already
 	 * includes some mathematical symbol
 	 * 
-	 * @param a
+	 * @param a input
 	 * @return the bracketed if necessary method name
 	 */
 	public static StringBuilder bracketIfNecessary(final String a) {
@@ -40,7 +40,7 @@ public class Operations {
 	/**
 	 * Create a string for a binary operator and its operands
 	 * 
-	 * @param operator
+	 * @param operator name
 	 * @param a
 	 *            1st operand name
 	 * @param b
@@ -55,19 +55,14 @@ public class Operations {
 	/**
 	 * Create a string for a function and its arguments
 	 * 
-	 * @param function
-	 * @param arguments
+	 * @param function name
+	 * @param arguments to use
 	 * @return name of function
 	 */
 	public static String createFunctionName(final String function, String... arguments) {
 		StringBuilder name = new StringBuilder(function);
 		name.append('(');
-		int length = arguments.length - 1;
-		for (int i = 0; i < length; i++) {
-			name.append(arguments[i]);
-			name.append(", ");
-		}
-		name.append(arguments[length]);
+		name.append(String.join(", ", arguments));
 		name.append(')');
 		return name.toString();
 	}
@@ -1171,8 +1166,8 @@ public class Operations {
 	 * 
 	 * @param op
 	 *            binary operator
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @param o
 	 *            output can be null - in which case, a new dataset is created
 	 * @return a op b, operation on a and b

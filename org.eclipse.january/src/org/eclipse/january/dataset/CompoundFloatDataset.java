@@ -316,8 +316,8 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 	 * Create a 1D dataset from an object which could be a Java list, array (of arrays...) or Number. Ragged
 	 * sequences or arrays are padded with zeros.
 	 *
-	 * @param itemSize
-	 * @param obj
+	 * @param itemSize item size
+	 * @param obj object
 	 * @return dataset with contents given by input
 	 */
 	public static CompoundFloatDataset createFromObject(final int itemSize, final Object obj) {
@@ -368,7 +368,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 
 	/**
 	 * Create a compound dataset using last dimension of given dataset
-	 * @param a
+	 * @param a dataset
 	 * @param shareData if true, then share data when possible otherwise copy it
 	 * @return compound dataset
 	 */
@@ -480,7 +480,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 	 *
 	 * @param index
 	 *            absolute index
-	 * @param values
+	 * @param values output destination
 	 */
 	public void getAbs(final int index, final float[] values) { // PRIM_TYPE
 		for (int i = 0; i < isize; i++) {
@@ -909,7 +909,7 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 	/**
 	 * Set values at first position. The dataset must not be null
 	 *
-	 * @param d
+	 * @param d input source
 	 * @since 2.0
 	 */
 	public void setItem(final float[] d) { // PRIM_TYPE
@@ -922,8 +922,8 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 	/**
 	 * Set values at given position. The dataset must be 1D
 	 *
-	 * @param d
-	 * @param i
+	 * @param d input source
+	 * @param i position in first dimension
 	 */
 	public void setItem(final float[] d, final int i) { // PRIM_TYPE
 		if (d.length > isize) {
@@ -935,9 +935,9 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 	/**
 	 * Set values at given position. The dataset must be 1D
 	 *
-	 * @param d
-	 * @param i
-	 * @param j
+	 * @param d input source
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 */
 	public void setItem(final float[] d, final int i, final int j) { // PRIM_TYPE
 		if (d.length > isize) {
@@ -949,8 +949,8 @@ public class CompoundFloatDataset extends AbstractCompoundDataset {
 	/**
 	 * Set values at given position
 	 *
-	 * @param d
-	 * @param pos
+	 * @param d input source
+	 * @param pos position
 	 */
 	public void setItem(final float[] d, final int... pos) { // PRIM_TYPE
 		if (d.length > isize) {

@@ -91,7 +91,7 @@ public class DateDatasetImpl extends StringDataset implements DateDataset {
 			throw new IllegalArgumentException("Argument is of unsupported class");
 		}
 	}
-	
+
 	private static Date stringToDate(final String dateAsString) {
 		if (dateAsString != null) {
 			try {
@@ -104,7 +104,7 @@ public class DateDatasetImpl extends StringDataset implements DateDataset {
 		
 		return null;
 	}
-	
+
 	@Override
 	public Date getDate() {
 		final String dateAsString = super.getString();
@@ -181,22 +181,36 @@ public class DateDatasetImpl extends StringDataset implements DateDataset {
 		data[index] = dateToString(date);
 		setDirty();
 	}
-	
+
 	/**
+	 * @param value to set
 	 * @since 2.0
 	 */
 	public void setItem(final Date value) {
 		setAbs(getFirst1DIndex(), value);
 	}
-	
+
+	/**
+	 * @param value to set
+	 * @param i position in first dimension
+	 */
 	public void setItem(final Date value, final int i) {
 		setAbs(get1DIndex(i), value);
 	}
-	
+
+	/**
+	 * @param value to set
+	 * @param i position in first dimension
+	 * @param j position in second dimension
+	 */
 	public void setItem(final Date value, final int i, final int j) {
 		setAbs(get1DIndex(i, j), value);
 	}
-	
+
+	/**
+	 * @param value to set
+	 * @param pos position
+	 */
 	public void setItem(final Date value, final int... pos) {
 		setAbs(get1DIndex(pos), value);
 	}

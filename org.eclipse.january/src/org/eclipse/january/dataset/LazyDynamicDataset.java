@@ -47,12 +47,12 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 
 	/**
 	 * Create a dynamic lazy dataset
-	 * @param name
-	 * @param dtype
-	 * @param elements
-	 * @param shape
-	 * @param maxShape
-	 * @param loader
+	 * @param name of dataset
+	 * @param dtype dataset type
+	 * @param elements item size
+	 * @param shape dataset shape
+	 * @param maxShape maximum shape
+	 * @param loader lazy loader
 	 * @deprecated Use {@link #LazyDynamicDataset(ILazyLoader, String, int, Class, int[], int[])}
 	 */
 	@Deprecated
@@ -62,12 +62,12 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 
 	/**
 	 * Create a dynamic lazy dataset
-	 * @param name
-	 * @param elements
-	 * @param clazz
-	 * @param shape
-	 * @param maxShape
-	 * @param loader
+	 * @param name of dataset
+	 * @param elements item size
+	 * @param clazz dataset sub-interface
+	 * @param shape dataset shape
+	 * @param maxShape maximum shape
+	 * @param loader lazy loader
 	 * @since 2.3
 	 * @deprecated Use {@link #LazyDynamicDataset(ILazyLoader, String, int, Class, int[], int[])}
 	 */
@@ -78,12 +78,12 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 
 	/**
 	 * Create a dynamic lazy dataset
-	 * @param loader
-	 * @param name
-	 * @param elements
-	 * @param clazz
-	 * @param shape
-	 * @param maxShape
+	 * @param loader lazy loader
+	 * @param name of dataset
+	 * @param elements item size
+	 * @param clazz dataset sub-interface
+	 * @param shape dataset shape
+	 * @param maxShape maximum shape
 	 * @since 2.3
 	 */
 	public LazyDynamicDataset(ILazyLoader loader, String name, int elements, Class<? extends Dataset> clazz, int[] shape, int[] maxShape) {
@@ -112,6 +112,7 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 	}
 
 	/**
+	 * @param other dataset to clone
 	 * @since 2.2
 	 */
 	protected LazyDynamicDataset(LazyDynamicDataset other) {

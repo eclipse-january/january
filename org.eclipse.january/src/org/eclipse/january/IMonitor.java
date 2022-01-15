@@ -18,7 +18,7 @@ package org.eclipse.january;
 public interface IMonitor {
 
 	/**
-	 * @param amount
+	 * @param amount of work donw
 	 */
 	public void worked(int amount);
 	
@@ -30,7 +30,7 @@ public interface IMonitor {
 	/**
 	 * Starts a subtask.
 	 * 
-	 * @param taskName
+	 * @param taskName to use
 	 */
 	public void subTask(String taskName);
 	

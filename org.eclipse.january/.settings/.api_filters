@@ -59,6 +59,20 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/january/dataset/IMetadataProvider.java" type="org.eclipse.january.dataset.IMetadataProvider">
+        <filter id="422776937">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.IMetadataProvider.getFirstMetadata(Class&lt;T&gt;)"/>
+                <message_argument value="T"/>
+            </message_arguments>
+        </filter>
+        <filter id="422776937">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.IMetadataProvider.getMetadata(Class&lt;T&gt;)"/>
+                <message_argument value="T"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/january/dataset/LazyDataset.java" type="org.eclipse.january.dataset.LazyDataset">
         <filter id="338755678">
             <message_arguments>
@@ -94,6 +108,18 @@
             <message_arguments>
                 <message_argument value="org.eclipse.january.dataset.LazyDatasetBase"/>
                 <message_argument value="logger"/>
+            </message_arguments>
+        </filter>
+        <filter id="422776937">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.LazyDatasetBase.getFirstMetadata(Class&lt;T&gt;)"/>
+                <message_argument value="T"/>
+            </message_arguments>
+        </filter>
+        <filter id="422776937">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.LazyDatasetBase.getMetadata(Class&lt;T&gt;)"/>
+                <message_argument value="T"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">

@@ -29,13 +29,13 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 
 	/**
 	 * Create a lazy dataset
-	 * @param name
+	 * @param name of dataset
 	 * @param dtype dataset type
-	 * @param elements
-	 * @param shape
-	 * @param maxShape
-	 * @param chunks
-	 * @param saver
+	 * @param elements item size
+	 * @param shape dataset shape
+	 * @param maxShape maximum shape
+	 * @param chunks chunk shape
+	 * @param saver lazy saver
 	 * @deprecated Use {@link #LazyWriteableDataset(ILazySaver, String, int, Class, int[], int[], int[])}
 	 */
 	@Deprecated
@@ -45,12 +45,12 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 
 	/**
 	 * Create a lazy dataset
-	 * @param name
-	 * @param clazz dataset interface
-	 * @param shape
-	 * @param maxShape
-	 * @param chunks
-	 * @param saver
+	 * @param saver lazy saver
+	 * @param name of dataset
+	 * @param clazz dataset sub-interface
+	 * @param shape dataset shape
+	 * @param maxShape maximum shape
+	 * @param chunks chunk shape
 	 * @since 2.3
 	 */
 	public LazyWriteableDataset(ILazySaver saver, String name, Class<? extends Dataset> clazz, int[] shape, int[] maxShape, int[] chunks) {
@@ -59,13 +59,13 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 
 	/**
 	 * Create a lazy dataset
-	 * @param name
-	 * @param elements
-	 * @param clazz dataset interface
-	 * @param shape
-	 * @param maxShape
-	 * @param chunks
-	 * @param saver
+	 * @param saver lazy saver
+	 * @param name of dataset
+	 * @param elements item size
+	 * @param clazz dataset sub-interface
+	 * @param shape dataset shape
+	 * @param maxShape maximum shape
+	 * @param chunks chunk shape
 	 * @since 2.3
 	 */
 	public LazyWriteableDataset(ILazySaver saver, String name, int elements, Class<? extends Dataset> clazz, int[] shape, int[] maxShape, int[] chunks) {
@@ -78,12 +78,12 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 
 	/**
 	 * Create a lazy dataset
-	 * @param name
+	 * @param name of dataset
 	 * @param dtype dataset type
-	 * @param shape
-	 * @param maxShape
-	 * @param chunks
-	 * @param saver
+	 * @param shape dataset shape
+	 * @param maxShape maximum shape
+	 * @param chunks chunk shape
+	 * @param saver lazy saver
 	 * @deprecated Use {@link #LazyWriteableDataset(ILazySaver, String, int, Class, int[], int[], int[])}
 	 */
 	@Deprecated
@@ -92,33 +92,34 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 	}
 
 	/**
-	 * Create a lazy dataset
-	 * @param name
-	 * @param clazz dataset element class
-	 * @param elements
-	 * @param shape
-	 * @param maxShape
-	 * @param chunks
-	 * @param saver
+	 * Create a lazy dataset using element class
+	 * @param name of dataset
+	 * @param eClass element class
+	 * @param elements item size
+	 * @param shape dataset shape
+	 * @param maxShape maximum shape
+	 * @param chunks chunk shape
+	 * @param saver lazy saver
 	 */
-	public LazyWriteableDataset(String name, Class<?> clazz, int elements, int[] shape, int[] maxShape, int[] chunks, ILazySaver saver) {
-		this(saver, name, elements, InterfaceUtils.getInterfaceFromClass(elements, clazz), shape, maxShape, chunks);
+	public LazyWriteableDataset(String name, Class<?> eClass, int elements, int[] shape, int[] maxShape, int[] chunks, ILazySaver saver) {
+		this(saver, name, elements, InterfaceUtils.getInterfaceFromClass(elements, eClass), shape, maxShape, chunks);
 	}
 
 	/**
-	 * Create a lazy dataset
-	 * @param name
-	 * @param clazz dataset element class
-	 * @param shape
-	 * @param maxShape
-	 * @param chunks
-	 * @param saver
+	 * Create a lazy dataset using element class
+	 * @param name of dataset
+	 * @param eClass element class
+	 * @param shape dataset shape
+	 * @param maxShape maximum shape
+	 * @param chunks chunk shape
+	 * @param saver lazy saver
 	 */
-	public LazyWriteableDataset(String name, Class<?> clazz, int[] shape, int[] maxShape, int[] chunks, ILazySaver saver) {
-		this(saver, name, 1, InterfaceUtils.getInterfaceFromClass(1, clazz), shape, maxShape, chunks);
+	public LazyWriteableDataset(String name, Class<?> eClass, int[] shape, int[] maxShape, int[] chunks, ILazySaver saver) {
+		this(saver, name, 1, InterfaceUtils.getInterfaceFromClass(1, eClass), shape, maxShape, chunks);
 	}
 
 	/**
+	 * @param other dataset
 	 * @since 2.2
 	 */
 	protected LazyWriteableDataset(LazyWriteableDataset other) {
@@ -132,7 +133,8 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 
 	/**
 	 * Create a lazy writeable dataset based on in-memory data (handy for testing)
-	 * @param dataset
+	 * @param dataset input
+	 * @return lazy writeable dataset
 	 */
 	public static LazyWriteableDataset createLazyDataset(final Dataset dataset) {
 		return createLazyDataset(dataset, null);
@@ -140,7 +142,9 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 
 	/**
 	 * Create a lazy writeable dataset based on in-memory data (handy for testing)
-	 * @param dataset
+	 * @param dataset input
+	 * @param maxShape maximum shape
+	 * @return lazy writeable dataset
 	 */
 	public static LazyWriteableDataset createLazyDataset(final Dataset dataset, final int[] maxShape) {
 		return new LazyWriteableDataset(new ILazySaver() {
@@ -266,9 +270,9 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 	/**
 	 * Set a slice of the dataset
 	 * 
-	 * @param data
+	 * @param data to set
 	 * @param slice an n-D slice
-	 * @throws DatasetException 
+	 * @throws DatasetException when cannot write data
 	 */
 	public void setSlice(IDataset data, SliceND slice) throws DatasetException {
 		setSlice(null, data, slice);
@@ -332,7 +336,7 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 
 	/**
 	 * Set saver (and also loader)
-	 * @param saver
+	 * @param saver lazy saver
 	 */
 	@Override
 	public void setSaver(ILazySaver saver) {

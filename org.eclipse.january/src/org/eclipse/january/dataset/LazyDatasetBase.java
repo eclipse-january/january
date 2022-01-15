@@ -155,7 +155,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 
 	/**
 	 * Find first sub-interface of (or class that directly implements) MetadataType
-	 * @param clazz
+	 * @param clazz metadata type
 	 * @return sub-interface
 	 * @exception IllegalArgumentException when given class is {@link MetadataType} or an anonymous sub-class of it
 	 */
@@ -246,7 +246,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public synchronized <S extends MetadataType, T extends S> List<S> getMetadata(Class<T> clazz) throws MetadataException {
+	public synchronized <T extends MetadataType> List<T> getMetadata(Class<T> clazz) throws MetadataException {
 		if (metadata == null) {
 			dirty = false;
 			return null;
@@ -258,24 +258,24 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		}
 
 		if (clazz == null) {
-			List<S> all = new ArrayList<S>();
+			List<T> all = new ArrayList<>();
 			for (Class<? extends MetadataType> c : metadata.keySet()) {
-				all.addAll((Collection<S>) metadata.get(c));
+				all.addAll((Collection<T>) metadata.get(c));
 			}
 			return all;
 		}
 
-		return (List<S>) metadata.get(findMetadataTypeSubInterfaces(clazz));
+		return (List<T>) metadata.get(findMetadataTypeSubInterfaces(clazz));
 	}
 
 	@Override
-	public synchronized <S extends MetadataType, T extends S> S getFirstMetadata(Class<T> clazz) {
+	public synchronized <T extends MetadataType> T getFirstMetadata(Class<T> clazz) {
 		try {
-			List<S> ml = getMetadata(clazz);
+			List<T> ml = getMetadata(clazz);
 			if (ml == null) {
 				return null;
 			}
-			for (S t : ml) {
+			for (T t : ml) {
 				if (clazz.isInstance(t)) {
 					return t;
 				}
@@ -305,6 +305,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	}
 
 	/**
+	 * @return copy of metadata
 	 * @since 2.0
 	 */
 	protected synchronized ConcurrentMap<Class<? extends MetadataType>, List<MetadataType>> copyMetadata() {
@@ -312,6 +313,8 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	}
 
 	/**
+	 * @param metadata type
+	 * @return copy of metadata of given type
 	 * @since 2.0
 	 */
 	protected static ConcurrentMap<Class<? extends MetadataType>, List<MetadataType>> copyMetadata(Map<Class<? extends MetadataType>, List<MetadataType>> metadata) {
@@ -344,6 +347,9 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	}
 
 	/**
+	 * @param a dataset
+	 * @param clone if true, copy metadata
+	 * @return copy of metadata
 	 * @since 2.2
 	 */
 	protected static ConcurrentMap<Class<? extends MetadataType>, List<MetadataType>> getMetadataMap(ILazyDataset a, boolean clone) {
@@ -793,7 +799,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	 * Slice all datasets in metadata that are annotated by @Sliceable. Call this on the new sliced
 	 * dataset after cloning the metadata
 	 * @param asView if true then just a view
-	 * @param slice
+	 * @param slice an n-D slice
 	 */
 	protected void sliceMetadata(boolean asView, final SliceND slice) {
 		processAnnotatedMetadata(new MdsSlice(asView, slice));
@@ -802,8 +808,8 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	/**
 	 * Reshape all datasets in metadata that are annotated by @Reshapeable. Call this when squeezing
 	 * or setting the shape
-	 * 
-	 * @param newShape
+	 * @param oldShape old shape
+	 * @param newShape new shape
 	 */
 	protected void reshapeMetadata(final int[] oldShape, final int[] newShape) {
 		processAnnotatedMetadata(new MdsReshape(oldShape, newShape));
@@ -812,7 +818,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	/**
 	 * Transpose all datasets in metadata that are annotated by @Transposable. Call this on the transposed
 	 * dataset after cloning the metadata
-	 * @param axesMap
+	 * @param axesMap if zero length then axes order reversed
 	 */
 	protected void transposeMetadata(final int[] axesMap) {
 		processAnnotatedMetadata(new MdsTranspose(axesMap));
@@ -1084,8 +1090,8 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 
 	/**
 	 * Check permutation axes
-	 * @param shape
-	 * @param axes
+	 * @param shape to use
+	 * @param axes if zero length then axes order reversed
 	 * @return cleaned up copy of axes or null if trivial
 	 */
 	public static int[] checkPermutatedAxes(int[] shape, int... axes) {

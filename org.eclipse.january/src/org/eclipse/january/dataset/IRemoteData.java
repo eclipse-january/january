@@ -26,17 +26,17 @@ public interface IRemoteData extends IFileConnection {
 	/**
 	 * Map of path to collection of attributes at that path.
 	 * @return NeXus meta-data objects in most instances.
-	 * @throws Exception
+	 * @throws Exception when cannot retrieve tree
 	 */
-	public Map<String, Object> getTree()  throws Exception;
+	public Map<String, Object> getTree() throws Exception;
 	
 	/**
 	 * Create a remote dataset looking at the dataset path named.
 	 * connect() before use and disconnect() after use must be performed.
 	 * 
-	 * @param datasetPath
+	 * @param datasetPath path in tree to dataset
 	 * @return IRemoteDataset
-	 * @throws Exception
+	 * @throws Exception when cannot connect to dataset
 	 */
 	public IDatasetConnector createRemoteDataset(String datasetPath) throws Exception;
 }

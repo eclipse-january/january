@@ -133,9 +133,8 @@ public class Outliers {
 
 	/**
 	 * Calculates the overall median of two double arrays
-	 * @param a
-	 * @param b
-	 * 			the two arrays for which the overall median is desired. 
+	 * @param a first array
+	 * @param b second array
 	 * @return the overall median of the two arrays
 	 */
 	public static double medianOFTwoPrimitiveArrays (double[] a, double[] b) {

@@ -20,7 +20,7 @@ public class DatasetFactory {
 	/**
 	 * Create dataset with items ranging from 0 up to given stop in steps of 1
 	 * @param stop stop value is <strong>not</strong> included
-	 * @param dtype
+	 * @param dtype dataset type
 	 * @return a new dataset of given shape and type, filled with values determined by parameters
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory,
@@ -33,10 +33,10 @@ public class DatasetFactory {
 
 	/**
 	 * Create dataset with items ranging from given start up to given stop in given steps
-	 * @param start
+	 * @param start start value start value
 	 * @param stop stop value is <strong>not</strong> included
 	 * @param step spacing between items
-	 * @param dtype
+	 * @param dtype dataset type
 	 * @return a new 1D dataset of given type, filled with values determined by parameters
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory,
@@ -49,9 +49,9 @@ public class DatasetFactory {
 
 	/**
 	 * Create compound dataset with items of given size ranging from 0 up to given stop in steps of 1
-	 * @param itemSize
+	 * @param itemSize item size
 	 * @param stop stop value is <strong>not</strong> included
-	 * @param dtype
+	 * @param dtype dataset type
 	 * @return a new dataset of given shape and type, filled with values determined by parameters
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory,
@@ -64,11 +64,11 @@ public class DatasetFactory {
 
 	/**
 	 * Create compound dataset with items of given size ranging from given start up to given stop in given steps
-	 * @param itemSize
-	 * @param start
+	 * @param itemSize item size
+	 * @param start start value
 	 * @param stop stop value is <strong>not</strong> included
 	 * @param step spacing between items
-	 * @param dtype
+	 * @param dtype dataset type
 	 * @return a new 1D dataset of given type, filled with values determined by parameters
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory,
@@ -82,7 +82,7 @@ public class DatasetFactory {
 
 	/**
 	 * Create a dataset from object
-	 * @param dtype
+	 * @param dtype dataset type
 	 * @param obj
 	 *            can be a Java list, array or Number
 	 * @return dataset
@@ -98,7 +98,7 @@ public class DatasetFactory {
 
 	/**
 	 * Create a dataset from object
-	 * @param dtype
+	 * @param dtype dataset type
 	 * @param obj
 	 *            can be a Java list, array or Number
 	 * @param shape can be null
@@ -115,8 +115,8 @@ public class DatasetFactory {
 
 	/**
 	 * Create a dataset from object
-	 * @param itemSize
-	 * @param dtype
+	 * @param itemSize item size
+	 * @param dtype dataset type
 	 * @param obj
 	 *            can be a Java list, array or Number
 	 * @param shape can be null
@@ -134,8 +134,8 @@ public class DatasetFactory {
 	/**
 	 * Create dataset of given type from list
 	 *
-	 * @param dtype
-	 * @param objectList
+	 * @param dtype dataset type
+	 * @param objectList inputs
 	 * @return dataset filled with values from list
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory,
@@ -149,8 +149,8 @@ public class DatasetFactory {
 	/**
 	 * Create compound dataset of given type from given parts
 	 *
-	 * @param dtype
-	 * @param objects
+	 * @param dtype dataset type
+	 * @param objects inputs
 	 * @return compound dataset
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory,
@@ -164,9 +164,9 @@ public class DatasetFactory {
 	/**
 	 * Create complex dataset of given type from real and imaginary parts
 	 *
-	 * @param dtype
-	 * @param real
-	 * @param imag
+	 * @param dtype dataset type
+	 * @param real real part
+	 * @param imag imaginary part
 	 * @return complex dataset
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory,
@@ -178,8 +178,8 @@ public class DatasetFactory {
 	}
 
 	/**
-	 * @param shape
-	 * @param dtype
+	 * @param shape output shape
+	 * @param dtype dataset type
 	 * @return a new dataset of given shape and type, filled with zeros
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory,
@@ -191,10 +191,10 @@ public class DatasetFactory {
 	}
 
 	/**
-	 * @param itemSize
+	 * @param itemSize item size
 	 *            if equal to 1, then non-compound dataset is returned
-	 * @param shape
-	 * @param dtype
+	 * @param shape output shape
+	 * @param dtype dataset type
 	 * @return a new dataset of given item size, shape and type, filled with zeros
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory,
@@ -209,9 +209,9 @@ public class DatasetFactory {
 	}
 
 	/**
-	 * @param itemSize
-	 * @param shape
-	 * @param dtype
+	 * @param itemSize item size
+	 * @param shape output shape
+	 * @param dtype dataset type
 	 * @return a new dataset of given item size, shape and type, filled with zeros
 	 * @since 2.0
 	 * 
@@ -226,8 +226,8 @@ public class DatasetFactory {
 	/**
 	 * Create a new dataset of same shape as input dataset, filled with zeros. If dtype is not
 	 * explicitly compound then an elemental dataset is created 
-	 * @param dataset
-	 * @param dtype
+	 * @param dataset input
+	 * @param dtype dataset type
 	 * @return a new dataset
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory,
@@ -244,8 +244,8 @@ public class DatasetFactory {
 	/**
 	 * Create a new dataset of same shape as input dataset, filled with ones. If dtype is not
 	 * explicitly compound then an elemental dataset is created
-	 * @param dataset
-	 * @param dtype
+	 * @param dataset input
+	 * @param dtype dataset type
 	 * @return a new dataset
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory,
@@ -260,8 +260,8 @@ public class DatasetFactory {
 	}
 
 	/**
-	 * @param shape
-	 * @param dtype
+	 * @param shape output shape
+	 * @param dtype dataset type
 	 * @return a new dataset of given shape and type, filled with ones
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory,
@@ -273,10 +273,10 @@ public class DatasetFactory {
 	}
 
 	/**
-	 * @param itemSize
+	 * @param itemSize item size
 	 *            if equal to 1, then non-compound dataset is returned
-	 * @param shape
-	 * @param dtype
+	 * @param shape output shape
+	 * @param dtype dataset type
 	 * @return a new dataset of given item size, shape and type, filled with ones
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory,
@@ -290,10 +290,10 @@ public class DatasetFactory {
 	/**
 	 * Create a 1D dataset of linearly spaced values in closed interval
 	 * 
-	 * @param start
+	 * @param start start value
 	 * @param stop stop value is included
 	 * @param length number of points
-	 * @param dtype
+	 * @param dtype dataset type
 	 * @return dataset with linearly spaced values
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory,
@@ -309,11 +309,11 @@ public class DatasetFactory {
 	 * determine the factor between values: factor = base ** step, where step is the interval between linearly
 	 * spaced sequence of points
 	 * 
-	 * @param start
+	 * @param start start value
 	 * @param stop stop value is included
 	 * @param length number of points
-	 * @param base
-	 * @param dtype
+	 * @param base for exponentiation
+	 * @param dtype dataset type
 	 * @return dataset with logarithmically spaced values
 	 * 
 	 * @deprecated Please use the class-based methods in DatasetFactory,
@@ -327,8 +327,9 @@ public class DatasetFactory {
 	/**
 	 * Create a 1D dataset of linearly spaced values in closed interval
 	 * 
-	 * @param clazz dataset class
-	 * @param start
+	 * @param <T> dataset sub-interface
+	 * @param clazz dataset sub-interface
+	 * @param start start value
 	 * @param stop stop value is included
 	 * @param length number of points
 	 * @return dataset with linearly spaced values
@@ -358,11 +359,12 @@ public class DatasetFactory {
 	 * determine the factor between values: factor = base ** step, where step is the interval between linearly
 	 * spaced sequence of points
 	 * 
-	 * @param clazz dataset class
-	 * @param start
+	 * @param <T> dataset sub-interface
+	 * @param clazz dataset sub-interface
+	 * @param start start value
 	 * @param stop stop value is included
 	 * @param length number of points
-	 * @param base
+	 * @param base for exponentiation
 	 * @return dataset with logarithmically spaced values
 	 */
 	public static <T extends Dataset> T createLogSpace(Class<T> clazz, final double start, final double stop, final int length, final double base) {
@@ -395,7 +397,7 @@ public class DatasetFactory {
 
 	/**
 	 * Create dataset with items ranging from given start up to given stop in given steps
-	 * @param start
+	 * @param start start value
 	 * @param stop stop value is <strong>not</strong> included
 	 * @param step spacing between items
 	 * @return a new 1D dataset of given type, filled with values determined by parameters
@@ -407,7 +409,8 @@ public class DatasetFactory {
 
 	/**
 	 * Create dataset with items ranging from 0 up to given stop in steps of 1
-	 * @param clazz dataset class
+	 * @param <T> dataset sub-interface
+	 * @param clazz dataset sub-interface
 	 * @param stop stop value is <strong>not</strong> included
 	 * @return a new dataset of given shape and class, filled with values determined by parameters
 	 */
@@ -417,8 +420,9 @@ public class DatasetFactory {
 
 	/**
 	 * Create dataset with items ranging from given start up to given stop in given steps
-	 * @param clazz dataset class
-	 * @param start
+	 * @param <T> dataset sub-interface
+	 * @param clazz dataset sub-interface
+	 * @param start start value
 	 * @param stop stop value is <strong>not</strong> included
 	 * @param step spacing between items
 	 * @return a new 1D dataset of given class, filled with values determined by parameters
@@ -455,8 +459,9 @@ public class DatasetFactory {
 
 	/**
 	 * Create compound dataset with items ranging from 0 up to given stop in steps of 1
-	 * @param itemSize
-	 * @param clazz compound dataset class
+	 * @param <T> compound dataset sub-interface
+	 * @param itemSize item size
+	 * @param clazz compound dataset sub-interface
 	 * @param stop stop value is <strong>not</strong> included
 	 * @return a new 1D dataset of given class, filled with values determined by parameters
 	 * @since 2.1
@@ -467,9 +472,10 @@ public class DatasetFactory {
 
 	/**
 	 * Create compound dataset with items ranging from given start up to given stop in given steps
-	 * @param itemSize
-	 * @param clazz compound dataset class
-	 * @param start
+	 * @param <T> compound dataset sub-interface
+	 * @param itemSize item size
+	 * @param clazz compound dataset sub-interface
+	 * @param start start value
 	 * @param stop stop value is <strong>not</strong> included
 	 * @param step spacing between items
 	 * @return a new 1D dataset of given class, filled with values determined by parameters
@@ -563,7 +569,7 @@ public class DatasetFactory {
 	/**
 	 * Create dataset of appropriate type from list
 	 * 
-	 * @param objectList
+	 * @param objectList inputs for each item
 	 * @return dataset filled with values from list
 	 */
 	public static Dataset createFromList(List<?> objectList) {
@@ -593,7 +599,7 @@ public class DatasetFactory {
 	/**
 	 * Create compound dataset of given type from given parts
 	 *
-	 * @param objects
+	 * @param objects inputs across dataset for each element
 	 * @return compound dataset
 	 */
 	public static CompoundDataset createCompoundDataset(Object... objects) {
@@ -606,7 +612,8 @@ public class DatasetFactory {
 
 	/**
 	 * Create a dataset from object
-	 * @param clazz dataset class
+	 * @param <T> dataset sub-interface
+	 * @param clazz dataset sub-interface
 	 * @param obj
 	 *            can be a Java list, array or Number
 	 * @return dataset
@@ -620,7 +627,8 @@ public class DatasetFactory {
 
 	/**
 	 * Create a dataset from object
-	 * @param clazz dataset class
+	 * @param <T> dataset sub-interface
+	 * @param clazz dataset sub-interface
 	 * @param obj
 	 *            can be a Java list, array or Number
 	 * @param shape can be null
@@ -632,8 +640,9 @@ public class DatasetFactory {
 
 	/**
 	 * Create a compound dataset from object
-	 * @param itemSize
-	 * @param clazz dataset class
+	 * @param <T> compound dataset sub-interface
+	 * @param itemSize item size
+	 * @param clazz compound dataset sub-interface
 	 * @param obj
 	 *            can be a Java list, array or Number
 	 * @param shape can be null
@@ -750,8 +759,9 @@ public class DatasetFactory {
 	/**
 	 * Create dataset of given class from list
 	 *
-	 * @param clazz dataset class
-	 * @param objectList
+	 * @param <T> dataset sub-interface
+	 * @param clazz dataset sub-interface
+	 * @param objectList inputs for each item
 	 * @return dataset filled with values from list
 	 */
 	public static <T extends Dataset> T createFromList(Class<T> clazz, List<?> objectList) {
@@ -767,8 +777,9 @@ public class DatasetFactory {
 	/**
 	 * Create compound dataset of given class from given parts
 	 *
-	 * @param clazz dataset class
-	 * @param objects
+	 * @param <T> compound dataset sub-interface
+	 * @param clazz compound dataset sub-interface
+	 * @param objects inputs across dataset for each element
 	 * @return compound dataset
 	 * @since 2.3
 	 */
@@ -783,9 +794,10 @@ public class DatasetFactory {
 	/**
 	 * Create complex dataset of given class from real and imaginary parts
 	 *
-	 * @param clazz dataset class
-	 * @param real
-	 * @param imag
+	 * @param <T> complex dataset sub-interface
+	 * @param clazz complex dataset sub-interface
+	 * @param real real part
+	 * @param imag imaginary part
 	 * @return complex dataset
 	 * @since 2.3
 	 */
@@ -801,7 +813,7 @@ public class DatasetFactory {
 	}
 
 	/**
-	 * @param shape
+	 * @param shape output shape
 	 * @return a new double dataset of given shape, filled with zeros
 	 */
 	public static DoubleDataset zeros(final int... shape) {
@@ -809,7 +821,8 @@ public class DatasetFactory {
 	}
 
 	/**
-	 * @param dataset
+	 * @param <T> dataset subclass
+	 * @param dataset input
 	 * @return a new dataset of same shape and class as input dataset, filled with zeros
 	 */
 	public static <T extends Dataset> T zeros(final T dataset) {
@@ -817,8 +830,9 @@ public class DatasetFactory {
 	}
 
 	/**
-	 * @param dataset
-	 * @param shape
+	 * @param <T> dataset subclass
+	 * @param dataset input
+	 * @param shape output shape
 	 * @return a new dataset of same class as input dataset and given shape, filled with zeros
 	 * @since 2.3
 	 */
@@ -830,8 +844,9 @@ public class DatasetFactory {
 	}
 
 	/**
-	 * @param clazz dataset class
-	 * @param shape
+	 * @param <T> dataset sub-interface
+	 * @param clazz dataset sub-interface
+	 * @param shape output shape
 	 * @return a new dataset of given shape and class, filled with zeros
 	 */
 	@SuppressWarnings("unchecked")
@@ -870,10 +885,10 @@ public class DatasetFactory {
 	}
 
 	/**
-	 * @param itemSize
-	 *            if equal to 1, then non-compound dataset is returned
-	 * @param clazz dataset class
-	 * @param shape
+	 * @param <T> dataset sub-interface
+	 * @param itemSize item size. If equal to 1, then non-compound dataset is returned
+	 * @param clazz dataset sub-interface
+	 * @param shape output shape
 	 * @return a new dataset of given item size, shape and class, filled with zeros
 	 */
 	@SuppressWarnings("unchecked")
@@ -885,7 +900,8 @@ public class DatasetFactory {
 	}
 
 	/**
-	 * @param dataset
+	 * @param <T> dataset subclass
+	 * @param dataset input
 	 * @param clazz dataset class
 	 * @return a new dataset of given class with same shape as input dataset, filled with zeros
 	 */
@@ -894,9 +910,10 @@ public class DatasetFactory {
 	}
 
 	/**
-	 * @param itemSize
-	 * @param clazz compound dataset class
-	 * @param shape
+	 * @param <T> compound dataset sub-interface
+	 * @param itemSize item size
+	 * @param clazz compound dataset sub-interface
+	 * @param shape output shape
 	 * @return a new compound dataset of given item size, shape and class, filled with zeros
 	 * @since 2.0
 	 */
@@ -939,7 +956,7 @@ public class DatasetFactory {
 	}
 
 	/**
-	 * @param shape
+	 * @param shape output shape
 	 * @return a new double dataset of given shape, filled with ones
 	 */
 	public static DoubleDataset ones(final int... shape) {
@@ -947,7 +964,8 @@ public class DatasetFactory {
 	}
 
 	/**
-	 * @param dataset
+	 * @param <T> dataset subclass
+	 * @param dataset input
 	 * @return a new dataset of same shape and class as input dataset, filled with ones
 	 */
 	@SuppressWarnings("unchecked")
@@ -956,8 +974,9 @@ public class DatasetFactory {
 	}
 
 	/**
-	 * @param clazz dataset class
-	 * @param shape
+	 * @param <T> dataset sub-interface
+	 * @param clazz dataset sub-interface
+	 * @param shape output shape
 	 * @return a new dataset of given shape and class, filled with ones
 	 */
 	@SuppressWarnings("unchecked")
@@ -995,9 +1014,10 @@ public class DatasetFactory {
 	}
 
 	/**
-	 * @param itemSize
-	 * @param clazz dataset class
-	 * @param shape
+	 * @param <T> dataset sub-interface
+	 * @param itemSize item size. If equal to 1, then non-compound dataset is returned
+	 * @param clazz dataset sub-interface
+	 * @param shape output shape
 	 * @return a new dataset of given item size, shape and class, filled with ones
 	 */
 	@SuppressWarnings("unchecked")
@@ -1033,7 +1053,8 @@ public class DatasetFactory {
 	}
 
 	/**
-	 * @param dataset
+	 * @param <T> dataset subclass
+	 * @param dataset input
 	 * @param clazz dataset class
 	 * @return a new dataset of given class with same shape as input dataset, filled with ones
 	 */

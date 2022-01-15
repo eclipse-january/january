@@ -425,8 +425,8 @@ public class SliceND {
 	}
 
 	/**
-	 * Update source shape (for use with dynamic datasets
-	 * @param shape
+	 * Update source shape (for use with dynamic datasets)
+	 * @param shape source shape
 	 * @since 2.3
 	 */
 	public void updateSourceShape(int... shape) {
@@ -503,6 +503,7 @@ public class SliceND {
 	 * 
 	 * @param i
 	 *            dimension to flip
+	 * @return this
 	 */
 	public SliceND flip(int i) {
 		if (lshape == null) {
@@ -528,6 +529,7 @@ public class SliceND {
 	 * Flips slices directions in all dimensions, this means that all slices are
 	 * beginning at previous end point, steps are in the opposite direction, and
 	 * finishes are at the previous start point.
+	 * @return this
 	 */
 	public SliceND flip() {
 		if (lshape == null) {
@@ -640,10 +642,15 @@ public class SliceND {
 	/**
 	 * Create SliceND without sanity checks on start, stop and step
 	 * @param shape
+	 *            Shape of the dataset, see {@link ILazyDataset#getShape()}
 	 * @param maxShape
+	 *            Array of maximals shapes, may be {@code null}
 	 * @param start
+	 *            Array of starts points, may be {@code null}
 	 * @param stop
+	 *            Array of stops points, may be {@code null}
 	 * @param step
+	 *            Array of steps, may be {@code null}
 	 * @return slice
 	 */
 	static SliceND createSlice(final int[] shape, final int[] maxShape, final int[] start, final int[] stop, final int[] step) {

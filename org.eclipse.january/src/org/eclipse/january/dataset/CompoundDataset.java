@@ -212,57 +212,57 @@ public interface CompoundDataset extends Dataset {
 	/**
 	 * Get an item as a double array
 	 * @param darray double array must be allocated and have sufficient length
-	 * @param i
+	 * @param i position in first dimension
 	 */
 	public void getDoubleArray(double[] darray, final int i);
 
 	/**
 	 * Get an item as a double array
 	 * @param darray double array must be allocated and have sufficient length
-	 * @param i
-	 * @param j
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 */
 	public void getDoubleArray(double[] darray, final int i, final int j);
 
 	/**
 	 * Get an item as a double array
 	 * @param darray double array must be allocated and have sufficient length
-	 * @param pos
+	 * @param pos position
 	 */
 	public void getDoubleArray(double[] darray, final int... pos);
 
 	/**
 	 * Get an item as a double array
-	 * @param index
+	 * @param index in array
 	 * @param darray double array must be allocated and have sufficient length
 	 */
 	public void getDoubleArrayAbs(int index, double[] darray);
 
 	/**
 	 * Get chosen elements from each item as a dataset
-	 * @param element
+	 * @param element to choose
 	 * @return dataset of chosen elements
 	 */
 	public Dataset getElements(int element);
 
 	/**
 	 * Get chosen elements from each item as a view on dataset
-	 * @param element
+	 * @param element to choose
 	 * @return view dataset of chosen elements
 	 */
 	public Dataset getElementsView(int element);
 
 	/**
 	 * Set values of chosen elements from each item according to source dataset
-	 * @param source
-	 * @param element
+	 * @param source dataset
+	 * @param element to choose
 	 */
 	public void setElements(Dataset source, int element);
 
 	/**
 	 * Copy chosen elements from each item to another dataset
-	 * @param destination
-	 * @param element
+	 * @param destination dataset
+	 * @param element to choose
 	 */
 	public void copyElements(Dataset destination, int element);
 
@@ -298,20 +298,20 @@ public interface CompoundDataset extends Dataset {
 	public byte[] getByteArray();
 
 	/**
-	 * @param i
+	 * @param i position in first dimension
 	 * @return item in given position
 	 */
 	public byte[] getByteArray(final int i);
 
 	/**
-	 * @param i
-	 * @param j
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 * @return item in given position
 	 */
 	public byte[] getByteArray(final int i, final int j);
 
 	/**
-	 * @param pos
+	 * @param pos position
 	 * @return item in given position
 	 */
 	public byte[] getByteArray(final int... pos);
@@ -323,20 +323,20 @@ public interface CompoundDataset extends Dataset {
 	public short[] getShortArray();
 
 	/**
-	 * @param i
+	 * @param i position in first dimension
 	 * @return item in given position
 	 */
 	public short[] getShortArray(final int i);
 
 	/**
-	 * @param i
-	 * @param j
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 * @return item in given position
 	 */
 	public short[] getShortArray(final int i, final int j);
 
 	/**
-	 * @param pos
+	 * @param pos position
 	 * @return item in given position
 	 */
 	public short[] getShortArray(final int... pos);
@@ -348,20 +348,20 @@ public interface CompoundDataset extends Dataset {
 	public int[] getIntArray();
 
 	/**
-	 * @param i
+	 * @param i position in first dimension
 	 * @return item in given position
 	 */
 	public int[] getIntArray(final int i);
 
 	/**
-	 * @param i
-	 * @param j
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 * @return item in given position
 	 */
 	public int[] getIntArray(final int i, final int j);
 
 	/**
-	 * @param pos
+	 * @param pos position
 	 * @return item in given position
 	 * @since 2.0
 	 */
@@ -374,20 +374,20 @@ public interface CompoundDataset extends Dataset {
 	public long[] getLongArray();
 
 	/**
-	 * @param i
+	 * @param i position in first dimension
 	 * @return item in given position
 	 */
 	public long[] getLongArray(final int i);
 
 	/**
-	 * @param i
-	 * @param j
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 * @return item in given position
 	 */
 	public long[] getLongArray(final int i, final int j);
 
 	/**
-	 * @param pos
+	 * @param pos position
 	 * @return item in given position
 	 */
 	public long[] getLongArray(final int... pos);
@@ -399,20 +399,20 @@ public interface CompoundDataset extends Dataset {
 	public float[] getFloatArray();
 
 	/**
-	 * @param i
+	 * @param i position in first dimension
 	 * @return item in given position
 	 */
 	public float[] getFloatArray(final int i);
 
 	/**
-	 * @param i
-	 * @param j
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 * @return item in given position
 	 */
 	public float[] getFloatArray(final int i, final int j);
 
 	/**
-	 * @param pos
+	 * @param pos position
 	 * @return item in given position
 	 */
 	public float[] getFloatArray(final int... pos);
@@ -424,20 +424,20 @@ public interface CompoundDataset extends Dataset {
 	public double[] getDoubleArray();
 
 	/**
-	 * @param i
+	 * @param i position in first dimension
 	 * @return item in given position
 	 */
 	public double[] getDoubleArray(final int i);
 
 	/**
-	 * @param i
-	 * @param j
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 * @return item in given position
 	 */
 	public double[] getDoubleArray(final int i, final int j);
 
 	/**
-	 * @param pos
+	 * @param pos position
 	 * @return item in given position
 	 */
 	public double[] getDoubleArray(final int... pos);

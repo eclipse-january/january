@@ -31,28 +31,28 @@ public class Random {
 	private final static RandomDataGenerator prng = new RandomDataGenerator(generator);
 
 	/**
-	 * @param seed
+	 * @param seed value for generator
 	 */
 	public static void seed(final int seed) {
 		generator.setSeed(seed);
 	}
 
 	/**
-	 * @param seed
+	 * @param seed values for generator
 	 */
 	public static void seed(final int[] seed) {
 		generator.setSeed(seed);
 	}
 
 	/**
-	 * @param seed
+	 * @param seed value for generator
 	 */
 	public static void seed(final long seed) {
 		generator.setSeed(seed);
 	}
 
 	/**
-	 * @param shape
+	 * @param shape output shape
 	 * @return an array of values sampled from a uniform distribution between 0 (inclusive) and 1 (exclusive) 
 	 */
 	public static DoubleDataset rand(final int... shape) {
@@ -67,9 +67,9 @@ public class Random {
 	}
 
 	/**
-	 * @param low
-	 * @param high
-	 * @param shape
+	 * @param low lower exclusive bound
+	 * @param high upper exclusive bound
+	 * @param shape output shape
 	 * @return an array of values sampled from a uniform distribution between low and high (both exclusive) 
 	 */
 	public static DoubleDataset rand(double low, double high, final int... shape) {
@@ -84,7 +84,7 @@ public class Random {
 	}
 
 	/**
-	 * @param shape
+	 * @param shape output shape
 	 * @return an array of values sampled from a Gaussian distribution with mean 0 and variance 1 
 	 * 
 	 * (The term Gaussian here is a description of a shape of data taken from the mathematician of the
@@ -102,9 +102,9 @@ public class Random {
 	}
 
 	/**
-	 * @param mean
+	 * @param mean mean of distribution
 	 * @param std standard deviation
-	 * @param shape
+	 * @param shape output shape
 	 * @return an array of values sampled from a Gaussian distribution with given mean and standard deviation 
 	 */
 	public static DoubleDataset randn(double mean, double std, final int... shape) {
@@ -119,9 +119,9 @@ public class Random {
 	}
 
 	/**
-	 * @param low 
-	 * @param high
-	 * @param shape
+	 * @param low lower inclusive bound
+	 * @param high upper exclusive bound
+	 * @param shape output shape
 	 * @return an array of values sampled from a discrete uniform distribution in range [low, high)
 	 */
 	public static IntegerDataset randint(final int low, final int high, final int[] shape) {
@@ -129,9 +129,9 @@ public class Random {
 	}
 
 	/**
-	 * @param low 
-	 * @param high 
-	 * @param shape
+	 * @param low lower inclusive bound
+	 * @param high upper inclusive bound
+	 * @param shape output shape
 	 * @return an array of values sampled from a discrete uniform distribution in range [low, high]
 	 */
 	public static IntegerDataset random_integers(final int low, final int high, final int[] shape) {
@@ -152,8 +152,8 @@ public class Random {
 	}
 
 	/**
-	 * @param beta 
-	 * @param shape
+	 * @param beta mean
+	 * @param shape output shape
 	 * @return an array of values sampled from an exponential distribution with mean beta
 	 */
 	public static DoubleDataset exponential(final double beta, final int... shape) {
@@ -168,8 +168,8 @@ public class Random {
 	}
 
 	/**
-	 * @param lam 
-	 * @param shape
+	 * @param lam Poisson parameter
+	 * @param shape output shape
 	 * @return an array of values sampled from an exponential distribution with mean lambda
 	 */
 	public static IntegerDataset poisson(final double lam, final int... shape) {
@@ -184,7 +184,7 @@ public class Random {
 	}
 
 	/**
-	 * @param shape
+	 * @param shape output shape
 	 * @return a lazy dataset with uniformly distributed random numbers
 	 */
 	public static ILazyDataset lazyRand(int... shape) {
@@ -192,8 +192,8 @@ public class Random {
 	}
 
 	/**
-	 * @param name
-	 * @param shape
+	 * @param name dataset name
+	 * @param shape output shape
 	 * @return a lazy dataset with uniformly distributed random numbers
 	 */
 	public static ILazyDataset lazyRand(String name, int... shape) {
@@ -201,9 +201,9 @@ public class Random {
 	}
 
 	/**
-	 * @param dtype
-	 * @param name
-	 * @param shape
+	 * @param dtype dataset type
+	 * @param name dataset name
+	 * @param shape output shape
 	 * @return a lazy dataset with uniformly distributed random numbers
 	 * @deprecated Use {@link #lazyRand(String, Class, int...)}
 	 */
@@ -213,9 +213,9 @@ public class Random {
 	}
 
 	/**
-	 * @param name
-	 * @param clazz dataset interface
-	 * @param shape
+	 * @param name dataset name
+	 * @param clazz dataset sub-interface
+	 * @param shape output shape
 	 * @return a lazy dataset with uniformly distributed random numbers
 	 * @since 2.3
 	 */

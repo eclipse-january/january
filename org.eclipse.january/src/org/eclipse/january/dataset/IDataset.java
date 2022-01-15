@@ -25,7 +25,7 @@ import org.eclipse.january.metadata.IMetadata;
 public interface IDataset extends ILazyDataset {
 	/**
 	 * Set string output format
-	 * @param format
+	 * @param format to output
 	 */
 	public void setStringFormat(Format format);
 
@@ -35,69 +35,69 @@ public interface IDataset extends ILazyDataset {
 	public int getItemBytes();
 
 	/**
-	 * @param pos
+	 * @param pos position
 	 * @return Item in given position as an object
 	 */
 	public Object getObject(final int... pos);
 
 	/**
-	 * @param pos
+	 * @param pos position
 	 * @return Item in given position as a string
 	 */
 	public String getString(final int... pos);
 
 	/**
-	 * @param pos
+	 * @param pos position
 	 * @return Item in given position as a double
 	 */
 	public double getDouble(final int... pos);
 
 	/**
-	 * @param pos
+	 * @param pos position
 	 * @return Item in given position as a long
 	 */
 	public long getLong(final int... pos);
 
 	/**
-	 * @param pos
+	 * @param pos position
 	 * @return Item in given position as a float
 	 */
 	public float getFloat(final int... pos);
 
 	/**
-	 * @param pos
+	 * @param pos position
 	 * @return Item in given position as an int
 	 */
 	public int getInt(final int... pos);
 
 	/**
-	 * @param pos
+	 * @param pos position
 	 * @return Item in given position as a short
 	 */
 	public short getShort(final int... pos);
 
 	/**
-	 * @param pos
+	 * @param pos position
 	 * @return Item in given position as a byte
 	 */
 	public byte getByte(final int... pos);
 
 	/**
-	 * @param pos
+	 * @param pos position
 	 * @return Item in given position as a boolean
 	 */
 	public boolean getBoolean(final int... pos);
 
 	/**
 	 * Set the value given by object at given position
-	 * @param obj
-	 * @param pos
+	 * @param obj value to set
+	 * @param pos position
 	 */
 	public void set(final Object obj, final int... pos);
 
 	/**
 	 * Change shape and size of dataset in-place
-	 * @param newShape
+	 * @param newShape to use
 	 */
 	public void resize(int... newShape);
 
@@ -106,13 +106,15 @@ public interface IDataset extends ILazyDataset {
 
 	/**
 	 * Remove dimensions of 1 in shape of the dataset
+	 * @return shallow squeezed copy
 	 */
 	public IDataset squeeze();
 
 	/**
 	 * Remove dimensions of 1 in shape of the dataset from ends only if true
 	 * 
-	 * @param onlyFromEnds
+	 * @param onlyFromEnds if true, trim ends
+	 * @return shallow squeezed copy
 	 */
 	public IDataset squeeze(boolean onlyFromEnds);
 
@@ -238,14 +240,14 @@ public interface IDataset extends ILazyDataset {
 
 	/**
 	 * Get the error for a given position.
-	 * @param pos
+	 * @param pos position
 	 * @return error value (symmetric)
 	 */
 	public double getError(int... pos);
 
 	/**
 	 * Get the error values for a single point in the dataset
-	 * @param pos of the point to be referenced 
+	 * @param pos position
 	 * @return the values of the error at this point (can be null when no error defined)
 	 */
 	public double[] getErrorArray(int... pos);

@@ -65,11 +65,11 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	/**
 	 * Create a lazy dataset
-	 * @param loader
-	 * @param name
-	 * @param elements
-	 * @param clazz dataset interface (can be null to represent undefined interface)
-	 * @param shape
+	 * @param loader lazy loader
+	 * @param name of dataset
+	 * @param elements item size
+	 * @param clazz dataset sub-interface
+	 * @param shape dataset shape
 	 * @since 2.3
 	 */
 	public LazyDataset(ILazyLoader loader, String name, int elements, Class<? extends Dataset> clazz, int... shape) {
@@ -88,10 +88,10 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	/**
 	 * Create a lazy dataset
-	 * @param loader
-	 * @param name
-	 * @param clazz dataset interface (can be null to represent undefined interface)
-	 * @param shape
+	 * @param loader lazy loader
+	 * @param name of dataset
+	 * @param clazz dataset sub-interface
+	 * @param shape dataset shape
 	 * @since 2.3
 	 */
 	public LazyDataset(ILazyLoader loader, String name, Class<? extends Dataset> clazz, int... shape) {
@@ -100,11 +100,11 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	/**
 	 * Create a lazy dataset
-	 * @param name
+	 * @param name of dataset
 	 * @param dtype dataset type
-	 * @param elements
-	 * @param shape
-	 * @param loader
+	 * @param elements item size
+	 * @param shape dataset shape
+	 * @param loader lazy loader
 	 * @deprecated Use {@link #LazyDataset(ILazyLoader, String, int, Class, int[])}
 	 */
 	@Deprecated
@@ -114,10 +114,10 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	/**
 	 * Create a lazy dataset
-	 * @param name
+	 * @param name of dataset
 	 * @param dtype dataset type
-	 * @param shape
-	 * @param loader
+	 * @param shape dataset shape
+	 * @param loader lazy loader
 	 * @deprecated Use {@link #LazyDataset(ILazyLoader, String, int, Class, int[])}
 	 */
 	@Deprecated
@@ -145,7 +145,8 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	/**
 	 * Create a lazy dataset based on in-memory data (handy for testing)
-	 * @param dataset
+	 * @param dataset input
+	 * @return lazy dataset
 	 */
 	public static LazyDataset createLazyDataset(final Dataset dataset) {
 		return new LazyDataset(new ILazyLoader() {
@@ -188,7 +189,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	/**
 	 * Set interface
-	 * @param clazz
+	 * @param clazz dataset sub-interface
 	 * @since 2.3
 	 */
 	public void setInterface(Class<? extends Dataset> clazz) {
@@ -573,7 +574,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	/**
 	 * Calculate absolute slice
-	 * @param slice
+	 * @param slice an n-D slice
 	 * @return true slice or null if zero-sized
 	 */
 	protected final SliceND calcTrueSlice(SliceND slice) {
@@ -683,7 +684,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	/**
 	 * Transform data so that it can be used in setSlice of saver
-	 * @param data
+	 * @param data input
 	 * @param tslice true slice 
 	 * @return data with dimensions adjusted and remapped 
 	 */
@@ -699,8 +700,8 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	/**
 	 * Store metadata items that has given annotation
-	 * @param origMetadata
-	 * @param aclazz
+	 * @param origMetadata original metadata
+	 * @param aclazz annotation class
 	 */
 	private void storeMetadata(Map<Class<? extends MetadataType>, List<MetadataType>> origMetadata, Class<? extends Annotation> aclazz) {
 		List<Class<? extends MetadataType>> mclazzes = findAnnotatedMetadata(aclazz);
@@ -775,8 +776,8 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	 * which calls a rolling function (like rmean) instead of slicing directly
 	 * to memory.
 	 * 
-	 * @param lazySet
-	 * @param dimension
+	 * @param lazySet lazy dataset
+	 * @param dimension to slice along
 	 * @return maximum size of dimension that can be sliced.
 	 */
 	public static int getMaxSliceLength(ILazyDataset lazySet, int dimension) {

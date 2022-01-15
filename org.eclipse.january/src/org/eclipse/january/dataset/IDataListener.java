@@ -18,7 +18,7 @@ public interface IDataListener extends EventListener {
 
 	/**
 	 * Called when data changes value/shape.
-	 * @param evt
+	 * @param evt event
 	 */
 	void dataChangePerformed(DataEvent evt);
 }
