@@ -296,14 +296,14 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 	}
 
 	private void internalSetSlice(IMonitor monitor, final boolean async, IDataset data, SliceND slice) throws DatasetException {
-		int[] dshape = data instanceof Dataset ? ((Dataset) data).getShapeRef() : data.getShape();
-		if (dshape.length == 0) { // fix zero-rank case
-			dshape = new int[] {1}; // FIXME remove
-		}
-		// if necessary, reshape the input data according to the shape of the slice
-		if (!Arrays.equals(slice.getShape(), dshape)) {
-			data = data.getSliceView();
-			data.setShape(slice.getShape());
+		if (slice != null) {
+			int[] dshape = data instanceof Dataset ? ((Dataset) data).getShapeRef() : data.getShape();
+
+			// if necessary, reshape the input data according to the shape of the slice
+			if (!Arrays.equals(slice.getShape(), dshape)) {
+				data = data.getSliceView();
+				data.setShape(slice.getShape());
+			}
 		}
 
 		SliceND nslice = calcTrueSlice(slice);
