@@ -1,5 +1,5 @@
 /*-
- * Copyright 2016 Diamond Light Source Ltd.
+ * Copyright 2022 Diamond Light Source Ltd.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,18 +10,15 @@
 package org.eclipse.january.dataset;
 
 /**
- * Class to run over a pair of contiguous datasets with only the second dataset read
+ * Class to run over a pair of contiguous and elemental datasets with only the second dataset read
+ * @since 2.3
  */
-public class ContiguousSingleIterator extends BroadcastSelfIterator {
+public class ContiguousSingleIteratorElemental extends BroadcastSelfIterator {
 	private final int aMax; // maximum index in array
-	private final int aStep; // step over items
-	private final int bStep;
 
-	public ContiguousSingleIterator(Dataset a, Dataset b) {
+	public ContiguousSingleIteratorElemental(Dataset a, Dataset b) {
 		super(a, b);
-		aStep = a.getElementsPerItem();
-		aMax = a.getSize() * aStep;
-		bStep = b.getElementsPerItem();
+		aMax = a.getSize();
 		maxShape = a.getShape();
 		asDouble = aDataset.hasFloatingPointElements();
 		reset();
@@ -29,17 +26,16 @@ public class ContiguousSingleIterator extends BroadcastSelfIterator {
 
 	@Override
 	public boolean hasNext() {
-		aIndex += aStep;
-		bIndex += bStep;
-
+		aIndex++;
+		bIndex = aIndex;
 		if (aIndex >= aMax) {
 			return false;
 		}
 		if (read) {
 			if (asDouble) {
-				bDouble = bDataset.getElementDoubleAbs(bIndex);
+				bDouble = bDataset.getElementDoubleAbs(aIndex);
 			} else {
-				bLong = bDataset.getElementLongAbs(bIndex);
+				bLong = bDataset.getElementLongAbs(aIndex);
 			}
 		}
 		return true;
@@ -52,8 +48,8 @@ public class ContiguousSingleIterator extends BroadcastSelfIterator {
 
 	@Override
 	public void reset() {
-		aIndex = -aStep;
-		bIndex = -bStep;
+		aIndex = -1;
+		bIndex = -1;
 		if (read) {
 			storeCurrentValues();
 		}
