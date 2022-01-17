@@ -25,7 +25,7 @@ public abstract class BroadcastSelfIterator extends BroadcastIteratorBase {
 	 */
 	public static BroadcastSelfIterator createIterator(Dataset a, Dataset b) {
 		if (Arrays.equals(a.getShapeRef(), b.getShapeRef()) && a.getStrides() == null && b.getStrides() == null) {
-			return new ContiguousSingleIterator(a, b);
+			return a.getElementsPerItem() == 1 && b.getElementsPerItem() == 1 ? new ContiguousSingleIteratorElemental(a, b) : new ContiguousSingleIterator(a, b);
 		}
 		return new BroadcastSingleIterator(a, b);
 	}
