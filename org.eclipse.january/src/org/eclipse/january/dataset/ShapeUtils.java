@@ -627,7 +627,7 @@ public class ShapeUtils {
 		int or = oldShape.length;
 		int[] newShape = new int[nr];
 		int di = 0;
-		for (int i = 0, si = 0; i < (or+1) && si <= or && di < nr; i++) {
+		for (int i = 0, si = 0; i < padding.length && si <= or && di < nr; i++) {
 			int c = padding[i];
 			if (c == 0) {
 				newShape[di++] = oldShape[si++];
