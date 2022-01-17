@@ -499,7 +499,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 				lz = lz.getSliceView(nslice);
 				shape = nslice.getShape();
 			}
-			if (lz.getSize() == oSize) {
+			if (lz.getSize() == oSize && Arrays.equals(shape, oShape)) {
 				nslice = slice;
 			} else {
 				nslice = slice.clone();

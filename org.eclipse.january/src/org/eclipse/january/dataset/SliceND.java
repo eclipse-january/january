@@ -437,7 +437,7 @@ public class SliceND {
 				}
 				for (int i = 0; i < shape.length; i++) {
 					int s = shape[i];
-					if (!isSliceWithinShape(s, lstart[i], lstop[i], lstep[i])) {
+					if ((s > 1 || s < lshape[i]) && !isSliceWithinShape(s, lstart[i], lstop[i], lstep[i])) {
 						throw new IllegalArgumentException("Updated source shape must be outside latest slice");
 					}
 				}

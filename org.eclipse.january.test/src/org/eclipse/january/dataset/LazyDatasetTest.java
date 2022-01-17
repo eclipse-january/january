@@ -20,6 +20,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 import org.eclipse.january.DatasetException;
+import org.eclipse.january.metadata.AxesMetadata;
+import org.eclipse.january.metadata.MetadataFactory;
 import org.junit.Test;
 
 public class LazyDatasetTest {
@@ -680,6 +682,12 @@ public class LazyDatasetTest {
 		Dataset d0 = Random.rand(new int[] {2, 3, 1, 4, 5});
 		d0.setName("random");
 		LazyDataset l0 = LazyDataset.createLazyDataset(d0);
+		AxesMetadata am = MetadataFactory.createMetadata(AxesMetadata.class, 5);
+		DoubleDataset axisB = DatasetFactory.createRange(-1.5, 1, 1);
+		am.setAxis(1, axisB);
+		Dataset axisE = DatasetFactory.createFromObject(new double[] {6, 5, 3, 2, 0});
+		am.setAxis(4, axisE);
+		l0.addMetadata(am);
 
 		for (LDOp op1 : LDOp.values()) {
 			if (op1 == LDOp.SHAPE) {
