@@ -377,7 +377,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	protected LazyDataset internalGetSliceView(SliceND slice) {
 		LazyDataset view = clone();
-		if (slice.isAll()) {
+		if (slice == null || slice.isAll()) {
 			return view;
 		}
 
@@ -416,17 +416,18 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 		Dataset a;
 		if (nslice == null) {
-			a = DatasetFactory.zeros(clazz == null ? DoubleDataset.class : clazz, slice.getShape());
+			a = DatasetFactory.zeros(clazz == null ? DoubleDataset.class : clazz, slice == null ? shape : slice.getShape());
 		} else {
 			try {
 				a = DatasetUtils.convertToDataset(loader.getDataset(monitor, nslice));
 			} catch (IOException e) {
-				logger.error("Problem getting {}: {}", String.format("slice %s %s %s from %s", Arrays.toString(slice.getStart()), Arrays.toString(slice.getStop()),
+				logger.error("Problem getting {}: {}", slice == null ? "all" : String.format("slice %s %s %s from %s", Arrays.toString(slice.getStart()), Arrays.toString(slice.getStop()),
 								Arrays.toString(slice.getStep()), loader), e);
 				throw new DatasetException(e);
 			}
 		}
-		a.setName(name + AbstractDataset.BLOCK_OPEN + (nslice == null ? slice : nslice) + AbstractDataset.BLOCK_CLOSE);
+		a.setName(name + AbstractDataset.BLOCK_OPEN + (nslice == null ?
+				(slice == null ? "..." : slice) : nslice) + AbstractDataset.BLOCK_CLOSE);
 		if (metadata != null && a instanceof LazyDatasetBase) {
 			LazyDatasetBase ba = (LazyDatasetBase) a;
 			ba.metadata = copyMetadata();
@@ -444,10 +445,11 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 				a = a.getTransposedView(map);
 			}
 			if (padding != null) {
-				a.setShape(slice.getShape());
+				a.setShape(slice == null ? shape : slice.getShape());
 			}
 		}
-		a.addMetadata(MetadataFactory.createMetadata(OriginMetadata.class, this, nslice == null ? slice.convertToSlice() : nslice.convertToSlice(), oShape, null, name));
+		a.addMetadata(MetadataFactory.createMetadata(OriginMetadata.class, this, nslice == null ?
+				(slice == null ? null : slice.convertToSlice()) : nslice.convertToSlice(), oShape, null, name));
 
 		if (clazz == null) {
 			clazz = a.getClass();
@@ -691,7 +693,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	final IDataset transformInput(IDataset data, SliceND tslice) {
 		if (padding != null) { // remove padding
 			data = data.getSliceView();
-			int[] nshape = tslice.getShape();
+			int[] nshape = tslice == null ? shape : tslice.getShape();
 			data.setShape(nshape);
 		}
 

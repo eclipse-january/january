@@ -9,14 +9,17 @@
 
 package org.eclipse.january.dataset;
 
+import static org.eclipse.january.asserts.TestUtils.assertDatasetEquals;
+import static org.eclipse.january.asserts.TestUtils.verbosePrintf;
+import static org.eclipse.january.asserts.TestUtils.verbosePrintln;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.util.Arrays;
 import java.util.Comparator;
 
 import org.eclipse.january.DatasetException;
-import org.eclipse.january.asserts.TestUtils;
-import org.junit.Assert;
 import org.junit.Test;
 
 public class LazyDatasetTest {
@@ -25,22 +28,22 @@ public class LazyDatasetTest {
 		try {
 			l.setShape(shape);
 			if (well) {
-				TestUtils.verbosePrintf("Succeeded setting shape for %s\n", msg);
+				verbosePrintf("Succeeded setting shape for %s\n", msg);
 			} else {
-				Assert.fail("Should have thrown exception for " + msg);
+				fail("Should have thrown exception for " + msg);
 			}
 		} catch (IllegalArgumentException iae) {
 			if (well) {
-				Assert.fail("Unexpected exception for " + msg);
+				fail("Unexpected exception for " + msg);
 			} else {
-				TestUtils.verbosePrintf("Correctly failed setting shape for %s\n", msg);
+				verbosePrintf("Correctly failed setting shape for %s\n", msg);
 			}
 		} catch (Exception e) {
 			msg += ": " + e.getMessage();
 			if (well) {
-				Assert.fail("Unexpected exception for " + msg);
+				fail("Unexpected exception for " + msg);
 			} else {
-				Assert.fail("Thrown wrong exception for " + msg);
+				fail("Thrown wrong exception for " + msg);
 			}
 		}
 	}
@@ -79,54 +82,54 @@ public class LazyDatasetTest {
 
 		Slice[] slice;
 		slice = new Slice[]{null, new Slice(1), null, new Slice(1, 3)};
-		Assert.assertEquals("Full slice", d, ld.getSlice());
-		Assert.assertEquals("Full slice", d, ld.getSlice((Slice) null));
-		Assert.assertEquals("Full slice", d, ld.getSlice((Slice) null, null));
-		Assert.assertEquals("Full slice", d, ld.getSlice(null, (SliceND) null));
-		Assert.assertEquals("Full slice", d, ld.getSlice(null, null, null));
-		Assert.assertEquals("Full slice", d, ld.getSlice(null, null, new int[] {1, 1, 1, 1}));
-		Assert.assertEquals("Full slice", d, ld.getSlice(new int[4], null, new int[] {1, 1, 1, 1}));
-		Assert.assertEquals("Full slice", d, ld.getSlice(new int[4], new int[] { 1, 2, 3, 4 }, new int[] { 1, 1, 1, 1 }));
-		Assert.assertEquals("Part slice", d.getSlice(slice), ld.getSlice(slice));
+		assertEquals("Full slice", d, ld.getSlice());
+		assertEquals("Full slice", d, ld.getSlice((Slice) null));
+		assertEquals("Full slice", d, ld.getSlice((Slice) null, null));
+		assertEquals("Full slice", d, ld.getSlice(null, (SliceND) null));
+		assertEquals("Full slice", d, ld.getSlice(null, null, null));
+		assertEquals("Full slice", d, ld.getSlice(null, null, new int[] {1, 1, 1, 1}));
+		assertEquals("Full slice", d, ld.getSlice(new int[4], null, new int[] {1, 1, 1, 1}));
+		assertEquals("Full slice", d, ld.getSlice(new int[4], new int[] { 1, 2, 3, 4 }, new int[] { 1, 1, 1, 1 }));
+		assertEquals("Part slice", d.getSlice(slice), ld.getSlice(slice));
 
 		Dataset nd;
 		ld.setShape(1, 1, 1, 2, 3, 4);
 		nd = d.getView(true);
 		nd.setShape(1, 1, 1, 2, 3, 4);
-		Assert.assertEquals("Full slice", nd, ld.getSlice());
+		assertEquals("Full slice", nd, ld.getSlice());
 		slice = new Slice[]{null, null, null, new Slice(1), null, new Slice(1, 3)};
-		Assert.assertEquals("Part slice", nd.getSlice(slice), ld.getSlice(slice));
+		assertEquals("Part slice", nd.getSlice(slice), ld.getSlice(slice));
 
 		ld.setShape(2, 3, 4);
 		nd = d.getView(true);
 		nd.setShape(2, 3, 4);
-		Assert.assertEquals("Full slice", nd, ld.getSlice());
+		assertEquals("Full slice", nd, ld.getSlice());
 		slice = new Slice[]{new Slice(1), null, new Slice(1, 3)};
-		Assert.assertEquals("Part slice", nd.getSlice(slice), ld.getSlice(slice));
+		assertEquals("Part slice", nd.getSlice(slice), ld.getSlice(slice));
 
 		ld.setShape(2, 3, 4, 1, 1, 1);
 		nd = d.getView(true);
 		nd.setShape(2, 3, 4, 1, 1, 1);
-		Assert.assertEquals("Full slice", nd, ld.getSlice());
+		assertEquals("Full slice", nd, ld.getSlice());
 		slice = new Slice[]{new Slice(1), null, new Slice(1, 3), null, null, null};
-		Assert.assertEquals("Part slice", nd.getSlice(slice), ld.getSlice(slice));
+		assertEquals("Part slice", nd.getSlice(slice), ld.getSlice(slice));
 
 		ld.setShape(1, 2, 3, 4, 1, 1, 1);
 		nd = d.getView(true);
 		nd.setShape(1, 2, 3, 4, 1, 1, 1);
-		Assert.assertEquals("Full slice", nd, ld.getSlice());
+		assertEquals("Full slice", nd, ld.getSlice());
 		slice = new Slice[]{null, new Slice(1), null, new Slice(1, 3), null, null, null};
-		Assert.assertEquals("Part slice", nd.getSlice(slice), ld.getSlice(slice));
+		assertEquals("Part slice", nd.getSlice(slice), ld.getSlice(slice));
 
 		// test negative slice
 		ld.setShape(shape);
 		slice = new Slice[]{new Slice(null, null, -1), null, null, null};
 		nd = ld.getSlice(slice);
-		Assert.assertEquals("Full negative slice", d.getSlice(slice), nd);
+		assertEquals("Full negative slice", d.getSlice(slice), nd);
 
 		slice = new Slice[]{null, null, null, new Slice(null, null, -1)};
 		nd = ld.getSlice(slice);
-		Assert.assertEquals("Full negative slice", d.getSlice(slice), nd);
+		assertEquals("Full negative slice", d.getSlice(slice), nd);
 
 		// test input SliceND checking
 		try {
@@ -151,7 +154,7 @@ public class LazyDatasetTest {
 		}
 
 		nd = ld.getSlice(new SliceND(ld.getShape()));
-		Assert.assertEquals("Full slice", d.getSlice(), nd);
+		assertEquals("Full slice", d.getSlice(), nd);
 	}
 
 	@Test
@@ -163,31 +166,31 @@ public class LazyDatasetTest {
 		Slice[] slice;
 		slice = new Slice[]{new Slice(1, null, 3), new Slice(1), new Slice(1, 3), null};
 		ILazyDataset l = ld.getSliceView(null, shape, null);
-		TestUtils.verbosePrintf("%s\n", l.toString());
-		Assert.assertEquals("Full slice", d, l.getSlice());
+		verbosePrintf("%s\n", l.toString());
+		assertEquals("Full slice", d, l.getSlice());
 		l = ld.getSliceView(slice);
-		TestUtils.verbosePrintf("%s\n", l.toString());
-		Assert.assertEquals("Part slice", d.getSlice(slice), l.getSlice());
+		verbosePrintf("%s\n", l.toString());
+		assertEquals("Part slice", d.getSlice(slice), l.getSlice());
 
 		l = ld.getSliceView();
-		TestUtils.verbosePrintf("%s\n", l.toString());
-		Assert.assertEquals("Full slice", d, l.getSlice());
+		verbosePrintf("%s\n", l.toString());
+		assertEquals("Full slice", d, l.getSlice());
 		l = ld.getSliceView(slice);
-		TestUtils.verbosePrintf("%s\n", l.toString());
-		Assert.assertEquals("Part slice", d.getSlice(slice), l.getSlice());
+		verbosePrintf("%s\n", l.toString());
+		assertEquals("Part slice", d.getSlice(slice), l.getSlice());
 
 		l = ld.getSliceView();
 		l.squeezeEnds();
-		Assert.assertEquals("Full slice", 3, l.getSlice().getRank());
+		assertEquals("Full slice", 3, l.getSlice().getRank());
 
 		// test negative slice views
 		slice = new Slice[]{new Slice(null, null, -1), null, null, null};
 		l = ld.getSliceView(slice);
-		Assert.assertEquals("Full negative slice", d.getSlice(slice), l.getSlice());
+		assertEquals("Full negative slice", d.getSlice(slice), l.getSlice());
 
 		slice = new Slice[]{null, null, null, new Slice(null, null, -1)};
 		l = ld.getSliceView(slice);
-		Assert.assertEquals("Full negative slice", d.getSlice(slice), l.getSlice());
+		assertEquals("Full negative slice", d.getSlice(slice), l.getSlice());
 
 		// test input SliceND checking
 		try {
@@ -212,7 +215,7 @@ public class LazyDatasetTest {
 		}
 
 		l = ld.getSliceView(new SliceND(ld.getShape()));
-		Assert.assertEquals("Full slice", d, l.getSlice());
+		assertEquals("Full slice", d, l.getSlice());
 	}
 
 	@Test
@@ -222,42 +225,42 @@ public class LazyDatasetTest {
 		LazyDataset ld = LazyDataset.createLazyDataset(data);
 
 		ld.setShape(1, 1, 2, 3, 4, 1);
-		Assert.assertArrayEquals(new int[] {1, 1, 2, 3, 4, 1}, ld.getShape());
-		TestUtils.assertDatasetEquals(data.reshape(1, 1, 2, 3, 4, 1), ld.getSlice(), true, 1e-14, 1e-14);
+		assertArrayEquals(new int[] {1, 1, 2, 3, 4, 1}, ld.getShape());
+		assertDatasetEquals(data.reshape(1, 1, 2, 3, 4, 1), ld.getSlice(), true, 1e-14, 1e-14);
 
 		LazyDataset tld = ld.getSliceView();
-		Assert.assertArrayEquals(new int[] {1, 1, 2, 3, 4, 1}, tld.getShape());
-		TestUtils.assertDatasetEquals(data.reshape(1, 1, 2, 3, 4, 1), tld.getSlice(), true, 1e-14, 1e-14);
+		assertArrayEquals(new int[] {1, 1, 2, 3, 4, 1}, tld.getShape());
+		assertDatasetEquals(data.reshape(1, 1, 2, 3, 4, 1), tld.getSlice(), true, 1e-14, 1e-14);
 
 		ld.setShape(1, 2, 3, 4);
 		tld = ld.getSliceView();
 		ld.setShape(1, 1, 2, 3, 4, 1);
-		Assert.assertArrayEquals(new int[] {1, 1, 2, 3, 4, 1}, ld.getShape());
-		Assert.assertArrayEquals(new int[] {1, 2, 3, 4}, tld.getShape());
-		TestUtils.assertDatasetEquals(data.reshape(1, 1, 2, 3, 4, 1), ld.getSlice(), true, 1e-14, 1e-14);
-		TestUtils.assertDatasetEquals(data.reshape(1, 1, 2, 3, 4, 1), ld.getSliceView().getSlice(), true, 1e-14, 1e-14);
+		assertArrayEquals(new int[] {1, 1, 2, 3, 4, 1}, ld.getShape());
+		assertArrayEquals(new int[] {1, 2, 3, 4}, tld.getShape());
+		assertDatasetEquals(data.reshape(1, 1, 2, 3, 4, 1), ld.getSlice(), true, 1e-14, 1e-14);
+		assertDatasetEquals(data.reshape(1, 1, 2, 3, 4, 1), ld.getSliceView().getSlice(), true, 1e-14, 1e-14);
 
 		tld.setShape(1, 1, 2, 3, 4, 1);
-		Assert.assertArrayEquals(new int[] {1, 1, 2, 3, 4, 1}, tld.getShape());
-		TestUtils.assertDatasetEquals(data.reshape(1, 1, 2, 3, 4, 1), tld.getSlice(), true, 1e-14, 1e-14);
-		TestUtils.assertDatasetEquals(data.reshape(1, 1, 2, 3, 4, 1), tld.getSliceView().getSlice(), true, 1e-14, 1e-14);
+		assertArrayEquals(new int[] {1, 1, 2, 3, 4, 1}, tld.getShape());
+		assertDatasetEquals(data.reshape(1, 1, 2, 3, 4, 1), tld.getSlice(), true, 1e-14, 1e-14);
+		assertDatasetEquals(data.reshape(1, 1, 2, 3, 4, 1), tld.getSliceView().getSlice(), true, 1e-14, 1e-14);
 
 		LazyDataset uld = tld.getSliceView();
-		Assert.assertArrayEquals(new int[] {1, 1, 2, 3, 4, 1}, uld.getShape());
-		TestUtils.assertDatasetEquals(data.reshape(1, 1, 2, 3, 4, 1), uld.getSlice(), true, 1e-14, 1e-14);
-		TestUtils.assertDatasetEquals(data.reshape(1, 1, 2, 3, 4, 1), uld.getSliceView().getSlice(), true, 1e-14, 1e-14);
+		assertArrayEquals(new int[] {1, 1, 2, 3, 4, 1}, uld.getShape());
+		assertDatasetEquals(data.reshape(1, 1, 2, 3, 4, 1), uld.getSlice(), true, 1e-14, 1e-14);
+		assertDatasetEquals(data.reshape(1, 1, 2, 3, 4, 1), uld.getSliceView().getSlice(), true, 1e-14, 1e-14);
 
 		uld.setShape(2, 3, 4);
-		Assert.assertArrayEquals(new int[] {2, 3, 4}, uld.getShape());
-		TestUtils.assertDatasetEquals(data.reshape(2, 3, 4), uld.getSlice(), true, 1e-14, 1e-14);
-		TestUtils.assertDatasetEquals(data.reshape(2, 3, 4), uld.getSliceView().getSlice(), true, 1e-14, 1e-14);
+		assertArrayEquals(new int[] {2, 3, 4}, uld.getShape());
+		assertDatasetEquals(data.reshape(2, 3, 4), uld.getSlice(), true, 1e-14, 1e-14);
+		assertDatasetEquals(data.reshape(2, 3, 4), uld.getSliceView().getSlice(), true, 1e-14, 1e-14);
 
 		Slice[] slice = new Slice[] {null, null, null, new Slice(1, null, 2)};
 		ld.setShape(1, 2, 3, 4);
 		tld = ld.getSliceView(slice);
 		tld.squeezeEnds();
-		TestUtils.assertDatasetEquals(data.getSliceView(slice).squeezeEnds(), tld.getSlice(), true, 1e-14, 1e-14);
-		TestUtils.assertDatasetEquals(data.getSliceView(slice).squeezeEnds(), tld.getSliceView().getSlice(), true, 1e-14, 1e-14);
+		assertDatasetEquals(data.getSliceView(slice).squeezeEnds(), tld.getSlice(), true, 1e-14, 1e-14);
+		assertDatasetEquals(data.getSliceView(slice).squeezeEnds(), tld.getSliceView().getSlice(), true, 1e-14, 1e-14);
 	}
 
 	@Test
@@ -267,58 +270,58 @@ public class LazyDatasetTest {
 		LazyDataset ld = LazyDataset.createLazyDataset(data);
 
 		LazyDataset tld = ld.getTransposedView(3, 1, 0, 2);
-		Assert.assertEquals(tld.getSize(), ld.getSize());
-		Assert.assertArrayEquals(new int[] {4, 2, 1, 3}, tld.getShape());
-		TestUtils.assertDatasetEquals(data.getTransposedView(3, 1, 0, 2), tld.getSlice(), true, 1e-14, 1e-14);
-		TestUtils.assertDatasetEquals(data.transpose(3, 1, 0, 2), tld.getSlice(), true, 1e-14, 1e-14);
+		assertEquals(tld.getSize(), ld.getSize());
+		assertArrayEquals(new int[] {4, 2, 1, 3}, tld.getShape());
+		assertDatasetEquals(data.getTransposedView(3, 1, 0, 2), tld.getSlice(), true, 1e-14, 1e-14);
+		assertDatasetEquals(data.transpose(3, 1, 0, 2), tld.getSlice(), true, 1e-14, 1e-14);
 
 		LazyDataset uld = tld.getTransposedView(3, 2, 1, 0);
-		Assert.assertArrayEquals(new int[] {3, 1, 2, 4}, uld.getShape());
-		TestUtils.assertDatasetEquals(data.getTransposedView(3, 1, 0, 2).getTransposedView(3, 2, 1, 0), uld.getSlice(), true, 1e-14, 1e-14);
+		assertArrayEquals(new int[] {3, 1, 2, 4}, uld.getShape());
+		assertDatasetEquals(data.getTransposedView(3, 1, 0, 2).getTransposedView(3, 2, 1, 0), uld.getSlice(), true, 1e-14, 1e-14);
 
-		Assert.assertArrayEquals(new int[] {3, 1, 2, 4}, ld.getTransposedView(2, 0, 1, 3).getShape());
-		TestUtils.assertDatasetEquals(data.getTransposedView(2, 0, 1, 3), uld.getSlice(), true, 1e-14, 1e-14);
+		assertArrayEquals(new int[] {3, 1, 2, 4}, ld.getTransposedView(2, 0, 1, 3).getShape());
+		assertDatasetEquals(data.getTransposedView(2, 0, 1, 3), uld.getSlice(), true, 1e-14, 1e-14);
 
 		// set shape of transposed view
 		tld.setShape(1, 4, 2, 1, 3, 1);
-		Assert.assertArrayEquals(new int[] {1, 4, 2, 1, 3, 1}, tld.getShape());
-		TestUtils.assertDatasetEquals(data.getTransposedView(3, 1, 0, 2).reshape(1, 4, 2, 1, 3, 1), tld.getSlice(), true, 1e-14, 1e-14);
+		assertArrayEquals(new int[] {1, 4, 2, 1, 3, 1}, tld.getShape());
+		assertDatasetEquals(data.getTransposedView(3, 1, 0, 2).reshape(1, 4, 2, 1, 3, 1), tld.getSlice(), true, 1e-14, 1e-14);
 
 		// get transpose of shaped dataset
 		ld.setShape(1, 1, 2, 3, 4, 1);
 		tld = ld.getTransposedView(3, 1, 0, 2, 4, 5);
-		Assert.assertArrayEquals(new int[] {3, 1, 1, 2, 4, 1}, tld.getShape());
-		TestUtils.assertDatasetEquals(data.reshape(1, 1, 2, 3, 4, 1).getTransposedView(3, 1, 0, 2, 4, 5), tld.getSlice(), true, 1e-14, 1e-14);
+		assertArrayEquals(new int[] {3, 1, 1, 2, 4, 1}, tld.getShape());
+		assertDatasetEquals(data.reshape(1, 1, 2, 3, 4, 1).getTransposedView(3, 1, 0, 2, 4, 5), tld.getSlice(), true, 1e-14, 1e-14);
 
 		// get transpose of shaped sliced dataset
 		ld.setShape(1, 2, 3, 4);
 		tld = ld.getSliceView(null, null, null, new Slice(1, null, 2));
-		TestUtils.assertDatasetEquals(data.getSliceView(null, null, null, new Slice(1, null, 2)), tld.getSlice(), true, 1e-14, 1e-14);
-		TestUtils.assertDatasetEquals(data.getSliceView(null, null, null, new Slice(1, null, 2)), tld.getSliceView().getSlice(), true, 1e-14, 1e-14);
+		assertDatasetEquals(data.getSliceView(null, null, null, new Slice(1, null, 2)), tld.getSlice(), true, 1e-14, 1e-14);
+		assertDatasetEquals(data.getSliceView(null, null, null, new Slice(1, null, 2)), tld.getSliceView().getSlice(), true, 1e-14, 1e-14);
 		uld = tld.getTransposedView(3, 1, 0, 2);
-		Assert.assertEquals(tld.getSize(), uld.getSize());
-		Assert.assertArrayEquals(new int[] {2, 2, 1, 3}, uld.getShape());
-		TestUtils.assertDatasetEquals(data.getSliceView(null, null, null, new Slice(1, null, 2)).getTransposedView(3, 1, 0, 2), uld.getSlice(), true, 1e-14, 1e-14);
+		assertEquals(tld.getSize(), uld.getSize());
+		assertArrayEquals(new int[] {2, 2, 1, 3}, uld.getShape());
+		assertDatasetEquals(data.getSliceView(null, null, null, new Slice(1, null, 2)).getTransposedView(3, 1, 0, 2), uld.getSlice(), true, 1e-14, 1e-14);
 
 		// slice after transpose
 		tld = ld.getTransposedView(3, 1, 0, 2);
-		TestUtils.assertDatasetEquals(data.getTransposedView(3, 1, 0, 2), tld.getSlice(), true, 1e-14, 1e-14);
-		TestUtils.assertDatasetEquals(data.getTransposedView(3, 1, 0, 2), tld.getSliceView().getSlice(), true, 1e-14, 1e-14);
+		assertDatasetEquals(data.getTransposedView(3, 1, 0, 2), tld.getSlice(), true, 1e-14, 1e-14);
+		assertDatasetEquals(data.getTransposedView(3, 1, 0, 2), tld.getSliceView().getSlice(), true, 1e-14, 1e-14);
 		LazyDataset vld = tld.getSliceView(new Slice(1, null, 2));
-		Assert.assertEquals(12, vld.getSize());
-		Assert.assertArrayEquals(new int[] {2, 2, 1, 3}, vld.getShape());
-		TestUtils.assertDatasetEquals(data.getTransposedView(3, 1, 0, 2).getSliceView(new Slice(1, null, 2)), vld.getSlice(), true, 1e-14, 1e-14);
+		assertEquals(12, vld.getSize());
+		assertArrayEquals(new int[] {2, 2, 1, 3}, vld.getShape());
+		assertDatasetEquals(data.getTransposedView(3, 1, 0, 2).getSliceView(new Slice(1, null, 2)), vld.getSlice(), true, 1e-14, 1e-14);
 
 		// transpose of reshaped transpose
 		tld.setShape(1, 4, 2, 1, 3, 1);
-		TestUtils.assertDatasetEquals(data.getTransposedView(3, 1, 0, 2).reshape(1, 4, 2, 1, 3, 1), tld.getSlice(), true, 1e-14, 1e-14);
-		TestUtils.assertDatasetEquals(data.getTransposedView(3, 1, 0, 2).reshape(1, 4, 2, 1, 3, 1), tld.getSliceView().getSlice(), true, 1e-14, 1e-14);
+		assertDatasetEquals(data.getTransposedView(3, 1, 0, 2).reshape(1, 4, 2, 1, 3, 1), tld.getSlice(), true, 1e-14, 1e-14);
+		assertDatasetEquals(data.getTransposedView(3, 1, 0, 2).reshape(1, 4, 2, 1, 3, 1), tld.getSliceView().getSlice(), true, 1e-14, 1e-14);
 		uld = tld.getTransposedView();
-		Assert.assertArrayEquals(new int[] {1, 3, 1, 2, 4, 1}, uld.getShape());
-		TestUtils.assertDatasetEquals(data.getTransposedView(3, 1, 0, 2).reshape(1, 4, 2, 1, 3, 1).getTransposedView(), uld.getSlice(), true, 1e-14, 1e-14);
+		assertArrayEquals(new int[] {1, 3, 1, 2, 4, 1}, uld.getShape());
+		assertDatasetEquals(data.getTransposedView(3, 1, 0, 2).reshape(1, 4, 2, 1, 3, 1).getTransposedView(), uld.getSlice(), true, 1e-14, 1e-14);
 		uld.setShape(3, 1, 2, 4, 1);
-		Assert.assertArrayEquals(new int[] {3, 1, 2, 4, 1}, uld.getShape());
-		TestUtils.assertDatasetEquals(data.getTransposedView(3, 1, 0, 2).reshape(1, 4, 2, 1, 3, 1).getTransposedView().reshape(3, 1, 2, 4, 1),
+		assertArrayEquals(new int[] {3, 1, 2, 4, 1}, uld.getShape());
+		assertDatasetEquals(data.getTransposedView(3, 1, 0, 2).reshape(1, 4, 2, 1, 3, 1).getTransposedView().reshape(3, 1, 2, 4, 1),
 				uld.getSlice(), true, 1e-14, 1e-14);
 	}
 
@@ -331,7 +334,7 @@ public class LazyDatasetTest {
 		LazyDataset sv = ld.getSliceView(new int[] { 0 }, new int[] { 5 }, null);
 		sv.setShape(new int[] { 1, 1, 5 });
 		LazyDataset view = sv.getSliceView(new int[] { 0, 0, 0 }, new int[] { 1, 1, 4 }, null);
-		TestUtils.assertDatasetEquals(data.getSliceView(new Slice(5)).reshape(1, 1, 5).getSliceView(null, null, new Slice(4)),
+		assertDatasetEquals(data.getSliceView(new Slice(5)).reshape(1, 1, 5).getSliceView(null, null, new Slice(4)),
 				view.getSlice(), true, 1e-14, 1e-14);
 	}
 
@@ -342,27 +345,27 @@ public class LazyDatasetTest {
 	
 		ILazyDataset td = d.getTransposedView(2, 0, 3, 1);
 		ILazyDataset tl = l.getTransposedView(2, 0, 3, 1); // shape = 1, 3, 5, 2
-		TestUtils.assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(td),
+		assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(td),
 				DatasetUtils.sliceAndConvertLazyDataset(tl));
 		
 		td.setShape(3, 5, 1, 1, 2);
 		tl.setShape(3, 5, 1, 1, 2); // pad = -1, 0, 0, 2, 0
-		TestUtils.assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(td),
+		assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(td),
 				DatasetUtils.sliceAndConvertLazyDataset(tl));
 	
 		ILazyDataset ttd = td.getTransposedView(1, 3, 4, 2, 0);
 		ILazyDataset ttl = tl.getTransposedView(1, 3, 4, 2, 0); // shape = 5, 1, 2, 1, 3
-		TestUtils.assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(ttd),
+		assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(ttd),
 				DatasetUtils.sliceAndConvertLazyDataset(ttl));
 
 		ttd.setShape(5, 2, 1, 1, 1, 3, 1, 1, 1);
 		ttl.setShape(5, 2, 1, 1, 1, 3, 1, 1, 1);
-		TestUtils.assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(ttd),
+		assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(ttd),
 				DatasetUtils.sliceAndConvertLazyDataset(ttl));
 
 		ttd = ttd.getTransposedView(5, 7, 1, 3, 2, 8, 6, 4, 0);
 		ttl = ttl.getTransposedView(5, 7, 1, 3, 2, 8, 6, 4, 0);
-		TestUtils.assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(ttd),
+		assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(ttd),
 				DatasetUtils.sliceAndConvertLazyDataset(ttl));
 	}
 
@@ -375,10 +378,10 @@ public class LazyDatasetTest {
 		LazyDataset sv = ld.getSliceView(new Slice(1,2));
 		Dataset s = DatasetUtils.sliceAndConvertLazyDataset(sv);
 		s.squeezeEnds();
-		TestUtils.assertDatasetEquals(data.getSlice(new Slice(1,2)).squeeze(), s);
+		assertDatasetEquals(data.getSlice(new Slice(1,2)).squeeze(), s);
 
 		sv.squeezeEnds();
-		TestUtils.assertDatasetEquals(data.getSlice(new Slice(1,2)).squeeze(), sv.getSlice());
+		assertDatasetEquals(data.getSlice(new Slice(1,2)).squeeze(), sv.getSlice());
 	}
 
 	enum LDOp {
@@ -629,7 +632,7 @@ public class LazyDatasetTest {
 			System.out.println("\t\t\t -> " + d);
 			l = o.apply(l);
 			System.out.println("\t\t\t -> " + l);
-			TestUtils.assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(d),
+			assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(d),
 					DatasetUtils.sliceAndConvertLazyDataset(l));
 		}
 	}
@@ -683,55 +686,63 @@ public class LazyDatasetTest {
 				continue;
 			}
 			Operator o1 = createOperator(op1, p1[0], p1[1], p1[2], p1[3]);
-			TestUtils.verbosePrintln(o1.toString());
+			verbosePrintln(o1.toString());
 			ILazyDataset d1 = o1.apply(d0);
 			ILazyDataset l1 = o1.apply(l0);
-			TestUtils.verbosePrintln("\t\t -> " + Arrays.toString(l1.getShape()));
+			verbosePrintln("\t\t -> " + Arrays.toString(l1.getShape()));
 
-			TestUtils.assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(d1),
+			assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(d1),
 					DatasetUtils.sliceAndConvertLazyDataset(l1));
+			assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(d1),
+					DatasetUtils.convertToDataset(l1.getSlice((SliceND) null)));
 
 			for (LDOp op2 : LDOp.values()) {
 				if (op2 == LDOp.SHAPE) {
 					continue;
 				}
 				Operator o2 = createOperator(op2, p2[0], p2[1], p2[2], p2[3]);
-				TestUtils.verbosePrintln("\t" + o2);
+				verbosePrintln("\t" + o2);
 				ILazyDataset d2 = o2.apply(d1);
 				ILazyDataset l2 = o2.apply(l1);
-				TestUtils.verbosePrintln("\t\t\t -> " + Arrays.toString(l2.getShape()));
+				verbosePrintln("\t\t\t -> " + Arrays.toString(l2.getShape()));
 
-				TestUtils.assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(d2),
+				assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(d2),
 						DatasetUtils.sliceAndConvertLazyDataset(l2));
+				assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(d2),
+						DatasetUtils.convertToDataset(l2.getSlice((SliceND) null)));
 
 				for (LDOp op3 : LDOp.values()) {
 					if (op3 == LDOp.SHAPE) {
 						continue;
 					}
 					Operator o3 = createOperator(op3, p3[0], p3[1], p3[2], p3[3]);
-					TestUtils.verbosePrintln("\t\t" + o3);
+					verbosePrintln("\t\t" + o3);
 					ILazyDataset d3 = o3.apply(d2);
 					ILazyDataset l3 = o3.apply(l2);
-					TestUtils.verbosePrintln("\t\t\t\t -> " + Arrays.toString(l3.getShape()));
+					verbosePrintln("\t\t\t\t -> " + Arrays.toString(l3.getShape()));
 
-					TestUtils.assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(d3),
+					assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(d3),
 							DatasetUtils.sliceAndConvertLazyDataset(l3));
+					assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(d3),
+							DatasetUtils.convertToDataset(l3.getSlice((SliceND) null)));
 
 					for (LDOp op4 : LDOp.values()) {
 						if (op4 == LDOp.SHAPE) {
 							continue;
 						}
 						Operator o4 = createOperator(op4, p4[0], p4[1], p4[2], p4[3]);
-						TestUtils.verbosePrintln("\t\t\t" + o4);
+						verbosePrintln("\t\t\t" + o4);
 						ILazyDataset d4 = o4.apply(d3);
 						if (d4 == null) {
 							continue;
 						}
 						ILazyDataset l4 = o4.apply(l3);
-						TestUtils.verbosePrintln("\t\t\t\t -> " + Arrays.toString(l4.getShape()));
+						verbosePrintln("\t\t\t\t -> " + Arrays.toString(l4.getShape()));
 
-						TestUtils.assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(d4),
+						assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(d4),
 								DatasetUtils.sliceAndConvertLazyDataset(l4));
+						assertDatasetEquals(DatasetUtils.sliceAndConvertLazyDataset(d4),
+								DatasetUtils.convertToDataset(l4.getSlice((SliceND) null)));
 					}
 				}
 			}
