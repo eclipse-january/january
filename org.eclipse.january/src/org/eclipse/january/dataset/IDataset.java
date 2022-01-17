@@ -106,7 +106,7 @@ public interface IDataset extends ILazyDataset {
 
 	/**
 	 * Remove dimensions of 1 in shape of the dataset
-	 * @return shallow squeezed copy
+	 * @return this
 	 */
 	public IDataset squeeze();
 
@@ -114,7 +114,7 @@ public interface IDataset extends ILazyDataset {
 	 * Remove dimensions of 1 in shape of the dataset from ends only if true
 	 * 
 	 * @param onlyFromEnds if true, trim ends
-	 * @return shallow squeezed copy
+	 * @return this
 	 */
 	public IDataset squeeze(boolean onlyFromEnds);
 

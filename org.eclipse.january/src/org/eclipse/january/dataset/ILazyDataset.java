@@ -68,7 +68,7 @@ public interface ILazyDataset extends Serializable, IMetadataProvider, INameable
 
 	/**
 	 * Remove dimensions of 1 from ends of shape of the dataset
-	 * @return shallow squeezed copy
+	 * @return this
 	 */
 	public ILazyDataset squeezeEnds();
 
