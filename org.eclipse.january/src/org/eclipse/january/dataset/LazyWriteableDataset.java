@@ -358,4 +358,9 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 	public void setFillValue(Object fill) {
 		fillValue = fill;
 	}
+
+	@Override
+	public LazyWriteableDataset squeezeEnds() {
+		return (LazyWriteableDataset) super.squeezeEnds();
+	}
 }

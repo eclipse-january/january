@@ -93,4 +93,7 @@ public interface ILazyWriteableDataset extends IDynamicDataset {
 	 * @param fill value
 	 */
 	public void setFillValue(Object fill);
+
+	@Override
+	public ILazyWriteableDataset squeezeEnds();
 }

@@ -59,6 +59,19 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/january/dataset/ILazyWriteableDataset.java" type="org.eclipse.january.dataset.ILazyWriteableDataset">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.ILazyWriteableDataset"/>
+                <message_argument value="squeezeEnds()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="squeezeEnds()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/january/dataset/IMetadataProvider.java" type="org.eclipse.january.dataset.IMetadataProvider">
         <filter id="422776937">
             <message_arguments>
@@ -125,6 +138,13 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="checkSliceND(SliceND)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/january/dataset/LazyWriteableDataset.java" type="org.eclipse.january.dataset.LazyWriteableDataset">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="squeezeEnds()"/>
             </message_arguments>
         </filter>
     </resource>
