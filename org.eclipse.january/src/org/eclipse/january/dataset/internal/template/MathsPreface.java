@@ -1528,8 +1528,6 @@ class MathsPreface {
 		assert x.getRank() == 1;
 		assert d.getRank() == 1;
 
-		DoubleDataset r = DatasetFactory.zeros(DoubleDataset.class, x0.getShape());
-
 		Monotonicity mono = Comparisons.findMonotonicity(x);
 		if (mono == Monotonicity.NOT_ORDERED) {
 			throw new IllegalArgumentException("Dataset x must be ordered");
@@ -1540,8 +1538,8 @@ class MathsPreface {
 			dx = (DoubleDataset) x.flatten();
 		}
 		double[] xa = dx.getData();
-		int s = xa.length - 1;
-		boolean isReversed = mono == Monotonicity.STRICTLY_DECREASING || mono == Monotonicity.NONINCREASING;
+		final int s = xa.length - 1;
+		final boolean isReversed = mono == Monotonicity.STRICTLY_DECREASING || mono == Monotonicity.NONINCREASING;
 		if (isReversed) {
 			double[] txa = xa.clone();
 			for (int i = 0; i <= s; i++) { // reverse order
@@ -1550,6 +1548,7 @@ class MathsPreface {
 			xa = txa;
 		}
 
+		DoubleDataset r = DatasetFactory.zeros(dx0, DoubleDataset.class);
 		IndexIterator it = dx0.getIterator();
 		int k = -1;
 		while (it.hasNext()) {
@@ -1563,8 +1562,9 @@ class MathsPreface {
 						r.setAbs(k, left.doubleValue());
 						continue;
 					}
-					final double d1 = xa[0] - xa[1];
-					double t = d1 - v + xa[0];
+					final double xa0 = xa[0];
+					final double d1 = xa0 - xa[1];
+					double t = d1 - v + xa0;
 					if (t >= 0) {
 						continue; // sets to zero
 					}
@@ -1575,8 +1575,9 @@ class MathsPreface {
 						r.setAbs(k, right.doubleValue());
 						continue;
 					}
-					final double d1 = xa[s] - xa[s - 1];
-					double t = d1 - v + xa[s];
+					final double xas = xa[s];
+					final double d1 = xas - xa[s - 1];
+					double t = d1 - v + xas;
 					if (t <= 0) {
 						continue; // sets to zero
 					}
@@ -1584,7 +1585,8 @@ class MathsPreface {
 					r.setAbs(k, t * d.getDouble(isReversed ? 0 : s));
 				} else {
 					i = -i - 1;
-					double t = (xa[i] - v) / (xa[i] - xa[i - 1]);
+					final double xai = xa[i];
+					double t = (xai - v) / (xai - xa[i - 1]);
 					if (isReversed) {
 						i = s - i;
 						r.setAbs(k, t * d.getDouble(i + 1) + (1 - t) * d.getDouble(i));
