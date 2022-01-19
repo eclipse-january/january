@@ -22,7 +22,6 @@ import org.eclipse.january.io.ILazySaver;
  */
 public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWriteableDataset {
 	private static final long serialVersionUID = -679846418938412535L;
-	private int[] chunks;
 	private ILazySaver saver;
 	private Object fillValue;
 	private boolean writeAsync;
@@ -69,8 +68,7 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 	 * @since 2.3
 	 */
 	public LazyWriteableDataset(ILazySaver saver, String name, int elements, Class<? extends Dataset> clazz, int[] shape, int[] maxShape, int[] chunks) {
-		super(saver, name, elements, clazz, shape, maxShape);
-		this.chunks = chunks == null ? null : chunks.clone();
+		super(saver, name, elements, clazz, shape, maxShape, chunks);
 		this.saver = saver;
 
 		size = ShapeUtils.calcLongSize(this.shape);
@@ -187,7 +185,6 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Arrays.hashCode(chunks);
 		result = prime * result + ((fillValue == null) ? 0 : fillValue.hashCode());
 		result = prime * result + (writeAsync ? 1231 : 1237);
 		return result;
@@ -203,9 +200,6 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 		}
 
 		LazyWriteableDataset other = (LazyWriteableDataset) obj;
-		if (!Arrays.equals(chunks, other.chunks)) {
-			return false;
-		}
 		if (fillValue == null) {
 			if (other.fillValue != null) {
 				return false;
@@ -225,16 +219,6 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 		}
 
 		return true;
-	}
-
-	@Override
-	public int[] getChunking() {
-		return chunks;
-	}
-
-	@Override
-	public void setChunking(int... chunks) {
-		this.chunks = chunks == null ? null : chunks.clone();
 	}
 
 	@Override

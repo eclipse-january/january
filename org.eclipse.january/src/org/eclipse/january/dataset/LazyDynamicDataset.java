@@ -18,6 +18,7 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 	private static final long serialVersionUID = -6296506563932840938L;
 
 	protected int[] maxShape;
+	protected int[] chunks;
 
 	protected transient DataListenerDelegate eventDelegate; // this does not need to be serialised!
 
@@ -87,6 +88,21 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 	 * @since 2.3
 	 */
 	public LazyDynamicDataset(ILazyLoader loader, String name, int elements, Class<? extends Dataset> clazz, int[] shape, int[] maxShape) {
+		this(loader, name, elements, clazz, shape, maxShape, null);
+	}
+
+	/**
+	 * Create a dynamic lazy dataset
+	 * @param loader lazy loader
+	 * @param name of dataset
+	 * @param elements item size
+	 * @param clazz dataset sub-interface
+	 * @param shape dataset shape
+	 * @param maxShape maximum shape
+	 * @param chunks chunk shape
+	 * @since 2.3
+	 */
+	public LazyDynamicDataset(ILazyLoader loader, String name, int elements, Class<? extends Dataset> clazz, int[] shape, int[] maxShape, int[] chunks) {
 		super(loader, name, elements, clazz, shape);
 		if (maxShape == null) {
 			this.maxShape = shape.clone();
@@ -108,6 +124,8 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 		} else {
 			this.maxShape = maxShape.clone();
 		}
+		this.chunks = chunks == null ? null : chunks.clone();
+
 		this.eventDelegate = new DataListenerDelegate();
 	}
 
@@ -119,6 +137,7 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 		super(other);
 
 		maxShape = other.maxShape;
+		chunks = other.chunks;
 		eventDelegate = other.eventDelegate;
 		checker = other.checker;
 		runner = other.runner;
@@ -131,6 +150,7 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 		result = prime * result + ((checker == null) ? 0 : checker.hashCode());
 		result = prime * result + ((checkingThread == null) ? 0 : checkingThread.hashCode());
 		result = prime * result + Arrays.hashCode(maxShape);
+		result = prime * result + Arrays.hashCode(chunks);
 		return result;
 	}
 
@@ -145,6 +165,9 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 
 		LazyDynamicDataset other = (LazyDynamicDataset) obj;
 		if (!Arrays.equals(maxShape, other.maxShape)) {
+			return false;
+		}
+		if (!Arrays.equals(chunks, other.chunks)) {
 			return false;
 		}
 
@@ -242,6 +265,16 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 			shape = prependShapeWithOnes(this.maxShape.length, shape); // TODO this does not update any metadata
 //			setShapeInternal(prependShapeWithOnes(this.maxShape.length, shape));
 		}
+	}
+
+	@Override
+	public int[] getChunking() {
+		return chunks;
+	}
+
+	@Override
+	public void setChunking(int... chunks) {
+		this.chunks = chunks == null ? null : chunks.clone();
 	}
 
 	private final static int[] prependShapeWithOnes(int rank, int[] shape) {
