@@ -24,18 +24,6 @@ public interface ILazyWriteableDataset extends IDynamicDataset {
 	public static final int UNLIMITED = IDynamicDataset.UNLIMITED;
 
 	/**
-	 * Get chunking
-	 * @return chunks (can be null)
-	 */
-	public int[] getChunking();
-
-	/**
-	 * Set chunking
-	 * @param chunks chunk shape
-	 */
-	public void setChunking(int... chunks);
-
-	/**
 	 * Set saver
 	 * @param saver lazy saver
 	 */

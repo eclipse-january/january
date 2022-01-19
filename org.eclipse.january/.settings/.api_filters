@@ -59,6 +59,20 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/january/dataset/IDynamicDataset.java" type="org.eclipse.january.dataset.IDynamicDataset">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.IDynamicDataset"/>
+                <message_argument value="getChunking()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.IDynamicDataset"/>
+                <message_argument value="setChunking(int[])"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/january/dataset/ILazyWriteableDataset.java" type="org.eclipse.january.dataset.ILazyWriteableDataset">
         <filter id="403804204">
             <message_arguments>
@@ -138,6 +152,19 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="checkSliceND(SliceND)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/january/dataset/LazyDynamicDataset.java" type="org.eclipse.january.dataset.LazyDynamicDataset">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.LazyDynamicDataset"/>
+                <message_argument value="chunks"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="chunks"/>
             </message_arguments>
         </filter>
     </resource>
