@@ -11,7 +11,7 @@
  *******************************************************************************/
 target "January" with source requirements
 
-location "http://download.eclipse.org/tools/orbit/downloads/drops/R20180606145124/repository" eclipse-orbit-photon {
+location "https://download.eclipse.org/tools/orbit/downloads/drops/R20180606145124/repository" eclipse-orbit-photon {
 
 // The versions we point to in Orbit are the versions we have CQs approved for, please
 // raise CQ for items not in this list or version changes
@@ -28,7 +28,7 @@ location "http://download.eclipse.org/tools/orbit/downloads/drops/R2018060614512
 }
 
 // To speed up the build, pull the platform from its own site. version specific and not the EPP site
-location "http://download.eclipse.org/eclipse/updates/4.7/R-4.7.2-201711300510/" { // tycho 1.1 depends on Oxygen.2
+location "https://download.eclipse.org/eclipse/updates/4.7/R-4.7.2-201711300510/" { // tycho 1.1 depends on Oxygen.2
 	org.eclipse.equinox.launcher lazy
 	org.eclipse.core.runtime.feature.feature.group lazy
 }
