@@ -7,7 +7,7 @@ target "JanuaryExamples" with source requirements
 // This set of examples is for the latest master branch build of January.
 // The examples are available for the released version of January on the
 // respective release branches (e.g. january_1_0 for the 1.0 release)
-location "https://download.eclipse.org/january/releasecandidates/2.3.1RC1/repository" january-2.3.1RC1 {
+location "https://download.eclipse.org/january/releasecandidates/2.3.1RC2/repository" january-2.3.1RC2 {
 	org.eclipse.january lazy
 }
 
