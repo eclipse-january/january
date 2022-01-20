@@ -53,6 +53,7 @@ public class InterfaceUtils {
 		for (Entry<Class<? extends Dataset>, Class<? extends CompoundDataset>> e : interface2Compound.entrySet()) {
 			compound2Interface.put(e.getValue(), e.getKey());
 		}
+		compound2Interface.put(RGBByteDataset.class, ByteDataset.class);
 		compound2Interface.put(RGBDataset.class, ShortDataset.class);
 		compound2Interface.put(ComplexFloatDataset.class, FloatDataset.class);
 		compound2Interface.put(ComplexDoubleDataset.class, DoubleDataset.class);
@@ -90,6 +91,7 @@ public class InterfaceUtils {
 		result.put(BooleanDataset.class, Boolean.class);
 		result.put(StringDataset.class, String.class);
 		result.put(ComplexDoubleDataset.class, Double.class); // XXX must be before compound double
+		result.put(RGBByteDataset.class, Byte.class); // XXX must be before compound byte
 		result.put(RGBDataset.class, Short.class); // XXX must be before compound short
 		result.put(ByteDataset.class, Byte.class);
 		result.put(ShortDataset.class, Short.class);
@@ -145,7 +147,7 @@ public class InterfaceUtils {
 	}
 
 	/**
-	 * @param object
+	 * @param object input
 	 * @param dInterface dataset interface
 	 * @return true if object is an instance of dataset interface
 	 */
@@ -154,7 +156,7 @@ public class InterfaceUtils {
 	}
 
 	/**
-	 * @param clazz
+	 * @param clazz dataset class
 	 * @param dInterface dataset interface
 	 * @return true if given class implements interface
 	 */
@@ -163,7 +165,7 @@ public class InterfaceUtils {
 	}
 
 	/**
-	 * @param clazz
+	 * @param clazz dataset class
 	 * @param dInterfaces dataset interface
 	 * @return true if given class implements any of the interfaces
 	 */
@@ -178,7 +180,7 @@ public class InterfaceUtils {
 	}
 
 	/**
-	 * @param clazz
+	 * @param clazz element class
 	 * @return true if supported as an element class (note, Object is not supported)
 	 */
 	public static boolean isElementSupported(Class<? extends Object> clazz) {
@@ -197,7 +199,7 @@ public class InterfaceUtils {
 	 * Get dataset interface from an object. The following are supported: Java Number objects, Apache common math Complex
 	 * objects, Java arrays and lists, Dataset objects and ILazyDataset object
 	 *
-	 * @param obj
+	 * @param obj input
 	 * @return dataset interface 
 	 */
 	public static Class <? extends Dataset> getInterface(Object obj) {
@@ -238,7 +240,7 @@ public class InterfaceUtils {
 
 	/**
 	 * Find sub-interface of Dataset
-	 * @param clazz
+	 * @param clazz dataset class
 	 * @return sub-interface or null if given class is Dataset.class
 	 * @since 2.3
 	 */
@@ -265,8 +267,8 @@ public class InterfaceUtils {
 	}
 
 	/**
-	 * @param elementsPerItem
-	 * @param elementClass
+	 * @param elementsPerItem item size
+	 * @param elementClass element class
 	 * @return dataset interface 
 	 */
 	public static Class<? extends Dataset> getInterfaceFromClass(int elementsPerItem, Class<?> elementClass) {
@@ -317,7 +319,7 @@ public class InterfaceUtils {
 	}
 
 	/**
-	 * @param clazz
+	 * @param clazz dataset class
 	 * @return true if dataset interface is not compound or complex
 	 */
 	public static boolean isElemental(Class<? extends Dataset> clazz) {
@@ -325,7 +327,7 @@ public class InterfaceUtils {
 	}
 
 	/**
-	 * @param clazz
+	 * @param clazz dataset class
 	 * @return true if dataset interface is compound (not complex)
 	 */
 	public static boolean isCompound(Class<? extends Dataset> clazz) {
@@ -350,7 +352,7 @@ public class InterfaceUtils {
 	}
 
 	/**
-	 * @param clazz
+	 * @param clazz dataset class
 	 * @return true if dataset interface has integer elements
 	 */
 	public static boolean isInteger(Class<? extends Dataset> clazz) {
@@ -359,7 +361,7 @@ public class InterfaceUtils {
 	}
 
 	/**
-	 * @param clazz
+	 * @param clazz dataset class
 	 * @return true if dataset interface has floating point elements
 	 */
 	public static boolean isFloating(Class<? extends Dataset> clazz) {
@@ -376,7 +378,7 @@ public class InterfaceUtils {
 	}
 
 	/**
-	 * @param clazz
+	 * @param clazz dataset class
 	 * @return true if dataset interface has complex items
 	 */
 	public static boolean isComplex(Class<? extends Dataset> clazz) {
@@ -384,7 +386,7 @@ public class InterfaceUtils {
 	}
 
 	/**
-	 * @param clazz
+	 * @param clazz dataset class
 	 * @return true if dataset interface has numerical elements
 	 */
 	public static boolean isNumerical(Class<? extends Dataset> clazz) {
@@ -393,13 +395,13 @@ public class InterfaceUtils {
 	}
 
 	/**
-	 * @param clazz
+	 * @param clazz dataset class
 	 * @return number of elements per item
 	 */
 	public static int getElementsPerItem(Class<? extends Dataset> clazz) {
 		if (isComplex(clazz)) {
 			return 2;
-		} else if (RGBDataset.class.isAssignableFrom(clazz)) {
+		} else if (RGBByteDataset.class.isAssignableFrom(clazz) || RGBDataset.class.isAssignableFrom(clazz)) {
 			return 3;
 		}
 		if (CompoundDataset.class.isAssignableFrom(clazz)) {
@@ -478,7 +480,7 @@ public class InterfaceUtils {
 	 * The largest dataset type suitable for a summation of around a few thousand items without changing from the "kind"
 	 * of dataset
 	 *
-	 * @param otype
+	 * @param a dataset
 	 * @return largest dataset type available for given dataset type
 	 */
 	public static Class<? extends Dataset> getLargestInterface(Dataset a) {
@@ -504,8 +506,7 @@ public class InterfaceUtils {
 	 * Find floating point dataset interface that best fits given types. The best type takes into account complex and array
 	 * datasets
 	 *
-	 * @param clazz
-	 *            old dataset class
+	 * @param clazz dataset class
 	 * @return best dataset interface
 	 */
 	public static Class<? extends Dataset> getBestFloatInterface(Class<? extends Dataset> clazz) {
@@ -520,7 +521,7 @@ public class InterfaceUtils {
 	/**
 	 * @param isize
 	 *            number of elements in an item
-	 * @param dtype
+	 * @param clazz dataset interface
 	 * @return length of single item in bytes
 	 */
 	public static int getItemBytes(final int isize, Class<? extends Dataset> clazz) {
@@ -532,7 +533,7 @@ public class InterfaceUtils {
 	/**
 	 * Convert double array to primitive array
 	 * @param clazz dataset interface
-	 * @param x
+	 * @param x values
 	 * @return biggest native primitive array if integer. Return null if not interface is not numerical
 	 */
 	public static Object fromDoublesToBiggestPrimitives(Class<? extends Dataset> clazz, double[] x) {
@@ -564,7 +565,7 @@ public class InterfaceUtils {
 	/**
 	 * Convert double to number
 	 * @param clazz dataset interface
-	 * @param x
+	 * @param x value
 	 * @return number if integer. Return null if not interface is not numerical
 	 * @since 2.3
 	 */
@@ -588,7 +589,7 @@ public class InterfaceUtils {
 	/**
 	 * Convert double to number
 	 * @param clazz dataset interface
-	 * @param x
+	 * @param x value
 	 * @return biggest number if integer. Return null if not interface is not numerical
 	 */
 	public static Number fromDoubleToBiggestNumber(Class<? extends Dataset> clazz, double x) {
@@ -607,7 +608,7 @@ public class InterfaceUtils {
 
 	/**
 	 * @param clazz dataset interface
-	 * @param x
+	 * @param x value
 	 * @return biggest native primitive if integer
 	 * @since 2.3
 	 */

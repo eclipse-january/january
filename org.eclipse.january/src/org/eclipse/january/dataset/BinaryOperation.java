@@ -18,38 +18,38 @@ package org.eclipse.january.dataset;
 public interface BinaryOperation extends IOperation {
 
 	/**
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return a op b
 	 */
 	boolean booleanOperate(long a, long b);
 
 	/**
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return a op b
 	 */
 	long longOperate(long a, long b);
 
 	/**
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return a op b
 	 */
 	double doubleOperate(double a, double b);
 
 	/**
 	 * @param out holds (ra, ia) op (rb, ib)
-	 * @param ra
-	 * @param ia
-	 * @param rb
-	 * @param ib
+	 * @param ra real part of first operand
+	 * @param ia imaginary part of first operand
+	 * @param rb real part of second operand
+	 * @param ib imaginary part of second operand
 	 */
 	void complexOperate(double[] out, double ra, double ia, double rb, double ib);
 
 	/**
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return string to represent output
 	 * @since 2.0
 	 */
@@ -79,16 +79,10 @@ public interface BinaryOperation extends IOperation {
 			return DTypeUtils.toLong(doubleOperate(a, b));
 		}
 
-		/**
-		 * override this
-		 */
 		@Override
 		public void complexOperate(double[] out, double ra, double ia, double rb, double ib) {
 		}
 
-		/**
-		 * override this
-		 */
 		@Override
 		public String toString(String string, String string2) {
 			return null;

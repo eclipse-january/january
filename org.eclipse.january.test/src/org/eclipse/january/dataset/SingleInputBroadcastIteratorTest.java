@@ -9,11 +9,6 @@
 
 package org.eclipse.january.dataset;
 
-import org.eclipse.january.dataset.CompoundDataset;
-import org.eclipse.january.dataset.Dataset;
-import org.eclipse.january.dataset.DatasetFactory;
-import org.eclipse.january.dataset.SingleInputBroadcastIterator;
-import org.eclipse.january.dataset.Slice;
 import org.junit.Assert;
 import org.junit.Test;
 

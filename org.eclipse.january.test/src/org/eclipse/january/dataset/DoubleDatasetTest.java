@@ -18,12 +18,6 @@ import static org.junit.Assert.fail;
 import org.apache.commons.math3.complex.Complex;
 import org.eclipse.january.MetadataException;
 import org.eclipse.january.asserts.TestUtils;
-import org.eclipse.january.dataset.Dataset;
-import org.eclipse.january.dataset.DatasetFactory;
-import org.eclipse.january.dataset.DoubleDataset;
-import org.eclipse.january.dataset.IndexIterator;
-import org.eclipse.january.dataset.Maths;
-import org.eclipse.january.dataset.Slice;
 import org.eclipse.january.metadata.StatisticsMetadata;
 import org.junit.Test;
 

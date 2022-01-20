@@ -59,31 +59,32 @@ class MathsPreface {
 	/**
 	 * Unwrap result from mathematical methods if necessary
 	 * 
-	 * @param o
-	 * @param a
+	 * @param o dataset
+	 * @param a input
 	 * @return a dataset if a is a dataset or an object of the same class as o
 	 */
 	public static Object unwrap(final Dataset o, final Object a) {
-		return a instanceof Dataset ? o : o.getObjectAbs(o.getOffset());
+		return a instanceof Dataset ? o : o.getObject();
 	}
 
 	/**
 	 * Unwrap result from mathematical methods if necessary
 	 * 
-	 * @param o
-	 * @param a
+	 * @param o dataset
+	 * @param a first input
+	 * @param b second input
 	 * @return a dataset if either a and b are datasets or an object of the same
 	 *         class as o
 	 */
 	public static Object unwrap(final Dataset o, final Object a, final Object b) {
-		return (a instanceof Dataset || b instanceof Dataset) ? o : o.getObjectAbs(o.getOffset());
+		return (a instanceof Dataset || b instanceof Dataset) ? o : o.getObject();
 	}
 
 	/**
 	 * Unwrap result from mathematical methods if necessary
 	 * 
-	 * @param o
-	 * @param a
+	 * @param o dataset
+	 * @param a inputs
 	 * @return a dataset if any inputs are datasets or an object of the same
 	 *         class as o
 	 */
@@ -95,12 +96,12 @@ class MathsPreface {
 				break;
 			}
 		}
-		return isAnyDataset ? o : o.getObjectAbs(o.getOffset());
+		return isAnyDataset ? o : o.getObject();
 	}
 
 	/**
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return floor divide of a and b
 	 */
 	public static Dataset floorDivide(final Object a, final Object b) {
@@ -108,8 +109,8 @@ class MathsPreface {
 	}
 
 	/**
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @param o
 	 *            output can be null - in which case, a new dataset is created
 	 * @return floor divide of a and b
@@ -119,8 +120,8 @@ class MathsPreface {
 	}
 
 	/**
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @return floor remainder of a and b
 	 */
 	public static Dataset floorRemainder(final Object a, final Object b) {
@@ -128,8 +129,8 @@ class MathsPreface {
 	}
 
 	/**
-	 * @param a
-	 * @param b
+	 * @param a first operand
+	 * @param b second operand
 	 * @param o
 	 *            output can be null - in which case, a new dataset is created
 	 * @return floor remainder of a and b
@@ -145,7 +146,7 @@ class MathsPreface {
 	/**
 	 * Find reciprocal from dataset
 	 * 
-	 * @param a
+	 * @param a single operand
 	 * @return reciprocal dataset
 	 */
 	public static Dataset reciprocal(final Object a) {
@@ -155,7 +156,7 @@ class MathsPreface {
 	/**
 	 * Find reciprocal from dataset
 	 * 
-	 * @param a
+	 * @param a single operand
 	 * @param o
 	 *            output can be null - in which case, a new dataset is created
 	 * @return reciprocal dataset
@@ -168,7 +169,7 @@ class MathsPreface {
 	/**
 	 * abs - absolute value of each element
 	 * 
-	 * @param a
+	 * @param a single operand
 	 * @return dataset
 	 */
 	public static Dataset abs(final Object a) {
@@ -178,7 +179,7 @@ class MathsPreface {
 	/**
 	 * abs - absolute value of each element
 	 * 
-	 * @param a
+	 * @param a single operand
 	 * @param o
 	 *            output can be null - in which case, a new dataset is created
 	 * @return dataset
@@ -436,7 +437,7 @@ class MathsPreface {
 	}
 
 	/**
-	 * @param a
+	 * @param a single operand
 	 * @return a^*, complex conjugate of a
 	 */
 	public static Dataset conjugate(final Object a) {
@@ -444,7 +445,7 @@ class MathsPreface {
 	}
 
 	/**
-	 * @param a
+	 * @param a single operand
 	 * @param o
 	 *            output can be null - in which case, a new dataset is created
 	 * @return a^*, complex conjugate of a
@@ -1050,7 +1051,7 @@ class MathsPreface {
 	/**
 	 * Create a dataset of the arguments from a complex dataset
 	 * 
-	 * @param a
+	 * @param a single operand
 	 * @return dataset of angles in radians
 	 */
 	public static Dataset angle(final Object a) {
@@ -1060,7 +1061,7 @@ class MathsPreface {
 	/**
 	 * Create a dataset of the arguments from a complex dataset
 	 * 
-	 * @param a
+	 * @param a single operand
 	 * @param inDegrees
 	 *            if true then return angles in degrees else in radians
 	 * @return dataset of angles
@@ -1072,7 +1073,7 @@ class MathsPreface {
 	/**
 	 * Create a dataset of the arguments from a complex dataset
 	 * 
-	 * @param a
+	 * @param a single operand
 	 * @param o
 	 *            output can be null - in which case, a new dataset is created
 	 * @return dataset of angles in radians
@@ -1084,7 +1085,7 @@ class MathsPreface {
 	/**
 	 * Create a dataset of the arguments from a complex dataset
 	 * 
-	 * @param a
+	 * @param a single operand
 	 * @param inDegrees
 	 *            if true then return angles in degrees else in radians
 	 * @param o
@@ -1359,8 +1360,7 @@ class MathsPreface {
 	 * Create a phase only dataset. NB it will contain NaNs if there are any
 	 * items with zero amplitude
 	 * 
-	 * @param a
-	 *            dataset
+	 * @param a single operand
 	 * @param keepZeros
 	 *            if true then zero items are returned as zero rather than NaNs
 	 * @return complex dataset where items have unit amplitude
@@ -1373,8 +1373,7 @@ class MathsPreface {
 	 * Create a phase only dataset. NB it will contain NaNs if there are any
 	 * items with zero amplitude
 	 * 
-	 * @param a
-	 *            dataset
+	 * @param a single operand
 	 * @param o
 	 *            output can be null - in which case, a new dataset is created
 	 * @param keepZeros
@@ -1463,8 +1462,8 @@ class MathsPreface {
 	 * no clone is done, the original object is returned directly. Otherwise a
 	 * new data set is returned, the sum of those passed in.
 	 * 
-	 * @param sets
-	 * @param requireClone
+	 * @param sets datasets
+	 * @param requireClone if true, clone destination to hold sum
 	 * @return sum of collection
 	 */
 	public static Dataset add(final Collection<IDataset> sets, boolean requireClone) {
@@ -1488,8 +1487,8 @@ class MathsPreface {
 	 * 
 	 * The first IDataset must cast to Dataset
 	 * 
-	 * @param sets
-	 * @param requireClone
+	 * @param sets datasets
+	 * @param requireClone if true, clone destination to hold product
 	 * @return product of collection
 	 */
 	public static Dataset multiply(final Collection<IDataset> sets, boolean requireClone) {
@@ -1529,8 +1528,6 @@ class MathsPreface {
 		assert x.getRank() == 1;
 		assert d.getRank() == 1;
 
-		DoubleDataset r = DatasetFactory.zeros(DoubleDataset.class, x0.getShape());
-
 		Monotonicity mono = Comparisons.findMonotonicity(x);
 		if (mono == Monotonicity.NOT_ORDERED) {
 			throw new IllegalArgumentException("Dataset x must be ordered");
@@ -1541,8 +1538,8 @@ class MathsPreface {
 			dx = (DoubleDataset) x.flatten();
 		}
 		double[] xa = dx.getData();
-		int s = xa.length - 1;
-		boolean isReversed = mono == Monotonicity.STRICTLY_DECREASING || mono == Monotonicity.NONINCREASING;
+		final int s = xa.length - 1;
+		final boolean isReversed = mono == Monotonicity.STRICTLY_DECREASING || mono == Monotonicity.NONINCREASING;
 		if (isReversed) {
 			double[] txa = xa.clone();
 			for (int i = 0; i <= s; i++) { // reverse order
@@ -1551,6 +1548,7 @@ class MathsPreface {
 			xa = txa;
 		}
 
+		DoubleDataset r = DatasetFactory.zeros(dx0, DoubleDataset.class);
 		IndexIterator it = dx0.getIterator();
 		int k = -1;
 		while (it.hasNext()) {
@@ -1564,8 +1562,9 @@ class MathsPreface {
 						r.setAbs(k, left.doubleValue());
 						continue;
 					}
-					final double d1 = xa[0] - xa[1];
-					double t = d1 - v + xa[0];
+					final double xa0 = xa[0];
+					final double d1 = xa0 - xa[1];
+					double t = d1 - v + xa0;
 					if (t >= 0) {
 						continue; // sets to zero
 					}
@@ -1576,8 +1575,9 @@ class MathsPreface {
 						r.setAbs(k, right.doubleValue());
 						continue;
 					}
-					final double d1 = xa[s] - xa[s - 1];
-					double t = d1 - v + xa[s];
+					final double xas = xa[s];
+					final double d1 = xas - xa[s - 1];
+					double t = d1 - v + xas;
 					if (t <= 0) {
 						continue; // sets to zero
 					}
@@ -1585,7 +1585,8 @@ class MathsPreface {
 					r.setAbs(k, t * d.getDouble(isReversed ? 0 : s));
 				} else {
 					i = -i - 1;
-					double t = (xa[i] - v) / (xa[i] - xa[i - 1]);
+					final double xai = xa[i];
+					double t = (xai - v) / (xai - xa[i - 1]);
 					if (isReversed) {
 						i = s - i;
 						r.setAbs(k, t * d.getDouble(i + 1) + (1 - t) * d.getDouble(i));
@@ -1860,8 +1861,11 @@ class MathsPreface {
 	 * @param values
 	 *            bilinear interpolated array
 	 * @param d
+	 *            input dataset
 	 * @param x0
+	 *            coordinate
 	 * @param x1
+	 *            coordinate
 	 */
 	public static void interpolate(final double[] values, final CompoundDataset d, final double x0, final double x1) {
 		final int[] s = d.getShapeRef();
@@ -1944,7 +1948,7 @@ class MathsPreface {
 	}
 
 	/**
-	 * Linearly interpolate a value at a point in a n-D dataset. The dataset is
+	 * Linearly interpolate a value at a point in an n-D dataset. The dataset is
 	 * considered to have zero support outside its bounds. Thus points just
 	 * outside are interpolated from the boundary value to zero. The number of
 	 * coordinates must match the rank of the dataset.
@@ -1960,7 +1964,7 @@ class MathsPreface {
 	}
 
 	/**
-	 * Linearly interpolate a value at a point in a n-D dataset with a mask. The
+	 * Linearly interpolate a value at a point in an n-D dataset with a mask. The
 	 * dataset is considered to have zero support outside its bounds. Thus
 	 * points just outside are interpolated from the boundary value to zero. The
 	 * number of coordinates must match the rank of the dataset.
@@ -2067,7 +2071,9 @@ class MathsPreface {
 	 * @param values
 	 *            linearly interpolated array
 	 * @param d
+	 *            input dataset
 	 * @param x
+	 *            coordinates
 	 */
 	public static void interpolate(final double[] values, final CompoundDataset d, final double... x) {
 		int r = d.getRank();
@@ -2224,8 +2230,11 @@ class MathsPreface {
 	 * @param values
 	 *            bilinear interpolated array
 	 * @param d
+	 *            input dataset
 	 * @param x0
+	 *            coordinate
 	 * @param x1
+	 *            coordinate
 	 * @deprecated Use
 	 *             {@link #interpolate(double[], CompoundDataset, double, double)}
 	 */
@@ -2678,10 +2687,10 @@ class MathsPreface {
 	/**
 	 * Discrete difference of dataset along axis using finite difference
 	 * 
-	 * @param a
+	 * @param a dataset
 	 * @param n
 	 *            order of difference
-	 * @param axis
+	 * @param axis to take difference along
 	 * @return difference
 	 */
 	public static Dataset difference(Dataset a, final int n, int axis) {
@@ -2723,51 +2732,37 @@ class MathsPreface {
 		return ds;
 	}
 
-	private static double SelectedMean(Dataset data, int Min, int Max) {
-
+	private static double selectedMean(Dataset data, int min, int max) {
 		double result = 0.0;
-		for (int i = Min, imax = data.getSize(); i <= Max; i++) {
+		for (int i = min, end = data.getSize() - 1; i <= max; i++) {
 			// clip i appropriately, imagine that effectively the two ends
-			// continue
-			// straight out.
-			int pos = i;
-			if (pos < 0) {
-				pos = 0;
-			} else if (pos >= imax) {
-				pos = imax - 1;
-			}
-			result += data.getElementDoubleAbs(pos);
+			// continue straight out.
+			int pos = Math.min(Math.max(0, i), end);
+			result += data.getDouble(pos);
 		}
 
 		// now the sum is complete, average the values.
-		result /= (Max - Min) + 1;
+		result /= (max - min) + 1;
 		return result;
 	}
 
-	private static void SelectedMeanArray(double[] out, Dataset data, int Min, int Max) {
+	private static void selectedMeanArray(double[] out, Dataset data, int min, int max) {
+		Arrays.fill(out, 0);
 		final int isize = out.length;
-		for (int j = 0; j < isize; j++)
-			out[j] = 0.;
-
-		for (int i = Min, imax = data.getSize(); i <= Max; i++) {
+		for (int i = min, end = data.getSize() - 1; i <= max; i++) {
 			// clip i appropriately, imagine that effectively the two ends
-			// continue
-			// straight out.
-			int pos = i * isize;
-			if (pos < 0) {
-				pos = 0;
-			} else if (pos >= imax) {
-				pos = imax - isize;
+			// continue straight out.
+			int off = data.get1DIndex(Math.min(Math.max(0, i), end));
+			for (int j = 0; j < isize; j++) {
+				out[j] += data.getElementDoubleAbs(off++);
 			}
-			for (int j = 0; j < isize; j++)
-				out[j] += data.getElementDoubleAbs(pos + j);
 		}
 
 		// now the sum is complete, average the values.
-		double norm = 1. / (Max - Min + 1.);
-		for (int j = 0; j < isize; j++)
+		double norm = 1. / (max - min + 1.);
+		for (int j = 0; j < isize; j++) {
 			out[j] *= norm;
-
+		}
 	}
 
 	/**
@@ -2821,10 +2816,10 @@ class MathsPreface {
 		final int isize = y.getElementsPerItem();
 		if (isize == 1) {
 			for (int i = 0, imax = x.getSize(); i < imax; i++) {
-				double LeftValue = SelectedMean(y, i - n, i - 1);
-				double RightValue = SelectedMean(y, i + 1, i + n);
-				double LeftPosition = SelectedMean(x, i - n, i - 1);
-				double RightPosition = SelectedMean(x, i + 1, i + n);
+				double LeftValue = selectedMean(y, i - n, i - 1);
+				double RightValue = selectedMean(y, i + 1, i + n);
+				double LeftPosition = selectedMean(x, i - n, i - 1);
+				double RightPosition = selectedMean(x, i + 1, i + n);
 
 				// now the values and positions are calculated, the derivative
 				// can be
@@ -2835,10 +2830,10 @@ class MathsPreface {
 			double[] leftValues = new double[isize];
 			double[] rightValues = new double[isize];
 			for (int i = 0, imax = x.getSize(); i < imax; i++) {
-				SelectedMeanArray(leftValues, y, i - n, i - 1);
-				SelectedMeanArray(rightValues, y, i + 1, i + n);
-				double delta = SelectedMean(x, i - n, i - 1);
-				delta = 1. / (SelectedMean(x, i + 1, i + n) - delta);
+				selectedMeanArray(leftValues, y, i - n, i - 1);
+				selectedMeanArray(rightValues, y, i + 1, i + n);
+				double delta = selectedMean(x, i - n, i - 1);
+				delta = 1. / (selectedMean(x, i + 1, i + n) - delta);
 				for (int j = 0; j < isize; j++) {
 					rightValues[j] -= leftValues[j];
 					rightValues[j] *= delta;
@@ -2856,8 +2851,8 @@ class MathsPreface {
 	/**
 	 * Discrete difference of dataset along axis using finite central difference
 	 * 
-	 * @param a
-	 * @param axis
+	 * @param a dataset
+	 * @param axis to take difference along
 	 * @return difference
 	 */
 	public static Dataset centralDifference(Dataset a, int axis) {
@@ -3132,7 +3127,7 @@ class MathsPreface {
 	/**
 	 * Calculate gradient (or partial derivatives) by central difference
 	 * 
-	 * @param y
+	 * @param y dataset
 	 * @param x
 	 *            one or more datasets for dependent variables
 	 * @return a list of datasets (one for each dimension in y)

@@ -29,7 +29,7 @@ public class ContiguousIteratorWithPosition extends IndexIterator {
 	 * Constructor for an iterator over the items of a dataset that are
 	 * within the dimensions
 	 *
-	 * @param shape
+	 * @param shape to use
 	 * @param length of entire data array
 	 */
 	public ContiguousIteratorWithPosition(final int[] shape, final int length) {
@@ -40,7 +40,7 @@ public class ContiguousIteratorWithPosition extends IndexIterator {
 	 * Constructor for an iterator over the items of a dataset that are
 	 * within the dimensions
 	 *
-	 * @param shape
+	 * @param shape to use
 	 * @param length of entire data array
 	 * @param isize number of elements in an item
 	 */

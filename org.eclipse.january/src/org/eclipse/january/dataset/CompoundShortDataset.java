@@ -17,6 +17,8 @@ package org.eclipse.january.dataset;
 import java.util.Arrays;
 
 import org.apache.commons.math3.complex.Complex;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Extend compound dataset for short values // PRIM_TYPE
@@ -24,6 +26,8 @@ import org.apache.commons.math3.complex.Complex;
 public class CompoundShortDataset extends AbstractCompoundDataset {
 	// pin UID to base class
 	private static final long serialVersionUID = Dataset.serialVersionUID;
+
+	private static final Logger logger = LoggerFactory.getLogger(CompoundShortDataset.class);
 
 	protected short[] data; // subclass alias // PRIM_TYPE
 
@@ -312,8 +316,8 @@ public class CompoundShortDataset extends AbstractCompoundDataset {
 	 * Create a 1D dataset from an object which could be a Java list, array (of arrays...) or Number. Ragged
 	 * sequences or arrays are padded with zeros.
 	 *
-	 * @param itemSize
-	 * @param obj
+	 * @param itemSize item size
+	 * @param obj object
 	 * @return dataset with contents given by input
 	 */
 	public static CompoundShortDataset createFromObject(final int itemSize, final Object obj) {
@@ -364,7 +368,7 @@ public class CompoundShortDataset extends AbstractCompoundDataset {
 
 	/**
 	 * Create a compound dataset using last dimension of given dataset
-	 * @param a
+	 * @param a dataset
 	 * @param shareData if true, then share data when possible otherwise copy it
 	 * @return compound dataset
 	 */
@@ -476,7 +480,7 @@ public class CompoundShortDataset extends AbstractCompoundDataset {
 	 *
 	 * @param index
 	 *            absolute index
-	 * @param values
+	 * @param values output destination
 	 */
 	public void getAbs(final int index, final short[] values) { // PRIM_TYPE
 		for (int i = 0; i < isize; i++) {
@@ -905,7 +909,7 @@ public class CompoundShortDataset extends AbstractCompoundDataset {
 	/**
 	 * Set values at first position. The dataset must not be null
 	 *
-	 * @param d
+	 * @param d input source
 	 * @since 2.0
 	 */
 	public void setItem(final short[] d) { // PRIM_TYPE
@@ -918,8 +922,8 @@ public class CompoundShortDataset extends AbstractCompoundDataset {
 	/**
 	 * Set values at given position. The dataset must be 1D
 	 *
-	 * @param d
-	 * @param i
+	 * @param d input source
+	 * @param i position in first dimension
 	 */
 	public void setItem(final short[] d, final int i) { // PRIM_TYPE
 		if (d.length > isize) {
@@ -931,9 +935,9 @@ public class CompoundShortDataset extends AbstractCompoundDataset {
 	/**
 	 * Set values at given position. The dataset must be 1D
 	 *
-	 * @param d
-	 * @param i
-	 * @param j
+	 * @param d input source
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 */
 	public void setItem(final short[] d, final int i, final int j) { // PRIM_TYPE
 		if (d.length > isize) {
@@ -945,8 +949,8 @@ public class CompoundShortDataset extends AbstractCompoundDataset {
 	/**
 	 * Set values at given position
 	 *
-	 * @param d
-	 * @param pos
+	 * @param d input source
+	 * @param pos position
 	 */
 	public void setItem(final short[] d, final int... pos) { // PRIM_TYPE
 		if (d.length > isize) {

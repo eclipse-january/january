@@ -22,6 +22,7 @@ public abstract class BooleanIterator extends IndexIterator {
 	 * Create a boolean iterator that stops at every position in the choice dataset with a true value
 	 * @param a primary dataset
 	 * @param c choice dataset, can be null to choose all
+	 * @return boolean iterator
 	 * @since 2.1
 	 */
 	public static BooleanIterator createIterator(Dataset a, Dataset c) {
@@ -33,6 +34,7 @@ public abstract class BooleanIterator extends IndexIterator {
 	 * @param a primary dataset
 	 * @param c choice dataset, can be null to choose all
 	 * @param o output dataset, can be null
+	 * @return boolean iterator
 	 * @since 2.1
 	 */
 	public static BooleanIterator createIterator(Dataset a, Dataset c, Dataset o) {
@@ -46,6 +48,7 @@ public abstract class BooleanIterator extends IndexIterator {
 	 * @param a primary dataset
 	 * @param c choice dataset, can be null to choose all
 	 * @param o output dataset, can be null
+	 * @return boolean iterator
 	 * @since 2.1
 	 */
 	public static BooleanIterator createIterator(boolean v, Dataset a, Dataset c, Dataset o) {
@@ -60,6 +63,7 @@ public abstract class BooleanIterator extends IndexIterator {
 	 * @param c choice dataset, can be null to choose all
 	 * @param o output dataset, can be null
 	 * @param createIfNull if true create the output dataset if that is null
+	 * @return boolean iterator
 	 * @since 2.1
 	 */
 	public static BooleanIterator createIterator(boolean v, Dataset a, Dataset c, Dataset o, boolean createIfNull) {

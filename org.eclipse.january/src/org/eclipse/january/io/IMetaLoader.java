@@ -27,14 +27,15 @@ public interface IMetaLoader {
 	/**
 	 * Loads the meta data from the file but not all the data.
 	 * This can be read in more cheaply than the entire data.
-	 * @param mon
+	 * @param mon can be null
+	 * @throws IOException when cannot load metadata
 	 */
 	public void loadMetadata(IMonitor mon) throws IOException ;
-	
-    /**
-     * Returns an object containing some data about the data file
-     * to be read in. 
-      * @return IMetadata
-     */
+
+	/**
+	 * Returns an object containing some data about the data file to be read in
+	 *
+	 * @return IMetadata
+	 */
 	public IMetadata getMetadata();
 }

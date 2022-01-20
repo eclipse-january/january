@@ -23,21 +23,20 @@ public interface ILazySaver extends ILazyLoader {
 
 	/**
 	 * Initialize dataset in file
-	 * @throws IOException
+	 * @throws IOException when cannot open destination
 	 */
 	public void initialize() throws IOException;
 
 	/**
-	 * 
 	 * @return true if file is writeable
 	 */
 	public boolean isFileWriteable();
 
 	/**
-	 * @param mon
-	 * @param data
-	 * @param slice
-	 * @throws IOException
+	 * @param mon can be null
+	 * @param data to use
+	 * @param slice destination where to set with items of data
+	 * @throws IOException when cannot write data
 	 */
 	public void setSlice(IMonitor mon, IDataset data, SliceND slice) throws IOException;
 }

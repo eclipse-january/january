@@ -21,7 +21,7 @@ public class RunningAverage {
 	private int count = 1;
 
 	/**
-	 * @param dataset
+	 * @param dataset input
 	 */
 	public RunningAverage(IDataset dataset) {
 		average = (DoubleDataset) (dataset.getElementClass().equals(Double.class) ? DatasetUtils.convertToDataset(dataset).clone()
@@ -36,7 +36,7 @@ public class RunningAverage {
 
 	/**
 	 * Update average
-	 * @param dataset
+	 * @param dataset input
 	 */
 	public void update(IDataset dataset) {
 		count++;

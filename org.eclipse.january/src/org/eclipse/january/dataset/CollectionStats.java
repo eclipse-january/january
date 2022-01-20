@@ -29,9 +29,9 @@ public class CollectionStats {
 	/**
 	 * Used to get a mean image from a set of images for instance.
 	 * 
-	 * @param sets
-	 * @return mean data set of the same shape as those passed in.
-	 * @throws Exception
+	 * @param sets datasets
+	 * @return mean dataset of the same shape as those passed in
+	 * @throws Exception when datasets have different shapes
 	 */
 	public static Dataset mean(final List<IDataset> sets) throws Exception {
 		
@@ -46,9 +46,9 @@ public class CollectionStats {
 	/**
 	 * Used to get a median image from a set of images for instance.
 	 * 
-	 * @param sets
-	 * @return median data set of the same shape as those passed in.
-	 * @throws Exception
+	 * @param sets datasets
+	 * @return median dataset of the same shape as those passed in
+	 * @throws Exception when datasets have different shapes
 	 */
 	public static Dataset median(final List<IDataset> sets) throws Exception {
 		
@@ -63,43 +63,42 @@ public class CollectionStats {
 	/**
 	 * Used to get a median image from a set of images for instance.
 	 * 
-	 * @param sets
+	 * @param sets datasets
 	 * @return median data set of the same shape as those passed in.
-	 * @throws Exception
+	 * @throws Exception when datasets have different shapes
 	 */
-	private static Dataset process(final List<IDataset> sets,
-			                               final StatFunction   function) throws Exception {
+	private static Dataset process(final List<IDataset> sets, final StatFunction function) throws Exception {
 		
 		int[] shape = assertShapes(sets);
 		final DoubleDataset result = DatasetFactory.zeros(DoubleDataset.class, shape);
-        final double[] rData = result.getData();
-        final IndexIterator iter = new PositionIterator(shape);
-        final int[] pos = iter.getPos();
+		final double[] rData = result.getData();
+		final IndexIterator iter = new PositionIterator(shape);
+		final int[] pos = iter.getPos();
 
-        final int len = sets.size();
+		final int len = sets.size();
 		final DoubleDataset pixel = DatasetFactory.zeros(DoubleDataset.class, len);
 		final double[] pData = pixel.getData();
-        for (int i = 0; iter.hasNext(); i++) {
+		for (int i = 0; iter.hasNext(); i++) {
 			for (int ipix = 0; ipix < len; ipix++) {
 				pData[ipix] = sets.get(ipix).getDouble(pos);
 			}
 			pixel.setDirty();
 			rData[i] = function.evaluate(pixel);
 		}
-        
-        return result;
+
+		return result;
 	}
 
-	private static int[] assertShapes(final Collection<IDataset> sets) throws Exception{
+	private static int[] assertShapes(final Collection<IDataset> sets) throws Exception {
 		
-		if (sets.size()<2) throw new Exception("You must take the median of at least two sets!");
+		if (sets.size()<2) throw new IllegalArgumentException("You must take the median of at least two sets!");
 		
 		final Iterator<IDataset> it = sets.iterator();
 		final int[] shape = it.next().getShape();
 		while (it.hasNext()) {
 			IDataset d = it.next();
 			final int[] nextShape = d.getShape();
-			if (!Arrays.equals(shape, nextShape)) throw new Exception("All data sets should be the same shape!");
+			if (!Arrays.equals(shape, nextShape)) throw new IllegalArgumentException("All data sets should be the same shape!");
 		}
 		return shape;
 	}

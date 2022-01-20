@@ -13,6 +13,7 @@ target "January-baseline" with source requirements
 
 location "https://download.eclipse.org/january/releases/2.2.2/repository/" january-2.2 {
 	org.eclipse.january lazy
+	org.eclipse.january.assert lazy
 }
 
 location "https://download.eclipse.org/tools/orbit/downloads/drops/R20180606145124/repository" eclipse-orbit-photon {

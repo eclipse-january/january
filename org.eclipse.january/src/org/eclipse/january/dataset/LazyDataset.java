@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.eclipse.january.DatasetException;
 import org.eclipse.january.IMonitor;
@@ -32,9 +33,13 @@ import org.eclipse.january.metadata.OriginMetadata;
 import org.eclipse.january.metadata.Reshapeable;
 import org.eclipse.january.metadata.Sliceable;
 import org.eclipse.january.metadata.Transposable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class LazyDataset extends LazyDatasetBase implements Serializable, Cloneable {
 	private static final long serialVersionUID = 2467865859867440242L;
+
+	private static final Logger logger = LoggerFactory.getLogger(LazyDataset.class);
 
 	protected Map<Class<? extends MetadataType>, List<MetadataType>> oMetadata = null;
 	protected int[] oShape; // original shape
@@ -60,11 +65,11 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	/**
 	 * Create a lazy dataset
-	 * @param loader
-	 * @param name
-	 * @param elements
-	 * @param clazz dataset interface
-	 * @param shape
+	 * @param loader lazy loader
+	 * @param name of dataset
+	 * @param elements item size
+	 * @param clazz dataset sub-interface
+	 * @param shape dataset shape
 	 * @since 2.3
 	 */
 	public LazyDataset(ILazyLoader loader, String name, int elements, Class<? extends Dataset> clazz, int... shape) {
@@ -83,10 +88,10 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	/**
 	 * Create a lazy dataset
-	 * @param loader
-	 * @param name
-	 * @param clazz dataset interface
-	 * @param shape
+	 * @param loader lazy loader
+	 * @param name of dataset
+	 * @param clazz dataset sub-interface
+	 * @param shape dataset shape
 	 * @since 2.3
 	 */
 	public LazyDataset(ILazyLoader loader, String name, Class<? extends Dataset> clazz, int... shape) {
@@ -95,11 +100,11 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	/**
 	 * Create a lazy dataset
-	 * @param name
+	 * @param name of dataset
 	 * @param dtype dataset type
-	 * @param elements
-	 * @param shape
-	 * @param loader
+	 * @param elements item size
+	 * @param shape dataset shape
+	 * @param loader lazy loader
 	 * @deprecated Use {@link #LazyDataset(ILazyLoader, String, int, Class, int[])}
 	 */
 	@Deprecated
@@ -109,10 +114,10 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	/**
 	 * Create a lazy dataset
-	 * @param name
+	 * @param name of dataset
 	 * @param dtype dataset type
-	 * @param shape
-	 * @param loader
+	 * @param shape dataset shape
+	 * @param loader lazy loader
 	 * @deprecated Use {@link #LazyDataset(ILazyLoader, String, int, Class, int[])}
 	 */
 	@Deprecated
@@ -140,7 +145,8 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	/**
 	 * Create a lazy dataset based on in-memory data (handy for testing)
-	 * @param dataset
+	 * @param dataset input
+	 * @return lazy dataset
 	 */
 	public static LazyDataset createLazyDataset(final Dataset dataset) {
 		return new LazyDataset(new ILazyLoader() {
@@ -166,15 +172,15 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	}
 
 	/**
-	 * Can return -1 for unknown
+	 * Can return -1 when dataset interface is not defined
 	 */
 	@Override
 	public int getDType() {
-		return DTypeUtils.getDType(clazz);
+		return clazz == null ? -1 : DTypeUtils.getDType(clazz);
 	}
 
 	/**
-	 * @return dataset interface that supports element class and number of elements
+	 * @return dataset interface that supports element class and number of elements. Can be null when undefined
 	 * @since 2.3
 	 */
 	public Class<? extends Dataset> getInterface() {
@@ -183,7 +189,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	/**
 	 * Set interface
-	 * @param clazz
+	 * @param clazz dataset sub-interface
 	 * @since 2.3
 	 */
 	public void setInterface(Class<? extends Dataset> clazz) {
@@ -233,9 +239,9 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 		int result = super.hashCode();
 		result = prime * result + Arrays.hashCode(oShape);
 		result = prime * result + (int) (size ^ (size >>> 32));
-		result = prime * result + clazz.hashCode();
+		result = prime * result + Objects.hashCode(clazz);
 		result = prime * result + isize;
-		result = prime * result + ((loader == null) ? 0 : loader.hashCode());
+		result = prime * result + Objects.hashCode(loader);
 		result = prime * result + Arrays.hashCode(begSlice);
 		result = prime * result + Arrays.hashCode(delSlice);
 		result = prime * result + Arrays.hashCode(sShape);
@@ -260,7 +266,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 		if (size != other.size) {
 			return false;
 		}
-		if (!clazz.equals(other.clazz)) {
+		if (!Objects.equals(clazz, other.clazz)) {
 			return false;
 		}
 		if (isize != other.isize) {
@@ -314,9 +320,9 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	@Override
 	public Dataset getSlice(Slice... slice) throws DatasetException {
 		if (slice == null || slice.length == 0) {
-			return getSlice(null, new SliceND(shape));
+			return internalGetSlice(null, new SliceND(shape));
 		}
-		return getSlice(null, new SliceND(shape, slice));
+		return internalGetSlice(null, new SliceND(shape, slice));
 	}
 
 	@Override
@@ -327,9 +333,9 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	@Override
 	public Dataset getSlice(IMonitor monitor, Slice... slice) throws DatasetException {
 		if (slice == null || slice.length == 0) {
-			return getSlice(monitor, new SliceND(shape));
+			return internalGetSlice(monitor, new SliceND(shape));
 		}
-		return getSlice(monitor, new SliceND(shape, slice));
+		return internalGetSlice(monitor, new SliceND(shape, slice));
 	}
 
 	@Override
@@ -360,13 +366,18 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	@Override
 	public LazyDataset getSliceView(int[] start, int[] stop, int[] step) {
-		return getSliceView(new SliceND(shape, start, stop, step));
+		return internalGetSliceView(new SliceND(shape, start, stop, step));
 	}
 
 	@Override
 	public LazyDataset getSliceView(SliceND slice) {
+		checkSliceND(slice);
+		return internalGetSliceView(slice);
+	}
+
+	protected LazyDataset internalGetSliceView(SliceND slice) {
 		LazyDataset view = clone();
-		if (slice.isAll()) {
+		if (slice == null || slice.isAll()) {
 			return view;
 		}
 
@@ -386,11 +397,17 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	@Override
 	public Dataset getSlice(IMonitor monitor, int[] start, int[] stop, int[] step) throws DatasetException {
-		return getSlice(monitor, new SliceND(shape, start, stop, step));
+		return internalGetSlice(monitor, new SliceND(shape, start, stop, step));
 	}
 
 	@Override
 	public Dataset getSlice(IMonitor monitor, SliceND slice) throws DatasetException {
+		checkSliceND(slice);
+
+		return internalGetSlice(monitor, slice);
+	}
+
+	protected Dataset internalGetSlice(IMonitor monitor, SliceND slice) throws DatasetException {
 		if (loader != null && !loader.isFileReadable()) {
 			return null;
 		}
@@ -399,17 +416,18 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 		Dataset a;
 		if (nslice == null) {
-			a = DatasetFactory.zeros(clazz, slice.getShape());
+			a = DatasetFactory.zeros(clazz == null ? DoubleDataset.class : clazz, slice == null ? shape : slice.getShape());
 		} else {
 			try {
 				a = DatasetUtils.convertToDataset(loader.getDataset(monitor, nslice));
 			} catch (IOException e) {
-				logger.error("Problem getting {}: {}", String.format("slice %s %s %s from %s", Arrays.toString(slice.getStart()), Arrays.toString(slice.getStop()),
+				logger.error("Problem getting {}: {}", slice == null ? "all" : String.format("slice %s %s %s from %s", Arrays.toString(slice.getStart()), Arrays.toString(slice.getStop()),
 								Arrays.toString(slice.getStep()), loader), e);
 				throw new DatasetException(e);
 			}
 		}
-		a.setName(name + AbstractDataset.BLOCK_OPEN + (nslice == null ? slice : nslice) + AbstractDataset.BLOCK_CLOSE);
+		a.setName(name + AbstractDataset.BLOCK_OPEN + (nslice == null ?
+				(slice == null ? "..." : slice) : nslice) + AbstractDataset.BLOCK_CLOSE);
 		if (metadata != null && a instanceof LazyDatasetBase) {
 			LazyDatasetBase ba = (LazyDatasetBase) a;
 			ba.metadata = copyMetadata();
@@ -427,11 +445,15 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 				a = a.getTransposedView(map);
 			}
 			if (padding != null) {
-				a.setShape(slice.getShape());
+				a.setShape(slice == null ? shape : slice.getShape());
 			}
 		}
-		a.addMetadata(MetadataFactory.createMetadata(OriginMetadata.class, this, nslice == null ? slice.convertToSlice() : nslice.convertToSlice(), oShape, null, name));
+		a.addMetadata(MetadataFactory.createMetadata(OriginMetadata.class, this, nslice == null ?
+				(slice == null ? null : slice.convertToSlice()) : nslice.convertToSlice(), oShape, null, name));
 
+		if (clazz == null) {
+			clazz = a.getClass();
+		}
 		return a;
 	}
 
@@ -554,7 +576,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	/**
 	 * Calculate absolute slice
-	 * @param slice
+	 * @param slice an n-D slice
 	 * @return true slice or null if zero-sized
 	 */
 	protected final SliceND calcTrueSlice(SliceND slice) {
@@ -664,14 +686,14 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	/**
 	 * Transform data so that it can be used in setSlice of saver
-	 * @param data
+	 * @param data input
 	 * @param tslice true slice 
 	 * @return data with dimensions adjusted and remapped 
 	 */
 	final IDataset transformInput(IDataset data, SliceND tslice) {
 		if (padding != null) { // remove padding
 			data = data.getSliceView();
-			int[] nshape = tslice.getShape();
+			int[] nshape = tslice == null ? shape : tslice.getShape();
 			data.setShape(nshape);
 		}
 
@@ -680,8 +702,8 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	/**
 	 * Store metadata items that has given annotation
-	 * @param origMetadata
-	 * @param aclazz
+	 * @param origMetadata original metadata
+	 * @param aclazz annotation class
 	 */
 	private void storeMetadata(Map<Class<? extends MetadataType>, List<MetadataType>> origMetadata, Class<? extends Annotation> aclazz) {
 		List<Class<? extends MetadataType>> mclazzes = findAnnotatedMetadata(aclazz);
@@ -756,8 +778,8 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	 * which calls a rolling function (like rmean) instead of slicing directly
 	 * to memory.
 	 * 
-	 * @param lazySet
-	 * @param dimension
+	 * @param lazySet lazy dataset
+	 * @param dimension to slice along
 	 * @return maximum size of dimension that can be sliced.
 	 */
 	public static int getMaxSliceLength(ILazyDataset lazySet, int dimension) {

@@ -463,7 +463,7 @@ public class StrideIteratorTest {
 
 		// 0D to 1D
 		b = DatasetFactory.createFromObject(2., 1).getBroadcastView(4);
-		r = DatasetFactory.zeros(b.getClass(), b.getShapeRef()).fill(b.getObjectAbs(0));
+		r = DatasetFactory.zeros(b.getClass(), b.getShapeRef()).fill(b.getObject());
 		checkSliced(r, b);
 
 		// 1D to 2D
@@ -481,7 +481,7 @@ public class StrideIteratorTest {
 		// compound datasets
 		// 0D to 1D
 		b = DatasetFactory.createCompoundDataset(1., 2., 3.).getBroadcastView(4);
-		r = DatasetFactory.zeros(b.getElementsPerItem(), b.getClass(), b.getShapeRef()).fill(b.getObjectAbs(0));
+		r = DatasetFactory.zeros(b.getElementsPerItem(), b.getClass(), b.getShapeRef()).fill(b.getObject());
 		checkSliced(r, b);
 
 		// 1D to 2D

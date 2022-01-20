@@ -22,7 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DTypeUtils {
-	protected static final Logger logger = LoggerFactory.getLogger(DTypeUtils.class);
+	private static final Logger logger = LoggerFactory.getLogger(DTypeUtils.class);
 
 	private static Map<Class<? extends Dataset>, Integer> createInterfaceMap() {
 		Map<Class<? extends Dataset>, Integer> map = new LinkedHashMap<>();
@@ -48,6 +48,7 @@ public class DTypeUtils {
 		map.put(ObjectDataset.class, Dataset.OBJECT);
 		map.put(DateDatasetImpl.class, Dataset.DATE);
 		map.put(DateDataset.class, Dataset.DATE);
+		map.put(RGBByteDataset.class, Dataset.RGB8);
 		map.put(RGBDataset.class, Dataset.RGB);
 		return map;
 	}
@@ -63,7 +64,7 @@ public class DTypeUtils {
 	}
 
 	/**
-	 * @param a
+	 * @param a input
 	 * @return name of dataset type
 	 */
 	public static String getDTypeName(Dataset a) {
@@ -71,7 +72,7 @@ public class DTypeUtils {
 	}
 
 	/**
-	 * @param a
+	 * @param a input
 	 * @return name of dataset type
 	 */
 	public static String getDTypeName(ILazyDataset a) {
@@ -79,8 +80,8 @@ public class DTypeUtils {
 	}
 
 	/**
-	 * @param dtype
-	 * @param itemSize
+	 * @param dtype dataset type
+	 * @param itemSize item size
 	 * @return name of dataset type
 	 */
 	public static String getDTypeName(int dtype, int itemSize) {
@@ -112,26 +113,42 @@ public class DTypeUtils {
 		return null;
 	}
 
+	/**
+	 * @param dtype dataset type
+	 * @return true if each dataset item has single element
+	 */
 	public static boolean isDTypeElemental(int dtype) {
 		return dtype <= Dataset.DATE;
 	}
 
+	/**
+	 * @param dtype dataset type
+	 * @return true if dataset elements are integers
+	 */
 	public static boolean isDTypeInteger(int dtype) {
 		return dtype == Dataset.INT8 || dtype == Dataset.INT16 || dtype == Dataset.INT32 || dtype == Dataset.INT64 ||
-				dtype == Dataset.ARRAYINT8 || dtype == Dataset.ARRAYINT16 || dtype == Dataset.ARRAYINT32 || dtype == Dataset.ARRAYINT64 || dtype == Dataset.RGB;
+				dtype == Dataset.ARRAYINT8 || dtype == Dataset.ARRAYINT16 || dtype == Dataset.ARRAYINT32 || dtype == Dataset.ARRAYINT64 || dtype == Dataset.RGB8 || dtype == Dataset.RGB;
 	}
 
+	/**
+	 * @param dtype dataset type
+	 * @return true if dataset elements are floats
+	 */
 	public static boolean isDTypeFloating(int dtype) {
 		return dtype == Dataset.FLOAT32 || dtype == Dataset.FLOAT64 || dtype == Dataset.COMPLEX64 || dtype == Dataset.COMPLEX128 ||
 				dtype == Dataset.ARRAYFLOAT32 || dtype == Dataset.ARRAYFLOAT64;
 	}
 
+	/**
+	 * @param dtype dataset type
+	 * @return true if each dataset itema are complex
+	 */
 	public static boolean isDTypeComplex(int dtype) {
 		return dtype == Dataset.COMPLEX64 || dtype == Dataset.COMPLEX128;
 	}
 
 	/**
-	 * @param dtype
+	 * @param dtype dataset type
 	 * @return true if dataset type is numerical, i.e. a dataset contains numbers
 	 */
 	public static boolean isDTypeNumerical(int dtype) {
@@ -155,12 +172,12 @@ public class DTypeUtils {
 	 * Find floating point dataset type that best fits given types. The best type takes into account complex and array
 	 * datasets
 	 *
-	 * @param otype
-	 *            old dataset type
+	 * @param dtype
+	 *            dataset type
 	 * @return best dataset type
 	 */
-	public static int getBestFloatDType(final int otype) {
-		return getDType(InterfaceUtils.getBestFloatInterface(getInterface(otype)));
+	public static int getBestFloatDType(final int dtype) {
+		return getDType(InterfaceUtils.getBestFloatInterface(getInterface(dtype)));
 	}
 
 	/**
@@ -189,17 +206,18 @@ public class DTypeUtils {
 	 * Get dataset type from an element class
 	 *
 	 * @param cls element class
+	 * @param itemSize item size
 	 * @return dataset type
 	 */
-	public static int getDTypeFromClass(Class<? extends Object> cls, int isize) {
-		return getDType(InterfaceUtils.getInterfaceFromClass(isize, cls));
+	public static int getDTypeFromClass(Class<? extends Object> cls, int itemSize) {
+		return getDType(InterfaceUtils.getInterfaceFromClass(itemSize, cls));
 	}
 
 	/**
 	 * Get dataset type from an object. The following are supported: Java Number objects, Apache common math Complex
 	 * objects, Java arrays and lists
 	 *
-	 * @param obj
+	 * @param obj input
 	 * @return dataset type
 	 */
 	public static int getDTypeFromObject(Object obj) {
@@ -243,7 +261,7 @@ public class DTypeUtils {
 
 	/**
 	 * Get dataset type from given dataset
-	 * @param d
+	 * @param d dataset
 	 * @return dataset type
 	 */
 	public static int getDType(ILazyDataset d) {
@@ -256,11 +274,11 @@ public class DTypeUtils {
 	 * The largest dataset type suitable for a summation of around a few thousand items without changing from the "kind"
 	 * of dataset
 	 *
-	 * @param otype
+	 * @param dtype dataset type
 	 * @return largest dataset type available for given dataset type
 	 */
-	public static int getLargestDType(final int otype) {
-		switch (otype) {
+	public static int getLargestDType(final int dtype) {
+		switch (dtype) {
 		case Dataset.BOOL:
 		case Dataset.INT8:
 		case Dataset.INT16:
@@ -285,9 +303,10 @@ public class DTypeUtils {
 			return Dataset.ARRAYFLOAT64;
 		case Dataset.DATE:
 		case Dataset.STRING:
+		case Dataset.RGB8:
 		case Dataset.RGB:
 		case Dataset.OBJECT:
-			return otype;
+			return dtype;
 		}
 		throw new IllegalArgumentException("Unsupported dataset type");
 	}
@@ -296,7 +315,7 @@ public class DTypeUtils {
 	 * The largest dataset class suitable for a summation of around a few thousand items without changing from the "kind"
 	 * of dataset
 	 *
-	 * @param clazz
+	 * @param clazz dataset sub-interface
 	 * @return largest dataset class available for given dataset class
 	 * @since 2.3
 	 */
@@ -321,16 +340,17 @@ public class DTypeUtils {
 	}
 
 	/**
-	 * @param otype
+	 * @param dtype dataset type
 	 * @return elemental dataset type available for given dataset type
 	 */
-	public static int getElementalDType(final int otype) {
-		switch (otype) {
+	public static int getElementalDType(final int dtype) {
+		switch (dtype) {
 		case Dataset.COMPLEX64:
 			return Dataset.FLOAT32;
 		case Dataset.COMPLEX128:
 			return Dataset.FLOAT64;
 		case Dataset.ARRAYINT8:
+		case Dataset.RGB8:
 			return Dataset.INT8;
 		case Dataset.ARRAYINT16:
 		case Dataset.RGB:
@@ -344,12 +364,12 @@ public class DTypeUtils {
 		case Dataset.ARRAYFLOAT64:
 			return Dataset.FLOAT64;
 		default:
-			return otype;
+			return dtype;
 		}
 	}
 
 	/**
-	 * @param dtype
+	 * @param dtype dataset type
 	 * @return number of elements per item
 	 */
 	public static int getElementsPerItem(final int dtype) {
@@ -364,6 +384,7 @@ public class DTypeUtils {
 		case Dataset.COMPLEX64:
 		case Dataset.COMPLEX128:
 			return 2;
+		case Dataset.RGB8:
 		case Dataset.RGB:
 			return 3;
 		}
@@ -371,7 +392,7 @@ public class DTypeUtils {
 	}
 
 	/**
-	 * @param dtype
+	 * @param dtype dataset type
 	 * @return length of single item in bytes
 	 */
 	public static int getItemBytes(final int dtype) {
@@ -379,7 +400,7 @@ public class DTypeUtils {
 	}
 
 	/**
-	 * @param dtype
+	 * @param dtype dataset type
 	 * @param isize
 	 *            number of elements in an item
 	 * @return length of single item in bytes
@@ -393,6 +414,7 @@ public class DTypeUtils {
 			break;
 		case Dataset.INT8:
 		case Dataset.ARRAYINT8:
+		case Dataset.RGB8:
 			size = Byte.SIZE / 8;
 			break;
 		case Dataset.INT16:
@@ -426,6 +448,10 @@ public class DTypeUtils {
 		return size * isize;
 	}
 
+	/**
+	 * @param b input
+	 * @return converted boolean
+	 */
 	public static boolean toBoolean(final Object b) {
 		if (b instanceof Number) {
 			return ((Number) b).longValue() != 0;
@@ -454,7 +480,7 @@ public class DTypeUtils {
 	}
 
 	/**
-	 * @param d
+	 * @param d value
 	 * @return returns a long or 0 if d is NaN or infinite
 	 * @since 2.1
 	 */
@@ -465,7 +491,7 @@ public class DTypeUtils {
 	}
 
 	/**
-	 * @param d
+	 * @param d value
 	 * @return returns a long or 0 if d is NaN or infinite
 	 * @since 2.1
 	 */
@@ -475,6 +501,10 @@ public class DTypeUtils {
 		return (long) d;
 	}
 
+	/**
+	 * @param b input
+	 * @return converted long
+	 */
 	public static long toLong(final Object b) {
 		if (b instanceof Number) {
 			final Number n = (Number) b;
@@ -503,6 +533,10 @@ public class DTypeUtils {
 		}
 	}
 
+	/**
+	 * @param b input
+	 * @return real part of input
+	 */
 	public static double toReal(final Object b) {
 		if (b instanceof Number) {
 			return ((Number) b).doubleValue();
@@ -534,6 +568,10 @@ public class DTypeUtils {
 		}
 	}
 
+	/**
+	 * @param b input
+	 * @return imaginary part of input
+	 */
 	public static double toImag(final Object b) {
 		if (b instanceof Number) {
 			return 0;
@@ -551,7 +589,7 @@ public class DTypeUtils {
 				logger.error("Given dataset must have only one item");
 				throw new IllegalArgumentException("Given dataset must have only one item");
 			}
-			return toImag(db.getObjectAbs(db.getOffset()));
+			return toImag(db.getObject());
 		} else if (b instanceof IDataset) {
 			IDataset db = (Dataset) b;
 			if (db.getSize() != 1) {
@@ -565,6 +603,11 @@ public class DTypeUtils {
 		}
 	}
 
+	/**
+	 * @param b input
+	 * @param itemSize item size
+	 * @return converted doubles
+	 */
 	public static double[] toDoubleArray(final Object b, final int itemSize) {
 		double[] result = null;
 
@@ -631,7 +674,7 @@ public class DTypeUtils {
 				logger.error("Given dataset must have only one item");
 				throw new IllegalArgumentException("Given dataset must have only one item");
 			}
-			return toDoubleArray(db.getObjectAbs(db.getOffset()), itemSize);
+			return toDoubleArray(db.getObject(), itemSize);
 		} else if (b instanceof IDataset) {
 			IDataset db = (Dataset) b;
 			if (db.getSize() != 1) {
@@ -644,6 +687,11 @@ public class DTypeUtils {
 		return result;
 	}
 
+	/**
+	 * @param b input
+	 * @param itemSize item size
+	 * @return converted floats
+	 */
 	public static float[] toFloatArray(final Object b, final int itemSize) {
 		float[] result = null;
 
@@ -715,7 +763,7 @@ public class DTypeUtils {
 				logger.error("Given dataset must have only one item");
 				throw new IllegalArgumentException("Given dataset must have only one item");
 			}
-			return toFloatArray(db.getObjectAbs(db.getOffset()), itemSize);
+			return toFloatArray(db.getObject(), itemSize);
 		} else if (b instanceof IDataset) {
 			IDataset db = (Dataset) b;
 			if (db.getSize() != 1) {
@@ -728,6 +776,11 @@ public class DTypeUtils {
 		return result;
 	}
 
+	/**
+	 * @param b input
+	 * @param itemSize item size
+	 * @return converted longs
+	 */
 	public static long[] toLongArray(final Object b, final int itemSize) {
 		long[] result = null;
 
@@ -800,7 +853,7 @@ public class DTypeUtils {
 				logger.error("Given dataset must have only one item");
 				throw new IllegalArgumentException("Given dataset must have only one item");
 			}
-			return toLongArray(db.getObjectAbs(db.getOffset()), itemSize);
+			return toLongArray(db.getObject(), itemSize);
 		} else if (b instanceof IDataset) {
 			IDataset db = (Dataset) b;
 			if (db.getSize() != 1) {
@@ -813,6 +866,11 @@ public class DTypeUtils {
 		return result;
 	}
 
+	/**
+	 * @param b input
+	 * @param itemSize item size
+	 * @return converted integers
+	 */
 	public static int[] toIntegerArray(final Object b, final int itemSize) {
 		int[] result = null;
 
@@ -885,7 +943,7 @@ public class DTypeUtils {
 				logger.error("Given dataset must have only one item");
 				throw new IllegalArgumentException("Given dataset must have only one item");
 			}
-			return toIntegerArray(db.getObjectAbs(db.getOffset()), itemSize);
+			return toIntegerArray(db.getObject(), itemSize);
 		} else if (b instanceof IDataset) {
 			IDataset db = (Dataset) b;
 			if (db.getSize() != 1) {
@@ -898,6 +956,11 @@ public class DTypeUtils {
 		return result;
 	}
 
+	/**
+	 * @param b input
+	 * @param itemSize item size
+	 * @return converted shorts
+	 */
 	public static short[] toShortArray(final Object b, final int itemSize) {
 		short[] result = null;
 
@@ -970,7 +1033,7 @@ public class DTypeUtils {
 				logger.error("Given dataset must have only one item");
 				throw new IllegalArgumentException("Given dataset must have only one item");
 			}
-			return toShortArray(db.getObjectAbs(db.getOffset()), itemSize);
+			return toShortArray(db.getObject(), itemSize);
 		} else if (b instanceof IDataset) {
 			IDataset db = (Dataset) b;
 			if (db.getSize() != 1) {
@@ -983,6 +1046,11 @@ public class DTypeUtils {
 		return result;
 	}
 
+	/**
+	 * @param b input
+	 * @param itemSize item size
+	 * @return converted bytes
+	 */
 	public static byte[] toByteArray(final Object b, final int itemSize) {
 		byte[] result = null;
 
@@ -1055,7 +1123,7 @@ public class DTypeUtils {
 				logger.error("Given dataset must have only one item");
 				throw new IllegalArgumentException("Given dataset must have only one item");
 			}
-			return toByteArray(db.getObjectAbs(db.getOffset()), itemSize);
+			return toByteArray(db.getObject(), itemSize);
 		} else if (b instanceof IDataset) {
 			IDataset db = (Dataset) b;
 			if (db.getSize() != 1) {
@@ -1068,6 +1136,11 @@ public class DTypeUtils {
 		return result;
 	}
 
+	/**
+	 * @param x input
+	 * @param dtype dataset type primitive array
+	 * @return array of biggest primitives
+	 */
 	public static Object fromDoublesToBiggestPrimitives(double[] x, int dtype) {
 		switch (dtype) {
 		case Dataset.BOOL:
@@ -1095,7 +1168,7 @@ public class DTypeUtils {
 	}
 
 	/**
-	 * @param dtype
+	 * @param dtype dataset type
 	 * @return (boxed) class of constituent element
 	 */
 	public static Class<?> getElementClass(final int dtype) {
@@ -1104,6 +1177,7 @@ public class DTypeUtils {
 			return Boolean.class;
 		case Dataset.INT8:
 		case Dataset.ARRAYINT8:
+		case Dataset.RGB8:
 			return Byte.class;
 		case Dataset.INT16:
 		case Dataset.ARRAYINT16:
@@ -1143,8 +1217,8 @@ public class DTypeUtils {
 	}
 
 	/**
-	 * @param x
-	 * @param dtype
+	 * @param x value
+	 * @param dtype dataset type
 	 * @return biggest native primitive if integer (should test for 64bit?)
 	 * @since 2.2
 	 */
@@ -1166,7 +1240,7 @@ public class DTypeUtils {
 	}
 
 	/**
-	 * @param clazz
+	 * @param clazz element class
 	 * @return true if supported
 	 * @deprecated Use {@link InterfaceUtils#isElementSupported(Class)}
 	 */
@@ -1176,7 +1250,7 @@ public class DTypeUtils {
 	}
 
 	/**
-	 * @param b
+	 * @param b input
 	 * @return length of object
 	 */
 	public static final int getLength(final Object b) {
@@ -1198,7 +1272,7 @@ public class DTypeUtils {
 	}
 
 	/**
-	 * @param a
+	 * @param a input
 	 * @return name of dataset interface
 	 * @since 2.3
 	 */
@@ -1207,7 +1281,7 @@ public class DTypeUtils {
 	}
 
 	/**
-	 * @param a
+	 * @param a input
 	 * @return name of dataset interface
 	 * @since 2.3
 	 */
@@ -1221,7 +1295,7 @@ public class DTypeUtils {
 
 	/**
 	 * @param clazz dataset interface
-	 * @param itemSize
+	 * @param itemSize item size
 	 * @return name of dataset interface
 	 * @since 2.3
 	 */
@@ -1229,6 +1303,8 @@ public class DTypeUtils {
 		int bytes = InterfaceUtils.getItemBytes(1, clazz);
 		if (InterfaceUtils.isComplex(clazz)) {
 			return "COMPLEX" + bytes*16;
+		} else if (RGBByteDataset.class.isAssignableFrom(clazz)) {
+			return "RGB8";
 		} else if (RGBDataset.class.isAssignableFrom(clazz)) {
 			return "RGB";
 		}

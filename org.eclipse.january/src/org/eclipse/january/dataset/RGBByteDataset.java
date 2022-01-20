@@ -1,6 +1,6 @@
 /*-
  *******************************************************************************
- * Copyright (c) 2011, 2016 Diamond Light Source Ltd.
+ * Copyright (c) 2022 Diamond Light Source Ltd.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -18,27 +18,29 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Class to hold colour datasets as red, green, blue tuples of short integers
+ * Class to hold colour datasets as red, green, blue tuples of byte integers. Note that
+ * the values are treated as unsigned integers
+ * @since 2.3
  */
-public class RGBDataset extends CompoundShortDataset implements Cloneable {
+public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 	// pin UID to base class
 	private static final long serialVersionUID = Dataset.serialVersionUID;
 
-	private static final Logger logger = LoggerFactory.getLogger(RGBDataset.class);
+	private static final Logger logger = LoggerFactory.getLogger(RGBByteDataset.class);
 
 	private static final int ISIZE = 3; // number of elements per item
 
 	/**
 	 * Create a null dataset
 	 */
-	public RGBDataset() {
+	public RGBByteDataset() {
 		super(ISIZE);
 	}
 
 	/**
 	 * @param shape output shape
 	 */
-	public RGBDataset(final int... shape) {
+	public RGBByteDataset(final int... shape) {
 		super(ISIZE, shape);
 	}
 
@@ -46,7 +48,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * @param data interleaved RGB values
 	 * @param shape output shape
 	 */
-	public RGBDataset(final short[] data, final int... shape) {
+	public RGBByteDataset(final byte[] data, final int... shape) {
 		super(ISIZE, data, shape);
 	}
 
@@ -54,13 +56,13 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * Copy a dataset
 	 * @param dataset to clone
 	 */
-	public RGBDataset(final RGBDataset dataset) {
+	public RGBByteDataset(final RGBByteDataset dataset) {
 		super(dataset);
 	}
 
 	@Override
-	public RGBDataset clone() {
-		return new RGBDataset(this);
+	public RGBByteDataset clone() {
+		return new RGBByteDataset(this);
 	}
 
 	/**
@@ -70,7 +72,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * @param blueData data for blue
 	 * @param shape (can be null to create 1D dataset)
 	 */
-	public RGBDataset(final int[] redData, final int[] greenData, final int[] blueData, int... shape) {
+	public RGBByteDataset(final int[] redData, final int[] greenData, final int[] blueData, int... shape) {
 		int dsize = redData.length > greenData.length ? greenData.length : redData.length;
 		dsize = dsize > blueData.length ? blueData.length : dsize;
 		if (shape == null || shape.length == 0) {
@@ -92,9 +94,9 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 		}
 
 		for (int i = 0, n = 0; i < size; i++) {
-			data[n++] = (short) redData[i];
-			data[n++] = (short) greenData[i];
-			data[n++] = (short) blueData[i];
+			data[n++] = (byte) redData[i];
+			data[n++] = (byte) greenData[i];
+			data[n++] = (byte) blueData[i];
 		}
 	}
 
@@ -105,7 +107,42 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * @param blueData data for blue
 	 * @param shape (can be null to create 1D dataset)
 	 */
-	public RGBDataset(final short[] redData, final short[] greenData, final short[] blueData, int... shape) {
+	public RGBByteDataset(final short[] redData, final short[] greenData, final short[] blueData, int... shape) {
+		int dsize = redData.length > greenData.length ? greenData.length : redData.length;
+		dsize = dsize > blueData.length ? blueData.length : dsize;
+		if (shape == null || shape.length == 0) {
+			shape = new int[] {dsize};
+		}
+		isize = ISIZE;
+		size = ShapeUtils.calcSize(shape);
+		if (size != dsize) {
+			logger.error("Shape is not compatible with size of data array");
+			throw new IllegalArgumentException("Shape is not compatible with size of data array");
+		}
+		this.shape = shape.clone();
+
+		try {
+			odata = data = createArray(size);
+		} catch (Throwable t) {
+			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
+			throw new IllegalArgumentException(t);
+		}
+
+		for (int i = 0, n = 0; i < size; i++) {
+			data[n++] = (byte) redData[i];
+			data[n++] = (byte) greenData[i];
+			data[n++] = (byte) blueData[i];
+		}
+	}
+
+	/**
+	 * Create a dataset using given data (red, green and blue parts are given separately)
+	 * @param redData data for red
+	 * @param greenData data for green
+	 * @param blueData data for blue
+	 * @param shape (can be null to create 1D dataset)
+	 */
+	public RGBByteDataset(final byte[] redData, final byte[] greenData, final byte[] blueData, int... shape) {
 		int dsize = redData.length > greenData.length ? greenData.length : redData.length;
 		dsize = dsize > blueData.length ? blueData.length : dsize;
 		if (shape == null || shape.length == 0) {
@@ -133,40 +170,8 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 		}
 	}
 
-	/**
-	 * Create a dataset using given data (red, green and blue parts are given separately)
-	 * @param redData data for red
-	 * @param greenData data for green
-	 * @param blueData data for blue
-	 * @param shape (can be null to create 1D dataset)
-	 */
-	public RGBDataset(final byte[] redData, final byte[] greenData, final byte[] blueData, int... shape) {
-		int dsize = redData.length > greenData.length ? greenData.length : redData.length;
-		dsize = dsize > blueData.length ? blueData.length : dsize;
-		if (shape == null || shape.length == 0) {
-			shape = new int[] {dsize};
-		}
-		isize = ISIZE;
-		size = ShapeUtils.calcSize(shape);
-		if (size != dsize) {
-			logger.error("Shape is not compatible with size of data array");
-			throw new IllegalArgumentException("Shape is not compatible with size of data array");
-		}
-		this.shape = shape.clone();
-
-		try {
-			odata = data = createArray(size);
-		} catch (Throwable t) {
-			logger.error("Could not create a dataset of shape {}", Arrays.toString(shape), t);
-			throw new IllegalArgumentException(t);
-		}
-
-		for (int i = 0, n = 0; i < size; i++) {
-			data[n++] = (short) (0xff & redData[i]);
-			data[n++] = (short) (0xff & greenData[i]);
-			data[n++] = (short) (0xff & blueData[i]);
-		}
-	}
+	private final static int MIN_VALUE = 0;
+	private final static int MAX_VALUE = 255;
 
 	/**
 	 * Create a dataset using given colour data (colour components are given separately)
@@ -174,14 +179,14 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * @param green dataset
 	 * @param blue dataset
 	 */
-	public RGBDataset(final Dataset red, final Dataset green, final Dataset blue) {
+	public RGBByteDataset(final Dataset red, final Dataset green, final Dataset blue) {
 		super(ISIZE, red.getShapeRef());
 		red.checkCompatibility(green);
 		red.checkCompatibility(blue);
 
-		if (red.max().doubleValue() > Short.MAX_VALUE || red.min().doubleValue() < Short.MIN_VALUE ||
-				green.max().doubleValue() > Short.MAX_VALUE || green.min().doubleValue() < Short.MIN_VALUE || 
-				blue.max().doubleValue() > Short.MAX_VALUE || blue.min().doubleValue() < Short.MIN_VALUE) {
+		if (red.max().doubleValue() > MAX_VALUE || red.min().doubleValue() < MIN_VALUE ||
+				green.max().doubleValue() > MAX_VALUE || green.min().doubleValue() < MIN_VALUE || 
+				blue.max().doubleValue() > MAX_VALUE || blue.min().doubleValue() < MIN_VALUE) {
 			logger.warn("Some values are out of range and will be truncated");
 		}
 
@@ -190,9 +195,9 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 		IndexIterator biter = blue.getIterator();
 
 		for (int i = 0; riter.hasNext() && giter.hasNext() && biter.hasNext();) {
-			data[i++] = (short) red.getElementLongAbs(riter.index);
-			data[i++] = (short) green.getElementLongAbs(giter.index);
-			data[i++] = (short) blue.getElementLongAbs(biter.index);
+			data[i++] = (byte) red.getElementLongAbs(riter.index);
+			data[i++] = (byte) green.getElementLongAbs(giter.index);
+			data[i++] = (byte) blue.getElementLongAbs(biter.index);
 		}
 	}
 
@@ -200,13 +205,13 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * Create a dataset using given grey data
 	 * @param grey dataset
 	 */
-	public RGBDataset(final Dataset grey) {
+	public RGBByteDataset(final Dataset grey) {
 		super(ISIZE, grey.getShapeRef());
 
 		IndexIterator giter = grey.getIterator();
 
 		for (int i = 0; giter.hasNext();) {
-			final short g = (short) grey.getElementLongAbs(giter.index); 
+			final byte g = (byte) grey.getElementLongAbs(giter.index); 
 			data[i++] = g;
 			data[i++] = g;
 			data[i++] = g;
@@ -216,9 +221,8 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	/**
 	 * Create a dataset using given compound data
 	 * @param colour dataset with colour data
-	 * @since 2.3
 	 */
-	public RGBDataset(final CompoundDataset colour) {
+	public RGBByteDataset(final CompoundDataset colour) {
 		super(ISIZE, colour.getShapeRef());
 
 		if (colour.getElementsPerItem() != 3) {
@@ -227,11 +231,12 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 
 		final IndexIterator it = colour.getIterator();
 		for (int i = 0; it.hasNext();) {
-			data[i++] = (short) colour.getElementLongAbs(it.index);
-			data[i++] = (short) colour.getElementLongAbs(it.index + 1);
-			data[i++] = (short) colour.getElementLongAbs(it.index + 2);
+			data[i++] = (byte) colour.getElementLongAbs(it.index);
+			data[i++] = (byte) colour.getElementLongAbs(it.index + 1);
+			data[i++] = (byte) colour.getElementLongAbs(it.index + 2);
 		}
 	}
+
 	/**
 	 * Create a RGB dataset from an object which could be a Java list, array (of arrays...) or Number. Ragged
 	 * sequences or arrays are padded with zeros. The item size is the last dimension of the corresponding
@@ -240,9 +245,9 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * @param obj object
 	 * @return dataset with contents given by input
 	 */
-	public static RGBDataset createFromObject(final Object obj) {
-		CompoundShortDataset result = (CompoundShortDataset) DatasetUtils.createCompoundDataset(ShortDataset.createFromObject(obj), ISIZE);
-		return new RGBDataset(result.data, result.shape);
+	public static RGBByteDataset createFromObject(final Object obj) {
+		CompoundByteDataset result = (CompoundByteDataset) DatasetUtils.createCompoundDataset(ByteDataset.createFromObject(obj), ISIZE);
+		return new RGBByteDataset(result.data, result.shape);
 	}
 
 	/**
@@ -250,26 +255,26 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * @param a dataset
 	 * @return RGB dataset (grey if input dataset has less than 3 elements per item)
 	 */
-	public static RGBDataset createFromCompoundDataset(final CompoundDataset a) {
-		if (a instanceof RGBDataset)
-			return (RGBDataset) a;
+	public static RGBByteDataset createFromCompoundDataset(final CompoundDataset a) {
+		if (a instanceof RGBByteDataset)
+			return (RGBByteDataset) a;
 		final int is = a.getElementsPerItem();
 		if (is < 3) {
-			return new RGBDataset((Dataset) a);
+			return new RGBByteDataset((Dataset) a);
 		}
 
-		if (a instanceof CompoundShortDataset && is == 3) {
-			return new RGBDataset((short[]) a.getBuffer(), a.getShapeRef());
+		if (a instanceof CompoundByteDataset && is == 3) {
+			return new RGBByteDataset((byte[]) a.getBuffer(), a.getShapeRef());
 		}
 
-		final RGBDataset rgb = new RGBDataset(a.getShapeRef());
+		final RGBByteDataset rgb = new RGBByteDataset(a.getShapeRef());
 		final IndexIterator it = a.getIterator();
 
 		int n = 0;
 		while (it.hasNext()) {
-			rgb.data[n++] = (short) a.getElementLongAbs(it.index);
-			rgb.data[n++] = (short) a.getElementLongAbs(it.index + 1);
-			rgb.data[n++] = (short) a.getElementLongAbs(it.index + 2);
+			rgb.data[n++] = (byte) a.getElementLongAbs(it.index);
+			rgb.data[n++] = (byte) a.getElementLongAbs(it.index + 1);
+			rgb.data[n++] = (byte) a.getElementLongAbs(it.index + 2);
 		}
 
 		return rgb;
@@ -282,15 +287,15 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * @param value (from 0 to 1)
 	 * @return RGB dataset
 	 */
-	public static RGBDataset createFromHSV(final Dataset hue, final Dataset saturation, final Dataset value) {
+	public static RGBByteDataset createFromHSV(final Dataset hue, final Dataset saturation, final Dataset value) {
 		if ((saturation != null && !hue.isCompatibleWith(saturation)) || !hue.isCompatibleWith(value)) {
 			throw new IllegalArgumentException("Hue, saturation and value datasets must have the same shape");
 		}
 
-		RGBDataset result = new RGBDataset(hue.getShapeRef());
+		RGBByteDataset result = new RGBByteDataset(hue.getShapeRef());
 		IndexIterator it = result.getIterator(true);
 		int[] pos = it.getPos();
-		short[] rgb = new short[3];
+		byte[] rgb = new byte[3];
 
 		if (saturation == null) {
 			while (it.hasNext()) {
@@ -314,15 +319,15 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * @param lightness (from 0 to 1)
 	 * @return RGB dataset
 	 */
-	public static RGBDataset createFromHSL(final Dataset hue, final Dataset saturation, final Dataset lightness) {
+	public static RGBByteDataset createFromHSL(final Dataset hue, final Dataset saturation, final Dataset lightness) {
 		if ((saturation != null && !hue.isCompatibleWith(saturation)) || !hue.isCompatibleWith(lightness)) {
 			throw new IllegalArgumentException("Hue, saturation and lightness datasets must have the same shape");
 		}
 
-		RGBDataset result = new RGBDataset(hue.getShapeRef());
+		RGBByteDataset result = new RGBByteDataset(hue.getShapeRef());
 		IndexIterator it = result.getIterator(true);
 		int[] pos = it.getPos();
-		short[] rgb = new short[3];
+		byte[] rgb = new byte[3];
 
 		if (saturation == null) {
 			while (it.hasNext()) {
@@ -339,7 +344,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 		return result;
 	}
 
-	private static void convertHSVToRGB(double h, double s, double v, short[] rgb) {
+	private static void convertHSVToRGB(double h, double s, double v, byte[] rgb) {
 		double m = 255 * v;
 		double chroma = s * m;
 		m -= chroma;
@@ -347,9 +352,9 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 		if (hprime < 0) {
 			hprime += 6;
 		}
-		short sx = (short) (chroma * (1 - Math.abs((hprime % 2) - 1)) + m);
-		short sc = (short) (chroma + m);
-		short sm = (short) m;
+		byte sx = (byte) (chroma * (1 - Math.abs((hprime % 2) - 1)) + m);
+		byte sc = (byte) (chroma + m);
+		byte sm = (byte) m;
 		
 		if (hprime < 1) {
 			rgb[0] = sc;
@@ -382,7 +387,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 		}
 	}
 
-	private static void convertHSLToRGB(double h, double s, double l, short[] rgb) {
+	private static void convertHSLToRGB(double h, double s, double l, byte[] rgb) {
 		double m = l;
 		double chroma = s * (1 - Math.abs(2 * m - 1));
 		m -= chroma * 0.5;
@@ -392,9 +397,9 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 		if (hprime < 0) {
 			hprime += 6;
 		}
-		short sx = (short) (chroma * (1 - Math.abs((hprime % 2) - 1)) + m);
-		short sc = (short) (chroma + m);
-		short sm = (short) m;
+		byte sx = (byte) (chroma * (1 - Math.abs((hprime % 2) - 1)) + m);
+		byte sc = (byte) (chroma + m);
+		byte sm = (byte) m;
 		
 		if (hprime < 1) {
 			rgb[0] = sc;
@@ -428,18 +433,18 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	}
 
 	@Override
-	public RGBDataset getSlice(SliceIterator siter) {
-		CompoundShortDataset base = super.getSlice(siter);
+	public RGBByteDataset getSlice(SliceIterator siter) {
+		CompoundByteDataset base = super.getSlice(siter);
 
-		RGBDataset slice = new RGBDataset();
+		RGBByteDataset slice = new RGBByteDataset();
 		copyToView(base, slice, false, false);
 		slice.setData();
 		return slice;
 	}
 
 	@Override
-	public RGBDataset getView(boolean deepCopyMetadata) {
-		RGBDataset view = new RGBDataset();
+	public RGBByteDataset getView(boolean deepCopyMetadata) {
+		RGBByteDataset view = new RGBByteDataset();
 		copyToView(this, view, true, deepCopyMetadata);
 		view.setData();
 		return view;
@@ -447,9 +452,8 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 
 	/**
 	 * @return red value in the first position
-	 * @since 2.0
 	 */
-	public short getRed() {
+	public byte getRed() {
 		return data[getFirst1DIndex()];
 	}
 
@@ -457,7 +461,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * @param i position in first dimension
 	 * @return red value in given position
 	 */
-	public short getRed(final int i) {
+	public byte getRed(final int i) {
 		return data[get1DIndex(i)];
 	}
 
@@ -466,7 +470,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * @param j position in second dimension
 	 * @return red value in given position
 	 */
-	public short getRed(final int i, final int j) {
+	public byte getRed(final int i, final int j) {
 		return data[get1DIndex(i, j)];
 	}
 
@@ -474,15 +478,14 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * @param pos position
 	 * @return red value in given position
 	 */
-	public short getRed(final int... pos) {
+	public byte getRed(final int... pos) {
 		return data[get1DIndex(pos)];
 	}
 
 	/**
 	 * @return green value in the first position
-	 * @since 2.0
 	 */
-	public short getGreen() {
+	public byte getGreen() {
 		return data[getFirst1DIndex() + 1];
 	}
 
@@ -490,7 +493,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * @param i position in first dimension
 	 * @return green value in given position
 	 */
-	public short getGreen(final int i) {
+	public byte getGreen(final int i) {
 		return data[get1DIndex(i) + 1];
 	}
 
@@ -499,7 +502,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * @param j position in second dimension
 	 * @return green value in given position
 	 */
-	public short getGreen(final int i, final int j) {
+	public byte getGreen(final int i, final int j) {
 		return data[get1DIndex(i, j) + 1];
 	}
 
@@ -507,15 +510,14 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * @param pos position
 	 * @return green value in given position
 	 */
-	public short getGreen(final int... pos) {
+	public byte getGreen(final int... pos) {
 		return data[get1DIndex(pos) + 1];
 	}
 
 	/**
 	 * @return blue value in the first position
-	 * @since 2.0
 	 */
-	public short getBlue() {
+	public byte getBlue() {
 		return data[getFirst1DIndex() + 2];
 	}
 
@@ -523,7 +525,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * @param i position in first dimension
 	 * @return blue value in given position
 	 */
-	public short getBlue(final int i) {
+	public byte getBlue(final int i) {
 		return data[get1DIndex(i) + 2];
 	}
 
@@ -532,7 +534,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * @param j position in second dimension
 	 * @return blue value in given position
 	 */
-	public short getBlue(final int i, final int j) {
+	public byte getBlue(final int i, final int j) {
 		return data[get1DIndex(i, j) + 2];
 	}
 
@@ -540,40 +542,40 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * @param pos position
 	 * @return blue value in given position
 	 */
-	public short getBlue(final int... pos) {
+	public byte getBlue(final int... pos) {
 		return data[get1DIndex(pos) + 2];
 	}
 
 	/**
-	 * Get a red value from given absolute index as a short - note this index does not
+	 * Get a red value from given absolute index as a byte - note this index does not
 	 * take in account the item size so be careful when using with multi-element items
 	 * 
 	 * @param n absolute index
 	 * @return red value
 	 */
-	public short getRedAbs(int n) {
+	public byte getRedAbs(int n) {
 		return data[n*isize];
 	}
 
 	/**
-	 * Get a green value from given absolute index as a short - note this index does not
+	 * Get a green value from given absolute index as a byte - note this index does not
 	 * take in account the item size so be careful when using with multi-element items
 	 * 
 	 * @param n absolute index
 	 * @return green value
 	 */
-	public short getGreenAbs(int n) {
+	public byte getGreenAbs(int n) {
 		return data[n*isize + 1];
 	}
 
 	/**
-	 * Get a blue value from given absolute index as a short - note this index does not
+	 * Get a blue value from given absolute index as a byte - note this index does not
 	 * take in account the item size so be careful when using with multi-element items
 	 * 
 	 * @param n absolute index
 	 * @return blue value
 	 */
-	public short getBlueAbs(int n) {
+	public byte getBlueAbs(int n) {
 		return data[n*isize + 2];
 	}
 
@@ -586,7 +588,6 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * @param <T> dataset sub-interface
 	 * @param clazz dataset sub-interface
 	 * @return a grey-scale dataset of given type
-	 * @since 2.2
 	 */
 	public <T extends Dataset> T createGreyDataset(final Class<T> clazz) {
 		return createGreyDataset(clazz, Wr, Wg, Wb);
@@ -600,7 +601,6 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * @param green weight
 	 * @param blue weight
 	 * @return a grey-scale dataset of given class
-	 * @since 2.2
 	 */
 	public <T extends Dataset> T createGreyDataset(final Class<T> clazz, final double red, final double green, final double blue) {
 		final T grey = DatasetFactory.zeros(clazz, shape);
@@ -608,7 +608,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 
 		int i = 0;
 		while (it.hasNext()) {
-			grey.setObjectAbs(i++, red*data[it.index] + green*data[it.index + 1] + blue*data[it.index + 2]);
+			grey.setObjectAbs(i++, red*Byte.toUnsignedInt(data[it.index]) + green*Byte.toUnsignedInt(data[it.index + 1]) + blue*Byte.toUnsignedInt(data[it.index + 2]));
 		}
 		return grey;
 	}
@@ -617,7 +617,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * Convert colour dataset to a grey-scale one using the NTSC formula, aka ITU-R BT.601, for RGB to luma mapping
 	 * @param dtype dataset type
 	 * @return a grey-scale dataset of given class
-	 * @deprecated Use {@link RGBDataset#createGreyDataset(Class)}
+	 * @deprecated Use {@link RGBByteDataset#createGreyDataset(Class)}
 	 */
 	@Deprecated
 	public Dataset createGreyDataset(final int dtype) {
@@ -631,7 +631,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * @param blue weight
 	 * @param dtype dataset type
 	 * @return a grey-scale dataset of given type
-	 * @deprecated Use {@link RGBDataset#createGreyDataset(Class, double, double, double)}
+	 * @deprecated Use {@link RGBByteDataset#createGreyDataset(Class, double, double, double)}
 	 */
 	@Deprecated
 	public Dataset createGreyDataset(final double red, final double green, final double blue, final int dtype) {
@@ -643,7 +643,6 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * @param <T> dataset sub-interface
 	 * @param clazz dataset sub-interface
 	 * @return a dataset of given class
-	 * @since 2.1
 	 */
 	public <T extends Dataset> T createRedDataset(final Class<T> clazz) {
 		return createColourChannelDataset(0, clazz, "red");
@@ -654,7 +653,6 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * @param <T> dataset sub-interface
 	 * @param clazz dataset sub-interface
 	 * @return a dataset of given class
-	 * @since 2.1
 	 */
 	public <T extends Dataset> T createGreenDataset(final Class<T> clazz) {
 		return createColourChannelDataset(1, clazz, "green");
@@ -665,7 +663,6 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	 * @param <T> dataset sub-interface
 	 * @param clazz dataset sub-interface
 	 * @return a dataset of given class
-	 * @since 2.1
 	 */
 	public <T extends Dataset> T createBlueDataset(final Class<T> clazz) {
 		return createColourChannelDataset(2, clazz, "blue");
@@ -718,7 +715,7 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 
 		int i = 0;
 		while (it.hasNext()) {
-			channel.setObjectAbs(i++, data[it.index + channelOffset]);
+			channel.setObjectAbs(i++, Byte.toUnsignedInt(data[it.index + channelOffset]));
 		}
 
 		return channel;
@@ -728,38 +725,38 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 	/**
 	 * @return red view
 	 */
-	public ShortDataset getRedView() {
+	public ByteDataset getRedView() {
 		return getColourChannelView(0, "red");
 	}
 
 	/**
 	 * @return green view
 	 */
-	public ShortDataset getGreenView() {
+	public ByteDataset getGreenView() {
 		return getColourChannelView(1, "green");
 	}
 
 	/**
 	 * @return blue view
 	 */
-	public ShortDataset getBlueView() {
+	public ByteDataset getBlueView() {
 		return getColourChannelView(2, "blue");
 	}
 
-	private ShortDataset getColourChannelView(final int channelOffset, final String cName) {
-		ShortDataset view = getElements(channelOffset);
+	private ByteDataset getColourChannelView(final int channelOffset, final String cName) {
+		ByteDataset view = getElements(channelOffset);
 		view.setName(cName);
 		return view;
 	}
 
 	@Override
 	public Number max(boolean... ignored) {
-		short max = Short.MIN_VALUE;
+		int max = 0;
 		final IndexIterator it = getIterator();
 
 		while (it.hasNext()) {
 			for (int i = 0; i < ISIZE; i++) {
-				final short value = data[it.index + i];
+				int value = Byte.toUnsignedInt(data[it.index + i]);
 				if (value > max)
 					max = value;
 			}
@@ -769,12 +766,12 @@ public class RGBDataset extends CompoundShortDataset implements Cloneable {
 
 	@Override
 	public Number min(boolean... ignored) {
-		short min = Short.MAX_VALUE;
+		int min = MAX_VALUE;
 		final IndexIterator it = getIterator();
 
 		while (it.hasNext()) {
 			for (int i = 0; i < ISIZE; i++) {
-				final short value = data[it.index + i];
+				int value = Byte.toUnsignedInt(data[it.index + i]);
 				if (value < min)
 					min = value;
 			}

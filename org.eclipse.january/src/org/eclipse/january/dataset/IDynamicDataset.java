@@ -23,4 +23,18 @@ public interface IDynamicDataset extends ILazyDataset, IDynamicShape {
 	 * Denotes an unlimited dimension in maximum shape
 	 */
 	public static final int UNLIMITED = IDynamicShape.UNLIMITED;
+
+	/**
+	 * Get chunking
+	 * @return chunks (can be null)
+	 * @since 2.3
+	 */
+	public int[] getChunking();
+
+	/**
+	 * Set chunking
+	 * @param chunks chunk shape
+	 * @since 2.3
+	 */
+	public void setChunking(int... chunks);
 }

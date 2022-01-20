@@ -43,7 +43,7 @@ public class AggregateDataset extends LazyDatasetBase implements ILazyDataset {
 	/**
 	 * Calculate (possibly extended) shapes from given datasets
 	 * @param extend if true, extend rank by one
-	 * @param datasets
+	 * @param datasets inputs
 	 * @return array of shapes
 	 */
 	public static int[][] calcShapes(boolean extend, ILazyDataset... datasets) {
@@ -103,7 +103,7 @@ public class AggregateDataset extends LazyDatasetBase implements ILazyDataset {
 	/**
 	 * Create an aggregate dataset
 	 * @param extend if true, extend rank by one
-	 * @param datasets
+	 * @param datasets inputs
 	 */
 	public AggregateDataset(boolean extend, ILazyDataset... datasets) {
 

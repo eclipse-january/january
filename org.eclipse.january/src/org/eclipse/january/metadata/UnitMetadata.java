@@ -22,7 +22,7 @@ public interface UnitMetadata extends MetadataType {
 
 	/**
 	 * Initialize unit metadata with given unit
-	 * @param unit
+	 * @param unit to set
 	 */
 	public void initialize(Unit<?> unit);
 

@@ -11,8 +11,6 @@ package org.eclipse.january.dataset;
 
 import static org.junit.Assert.assertEquals;
 
-import org.eclipse.january.dataset.IndexIterator;
-import org.eclipse.january.dataset.StringDataset;
 import org.junit.Test;
 
 public class StringDatasetTest {

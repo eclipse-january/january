@@ -32,13 +32,13 @@ public class DatasetUtils {
 	/**
 	 * Setup the logging facilities
 	 */
-	transient protected static final Logger utilsLogger = LoggerFactory.getLogger(DatasetUtils.class);
+	private static final Logger utilsLogger = LoggerFactory.getLogger(DatasetUtils.class);
 
 	/**
 	 * Append copy of dataset with another dataset along n-th axis
 	 *
-	 * @param a
-	 * @param b
+	 * @param a first dataset
+	 * @param b second dataset
 	 * @param axis
 	 *            number of axis (negative number counts from last)
 	 * @return appended dataset
@@ -83,9 +83,10 @@ public class DatasetUtils {
 
 	/**
 	 * Changes specific items of dataset by replacing them with other array
-	 * @param a
-	 * @param indices dataset interpreted as integers
-	 * @param values
+	 * @param <T> dataset class
+	 * @param a dataset
+	 * @param indices dataset interpreted as integers where to put items
+	 * @param values to set
 	 * @return changed dataset
 	 */
 	public static <T extends Dataset> T put(final T a, final Dataset indices, Object values) {
@@ -103,9 +104,10 @@ public class DatasetUtils {
 
 	/**
 	 * Changes specific items of dataset by replacing them with other array
-	 * @param a
-	 * @param indices
-	 * @param values
+	 * @param <T> dataset class
+	 * @param a dataset
+	 * @param indices where to put items
+	 * @param values to set
 	 * @return changed dataset
 	 */
 	public static <T extends Dataset> T put(final T a, final int[] indices, Object values) {
@@ -122,25 +124,24 @@ public class DatasetUtils {
 
 	/**
 	 * Take items from dataset along an axis
-	 * @param indices dataset interpreted as integers
+	 * @param <T> dataset class
+	 * @param a dataset
+	 * @param indices dataset interpreted as integers where to take items
 	 * @param axis if null, then use flattened view
-	 * @return a sub-array
+	 * @return a sub-dataset
 	 */
 	public static <T extends Dataset> T take(final T a, final Dataset indices, Integer axis) {
-		IntegerDataset indexes = (IntegerDataset) indices.flatten().cast(IntegerDataset.class);
+		IntegerDataset indexes = indices.flatten().cast(IntegerDataset.class);
 		return take(a, indexes.getData(), axis);
-	}
-
-	@SuppressWarnings("unchecked")
-	private static <T extends Dataset> T zeros(final T a, final int... shape) {
-		return (T) DatasetFactory.zeros(a.getElementsPerItem(), a.getClass(), shape);
 	}
 
 	/**
 	 * Take items from dataset along an axis
-	 * @param indices
+	 * @param <T> dataset class
+	 * @param a dataset
+	 * @param indices where to take items
 	 * @param axis if null, then use flattened view
-	 * @return a sub-array
+	 * @return a sub-dataset
 	 */
 	public static <T extends Dataset> T take(final T a, final int[] indices, Integer axis) {
 		if (indices == null || indices.length == 0) {
@@ -155,7 +156,7 @@ public class DatasetUtils {
 		if (axis == null) {
 			ashape = new int[1];
 			ashape[0] = ilen;
-			result = zeros(a, ashape);
+			result = DatasetFactory.zeros(a, ashape);
 			Serializable src = a.getBuffer();
 			for (int i = 0; i < ilen; i++) {
 				((AbstractDataset) result).setItemDirect(i, indices[i], src);
@@ -163,7 +164,7 @@ public class DatasetUtils {
 		} else {
 			axis = a.checkAxis(axis);
 			ashape[axis] = ilen;
-			result = zeros(a, ashape);
+			result = DatasetFactory.zeros(a, ashape);
 
 			int[] dpos = new int[rank];
 			int[] spos = new int[rank];
@@ -190,8 +191,8 @@ public class DatasetUtils {
 	 * Construct a dataset that contains the original dataset repeated the number
 	 * of times in each axis given by corresponding entries in the reps array
 	 *
-	 * @param a
-	 * @param reps
+	 * @param a dataset
+	 * @param reps repetitions in each dimension
 	 * @return tiled dataset
 	 */
 	public static Dataset tile(final IDataset a, int... reps) {
@@ -292,7 +293,7 @@ public class DatasetUtils {
 	 * running along the old dataset's 2nd dimension and the new 2nd is the old 1st.
 	 * The 3rd dimension is left unchanged.
 	 *
-	 * @param a
+	 * @param a dataset
 	 * @param axes if null or zero length then axes order reversed
 	 * @return remapped copy of data
 	 */
@@ -302,9 +303,9 @@ public class DatasetUtils {
 
 	/**
 	 * Swap two axes in dataset
-	 * @param a
-	 * @param axis1
-	 * @param axis2
+	 * @param a dataset
+	 * @param axis1 first axis
+	 * @param axis2 second axis
 	 * @return swapped dataset
 	 */
 	public static Dataset swapAxes(final IDataset a, int axis1, int axis2) {
@@ -312,7 +313,8 @@ public class DatasetUtils {
 	}
 
 	/**
-	 * @param a
+	 * @param <T> dataset class
+	 * @param a dataset
 	 * @return sorted flattened copy of dataset
 	 */
 	public static <T extends Dataset> T sort(final T a) {
@@ -320,7 +322,8 @@ public class DatasetUtils {
 	}
 
 	/**
-	 * @param a
+	 * @param <T> dataset class
+	 * @param a dataset
 	 * @param axis to sort along, if null then dataset is first flattened
 	 * @return dataset sorted along axis
 	 */
@@ -440,8 +443,8 @@ public class DatasetUtils {
 
 	/**
 	 * Concatenate the set of datasets along given axis
-	 * @param as
-	 * @param axis
+	 * @param as datasets
+	 * @param axis to concatenate along
 	 * @return concatenated dataset
 	 */
 	public static Dataset concatenate(final IDataset[] as, int axis) {
@@ -501,9 +504,9 @@ public class DatasetUtils {
 
 	/**
 	 * Split a dataset into equal sections along given axis
-	 * @param a
-	 * @param sections
-	 * @param axis
+	 * @param a dataset
+	 * @param sections number of sections
+	 * @param axis to split along
 	 * @param checkEqual makes sure the division is into equal parts
 	 * @return list of split datasets
 	 */
@@ -524,9 +527,9 @@ public class DatasetUtils {
 
 	/**
 	 * Split a dataset into parts along given axis
-	 * @param a
-	 * @param indices
-	 * @param axis
+	 * @param a dataset
+	 * @param indices where to split
+	 * @param axis to split along
 	 * @return list of split datasets
 	 */
 	public static List<Dataset> split(final Dataset a, int[] indices, int axis) {
@@ -585,9 +588,10 @@ public class DatasetUtils {
 	 *
 	 * By default, axis=-1 implies using a flattened version of the input dataset
 	 *
-	 * @param a
-	 * @param repeats
-	 * @param axis
+	 * @param <T> dataset class
+	 * @param a dataset
+	 * @param repeats number of repetitions
+	 * @param axis to repeat
 	 * @return dataset
 	 */
 	public static <T extends Dataset> T repeat(T a, int[] repeats, int axis) {
@@ -637,7 +641,7 @@ public class DatasetUtils {
 			newShape[axis] = nlen;
 		}
 
-		T rdata = zeros(a, newShape);
+		T rdata = DatasetFactory.zeros(a, newShape);
 		Serializable nbuf = rdata.getBuffer();
 
 		int csize = a.getElementsPerItem(); // chunk size
@@ -678,13 +682,14 @@ public class DatasetUtils {
 
 	/**
 	 * Resize a dataset
-	 * @param a
-	 * @param shape
+	 * @param <T> dataset class
+	 * @param a dataset
+	 * @param shape output shape
 	 * @return new dataset with new shape and items that are truncated or repeated, as necessary
 	 */
 	public static <T extends Dataset> T resize(final T a, final int... shape) {
 		int size = a.getSize();
-		T rdata = zeros(a, shape);
+		T rdata = DatasetFactory.zeros(a, shape);
 		IndexIterator it = rdata.getIterator();
 		while (it.hasNext()) {
 			rdata.setObjectAbs(it.index, a.getObjectAbs(it.index % size));
@@ -711,9 +716,10 @@ public class DatasetUtils {
 	/**
 	 * Cast a dataset
 	 *
-	 * @param clazz dataset class
+	 * @param <T> dataset sub-interface
+	 * @param clazz dataset sub-interface
 	 * @param d
-	 *            The dataset to be cast.
+	 *            The dataset to be copied
 	 * @return dataset of given class (or same dataset if already of the right class)
 	 */
 	@SuppressWarnings("unchecked")
@@ -732,6 +738,12 @@ public class DatasetUtils {
 				c = new IntegerDataset(a);
 			} else if (LongDataset.class.isAssignableFrom(clazz)) {
 				c = new LongDataset(a);
+			} else if (RGBByteDataset.class.isAssignableFrom(clazz)) {
+				if (a instanceof CompoundDataset) {
+					c = new RGBByteDataset((CompoundDataset) a);
+				} else {
+					c = new RGBByteDataset(a);
+				}
 			} else if (CompoundByteDataset.class.isAssignableFrom(clazz)) {
 				if (a instanceof CompoundByteDataset) {
 					c = new CompoundByteDataset((CompoundDataset) a);
@@ -740,7 +752,7 @@ public class DatasetUtils {
 				}
 			} else if (RGBDataset.class.isAssignableFrom(clazz)) {
 				if (a instanceof CompoundDataset) {
-					c = RGBDataset.createFromCompoundDataset((CompoundDataset) a);
+					c = new RGBDataset((CompoundDataset) a);
 				} else {
 					c = new RGBDataset(a);
 				}
@@ -803,7 +815,7 @@ public class DatasetUtils {
 	 * Cast a dataset
 	 *
 	 * @param d
-	 *            The dataset to be cast.
+	 *            The dataset to be cast
 	 * @param dtype dataset type
 	 * @return dataset of given type (or same dataset if already of the right type)
 	 * @deprecated Please use the class-based methods in DatasetUtils,
@@ -816,9 +828,10 @@ public class DatasetUtils {
 
 	/**
 	 * Cast a dataset
-	 * @param clazz dataset class
+	 * @param <T> dataset sub-interface
+	 * @param clazz dataset sub-interface
 	 * @param d
-	 *            The dataset to be cast.
+	 *            The dataset to be cast
 	 * @return dataset of given class
 	 */
 	@SuppressWarnings("unchecked")
@@ -828,6 +841,16 @@ public class DatasetUtils {
 		if (a.getClass().equals(clazz)) {
 			return (T) a;
 		}
+
+		if (a instanceof CompoundDataset) {
+			if (RGBByteDataset.class.isAssignableFrom(clazz)) {
+				return (T) RGBByteDataset.createFromCompoundDataset((CompoundDataset) a);
+			}
+			if (RGBDataset.class.isAssignableFrom(clazz)) {
+				return (T) RGBDataset.createFromCompoundDataset((CompoundDataset) a);
+			}
+		}
+
 		return copy(clazz, d);
 	}
 
@@ -835,7 +858,7 @@ public class DatasetUtils {
 	 * Cast a dataset
 	 *
 	 * @param d
-	 *            The dataset to be cast.
+	 *            The dataset to be cast
 	 * @param repeat repeat elements over item
 	 * @param dtype dataset type
 	 * @param isize item size
@@ -851,12 +874,13 @@ public class DatasetUtils {
 	/**
 	 * Cast a dataset
 	 *
-	 * @param clazz dataset class
+	 * @param <T> dataset sub-interface
+	 * @param isize item size
+	 * @param clazz dataset sub-interface
 	 * @param d
 	 *            The dataset to be cast.
 	 * @param repeat repeat elements over item
-	 * @param dtype dataset type
-	 * @param isize item size
+	 * @return dataset of given class
 	 * @since 2.3
 	 */
 	@SuppressWarnings("unchecked")
@@ -889,6 +913,12 @@ public class DatasetUtils {
 				c = new IntegerDataset(a);
 			} else if (LongDataset.class.isAssignableFrom(clazz)) {
 				c = new LongDataset(a);
+			} else if (RGBByteDataset.class.isAssignableFrom(clazz)) {
+				if (a instanceof CompoundDataset) {
+					c = RGBByteDataset.createFromCompoundDataset((CompoundDataset) a);
+				} else {
+					c = new RGBByteDataset(a);
+				}
 			} else if (CompoundByteDataset.class.isAssignableFrom(clazz)) {
 				c = new CompoundByteDataset(isize, repeat, a);
 			} else if (RGBDataset.class.isAssignableFrom(clazz)) {
@@ -935,7 +965,8 @@ public class DatasetUtils {
 	/**
 	 * Cast array of datasets to a compound dataset
 	 *
-	 * @param clazz dataset class
+	 * @param <T> compound dataset sub-interface
+	 * @param clazz compound dataset sub-interface
 	 * @param a
 	 *            The datasets to be cast.
 	 * @return dataset of given class
@@ -964,6 +995,7 @@ public class DatasetUtils {
 	 *
 	 * @param a
 	 *            The datasets to be cast.
+	 * @param dtype dataset type
 	 * @return compound dataset of given type
 	 * @deprecated Please use the class-based methods in DatasetUtils,
 	 *             such as {@link #cast(Class, Dataset...)}
@@ -976,7 +1008,7 @@ public class DatasetUtils {
 	/**
 	 * Make a dataset unsigned by promoting it to a wider dataset type and unwrapping the signs
 	 * of its contents
-	 * @param a
+	 * @param a dataset
 	 * @return unsigned dataset or original if it is not an integer dataset
 	 */
 	public static Dataset makeUnsigned(IDataset a) {
@@ -986,7 +1018,7 @@ public class DatasetUtils {
 	/**
 	 * Make a dataset unsigned by promoting it to a wider dataset type and unwrapping the signs
 	 * of its contents
-	 * @param a
+	 * @param a dataset
 	 * @param check if true, then check for negative values
 	 * @return unsigned dataset or original if it is not an integer dataset or it has been check for negative numbers
 	 * @since 2.1
@@ -1118,11 +1150,11 @@ public class DatasetUtils {
 	}
 
 	/**
-	 * @param clazz dataset class
-	 * @param rows
-	 * @param cols
-	 * @param offset
-	 * @param dtype
+	 * @param <T> dataset sub-interface
+	 * @param clazz dataset sub-interface
+	 * @param rows number of rows
+	 * @param cols number of columns
+	 * @param offset row offset
 	 * @return a new 2d dataset of given shape and class, filled with ones on the (offset) diagonal
 	 * @since 2.3
 	 */
@@ -1145,10 +1177,10 @@ public class DatasetUtils {
 	}
 
 	/**
-	 * @param rows
-	 * @param cols
-	 * @param offset
-	 * @param dtype
+	 * @param rows number of rows
+	 * @param cols number of columns
+	 * @param offset row offset
+	 * @param dtype dataset type
 	 * @return a new 2d dataset of given shape and type, filled with ones on the (offset) diagonal
 	 * @deprecated Please use the class-based methods in DatasetUtils,
 	 *             such as {@link #eye(Class, int, int, int)}
@@ -1160,8 +1192,10 @@ public class DatasetUtils {
 
 	/**
 	 * Create a (off-)diagonal matrix from items in dataset
-	 * @param a
-	 * @param offset
+	 *
+	 * @param <T> dataset class
+	 * @param a dataset
+	 * @param offset distance right of diagonal
 	 * @return diagonal matrix
 	 */
 	public static <T extends Dataset> T diag(final T a, final int offset) {
@@ -1177,7 +1211,7 @@ public class DatasetUtils {
 		if (rank == 1) {
 			int side = shape[0] + Math.abs(offset);
 			int[] pos = new int[] {side, side};
-			result = zeros(a, pos);
+			result = DatasetFactory.zeros(a, pos);
 			if (offset >= 0) {
 				pos[0] = 0;
 				pos[1] = offset;
@@ -1195,7 +1229,7 @@ public class DatasetUtils {
 			int side = offset >= 0 ? Math.min(shape[0], shape[1]-offset) : Math.min(shape[0]+offset, shape[1]);
 			if (side < 0)
 				side = 0;
-			result = zeros(a, side);
+			result = DatasetFactory.zeros(a, side, side);
 
 			if (side > 0) {
 				int[] pos = offset >= 0 ? new int[] { 0, offset } : new int[] { -offset, 0 };
@@ -1217,7 +1251,7 @@ public class DatasetUtils {
 	 * problems when used on large datasets and throw runtime exceptions
 	 * @param lazy can be null
 	 * @return Converted dataset or null
-	 * @throws DatasetException
+	 * @throws DatasetException when cannot retrieve data
 	 */
 	public static Dataset sliceAndConvertLazyDataset(ILazyDataset lazy) throws DatasetException {
 		if (lazy == null)
@@ -1292,7 +1326,7 @@ public class DatasetUtils {
 
 	/**
 	 * Create a compound dataset from given datasets
-	 * @param datasets
+	 * @param datasets inputs
 	 * @return compound dataset or null if none given
 	 */
 	public static CompoundDataset createCompoundDataset(final Dataset... datasets) {
@@ -1303,9 +1337,10 @@ public class DatasetUtils {
 	}
 
 	/**
-	 * Create a compound dataset from given datasets
-	 * @param clazz dataset class
-	 * @param datasets
+	 * Create a compound dataset from copying given datasets
+	 * @param <T> compound dataset sub-interface
+	 * @param clazz compound dataset sub-interface
+	 * @param datasets inputs
 	 * @return compound dataset or null if none given
 	 */
 	@SuppressWarnings("unchecked")
@@ -1314,7 +1349,15 @@ public class DatasetUtils {
 			return null;
 
 		CompoundDataset c = null;
-		if (CompoundByteDataset.class.isAssignableFrom(clazz)) {
+		if (RGBByteDataset.class.isAssignableFrom(clazz)) {
+			if (datasets.length == 1) {
+				c = new RGBByteDataset(datasets[0]);
+			} else if (datasets.length == 3) {
+				c = new RGBByteDataset(datasets[0], datasets[1], datasets[2]);
+			} else {
+				throw new IllegalArgumentException("Need one or three datasets for RGB dataset");
+			}
+		} else if (CompoundByteDataset.class.isAssignableFrom(clazz)) {
 			c = new CompoundByteDataset(datasets);
 		} else if (RGBDataset.class.isAssignableFrom(clazz)) {
 			if (datasets.length == 1) {
@@ -1358,8 +1401,8 @@ public class DatasetUtils {
 
 	/**
 	 * Create a compound dataset from given datasets
-	 * @param dtype
-	 * @param datasets
+	 * @param dtype dataset type
+	 * @param datasets for each element
 	 * @return compound dataset or null if none given
 	 * @deprecated Please use the class-based methods in DatasetUtils,
 	 *             such as {@link #createCompoundDataset(Class, Dataset...)}
@@ -1370,9 +1413,9 @@ public class DatasetUtils {
 	}
 
 	/**
-	 * Create a compound dataset from given dataset
-	 * @param dataset
-	 * @param itemSize
+	 * Create a compound dataset from given dataset, sharing data
+	 * @param dataset input
+	 * @param itemSize item size
 	 * @return compound dataset
 	 */
 	public static CompoundDataset createCompoundDataset(final Dataset dataset, final int itemSize) {
@@ -1420,7 +1463,7 @@ public class DatasetUtils {
 
 	/**
 	 * Create a compound dataset by using last axis as elements of an item
-	 * @param a
+	 * @param a dataset
 	 * @param shareData if true, then share data
 	 * @return compound dataset
 	 */
@@ -1447,7 +1490,7 @@ public class DatasetUtils {
 	 * Create a dataset from a compound dataset by using elements of an item as last axis
 	 * <p>
 	 * In the case where the number of elements is one, the last axis is squeezed out.
-	 * @param a
+	 * @param a dataset
 	 * @param shareData if true, then share data
 	 * @return non-compound dataset
 	 */
@@ -1459,8 +1502,8 @@ public class DatasetUtils {
 	 * Create a copy that has been coerced to an appropriate dataset type
 	 * depending on the input object's class
 	 *
-	 * @param a
-	 * @param obj
+	 * @param a dataset
+	 * @param obj input object
 	 * @return coerced copy of dataset
 	 */
 	public static Dataset coerce(Dataset a, Object obj) {
@@ -1593,8 +1636,9 @@ public class DatasetUtils {
 	}
 
 	/**
-	 * Generate an index dataset for given dataset where sub-datasets contain index values
+	 * Generate an index dataset for given dataset shape where sub-datasets contain index values
 	 *
+	 * @param shape for indexing
 	 * @return an index dataset
 	 */
 	public static IntegerDataset indices(int... shape) {
@@ -1688,8 +1732,8 @@ public class DatasetUtils {
 	/**
 	 * Find linearly-interpolated crossing points where the given dataset crosses the given value
 	 *
-	 * @param d
-	 * @param value
+	 * @param d dataset
+	 * @param value crossing value
 	 * @return list of interpolated indices
 	 */
 	public static List<Double> crossings(Dataset d, double value) {
@@ -1967,8 +2011,8 @@ public class DatasetUtils {
 
 	/**
 	 * Find absolute index of first value in dataset that is equal to given number
-	 * @param a
-	 * @param n
+	 * @param a dataset
+	 * @param n value
 	 * @return absolute index (if greater than a.getSize() then no value found)
 	 */
 	public static int findIndexEqualTo(final Dataset a, final double n) {
@@ -1983,8 +2027,8 @@ public class DatasetUtils {
 
 	/**
 	 * Find absolute index of first value in dataset that is greater than given number
-	 * @param a
-	 * @param n
+	 * @param a dataset
+	 * @param n value
 	 * @return absolute index (if greater than a.getSize() then no value found)
 	 */
 	public static int findIndexGreaterThan(final Dataset a, final double n) {
@@ -1999,8 +2043,8 @@ public class DatasetUtils {
 
 	/**
 	 * Find absolute index of first value in dataset that is greater than or equal to given number
-	 * @param a
-	 * @param n
+	 * @param a dataset
+	 * @param n value
 	 * @return absolute index (if greater than a.getSize() then no value found)
 	 */
 	public static int findIndexGreaterThanOrEqualTo(final Dataset a, final double n) {
@@ -2015,8 +2059,8 @@ public class DatasetUtils {
 
 	/**
 	 * Find absolute index of first value in dataset that is less than given number
-	 * @param a
-	 * @param n
+	 * @param a dataset
+	 * @param n value
 	 * @return absolute index (if greater than a.getSize() then no value found)
 	 */
 	public static int findIndexLessThan(final Dataset a, final double n) {
@@ -2031,8 +2075,8 @@ public class DatasetUtils {
 
 	/**
 	 * Find absolute index of first value in dataset that is less than or equal to given number
-	 * @param a
-	 * @param n
+	 * @param a dataset
+	 * @param n value
 	 * @return absolute index (if greater than a.getSize() then no value found)
 	 */
 	public static int findIndexLessThanOrEqualTo(final Dataset a, final double n) {
@@ -2047,7 +2091,7 @@ public class DatasetUtils {
 
 	/**
 	 * Find first occurrences in one dataset of values given in another sorted dataset
-	 * @param a
+	 * @param a dataset
 	 * @param values sorted 1D dataset of values to find
 	 * @return absolute indexes of those first occurrences (-1 is used to indicate value not found)
 	 */
@@ -2130,7 +2174,7 @@ public class DatasetUtils {
 
 	/**
 	 * Find indexes in sorted dataset of values for each value in other dataset
-	 * @param a
+	 * @param a dataset
 	 * @param values sorted 1D dataset of values to find
 	 * @return absolute indexes of values (-1 is used to indicate value not found)
 	 */
@@ -2215,8 +2259,9 @@ public class DatasetUtils {
 
 	/**
 	 * Roll items over given axis by given amount
-	 * @param a
-	 * @param shift
+	 * @param <T> dataset class
+	 * @param a dataset
+	 * @param shift amount to shift
 	 * @param axis if null, then roll flattened dataset
 	 * @return rolled dataset
 	 */
@@ -2264,7 +2309,8 @@ public class DatasetUtils {
 
 	/**
 	 * Roll the specified axis backwards until it lies in given position
-	 * @param a
+	 * @param <T> dataset class
+	 * @param a dataset
 	 * @param axis The rolled axis (index in shape array). Other axes are left unchanged in relative positions
 	 * @param start The position with it right of the destination of the rolled axis
 	 * @return dataset with rolled axis
@@ -2307,6 +2353,7 @@ public class DatasetUtils {
 
 	/**
 	 * Flip items in left/right direction, column-wise, or along second axis
+	 * @param <T> dataset class
 	 * @param a dataset must be at least 2D
 	 * @return view of flipped dataset
 	 */
@@ -2320,6 +2367,7 @@ public class DatasetUtils {
 
 	/**
 	 * Flip items in up/down direction, row-wise, or along first axis
+	 * @param <T> dataset class
 	 * @param a dataset
 	 * @return view of flipped dataset
 	 */
@@ -2330,6 +2378,7 @@ public class DatasetUtils {
 
 	/**
 	 * Rotate items in first two dimension by 90 degrees anti-clockwise
+	 * @param <T> dataset class
 	 * @param a dataset must be at least 2D
 	 * @return view of flipped dataset
 	 */
@@ -2339,6 +2388,7 @@ public class DatasetUtils {
 
 	/**
 	 * Rotate items in first two dimension by 90 degrees anti-clockwise
+	 * @param <T> dataset class
 	 * @param a dataset must be at least 2D
 	 * @param k number of 90-degree rotations
 	 * @return view of flipped dataset
@@ -2376,8 +2426,8 @@ public class DatasetUtils {
 	/**
 	 * Select content according where condition is true. All inputs are broadcasted to a maximum shape
 	 * @param condition boolean dataset
-	 * @param x
-	 * @param y
+	 * @param x first input
+	 * @param y second input
 	 * @return dataset where content is x or y depending on whether condition is true or otherwise
 	 */
 	public static Dataset select(BooleanDataset condition, Object x, Object y) {
@@ -2522,8 +2572,8 @@ public class DatasetUtils {
 
 	/**
 	 * Calculate positions in given shape from a dataset of 1-D indexes
-	 * @param indices
-	 * @param shape
+	 * @param indices dataset values taken as integers for index
+	 * @param shape dataset shape
 	 * @return list of positions as integer datasets
 	 */
 	public static List<IntegerDataset> calcPositionsFromIndexes(Dataset indices, int[] shape) {
@@ -2549,7 +2599,7 @@ public class DatasetUtils {
 	/**
 	 * Calculate indexes in given shape from datasets of position
 	 * @param positions as a list of datasets where each holds the position in a dimension
-	 * @param shape
+	 * @param shape dataset shape
 	 * @param mode either null, zero-length, unit length or length of rank of shape where
 	 *  0 = raise exception, 1 = wrap, 2 = clip
 	 * @return indexes as an integer dataset
@@ -2611,7 +2661,7 @@ public class DatasetUtils {
 
 	/**
 	 * Serialize dataset by flattening it. Discards metadata
-	 * @param data
+	 * @param data dataset
 	 * @return some java array
 	 */
 	public static Serializable serializeDataset(final IDataset data) {
@@ -2622,7 +2672,7 @@ public class DatasetUtils {
 
 	/**
 	 * Extract values where condition is non-zero. This is similar to Dataset#getByBoolean but supports broadcasting
-	 * @param data
+	 * @param data dataset
 	 * @param condition should be broadcastable to data
 	 * @return 1-D dataset of values
 	 */
@@ -2673,9 +2723,9 @@ public class DatasetUtils {
 
 	/**
 	 * Set shape to keep original rank
-	 * @param a
-	 * @param originalShape
-	 * @param axes
+	 * @param a dataset
+	 * @param originalShape original shape
+	 * @param axes dimensions in original shape to set to 1
 	 * @since 2.2
 	 */
 	public static void setShapeToOriginalRank(ILazyDataset a, int[] originalShape, int... axes) {

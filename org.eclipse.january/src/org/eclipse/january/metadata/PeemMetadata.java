@@ -12,8 +12,6 @@
 
 package org.eclipse.january.metadata;
 
-import org.eclipse.january.metadata.MetadataType;
-
 /**
  * This metadata describes Peem-related information
  */
@@ -21,9 +19,9 @@ public interface PeemMetadata extends MetadataType {
 
 	/**
 	 * Initialize PEEM metadata
-	 * @param xyPosition
-	 * @param scaling
-	 * @param fieldOfView
+	 * @param xyPosition values of motor
+	 * @param scaling image resolution
+	 * @param fieldOfView size of image
 	 */
 	public void initialize(double[] xyPosition, double scaling, double fieldOfView);
 
@@ -53,19 +51,19 @@ public interface PeemMetadata extends MetadataType {
 
 	/**
 	 * Sets X/y motor position in microns
-	 * @param xyMotorPosition
+	 * @param xyMotorPosition values of motor
 	 */
 	void setXYMotorPosition(double[] xyMotorPosition);
 
 	/**
 	 * Sets scaling micron/pixel
-	 * @param scaling
+	 * @param scaling image resolution
 	 */
 	void setScaling(double scaling);
 
 	/**
 	 * Sets fieldOfView value in microns
-	 * @param fieldOfView
+	 * @param fieldOfView size of image
 	 */
 	void setFieldOfView(double fieldOfView);
 

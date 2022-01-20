@@ -21,6 +21,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.eclipse.january.metadata.StatisticsMetadata;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -29,6 +31,8 @@ import org.eclipse.january.metadata.StatisticsMetadata;
 public class BooleanDatasetBase extends AbstractDataset {
 	// pin UID to base class
 	private static final long serialVersionUID = Dataset.serialVersionUID;
+
+	private static final Logger logger = LoggerFactory.getLogger(BooleanDatasetBase.class);
 
 	protected boolean[] data; // subclass alias // PRIM_TYPE
 
@@ -344,7 +348,7 @@ public class BooleanDatasetBase extends AbstractDataset {
 	}
 
 	/**
-	 * @param i
+	 * @param i position in first dimension
 	 * @return item in given position
 	 */
 	public boolean get(final int i) { // PRIM_TYPE
@@ -352,8 +356,8 @@ public class BooleanDatasetBase extends AbstractDataset {
 	}
 
 	/**
-	 * @param i
-	 * @param j
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 * @return item in given position
 	 */
 	public boolean get(final int i, final int j) { // PRIM_TYPE
@@ -361,7 +365,7 @@ public class BooleanDatasetBase extends AbstractDataset {
 	}
 
 	/**
-	 * @param pos
+	 * @param pos position
 	 * @return item in given position
 	 */
 	public boolean get(final int... pos) { // PRIM_TYPE
@@ -551,7 +555,7 @@ public class BooleanDatasetBase extends AbstractDataset {
 	/**
 	 * Sets the value at first point to the passed value. The dataset must not be null
 	 *
-	 * @param value
+	 * @param value to set
 	 * @since 2.0
 	 */
 	public void setItem(final boolean value) { // PRIM_TYPE
@@ -561,8 +565,8 @@ public class BooleanDatasetBase extends AbstractDataset {
 	/**
 	 * Sets the value at a particular point to the passed value. The dataset must be 1D
 	 *
-	 * @param value
-	 * @param i
+	 * @param value to set
+	 * @param i position in first dimension
 	 */
 	public void setItem(final boolean value, final int i) { // PRIM_TYPE
 		setAbs(get1DIndex(i), value);
@@ -571,9 +575,9 @@ public class BooleanDatasetBase extends AbstractDataset {
 	/**
 	 * Sets the value at a particular point to the passed value. The dataset must be 2D
 	 *
-	 * @param value
-	 * @param i
-	 * @param j
+	 * @param value to set
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 */
 	public void setItem(final boolean value, final int i, final int j) { // PRIM_TYPE
 		setAbs(get1DIndex(i, j), value);
@@ -582,8 +586,8 @@ public class BooleanDatasetBase extends AbstractDataset {
 	/**
 	 * Sets the value at a particular point to the passed value
 	 *
-	 * @param value
-	 * @param pos
+	 * @param value to set
+	 * @param pos position
 	 */
 	public void setItem(final boolean value, final int... pos) { // PRIM_TYPE
 		setAbs(get1DIndex(pos), value);
