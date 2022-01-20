@@ -801,16 +801,12 @@ def icode(cargo):
 #    print("int case:", name)
 #    print(text)
     sameloop({ 8 : ("byte", "ByteDataset"), 16 : ("short", "ShortDataset"),
-              64 : ("long", "LongDataset"),
-              32 : ("int", "IntegerDataset"),
-             },
-              "INT", "i", text, use_long=True, unsigned=def_unsigned_mask)
+                32 : ("int", "IntegerDataset"), 64 : ("long", "LongDataset"), },
+                "INT", "i", text, use_long=True, unsigned=def_unsigned_mask)
     types.append("integer")
     compoundloop({ 8 : ("byte", "CompoundByteDataset"), 16 : ("short", "CompoundShortDataset"),
-                  64 : ("long", "CompoundLongDataset"),
-                  32 : ("int", "CompoundIntegerDataset"),
-                 },
-                  "ARRAYINT", "ai", text, use_long=True, unsigned=def_unsigned_mask)
+                32 : ("int", "CompoundIntegerDataset"), 64 : ("long", "CompoundLongDataset"), },
+                "ARRAYINT", "ai", text, use_long=True, unsigned=def_unsigned_mask)
     types.append("compound integer")
     return cases, (f, last, name, jdoc, types)
 
@@ -820,15 +816,11 @@ def ircode(cargo):
 #    print("int case:", name)
 #    print(text)
     sameloop({ 8 : ("byte", "ByteDataset"), 16 : ("short", "ShortDataset"),
-                64 : ("long", "LongDataset"),
-                32 : ("int", "IntegerDataset"),
-                 },
+                32 : ("int", "IntegerDataset"), 64 : ("long", "LongDataset"), },
                 "INT", "i", text, override_long=True, unsigned=def_unsigned_mask)
     types.append("integer")
     compoundloop({ 8 : ("byte", "CompoundByteDataset"), 16 : ("short", "CompoundShortDataset"),
-                64 : ("long", "CompoundLongDataset"),
-                32 : ("int", "CompoundIntegerDataset"),
-                 },
+                32 : ("int", "CompoundIntegerDataset"), 64 : ("long", "CompoundLongDataset"), },
                 "ARRAYINT", "ai", text, override_long=True, unsigned=def_unsigned_mask)
     types.append("compound integer")
     return cases, (f, last, name, jdoc, types)
@@ -840,15 +832,11 @@ def rcode(cargo):
 #    print(text)
     if "integer" not in types:
         sameloop({ 8 : ("byte", "ByteDataset"), 16 : ("short", "ShortDataset"),
-                    64 : ("long", "LongDataset"),
-                    32 : ("int", "IntegerDataset"),
-                    },
+                    32 : ("int", "IntegerDataset"), 64 : ("long", "LongDataset"), },
                     "INT", "i", text)
         types.append("integer")
         compoundloop({ 8 : ("byte", "CompoundByteDataset"), 16 : ("short", "CompoundShortDataset"),
-                      64 : ("long", "CompoundLongDataset"),
-                      32 : ("int", "CompoundIntegerDataset"),
-                      },
+                    32 : ("int", "CompoundIntegerDataset"), 64 : ("long", "CompoundLongDataset"), },
                     "ARRAYINT", "ai", text)
         types.append("compound integer")
 
