@@ -16,8 +16,6 @@ package org.eclipse.january.dataset;
 import java.util.Arrays;
 
 import org.eclipse.january.DatasetException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Mathematics class for lazy datasets
@@ -31,7 +29,7 @@ public final class LazyMaths {
 	/**
 	 * Setup the logging facilities
 	 */
-	protected static final Logger logger = LoggerFactory.getLogger(LazyMaths.class);
+//	private static final Logger logger = LoggerFactory.getLogger(LazyMaths.class);
 
 	// TODO Uncomment this next line when minimum JDK is set to 1.8
 	// @FunctionalInterface
@@ -108,10 +106,10 @@ public final class LazyMaths {
 	}
 
 	/**
-	 * @param data
+	 * @param data lazy dataset
 	 * @param axes (can be negative). If null or empty then use all axes
 	 * @return maximum along axes in lazy dataset
-	 * @throws DatasetException
+	 * @throws DatasetException when data cannot be retrieved
 	 * @since 2.1
 	 */
 	public static Dataset max(final ILazyDataset data, int... axes) throws DatasetException {
@@ -124,10 +122,10 @@ public final class LazyMaths {
 	}
 
 	/**
-	 * @param data
+	 * @param data lazy dataset
 	 * @param axes (can be negative). If null or empty then use all axes
 	 * @return minimum along axes in lazy dataset
-	 * @throws DatasetException
+	 * @throws DatasetException when data cannot be retrieved
 	 * @since 2.1
 	 */
 	public static Dataset min(final ILazyDataset data, int... axes) throws DatasetException {
@@ -140,10 +138,10 @@ public final class LazyMaths {
 	}
 
 	/**
-	 * @param data
+	 * @param data lazy dataset
 	 * @param axis (can be negative)
 	 * @return sum along axis in lazy dataset
-	 * @throws DatasetException 
+	 * @throws DatasetException when data cannot be retrieved
 	 */
 	public static Dataset sum(final ILazyDataset data, int axis) throws DatasetException {
 		if (data instanceof Dataset) {
@@ -169,10 +167,10 @@ public final class LazyMaths {
 	}
 
 	/**
-	 * @param data
+	 * @param data lazy dataset
 	 * @param ignoreAxes axes to ignore
 	 * @return sum when given axes are ignored in lazy dataset
-	 * @throws DatasetException 
+	 * @throws DatasetException when data cannot be retrieved
 	 * @since 2.0
 	 */
 	public static Dataset sum(final ILazyDataset data, int... ignoreAxes) throws DatasetException {
@@ -180,11 +178,11 @@ public final class LazyMaths {
 	}
 
 	/**
-	 * @param data
-	 * @param ignore if true, ignore the provided axes, otherwise use only the provided axes 
+	 * @param data lazy dataset
+	 * @param ignore if true, ignore the provided axes, otherwise use only the provided axes
 	 * @param axes axes to ignore or accept, depending on the preceding flag
-	 * @return sum
-	 * @throws DatasetException 
+	 * @return sum over all used axes
+	 * @throws DatasetException when data cannot be retrieved
 	 * @since 2.0
 	 */
 	public static Dataset sum(final ILazyDataset data, boolean ignore, int... axes) throws DatasetException {
@@ -203,10 +201,10 @@ public final class LazyMaths {
 	}
 
 	/**
-	 * @param data
+	 * @param data lazy dataset
 	 * @param axis (can be negative)
 	 * @return product along axis in lazy dataset
-	 * @throws DatasetException 
+	 * @throws DatasetException when data cannot be retrieved
 	 */
 	public static Dataset product(final ILazyDataset data, int axis) throws DatasetException {
 		int[][] sliceInfo = new int[3][];
@@ -230,12 +228,12 @@ public final class LazyMaths {
 	}
 
 	/**
-	 * @param start
+	 * @param start number to begin at
 	 * @param stop inclusive
-	 * @param data
-	 * @param ignoreAxes
+	 * @param data lazy dataset
+	 * @param ignoreAxes axes to ignore
 	 * @return mean when given axes are ignored in lazy dataset
-	 * @throws DatasetException 
+	 * @throws DatasetException when data cannot be retrieved
 	 */
 	public static Dataset mean(int start, int stop, ILazyDataset data, int... ignoreAxes) throws DatasetException {
 		int[] shape = data.getShape();
@@ -265,7 +263,13 @@ public final class LazyMaths {
 
 		return  av != null ? av.getCurrentAverage().squeeze() : null;
 	}
-	
+
+	/**
+	 * @param data lazy dataset
+	 * @param ignoreAxes axes to ignore
+	 * @return mean when given axes are ignored in lazy dataset
+	 * @throws DatasetException when data cannot be retrieved
+	 */
 	public static Dataset mean(ILazyDataset data, int... ignoreAxes) throws DatasetException {
 		return mean(0, Integer.MAX_VALUE -1 , data, ignoreAxes);
 	}

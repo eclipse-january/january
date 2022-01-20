@@ -44,6 +44,10 @@ public abstract class BroadcastIteratorBase extends IndexIterator {
 	protected Dataset aDataset;
 	protected Dataset bDataset;
 
+	/**
+	 * @param a dataset to iterate over
+	 * @param b dataset to iterate over
+	 */
 	public BroadcastIteratorBase(Dataset a, Dataset b) {
 		aDataset = a;
 		bDataset = b;
@@ -68,7 +72,7 @@ public abstract class BroadcastIteratorBase extends IndexIterator {
 
 	/**
 	 * Set to output doubles
-	 * @param asDouble
+	 * @param asDouble if true, output is set as doubles
 	 */
 	public void setOutputDouble(boolean asDouble) {
 		if (this.asDouble != asDouble) {

@@ -21,7 +21,6 @@ import java.util.Collection;
 
 import org.apache.commons.math3.complex.Complex;
 import org.eclipse.january.asserts.TestUtils;
-import org.eclipse.january.dataset.BinaryOperation;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -156,7 +155,7 @@ public class BinaryOperationTest {
 	public BinaryOperationTest(Class<BinaryOperation> opClass, Object parameter, Object[][] values) throws Exception {
 
 		if (parameter == null) {
-			operation = opClass.newInstance();
+			operation = opClass.getConstructor().newInstance();
  		} else if (parameter instanceof Number) {
  			Constructor<BinaryOperation> c = opClass.getConstructor(Number.class);
  			operation = c.newInstance(parameter);

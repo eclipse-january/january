@@ -14,6 +14,9 @@ package org.eclipse.january.dataset;
 
 import java.text.MessageFormat;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * Extend boolean base dataset for boolean values
@@ -21,6 +24,8 @@ import java.text.MessageFormat;
 public class BooleanDataset extends BooleanDatasetBase {
 	// pin UID to base class
 	private static final long serialVersionUID = Dataset.serialVersionUID;
+
+	private static final Logger logger = LoggerFactory.getLogger(BooleanDataset.class);
 
 	/**
 	 * Create a null dataset

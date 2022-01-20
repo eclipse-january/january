@@ -26,21 +26,23 @@ public interface IMetadataProvider {
 	/**
 	 * @deprecated Use {@code getFirstMetadata(IMetadata.class)} instead
 	 * @return an instance of IMetadata
-	 * @throws Exception
+	 * @throws Exception when failing to fetch metadata
 	 */
 	@Deprecated
 	public IMetadata getMetadata() throws Exception;
 
 	/**
+	 * @param <T> metadata sub-interface
 	 * @param clazz if null return everything
 	 * @return list of metadata with given class (or its super interface)
-	 * @throws MetadataException
+	 * @throws MetadataException when failing to fetch metadata
 	 */
-	public <S extends MetadataType, T extends S> List<S> getMetadata(Class<T> clazz) throws MetadataException;
+	public <T extends MetadataType> List<T> getMetadata(Class<T> clazz) throws MetadataException;
 
 	/**
+	 * @param <T> metadata sub-interface
 	 * @param clazz if null return first from everything
 	 * @return first element from list of metadata with given class (or its super interface)
 	 */
-	public <S extends MetadataType, T extends S> S getFirstMetadata(Class<T> clazz);
+	public <T extends MetadataType> T getFirstMetadata(Class<T> clazz);
 }

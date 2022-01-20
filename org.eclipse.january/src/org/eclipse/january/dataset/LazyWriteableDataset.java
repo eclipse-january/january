@@ -22,20 +22,19 @@ import org.eclipse.january.io.ILazySaver;
  */
 public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWriteableDataset {
 	private static final long serialVersionUID = -679846418938412535L;
-	private int[] chunks;
 	private ILazySaver saver;
 	private Object fillValue;
 	private boolean writeAsync;
 
 	/**
 	 * Create a lazy dataset
-	 * @param name
+	 * @param name of dataset
 	 * @param dtype dataset type
-	 * @param elements
-	 * @param shape
-	 * @param maxShape
-	 * @param chunks
-	 * @param saver
+	 * @param elements item size
+	 * @param shape dataset shape
+	 * @param maxShape maximum shape
+	 * @param chunks chunk shape
+	 * @param saver lazy saver
 	 * @deprecated Use {@link #LazyWriteableDataset(ILazySaver, String, int, Class, int[], int[], int[])}
 	 */
 	@Deprecated
@@ -45,12 +44,12 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 
 	/**
 	 * Create a lazy dataset
-	 * @param name
-	 * @param clazz dataset interface
-	 * @param shape
-	 * @param maxShape
-	 * @param chunks
-	 * @param saver
+	 * @param saver lazy saver
+	 * @param name of dataset
+	 * @param clazz dataset sub-interface
+	 * @param shape dataset shape
+	 * @param maxShape maximum shape
+	 * @param chunks chunk shape
 	 * @since 2.3
 	 */
 	public LazyWriteableDataset(ILazySaver saver, String name, Class<? extends Dataset> clazz, int[] shape, int[] maxShape, int[] chunks) {
@@ -59,18 +58,17 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 
 	/**
 	 * Create a lazy dataset
-	 * @param name
-	 * @param elements
-	 * @param clazz dataset interface
-	 * @param shape
-	 * @param maxShape
-	 * @param chunks
-	 * @param saver
+	 * @param saver lazy saver
+	 * @param name of dataset
+	 * @param elements item size
+	 * @param clazz dataset sub-interface
+	 * @param shape dataset shape
+	 * @param maxShape maximum shape
+	 * @param chunks chunk shape
 	 * @since 2.3
 	 */
 	public LazyWriteableDataset(ILazySaver saver, String name, int elements, Class<? extends Dataset> clazz, int[] shape, int[] maxShape, int[] chunks) {
-		super(saver, name, elements, clazz, shape, maxShape);
-		this.chunks = chunks == null ? null : chunks.clone();
+		super(saver, name, elements, clazz, shape, maxShape, chunks);
 		this.saver = saver;
 
 		size = ShapeUtils.calcLongSize(this.shape);
@@ -78,12 +76,12 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 
 	/**
 	 * Create a lazy dataset
-	 * @param name
+	 * @param name of dataset
 	 * @param dtype dataset type
-	 * @param shape
-	 * @param maxShape
-	 * @param chunks
-	 * @param saver
+	 * @param shape dataset shape
+	 * @param maxShape maximum shape
+	 * @param chunks chunk shape
+	 * @param saver lazy saver
 	 * @deprecated Use {@link #LazyWriteableDataset(ILazySaver, String, int, Class, int[], int[], int[])}
 	 */
 	@Deprecated
@@ -92,33 +90,34 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 	}
 
 	/**
-	 * Create a lazy dataset
-	 * @param name
-	 * @param clazz dataset element class
-	 * @param elements
-	 * @param shape
-	 * @param maxShape
-	 * @param chunks
-	 * @param saver
+	 * Create a lazy dataset using element class
+	 * @param name of dataset
+	 * @param eClass element class
+	 * @param elements item size
+	 * @param shape dataset shape
+	 * @param maxShape maximum shape
+	 * @param chunks chunk shape
+	 * @param saver lazy saver
 	 */
-	public LazyWriteableDataset(String name, Class<?> clazz, int elements, int[] shape, int[] maxShape, int[] chunks, ILazySaver saver) {
-		this(saver, name, elements, InterfaceUtils.getInterfaceFromClass(elements, clazz), shape, maxShape, chunks);
+	public LazyWriteableDataset(String name, Class<?> eClass, int elements, int[] shape, int[] maxShape, int[] chunks, ILazySaver saver) {
+		this(saver, name, elements, InterfaceUtils.getInterfaceFromClass(elements, eClass), shape, maxShape, chunks);
 	}
 
 	/**
-	 * Create a lazy dataset
-	 * @param name
-	 * @param clazz dataset element class
-	 * @param shape
-	 * @param maxShape
-	 * @param chunks
-	 * @param saver
+	 * Create a lazy dataset using element class
+	 * @param name of dataset
+	 * @param eClass element class
+	 * @param shape dataset shape
+	 * @param maxShape maximum shape
+	 * @param chunks chunk shape
+	 * @param saver lazy saver
 	 */
-	public LazyWriteableDataset(String name, Class<?> clazz, int[] shape, int[] maxShape, int[] chunks, ILazySaver saver) {
-		this(saver, name, 1, InterfaceUtils.getInterfaceFromClass(1, clazz), shape, maxShape, chunks);
+	public LazyWriteableDataset(String name, Class<?> eClass, int[] shape, int[] maxShape, int[] chunks, ILazySaver saver) {
+		this(saver, name, 1, InterfaceUtils.getInterfaceFromClass(1, eClass), shape, maxShape, chunks);
 	}
 
 	/**
+	 * @param other dataset
 	 * @since 2.2
 	 */
 	protected LazyWriteableDataset(LazyWriteableDataset other) {
@@ -132,7 +131,8 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 
 	/**
 	 * Create a lazy writeable dataset based on in-memory data (handy for testing)
-	 * @param dataset
+	 * @param dataset input
+	 * @return lazy writeable dataset
 	 */
 	public static LazyWriteableDataset createLazyDataset(final Dataset dataset) {
 		return createLazyDataset(dataset, null);
@@ -140,7 +140,9 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 
 	/**
 	 * Create a lazy writeable dataset based on in-memory data (handy for testing)
-	 * @param dataset
+	 * @param dataset input
+	 * @param maxShape maximum shape
+	 * @return lazy writeable dataset
 	 */
 	public static LazyWriteableDataset createLazyDataset(final Dataset dataset, final int[] maxShape) {
 		return new LazyWriteableDataset(new ILazySaver() {
@@ -171,7 +173,7 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 				if (slice.isExpanded()) {
 					Dataset od = d;
 					d = DatasetFactory.zeros(od.getClass(), slice.getSourceShape());
-					d.setSlice(od, SliceND.createSlice(od, null, null));
+					d.setSlice(od, SliceND.createSlice(d, null, od.getShapeRef()));
 				}
 				d.setSlice(data, slice);
 			}
@@ -183,7 +185,6 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Arrays.hashCode(chunks);
 		result = prime * result + ((fillValue == null) ? 0 : fillValue.hashCode());
 		result = prime * result + (writeAsync ? 1231 : 1237);
 		return result;
@@ -199,9 +200,6 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 		}
 
 		LazyWriteableDataset other = (LazyWriteableDataset) obj;
-		if (!Arrays.equals(chunks, other.chunks)) {
-			return false;
-		}
 		if (fillValue == null) {
 			if (other.fillValue != null) {
 				return false;
@@ -221,16 +219,6 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 		}
 
 		return true;
-	}
-
-	@Override
-	public int[] getChunking() {
-		return chunks;
-	}
-
-	@Override
-	public void setChunking(int... chunks) {
-		this.chunks = chunks == null ? null : chunks.clone();
 	}
 
 	@Override
@@ -266,9 +254,9 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 	/**
 	 * Set a slice of the dataset
 	 * 
-	 * @param data
+	 * @param data to set
 	 * @param slice an n-D slice
-	 * @throws DatasetException 
+	 * @throws DatasetException when cannot write data
 	 */
 	public void setSlice(IDataset data, SliceND slice) throws DatasetException {
 		setSlice(null, data, slice);
@@ -281,23 +269,25 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 
 	@Override
 	public void setSlice(IMonitor monitor, IDataset data, SliceND slice) throws DatasetException {
+		checkSliceND(slice);
 		internalSetSlice(monitor, writeAsync, data, slice);
 	}
 
 	@Override
 	public void setSliceSync(IMonitor monitor, IDataset data, SliceND slice) throws DatasetException {
+		checkSliceND(slice);
 		internalSetSlice(monitor, false, data, slice);
 	}
 
 	private void internalSetSlice(IMonitor monitor, final boolean async, IDataset data, SliceND slice) throws DatasetException {
-		int[] dshape = data instanceof Dataset ? ((Dataset) data).getShapeRef() : data.getShape();
-		if (dshape.length == 0) { // fix zero-rank case
-			dshape = new int[] {1}; // FIXME remove
-		}
-		// if necessary, reshape the input data according to the shape of the slice
-		if (!Arrays.equals(slice.getShape(), dshape)) {
-			data = data.getSliceView();
-			data.setShape(slice.getShape());
+		if (slice != null) {
+			int[] dshape = data instanceof Dataset ? ((Dataset) data).getShapeRef() : data.getShape();
+
+			// if necessary, reshape the input data according to the shape of the slice
+			if (!Arrays.equals(slice.getShape(), dshape)) {
+				data = data.getSliceView();
+				data.setShape(slice.getShape());
+			}
 		}
 
 		SliceND nslice = calcTrueSlice(slice);
@@ -330,7 +320,7 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 
 	/**
 	 * Set saver (and also loader)
-	 * @param saver
+	 * @param saver lazy saver
 	 */
 	@Override
 	public void setSaver(ILazySaver saver) {
@@ -351,5 +341,10 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 	@Override
 	public void setFillValue(Object fill) {
 		fillValue = fill;
+	}
+
+	@Override
+	public LazyWriteableDataset squeezeEnds() {
+		return (LazyWriteableDataset) super.squeezeEnds();
 	}
 }

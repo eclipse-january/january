@@ -104,25 +104,27 @@ allow_ints = False
 def oldmethod(name, jdoc=None, edoc="", params=0):
     if is_binaryop:
         print("\t/**\n\t * %s operator" %  name)
-        print("\t * @param a")
-        print("\t * @param b")
+        print("\t * @param a first operand")
+        print("\t * @param b second operand")
     else:
         print("\t/**\n\t * %s - %s" %  (name, jdoc))
-        print("\t * @param a")
+        print("\t * @param a single operand")
 
-    plist = []
     if params > 0:
-        plist = ["pa"]
-        psig = "final Object " + plist[0]
+        cp = "pa"
+        plist = [cp]
+        jdlist = [cp + " %s parameter" % ORDINALS[0]]
+        psig = "final Object " + cp
         for p in range(1, params):
-            plist.append("p"+chr(ord('a')+p))
-            psig += ", final Object " + plist[p]
+            cp = "p"+chr(ord('a')+p)
+            plist.append(cp)
+            jdlist.append(cp + " %s parameter" % ORDINALS[p])
+            psig += ", final Object " + cp
 
-        ptext = ""
-        for p in plist:
-            print("\t * @param %s" % p)
-            ptext += "%s, " % p
-        ptext = ptext[:-2]
+        for jd in jdlist:
+            print("\t * @param %s" % jd)
+
+        ptext = ", ".join(plist)
         if is_binaryop:
             print("\t * @return %s\n%s\t */" % (jdoc, edoc))
             print("\tpublic static Dataset %s(final Object a, final Object b, %s) {" % (name, psig))
@@ -142,6 +144,7 @@ def oldmethod(name, jdoc=None, edoc="", params=0):
             print("\t\treturn %s(a, null);" % name)
     print("\t}\n")
 
+ORDINALS = ('first', 'second', 'third', 'fourth', 'fifth')
 def beginmethod(name, jdoc=None, edoc=None, params=0):
     if edoc is None:
         edoc = ""
@@ -150,24 +153,29 @@ def beginmethod(name, jdoc=None, edoc=None, params=0):
     oldmethod(name, jdoc, edoc, params)
     if is_binaryop:
         print("\t/**\n\t * %s operator" %  name)
-        print("\t * @param a")
-        print("\t * @param b")
+        print("\t * @param a first operand")
+        print("\t * @param b second operand")
         print("\t * @param o output can be null - in which case, a new dataset is created")
     else:
         print("\t/**\n\t * %s - %s" %  (name, jdoc))
-        print("\t * @param a")
+        print("\t * @param a single operand")
         print("\t * @param o output can be null - in which case, a new dataset is created")
 
     plist = []
     if params > 0:
-        plist = ["pa"]
-        psig = "final Object " + plist[0]
+        cp = "pa"
+        plist.append(cp)
+        jdlist = [cp + " %s parameter" % ORDINALS[0]]
+        psig = "final Object " + cp
         for p in range(1, params):
-            plist.append("p"+chr(ord('a')+p))
-            psig += ", final Object " + plist[p]
+            cp = "p"+chr(ord('a')+p)
+            plist.append(cp)
+            jdlist.append(cp + " %s parameter" % ORDINALS[p])
+            psig += ", final Object " + cp
 
-        for p in plist:
-            print("\t * @param %s" % p)
+        for jd in jdlist:
+            print("\t * @param %s" % jd)
+
         if is_binaryop:
             print("\t * @return %s\n%s\t */" % (jdoc, edoc))
             print("\tpublic static Dataset %s(final Object a, final Object b, final Dataset o, %s) {" % (name, psig))
@@ -793,11 +801,11 @@ def icode(cargo):
 #    print("int case:", name)
 #    print(text)
     sameloop({ 8 : ("byte", "ByteDataset"), 16 : ("short", "ShortDataset"),
-                32 : ("int", "IntegerDataset"), 64 : ("long", "LongDataset") },
+                32 : ("int", "IntegerDataset"), 64 : ("long", "LongDataset"), },
                 "INT", "i", text, use_long=True, unsigned=def_unsigned_mask)
     types.append("integer")
     compoundloop({ 8 : ("byte", "CompoundByteDataset"), 16 : ("short", "CompoundShortDataset"),
-                32 : ("int", "CompoundIntegerDataset"), 64 : ("long", "CompoundLongDataset") },
+                32 : ("int", "CompoundIntegerDataset"), 64 : ("long", "CompoundLongDataset"), },
                 "ARRAYINT", "ai", text, use_long=True, unsigned=def_unsigned_mask)
     types.append("compound integer")
     return cases, (f, last, name, jdoc, types)
@@ -808,11 +816,11 @@ def ircode(cargo):
 #    print("int case:", name)
 #    print(text)
     sameloop({ 8 : ("byte", "ByteDataset"), 16 : ("short", "ShortDataset"),
-                32 : ("int", "IntegerDataset"), 64 : ("long", "LongDataset") },
+                32 : ("int", "IntegerDataset"), 64 : ("long", "LongDataset"), },
                 "INT", "i", text, override_long=True, unsigned=def_unsigned_mask)
     types.append("integer")
     compoundloop({ 8 : ("byte", "CompoundByteDataset"), 16 : ("short", "CompoundShortDataset"),
-                32 : ("int", "CompoundIntegerDataset"), 64 : ("long", "CompoundLongDataset") },
+                32 : ("int", "CompoundIntegerDataset"), 64 : ("long", "CompoundLongDataset"), },
                 "ARRAYINT", "ai", text, override_long=True, unsigned=def_unsigned_mask)
     types.append("compound integer")
     return cases, (f, last, name, jdoc, types)
@@ -824,11 +832,11 @@ def rcode(cargo):
 #    print(text)
     if "integer" not in types:
         sameloop({ 8 : ("byte", "ByteDataset"), 16 : ("short", "ShortDataset"),
-                    32 : ("int", "IntegerDataset"), 64 : ("long", "LongDataset") },
+                    32 : ("int", "IntegerDataset"), 64 : ("long", "LongDataset"), },
                     "INT", "i", text)
         types.append("integer")
         compoundloop({ 8 : ("byte", "CompoundByteDataset"), 16 : ("short", "CompoundShortDataset"),
-                    32 : ("int", "CompoundIntegerDataset"), 64 : ("long", "CompoundLongDataset") },
+                    32 : ("int", "CompoundIntegerDataset"), 64 : ("long", "CompoundLongDataset"), },
                     "ARRAYINT", "ai", text)
         types.append("compound integer")
 
@@ -916,7 +924,6 @@ def generateclass(funcs, shell):
             break
         print(l, end='')
     print("import org.apache.commons.math3.complex.Complex;")
-    print("import org.eclipse.january.dataset.DTypeUtils;")
     while True: # edit imports
         l = shell.readline()
         if l.startswith("// end of imports that will be omitted in derived class"):

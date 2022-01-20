@@ -18,6 +18,8 @@ import org.eclipse.january.DatasetException;
 import org.eclipse.january.IMonitor;
 import org.eclipse.january.metadata.StatisticsMetadata;
 import org.eclipse.january.metadata.internal.StatisticsMetadataImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Generic container class for data that is compound in nature
@@ -30,6 +32,8 @@ import org.eclipse.january.metadata.internal.StatisticsMetadataImpl;
 public abstract class AbstractCompoundDataset extends AbstractDataset implements CompoundDataset {
 	// pin UID to base class
 	private static final long serialVersionUID = Dataset.serialVersionUID;
+
+	private static final Logger logger = LoggerFactory.getLogger(AbstractCompoundDataset.class);
 
 	protected int isize; // number of elements per item
 
@@ -72,7 +76,7 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 
 	/**
 	 * Get an iterator that picks out the chosen element from all items
-	 * @param element
+	 * @param element to choose
 	 * @return an iterator
 	 */
 	public IndexIterator getIterator(int element) {
@@ -95,6 +99,16 @@ public abstract class AbstractCompoundDataset extends AbstractDataset implements
 
 	@Override
 	public IndexIterator getSliceIterator(SliceND slice) {
+		checkSliceND(slice);
+		return internalGetSliceIterator(slice);
+	}
+
+	/**
+	 * @param slice to define iterator
+	 * @return an slice iterator that operates like an IndexIterator
+	 */
+	@Override
+	protected IndexIterator internalGetSliceIterator(SliceND slice) {
 		if (ShapeUtils.calcLongSize(slice.getShape()) == 0) {
 			return new NullIterator(shape, slice.getShape());
 		}

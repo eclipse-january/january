@@ -16,7 +16,7 @@ public interface IDatasetChangeChecker {
 
 	/**
 	 * Set dataset to be checked for signs of change. Do any state initialization in here.
-	 * @param dataset
+	 * @param dataset input
 	 */
 	public void setDataset(ILazyDataset dataset);
 

@@ -23,7 +23,7 @@ public class DatasetException extends Exception {
 	}
 
 	/**
-	 * @param message
+	 * @param message detailed message
 	 * @see Exception#Exception(String)
 	 */
 	public DatasetException(String message) {
@@ -31,7 +31,7 @@ public class DatasetException extends Exception {
 	}
 
 	/**
-	 * @param cause
+	 * @param cause of problem
 	 * @see Exception#Exception(Throwable)
 	 */
 	public DatasetException(Throwable cause) {
@@ -39,8 +39,8 @@ public class DatasetException extends Exception {
 	}
 
 	/**
-	 * @param message
-	 * @param cause
+	 * @param message detailed message
+	 * @param cause of problem
 	 * @see Exception#Exception(String, Throwable)
 	 */
 	public DatasetException(String message, Throwable cause) {

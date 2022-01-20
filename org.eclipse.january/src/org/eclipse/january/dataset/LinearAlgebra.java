@@ -37,8 +37,8 @@ public class LinearAlgebra {
 	/**
 	 * Calculate the tensor dot product over given axes. This is the sum of products of elements selected
 	 * from the given axes in each dataset
-	 * @param a
-	 * @param b
+	 * @param a first dataset
+	 * @param b second dataset
 	 * @param axisa axis dimension in a to sum over (can be -ve)
 	 * @param axisb axis dimension in b to sum over (can be -ve)
 	 * @return tensor dot product
@@ -108,8 +108,8 @@ public class LinearAlgebra {
 	/**
 	 * Calculate the tensor dot product over given axes. This is the sum of products of elements selected
 	 * from the given axes in each dataset
-	 * @param a
-	 * @param b
+	 * @param a first dataset
+	 * @param b second dataset
 	 * @param axisa axis dimensions in a to sum over (can be -ve)
 	 * @param axisb axis dimensions in b to sum over (can be -ve)
 	 * @return tensor dot product
@@ -198,8 +198,8 @@ public class LinearAlgebra {
 	 * Calculate the dot product of two datasets. When <b>b</b> is a 1D dataset, the sum product over
 	 * the last axis of <b>a</b> and <b>b</b> is returned. Where <b>a</b> is also a 1D dataset, a zero-rank dataset
 	 * is returned. If <b>b</b> is 2D or higher, its second-to-last axis is used
-	 * @param a
-	 * @param b
+	 * @param a first dataset
+	 * @param b second dataset
 	 * @return dot product
 	 */
 	public static Dataset dotProduct(Dataset a, Dataset b) {
@@ -210,8 +210,8 @@ public class LinearAlgebra {
 
 	/**
 	 * Calculate the outer product of two datasets
-	 * @param a
-	 * @param b
+	 * @param a first dataset
+	 * @param b second dataset
 	 * @return outer product
 	 */
 	public static Dataset outerProduct(Dataset a, Dataset b) {
@@ -248,8 +248,8 @@ public class LinearAlgebra {
 	/**
 	 * Calculate the cross product of two datasets. Datasets must be broadcastable and
 	 * possess last dimensions of length 2 or 3
-	 * @param a
-	 * @param b
+	 * @param a first dataset
+	 * @param b second dataset
 	 * @return cross product
 	 */
 	public static Dataset crossProduct(Dataset a, Dataset b) {
@@ -260,8 +260,8 @@ public class LinearAlgebra {
 	 * Calculate the cross product of two datasets. Datasets must be broadcastable and
 	 * possess dimensions of length 2 or 3. The axis parameters can be negative to indicate
 	 * dimensions from the end of their shapes
-	 * @param a
-	 * @param b
+	 * @param a first dataset
+	 * @param b second dataset
 	 * @param axisA dimension to be used a vector (must have length of 2 or 3)
 	 * @param axisB dimension to be used a vector (must have length of 2 or 3)
 	 * @param axisC dimension to assign as cross-product
@@ -488,7 +488,7 @@ public class LinearAlgebra {
 
 	/**
 	 * Raise dataset to given power by matrix multiplication
-	 * @param a
+	 * @param a dataset
 	 * @param n power
 	 * @return {@code a ** n}
 	 */
@@ -508,8 +508,8 @@ public class LinearAlgebra {
 	 * Create the Kronecker product as defined by 
 	 * {@code kron[k0,...,kN] = a[i0,...,iN] * b[j0,...,jN]}
 	 * where {@code kn = sn * in + jn} for {@code n = 0...N} and {@code s} is shape of {@code b}
-	 * @param a
-	 * @param b
+	 * @param a first dataset
+	 * @param b second dataset
 	 * @return Kronecker product of a and b
 	 */
 	public static Dataset kroneckerProduct(Dataset a, Dataset b) {
@@ -605,7 +605,7 @@ public class LinearAlgebra {
 
 	/**
 	 * Calculate trace of dataset - sum of values over 1st axis and 2nd axis
-	 * @param a
+	 * @param a dataset
 	 * @return trace of dataset
 	 */
 	public static Dataset trace(Dataset a) {
@@ -614,10 +614,10 @@ public class LinearAlgebra {
 
 	/**
 	 * Calculate trace of dataset - sum of values over axis1 and axis2 where axis2 is offset
-	 * @param a
-	 * @param offset
-	 * @param axis1
-	 * @param axis2
+	 * @param a dataset
+	 * @param offset distance right of diagonal
+	 * @param axis1 first axis
+	 * @param axis2 second axis
 	 * @return trace of dataset
 	 */
 	public static Dataset trace(Dataset a, int offset, int axis1, int axis2) {
@@ -738,7 +738,7 @@ public class LinearAlgebra {
 	}
 
 	/**
-	 * @param a
+	 * @param a dataset
 	 * @return norm of dataset
 	 */
 	public static double norm(Dataset a) {
@@ -746,8 +746,8 @@ public class LinearAlgebra {
 	}
 
 	/**
-	 * @param a
-	 * @param order
+	 * @param a dataset
+	 * @param order for norm
 	 * @return norm of dataset
 	 */
 	public static double norm(Dataset a, NormOrder order) {
@@ -852,8 +852,8 @@ public class LinearAlgebra {
 	}
 
 	/**
-	 * @param a
-	 * @param p
+	 * @param a dataset
+	 * @param p norm value
 	 * @return p-norm of dataset
 	 */
 	public static double norm(Dataset a, final double p) {
@@ -971,7 +971,7 @@ public class LinearAlgebra {
 	}
 
 	/**
-	 * @param a
+	 * @param a dataset
 	 * @return array of singular values
 	 */
 	public static double[] calcSingularValues(Dataset a) {
@@ -982,7 +982,7 @@ public class LinearAlgebra {
 
 	/**
 	 * Calculate singular value decomposition {@code A = U S V^T}
-	 * @param a
+	 * @param a dataset
 	 * @return array of U - orthogonal matrix, s - singular values vector, V - orthogonal matrix
 	 */
 	public static Dataset[] calcSingularValueDecomposition(Dataset a) {
@@ -993,7 +993,7 @@ public class LinearAlgebra {
 
 	/**
 	 * Calculate (Moore-Penrose) pseudo-inverse
-	 * @param a
+	 * @param a dataset
 	 * @return pseudo-inverse
 	 */
 	public static Dataset calcPseudoInverse(Dataset a) {
@@ -1003,7 +1003,7 @@ public class LinearAlgebra {
 
 	/**
 	 * Calculate matrix rank by singular value decomposition method
-	 * @param a
+	 * @param a dataset
 	 * @return effective numerical rank of matrix
 	 */
 	public static int calcMatrixRank(Dataset a) {
@@ -1013,7 +1013,7 @@ public class LinearAlgebra {
 
 	/**
 	 * Calculate condition number of matrix by singular value decomposition method
-	 * @param a
+	 * @param a dataset
 	 * @return condition number
 	 */
 	public static double calcConditionNumber(Dataset a) {
@@ -1022,7 +1022,7 @@ public class LinearAlgebra {
 	}
 
 	/**
-	 * @param a
+	 * @param a dataset
 	 * @return determinant of dataset
 	 */
 	public static double calcDeterminant(Dataset a) {
@@ -1031,7 +1031,7 @@ public class LinearAlgebra {
 	}
 
 	/**
-	 * @param a
+	 * @param a dataset
 	 * @return dataset of eigenvalues (can be double or complex double)
 	 */
 	public static Dataset calcEigenvalues(Dataset a) {
@@ -1047,7 +1047,7 @@ public class LinearAlgebra {
 
 	/**
 	 * Calculate eigen-decomposition {@code A = V D V^T}
-	 * @param a
+	 * @param a dataset
 	 * @return array of D eigenvalues (can be double or complex double) and V eigenvectors
 	 */
 	public static Dataset[] calcEigenDecomposition(Dataset a) {
@@ -1067,7 +1067,7 @@ public class LinearAlgebra {
 
 	/**
 	 * Calculate QR decomposition {@code A = Q R}
-	 * @param a
+	 * @param a dataset
 	 * @return array of Q and R
 	 */
 	public static Dataset[] calcQRDecomposition(Dataset a) {
@@ -1077,7 +1077,7 @@ public class LinearAlgebra {
 
 	/**
 	 * Calculate LU decomposition {@code A = P^-1 L U}
-	 * @param a
+	 * @param a dataset
 	 * @return array of L, U and P
 	 */
 	public static Dataset[] calcLUDecomposition(Dataset a) {
@@ -1088,7 +1088,7 @@ public class LinearAlgebra {
 
 	/**
 	 * Calculate inverse of square dataset
-	 * @param a
+	 * @param a dataset
 	 * @return inverse
 	 */
 	public static Dataset calcInverse(Dataset a) {
@@ -1098,8 +1098,8 @@ public class LinearAlgebra {
 
 	/**
 	 * Solve linear matrix equation {@code A x = v}
-	 * @param a
-	 * @param v
+	 * @param a dataset
+	 * @param v vector
 	 * @return x
 	 */
 	public static Dataset solve(Dataset a, Dataset v) {
@@ -1115,8 +1115,8 @@ public class LinearAlgebra {
 	
 	/**
 	 * Solve least squares matrix equation {@code A x = v} by SVD
-	 * @param a
-	 * @param v
+	 * @param a dataset
+	 * @param v vector
 	 * @return x
 	 */
 	public static Dataset solveSVD(Dataset a, Dataset v) {
@@ -1131,7 +1131,7 @@ public class LinearAlgebra {
 	
 	/**
 	 * Calculate Cholesky decomposition {@code A = L L^T}
-	 * @param a
+	 * @param a dataset
 	 * @return L
 	 */
 	public static Dataset calcCholeskyDecomposition(Dataset a) {
@@ -1142,8 +1142,8 @@ public class LinearAlgebra {
 	/**
 	 * Calculation {@code A x = v} by conjugate gradient method with the stopping criterion being
 	 * that the estimated residual {@code r = v - A x} satisfies {@code ||r|| < ||v||} with maximum of 100 iterations
-	 * @param a
-	 * @param v
+	 * @param a dataset
+	 * @param v vector
 	 * @return value of {@code A^-1 v} by conjugate gradient method
 	 */
 	public static Dataset calcConjugateGradient(Dataset a, Dataset v) {
@@ -1153,9 +1153,9 @@ public class LinearAlgebra {
 	/**
 	 * Calculation {@code A x = v} by conjugate gradient method with the stopping criterion being
 	 * that the estimated residual {@code r = v - A x} satisfies {@code ||r|| < delta ||v||}
-	 * @param a
-	 * @param v
-	 * @param maxIterations
+	 * @param a dataset
+	 * @param v vector
+	 * @param maxIterations maximum iterations
 	 * @param delta parameter used by stopping criterion
 	 * @return value of {@code A^-1 v} by conjugate gradient method
 	 */

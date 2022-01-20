@@ -13,11 +13,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.apache.commons.math3.complex.Complex;
 import org.eclipse.january.asserts.TestUtils;
-import org.eclipse.january.dataset.Dataset;
-import org.eclipse.january.dataset.DatasetFactory;
-import org.eclipse.january.dataset.DoubleDataset;
-import org.eclipse.january.dataset.IndexIterator;
-import org.eclipse.january.dataset.IntegerDataset;
 import org.junit.Test;
 
 public class IntegerDatasetTest {

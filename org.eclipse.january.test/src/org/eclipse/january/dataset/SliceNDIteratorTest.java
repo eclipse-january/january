@@ -12,6 +12,7 @@ package org.eclipse.january.dataset;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 
 import java.util.Arrays;
 
@@ -128,5 +129,51 @@ public class SliceNDIteratorTest {
 	private static void myAssertEquals(SliceND a, SliceND b) {
 		assertArrayEquals(a.getSourceShape(), b.getSourceShape());
 		assertArrayEquals(a.getShape(), b.getShape());
+	}
+
+	@Test
+	public void testIterationsAll() {
+		SliceND sa = new SliceND(new int[] {7});
+
+		SliceNDIterator it = new SliceNDIterator(sa);
+
+		assertArrayEquals(new int[]{7}, it.getShape());
+		assertNull(it.getOmittedSlice());
+
+		int size = 0;
+		while (it.hasNext()) {
+			TestUtils.verbosePrintln(size + ": " + Arrays.toString(it.getPos()) + " or " + Arrays.toString(it.getUsedPos()));
+			TestUtils.verbosePrintln("use: " + it.getUsedSlice() + ", cur: " + it.getCurrentSlice() + ", out: " + it.getOutputSlice());
+			if (size == 3) {
+				assertArrayEquals(new int[]{3}, it.getPos());
+				assertArrayEquals(new int[]{3}, it.getUsedPos());
+				myAssertEquals(new SliceND(new int[] {7}, new Slice(3, 4)), it.getUsedSlice());
+				myAssertEquals(new SliceND(new int[] {7}, new Slice(3, 4)), it.getOutputSlice());
+			}
+			size++;
+		}
+	}
+
+	@Test
+	public void testIterationsSlicedSameRank() {
+		SliceND sa = new SliceND(new int[] {12}, new Slice(2, 9));
+
+		SliceNDIterator it = new SliceNDIterator(sa);
+
+		assertArrayEquals(new int[]{7}, it.getShape());
+		assertNull(it.getOmittedSlice());
+
+		int size = 0;
+		while (it.hasNext()) {
+			TestUtils.verbosePrintln(size + ": " + Arrays.toString(it.getPos()) + " or " + Arrays.toString(it.getUsedPos()));
+			TestUtils.verbosePrintln("use: " + it.getUsedSlice() + ", cur: " + it.getCurrentSlice() + ", out: " + it.getOutputSlice());
+			if (size == 3) {
+				assertArrayEquals(new int[]{5}, it.getPos());
+				assertArrayEquals(new int[]{5}, it.getUsedPos());
+				myAssertEquals(new SliceND(new int[] {12}, new Slice(5, 6)), it.getUsedSlice());
+				myAssertEquals(new SliceND(new int[] {7}, new Slice(3, 4)), it.getOutputSlice());
+			}
+			size++;
+		}
 	}
 }

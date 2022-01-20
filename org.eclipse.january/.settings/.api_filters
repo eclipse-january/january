@@ -4,14 +4,93 @@
         <filter id="931135546">
             <message_arguments>
                 <message_argument value="2.3.1"/>
-                <message_argument value="2.2.0"/>
+                <message_argument value="2.2.2"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/january/dataset/AbstractDataset.java" type="org.eclipse.january.dataset.AbstractDataset">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="internalGetSliceIterator(SliceND)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/january/dataset/ContiguousSingleIteratorElemental.java" type="org.eclipse.january.dataset.ContiguousSingleIteratorElemental">
+        <filter id="1108344834">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="org.eclipse.january.dataset.ContiguousSingleIteratorElemental"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/january/dataset/DTypeUtils.java" type="org.eclipse.january.dataset.DTypeUtils">
+        <filter id="388018290">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.DTypeUtils"/>
+                <message_argument value="logger"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="getDatasetName(Class&lt;? extends Dataset&gt;, int)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="getDatasetName(Dataset)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="getDatasetName(ILazyDataset)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="getInterface(int)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="getLargestDataset(Class&lt;? extends Dataset&gt;)"/>
             </message_arguments>
         </filter>
     </resource>
     <resource path="src/org/eclipse/january/dataset/Dataset.java" type="org.eclipse.january.dataset.Dataset">
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.Dataset"/>
+                <message_argument value="RGB8"/>
+            </message_arguments>
+        </filter>
         <filter id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.january.dataset.Dataset"/>
+                <message_argument value="cast(int, Class&lt;T&gt;, boolean)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1209008130">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="RGB8"/>
+            </message_arguments>
+        </filter>
+        <filter id="1209008130">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
                 <message_argument value="cast(int, Class&lt;T&gt;, boolean)"/>
             </message_arguments>
         </filter>
@@ -29,88 +108,311 @@
                 <message_argument value="createCompoundDataset(Class&lt;T&gt;, Object[])"/>
             </message_arguments>
         </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="createComplexDataset(Class&lt;? extends Dataset&gt;, Object, Object)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="createCompoundDataset(Class&lt;T&gt;, Object[])"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="zeros(T, int[])"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/january/dataset/DatasetUtils.java" type="org.eclipse.january.dataset.DatasetUtils">
+        <filter id="388018290">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.DatasetUtils"/>
+                <message_argument value="utilsLogger"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="cast(Class&lt;? extends Dataset&gt;, Dataset[])"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="cast(int, Class&lt;T&gt;, IDataset, boolean)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="compoundCast(Class&lt;T&gt;, Dataset[])"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="eye(Class&lt;T&gt;, int, int, int)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/january/dataset/IDynamicDataset.java" type="org.eclipse.january.dataset.IDynamicDataset">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.IDynamicDataset"/>
+                <message_argument value="getChunking()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.IDynamicDataset"/>
+                <message_argument value="setChunking(int[])"/>
+            </message_arguments>
+        </filter>
+        <filter id="1209008130">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="getChunking()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1209008130">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="setChunking(int[])"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/january/dataset/ILazyWriteableDataset.java" type="org.eclipse.january.dataset.ILazyWriteableDataset">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.ILazyWriteableDataset"/>
+                <message_argument value="squeezeEnds()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="squeezeEnds()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/january/dataset/IMetadataProvider.java" type="org.eclipse.january.dataset.IMetadataProvider">
+        <filter id="422776937">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.IMetadataProvider.getFirstMetadata(Class&lt;T&gt;)"/>
+                <message_argument value="T"/>
+            </message_arguments>
+        </filter>
+        <filter id="422776937">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.IMetadataProvider.getMetadata(Class&lt;T&gt;)"/>
+                <message_argument value="T"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/january/dataset/InterfaceUtils.java" type="org.eclipse.january.dataset.InterfaceUtils">
+        <filter id="1108344834">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="org.eclipse.january.dataset.InterfaceUtils"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/january/dataset/LazyDataset.java" type="org.eclipse.january.dataset.LazyDataset">
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.january.dataset.LazyDataset"/>
-                <message_argument value="padding"/>
-            </message_arguments>
-        </filter>
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.january.dataset.LazyDataset"/>
-                <message_argument value="sShape"/>
-            </message_arguments>
-        </filter>
-        <filter id="338755678">
-            <message_arguments>
-                <message_argument value="org.eclipse.january.dataset.LazyDataset"/>
-                <message_argument value="base"/>
-            </message_arguments>
-        </filter>
         <filter id="338755678">
             <message_arguments>
                 <message_argument value="org.eclipse.january.dataset.LazyDataset"/>
                 <message_argument value="dtype"/>
             </message_arguments>
         </filter>
-        <filter id="338755678">
+        <filter id="1141899266">
             <message_arguments>
-                <message_argument value="org.eclipse.january.dataset.LazyDataset"/>
-                <message_argument value="postShape"/>
-            </message_arguments>
-        </filter>
-        <filter id="338755678">
-            <message_arguments>
-                <message_argument value="org.eclipse.january.dataset.LazyDataset"/>
-                <message_argument value="prepShape"/>
-            </message_arguments>
-        </filter>
-        <filter id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.january.dataset.LazyDataset"/>
-                <message_argument value="transformInput(IDataset)"/>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="LazyDataset(ILazyLoader, String, Class&lt;? extends Dataset&gt;, int[])"/>
             </message_arguments>
         </filter>
         <filter id="1141899266">
             <message_arguments>
-                <message_argument value="2.2"/>
                 <message_argument value="2.3"/>
-                <message_argument value="padding"/>
+                <message_argument value="3.0"/>
+                <message_argument value="LazyDataset(ILazyLoader, String, int, Class&lt;? extends Dataset&gt;, int[])"/>
             </message_arguments>
         </filter>
         <filter id="1141899266">
             <message_arguments>
-                <message_argument value="2.2"/>
                 <message_argument value="2.3"/>
-                <message_argument value="sShape"/>
+                <message_argument value="3.0"/>
+                <message_argument value="getInterface()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="setInterface(Class&lt;? extends Dataset&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="internalGetSlice(IMonitor, SliceND)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="internalGetSliceView(SliceND)"/>
             </message_arguments>
         </filter>
     </resource>
     <resource path="src/org/eclipse/january/dataset/LazyDatasetBase.java" type="org.eclipse.january.dataset.LazyDatasetBase">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.LazyDatasetBase"/>
+                <message_argument value="catchExceptions"/>
+            </message_arguments>
+        </filter>
         <filter id="338792546">
             <message_arguments>
                 <message_argument value="org.eclipse.january.dataset.LazyDatasetBase"/>
                 <message_argument value="getElementClass()"/>
             </message_arguments>
         </filter>
+        <filter id="388018290">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.LazyDatasetBase"/>
+                <message_argument value="logger"/>
+            </message_arguments>
+        </filter>
+        <filter id="422776937">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.LazyDatasetBase.getFirstMetadata(Class&lt;T&gt;)"/>
+                <message_argument value="T"/>
+            </message_arguments>
+        </filter>
+        <filter id="422776937">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.LazyDatasetBase.getMetadata(Class&lt;T&gt;)"/>
+                <message_argument value="T"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="checkSliceND(SliceND)"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/january/dataset/LazyDynamicDataset.java" type="org.eclipse.january.dataset.LazyDynamicDataset">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.january.dataset.LazyDynamicDataset"/>
+                <message_argument value="chunks"/>
+            </message_arguments>
+        </filter>
         <filter id="1141899266">
             <message_arguments>
-                <message_argument value="2.2"/>
                 <message_argument value="2.3"/>
-                <message_argument value="LazyDynamicDataset(LazyDynamicDataset)"/>
+                <message_argument value="3.0"/>
+                <message_argument value="LazyDynamicDataset(ILazyLoader, String, int, Class&lt;? extends Dataset&gt;, int[], int[])"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="LazyDynamicDataset(ILazyLoader, String, int, Class&lt;? extends Dataset&gt;, int[], int[], int[])"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="LazyDynamicDataset(String, int, Class&lt;? extends Dataset&gt;, int[], int[], ILazyLoader)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="chunks"/>
             </message_arguments>
         </filter>
     </resource>
     <resource path="src/org/eclipse/january/dataset/LazyWriteableDataset.java" type="org.eclipse.january.dataset.LazyWriteableDataset">
         <filter id="1141899266">
             <message_arguments>
-                <message_argument value="2.2"/>
                 <message_argument value="2.3"/>
-                <message_argument value="LazyWriteableDataset(LazyWriteableDataset)"/>
+                <message_argument value="3.0"/>
+                <message_argument value="LazyWriteableDataset(ILazySaver, String, Class&lt;? extends Dataset&gt;, int[], int[], int[])"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="LazyWriteableDataset(ILazySaver, String, int, Class&lt;? extends Dataset&gt;, int[], int[], int[])"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="squeezeEnds()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/january/dataset/Maths.java" type="org.eclipse.january.dataset.Maths">
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="lowerClip(Object, Dataset, Object)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="lowerClip(Object, Object)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="upperClip(Object, Dataset, Object)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="upperClip(Object, Object)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/january/dataset/NullIterator.java" type="org.eclipse.january.dataset.NullIterator">
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="NullIterator()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/january/dataset/RGBByteDataset.java" type="org.eclipse.january.dataset.RGBByteDataset">
+        <filter id="1108344834">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="org.eclipse.january.dataset.RGBByteDataset"/>
             </message_arguments>
         </filter>
     </resource>
@@ -154,20 +456,94 @@
                 <message_argument value="createRedDataset(Class&lt;T&gt;)"/>
             </message_arguments>
         </filter>
-    </resource>
-    <resource path="src/org/eclipse/january/dataset/ShapeUtils.java" type="org.eclipse.january.dataset.ShapeUtils">
         <filter id="1141899266">
             <message_arguments>
-                <message_argument value="2.2"/>
-                <message_argument value="2.3"/>
-                <message_argument value="calcShapePadding(int[], int[])"/>
+                <message_argument value="2.1"/>
+                <message_argument value="3.0"/>
+                <message_argument value="createBlueDataset(Class&lt;T&gt;)"/>
             </message_arguments>
         </filter>
         <filter id="1141899266">
             <message_arguments>
-                <message_argument value="2.2"/>
+                <message_argument value="2.1"/>
+                <message_argument value="3.0"/>
+                <message_argument value="createGreenDataset(Class&lt;T&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.1"/>
+                <message_argument value="3.0"/>
+                <message_argument value="createRedDataset(Class&lt;T&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
                 <message_argument value="2.3"/>
-                <message_argument value="differsByOnes(int[], int[])"/>
+                <message_argument value="3.0"/>
+                <message_argument value="RGBDataset(CompoundDataset)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/january/dataset/Random.java" type="org.eclipse.january.dataset.Random">
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="lazyRand(String, Class&lt;? extends Dataset&gt;, int[])"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/january/dataset/SliceND.java" type="org.eclipse.january.dataset.SliceND">
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="updateSourceShape(int[])"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/january/dataset/Stats.java" type="org.eclipse.january.dataset.Stats">
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="typedProduct(Class&lt;? extends Dataset&gt;, Dataset, boolean[])"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="typedProduct(Class&lt;T&gt;, Dataset, int, boolean[])"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="typedProduct(Class&lt;T&gt;, Dataset, int[], boolean[])"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="typedSum(Class&lt;? extends Dataset&gt;, Dataset, boolean[])"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="typedSum(Class&lt;T&gt;, Dataset, int, boolean[])"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="2.3"/>
+                <message_argument value="3.0"/>
+                <message_argument value="typedSum(Class&lt;T&gt;, Dataset, int[], boolean[])"/>
             </message_arguments>
         </filter>
     </resource>

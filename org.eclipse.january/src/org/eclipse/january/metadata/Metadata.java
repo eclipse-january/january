@@ -66,7 +66,7 @@ public class Metadata implements IMetadata {
 
 	/**
 	 * Set metadata map
-	 * @param metadata
+	 * @param metadata map
 	 */
 	@Override
 	public void setMetadata(Map<String, ? extends Serializable> metadata) {
@@ -83,7 +83,7 @@ public class Metadata implements IMetadata {
 
 	/**
 	 * Set user objects
-	 * @param objects
+	 * @param objects for user
 	 */
 	public void setUserObjects(Collection<Serializable> objects) {
 		userObjects = objects;

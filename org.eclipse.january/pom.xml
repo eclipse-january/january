@@ -92,13 +92,19 @@
 					<doctitle>${project.name} ${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion} API.</doctitle>
 					<excludePackageNames>*.internal.*</excludePackageNames>
 					<linksource>true</linksource>
+					<sourcepath>${basedir}/src:${basedir}/../org.eclipse.january.asserts/src:</sourcepath>
 					<links>
 						<!-- This list should match the bundles/packages depended on, with the versions as specified in the
 						     target platform -->
 						<link>https://docs.oracle.com/javase/7/docs/api/</link>
 						<link>https://commons.apache.org/proper/commons-math/javadocs/api-3.5/</link>
+						<link>https://unitsofmeasurement.github.io/unit-api/site/apidocs/</link>
 						<link>https://www.slf4j.org/apidocs/</link>
+						<link>https://junit.org/junit4/javadoc/4.12/</link>
 					</links>
+					<additionalOptions>
+						<additionalOption>-Xmaxwarns 1000</additionalOption>
+					</additionalOptions>
 					<failOnError>false</failOnError>
 				</configuration>
 			</plugin>
@@ -121,6 +127,11 @@
 			<groupId>javax.measure</groupId>
 			<artifactId>unit-api</artifactId>
 			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
 		</dependency>
 	</dependencies>
 </project>

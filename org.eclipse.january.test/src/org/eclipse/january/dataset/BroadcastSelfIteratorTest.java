@@ -5,17 +5,30 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class BroadcastSelfIteratorTest {
+
 	@Test
 	public void testSingle() {
 		Dataset a = DatasetFactory.zeros(5, 3);
 		Dataset b = DatasetFactory.createRange(1, 31., 2.);
+		testIterator(a, b);
+	}
+
+	@Test
+	public void testCompound() {
+		Dataset a = DatasetFactory.compoundZeros(3, CompoundDoubleDataset.class, 5, 3);
+		Dataset b = DatasetFactory.createRange(3, CompoundDoubleDataset.class, 1, 31., 2.);
+		testIterator(a, b);
+	}
+
+	private void testIterator(Dataset a, Dataset b) {
+		BroadcastSelfIterator bit = BroadcastSelfIterator.createIterator(a, b.reshape(5, 3));
+		while (bit.hasNext()) {
+			assertEquals(b.getElementDoubleAbs(bit.bIndex), bit.bDouble, 1e-6);
+		}
 
 		Dataset bv = b.getSliceView(new Slice(3, 8));
-		Slice s;
-
 		// passes already
-		s = new Slice(1, 2);
-		BroadcastSelfIterator bit;
+		Slice s = new Slice(1, 2);
 
 		bit = BroadcastSelfIterator.createIterator(a.getSliceView(null, s), bv.reshape(5, 1));
 		while (bit.hasNext()) {

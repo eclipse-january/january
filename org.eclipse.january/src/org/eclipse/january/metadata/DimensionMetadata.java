@@ -16,9 +16,9 @@ public interface DimensionMetadata extends MetadataType {
 
 	/**
 	 * Initialize dimension metadata
-	 * @param shape
-	 * @param maxShape
-	 * @param chunkShape
+	 * @param shape to set
+	 * @param maxShape maximum possible dimensions
+	 * @param chunkShape dimensions of chunks
 	 */
 	public void initialize(int[] shape, int[] maxShape, int[] chunkShape);
 

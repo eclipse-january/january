@@ -22,11 +22,11 @@ public interface OriginMetadata extends DimensionMetadata {
 
 	/**
 	 * Initialize origin of dataset
-	 * @param parent
-	 * @param outSlice
-	 * @param dataDims
-	 * @param filePath
-	 * @param datasetName
+	 * @param parent of dataset
+	 * @param outSlice output
+	 * @param dataDims dimensions of parent dataset
+	 * @param filePath location of file
+	 * @param datasetName path in file
 	 */
 	public void initialize(ILazyDataset parent, Slice[] outSlice, int[] dataDims, String filePath, String datasetName);
 

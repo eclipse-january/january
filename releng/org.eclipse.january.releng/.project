@@ -10,11 +10,6 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>.travis.yml</name>
-			<type>1</type>
-			<locationURI>$%7BPARENT-2-PROJECT_LOC%7D/.travis.yml</locationURI>
-		</link>
-		<link>
 			<name>CONTRIBUTING.md</name>
 			<type>1</type>
 			<locationURI>$%7BPARENT-2-PROJECT_LOC%7D/CONTRIBUTING.md</locationURI>

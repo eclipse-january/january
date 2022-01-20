@@ -18,13 +18,22 @@ import java.util.Arrays;
  */
 public abstract class BroadcastSelfIterator extends BroadcastIteratorBase {
 
+	/**
+	 * @param a dataset to iterate over
+	 * @param b dataset to iterate over (will broadcast to first)
+	 * @return broadcast iterator
+	 */
 	public static BroadcastSelfIterator createIterator(Dataset a, Dataset b) {
 		if (Arrays.equals(a.getShapeRef(), b.getShapeRef()) && a.getStrides() == null && b.getStrides() == null) {
-			return new ContiguousSingleIterator(a, b);
+			return a.getElementsPerItem() == 1 && b.getElementsPerItem() == 1 ? new ContiguousSingleIteratorElemental(a, b) : new ContiguousSingleIterator(a, b);
 		}
 		return new BroadcastSingleIterator(a, b);
 	}
 
+	/**
+	 * @param a dataset to iterate over
+	 * @param b dataset to iterate over (will broadcast to first)
+	 */
 	protected BroadcastSelfIterator(Dataset a, Dataset b) {
 		super(a, b);
 		read = InterfaceUtils.isNumerical(b.getClass());

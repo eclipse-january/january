@@ -35,7 +35,7 @@ public interface IMetadata extends IDataAnalysisObject, MetadataType, Serializab
 
 	/**
 	 * Initialize metadata
-	 * @param metadata
+	 * @param metadata map
 	 */
 	public void initialize(Map<String, ? extends Serializable> metadata);
 
@@ -69,16 +69,16 @@ public interface IMetadata extends IDataAnalysisObject, MetadataType, Serializab
 	/**
 	 * Returns string value or null if not implemented
 	 * 
-	 * @param key
+	 * @param key to find value
 	 * @return value
-	 * @throws MetadataException
+	 * @throws MetadataException when failing to fetch metadata
 	 */
 	public Serializable getMetaValue(String key) throws MetadataException;
 
 	/**
 	 * Returns a collection of metadata names
 	 * @return collection
-	 * @throws MetadataException
+	 * @throws MetadataException when failing to fetch metadata
 	 */
 	public Collection<String> getMetaNames() throws MetadataException;
 
@@ -101,7 +101,7 @@ public interface IMetadata extends IDataAnalysisObject, MetadataType, Serializab
 	/**
 	 * Add name and shape of a dataset to metadata
 	 * 
-	 * @param name
+	 * @param name of dataset
 	 * @param shape (can be null or zero-length)
 	 * 
 	 * (NOTE method should be public, people can define loaders outside this
@@ -113,7 +113,7 @@ public interface IMetadata extends IDataAnalysisObject, MetadataType, Serializab
 
 	/**
 	 * Set metadata map
-	 * @param metadata
+	 * @param metadata map
 	 */
 	public void setMetadata(Map<String, ? extends Serializable> metadata);
 }

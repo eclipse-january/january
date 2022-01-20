@@ -24,7 +24,7 @@ public class SingleItemIterator extends IndexIterator {
 	 * Constructor for an iterator over single item that will be broadcast over
 	 * given size of broadcast shape
 	 * @param offset offset to single item
-	 * @param size
+	 * @param size size of dataset
 	 */
 	public SingleItemIterator(final int offset, final int size) {
 		this.size = size;
