@@ -416,7 +416,8 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 		Dataset a;
 		if (nslice == null) {
-			a = DatasetFactory.zeros(clazz == null ? DoubleDataset.class : clazz, slice == null ? shape : slice.getShape());
+			Class<? extends Dataset> nClass = clazz == null ? DoubleDataset.class : clazz;
+			a = DatasetFactory.zeros(nClass, slice == null ? shape : slice.getShape());
 		} else {
 			try {
 				a = DatasetUtils.convertToDataset(loader.getDataset(monitor, nslice));
