@@ -100,7 +100,7 @@
 						<link>https://commons.apache.org/proper/commons-math/javadocs/api-3.5/</link>
 						<link>https://unitsofmeasurement.github.io/unit-api/site/apidocs/</link>
 						<link>https://www.slf4j.org/apidocs/</link>
-						<link>https://junit.org/junit4/javadoc/4.12/</link>
+						<link>https://junit.org/junit4/javadoc/4.13.2/</link>
 					</links>
 					<additionalOptions>
 						<additionalOption>-Xmaxwarns 1000</additionalOption>
@@ -131,7 +131,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.12</version>
+			<version>4.13.2</version>
 		</dependency>
 	</dependencies>
 </project>
