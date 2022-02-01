@@ -69,6 +69,14 @@ public class RGBByteDatasetTest {
 			assertEquals(0, c.getGreen(i));
 			assertEquals(0, c.getBlue(i));
 		}
+
+		Class<? extends Dataset> clazz = c.getClass();
+		assertEquals(false, InterfaceUtils.isElemental(clazz));
+		assertEquals(true,  InterfaceUtils.isCompound(clazz));
+		assertEquals(true,  InterfaceUtils.isInteger(clazz));
+		assertEquals(true,  InterfaceUtils.isNumerical(clazz));
+		assertEquals(false, InterfaceUtils.isFloating(clazz));
+		assertEquals(false, InterfaceUtils.isComplex(clazz));
 	}
 
 	@Test

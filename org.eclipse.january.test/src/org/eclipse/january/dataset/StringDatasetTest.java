@@ -45,5 +45,7 @@ public class StringDatasetTest {
 		a.hashCode();
 		b.hashCode();
 		c.hashCode();
+
+		assertEquals(1, a.getItemBytes());
 	}
 }

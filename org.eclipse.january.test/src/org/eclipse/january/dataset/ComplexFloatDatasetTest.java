@@ -48,5 +48,13 @@ public class ComplexFloatDatasetTest {
 		a.hashCode();
 		b.hashCode();
 		aa.hashCode();
+
+		Class<? extends Dataset> clazz = a.getClass();
+		assertEquals(false, InterfaceUtils.isElemental(clazz));
+		assertEquals(true,  InterfaceUtils.isCompound(clazz));
+		assertEquals(false, InterfaceUtils.isInteger(clazz));
+		assertEquals(true,  InterfaceUtils.isNumerical(clazz));
+		assertEquals(true,  InterfaceUtils.isFloating(clazz));
+		assertEquals(true,  InterfaceUtils.isComplex(clazz));
 	}
 }

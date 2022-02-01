@@ -53,6 +53,14 @@ public class DoubleDatasetTest {
 		a.hashCode();
 		b.hashCode();
 		c.hashCode();
+
+		Class<? extends Dataset> clazz = a.getClass();
+		assertEquals(true,  InterfaceUtils.isElemental(clazz));
+		assertEquals(false, InterfaceUtils.isCompound(clazz));
+		assertEquals(false, InterfaceUtils.isInteger(clazz));
+		assertEquals(true,  InterfaceUtils.isNumerical(clazz));
+		assertEquals(true,  InterfaceUtils.isFloating(clazz));
+		assertEquals(false, InterfaceUtils.isComplex(clazz));
 	}
 
 	@Test

@@ -42,6 +42,14 @@ public class BooleanDatasetTest {
 		// test hashes
 		a.hashCode();
 		b.hashCode();
+
+		Class<? extends Dataset> clazz = a.getClass();
+		assertEquals(true,  InterfaceUtils.isElemental(clazz));
+		assertEquals(false, InterfaceUtils.isCompound(clazz));
+		assertEquals(false, InterfaceUtils.isInteger(clazz));
+		assertEquals(true,  InterfaceUtils.isNumerical(clazz));
+		assertEquals(false, InterfaceUtils.isFloating(clazz));
+		assertEquals(false, InterfaceUtils.isComplex(clazz));
 	}
 
 	@Test
