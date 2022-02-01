@@ -750,6 +750,16 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 	}
 
 	@Override
+	public double getElementDoubleAbs(final int index) {
+		return Byte.toUnsignedInt(data[index]);
+	}
+
+	@Override
+	public long getElementLongAbs(final int index) {
+		return Byte.toUnsignedInt(data[index]);
+	}
+
+	@Override
 	public Number max(boolean... ignored) {
 		int max = 0;
 		final IndexIterator it = getIterator();
