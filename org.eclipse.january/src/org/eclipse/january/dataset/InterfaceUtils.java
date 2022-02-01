@@ -192,7 +192,8 @@ public class InterfaceUtils {
 	 * @return (boxed) class of constituent element
 	 */
 	public static Class<?> getElementClass(final Class<? extends Dataset> clazz) {
-		return interface2Class.get(clazz);
+		Class<? extends Dataset> eInterface = getElementalInterface(clazz);
+		return interface2Class.get(eInterface);
 	}
 
 	/**
@@ -356,7 +357,7 @@ public class InterfaceUtils {
 	 * @return true if dataset interface has integer elements
 	 */
 	public static boolean isInteger(Class<? extends Dataset> clazz) {
-		Class<?> c = interface2Class.get(clazz);
+		Class<?> c = getElementClass(clazz);
 		return isElementClassInteger(c);
 	}
 
@@ -365,7 +366,7 @@ public class InterfaceUtils {
 	 * @return true if dataset interface has floating point elements
 	 */
 	public static boolean isFloating(Class<? extends Dataset> clazz) {
-		Class<?> c = interface2Class.get(clazz);
+		Class<?> c = getElementClass(clazz);
 		return isElementClassFloating(c);
 	}
 
@@ -390,7 +391,7 @@ public class InterfaceUtils {
 	 * @return true if dataset interface has numerical elements
 	 */
 	public static boolean isNumerical(Class<? extends Dataset> clazz) {
-		Class<?> c = interface2Class.get(clazz);
+		Class<?> c = getElementClass(clazz);
 		return Boolean.class == c || isElementClassInteger(c) || isElementClassFloating(c);
 	}
 
@@ -503,7 +504,7 @@ public class InterfaceUtils {
 	}
 
 	/**
-	 * Find floating point dataset interface that best fits given types. The best type takes into account complex and array
+	 * Find floating point dataset interface that best fits given class. The best interface takes into account complex and array
 	 * datasets
 	 *
 	 * @param clazz dataset class
@@ -525,7 +526,11 @@ public class InterfaceUtils {
 	 * @return length of single item in bytes
 	 */
 	public static int getItemBytes(final int isize, Class<? extends Dataset> clazz) {
-		int bytes = elementBytes.get(interface2Class.get(clazz));
+		Class<?> eClass = interface2Class.get(clazz);
+		if (eClass == null) {
+			eClass = interface2Class.get(findSubInterface(clazz));
+		}
+		int bytes = elementBytes.get(eClass);
 
 		return isize * bytes;
 	}

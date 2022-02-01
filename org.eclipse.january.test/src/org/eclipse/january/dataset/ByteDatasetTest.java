@@ -38,6 +38,14 @@ public class ByteDatasetTest {
 		// test hashes
 		a.hashCode();
 		b.hashCode();
+
+		Class<? extends Dataset> clazz = a.getClass();
+		assertEquals(true,  InterfaceUtils.isElemental(clazz));
+		assertEquals(false, InterfaceUtils.isCompound(clazz));
+		assertEquals(true,  InterfaceUtils.isInteger(clazz));
+		assertEquals(true,  InterfaceUtils.isNumerical(clazz));
+		assertEquals(false, InterfaceUtils.isFloating(clazz));
+		assertEquals(false, InterfaceUtils.isComplex(clazz));
 	}
 
 	@Test

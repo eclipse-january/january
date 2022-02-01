@@ -9,12 +9,12 @@
 
 package org.eclipse.january.dataset;
 
+import static org.eclipse.january.asserts.TestUtils.assertDatasetEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
 
-import org.eclipse.january.asserts.TestUtils;
 import org.junit.Test;
 
 public class DateDatasetTest {
@@ -162,14 +162,28 @@ public class DateDatasetTest {
 		DateDatasetImpl d = new DateDatasetImpl(dates);
 
 		assertTrue(d instanceof DateDataset);
+		assertEquals(Date.class, d.getElementClass());
+		assertEquals(1, d.getItemBytes());
 		assertEquals(dates[0], d.getDateAbs(0));
 
 		TimeDataset t = TimeDataset.createDateDataset(new Date(START_DATE), times);
 		assertTrue(t instanceof DateDataset);
-		TestUtils.assertDatasetEquals(d, t);
+		assertEquals(Date.class, t.getElementClass());
+		assertEquals(1, t.getItemBytes());
+		assertDatasetEquals(d, t);
 
 		TimeDataset2 t2 = TimeDataset2.createDateDataset(new Date(START_DATE), times);
 		assertTrue(t2 instanceof DateDataset);
-		TestUtils.assertDatasetEquals(t, t2);
+		assertEquals(Date.class, t2.getElementClass());
+		assertEquals(1, t2.getItemBytes());
+		assertDatasetEquals(t, t2);
+
+		Class<? extends Dataset> clazz = d.getClass();
+		assertEquals(true,  InterfaceUtils.isElemental(clazz));
+		assertEquals(false, InterfaceUtils.isCompound(clazz));
+		assertEquals(false, InterfaceUtils.isInteger(clazz));
+		assertEquals(false, InterfaceUtils.isNumerical(clazz));
+		assertEquals(false, InterfaceUtils.isFloating(clazz));
+		assertEquals(false, InterfaceUtils.isComplex(clazz));
 	}
 }
