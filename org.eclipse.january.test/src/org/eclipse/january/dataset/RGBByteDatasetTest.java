@@ -34,6 +34,9 @@ public class RGBByteDatasetTest {
 			assertEquals(i, Byte.toUnsignedInt(c.getRed(i)));
 			assertEquals(i + 1, Byte.toUnsignedInt(c.getGreen(i)));
 			assertEquals(i + 2, Byte.toUnsignedInt(c.getBlue(i)));
+			assertEquals(i,     c.getElementLongAbs(3*i));
+			assertEquals(i + 1, c.getElementLongAbs(3*i + 1));
+			assertEquals(i + 2, c.getElementLongAbs(3*i + 2));
 		}
 
 		c = new RGBByteDataset(g);
