@@ -356,8 +356,8 @@ public class SliceND {
 	}
 
 	/**
-	 * Returns an array of shapes of the source Dataset (this can change for
-	 * dynamic Datasets).
+	 * Return an array of shapes of the source dataset (this can change for
+	 * dynamic datasets).
 	 * 
 	 * @return shape of source Dataset
 	 */
@@ -366,7 +366,7 @@ public class SliceND {
 	}
 
 	/**
-	 * Returns an array of maximals shapes
+	 * Return an array of maximum shape
 	 * 
 	 * @return maximum shape
 	 */
@@ -375,7 +375,7 @@ public class SliceND {
 	}
 
 	/**
-	 * Returns {@code true} if the slice makes shape larger, else {@code false}.
+	 * Return {@code true} if the slice makes shape larger, else {@code false}.
 	 * 
 	 * @return {@code true} if slice makes shape larger, {@code false} in the
 	 *         other case
@@ -385,7 +385,7 @@ public class SliceND {
 	}
 
 	/**
-	 * Returns an array of resulting shapes (this can change if the start, stop,
+	 * Return an array of resulting shapes (this can change if the start, stop,
 	 * step arrays are changed).
 	 * 
 	 * @return resulting shape
@@ -395,7 +395,7 @@ public class SliceND {
 	}
 
 	/**
-	 * Returns an array of the starts values.
+	 * Return an array of the starts values.
 	 * 
 	 * @return start values
 	 */
@@ -404,7 +404,7 @@ public class SliceND {
 	}
 
 	/**
-	 * Returns an array of stops values.
+	 * Return an array of stops values.
 	 * <p>
 	 * Note : stop values are clamped to -1 for <b>negative</b> steps
 	 * </p>
@@ -416,7 +416,7 @@ public class SliceND {
 	}
 
 	/**
-	 * Returns an array of the steps values.
+	 * Return an array of the steps values.
 	 * 
 	 * @return step values
 	 */
@@ -469,7 +469,7 @@ public class SliceND {
 	}
 
 	/**
-	 * Returns {@code true} if all of originals shapes are covered by positive
+	 * Return {@code true} if all of originals shapes are covered by positive
 	 * steps slices, else {@code false}.
 	 * 
 	 * @return {@code true} if all of originals shapes is covered by this slice
@@ -484,7 +484,7 @@ public class SliceND {
 			return true;
 		}
 
-		boolean allData = Arrays.equals(oshape, lshape);
+		boolean allData = Arrays.equals(oshape, lshape) && ShapeUtils.calcSize(oshape) > 0;
 		if (allData) {
 			for (int i = 0; i < lshape.length; i++) {
 				if (lstep[i] < 0) {
@@ -497,7 +497,7 @@ public class SliceND {
 	}
 
 	/**
-	 * Flips the slice direction in given dimension, this means that slice
+	 * Flip the slice direction in given dimension, this means that slice
 	 * begins at previous end point, steps in the opposite direction, and
 	 * finishes at the previous start point.
 	 * 
@@ -526,7 +526,7 @@ public class SliceND {
 	}
 
 	/**
-	 * Flips slices directions in all dimensions, this means that all slices are
+	 * Flip slices directions in all dimensions, this means that all slices are
 	 * beginning at previous end point, steps are in the opposite direction, and
 	 * finishes are at the previous start point.
 	 * @return this
@@ -544,7 +544,7 @@ public class SliceND {
 	}
 
 	/**
-	 * Converts to a slice array all the Slices of the SliceND.
+	 * Convert to a slice array all the Slices of the SliceND
 	 * 
 	 * @return a Slice array
 	 */
@@ -565,7 +565,7 @@ public class SliceND {
 	}
 
 	/**
-	 * Creates a deep copy of the SliceND.
+	 * Create a deep copy of the SliceND
 	 * 
 	 * @return New SliceND with the current SliceND properties
 	 */
@@ -591,7 +591,7 @@ public class SliceND {
 	 */
 	@Override
 	public String toString() {
-		final int rank = lshape.length;
+		final int rank = lshape == null ? 0 : lshape.length;
 		if (rank == 0) {
 			return "";
 		}
@@ -605,7 +605,7 @@ public class SliceND {
 	}
 
 	/**
-	 * Creats SliceND from dataset.
+	 * Create SliceND from dataset
 	 * 
 	 * @param data
 	 *            ILazyDataset to treat
@@ -620,7 +620,7 @@ public class SliceND {
 	}
 
 	/**
-	 * Creating SliceND from dataset.
+	 * Create SliceND from dataset
 	 * 
 	 * @param data
 	 *            ILazyDataset to treat
@@ -686,4 +686,50 @@ public class SliceND {
 		return s;
 	}
 
+	/**
+	 * Check slice is compatible with given shapes
+	 * @param dShape dataset shape
+	 * @param dMShape dataset maximum shape (can be null)
+	 * @since 2.3
+	 */
+	public void checkShapes(int[] dShape, int[] dMShape) {
+		if (oshape == null) {
+			if (dShape == null) {
+				return;
+			}
+			throw new IllegalArgumentException("Dataset shape must be null with source shape null");
+		}
+		int r = oshape.length;
+		if (r != dShape.length) {
+			throw new IllegalArgumentException("Dataset shape must be equal in length to source shape");
+		}
+		if (Arrays.equals(oshape, dShape)) {
+			return;
+		}
+
+		if (dMShape == null) {
+			for (int i = 0; i < r; i++) {
+				int o = oshape[i];
+				if (o == 0) {
+					throw new IllegalArgumentException("Slice shape has zero length");
+				}
+				if (o > dShape[i]) {
+					throw new IllegalArgumentException("Slice shape is greater than dataset shape");
+				}
+			}
+		} else {
+			for (int i = 0; i < r; i++) {
+				int o = oshape[i];
+				if (o == 0) {
+					throw new IllegalArgumentException("Slice shape has zero length");
+				}
+				int m = dMShape[i];
+				if (m != ILazyWriteableDataset.UNLIMITED) {
+					if (o > m) {
+						throw new IllegalArgumentException("Slice shape is greater than max dataset shape");
+					}
+				}
+			}
+		}
+	}
 }

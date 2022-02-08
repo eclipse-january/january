@@ -290,6 +290,16 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 	}
 
 	@Override
+	protected void checkSliceND(SliceND slice) {
+		slice.checkShapes(shape, maxShape);
+	}
+
+	@Override
+	protected SliceND createSlice(int[] nstart, int[] nstop, int[] nstep) {
+		return SliceND.createSlice(oShape, maxShape, nstart, nstop, nstep);
+	}
+
+	@Override
 	public LazyDynamicDataset clone() {
 		return new LazyDynamicDataset(this);
 	}

@@ -341,9 +341,9 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 	@Override
 	public LazyDataset getSliceView(Slice... slice) {
 		if (slice == null || slice.length == 0) {
-			return getSliceView(new SliceND(shape));
+			return internalGetSliceView(new SliceND(shape));
 		}
-		return getSliceView(new SliceND(shape, slice));
+		return internalGetSliceView(new SliceND(shape, slice));
 	}
 
 	/**
@@ -371,7 +371,9 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	@Override
 	public LazyDataset getSliceView(SliceND slice) {
-		checkSliceND(slice);
+		if (slice != null) {
+			checkSliceND(slice);
+		}
 		return internalGetSliceView(slice);
 	}
 
@@ -402,8 +404,9 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 	@Override
 	public Dataset getSlice(IMonitor monitor, SliceND slice) throws DatasetException {
-		checkSliceND(slice);
-
+		if (slice != null) {
+			checkSliceND(slice);
+		}
 		return internalGetSlice(monitor, slice);
 	}
 
@@ -427,7 +430,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 			}
 		}
 		a.setName(name + AbstractDataset.BLOCK_OPEN + (nslice == null ?
-				(slice == null ? "..." : slice) : nslice) + AbstractDataset.BLOCK_CLOSE);
+				(slice == null ? AbstractDataset.ELLIPSIS : slice) : nslice) + AbstractDataset.BLOCK_CLOSE);
 		if (metadata != null && a instanceof LazyDatasetBase) {
 			LazyDatasetBase ba = (LazyDatasetBase) a;
 			ba.metadata = copyMetadata();

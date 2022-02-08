@@ -343,7 +343,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	 * @return an slice iterator that operates like an IndexIterator
 	 */
 	public IndexIterator getSliceIterator(SliceND slice) {
-		checkSliceND(slice);
+		if (slice != null) {
+			checkSliceND(slice);
+		}
 		return internalGetSliceIterator(slice);
 	}
 
@@ -801,7 +803,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	 */
 	@Override
 	public Dataset getSliceView(SliceND slice) {
-		checkSliceND(slice);
+		if (slice != null) {
+			checkSliceND(slice);
+		}
 		return internalGetSliceView(slice);
 	}
 
@@ -1046,6 +1050,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	protected static final char BLOCK_OPEN = '[';
 	protected static final char BLOCK_CLOSE = ']';
+	protected final static String ELLIPSIS = "...";
 
 	@Override
 	public String toString() {
@@ -1129,7 +1134,6 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	private final static String SEPARATOR = ",";
 	private final static String SPACE = " ";
-	private final static String ELLIPSIS = "...";
 	private final static String NEWLINE = "\n";
 
 	/**
@@ -1412,7 +1416,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	 */
 	@Override
 	public Dataset getSlice(final SliceND slice) {
-		checkSliceND(slice);
+		if (slice != null) {
+			checkSliceND(slice);
+		}
 		return internalGetSlice(slice);
 	}
 
@@ -1435,7 +1441,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public Dataset setSlice(final Object obj, final SliceND slice) {
-		checkSliceND(slice);
+		if (slice != null) {
+			checkSliceND(slice);
+		}
 		return internalSetSlice(obj, slice);
 	}
 
