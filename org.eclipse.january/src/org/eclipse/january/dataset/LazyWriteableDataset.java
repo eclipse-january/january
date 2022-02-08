@@ -269,13 +269,17 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 
 	@Override
 	public void setSlice(IMonitor monitor, IDataset data, SliceND slice) throws DatasetException {
-		checkSliceND(slice);
+		if (slice != null) {
+			checkSliceND(slice);
+		}
 		internalSetSlice(monitor, writeAsync, data, slice);
 	}
 
 	@Override
 	public void setSliceSync(IMonitor monitor, IDataset data, SliceND slice) throws DatasetException {
-		checkSliceND(slice);
+		if (slice != null) {
+			checkSliceND(slice);
+		}
 		internalSetSlice(monitor, false, data, slice);
 	}
 
@@ -326,11 +330,6 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 	public void setSaver(ILazySaver saver) {
 		this.saver = saver;
 		this.loader = saver;
-	}
-
-	@Override
-	protected SliceND createSlice(int[] nstart, int[] nstop, int[] nstep) {
-		return SliceND.createSlice(oShape, maxShape, nstart, nstop, nstep);
 	}
 
 	@Override

@@ -29,10 +29,17 @@ public class SliceNDTest {
 		// null dataset
 		slice = new SliceND(null);
 		assertTrue(slice.isAll());
+		assertEquals("", slice.toString());
 
 		// zero-rank dataset
 		slice = new SliceND(new int[0]);
 		assertTrue(slice.isAll());
+		assertEquals("", slice.toString());
+
+		// zero-sized
+		slice = new SliceND(new int[] {0});
+		assertFalse(slice.isAll());
+		assertEquals(":", slice.toString());
 
 		step = new int[] {};
 		lstart = new int[] {};
@@ -332,6 +339,30 @@ public class SliceNDTest {
 		assertArrayEquals(new int[] {3}, slice.getStart());
 		assertArrayEquals(new int[] {7}, slice.getStop());
 
+		lstart[0] = 8;
+		slice = new SliceND(new int[] {7}, new int[] {9}, lstart, null, step);
+		assertArrayEquals(new int[] {1}, slice.getShape());
+		assertArrayEquals(new int[] {8}, slice.getStart());
+		assertArrayEquals(new int[] {9}, slice.getStop());
+
+		lstart[0] = 8;
+		slice = new SliceND(new int[] {7}, new int[] {9}, lstart, new int[] {10}, step);
+		assertArrayEquals(new int[] {1}, slice.getShape());
+		assertArrayEquals(new int[] {8}, slice.getStart());
+		assertArrayEquals(new int[] {9}, slice.getStop());
+
+		lstart[0] = 10;
+		slice = new SliceND(new int[] {7}, new int[] {9}, lstart, new int[] {10}, step);
+		assertArrayEquals(new int[] {0}, slice.getShape());
+		assertArrayEquals(new int[] {9}, slice.getStart());
+		assertArrayEquals(new int[] {9}, slice.getStop());
+
+		lstart[0] = 10;
+		slice = new SliceND(new int[] {7}, new int[] {9}, lstart, null, step);
+		assertArrayEquals(new int[] {0}, slice.getShape());
+		assertArrayEquals(new int[] {9}, slice.getStart());
+		assertArrayEquals(new int[] {9}, slice.getStop());
+
 		lstart[0] = -4;
 		slice = new SliceND(new int[] {7}, new int[] {9}, lstart, null, step);
 		assertArrayEquals(new int[] {2}, slice.getShape());
@@ -357,6 +388,7 @@ public class SliceNDTest {
 		assertArrayEquals(new int[] {8}, slice.getStart());
 		assertArrayEquals(new int[] {9}, slice.getStop());
 		assertArrayEquals(new int[] {9}, slice.getSourceShape());
+		assertFalse(slice.isAll());
 
 		lstop[0] = 7;
 		slice = new SliceND(new int[] {7}, new int[] {9}, null, lstop, step);
@@ -429,6 +461,12 @@ public class SliceNDTest {
 		assertArrayEquals(new int[] {3}, slice.getStart());
 		assertArrayEquals(new int[] {-1}, slice.getStop());
 
+		lstart[0] = 8;
+		slice = new SliceND(new int[] {7}, new int[] {9}, lstart, null, step);
+		assertArrayEquals(new int[] {4}, slice.getShape());
+		assertArrayEquals(new int[] {6}, slice.getStart());
+		assertArrayEquals(new int[] {-1}, slice.getStop());
+
 		lstart[0] = -4;
 		slice = new SliceND(new int[] {7}, new int[] {9}, lstart, null, step);
 		assertArrayEquals(new int[] {2}, slice.getShape());
@@ -458,7 +496,6 @@ public class SliceNDTest {
 		assertArrayEquals(new int[] {4}, slice.getShape());
 		assertArrayEquals(new int[] {6}, slice.getStart());
 		assertArrayEquals(new int[] {-1}, slice.getStop());
-
 
 		lstop[0] = 0;
 		slice = new SliceND(new int[] {7}, new int[] {9}, null, lstop, step);
@@ -490,7 +527,7 @@ public class SliceNDTest {
 		assertArrayEquals(new int[] {6}, slice.getStart());
 		assertArrayEquals(new int[] {4}, slice.getStop());
 
-		lstop[0] = -8;
+		lstop[0] = -9;
 		slice = new SliceND(new int[] {7}, new int[] {9}, null, lstop, step);
 		assertArrayEquals(new int[] {4}, slice.getShape());
 		assertArrayEquals(new int[] {6}, slice.getStart());
@@ -522,11 +559,7 @@ public class SliceNDTest {
 		int[] lstop;
 		SliceND slice;
 
-		step = new int[] {};
-		lstart = new int[] {};
-		lstop = new int[] {};
 		step = new int[] {2};
-
 		lstart = new int[1];
 		lstop = new int[1];
 		slice = new SliceND(new int[] {7}, new int[] {-1}, null, null, step);
@@ -906,7 +939,6 @@ public class SliceNDTest {
 		SliceND slice;
 
 		step = new int[] {};
-		lstart = new int[] {};
 		slice = new SliceND(new int[] {}, null, null, step);
 		try {
 			slice.flip(0);
@@ -982,6 +1014,10 @@ public class SliceNDTest {
 		assertArrayEquals(new int[] {3, 4}, slice.getStart());
 		assertArrayEquals(new int[] {7, -1}, slice.getStop());
 		assertArrayEquals(new int[] {2, -3}, slice.getStep());
+
+		slice = new SliceND(null);
+		slice.flip();
+		slice.flip(0); // perhaps should throw exception
 	}
 
 	/**
@@ -1094,6 +1130,98 @@ public class SliceNDTest {
 
 		try {
 			slice.updateSourceShape(null);
+			fail();
+		} catch (IllegalArgumentException e) {
+			System.out.println("As expected: " + e);
+		}
+
+		slice = new SliceND(null);
+		slice.updateSourceShape(null);
+
+		try {
+			slice.updateSourceShape();
+			fail();
+		} catch (IllegalArgumentException e) {
+			System.out.println("As expected: " + e);
+		}
+
+		try {
+			slice.updateSourceShape(3);
+			fail();
+		} catch (IllegalArgumentException e) {
+			System.out.println("As expected: " + e);
+		}
+	}
+
+	@Test
+	public void testCheckShapes() {
+		SliceND slice = new SliceND(new int[] {8, 4}, new int[] {6 , 1}, new int[] {2, 4}, new int[] {-3, 1});
+
+		slice.checkShapes(new int[] {8, 4}, null);
+
+		try {
+			slice.checkShapes(new int[] {7}, null);
+			fail();
+		} catch (IllegalArgumentException e) {
+			System.out.println("As expected: " + e);
+		}
+
+		try {
+			slice.checkShapes(new int[] {7, 4}, null);
+			fail();
+		} catch (IllegalArgumentException e) {
+			System.out.println("As expected: " + e);
+		}
+
+		try {
+			slice.checkShapes(new int[] {6, 4}, null);
+			fail();
+		} catch (IllegalArgumentException e) {
+			System.out.println("As expected: " + e);
+		}
+
+		slice.checkShapes(new int[] {6, 4}, new int[] {12, ILazyWriteableDataset.UNLIMITED});
+
+		slice.checkShapes(new int[] {6, 4}, new int[] {ILazyWriteableDataset.UNLIMITED, 4});
+
+		slice = new SliceND(new int[] {8, 4}, new int[] {12, 6},
+				new int[] {6 , 1}, new int[] {2, 4}, new int[] {-3, 1});
+
+		slice.checkShapes(new int[] {10, 4}, null);
+
+		slice.checkShapes(new int[] {8, 4}, null);
+
+		try {
+			slice.checkShapes(new int[] {7, 4}, null);
+			fail();
+		} catch (IllegalArgumentException e) {
+			System.out.println("As expected: " + e);
+		}
+
+		try {
+			slice.checkShapes(new int[] {5, 5}, null);
+			fail();
+		} catch (IllegalArgumentException e) {
+			System.out.println("As expected: " + e);
+		}
+
+		slice.checkShapes(new int[] {5, 5}, new int[] {ILazyWriteableDataset.UNLIMITED, 6});
+
+		slice.checkShapes(new int[] {5, 5}, new int[] {12, ILazyWriteableDataset.UNLIMITED});
+
+		try {
+			slice.checkShapes(new int[] {5, 2}, new int[] {12, 3});
+			fail();
+		} catch (IllegalArgumentException e) {
+			System.out.println("As expected: " + e);
+		}
+
+		slice = new SliceND(null);
+
+		slice.checkShapes(null, null);
+
+		try {
+			slice.checkShapes(new int[] {5, 5}, null);
 			fail();
 		} catch (IllegalArgumentException e) {
 			System.out.println("As expected: " + e);

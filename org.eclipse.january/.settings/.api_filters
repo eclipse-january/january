@@ -14,6 +14,11 @@
                 <message_argument value="internalGetSliceIterator(SliceND)"/>
             </message_arguments>
         </filter>
+        <filter id="1194328068">
+            <message_arguments>
+                <message_argument value="ELLIPSIS"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/january/dataset/DTypeUtils.java" type="org.eclipse.january.dataset.DTypeUtils">
         <filter id="388018290">

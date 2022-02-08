@@ -19,10 +19,10 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import org.eclipse.january.DatasetException;
 import org.eclipse.january.MetadataException;
@@ -130,27 +130,12 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		dirty = true;
 	}
 
+	/**
+	 * Check if slice is compatible with dataset's shape
+	 * @param slice to check
+	 */
 	protected void checkSliceND(SliceND slice) {
-		if (slice != null) {
-			int[] source = slice.getSourceShape();
-			boolean fail = false;
-			if (slice.isExpanded()) {
-				fail = shape.length != source.length;
-				if (!fail) {
-					for (int i = 0; i < shape.length; i++) {
-						if (shape[i] > source[i]) {
-							fail = true;
-							break;
-						}
-					}
-				}
-			} else {
-				fail = !Arrays.equals(shape, source);
-			}
-			if (fail) {
-				throw new IllegalArgumentException("Slice's shape must match dataset's shape");
-			}
-		}
+		slice.checkShapes(shape, null);
 	}
 
 	/**
