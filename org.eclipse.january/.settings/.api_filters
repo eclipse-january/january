@@ -7,6 +7,12 @@
                 <message_argument value="2.2.2"/>
             </message_arguments>
         </filter>
+        <filter id="931135546">
+            <message_arguments>
+                <message_argument value="2.3.2"/>
+                <message_argument value="2.2.2"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/january/dataset/AbstractDataset.java" type="org.eclipse.january.dataset.AbstractDataset">
         <filter id="1143996420">
