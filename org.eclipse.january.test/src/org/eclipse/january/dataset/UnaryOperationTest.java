@@ -57,7 +57,7 @@ public class UnaryOperationTest {
 	 * @throws NoSuchMethodException 
 	 */
 	public UnaryOperationTest(Class<UnaryOperation> opClass, Object[][] values) throws Exception {
-		operation = opClass.newInstance();
+		operation = opClass.getConstructor().newInstance();
 
 		int l = values.length;
 		expected = new Object[l];

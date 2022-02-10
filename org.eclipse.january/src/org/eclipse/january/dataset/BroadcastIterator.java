@@ -17,14 +17,32 @@ import java.util.Arrays;
  */
 public abstract class BroadcastIterator extends BroadcastIteratorBase {
 
+	/**
+	 * @param a dataset to iterate over
+	 * @param b dataset to iterate over
+	 * @return broadcast iterator
+	 */
 	public static BroadcastIterator createIterator(Dataset a, Dataset b) {
 		return createIterator(a, b, null, false);
 	}
 
+	/**
+	 * @param a dataset to iterate over
+	 * @param b dataset to iterate over
+	 * @param o output (can be null for new dataset, or a)
+	 * @return broadcast iterator
+	 */
 	public static BroadcastIterator createIterator(Dataset a, Dataset b, Dataset o) {
 		return createIterator(a, b, o, false);
 	}
 
+	/**
+	 * @param a dataset to iterate over
+	 * @param b dataset to iterate over
+	 * @param o output (can be null for new dataset, or a)
+	 * @param createIfNull if true, create new dataset if o is null
+	 * @return broadcast iterator
+	 */
 	public static BroadcastIterator createIterator(Dataset a, Dataset b, Dataset o, boolean createIfNull) {
 		if (Arrays.equals(a.getShapeRef(), b.getShapeRef()) && a.getStrides() == null && b.getStrides() == null) {
 			if (o == null || (o.getStrides() == null && Arrays.equals(a.getShapeRef(), o.getShapeRef()))) {
@@ -54,6 +72,11 @@ public abstract class BroadcastIterator extends BroadcastIteratorBase {
 	final protected boolean outputA;
 	final protected boolean outputB;
 
+	/**
+	 * @param a dataset to iterate over
+	 * @param b dataset to iterate over
+	 * @param o output (can be null for new dataset, or a)
+	 */
 	protected BroadcastIterator(Dataset a, Dataset b, Dataset o) {
 		super(a, b);
 		oDataset = o;

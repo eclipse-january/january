@@ -27,9 +27,6 @@
 		<developerConnection>scm:git:git@github.com:eclipse/january.git</developerConnection>
 		<url>https://github.com/eclipse/january.git</url>
 	</scm>
-	<prerequisites>
-		<maven>3.0</maven>
-	</prerequisites>
 
 	<name>The Eclipse January Project</name>
 	<description>Common data structures for Science</description>

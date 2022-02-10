@@ -11,15 +11,15 @@
  *******************************************************************************/
 target "January-baseline" with source requirements
 
-location "http://download.eclipse.org/january/releases/2.0.0/repository/" january-2.0 {
+location "https://download.eclipse.org/january/releases/2.2.2/repository/" january-2.2 {
 	org.eclipse.january lazy
+	org.eclipse.january.assert lazy
 }
 
-location "http://download.eclipse.org/tools/orbit/downloads/drops/R20170818183741/repository" eclipse-orbit-oxygen-sr1 {
+location "https://download.eclipse.org/tools/orbit/downloads/drops/R20180606145124/repository" eclipse-orbit-photon {
 
 // The versions we point to in Orbit are the versions we have CQs approved for, please
 // raise CQ for items not in this list or version changes
 	org.slf4j.api [1.7.2,1.7.3) // CQ 11781
 	org.apache.commons.math3 [3.5.0,3.5.1) // CQ 11785
-
 }

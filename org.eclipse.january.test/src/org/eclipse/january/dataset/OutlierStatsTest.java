@@ -9,9 +9,6 @@
 
 package org.eclipse.january.dataset;
 
-import org.eclipse.january.dataset.DoubleDataset;
-import org.eclipse.january.dataset.Outliers;
-import org.eclipse.january.dataset.Random;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -10,10 +10,6 @@
 package org.eclipse.january.dataset;
 
 import org.eclipse.january.asserts.TestUtils;
-import org.eclipse.january.dataset.Dataset;
-import org.eclipse.january.dataset.DatasetFactory;
-import org.eclipse.january.dataset.LazyMaths;
-import org.eclipse.january.dataset.Maths;
 import org.junit.Before;
 import org.junit.Test;
 

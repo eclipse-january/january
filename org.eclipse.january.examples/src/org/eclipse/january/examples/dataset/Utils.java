@@ -42,7 +42,7 @@ public class Utils {
 				}
 			}));
 	
-			LoggerFactory.getLogger(BasicExample.class);
+			LoggerFactory.getLogger(Utils.class);
 	
 		} finally {
 			System.setErr(saved);

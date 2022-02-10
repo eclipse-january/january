@@ -20,16 +20,16 @@ import java.util.List;
 public class BooleanNullIterator extends BooleanIteratorBase {
 
 	/**
-	 * @param a
-	 * @param o (can be null for new dataset, or a)
+	 * @param a dataset to iterate over
+	 * @param o output (can be null for new dataset, or a)
 	 */
 	public BooleanNullIterator(Dataset a, Dataset o) {
 		this(a, o, false);
 	}
 
 	/**
-	 * @param a
-	 * @param o (can be null for new dataset, or a)
+	 * @param a dataset to iterate over
+	 * @param o output (can be null for new dataset, or a)
 	 * @param createIfNull if true create the output dataset if that is null
 	 * (by default, can create float or complex datasets)
 	 */
@@ -38,8 +38,8 @@ public class BooleanNullIterator extends BooleanIteratorBase {
 	}
 
 	/**
-	 * @param a
-	 * @param o (can be null for new dataset, or a)
+	 * @param a dataset to iterate over
+	 * @param o output (can be null for new dataset, or a)
 	 * @param createIfNull if true create the output dataset if that is null
 	 * @param allowInteger if true, can create integer datasets
 	 * @param allowComplex if true, can create complex datasets

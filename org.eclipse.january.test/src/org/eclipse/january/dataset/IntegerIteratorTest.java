@@ -15,11 +15,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.eclipse.january.dataset.Dataset;
-import org.eclipse.january.dataset.DatasetFactory;
-import org.eclipse.january.dataset.IndexIterator;
-import org.eclipse.january.dataset.IntegerDataset;
-import org.eclipse.january.dataset.IntegerIterator;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

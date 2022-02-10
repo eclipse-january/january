@@ -44,21 +44,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 
 	private static final long serialVersionUID = 767926846438976050L;
 
-	protected static final Logger logger = LoggerFactory.getLogger(LazyDatasetBase.class);
-
-	protected static boolean catchExceptions;
-
-	static {
-		/**
-		 * Boolean to set to true if running jython scripts that utilise ScisoftPy in IDE
-		 */
-		try {
-			catchExceptions = Boolean.getBoolean("run.in.eclipse");
-		} catch (SecurityException e) {
-			// set a default for when the security manager does not allow access to the requested key
-			catchExceptions = false;
-		}
-	}
+	private static final Logger logger = LoggerFactory.getLogger(LazyDatasetBase.class);
 
 	transient private boolean dirty = true; // indicate dirty state of metadata
 	protected String name = "";
@@ -144,9 +130,32 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		dirty = true;
 	}
 
+	protected void checkSliceND(SliceND slice) {
+		if (slice != null) {
+			int[] source = slice.getSourceShape();
+			boolean fail = false;
+			if (slice.isExpanded()) {
+				fail = shape.length != source.length;
+				if (!fail) {
+					for (int i = 0; i < shape.length; i++) {
+						if (shape[i] > source[i]) {
+							fail = true;
+							break;
+						}
+					}
+				}
+			} else {
+				fail = !Arrays.equals(shape, source);
+			}
+			if (fail) {
+				throw new IllegalArgumentException("Slice's shape must match dataset's shape");
+			}
+		}
+	}
+
 	/**
 	 * Find first sub-interface of (or class that directly implements) MetadataType
-	 * @param clazz
+	 * @param clazz metadata type
 	 * @return sub-interface
 	 * @exception IllegalArgumentException when given class is {@link MetadataType} or an anonymous sub-class of it
 	 */
@@ -237,7 +246,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public synchronized <S extends MetadataType, T extends S> List<S> getMetadata(Class<T> clazz) throws MetadataException {
+	public synchronized <T extends MetadataType> List<T> getMetadata(Class<T> clazz) throws MetadataException {
 		if (metadata == null) {
 			dirty = false;
 			return null;
@@ -249,24 +258,24 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 		}
 
 		if (clazz == null) {
-			List<S> all = new ArrayList<S>();
+			List<T> all = new ArrayList<>();
 			for (Class<? extends MetadataType> c : metadata.keySet()) {
-				all.addAll((Collection<S>) metadata.get(c));
+				all.addAll((Collection<T>) metadata.get(c));
 			}
 			return all;
 		}
 
-		return (List<S>) metadata.get(findMetadataTypeSubInterfaces(clazz));
+		return (List<T>) metadata.get(findMetadataTypeSubInterfaces(clazz));
 	}
 
 	@Override
-	public synchronized <S extends MetadataType, T extends S> S getFirstMetadata(Class<T> clazz) {
+	public synchronized <T extends MetadataType> T getFirstMetadata(Class<T> clazz) {
 		try {
-			List<S> ml = getMetadata(clazz);
+			List<T> ml = getMetadata(clazz);
 			if (ml == null) {
 				return null;
 			}
-			for (S t : ml) {
+			for (T t : ml) {
 				if (clazz.isInstance(t)) {
 					return t;
 				}
@@ -296,6 +305,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	}
 
 	/**
+	 * @return copy of metadata
 	 * @since 2.0
 	 */
 	protected synchronized ConcurrentMap<Class<? extends MetadataType>, List<MetadataType>> copyMetadata() {
@@ -303,6 +313,8 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	}
 
 	/**
+	 * @param metadata type
+	 * @return copy of metadata of given type
 	 * @since 2.0
 	 */
 	protected static ConcurrentMap<Class<? extends MetadataType>, List<MetadataType>> copyMetadata(Map<Class<? extends MetadataType>, List<MetadataType>> metadata) {
@@ -335,6 +347,9 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	}
 
 	/**
+	 * @param a dataset
+	 * @param clone if true, copy metadata
+	 * @return copy of metadata
 	 * @since 2.2
 	 */
 	protected static ConcurrentMap<Class<? extends MetadataType>, List<MetadataType>> getMetadataMap(ILazyDataset a, boolean clone) {
@@ -482,8 +497,9 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 					}
 				}
 				lz = lz.getSliceView(nslice);
+				shape = nslice.getShape();
 			}
-			if (lz.getSize() == oSize) {
+			if (lz.getSize() == oSize && Arrays.equals(shape, oShape)) {
 				nslice = slice;
 			} else {
 				nslice = slice.clone();
@@ -497,6 +513,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 						throw new IllegalArgumentException("Sliceable dataset has non-unit dimension less than host!");
 					}
 				}
+				nslice.updateSourceShape(shape);
 			}
 
 			if (asView || (lz instanceof IDataset)) {
@@ -782,29 +799,29 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	 * Slice all datasets in metadata that are annotated by @Sliceable. Call this on the new sliced
 	 * dataset after cloning the metadata
 	 * @param asView if true then just a view
-	 * @param slice
+	 * @param slice an n-D slice
 	 */
 	protected void sliceMetadata(boolean asView, final SliceND slice) {
-		processAnnotatedMetadata(new MdsSlice(asView, slice), true);
+		processAnnotatedMetadata(new MdsSlice(asView, slice));
 	}
 
 	/**
 	 * Reshape all datasets in metadata that are annotated by @Reshapeable. Call this when squeezing
 	 * or setting the shape
-	 * 
-	 * @param newShape
+	 * @param oldShape old shape
+	 * @param newShape new shape
 	 */
 	protected void reshapeMetadata(final int[] oldShape, final int[] newShape) {
-		processAnnotatedMetadata(new MdsReshape(oldShape, newShape), true);
+		processAnnotatedMetadata(new MdsReshape(oldShape, newShape));
 	}
 
 	/**
 	 * Transpose all datasets in metadata that are annotated by @Transposable. Call this on the transposed
 	 * dataset after cloning the metadata
-	 * @param axesMap
+	 * @param axesMap if zero length then axes order reversed
 	 */
 	protected void transposeMetadata(final int[] axesMap) {
-		processAnnotatedMetadata(new MdsTranspose(axesMap), true);
+		processAnnotatedMetadata(new MdsTranspose(axesMap));
 	}
 
 	/**
@@ -812,11 +829,11 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	 * @since 2.0
 	 */
 	protected void dirtyMetadata() {
-		processAnnotatedMetadata(new MdsDirty(), true);
+		processAnnotatedMetadata(new MdsDirty());
 	}
 
 	@SuppressWarnings("unchecked")
-	private void processAnnotatedMetadata(MetadatasetAnnotationOperation op, boolean throwException) {
+	private void processAnnotatedMetadata(MetadatasetAnnotationOperation op) {
 		if (metadata == null)
 			return;
 
@@ -828,7 +845,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 
 				Class<? extends MetadataType> mc = m.getClass();
 				do { // iterate over super-classes
-					processClass(op, m, mc, throwException);
+					processClass(op, m, mc);
 					Class<?> sclazz = mc.getSuperclass();
 					if (!MetadataType.class.isAssignableFrom(sclazz)) {
 						break;
@@ -840,7 +857,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private static void processClass(MetadatasetAnnotationOperation op, MetadataType m, Class<? extends MetadataType> mc, boolean throwException) {
+	private static void processClass(MetadatasetAnnotationOperation op, MetadataType m, Class<? extends MetadataType> mc) {
 		for (Field f : mc.getDeclaredFields()) {
 			if (!f.isAnnotationPresent(op.getAnnClass()))
 				continue;
@@ -863,9 +880,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 						f.set(m, op.run((ILazyDataset) o));
 					} catch (Exception e) {
 						logger.error("Problem processing " + o, e);
-						if (!catchExceptions) {
-							throw e;
-						}
+						throw e;
 					}
 				} else if (o.getClass().isArray()) {
 					int l = Array.getLength(o);
@@ -945,9 +960,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 				}
 			} catch (Exception e) {
 				logger.error("Problem occurred when processing metadata of class {}: {}", mc.getCanonicalName(), e);
-				if (throwException) {
-					throw new RuntimeException(e);
-				} 
+				throw new RuntimeException(e);
 			}
 		}
 	}
@@ -963,9 +976,7 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 				return op.run((ILazyDataset) o);
 			} catch (Exception e) {
 				logger.error("Problem processing " + o, e);
-				if (!catchExceptions) {
-					throw e;
-				}
+				throw e;
 			}
 		} else if (o.getClass().isArray()) {
 			int l = Array.getLength(o);
@@ -996,11 +1007,13 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 				if (is != 1 && is != getElementsPerItem()) {
 					throw new IllegalArgumentException("Dataset has incompatible number of elements with this dataset");
 				}
-				d = ed.cast((Class<Dataset>)(is == 1 ? DoubleDataset.class: CompoundDoubleDataset.class));
+				Class<? extends Dataset> nClass = is == 1 ? DoubleDataset.class: CompoundDoubleDataset.class;
+				d = ed.cast(nClass);
 			} else if (!keepLazy) {
 				final int is = getElementsPerItem();
 				try {
-					d = DatasetUtils.cast((Class<Dataset>)(is == 1 ? DoubleDataset.class: CompoundDoubleDataset.class), d.getSlice());
+					Class<? extends Dataset> nClass = is == 1 ? DoubleDataset.class: CompoundDoubleDataset.class;
+					d = DatasetUtils.cast(nClass, d.getSlice());
 				} catch (DatasetException e) {
 					logger.error("Could not get data from lazy dataset", e);
 					return null;
@@ -1079,8 +1092,8 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 
 	/**
 	 * Check permutation axes
-	 * @param shape
-	 * @param axes
+	 * @param shape to use
+	 * @param axes if zero length then axes order reversed
 	 * @return cleaned up copy of axes or null if trivial
 	 */
 	public static int[] checkPermutatedAxes(int[] shape, int... axes) {

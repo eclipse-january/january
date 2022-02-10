@@ -17,9 +17,9 @@ public final class BroadcastUtils {
 
 	/**
 	 * Calculate shapes for broadcasting
-	 * @param oldShape
-	 * @param size
-	 * @param newShape
+	 * @param oldShape old shape
+	 * @param size dataset size
+	 * @param newShape new shape
 	 * @return broadcasted shape and full new shape or null if it cannot be done
 	 */
 	public static int[][] calculateBroadcastShapes(int[] oldShape, int size, int... newShape) {
@@ -62,8 +62,8 @@ public final class BroadcastUtils {
 
 	/**
 	 * Pad shape by prefixing with ones
-	 * @param shape
-	 * @param padding
+	 * @param shape to pad
+	 * @param padding number of dimensions to add
 	 * @return new shape or old shape if padding is zero
 	 */
 	public static int[] padShape(final int[] shape, final int padding) {
@@ -136,8 +136,8 @@ public final class BroadcastUtils {
 
 	/**
 	 * Take in shapes and broadcast them to maximum shape
-	 * @param maxShape
-	 * @param shapes
+	 * @param maxShape maximum shape
+	 * @param shapes inputs
 	 * @return list of broadcasted shapes
 	 */
 	public static List<int[]> broadcastShapesToMax(int[] maxShape, int[]... shapes) {
@@ -265,7 +265,7 @@ public final class BroadcastUtils {
 	/**
 	 * Create a stride array from a dataset to a broadcast shape
 	 * @param a dataset
-	 * @param broadcastShape
+	 * @param broadcastShape shape to broadcast
 	 * @return stride array
 	 */
 	public static int[] createBroadcastStrides(Dataset a, final int[] broadcastShape) {
@@ -274,10 +274,10 @@ public final class BroadcastUtils {
 
 	/**
 	 * Create a stride array from a dataset to a broadcast shape
-	 * @param isize
+	 * @param isize item size
 	 * @param oShape original shape
 	 * @param oStride original stride
-	 * @param broadcastShape
+	 * @param broadcastShape shape to broadcast
 	 * @return stride array
 	 */
 	public static int[] createBroadcastStrides(final int isize, final int[] oShape, final int[] oStride, final int[] broadcastShape) {
@@ -318,7 +318,7 @@ public final class BroadcastUtils {
 
 	/**
 	 * Converts and broadcast all objects as datasets of same shape
-	 * @param objects
+	 * @param objects to convert and broadcast
 	 * @return all as broadcasted to same shape
 	 */
 	public static Dataset[] convertAndBroadcast(Object... objects) {

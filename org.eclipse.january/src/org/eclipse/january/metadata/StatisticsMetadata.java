@@ -24,8 +24,7 @@ import org.eclipse.january.dataset.Dataset;
 public interface StatisticsMetadata<T> extends MetadataType {
 
 	/**
-	 *
-	 * @param dataset
+	 * @param dataset to use
 	 */
 	public void initialize(Dataset dataset);
 
@@ -52,7 +51,7 @@ public interface StatisticsMetadata<T> extends MetadataType {
 	public void setHash(int hash);
 
 	/**
-	 * @param shape
+	 * @param shape to hash with data
 	 * @return the hash
 	 */
 	public int getHash(int[] shape);
@@ -131,28 +130,28 @@ public interface StatisticsMetadata<T> extends MetadataType {
 	public T getSum(boolean... ignoreInvalids);
 
 	/**
-	 * @param isWholePopulation
+	 * @param isWholePopulation if false, consider as sample of population
 	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @return the variance of samples
 	 */
 	public double getVariance(boolean isWholePopulation, boolean... ignoreInvalids);
 
 	/**
-	 * @param axis
+	 * @param axis to reduce along
 	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @return the argument at which the maximum first occurs
 	 */
 	public Dataset getArgMaximum(int axis, boolean... ignoreInvalids);
 
 	/**
-	 * @param axis
+	 * @param axis to reduce along
 	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @return the argument at which the minimum first occurs
 	 */
 	public Dataset getArgMinimum(int axis, boolean... ignoreInvalids);
 
 	/**
-	 * @param axis
+	 * @param axis to reduce along
 	 * @param ignoreInvalids - Can be null, one boolean, or two booleans. By default, both are false. If
 	 * the first boolean is true, will ignore NaNs and ignore infinities. Use the second boolean to
 	 * ignore infinities separately.
@@ -161,43 +160,43 @@ public interface StatisticsMetadata<T> extends MetadataType {
 	public Dataset getMaximum(int axis, boolean... ignoreInvalids);
 
 	/**
-	 * @param axis
+	 * @param axis to reduce along
 	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @return the minimum
 	 */
 	public Dataset getMinimum(int axis, boolean... ignoreInvalids);
 
 	/**
-	 * @param axis
+	 * @param axis to reduce along
 	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @return the number of samples
 	 */
 	public Dataset getCount(int axis, boolean... ignoreInvalids);
 
 	/**
-	 * @param axis
+	 * @param axis to reduce along
 	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @return the mean of samples
 	 */
 	public Dataset getMean(int axis, boolean... ignoreInvalids);
 
 	/**
-	 * @param axis
+	 * @param axis to reduce along
 	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @return the sum of samples
 	 */
 	public Dataset getSum(int axis, boolean... ignoreInvalids);
 
 	/**
-	 * @param axis
-	 * @param isWholePopulation
+	 * @param axis to reduce along
+	 * @param isWholePopulation if false, consider as sample of population
 	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @return the variance of samples
 	 */
 	public Dataset getVariance(int axis, boolean isWholePopulation, boolean... ignoreInvalids);
 
 	/**
-	 * @param axes
+	 * @param axes to reduce along
 	 * @param ignoreInvalids - Can be null, one boolean, or two booleans. By default, both are false. If
 	 * the first boolean is true, will ignore NaNs and ignore infinities. Use the second boolean to
 	 * ignore infinities separately.
@@ -207,7 +206,7 @@ public interface StatisticsMetadata<T> extends MetadataType {
 	public Dataset getMaximum(int[] axes, boolean... ignoreInvalids);
 
 	/**
-	 * @param axes
+	 * @param axes to reduce over
 	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @return the minimum
 	 * @since 2.2
@@ -215,7 +214,7 @@ public interface StatisticsMetadata<T> extends MetadataType {
 	public Dataset getMinimum(int[] axes, boolean... ignoreInvalids);
 
 	/**
-	 * @param axes
+	 * @param axes to reduce over
 	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @return the number of samples
 	 * @since 2.2
@@ -223,7 +222,7 @@ public interface StatisticsMetadata<T> extends MetadataType {
 	public Dataset getCount(int[] axes, boolean... ignoreInvalids);
 
 	/**
-	 * @param axes
+	 * @param axes to reduce over
 	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @return the mean of samples
 	 * @since 2.2
@@ -231,7 +230,7 @@ public interface StatisticsMetadata<T> extends MetadataType {
 	public Dataset getMean(int[] axes, boolean... ignoreInvalids);
 
 	/**
-	 * @param axes
+	 * @param axes to reduce over
 	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @return the sum of samples
 	 * @since 2.2
@@ -239,8 +238,8 @@ public interface StatisticsMetadata<T> extends MetadataType {
 	public Dataset getSum(int[] axes, boolean... ignoreInvalids);
 
 	/**
-	 * @param axes
-	 * @param isWholePopulation
+	 * @param axes to reduce along
+	 * @param isWholePopulation if false, consider as sample of population
 	 * @param ignoreInvalids see {@link #getMaximum(boolean...)} for explanation
 	 * @return the variance of samples
 	 * @since 2.2

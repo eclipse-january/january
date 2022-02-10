@@ -72,13 +72,13 @@ public class TestUtils {
 
 	/**
 	 * Assert equality of datasets where each item is true if they are equal or
-	 * for floating point datasets, abs(a - b) <= 1e-12 + 1e-12*abs(b)
+	 * for floating point datasets, if <code>abs(a - b) &le; 1e-12 + 1e-12*abs(b)</code>
 	 * <p>
 	 * The dataset types have to match and so does the number of elements in each item.
 	 * <p>
 	 * Same as <pre>TestUtils.assertDatasetEquals(expected, actual, true, 1e-12, 1e-12)</pre>
-	 * @param expected
-	 * @param actual
+	 * @param expected dataset
+	 * @param actual dataset
 	 */
 	public static void assertDatasetEquals(Dataset expected, Dataset actual) {
 		assertDatasetEquals(expected, actual, true, 1e-12, 1e-12);
@@ -86,9 +86,9 @@ public class TestUtils {
 
 	/**
 	 * Assert equality of datasets where each element is true if they are equal or
-	 * for floating point datasets, abs(a - b) <= 1e-12 + 1e-12*abs(b)
-	 * @param expected
-	 * @param actual
+	 * for floating point datasets, if <code>abs(a - b) &le; 1e-12 + 1e-12*abs(b)</code>
+	 * @param expected dataset
+	 * @param actual dataset
 	 * @param testDTypeAndItemSize if true, check dataset type and number of elements
 	 */
 	public static void assertDatasetEquals(Dataset expected, Dataset actual, boolean testDTypeAndItemSize) {
@@ -97,13 +97,13 @@ public class TestUtils {
 
 	/**
 	 * Assert equality of datasets where each element is true if they are equal or
-	 * for floating point datasets, if abs(a - b) <= absTolerance + relTolerance*abs(b).
+	 * for floating point datasets, if <code>abs(a - b) &le; absTolerance + relTolerance*abs(b)</code>.
 	 * <p>
 	 * The dataset types does not have to match nor does the number of elements in each item. 
-	 * @param expected
-	 * @param actual
-	 * @param relTolerance
-	 * @param absTolerance
+	 * @param expected dataset
+	 * @param actual dataset
+	 * @param relTolerance relative tolerance
+	 * @param absTolerance absolute tolerance
 	 */
 	public static void assertDatasetEquals(Dataset expected, Dataset actual, double relTolerance, double absTolerance) {
 		assertDatasetEquals(expected, actual, false, relTolerance, absTolerance);
@@ -111,12 +111,12 @@ public class TestUtils {
 
 	/**
 	 * Assert equality of datasets where each element is true if they are equal or
-	 * for floating point datasets, if abs(a - b) <= absTolerance + relTolerance*abs(b)
-	 * @param expected
-	 * @param actual
+	 * for floating point datasets, if <code>abs(a - b) &le; absTolerance + relTolerance*abs(b)</code>.
+	 * @param expected dataset
+	 * @param actual dataset
 	 * @param testDTypeAndItemSize if true, check dataset type and number of elements
-	 * @param relTolerance 
-	 * @param absTolerance 
+	 * @param relTolerance relative tolerance
+	 * @param absTolerance absolute tolerance
 	 */
 	public static void assertDatasetEquals(Dataset expected, Dataset actual, boolean testDTypeAndItemSize, double relTolerance, double absTolerance) {
 		final int eis = expected.getElementsPerItem();
@@ -201,7 +201,7 @@ public class TestUtils {
 	}
 
 	/**
-	 * Assert equality if abs(e - a) <= max(1e-20, 1e-14*max(abs(e), abs(a)))
+	 * Assert equality if <code>abs(e - a) &le; max(1e-20, 1e-14*max(abs(e), abs(a)))</code>
 	 * @param s message for assert exception
 	 * @param e expected value
 	 * @param a actual value
@@ -211,7 +211,7 @@ public class TestUtils {
 	}
 
 	/**
-	 * Assert equality if abs(e - a) <= max(absTol, relTol*max(abs(e), abs(a)))
+	 * Assert equality if <code>abs(e - a) &le; max(absTol, relTol*max(abs(e), abs(a)))</code>
 	 * @param s message for assert exception
 	 * @param e expected value
 	 * @param a actual value
@@ -240,16 +240,28 @@ public class TestUtils {
 
 	private static Verbosity verbosity = Verbosity.QUIET;
 
+	/**
+	 * @param verbosity level
+	 */
 	public static void setVerbosity(Verbosity verbosity) {
 		TestUtils.verbosity = verbosity;
 	}
 
+	/**
+	 * Print when verbosity set to verbose
+	 * @param fmt format
+	 * @param args arguments
+	 */
 	public static void verbosePrintf(String fmt, Object... args) {
 		if (verbosity == Verbosity.VERBOSE) {
 			System.out.printf(fmt, args);
 		}
 	}
 
+	/**
+	 * Print when verbosity set to verbose
+	 * @param arg argument
+	 */
 	public static void verbosePrintln(String arg) {
 		if (verbosity == Verbosity.VERBOSE) {
 			System.out.println(arg);

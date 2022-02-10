@@ -36,10 +36,10 @@ public class BroadcastPairIterator extends BroadcastIterator {
 
 	/**
 	 * 
-	 * @param a
-	 * @param b
-	 * @param o (can be null for new dataset, a or b)
-	 * @param createIfNull
+	 * @param a dataset to iterate over
+	 * @param b dataset to iterate over
+	 * @param o output (can be null for new dataset, or a)
+	 * @param createIfNull if true, create new dataset if o is null
 	 */
 	public BroadcastPairIterator(Dataset a, Dataset b, Dataset o, boolean createIfNull) {
 		super(a, b, o);

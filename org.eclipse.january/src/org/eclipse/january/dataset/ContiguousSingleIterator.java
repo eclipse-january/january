@@ -15,7 +15,6 @@ package org.eclipse.january.dataset;
 public class ContiguousSingleIterator extends BroadcastSelfIterator {
 	private final int aMax; // maximum index in array
 	private final int aStep; // step over items
-	private final int bMax; // maximum index in array
 	private final int bStep;
 
 	public ContiguousSingleIterator(Dataset a, Dataset b) {
@@ -23,7 +22,6 @@ public class ContiguousSingleIterator extends BroadcastSelfIterator {
 		aStep = a.getElementsPerItem();
 		aMax = a.getSize() * aStep;
 		bStep = b.getElementsPerItem();
-		bMax = b.getSize() * bStep;
 		maxShape = a.getShape();
 		asDouble = aDataset.hasFloatingPointElements();
 		reset();
@@ -34,7 +32,7 @@ public class ContiguousSingleIterator extends BroadcastSelfIterator {
 		aIndex += aStep;
 		bIndex += bStep;
 
-		if (aIndex >= aMax || bIndex >= bMax) {
+		if (aIndex >= aMax) {
 			return false;
 		}
 		if (read) {

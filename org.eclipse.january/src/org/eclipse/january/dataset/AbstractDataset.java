@@ -26,6 +26,8 @@ import org.eclipse.january.metadata.MetadataFactory;
 import org.eclipse.january.metadata.StatisticsMetadata;
 import org.eclipse.january.metadata.internal.ErrorMetadataImpl;
 import org.eclipse.january.metadata.internal.StatisticsMetadataImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Generic container class for data 
@@ -38,6 +40,8 @@ import org.eclipse.january.metadata.internal.StatisticsMetadataImpl;
 public abstract class AbstractDataset extends LazyDatasetBase implements Dataset {
 	// pin UID to base class
 	private static final long serialVersionUID = Dataset.serialVersionUID;
+
+	private static final Logger logger = LoggerFactory.getLogger(AbstractDataset.class);
 
 	protected int size; // number of items
 
@@ -116,10 +120,6 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 		return DatasetUtils.cast(clazz, this);
 	}
 
-	/**
-	 * {@inheritDoc Dataset#cast(int, Class, boolean)}
-	 * @since 2.3
-	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends Dataset> T cast(final int isize, Class<T> clazz, final boolean repeat) {
@@ -139,8 +139,8 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	/**
 	 * Copy fields from original to view
-	 * @param orig
-	 * @param view
+	 * @param orig original
+	 * @param view destination
 	 * @param clone if true, then clone everything but bulk data
 	 * @param cloneMetadata if true, clone metadata
 	 */
@@ -259,8 +259,8 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	/**
 	 * Fill dataset from object at depth dimension
-	 * @param obj
-	 * @param depth
+	 * @param obj fill value
+	 * @param depth dimension
 	 * @param pos position
 	 */
 	protected void fillData(Object obj, final int depth, final int[] pos) {
@@ -335,14 +335,23 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public IndexIterator getSliceIterator(final int[] start, final int[] stop, final int[] step) {
-		return getSliceIterator(new SliceND(shape, start, stop, step));
+		return internalGetSliceIterator(new SliceND(shape, start, stop, step));
 	}
 
 	/**
-	 * @param slice
+	 * @param slice an n-D slice
 	 * @return an slice iterator that operates like an IndexIterator
 	 */
 	public IndexIterator getSliceIterator(SliceND slice) {
+		checkSliceND(slice);
+		return internalGetSliceIterator(slice);
+	}
+
+	/**
+	 * @param slice an n-D slice
+	 * @return an slice iterator that operates like an IndexIterator
+	 */
+	protected IndexIterator internalGetSliceIterator(SliceND slice) {
 		if (ShapeUtils.calcLongSize(slice.getShape()) == 0) {
 			return new NullIterator(shape, slice.getShape());
 		}
@@ -483,8 +492,8 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	/**
 	 * Check for -1 placeholder in shape and replace if necessary
-	 * @param shape
-	 * @param size
+	 * @param shape to use
+	 * @param size expected size
 	 */
 	private void checkShape(int[] shape, int size) {
 		if (shape == null) {
@@ -677,8 +686,8 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	/**
 	 * Create a stride array from dataset
-	 * @param isize
-	 * @param shape
+	 * @param isize item size
+	 * @param shape to use
 	 * @param oStride original stride
 	 * @param oOffset original offset (only used if there is an original stride)
 	 * @param offset output offset
@@ -704,7 +713,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	/**
 	 * Create a stride array from slice information and a dataset
-	 * @param slice
+	 * @param slice an n-D slice
 	 * @param a dataset
 	 * @param stride output stride
 	 * @param offset output offset
@@ -716,9 +725,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	/**
 	 * Create a stride array from slice and dataset information
-	 * @param slice
-	 * @param isize
-	 * @param shape
+	 * @param slice an n-D slice
+	 * @param isize item size
+	 * @param shape to use
 	 * @param oStride original stride
 	 * @param oOffset original offset (only used if there is an original stride)
 	 * @param stride output stride
@@ -773,7 +782,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public Dataset getSliceView(final int[] start, final int[] stop, final int[] step) {
-		return getSliceView(new SliceND(shape, start, stop, step));
+		return internalGetSliceView(new SliceND(shape, start, stop, step));
 	}
 
 	@Override
@@ -782,16 +791,21 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			return getView(true);
 		}
 
-		return getSliceView(new SliceND(shape, slice));
+		return internalGetSliceView(new SliceND(shape, slice));
 	}
 
 	/**
 	 * Get a slice of the dataset. The returned dataset is a view on a selection of items
-	 * @param slice
+	 * @param slice an n-D slice
 	 * @return slice view
 	 */
 	@Override
 	public Dataset getSliceView(SliceND slice) {
+		checkSliceND(slice);
+		return internalGetSliceView(slice);
+	}
+
+	private Dataset internalGetSliceView(SliceND slice) {
 		if (slice.isAll()) {
 			return getView(true);
 		}
@@ -834,6 +848,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	/**
+	 * @return index of first element
 	 * @since 2.0
 	 */
 	protected int getFirst1DIndex() {
@@ -857,7 +872,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	/**
-	 * @param i
+	 * @param i position in first dimension
 	 * @return the index on the data array corresponding to that location
 	 */
 	protected int get1DIndex(int i) {
@@ -878,8 +893,8 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	/**
-	 * @param i
-	 * @param j
+	 * @param i position in first dimension
+	 * @param j position in second dimension
 	 * @return the index on the data array corresponding to that location
 	 */
 	protected int get1DIndex(int i, int j) {
@@ -1094,7 +1109,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	/**
 	 * Set maximum line length for toString() method
-	 * @param maxLineLength
+	 * @param maxLineLength limit on length of line
 	 */
 	public static void setMaxLineLength(int maxLineLength) {
 		maxStringLength = maxLineLength;
@@ -1119,7 +1134,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	/**
 	 * Make a line of output for last dimension of dataset
-	 * 
+	 * @param end
 	 * @param start
 	 * @return line
 	 */
@@ -1341,9 +1356,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	/**
-	 * @param start
-	 * @param stop
-	 * @param step
+	 * @param start begin
+	 * @param stop exclusive end
+	 * @param step number to skip
 	 * @return number of steps to take
 	 */
 	protected static int calcSteps(final double start, final double stop, final double step) {
@@ -1367,12 +1382,12 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public Dataset getSlice(final int[] start, final int[] stop, final int[] step) {
-		return getSlice(new SliceND(shape, start, stop, step));
+		return internalGetSlice(new SliceND(shape, start, stop, step));
 	}
 
 	@Override
 	public Dataset getSlice(Slice... slice) {
-		return getSlice(new SliceND(shape, slice));
+		return internalGetSlice(new SliceND(shape, slice));
 	}
 
 	@Override
@@ -1392,12 +1407,17 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	/**
 	 * Get a slice of the dataset. The returned dataset is a copied selection of items
-	 * @param slice
+	 * @param slice an n-D slice
 	 * @return The dataset of the sliced data
 	 */
 	@Override
 	public Dataset getSlice(final SliceND slice) {
-		SliceIterator it = (SliceIterator) getSliceIterator(slice);
+		checkSliceND(slice);
+		return internalGetSlice(slice);
+	}
+
+	private Dataset internalGetSlice(final SliceND slice) {
+		SliceIterator it = (SliceIterator) internalGetSliceIterator(slice);
 		AbstractDataset s = getSlice(it);
 		s.metadata = copyMetadata();
 		s.setDirty();
@@ -1415,6 +1435,11 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public Dataset setSlice(final Object obj, final SliceND slice) {
+		checkSliceND(slice);
+		return internalSetSlice(obj, slice);
+	}
+
+	private Dataset internalSetSlice(final Object obj, final SliceND slice) {
 		Dataset ds;
 		if (obj instanceof Dataset) {
 			ds = (Dataset) obj;
@@ -1433,13 +1458,13 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 
 	@Override
 	public Dataset setSlice(final Object obj, final int[] start, final int[] stop, final int[] step) {
-		return setSlice(obj, new SliceND(shape, start, stop, step));
+		return internalSetSlice(obj, new SliceND(shape, start, stop, step));
 	}
 
 	/**
 	 * Set a view of current dataset to given dataset with broadcasting
-	 * @param view
-	 * @param d
+	 * @param view destination
+	 * @param d source of data
 	 * @return this dataset
 	 */
 	abstract Dataset setSlicedView(Dataset view, Dataset d);
@@ -1447,9 +1472,9 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	@Override
 	public Dataset setSlice(Object obj, Slice... slice) {
 		if (slice == null || slice.length == 0) {
-			return setSlice(obj, new SliceND(shape));
+			return internalSetSlice(obj, new SliceND(shape));
 		}
-		return setSlice(obj, new SliceND(shape, slice));
+		return internalSetSlice(obj, new SliceND(shape, slice));
 	}
 
 	@Override
@@ -1488,6 +1513,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	/**
+	 * @return statistics
 	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
@@ -1502,6 +1528,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	}
 
 	/**
+	 * @return statistics
 	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
@@ -1735,8 +1762,8 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 	/**
 	 * Set item from compatible dataset in a direct and speedy way. Remember to setDirty afterwards.
 	 * 
-	 * @param dindex
-	 * @param sindex
+	 * @param dindex destination index
+	 * @param sindex source index
 	 * @param src
 	 *            is the source data buffer
 	 */

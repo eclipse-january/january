@@ -26,16 +26,15 @@ public interface ILazyLoader extends Serializable {
 	public static final long serialVersionUID = -611684979804645511L;
 
 	/**
-	 * 
 	 * @return true if file is readable
 	 */
 	public boolean isFileReadable();
 
 	/**
-	 * @param mon
-	 * @param slice
+	 * @param mon can be null
+	 * @param slice source where items of data fetched
 	 * @return a slice of a dataset
-	 * @throws IOException
+	 * @throws IOException when cannot retrieve data
 	 */
 	public IDataset getDataset(IMonitor mon, SliceND slice) throws IOException;
 }

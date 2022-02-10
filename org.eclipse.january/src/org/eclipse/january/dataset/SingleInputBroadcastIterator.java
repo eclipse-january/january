@@ -58,7 +58,7 @@ public class SingleInputBroadcastIterator extends IndexIterator {
 	private boolean asDouble = true;
 
 	/**
-	 * @param a
+	 * @param a dataset to iterate over
 	 * @param o (can be null for new dataset, or a)
 	 */
 	public SingleInputBroadcastIterator(Dataset a, Dataset o) {
@@ -66,18 +66,18 @@ public class SingleInputBroadcastIterator extends IndexIterator {
 	}
 
 	/**
-	 * @param a
+	 * @param a dataset to iterate over
 	 * @param o (can be null for new dataset, or a)
-	 * @param createIfNull (by default, can create float or complex datasets)
+	 * @param createIfNull if true, create new dataset if o is null
 	 */
 	public SingleInputBroadcastIterator(Dataset a, Dataset o, boolean createIfNull) {
 		this(a, o, createIfNull, false, true);
 	}
 
 	/**
-	 * @param a
+	 * @param a dataset to iterate over
 	 * @param o (can be null for new dataset, or a)
-	 * @param createIfNull
+	 * @param createIfNull (by default, can create float or complex datasets)
 	 * @param allowInteger if true, can create integer datasets
 	 * @param allowComplex if true, can create complex datasets
 	 */
@@ -158,7 +158,7 @@ public class SingleInputBroadcastIterator extends IndexIterator {
 
 	/**
 	 * Set to output doubles
-	 * @param asDouble
+	 * @param asDouble true to output as double
 	 */
 	public void setOutputDouble(boolean asDouble) {
 		if (this.asDouble != asDouble) {

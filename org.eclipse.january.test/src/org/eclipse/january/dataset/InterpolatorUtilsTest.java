@@ -11,10 +11,6 @@ package org.eclipse.january.dataset;
 
 import static org.junit.Assert.assertEquals;
 
-import org.eclipse.january.dataset.Dataset;
-import org.eclipse.january.dataset.DatasetFactory;
-import org.eclipse.january.dataset.InterpolatorUtils;
-import org.eclipse.january.dataset.Maths;
 import org.junit.Test;
 
 public class InterpolatorUtilsTest {

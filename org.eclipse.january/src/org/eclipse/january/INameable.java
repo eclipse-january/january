@@ -20,7 +20,7 @@ public interface INameable {
 	public String getName();
 
 	/**
-	 * @param name
+	 * @param name to use
 	 */
 	public void setName(String name);
 

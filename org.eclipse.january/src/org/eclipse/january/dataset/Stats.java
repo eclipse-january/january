@@ -291,8 +291,8 @@ public class Stats {
 
 	/**
 	 * Calculate quantile of dataset which is defined as the inverse of the cumulative distribution function (CDF)
-	 * @param a
-	 * @param q
+	 * @param a dataset
+	 * @param q quantile
 	 * @return point at which CDF has value q
 	 */
 	@SuppressWarnings("unchecked")
@@ -311,8 +311,8 @@ public class Stats {
 
 	/**
 	 * Calculate quantiles of dataset which is defined as the inverse of the cumulative distribution function (CDF)
-	 * @param a
-	 * @param values
+	 * @param a dataset
+	 * @param values quantiles
 	 * @return points at which CDF has given values
 	 */
 	@SuppressWarnings("unchecked")
@@ -337,9 +337,9 @@ public class Stats {
 
 	/**
 	 * Calculate quantiles of dataset which is defined as the inverse of the cumulative distribution function (CDF)
-	 * @param a
-	 * @param axis
-	 * @param values
+	 * @param a dataset
+	 * @param axis to reduce along
+	 * @param values quantiles
 	 * @return points at which CDF has given values
 	 */
 	@SuppressWarnings({ "unchecked" })
@@ -396,7 +396,7 @@ public class Stats {
 
 	/**
 	 * @param a dataset
-	 * @param axis
+	 * @param axis to reduce along
 	 * @return median
 	 */
 	public static Dataset median(final Dataset a, int axis) {
@@ -414,7 +414,7 @@ public class Stats {
 
 	/**
 	 * Interquartile range: Q3 - Q1
-	 * @param a
+	 * @param a dataset
 	 * @return range
 	 */
 	@SuppressWarnings("unchecked")
@@ -436,8 +436,8 @@ public class Stats {
 
 	/**
 	 * Interquartile range: Q3 - Q1
-	 * @param a
-	 * @param axis
+	 * @param a dataset
+	 * @param axis to reduce along
 	 * @return range
 	 */
 	public static Dataset iqr(final Dataset a, int axis) {
@@ -763,7 +763,7 @@ public class Stats {
 
 	/**
 	 * @param a dataset
-	 * @param axis
+	 * @param axis to reduce along
 	 * @param ignoreInvalids see {@link Dataset#max(int, boolean...)}
 	 * @return skewness along axis in dataset
 	 * @since 2.0
@@ -775,7 +775,7 @@ public class Stats {
 
 	/**
 	 * @param a dataset
-	 * @param axis
+	 * @param axis to reduce along
 	 * @param ignoreInvalids see {@link Dataset#max(int, boolean...)}
 	 * @return kurtosis along axis in dataset
 	 * @since 2.0
@@ -814,7 +814,7 @@ public class Stats {
 
 	/**
 	 * @param a dataset
-	 * @param dtype
+	 * @param dtype dataset type
 	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
 	 * @return typed sum of dataset
 	 * @since 2.0
@@ -826,9 +826,10 @@ public class Stats {
 	}
 
 	/**
-	 * @param clazz dataset class
+	 * @param <T> dataset sub-interface
+	 * @param clazz dataset sub-interface
 	 * @param a dataset
-	 * @param axis
+	 * @param axis to reduce along
 	 * @param ignoreInvalids see {@link Dataset#max(int, boolean...)}
 	 * @return typed sum of items along axis in dataset
 	 * @since 2.3
@@ -838,9 +839,10 @@ public class Stats {
 	}
 
 	/**
-	 * @param clazz dataset class
+	 * @param <T> dataset sub-interface
+	 * @param clazz dataset sub-interface
 	 * @param a dataset
-	 * @param axes
+	 * @param axes to reduce over
 	 * @param ignoreInvalids see {@link Dataset#max(int, boolean...)}
 	 * @return typed sum of items along axes in dataset
 	 * @since 2.3
@@ -851,12 +853,12 @@ public class Stats {
 
 	/**
 	 * @param a dataset
-	 * @param dtype
-	 * @param axis
+	 * @param dtype dataset type
+	 * @param axis to reduce along
 	 * @param ignoreInvalids see {@link Dataset#max(int, boolean...)}
 	 * @return typed sum of items along axis in dataset
 	 * @since 2.0
-	 * @deprecated Please use the class-based method {@link #typedSum(Class, Dataset, axis, boolean...)}
+	 * @deprecated Please use the class-based method {@link #typedSum(Class, Dataset, int, boolean...)}
 	 */
 	@Deprecated
 	public static Dataset typedSum(final Dataset a, int dtype, int axis, final boolean... ignoreInvalids) {
@@ -875,7 +877,7 @@ public class Stats {
 
 	/**
 	 * @param a dataset
-	 * @param axis
+	 * @param axis to reduce along
 	 * @param ignoreInvalids see {@link Dataset#max(int, boolean...)}
 	 * @return product of items along axis in dataset
 	 * @since 2.0
@@ -886,7 +888,7 @@ public class Stats {
 
 	/**
 	 * @param a dataset
-	 * @param axes
+	 * @param axes to reduce over
 	 * @param ignoreInvalids see {@link Dataset#max(int, boolean...)}
 	 * @return product of items along axes in dataset
 	 * @since 2.2
@@ -897,7 +899,7 @@ public class Stats {
 
 	/**
 	 * @param a dataset
-	 * @param dtype
+	 * @param dtype dataset type
 	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
 	 * @return typed product of all items in dataset
 	 * @since 2.0
@@ -911,7 +913,6 @@ public class Stats {
 	/**
 	 * @param clazz dataset class
 	 * @param a dataset
-	 * @param dtype
 	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
 	 * @return typed product of all items in dataset
 	 * @since 2.3
@@ -1025,8 +1026,8 @@ public class Stats {
 
 	/**
 	 * @param a dataset
-	 * @param dtype
-	 * @param axes
+	 * @param dtype dataset type
+	 * @param axes to reduce over
 	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
 	 * @return typed product of items in axes of dataset
 	 * @since 2.2
@@ -1039,8 +1040,8 @@ public class Stats {
 
 	/**
 	 * @param a dataset
-	 * @param dtype
-	 * @param axis
+	 * @param dtype dataset type
+	 * @param axis to reduce along
 	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
 	 * @return typed product of items along axis in dataset
 	 * @since 2.0
@@ -1052,9 +1053,10 @@ public class Stats {
 	}
 
 	/**
-	 * @param clazz dataset class
+	 * @param <T> dataset sub-interface
+	 * @param clazz dataset sub-interface
 	 * @param a dataset
-	 * @param axis
+	 * @param axis to reduce along
 	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
 	 * @return typed product of items along axis in dataset
 	 * @since 2.3
@@ -1064,9 +1066,10 @@ public class Stats {
 	}
 
 	/**
-	 * @param clazz dataset class
+	 * @param <T> dataset sub-interface
+	 * @param clazz dataset sub-interface
 	 * @param a dataset
-	 * @param axes
+	 * @param axes to reduce over
 	 * @param ignoreInvalids see {@link IDataset#max(boolean...)}
 	 * @return typed product of items in axes of dataset
 	 * @since 2.3
@@ -1225,7 +1228,7 @@ public class Stats {
 
 	/**
 	 * @param a dataset
-	 * @param axis
+	 * @param axis to reduce along
 	 * @param ignoreInvalids see {@link Dataset#max(int, boolean...)}
 	 * @return cumulative product of items along axis in dataset
 	 * @since 2.0
@@ -1386,7 +1389,7 @@ public class Stats {
 
 	/**
 	 * @param a dataset
-	 * @param axis
+	 * @param axis to reduce along
 	 * @param ignoreInvalids see {@link Dataset#max(int, boolean...)}
 	 * @return cumulative sum of items along axis in dataset
 	 * @since 2.0
@@ -1561,7 +1564,7 @@ public class Stats {
 	}
 
 	/**
-	 * @param a
+	 * @param a dataset
 	 * @return average deviation value of all items the dataset
 	 */
 	public static Object averageDeviation(final Dataset a) {
@@ -1596,8 +1599,8 @@ public class Stats {
 
 	/**
 	 * The residual is the sum of squared differences
-	 * @param a
-	 * @param b
+	 * @param a first dataset
+	 * @param b second dataset
 	 * @return residual value
 	 */
 	public static double residual(final Dataset a, final Dataset b) {
@@ -1606,9 +1609,9 @@ public class Stats {
 
 	/**
 	 * The residual is the sum of squared differences
-	 * @param a
-	 * @param b
-	 * @param w
+	 * @param a first dataset
+	 * @param b second dataset
+	 * @param w weight dataset
 	 * @return residual value
 	 */
 	public static double weightedResidual(final Dataset a, final Dataset b, final Dataset w) {
@@ -1625,7 +1628,7 @@ public class Stats {
 	 * The actual thresholds used are returned in the array.
 	 * <p>
 	 * Also, the low and high values will be made distinct if possible by adjusting the thresholds
-	 * @param a
+	 * @param a dataset
 	 * @param lo percentage threshold for lower limit
 	 * @param hi percentage threshold for higher limit
 	 * @param length maximum number of items used internally, if negative, then unlimited
@@ -1645,7 +1648,7 @@ public class Stats {
 	 * The actual thresholds used are returned in the array.
 	 * <p>
 	 * Also, the low and high values will be made distinct if possible by adjusting the thresholds
-	 * @param a
+	 * @param a dataset
 	 * @param mask can be null
 	 * @param value value of mask to match to include for calculation
 	 * @param lo percentage threshold for lower limit
@@ -1825,8 +1828,9 @@ public class Stats {
 	}
 
 	/**
-	 * See {@link #covariance(Dataset a, Dataset b, boolean rowvar, boolean bias, Integer ddof)} with b = null, rowvar = true, bias = false and ddof = null.
-	 * @param a
+	 * See {@link #covariance(Dataset a, Dataset b, boolean rowvar, boolean bias, Integer ddof)}
+	 * with b = null, rowvar = true, bias = false and ddof = null.
+	 * @param a dataset containing multiple variable and observations. Each row represents a variable, each column an observation.
 	 * @return covariance array of a
 	 */
 	public static Dataset covariance(final Dataset a) {
@@ -1834,19 +1838,24 @@ public class Stats {
 	}
 
 	/**
-	 * See {@link #covariance(Dataset a, Dataset b, boolean rowvar, boolean bias, Integer ddof)} with b = null.
-	 * @param a
+	 * See {@link #covariance(Dataset a, Dataset b, boolean rowvar, boolean bias, Integer ddof)}
+	 * with b = null.
+	 * @param a dataset containing multiple variable and observations. Each row represents a variable, each column an observation.
+	 * @param rowvar When true (default), each row is a variable; when false each column is a variable.
+	 * @param bias Default normalisation is (N - 1) - N is number of observations. If set true, normalisation is (N). 
+	 * @param ddof Default normalisation is (N - 1). If ddof is set, then normalisation is (N - ddof).
 	 * @return covariance array of a
 	 * @since 2.0
 	 */
-	public static Dataset covariance(final Dataset a, 
-			boolean rowvar, boolean bias, Integer ddof) {
+	public static Dataset covariance(final Dataset a, boolean rowvar, boolean bias, Integer ddof) {
 		return covariance(a, null, rowvar, bias, ddof);
 	}
 
 	/**
-	 * See {@link #covariance(Dataset a, Dataset b, boolean rowvar, boolean bias, Integer ddof)} with b = null, rowvar = true, bias = false and ddof = null.
-	 * @param a
+	 * See {@link #covariance(Dataset a, Dataset b, boolean rowvar, boolean bias, Integer ddof)}
+	 * with b = null, rowvar = true, bias = false and ddof = null
+	 * @param a dataset containing multiple variable and observations. Each row represents a variable, each column an observation.
+	 * @param b An extra set of variables and observations. Must be of same type as a and have a compatible shape. 
 	 * @return covariance array of a concatenated with b
 	 */
 	public static Dataset covariance(final Dataset a, final Dataset b) {
@@ -1854,9 +1863,9 @@ public class Stats {
 	}
 
 	/**
-	 * Calculate the covariance matrix (array) of a concatenated with b. This 
-	 * method is directly based on the implementation in numpy (cov). 
-	 * @param a Array containing multiple variable and observations. Each row represents a variable, each column an observation.
+	 * Calculate the covariance matrix (array) of a concatenated with b. This method is
+	 * directly based on the implementation in numpy (cov).
+	 * @param a dataset containing multiple variable and observations. Each row represents a variable, each column an observation.
 	 * @param b An extra set of variables and observations. Must be of same type as a and have a compatible shape. 
 	 * @param rowvar When true (default), each row is a variable; when false each column is a variable.
 	 * @param bias Default normalisation is (N - 1) - N is number of observations. If set true, normalisation is (N). 
@@ -1864,9 +1873,8 @@ public class Stats {
 	 * @return covariance array of a concatenated with b
 	 * @since 2.0
 	 */
-	public static Dataset covariance (final Dataset a, final Dataset b, 
-			boolean rowvar, boolean bias, Integer ddof) {
-		
+	public static Dataset covariance(final Dataset a, final Dataset b, boolean rowvar, boolean bias, Integer ddof) {
+
 		//Create a working copy of the dataset & check its rank.
 		Dataset vars = a.clone();
 		if (a.getRank() == 1) {

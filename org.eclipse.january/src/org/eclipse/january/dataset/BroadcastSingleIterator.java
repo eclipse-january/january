@@ -27,9 +27,8 @@ public class BroadcastSingleIterator extends BroadcastSelfIterator {
 	private int aStart, bStart;
 
 	/**
-	 * 
-	 * @param a
-	 * @param b
+	 * @param a dataset to iterate over
+	 * @param b dataset to iterate over (will broadcast to first)
 	 */
 	public BroadcastSingleIterator(Dataset a, Dataset b) {
 		super(a, b);

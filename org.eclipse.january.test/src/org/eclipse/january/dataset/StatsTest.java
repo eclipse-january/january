@@ -16,14 +16,6 @@ import static org.junit.Assert.assertTrue;
 import java.util.Arrays;
 
 import org.eclipse.january.asserts.TestUtils;
-import org.eclipse.january.dataset.Dataset;
-import org.eclipse.january.dataset.DatasetFactory;
-import org.eclipse.january.dataset.DatasetUtils;
-import org.eclipse.january.dataset.DoubleDataset;
-import org.eclipse.january.dataset.IntegerDataset;
-import org.eclipse.january.dataset.Maths;
-import org.eclipse.january.dataset.Random;
-import org.eclipse.january.dataset.Stats;
 import org.junit.Ignore;
 import org.junit.Test;
 

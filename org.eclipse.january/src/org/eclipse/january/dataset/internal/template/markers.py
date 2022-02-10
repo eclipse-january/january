@@ -1,6 +1,7 @@
+#!/usr/bin/env python3
 ###
 # *******************************************************************************
-# * Copyright (c) 2011, 2016 Diamond Light Source Ltd.
+# * Copyright (c) 2011-2022 Diamond Light Source Ltd.
 # * All rights reserved. This program and the accompanying materials
 # * are made available under the terms of the Eclipse Public License v1.0
 # * which accompanies this distribution, and is available at
@@ -11,7 +12,6 @@
 # *******************************************************************************/
 ###
 
-#!/usr/bin/env python
 '''
 transmutation class for markers
 
@@ -71,7 +71,7 @@ class transmutate(object):
         self.commentline = "// This is generated from %s.java by %s" % (srcclass, scriptfile)
 
         if len(source) != len(destination):
-            raise ValueError, "length of lists should be the same"
+            raise ValueError("length of lists should be the same")
 
         (self.sdtype, self.spclass, self.sprim, self.sgetel,
         self.sconv, self.sform, self.sdef) = source
@@ -82,7 +82,7 @@ class transmutate(object):
         self.Sprim = self.sprim.capitalize()
         self.Dprim = self.dprim.capitalize()
 
-        if (self.ddtype.startswith("INT") or self.ddtype.startswith("ARRAYINT")) and self.dprim is not "long":
+        if (self.ddtype.startswith("INT") or self.ddtype.startswith("ARRAYINT")) and self.dprim != "long":
             self.dprimlong = self.dcast + "(long) "
         else:
             self.dprimlong = self.dcast
@@ -126,9 +126,9 @@ class transmutate(object):
         self.tolong = "DTypeUtils.toLong("
 
         # also // IGNORE_CLASS
-#        print "prim |", self.dprim, "| conv |", self.dconv, "| cast |", self.dcast
+#        print("prim |", self.dprim, "| conv |", self.dconv, "| cast |", self.dcast)
 #        if self.dprim in self.dconv:
-#            print 'found primitive matches cast'
+#            print("found primitive matches cast")
 
         self.plist = [t[0] for t in processors]
         self.processors = dict(processors)
@@ -192,7 +192,7 @@ class transmutate(object):
         l = transmutate.separator.split(prefix)
         pind = prefix.rfind(l[-1])
         if pind < 0:
-            raise ValueError, 'Cannot find an identifier'
+            raise ValueError("Cannot find an identifier: %s" % l[-1])
         return ''.join(prefix[:pind]) + self.dcast + ''.join(prefix[pind:]) + '.' + method + ''.join(bits[1:])
 
     def fromobj(self, line):
@@ -223,7 +223,7 @@ class transmutate(object):
             return line
         f = False
         for c in self.icasts:
-#            print line, c, f
+#            print(line, c, f)
             if c == self.dcast:
                 f = True
             if f and c in line:

@@ -1,6 +1,7 @@
+#!/usr/bin/env python3
 ###
 # *******************************************************************************
-# * Copyright (c) 2011, 2017 Diamond Light Source Ltd.
+# * Copyright (c) 2011-2022 Diamond Light Source Ltd.
 # * All rights reserved. This program and the accompanying materials
 # * are made available under the terms of the Eclipse Public License v1.0
 # * which accompanies this distribution, and is available at
@@ -11,11 +12,10 @@
 # *******************************************************************************/
 ###
 
-#!/usr/bin/env python
 '''
 From complex double dataset generate other classes
 
-$ python fromcpxdouble.py ../../ComplexDoubleDataset.java
+$ python3 fromcpxdouble.py ../../ComplexDoubleDataset.java
 
 '''
 
@@ -25,7 +25,7 @@ from markers import transmutate #@UnresolvedImport
 defds = { "ComplexDoubleDataset":["COMPLEX128", "Double", "double", "getElementDoubleAbs", "DTypeUtils.toReal(obj)", "%.8g",
 "NaN"] }
 
-defkey = defds.keys()[0]
+defkey = list(defds.keys())[0]
 
 # all other dataset definitions
 fds = { "ComplexFloatDataset":["COMPLEX64", "Float", "float", "getElementDoubleAbs", "(float) DTypeUtils.toReal(obj)", "%.8g",
@@ -34,16 +34,15 @@ fds = { "ComplexFloatDataset":["COMPLEX64", "Float", "float", "getElementDoubleA
 def generateclass(dclass):
     handlers  = [ transmutate(__file__, defkey, defds[defkey], d, fds[d], True) for d in fds ]
     files  = [ open(d + ".java", "w") for d in fds ]
-    ncls = len(files)
 
     while True:
         l = dclass.readline()
         if not l:
             break
-        for n in range(ncls):
-            nl = handlers[n].processline(l)
+        for h,f in zip(handlers, files):
+            nl = h.processline(l)
             if nl != None:
-                print >> files[n], nl
+                print(nl, file=f)
 
 if __name__ == '__main__':
     import sys
