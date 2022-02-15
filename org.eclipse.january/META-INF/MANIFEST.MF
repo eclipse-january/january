@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Eclipse January Datasets (Incubation)
 Bundle-SymbolicName: org.eclipse.january
-Bundle-Version: 2.3.2.qualifier
+Bundle-Version: 2.3.2
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.eclipse.january;version="2.3.2",
  org.eclipse.january.dataset;version="2.3.2",
