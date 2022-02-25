@@ -74,6 +74,31 @@ public class ShapeUtils {
 	}
 
 	/**
+	 * Check if size is zero
+	 * @param shape dataset shape
+	 * @return true if shape is null or any dimension in shape is zero
+	 * @since 2.3
+	 */
+	public static boolean isZeroSize(final int[] shape) {
+		if (shape == null) { // special case of null-shaped
+			return true;
+		}
+
+		final int rank = shape.length;
+		if (rank == 0) { // special case of zero-rank shape
+			return false;
+		}
+	
+		for (int i = 0; i < rank; i++) {
+			if (shape[i] == 0) {
+				return true;
+			}
+		}
+	
+		return false;
+	}
+
+	/**
 	 * Check if shapes are broadcast compatible
 	 * 
 	 * @param ashape first shape

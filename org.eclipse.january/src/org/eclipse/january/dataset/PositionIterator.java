@@ -149,7 +149,7 @@ public class PositionIterator extends IndexIterator {
 
 		pos = new int[rank];
 
-		zero = ShapeUtils.calcSize(shape) == 0;
+		zero = ShapeUtils.isZeroSize(shape);
 
 		reset();
 	}
