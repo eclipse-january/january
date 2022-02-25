@@ -484,7 +484,7 @@ public class SliceND {
 			return true;
 		}
 
-		boolean allData = Arrays.equals(oshape, lshape) && ShapeUtils.calcSize(oshape) > 0;
+		boolean allData = Arrays.equals(oshape, lshape) && !ShapeUtils.isZeroSize(oshape);
 		if (allData) {
 			for (int i = 0; i < lshape.length; i++) {
 				if (lstep[i] < 0) {

@@ -14,6 +14,7 @@ import static org.eclipse.january.asserts.TestUtils.verbosePrintf;
 import static org.eclipse.january.asserts.TestUtils.verbosePrintln;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import java.util.Arrays;
@@ -218,6 +219,14 @@ public class LazyDatasetTest {
 
 		l = ld.getSliceView(new SliceND(ld.getShape()));
 		assertEquals("Full slice", d, l.getSlice());
+	}
+
+	@Test
+	public void testLargeLazySliceView() throws DatasetException {
+		ILazyDataset lazyRand = Random.lazyRand(new int[] {2000,2000,2000});
+		IDataset r = lazyRand.getSlice(new Slice(1));
+		assertEquals(2000*2000, r.getSize());
+		assertNotNull(lazyRand.getSliceView()); // should not fail
 	}
 
 	@Test
