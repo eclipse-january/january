@@ -8,15 +8,15 @@ Developer resources:
 
 Information regarding source code management, builds, coding standards, and more.
 
-- On the Wiki: https://github.com/eclipse/january/wiki
+- On the Wiki: https://github.com/eclipse-january/january/wiki
 - On the Eclipse Project Portal: https://projects.eclipse.org/projects/technology.january/developer
 
 Contributor License Agreement:
 ------------------------------
 
-Before your contribution can be accepted by the project, you need to create and electronically sign the Eclipse Foundation Contributor License Agreement (CLA).
+Before your contribution can be accepted by the project, you need to create and electronically submit an Eclipse Contributor Agreement (ECA).
 
-- http://www.eclipse.org/legal/CLA.php
+- http://www.eclipse.org/legal/eca
 
 Contact:
 --------
