@@ -2,10 +2,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<inceptionYear>2014</inceptionYear>
-	<url>https://www.eclipse.org/january/</url>
+	<url>https://eclipse.dev/january/</url>
 	<ciManagement>
-		<system>hudson</system>
-		<url>https://hudson.eclipse.org/january</url>
+		<system>GitHub actions</system>
+		<url>https://github.com/eclipse-january/actions</url>
 	</ciManagement>
 	<licenses>
 		<license>
@@ -20,12 +20,12 @@
 	</organization>
 	<issueManagement>
 		<system>GitHub</system>
-		<url>https://github.com/eclipse/january/issues</url>
+		<url>https://github.com/eclipse-january/issues</url>
 	</issueManagement>
 	<scm>
-		<connection>scm:git:https://github.com/eclipse/january.git</connection>
-		<developerConnection>scm:git:git@github.com:eclipse/january.git</developerConnection>
-		<url>https://github.com/eclipse/january.git</url>
+		<connection>scm:git:https://github.com/eclipse-january.git</connection>
+		<developerConnection>scm:git:git@github.com:eclipse-january.git</developerConnection>
+		<url>https://github.com/eclipse-january.git</url>
 	</scm>
 
 	<name>The Eclipse January Project</name>
