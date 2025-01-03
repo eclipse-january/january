@@ -57,5 +57,4 @@ public class ByteDatasetTest {
 		assertEquals(3.6055512754639891, a.stdDeviation(), 1e-6);
 		assertEquals(13., a.variance(), 1e-6);
 	}
-
 }

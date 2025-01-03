@@ -193,10 +193,11 @@ public class DoubleDatasetTest {
 		assertEquals(4, c.getShapeRef()[1]);
 		it = c.getIterator();
 		for (int i = 0; it.hasNext(); i++) {
-			if (i < 7)
+			if (i < 7) {
 				assertEquals(i, c.getElementDoubleAbs(it.index), 1e-15 * i);
-			else
+			} else {
 				assertEquals(0, c.getElementDoubleAbs(it.index), 1e-15);
+			}
 		}
 
 		double[][] dd = { { 0, 1, 2 }, { 4, 5, 6, 7 } };
@@ -207,10 +208,25 @@ public class DoubleDatasetTest {
 		assertEquals(4, d.getShapeRef()[1]);
 		it = d.getIterator();
 		for (int i = 0; it.hasNext(); i++) {
-			if (i != 3)
+			if (i != 3) {
 				assertEquals(i, d.getElementDoubleAbs(it.index), 1e-15 * i);
-			else
+			} else {
 				assertEquals(0, d.getElementDoubleAbs(it.index), 1e-15);
+			}
+		}
+
+		Double[] bda = { 0.5, null, 2.5d };
+		DoubleDataset e = DoubleDataset.createFromObject(bda);
+		assertEquals(1, e.getRank());
+		assertEquals(3, e.getSize());
+		assertEquals(3, e.getShapeRef()[0]);
+		it = e.getIterator();
+		for (int i = 0; it.hasNext(); i++) {
+			if (i != 1) {
+				assertEquals(i + 0.5, e.getElementDoubleAbs(it.index), 1e-15 * i);
+			} else {
+				assertTrue(Double.isNaN(e.getElementDoubleAbs(it.index)));
+			}
 		}
 	}
 
