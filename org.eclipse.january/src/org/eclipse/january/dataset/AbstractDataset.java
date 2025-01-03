@@ -268,7 +268,7 @@ public abstract class AbstractDataset extends LazyDatasetBase implements Dataset
 			Class<?> c = InterfaceUtils.getElementClass(getClass());
 			if (Float.class.equals(c)) {
 				set(Float.NaN, pos);
-			} else if (Float.class.equals(c)) {
+			} else if (Double.class.equals(c)) {
 				set(Double.NaN, pos);
 			}
 			return;

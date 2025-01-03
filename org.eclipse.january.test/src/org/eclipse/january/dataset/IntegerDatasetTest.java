@@ -51,6 +51,80 @@ public class IntegerDatasetTest {
 	}
 
 	@Test
+	public void testCreators() {
+		int dz = -5;
+		IntegerDataset z = IntegerDataset.createFromObject(dz);
+		assertEquals(0, z.getRank());
+		assertEquals(1, z.getSize());
+		assertEquals(dz, z.getElementLongAbs(0));
+
+		int[] da = { 0, 1, 2, 3, 4, 5 };
+		IntegerDataset a = IntegerDataset.createFromObject(da);
+		assertEquals(1, a.getRank());
+		assertEquals(6, a.getSize());
+		assertEquals(6, a.getShapeRef()[0]);
+		IndexIterator it = a.getIterator();
+		for (int i = 0; it.hasNext(); i++) {
+			assertEquals(i, a.getElementLongAbs(it.index));
+		}
+
+		int[][] db = { { 0, 1, 2 }, { 3, 4, 5 } };
+		IntegerDataset b = IntegerDataset.createFromObject(db);
+		assertEquals(2, b.getRank());
+		assertEquals(6, b.getSize());
+		assertEquals(2, b.getShapeRef()[0]);
+		assertEquals(3, b.getShapeRef()[1]);
+		it = b.getIterator();
+		for (int i = 0; it.hasNext(); i++) {
+			assertEquals(i, b.getElementLongAbs(it.index));
+		}
+
+		int[][] dc = { { 0, 1, 2, 3 }, { 4, 5, 6 } };
+		IntegerDataset c = IntegerDataset.createFromObject(dc);
+		assertEquals(2, c.getRank());
+		assertEquals(8, c.getSize());
+		assertEquals(2, c.getShapeRef()[0]);
+		assertEquals(4, c.getShapeRef()[1]);
+		it = c.getIterator();
+		for (int i = 0; it.hasNext(); i++) {
+			if (i < 7) {
+				assertEquals(i, c.getElementLongAbs(it.index));
+			} else {
+				assertEquals(0, c.getElementLongAbs(it.index));
+			}
+		}
+
+		int[][] dd = { { 0, 1, 2 }, { 4, 5, 6, 7 } };
+		IntegerDataset d = IntegerDataset.createFromObject(dd);
+		assertEquals(2, d.getRank());
+		assertEquals(8, d.getSize());
+		assertEquals(2, d.getShapeRef()[0]);
+		assertEquals(4, d.getShapeRef()[1]);
+		it = d.getIterator();
+		for (int i = 0; it.hasNext(); i++) {
+			if (i != 3) {
+				assertEquals(i, d.getElementLongAbs(it.index));
+			} else {
+				assertEquals(0, d.getElementLongAbs(it.index));
+			}
+		}
+
+		Integer[] bda = { 0, null, 2 };
+		IntegerDataset e = IntegerDataset.createFromObject(bda);
+		assertEquals(1, e.getRank());
+		assertEquals(3, e.getSize());
+		assertEquals(3, e.getShapeRef()[0]);
+		it = e.getIterator();
+		for (int i = 0; it.hasNext(); i++) {
+			if (i != 1) {
+				assertEquals(i, e.getElementLongAbs(it.index));
+			} else {
+				assertEquals(0, e.getElementLongAbs(it.index));
+			}
+		}
+	}
+
+	@Test
 	public void testStats() {
 		Dataset a = DatasetFactory.createRange(IntegerDataset.class, 12);
 		assertEquals(Integer.valueOf(11), a.max());
@@ -59,25 +133,24 @@ public class IntegerDatasetTest {
 		assertEquals(3.6055512754639891, a.stdDeviation(), 1e-6);
 		assertEquals(13., a.variance(), 1e-6);
 	}
-	
+
 	@Test
 	public void testPosition() {
-		double[] da = { 0, 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1 };
-		DoubleDataset a = new DoubleDataset(da);
-		
-		assertEquals(6,a.maxPos()[0]);
-		assertEquals(0,a.minPos()[0]);
-		
+		int[] da = { 0, 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1 };
+		IntegerDataset a = new IntegerDataset(da, null);
+
+		assertEquals(6, a.maxPos()[0]);
+		assertEquals(0, a.minPos()[0]);
+
 		Dataset b = DatasetFactory.zeros(IntegerDataset.class, 100, 200);
-		
+
 		b.set(100, new int[]{50,100});
 		b.set(-100, new int[]{51,101});
-		
+
 		assertEquals(50,b.maxPos()[0]);
 		assertEquals(100,b.maxPos()[1]);
 		assertEquals(51,b.minPos()[0]);
 		assertEquals(101,b.minPos()[1]);
-		
 	}
 
 	@Test

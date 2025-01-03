@@ -158,8 +158,12 @@ public class DatasetFactoryTest {
 		TestUtils.assertDatasetEquals(exp, act);
 
 		// one dimensional
-		exp = new DoubleDataset(new double[] { 3, 4, 5 });
-		act = DatasetFactory.createFromObject(DoubleDataset.class, new double[] { 3, 4, 5 });
+		exp = new DoubleDataset(new double[] { 3, 0, 5 });
+		act = DatasetFactory.createFromObject(DoubleDataset.class, new double[] { 3, 0, 5 });
+		TestUtils.assertDatasetEquals(exp, act);
+
+		exp = new DoubleDataset(new double[] { 3, Double.NaN, 5 });
+		act = DatasetFactory.createFromObject(DoubleDataset.class, new Double[] { 3., null, 5. });
 		TestUtils.assertDatasetEquals(exp, act);
 
 		// two dimensional
@@ -169,6 +173,15 @@ public class DatasetFactoryTest {
 
 		act = DatasetFactory.createFromObject(DoubleDataset.class, new double[][] {{3, 4, 5}, {6, 7, 8}});
 		TestUtils.assertDatasetEquals(exp, act);
+
+		
+	}
+
+	public static Dataset nanPad(Dataset input, int[] newShape, boolean inFreqSpace) {
+		Dataset output = DatasetFactory.zeros(input.getElementsPerItem(), input.getClass(), newShape);
+		output.fill(Double.NaN);
+		output.setSlice(input, null, input.getShapeRef(), null);
+		return output;
 	}
 
 	@Test

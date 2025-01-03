@@ -49,6 +49,80 @@ public class LongDatasetTest {
 	}
 
 	@Test
+	public void testCreators() {
+		long dz = -5;
+		LongDataset z = LongDataset.createFromObject(dz);
+		assertEquals(0, z.getRank());
+		assertEquals(1, z.getSize());
+		assertEquals(dz, z.getElementLongAbs(0));
+
+		long[] da = { 0, 1, 2, 3, 4, 5 };
+		LongDataset a = LongDataset.createFromObject(da);
+		assertEquals(1, a.getRank());
+		assertEquals(6, a.getSize());
+		assertEquals(6, a.getShapeRef()[0]);
+		IndexIterator it = a.getIterator();
+		for (int i = 0; it.hasNext(); i++) {
+			assertEquals(i, a.getElementLongAbs(it.index));
+		}
+
+		long[][] db = { { 0, 1, 2 }, { 3, 4, 5 } };
+		LongDataset b = LongDataset.createFromObject(db);
+		assertEquals(2, b.getRank());
+		assertEquals(6, b.getSize());
+		assertEquals(2, b.getShapeRef()[0]);
+		assertEquals(3, b.getShapeRef()[1]);
+		it = b.getIterator();
+		for (int i = 0; it.hasNext(); i++) {
+			assertEquals(i, b.getElementLongAbs(it.index));
+		}
+
+		long[][] dc = { { 0, 1, 2, 3 }, { 4, 5, 6 } };
+		LongDataset c = LongDataset.createFromObject(dc);
+		assertEquals(2, c.getRank());
+		assertEquals(8, c.getSize());
+		assertEquals(2, c.getShapeRef()[0]);
+		assertEquals(4, c.getShapeRef()[1]);
+		it = c.getIterator();
+		for (int i = 0; it.hasNext(); i++) {
+			if (i < 7) {
+				assertEquals(i, c.getElementLongAbs(it.index));
+			} else {
+				assertEquals(0, c.getElementLongAbs(it.index));
+			}
+		}
+
+		long[][] dd = { { 0, 1, 2 }, { 4, 5, 6, 7 } };
+		LongDataset d = LongDataset.createFromObject(dd);
+		assertEquals(2, d.getRank());
+		assertEquals(8, d.getSize());
+		assertEquals(2, d.getShapeRef()[0]);
+		assertEquals(4, d.getShapeRef()[1]);
+		it = d.getIterator();
+		for (int i = 0; it.hasNext(); i++) {
+			if (i != 3) {
+				assertEquals(i, d.getElementLongAbs(it.index));
+			} else {
+				assertEquals(0, d.getElementLongAbs(it.index));
+			}
+		}
+
+		Long[] bda = { 0l, null, 2l };
+		LongDataset e = LongDataset.createFromObject(bda);
+		assertEquals(1, e.getRank());
+		assertEquals(3, e.getSize());
+		assertEquals(3, e.getShapeRef()[0]);
+		it = e.getIterator();
+		for (int i = 0; it.hasNext(); i++) {
+			if (i != 1) {
+				assertEquals(i, e.getElementLongAbs(it.index));
+			} else {
+				assertEquals(0, e.getElementLongAbs(it.index));
+			}
+		}
+	}
+
+	@Test
 	public void testGetter() {
 		long[] da = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
 		LongDataset a = new LongDataset(da);
