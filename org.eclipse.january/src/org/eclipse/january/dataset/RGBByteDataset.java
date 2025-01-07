@@ -593,6 +593,10 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 		return createGreyDataset(clazz, Wr, Wg, Wb);
 	}
 
+	static int toUnsignedInt(byte x) {
+		return ((int) x) & 0xff;
+	}
+
 	/**
 	 * Convert colour dataset to a grey-scale one using given RGB to luma mapping
 	 * @param <T> dataset sub-interface
@@ -608,7 +612,7 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 
 		int i = 0;
 		while (it.hasNext()) {
-			grey.setObjectAbs(i++, red*Byte.toUnsignedInt(data[it.index]) + green*Byte.toUnsignedInt(data[it.index + 1]) + blue*Byte.toUnsignedInt(data[it.index + 2]));
+			grey.setObjectAbs(i++, red*toUnsignedInt(data[it.index]) + green*toUnsignedInt(data[it.index + 1]) + blue*toUnsignedInt(data[it.index + 2]));
 		}
 		return grey;
 	}
@@ -715,7 +719,7 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 
 		int i = 0;
 		while (it.hasNext()) {
-			channel.setObjectAbs(i++, Byte.toUnsignedInt(data[it.index + channelOffset]));
+			channel.setObjectAbs(i++, toUnsignedInt(data[it.index + channelOffset]));
 		}
 
 		return channel;
@@ -751,12 +755,12 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 
 	@Override
 	public double getElementDoubleAbs(final int index) {
-		return Byte.toUnsignedInt(data[index]);
+		return toUnsignedInt(data[index]);
 	}
 
 	@Override
 	public long getElementLongAbs(final int index) {
-		return Byte.toUnsignedInt(data[index]);
+		return toUnsignedInt(data[index]);
 	}
 
 	@Override
@@ -766,7 +770,7 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 
 		while (it.hasNext()) {
 			for (int i = 0; i < ISIZE; i++) {
-				int value = Byte.toUnsignedInt(data[it.index + i]);
+				int value = toUnsignedInt(data[it.index + i]);
 				if (value > max)
 					max = value;
 			}
@@ -781,7 +785,7 @@ public class RGBByteDataset extends CompoundByteDataset implements Cloneable {
 
 		while (it.hasNext()) {
 			for (int i = 0; i < ISIZE; i++) {
-				int value = Byte.toUnsignedInt(data[it.index + i]);
+				int value = toUnsignedInt(data[it.index + i]);
 				if (value < min)
 					min = value;
 			}
