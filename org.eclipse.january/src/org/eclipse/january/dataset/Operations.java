@@ -62,7 +62,14 @@ public class Operations {
 	public static String createFunctionName(final String function, String... arguments) {
 		StringBuilder name = new StringBuilder(function);
 		name.append('(');
-		name.append(String.join(", ", arguments));
+		int last = arguments.length - 1;
+		if (last >= 0) {
+			for (int i = 0; i < last; i++) {
+				name.append(arguments[i]);
+				name.append(", ");
+			}
+			name.append(arguments[last]);
+		}
 		name.append(')');
 		return name.toString();
 	}

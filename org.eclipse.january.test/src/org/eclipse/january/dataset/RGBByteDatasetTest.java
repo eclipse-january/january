@@ -14,6 +14,8 @@ import static org.junit.Assert.assertEquals;
 import org.eclipse.january.asserts.TestUtils;
 import org.junit.Test;
 
+import static org.eclipse.january.dataset.RGBByteDataset.toUnsignedInt;
+
 /**
  * Basic tests of RGB dataset
  */
@@ -31,9 +33,9 @@ public class RGBByteDatasetTest {
 		RGBByteDataset c = new RGBByteDataset(r, g, b);
 
 		for (int i = 0; i < n; i++) {
-			assertEquals(i, Byte.toUnsignedInt(c.getRed(i)));
-			assertEquals(i + 1, Byte.toUnsignedInt(c.getGreen(i)));
-			assertEquals(i + 2, Byte.toUnsignedInt(c.getBlue(i)));
+			assertEquals(i, toUnsignedInt(c.getRed(i)));
+			assertEquals(i + 1, toUnsignedInt(c.getGreen(i)));
+			assertEquals(i + 2, toUnsignedInt(c.getBlue(i)));
 			assertEquals(i,     c.getElementLongAbs(3*i));
 			assertEquals(i + 1, c.getElementLongAbs(3*i + 1));
 			assertEquals(i + 2, c.getElementLongAbs(3*i + 2));
@@ -41,9 +43,9 @@ public class RGBByteDatasetTest {
 
 		c = new RGBByteDataset(g);
 		for (int i = 0; i < n; i++) {
-			assertEquals(i + 1, Byte.toUnsignedInt(c.getRed(i)));
-			assertEquals(i + 1, Byte.toUnsignedInt(c.getGreen(i)));
-			assertEquals(i + 1, Byte.toUnsignedInt(c.getBlue(i)));
+			assertEquals(i + 1, toUnsignedInt(c.getRed(i)));
+			assertEquals(i + 1, toUnsignedInt(c.getGreen(i)));
+			assertEquals(i + 1, toUnsignedInt(c.getBlue(i)));
 		}
 
 		r = r.cast(ByteDataset.class);
@@ -52,23 +54,23 @@ public class RGBByteDatasetTest {
 
 		c = new RGBByteDataset((byte[]) r.getBuffer(), (byte[]) g.getBuffer(), (byte[]) b.getBuffer());
 		for (int i = 0; i < n; i++) {
-			assertEquals(i, Byte.toUnsignedInt(c.getRed(i)));
-			assertEquals(i + 1, Byte.toUnsignedInt(c.getGreen(i)));
-			assertEquals(i + 2, Byte.toUnsignedInt(c.getBlue(i)));
+			assertEquals(i, toUnsignedInt(c.getRed(i)));
+			assertEquals(i + 1, toUnsignedInt(c.getGreen(i)));
+			assertEquals(i + 2, toUnsignedInt(c.getBlue(i)));
 		}
 
 		CompoundDataset cc = DatasetFactory.createRange(2, CompoundIntegerDataset.class, n);
 		c = RGBByteDataset.createFromCompoundDataset(cc);
 		for (int i = 0; i < n; i++) {
-			assertEquals(i, Byte.toUnsignedInt(c.getRed(i)));
-			assertEquals(i, Byte.toUnsignedInt(c.getGreen(i)));
-			assertEquals(i, Byte.toUnsignedInt(c.getBlue(i)));
+			assertEquals(i, toUnsignedInt(c.getRed(i)));
+			assertEquals(i, toUnsignedInt(c.getGreen(i)));
+			assertEquals(i, toUnsignedInt(c.getBlue(i)));
 		}
 		
 		cc = DatasetFactory.createRange(4, CompoundIntegerDataset.class, n);
 		c = RGBByteDataset.createFromCompoundDataset(cc);
 		for (int i = 0; i < n; i++) {
-			assertEquals(i, Byte.toUnsignedInt(c.getRed(i)));
+			assertEquals(i, toUnsignedInt(c.getRed(i)));
 			assertEquals(0, c.getGreen(i));
 			assertEquals(0, c.getBlue(i));
 		}
