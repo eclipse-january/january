@@ -2,7 +2,7 @@
 
 ## What is this?
 
-This is the getting started project for the [Eclipse January](https://github.com/eclipse/january) project.
+This is the getting started project for the [Eclipse January](https://github.com/eclipse-january/january) project.
 
 ## Getting Started
 
@@ -21,6 +21,5 @@ Browse through the more advanced examples.
 - [Lazy Examples](/org.eclipse.january.examples/src/org/eclipse/january/examples/dataset/LazyExamples.java) demonstrates how to use datasets which are not entirely loaded in memory.
 
 Contribute to the Eclipse Datasets project.
-- Fork the [Eclipse January](https://github.com/eclipse/january) project.
+- Fork the [Eclipse January](https://github.com/eclipse-january/january) project.
 - Join in on the Eclipse January discussion on the [Eclipse january-dev Mailing List](https://dev.eclipse.org/mailman/listinfo/january-dev).
-- Join in on all Eclipse Science discussions on the [Eclipse Science Mailing List](https://dev.eclipse.org/mailman/listinfo/science-iwg).
