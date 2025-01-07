@@ -48,6 +48,8 @@ Mark up source class with following comment markers:
 @SuppressWarnings("cast")
 '''
 
+from os.path import basename
+
 class transmutate(object):
     def __init__(self, scriptfile, srcclass, source, dstclass, destination, disreal=True,
                  disbool=False, disobj=False):
@@ -68,7 +70,7 @@ class transmutate(object):
         '''
         self.sdsclass = srcclass
         self.ddsclass = dstclass
-        self.commentline = "// This is generated from %s.java by %s" % (srcclass, scriptfile)
+        self.commentline = "// This is generated from %s.java by %s" % (srcclass, basename(scriptfile))
 
         if len(source) != len(destination):
             raise ValueError("length of lists should be the same")
