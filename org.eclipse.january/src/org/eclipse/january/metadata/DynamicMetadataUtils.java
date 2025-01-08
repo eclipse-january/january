@@ -19,14 +19,13 @@ public class DynamicMetadataUtils {
 		if (axm == null) return maxShape;
 		
 		for (AxesMetadata a : axm) {
-			AxesMetadata ai = a;
-			int[] s = ai.refresh(shape);
+			int[] s = a.refresh(shape);
 			for (int i = 0; i < s.length; i++) {
 				if (maxShape[i] > s[i]) maxShape[i] = s[i];
  			}
 		}
 		
-		return maxShape;	
+		return maxShape;
 	}
 	
 }

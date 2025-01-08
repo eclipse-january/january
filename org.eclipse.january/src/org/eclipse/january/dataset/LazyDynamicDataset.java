@@ -17,6 +17,7 @@ import org.eclipse.january.io.ILazyLoader;
 public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 	private static final long serialVersionUID = -6296506563932840938L;
 
+	protected int[] oMaxShape;
 	protected int[] maxShape;
 	protected int[] chunks;
 
@@ -124,6 +125,7 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 		} else {
 			this.maxShape = maxShape.clone();
 		}
+		this.oMaxShape = this.maxShape;
 		this.chunks = chunks == null ? null : chunks.clone();
 
 		this.eventDelegate = new DataListenerDelegate();
@@ -137,6 +139,7 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 		super(other);
 
 		maxShape = other.maxShape;
+		oMaxShape = other.oMaxShape;
 		chunks = other.chunks;
 		eventDelegate = other.eventDelegate;
 		checker = other.checker;
@@ -149,6 +152,7 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 		int result = super.hashCode();
 		result = prime * result + ((checker == null) ? 0 : checker.hashCode());
 		result = prime * result + ((checkingThread == null) ? 0 : checkingThread.hashCode());
+		result = prime * result + Arrays.hashCode(oMaxShape);
 		result = prime * result + Arrays.hashCode(maxShape);
 		result = prime * result + Arrays.hashCode(chunks);
 		return result;
@@ -164,6 +168,9 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 		}
 
 		LazyDynamicDataset other = (LazyDynamicDataset) obj;
+		if (!Arrays.equals(oMaxShape, other.oMaxShape)) {
+			return false;
+		}
 		if (!Arrays.equals(maxShape, other.maxShape)) {
 			return false;
 		}
@@ -232,7 +239,7 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 		if (maxShape != null) {
 			for (int i = 0; i < rank; i++) {
 				int m = maxShape[i];
-				if (m != -1 && newShape[i] > m) {
+				if (m != UNLIMITED && newShape[i] > m) {
 					throw new IllegalArgumentException("A dimension of new shape must not exceed maximum shape");
 				}
 			}
@@ -257,6 +264,7 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 	@Override
 	public void setMaxShape(int... maxShape) {
 		this.maxShape = maxShape == null ? shape.clone() : maxShape.clone();
+		this.oMaxShape = this.maxShape;
 
 		if (this.maxShape.length > oShape.length) {
 			oShape = prependShapeWithOnes(this.maxShape.length, oShape);
@@ -265,6 +273,36 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 			shape = prependShapeWithOnes(this.maxShape.length, shape); // TODO this does not update any metadata
 //			setShapeInternal(prependShapeWithOnes(this.maxShape.length, shape));
 		}
+	}
+
+	@Override
+	void setShapeInternal(int... nShape) {
+		super.setShapeInternal(nShape);
+		int r = shape.length;
+		if (maxShape != null) {
+			maxShape = ShapeUtils.padShape(padding, r, oMaxShape);
+		}
+		if (chunks != null) {
+			chunks = ShapeUtils.padShape(padding, r, chunks);
+		}
+	}
+
+	/**
+	 * @since 2.3
+	 */
+	@Override
+	public LazyDynamicDataset getTransposedView(int... axes) {
+		LazyDynamicDataset view = clone();
+
+		int[] naxes = checkPermutatedAxes(shape, axes);
+		if (naxes == null) {
+			return view;
+		}
+
+		internalTransposeView(view, naxes, axes);
+		view.maxShape = calcTransposed(naxes, maxShape);
+		view.chunks = calcTransposed(naxes, chunks);
+		return view;
 	}
 
 	@Override
@@ -296,7 +334,7 @@ public class LazyDynamicDataset extends LazyDataset implements IDynamicDataset {
 
 	@Override
 	protected SliceND createSlice(int[] nstart, int[] nstop, int[] nstep) {
-		return SliceND.createSlice(oShape, maxShape, nstart, nstop, nstep);
+		return SliceND.createSlice(oShape, oMaxShape, nstart, nstop, nstep);
 	}
 
 	@Override

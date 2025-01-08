@@ -9,6 +9,8 @@
 
 package org.eclipse.january.dataset;
 
+import static org.junit.Assert.assertArrayEquals;
+
 import java.util.Arrays;
 
 import org.eclipse.january.asserts.TestUtils;
@@ -27,7 +29,7 @@ public class LazyDynamicDatasetTest {
 		}
 	}
 
-	IDynamicDataset createDynamic() {
+	private static IDynamicDataset createDynamic() {
 		IDynamicDataset lazy = new LazyDynamicDataset(null, "test", 1, IntegerDataset.class, new int[] {0,4}, new int[] {IDynamicDataset.UNLIMITED, 4});
 		return lazy;
 	}
@@ -81,5 +83,37 @@ public class LazyDynamicDatasetTest {
 			}
 		}
 		Assert.assertEquals(repeat, counter.count);
+	}
+
+	@Test
+	public void testShapeChanges() {
+		IDynamicDataset lazy = new LazyDynamicDataset(null, "test", 1, IntegerDataset.class, new int[] {3, 4}, new int[] {IDynamicDataset.UNLIMITED, 4});
+		lazy.setChunking(2, 4);
+
+		IDynamicDataset t = (IDynamicDataset) lazy.getSliceView(new Slice(2));
+		assertArrayEquals(new int[] {2, 4}, t.getShape());
+		assertArrayEquals(new int[] {IDynamicDataset.UNLIMITED, 4}, t.getMaxShape());
+		assertArrayEquals(new int[] {2, 4}, t.getChunking());
+
+		t = (IDynamicDataset) lazy.getTransposedView(1, 0);
+		assertArrayEquals(new int[] {4, 3}, t.getShape());
+		assertArrayEquals(new int[] {4, IDynamicDataset.UNLIMITED}, t.getMaxShape());
+		assertArrayEquals(new int[] {4, 2}, t.getChunking());
+
+		t = (IDynamicDataset) lazy.getSliceView();
+		t.setShape(1, 3, 4);
+		assertArrayEquals(new int[] {1, 3, 4}, t.getShape());
+		assertArrayEquals(new int[] {1, IDynamicDataset.UNLIMITED, 4}, t.getMaxShape());
+		assertArrayEquals(new int[] {1, 2, 4}, t.getChunking());
+
+		t = (IDynamicDataset) t.getTransposedView(2, 1, 0);
+		assertArrayEquals(new int[] {4, 3, 1}, t.getShape());
+		assertArrayEquals(new int[] {4, IDynamicDataset.UNLIMITED, 1}, t.getMaxShape());
+		assertArrayEquals(new int[] {4, 2, 1}, t.getChunking());
+
+		t = (IDynamicDataset) t.getSliceView(null, new Slice(2), null);
+		assertArrayEquals(new int[] {4, 2, 1}, t.getShape());
+		assertArrayEquals(new int[] {4, IDynamicDataset.UNLIMITED, 1}, t.getMaxShape());
+		assertArrayEquals(new int[] {4, 2, 1}, t.getChunking());
 	}
 }

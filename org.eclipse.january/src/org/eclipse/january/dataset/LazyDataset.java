@@ -346,10 +346,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 		return internalGetSliceView(new SliceND(shape, slice));
 	}
 
-	/**
-	 * @param nShape
-	 */
-	private void setShapeInternal(int... nShape) {
+	void setShapeInternal(int... nShape) {
 		// work out transposed (sliced) shape (instead of removing padding from current shape)
 		if (size != 0) {
 			int[] pShape = calcTransposed(map, sShape == null ? oShape : sShape);
@@ -469,6 +466,11 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 			return view;
 		}
 
+		internalTransposeView(view, naxes, axes);
+		return view;
+	}
+
+	void internalTransposeView(LazyDataset view, int[] naxes, final int... axes) {
 		view.shape = calcTransposed(naxes, shape);
 		if (view.size != 0 && padding != null) { // work out transpose by reverting effect of padding
 			int or = oShape.length;
@@ -550,7 +552,6 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 		}
 		view.storeMetadata(metadata, Transposable.class);
 		view.transposeMetadata(axes);
-		return view;
 	}
 
 	private static int find(int[] map, int m, int off) {
@@ -562,7 +563,7 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 		return -1;
 	}
 
-	private static int[] calcTransposed(int[] map, int[] values) {
+	static int[] calcTransposed(int[] map, int[] values) {
 		if (values == null) {
 			return null;
 		}
@@ -615,8 +616,8 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 		int r = oShape.length;
 		if (padding == null) {
 			nshape = slice.getShape();
-			nstart = slice.getStart();
-			nstep = slice.getStep();
+			nstart = slice.getStart().clone();
+			nstep = slice.getStep().clone();
 		} else {
 			final int[] lshape = slice.getShape();
 			final int[] lstart = slice.getStart();
