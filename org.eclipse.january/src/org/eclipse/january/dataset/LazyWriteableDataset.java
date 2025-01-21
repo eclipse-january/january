@@ -123,7 +123,6 @@ public class LazyWriteableDataset extends LazyDynamicDataset implements ILazyWri
 	protected LazyWriteableDataset(LazyWriteableDataset other) {
 		super(other);
 
-		chunks = other.chunks;
 		saver  = other.saver;
 		fillValue  = other.fillValue;
 		writeAsync = other.writeAsync;

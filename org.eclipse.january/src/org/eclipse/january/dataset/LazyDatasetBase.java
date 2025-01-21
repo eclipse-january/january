@@ -490,11 +490,9 @@ public abstract class LazyDatasetBase implements ILazyDataset, Serializable {
 				nslice = slice.clone();
 				for (int i = 0; i < rank; i++) {
 					int s = shape[i];
-					if (s >= oShape[i]) {
-						continue;
-					} else if (s == 1) {
+					if (s == 1) {
 						nslice.setSlice(i, 0, 1, 1);
-					} else {
+					} else if (s < oShape[i]) {
 						throw new IllegalArgumentException("Sliceable dataset has non-unit dimension less than host!");
 					}
 				}
