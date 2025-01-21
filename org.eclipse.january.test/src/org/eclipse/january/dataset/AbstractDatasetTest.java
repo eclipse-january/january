@@ -13,8 +13,8 @@ import static org.eclipse.january.asserts.TestUtils.assertDatasetEquals;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -31,6 +31,7 @@ import org.eclipse.january.asserts.TestUtils;
 import org.eclipse.january.metadata.StatisticsMetadata;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.function.ThrowingRunnable;
 
 public class AbstractDatasetTest {
 	@Test
@@ -426,9 +427,7 @@ public class AbstractDatasetTest {
 		ds.setShape(2,1,5);
 
 		ds.squeeze();
-		assertEquals(2, ds.getShapeRef().length);
-		assertEquals(2, ds.getShapeRef()[0]);
-		assertEquals(5, ds.getShapeRef()[1]);
+		assertArrayEquals(new int[] {2, 5}, ds.getShapeRef());
 
 		int[] os, ns;
 		os = new int[] { 1, 1 };
@@ -439,47 +438,27 @@ public class AbstractDatasetTest {
 
 		os = new int[] { 2, 1, 5 };
 		ns = ShapeUtils.squeezeShape(os, false);
-		assertEquals(2, ns.length);
-		assertEquals(2, ns[0]);
-		assertEquals(5, ns[1]);
+		assertArrayEquals(new int[] {2, 5}, ns);
 		ns = ShapeUtils.squeezeShape(os, true);
-		assertEquals(3, ns.length);
-		assertEquals(2, ns[0]);
-		assertEquals(1, ns[1]);
-		assertEquals(5, ns[2]);
+		assertArrayEquals(new int[] {2, 1, 5}, ns);
 
 		os = new int[] { 2, 1, 5, 1 };
 		ns = ShapeUtils.squeezeShape(os, false);
-		assertEquals(2, ns.length);
-		assertEquals(2, ns[0]);
-		assertEquals(5, ns[1]);
+		assertArrayEquals(new int[] {2, 5}, ns);
 		ns = ShapeUtils.squeezeShape(os, true);
-		assertEquals(3, ns.length);
-		assertEquals(2, ns[0]);
-		assertEquals(1, ns[1]);
-		assertEquals(5, ns[2]);
+		assertArrayEquals(new int[] {2, 1, 5}, ns);
 
 		os = new int[] { 1, 2, 1, 5 };
 		ns = ShapeUtils.squeezeShape(os, false);
-		assertEquals(2, ns.length);
-		assertEquals(2, ns[0]);
-		assertEquals(5, ns[1]);
+		assertArrayEquals(new int[] {2, 5}, ns);
 		ns = ShapeUtils.squeezeShape(os, true);
-		assertEquals(3, ns.length);
-		assertEquals(2, ns[0]);
-		assertEquals(1, ns[1]);
-		assertEquals(5, ns[2]);
+		assertArrayEquals(new int[] {2, 1, 5}, ns);
 
 		os = new int[] { 1, 2, 1, 5, 1 };
 		ns = ShapeUtils.squeezeShape(os, false);
-		assertEquals(2, ns.length);
-		assertEquals(2, ns[0]);
-		assertEquals(5, ns[1]);
+		assertArrayEquals(new int[] {2, 5}, ns);
 		ns = ShapeUtils.squeezeShape(os, true);
-		assertEquals(3, ns.length);
-		assertEquals(2, ns[0]);
-		assertEquals(1, ns[1]);
-		assertEquals(5, ns[2]);
+		assertArrayEquals(new int[] {2, 1, 5}, ns);
 	}
 
 	/**
@@ -493,26 +472,21 @@ public class AbstractDatasetTest {
 		Dataset ta = DatasetUtils.tile(ds, 2);
 		double[] xa = { 0., 1., 2., 0., 1., 2. };
 
-		assertEquals(1, ta.getShapeRef().length);
-		assertEquals(6, ta.getShapeRef()[0]);
+		assertArrayEquals(new int[] {6}, ta.getShapeRef());
 		for (int i = 0; i < xa.length; i++) {
 			assertEquals(xa[i], ((DoubleDataset) ta).getData()[i], 1e-6);
 		}
 
 		Dataset tb = DatasetUtils.tile(ds, 1, 2);
 
-		assertEquals(2, tb.getShapeRef().length);
-		assertEquals(1, tb.getShapeRef()[0]);
-		assertEquals(6, tb.getShapeRef()[1]);
+		assertArrayEquals(new int[] {1, 6}, tb.getShapeRef());
 		for (int i = 0; i < xa.length; i++) {
 			assertEquals(xa[i], ((DoubleDataset) tb).getData()[i], 1e-6);
 		}
 
 		Dataset tc = DatasetUtils.tile(ds, 2, 1);
 
-		assertEquals(2, tc.getShapeRef().length);
-		assertEquals(2, tc.getShapeRef()[0]);
-		assertEquals(3, tc.getShapeRef()[1]);
+		assertArrayEquals(new int[] {2, 3}, tc.getShapeRef());
 		for (int i = 0; i < xa.length; i++) {
 			assertEquals(xa[i], ((DoubleDataset) tc).getData()[i], 1e-6);
 		}
@@ -523,18 +497,14 @@ public class AbstractDatasetTest {
 		Dataset td = DatasetUtils.tile(ds, 2);
 		double[] xd = { 0., 1., 2., 0., 1., 2., 3., 4., 5., 3., 4., 5. };
 
-		assertEquals(2, td.getShapeRef().length);
-		assertEquals(2, td.getShapeRef()[0]);
-		assertEquals(6, td.getShapeRef()[1]);
+		assertArrayEquals(new int[] {2, 6}, td.getShapeRef());
 		for (int i = 0; i < xd.length; i++) {
 			assertEquals(xd[i], ((DoubleDataset) td).getData()[i], 1e-6);
 		}
 
 		Dataset te = DatasetUtils.tile(ds, 1, 2);
 
-		assertEquals(2, te.getShapeRef().length);
-		assertEquals(2, te.getShapeRef()[0]);
-		assertEquals(6, te.getShapeRef()[1]);
+		assertArrayEquals(new int[] {2, 6}, te.getShapeRef());
 		for (int i = 0; i < xd.length; i++) {
 			assertEquals(xd[i], ((DoubleDataset) te).getData()[i], 1e-6);
 		}
@@ -542,9 +512,7 @@ public class AbstractDatasetTest {
 		Dataset tf = DatasetUtils.tile(ds, 2, 1);
 		double[] xf = { 0., 1., 2., 3., 4., 5., 0., 1., 2., 3., 4., 5. };
 
-		assertEquals(2, tf.getShapeRef().length);
-		assertEquals(4, tf.getShapeRef()[0]);
-		assertEquals(3, tf.getShapeRef()[1]);
+		assertArrayEquals(new int[] {4, 3}, tf.getShapeRef());
 		for (int i = 0; i < xf.length; i++) {
 			assertEquals(xf[i], ((DoubleDataset) tf).getData()[i], 1e-6);
 		}
@@ -624,9 +592,7 @@ public class AbstractDatasetTest {
 		Dataset ta = DatasetUtils.transpose(ds, 1, 0);
 		double[][] xa = { { 0., 1., 2. }, { 3., 4., 5. } };
 
-		assertEquals(2, ta.getShapeRef().length);
-		assertEquals(3, ta.getShapeRef()[0]);
-		assertEquals(2, ta.getShapeRef()[1]);
+		assertArrayEquals(new int[] {3, 2}, ta.getShapeRef());
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 3; j++) {
 				assertEquals(xa[i][j], ta.getDouble(j, i), 1e-6);
@@ -647,37 +613,30 @@ public class AbstractDatasetTest {
 		double[][][] xb = { {{ 0., 1., 2., 3.}, {4., 5., 6., 7.}, {8., 9., 10., 11. }},
 				{{12., 13., 14., 15.}, {16., 17., 18., 19.}, {20., 21., 22., 23.}} };
 
-		Dataset tb;
+		final Dataset df = ds;
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() {
+				DatasetUtils.transpose(df, 0);
+			}
+		});
 
-		try {
-			tb = DatasetUtils.transpose(ds, 0);
-		} catch (IllegalArgumentException e) {
-			// this is correct.
-		} catch (Exception e) {
-			fail("wrong exception type passed from incorrect arguments being passed to the constructor");
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() {
+				DatasetUtils.transpose(df, 0, -1, 0);
+			}
+		});
 
-		try {
-			tb = DatasetUtils.transpose(ds, 0, -1, 0);
-		} catch (IllegalArgumentException e) {
-			// this is correct.
-		} catch (Exception e) {
-			fail("wrong exception type passed from incorrect arguments being passed to the constructor");
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() {
+				DatasetUtils.transpose(df, 0, 1, 1);
+			}
+		});
 
-		try {
-			tb = DatasetUtils.transpose(ds, 0, 1, 1);
-		} catch (IllegalArgumentException e) {
-			// this is correct.
-		} catch (Exception e) {
-			fail("wrong exception type passed from incorrect arguments being passed to the constructor");
-		}
-
-		tb = DatasetUtils.transpose(ds, 0, 1, 2);
-		assertEquals(3, tb.getShapeRef().length);
-		assertEquals(2, tb.getShapeRef()[0]);
-		assertEquals(3, tb.getShapeRef()[1]);
-		assertEquals(4, tb.getShapeRef()[2]);
+		Dataset tb = DatasetUtils.transpose(ds, 0, 1, 2);
+		assertArrayEquals(new int[] {2, 3, 4}, tb.getShapeRef());
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 3; j++) {
 				for (int k = 0; k < 4; k++) {
@@ -687,10 +646,7 @@ public class AbstractDatasetTest {
 		}
 
 		tb = DatasetUtils.transpose(ds, 1, 0, 2);
-		assertEquals(3, tb.getShapeRef().length);
-		assertEquals(3, tb.getShapeRef()[0]);
-		assertEquals(2, tb.getShapeRef()[1]);
-		assertEquals(4, tb.getShapeRef()[2]);
+		assertArrayEquals(new int[] {3, 2, 4}, tb.getShapeRef());
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 3; j++) {
 				for (int k = 0; k < 4; k++) {
@@ -700,10 +656,7 @@ public class AbstractDatasetTest {
 		}
 
 		tb = DatasetUtils.transpose(ds, 2, 0, 1);
-		assertEquals(3, tb.getShapeRef().length);
-		assertEquals(4, tb.getShapeRef()[0]);
-		assertEquals(2, tb.getShapeRef()[1]);
-		assertEquals(3, tb.getShapeRef()[2]);
+		assertArrayEquals(new int[] {4, 2, 3}, tb.getShapeRef());
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 3; j++) {
 				for (int k = 0; k < 4; k++) {
@@ -719,22 +672,19 @@ public class AbstractDatasetTest {
 	@Test
 	public void testRepeat() {
 		// 2D
-		Dataset ds = DatasetFactory.createRange(DoubleDataset.class, 6);
+		final Dataset ds = DatasetFactory.createRange(DoubleDataset.class, 6);
 		ds.setShape(2,3);
 
 		double[] xa = { 0., 0., 1., 1., 2., 2., 3., 3., 4., 4., 5., 5. };
 		DoubleDataset ta = (DoubleDataset) DatasetUtils.repeat(ds, new int[] {2}, -1);
-		assertEquals(1, ta.getShapeRef().length);
-		assertEquals(12, ta.getShapeRef()[0]);
+		assertArrayEquals(new int[] {12}, ta.getShapeRef());
 		for (int i = 0; i < 12; i++) {
 			assertEquals(xa[i], ta.get(i), 1e-6);
 		}
 
 		double[][] xb = { { 0., 0., 1., 1., 2., 2. }, {  3., 3., 4., 4., 5., 5. }  };
 		DoubleDataset tb = (DoubleDataset) DatasetUtils.repeat(ds, new int[] {2}, 1);
-		assertEquals(2, tb.getShapeRef().length);
-		assertEquals(2, tb.getShapeRef()[0]);
-		assertEquals(6, tb.getShapeRef()[1]);
+		assertArrayEquals(new int[] {2, 6}, tb.getShapeRef());
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 6; j++) {
 				assertEquals(xb[i][j], tb.get(i, j), 1e-6);
@@ -743,9 +693,7 @@ public class AbstractDatasetTest {
 
 		double[][] xc = { { 0., 1., 2. }, { 0., 1., 2. }, {  3., 4., 5. }, {  3., 4., 5. }  };
 		DoubleDataset tc = (DoubleDataset) DatasetUtils.repeat(ds, new int[] {2}, 0);
-		assertEquals(2, tc.getShapeRef().length);
-		assertEquals(4, tc.getShapeRef()[0]);
-		assertEquals(3, tc.getShapeRef()[1]);
+		assertArrayEquals(new int[] {4, 3}, tc.getShapeRef());
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 3; j++) {
 				assertEquals(xc[i][j], tc.get(i, j), 1e-6);
@@ -754,9 +702,7 @@ public class AbstractDatasetTest {
 
 		double[][] xd = { { 0., 1., 2. }, { 0., 1., 2. }, {  3., 4., 5. } };
 		DoubleDataset td = (DoubleDataset) DatasetUtils.repeat(ds, new int[] {2, 1}, 0);
-		assertEquals(2, td.getShapeRef().length);
-		assertEquals(3, td.getShapeRef()[0]);
-		assertEquals(3, td.getShapeRef()[1]);
+		assertArrayEquals(new int[] {3, 3}, td.getShapeRef());
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
 				assertEquals(xd[i][j], td.get(i, j), 1e-6);
@@ -765,9 +711,7 @@ public class AbstractDatasetTest {
 
 		double[][] xe = { { 0., 1., 1., 2., 2., 2.}, {  3., 4., 4., 5., 5., 5. }  };
 		DoubleDataset te = (DoubleDataset) DatasetUtils.repeat(ds, new int[] {1, 2, 3}, 1);
-		assertEquals(2, te.getShapeRef().length);
-		assertEquals(2, te.getShapeRef()[0]);
-		assertEquals(6, te.getShapeRef()[1]);
+		assertArrayEquals(new int[] {2, 6}, te.getShapeRef());
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 6; j++) {
 				assertEquals(xe[i][j], te.get(i, j), 1e-6);
@@ -776,35 +720,31 @@ public class AbstractDatasetTest {
 
 		double[] xf = { 0., 1., 2., 2., 5., 5., 5. };
 		DoubleDataset tf = (DoubleDataset) DatasetUtils.repeat(ds, new int[] {1, 1, 2, 0, 0, 3}, -1);
-		assertEquals(1, tf.getShapeRef().length);
-		assertEquals(7, tf.getShapeRef()[0]);
+		assertArrayEquals(new int[] {7}, tf.getShapeRef());
 		for (int i = 0; i < 7; i++) {
 			assertEquals(xf[i], tf.get(i), 1e-6);
 		}
 
-		try {
-			tf = (DoubleDataset) DatasetUtils.repeat(ds, new int[] {0}, 3);
-		} catch (IllegalArgumentException e) {
-			// this is correct.
-		} catch (Exception e) {
-			fail("wrong exception type passed from incorrect arguments being passed to the constructor");
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() {
+				DatasetUtils.repeat(ds, new int[] {0}, 3);
+			}
+		});
 
-		try {
-			tf = (DoubleDataset) DatasetUtils.repeat(ds, new int[] {2, 1}, -1);
-		} catch (IllegalArgumentException e) {
-			// this is correct.
-		} catch (Exception e) {
-			fail("wrong exception type passed from incorrect arguments being passed to the constructor");
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() {
+				DatasetUtils.repeat(ds, new int[] {2, 1}, -1);
+			}
+		});
 
-		try {
-			tf = (DoubleDataset) DatasetUtils.repeat(ds, new int[] {-1}, -1);
-		} catch (IllegalArgumentException e) {
-			// this is correct.
-		} catch (Exception e) {
-			fail("wrong exception type passed from incorrect arguments being passed to the constructor");
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() {
+				DatasetUtils.repeat(ds, new int[] {-1}, -1);
+			}
+		});
 	}
 
 	/**
@@ -994,13 +934,12 @@ public class AbstractDatasetTest {
 
 	@Test
 	public void testSlicing() {
-		Dataset a = DatasetFactory.createRange(IntegerDataset.class, 1000);
+		final Dataset a = DatasetFactory.createRange(IntegerDataset.class, 1000);
 		Dataset s, t;
 		IndexIterator is, it;
 
 		s = a.getSlice(null, new int[] {10}, null);
-		assertEquals(1, s.getShapeRef().length);
-		assertEquals(10, s.getShapeRef()[0]);
+		assertArrayEquals(new int[] {10}, s.getShapeRef());
 
 		is = s.getIterator();
 		for (int i = 0; is.hasNext(); i++) {
@@ -1008,8 +947,7 @@ public class AbstractDatasetTest {
 		}
 
 		t = a.getSlice(new Slice(10));
-		assertEquals(1, t.getShapeRef().length);
-		assertEquals(10, t.getShapeRef()[0]);
+		assertArrayEquals(new int[] {10}, t.getShapeRef());
 
 		it = t.getIterator();
 		for (int i = 0; it.hasNext(); i++) {
@@ -1023,16 +961,13 @@ public class AbstractDatasetTest {
 		}
 
 		s = a.getSlice(new int[]{0}, new int[] {10}, null);
-		assertEquals(1, s.getShapeRef().length);
-		assertEquals(10, s.getShapeRef()[0]);
+		assertArrayEquals(new int[] {10}, s.getShapeRef());
 
 		s = a.getSlice(new int[]{-1000}, new int[] {10}, null);
-		assertEquals(1, s.getShapeRef().length);
-		assertEquals(10, s.getShapeRef()[0]);
+		assertArrayEquals(new int[] {10}, s.getShapeRef());
 
 		s = a.getSlice(new int[] {9}, null, new int[] {-1});
-		assertEquals(1, s.getShapeRef().length);
-		assertEquals(10, s.getShapeRef()[0]);
+		assertArrayEquals(new int[] {10}, s.getShapeRef());
 
 		is = s.getIterator();
 		for (int i = 9; is.hasNext(); i--) {
@@ -1040,8 +975,7 @@ public class AbstractDatasetTest {
 		}
 
 		t = a.getSlice(new Slice(9, null, -1));
-		assertEquals(1, t.getShapeRef().length);
-		assertEquals(10, t.getShapeRef()[0]);
+		assertArrayEquals(new int[] {10}, s.getShapeRef());
 
 		it = t.getIterator();
 		for (int i = 9; it.hasNext(); i--) {
@@ -1123,26 +1057,26 @@ public class AbstractDatasetTest {
 		}
 
 		// test input SliceND checking
-		try {
-			a.getSlice(new SliceND(null));
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() {
+				a.getSlice(new SliceND(null));
+			}
+		});
 
-		try {
-			a.getSlice(new SliceND(new int[0]));
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() {
+				a.getSlice(new SliceND(new int[0]));
+			}
+		});
 
-		try {
-			a.getSlice(new SliceND(new int[2]));
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() {
+				a.getSlice(new SliceND(new int[2]));
+			}
+		});
 
 		s = a.getSlice(new SliceND(a.getShape()));
 		assertEquals("Full slice", a, s);
@@ -1173,14 +1107,14 @@ public class AbstractDatasetTest {
 		c.setShape(6,2,2);
 		assertEquals(c, b);
 		b.setShape(6,4);
-		try {
-			b.setShape(2,12);
-			fail("Should have raised an exception");
-		} catch (IllegalArgumentException iae) {
-			// expected
-		} catch (Exception e) {
-			fail("Unexpected exception: " + e);
-		}
+
+		final Dataset fb = b;
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() {
+				fb.setShape(2,12);
+			}
+		});
 
 		b = checkSliceView(a, new int[] {1, -1}, new int[] {-1, 2}, new int[] {1, -2}); // 4x4
 		checkSliceView(b, new int[] {1, 0}, new int[] {4, 3}, new int[] {2, 1});
@@ -1197,26 +1131,22 @@ public class AbstractDatasetTest {
 
 		// test input SliceND checking
 		a = DatasetFactory.createRange(60).reshape(6, 10);
-		try {
-			a.getSliceView(new SliceND(null));
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		final Dataset fa = a;
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() {
+				fa.getSliceView(new SliceND(null));
+			}
+		});
 
-		try {
-			a.getSliceView(new SliceND(new int[0]));
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() {
+				fa.getSliceView(new SliceND(new int[0]));
+			}
+		});
 
-		try {
-			a.getSliceView(new SliceND(new int[2]));
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		a.getSliceView(new SliceND(new int[2]));
 
 		b = a.getSliceView(new SliceND(a.getShape()));
 		assertEquals("Full slice", a, b);
@@ -1317,6 +1247,7 @@ public class AbstractDatasetTest {
 
 		// with broadcasting
 		a = DatasetFactory.createRange(100).reshape(20, 5);
+		// (20, 5) [2:10, ::2] => (8,3)
 		a.setSlice(DatasetFactory.createRange(ShortDataset.class, 3), new Slice(2, 10), new Slice(null, null, 2));
 
 		assertEquals(0, a.getDouble(0, 0), 1e-15);
@@ -1337,11 +1268,14 @@ public class AbstractDatasetTest {
 		assertEquals(13, a.getDouble(2, 3), 1e-15);
 		assertEquals(2, a.getDouble(2, 4), 1e-15);
 
-		try {
-			a.setSlice(DatasetFactory.createRange(ShortDataset.class, 3), new Slice(2, 7, 2), new Slice(2, 3));
-			fail("Should have thrown an IAE");
-		} catch (IllegalArgumentException e) {
-		}
+		final Dataset fa = a;
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() {
+				// (20, 5) [2:7:2, 2:3] => (3,1)
+				fa.setSlice(DatasetFactory.createRange(ShortDataset.class, 3), new Slice(2, 7, 2), new Slice(2, 3));
+			}
+		});
 
 		// compound
 		CompoundDataset c = DatasetFactory.createRange(3, CompoundDoubleDataset.class, 100).reshape(20, 5);
@@ -1366,7 +1300,6 @@ public class AbstractDatasetTest {
 
 	@Test
 	public void test1DErrors() {
-		
 		// test 1D errors for single value
 		Dataset a = DatasetFactory.createRange(IntegerDataset.class, 100);
 		a.setErrors(5);
@@ -1381,12 +1314,8 @@ public class AbstractDatasetTest {
 		Dataset error = a.getErrors();
 		
 		// check compatibility
-		try {
-			ShapeUtils.checkCompatibility(a, error);
-		} catch (Exception e) {
-			fail("Error shape is not the same as input datasets");
-		}
-		
+		ShapeUtils.checkCompatibility(a, error);
+
 		assertEquals(5.0, error.getDouble(0), 0.001);
 		assertEquals(5.0, error.getDouble(50), 0.001);
 		assertEquals(5.0, error.getDouble(99), 0.001);
@@ -1402,21 +1331,15 @@ public class AbstractDatasetTest {
 		Dataset error2 = a.getErrors();
 		
 		// check compatibility
-		try {
-			ShapeUtils.checkCompatibility(a, error2);
-		} catch (Exception e) {
-			fail("Error shape is not the same as input datasets");
-		}
-		
+		ShapeUtils.checkCompatibility(a, error2);
+
 		assertEquals(10.0, error2.getDouble(0), 0.001);
 		assertEquals(10.0, error2.getDouble(50), 0.001);
 		assertEquals(10.0, error2.getDouble(99), 0.001);
 	}
-	
-	
+
 	@Test
 	public void test2DErrors() {
-		
 		// test 1D errors for single value
 		Dataset a = DatasetFactory.zeros(IntegerDataset.class, 100, 100);
 		a.setErrors(5);
@@ -1431,12 +1354,8 @@ public class AbstractDatasetTest {
 		Dataset error = a.getErrors();
 		
 		// check compatibility
-		try {
-			ShapeUtils.checkCompatibility(a, error);
-		} catch (Exception e) {
-			fail("Error shape is not the same as input datasets");
-		}
-		
+		ShapeUtils.checkCompatibility(a, error);
+
 		assertEquals(5.0, error.getDouble(0,0), 0.001);
 		assertEquals(5.0, error.getDouble(50,50), 0.001);
 		assertEquals(5.0, error.getDouble(99,99), 0.001);
@@ -1452,12 +1371,8 @@ public class AbstractDatasetTest {
 		Dataset error2 = a.getErrors();
 		
 		// check compatibility
-		try {
-			ShapeUtils.checkCompatibility(a, error2);
-		} catch (Exception e) {
-			fail("Error shape is not the same as input datasets");
-		}
-		
+		ShapeUtils.checkCompatibility(a, error2);
+
 		assertEquals(10.0, error2.getDouble(0,0), 0.001);
 		assertEquals(10.0, error2.getDouble(50,50), 0.001);
 		assertEquals(10.0, error2.getDouble(99,99), 0.001);
@@ -1484,7 +1399,6 @@ public class AbstractDatasetTest {
 
 	@Test
 	public void testSetErrorBuffer() {
-		
 		Dataset a = DatasetFactory.zeros(IntegerDataset.class, 100, 100);
 		Dataset err = DatasetFactory.createLinearSpace(DoubleDataset.class, 0, a.getSize() - 1, a.getSize());
 		err.setShape(a.getShapeRef());
@@ -1501,13 +1415,8 @@ public class AbstractDatasetTest {
 		assertTrue(a.hasErrors());
 		
 		// now for pulling out the full error array and check compatibility
-		Dataset error = a.getErrors();
-		try {
-			ShapeUtils.checkCompatibility(a, error);
-		} catch (Exception e) {
-			fail("Error shape is not the same as input datasets");
-		}
-				
+		ShapeUtils.checkCompatibility(a, a.getErrors());
+
 		a.setErrorBuffer(err);
 
 		assertEquals(0.0, a.getError(0,0), 0.001);
@@ -1517,13 +1426,8 @@ public class AbstractDatasetTest {
 		assertTrue(a.hasErrors());
 		
 		// now for pulling out the full error array and check compatibility
-		error = a.getErrors();
-		try {
-			ShapeUtils.checkCompatibility(a, error);
-		} catch (Exception e) {
-			fail("Error shape is not the same as input datasets");
-		}
-		
+		ShapeUtils.checkCompatibility(a, a.getErrors());
+
 		a.setErrorBuffer(err.getBuffer());
 
 		assertEquals(0.0, a.getError(0,0), 0.001);
@@ -1533,12 +1437,7 @@ public class AbstractDatasetTest {
 		assertTrue(a.hasErrors());
 		
 		// now for pulling out the full error array and check compatibility
-		error = a.getErrors();
-		try {
-			ShapeUtils.checkCompatibility(a, error);
-		} catch (Exception e) {
-			fail("Error shape is not the same as input datasets");
-		}
+		ShapeUtils.checkCompatibility(a, a.getErrors());
 	}
 	
 	@Test
@@ -1675,7 +1574,7 @@ public class AbstractDatasetTest {
 		udata = new long[] {0, 1, 127, 128, 255, 256, 32767, 32768, 65535, 65536, 2147483647L, 2147483648L, 4294967295L, 4294967296L};
 		d = new LongDataset(udata);
 		c = DatasetUtils.cast(IntegerDataset.class, d);
-		Assert.assertTrue(c.max().doubleValue() < d.max().doubleValue()); // check stored values
+		assertTrue(c.max().doubleValue() < d.max().doubleValue()); // check stored values
 		a = DatasetFactory.createFromObject(true, c);
 		assertEquals("Cast", 0, a.getLong(13));
 		for (int i = 0; i < 13; i++) {
@@ -1683,7 +1582,7 @@ public class AbstractDatasetTest {
 		}
 
 		c = DatasetUtils.cast(ShortDataset.class, d);
-		Assert.assertTrue(c.max().doubleValue() < d.max().doubleValue());
+		assertTrue(c.max().doubleValue() < d.max().doubleValue());
 		a = DatasetFactory.createFromObject(true, c);
 		assertEquals("Cast", 0, a.getLong(9));
 		for (int i = 0; i < 9; i++) {
@@ -1691,7 +1590,7 @@ public class AbstractDatasetTest {
 		}
 
 		c = DatasetUtils.cast(ByteDataset.class, d);
-		Assert.assertTrue(c.max().doubleValue() < d.max().doubleValue());
+		assertTrue(c.max().doubleValue() < d.max().doubleValue());
 		a = DatasetFactory.createFromObject(true, c);
 		assertEquals("Cast", 0, a.getLong(5));
 		for (int i = 0; i < 5; i++) {
@@ -1758,10 +1657,10 @@ public class AbstractDatasetTest {
 	@Test
 	public void testRollAxis() {
 		Dataset a = DatasetFactory.ones(ByteDataset.class, 3, 4, 5, 6);
-		Assert.assertArrayEquals(new int[] {3, 6, 4, 5}, DatasetUtils.rollAxis(a, 3, 1).getShapeRef());
-		Assert.assertArrayEquals(new int[] {5, 3, 4, 6}, DatasetUtils.rollAxis(a, 2, 0).getShapeRef());
-		Assert.assertArrayEquals(new int[] {3, 5, 6, 4}, DatasetUtils.rollAxis(a, 1, 4).getShapeRef());
-		Assert.assertArrayEquals(new int[] {3, 6, 4, 5}, DatasetUtils.rollAxis(a, -1, 1).getShapeRef());
+		assertArrayEquals(new int[] {3, 6, 4, 5}, DatasetUtils.rollAxis(a, 3, 1).getShapeRef());
+		assertArrayEquals(new int[] {5, 3, 4, 6}, DatasetUtils.rollAxis(a, 2, 0).getShapeRef());
+		assertArrayEquals(new int[] {3, 5, 6, 4}, DatasetUtils.rollAxis(a, 1, 4).getShapeRef());
+		assertArrayEquals(new int[] {3, 6, 4, 5}, DatasetUtils.rollAxis(a, -1, 1).getShapeRef());
 	}
 
 	@Test
@@ -1849,38 +1748,40 @@ public class AbstractDatasetTest {
 		Dataset a = DatasetFactory.createFromObject(new double[] { 0, 1, 3, 5, -7, -9 });
 		Dataset b = DatasetFactory.createFromObject(new double[] { 0.01, 1.2, 2.9, 5, -7.1, -9 });
 
-		Dataset c = a.clone().reshape(2, 3);
+		final Dataset c = a.clone().reshape(2, 3);
 		IntegerDataset d = DatasetFactory.createFromObject(IntegerDataset.class, new int[] {0, 0, 1, 1, 0, 1}, 2, 3);
 
 		Dataset e = DatasetUtils.choose(d, new Object[] {c, -2}, true, false);
 		assertDatasetEquals(DatasetFactory.createFromObject(new double[] {0, 1, -2, -2, -7, -2}, 2, 3), e);
 
 		d = DatasetFactory.createFromObject(IntegerDataset.class, new int[] {-2, 0, 3, 1, 0, 2}, 2, 3);
-		try {
-			e = DatasetUtils.choose(d, new Object[] {c, -2}, true, false);
-			fail("Should have thrown an array index OOB exception");
-		} catch (ArrayIndexOutOfBoundsException oob) {
-			// expected
-		}
+		final IntegerDataset fd = d;
+		assertThrows(ArrayIndexOutOfBoundsException.class, new ThrowingRunnable() {
+			@Override
+			public void run() {
+				DatasetUtils.choose(fd, new Object[] {c, -2}, true, false);
+			}
+		});
+
 		e = DatasetUtils.choose(d, new Object[] {c, -2}, false, false);
 		assertDatasetEquals(DatasetFactory.createFromObject(new double[] {0, 1, -2, -2, -7, -9}, 2, 3), e);
 
 		e = DatasetUtils.choose(d, new Object[] {c, -2}, false, true);
 		assertDatasetEquals(DatasetFactory.createFromObject(new double[] {0, 1, -2, -2, -7, -2}, 2, 3), e);
 
-		Dataset f = b.clone().reshape(2, 3);
+		final Dataset f = b.clone().reshape(2, 3);
 		IntegerDataset g = DatasetFactory.createFromObject(IntegerDataset.class, new int[] {1, 0, 1, 1, 2, 2}, 2, 3);
 
 		e = DatasetUtils.choose(g, new Object[] {c, f, -2}, true, false);
 		assertDatasetEquals(DatasetFactory.createFromObject(new double[] {0.01, 1, 2.9, 5, -2, -2}, 2, 3), e);
 
 		g = DatasetFactory.createFromObject(IntegerDataset.class, new int[] {-1, 3, 1, 1, 2, 2}, 2, 3);
-		try {
-			e = DatasetUtils.choose(d, new Object[] {c, f, -2}, true, false);
-			fail("Should have thrown an array index OOB exception");
-		} catch (ArrayIndexOutOfBoundsException oob) {
-			// expected
-		}
+		assertThrows(ArrayIndexOutOfBoundsException.class, new ThrowingRunnable() {
+			@Override
+			public void run() {
+				DatasetUtils.choose(fd, new Object[] {c, f, -2}, true, false);
+			}
+		});
 
 		e = DatasetUtils.choose(g, new Object[] {c, f, -2}, false, false);
 		assertDatasetEquals(DatasetFactory.createFromObject(new double[] {-2, 1, 2.9, 5, -2, -2}, 2, 3), e);
@@ -1896,8 +1797,8 @@ public class AbstractDatasetTest {
 		int[] small = new int[] {2};
 		int[] medium = new int[] {1024, 1024};
 		int[] large = new int[] {1024, 1024, 1024};
-		int[] xxxlarge = new int[] {1024, 1024, 1024, 1024};
-		int[] bad = new int[] {1024, -1, 1024};
+		final int[] xxxlarge = new int[] {1024, 1024, 1024, 1024};
+		final int[] bad = new int[] {1024, -1, 1024};
 
 		assertEquals(0, ShapeUtils.calcLongSize(zero));
 		assertEquals(0, ShapeUtils.calcSize(zero));
@@ -1915,37 +1816,31 @@ public class AbstractDatasetTest {
 		assertEquals(1024*1024*1024, ShapeUtils.calcSize(large));
 
 		assertEquals(1024*1024*1024*1024L, ShapeUtils.calcLongSize(xxxlarge));
-		try {
-			ShapeUtils.calcSize(xxxlarge);
-			fail("Should have thrown an illegal argument exception");
-		} catch (IllegalArgumentException e) {
-			// expected
-		} catch (Throwable t) {
-			fail("Should have thrown an illegal argument exception");
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() {
+				ShapeUtils.calcSize(xxxlarge);
+			}
+		});
 
-		try {
-			ShapeUtils.calcLongSize(bad);
-			fail("Should have thrown an illegal argument exception");
-		} catch (IllegalArgumentException e) {
-			// expected
-		} catch (Throwable t) {
-			fail("Should have thrown an illegal argument exception");
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() {
+				ShapeUtils.calcLongSize(bad);
+			}
+		});
 
-		try {
-			ShapeUtils.calcSize(bad);
-			fail("Should have thrown an illegal argument exception");
-		} catch (IllegalArgumentException e) {
-			// expected
-		} catch (Throwable t) {
-			fail("Should have thrown an illegal argument exception");
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() {
+				ShapeUtils.calcSize(bad);
+			}
+		});
 	}
 
 	@Test
 	public void testFill() {
-		Dataset a = DatasetFactory.createRange(DoubleDataset.class, 12);
+		final Dataset a = DatasetFactory.createRange(DoubleDataset.class, 12);
 
 		Dataset b = DatasetFactory.zeros(a);
 		a.fill(0);
@@ -1966,11 +1861,12 @@ public class AbstractDatasetTest {
 		a.fill(DatasetFactory.createFromObject(new int[] {0}));
 		assertDatasetEquals(b, a, 1e-15, 1e-20);
 
-		try {
-			a.fill(DatasetFactory.createFromObject(new int[] {0, 1}));
-			fail();
-		} catch (IllegalArgumentException e) {
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() {
+				a.fill(DatasetFactory.createFromObject(new int[] {0, 1}));
+			}
+		});
 	}
 
 	@Test
@@ -2176,7 +2072,7 @@ public class AbstractDatasetTest {
 
 	private Dataset checkBroadcast2D(Dataset a, boolean broadcastFirstDim, int... broadcastShape) {
 		Dataset b = a.getBroadcastView(broadcastShape);
-		Assert.assertArrayEquals(broadcastShape, b.getShapeRef());
+		assertArrayEquals(broadcastShape, b.getShapeRef());
 		int size = ShapeUtils.calcSize(broadcastShape);
 		assertEquals(size, b.getSize());
 

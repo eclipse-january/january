@@ -166,13 +166,11 @@ public class Slice implements Cloneable, Serializable {
 	 *         {@code false} in the other case.
 	 */
 	public boolean isSliceComplete() {
-		if (start == null && stop == null && (step == 1 || step == -1))
-			return true;
 		if (length > 0) {
 			return getNumSteps() == length;
 		}
 
-		return true;
+		return start == null && stop == null && (step == 1 || step == -1);
 	}
 
 	/**
@@ -213,22 +211,36 @@ public class Slice implements Cloneable, Serializable {
 
 	/**
 	 * Set the starting index of the slice. If the start point of the Slice is
-	 * {@code null}, it will be set automatically to 0.
+	 * {@code null}, it will be set automatically to 0 or end.
 	 * 
 	 * @param start
 	 *            Starting index of the Slice, may be {@code null}
 	 */
 	public void setStart(Integer start) {
 		if (start != null && length > 0) {
+			if (start < 0) {
+				start += length;
+			}
 			if (step > 0) {
+				// ensure start >= 0 and < end
+				if (start < 0) {
+					start = 0;
+				}
 				int end = stop == null ? length : stop;
-				if (start >= end) {
-					throw new IllegalArgumentException("Non-null start must be less than end");
+				if (start > end) {
+					start = end;
 				}
 			} else {
+				// ensure start >= -1 and >= end, start < length
+				if (start < -1) {
+					start = -1;
+				}
 				int end = stop == null ? -1 : stop;
 				if (start < end) {
-					throw new IllegalArgumentException("Non-null start must be greater than end for negative step");
+					start = end;
+				}
+				if (start >= length) {
+					start = length - 1;
 				}
 			}
 		}
@@ -245,19 +257,32 @@ public class Slice implements Cloneable, Serializable {
 	 */
 	public void setStop(Integer stop) {
 		if (stop != null && length > 0) {
+			if (stop < 0) {
+				stop += length;
+			}
+
 			if (step > 0) {
+				// ensure stop >=0 and >= beg
+				if (stop < 0) {
+					stop = 0;
+				}
 				int beg = start == null ? 0 : start;
 				if (stop < beg) {
-					throw new IllegalArgumentException("Non-null stop must be greater than or equal to beginning");
+					stop = beg;
+				}
+				if (stop > length) {
+					stop = length;
 				}
 			} else {
-				int beg = start == null ? length - 1 : start;
-				if (stop >= beg) {
-					throw new IllegalArgumentException("Non-null stop must be less than beginning for negative step");
+				// ensure stop >= -1 and >= end
+				if (stop < -1) {
+					stop = -1;
+				}
+				int end = start == null ? length - 1 : start;
+				if (stop > end) {
+					stop = end;
 				}
 			}
-			if (stop > length)
-				stop = length;
 		}
 		this.stop = stop;
 	}
@@ -299,14 +324,10 @@ public class Slice implements Cloneable, Serializable {
 		int beg;
 		if (start == null) {
 			if (step < 0) {
-				if (length < 0) {
-					if (stop == null) {
-						throw new IllegalStateException("Length or stop should be set");
-					}
-					beg = stop - 1;
-				} else {
-					beg = length - 1;
-				}
+//				if (length < 0) { // not reachable as getNumSteps() throws exception
+//					throw new IllegalStateException("Length or stop should be set");
+//				}
+				beg = length - 1;
 			} else {
 				beg = 0;
 			}
@@ -400,18 +421,27 @@ public class Slice implements Cloneable, Serializable {
 	 */
 	public int getNumSteps() {
 		if (length < 0) {
-			if (stop == null)
-				throw new IllegalStateException("Slice is underspecified - stop is null and length is negative");
-			int beg = start == null ? (step > 0 ? 0 : stop - 1) : start;
-			if (step > 0 && stop <= beg)
+			if (step > 0) {
+				if (stop == null) {
+					throw new IllegalStateException("Slice is underspecified - stop is null and length is negative");
+				}
+				int beg = start == null ? 0 : start;
+				if (stop <= beg) {
+					return 0;
+				}
+				return getNumSteps(beg, stop, step);
+			}
+			if (start == null) {
+				throw new IllegalStateException("Slice is underspecified - start is null and length is negative");
+			}
+			int end = stop == null ? -1 : stop;
+			if (start <= end)
 				return 0;
-			if (step < 0 && stop > beg)
-				return 0;
-			return getNumSteps(beg, stop, step);
+			return getNumSteps(start, end, step);
 		}
 		int beg = start == null ? (step > 0 ? 0 : length - 1) : start;
 		int end = stop == null ? (step > 0 ? length : -1) : stop;
-		return getNumSteps(beg, end, step);
+		return getNumSteps(beg, end);
 	}
 
 	/**
@@ -428,7 +458,10 @@ public class Slice implements Cloneable, Serializable {
 		return getNumSteps(beg, end, step);
 	}
 
-	private static int getNumSteps(int beg, int end, int step) {
+	static int getNumSteps(int beg, int end, int step) {
+		if (beg == end) {
+			return 0;
+		}
 		int del = step > 0 ? 1 : -1;
 		return Math.max(0, (end - beg - del) / step + 1);
 	}
@@ -455,17 +488,26 @@ public class Slice implements Cloneable, Serializable {
 	 * Note : the stop value may not be preserved across two flips
 	 * </p>
 	 * 
-	 * @return Flipped Slice.
+	 * @return flipped slice
 	 */
 	public Slice flip() {
 		if (length < 0) {
-			Integer tmp = start == null ? null : start - step;
+			Integer tmp;
+			if (step > 0) {
+				tmp = start == null ? null : start - 1;
+			} else {
+				tmp = start == null ? null : start + 1;
+			}
 			start = stop == null ? null : getEnd();
 			stop = tmp;
 		} else {
 			Integer tstart = start;
 			start = stop == null ? null : getEnd();
-			stop = tstart == null ? null : tstart - step;
+			if (step > 0) {
+				stop = tstart == null ? null : tstart - 1;
+			} else {
+				stop = tstart == null ? null : tstart + 1;
+			}
 		}
 		step = -step;
 
@@ -493,7 +535,7 @@ public class Slice implements Cloneable, Serializable {
 
 		int i = 0;
 		for (; i < length; i++) {
-			if (length > rank)
+			if (i >= rank)
 				break;
 
 			Slice s = slice[i];
@@ -508,12 +550,6 @@ public class Slice implements Cloneable, Serializable {
 				start[i] = s.step > 0 ? 0 : shape[i] - 1;
 			} else {
 				n = s.start;
-				if (n < 0)
-					n += shape[i];
-				if (n < 0 || n >= shape[i]) {
-					throw new IllegalArgumentException(
-							String.format("Start is out of bounds: %d is not in [%d,%d)", n, s.start, shape[i]));
-				}
 				start[i] = n;
 			}
 
@@ -521,26 +557,10 @@ public class Slice implements Cloneable, Serializable {
 				stop[i] = s.step > 0 ? shape[i] : -1;
 			} else {
 				n = s.stop;
-				if (n < 0)
-					n += shape[i];
-				if (n < 0 || n > shape[i]) {
-					throw new IllegalArgumentException(
-							String.format("Stop is out of bounds: %d is not in [%d,%d)", n, s.stop, shape[i]));
-				}
 				stop[i] = n;
 			}
 
 			n = s.step;
-			if (n == 0) {
-				throw new IllegalArgumentException("Step cannot be zero");
-			}
-			if (n > 0) {
-				if (start[i] > stop[i])
-					throw new IllegalArgumentException("Start must be less than stop for positive steps");
-			} else {
-				if (start[i] < stop[i])
-					throw new IllegalArgumentException("Start must be greater than stop for negative steps");
-			}
 			step[i] = n;
 		}
 		for (; i < rank; i++) {

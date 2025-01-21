@@ -15,6 +15,7 @@ import static org.eclipse.january.asserts.TestUtils.verbosePrintln;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.fail;
 
 import java.util.Arrays;
@@ -24,6 +25,7 @@ import org.eclipse.january.DatasetException;
 import org.eclipse.january.metadata.AxesMetadata;
 import org.eclipse.january.metadata.MetadataFactory;
 import org.junit.Test;
+import org.junit.function.ThrowingRunnable;
 
 public class LazyDatasetTest {
 
@@ -81,7 +83,7 @@ public class LazyDatasetTest {
 	public void testGetSlice() throws Exception {
 		final int[] shape = new int[] {1, 2, 3, 4};
 		final Dataset d = Random.randn(shape);
-		LazyDataset ld = LazyDataset.createLazyDataset(d);
+		final LazyDataset ld = LazyDataset.createLazyDataset(d);
 
 		Slice[] slice;
 		slice = new Slice[]{null, new Slice(1), null, new Slice(1, 3)};
@@ -135,26 +137,26 @@ public class LazyDatasetTest {
 		assertEquals("Full negative slice", d.getSlice(slice), nd);
 
 		// test input SliceND checking
-		try {
-			ld.getSlice(new SliceND(null));
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				ld.getSlice(new SliceND(null));
+			}
+		});
 
-		try {
-			ld.getSlice(new SliceND(new int[0]));
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				ld.getSlice(new SliceND(new int[0]));
+			}
+		});
 
-		try {
-			ld.getSlice(new SliceND(new int[2]));
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				ld.getSlice(new SliceND(new int[2]));
+			}
+		});
 
 		nd = ld.getSlice(new SliceND(ld.getShape()));
 		assertEquals("Full slice", d.getSlice(), nd);
@@ -164,7 +166,7 @@ public class LazyDatasetTest {
 	public void testGetSliceView() throws Exception {
 		final int[] shape = new int[] {6, 2, 4, 1};
 		final Dataset d = Random.randn(shape);
-		LazyDataset ld = LazyDataset.createLazyDataset(d);
+		final LazyDataset ld = LazyDataset.createLazyDataset(d);
 
 		Slice[] slice;
 		slice = new Slice[]{new Slice(1, null, 3), new Slice(1), new Slice(1, 3), null};
@@ -196,26 +198,26 @@ public class LazyDatasetTest {
 		assertEquals("Full negative slice", d.getSlice(slice), l.getSlice());
 
 		// test input SliceND checking
-		try {
-			ld.getSliceView(new SliceND(null));
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				ld.getSliceView(new SliceND(null));
+			}
+		});
 
-		try {
-			ld.getSliceView(new SliceND(new int[0]));
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				ld.getSliceView(new SliceND(new int[0]));
+			}
+		});
 
-		try {
-			ld.getSliceView(new SliceND(new int[2]));
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				ld.getSliceView(new SliceND(new int[2]));
+			}
+		});
 
 		l = ld.getSliceView(new SliceND(ld.getShape()));
 		assertEquals("Full slice", d, l.getSlice());

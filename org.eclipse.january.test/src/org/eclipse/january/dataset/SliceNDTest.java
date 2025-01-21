@@ -12,16 +12,18 @@ package org.eclipse.january.dataset;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import org.junit.Test;
+import org.junit.function.ThrowingRunnable;
 
 public class SliceNDTest {
 
 	@Test
 	public void testSliceND() {
-		int[] step;
+		final int[] step;
 		int[] lstart;
 		int[] lstop;
 		SliceND slice;
@@ -30,6 +32,7 @@ public class SliceNDTest {
 		slice = new SliceND(null);
 		assertTrue(slice.isAll());
 		assertEquals("", slice.toString());
+		assertNull(slice.convertToSlice());
 
 		// zero-rank dataset
 		slice = new SliceND(new int[0]);
@@ -41,33 +44,32 @@ public class SliceNDTest {
 		assertFalse(slice.isAll());
 		assertEquals(":", slice.toString());
 
-		step = new int[] {};
 		lstart = new int[] {};
 		lstop = new int[] {};
-		slice = new SliceND(new int[] {}, null, null, step);
+		slice = new SliceND(new int[] {}, null, null, new int[] {});
 		assertArrayEquals(new int[] {}, slice.getShape());
 
-		try {
-			slice = new SliceND(new int[] {1}, null, null, step);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				new SliceND(new int[] {1}, null, null, new int[] {});
+			}
+		});
 
-		try {
-			slice = new SliceND(new int[] {3}, null, null, new int[1]);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				new SliceND(new int[] {3}, null, null, new int[1]);
+			}
+		});
 
 		step = new int[] {2};
-		try {
-			slice = new SliceND(new int[] {2, 3}, null, null, step);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				new SliceND(new int[] {2, 3}, null, null, step);
+			}
+		});
 
 		lstart = new int[1];
 		lstop = new int[1];
@@ -75,6 +77,7 @@ public class SliceNDTest {
 		assertArrayEquals(new int[] {4}, slice.getShape());
 		assertArrayEquals(new int[] {0}, slice.getStart());
 		assertArrayEquals(new int[] {7}, slice.getStop());
+		assertArrayEquals(new int[] {7}, slice.getMaxShape());
 
 		lstart[0] = 0;
 		slice = new SliceND(new int[] {7}, lstart, null, step);
@@ -155,13 +158,13 @@ public class SliceNDTest {
 		assertArrayEquals(new int[] {4}, slice.getStart());
 		assertArrayEquals(new int[] {4}, slice.getStop());
 
-		step = new int[] {-2};
-		try {
-			slice = new SliceND(new int[] {2, 3}, null, null, step);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		step[0] = -2;
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				new SliceND(new int[] {2, 3}, null, null, step);
+			}
+		});
 
 		slice = new SliceND(new int[] {7}, null, null, step);
 		assertArrayEquals(new int[] {4}, slice.getShape());
@@ -291,32 +294,76 @@ public class SliceNDTest {
 		assertArrayEquals(new int[] {0, 3}, slice.getShape());
 		assertArrayEquals(new int[] {1, 1}, slice.getStart());
 		assertArrayEquals(new int[] {1, 4}, slice.getStop());
-	}
+
+		slice = new SliceND(new int[] {8, 4}, new Slice(1,8,-3), new Slice(1, 4));
+		assertArrayEquals(new int[] {0, 3}, slice.getShape());
+		assertArrayEquals(new int[] {1, 1}, slice.getStart());
+		assertArrayEquals(new int[] {1, 4}, slice.getStop());
+
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				new SliceND(new int[] {2, 3}, new Slice[] {null, null, null});
+			}
+		});
+}
 
 	@Test
 	public void testExpandedSliceND() {
-		int[] step;
+		final int[] step;
 		int[] lstart;
 		int[] lstop;
 		SliceND slice;
 
-		step = new int[] {};
 		lstart = new int[] {};
 		lstop = new int[] {};
 
-		try {
-			slice = new SliceND(new int[] {1}, new int[] {}, null, null, null);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		slice = new SliceND(null, null, null, null, null);
+		assertArrayEquals(new int[] {}, slice.getShape());
+		assertArrayEquals(new int[] {}, slice.getStart());
+		assertArrayEquals(new int[] {}, slice.getStop());
 
-		try {
-			slice = new SliceND(new int[] {1}, new int[] {2, 2}, null, null, null);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				new SliceND(new int[] {1}, new int[] {}, null, null, null);
+			}
+		});
+
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				new SliceND(new int[] {1}, new int[] {2, 2}, null, null, null);
+			}
+		});
+
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				new SliceND(new int[] {5}, new int[] {2}, null, null, null);
+			}
+		});
+
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				new SliceND(new int[] {5}, new int[] {2}, new int[0], null, null);
+			}
+		});
+
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				new SliceND(new int[] {5}, new int[] {2}, null, new int[2], null);
+			}
+		});
+
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				new SliceND(new int[] {5}, new int[] {2}, null, null, new int[0]);
+			}
+		});
 
 		step = new int[] {2};
 
@@ -326,12 +373,15 @@ public class SliceNDTest {
 		assertArrayEquals(new int[] {4}, slice.getShape());
 		assertArrayEquals(new int[] {0}, slice.getStart());
 		assertArrayEquals(new int[] {7}, slice.getStop());
+		assertArrayEquals(new int[] {9}, slice.getMaxShape());
+		assertFalse(slice.isExpanded());
 
 		lstart[0] = 0;
 		slice = new SliceND(new int[] {7}, new int[] {9}, lstart, null, step);
 		assertArrayEquals(new int[] {4}, slice.getShape());
 		assertArrayEquals(new int[] {0}, slice.getStart());
 		assertArrayEquals(new int[] {7}, slice.getStop());
+		assertFalse(slice.isExpanded());
 
 		lstart[0] = 3;
 		slice = new SliceND(new int[] {7}, new int[] {9}, lstart, null, step);
@@ -341,21 +391,44 @@ public class SliceNDTest {
 
 		lstart[0] = 8;
 		slice = new SliceND(new int[] {7}, new int[] {9}, lstart, null, step);
-		assertArrayEquals(new int[] {1}, slice.getShape());
+		assertArrayEquals(new int[] {0}, slice.getShape());
 		assertArrayEquals(new int[] {8}, slice.getStart());
-		assertArrayEquals(new int[] {9}, slice.getStop());
+		assertArrayEquals(new int[] {8}, slice.getStop());
+		assertTrue(slice.isExpanded());
 
 		lstart[0] = 8;
-		slice = new SliceND(new int[] {7}, new int[] {9}, lstart, new int[] {10}, step);
+		lstop[0] = 10;
+		slice = new SliceND(new int[] {7}, new int[] {9}, lstart, lstop, step);
 		assertArrayEquals(new int[] {1}, slice.getShape());
 		assertArrayEquals(new int[] {8}, slice.getStart());
 		assertArrayEquals(new int[] {9}, slice.getStop());
+		assertTrue(slice.isExpanded());
 
 		lstart[0] = 10;
-		slice = new SliceND(new int[] {7}, new int[] {9}, lstart, new int[] {10}, step);
+		slice = new SliceND(new int[] {7}, new int[] {9}, lstart, lstop, step);
 		assertArrayEquals(new int[] {0}, slice.getShape());
 		assertArrayEquals(new int[] {9}, slice.getStart());
 		assertArrayEquals(new int[] {9}, slice.getStop());
+
+		lstart[0] = 5;
+		lstop[0] = 2;
+		slice = new SliceND(new int[] {7}, new int[] {9}, lstart, lstop, step);
+		assertArrayEquals(new int[] {0}, slice.getShape());
+		assertArrayEquals(new int[] {5}, slice.getStart());
+		assertArrayEquals(new int[] {5}, slice.getStop());
+
+		lstart[0] = 12;
+		lstop[0] = 6;
+		slice = new SliceND(new int[] {7}, new int[] {19}, lstart, lstop, step);
+		assertArrayEquals(new int[] {0}, slice.getShape());
+		assertArrayEquals(new int[] {12}, slice.getStart());
+		assertArrayEquals(new int[] {12}, slice.getStop());
+
+		lstop[0] = 8;
+		slice = new SliceND(new int[] {7}, new int[] {19}, lstart, lstop, step);
+		assertArrayEquals(new int[] {0}, slice.getShape());
+		assertArrayEquals(new int[] {12}, slice.getStart());
+		assertArrayEquals(new int[] {12}, slice.getStop());
 
 		lstart[0] = 10;
 		slice = new SliceND(new int[] {7}, new int[] {9}, lstart, null, step);
@@ -377,17 +450,17 @@ public class SliceNDTest {
 
 		lstart[0] = 7;
 		slice = new SliceND(new int[] {7}, new int[] {9}, lstart, null, step);
-		assertArrayEquals(new int[] {1}, slice.getShape());
+		assertArrayEquals(new int[] {0}, slice.getShape());
 		assertArrayEquals(new int[] {7}, slice.getStart());
-		assertArrayEquals(new int[] {9}, slice.getStop());
-		assertArrayEquals(new int[] {9}, slice.getSourceShape());
+		assertArrayEquals(new int[] {7}, slice.getStop());
+		assertArrayEquals(new int[] {7}, slice.getSourceShape());
 
 		lstart[0] = 8;
 		slice = new SliceND(new int[] {7}, new int[] {9}, lstart, null, step);
-		assertArrayEquals(new int[] {1}, slice.getShape());
+		assertArrayEquals(new int[] {0}, slice.getShape());
 		assertArrayEquals(new int[] {8}, slice.getStart());
-		assertArrayEquals(new int[] {9}, slice.getStop());
-		assertArrayEquals(new int[] {9}, slice.getSourceShape());
+		assertArrayEquals(new int[] {8}, slice.getStop());
+		assertArrayEquals(new int[] {8}, slice.getSourceShape());
 		assertFalse(slice.isAll());
 
 		lstop[0] = 7;
@@ -436,13 +509,13 @@ public class SliceNDTest {
 		assertArrayEquals(new int[] {9}, slice.getStop());
 		assertArrayEquals(new int[] {9}, slice.getSourceShape());
 
-		step = new int[] {-2};
-		try {
-			slice = new SliceND(new int[] {2, 3}, null, null, step);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		step[0] = -2;
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				new SliceND(new int[] {2, 3}, null, null, step);
+			}
+		});
 
 		slice = new SliceND(new int[] {7}, new int[] {9}, null, null, step);
 		assertArrayEquals(new int[] {4}, slice.getShape());
@@ -550,12 +623,22 @@ public class SliceNDTest {
 		assertArrayEquals(new int[] {4}, slice.getShape());
 		assertArrayEquals(new int[] {6}, slice.getStart());
 		assertArrayEquals(new int[] {-1}, slice.getStop());
+
+		slice = new SliceND(new int[] {7, 12}, new int[] {9, 12}, (Slice[]) null);
+		assertArrayEquals(new int[] {7, 12}, slice.getShape());
+		assertArrayEquals(new int[] {0, 0}, slice.getStart());
+		assertArrayEquals(new int[] {7, 12}, slice.getStop());
+
+		slice = new SliceND(new int[] {7, 12}, new int[] {9, 12}, new Slice(null, -8, step[0]), null);
+		assertArrayEquals(new int[] {4, 12}, slice.getShape());
+		assertArrayEquals(new int[] {6, 0}, slice.getStart());
+		assertArrayEquals(new int[] {-1, 12}, slice.getStop());
 	}
 
 	@Test
 	public void testUnlimitedSliceND() {
-		int[] step;
-		int[] lstart;
+		final int[] step;
+		final int[] lstart;
 		int[] lstop;
 		SliceND slice;
 
@@ -593,20 +676,16 @@ public class SliceNDTest {
 		assertArrayEquals(new int[] {7}, slice.getStop());
 
 		lstart[0] = 7;
-		try {
-			slice = new SliceND(new int[] {7}, new int[] {-1}, lstart, null, step);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		slice = new SliceND(new int[] {7}, new int[] {-1}, lstart, null, step);
+		assertArrayEquals(new int[] {0}, slice.getShape());
+		assertArrayEquals(new int[] {7}, slice.getStart());
+		assertArrayEquals(new int[] {7}, slice.getStop());
 
 		lstart[0] = 8;
-		try {
-			slice = new SliceND(new int[] {7}, new int[] {-1}, lstart, null, step);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		slice = new SliceND(new int[] {7}, new int[] {-1}, lstart, null, step);
+		assertArrayEquals(new int[] {0}, slice.getShape());
+		assertArrayEquals(new int[] {8}, slice.getStart());
+		assertArrayEquals(new int[] {8}, slice.getStop());
 
 		lstop[0] = 7;
 		slice = new SliceND(new int[] {7}, new int[] {-1}, null, lstop, step);
@@ -676,14 +755,28 @@ public class SliceNDTest {
 		assertArrayEquals(new int[] {12}, slice.getStop());
 		assertArrayEquals(new int[] {12}, slice.getSourceShape());
 
+		lstart[0] = 9;
+		lstop[0] = 8;
+		slice = new SliceND(new int[] {7}, new int[] {-1}, lstart, lstop, step);
+		assertArrayEquals(new int[] {0}, slice.getShape());
+		assertArrayEquals(new int[] {9}, slice.getStart());
+		assertArrayEquals(new int[] {9}, slice.getStop());
+		assertArrayEquals(new int[] {9}, slice.getSourceShape());
 
-		step = new int[] {-2};
-		try {
-			slice = new SliceND(new int[] {2, 3}, null, null, step);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		lstop[0] = 2;
+		slice = new SliceND(new int[] {7}, new int[] {-1}, lstart, lstop, step);
+		assertArrayEquals(new int[] {0}, slice.getShape());
+		assertArrayEquals(new int[] {9}, slice.getStart());
+		assertArrayEquals(new int[] {9}, slice.getStop());
+		assertArrayEquals(new int[] {9}, slice.getSourceShape());
+
+		step[0]= -2;
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				new SliceND(new int[] {2, 3}, null, null, step);
+			}
+		});
 
 		slice = new SliceND(new int[] {7}, new int[] {-1}, null, null, step);
 		assertArrayEquals(new int[] {4}, slice.getShape());
@@ -799,6 +892,10 @@ public class SliceNDTest {
 		lstart = new int[] {};
 		lstop = new int[] {};
 		slice = new SliceND(new int[] {}, null, null, step);
+		assertTrue(slice.isAll());
+
+		step = new int[] {1};
+		slice = new SliceND(new int[] {7}, null, null, step);
 		assertTrue(slice.isAll());
 
 		step = new int[] {-1};
@@ -934,21 +1031,18 @@ public class SliceNDTest {
 
 	@Test
 	public void testFlip() {
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				new SliceND(new int[] {}, null, null, new int[] {}).flip(0);
+			}
+		});
+
 		int[] step;
 		int[] lstart;
 		SliceND slice;
 
-		step = new int[] {};
-		slice = new SliceND(new int[] {}, null, null, step);
-		try {
-			slice.flip(0);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
-
 		step = new int[] {2};
-
 		lstart = new int[1];
 		slice = new SliceND(new int[] {7}, null, null, step).flip();
 		assertArrayEquals(new int[] {4}, slice.getShape());
@@ -1068,12 +1162,17 @@ public class SliceNDTest {
 	@Test
 	public void testSliceWithinShape() {
 		assertTrue(SliceND.isSliceWithinShape(0, 0, 0, 1));
+		assertFalse(SliceND.isSliceWithinShape(0, 1, 0, 1));
+		assertFalse(SliceND.isSliceWithinShape(0, 0, 1, 1));
 
 		assertTrue(SliceND.isSliceWithinShape(5, 0, 5, 1));
 		assertTrue(SliceND.isSliceWithinShape(5, 1, 1, 1));
+		assertFalse(SliceND.isSliceWithinShape(5, -1, 1, 1));
+		assertFalse(SliceND.isSliceWithinShape(5, 3, 2, 1));
 		assertTrue(SliceND.isSliceWithinShape(5, 1, 5, 1));
 		assertTrue(SliceND.isSliceWithinShape(5, 4, 4, 1));
 		assertFalse(SliceND.isSliceWithinShape(5, 5, 5, 1));
+		assertFalse(SliceND.isSliceWithinShape(5, 4, 6, 1));
 		assertFalse(SliceND.isSliceWithinShape(5, 2, 1, 1));
 
 		assertTrue(SliceND.isSliceWithinShape(5, 4, -1, -1));
@@ -1083,148 +1182,360 @@ public class SliceNDTest {
 		assertFalse(SliceND.isSliceWithinShape(5, 5, 5, -1));
 		assertFalse(SliceND.isSliceWithinShape(5, -1, -1, -1));
 		assertFalse(SliceND.isSliceWithinShape(5, 1, 2, -1));
+		assertFalse(SliceND.isSliceWithinShape(5, 4, -2, -1));
 	}
 
 	@Test
 	public void testUpdateSourceShape() {
-		SliceND slice = new SliceND(new int[] {8, 4}, new int[] {6 , 1}, new int[] {2, 4}, new int[] {-3, 1});
+		// (8,12)[6:2:-3, 5:9] => (2,3)
+		final SliceND slice = new SliceND(new int[] {8, 12}, new int[] {6 , 5}, new int[] {2, 9}, new int[] {-3, 1});
 
-		slice.updateSourceShape(13, 4);
+		slice.updateSourceShape(13, 12);
 
-		slice.updateSourceShape(8, 6);
+		slice.updateSourceShape(8,14);
 
-		try {
-			slice.updateSourceShape(8, 3);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				slice.updateSourceShape(8, 3);
+			}
+		});
 
-		try {
-			slice.updateSourceShape(3, 4);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				slice.updateSourceShape(8, 3);
+			}
+		});
 
-		try {
-			slice.updateSourceShape(1, 4);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				slice.updateSourceShape(3, 4);
+			}
+		});
 
-		try {
-			slice.updateSourceShape(3);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				slice.updateSourceShape(1, 4);
+			}
+		});
 
-		try {
-			slice.updateSourceShape();
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				slice.updateSourceShape(3);
+			}
+		});
 
-		try {
-			slice.updateSourceShape(null);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				slice.updateSourceShape();
+			}
+		});
 
-		slice = new SliceND(null);
-		slice.updateSourceShape(null);
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				slice.updateSourceShape(null);
+			}
+		});
 
-		try {
-			slice.updateSourceShape();
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				slice.updateSourceShape();
+			}
+		});
 
-		try {
-			slice.updateSourceShape(3);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		final SliceND slice1 = new SliceND(null);
+		slice1.updateSourceShape(null);
+
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				slice1.updateSourceShape(3);
+			}
+		});
 	}
 
 	@Test
 	public void testCheckShapes() {
-		SliceND slice = new SliceND(new int[] {8, 4}, new int[] {6 , 1}, new int[] {2, 4}, new int[] {-3, 1});
+		// [6:2:-3, 1:] in (8,4) has output shape is (2,3)
+		final SliceND slice1 = new SliceND(new int[] {8, 4}, new int[] {6 , 1}, new int[] {2, 4}, new int[] {-3, 1});
 
-		slice.checkShapes(new int[] {8, 4}, null);
+		slice1.checkShapes(new int[] {8, 4}, null);
 
-		try {
-			slice.checkShapes(new int[] {7}, null);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				slice1.checkShapes(new int[] {7}, null);
+			}
+		});
 
-		try {
-			slice.checkShapes(new int[] {7, 4}, null);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				slice1.checkShapes(new int[] {7, 2}, null);
+			}
+		});
 
-		try {
-			slice.checkShapes(new int[] {6, 4}, null);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				slice1.checkShapes(new int[] {6, 4}, null);
+			}
+		});
 
-		slice.checkShapes(new int[] {6, 4}, new int[] {12, ILazyWriteableDataset.UNLIMITED});
+		slice1.checkShapes(new int[] {6, 4}, new int[] {12, ILazyWriteableDataset.UNLIMITED});
 
-		slice.checkShapes(new int[] {6, 4}, new int[] {ILazyWriteableDataset.UNLIMITED, 4});
+		slice1.checkShapes(new int[] {6, 4}, new int[] {ILazyWriteableDataset.UNLIMITED, 4});
 
-		slice = new SliceND(new int[] {8, 4}, new int[] {12, 6},
+		// [6:2:-3, 2:] in (8,4) [max (12,6)] has output shape (2,3)
+		final SliceND slice2 = new SliceND(new int[] {8, 4}, new int[] {12, 6},
 				new int[] {6 , 1}, new int[] {2, 4}, new int[] {-3, 1});
 
-		slice.checkShapes(new int[] {10, 4}, null);
+		slice2.checkShapes(new int[] {10, 4}, null);
 
-		slice.checkShapes(new int[] {8, 4}, null);
+		slice2.checkShapes(new int[] {8, 4}, null);
 
-		try {
-			slice.checkShapes(new int[] {7, 4}, null);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				slice2.checkShapes(new int[] {6, 4}, null);
+			}
+		});
 
-		try {
-			slice.checkShapes(new int[] {5, 5}, null);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				slice2.checkShapes(new int[] {5, 5}, null);
+			}
+		});
 
-		slice.checkShapes(new int[] {5, 5}, new int[] {ILazyWriteableDataset.UNLIMITED, 6});
+		slice2.checkShapes(new int[] {7, 5}, new int[] {8, 4});
+		slice2.checkShapes(new int[] {5, 5}, new int[] {8, 4});
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				// b >= m
+				slice2.checkShapes(new int[] {5, 5}, new int[] {5, 4});
+			}
+		});
 
-		slice.checkShapes(new int[] {5, 5}, new int[] {12, ILazyWriteableDataset.UNLIMITED});
+		slice2.checkShapes(new int[] {7, 3}, new int[] {8, 4});
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				slice2.checkShapes(new int[] {7, 3}, new int[] {8, 3});
+			}
+		});
 
-		try {
-			slice.checkShapes(new int[] {5, 2}, new int[] {12, 3});
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		slice2.checkShapes(new int[] {5, 5}, new int[] {ILazyWriteableDataset.UNLIMITED, 6});
 
-		slice = new SliceND(null);
+		slice2.checkShapes(new int[] {6, 5}, new int[] {ILazyWriteableDataset.UNLIMITED, 6});
 
-		slice.checkShapes(null, null);
+		slice2.checkShapes(new int[] {5, 5}, new int[] {12, ILazyWriteableDataset.UNLIMITED});
 
-		try {
-			slice.checkShapes(new int[] {5, 5}, null);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("As expected: " + e);
-		}
+		slice2.checkShapes(new int[] {5, 3}, new int[] {12, ILazyWriteableDataset.UNLIMITED});
+
+		final SliceND slice3 = new SliceND(null);
+
+		slice3.checkShapes(null, null);
+
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				slice3.checkShapes(new int[] {5, 5}, null);
+			}
+		});
+	}
+
+	@Test
+	public void testSetStartStop() {
+		int length = 12;
+		int step = 1;
+		int last = length - 1;
+		int stop = 5;
+		SliceND sl;
+
+		sl = new SliceND(new int[] {length});
+		assertEquals(0, sl.getStart()[0]);
+		assertEquals(length, sl.getShape()[0]);
+
+		sl.setSlice(0, 1, null, step);
+		assertEquals(1, sl.getStart()[0]);
+		assertEquals(last, sl.getShape()[0]);
+
+		sl.setSlice(0, -1, null, step);
+		assertEquals(last, sl.getStart()[0]);
+		assertEquals(1, sl.getShape()[0]);
+
+		sl.setSlice(0, -length-1, null, step);
+		assertEquals(0, sl.getStart()[0]);
+		assertEquals(length, sl.getShape()[0]);
+
+		sl.setSlice(0, last, null, step);
+		assertEquals(last, sl.getStart()[0]);
+		assertEquals(1, sl.getShape()[0]);
+
+
+		sl.setSlice(0, last + 2, null, step);
+		assertEquals(length, sl.getStart()[0]);
+		assertEquals(0, sl.getShape()[0]);
+
+		sl.setSlice(0, 1, null, -step);
+		assertEquals(1, sl.getStart()[0]);
+		assertEquals(2, sl.getShape()[0]);
+
+		sl.setSlice(0, -1, null, -step);
+		assertEquals(last, sl.getStart()[0]);
+		assertEquals(length, sl.getShape()[0]);
+
+		sl.setSlice(0, -length-2, null, -step);
+		assertEquals(-1, sl.getStart()[0]);
+		assertEquals(0, sl.getShape()[0]);
+
+		sl.setSlice(0, last, null, -step);
+		assertEquals(last, sl.getStart()[0]);
+		assertEquals(length, sl.getShape()[0]);
+
+		sl.setSlice(0, last + 2, null, -step);
+		assertEquals(last, sl.getStart()[0]);
+		assertEquals(length, sl.getShape()[0]);
+
+		// with a stop defined
+		sl.setSlice(0, 1, stop, step);
+		assertEquals(1, sl.getStart()[0]);
+		assertEquals(stop - 1, sl.getShape()[0]);
+
+		sl.setSlice(0, -1, stop, step);
+		assertEquals(last, sl.getStart()[0]);
+		assertEquals(0, sl.getShape()[0]);
+
+		sl.setSlice(0, -length-1, stop, step);
+		assertEquals(0, sl.getStart()[0]);
+		assertEquals(stop, sl.getShape()[0]);
+
+		sl.setSlice(0, last, stop, step);
+		assertEquals(last, sl.getStart()[0]);
+		assertEquals(0, sl.getShape()[0]);
+
+		sl.setSlice(0, last + 2, stop, step);
+		assertEquals(length, sl.getStart()[0]);
+		assertEquals(0, sl.getShape()[0]);
+
+		sl.setSlice(0, last + 2, stop - 2, step);
+		assertEquals(length, sl.getStart()[0]);
+		assertEquals(0, sl.getShape()[0]);
+
+		sl.setSlice(0, null, null, step);
+		assertEquals(length, sl.getStop()[0]);
+		assertEquals(0, sl.getStart()[0]);
+		assertEquals(length, sl.getShape()[0]);
+
+		sl.setSlice(0, null, -length-1, step);
+		assertEquals(0, sl.getStop()[0]);
+		assertEquals(0, sl.getStart()[0]);
+		assertEquals(0, sl.getShape()[0]);
+
+		sl.setSlice(0, null, length+1, step);
+		assertEquals(length, sl.getStop()[0]);
+		assertEquals(length, sl.getShape()[0]);
+
+		sl.setSlice(0, 1, stop, -step);
+		assertEquals(1, sl.getStart()[0]);
+		assertEquals(0, sl.getShape()[0]);
+
+		int expected = last - stop;
+		sl.setSlice(0, -1, stop, -step);
+		assertEquals(last, sl.getStart()[0]);
+		assertEquals(expected, sl.getShape()[0]);
+
+		sl.setSlice(0, -length-1, stop, -step);
+		assertEquals(-1, sl.getStart()[0]);
+		assertEquals(0, sl.getShape()[0]);
+
+		sl.setSlice(0, last, stop, -step);
+		assertEquals(last, sl.getStart()[0]);
+		assertEquals(expected, sl.getShape()[0]);
+
+		sl.setSlice(0, last+1, stop, -step);
+		assertEquals(last, sl.getStart()[0]);
+		assertEquals(expected, sl.getShape()[0]);
+
+		sl.setSlice(0, null, null, -step);
+		assertEquals(-1, sl.getStop()[0]);
+		assertEquals(length, sl.getShape()[0]);
+
+		sl.setSlice(0, null, -length-1, -step);
+		assertEquals(-1, sl.getStop()[0]);
+		assertEquals(length, sl.getShape()[0]);
+
+		sl.setSlice(0, null, length+1, -step);
+		assertEquals(last, sl.getStop()[0]);
+		assertEquals(0, sl.getShape()[0]);
+
+		sl.setSlice(0, stop, length+1, -step);
+		assertEquals(stop, sl.getStop()[0]);
+		assertEquals(0, sl.getShape()[0]);
+
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				new SliceND(null).setSlice(0, null, null, -2);
+			}
+		});
+	}
+
+	@Test
+	public void testCreateSlice() {
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				SliceND.createSlice(null, null, null, null, null);
+			}
+		});
+
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				SliceND.createSlice(new int[0], new int[1], null, null, null);
+			}
+		});
+
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				SliceND.createSlice(new int[1], null, new int[2], null, null);
+			}
+		});
+
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				SliceND.createSlice(new int[1], null, null, new int[2], null);
+			}
+		});
+
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				SliceND.createSlice(new int[1], null, null, null, new int[2]);
+			}
+		});
+
+		SliceND s = SliceND.createSlice(new int[0], null, null, null, null);
+		assertEquals(0, s.getShape().length);
+
+		LazyDataset lazy = LazyDataset.createLazyDataset(DatasetFactory.createRange(12));
+		s = SliceND.createSlice(lazy, new int[] {2}, new int[] {8});
+		assertArrayEquals(new int[] {6}, s.getShape());
+
+		lazy = new LazyDynamicDataset(lazy.getLoader(), lazy.getName(), lazy.getElementsPerItem(), DoubleDataset.class, lazy.getShape(), new int[] {20});
+		s = SliceND.createSlice(lazy, new int[] {2}, new int[] {8});
+		assertArrayEquals(new int[] {6}, s.getShape());
 	}
 }
