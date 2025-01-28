@@ -166,6 +166,10 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 		}, dataset.getName(), dataset.getElementsPerItem(), dataset.getClass(), dataset.getShapeRef());
 	}
 
+	ILazyLoader getLoader() {
+		return loader;
+	}
+
 	@Override
 	public Class<?> getElementClass() {
 		return InterfaceUtils.getElementClass(clazz);
@@ -603,6 +607,10 @@ public class LazyDataset extends LazyDatasetBase implements Serializable, Clonea
 
 		if (slice == null) {
 			slice = new SliceND(shape);
+		}
+
+		if (padding == null && map == null && begSlice == null) {
+			return slice.clone();
 		}
 
 		if (ShapeUtils.calcLongSize(slice.getShape()) == 0) {

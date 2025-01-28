@@ -137,7 +137,7 @@ public class SliceND {
 	 * @param shape
 	 *            Shape of the dataset, see {@link ILazyDataset#getShape()}
 	 * @param maxShape
-	 *            Array of maximals shapes, may be {@code null}
+	 *            Array of maximal shapes, may be {@code null}
 	 * @param start
 	 *            Array of starts points, may be {@code null}
 	 * @param stop
@@ -185,8 +185,42 @@ public class SliceND {
 		}
 
 		for (int i = 0; i < rank; i++) {
-			internalSetSlice(i, start == null ? null : lstart[i], stop == null ? null : lstop[i], lstep[i]);
+			int d = lstep[i];
+			int l = oshape[i];
+			int b = start == null ? (d > 0 ? 0 : l - 1) : lstart[i];
+			int e = stop == null ? (d > 0 ? l : -1-l) : lstop[i];
+			internalSetSlice(true, i, b, e, d);
 		}
+	}
+
+	/**
+	 * Set slice for given dimension, if the start is {@code null} it will be
+	 * set to 0, stop is by default equal to the entire size of the set.
+	 * 
+	 * @param i
+	 *            dimension
+	 * @param start
+	 *            Start point
+	 * @param stop
+	 *            Stop point
+	 * @param step
+	 *            Slice step
+	 */
+	public void setSlice(int i, int start, int stop, int step) {
+		internalSetSlice(true, i, start, stop, step);
+	}
+
+	/**
+	 * Set slice for given dimension.
+	 * 
+	 * @param i
+	 *            Dimension
+	 * @param slice
+	 *            Slice with wanted properties to set
+	 * @since 2.0
+	 */
+	public void setSlice(int i, Slice slice) {
+		setSlice(i, slice.getStart(), slice.getStop(), slice.getStep());
 	}
 
 	/**
@@ -203,53 +237,48 @@ public class SliceND {
 	 *            Slice step
 	 */
 	public void setSlice(int i, Integer start, Integer stop, int step) {
-		internalSetSlice(i, start, stop, step);
+		i = ShapeUtils.checkAxis(oshape == null ? 0 : oshape.length, i);
+		final int s = oshape[i];
+		final int m = mshape[i];
+		int iStart;
+		int iStop;
+
+		if (start == null) {
+			iStart = step > 0 ? 0 : s - 1;
+		} else {
+			iStart = start;
+		}
+		if (stop == null) {
+			if (iStart > s) {
+				if (m == ILazyWriteableDataset.UNLIMITED) {
+					throw new IllegalArgumentException(
+						"To extend past current dimension in unlimited case, a stop value must be specified");
+				}
+				iStop = step > 0 ? iStart : -1-s;
+			} else {
+				iStop = step > 0 ? s : -1-s; // need to offset before wrap
+			}
+		} else {
+			iStop = stop;
+		}
+		internalSetSlice(true, i, iStart, iStop, step);
 	}
 
 	/**
 	 * Set slice for given dimension, if the start is {@code null} it will be
 	 * set to 0, stop is by default equal to the entire size of the set.
 	 * 
+	 * @param wrap if true, wrap -ve stops when step -ve
 	 * @param i
 	 *            dimension
 	 * @param start
-	 *            Start point, may be {@code null} to imply start of dimension
+	 *            Start point
 	 * @param stop
-	 *            Stop point, may be {@code null} to imply end of dimension
+	 *            Stop point
 	 * @param step
 	 *            Slice step
 	 */
-	public void setSlice(int i, int start, int stop, int step) {
-		internalSetSlice(i, start, stop, step);
-	}
-
-	/**
-	 * Set slice for given dimension.
-	 * 
-	 * @param i
-	 *            Dimension
-	 * @param slice
-	 *            Slice with wanted properties to set
-	 * @since 2.0
-	 */
-	public void setSlice(int i, Slice slice) {
-		internalSetSlice(i, slice.getStart(), slice.getStop(), slice.getStep());
-	}
-
-	/**
-	 * Set slice for given dimension, if the start is {@code null} it will be
-	 * set to 0, stop is by default equal to the entire size of the set.
-	 * 
-	 * @param i
-	 *            dimension
-	 * @param start
-	 *            Start point, may be {@code null} to imply start of dimension
-	 * @param stop
-	 *            Stop point, may be {@code null} to imply end of dimension
-	 * @param step
-	 *            Slice step
-	 */
-	private void internalSetSlice(int i, Integer start, Integer stop, int step) {
+	private void internalSetSlice(boolean wrap, int i, int start, int stop, int step) {
 		if (oshape == null) {
 			throw new IllegalArgumentException("Cannot set slice on null dataset");
 		}
@@ -260,12 +289,11 @@ public class SliceND {
 		final int s = oshape[i];
 		final int m = mshape[i];
 
-		if (start == null) {
-			start = step > 0 ? 0 : s - 1;
-		} else if (start < 0) {
+		if (start < 0) {
 			start += s;
 		}
 		if (step > 0) {
+			// ensure start >= 0 and < length or max
 			if (start < 0) {
 				start = 0;
 			} else if (start > s) {
@@ -276,17 +304,9 @@ public class SliceND {
 				}
 			}
 
-			if (stop == null) {
-				if (start >= s && m == ILazyWriteableDataset.UNLIMITED) {
-					throw new IllegalArgumentException(
-							"To extend past current dimension in unlimited case, a stop value must be specified");
-				}
-				stop = s;
-			} else if (stop < 0) {
-				stop += s;
-			}
+			// ensure stop >= 0 and <= length or max
 			if (stop < 0) {
-				stop = 0;
+				stop += s;
 			} else if (stop > s) {
 				if (m == s) {
 					stop = s;
@@ -294,17 +314,13 @@ public class SliceND {
 					stop = m;
 				}
 			}
+			if (stop < 0) {
+				stop = 0;
+			}
 
-			if (start >= stop) {
-				if (start < s || m == s) {
-					lstop[i] = start;
-				} else { // override end
-					stop = start + step;
-					if (m != ILazyWriteableDataset.UNLIMITED && stop > m) {
-						stop = m;
-					}
-					lstop[i] = stop;
-				}
+			// ensure start <= stop
+			if (start > stop) {
+				lstop[i] = start;
 			} else {
 				lstop[i] = stop;
 			}
@@ -314,15 +330,15 @@ public class SliceND {
 				expanded = true;
 			}
 		} else {
+			// ensure start >= -1 and < length
 			if (start < 0) {
 				start = -1;
 			} else if (start >= s) {
 				start = s - 1;
 			}
 
-			if (stop == null) {
-				stop = -1;
-			} else if (stop < 0) {
+			// ensure stop >= -1 and < length
+			if (stop < 0 && wrap) {
 				stop += s;
 			}
 			if (stop < -1) {
@@ -330,7 +346,9 @@ public class SliceND {
 			} else if (stop >= s) {
 				stop = s - 1;
 			}
-			if (stop >= start) {
+
+			// ensure stop <= start
+			if (stop > start) {
 				lstop[i] = start;
 			} else {
 				lstop[i] = stop;
@@ -338,21 +356,9 @@ public class SliceND {
 		}
 
 		stop = lstop[i];
-		lshape[i] = calcLength(start, stop, step);
+		lshape[i] = Slice.getNumSteps(start, stop, step);
 		lstart[i] = start;
 		lstep[i] = step;
-	}
-
-	private static int calcLength(int start, int stop, int step) {
-		int l;
-		if (start == stop) {
-			l = 0;
-		} else if (step > 0) {
-			l = Math.max(0, (stop - start - 1) / step + 1);
-		} else {
-			l = Math.max(0, (stop - start + 1) / step + 1);
-		}
-		return l;
 	}
 
 	/**
@@ -437,8 +443,8 @@ public class SliceND {
 				}
 				for (int i = 0; i < shape.length; i++) {
 					int s = shape[i];
-					if ((s > 1 || s < lshape[i]) && !isSliceWithinShape(s, lstart[i], lstop[i], lstep[i])) {
-						throw new IllegalArgumentException("Updated source shape must be outside latest slice");
+					if (s > 1 && s < oshape[i] && !isSliceWithinShape(s, lstart[i], lstop[i], lstep[i])) {
+						throw new IllegalArgumentException("Updated source shape ("+ Arrays.toString(shape) + ") must be outside this slice: " + toString());
 					}
 				}
 				System.arraycopy(shape, 0, oshape, 0, shape.length);
@@ -572,6 +578,7 @@ public class SliceND {
 	@Override
 	public SliceND clone() {
 		SliceND c = new SliceND(oshape);
+		c.mshape = copy(mshape);
 		if (lshape != null) {
 			for (int i = 0; i < lshape.length; i++) {
 				c.lstart[i] = lstart[i];
@@ -639,18 +646,29 @@ public class SliceND {
 		return new SliceND(data.getShape(), start, stop, step);
 	}
 
+	private static boolean isRankWrong(int rank, int[] array) {
+		if (array == null) {
+			return rank != 0;
+		}
+		return array.length != rank;
+	}
+
+	private static int length(int[] array) {
+		return array == null ? 0 : array.length;
+	}
+
 	/**
 	 * Create SliceND without sanity checks on start, stop and step
 	 * @param shape
 	 *            Shape of the dataset, see {@link ILazyDataset#getShape()}
 	 * @param maxShape
-	 *            Array of maximals shapes, may be {@code null}
+	 *            Array of maximal shapes, may be {@code null}
 	 * @param start
-	 *            Array of starts points, may be {@code null}
+	 *            Array of starts points, must not be {@code null} if rank is non-zero
 	 * @param stop
-	 *            Array of stops points, may be {@code null}
+	 *            Array of stops points, must not be {@code null} if rank is non-zero
 	 * @param step
-	 *            Array of steps, may be {@code null}
+	 *            Array of steps, must not be {@code null} if rank is non-zero
 	 * @return slice
 	 */
 	static SliceND createSlice(final int[] shape, final int[] maxShape, final int[] start, final int[] stop, final int[] step) {
@@ -659,29 +677,21 @@ public class SliceND {
 		}
 		int rank = shape.length;
 
-		if (maxShape != null && maxShape.length != rank) {
-			throw new IllegalArgumentException("Max shape must have same rank as shape");
-		}
-		if (start.length != rank || stop.length != rank || step.length != rank) {
+		if (isRankWrong(rank, start) || isRankWrong(rank, stop) || isRankWrong(rank, step)) {
 			throw new IllegalArgumentException("No of indexes does not match data dimensions: you passed it start="
-					+ start.length + ", stop=" + stop.length + ", step=" + step.length + ", and it needs " + rank);
+					+ length(start) + ", stop=" + length(stop) + ", step=" + length(step) + ", and it needs " + rank);
 		}
 
 		SliceND s = new SliceND(shape);
 		if (maxShape != null) {
+			if (maxShape.length != rank) {
+				throw new IllegalArgumentException("Max shape must have same rank as shape");
+			}
 			s.initMaxShape(maxShape);
 		}
-		s.lstart = start;
-		s.lstop  = stop;
-		s.lstep  = step;
 
 		for (int i = 0; i < rank; i++) {
-			int e = stop[i];
-			s.lshape[i] = calcLength(start[i], e, step[i]);
-			if (e > shape[i]) {
-				s.oshape[i] = e;
-				s.expanded = true;
-			}
+			s.internalSetSlice(false, i, start[i], stop[i], step[i]);
 		}
 		return s;
 	}
@@ -693,40 +703,46 @@ public class SliceND {
 	 * @since 2.3
 	 */
 	public void checkShapes(int[] dShape, int[] dMShape) {
-		if (oshape == null) {
+		if (lshape == null) {
 			if (dShape == null) {
 				return;
 			}
-			throw new IllegalArgumentException("Dataset shape must be null with source shape null");
+			throw new IllegalArgumentException("Dataset shape must be null with slice shape null");
 		}
-		int r = oshape.length;
-		if (r != dShape.length) {
-			throw new IllegalArgumentException("Dataset shape must be equal in length to source shape");
-		}
-		if (Arrays.equals(oshape, dShape)) {
-			return;
+		int rank = lshape.length;
+		if (rank != dShape.length) {
+			throw new IllegalArgumentException("Dataset shape must be equal in length to slice shape");
 		}
 
+		// assume start <= stop (or start >= stop, when step is -ve)
 		if (dMShape == null) {
-			for (int i = 0; i < r; i++) {
-				int o = oshape[i];
-				if (o == 0) {
-					throw new IllegalArgumentException("Slice shape has zero length");
-				}
-				if (o > dShape[i]) {
-					throw new IllegalArgumentException("Slice shape is greater than dataset shape");
+			for (int i = 0; i < rank; i++) {
+				int l = dShape[i];
+				if (lstep[i] > 0) {
+					int e = lstop[i];
+					if (e > l) {
+						throw new IllegalArgumentException(String.format("Slice ends outside shape: %d => %d > %d", i, e, l));
+					}
+				} else {
+					int b = lstart[i];
+					if (b >= l) {
+						throw new IllegalArgumentException(String.format("Slice begins outside shape: %d => %d >= %d", i, b, l));
+					}
 				}
 			}
 		} else {
-			for (int i = 0; i < r; i++) {
-				int o = oshape[i];
-				if (o == 0) {
-					throw new IllegalArgumentException("Slice shape has zero length");
-				}
+			for (int i = 0; i < rank; i++) {
+				int l = dShape[i];
 				int m = dMShape[i];
-				if (m != ILazyWriteableDataset.UNLIMITED) {
-					if (o > m) {
-						throw new IllegalArgumentException("Slice shape is greater than max dataset shape");
+				if (lstep[i] > 0) {
+					int e = lstop[i];
+					if (e > l && m != ILazyWriteableDataset.UNLIMITED && e > m) {
+						throw new IllegalArgumentException(String.format("Slice ends outside shape: %d => %d > %d or %d", i, e, l, m));
+					}
+				} else {
+					int b = lstart[i];
+					if (b >= l && m != ILazyWriteableDataset.UNLIMITED && b >= m) {
+						throw new IllegalArgumentException(String.format("Slice begins outside shape: %d => %d >= %d or %d", i, b, l, m));
 					}
 				}
 			}

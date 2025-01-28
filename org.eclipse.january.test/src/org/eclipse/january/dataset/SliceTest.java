@@ -11,19 +11,23 @@ package org.eclipse.january.dataset;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import org.junit.Test;
+import org.junit.function.ThrowingRunnable;
 
 public class SliceTest {
-	
+
 	@Test
 	public void testSlice() {
 		Slice sl;
 		sl = new Slice();
 		assertEquals(":", sl.toString());
 		sl = new Slice(12);
+		assertEquals(":12", sl.toString());
+		sl = sl.clone();
 		assertEquals(":12", sl.toString());
 		sl = new Slice(1, 12);
 		assertEquals("1:12", sl.toString());
@@ -51,6 +55,8 @@ public class SliceTest {
 		assertEquals("::3", sl.toString());
 		sl = new Slice(null, null, 3).setLength(12);
 		assertEquals("::3", sl.toString());
+		sl = new Slice(null, null, null).setLength(12);
+		assertEquals(":", sl.toString());
 		sl = new Slice(11, 12);
 		assertEquals("11", sl.toString());
 		sl = new Slice(0, 1);
@@ -103,17 +109,17 @@ public class SliceTest {
 		sl = new Slice(6, 0, -2).setLength(12);
 		assertEquals(3, sl.getNumSteps());
 
-		try {
-			sl = new Slice();
-			sl.getNumSteps();
-			fail("No exception thrown");
-		} catch (IllegalStateException ise) {
-			// passed
-		} catch (Exception e) {
-			fail("Wrong exception type passed, this should give an IllegalStateException");
-		}
+		assertThrows(IllegalStateException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				Slice sa = new Slice();
+				sa.getNumSteps();
+			}
+		});
 
 		sl = new Slice(12);
+		assertEquals(12, sl.getNumSteps());
+		sl = new Slice(null, 12);
 		assertEquals(12, sl.getNumSteps());
 		sl = new Slice(1, 12);
 		assertEquals(11, sl.getNumSteps());
@@ -134,15 +140,13 @@ public class SliceTest {
 
 		sl = new Slice(null, 11, 1);
 		assertEquals(11, sl.getNumSteps());
-		try {
-			sl = new Slice(11, null, -1);
-			sl.getNumSteps();
-			fail("No exception thrown");
-		} catch (IllegalStateException ise) {
-			// passed
-		} catch (Exception e) {
-			fail("Wrong exception type passed, this should give an IllegalStateException");
-		}
+		assertThrows(IllegalStateException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				Slice sa = new Slice(null, 1, -1);
+				sa.getNumSteps();
+			}
+		});
 
 		sl = new Slice(null, null, 15).setLength(4096);
 		assertEquals(274, sl.getNumSteps());
@@ -186,123 +190,212 @@ public class SliceTest {
 		Slice sl;
 
 		sl = new Slice().setLength(12);
-		assertEquals(null, sl.getStart());
-		assertEquals(null, sl.getStop());
+		assertNull(sl.getStart());
+		assertNull(sl.getStop());
 		assertEquals(1, sl.getStep());
 		assertEquals(12, sl.getLength());
 
 		sl = new Slice(10).setLength(12);
-		assertEquals(null, sl.getStart());
+		assertNull(sl.getStart());
 		assertEquals(10, (int) sl.getStop());
 		assertEquals(1, sl.getStep());
 		assertEquals(12, sl.getLength());
 	}
 
 	@Test
-	public void testSetter() {
+	public void testSetStartStop() {
+		int length = 12;
+		int step = 1;
+		int last = length - 1;
+		int stop = 5;
+		Slice sl;
+
+		sl = new Slice().setLength(length);
+		sl.setStep(step);
+		sl.setStart(null);
+		assertNull(sl.getStart());
+		assertEquals(length, sl.getNumSteps());
+
+		sl.setStart(1);
+		assertEquals(1, (int) sl.getStart());
+		assertEquals(last, sl.getNumSteps());
+
+		sl.setStart(-1);
+		assertEquals(last, (int) sl.getStart());
+		assertEquals(1, sl.getNumSteps());
+
+		sl.setStart(-length-1);
+		assertEquals(0, (int) sl.getStart());
+		assertEquals(length, sl.getNumSteps());
+
+		sl.setStart(last);
+		assertEquals(last, (int) sl.getStart());
+		assertEquals(1, sl.getNumSteps());
+
+		sl.setStart(last + 2);
+		assertEquals(length, (int) sl.getStart());
+		assertEquals(0, sl.getNumSteps());
+
+		sl.setStep(-step);
+		sl.setStart(1);
+		assertEquals(1, (int) sl.getStart());
+		assertEquals(2, sl.getNumSteps());
+
+		sl.setStart(-1);
+		assertEquals(last, (int) sl.getStart());
+		assertEquals(length, sl.getNumSteps());
+
+		sl.setStart(-length-2);
+		assertEquals(-1, (int) sl.getStart());
+		assertEquals(0, sl.getNumSteps());
+
+		sl.setStart(last);
+		assertEquals(last, (int) sl.getStart());
+		assertEquals(length, sl.getNumSteps());
+		sl.setStart(last + 2);
+		assertEquals(last, (int) sl.getStart());
+		assertEquals(length, sl.getNumSteps());
+
+		// with a stop defined
+		sl.setStep(step);
+		sl.setStart(1);
+		sl.setStop(stop);
+		assertEquals(1, (int) sl.getStart());
+		assertEquals(stop - 1, sl.getNumSteps());
+
+		sl.setStart(-1);
+		assertEquals(stop, (int) sl.getStart());
+		assertEquals(0, sl.getNumSteps());
+
+		sl.setStart(-length-1);
+		assertEquals(0, (int) sl.getStart());
+		assertEquals(stop, sl.getNumSteps());
+
+		sl.setStart(last);
+		assertEquals(stop, (int) sl.getStart());
+		assertEquals(0, sl.getNumSteps());
+
+		sl.setStart(last + 2);
+		assertEquals(stop, (int) sl.getStart());
+		assertEquals(0, sl.getNumSteps());
+
+		sl.setStop(stop - 2);
+		assertEquals(stop, (int) sl.getStart());
+		assertEquals(0, sl.getNumSteps());
+
+		sl.setStart(null);
+		sl.setStop(null);
+		assertNull(sl.getStop());
+		assertEquals(length, sl.getNumSteps());
+
+		sl.setStop(-length-1);
+		assertEquals(0, (int) sl.getStop());
+		assertEquals(0, sl.getNumSteps());
+
+		sl.setStop(length + 1);
+		assertEquals(length, (int) sl.getStop());
+		assertEquals(length, sl.getNumSteps());
+
+		sl.setStop(stop);
+		sl.setStep(-step);
+		sl.setStart(1);
+		assertEquals(stop, (int) sl.getStart());
+		assertEquals(0, sl.getNumSteps());
+
+		sl.setStart(-1);
+		assertEquals(last, (int) sl.getStart());
+		int expected = last - stop;
+		assertEquals(expected, sl.getNumSteps());
+
+		sl.setStart(-length-1);
+		assertEquals(stop, (int) sl.getStart());
+		assertEquals(0, sl.getNumSteps());
+
+		sl.setStart(last);
+		assertEquals(last, (int) sl.getStart());
+		assertEquals(expected, sl.getNumSteps());
+
+		sl.setStart(last + 2);
+		assertEquals(last, (int) sl.getStart());
+		assertEquals(expected, sl.getNumSteps());
+
+		sl.setStart(null);
+		sl.setStop(null);
+		assertNull(sl.getStop());
+		assertEquals(length, sl.getNumSteps());
+
+		sl.setStop(-length-4);
+		assertEquals(-1, (int) sl.getStop());
+		assertEquals(length, sl.getNumSteps());
+
+		sl.setStop(-length-1);
+		assertEquals(-1, (int) sl.getStop());
+		assertEquals(length, sl.getNumSteps());
+
+		sl.setStop(length + 1);
+		assertEquals(last, (int) sl.getStop());
+		assertEquals(0, sl.getNumSteps());
+
+		sl.setStop(null);
+		sl.setStart(stop);
+		sl.setStop(length + 1);
+		assertEquals(stop, (int) sl.getStop());
+		assertEquals(0, sl.getNumSteps());
+	}
+
+	@Test
+	public void testSetLengthStep() {
 		Slice sl;
 
 		sl = new Slice().setLength(12);
-		sl.setStart(1);
-		assertEquals(1, (int) sl.getStart());
+		sl.setStop(10);
+		final Slice sa = sl;
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			public void run() throws Throwable {
+				sa.setLength(9);
+			}
+		});
+
+		sl = new Slice().setLength(12);
+		sl.setStart(3);
 		sl.setStop(10);
 		assertEquals(10, (int) sl.getStop());
-		sl.setStep(2);
-		assertEquals(2, sl.getStep());
-		sl.setLength(11);
-		assertEquals(11, sl.getLength());
-
-		sl = new Slice().setLength(12);
-		sl.setStart(3);
-		sl.setStop(10);
-		try {
-			sl.setLength(9);
-			fail("No exception thrown");
-		} catch (IllegalArgumentException iae) {
-			// passed
-		} catch (Exception e) {
-			fail("Wrong exception type passed, this should give an IllegalArgumentException");
-		}
-
-		try {
-			sl.setStart(11);
-			fail("No exception thrown");
-		} catch (IllegalArgumentException iae) {
-			// passed
-		} catch (Exception e) {
-			fail("Wrong exception type passed, this should give an IllegalArgumentException");
-		}
-
-		sl = new Slice().setLength(12);
-		sl.setStart(3);
-		sl.setStop(10);
-		try {
-			sl.setLength(9);
-			fail("No exception thrown");
-		} catch (IllegalArgumentException iae) {
-			// passed
-		} catch (Exception e) {
-			fail("Wrong exception type passed, this should give an IllegalArgumentException");
-		}
-
-		try {
-			sl.setStart(11);
-			fail("No exception thrown");
-		} catch (IllegalArgumentException iae) {
-			// passed
-		} catch (Exception e) {
-			fail("Wrong exception type passed, this should give an IllegalArgumentException");
-		}
-		try {
-			sl.setStop(0);
-			fail("No exception thrown");
-		} catch (IllegalArgumentException iae) {
-			// passed
-		} catch (Exception e) {
-			fail("Wrong exception type passed, this should give an IllegalArgumentException");
-		}
+		assertEquals(7, sl.getNumSteps());
+		final Slice sb = sl;
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			public void run() throws Throwable {
+				sb.setLength(9);
+			}
+		});
 
 		sl = new Slice().setLength(12);
 		sl.setStep(-2);
 		sl.setStart(10);
+		assertEquals(10, (int) sl.getStart());
+		assertEquals(6, sl.getNumSteps());
 		sl.setStop(3);
-		try {
-			sl.setLength(9);
-			fail("No exception thrown");
-		} catch (IllegalArgumentException iae) {
-			// passed
-		} catch (Exception e) {
-			fail("Wrong exception type passed, this should give an IllegalArgumentException");
-		}
+		assertEquals(4, sl.getNumSteps());
+		final Slice sc = sl;
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			public void run() throws Throwable {
+				sc.setLength(9);
+			}
+		});
 
-		try {
-			sl.setStart(2);
-			fail("No exception thrown");
-		} catch (IllegalArgumentException iae) {
-			// passed
-		} catch (Exception e) {
-			fail("Wrong exception type passed, this should give an IllegalArgumentException");
-		}
-		try {
-			sl.setStop(10);
-			fail("No exception thrown");
-		} catch (IllegalArgumentException iae) {
-			// passed
-		} catch (Exception e) {
-			fail("Wrong exception type passed, this should give an IllegalArgumentException");
-		}
+		sl.setStart(10);
+		sl.setStop(10);
+		assertEquals(10, (int) sl.getStop());
+		assertEquals(0, sl.getNumSteps());
 
-		try {
-			sl.setStep(0);
-			fail("No exception thrown");
-		} catch (IllegalArgumentException iae) {
-			// passed
-		} catch (Exception e) {
-			fail("Wrong exception type passed, this should give an IllegalArgumentException");
-		}
+		final Slice sd = sl;
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			public void run() throws Throwable {
+				sd.setStep(0);
+			}
+		});
 
 		sl = new Slice(10).setLength(12);
-		assertEquals(null, sl.getStart());
+		assertNull(sl.getStart());
 		assertEquals(10, (int) sl.getStop());
 		assertEquals(1, sl.getStep());
 		assertEquals(12, sl.getLength());
@@ -331,15 +424,12 @@ public class SliceTest {
 		assertEquals(11, sl.getEnd());
 		sl = new Slice(1, 12);
 		assertEquals(11, sl.getEnd());
-		try {
-			sl = new Slice(12, 1);
-			sl.getEnd();
-			fail("No exception thrown");
-		} catch (IllegalStateException ise) {
-			// passed
-		} catch (Exception e) {
-			fail("Wrong exception type passed, this should give an IllegalStateException");
-		}
+		final Slice sa = new Slice(12, 1);
+		assertThrows(IllegalStateException.class, new ThrowingRunnable() {
+			public void run() throws Throwable {
+				sa.getEnd();
+			}
+		});
 		sl = new Slice(1, 12, 2);
 		assertEquals(11, sl.getEnd());
 		sl = new Slice(1, 12, 12);
@@ -353,24 +443,18 @@ public class SliceTest {
 
 		sl = new Slice(null, 12, 2);
 		assertEquals(10, sl.getEnd());
-		try {
-			sl = new Slice(null, 12, -2);
-			sl.getEnd();
-			fail("No exception thrown");
-		} catch (IllegalStateException ise) {
-			// passed
-		} catch (Exception e) {
-			fail("Wrong exception type passed, this should give an IllegalStateException");
-		}
-		try {
-			sl = new Slice(null, null, -2);
-			sl.getEnd();
-			fail("No exception thrown");
-		} catch (IllegalStateException ise) {
-			// passed
-		} catch (Exception e) {
-			fail("Wrong exception type passed, this should give an IllegalStateException");
-		}
+		final Slice sb = new Slice(null, 12, -2);
+		assertThrows(IllegalStateException.class, new ThrowingRunnable() {
+			public void run() throws Throwable {
+				sb.getEnd();
+			}
+		});
+		final Slice sc = new Slice(null, null, -2);
+		assertThrows(IllegalStateException.class, new ThrowingRunnable() {
+			public void run() throws Throwable {
+				sc.getEnd();
+			}
+		});
 	}
 
 	@Test
@@ -397,43 +481,102 @@ public class SliceTest {
 		assertEquals("11", sl.toString());
 		assertEquals("11", sl.flip().toString());
 		sl = new Slice(1, 12, 3).flip();
-		assertEquals("10:-2:-3", sl.toString());
-		assertEquals("1:13:3", sl.flip().toString());
+		assertEquals("10:0:-3", sl.toString());
+		assertEquals("1:11:3", sl.flip().toString());
 		sl = new Slice(11, 12, 3).flip();
 		assertEquals("11", sl.toString());
 		assertEquals("11", sl.flip().toString());
+
 		
 		sl = new Slice().setLength(12);
 		sl.flip();
-		assertEquals(null, sl.getStart());
-		assertEquals(null, sl.getStop());
+		assertNull(sl.getStart());
+		assertNull(sl.getStop());
 		assertEquals(-1, sl.getStep());
-		assertEquals(12, sl.getLength());
+		assertEquals(12, sl.getNumSteps());
 
 		sl = new Slice(10).setLength(12);
 		sl.flip();
 		assertEquals(9, (int) sl.getStart());
-		assertEquals(null, sl.getStop());
+		assertNull(sl.getStop());
 		assertEquals(-1, sl.getStep());
-		assertEquals(12, sl.getLength());
+		assertEquals(10, sl.getNumSteps());
+
+		sl = new Slice(null, 10).setLength(12);
+		sl.flip();
+		assertEquals(9, (int) sl.getStart());
+		assertNull(sl.getStop());
+		assertEquals(-1, sl.getStep());
+		assertEquals(10, sl.getNumSteps());
+
+		sl = new Slice(null, 4, -1).setLength(12);
+		sl.flip();
+		assertEquals(5, (int) sl.getStart());
+		assertNull(sl.getStop());
+		assertEquals(1, sl.getStep());
+		assertEquals(7, sl.getNumSteps());
+
+		sl = new Slice(3, 10).setLength(12);
+		sl.flip();
+		assertEquals(9, (int) sl.getStart());
+		assertEquals(2, (int) sl.getStop());
+		assertEquals(-1, sl.getStep());
+		assertEquals(7, sl.getNumSteps());
+
+		sl = new Slice(9, 2, -1).setLength(12);
+		sl.flip();
+		assertEquals(3, (int) sl.getStart());
+		assertEquals(10, (int) sl.getStop());
+		assertEquals(1, sl.getStep());
+		assertEquals(7, sl.getNumSteps());
 	}
 
 	@Test
 	public void testConverters() {
-		int[] start = new int[1];
-		int[] stop  = new int[1];
-		int[] step  = new int[1];
+		final int[] start = new int[1];
+		final int[] stop  = new int[1];
+		final int[] step  = new int[1];
 		int[] shape = new int[] {12};
+
+		Slice.convertFromSlice(null, shape, start, stop, step);
+		assertEquals(0, start[0]);
+		assertEquals(12, stop[0]);
+		assertEquals(1, step[0]);
 
 		Slice.convertFromSlice(new Slice[] {null}, shape, start, stop, step);
 		assertEquals(0, start[0]);
 		assertEquals(12, stop[0]);
 		assertEquals(1, step[0]);
 
+		Slice.convertFromSlice(new Slice[] {new Slice(null,11,2)}, shape, start, stop, step);
+		assertEquals(0, start[0]);
+		assertEquals(11, stop[0]);
+		assertEquals(2, step[0]);
+
+		Slice.convertFromSlice(new Slice[] {new Slice(null,null,2)}, shape, start, stop, step);
+		assertEquals(0, start[0]);
+		assertEquals(12, stop[0]);
+		assertEquals(2, step[0]);
+
+		Slice.convertFromSlice(new Slice[] {new Slice(null,6,-2)}, shape, start, stop, step);
+		assertEquals(11, start[0]);
+		assertEquals(6, stop[0]);
+		assertEquals(-2, step[0]);
+
+		Slice.convertFromSlice(new Slice[] {new Slice(null,null,-2)}, shape, start, stop, step);
+		assertEquals(11, start[0]);
+		assertEquals(-1, stop[0]);
+		assertEquals(-2, step[0]);
+
 		Slice.convertFromSlice(new Slice[] {new Slice(1,11,2).setLength(12)}, shape, start, stop, step);
 		assertEquals(1, start[0]);
 		assertEquals(11, stop[0]);
 		assertEquals(2, step[0]);
+
+		Slice.convertFromSlice(new Slice[] {new Slice(3, 6).setLength(12), new Slice().setLength(12)}, shape, start, stop, step);
+		assertEquals(3, start[0]);
+		assertEquals(6, stop[0]);
+		assertEquals(1, step[0]);
 
 		Slice.convertFromSlice(new Slice[] {new Slice().setLength(12)}, shape, start, stop, step);
 		assertEquals(0, start[0]);
@@ -446,29 +589,51 @@ public class SliceTest {
 		assertEquals(12, (int) sl[0].getStop());
 		assertEquals(1, sl[0].getStep());
 
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			public void run() throws Throwable {
+				Slice.convertToSlice(start, new int[0], step);
+			}
+		});
+
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			public void run() throws Throwable {
+				Slice.convertToSlice(start, stop, new int[0]);
+			}
+		});
+
 		sl = Slice.convertFromString("[:,:,:,:]");
 		assertEquals(4, sl.length);
 		assertEquals(0, (int) sl[0].getStart());
 		assertEquals(0, (int) sl[1].getStart());
 		assertEquals(0, (int) sl[2].getStart());
 		assertEquals(0, (int) sl[3].getStart());
-		assertEquals(null, sl[0].getStop());
-		assertEquals(null, sl[1].getStop());
-		assertEquals(null, sl[2].getStop());
-		assertEquals(null, sl[3].getStop());
+		assertNull(sl[0].getStop());
+		assertNull(sl[1].getStop());
+		assertNull(sl[2].getStop());
+		assertNull(sl[3].getStop());
 		assertEquals(1, sl[0].getStep());
 		assertEquals(1, sl[1].getStep());
 		assertEquals(1, sl[2].getStep());
 		assertEquals(1, sl[3].getStep());
 
+		sl = Slice.convertFromString("[7]");
+		assertEquals(7, (int) sl[0].getStart());
+		assertEquals(8, (int) sl[0].getStop());
+		assertEquals(1, sl[0].getStep());
+
+		sl = Slice.convertFromString("[7:12]");
+		assertEquals(7, (int) sl[0].getStart());
+		assertEquals(12, (int) sl[0].getStop());
+		assertEquals(1, sl[0].getStep());
+
 		sl = Slice.convertFromString("[::]");
 		assertEquals(0, (int) sl[0].getStart());
-		assertEquals(null, sl[0].getStop());
+		assertNull(sl[0].getStop());
 		assertEquals(1, sl[0].getStep());
 
 		sl = Slice.convertFromString("[1::]");
 		assertEquals(1, (int) sl[0].getStart());
-		assertEquals(null, sl[0].getStop());
+		assertNull(sl[0].getStop());
 		assertEquals(1, sl[0].getStep());
 
 		sl = Slice.convertFromString("[:3:]");
@@ -478,7 +643,7 @@ public class SliceTest {
 
 		sl = Slice.convertFromString("[::-1]");
 		assertEquals(0, (int) sl[0].getStart());
-		assertEquals(null, sl[0].getStop());
+		assertNull(sl[0].getStop());
 		assertEquals(-1, sl[0].getStep());
 
 		sl = Slice.convertFromString("[10:2:-2]");
@@ -505,112 +670,92 @@ public class SliceTest {
 
 	@Test
 	public void testPos() {
-		Slice sl;
+		final Slice sa = new Slice(0, 10, 1);
+		assertEquals(0, sa.getPosition(0));
+		assertEquals(5, sa.getPosition(5));
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			public void run() throws Throwable {
+				sa.getPosition(-1);
+			}
+		});
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			public void run() throws Throwable {
+				sa.getPosition(10);
+			}
+		});
 
-		sl = new Slice(0, 10, 1);
-		assertEquals(0, sl.getPosition(0));
-		assertEquals(5, sl.getPosition(5));
-		try {
-			sl.getPosition(-1);
-			fail("No exception thrown");
-		} catch (IllegalArgumentException iae) {
-			// passed
-		} catch (Exception e) {
-			fail("Wrong exception type passed, this should give an IllegalArgumentException");
-		}
-		try {
-			sl.getPosition(10);
-			fail("No exception thrown");
-		} catch (IllegalArgumentException iae) {
-			// passed
-		} catch (Exception e) {
-			fail("Wrong exception type passed, this should give an IllegalArgumentException");
-		}
+		final Slice sb = new Slice(5, 2, -1);
+		assertEquals(5, sb.getPosition(0));
+		assertEquals(3, sb.getPosition(2));
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			public void run() throws Throwable {
+				sb.getPosition(3);
+			}
+		});
 
-		sl = new Slice(5, 2, -1);
-		assertEquals(5, sl.getPosition(0));
-		assertEquals(3, sl.getPosition(2));
-		try {
-			sl.getPosition(3);
-			fail("No exception thrown");
-		} catch (IllegalArgumentException iae) {
-			// passed
-		} catch (Exception e) {
-			fail("Wrong exception type passed, this should give an IllegalArgumentException");
-		}
+		final Slice sc = new Slice(null, null, 1).setLength(12);
+		assertEquals(0, sc.getPosition(0));
+		assertEquals(3, sc.getPosition(3));
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			public void run() throws Throwable {
+				sc.getPosition(12);
+			}
+		});
 
-		sl = new Slice(null, null, 1).setLength(12);
-		assertEquals(0, sl.getPosition(0));
-		assertEquals(3, sl.getPosition(3));
-		try {
-			sl.getPosition(12);
-			fail("No exception thrown");
-		} catch (IllegalArgumentException iae) {
-			// passed
-		} catch (Exception e) {
-			fail("Wrong exception type passed, this should give an IllegalArgumentException");
-		}
+		final Slice sd = new Slice(null, null, -1).setLength(12);
+		assertEquals(11, sd.getPosition(0));
+		assertEquals(8, sd.getPosition(3));
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			public void run() throws Throwable {
+				sd.getPosition(12);
+			}
+		});
 
-		sl = new Slice(null, null, -1).setLength(12);
-		assertEquals(11, sl.getPosition(0));
-		assertEquals(8, sl.getPosition(3));
-		try {
-			sl.getPosition(12);
-			fail("No exception thrown");
-		} catch (IllegalArgumentException iae) {
-			// passed
-		} catch (Exception e) {
-			fail("Wrong exception type passed, this should give an IllegalArgumentException");
-		}
+		sd.setLength(-1);
+		assertThrows(IllegalStateException.class, new ThrowingRunnable() {
+			public void run() throws Throwable {
+				sd.getPosition(1);
+			}
+		});
+		sd.setStart(12);
+		assertEquals(9, sd.getPosition(3));
 
-		sl = new Slice(null, null, -2).setLength(12);
-		assertEquals(11, sl.getPosition(0));
-		assertEquals(5, sl.getPosition(3));
-		assertEquals(1, sl.getPosition(5));
-		try {
-			sl.getPosition(6);
-			fail("No exception thrown");
-		} catch (IllegalArgumentException iae) {
-			// passed
-		} catch (Exception e) {
-			fail("Wrong exception type passed, this should give an IllegalArgumentException");
-		}
+		final Slice se = new Slice(null, null, -2).setLength(12);
+		assertEquals(11, se.getPosition(0));
+		assertEquals(5, se.getPosition(3));
+		assertEquals(1, se.getPosition(5));
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			public void run() throws Throwable {
+				se.getPosition(6);
+			}
+		});
 
-		sl = new Slice(6, null, -2).setLength(12);
-		assertEquals(6, sl.getPosition(0));
-		assertEquals(0, sl.getPosition(3));
-		try {
-			sl.getPosition(4);
-			fail("No exception thrown");
-		} catch (IllegalArgumentException iae) {
-			// passed
-		} catch (Exception e) {
-			fail("Wrong exception type passed, this should give an IllegalArgumentException");
-		}
+		final Slice sf = new Slice(6, null, -2).setLength(12);
+		assertEquals(6, sf.getPosition(0));
+		assertEquals(0, sf.getPosition(3));
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			public void run() throws Throwable {
+				sf.getPosition(4);
+			}
+		});
 
-		sl = new Slice(6, 1, -2).setLength(12);
-		assertEquals(6, sl.getPosition(0));
-		assertEquals(2, sl.getPosition(2));
-		try {
-			sl.getPosition(3);
-			fail("No exception thrown");
-		} catch (IllegalArgumentException iae) {
-			// passed
-		} catch (Exception e) {
-			fail("Wrong exception type passed, this should give an IllegalArgumentException");
-		}
+		final Slice sg = new Slice(6, 1, -2).setLength(12);
+		assertEquals(6, sg.getPosition(0));
+		assertEquals(2, sg.getPosition(2));
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			public void run() throws Throwable {
+				sg.getPosition(3);
+			}
+		});
 
-		sl = new Slice(6, 0, -2).setLength(12);
-		assertEquals(6, sl.getPosition(0));
-		assertEquals(2, sl.getPosition(2));
-		try {
-			sl.getPosition(3);
-			fail("No exception thrown");
-		} catch (IllegalArgumentException iae) {
-			// passed
-		} catch (Exception e) {
-			fail("Wrong exception type passed, this should give an IllegalArgumentException");
-		}
+		final Slice sh = new Slice(6, 0, -2).setLength(12);
+		assertEquals(6, sh.getPosition(0));
+		assertEquals(2, sh.getPosition(2));
+		assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			public void run() throws Throwable {
+				sh.getPosition(3);
+			}
+		});
 	}
 
 	@Test
@@ -623,5 +768,52 @@ public class SliceTest {
 		s.setLength(0);
 
 		assertEquals(0, s.getNumSteps());
+	}
+
+	@Test
+	public void testCreateStrings() {
+		assertEquals("", Slice.createString());
+		assertEquals("", Slice.createString((Slice[]) null));
+		assertEquals(":", Slice.createString(new Slice[1]));
+		assertEquals(":", Slice.createString(new Slice()));
+		assertEquals(":4", Slice.createString(new Slice(4)));
+		assertEquals("4:", Slice.createString(new Slice(4, null)));
+		assertEquals("4:7", Slice.createString(new Slice(4, 7).setLength(12)));
+		assertEquals("4", Slice.createString(new Slice(4, 5).setLength(12)));
+		assertEquals("", Slice.createString(new int[0], new int[] {0}, new int[] {12}, new int[] {1}));
+		assertEquals(":", Slice.createString(new int[] {12}, new int[] {0}, new int[] {12}, new int[] {1}));
+		assertEquals("4:", Slice.createString(new int[] {12}, new int[] {4}, new int[] {12}, new int[] {1}));
+		assertEquals("4:7", Slice.createString(new int[] {12}, new int[] {4}, new int[] {7}, new int[] {1}));
+		assertEquals("4", Slice.createString(new int[] {12}, new int[] {4}, new int[] {5}, new int[] {1}));
+		assertEquals(":", Slice.createString(new int[] {12}, null, null, null));
+		assertEquals("::-1", Slice.createString(new int[] {12}, null, null, new int[] {-1}));
+	}
+
+	@Test
+	public void testIsSliceComplete() {
+		Slice s = new Slice();
+
+		assertTrue(s.isSliceComplete());
+		s.setStep(-1);
+		assertTrue(s.isSliceComplete());
+		s.setStep(2);
+		assertFalse(s.isSliceComplete());
+		s.setStep(-2);
+		assertFalse(s.isSliceComplete());
+		s.setStep(1);
+		s.setStart(4);
+		assertFalse(s.isSliceComplete());
+		s.setStart(null);
+		s.setStop(12);
+		assertFalse(s.isSliceComplete());
+		s.setStop(null);
+
+		s.setStart(4);
+		s.setLength(9);
+		assertFalse(s.isSliceComplete());
+		s.setStart(null);
+		assertTrue(s.isSliceComplete());
+		s.setStart(0);
+		assertTrue(s.isSliceComplete());
 	}
 }
