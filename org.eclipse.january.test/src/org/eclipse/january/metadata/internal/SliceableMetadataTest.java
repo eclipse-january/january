@@ -361,13 +361,16 @@ public class SliceableMetadataTest {
 		}
 
 		Slice[] slice = new Slice[] {null, new Slice(1), null, new Slice(0,2)};
-		ILazyDataset sliced;
+		ILazyDataset sliced = dataset.getSliceView(slice);
+
 		try {
+			slice[3].setStop(5);
 			sliced = dataset.getSliceView(slice);
 			fail("Should not get here");
 		} catch (Exception e) {
 		}
 
+		slice[3].setStop(2);
 		final int [] partial4 = new int[] {1, 2, 1, 1};
 		final int[] result3 = new int[] {1, 1, 1, 1};
 		bdm.put("1", Random.randn(partial4).cast(BooleanDataset.class));

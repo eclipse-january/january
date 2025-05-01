@@ -18,7 +18,6 @@ import java.util.Arrays;
 
 import org.eclipse.january.DatasetException;
 import org.eclipse.january.MetadataException;
-import org.eclipse.january.asserts.TestUtils;
 import org.eclipse.january.dataset.Dataset;
 import org.eclipse.january.dataset.DatasetFactory;
 import org.eclipse.january.dataset.DatasetUtils;
@@ -26,12 +25,15 @@ import org.eclipse.january.dataset.DoubleDataset;
 import org.eclipse.january.dataset.IDataset;
 import org.eclipse.january.dataset.ILazyDataset;
 import org.eclipse.january.dataset.IntegerDataset;
+import org.eclipse.january.dataset.LazyDataset;
 import org.eclipse.january.dataset.Random;
 import org.eclipse.january.dataset.Slice;
 import org.eclipse.january.metadata.AxesMetadata;
 import org.eclipse.january.metadata.ErrorMetadata;
 import org.eclipse.january.metadata.MetadataFactory;
 import org.junit.Test;
+
+import static org.eclipse.january.asserts.TestUtils.assertDatasetEquals;
 
 public class AxesMetadataTest {
 
@@ -351,7 +353,7 @@ public class AxesMetadataTest {
 		amd = ds.getFirstMetadata(AxesMetadata.class);
 		for (int i = 0; i < rank; i++) {
 			assertEquals(shape[i], amd.getAxes()[i].getSize());
-			TestUtils.assertDatasetEquals(axes[i].getSlice(slices[i]), DatasetUtils.sliceAndConvertLazyDataset(amd.getAxes()[i]).squeeze());
+			assertDatasetEquals(axes[i].getSlice(slices[i]), DatasetUtils.sliceAndConvertLazyDataset(amd.getAxes()[i]).squeeze());
 		}
 
 		for (int i = 0; i < rank; i++) {
@@ -361,7 +363,7 @@ public class AxesMetadataTest {
 		amd = ds.getFirstMetadata(AxesMetadata.class);
 		for (int i = 0; i < rank; i++) {
 			assertEquals(shape[i] - i - 2, amd.getAxes()[i].getSize());
-			TestUtils.assertDatasetEquals(axes[i].getSlice(slices[i]), DatasetUtils.sliceAndConvertLazyDataset(amd.getAxes()[i]).squeeze());
+			assertDatasetEquals(axes[i].getSlice(slices[i]), DatasetUtils.sliceAndConvertLazyDataset(amd.getAxes()[i]).squeeze());
 		}
 
 		for (int i = 0; i < rank; i++) {
@@ -372,7 +374,7 @@ public class AxesMetadataTest {
 		for (int i = 0; i < rank; i++) {
 			assertEquals(shape[i] - i - 1, amd.getAxes()[i].getSize());
 			Dataset a = axes[i].getSliceView(new Slice(ds.getShape()[i])); // crop longer axis
-			TestUtils.assertDatasetEquals(a.getSlice(slices[i]), DatasetUtils.sliceAndConvertLazyDataset(amd.getAxes()[i]).squeeze());
+			assertDatasetEquals(a.getSlice(slices[i]), DatasetUtils.sliceAndConvertLazyDataset(amd.getAxes()[i]).squeeze());
 		}
 	}
 
@@ -395,5 +397,42 @@ public class AxesMetadataTest {
 		amd = data.getFirstMetadata(AxesMetadata.class);
 
 		assertEquals(2, amd.getAxes().length);
+	}
+
+	@Test
+	public void testPreSlicedAxis() throws MetadataException, DatasetException {
+		final int[] shape = new int[] {5, 7};
+		IntegerDataset expected = Random.randint(-4, 6, shape);
+		LazyDataset data = LazyDataset.createLazyDataset(expected);
+		LazyDataset wholeAxis = LazyDataset.createLazyDataset(DatasetFactory.createRange(shape[1]+2));
+		LazyDataset axis = wholeAxis.getSliceView(new Slice(shape[1]));
+		AxesMetadata amd = MetadataFactory.createMetadata(AxesMetadata.class, shape.length);
+		amd.setAxis(1, axis);
+		data.addMetadata(amd);
+
+		LazyDataset sliced = data.getSliceView(new Slice(3), new Slice(6));
+		assertDatasetEquals(expected.getSlice(new Slice(3), new Slice(6)), sliced.getSlice());
+		amd = sliced.getFirstMetadata(AxesMetadata.class);
+		ILazyDataset[] aAxes = amd.getAxis(1);
+		assertDatasetEquals(wholeAxis.getSlice(new Slice(6)), DatasetUtils.sliceAndConvertLazyDataset(aAxes[0]).squeeze());
+	}
+
+	@Test
+	public void testPreSlicedData() throws MetadataException, DatasetException {
+		final int[] shape = new int[] {7, 5};
+		IntegerDataset expected = Random.randint(-4, 6, shape);
+		LazyDataset wholeData = LazyDataset.createLazyDataset(expected);
+		int dim0 = shape[0] - 2;
+		LazyDataset data = wholeData.getSliceView(new Slice(dim0));
+		LazyDataset axis = LazyDataset.createLazyDataset(DatasetFactory.createRange(dim0));
+		AxesMetadata amd = MetadataFactory.createMetadata(AxesMetadata.class, shape.length);
+		amd.setAxis(0, axis);
+		data.addMetadata(amd);
+
+		LazyDataset sliced = data.getSliceView(new Slice(3), new Slice(4));
+		assertDatasetEquals(expected.getSlice(new Slice(3), new Slice(4)), sliced.getSlice());
+		amd = sliced.getFirstMetadata(AxesMetadata.class);
+		ILazyDataset[] aAxes = amd.getAxis(0);
+		assertDatasetEquals(axis.getSlice(new Slice(3)), DatasetUtils.sliceAndConvertLazyDataset(aAxes[0]).squeeze());
 	}
 }
